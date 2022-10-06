@@ -28,7 +28,6 @@ public class gng
 	
 	
 	
-	VIDEO_EOF( gng );
 	
 	
 	

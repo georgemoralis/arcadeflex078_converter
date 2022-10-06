@@ -149,7 +149,6 @@ public class wardner
 	
 	/******************** Video stuff **********************/
 	
-	VIDEO_EOF( toaplan0 );
 	
 	
 	

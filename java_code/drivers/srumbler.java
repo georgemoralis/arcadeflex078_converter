@@ -19,7 +19,6 @@ public class srumbler
 	
 	
 	
-	VIDEO_EOF( srumbler );
 	
 	
 	

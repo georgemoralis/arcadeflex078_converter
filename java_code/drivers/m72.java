@@ -84,7 +84,6 @@ public class m72
 	MACHINE_INIT( xmultipl );
 	MACHINE_INIT( kengo );
 	INTERRUPT_GEN( m72_interrupt );
-	VIDEO_EOF( m72 );
 	
 	
 	static unsigned char *protection_ram;

@@ -25,7 +25,6 @@ void turbo_update_segments(void);
 /*----------- defined in vidhrdw/turbo.c -----------*/
 
 
-VIDEO_EOF( turbo );
 
 
 

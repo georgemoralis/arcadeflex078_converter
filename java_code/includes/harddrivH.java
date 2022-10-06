@@ -198,4 +198,3 @@ WRITE16_HANDLER( hdgsp_paletteram_lo_w );
 READ16_HANDLER( hdgsp_paletteram_hi_r );
 WRITE16_HANDLER( hdgsp_paletteram_hi_w );
 
-VIDEO_EOF( harddriv );

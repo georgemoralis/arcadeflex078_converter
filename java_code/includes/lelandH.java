@@ -81,4 +81,3 @@ void leland_i86_optimize_address(offs_t offset);
 
 
 
-VIDEO_EOF( leland );

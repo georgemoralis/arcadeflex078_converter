@@ -15,4 +15,4 @@ Misc
 
 & removed inside MEMORY_READ_START,MEMORY_WRITE_START,PORT_READ_START,PORT_WRITE_START functions
 lines that start with "extern" removed
-Removed forward functions ( WRITE_HANDLER , READ_HANDLER)
+Removed forward functions ( WRITE_HANDLER , READ_HANDLER,VIDEO_START,VIDEO_UPDATE,VIDEO_EOF,PALETTE_INIT)

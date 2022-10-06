@@ -29,8 +29,6 @@ public class toki
 	
 	
 	INTERRUPT_GEN( toki_interrupt );
-	VIDEO_EOF( toki );
-	VIDEO_EOF( tokib );
 	WRITE16_HANDLER( toki_background1_videoram16_w );
 	WRITE16_HANDLER( toki_background2_videoram16_w );
 	WRITE16_HANDLER( toki_control_w );

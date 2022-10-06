@@ -330,7 +330,6 @@ typedef struct _ygv608 {
 
 
 INTERRUPT_GEN( ygv608_timed_interrupt );
-VIDEO_STOP( ygv608 );
 
 READ16_HANDLER( ygv608_r );
 WRITE16_HANDLER( ygv608_w );

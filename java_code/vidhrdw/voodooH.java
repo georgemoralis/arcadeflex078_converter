@@ -7,7 +7,6 @@
 **************************************************************************/
 
 
-VIDEO_STOP( voodoo );
 
 void voodoo_set_init_enable(data32_t newval);
 

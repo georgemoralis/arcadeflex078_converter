@@ -84,7 +84,6 @@ public class tmnt
 	WRITE16_HANDLER( prmrsocr_122000_w );
 	WRITE16_HANDLER( tmnt_priority_w );
 	READ16_HANDLER( glfgreat_ball_r );
-	VIDEO_EOF( detatwin );
 	
 	static int tmnt_soundlatch;
 	static int cbj_snd_irqlatch, cbj_nvram_bank;

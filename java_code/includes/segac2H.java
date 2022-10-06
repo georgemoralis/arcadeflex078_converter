@@ -9,7 +9,6 @@
 
 
 
-VIDEO_EOF( segac2 );
 
 
 void	segac2_enable_display(int enable);

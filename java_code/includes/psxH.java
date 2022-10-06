@@ -7,7 +7,6 @@
 #if !defined( PSX_H )
 
 /* vidhrdw */
-VIDEO_STOP( psx );
 INTERRUPT_GEN( psx_vblank );
 READ32_HANDLER( psx_gpu_r );
 WRITE32_HANDLER( psx_gpu_w );

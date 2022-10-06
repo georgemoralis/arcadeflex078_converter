@@ -178,7 +178,6 @@ public class taito_b
 	
 	
 	
-	VIDEO_EOF( taitob );
 	
 	
 	WRITE16_HANDLER( TC0180VCU_word_w );

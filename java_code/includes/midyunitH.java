@@ -87,4 +87,3 @@ void midyunit_display_interrupt(int scanline);
 
 WRITE16_HANDLER( midyunit_io_register_w );
 
-VIDEO_EOF( midyunit );

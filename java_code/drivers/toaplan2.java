@@ -297,9 +297,6 @@ public class toaplan2
 	WRITE16_HANDLER( batrider_objectbank_w );
 	WRITE16_HANDLER( batrider_textdata_decode );
 	
-	VIDEO_EOF( toaplan2_0 );
-	VIDEO_EOF( toaplan2_1 );
-	VIDEO_EOF( batrider_0 );
 	
 	
 	/********* Video wrappers for PIPIBIBI *********/
