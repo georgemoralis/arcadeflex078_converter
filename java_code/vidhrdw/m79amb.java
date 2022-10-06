@@ -15,39 +15,39 @@ package vidhrdw;
 public class m79amb
 {
 	
-
-
-/* palette colors (see drivers/8080bw.c) */
-enum { BLACK, WHITE };
-
-
-static unsigned char mask = 0;
-
-WRITE_HANDLER( ramtek_mask_w )
-{
-	mask = data;
-}
-
-WRITE_HANDLER( ramtek_videoram_w )
-{
-	data = data & ~mask;
-
-	if (videoram[offset] != data)
+	
+	
+	/* palette colors (see drivers/8080bw.c) */
+	enum { BLACK, WHITE };
+	
+	
+	static unsigned char mask = 0;
+	
+	WRITE_HANDLER( ramtek_mask_w )
 	{
-		int i,x,y;
-
-		videoram[offset] = data;
-
-		y = offset / 32;
-		x = 8 * (offset % 32);
-
-		for (i = 0; i < 8; i++)
+		mask = data;
+	}
+	
+	WRITE_HANDLER( ramtek_videoram_w )
+	{
+		data = data & ~mask;
+	
+		if (videoram[offset] != data)
 		{
-			plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? WHITE : BLACK]);
-
-			x++;
-			data <<= 1;
+			int i,x,y;
+	
+			videoram[offset] = data;
+	
+			y = offset / 32;
+			x = 8 * (offset % 32);
+	
+			for (i = 0; i < 8; i++)
+			{
+				plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? WHITE : BLACK]);
+	
+				x++;
+				data <<= 1;
+			}
 		}
 	}
-}
 }

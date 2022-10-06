@@ -35,74 +35,74 @@ package cpu.v60;
 public class am
 {
 	
-/*
-  Input:
-  modAdd
-	modDim
-
-  Output:
-	amOut
-	amLength
-*/
-
-UINT32 ReadAM(void)
-{
-	modM=modM?1:0;
-	modVal=OpRead8(modAdd);
-	return AMTable1[modM][modVal>>5]();
-}
-
-UINT32 BitReadAM(void)
-{
-	modM=modM?1:0;
-	modVal=OpRead8(modAdd);
-	return BAMTable1[modM][modVal>>5]();
-}
-
-
-
-/*
-  Input:
-  modAdd
-	modDim
-
-  Output:
-	amOut
-	amFlag
-	amLength
-*/
-
-UINT32 ReadAMAddress(void)
-{
-	modM=modM?1:0;
-	modVal=OpRead8(modAdd);
-	return AMTable2[modM][modVal>>5]();
-}
-
-UINT32 BitReadAMAddress(void)
-{
-	modM=modM?1:0;
-	modVal=OpRead8(modAdd);
-	return BAMTable2[modM][modVal>>5]();
-}
-
-/*
-  Input:
-  modAdd
-	modDim
-	modWriteValB/H/W
-
-  Output:
-	amOut
-	amLength
-*/
-
-UINT32 WriteAM(void)
-{
-	modM=modM?1:0;
-	modVal=OpRead8(modAdd);
-	return AMTable3[modM][modVal>>5]();
-}
-
-
+	/*
+	  Input:
+	  modAdd
+		modDim
+	
+	  Output:
+		amOut
+		amLength
+	*/
+	
+	UINT32 ReadAM(void)
+	{
+		modM=modM?1:0;
+		modVal=OpRead8(modAdd);
+		return AMTable1[modM][modVal>>5]();
+	}
+	
+	UINT32 BitReadAM(void)
+	{
+		modM=modM?1:0;
+		modVal=OpRead8(modAdd);
+		return BAMTable1[modM][modVal>>5]();
+	}
+	
+	
+	
+	/*
+	  Input:
+	  modAdd
+		modDim
+	
+	  Output:
+		amOut
+		amFlag
+		amLength
+	*/
+	
+	UINT32 ReadAMAddress(void)
+	{
+		modM=modM?1:0;
+		modVal=OpRead8(modAdd);
+		return AMTable2[modM][modVal>>5]();
+	}
+	
+	UINT32 BitReadAMAddress(void)
+	{
+		modM=modM?1:0;
+		modVal=OpRead8(modAdd);
+		return BAMTable2[modM][modVal>>5]();
+	}
+	
+	/*
+	  Input:
+	  modAdd
+		modDim
+		modWriteValB/H/W
+	
+	  Output:
+		amOut
+		amLength
+	*/
+	
+	UINT32 WriteAM(void)
+	{
+		modM=modM?1:0;
+		modVal=OpRead8(modAdd);
+		return AMTable3[modM][modVal>>5]();
+	}
+	
+	
 }

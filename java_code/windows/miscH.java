@@ -28,18 +28,18 @@ package windows;
 public class miscH
 {
 	
-/* clock stuff */
-typedef long uclock_t;
-uclock_t uclock(void);
-#define UCLOCKS_PER_SEC 1000000
-
-/* print colum stuff */
-void print_colums(const char *text1, const char *text2);
-void fprint_colums(FILE *f, const char *text1, const char *text2);
-
-int snprintf(char *s, size_t maxlen, const char *fmt, ...);
-
-
-
-#endif /* ifndef __MISC_H */
+	/* clock stuff */
+	typedef long uclock_t;
+	uclock_t uclock(void);
+	#define UCLOCKS_PER_SEC 1000000
+	
+	/* print colum stuff */
+	void print_colums(const char *text1, const char *text2);
+	void fprint_colums(FILE *f, const char *text1, const char *text2);
+	
+	int snprintf(char *s, size_t maxlen, const char *fmt, ...);
+	
+	
+	
+	#endif /* ifndef __MISC_H */
 }

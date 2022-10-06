@@ -141,22 +141,22 @@ package cpu.spc700;
 public class spc700H
 {
 	
-#define spc700_read_8(addr) cpu_readmem16(addr)
-#define spc700_write_8(addr,data) cpu_writemem16(addr,data)
-
-#define spc700_read_8_direct(A)     spc700_read_8(A)
-#define spc700_write_8_direct(A, V) spc700_write_8(A, V)
-#define spc700_read_instruction(A)    cpu_readop(A)
-#define spc700_read_8_immediate(A)    cpu_readop_arg(A)
-#define spc700_jumping(A)             change_pc16(A)
-#define spc700_branching(A)
-
-
-
-/* ======================================================================== */
-/* ============================== END OF FILE ============================= */
-/* ======================================================================== */
-
-#endif /* SPC700__HEADER */
-
+	#define spc700_read_8(addr) cpu_readmem16(addr)
+	#define spc700_write_8(addr,data) cpu_writemem16(addr,data)
+	
+	#define spc700_read_8_direct(A)     spc700_read_8(A)
+	#define spc700_write_8_direct(A, V) spc700_write_8(A, V)
+	#define spc700_read_instruction(A)    cpu_readop(A)
+	#define spc700_read_8_immediate(A)    cpu_readop_arg(A)
+	#define spc700_jumping(A)             change_pc16(A)
+	#define spc700_branching(A)
+	
+	
+	
+	/* ======================================================================== */
+	/* ============================== END OF FILE ============================= */
+	/* ======================================================================== */
+	
+	#endif /* SPC700__HEADER */
+	
 }

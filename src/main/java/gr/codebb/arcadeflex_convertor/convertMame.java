@@ -73,6 +73,12 @@ public class convertMame {
                     }
                     continue;
                 }
+                case 10: // '\n'
+                {
+                    Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];
+                    line_change_flag = true;
+                    continue;
+                }
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

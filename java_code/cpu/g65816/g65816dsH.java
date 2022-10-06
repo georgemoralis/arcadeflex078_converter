@@ -30,7 +30,7 @@ package cpu.g65816;
 public class g65816dsH
 {
 	#define g65816_read_8_disassembler(addr)				cpu_readmem24(addr)
-
-
-#endif /* HEADER__G65816DS */
+	
+	
+	#endif /* HEADER__G65816DS */
 }

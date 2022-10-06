@@ -12,9 +12,9 @@ package cpu.nec;
 public class nechostH
 {
 	
-typedef char BOOLEAN;
-
-typedef UINT8 BYTE;
-typedef UINT16 WORD;
-typedef UINT32 DWORD;
+	typedef char BOOLEAN;
+	
+	typedef UINT8 BYTE;
+	typedef UINT16 WORD;
+	typedef UINT32 DWORD;
 }

@@ -30,7 +30,7 @@ package cpu.spc700;
 public class spc700dsH
 {
 	#define spc700_read_8_disassembler(addr)				cpu_readmem16(addr)
-
-
-#endif /* HEADER__SPC700DS */
+	
+	
+	#endif /* HEADER__SPC700DS */
 }

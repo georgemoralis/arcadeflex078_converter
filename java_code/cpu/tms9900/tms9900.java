@@ -11,6 +11,6 @@ package cpu.tms9900;
 public class tms9900
 {
 	
-#define TMS99XX_MODEL TMS9900_ID
-
-}
+	#define TMS99XX_MODEL TMS9900_ID
+	
+	}

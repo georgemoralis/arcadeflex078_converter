@@ -13,9 +13,9 @@ package includes;
 public class arcadeclH
 {
 	
-
-/*----------- defined in vidhrdw/arcadecl.c -----------*/
-
-VIDEO_START( arcadecl );
-VIDEO_UPDATE( arcadecl );
+	
+	/*----------- defined in vidhrdw/arcadecl.c -----------*/
+	
+	VIDEO_START( arcadecl );
+	VIDEO_UPDATE( arcadecl );
 }
