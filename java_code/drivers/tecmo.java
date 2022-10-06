@@ -58,8 +58,6 @@ public class tecmo
 	
 	
 	
-	VIDEO_START( tecmo );
-	VIDEO_UPDATE( tecmo );
 	
 	
 	

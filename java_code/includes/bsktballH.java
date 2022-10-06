@@ -11,4 +11,3 @@ INTERRUPT_GEN( bsktball_interrupt );
 
 /*----------- defined in vidhrdw/bsktball.c -----------*/
 
-VIDEO_UPDATE( bsktball );

@@ -104,12 +104,6 @@ public class punchout
 {
 	
 	
-	VIDEO_START( punchout );
-	VIDEO_START( armwrest );
-	PALETTE_INIT( punchout );
-	PALETTE_INIT( armwrest );
-	VIDEO_UPDATE( punchout );
-	VIDEO_UPDATE( armwrest );
 	
 	DRIVER_INIT( punchout );
 	DRIVER_INIT( spnchout );

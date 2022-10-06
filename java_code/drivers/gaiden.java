@@ -135,11 +135,7 @@ public class gaiden
 	
 	
 	
-	VIDEO_START( gaiden );
-	VIDEO_START( raiga );
 	
-	VIDEO_UPDATE( gaiden );
-	VIDEO_UPDATE( raiga );
 	
 	WRITE16_HANDLER( gaiden_videoram_w );
 	WRITE16_HANDLER( gaiden_videoram2_w );

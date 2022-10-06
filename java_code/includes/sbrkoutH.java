@@ -12,4 +12,3 @@ INTERRUPT_GEN( sbrkout_interrupt );
 /*----------- defined in vidhrdw/sbrkout.c -----------*/
 
 
-VIDEO_UPDATE( sbrkout );

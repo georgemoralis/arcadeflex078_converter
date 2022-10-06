@@ -57,12 +57,6 @@ public class travrusa
 {
 	
 	
-	PALETTE_INIT( travrusa );
-	PALETTE_INIT( shtrider );
-	VIDEO_START( travrusa );
-	VIDEO_START( shtrider );
-	VIDEO_UPDATE( travrusa );
-	VIDEO_UPDATE( shtrider );
 	
 	
 	

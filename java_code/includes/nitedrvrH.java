@@ -13,4 +13,3 @@ void nitedrvr_crash_toggle(int dummy);
 
 /*----------- defined in vidhrdw/nitedrvr.c -----------*/
 
-VIDEO_UPDATE( nitedrvr );

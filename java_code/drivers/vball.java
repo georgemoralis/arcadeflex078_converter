@@ -98,8 +98,6 @@ public class vball
 	
 	/* from vidhrdw */
 	
-	VIDEO_START( vb );
-	VIDEO_UPDATE( vb );
 	
 	INTERRUPT_GEN( vball_interrupt );
 	

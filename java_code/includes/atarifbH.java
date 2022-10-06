@@ -22,5 +22,3 @@
 
 
 
-VIDEO_START( atarifb );
-VIDEO_UPDATE( atarifb );

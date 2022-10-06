@@ -44,8 +44,6 @@ public class ambush
 	
 	
 	
-	PALETTE_INIT( ambush );
-	VIDEO_UPDATE( ambush );
 	
 	
 	public static WriteHandlerPtr ambush_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)

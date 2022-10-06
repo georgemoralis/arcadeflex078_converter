@@ -15,9 +15,6 @@ public class _1943
 	
 	
 	
-	PALETTE_INIT( 1943 );
-	VIDEO_UPDATE( 1943 );
-	VIDEO_START( 1943 );
 	
 	
 	

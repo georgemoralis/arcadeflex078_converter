@@ -82,8 +82,6 @@ public class stlforce
 	data16_t *stlforce_bg_scrollram, *stlforce_mlow_scrollram, *stlforce_mhigh_scrollram, *stlforce_vidattrram;
 	data16_t *stlforce_spriteram;
 	
-	VIDEO_START( stlforce );
-	VIDEO_UPDATE( stlforce );
 	WRITE16_HANDLER( stlforce_tx_videoram_w );
 	WRITE16_HANDLER( stlforce_mhigh_videoram_w );
 	WRITE16_HANDLER( stlforce_mlow_videoram_w );

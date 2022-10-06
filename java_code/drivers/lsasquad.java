@@ -34,7 +34,6 @@ public class lsasquad
 {
 	
 	/* in vidhrdw/lsasquad.c */
-	VIDEO_UPDATE( lsasquad );
 	
 	/* in machine/lsasquad.c */
 	

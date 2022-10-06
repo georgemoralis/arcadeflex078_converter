@@ -67,9 +67,6 @@ public class gyruss
 	
 	void konami1_decode_cpu2(void);
 	
-	VIDEO_START( gyruss );
-	PALETTE_INIT( gyruss );
-	VIDEO_UPDATE( gyruss );
 	INTERRUPT_GEN( gyruss_6809_interrupt );
 	
 	

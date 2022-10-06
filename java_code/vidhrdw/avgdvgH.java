@@ -28,22 +28,11 @@ void avg_set_flip_y(int flip);
  * entries for translucency/antialiasing and for backdrop/overlay artwork */
 
 /* Black and White vector colors for Asteroids, Lunar Lander, Omega Race */
-PALETTE_INIT( avg_white );
 /* Basic 8 rgb vector colors for Tempest, Gravitar, Major Havoc etc. */
-PALETTE_INIT( avg_multi );
 
 /* Some games use a colorram. This is not handled via the Mame core functions
  * right now, but in src/vidhrdw/avgdvg.c itself. */
 WRITE16_HANDLER( quantum_colorram_w );
 
-VIDEO_START( dvg );
-VIDEO_START( avg );
-VIDEO_START( avg_tempest );
-VIDEO_START( avg_mhavoc );
-VIDEO_START( avg_alphaone );
-VIDEO_START( avg_starwars );
-VIDEO_START( avg_quantum );
-VIDEO_START( avg_bzone );
-VIDEO_START( avg_redbaron );
 
 #endif

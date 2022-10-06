@@ -43,11 +43,7 @@ public class afega
 	WRITE16_HANDLER( afega_vram_1_w );
 	WRITE16_HANDLER( afega_palette_w );
 	
-	PALETTE_INIT( grdnstrm );
 	
-	VIDEO_START( afega );
-	VIDEO_UPDATE( afega );
-	VIDEO_UPDATE( bubl2000 );
 	
 	
 	/***************************************************************************

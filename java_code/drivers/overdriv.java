@@ -28,8 +28,6 @@ public class overdriv
 {
 	
 	
-	VIDEO_START( overdriv );
-	VIDEO_UPDATE( overdriv );
 	
 	
 	

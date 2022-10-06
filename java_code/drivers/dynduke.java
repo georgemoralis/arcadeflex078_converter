@@ -30,8 +30,6 @@ package drivers;
 public class dynduke
 {
 	
-	VIDEO_START( dynduke );
-	VIDEO_UPDATE( dynduke );
 	
 	static unsigned char *dynduke_shared_ram;
 	

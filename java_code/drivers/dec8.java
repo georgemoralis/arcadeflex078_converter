@@ -45,23 +45,6 @@ package drivers;
 public class dec8
 {
 	
-	PALETTE_INIT( ghostb );
-	VIDEO_UPDATE( cobracom );
-	VIDEO_UPDATE( ghostb );
-	VIDEO_UPDATE( srdarwin );
-	VIDEO_UPDATE( gondo );
-	VIDEO_UPDATE( garyoret );
-	VIDEO_UPDATE( lastmiss );
-	VIDEO_UPDATE( shackled );
-	VIDEO_UPDATE( oscar );
-	VIDEO_START( cobracom );
-	VIDEO_START( oscar );
-	VIDEO_START( ghostb );
-	VIDEO_START( lastmiss );
-	VIDEO_START( shackled );
-	VIDEO_START( srdarwin );
-	VIDEO_START( gondo );
-	VIDEO_START( garyoret );
 	
 	
 	/******************************************************************************/

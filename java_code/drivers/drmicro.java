@@ -19,9 +19,6 @@ public class drmicro
 	
 	#define MCLK 18432000
 	
-	PALETTE_INIT( drmicro );
-	VIDEO_START( drmicro );
-	VIDEO_UPDATE( drmicro );
 	
 	
 	

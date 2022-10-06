@@ -6,7 +6,5 @@
 
 /*----------- defined in vidhrdw/epos.c -----------*/
 
-PALETTE_INIT( epos );
 
 
-VIDEO_UPDATE( epos );

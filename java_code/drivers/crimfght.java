@@ -21,8 +21,6 @@ public class crimfght
 	static MACHINE_INIT( crimfght );
 	static void crimfght_banking( int lines );
 	
-	VIDEO_START( crimfght );
-	VIDEO_UPDATE( crimfght );
 	
 	
 	public static WriteHandlerPtr crimfght_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)

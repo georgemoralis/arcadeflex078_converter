@@ -48,15 +48,9 @@ public class marineb
 	
 	
 	MACHINE_INIT( espial );
-	PALETTE_INIT( espial );
 	
 	
 	
-	VIDEO_UPDATE( marineb );
-	VIDEO_UPDATE( changes );
-	VIDEO_UPDATE( springer );
-	VIDEO_UPDATE( hoccer );
-	VIDEO_UPDATE( hopprobo );
 	
 	
 	static MACHINE_INIT( marineb )

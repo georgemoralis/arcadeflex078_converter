@@ -23,11 +23,8 @@ public class contra
 {
 	
 	
-	PALETTE_INIT( contra );
 	
 	
-	VIDEO_UPDATE( contra );
-	VIDEO_START( contra );
 	
 	
 	WRITE_HANDLER( contra_bankswitch_w )

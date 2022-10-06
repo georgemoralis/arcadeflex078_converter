@@ -115,11 +115,6 @@ public class asuka
 	
 	INTERRUPT_GEN( rastan_s_interrupt );
 	
-	VIDEO_START( asuka );
-	VIDEO_START( galmedes );
-	VIDEO_START( cadash );
-	VIDEO_UPDATE( asuka );
-	VIDEO_UPDATE( bonzeadv );
 	
 	
 	WRITE16_HANDLER( bonzeadv_c_chip_w );

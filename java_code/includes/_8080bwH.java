@@ -67,12 +67,7 @@ INTERRUPT_GEN( polaris_interrupt );
 INTERRUPT_GEN( phantom2_interrupt );
 
 
-VIDEO_UPDATE( 8080bw );
 
 VIDEO_EOF (helifire);
 
-PALETTE_INIT( invadpt2 );
-PALETTE_INIT( helifire );
-PALETTE_INIT( sflush );
-PALETTE_INIT( cosmo );
 

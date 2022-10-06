@@ -68,9 +68,6 @@ public class firetrap
 	
 	
 	
-	VIDEO_START( firetrap );
-	PALETTE_INIT( firetrap );
-	VIDEO_UPDATE( firetrap );
 	
 	
 	static int firetrap_irq_enable = 0;

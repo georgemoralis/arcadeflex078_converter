@@ -22,8 +22,6 @@ public class gbusters
 	
 	
 	
-	VIDEO_START( gbusters );
-	VIDEO_UPDATE( gbusters );
 	
 	static int palette_selected;
 	static unsigned char *ram;

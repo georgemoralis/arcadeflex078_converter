@@ -26,8 +26,6 @@ public class grobda
 	MACHINE_INIT( grobda );
 	
 	/* video functions */
-	PALETTE_INIT( grobda );
-	VIDEO_UPDATE( grobda );
 	
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

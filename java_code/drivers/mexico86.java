@@ -79,8 +79,6 @@ public class mexico86
 	INTERRUPT_GEN( mexico86_m68705_interrupt );
 	
 	/* in vidhrdw/mexico86.c */
-	VIDEO_UPDATE( mexico86 );
-	VIDEO_UPDATE( kikikai );
 	
 	//AT
 	public static ReadHandlerPtr kiki_2203_r  = new ReadHandlerPtr() { public int handler(int offset)

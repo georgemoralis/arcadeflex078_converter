@@ -300,17 +300,6 @@ public class toaplan2
 	VIDEO_EOF( toaplan2_0 );
 	VIDEO_EOF( toaplan2_1 );
 	VIDEO_EOF( batrider_0 );
-	VIDEO_START( toaplan2_0 );
-	VIDEO_START( toaplan2_1 );
-	VIDEO_START( truxton2_0 );
-	VIDEO_START( battleg_0 );
-	VIDEO_START( batrider_0 );
-	VIDEO_UPDATE( toaplan2_0 );
-	VIDEO_UPDATE( truxton2_0 );
-	VIDEO_UPDATE( dogyuun_1 );
-	VIDEO_UPDATE( batsugun_1 );
-	VIDEO_UPDATE( batrider_0 );
-	VIDEO_UPDATE( mahoudai_0 );
 	
 	
 	/********* Video wrappers for PIPIBIBI *********/

@@ -136,8 +136,6 @@ public class cclimber
 	
 	
 	
-	PALETTE_INIT( cclimber );
-	VIDEO_UPDATE( cclimber );
 	
 	
 	
@@ -1077,8 +1075,6 @@ public class cclimber
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( swimmer );
-	VIDEO_UPDATE( swimmer );
 	
 	
 	

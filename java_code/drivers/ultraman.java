@@ -18,8 +18,6 @@ public class ultraman
 	
 	/* from vidhrdw/ultraman.c */
 	WRITE16_HANDLER( ultraman_gfxctrl_w );
-	VIDEO_START( ultraman );
-	VIDEO_UPDATE( ultraman );
 	
 	
 	

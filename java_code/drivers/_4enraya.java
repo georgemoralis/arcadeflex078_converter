@@ -57,8 +57,6 @@ package drivers;
 public class _4enraya
 {
 	
-	VIDEO_START( 4enraya );
-	VIDEO_UPDATE( 4enraya );
 	
 	
 	static int soundlatch;

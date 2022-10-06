@@ -26,8 +26,6 @@ public class tankbust
 {
 	
 	
-	VIDEO_START( tankbust );
-	VIDEO_UPDATE( tankbust );
 	
 	
 	

@@ -6,8 +6,6 @@
 
 /*----------- defined in vidhrdw/atetris.c -----------*/
 
-VIDEO_START( atetris );
-VIDEO_UPDATE( atetris );
 
 
 

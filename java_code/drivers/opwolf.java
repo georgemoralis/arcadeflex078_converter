@@ -67,8 +67,6 @@ public class opwolf
 	WRITE16_HANDLER( rainbow_spritectrl_w );
 	WRITE16_HANDLER( rastan_spriteflip_w );
 	
-	VIDEO_START( opwolf );
-	VIDEO_UPDATE( opwolf );
 	
 	static int opwolf_gun_xoffs,opwolf_gun_yoffs;
 	

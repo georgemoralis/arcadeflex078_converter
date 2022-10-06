@@ -17,7 +17,6 @@ package drivers;
 public class xxmissio
 {
 	
-	VIDEO_UPDATE( xxmissio );
 	
 	
 	static UINT8 *shared_workram;

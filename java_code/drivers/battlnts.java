@@ -17,8 +17,6 @@ public class battlnts
 {
 	
 	/* from vidhrdw */
-	VIDEO_START( battlnts );
-	VIDEO_UPDATE( battlnts );
 	
 	static INTERRUPT_GEN( battlnts_interrupt )
 	{

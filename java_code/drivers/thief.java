@@ -38,8 +38,6 @@ public class thief
 	static UINT8 thief_input_select;
 	
 	
-	VIDEO_START( thief );
-	VIDEO_UPDATE( thief );
 	
 	
 	static INTERRUPT_GEN( thief_interrupt )

@@ -19,10 +19,6 @@ public class fromanceH
 	
 	/*----------- defined in vidhrdw/fromance.c -----------*/
 	
-	VIDEO_START( fromance );
-	VIDEO_START( nekkyoku );
-	VIDEO_UPDATE( fromance );
-	VIDEO_UPDATE( pipedrm );
 	
 	
 	

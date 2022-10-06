@@ -71,10 +71,6 @@ public class gberet
 	
 	
 	
-	PALETTE_INIT( gberet );
-	VIDEO_START( gberet );
-	VIDEO_UPDATE( gberet );
-	VIDEO_UPDATE( gberetb );
 	
 	INTERRUPT_GEN( gberet_interrupt );
 	

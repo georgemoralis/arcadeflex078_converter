@@ -17,9 +17,6 @@ package drivers;
 public class magmax
 {
 	
-	PALETTE_INIT( magmax );
-	VIDEO_UPDATE( magmax );
-	VIDEO_START( magmax );
 	
 	
 	

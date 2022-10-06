@@ -230,8 +230,6 @@ package drivers;
 public class ninjakd2
 {
 	
-	VIDEO_START( ninjakd2 );
-	VIDEO_UPDATE( ninjakd2 );
 	
 	
 	static int ninjakd2_bank_latch = 255;

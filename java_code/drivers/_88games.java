@@ -20,8 +20,6 @@ public class _88games
 	static unsigned char *ram;
 	static int videobank;
 	
-	VIDEO_START( 88games );
-	VIDEO_UPDATE( 88games );
 	
 	
 	static INTERRUPT_GEN( k88games_interrupt )

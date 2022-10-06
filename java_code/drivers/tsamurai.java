@@ -52,7 +52,6 @@ public class tsamurai
 	
 	
 	
-	VIDEO_UPDATE( tsamurai );
 	
 	
 	static struct AY8910interface ay8910_interface =

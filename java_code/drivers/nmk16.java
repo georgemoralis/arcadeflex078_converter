@@ -162,19 +162,6 @@ public class nmk16
 	WRITE16_HANDLER( mustang_scroll_w );
 	WRITE16_HANDLER( vandyke_scroll_w );
 	
-	VIDEO_START( macross );
-	VIDEO_UPDATE( manybloc );
-	VIDEO_START( gunnail );
-	VIDEO_START( macross2 );
-	VIDEO_START( tdragon2 );
-	VIDEO_START( bjtwin );
-	VIDEO_START( bioship );
-	VIDEO_START( strahl );
-	VIDEO_UPDATE( bioship );
-	VIDEO_UPDATE( strahl );
-	VIDEO_UPDATE( macross );
-	VIDEO_UPDATE( gunnail );
-	VIDEO_UPDATE( bjtwin );
 	VIDEO_EOF( nmk );
 	
 	static int respcount; // used with mcu function

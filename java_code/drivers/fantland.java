@@ -38,7 +38,6 @@ package drivers;
 public class fantland
 {
 	
-	VIDEO_UPDATE( fantland );
 	
 	/***************************************************************************
 	

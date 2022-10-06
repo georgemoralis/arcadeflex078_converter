@@ -18,5 +18,4 @@ INTERRUPT_GEN( aztarac_snd_timed_irq );
 
 WRITE16_HANDLER( aztarac_ubr_w );
 
-VIDEO_START( aztarac );
 

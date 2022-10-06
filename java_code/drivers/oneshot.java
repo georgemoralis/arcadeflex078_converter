@@ -49,9 +49,6 @@ public class oneshot
 	WRITE16_HANDLER( oneshot_bg_videoram_w );
 	WRITE16_HANDLER( oneshot_mid_videoram_w );
 	WRITE16_HANDLER( oneshot_fg_videoram_w );
-	VIDEO_START( oneshot );
-	VIDEO_UPDATE( oneshot );
-	VIDEO_UPDATE( maddonna );
 	
 	
 	static READ16_HANDLER( oneshot_in0_word_r )

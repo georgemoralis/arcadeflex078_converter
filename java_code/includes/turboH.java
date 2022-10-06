@@ -25,16 +25,7 @@ void turbo_update_segments(void);
 /*----------- defined in vidhrdw/turbo.c -----------*/
 
 
-PALETTE_INIT( turbo );
-VIDEO_START( turbo );
 VIDEO_EOF( turbo );
-VIDEO_UPDATE( turbo );
 
-PALETTE_INIT( subroc3d );
-VIDEO_START( subroc3d );
-VIDEO_UPDATE( subroc3d );
 
-PALETTE_INIT( buckrog );
-VIDEO_START( buckrog );
-VIDEO_UPDATE( buckrog );
 

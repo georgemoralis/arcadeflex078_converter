@@ -8,5 +8,3 @@
 
 
 MACHINE_INIT( skydiver );
-VIDEO_START( skydiver );
-VIDEO_UPDATE( skydiver );

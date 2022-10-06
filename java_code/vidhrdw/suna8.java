@@ -77,8 +77,6 @@ public class suna8
 	/* Functions defined in vidhrdw: */
 	
 	
-	VIDEO_START( suna8 );
-	VIDEO_UPDATE( suna8 );
 	
 	
 	/***************************************************************************

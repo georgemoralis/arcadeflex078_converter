@@ -22,9 +22,6 @@ public class chaknpop
 	/* vidhrdw/chaknpop.c */
 	
 	
-	PALETTE_INIT( chaknpop );
-	VIDEO_START( chaknpop );
-	VIDEO_UPDATE( chaknpop );
 	
 	
 	

@@ -85,8 +85,6 @@ public class vicdual
 	
 	static unsigned char *vicdual_ram;
 	
-	PALETTE_INIT( vicdual );
-	VIDEO_UPDATE( vicdual );
 	
 	/* Carnival sound handlers */
 	

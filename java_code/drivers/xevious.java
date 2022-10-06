@@ -214,9 +214,6 @@ public class xevious
 	MACHINE_INIT( xevious );
 	
 	
-	VIDEO_START( xevious );
-	PALETTE_INIT( xevious );
-	VIDEO_UPDATE( xevious );
 	
 	
 	
@@ -226,7 +223,6 @@ public class xevious
 	INTERRUPT_GEN( battles_interrupt_4 );
 	
 	MACHINE_INIT( battles );
-	PALETTE_INIT( battles );
 	
 	
 	

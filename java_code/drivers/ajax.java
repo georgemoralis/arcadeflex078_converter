@@ -26,8 +26,6 @@ public class ajax
 	INTERRUPT_GEN( ajax_interrupt );
 	
 	/* from vidhrdw/ajax.c */
-	VIDEO_START( ajax );
-	VIDEO_UPDATE( ajax );
 	
 	/****************************************************************************/
 	

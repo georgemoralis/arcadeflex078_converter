@@ -68,8 +68,6 @@ public class snowbros
 	
 	
 	WRITE16_HANDLER( snowbros_flipscreen_w );
-	VIDEO_UPDATE( snowbros );
-	VIDEO_UPDATE( wintbob );
 	
 	static data16_t *hyperpac_ram;
 	

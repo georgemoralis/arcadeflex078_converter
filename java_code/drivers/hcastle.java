@@ -15,9 +15,6 @@ package drivers;
 public class hcastle
 {
 	
-	PALETTE_INIT( hcastle );
-	VIDEO_UPDATE( hcastle );
-	VIDEO_START( hcastle );
 	
 	
 	

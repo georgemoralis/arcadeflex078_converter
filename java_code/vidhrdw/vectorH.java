@@ -48,8 +48,6 @@ public class vectorH
 	
 	
 	
-	VIDEO_START( vector );
-	VIDEO_UPDATE( vector );
 	
 	#define VCLEAN  0
 	#define VDIRTY  1

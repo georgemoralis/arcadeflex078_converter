@@ -29,8 +29,6 @@ package drivers;
 public class battlera
 {
 	
-	VIDEO_UPDATE( battlera );
-	VIDEO_START( battlera );
 	INTERRUPT_GEN( battlera_interrupt );
 	
 	

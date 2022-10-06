@@ -25,8 +25,5 @@ public class gridleeH
 	
 	/* video driver data & functions */
 	
-	PALETTE_INIT( gridlee );
-	VIDEO_START( gridlee );
-	VIDEO_UPDATE( gridlee );
 	
 	}

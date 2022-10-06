@@ -42,8 +42,6 @@ public class hexa
 	
 	
 	
-	VIDEO_START( hexa );
-	VIDEO_UPDATE( hexa );
 	
 	
 	

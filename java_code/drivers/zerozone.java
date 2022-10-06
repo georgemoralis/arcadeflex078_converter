@@ -35,8 +35,6 @@ package drivers;
 public class zerozone
 {
 	
-	VIDEO_START( zerozone );
-	VIDEO_UPDATE( zerozone );
 	WRITE16_HANDLER( zerozone_tilemap_w );
 	WRITE16_HANDLER( zerozone_tilebank_w );
 	

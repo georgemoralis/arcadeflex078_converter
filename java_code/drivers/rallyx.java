@@ -65,9 +65,6 @@ public class rallyx
 	
 	
 	
-	PALETTE_INIT( rallyx );
-	VIDEO_START( rallyx );
-	VIDEO_UPDATE( rallyx );
 	
 	
 	public static WriteHandlerPtr rallyx_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)

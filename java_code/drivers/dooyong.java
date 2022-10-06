@@ -51,12 +51,6 @@ public class dooyong
 	
 	
 	WRITE16_HANDLER( rshark_ctrl_w );
-	VIDEO_UPDATE( lastday );
-	VIDEO_UPDATE( gulfstrm );
-	VIDEO_UPDATE( pollux );
-	VIDEO_UPDATE( bluehawk );
-	VIDEO_UPDATE( primella );
-	VIDEO_UPDATE( rshark );
 	VIDEO_EOF( dooyong );
 	VIDEO_EOF( rshark );
 	

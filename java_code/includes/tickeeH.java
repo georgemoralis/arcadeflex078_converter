@@ -11,6 +11,4 @@
 /*----------- defined in vidhrdw/tickee.c -----------*/
 
 
-VIDEO_START( tickee );
 
-VIDEO_UPDATE( tickee );

@@ -18,8 +18,6 @@ void drivedge_update_interrupts(int vint, int xint, int qint);
 /*----------- defined in vidhrdw/itech32.c -----------*/
 
 
-VIDEO_START( itech32 );
-VIDEO_START( drivedge );
 
 WRITE16_HANDLER( timekill_colora_w );
 WRITE16_HANDLER( timekill_colorbc_w );
@@ -47,4 +45,3 @@ READ16_HANDLER( bloodstm_video_r );
 WRITE32_HANDLER( itech020_video_w );
 READ32_HANDLER( itech020_video_r );
 
-VIDEO_UPDATE( itech32 );

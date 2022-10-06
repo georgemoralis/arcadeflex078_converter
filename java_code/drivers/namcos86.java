@@ -32,9 +32,6 @@ public class namcos86
 	
 	/*******************************************************************/
 	
-	PALETTE_INIT( namcos86 );
-	VIDEO_START( namcos86 );
-	VIDEO_UPDATE( namcos86 );
 	
 	
 	

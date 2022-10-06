@@ -19,9 +19,6 @@ public class yard
 	
 	
 	
-	PALETTE_INIT( yard );
-	VIDEO_START( yard );
-	VIDEO_UPDATE( yard );
 	
 	
 	

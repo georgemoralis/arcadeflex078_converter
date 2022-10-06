@@ -65,8 +65,6 @@ package drivers;
 public class avengrgs
 {
 	
-	VIDEO_START( avengrgs );
-	VIDEO_UPDATE( avengrgs );
 	VIDEO_STOP(avengrgs);
 	
 	static data32_t *avengrgs_ram;

@@ -88,8 +88,6 @@ public class polyplay
 {
 	
 	/* video hardware access */
-	PALETTE_INIT( polyplay );
-	VIDEO_UPDATE( polyplay );
 	
 	/* I/O Port handling */
 	

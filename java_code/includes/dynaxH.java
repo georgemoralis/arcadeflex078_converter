@@ -32,15 +32,5 @@ void sprtmtch_update_irq(void);
 
 
 
-VIDEO_START( hanamai );
-VIDEO_START( hnoridur );
-VIDEO_START( mcnpshnt );
-VIDEO_START( sprtmtch );
-VIDEO_START( mjdialq2 );
 
-VIDEO_UPDATE( hanamai );
-VIDEO_UPDATE( hnoridur );
-VIDEO_UPDATE( sprtmtch );
-VIDEO_UPDATE( mjdialq2 );
 
-PALETTE_INIT( sprtmtch );

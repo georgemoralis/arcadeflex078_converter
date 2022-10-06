@@ -23,9 +23,6 @@ public class mrdo
 	
 	
 	
-	PALETTE_INIT( mrdo );
-	VIDEO_START( mrdo );
-	VIDEO_UPDATE( mrdo );
 	
 	
 	

@@ -22,9 +22,6 @@ public class scregg
 	
 	
 	/* from vidhrdw/btime.c */
-	PALETTE_INIT( btime );
-	VIDEO_START( btime );
-	VIDEO_UPDATE( eggs );
 	
 	
 	public static Memory_ReadAddress dommy_readmem[]={

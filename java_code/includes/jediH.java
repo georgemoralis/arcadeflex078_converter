@@ -7,6 +7,4 @@
 /*----------- defined in vidhrdw/jedi.c -----------*/
 
 
-VIDEO_START( jedi );
-VIDEO_UPDATE( jedi );
 

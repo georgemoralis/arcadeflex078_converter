@@ -109,9 +109,6 @@ public class nbmj8891
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
-	VIDEO_UPDATE( gionbana );
-	VIDEO_START( gionbana );
-	VIDEO_START( hanamomo );
 	
 	void gionbana_radrx_w(int data);
 	void gionbana_radry_w(int data);

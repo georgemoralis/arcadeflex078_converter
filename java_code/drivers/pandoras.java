@@ -30,9 +30,6 @@ public class pandoras
 	static unsigned char *pandoras_sharedram2;
 	
 	/* from vidhrdw */
-	PALETTE_INIT( pandoras );
-	VIDEO_START( pandoras );
-	VIDEO_UPDATE( pandoras );
 	
 	static INTERRUPT_GEN( pandoras_interrupt_a ){
 		if (irq_enable_a)

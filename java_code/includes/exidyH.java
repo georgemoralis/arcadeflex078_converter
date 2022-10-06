@@ -27,10 +27,7 @@ void targ_sh_stop(void);
 
 
 
-PALETTE_INIT( exidy );
-VIDEO_START( exidy );
 VIDEO_EOF( exidy );
-VIDEO_UPDATE( exidy );
 
 INTERRUPT_GEN( exidy_vblank_interrupt );
 

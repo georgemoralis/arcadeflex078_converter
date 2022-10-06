@@ -41,11 +41,6 @@ package drivers;
 public class snk68
 {
 	
-	VIDEO_START( pow );
-	VIDEO_START( searchar );
-	VIDEO_START( ikari3 );
-	VIDEO_UPDATE( pow );
-	VIDEO_UPDATE( searchar );
 	WRITE16_HANDLER( pow_paletteram16_word_w );
 	WRITE16_HANDLER( pow_flipscreen16_w );
 	WRITE16_HANDLER( pow_video16_w );

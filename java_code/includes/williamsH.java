@@ -45,10 +45,5 @@ MACHINE_INIT( joust2 );
 
 
 
-VIDEO_START( williams );
-VIDEO_UPDATE( williams );
-VIDEO_UPDATE( williams2 );
 
-VIDEO_START( blaster );
-VIDEO_START( williams2 );
 

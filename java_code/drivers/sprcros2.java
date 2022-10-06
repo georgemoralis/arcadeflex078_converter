@@ -65,9 +65,6 @@ public class sprcros2
 	
 	
 	
-	PALETTE_INIT( sprcros2 );
-	VIDEO_START( sprcros2 );
-	VIDEO_UPDATE( sprcros2 );
 	static data8_t *sprcros2_sharedram;
 	int sprcros2_m_port7 = 0;
 	static int sprcros2_s_port3 = 0;

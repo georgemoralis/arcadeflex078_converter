@@ -25,9 +25,6 @@ public class ddrible
 	/* video hardware memory handlers */
 	
 	/* video hardware functions */
-	PALETTE_INIT( ddrible );
-	VIDEO_START( ddrible );
-	VIDEO_UPDATE( ddrible );
 	
 	
 	static INTERRUPT_GEN( ddrible_interrupt_0 )

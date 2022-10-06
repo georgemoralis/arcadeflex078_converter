@@ -69,9 +69,6 @@ public class gunsmoke
 	
 	
 	
-	PALETTE_INIT( gunsmoke );
-	VIDEO_UPDATE( gunsmoke );
-	VIDEO_START( gunsmoke );
 	
 	
 	#if GUNSMOKE_HACK

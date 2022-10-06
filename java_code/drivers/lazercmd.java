@@ -238,8 +238,6 @@ public class lazercmd
 	   externals
 	
 	 *************************************************************/
-	VIDEO_START( lazercmd );
-	VIDEO_UPDATE( lazercmd );
 	void lazercmd_marker_dirty(int marker);
 	
 	/*************************************************************

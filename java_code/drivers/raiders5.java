@@ -32,7 +32,6 @@ package drivers;
 public class raiders5
 {
 	
-	VIDEO_UPDATE( raiders5 );
 	
 	
 	static UINT8 *raiders5_shared_workram;

@@ -46,10 +46,7 @@ public class superpac
 	
 	
 	
-	VIDEO_START( superpac );
-	VIDEO_UPDATE( superpac );
 	MACHINE_INIT( superpac );
-	PALETTE_INIT( superpac );
 	
 	
 	

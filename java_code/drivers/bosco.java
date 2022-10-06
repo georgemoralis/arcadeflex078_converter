@@ -80,12 +80,7 @@ public class bosco
 	INTERRUPT_GEN( bosco_interrupt_3 );
 	MACHINE_INIT( bosco );
 	
-	VIDEO_START( bosco );
-	VIDEO_UPDATE( bosco );
-	PALETTE_INIT( bosco );
 	
-	VIDEO_START( bosco );
-	VIDEO_UPDATE( bosco );
 	
 	int  bosco_sh_start(const struct MachineSound *msound);
 	void bosco_sh_stop(void);

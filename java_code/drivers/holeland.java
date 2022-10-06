@@ -20,10 +20,6 @@ package drivers;
 public class holeland
 {
 	
-	VIDEO_START( holeland );
-	VIDEO_START( crzrally );
-	VIDEO_UPDATE( holeland );
-	VIDEO_UPDATE( crzrally );
 	
 	
 	

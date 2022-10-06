@@ -23,9 +23,6 @@ public class sidepckt
 {
 	
 	/* from vidhrdw */
-	PALETTE_INIT( sidepckt );
-	VIDEO_START( sidepckt );
-	VIDEO_UPDATE( sidepckt );
 	
 	static int i8751_return;
 	

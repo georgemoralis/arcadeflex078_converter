@@ -9,6 +9,3 @@
 
 
 
-PALETTE_INIT( crgolf );
-VIDEO_START( crgolf );
-VIDEO_UPDATE( crgolf );

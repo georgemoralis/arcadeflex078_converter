@@ -31,10 +31,8 @@ public class galspnbl
 	
 	
 	
-	PALETTE_INIT( galspnbl );
 	WRITE16_HANDLER( galspnbl_bgvideoram_w );
 	WRITE16_HANDLER( galspnbl_scroll_w );
-	VIDEO_UPDATE( galspnbl );
 	
 	
 	static WRITE16_HANDLER( soundcommand_w )

@@ -18,8 +18,6 @@ public class yamato
 	
 	
 	
-	PALETTE_INIT( cclimber );
-	VIDEO_UPDATE( cclimber );
 	
 	
 	PALETTE_INIT( yamato )

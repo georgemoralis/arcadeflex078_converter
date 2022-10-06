@@ -26,7 +26,6 @@ public class momoko
 {
 	
 	
-	VIDEO_UPDATE( momoko );
 	
 	WRITE_HANDLER( momoko_fg_select_w);
 	WRITE_HANDLER( momoko_bg_select_w);

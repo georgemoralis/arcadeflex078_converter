@@ -20,9 +20,6 @@ public class labyrunr
 	
 	
 	/* from vidhrdw/labyrunr.c */
-	PALETTE_INIT( labyrunr );
-	VIDEO_START( labyrunr );
-	VIDEO_UPDATE( labyrunr );
 	
 	static INTERRUPT_GEN( labyrunr_interrupt )
 	{

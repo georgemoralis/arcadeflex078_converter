@@ -19,7 +19,6 @@ public class missb2
 	data8_t *bg_paletteram,*bg_vram;
 	
 	/* vidhrdw/bublbobl.c */
-	VIDEO_UPDATE( bublbobl );
 	
 	/* machine/bublbobl.c */
 	INTERRUPT_GEN( bublbobl_m68705_interrupt );

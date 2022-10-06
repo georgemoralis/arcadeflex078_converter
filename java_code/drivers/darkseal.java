@@ -19,8 +19,6 @@ package drivers;
 public class darkseal
 {
 	
-	VIDEO_START( darkseal );
-	VIDEO_UPDATE( darkseal );
 	
 	WRITE16_HANDLER( darkseal_pf1_data_w );
 	WRITE16_HANDLER( darkseal_pf2_data_w );

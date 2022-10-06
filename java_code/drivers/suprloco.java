@@ -21,9 +21,6 @@ public class suprloco
 {
 	
 	
-	PALETTE_INIT( suprloco );
-	VIDEO_START( suprloco );
-	VIDEO_UPDATE( suprloco );
 	
 	
 	public static WriteHandlerPtr suprloco_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)

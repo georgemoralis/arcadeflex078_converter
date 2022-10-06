@@ -47,8 +47,6 @@ public class mitchell
 	void block_decode(void);
 	
 	
-	VIDEO_START( pang );
-	VIDEO_UPDATE( pang );
 	
 	
 	

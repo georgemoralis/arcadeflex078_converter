@@ -24,8 +24,6 @@ public class tail2nos
 	READ16_HANDLER( tail2nos_zoomdata_r );
 	WRITE16_HANDLER( tail2nos_zoomdata_w );
 	WRITE16_HANDLER( tail2nos_gfxbank_w );
-	VIDEO_START( tail2nos );
-	VIDEO_UPDATE( tail2nos );
 	
 	
 	static MACHINE_INIT( tail2nos )

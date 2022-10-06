@@ -37,12 +37,7 @@ package drivers;
 public class galivan
 {
 	
-	PALETTE_INIT( galivan );
-	VIDEO_START( galivan );
-	VIDEO_UPDATE( galivan );
 	
-	VIDEO_START( ninjemak );
-	VIDEO_UPDATE( ninjemak );
 	
 	
 	

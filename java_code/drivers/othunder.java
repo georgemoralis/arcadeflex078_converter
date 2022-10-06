@@ -58,8 +58,6 @@ package drivers;
 public class othunder
 {
 	
-	VIDEO_START( othunder );
-	VIDEO_UPDATE( othunder );
 	
 	static data16_t eep_latch = 0;
 	

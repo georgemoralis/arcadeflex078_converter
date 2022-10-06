@@ -24,15 +24,9 @@ public class system1H
 	
 	
 	
-	VIDEO_START( system1 );
 	void system1_define_background_memory(int Mode);
 	
-	VIDEO_UPDATE( system1 );
-	PALETTE_INIT( system1 );
 	
-	VIDEO_UPDATE( choplifter );
-	VIDEO_UPDATE( wbml );
-	VIDEO_UPDATE( blockgal );
 	
 	#endif
 }

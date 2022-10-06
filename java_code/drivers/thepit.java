@@ -65,9 +65,6 @@ public class thepit
 {
 	
 	
-	PALETTE_INIT( thepit );
-	PALETTE_INIT( suprmous );
-	VIDEO_UPDATE( thepit );
 	
 	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

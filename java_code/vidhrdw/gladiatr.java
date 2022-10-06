@@ -85,7 +85,6 @@ public class gladiatr
 	}
 	
 	
-	VIDEO_START( gladiatr );
 	VIDEO_START( gladiatr ){
 		sprite_bank = 2;
 	

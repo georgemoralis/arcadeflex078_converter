@@ -24,8 +24,6 @@ public class chqflag
 	
 	
 	/* from vidhrdw/chqflag.c */
-	VIDEO_START( chqflag );
-	VIDEO_UPDATE( chqflag );
 	
 	
 	static INTERRUPT_GEN( chqflag_interrupt )

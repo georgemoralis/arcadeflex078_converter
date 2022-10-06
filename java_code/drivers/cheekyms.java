@@ -18,8 +18,6 @@ public class cheekyms
 	
 	
 	
-	PALETTE_INIT( cheekyms );
-	VIDEO_UPDATE( cheekyms );
 	
 	
 	public static Memory_ReadAddress readmem[]={

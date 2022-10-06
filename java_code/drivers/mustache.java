@@ -79,9 +79,6 @@ public class mustache
 {
 	
 	WRITE_HANDLER ( mustache_video_control_w);
-	VIDEO_START( mustache );
-	VIDEO_UPDATE( mustache );
-	PALETTE_INIT( mustache );
 	
 	
 	static int read_coins=0;

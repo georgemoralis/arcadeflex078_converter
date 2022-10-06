@@ -32,8 +32,6 @@ public class mjkjidai
 	
 	
 	
-	VIDEO_START( mjkjidai );
-	VIDEO_UPDATE( mjkjidai );
 	
 	
 	

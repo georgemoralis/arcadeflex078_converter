@@ -43,7 +43,6 @@ void kof2000_neogeo_gfx_decrypt(int extra_xor);
 
 /*----------- defined in vidhrdw/neogeo.c -----------*/
 
-VIDEO_START( neogeo_mvs );
 
 WRITE16_HANDLER( neogeo_setpalbank0_16_w );
 WRITE16_HANDLER( neogeo_setpalbank1_16_w );
@@ -60,6 +59,4 @@ WRITE16_HANDLER( neo_game_fix_16_w );
 WRITE16_HANDLER (neogeo_select_bios_vectors);
 WRITE16_HANDLER (neogeo_select_game_vectors);
 
-VIDEO_UPDATE( neogeo );
-VIDEO_UPDATE( neogeo_raster );
 void neogeo_vh_raster_partial_refresh(struct mame_bitmap *bitmap,int current_line);

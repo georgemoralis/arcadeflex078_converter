@@ -50,9 +50,6 @@ public class vulgus
 	
 	
 	
-	VIDEO_START( vulgus );
-	PALETTE_INIT( vulgus );
-	VIDEO_UPDATE( vulgus );
 	
 	
 	

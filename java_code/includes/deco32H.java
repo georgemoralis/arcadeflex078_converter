@@ -1,17 +1,8 @@
 
-VIDEO_START( captaven );
-VIDEO_START( fghthist );
-VIDEO_START( dragngun );
-VIDEO_START( lockload );
-VIDEO_START( tattass );
 
 VIDEO_EOF( captaven );
 VIDEO_EOF( dragngun );
 
-VIDEO_UPDATE( captaven );
-VIDEO_UPDATE( fghthist );
-VIDEO_UPDATE( dragngun );
-VIDEO_UPDATE( tattass );
 
 
 WRITE32_HANDLER( deco32_pf1_data_w );

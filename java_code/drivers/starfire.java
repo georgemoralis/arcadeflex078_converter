@@ -55,7 +55,6 @@ public class starfire
 	
 	
 	/* In vidhrdw/starfire.c */
-	VIDEO_UPDATE( starfire );
 	
 	
 	

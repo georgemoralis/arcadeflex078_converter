@@ -30,11 +30,6 @@ public class matmania
 {
 	
 	
-	PALETTE_INIT( matmania );
-	VIDEO_UPDATE( matmania );
-	VIDEO_UPDATE( maniach );
-	VIDEO_START( matmania );
-	VIDEO_UPDATE( matmania );
 	
 	
 	

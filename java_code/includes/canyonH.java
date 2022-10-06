@@ -6,4 +6,3 @@
 
 /*----------- defined in vidhrdw/canyon.c -----------*/
 
-VIDEO_UPDATE( canyon );

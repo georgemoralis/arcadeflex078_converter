@@ -59,11 +59,7 @@ public class shangkid
 	
 	/* from vidhrdw/shangkid.c */
 	
-	VIDEO_START( shangkid );
-	VIDEO_UPDATE( shangkid );
 	
-	PALETTE_INIT( dynamski );
-	VIDEO_UPDATE( dynamski );
 	
 	/***************************************************************************************/
 	

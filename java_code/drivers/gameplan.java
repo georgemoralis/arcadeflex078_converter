@@ -19,7 +19,6 @@ package drivers;
 public class gameplan
 {
 	
-	VIDEO_START( gameplan );
 	
 	static int gameplan_current_port;
 	

@@ -156,9 +156,7 @@ public class armedf
 	
 	
 	
-	VIDEO_UPDATE( armedf );
 	VIDEO_EOF( armedf );
-	VIDEO_START( armedf );
 	
 	WRITE16_HANDLER( armedf_bg_videoram_w );
 	WRITE16_HANDLER( armedf_fg_videoram_w );

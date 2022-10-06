@@ -13,9 +13,6 @@ public class ttmahjng
 {
 	
 	
-	PALETTE_INIT( ttmahjng );
-	VIDEO_START( ttmahjng );
-	VIDEO_UPDATE( ttmahjng );
 	
 	
 	static int psel;

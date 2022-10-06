@@ -25,9 +25,6 @@ public class munchmo
 	
 	
 	
-	PALETTE_INIT( mnchmobl );
-	VIDEO_START( mnchmobl );
-	VIDEO_UPDATE( mnchmobl );
 	
 	
 	/***************************************************************************/

@@ -41,8 +41,6 @@ package drivers;
 public class taito_f3
 {
 	
-	VIDEO_START( f3 );
-	VIDEO_UPDATE( f3 );
 	VIDEO_EOF( f3 );
 	VIDEO_STOP( f3 );
 	

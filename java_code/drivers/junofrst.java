@@ -92,7 +92,6 @@ public class junofrst
 	
 	static int i8039_status;
 	
-	VIDEO_UPDATE( tutankhm );
 	
 	
 	

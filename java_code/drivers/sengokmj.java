@@ -81,8 +81,6 @@ public class sengokmj
 	
 	static UINT8 sengokumj_mux_data;
 	
-	VIDEO_START( sengokmj );
-	VIDEO_UPDATE( sengokmj );
 	
 	/*Multiplexer device for the mahjong panel*/
 	READ_HANDLER( mahjong_panel_0_r )

@@ -55,8 +55,6 @@ package drivers;
 public class ladyfrog
 {
 	
-	VIDEO_START( ladyfrog );
-	VIDEO_UPDATE( ladyfrog );
 	
 	static int sound_nmi_enable=0,pending_nmi=0;
 	static int snd_flag;

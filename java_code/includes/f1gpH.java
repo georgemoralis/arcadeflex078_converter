@@ -1,9 +1,5 @@
 
 
-VIDEO_START( f1gp );
-VIDEO_START( f1gp2 );
-VIDEO_UPDATE( f1gp );
-VIDEO_UPDATE( f1gp2 );
 
 READ16_HANDLER( f1gp_zoomdata_r );
 WRITE16_HANDLER( f1gp_zoomdata_w );

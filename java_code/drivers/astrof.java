@@ -45,9 +45,6 @@ public class astrof
 {
 	
 	
-	PALETTE_INIT( astrof );
-	VIDEO_START( astrof );
-	VIDEO_UPDATE( astrof );
 	
 	
 	public static Memory_ReadAddress readmem[]={

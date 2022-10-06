@@ -59,9 +59,6 @@ public class dday
 {
 	
 	
-	PALETTE_INIT( dday );
-	VIDEO_START( dday );
-	VIDEO_UPDATE( dday );
 	
 	
 	public static Memory_ReadAddress readmem[]={

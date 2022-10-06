@@ -80,8 +80,6 @@ public class chinagat
 	/**************** Video stuff ******************/
 	
 	
-	VIDEO_START( chinagat );
-	VIDEO_UPDATE( ddragon );
 	
 	
 	/**************** Machine stuff ******************/

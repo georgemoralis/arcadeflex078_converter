@@ -33,7 +33,6 @@ WRITE16_HANDLER( kaneko16_bg15_select_w );
 READ16_HANDLER ( kaneko16_bg15_reg_r );
 WRITE16_HANDLER( kaneko16_bg15_reg_w );
 
-PALETTE_INIT( berlwall );
 
 
 /* Priorities: */
@@ -48,14 +47,8 @@ typedef struct
 
 /* Machine */
 
-VIDEO_START( kaneko16_sprites );
-VIDEO_START( kaneko16_1xVIEW2 );
-VIDEO_START( kaneko16_2xVIEW2 );
-VIDEO_START( berlwall );
-VIDEO_START( sandscrp_1xVIEW2 );
 
 
-VIDEO_UPDATE( kaneko16 );
 
 MACHINE_INIT( kaneko16 );
 
@@ -68,9 +61,6 @@ void galpani2_mcu_run(void);
 
 
 
-PALETTE_INIT( galpani2 );
-VIDEO_START( galpani2 );
-VIDEO_UPDATE( galpani2 );
 
 WRITE16_HANDLER( galpani2_palette_0_w );
 WRITE16_HANDLER( galpani2_palette_1_w );

@@ -232,8 +232,6 @@ public class twincobr
 	WRITE16_HANDLER( twincobr_crtc_reg_sel_w );
 	WRITE16_HANDLER( twincobr_crtc_data_w );
 	
-	VIDEO_START( toaplan0 );
-	VIDEO_UPDATE( toaplan0 );
 	VIDEO_EOF( toaplan0 );
 	
 	

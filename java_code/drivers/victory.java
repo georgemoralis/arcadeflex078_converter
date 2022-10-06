@@ -119,9 +119,7 @@ public class victory
 	
 	/* video driver data & functions */
 	
-	VIDEO_START( victory );
 	VIDEO_EOF( victory );
-	VIDEO_UPDATE( victory );
 	INTERRUPT_GEN( victory_vblank_interrupt );
 	
 	

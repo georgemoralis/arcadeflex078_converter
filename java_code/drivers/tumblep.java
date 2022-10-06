@@ -151,12 +151,6 @@ public class tumblep
 	#define TUMBLEP_HACK	0
 	#define FNCYWLD_HACK	0
 	
-	VIDEO_START( tumblep );
-	VIDEO_START( fncywld );
-	VIDEO_UPDATE( tumblep );
-	VIDEO_UPDATE( tumblepb );
-	VIDEO_UPDATE( jumpkids );
-	VIDEO_UPDATE( fncywld );
 	
 	WRITE16_HANDLER( tumblep_pf1_data_w );
 	WRITE16_HANDLER( tumblep_pf2_data_w );

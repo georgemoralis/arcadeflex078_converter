@@ -17,9 +17,6 @@ public class rockrage
 	
 	
 	/* from vidhrdw */
-	VIDEO_START( rockrage );
-	VIDEO_UPDATE( rockrage );
-	PALETTE_INIT( rockrage );
 	
 	static INTERRUPT_GEN( rockrage_interrupt )
 	{

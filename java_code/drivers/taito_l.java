@@ -57,8 +57,6 @@ public class taito_l
 {
 	
 	VIDEO_EOF( taitol );
-	VIDEO_START( taitol );
-	VIDEO_UPDATE( taitol );
 	
 	void taitol_chardef14_m(int offset);
 	void taitol_chardef15_m(int offset);

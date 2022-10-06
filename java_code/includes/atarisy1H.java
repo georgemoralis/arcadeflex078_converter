@@ -15,5 +15,3 @@ WRITE16_HANDLER( atarisy1_xscroll_w );
 WRITE16_HANDLER( atarisy1_yscroll_w );
 WRITE16_HANDLER( atarisy1_priority_w );
 
-VIDEO_START( atarisy1 );
-VIDEO_UPDATE( atarisy1 );

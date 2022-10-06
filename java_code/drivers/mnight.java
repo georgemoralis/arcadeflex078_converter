@@ -17,8 +17,6 @@ package drivers;
 public class mnight
 {
 	
-	VIDEO_START( mnight );
-	VIDEO_UPDATE( mnight );
 	
 	
 	static int mnight_bank_latch = 255, main_cpu_num;

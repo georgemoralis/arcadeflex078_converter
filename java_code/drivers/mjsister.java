@@ -19,8 +19,6 @@ public class mjsister
 	
 	
 	
-	VIDEO_START( mjsister );
-	VIDEO_UPDATE( mjsister );
 	
 	static int mjsister_input_sel1;
 	static int mjsister_input_sel2;

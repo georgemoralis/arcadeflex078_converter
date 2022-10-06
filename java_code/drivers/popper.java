@@ -89,9 +89,6 @@ public class popper
 	
 	
 	
-	PALETTE_INIT( popper );
-	VIDEO_START( popper );
-	VIDEO_UPDATE( popper );
 	static data8_t *popper_sharedram;
 	
 	public static ReadHandlerPtr popper_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)

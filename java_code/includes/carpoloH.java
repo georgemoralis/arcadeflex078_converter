@@ -25,7 +25,4 @@ void carpolo_generate_car_border_interrupt(int car, int horizontal_border);
 /* defined in vidhrdw/carpolo.c */
 
 
-PALETTE_INIT( carpolo );
-VIDEO_START( carpolo );
-VIDEO_UPDATE( carpolo );
 VIDEO_EOF( carpolo );

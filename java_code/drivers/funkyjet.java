@@ -50,8 +50,6 @@ public class funkyjet
 {
 	
 	
-	VIDEO_START( funkyjet );
-	VIDEO_UPDATE( funkyjet );
 	
 	/******************************************************************************/
 	

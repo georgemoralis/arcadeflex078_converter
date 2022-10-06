@@ -36,9 +36,6 @@ public class m90
 	static int bankaddress;
 	
 	
-	VIDEO_UPDATE( m90 );
-	VIDEO_UPDATE( m90_bootleg );
-	VIDEO_START( m90 );
 	
 	/***************************************************************************/
 	

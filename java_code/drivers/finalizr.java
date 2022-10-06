@@ -22,9 +22,6 @@ public class finalizr
 	
 	int finalizr_T1_line;
 	
-	PALETTE_INIT( finalizr );
-	VIDEO_START( finalizr );
-	VIDEO_UPDATE( finalizr );
 	
 	
 	

@@ -14,8 +14,6 @@ package drivers;
 public class xmen
 {
 	
-	VIDEO_START( xmen );
-	VIDEO_UPDATE( xmen );
 	
 	
 	/***************************************************************************

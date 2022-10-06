@@ -55,10 +55,7 @@ public class stactics
 	INTERRUPT_GEN( stactics_interrupt );
 	
 	/* Defined in vidhrdw/stactics.c */
-	VIDEO_START( stactics );
-	VIDEO_UPDATE( stactics );
 	
-	PALETTE_INIT( stactics );
 	
 	
 	

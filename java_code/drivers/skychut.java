@@ -27,8 +27,6 @@ public class skychut
 {
 	
 	
-	VIDEO_UPDATE( skychut );
-	VIDEO_UPDATE( iremm15 );
 	
 	static UINT8 *memory;
 	

@@ -42,8 +42,5 @@ public class namcos22H
 	READ32_HANDLER( namcos22_dspram_r );
 	WRITE32_HANDLER( namcos22_dspram_w );
 	
-	VIDEO_UPDATE( namcos22 );
 	
-	VIDEO_START( namcos22s );
-	VIDEO_UPDATE( namcos22s );
-}
+	}

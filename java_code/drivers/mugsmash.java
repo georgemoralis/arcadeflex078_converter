@@ -51,8 +51,6 @@ public class mugsmash
 	data16_t *mugsmash_videoram1, *mugsmash_videoram2, *mugs_spriteram;
 	data16_t *mugsmash_regs1, *mugsmash_regs2;
 	
-	VIDEO_START( mugsmash );
-	VIDEO_UPDATE( mugsmash );
 	
 	WRITE16_HANDLER( mugsmash_reg_w );
 	WRITE16_HANDLER( mugsmash_videoram2_w );

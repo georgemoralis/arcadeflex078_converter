@@ -35,7 +35,6 @@ public class hitme
 	VIDEO_START (hitme);
 	VIDEO_START (brickyrd);
 	VIDEO_UPDATE (hitme);
-	PALETTE_INIT( hitme );
 	
 	INPUT_PORTS_START( hitme )
 		PORT_START

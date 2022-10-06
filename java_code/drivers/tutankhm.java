@@ -189,7 +189,6 @@ public class tutankhm
 	
 	
 	
-	VIDEO_UPDATE( tutankhm );
 	
 	
 	public static WriteHandlerPtr tutankhm_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)

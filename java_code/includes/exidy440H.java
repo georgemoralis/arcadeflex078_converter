@@ -22,7 +22,5 @@ void exidy440_sh_update(void);
 
 INTERRUPT_GEN( exidy440_vblank_interrupt );
 
-VIDEO_START( exidy440 );
 VIDEO_EOF( exidy440 );
-VIDEO_UPDATE( exidy440 );
 

@@ -29,9 +29,7 @@ public class skyfox
 	/* Functions defined in vidhrdw: */
 	
 	
-	PALETTE_INIT( skyfox );
 	
-	VIDEO_UPDATE( skyfox );
 	
 	
 	/***************************************************************************

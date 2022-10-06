@@ -31,7 +31,6 @@ public class xyonix
 	data8_t *xyonix_vidram;
 	
 	/* in vidhrdw/xyonix.c */
-	PALETTE_INIT( xyonix );
 	VIDEO_START(xyonix);
 	VIDEO_UPDATE(xyonix);
 	

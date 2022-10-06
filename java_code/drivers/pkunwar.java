@@ -17,8 +17,6 @@ public class pkunwar
 {
 	
 	
-	PALETTE_INIT( nova2001 );
-	VIDEO_UPDATE( pkunwar );
 	
 	
 	

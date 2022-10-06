@@ -46,9 +46,6 @@ package drivers;
 public class raiden
 {
 	
-	VIDEO_START( raiden );
-	VIDEO_START( raidena );
-	VIDEO_UPDATE( raiden );
 	
 	static unsigned char *raiden_shared_ram;
 	

@@ -35,8 +35,6 @@ public class toypop
 	WRITE16_HANDLER( toypop_merged_background_w );
 	WRITE16_HANDLER( toypop_flipscreen_w );
 	WRITE16_HANDLER( liblrabl_flipscreen_w );
-	VIDEO_UPDATE( toypop );
-	PALETTE_INIT( toypop );
 	
 	
 	

@@ -46,8 +46,6 @@ public class gijoe
 {
 	
 	
-	VIDEO_START( gijoe );
-	VIDEO_UPDATE( gijoe );
 	
 	static data16_t *gijoe_workram;
 	static data16_t cur_control2;

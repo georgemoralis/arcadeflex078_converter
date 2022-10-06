@@ -23,11 +23,6 @@ public class baraduke
 	static unsigned char *sharedram;
 	
 	/* from vidhrdw/baraduke.c */
-	VIDEO_START( baraduke );
-	VIDEO_START( metrocrs );
-	VIDEO_UPDATE( baraduke );
-	VIDEO_UPDATE( metrocrs );
-	PALETTE_INIT( baraduke );
 	
 	static int inputport_selected;
 	

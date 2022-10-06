@@ -73,17 +73,12 @@ public class astrocde
 	
 	
 	
-	PALETTE_INIT( astrocde );
-	VIDEO_UPDATE( astrocde );
 	
 	INTERRUPT_GEN( wow_interrupt );
 	
-	VIDEO_UPDATE( seawolf2 );
 	
 	INTERRUPT_GEN( gorf_interrupt );
 	
-	VIDEO_START( astrocde );
-	VIDEO_START( astrocde_stars );
 	
 	int  wow_sh_start(const struct MachineSound *msound);
 	void wow_sh_update(void);

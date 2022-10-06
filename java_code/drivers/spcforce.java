@@ -42,7 +42,6 @@ public class spcforce
 	
 	
 	
-	VIDEO_UPDATE( spcforce );
 	
 	
 	static int spcforce_SN76496_latch;

@@ -27,8 +27,6 @@ public class truco
 {
 	
 	/* from vidhrdw */
-	VIDEO_UPDATE( truco );
-	PALETTE_INIT( truco );
 	
 	
 	/***************************************************************************/

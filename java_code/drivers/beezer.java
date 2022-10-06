@@ -17,7 +17,6 @@ public class beezer
 	
 	/* from vidhrdw/beezer.c */
 	INTERRUPT_GEN( beezer_interrupt );
-	VIDEO_UPDATE( beezer );
 	
 	/* from machine/beezer.c */
 	DRIVER_INIT( beezer );

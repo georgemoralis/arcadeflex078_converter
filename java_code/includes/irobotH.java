@@ -14,9 +14,6 @@ MACHINE_INIT( irobot );
 
 /*----------- defined in vidhrdw/irobot.c -----------*/
 
-PALETTE_INIT( irobot );
-VIDEO_START( irobot );
-VIDEO_UPDATE( irobot );
 
 
 void irobot_poly_clear(void);

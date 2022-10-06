@@ -142,9 +142,6 @@ public class megasys1
 	
 	/* Functions defined in vidhrdw: */
 	
-	PALETTE_INIT( megasys1 );
-	VIDEO_START( megasys1 );
-	VIDEO_UPDATE( megasys1 );
 	
 	READ16_HANDLER( megasys1_vregs_C_r );
 	

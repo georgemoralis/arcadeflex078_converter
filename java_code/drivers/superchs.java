@@ -42,8 +42,6 @@ package drivers;
 public class superchs
 {
 	
-	VIDEO_START( superchs );
-	VIDEO_UPDATE( superchs );
 	
 	static UINT16 coin_word;
 	static data32_t *superchs_ram;

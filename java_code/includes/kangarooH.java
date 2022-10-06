@@ -19,8 +19,5 @@ public class kangarooH
 	/*----------- defined in vidhrdw/kangaroo.c -----------*/
 	
 	
-	PALETTE_INIT( kangaroo );
-	VIDEO_START( kangaroo );
-	VIDEO_UPDATE( kangaroo );
 	
 	}

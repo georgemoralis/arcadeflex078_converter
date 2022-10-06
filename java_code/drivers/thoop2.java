@@ -21,8 +21,6 @@ public class thoop2
 	
 	/* from vidhrdw/thoop2.c */
 	WRITE16_HANDLER( thoop2_vram_w );
-	VIDEO_START( thoop2 );
-	VIDEO_UPDATE( thoop2 );
 	
 	
 	static struct GfxLayout thoop2_tilelayout =

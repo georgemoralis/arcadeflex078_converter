@@ -11,4 +11,3 @@
 /*----------- defined in vidhrdw/copsnrob.c -----------*/
 
 
-VIDEO_UPDATE( copsnrob );

@@ -11,5 +11,4 @@ void dominos_ac_signal_flip(int dummy);
 
 /*----------- defined in vidhrdw/dominos.c -----------*/
 
-VIDEO_UPDATE( dominos );
 

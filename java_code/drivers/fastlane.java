@@ -21,9 +21,6 @@ public class fastlane
 {
 	
 	/* from vidhrdw/fastlane.c */
-	PALETTE_INIT( fastlane );
-	VIDEO_START( fastlane );
-	VIDEO_UPDATE( fastlane );
 	
 	static INTERRUPT_GEN( fastlane_interrupt )
 	{

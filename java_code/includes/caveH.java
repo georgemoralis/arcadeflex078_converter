@@ -20,21 +20,10 @@ WRITE16_HANDLER( cave_vram_1_8x8_w );
 WRITE16_HANDLER( cave_vram_2_8x8_w );
 WRITE16_HANDLER( cave_vram_3_8x8_w );
 
-PALETTE_INIT( ddonpach );
-PALETTE_INIT( dfeveron );
-PALETTE_INIT( mazinger );
-PALETTE_INIT( sailormn );
-PALETTE_INIT( pwrinst2 );
-
-VIDEO_START( cave_1_layer );
-VIDEO_START( cave_2_layers );
-VIDEO_START( cave_3_layers );
-VIDEO_START( cave_4_layers );
-
-VIDEO_START( sailormn_3_layers );
 
 
-VIDEO_UPDATE( cave );
+
+
 
 void cave_get_sprite_info(void);
 

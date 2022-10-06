@@ -351,9 +351,6 @@ package drivers;
 public class wgp
 {
 	
-	VIDEO_START( wgp );
-	VIDEO_START( wgp2 );
-	VIDEO_UPDATE( wgp );
 	
 	
 	READ16_HANDLER ( wgp_pivram_word_r );

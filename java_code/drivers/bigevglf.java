@@ -64,8 +64,6 @@ package drivers;
 public class bigevglf
 {
 	
-	VIDEO_START( bigevglf );
-	VIDEO_UPDATE( bigevglf );
 	
 	
 	

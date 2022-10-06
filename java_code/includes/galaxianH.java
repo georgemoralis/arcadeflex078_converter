@@ -24,55 +24,13 @@ MACHINE_DRIVER_EXTERN(galaxian_base);
 /* defined in vidhrdw/galaxian.c */
 
 
-PALETTE_INIT( galaxian );
-PALETTE_INIT( scramble );
-PALETTE_INIT( turtles );
-PALETTE_INIT( moonwar );
-PALETTE_INIT( darkplnt );
-PALETTE_INIT( rescue );
-PALETTE_INIT( minefld );
-PALETTE_INIT( stratgyx );
-PALETTE_INIT( mariner );
-PALETTE_INIT( frogger );
-PALETTE_INIT( rockclim );
 
 
 
 
 
 
-VIDEO_START( galaxian_plain );
-VIDEO_START( galaxian );
-VIDEO_START( gmgalax );
-VIDEO_START( mooncrst );
-VIDEO_START( mooncrgx );
-VIDEO_START( moonqsr );
-VIDEO_START( mshuttle );
-VIDEO_START( pisces );
-VIDEO_START( gteikob2 );
-VIDEO_START( batman2 );
-VIDEO_START( jumpbug );
-VIDEO_START( dkongjrm );
-VIDEO_START( scramble );
-VIDEO_START( theend );
-VIDEO_START( darkplnt );
-VIDEO_START( rescue );
-VIDEO_START( minefld );
-VIDEO_START( calipso );
-VIDEO_START( stratgyx );
-VIDEO_START( mimonkey );
-VIDEO_START( turtles );
-VIDEO_START( frogger );
-VIDEO_START( froggrmc );
-VIDEO_START( mariner );
-VIDEO_START( ckongs );
-VIDEO_START( froggers );
-VIDEO_START( newsin7 );
-VIDEO_START( sfx );
-VIDEO_START( rockclim );
-VIDEO_START( drivfrcg );
 
-VIDEO_UPDATE( galaxian );
 
 
 

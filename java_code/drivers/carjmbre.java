@@ -50,9 +50,6 @@ public class carjmbre
 {
 	
 	
-	PALETTE_INIT( carjmbre );
-	VIDEO_START( carjmbre );
-	VIDEO_UPDATE( carjmbre );
 	
 	
 	public static Memory_ReadAddress carjmbre_readmem[]={

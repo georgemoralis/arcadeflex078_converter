@@ -19,8 +19,6 @@ package drivers;
 public class flstory
 {
 	
-	VIDEO_START( flstory );
-	VIDEO_UPDATE( flstory );
 	
 	
 	

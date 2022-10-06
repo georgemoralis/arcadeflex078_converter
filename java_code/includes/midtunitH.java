@@ -41,9 +41,6 @@ public class midtunitH
 	/*----------- defined in vidhrdw/midtunit.c -----------*/
 	
 	
-	VIDEO_START( midtunit );
-	VIDEO_START( midwunit );
-	VIDEO_START( midxunit );
 	
 	READ16_HANDLER( midtunit_gfxrom_r );
 	READ16_HANDLER( midwunit_gfxrom_r );
@@ -70,5 +67,4 @@ public class midtunitH
 	READ16_HANDLER( midtunit_dma_r );
 	WRITE16_HANDLER( midtunit_dma_w );
 	
-	VIDEO_UPDATE( midtunit );
-}
+	}

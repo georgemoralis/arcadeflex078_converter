@@ -13,4 +13,3 @@ MACHINE_INIT( clayshoo );
 
 /* defined in vidhrdw/clayshoo.c */
 
-PALETTE_INIT( clayshoo );

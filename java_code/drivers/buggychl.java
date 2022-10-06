@@ -91,9 +91,6 @@ public class buggychl
 	
 	/* in vidhrdw */
 	
-	PALETTE_INIT( buggychl );
-	VIDEO_START( buggychl );
-	VIDEO_UPDATE( buggychl );
 	
 	
 	

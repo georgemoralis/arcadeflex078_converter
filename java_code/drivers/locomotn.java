@@ -58,11 +58,6 @@ public class locomotn
 {
 	
 	
-	PALETTE_INIT( locomotn );
-	VIDEO_START( rallyx );
-	VIDEO_UPDATE( locomotn );
-	VIDEO_UPDATE( jungler );
-	VIDEO_UPDATE( commsega );
 	
 	
 	public static WriteHandlerPtr coin_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)

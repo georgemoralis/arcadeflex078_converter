@@ -20,8 +20,6 @@ public class minivadr
 {
 	
 	
-	VIDEO_UPDATE( minivadr );
-	PALETTE_INIT( minivadr );
 	
 	
 	public static Memory_ReadAddress readmem[]={

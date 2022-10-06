@@ -48,8 +48,6 @@ public class djmain
 	
 	
 	
-	VIDEO_UPDATE( djmain );
-	VIDEO_START( djmain );
 	
 	
 	static enum {

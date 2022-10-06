@@ -18,8 +18,6 @@ public class mermaid
 	
 	
 	
-	PALETTE_INIT( mermaid );
-	VIDEO_UPDATE( mermaid );
 	
 	
 	static unsigned char *mermaid_AY8910_enable;

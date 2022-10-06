@@ -19,8 +19,6 @@ public class quizdna
 	
 	#define MCLK 16000000
 	
-	VIDEO_START( quizdna );
-	VIDEO_UPDATE( quizdna );
 	
 	
 	

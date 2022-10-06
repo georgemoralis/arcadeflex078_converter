@@ -79,8 +79,6 @@ public class psikyo4
 	#define MASTER_CLOCK 57272700	// main oscillator frequency
 	
 	/* defined in vidhrdw/psikyo4.c */
-	VIDEO_START( psikyo4 );
-	VIDEO_UPDATE( psikyo4 );
 	
 	static struct GfxLayout layout_16x16x8 =
 	{

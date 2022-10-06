@@ -153,8 +153,6 @@ package drivers;
 public class nycaptor
 {
 	
-	VIDEO_START( nycaptor );
-	VIDEO_UPDATE( nycaptor );
 	
 	
 	UINT8 *nycaptor_sharedram;

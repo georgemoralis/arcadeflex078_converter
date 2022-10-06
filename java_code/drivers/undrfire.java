@@ -126,8 +126,6 @@ package drivers;
 public class undrfire
 {
 	
-	VIDEO_START( undrfire );
-	VIDEO_UPDATE( undrfire );
 	
 	/* F3 sound */
 	READ16_HANDLER(f3_68000_share_r);

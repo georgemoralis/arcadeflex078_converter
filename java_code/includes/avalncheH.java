@@ -11,4 +11,3 @@ INTERRUPT_GEN( avalnche_interrupt );
 
 /*----------- defined in vidhrdw/avalnche.c -----------*/
 
-VIDEO_UPDATE( avalnche );

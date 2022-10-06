@@ -80,9 +80,6 @@ public class route16
 	DRIVER_INIT( route16 );
 	DRIVER_INIT( route16b );
 	DRIVER_INIT( stratvox );
-	PALETTE_INIT( route16 );
-	VIDEO_START( route16 );
-	VIDEO_UPDATE( route16 );
 	
 	READ_HANDLER( routex_prot_read )
 	{

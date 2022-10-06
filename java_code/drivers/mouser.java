@@ -25,8 +25,6 @@ public class mouser
 	unsigned char mouser_nmi_enable;
 	
 	/* From "vidhrdw/mouser.c" */
-	PALETTE_INIT( mouser );
-	VIDEO_UPDATE( mouser );
 	
 	/* Mouser has external masking circuitry around
 	 * the NMI input on the main CPU */

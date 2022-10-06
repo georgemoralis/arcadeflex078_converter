@@ -71,8 +71,6 @@ public class xexex
 {
 	
 	
-	VIDEO_START( xexex );
-	VIDEO_UPDATE( xexex );
 	void xexex_set_alpha(int on);
 	
 	MACHINE_INIT( xexex );

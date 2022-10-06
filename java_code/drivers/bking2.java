@@ -26,10 +26,7 @@ package drivers;
 public class bking2
 {
 	
-	PALETTE_INIT( bking2 );
 	
-	VIDEO_START( bking2 );
-	VIDEO_UPDATE( bking2 );
 	VIDEO_EOF( bking2 );
 	
 	

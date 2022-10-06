@@ -29,9 +29,6 @@ public class portrait
 	
 	int portrait_scrollx_hi, portrait_scrollx_lo;
 	
-	PALETTE_INIT( portrait );
-	VIDEO_START( portrait );
-	VIDEO_UPDATE( portrait );
 	
 	static struct GfxLayout tile_layout =
 	{

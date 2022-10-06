@@ -26,8 +26,6 @@ package drivers;
 public class goindol
 {
 	
-	VIDEO_START( goindol );
-	VIDEO_UPDATE( goindol );
 	
 	
 	

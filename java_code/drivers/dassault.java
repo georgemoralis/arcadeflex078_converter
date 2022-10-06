@@ -127,8 +127,6 @@ package drivers;
 public class dassault
 {
 	
-	VIDEO_START( dassault );
-	VIDEO_UPDATE( dassault );
 	
 	static data16_t *dassault_ram,*shared_ram,*dassault_ram2;
 	

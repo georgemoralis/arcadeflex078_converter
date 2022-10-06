@@ -53,8 +53,6 @@ public class blueprnt
 	
 	
 	
-	PALETTE_INIT( blueprnt );
-	VIDEO_UPDATE( blueprnt );
 	
 	
 	

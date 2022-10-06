@@ -6,6 +6,4 @@
 
 
 
-VIDEO_START( paradise );
-VIDEO_UPDATE( paradise );
 

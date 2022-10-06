@@ -125,9 +125,6 @@ public class digdug
 	INTERRUPT_GEN( digdug_interrupt_3 );
 	MACHINE_INIT( digdig );
 	
-	VIDEO_START( digdug );
-	VIDEO_UPDATE( digdug );
-	PALETTE_INIT( digdug );
 	
 	
 	

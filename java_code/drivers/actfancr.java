@@ -24,10 +24,6 @@ package drivers;
 public class actfancr
 {
 	
-	VIDEO_UPDATE( actfancr );
-	VIDEO_UPDATE( triothep );
-	VIDEO_START( actfancr );
-	VIDEO_START( triothep );
 	
 	static unsigned char *actfancr_ram;
 	

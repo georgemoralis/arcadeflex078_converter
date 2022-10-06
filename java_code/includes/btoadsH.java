@@ -9,8 +9,6 @@
 /*----------- defined in vidhrdw/btoads.c -----------*/
 
 
-VIDEO_START( btoads );
-VIDEO_UPDATE( btoads );
 
 WRITE16_HANDLER( btoads_misc_control_w );
 WRITE16_HANDLER( btoads_display_control_w );

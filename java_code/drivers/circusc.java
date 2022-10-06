@@ -20,9 +20,6 @@ public class circusc
 	
 	
 	
-	VIDEO_START( circusc );
-	PALETTE_INIT( circusc );
-	VIDEO_UPDATE( circusc );
 	
 	
 	

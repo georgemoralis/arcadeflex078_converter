@@ -20,10 +20,7 @@ void slikshot_extra_draw(struct mame_bitmap *bitmap, const struct rectangle *cli
 /*----------- defined in vidhrdw/itech8.c -----------*/
 
 
-VIDEO_START( itech8 );
-VIDEO_START( slikshot );
 
 
 
 
-VIDEO_UPDATE( itech8 );

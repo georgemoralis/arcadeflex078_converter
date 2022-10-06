@@ -155,8 +155,6 @@ public class ninjaw
 	
 	MACHINE_INIT( ninjaw );
 	
-	VIDEO_START( ninjaw );
-	VIDEO_UPDATE( ninjaw );
 	
 	static UINT16 cpua_ctrl = 0xff;
 	

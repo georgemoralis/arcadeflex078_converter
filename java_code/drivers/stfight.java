@@ -246,9 +246,6 @@ public class stfight
 	void stfight_adpcm_int( int data );
 	
 	// vidhrdw
-	PALETTE_INIT( stfight );
-	VIDEO_START( stfight );
-	VIDEO_UPDATE( stfight );
 	
 	// vidhrdw
 	

@@ -169,18 +169,16 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
-                case 'e':
-                {
+                case 'e': {
                     i = Convertor.inpos;
                     if (sUtil.getToken("extern")) {
-                            sUtil.skipLine();
-                            continue;
+                        sUtil.skipLine();
+                        continue;
                     }
                     Convertor.inpos = i;
                     break;
-                }    
-                case 'W':
-                {
+                }
+                case 'W': {
                     i = Convertor.inpos;
                     if (sUtil.getToken("WRITE_HANDLER(") || sUtil.getToken("WRITE_HANDLER (")) {
                         sUtil.skipSpace();
@@ -195,8 +193,7 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
-                case 'R':
-                {
+                case 'R': {
                     i = Convertor.inpos;
                     if (sUtil.getToken("READ_HANDLER(") || sUtil.getToken("READ_HANDLER (")) {
                         sUtil.skipSpace();
@@ -211,7 +208,21 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
-                    
+                case 'V': {
+                    i = Convertor.inpos;
+                    if (sUtil.getToken("VIDEO_START(") || sUtil.getToken("VIDEO_UPDATE(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        }
+                    }
+                    Convertor.inpos = i;
+                    break;
+                }
                 case '{': {
                     if (type == MEMORY_READ8) {
                         i3++;
@@ -309,6 +320,16 @@ public class convertMame {
                             sUtil.putString("\tnew IO_WritePort(MEMPORT_MARKER, 0)\n\t};");
                             type = -1;
                             Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    if (sUtil.getToken("PALETTE_INIT(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
                             continue;
                         }
                     }

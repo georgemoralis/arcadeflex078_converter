@@ -14,8 +14,6 @@ public class citycon
 	
 	
 	
-	VIDEO_UPDATE( citycon );
-	VIDEO_START( citycon );
 	
 	
 	READ_HANDLER( citycon_in_r )

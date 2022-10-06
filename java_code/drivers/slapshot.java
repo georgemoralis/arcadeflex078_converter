@@ -143,8 +143,6 @@ public class slapshot
 	
 	VIDEO_EOF( opwolf3_full_buffer_delayed );
 	VIDEO_EOF( taito_no_buffer );
-	VIDEO_START( slapshot );
-	VIDEO_UPDATE( slapshot );
 	
 	static data16_t *color_ram;
 	

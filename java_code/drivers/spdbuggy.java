@@ -53,8 +53,6 @@ public class spdbuggy
 	/* Functions defined in vidhrdw */
 	
 	
-	VIDEO_START( spdbuggy );
-	VIDEO_UPDATE( spdbuggy );
 	
 	
 	

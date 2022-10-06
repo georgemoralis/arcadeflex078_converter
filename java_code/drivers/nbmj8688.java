@@ -40,17 +40,6 @@ public class nbmj8688
 	#define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 	
 	
-	PALETTE_INIT( mbmj8688_8bit );
-	PALETTE_INIT( mbmj8688_12bit );
-	PALETTE_INIT( mbmj8688_16bit );
-	VIDEO_UPDATE( mbmj8688 );
-	VIDEO_UPDATE( mbmj8688_LCD );
-	VIDEO_START( mbmj8688_8bit );
-	VIDEO_START( mbmj8688_hybrid_12bit );
-	VIDEO_START( mbmj8688_pure_12bit );
-	VIDEO_START( mbmj8688_hybrid_16bit );
-	VIDEO_START( mbmj8688_pure_16bit );
-	VIDEO_START( mbmj8688_pure_16bit_LCD );
 	
 	
 	

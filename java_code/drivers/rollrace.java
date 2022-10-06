@@ -16,9 +16,6 @@ public class rollrace
 {
 	
 	
-	VIDEO_UPDATE( rollrace );
-	PALETTE_INIT( wiz );
-	VIDEO_START( rollrace );
 	
 	WRITE_HANDLER( rollrace_backgroundpage_w);
 	WRITE_HANDLER( rollrace_backgroundcolor_w);

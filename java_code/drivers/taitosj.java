@@ -136,9 +136,6 @@ public class taitosj
 	MACHINE_INIT( taitosj );
 	
 	
-	PALETTE_INIT( taitosj );
-	VIDEO_START( taitosj );
-	VIDEO_UPDATE( taitosj );
 	
 	
 	static int sndnmi_disable = 1;

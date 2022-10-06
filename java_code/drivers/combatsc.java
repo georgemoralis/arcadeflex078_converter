@@ -128,15 +128,9 @@ public class combatsc
 	
 	
 	/* from vidhrdw/combasc.c */
-	PALETTE_INIT( combasc );
-	PALETTE_INIT( combascb );
-	VIDEO_START( combasc );
-	VIDEO_START( combascb );
 	
 	MACHINE_INIT( combasc );
 	
-	VIDEO_UPDATE( combascb );
-	VIDEO_UPDATE( combasc );
 	
 	
 	

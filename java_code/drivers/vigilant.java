@@ -17,9 +17,6 @@ public class vigilant
 {
 	
 	/* vidhrdw/vigilant.c */
-	VIDEO_START( vigilant );
-	VIDEO_UPDATE( vigilant );
-	VIDEO_UPDATE( kikcubic );
 	
 	
 	WRITE_HANDLER( vigilant_bank_select_w )

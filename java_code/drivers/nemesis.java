@@ -56,9 +56,6 @@ public class nemesis
 	WRITE16_HANDLER( nemesis_videoram2f_word_w );
 	READ16_HANDLER( nemesis_characterram_word_r );
 	WRITE16_HANDLER( nemesis_characterram_word_w );
-	VIDEO_UPDATE( nemesis );
-	VIDEO_START( nemesis );
-	VIDEO_UPDATE( salamand );
 	MACHINE_INIT( nemesis );
 	
 	WRITE16_HANDLER( nemesis_gfx_flipx_w );

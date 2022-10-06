@@ -32,11 +32,6 @@ public class clshroad
 	
 	
 	
-	PALETTE_INIT( firebatl );
-	PALETTE_INIT( clshroad );
-	VIDEO_START( firebatl );
-	VIDEO_START( clshroad );
-	VIDEO_UPDATE( clshroad );
 	
 	int wiping_sh_start(const struct MachineSound *msound);
 	void wiping_sh_stop(void);

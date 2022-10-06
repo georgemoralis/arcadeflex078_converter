@@ -19,8 +19,5 @@ public class arabianH
 	/*----------- defined in vidhrdw/arabian.c -----------*/
 	
 	
-	PALETTE_INIT( arabian );
-	VIDEO_START( arabian );
-	VIDEO_UPDATE( arabian );
 	
 	}

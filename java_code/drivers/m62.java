@@ -62,40 +62,17 @@ public class m62
 {
 	
 	
-	PALETTE_INIT( irem );
-	PALETTE_INIT( battroad );
-	PALETTE_INIT( spelunk2 );
 	
 	
-	VIDEO_START( kungfum );
-	VIDEO_UPDATE( kungfum );
 	
-	VIDEO_START( ldrun );
-	VIDEO_UPDATE( ldrun );
 	
-	VIDEO_START( battroad );
-	VIDEO_UPDATE( battroad );
 	
-	VIDEO_START( ldrun4 );
-	VIDEO_UPDATE( ldrun4 );
 	
-	VIDEO_START( lotlot );
-	VIDEO_UPDATE( lotlot );
 	
-	VIDEO_START( kidniki );
-	VIDEO_UPDATE( kidniki );
 	
-	VIDEO_START( spelunkr );
-	VIDEO_UPDATE( spelunkr );
 	
-	VIDEO_START( spelunk2 );
-	VIDEO_UPDATE( spelunk2 );
 	
-	VIDEO_START( youjyudn );
-	VIDEO_UPDATE( youjyudn );
 	
-	VIDEO_START( horizon );
-	VIDEO_UPDATE( horizon );
 	
 	static int bankaddress;
 	static int bankaddress2;

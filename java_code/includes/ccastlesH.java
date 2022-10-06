@@ -8,6 +8,4 @@
 
 
 
-VIDEO_START( ccastles );
-VIDEO_UPDATE( ccastles );
 

@@ -36,9 +36,6 @@ public class bladestl
 	
 	/* from vidhrdw */
 	int bladestl_spritebank;
-	VIDEO_START( bladestl );
-	VIDEO_UPDATE( bladestl );
-	PALETTE_INIT( bladestl );
 	
 	static INTERRUPT_GEN( bladestl_interrupt )
 	{

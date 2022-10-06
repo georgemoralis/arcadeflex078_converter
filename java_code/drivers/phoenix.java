@@ -44,10 +44,6 @@ public class phoenix
 	
 	
 	
-	PALETTE_INIT( phoenix );
-	PALETTE_INIT( pleiads );
-	VIDEO_START( phoenix );
-	VIDEO_UPDATE( phoenix );
 	
 	int phoenix_sh_start(const struct MachineSound *msound);
 	void phoenix_sh_stop(void);

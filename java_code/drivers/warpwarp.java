@@ -67,8 +67,6 @@ public class warpwarp
 {
 	
 	
-	PALETTE_INIT( warpwarp );
-	VIDEO_UPDATE( warpwarp );
 	
 	/* from sndhrdw/warpwarp.c */
 	

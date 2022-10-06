@@ -45,8 +45,6 @@ public class yunsung8
 	
 	
 	
-	VIDEO_START( yunsung8 );
-	VIDEO_UPDATE( yunsung8 );
 	
 	
 	

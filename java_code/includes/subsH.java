@@ -12,5 +12,4 @@ INTERRUPT_GEN( subs_interrupt );
 
 /*----------- defined in vidhrdw/subs.c -----------*/
 
-VIDEO_UPDATE( subs );
 

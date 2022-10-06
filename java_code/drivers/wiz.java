@@ -167,11 +167,6 @@ public class wiz
 {
 	
 	
-	VIDEO_START( wiz );
-	PALETTE_INIT( wiz );
-	VIDEO_UPDATE( wiz );
-	VIDEO_UPDATE( stinger );
-	VIDEO_UPDATE( kungfut );
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

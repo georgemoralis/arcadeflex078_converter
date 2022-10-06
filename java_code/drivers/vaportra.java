@@ -17,8 +17,6 @@ package drivers;
 public class vaportra
 {
 	
-	VIDEO_START( vaportra );
-	VIDEO_UPDATE( vaportra );
 	
 	WRITE16_HANDLER( vaportra_pf1_data_w );
 	WRITE16_HANDLER( vaportra_pf2_data_w );

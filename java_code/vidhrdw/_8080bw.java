@@ -28,13 +28,7 @@ public class _8080bw
 	static void (*video_update_p)(struct mame_bitmap *bitmap,const struct rectangle *cliprect);
 	
 	
-	static VIDEO_UPDATE( 8080bw_common );
-	static VIDEO_UPDATE( helifire );
-	static VIDEO_UPDATE( seawolf );
-	static VIDEO_UPDATE( blueshrk );
-	static VIDEO_UPDATE( desertgu );
-	static VIDEO_UPDATE( bowler );
-	
+	static static static static static static 
 	static void plot_pixel_8080(int x, int y, int col);
 	
 	/* smoothed colors, overlays are not so contrasted */

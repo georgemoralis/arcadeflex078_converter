@@ -33,8 +33,6 @@ public class blockhl
 	static void blockhl_banking( int lines );
 	
 	
-	VIDEO_START( blockhl );
-	VIDEO_UPDATE( blockhl );
 	
 	static int palette_selected;
 	static unsigned char *ram;

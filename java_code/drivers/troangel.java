@@ -14,8 +14,6 @@ package drivers;
 public class troangel
 {
 	
-	PALETTE_INIT( troangel );
-	VIDEO_UPDATE( troangel );
 	
 	
 	

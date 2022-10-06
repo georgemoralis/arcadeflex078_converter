@@ -32,9 +32,6 @@ public class lastduel
 	WRITE16_HANDLER( madgear_scroll1_w );
 	WRITE16_HANDLER( madgear_scroll2_w );
 	WRITE16_HANDLER( lastduel_scroll_w );
-	VIDEO_START( lastduel );
-	VIDEO_START( madgear );
-	VIDEO_UPDATE( lastduel );
 	VIDEO_EOF( lastduel );
 	
 	

@@ -53,8 +53,6 @@ public class gaelco
 								BIG KARNAK
 	  ============================================================================*/
 	
-	VIDEO_START( bigkarnk );
-	VIDEO_UPDATE( bigkarnk );
 	
 	
 	static MEMORY_READ16_START( bigkarnk_readmem )
@@ -290,8 +288,6 @@ public class gaelco
 						BIOMECHANICAL TOY & MANIAC SQUARE
 	  ============================================================================*/
 	
-	VIDEO_START( maniacsq );
-	VIDEO_UPDATE( maniacsq );
 	
 	
 	static MEMORY_READ16_START( maniacsq_readmem )

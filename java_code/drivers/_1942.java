@@ -70,9 +70,6 @@ public class _1942
 	
 	
 	
-	VIDEO_START( 1942 );
-	PALETTE_INIT( 1942 );
-	VIDEO_UPDATE( 1942 );
 	
 	
 	

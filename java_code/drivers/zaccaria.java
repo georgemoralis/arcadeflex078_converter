@@ -44,9 +44,6 @@ public class zaccaria
 	
 	
 	
-	PALETTE_INIT( zaccaria );
-	VIDEO_START( zaccaria );
-	VIDEO_UPDATE( zaccaria );
 	
 	
 	static int dsw;

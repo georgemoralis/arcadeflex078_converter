@@ -12,7 +12,5 @@ MACHINE_INIT( missile );
 /*----------- defined in vidhrdw/missile.c -----------*/
 
 
-VIDEO_START( missile );
-VIDEO_UPDATE( missile );
 
 

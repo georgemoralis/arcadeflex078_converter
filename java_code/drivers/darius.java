@@ -139,8 +139,6 @@ public class darius
 	
 	MACHINE_INIT( darius );
 	
-	VIDEO_START( darius );
-	VIDEO_UPDATE( darius );
 	
 	static UINT16 cpua_ctrl;
 	static UINT16 coin_word=0;

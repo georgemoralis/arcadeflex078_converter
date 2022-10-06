@@ -46,9 +46,6 @@ public class mpatrol
 	
 	
 	
-	VIDEO_START( mpatrol );
-	PALETTE_INIT( mpatrol );
-	VIDEO_UPDATE( mpatrol );
 	
 	
 	

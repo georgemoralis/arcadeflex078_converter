@@ -56,22 +56,11 @@ public class btime
 {
 	
 	
-	PALETTE_INIT( btime );
-	PALETTE_INIT( lnc );
 	
 	MACHINE_INIT( lnc );
 	
-	VIDEO_START( btime );
-	VIDEO_START( bnj );
 	
 	
-	VIDEO_UPDATE( btime );
-	VIDEO_UPDATE( cookrace );
-	VIDEO_UPDATE( bnj );
-	VIDEO_UPDATE( lnc );
-	VIDEO_UPDATE( zoar );
-	VIDEO_UPDATE( disco );
-	VIDEO_UPDATE( eggs );
 	
 	
 	
