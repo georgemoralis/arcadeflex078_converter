@@ -1,0 +1,18 @@
+What we convert
+===============
+
+Functions Ptr's
+===============
+static MEMORY_READ_START
+static MEMORY_WRITE_START
+static PORT_READ_START
+static PORT_WRITE_START
+static WRITE_HANDLER
+static READ_HANDLER
+
+Misc
+====
+
+& removed inside MEMORY_READ_START,MEMORY_WRITE_START,PORT_READ_START,PORT_WRITE_START functions
+lines that start with "extern" removed
+Removed forward functions ( WRITE_HANDLER , READ_HANDLER)
