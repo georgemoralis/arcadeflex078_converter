@@ -62,28 +62,28 @@ public class galivan
 	//	layers = 0x60;
 	}
 	
-	static WRITE_HANDLER( galivan_sound_command_w )
+	public static WriteHandlerPtr galivan_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,(data << 1) | 1);
-	}
+	} };
 	
-	static READ_HANDLER( galivan_sound_command_r )
+	public static ReadHandlerPtr galivan_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
 	
 		data = soundlatch_r(offset);
 		soundlatch_clear_w(0,0);
 		return data;
-	}
+	} };
 	
-	static READ_HANDLER( IO_port_c0_r )
+	public static ReadHandlerPtr IO_port_c0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	  return (0x58); /* To Avoid Reset on Ufo Robot dangar */
-	}
+	} };
 	
 	
 	/* the scroll registers are memory mapped in ninjemak, I/O ports in the others */
-	static WRITE_HANDLER( ninjemak_videoreg_w )
+	public static WriteHandlerPtr ninjemak_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -102,7 +102,7 @@ public class galivan
 			default:
 				break;
 		}
-	}
+	} };
 	
 	
 	

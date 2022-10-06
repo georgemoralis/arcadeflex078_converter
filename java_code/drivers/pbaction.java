@@ -56,11 +56,11 @@ public class pbaction
 	extern VIDEO_UPDATE( pbaction );
 	
 	
-	static WRITE_HANDLER( pbaction_sh_command_w )
+	public static WriteHandlerPtr pbaction_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0x00);
-	}
+	} };
 	
 	
 	

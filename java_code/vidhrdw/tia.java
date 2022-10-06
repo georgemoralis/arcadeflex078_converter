@@ -575,7 +575,7 @@ public class tia
 	}
 	
 	
-	static WRITE_HANDLER( WSYNC_w )
+	public static WriteHandlerPtr WSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int cycles = activecpu_gettotalcycles() - frame_cycles;
 	
@@ -583,10 +583,10 @@ public class tia
 		{
 			activecpu_adjust_icount(cycles % 76 - 76);
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( VSYNC_w )
+	public static WriteHandlerPtr VSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 2)
 		{
@@ -606,10 +606,10 @@ public class tia
 		}
 	
 		VSYNC = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( VBLANK_w )
+	public static WriteHandlerPtr VBLANK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 0x80)
 		{
@@ -617,10 +617,10 @@ public class tia
 		}
 	
 		VBLANK = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( HMOVE_w )
+	public static WriteHandlerPtr HMOVE_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int curr_x = current_x();
 		int curr_y = current_y();
@@ -657,26 +657,26 @@ public class tia
 	
 			prev_x = 8;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RSYNC_w )
+	public static WriteHandlerPtr RSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* this address is used in chip testing */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( HMCLR_w )
+	public static WriteHandlerPtr HMCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		HMP0 = 0;
 		HMP1 = 0;
 		HMM0 = 0;
 		HMM1 = 0;
 		HMBL = 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( CXCLR_w )
+	public static WriteHandlerPtr CXCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		CXM0P = 0;
 		CXM1P = 0;
@@ -686,10 +686,10 @@ public class tia
 		CXM1FB = 0;
 		CXBLPF = 0;
 		CXPPMM = 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESP0_w )
+	public static WriteHandlerPtr RESP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horzP0 = current_x();
 	
@@ -701,10 +701,10 @@ public class tia
 		{
 			horzP0 = (horzP0 + 5) % 160;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESP1_w )
+	public static WriteHandlerPtr RESP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horzP1 = current_x();
 	
@@ -716,10 +716,10 @@ public class tia
 		{
 			horzP1 = (horzP1 + 5) % 160;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESM0_w )
+	public static WriteHandlerPtr RESM0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horzM0 = current_x();
 	
@@ -731,10 +731,10 @@ public class tia
 		{
 			horzM0 = (horzM0 + 4) % 160;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESM1_w )
+	public static WriteHandlerPtr RESM1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horzM1 = current_x();
 	
@@ -746,10 +746,10 @@ public class tia
 		{
 			horzM1 = (horzM1 + 4) % 160;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESBL_w )
+	public static WriteHandlerPtr RESBL_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horzBL = current_x();
 	
@@ -761,10 +761,10 @@ public class tia
 		{
 			horzBL = (horzBL + 4) % 160;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESMP0_w )
+	public static WriteHandlerPtr RESMP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (RESMP0 & 2)
 		{
@@ -772,10 +772,10 @@ public class tia
 		}
 	
 		RESMP0 = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( RESMP1_w )
+	public static WriteHandlerPtr RESMP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (RESMP1 & 2)
 		{
@@ -783,33 +783,33 @@ public class tia
 		}
 	
 		RESMP1 = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( GRP0_w )
+	public static WriteHandlerPtr GRP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		prevGRP1 = GRP1;
 	
 		GRP0 = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( GRP1_w )
+	public static WriteHandlerPtr GRP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		prevGRP0 = GRP0;
 	
 		GRP1 = data;
 	
 		prevENABL = ENABL;
-	}
+	} };
 	
 	
-	static READ_HANDLER( INPT_r )
+	public static ReadHandlerPtr INPT_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT32 elapsed = activecpu_gettotalcycles() - paddle_cycles;
 	
 		return elapsed > 76 * readinputport(offset & 3) ? 0x80 : 0x00;
-	}
+	} };
 	
 	
 	READ_HANDLER( tia_r )

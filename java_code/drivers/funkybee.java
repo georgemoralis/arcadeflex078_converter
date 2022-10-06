@@ -64,16 +64,16 @@ public class funkybee
 	extern VIDEO_UPDATE( funkybee );
 	
 	
-	static READ_HANDLER( funkybee_input_port_0_r )
+	public static ReadHandlerPtr funkybee_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		watchdog_reset_r(0);
 		return input_port_0_r(offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( funkybee_coin_counter_w )
+	public static WriteHandlerPtr funkybee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

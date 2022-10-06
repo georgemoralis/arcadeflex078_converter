@@ -26,10 +26,10 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( input_port_select_w )
+	public static WriteHandlerPtr input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		input_port_select = data;
-	}
+	} };
 	
 	
 	static data8_t difficulty_input_port_r(int bit)
@@ -50,7 +50,7 @@ public class clayshoo
 	}
 	
 	
-	static READ_HANDLER( input_port_r )
+	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t ret = 0;
 	
@@ -69,7 +69,7 @@ public class clayshoo
 		}
 	
 		return ret;
-	}
+	} };
 	
 	
 	static ppi8255_interface ppi8255_intf =

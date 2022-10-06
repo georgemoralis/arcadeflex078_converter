@@ -54,7 +54,7 @@ public class trackfld
 	
 	
 	/* handle fake button for speed cheat */
-	static READ_HANDLER( konami_IN1_r )
+	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		static int cheat = 0;
@@ -69,7 +69,7 @@ public class trackfld
 			cheat = (cheat+1)%4;
 		}
 		return res;
-	}
+	} };
 	
 	/*
 	 Track'n'Field has 1k of battery backed RAM which can be erased by setting a dipswitch
@@ -154,10 +154,10 @@ public class trackfld
 		}
 	}
 	
-	static WRITE_HANDLER( coin_w )
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data & 1);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

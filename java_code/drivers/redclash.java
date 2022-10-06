@@ -58,10 +58,10 @@ public class redclash
 			cpu_set_nmi_line(0,PULSE_LINE);
 	}
 	
-	static WRITE_HANDLER( irqack_w )
+	public static WriteHandlerPtr irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0,0,CLEAR_LINE);
-	}
+	} };
 	
 	
 	

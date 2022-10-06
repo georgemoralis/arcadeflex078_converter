@@ -160,13 +160,13 @@ public class bagman
 	}
 	
 	#if 0
-	static READ_HANDLER( bagman_ls259_r )
+	public static ReadHandlerPtr bagman_ls259_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ls259_buf[offset];
-	}
+	} };
 	#endif
 	
-	static WRITE_HANDLER( bagman_ls259_w )
+	public static WriteHandlerPtr bagman_ls259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bagman_pal16r6_w(offset,data); /*this is just a simulation*/
 	
@@ -186,12 +186,12 @@ public class bagman
 				}
 			}
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bagman_coin_counter_w )
+	public static WriteHandlerPtr bagman_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

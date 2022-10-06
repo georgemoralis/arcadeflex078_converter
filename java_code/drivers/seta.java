@@ -1385,15 +1385,15 @@ public class seta
 	
 	/* DSW reading for 8 bit CPUs */
 	
-	static READ_HANDLER( dsw1_r )
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(3) >> 8) & 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( dsw2_r )
+	public static ReadHandlerPtr dsw2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(3) >> 0) & 0xff;
-	}
+	} };
 	
 	
 	/*
@@ -2602,26 +2602,26 @@ public class seta
 	
 	***************************************************************************/
 	
-	static WRITE_HANDLER( sub_bankswitch_w )
+	public static WriteHandlerPtr sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU2);
 		int bank = data >> 4;
 	
 		cpu_setbank(1, &rom[bank * 0x4000 + 0xc000]);
-	}
+	} };
 	
-	static WRITE_HANDLER( sub_bankswitch_lockout_w )
+	public static WriteHandlerPtr sub_bankswitch_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sub_bankswitch_w(offset,data);
 		seta_coin_lockout_w(data);
-	}
+	} };
 	
 	
 	/***************************************************************************
 									Thundercade
 	***************************************************************************/
 	
-	static READ_HANDLER( ff_r )	{return 0xff;}
+	public static ReadHandlerPtr ff_r  = new ReadHandlerPtr() { public int handler(int offset)	{return 0xff;} };
 	
 	public static Memory_ReadAddress tndrcade_sub_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

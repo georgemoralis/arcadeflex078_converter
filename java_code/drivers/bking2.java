@@ -54,18 +54,18 @@ public class bking2
 	
 	static int sndnmi_enable = 1;
 	
-	static READ_HANDLER( bking2_sndnmi_disable_r )
+	public static ReadHandlerPtr bking2_sndnmi_disable_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		sndnmi_enable = 0;
 		return 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( bking2_sndnmi_enable_w )
+	public static WriteHandlerPtr bking2_sndnmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sndnmi_enable = 1;
-	}
+	} };
 	
-	static WRITE_HANDLER( bking2_soundlatch_w )
+	public static WriteHandlerPtr bking2_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i,code;
 	
@@ -75,41 +75,41 @@ public class bking2
 	
 		soundlatch_w(offset,code);
 		if (sndnmi_enable) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	static int bk3_l, bk3_h;
 	
-	static WRITE_HANDLER( bk3_l_w)
+	public static WriteHandlerPtr bk3_l_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bk3_l = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( bk3_h_w)
+	public static WriteHandlerPtr bk3_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bk3_h = data;
-	}
+	} };
 	
-	static READ_HANDLER( bk3_r )
+	public static ReadHandlerPtr bk3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *rom = memory_region(REGION_USER2);
 		return rom[bk3_h*256+bk3_l];
-	}
+	} };
 	
-	static WRITE_HANDLER( unk_w )
+	public static WriteHandlerPtr unk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	/*
 		0 = finished reading extra rom
 		1 = started reading extra rom
 	*/
-	}
+	} };
 	
-	static READ_HANDLER( mcu_status_r )
+	public static ReadHandlerPtr mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int res = 3;
 	
 		return res;//cpu data / MCU ready
-	}
+	} };
 	
 	
 	/*
@@ -123,7 +123,7 @@ public class bking2
 	*/
 	static unsigned char mcu_val;
 	
-	static WRITE_HANDLER( mcu_data_w )
+	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef MAME_DEBUG
 		logerror("mcu_data_w = %x\n",data);
@@ -135,9 +135,9 @@ public class bking2
 	   	   switch-case statement in the mcu_data_r function... */
 		if(mcu_val >= 0x80)
 			mcu_val = 0x5e;
-	}
+	} };
 	
-	static READ_HANDLER( mcu_data_r )
+	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	usrintf_showmessage("MCU-r1 PC = %04x %02x",activecpu_get_pc(),mcu_val);
 		switch(mcu_val)
@@ -146,13 +146,13 @@ public class bking2
 			case 0x30: return (mcu_val-0x1e);
 			default:   return (mcu_val);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( mcu_data_r2 )
+	public static ReadHandlerPtr mcu_data_r2  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	usrintf_showmessage("MCU-r2 PC = %04x %02x",activecpu_get_pc(),mcu_val);
 		return 0x31; //no "bad rom.", no "bad ext."
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -519,11 +519,11 @@ public class bking2
 	};
 	
 	
-	static WRITE_HANDLER( portb_w )
+	public static WriteHandlerPtr portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* don't know what this is... could be a filter */
 		if (data != 0x00) logerror("portB = %02x\n",data);
-	}
+	} };
 	
 	static struct AY8910interface ay8910_interface =
 	{

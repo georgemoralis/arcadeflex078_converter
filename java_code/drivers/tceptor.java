@@ -53,36 +53,36 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static READ_HANDLER( m6502_a_shared_r )
+	public static ReadHandlerPtr m6502_a_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return m6502_a_shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( m6502_a_shared_w )
+	public static WriteHandlerPtr m6502_a_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m6502_a_shared_ram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( m6502_b_shared_r )
+	public static ReadHandlerPtr m6502_b_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return m6502_b_shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( m6502_b_shared_w )
+	public static WriteHandlerPtr m6502_b_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m6502_b_shared_ram[offset] = data;
-	}
+	} };
 	
 	
-	static READ_HANDLER( m68k_shared_r )
+	public static ReadHandlerPtr m68k_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return m68k_shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( m68k_shared_w )
+	public static WriteHandlerPtr m68k_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m68k_shared_ram[offset] = data;
-	}
+	} };
 	
 	static READ16_HANDLER( m68k_shared_word_r )
 	{
@@ -96,15 +96,15 @@ public class tceptor
 	}
 	
 	
-	static READ_HANDLER( mcu_shared_r )
+	public static ReadHandlerPtr mcu_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mcu_shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_shared_w )
+	public static WriteHandlerPtr mcu_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mcu_shared_ram[offset] = data;
-	}
+	} };
 	
 	
 	/*******************************************************************/
@@ -117,15 +117,15 @@ public class tceptor
 			m6809_irq_enable = 1;
 	}
 	
-	static WRITE_HANDLER( m6809_irq_enable_w )
+	public static WriteHandlerPtr m6809_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m6809_irq_enable = 1;
-	}
+	} };
 	
-	static WRITE_HANDLER( m6809_irq_disable_w )
+	public static WriteHandlerPtr m6809_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m6809_irq_enable = 0;
-	}
+	} };
 	
 	
 	static INTERRUPT_GEN( m68k_vb_interrupt )
@@ -148,21 +148,21 @@ public class tceptor
 			mcu_irq_enable = 1;
 	}
 	
-	static WRITE_HANDLER( mcu_irq_enable_w )
+	public static WriteHandlerPtr mcu_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mcu_irq_enable = 1;
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_irq_disable_w )
+	public static WriteHandlerPtr mcu_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mcu_irq_enable = 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( voice_w )
+	public static WriteHandlerPtr voice_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_signed_data_16_w(0, data ? (data + 1) * 0x100 : 0x8000);
-	}
+	} };
 	
 	
 	/* fix dsw/input data to memory mapped data */
@@ -198,30 +198,30 @@ public class tceptor
 		return r;
 	}
 	
-	static READ_HANDLER( dsw0_r )
+	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return fix_input0(readinputport(0), readinputport(1));
-	}
+	} };
 	
-	static READ_HANDLER( dsw1_r )
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return fix_input1(readinputport(0), readinputport(1));
-	}
+	} };
 	
-	static READ_HANDLER( input0_r )
+	public static ReadHandlerPtr input0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return fix_input0(readinputport(2), readinputport(3));
-	}
+	} };
 	
-	static READ_HANDLER( input1_r )
+	public static ReadHandlerPtr input1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return fix_input1(readinputport(2), readinputport(3));
-	}
+	} };
 	
-	static READ_HANDLER( readFF )
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	/*******************************************************************/
 	

@@ -126,10 +126,10 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( skydiver_nmion_w )
+	public static WriteHandlerPtr skydiver_nmion_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		skydiver_nmion = offset;
-	}
+	} };
 	
 	
 	static INTERRUPT_GEN( skydiver_interrupt )

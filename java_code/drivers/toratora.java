@@ -71,45 +71,45 @@ public class toratora
 	
 	
 	
-	static READ_HANDLER( porta_0_r )
+	public static ReadHandlerPtr porta_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(0) & 0x0f;
-	}
+	} };
 	
-	static READ_HANDLER( ca1_0_r )
+	public static ReadHandlerPtr ca1_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(0) & 0x10) >> 4;	/* coin A */
-	}
+	} };
 	
-	static READ_HANDLER( ca2_0_r )
+	public static ReadHandlerPtr ca2_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(0) & 0x20) >> 5;	/* coin B */
-	}
+	} };
 	
-	static WRITE_HANDLER( portb_0_w )
+	public static WriteHandlerPtr portb_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* this is the coin counter output, however it is controlled by changing
 		   the PIA DDR (FF/DF) so we don't have a way to know which is which
 		   because we always get a 00 write. */
-	}
+	} };
 	
 	
 	
-	static READ_HANDLER( portb_1_r )
+	public static ReadHandlerPtr portb_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		logerror("%04x: read DIP\n",activecpu_get_pc());
 		return readinputport(1);
-	}
+	} };
 	
-	static WRITE_HANDLER( ca2_1_w )
+	public static WriteHandlerPtr ca2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("76477 #0 VCO SEL = %d\n",data & 1);
-	}
+	} };
 	
-	static WRITE_HANDLER( cb2_1_w )
+	public static WriteHandlerPtr cb2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("DIP tristate %sactive\n",(data & 1) ? "in" : "");
-	}
+	} };
 	
 	static struct pia6821_interface pia0_intf =
 	{
@@ -152,15 +152,15 @@ public class toratora
 		if (timer & 0x100) usrintf_showmessage("watchdog!");
 	}
 	
-	static READ_HANDLER( toratora_timer_r )
+	public static ReadHandlerPtr toratora_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return timer;
-	}
+	} };
 	
-	static WRITE_HANDLER( toratora_clear_timer_w )
+	public static WriteHandlerPtr toratora_clear_timer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer = 0;
-	}
+	} };
 	
 	
 	

@@ -113,14 +113,14 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( ultratnk_videoram_w )
+	public static WriteHandlerPtr ultratnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
@@ -158,7 +158,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( da_latch_w )
+	public static WriteHandlerPtr da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int joybits = readinputport(4);
 		ultratnk_controls = readinputport(3); /* start and fire buttons */
@@ -181,22 +181,22 @@ public class ultratnk
 			if( joybits&0x10 ) ultratnk_controls &= ~0x01;
 			break;
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( ultratnk_controls_r )
+	public static ReadHandlerPtr ultratnk_controls_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (ultratnk_controls << offset) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( ultratnk_barrier_r )
+	public static ReadHandlerPtr ultratnk_barrier_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(2) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( ultratnk_coin_r )
+	public static ReadHandlerPtr ultratnk_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset & 0x06)
 		{
@@ -207,16 +207,16 @@ public class ultratnk
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
-	static READ_HANDLER( ultratnk_tilt_r )
+	public static ReadHandlerPtr ultratnk_tilt_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(2) << 5) & 0x80;	/* tilt */
-	}
+	} };
 	
 	
-	static READ_HANDLER( ultratnk_dipsw_r )
+	public static ReadHandlerPtr ultratnk_dipsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int dipsw = readinputport(0);
 		switch( offset )
@@ -227,7 +227,7 @@ public class ultratnk
 			case 0x03: return ((dipsw & 0x03) >> 0); /* extended time */
 		}
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -276,7 +276,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( ultratnk_collision_r )
+	public static ReadHandlerPtr ultratnk_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/**	Note: hardware collision detection is not emulated.
 		 *	However, the game is fully playable, since the game software uses it
@@ -288,25 +288,25 @@ public class ultratnk
 			case 0x03:	return 0x80;	/* black tank = D7 */
 		}
 		return 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( ultratnk_leds_w )
+	public static WriteHandlerPtr ultratnk_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset/2,offset&1);
-	}
+	} };
 	
 	
-	static READ_HANDLER( mirror_r )
+	public static ReadHandlerPtr mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mirror_ram[offset];
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( mirror_w )
+	public static WriteHandlerPtr mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mirror_ram[offset] = data;
-	}
+	} };
 	
 	
 	

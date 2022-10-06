@@ -30,7 +30,7 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	static WRITE_HANDLER( pcktgal_bank_w )
+	public static WriteHandlerPtr pcktgal_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -39,21 +39,21 @@ public class pcktgal
 	
 		if (data & 2) { cpu_setbank(2,&RAM[0x6000]); }
 		else { cpu_setbank(2,&RAM[0x12000]); }
-	}
+	} };
 	
-	static WRITE_HANDLER( pcktgal_sound_bank_w )
+	public static WriteHandlerPtr pcktgal_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		if (data & 4) { cpu_setbank(3,&RAM[0x14000]); }
 		else { cpu_setbank(3,&RAM[0x10000]); }
-	}
+	} };
 	
-	static WRITE_HANDLER( pcktgal_sound_w )
+	public static WriteHandlerPtr pcktgal_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	static int msm5205next;
 	
@@ -69,16 +69,16 @@ public class pcktgal
 			cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( pcktgal_adpcm_data_w )
+	public static WriteHandlerPtr pcktgal_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		msm5205next=data;
-	}
+	} };
 	
-	static READ_HANDLER( pcktgal_adpcm_reset_r )
+	public static ReadHandlerPtr pcktgal_adpcm_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		MSM5205_reset_w(0,0);
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************/
 	

@@ -26,7 +26,7 @@ public class rollerg
 	
 	static int readzoomroms;
 	
-	static WRITE_HANDLER( rollerg_0010_w )
+	public static WriteHandlerPtr rollerg_0010_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: write %02x to 0010\n",activecpu_get_pc(),data);
 	
@@ -41,42 +41,42 @@ public class rollerg
 		K051316_wraparound_enable(0, data & 0x20);
 	
 		/* other bits unknown */
-	}
+	} };
 	
-	static READ_HANDLER( rollerg_K051316_r )
+	public static ReadHandlerPtr rollerg_K051316_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (readzoomroms) return K051316_rom_0_r(offset);
 		else return K051316_0_r(offset);
-	}
+	} };
 	
-	static READ_HANDLER( rollerg_sound_r )
+	public static ReadHandlerPtr rollerg_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
 		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return 0x00;
-	}
+	} };
 	
-	static WRITE_HANDLER( soundirq_w )
+	public static WriteHandlerPtr soundirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	static void nmi_callback(int param)
 	{
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	static WRITE_HANDLER( sound_arm_nmi_w )
+	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
-	}
+	} };
 	
-	static READ_HANDLER( pip_r )
+	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x7f;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

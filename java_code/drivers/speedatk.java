@@ -96,7 +96,7 @@ public class speedatk
 	 * example pressing button A + button B it causes an output of button C.               *
 	 * This function converts the bit inputs of this game into the usual way MAME does,and *
 	 * it handles the multiplexer device between player one and two.                       */
-	static READ_HANDLER( key_matrix_r )
+	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(mux_data)
 		{
@@ -142,17 +142,17 @@ public class speedatk
 		}
 	
 		return 0x00;
-	}
+	} };
 	
-	static WRITE_HANDLER( key_matrix_w )
+	public static WriteHandlerPtr key_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mux_data = data;
-	}
+	} };
 	
-	static READ_HANDLER( read_8001 )
+	public static ReadHandlerPtr read_8001  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 1;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

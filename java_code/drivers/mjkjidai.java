@@ -40,15 +40,15 @@ public class mjkjidai
 	
 	
 	
-	static WRITE_HANDLER( adpcm_w )
+	public static WriteHandlerPtr adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ADPCM_play(0,(data & 0x07) * 0x1000,0x1000*2);
-	}
+	} };
 	
 	
 	static int keyb,nvram_init_count;
 	
-	static READ_HANDLER( keyboard_r )
+	public static ReadHandlerPtr keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = 0x3f,i;
 	
@@ -72,9 +72,9 @@ public class mjkjidai
 		}
 	
 		return res;
-	}
+	} };
 	
-	static WRITE_HANDLER( keyboard_select_w )
+	public static WriteHandlerPtr keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("%04x: keyboard_select %d = %02x\n",activecpu_get_pc(),offset,data);
 	
@@ -83,7 +83,7 @@ public class mjkjidai
 			case 0: keyb = (keyb & 0xff00) | (data);      break;
 			case 1: keyb = (keyb & 0x00ff) | (data << 8); break;
 		}
-	}
+	} };
 	
 	static data8_t *nvram;
 	static size_t nvram_size;

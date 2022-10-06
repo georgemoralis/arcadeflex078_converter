@@ -58,21 +58,21 @@ public class sspeedr
 	}
 	
 	
-	static READ_HANDLER( sspeedr_steering_r )
+	public static ReadHandlerPtr sspeedr_steering_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(0);
 	
 		return 0x3f ^ (val >> 2) ^ (val >> 3);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sspeedr_int_ack_w )
+	public static WriteHandlerPtr sspeedr_int_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sspeedr_lamp_w )
+	public static WriteHandlerPtr sspeedr_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampGO",
 			data & 1);
@@ -80,10 +80,10 @@ public class sspeedr
 			data & 2);
 	
 		coin_counter_w(0, data & 8);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sspeedr_time_w )
+	public static WriteHandlerPtr sspeedr_time_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 prev = led_TIME[offset];
 	
@@ -99,10 +99,10 @@ public class sspeedr
 		artwork_show(buf_new, 1);
 	
 		led_TIME[offset] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sspeedr_score_w )
+	public static WriteHandlerPtr sspeedr_score_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 prev = led_SCORE[offset];
 	
@@ -118,13 +118,13 @@ public class sspeedr
 		artwork_show(buf_new, 1);
 	
 		led_SCORE[offset] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sspeedr_sound_w )
+	public static WriteHandlerPtr sspeedr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* not implemented */
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

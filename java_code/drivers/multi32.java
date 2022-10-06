@@ -612,24 +612,24 @@ public class multi32
 	
 	static UINT8 *sys32_SoundMemBank;
 	
-	static READ_HANDLER( system32_bank_r )
+	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sys32_SoundMemBank[offset];
-	}
+	} };
 	
-	static READ_HANDLER( sys32_shared_snd_r )
+	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		return RAM[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sys32_shared_snd_w )
+	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		RAM[offset] = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress multi32_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -648,7 +648,7 @@ public class multi32
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( sys32_soundbank_w )
+	public static WriteHandlerPtr sys32_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int Bank;
@@ -656,7 +656,7 @@ public class multi32
 		Bank = data * 0x2000;
 	
 		sys32_SoundMemBank = &RAM[Bank+0x10000];
-	}
+	} };
 	
 	public static IO_ReadPort multi32_sound_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

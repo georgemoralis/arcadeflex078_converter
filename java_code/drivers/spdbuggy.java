@@ -70,7 +70,7 @@ public class spdbuggy
 	***************************************************************************/
 	#if 0
 	static READ_HANDLER ( sharedram_r )	{ return sharedram[offset]; }
-	static WRITE_HANDLER( sharedram_w )	{ sharedram[offset] = data; }
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
 	#endif
 	
 	/*

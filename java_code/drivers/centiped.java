@@ -317,10 +317,10 @@ public class centiped
 	}
 	
 	
-	static WRITE_HANDLER( irq_ack_w )
+	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
 	
@@ -373,28 +373,28 @@ public class centiped
 	}
 	
 	
-	static READ_HANDLER( centiped_IN0_r )
+	public static ReadHandlerPtr centiped_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return read_trackball(0, 0);
-	}
+	} };
 	
 	
-	static READ_HANDLER( centiped_IN2_r )
+	public static ReadHandlerPtr centiped_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return read_trackball(1, 2);
-	}
+	} };
 	
 	
-	static READ_HANDLER( milliped_IN1_r )
+	public static ReadHandlerPtr milliped_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return read_trackball(1, 1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( input_select_w )
+	public static WriteHandlerPtr input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dsw_select = (~data >> 7) & 1;
-	}
+	} };
 	
 	
 	
@@ -404,22 +404,22 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( led_w )
+	public static WriteHandlerPtr led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset, ~data & 0x80);
-	}
+	} };
 	
 	
-	static READ_HANDLER( centipdb_rand_r )
+	public static ReadHandlerPtr centipdb_rand_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mame_rand() % 0xff;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( coin_count_w )
+	public static WriteHandlerPtr coin_count_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset, data);
-	}
+	} };
 	
 	
 	
@@ -429,18 +429,18 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( centipdb_AY8910_w )
+	public static WriteHandlerPtr centipdb_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		AY8910_control_port_0_w(0, offset);
 		AY8910_write_port_0_w(0, data);
-	}
+	} };
 	
 	
-	static READ_HANDLER( centipdb_AY8910_r )
+	public static ReadHandlerPtr centipdb_AY8910_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		AY8910_control_port_0_w(0, offset);
 		return AY8910_read_port_0_r(0);
-	}
+	} };
 	
 	
 	

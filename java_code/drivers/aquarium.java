@@ -96,13 +96,13 @@ public class aquarium
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
 	}
 	
-	static WRITE_HANDLER( aquarium_z80_bank_w )
+	public static WriteHandlerPtr aquarium_z80_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int soundbank = ((data & 0x7) + 1) * 0x8000;
 		data8_t *Z80 = (data8_t *)memory_region(REGION_CPU2);
 	
 		cpu_setbank(1, &Z80[soundbank + 0x10000]);
-	}
+	} };
 	
 	static MEMORY_READ16_START( readmem )
 		{ 0x000000, 0x07ffff, MRA16_ROM },

@@ -114,26 +114,26 @@ public class nbmj8991
 	WRITE_HANDLER( pstadium_paltbl_w );
 	
 	
-	static WRITE_HANDLER( pstadium_soundbank_w )
+	public static WriteHandlerPtr pstadium_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		if (!(data & 0x80)) soundlatch_clear_w(0, 0);
 		cpu_setbank(1, &RAM[0x08000 + (0x8000 * (data & 0x03))]);
-	}
+	} };
 	
-	static WRITE_HANDLER( pstadium_sound_w )
+	public static WriteHandlerPtr pstadium_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0, data);
-	}
+	} };
 	
-	static READ_HANDLER( pstadium_sound_r )
+	public static ReadHandlerPtr pstadium_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
 	
 		data = soundlatch_r(0);
 		return data;
-	}
+	} };
 	
 	static DRIVER_INIT( pstadium )
 	{
@@ -407,7 +407,7 @@ public class nbmj8991
 	};
 	
 	
-	static READ_HANDLER( io_pstadium_r )
+	public static ReadHandlerPtr io_pstadium_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -421,7 +421,7 @@ public class nbmj8991
 			case	0xf800:	return nb1413m3_dipsw2_r(0);
 			default:	return 0xff;
 		}
-	}
+	} };
 	
 	public static IO_ReadPort readport_pstadium[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -429,7 +429,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_pstadium_w )
+	public static WriteHandlerPtr io_pstadium_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -456,7 +456,7 @@ public class nbmj8991
 			case	0xd000:	break;
 			case	0xf000:	nb1413m3_outcoin_w(0,data); break;
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_pstadium[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -464,7 +464,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_av2mj1bb_w )
+	public static WriteHandlerPtr io_av2mj1bb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -491,7 +491,7 @@ public class nbmj8991
 			case	0xd000:	break;
 			case	0xf000:	break;
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_av2mj1bb[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -499,7 +499,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( io_galkoku_r )
+	public static ReadHandlerPtr io_galkoku_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -515,7 +515,7 @@ public class nbmj8991
 			case	0xf100:	return nb1413m3_dipsw2_r(0);
 			default:	return 0xff;
 		}
-	}
+	} };
 	
 	public static IO_ReadPort readport_galkoku[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -523,7 +523,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_galkoku_w )
+	public static WriteHandlerPtr io_galkoku_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -557,7 +557,7 @@ public class nbmj8991
 			case	0xe000:	break;
 			case	0xf000:	nb1413m3_outcoin_w(0,data); break;
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_galkoku[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -565,7 +565,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( io_hyouban_r )
+	public static ReadHandlerPtr io_hyouban_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -582,7 +582,7 @@ public class nbmj8991
 			case	0xf100:	return nb1413m3_dipsw2_r(0);
 			default:	return 0xff;
 		}
-	}
+	} };
 	
 	public static IO_ReadPort readport_hyouban[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -590,7 +590,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_hyouban_w )
+	public static WriteHandlerPtr io_hyouban_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -624,7 +624,7 @@ public class nbmj8991
 			case	0xe000:	break;
 			case	0xf000:	nb1413m3_outcoin_w(0,data); break;
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_hyouban[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

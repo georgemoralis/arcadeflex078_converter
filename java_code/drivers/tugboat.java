@@ -63,25 +63,25 @@ public class tugboat
 	
 	/* see crtc6845.c. That file is only a placeholder, I process the writes here
 	   because I need the start_addr register to handle scrolling */
-	static WRITE_HANDLER( tugboat_hd46505_0_w )
+	public static WriteHandlerPtr tugboat_hd46505_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int reg;
 		if (offset == 0) reg = data & 0x0f;
 		else if (reg < 18) hd46505_0_reg[reg] = data;
-	}
-	static WRITE_HANDLER( tugboat_hd46505_1_w )
+	} };
+	public static WriteHandlerPtr tugboat_hd46505_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int reg;
 		if (offset == 0) reg = data & 0x0f;
 		else if (reg < 18) hd46505_1_reg[reg] = data;
-	}
+	} };
 	
 	
 	
-	static WRITE_HANDLER( tugboat_score_w )
+	public static WriteHandlerPtr tugboat_score_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tugboat_ram[0x291d + 32*offset] = data ^ 0x0f;	/* ???? */
-	}
+	} };
 	
 	static void draw_tilemap(struct mame_bitmap *bitmap,const struct rectangle *cliprect,
 			int addr,int gfx0,int gfx1,int transparency)
@@ -133,7 +133,7 @@ public class tugboat
 	
 	static int ctrl;
 	
-	static READ_HANDLER( tugboat_input_r )
+	public static ReadHandlerPtr tugboat_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (~ctrl & 0x80)
 			return readinputport(0);
@@ -145,17 +145,17 @@ public class tugboat
 			return readinputport(3);
 		else
 			return readinputport(4);
-	}
+	} };
 	
-	static READ_HANDLER( tugboat_ctrl_r )
+	public static ReadHandlerPtr tugboat_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ctrl;
-	}
+	} };
 	
-	static WRITE_HANDLER( tugboat_ctrl_w )
+	public static WriteHandlerPtr tugboat_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ctrl = data;
-	}
+	} };
 	
 	static struct pia6821_interface pia0_intf =
 	{

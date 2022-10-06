@@ -72,14 +72,14 @@ public class locomotn
 	VIDEO_UPDATE( commsega );
 	
 	
-	static WRITE_HANDLER( coin_1_w )
+	public static WriteHandlerPtr coin_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0,data & 1);
-	}
-	static WRITE_HANDLER( coin_2_w )
+	} };
+	public static WriteHandlerPtr coin_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(1,data & 1);
-	}
+	} };
 	
 	
 	

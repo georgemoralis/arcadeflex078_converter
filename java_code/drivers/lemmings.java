@@ -81,10 +81,10 @@ public class lemmings
 		cpu_set_irq_line(1,1,HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( lemmings_sound_ack_w )
+	public static WriteHandlerPtr lemmings_sound_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1,1,CLEAR_LINE);
-	}
+	} };
 	
 	/******************************************************************************/
 	

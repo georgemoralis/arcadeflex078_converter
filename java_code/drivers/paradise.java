@@ -34,7 +34,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	static WRITE_HANDLER( paradise_rombank_w )
+	public static WriteHandlerPtr paradise_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank = data;
 		int bank_n = memory_region_length(REGION_CPU1)/0x4000 - 1;
@@ -46,13 +46,13 @@ public class paradise
 	
 		if (bank >= 3)	bank+=1;
 		cpu_setbank(1, memory_region(REGION_CPU1) + bank * 0x4000);
-	}
+	} };
 	
-	static WRITE_HANDLER( paradise_okibank_w )
+	public static WriteHandlerPtr paradise_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & ~0x02)	logerror("CPU #0 - PC %04X: unknown oki bank bits %02X\n",activecpu_get_pc(),data);
 		OKIM6295_set_bank_base(1, (data & 0x02) ? 0x40000 : 0);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress paradise_readmem[]={

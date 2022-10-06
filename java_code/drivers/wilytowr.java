@@ -93,41 +93,41 @@ public class wilytowr
 		}
 	}
 	
-	static WRITE_HANDLER( wilytowr_videoram_w )
+	public static WriteHandlerPtr wilytowr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( wilytowr_colorram_w )
+	public static WriteHandlerPtr wilytowr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( wilytowr_videoram2_w )
+	public static WriteHandlerPtr wilytowr_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (wilytowr_videoram2[offset] != data)
 		{
 			wilytowr_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( wilytwr_palbank_w )
+	public static WriteHandlerPtr wilytwr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pal_bank != (data & 0x01))
 		{
 			pal_bank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER( wilytwr_flipscreen_w )
 	{
@@ -217,21 +217,21 @@ public class wilytowr
 	}
 	
 	
-	static WRITE_HANDLER( coin_w )
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset, data & 0x01);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( snd_irq_w )
+	public static WriteHandlerPtr snd_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, 0, PULSE_LINE);
-	}
+	} };
 	
 	
 	static int p1,p2;
 	
-	static WRITE_HANDLER( snddata_w )
+	public static WriteHandlerPtr snddata_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((p2 & 0xf0) == 0xe0)
 			AY8910_control_port_0_w(0,offset);
@@ -244,17 +244,17 @@ public class wilytowr
 		else // if ((p2 & 0xf0) != 0x70)
 			/* the port address is the data, while the data seems to be control bits */
 			logerror("%04x: snddata_w ctrl = %02x, p1 = %02x, p2 = %02x, data = %02x\n",activecpu_get_pc(),data,p1,p2,offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( p1_w )
+	public static WriteHandlerPtr p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		p1 = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( p2_w )
+	public static WriteHandlerPtr p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		p2 = data;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

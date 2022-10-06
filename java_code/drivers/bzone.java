@@ -259,7 +259,7 @@ public class bzone
 		0x09,0x08,0x04,0x00,0x00,0x00,0x00,0x00
 	};
 	
-	static READ_HANDLER( bzone_IN3_r )
+	public static ReadHandlerPtr bzone_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res,res1;
 	
@@ -269,13 +269,13 @@ public class bzone
 		res |= one_joy_trans[res1 & 0x0f];
 	
 		return (res);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( bzone_coin_counter_w )
+	public static WriteHandlerPtr bzone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	
@@ -285,10 +285,10 @@ public class bzone
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( redbaron_joy_r )
+	public static ReadHandlerPtr redbaron_joy_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(rb_input_select ? 5 : 6);
-	}
+	} };
 	
 	
 	
@@ -868,17 +868,17 @@ public class bzone
 	
 	static UINT8 analog_data;
 	
-	static READ_HANDLER( analog_data_r )
+	public static ReadHandlerPtr analog_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return analog_data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( analog_select_w )
+	public static WriteHandlerPtr analog_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset <= 2)
 			analog_data = readinputport(6 + offset);
-	}
+	} };
 	
 	
 	static DRIVER_INIT( bzone )

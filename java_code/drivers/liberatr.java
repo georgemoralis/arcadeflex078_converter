@@ -153,16 +153,16 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( liberatr_led_w )
+	public static WriteHandlerPtr liberatr_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset,~data & 0x10);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( liberatr_coin_counter_w )
+	public static WriteHandlerPtr liberatr_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset ^ 0x01, data);
-	}
+	} };
 	
 	
 	
@@ -172,7 +172,7 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( liberatr_input_port_0_r )
+	public static ReadHandlerPtr liberatr_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int	res ;
 		int xdelta, ydelta;
@@ -194,7 +194,7 @@ public class liberatr
 		}
 	
 		return res;
-	}
+	} };
 	
 	
 	

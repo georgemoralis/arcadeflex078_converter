@@ -69,30 +69,30 @@ public class malzak
 	}
 	
 	
-	static READ_HANDLER( saa5050_r )
+	public static ReadHandlerPtr saa5050_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return saa5050_vidram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( saa5050_w )
+	public static WriteHandlerPtr saa5050_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		saa5050_vidram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( fake_VRLE_r )
+	public static ReadHandlerPtr fake_VRLE_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (s2636_1_ram[0xcb] & 0x3f) + (cpu_getvblank()*0x40);
-	}
+	} };
 	
-	static READ_HANDLER( ram_mirror_r )
+	public static ReadHandlerPtr ram_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_readmem16(0x1000+offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( ram_mirror_w )
+	public static WriteHandlerPtr ram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_writemem16(0x1000+offset,data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -138,32 +138,32 @@ public class malzak
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( s2650_data_r )
+	public static ReadHandlerPtr s2650_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		usrintf_showmessage("S2650 data port read");
 		return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( port40_w )
+	public static WriteHandlerPtr port40_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	usrintf_showmessage("S2650 [0x%04x]: port 0x40 write: 0x%02x",cpunum_get_pc_byte(0),data);
 	//	if(data & 0x01)
 	//		irqenable = 1;
 	//	else
 	//		irqenable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( port60_w )
+	public static WriteHandlerPtr port60_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		temp_x = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( portc0_w )
+	public static WriteHandlerPtr portc0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		temp_y = data;
-	}
+	} };
 	
-	static READ_HANDLER( collision_r )
+	public static ReadHandlerPtr collision_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		// High 4 bits seem to refer to the row affected.
 		static int counter;
@@ -171,7 +171,7 @@ public class malzak
 		if(++counter > 15)
 			counter = 0;
 		return 0xd0 + counter;
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

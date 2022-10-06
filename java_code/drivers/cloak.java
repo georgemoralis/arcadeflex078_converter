@@ -136,15 +136,15 @@ public class cloak
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( cloak_sharedram_r )
+	public static ReadHandlerPtr cloak_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cloak_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_sharedram_w )
+	public static WriteHandlerPtr cloak_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cloak_sharedram[offset] = data;
-	}
+	} };
 	
 	/*************************************
 	 *
@@ -152,34 +152,34 @@ public class cloak
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( cloak_led_w )
+	public static WriteHandlerPtr cloak_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(1 - offset, ~data & 0x80);
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_coin_counter_w )
+	public static WriteHandlerPtr cloak_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(1 - offset, data & 0x80);
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_custom_w )
+	public static WriteHandlerPtr cloak_custom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_irq_reset_0_w )
+	public static WriteHandlerPtr cloak_irq_reset_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, data, CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_irq_reset_1_w )
+	public static WriteHandlerPtr cloak_irq_reset_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, data, CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( cloak_nvram_enable_w )
+	public static WriteHandlerPtr cloak_nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cloak_nvram_enabled = data & 0x01;
-	}
+	} };
 	
 	/*************************************
 	 *

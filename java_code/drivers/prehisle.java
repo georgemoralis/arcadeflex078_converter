@@ -62,12 +62,12 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	static WRITE_HANDLER( D7759_write_port_0_w )
+	public static WriteHandlerPtr D7759_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UPD7759_port_w(offset,data);
 		UPD7759_start_w (0,0);
 		UPD7759_start_w (0,1);
-	}
+	} };
 	
 	public static Memory_ReadAddress prehisle_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

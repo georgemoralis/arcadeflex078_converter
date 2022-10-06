@@ -53,23 +53,23 @@ public class jackal
 	
 	
 	
-	static READ_HANDLER( rotary_0_r )
+	public static ReadHandlerPtr rotary_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (1 << (readinputport(5) * 8 / 256)) ^ 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( rotary_1_r )
+	public static ReadHandlerPtr rotary_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (1 << (readinputport(6) * 8 / 256)) ^ 0xff;
-	}
+	} };
 	
 	static int irq_enable;
 	
-	static WRITE_HANDLER( ctrl_w )
+	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		irq_enable = data & 0x02;
 		flip_screen_set(data & 0x08);
-	}
+	} };
 	
 	INTERRUPT_GEN( jackal_interrupt )
 	{

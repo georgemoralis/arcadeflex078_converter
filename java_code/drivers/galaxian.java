@@ -137,13 +137,13 @@ public class galaxian
 	
 	
 	/* Send sound data to the sound cpu and cause an nmi */
-	static WRITE_HANDLER( checkman_sound_command_w )
+	public static WriteHandlerPtr checkman_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w (0,data);
 		cpu_set_irq_line (1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	static READ_HANDLER( drivfrcg_port0_r )
+	public static ReadHandlerPtr drivfrcg_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (activecpu_get_pc())
 		{
@@ -153,7 +153,7 @@ public class galaxian
 		}
 	
 	    return 0;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress galaxian_readmem[]={

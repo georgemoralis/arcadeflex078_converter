@@ -109,7 +109,7 @@ public class fcombat
 	
 	/* is it protection? */
 	
-	static READ_HANDLER( fcombat_protection_r )
+	public static ReadHandlerPtr fcombat_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Must match ONE of these values after a "and  $3E" intruction :
 	
@@ -119,19 +119,19 @@ public class fcombat
 		*/
 	
 		return 0xff;	// seems enough
-	}
+	} };
 	
 	
 	/* same as exerion again */
 	
-	static READ_HANDLER( fcombat_port01_r )
+	public static ReadHandlerPtr fcombat_port01_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* the cocktail flip bit muxes between ports 0 and 1 */
 		return exerion_cocktail_flip ? input_port_1_r(offset) : input_port_0_r(offset);
-	}
+	} };
 	
 	
-	static READ_HANDLER( fcombat_port3_r )
+	public static ReadHandlerPtr fcombat_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bit 0 is VBLANK, which we simulate manually */
 		int result = input_port_3_r(offset);
@@ -139,7 +139,7 @@ public class fcombat
 		if (ybeam > Machine->visible_area.max_y)
 			result |= 1;
 		return result;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress fcombat_readmem[]={

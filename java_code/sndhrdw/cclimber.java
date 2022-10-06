@@ -65,10 +65,10 @@ public class cclimber
 	
 	static int sample_num,sample_freq,sample_volume;
 	
-	static WRITE_HANDLER( cclimber_sample_select_w )
+	public static WriteHandlerPtr cclimber_sample_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sample_num = data;
-	}
+	} };
 	
 	WRITE_HANDLER( cclimber_sample_rate_w )
 	{

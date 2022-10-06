@@ -31,17 +31,17 @@ public class quizdna
 	WRITE_HANDLER( paletteram_xBGR_RRRR_GGGG_BBBB_w );
 	
 	
-	static WRITE_HANDLER( quizdna_rombank_w )
+	public static WriteHandlerPtr quizdna_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *ROM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&ROM[0x10000+0x4000*(data & 0x3f)]);
-	}
+	} };
 	
-	static WRITE_HANDLER( gekiretu_rombank_w )
+	public static WriteHandlerPtr gekiretu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *ROM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&ROM[0x10000+0x4000*((data & 0x3f) ^ 0x0a)]);
-	}
+	} };
 	
 	/****************************************************************************/
 	

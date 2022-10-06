@@ -193,8 +193,6 @@ public class itech8
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( pia_porta_out );
-	static WRITE_HANDLER( pia_portb_out );
 	
 	static struct pia6821_interface pia_interface =
 	{
@@ -262,11 +260,11 @@ public class itech8
 	}
 	
 	
-	static WRITE_HANDLER( itech8_nmi_ack_w )
+	public static WriteHandlerPtr itech8_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	/* doesn't seem to hold for every game (e.g., hstennis) */
 	/*	cpu_set_nmi_line(0, CLEAR_LINE);*/
-	}
+	} };
 	
 	
 	static void generate_sound_irq(int state)
@@ -316,7 +314,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( blitter_w )
+	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0x20 on address 7 controls CPU banking */
 		if (offset / 2 == 7)
@@ -324,14 +322,14 @@ public class itech8
 	
 		/* the rest is handled by the video hardware */
 		itech8_blitter_w(offset, data);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( rimrockn_bank_w )
+	public static WriteHandlerPtr rimrockn_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* banking is controlled here instead of by the blitter output */
 		cpu_setbank(1, &memory_region(REGION_CPU1)[0x4000 + 0xc000 * (data & 3)]);
-	}
+	} };
 	
 	
 	
@@ -341,12 +339,12 @@ public class itech8
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( special_port0_r )
+	public static ReadHandlerPtr special_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t result = readinputport(0);
 		result = (result & 0xfe) | (pia_portb_data & 0x01);
 		return result;
-	}
+	} };
 	
 	
 	
@@ -356,14 +354,14 @@ public class itech8
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( pia_porta_out )
+	public static WriteHandlerPtr pia_porta_out = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("PIA port A write = %02x\n", data);
 		pia_porta_data = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( pia_portb_out )
+	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("PIA port B write = %02x\n", data);
 	
@@ -374,10 +372,10 @@ public class itech8
 		pia_portb_data = data;
 		ticket_dispenser_w(0, (data & 0x10) << 3);
 		coin_counter_w(0, (data & 0x20) >> 5);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( ym2203_portb_out )
+	public static WriteHandlerPtr ym2203_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("YM2203 port B write = %02x\n", data);
 	
@@ -388,7 +386,7 @@ public class itech8
 		pia_portb_data = data;
 		ticket_dispenser_w(0, data & 0x80);
 		coin_counter_w(0, (data & 0x20) >> 5);
-	}
+	} };
 	
 	
 	
@@ -405,13 +403,13 @@ public class itech8
 	}
 	
 	
-	static WRITE_HANDLER( sound_data_w )
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, delayed_sound_data_w);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( gtg2_sound_data_w )
+	public static WriteHandlerPtr gtg2_sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* on the later GTG2 board, they swizzle the data lines */
 		data = ((data & 0x80) >> 7) |
@@ -419,14 +417,14 @@ public class itech8
 		       ((data & 0x20) >> 3) |
 		       ((data & 0x02) << 5);
 		timer_set(TIME_NOW, data, delayed_sound_data_w);
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_data_r )
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
 		return sound_data;
-	}
+	} };
 	
 	
 	
@@ -453,7 +451,7 @@ public class itech8
 	}
 	
 	
-	static WRITE_HANDLER( via6522_w )
+	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		double period;
 	
@@ -485,10 +483,10 @@ public class itech8
 				if (FULL_LOGGING) logerror("VIA write(%02x) = %02x\n", offset, data);
 				break;
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( via6522_r )
+	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0;
 	
@@ -508,7 +506,7 @@ public class itech8
 	
 		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x\n", offset, result);
 		return result;
-	}
+	} };
 	
 	
 	

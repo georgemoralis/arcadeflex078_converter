@@ -151,21 +151,21 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	static READ_HANDLER( m92_eeprom_r )
+	public static ReadHandlerPtr m92_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *RAM = memory_region(REGION_USER1);
 	//	logerror("%05x: EEPROM RE %04x\n",activecpu_get_pc(),offset);
 		return RAM[offset/2];
-	}
+	} };
 	
-	static WRITE_HANDLER( m92_eeprom_w )
+	public static WriteHandlerPtr m92_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_USER1);
 	//	logerror("%05x: EEPROM WR %04x\n",activecpu_get_pc(),offset);
 		RAM[offset/2]=data;
-	}
+	} };
 	
-	static WRITE_HANDLER( m92_coincounter_w )
+	public static WriteHandlerPtr m92_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==0) {
 			coin_counter_w(0,data & 0x01);
@@ -174,19 +174,19 @@ public class m92
 			/* Bit 0x8 is Memcard related in RTypeLeo */
 			/* Bit 0x40 set in Blade Master test mode input check */
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( m92_bankswitch_w )
+	public static WriteHandlerPtr m92_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==1) return; /* Unused top byte */
 		bankaddress = 0x100000 + ((data&0x7)*0x10000);
 		set_m92_bank();
-	}
+	} };
 	
-	static READ_HANDLER( m92_port_4_r )
+	public static ReadHandlerPtr m92_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(4) | m92_sprite_buffer_busy; /* Bit 7 low indicates busy */
-	}
+	} };
 	
 	/*****************************************************************************/
 	
@@ -214,7 +214,7 @@ public class m92
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	}
 	
-	static WRITE_HANDLER( m92_soundlatch_w )
+	public static WriteHandlerPtr m92_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==0)
 		{
@@ -222,17 +222,17 @@ public class m92
 			soundlatch_w(0,data);
 	//		logerror("soundlatch_w %02x\n",data);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( m92_sound_status_r )
+	public static ReadHandlerPtr m92_sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//logerror("%06x: read sound status\n",activecpu_get_pc());
 		if (offset == 0)
 			return sound_status&0xff;
 		return sound_status>>8;
-	}
+	} };
 	
-	static READ_HANDLER( m92_soundlatch_r )
+	public static ReadHandlerPtr m92_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset == 0)
 		{
@@ -241,15 +241,15 @@ public class m92
 			return res;
 		}
 		else return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( m92_sound_irq_ack_w )
+	public static WriteHandlerPtr m92_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0)
 			timer_set(TIME_NOW,V30_CLEAR,setvector_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( m92_sound_status_w )
+	public static WriteHandlerPtr m92_sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0) {
 			sound_status = data | (sound_status&0xff00);
@@ -257,7 +257,7 @@ public class m92
 		}
 		else
 			sound_status = (data<<8) | (sound_status&0xff);
-	}
+	} };
 	
 	/*****************************************************************************/
 	
@@ -2068,23 +2068,23 @@ public class m92
 	
 	/***************************************************************************/
 	
-	static READ_HANDLER( lethalth_cycle_r )
+	public static ReadHandlerPtr lethalth_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc()==0x1f4 && m92_ram[0x1e]==2 && offset==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x1e + offset];
-	}
+	} };
 	
-	static READ_HANDLER( hook_cycle_r )
+	public static ReadHandlerPtr hook_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc()==0x55ba && m92_ram[0x12]==0 && m92_ram[0x13]==0 && offset==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x12 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( bmaster_cycle_r )
+	public static ReadHandlerPtr bmaster_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int d=activecpu_geticount();
 	
@@ -2102,9 +2102,9 @@ public class m92
 			}
 		}
 		return m92_ram[0x6fde + offset];
-	}
+	} };
 	
-	static READ_HANDLER( psoldier_cycle_r )
+	public static ReadHandlerPtr psoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0]+(m92_ram[1]<<8);
 		int b=m92_ram[0x1aec]+(m92_ram[0x1aed]<<8);
@@ -2114,9 +2114,9 @@ public class m92
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x1aec + offset];
-	}
+	} };
 	
-	static READ_HANDLER( ssoldier_cycle_r )
+	public static ReadHandlerPtr ssoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0]+(m92_ram[1]<<8);
 		int b=m92_ram[0x1aec]+(m92_ram[0x1aed]<<8);
@@ -2126,9 +2126,9 @@ public class m92
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x1aec + offset];
-	}
+	} };
 	
-	static READ_HANDLER( psoldier_snd_cycle_r )
+	public static ReadHandlerPtr psoldier_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_snd_ram[0xc34];
 	//logerror("%08x: %d %d\n",activecpu_get_pc(),a,offset);
@@ -2137,9 +2137,9 @@ public class m92
 		}
 	
 		return m92_snd_ram[0xc34 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( inthunt_cycle_r )
+	public static ReadHandlerPtr inthunt_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int d=activecpu_geticount();
 		int line = 256 - cpu_getiloops();
@@ -2160,9 +2160,9 @@ public class m92
 		}
 	
 		return m92_ram[0x25e + offset];
-	}
+	} };
 	
-	static READ_HANDLER( uccops_cycle_r )
+	public static ReadHandlerPtr uccops_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0x3f28]+(m92_ram[0x3f29]<<8);
 		int b=m92_ram[0x3a00]+(m92_ram[0x3a01]<<8);
@@ -2182,25 +2182,25 @@ public class m92
 		}
 	
 		return m92_ram[0x3a02 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( rtypeleo_cycle_r )
+	public static ReadHandlerPtr rtypeleo_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc()==0x30791 && offset==0 && m92_ram[0x32]==2 && m92_ram[0x33]==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x32 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( rtypelej_cycle_r )
+	public static ReadHandlerPtr rtypelej_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc()==0x307a3 && offset==0 && m92_ram[0x32]==2 && m92_ram[0x33]==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x32 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( gunforce_cycle_r )
+	public static ReadHandlerPtr gunforce_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0x6542]+(m92_ram[0x6543]<<8);
 		int b=m92_ram[0x61d0]+(m92_ram[0x61d1]<<8);
@@ -2219,9 +2219,9 @@ public class m92
 		}
 	
 		return m92_ram[0x61d0 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( dsccr94j_cycle_r )
+	public static ReadHandlerPtr dsccr94j_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0x965a]+(m92_ram[0x965b]<<8);
 		int d=activecpu_geticount();
@@ -2236,9 +2236,9 @@ public class m92
 		}
 	
 		return m92_ram[0x8636 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( gunforc2_cycle_r )
+	public static ReadHandlerPtr gunforc2_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_ram[0x9fa0]+(m92_ram[0x9fa1]<<8);
 		int b=m92_ram[0x9fa2]+(m92_ram[0x9fa3]<<8);
@@ -2255,9 +2255,9 @@ public class m92
 		}
 	
 		return m92_ram[0x9fa0 + offset];
-	}
+	} };
 	
-	static READ_HANDLER( gunforc2_snd_cycle_r )
+	public static ReadHandlerPtr gunforc2_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int a=m92_snd_ram[0xc31];
 	
@@ -2266,7 +2266,7 @@ public class m92
 		}
 	
 		return m92_snd_ram[0xc30 + offset];
-	}
+	} };
 	
 	/***************************************************************************/
 	

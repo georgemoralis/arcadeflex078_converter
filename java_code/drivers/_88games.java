@@ -33,7 +33,7 @@ public class _88games
 	
 	static int zoomreadroms;
 	
-	static READ_HANDLER( bankedram_r )
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (videobank) return ram[offset];
 		else
@@ -43,15 +43,15 @@ public class _88games
 			else
 				return K051316_0_r(offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bankedram_w )
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videobank) ram[offset] = data;
 		else K051316_0_w(offset,data);
-	}
+	} };
 	
-	static WRITE_HANDLER( k88games_5f84_w )
+	public static WriteHandlerPtr k88games_5f84_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0/1 coin counters */
 		coin_counter_w(0,data & 0x01);
@@ -63,15 +63,15 @@ public class _88games
 	
 		if (data & 0xf8)
 			usrintf_showmessage("5f84 = %02x",data);
-	}
+	} };
 	
-	static WRITE_HANDLER( k88games_sh_irqtrigger_w )
+	public static WriteHandlerPtr k88games_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
-	}
+	} };
 	
 	/* handle fake button for speed cheat for players 1 and 2 */
-	static READ_HANDLER( cheat1_r )
+	public static ReadHandlerPtr cheat1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		static int cheat = 0;
@@ -86,10 +86,10 @@ public class _88games
 			cheat = (cheat+1)%4;
 		}
 		return res;
-	}
+	} };
 	
 	/* handle fake button for speed cheat for players 3 and 4 */
-	static READ_HANDLER( cheat2_r )
+	public static ReadHandlerPtr cheat2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		static int cheat = 0;
@@ -104,20 +104,20 @@ public class _88games
 			cheat = (cheat+1)%4;
 		}
 		return res;
-	}
+	} };
 	
 	static int speech_chip;
-	static WRITE_HANDLER( speech_control_w )
+	public static WriteHandlerPtr speech_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		speech_chip = ( data & 4 ) ? 1 : 0;
 		UPD7759_reset_w( speech_chip, data & 2 );
 		UPD7759_start_w( speech_chip, data & 1 );
-	}
+	} };
 	
-	static WRITE_HANDLER( speech_msg_w )
+	public static WriteHandlerPtr speech_msg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UPD7759_port_w( speech_chip, data );
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -48,39 +48,39 @@ public class kingobox
 	static UINT8 *sprite_shared;
 	int kingofb_nmi_enable = 0;
 	
-	static READ_HANDLER( video_shared_r ) {
+	public static ReadHandlerPtr video_shared_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return video_shared[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( video_shared_w ) {
+	public static WriteHandlerPtr video_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		video_shared[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( sprite_shared_r ) {
+	public static ReadHandlerPtr sprite_shared_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return sprite_shared[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sprite_shared_w ) {
+	public static WriteHandlerPtr sprite_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		sprite_shared[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( video_interrupt_w ) {
+	public static WriteHandlerPtr video_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
-	}
+	} };
 	
-	static WRITE_HANDLER( sprite_interrupt_w ) {
+	public static WriteHandlerPtr sprite_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		cpu_set_irq_line_and_vector( 2, 0, HOLD_LINE, 0xff );
-	}
+	} };
 	
-	static WRITE_HANDLER( scroll_interrupt_w ) {
+	public static WriteHandlerPtr scroll_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		sprite_interrupt_w( offset, data );
 		*kingofb_scroll_y = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_command_w ) {
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		soundlatch_w( 0, data );
 		cpu_set_irq_line_and_vector( 3, 0, HOLD_LINE, 0xff );
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress main_readmem[]={

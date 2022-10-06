@@ -314,7 +314,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( input_r )
+	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = input_port_0_r(offset);
 	
@@ -330,7 +330,7 @@ public class exidy440
 	
 		/* return with the appropriate XOR */
 		return result ^ port_0_xor;
-	}
+	} };
 	
 	
 	
@@ -340,7 +340,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( bankram_w )
+	public static WriteHandlerPtr bankram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* EEROM lives in the upper 8k of bank 15 */
 		if (exidy440_bank == 15 && offset >= 0x2000)
@@ -350,7 +350,7 @@ public class exidy440
 		}
 	
 		/* everything else is ROM and we ignore it */
-	}
+	} };
 	
 	
 	
@@ -360,7 +360,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( io1_r )
+	public static ReadHandlerPtr io1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0xff;
 	
@@ -420,7 +420,7 @@ public class exidy440
 		}
 	
 		return result;
-	}
+	} };
 	
 	
 	
@@ -440,7 +440,7 @@ public class exidy440
 	}
 	
 	
-	static WRITE_HANDLER( io1_w )
+	public static WriteHandlerPtr io1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("W I/O1[%02X]=%02X\n", offset, data);
 	
@@ -476,7 +476,7 @@ public class exidy440
 					topsecex_yscroll = data;
 				break;
 		}
-	}
+	} };
 	
 	
 	

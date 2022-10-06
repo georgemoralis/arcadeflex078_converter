@@ -61,7 +61,7 @@ public class sidearms
 	
 	int sidearms_gameid;
 	
-	static WRITE_HANDLER( sidearms_bankswitch_w )
+	public static WriteHandlerPtr sidearms_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -70,13 +70,13 @@ public class sidearms
 		/* bits 0 and 1 select the ROM bank */
 		bankaddress = 0x10000 + (data & 0x0f) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	
 	
 	
 	/* Turtle Ship input ports are rotated 90 degrees */
-	static READ_HANDLER( turtship_ports_r )
+	public static ReadHandlerPtr turtship_ports_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int i,res;
 	
@@ -86,7 +86,7 @@ public class sidearms
 			res |= ((readinputport(i) >> offset) & 1) << i;
 	
 		return res;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -180,13 +180,13 @@ public class sidearms
 	
 	/* Whizz */
 	
-	static WRITE_HANDLER( whizz_bankswitch_w )
+	public static WriteHandlerPtr whizz_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		bankaddress = 0x10000 + (data & 0xc0) * 0x100;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress whizz_readmem[]={

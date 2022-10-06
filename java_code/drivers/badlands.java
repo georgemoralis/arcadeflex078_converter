@@ -219,7 +219,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( audio_io_r )
+	public static ReadHandlerPtr audio_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0xff;
 	
@@ -264,10 +264,10 @@ public class badlands
 		}
 	
 		return result;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( audio_io_w )
+	public static WriteHandlerPtr audio_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 0x206)
 		{
@@ -304,7 +304,7 @@ public class badlands
 				memcpy(bank_base, &bank_source_data[0x1000 * ((data >> 6) & 3)], 0x1000);
 				break;
 		}
-	}
+	} };
 	
 	
 	

@@ -146,19 +146,19 @@ public class victory
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( sound_response_r )
+	public static ReadHandlerPtr sound_response_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (LOG_SOUND) logerror("%04X:!!!! Sound response read = %02X\n", activecpu_get_previouspc(), sound_response);
 		pia_0_cb1_w(0, 0);
 		return sound_response;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_status_r )
+	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (LOG_SOUND) logerror("%04X:!!!! Sound status read = %02X\n", activecpu_get_previouspc(), (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6));
 		return (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6);
-	}
+	} };
 	
 	
 	static void delayed_command_w(int data)
@@ -168,10 +168,10 @@ public class victory
 		if (LOG_SOUND) logerror("%04X:!!!! Sound command = %02X\n", activecpu_get_previouspc(), data);
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, delayed_command_w);
-	}
+	} };
 	
 	
 	WRITE_HANDLER( victory_sound_response_w )
@@ -204,13 +204,13 @@ public class victory
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( lamp_control_w )
+	public static WriteHandlerPtr lamp_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,data & 0x80);
 		set_led_status(1,data & 0x40);
 		set_led_status(2,data & 0x20);
 		set_led_status(3,data & 0x10);
-	}
+	} };
 	
 	
 	

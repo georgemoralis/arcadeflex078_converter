@@ -201,7 +201,7 @@ public class cabal
 	
 	/*********************************************************************/
 	
-	static READ_HANDLER( cabalbl_snd_r )
+	public static ReadHandlerPtr cabalbl_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(offset){
 			case 0x06: return input_port_3_r(0);
@@ -209,15 +209,15 @@ public class cabal
 			case 0x0a: return cabal_sound_command1;
 			default: return(0xff);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( cabalbl_snd_w )
+	public static WriteHandlerPtr cabalbl_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch( offset ){
 			case 0x00: cabalbl_play_adpcm( 0, data ); break;
 			case 0x02: cabalbl_play_adpcm( 1, data ); break;
 	     }
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem_sound[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

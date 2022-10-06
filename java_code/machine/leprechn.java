@@ -10,12 +10,12 @@ public class leprechn
 	
 	static data8_t input_port_select;
 	
-	static WRITE_HANDLER( leprechn_input_port_select_w )
+	public static WriteHandlerPtr leprechn_input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    input_port_select = data;
-	}
+	} };
 	
-	static READ_HANDLER( leprechn_input_port_r )
+	public static ReadHandlerPtr leprechn_input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    switch (input_port_select)
 	    {
@@ -34,20 +34,20 @@ public class leprechn
 	    }
 	
 	    return 0xff;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( leprechn_coin_counter_w )
+	public static WriteHandlerPtr leprechn_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset, !data);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( leprechn_sh_w )
+	public static WriteHandlerPtr leprechn_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    soundlatch_w(offset,data);
 	    cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
-	}
+	} };
 	
 	
 	

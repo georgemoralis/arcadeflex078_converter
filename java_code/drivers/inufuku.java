@@ -116,17 +116,17 @@ public class inufuku
 		}
 	}
 	
-	static WRITE_HANDLER( pending_command_clear_w )
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pending_command = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( inufuku_soundrombank_w )
+	public static WriteHandlerPtr inufuku_soundrombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *ROM = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1, ROM + (data & 0x03) * 0x8000);
-	}
+	} };
 	
 	
 	/******************************************************************************

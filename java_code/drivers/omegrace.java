@@ -247,17 +247,17 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( omegrace_vg_go_r )
+	public static ReadHandlerPtr omegrace_vg_go_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		avgdvg_go_w(0,0);
 		return 0;
-	}
+	} };
 	
 	
-	static READ_HANDLER( omegrace_vg_status_r )
+	public static ReadHandlerPtr omegrace_vg_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return avgdvg_done() ? 0x00 : 0x80;
-	}
+	} };
 	
 	
 	

@@ -76,7 +76,7 @@ public class hyhoo
 	};
 	
 	
-	static READ_HANDLER( io_hyhoo_r )
+	public static ReadHandlerPtr io_hyhoo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -94,7 +94,7 @@ public class hyhoo
 			case	0xe100:	return nb1413m3_gfxrom_r((offset & 0x0100) >> 8);
 			default:	return 0xff;
 		}
-	}
+	} };
 	
 	public static IO_ReadPort readport_hyhoo[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -102,7 +102,7 @@ public class hyhoo
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_hyhoo_w )
+	public static WriteHandlerPtr io_hyhoo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -140,7 +140,7 @@ public class hyhoo
 					break;
 			case	0xf000:	break;
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_hyhoo[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

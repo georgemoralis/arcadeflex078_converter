@@ -1829,11 +1829,11 @@ public class _8080bw
 	
 	static int sfl_int=0;
 	
-	static READ_HANDLER( sfl_input_r )
+	public static ReadHandlerPtr sfl_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		sfl_int^=0x80;//vblank flag ?
 		return sfl_int|input_port_1_r(0);
-	}
+	} };
 	
 	public static Memory_ReadAddress sflush_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

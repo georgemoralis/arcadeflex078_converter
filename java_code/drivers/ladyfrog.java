@@ -75,23 +75,23 @@ public class ladyfrog
 	READ_HANDLER( ladyfrog_scrlram_r );
 	READ_HANDLER( ladyfrog_videoram_r );
 	
-	static READ_HANDLER( from_snd_r )
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		snd_flag=0;
 		return snd_data;
-	}
+	} };
 	
-	static WRITE_HANDLER( to_main_w )
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_data = data;
 		snd_flag = 2;
 	
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_cpu_reset_w )
+	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(1, (data&1 )? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
 	static void nmi_callback(int param)
 	{
@@ -99,18 +99,18 @@ public class ladyfrog
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_disable_w )
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -118,7 +118,7 @@ public class ladyfrog
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	static WRITE_HANDLER(unk_w)
 	{
@@ -144,10 +144,10 @@ public class ladyfrog
 		{ 100 }
 	};
 	
-	static READ_HANDLER( snd_flag_r )
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return snd_flag | 0xfd;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

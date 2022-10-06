@@ -62,14 +62,14 @@ public class zodiack
 	}
 	
 	
-	static WRITE_HANDLER( zodiack_control_w )
+	public static WriteHandlerPtr zodiack_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Bit 0-1 - coin counters */
 		coin_counter_w(0, data & 0x02);
 		coin_counter_w(1, data & 0x01);
 	
 		/* Bit 2 - ???? */
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

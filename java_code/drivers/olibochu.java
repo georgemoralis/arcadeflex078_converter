@@ -182,7 +182,7 @@ public class olibochu
 	}
 	
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int cmd;
 		int c;
@@ -195,7 +195,7 @@ public class olibochu
 			if (cmd & (1 << c)) break;
 	
 		if (c >= 0) soundlatch_w(0,15-c);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

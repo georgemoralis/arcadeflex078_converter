@@ -54,12 +54,12 @@ public class circus
 	#if 0
 	static int circus_interrupt;
 	
-	static READ_HANDLER( ripcord_IN2_r )
+	public static ReadHandlerPtr ripcord_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		circus_interrupt ++;
 		logerror("circus_int: %02x\n", circus_interrupt);
 		return readinputport (2);
-	}
+	} };
 	#endif
 	
 	

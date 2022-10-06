@@ -78,17 +78,17 @@ public class sprcros2
 	int sprcros2_m_port7 = 0;
 	static int sprcros2_s_port3 = 0;
 	
-	static READ_HANDLER( sprcros2_sharedram_r )
+	public static ReadHandlerPtr sprcros2_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sprcros2_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sprcros2_sharedram_w )
+	public static WriteHandlerPtr sprcros2_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sprcros2_sharedram[offset]=data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sprcros2_m_port7_w )
+	public static WriteHandlerPtr sprcros2_m_port7_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -107,9 +107,9 @@ public class sprcros2
 		tilemap_set_flip( ALL_TILEMAPS,data&0x02?(TILEMAP_FLIPX|TILEMAP_FLIPY):0 );
 	
 		sprcros2_m_port7 = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sprcros2_s_port3_w )
+	public static WriteHandlerPtr sprcros2_s_port3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -123,7 +123,7 @@ public class sprcros2
 			cpu_setbank(2,&RAM[0x10000+((data&0x08)<<10)]);
 	
 		sprcros2_s_port3 = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress sprcros2_m_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

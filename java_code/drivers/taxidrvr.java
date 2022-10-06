@@ -30,22 +30,22 @@ public class taxidrvr
 	
 	static int s1,s2,s3,s4,latchA,latchB;
 	
-	static READ_HANDLER( p0a_r )
+	public static ReadHandlerPtr p0a_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return latchA;
-	}
+	} };
 	
-	static READ_HANDLER( p0c_r )
+	public static ReadHandlerPtr p0c_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (s1 << 7);
-	}
+	} };
 	
-	static WRITE_HANDLER( p0b_w )
+	public static WriteHandlerPtr p0b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latchB = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( p0c_w )
+	public static WriteHandlerPtr p0c_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s2 = data & 1;
 	
@@ -56,45 +56,45 @@ public class taxidrvr
 		flip_screen_set(data & 8);
 	
 	//	usrintf_showmessage("%02x",data&0x0f);
-	}
+	} };
 	
-	static READ_HANDLER( p1b_r )
+	public static ReadHandlerPtr p1b_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return latchB;
-	}
+	} };
 	
-	static READ_HANDLER( p1c_r )
+	public static ReadHandlerPtr p1c_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (s2 << 7) | (s4 << 6) | ((readinputport(5) & 1) << 4);
-	}
+	} };
 	
-	static WRITE_HANDLER( p1a_w )
+	public static WriteHandlerPtr p1a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latchA = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( p1c_w )
+	public static WriteHandlerPtr p1c_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s1 = data & 1;
 		s3 = (data & 2) >> 1;
-	}
+	} };
 	
-	static READ_HANDLER( p8910_0a_r )
+	public static ReadHandlerPtr p8910_0a_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return latchA;
-	}
+	} };
 	
-	static READ_HANDLER( p8910_1a_r )
+	public static ReadHandlerPtr p8910_1a_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return s3;
-	}
+	} };
 	
 	/* note that a lot of writes happen with port B set as input. I think this is a bug in the
 	   original, since it works anyway even if the communication is flawed. */
-	static WRITE_HANDLER( p8910_0b_w )
+	public static WriteHandlerPtr p8910_0b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s4 = data & 1;
-	}
+	} };
 	
 	
 	static ppi8255_interface ppi8255_intf =

@@ -33,7 +33,7 @@ public class circusc
 	
 	
 	
-	static READ_HANDLER( circusc_sh_timer_r )
+	public static ReadHandlerPtr circusc_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int clock;
 	#define CIRCUSCHALIE_TIMER_RATE (14318180/6144)
@@ -41,22 +41,22 @@ public class circusc
 		clock = (activecpu_gettotalcycles()*4) / CIRCUSCHALIE_TIMER_RATE;
 	
 		return clock & 0xF;
-	}
+	} };
 	
-	static WRITE_HANDLER( circusc_sh_irqtrigger_w )
+	public static WriteHandlerPtr circusc_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
-	static WRITE_HANDLER( circusc_dac_w )
+	public static WriteHandlerPtr circusc_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_data_w(0,data);
-	}
+	} };
 	
-	static WRITE_HANDLER( circusc_coin_counter_w )
+	public static WriteHandlerPtr circusc_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	

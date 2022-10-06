@@ -22,7 +22,6 @@ public class chqflag
 	
 	static int K051316_readroms;
 	
-	static WRITE_HANDLER( k007232_extvolume_w );
 	
 	/* from vidhrdw/chqflag.c */
 	VIDEO_START( chqflag );
@@ -43,7 +42,7 @@ public class chqflag
 		}
 	}
 	
-	static WRITE_HANDLER( chqflag_bankswitch_w )
+	public static WriteHandlerPtr chqflag_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -73,9 +72,9 @@ public class chqflag
 		}
 	
 		/* other bits unknown/unused */
-	}
+	} };
 	
-	static WRITE_HANDLER( chqflag_vreg_w )
+	public static WriteHandlerPtr chqflag_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 	
@@ -118,16 +117,16 @@ public class chqflag
 	
 	
 		/* other bits unknown. bit 5 is used. */
-	}
+	} };
 	
 	static int analog_ctrl;
 	
-	static WRITE_HANDLER( select_analog_ctrl_w )
+	public static WriteHandlerPtr select_analog_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		analog_ctrl = data;
-	}
+	} };
 	
-	static READ_HANDLER( analog_read_r )
+	public static ReadHandlerPtr analog_read_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int accel, wheel;
 	
@@ -139,7 +138,7 @@ public class chqflag
 		}
 	
 		return 0xff;
-	}
+	} };
 	
 	WRITE_HANDLER( chqflag_sh_irqtrigger_w )
 	{
@@ -204,7 +203,7 @@ public class chqflag
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( k007232_bankswitch_w )
+	public static WriteHandlerPtr k007232_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank_A, bank_B;
 	
@@ -217,7 +216,7 @@ public class chqflag
 		bank_A = ((data >> 0) & 0x03);
 		bank_B = ((data >> 2) & 0x03);
 		K007232_set_bank( 1, bank_A, bank_B );
-	}
+	} };
 	
 	public static Memory_WriteAddress chqflag_writemem_sound[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -355,10 +354,10 @@ public class chqflag
 		K007232_set_volume(0,1,0,(v >> 4)*0x11);
 	}
 	
-	static WRITE_HANDLER( k007232_extvolume_w )
+	public static WriteHandlerPtr k007232_extvolume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		K007232_set_volume(1,1,(data & 0x0f)*0x11/2,(data >> 4)*0x11/2);
-	}
+	} };
 	
 	static void volume_callback1(int v)
 	{

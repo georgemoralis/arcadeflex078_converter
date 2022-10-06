@@ -74,7 +74,7 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( canyon_switches_r )
+	public static ReadHandlerPtr canyon_switches_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = 0;
 	
@@ -88,19 +88,19 @@ public class canyon
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static READ_HANDLER( canyon_options_r )
+	public static ReadHandlerPtr canyon_options_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(0) >> (2 * (~offset & 3))) & 3;
-	}
+	} };
 	
 	
-	static READ_HANDLER( canyon_wram_r )
+	public static ReadHandlerPtr canyon_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_CPU1)[offset];
-	}
+	} };
 	
 	
 	
@@ -110,40 +110,40 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( canyon_led_w )
+	public static WriteHandlerPtr canyon_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset & 0x01, offset & 0x02);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( canyon_motor_w )
+	public static WriteHandlerPtr canyon_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(offset & 0x01, data & 0x0f);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( canyon_explode_w )
+	public static WriteHandlerPtr canyon_explode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(6, data / 16);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( canyon_attract_w )
+	public static WriteHandlerPtr canyon_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(4 + (offset & 0x01), !(offset & 0x02));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( canyon_whistle_w )
+	public static WriteHandlerPtr canyon_whistle_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(2 + (offset & 0x01), (offset & 0x02) >> 1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( canyon_wram_w )
+	public static WriteHandlerPtr canyon_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		memory_region(REGION_CPU1)[offset] = data;
-	}
+	} };
 	
 	
 	

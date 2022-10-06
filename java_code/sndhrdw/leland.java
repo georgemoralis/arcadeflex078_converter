@@ -307,8 +307,6 @@ public class leland
 	
 	static void set_dac_frequency(int which, int frequency);
 	
-	static READ_HANDLER( peripheral_r );
-	static WRITE_HANDLER( peripheral_w );
 	
 	
 	
@@ -1106,7 +1104,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( i186_internal_port_r )
+	public static ReadHandlerPtr i186_internal_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int shift = 8 * (offset & 1);
 		int temp, which;
@@ -1281,7 +1279,7 @@ public class leland
 				break;
 		}
 		return 0x00;
-	}
+	} };
 	
 	
 	
@@ -1291,7 +1289,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( i186_internal_port_w )
+	public static WriteHandlerPtr i186_internal_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static UINT8 even_byte;
 		int temp, which, data16;
@@ -1538,7 +1536,7 @@ public class leland
 				logerror("%05X:80186 port %02X = %04X\n", activecpu_get_pc(), offset, data16);
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -1560,7 +1558,7 @@ public class leland
 	}
 	
 	
-	static READ_HANDLER( pit8254_r )
+	public static ReadHandlerPtr pit8254_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		struct counter_state *ctr;
 		int which = offset / 0x80;
@@ -1599,10 +1597,10 @@ public class leland
 				break;
 		}
 		return 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( pit8254_w )
+	public static WriteHandlerPtr pit8254_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		struct counter_state *ctr;
 		int which = offset / 0x80;
@@ -1670,7 +1668,7 @@ public class leland
 				ctr->mode = (data >> 1) & 7;
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -1764,7 +1762,7 @@ public class leland
 	}
 	
 	
-	static READ_HANDLER( main_to_sound_comm_r )
+	public static ReadHandlerPtr main_to_sound_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (!(offset & 1))
 		{
@@ -1776,7 +1774,7 @@ public class leland
 			if (LOG_COMM) logerror("%05X:Read sound command latch hi = %02X\n", activecpu_get_pc(), sound_command[1]);
 			return sound_command[1];
 		}
-	}
+	} };
 	
 	
 	
@@ -1826,11 +1824,11 @@ public class leland
 	}
 	
 	
-	static WRITE_HANDLER( sound_to_main_comm_w )
+	public static WriteHandlerPtr sound_to_main_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (LOG_COMM) logerror("%05X:Write sound response latch = %02X\n", activecpu_get_pc(), data);
 		sound_response = data;
-	}
+	} };
 	
 	
 	
@@ -1868,7 +1866,7 @@ public class leland
 	}
 	
 	
-	static WRITE_HANDLER( dac_w )
+	public static WriteHandlerPtr dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int which = offset / 2;
 		struct dac_state *d = &dac[which];
@@ -1905,10 +1903,10 @@ public class leland
 			d->volume = (data ^ 0x00) / DAC_VOLUME_SCALE;
 			if (LOG_DAC) logerror("%05X:DAC %d volume = %02X\n", activecpu_get_pc(), offset / 2, data);
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( redline_dac_w )
+	public static WriteHandlerPtr redline_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int which = offset / 0x200;
 		struct dac_state *d = &dac[which];
@@ -1936,10 +1934,10 @@ public class leland
 		/* update the volume */
 		d->volume = (offset & 0x1fe) / 2 / DAC_VOLUME_SCALE;
 		if (LOG_DAC) logerror("%05X:DAC %d value = %02X, volume = %02X\n", activecpu_get_pc(), which, data, (offset & 0x1fe) / 2);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( dac_10bit_w )
+	public static WriteHandlerPtr dac_10bit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static UINT8 even_byte;
 		struct dac_state *d = &dac[6];
@@ -1974,10 +1972,10 @@ public class leland
 			if (++count > d->buftarget)
 				clock_active &= ~0x40;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( ataxx_dac_control )
+	public static WriteHandlerPtr ataxx_dac_control = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* handle common offsets */
 		switch (offset)
@@ -2040,7 +2038,7 @@ public class leland
 			}
 		}
 		logerror("%05X:Unexpected peripheral write %d/%02X = %02X\n", activecpu_get_pc(), 5, offset, data);
-	}
+	} };
 	
 	
 	
@@ -2050,7 +2048,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( peripheral_r )
+	public static ReadHandlerPtr peripheral_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int select = offset / 0x80;
 		offset &= 0x7f;
@@ -2113,10 +2111,10 @@ public class leland
 				break;
 		}
 		return 0xff;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( peripheral_w )
+	public static WriteHandlerPtr peripheral_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int select = offset / 0x80;
 		offset &= 0x7f;
@@ -2155,7 +2153,7 @@ public class leland
 				logerror("%05X:Unexpected peripheral write %d/%02X = %02X\n", activecpu_get_pc(), select, offset, data);
 				break;
 		}
-	}
+	} };
 	
 	
 	

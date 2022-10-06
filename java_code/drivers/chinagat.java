@@ -127,30 +127,30 @@ public class chinagat
 		flip_screen_set(~data & 0x04);
 	}
 	
-	static WRITE_HANDLER( chinagat_bankswitch_w )
+	public static WriteHandlerPtr chinagat_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 		cpu_setbank( 1,&RAM[ 0x10000 + (0x4000 * (data & 7)) ] );
-	}
+	} };
 	
-	static WRITE_HANDLER( chinagat_sub_bankswitch_w )
+	public static WriteHandlerPtr chinagat_sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = memory_region( REGION_CPU2 );
 		cpu_setbank( 4,&RAM[ 0x10000 + (0x4000 * (data & 7)) ] );
-	}
+	} };
 	
-	static WRITE_HANDLER( chinagat_sub_IRQ_w )
+	public static WriteHandlerPtr chinagat_sub_IRQ_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( chinagat_cpu_sound_cmd_w )
+	public static WriteHandlerPtr chinagat_cpu_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w( offset, data );
 		cpu_set_irq_line( 2, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
-	}
+	} };
 	
-	static READ_HANDLER( saiyugb1_mcu_command_r )
+	public static ReadHandlerPtr saiyugb1_mcu_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if 0
 		if (saiyugb1_mcu_command == 0x78)
@@ -159,9 +159,9 @@ public class chinagat
 		}
 	#endif
 		return saiyugb1_mcu_command;
-	}
+	} };
 	
-	static WRITE_HANDLER( saiyugb1_mcu_command_w )
+	public static WriteHandlerPtr saiyugb1_mcu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		saiyugb1_mcu_command = data;
 	#if 0
@@ -170,15 +170,15 @@ public class chinagat
 			timer_suspendcpu(3, 0, SUSPEND_REASON_HALT);	/* Wake up */
 		}
 	#endif
-	}
+	} };
 	
-	static WRITE_HANDLER( saiyugb1_adpcm_rom_addr_w )
+	public static WriteHandlerPtr saiyugb1_adpcm_rom_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* i8748 Port 1 write */
 		saiyugb1_i8748_P1 = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( saiyugb1_adpcm_control_w )
+	public static WriteHandlerPtr saiyugb1_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* i8748 Port 2 write */
 	
@@ -223,9 +223,9 @@ public class chinagat
 			logerror("$ROM=%08x  P1=%02x  P2=%02x  Prev_P2=%02x  Nibble=%1x  PCM_data=%02x\n",saiyugb1_adpcm_addr,saiyugb1_i8748_P1,data,saiyugb1_i8748_P2,saiyugb1_pcm_shift,saiyugb1_pcm_nibble);
 		}
 		saiyugb1_i8748_P2 = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( saiyugb1_m5205_clk_w )
+	public static WriteHandlerPtr saiyugb1_m5205_clk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* i8748 T0 output clk mode */
 		/* This signal goes through a divide by 8 counter */
@@ -236,7 +236,7 @@ public class chinagat
 	#if 0
 		saiyugb1_m5205_clk++;
 		if (saiyugb1_m5205_clk == 8)
-		}
+		} };
 			MSM5205_vclk_w (0, 1);		/* ??? */
 			saiyugb1_m5205_clk = 0;
 		}
@@ -247,7 +247,7 @@ public class chinagat
 	#endif
 	}
 	
-	static READ_HANDLER( saiyugb1_m5205_irq_r )
+	public static ReadHandlerPtr saiyugb1_m5205_irq_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (adpcm_sound_irq)
 		{
@@ -255,7 +255,7 @@ public class chinagat
 			return 1;
 		}
 		return 0;
-	}
+	} };
 	static void saiyugb1_m5205_irq_w(int num)
 	{
 		adpcm_sound_irq = 1;

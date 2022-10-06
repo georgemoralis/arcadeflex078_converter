@@ -40,12 +40,12 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	static READ_HANDLER( actfan_control_0_r )
+	public static ReadHandlerPtr actfan_control_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(2); /* VBL */
-	}
+	} };
 	
-	static READ_HANDLER( actfan_control_1_r )
+	public static ReadHandlerPtr actfan_control_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset) {
 			case 0: return readinputport(0); /* Player 1 */
@@ -54,16 +54,16 @@ public class actfancr
 			case 3: return readinputport(4); /* Dip 2 */
 		}
 		return 0xff;
-	}
+	} };
 	
 	static int trio_control_select;
 	
-	static WRITE_HANDLER( triothep_control_select_w )
+	public static WriteHandlerPtr triothep_control_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		trio_control_select=data;
-	}
+	} };
 	
-	static READ_HANDLER( triothep_control_r )
+	public static ReadHandlerPtr triothep_control_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (trio_control_select) {
 			case 0: return readinputport(0); /* Player 1 */
@@ -74,13 +74,13 @@ public class actfancr
 		}
 	
 		return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( actfancr_sound_w )
+	public static WriteHandlerPtr actfancr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data & 0xff);
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	/******************************************************************************/
 	
@@ -616,7 +616,7 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	static READ_HANDLER( cycle_r )
+	public static ReadHandlerPtr cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int pc=activecpu_get_pc();
 		int ret=actfancr_ram[0x26];
@@ -629,9 +629,9 @@ public class actfancr
 		}
 	
 		return ret;
-	}
+	} };
 	
-	static READ_HANDLER( cyclej_r )
+	public static ReadHandlerPtr cyclej_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int pc=activecpu_get_pc();
 		int ret=actfancr_ram[0x26];
@@ -644,7 +644,7 @@ public class actfancr
 		}
 	
 		return ret;
-	}
+	} };
 	
 	static DRIVER_INIT( actfancr )
 	{

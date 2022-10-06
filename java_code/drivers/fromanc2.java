@@ -295,41 +295,41 @@ public class fromanc2
 		return (fromanc2_datalatch_2h << 8) | fromanc2_datalatch_2l;
 	}
 	
-	static READ_HANDLER( fromanc2_maincpu_r_l )
+	public static ReadHandlerPtr fromanc2_maincpu_r_l  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return fromanc2_datalatch1 & 0x00ff;
-	}
+	} };
 	
-	static READ_HANDLER( fromanc2_maincpu_r_h )
+	public static ReadHandlerPtr fromanc2_maincpu_r_h  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		fromanc2_subcpu_int_flag = 1;
 	
 		return (fromanc2_datalatch1 & 0xff00) >> 8;
-	}
+	} };
 	
-	static WRITE_HANDLER( fromanc2_maincpu_w_l )
+	public static WriteHandlerPtr fromanc2_maincpu_w_l = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fromanc2_datalatch_2l = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( fromanc2_maincpu_w_h )
+	public static WriteHandlerPtr fromanc2_maincpu_w_h = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fromanc2_datalatch_2h = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( fromanc2_subcpu_nmi_clr )
+	public static WriteHandlerPtr fromanc2_subcpu_nmi_clr = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fromanc2_subcpu_nmi_flag = 1;
-	}
+	} };
 	
-	static READ_HANDLER( fromanc2_sndcpu_nmi_clr )
+	public static ReadHandlerPtr fromanc2_sndcpu_nmi_clr  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( fromanc2_subcpu_rombank_w )
+	public static WriteHandlerPtr fromanc2_subcpu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU3);
 		int rombank = data & 0x03;
@@ -341,7 +341,7 @@ public class fromanc2
 		// Change RAM BANK
 		if (rambank != 0) cpu_setbank(2, &RAM[0x10000 + (rambank * 0x4000)]);
 		else cpu_setbank(2, &RAM[0x8000]);
-	}
+	} };
 	
 	
 	// ----------------------------------------------------------------------------

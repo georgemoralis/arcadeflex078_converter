@@ -21,7 +21,7 @@ public class shisen
 	extern VIDEO_START( sichuan2 );
 	extern VIDEO_UPDATE( sichuan2 );
 	
-	static READ_HANDLER( sichuan2_dsw1_r )
+	public static ReadHandlerPtr sichuan2_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = input_port_3_r(0);
 	
@@ -38,15 +38,15 @@ public class shisen
 		}
 	
 		return ret;
-	}
+	} };
 	
-	static WRITE_HANDLER( sichuan2_coin_w )
+	public static WriteHandlerPtr sichuan2_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((data & 0xf9) != 0x01) logerror("coin ctrl = %02x\n",data);
 	
 		coin_counter_w(0, data & 0x02);
 		coin_counter_w(1, data & 0x04);
-	}
+	} };
 	
 	
 	

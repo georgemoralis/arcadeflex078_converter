@@ -256,12 +256,12 @@ public class rungun
 	
 	/**********************************************************************************/
 	
-	static WRITE_HANDLER( sound_status_w )
+	public static WriteHandlerPtr sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		rng_sound_status = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( z80ctrl_w )
+	public static WriteHandlerPtr z80ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		rng_z80_control = data;
 	
@@ -269,7 +269,7 @@ public class rungun
 	
 		if (data & 0x10)
 			cpu_set_nmi_line(1, CLEAR_LINE);
-	}
+	} };
 	
 	static INTERRUPT_GEN(audio_interrupt)
 	{

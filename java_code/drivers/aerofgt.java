@@ -114,17 +114,17 @@ public class aerofgt
 		return pending_command;
 	}
 	
-	static WRITE_HANDLER( pending_command_clear_w )
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pending_command = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( aerofgt_sh_bankswitch_w )
+	public static WriteHandlerPtr aerofgt_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x03) * 0x8000);
-	}
+	} };
 	
 	static MACHINE_INIT( aerofgt )
 	{

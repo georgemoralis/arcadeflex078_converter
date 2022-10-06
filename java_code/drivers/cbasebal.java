@@ -39,7 +39,7 @@ public class cbasebal
 	
 	static int rambank;
 	
-	static WRITE_HANDLER( cbasebal_bankswitch_w )
+	public static WriteHandlerPtr cbasebal_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -53,10 +53,10 @@ public class cbasebal
 	
 		/* bits 6-7 select RAM bank */
 		rambank = (data & 0xc0) >> 6;
-	}
+	} };
 	
 	
-	static READ_HANDLER( bankedram_r )
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (rambank == 2)
 			return cbasebal_textram_r(offset);	/* VRAM */
@@ -70,9 +70,9 @@ public class cbasebal
 		{
 			return cbasebal_scrollram_r(offset);	/* SCROLL */
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bankedram_w )
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (rambank == 2)
 			cbasebal_textram_w(offset,data);
@@ -83,15 +83,15 @@ public class cbasebal
 		}
 		else
 			cbasebal_scrollram_w(offset,data);
-	}
+	} };
 	
-	static WRITE_HANDLER( cbasebal_coinctrl_w )
+	public static WriteHandlerPtr cbasebal_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(0,~data & 0x04);
 		coin_lockout_w(1,~data & 0x08);
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
-	}
+	} };
 	
 	
 	
@@ -124,29 +124,29 @@ public class cbasebal
 		}
 	}
 	
-	static READ_HANDLER( eeprom_r )
+	public static ReadHandlerPtr eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int bit;
 	
 		bit = EEPROM_read_bit() << 7;
 	
 		return (input_port_2_r(0) & 0x7f) | bit;
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_cs_w )
+	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_set_cs_line(data ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_clock_w )
+	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_set_clock_line(data ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_serial_w )
+	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_write_bit(data);
-	}
+	} };
 	
 	
 	

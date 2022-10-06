@@ -20,7 +20,7 @@ public class fastfred
 	// These values were derived based on disassembly of the code. Usually, it
 	// was pretty obvious what the values should be. Of course, this will have
 	// to change if a different ROM set ever surfaces.
-	static READ_HANDLER( fastfred_custom_io_r )
+	public static ReadHandlerPtr fastfred_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    switch (activecpu_get_pc())
 	    {
@@ -50,14 +50,14 @@ public class fastfred
 	
 	    logerror("Uncaught custom I/O read %04X at %04X\n", 0xc800+offset, activecpu_get_pc());
 	    return 0x00;
-	}
+	} };
 	
-	static READ_HANDLER( jumpcoas_custom_io_r )
+	public static ReadHandlerPtr jumpcoas_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset == 0x100)  return 0x63;
 	
 		return 0x00;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress fastfred_readmem[]={

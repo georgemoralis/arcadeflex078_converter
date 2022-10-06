@@ -938,37 +938,37 @@ public class system32
 	
 	static UINT8 *sys32_SoundMemBank;
 	
-	static READ_HANDLER( system32_bank_r )
+	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sys32_SoundMemBank[offset];
-	}
+	} };
 	
 	// the Z80's work RAM is fully shared with the V60 or V70 and battery backed up.
-	static READ_HANDLER( sys32_shared_snd_r )
+	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		return RAM[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sys32_shared_snd_w )
+	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		RAM[offset] = data;
-	}
+	} };
 	
 	// some games require that port f1 be a magic echo-back latch.
 	// thankfully, it's not required to do any math or anything on the values.
-	static READ_HANDLER( sys32_sound_prot_r )
+	public static ReadHandlerPtr sys32_sound_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return s32_f1_prot;
-	}
+	} };
 	
-	static WRITE_HANDLER( sys32_sound_prot_w )
+	public static WriteHandlerPtr sys32_sound_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s32_f1_prot = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem_32[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -1015,17 +1015,17 @@ public class system32
 		sys32_SoundMemBank = &RAM[Bank+0x100000];
 	}
 	
-	static WRITE_HANDLER( sys32_soundbank_lo_w )
+	public static WriteHandlerPtr sys32_soundbank_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s32_blo = data;
 		s32_recomp_bank();
-	}
+	} };
 	
-	static WRITE_HANDLER( sys32_soundbank_hi_w )
+	public static WriteHandlerPtr sys32_soundbank_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s32_bhi = data;
 		s32_recomp_bank();
-	}
+	} };
 	
 	public static IO_ReadPort sound_readport_32[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -1085,10 +1085,10 @@ public class system32
 	
 	/* jurassic park moving cab - not working yet */
 	
-	static READ_HANDLER( jpcab_z80_read )
+	public static ReadHandlerPtr jpcab_z80_read  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tocab;
-	}
+	} };
 	
 	public static Memory_ReadAddress jpcab_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

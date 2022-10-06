@@ -81,7 +81,7 @@ public class warpwarp
 	extern void warpwarp_sh_update(void);
 	
 	/* Read System Inputs */
-	static READ_HANDLER( bombbee_sys_r )
+	public static ReadHandlerPtr bombbee_sys_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset == 4)	// to return BUTTON1 status
 		{
@@ -89,26 +89,26 @@ public class warpwarp
 		}
 		else
 			return (readinputport(0) >> offset) & 1;
-	}
+	} };
 	
-	static READ_HANDLER( warpwarp_sys_r )
+	public static ReadHandlerPtr warpwarp_sys_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(0) >> offset) & 1;
-	}
+	} };
 	
 	/* Read Dipswitches */
-	static READ_HANDLER( warpwarp_dsw_r )
+	public static ReadHandlerPtr warpwarp_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(1) >> offset) & 1;
-	}
+	} };
 	
 	/* Read mux Controller Inputs */
-	static READ_HANDLER( bombbee_mux_r )
+	public static ReadHandlerPtr bombbee_mux_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(2 + (flip_screen & 1));
-	}
+	} };
 	
-	static READ_HANDLER( warpwarp_mux_r )
+	public static ReadHandlerPtr warpwarp_mux_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -118,17 +118,17 @@ public class warpwarp
 		if (res & 4) return 111;
 		if (res & 8) return 167;
 		return 255;
-	}
+	} };
 	
-	static WRITE_HANDLER( warpwarp_leds_w )
+	public static WriteHandlerPtr warpwarp_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset,data & 1);
-	}
+	} };
 	
-	static WRITE_HANDLER( warpwarp_coin_counter_w )
+	public static WriteHandlerPtr warpwarp_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	

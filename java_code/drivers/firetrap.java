@@ -86,28 +86,28 @@ public class firetrap
 	static int firetrap_irq_enable = 0;
 	static int firetrap_nmi_enable;
 	
-	static WRITE_HANDLER( firetrap_nmi_disable_w )
+	public static WriteHandlerPtr firetrap_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		firetrap_nmi_enable=~data & 1;
-	}
+	} };
 	
-	static WRITE_HANDLER( firetrap_bankselect_w )
+	public static WriteHandlerPtr firetrap_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		bankaddress = 0x10000 + (data & 0x03) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
-	static READ_HANDLER( firetrap_8751_bootleg_r )
+	public static ReadHandlerPtr firetrap_8751_bootleg_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Check for coin insertion */
 		/* the following only works in the bootleg version, which doesn't have an */
 		/* 8751 - the real thing is much more complicated than that. */
 		if ((readinputport(2) & 0x70) != 0x70) return 0xff;
 		return 0;
-	}
+	} };
 	
 	static int i8751_return,i8751_current_command;
 	
@@ -116,13 +116,13 @@ public class firetrap
 		i8751_current_command=0;
 	}
 	
-	static READ_HANDLER( firetrap_8751_r )
+	public static ReadHandlerPtr firetrap_8751_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//logerror("PC:%04x read from 8751\n",activecpu_get_pc());
 		return i8751_return;
-	}
+	} };
 	
-	static WRITE_HANDLER( firetrap_8751_w )
+	public static WriteHandlerPtr firetrap_8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int i8751_init_ptr=0;
 		static const data8_t i8751_init_data[]={
@@ -199,28 +199,28 @@ public class firetrap
 		/* Signal main cpu task is complete */
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xff);
 		i8751_current_command=data;
-	}
+	} };
 	
-	static WRITE_HANDLER( firetrap_sound_command_w )
+	public static WriteHandlerPtr firetrap_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( firetrap_sound_2400_w )
+	public static WriteHandlerPtr firetrap_sound_2400_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		MSM5205_reset_w(offset,~data & 0x01);
 		firetrap_irq_enable = data & 0x02;
-	}
+	} };
 	
-	static WRITE_HANDLER( firetrap_sound_bankselect_w )
+	public static WriteHandlerPtr firetrap_sound_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		bankaddress = 0x10000 + (data & 0x01) * 0x4000;
 		cpu_setbank(2,&RAM[bankaddress]);
-	}
+	} };
 	
 	static int msm5205next;
 	
@@ -236,15 +236,15 @@ public class firetrap
 			cpu_set_irq_line (1, M6502_IRQ_LINE, HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( firetrap_adpcm_data_w )
+	public static WriteHandlerPtr firetrap_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		msm5205next = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( flip_screen_w )
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

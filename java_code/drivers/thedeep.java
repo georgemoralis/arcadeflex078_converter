@@ -46,11 +46,11 @@ public class thedeep
 		nmi_enable = data;
 	}
 	
-	static WRITE_HANDLER( thedeep_sound_w )
+	public static WriteHandlerPtr thedeep_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_nmi_line(1, PULSE_LINE);
-	}
+	} };
 	
 	static data8_t protection_command, protection_data;
 	static int protection_index, protection_irq;
@@ -69,7 +69,7 @@ public class thedeep
 		rombank = -1;
 	}
 	
-	static WRITE_HANDLER( thedeep_protection_w )
+	public static WriteHandlerPtr thedeep_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		protection_command = data;
 		switch (protection_command)
@@ -130,24 +130,24 @@ public class thedeep
 			default:
 				logerror( "pc %04x: protection_command %02x\n", activecpu_get_pc(),protection_command);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( thedeep_e004_r )
+	public static ReadHandlerPtr thedeep_e004_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return protection_irq ? 1 : 0;
-	}
+	} };
 	
-	static READ_HANDLER( thedeep_protection_r )
+	public static ReadHandlerPtr thedeep_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		protection_irq = 0;
 		return protection_data;
-	}
+	} };
 	
-	static WRITE_HANDLER( thedeep_e100_w )
+	public static WriteHandlerPtr thedeep_e100_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data != 1)
 			logerror("pc %04x: e100 = %02x\n", activecpu_get_pc(),data);
-	}
+	} };
 	
 	public static Memory_ReadAddress thedeep_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

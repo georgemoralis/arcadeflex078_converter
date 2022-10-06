@@ -94,9 +94,9 @@ public class tsamurai
 	static int nmi_enabled;
 	static int sound_command1, sound_command2, sound_command3;
 	
-	static WRITE_HANDLER( nmi_enable_w ){
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enabled = data;
-	}
+	} };
 	
 	static INTERRUPT_GEN( samurai_interrupt ){
 		if (nmi_enabled) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -127,33 +127,33 @@ public class tsamurai
 		return 0xfb;
 	}
 	
-	static WRITE_HANDLER( sound_command1_w )
+	public static WriteHandlerPtr sound_command1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_command1 = data;
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_command2_w )
+	public static WriteHandlerPtr sound_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_command2 = data;
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_command3_w )
+	public static WriteHandlerPtr sound_command3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_command3 = data;
 		cpu_set_irq_line( 3, 0, HOLD_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( flip_screen_w )
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
-	static WRITE_HANDLER( tsamurai_coin_counter_w )
+	public static WriteHandlerPtr tsamurai_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -279,28 +279,28 @@ public class tsamurai
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( sound_command1_r )
+	public static ReadHandlerPtr sound_command1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sound_command1;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_out1_w )
+	public static WriteHandlerPtr sound_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_data_w(0,data);
-	}
+	} };
 	
-	static READ_HANDLER( sound_command2_r ){
+	public static ReadHandlerPtr sound_command2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_command2;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_out2_w )
+	public static WriteHandlerPtr sound_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_data_w(1,data);
-	}
+	} };
 	
-	static READ_HANDLER( sound_command3_r ){
+	public static ReadHandlerPtr sound_command3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_command3;
-	}
+	} };
 	
 	/*******************************************************************************/
 	public static Memory_ReadAddress readmem_sound1[]={
@@ -410,9 +410,9 @@ public class tsamurai
 	/*******************************************************************************/
 	
 	static int vsgongf_sound_nmi_enabled;
-	static WRITE_HANDLER( vsgongf_sound_nmi_enable_w ){
+	public static WriteHandlerPtr vsgongf_sound_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vsgongf_sound_nmi_enabled = data;
-	}
+	} };
 	
 	static INTERRUPT_GEN( vsgongf_sound_interrupt ){
 		if (vsgongf_sound_nmi_enabled) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
@@ -420,7 +420,7 @@ public class tsamurai
 	
 	/* what are these, protection of some kind? */
 	
-	static READ_HANDLER( vsgongf_a006_r ){
+	public static ReadHandlerPtr vsgongf_a006_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* sound CPU busy? */
 		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0x80;
 		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x80;
@@ -428,9 +428,9 @@ public class tsamurai
 	
 		logerror ("unhandled read from a006\n");
 		return 0x00;
-	}
+	} };
 	
-	static READ_HANDLER( vsgongf_a100_r ){
+	public static ReadHandlerPtr vsgongf_a100_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* protection? */
 		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0xaa;
 		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x63;
@@ -438,12 +438,12 @@ public class tsamurai
 	
 		logerror ("unhandled read from a100\n");
 		return 0x00;
-	}
+	} };
 	
-	static WRITE_HANDLER( vsgongf_sound_command_w ){
+	public static WriteHandlerPtr vsgongf_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem_vsgongf[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -16,7 +16,7 @@ public class pingpong
 	
 	static int intenable;
 	
-	static WRITE_HANDLER( coin_w )
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 2 = irq enable, bit 3 = nmi enable */
 		intenable = data & 0x0c;
@@ -26,7 +26,7 @@ public class pingpong
 		coin_counter_w(1,data & 2);
 	
 		/* other bits unknown */
-	}
+	} };
 	
 	static INTERRUPT_GEN( pingpong_interrupt )
 	{

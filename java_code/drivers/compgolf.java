@@ -170,11 +170,11 @@ public class compgolf
 		draw_sprites(bitmap,cliprect);
 	}
 	
-	static WRITE_HANDLER( compgolf_ctrl_w )
+	public static WriteHandlerPtr compgolf_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* 0x28 written here - not sure what each bit is, the game doesn't seem
 		to have a flipscreen bit though */
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

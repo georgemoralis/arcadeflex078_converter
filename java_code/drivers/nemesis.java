@@ -325,7 +325,7 @@ public class nemesis
 	        VLM5030_ST (0);
 	}
 	
-	static READ_HANDLER( nemesis_portA_r )
+	public static ReadHandlerPtr nemesis_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	/*
 	   bit 0-3:   timer
@@ -342,7 +342,7 @@ public class nemesis
 			res |= 0x20;
 	
 		return res;
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -745,19 +745,19 @@ public class nemesis
 		{ 0x311000, 0x311fff, MWA16_RAM },			/* not used */
 	MEMORY_END
 	
-	static READ_HANDLER( wd_r )
+	public static ReadHandlerPtr wd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int a=1;
 		a^= 1;
 		return a;
-	}
+	} };
 	
-	static WRITE_HANDLER( city_sound_bank_w )
+	public static WriteHandlerPtr city_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank_A=(data&0x3);
 		int bank_B=((data>>2)&0x3);
 		K007232_set_bank( 0, bank_A, bank_B );
-	}
+	} };
 	
 	public static Memory_ReadAddress sal_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

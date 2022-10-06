@@ -43,7 +43,7 @@ public class gomoku
 	void gomoku_sh_stop(void);
 	
 	/* input ports are rotated 90 degrees */
-	static READ_HANDLER( input_port_r )
+	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int i, res;
 	
@@ -52,7 +52,7 @@ public class gomoku
 			res |= ((readinputport(i) >> offset) & 1) << i;
 	
 		return res;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem_gomoku[]={

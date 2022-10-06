@@ -122,7 +122,7 @@ public class dogfgt
 		return bitmapram[offset + BITMAPRAM_SIZE/3 * bm_plane];
 	}
 	
-	static WRITE_HANDLER( internal_bitmapram_w )
+	public static WriteHandlerPtr internal_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x,y,subx;
 	
@@ -144,7 +144,7 @@ public class dogfgt
 			else
 				plot_pixel(pixbitmap,x+subx,y,PIXMAP_COLOR_BASE + 8*pixcolor + color);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER( dogfgt_bitmapram_w )
 	{

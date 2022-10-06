@@ -946,7 +946,7 @@ public class halleys
 	
 	
 	// draws Ben Bero Beh's color backdrop(verification required)
-	static WRITE_HANDLER( bgtile_w )
+	public static WriteHandlerPtr bgtile_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int yskip, xskip, ecx;
 		WORD *edi;
@@ -968,25 +968,25 @@ public class halleys
 		ax = (WORD)data | BG_RGB;
 	
 		do { edi[ecx] = edi[ecx+1] = edi[ecx+2] = edi[ecx+3] = edi[ecx+4] = ax; } while (ecx += SCREEN_WIDTH);
-	}
+	} };
 	
 	
-	static READ_HANDLER( blitter_status_r )
+	public static ReadHandlerPtr blitter_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (game_id==GAME_HALLEYS && activecpu_get_pc()==0x8017) return(0x55); // HACK: trick SRAM test on startup
 	
 		return(0);
-	}
+	} };
 	
 	
-	static READ_HANDLER( blitter_r )
+	public static ReadHandlerPtr blitter_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int i = offset & 0xf;
 	
 		if (i==0 || i==4) return(1);
 	
 		return(blitter_ram[offset]);
-	}
+	} };
 	
 	
 	static void blitter_reset(int param)
@@ -995,7 +995,7 @@ public class halleys
 	}
 	
 	
-	static WRITE_HANDLER( blitter_w )
+	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i = offset & 0xf;
 	
@@ -1016,10 +1016,10 @@ public class halleys
 				timer_adjust(blitter_reset_timer, TIME_IN_CYCLES(100, 0), 0, 0); // free blitter if no updates in 100 cycles
 			}
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( collision_id_r )
+	public static ReadHandlerPtr collision_id_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	/*
 		Collision detection abstract:
@@ -1051,7 +1051,7 @@ public class halleys
 		}
 	
 		return(io_ram[0x66]);
-	}
+	} };
 	
 	
 	//**************************************************************************
@@ -1150,7 +1150,7 @@ public class halleys
 		*b = prom_6330[0x40 + (bit0|bit1|bit2|bit3|bit4)];
 	}
 	
-	static WRITE_HANDLER( halleys_paletteram_IIRRGGBB_w )
+	public static WriteHandlerPtr halleys_paletteram_IIRRGGBB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DWORD d, r, g, b, i, j;
 		DWORD *pal_ptr = internal_palette;
@@ -1176,7 +1176,7 @@ public class halleys
 	
 		halleys_decode_rgb(&r, &g, &b, offset, 0);
 		palette_set_color(offset+0x20, r, g, b);
-	}
+	} };
 	
 	
 	static VIDEO_START( halleys )
@@ -1533,9 +1533,9 @@ public class halleys
 	
 	#if HALLEYS_DEBUG
 	
-	static READ_HANDLER( zero_r ) { return(0); }
+	public static ReadHandlerPtr zero_r  = new ReadHandlerPtr() { public int handler(int offset) { return(0); } };
 	
-	static READ_HANDLER( debug_r ) { return(io_ram[offset]); }
+	public static ReadHandlerPtr debug_r  = new ReadHandlerPtr() { public int handler(int offset) { return(io_ram[offset]); } };
 	
 	#endif
 	
@@ -1629,28 +1629,28 @@ public class halleys
 	}
 	
 	
-	static READ_HANDLER( vector_r )
+	public static ReadHandlerPtr vector_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(cpu1_base[0xffe0 + (offset^(mVectorType<<4))]);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( firq_ack_w )
+	public static WriteHandlerPtr firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		io_ram[0x9c] = data;
 	
 		if (firq_level) firq_level--;
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sndnmi_msk_w )
+	public static WriteHandlerPtr sndnmi_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sndnmi_mask = data & 1;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( soundcommand_w )
+	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (ffcount < MAX_SOUNDS)
 		{
@@ -1658,10 +1658,10 @@ public class halleys
 			sound_fifo[ffhead] = io_ram[0x8a] = data;
 			ffhead = (ffhead + 1) & (MAX_SOUNDS - 1);
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( coin_lockout_r )
+	public static ReadHandlerPtr coin_lockout_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		// This is a hack, but it lets you coin up when COIN1 or COIN2 are signaled.
 		// See NMI for the twisted logic that is involved in handling coin input.
@@ -1672,13 +1672,13 @@ public class halleys
 		if (inp & 0x40) result |= 0x04;
 	
 		return(result);
-	}
+	} };
 	
 	
-	static READ_HANDLER( io_mirror_r )
+	public static ReadHandlerPtr io_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(readinputport(offset + 3));
-	}
+	} };
 	
 	
 	//**************************************************************************

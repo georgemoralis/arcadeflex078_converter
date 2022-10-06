@@ -60,12 +60,12 @@ public class f1gp
 		return rom[offset] | (rom[offset+1] << 8);
 	}
 	
-	static WRITE_HANDLER( f1gp_sh_bankswitch_w )
+	public static WriteHandlerPtr f1gp_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU3) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x01) * 0x8000);
-	}
+	} };
 	
 	
 	static int pending_command;
@@ -85,10 +85,10 @@ public class f1gp
 		return (pending_command ? 0xff : 0);
 	}
 	
-	static WRITE_HANDLER( pending_command_clear_w )
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pending_command = 0;
-	}
+	} };
 	
 	
 	

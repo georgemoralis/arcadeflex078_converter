@@ -96,7 +96,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	static READ_HANDLER( segar_ports_r )
+	public static ReadHandlerPtr segar_ports_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int dip1, dip2;
 	
@@ -122,7 +122,7 @@ public class segar
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -132,30 +132,30 @@ public class segar
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( sindbadm_soundport_w )
+	public static WriteHandlerPtr sindbadm_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		/* spin for a while to let the Z80 read the command */
 		cpu_spinuntil_time(TIME_IN_USEC(50));
-	}
+	} };
 	
 	
 	/* the data lines are flipped */
-	static WRITE_HANDLER( sindbadm_SN76496_0_w )
+	public static WriteHandlerPtr sindbadm_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int flipped = ((data >> 7) & 0x01) | ((data >> 5) & 0x02) | ((data >> 3) & 0x04) | ((data >> 1) & 0x08) |
 				      ((data << 1) & 0x10) | ((data << 3) & 0x20) | ((data << 5) & 0x40) | ((data << 7) & 0x80);
 		SN76496_0_w(offset, flipped);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sindbadm_SN76496_1_w )
+	public static WriteHandlerPtr sindbadm_SN76496_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int flipped = ((data >> 7) & 0x01) | ((data >> 5) & 0x02) | ((data >> 3) & 0x04) | ((data >> 1) & 0x08) |
 				      ((data << 1) & 0x10) | ((data << 3) & 0x20) | ((data << 5) & 0x40) | ((data << 7) & 0x80);
 		SN76496_1_w(offset, flipped);
-	}
+	} };
 	
 	
 	

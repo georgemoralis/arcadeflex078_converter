@@ -89,7 +89,7 @@ public class pastelgl
 	};
 	
 	
-	static READ_HANDLER( io_pastelgl_r )
+	public static ReadHandlerPtr io_pastelgl_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -107,7 +107,7 @@ public class pastelgl
 			case	0xf100:	return nb1413m3_dipsw2_r(0);
 			default:	return 0xff;
 		}
-	}
+	} };
 	
 	public static IO_ReadPort readport_pastelgl[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -115,7 +115,7 @@ public class pastelgl
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( io_pastelgl_w )
+	public static WriteHandlerPtr io_pastelgl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
@@ -150,7 +150,7 @@ public class pastelgl
 			case	0xd000:	DAC_0_data_w(0, data); break;
 	#endif
 		}
-	}
+	} };
 	
 	public static IO_WritePort writeport_pastelgl[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

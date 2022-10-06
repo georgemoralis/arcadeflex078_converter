@@ -23,6 +23,8 @@ public class convertMame {
     static final int MEMORY_WRITE8 = 2;
     static final int PORT_READ8 = 3;
     static final int PORT_WRITE8 = 4;
+    static final int READ_HANDLER8 = 5;
+    static final int WRITE_HANDLER8 = 6;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -133,6 +135,36 @@ public class convertMame {
                             Convertor.inpos += 1;
                             continue;
                         }
+                    } else if (sUtil.getToken("READ_HANDLER(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static ReadHandlerPtr " + Convertor.token[0] + "  = new ReadHandlerPtr() { public int handler(int offset)");
+                            type = READ_HANDLER8;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    } else if (sUtil.getToken("WRITE_HANDLER(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static WriteHandlerPtr " + Convertor.token[0] + " = new WriteHandlerPtr() {public void handler(int offset, int data)");
+                            type = WRITE_HANDLER8;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
                     }
                     Convertor.inpos = i;
                     break;
@@ -174,6 +206,9 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                        i3++;
+                    }
                 }
                 break;
                 case '}': {
@@ -184,6 +219,15 @@ public class convertMame {
                         } else if (i3 == 1) {
                             Convertor.outbuf[(Convertor.outpos++)] = ')';
                             Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                        i3--;
+                        if (i3 == -1) {
+                            sUtil.putString("} };");
+                            Convertor.inpos += 1;
+                            type = -1;
                             continue;
                         }
                     }

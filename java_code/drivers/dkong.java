@@ -220,11 +220,11 @@ public class dkong
 	READ_HANDLER( hunchbks_mirror_r );
 	WRITE_HANDLER( hunchbks_mirror_w );
 	
-	static READ_HANDLER( dkong_sh_p1_r )   { return p[1]; }
-	static READ_HANDLER( dkong_sh_p2_r )   { return p[2]; }
-	static READ_HANDLER( dkong_sh_t0_r )   { return t[0]; }
-	static READ_HANDLER( dkong_sh_t1_r )   { return t[1]; }
-	static READ_HANDLER( dkong_sh_tune_r )
+	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
+	public static ReadHandlerPtr dkong_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[2]; } };
+	public static ReadHandlerPtr dkong_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[0]; } };
+	public static ReadHandlerPtr dkong_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[1]; } };
+	public static ReadHandlerPtr dkong_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 *SND = memory_region(REGION_CPU2);
 		if (page & 0x40)
@@ -235,7 +235,7 @@ public class dkong
 			}
 		}
 		return (SND[2048+(page & 7)*256+offset]);
-	}
+	} };
 	
 	MACHINE_INIT( strtheat );
 	READ_HANDLER( strtheat_decrypt_rom );
@@ -248,15 +248,15 @@ public class dkong
 	
 	#define TSTEP 0.001
 	
-	static WRITE_HANDLER( dkong_sh_p1_w )
+	public static WriteHandlerPtr dkong_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		envelope=exp(-tt);
 		DAC_data_w(0,(int)(data*envelope));
 		if (decay) tt+=TSTEP;
 		else tt=0;
-	}
+	} };
 	
-	static WRITE_HANDLER( dkong_sh_p2_w )
+	public static WriteHandlerPtr dkong_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*   If P2.Bit7 -> is apparently an external signal decay or other output control
 		 *   If P2.Bit6 -> activates the external compressed sample ROM
@@ -267,13 +267,13 @@ public class dkong
 		decay = !(data & 0x80);
 		page = (data & 0x47);
 		mcustatus = ((~data & 0x10) >> 4);
-	}
+	} };
 	
 	
-	static READ_HANDLER( dkong_in2_r )
+	public static ReadHandlerPtr dkong_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_2_r(offset) | (mcustatus << 6);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

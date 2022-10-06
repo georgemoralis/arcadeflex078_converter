@@ -182,52 +182,52 @@ public class wardner
 	}
 	
 	
-	static WRITE_HANDLER( CRTC_reg_sel_w )
+	public static WriteHandlerPtr CRTC_reg_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		crtc6845_address_w(offset, data);
-	}
+	} };
 	
-	static WRITE_HANDLER( CRTC_data_w )
+	public static WriteHandlerPtr CRTC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		crtc6845_register_w(0, data);
 		twincobr_display_on = 1;
-	}
+	} };
 	
-	static READ_HANDLER( wardner_sprite_r )
+	public static ReadHandlerPtr wardner_sprite_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int shift = (offset & 1) * 8;
 		return spriteram16[offset/2] >> shift;
-	}
+	} };
 	
-	static WRITE_HANDLER( wardner_sprite_w )
+	public static WriteHandlerPtr wardner_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset & 1)
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0x00ff) | (data << 8);
 		else
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0xff00) | data;
-	}
+	} };
 	
-	static READ_HANDLER( wardner_sharedram_r )
+	public static ReadHandlerPtr wardner_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return wardner_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( wardner_sharedram_w )
+	public static WriteHandlerPtr wardner_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wardner_sharedram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( wardner_spare_pal_ram_r )
+	public static ReadHandlerPtr wardner_spare_pal_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return wardner_spare_pal_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( wardner_spare_pal_ram_w )
+	public static WriteHandlerPtr wardner_spare_pal_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wardner_spare_pal_ram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( wardner_ram_rom_r )
+	public static ReadHandlerPtr wardner_ram_rom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int wardner_data = 0;
 	
@@ -255,12 +255,12 @@ public class wardner
 			wardner_data = wardner_rom[wardner_rombank + offset];
 		}
 		return wardner_data;
-	}
+	} };
 	
-	static WRITE_HANDLER( wardner_ramrom_banks_w )
+	public static WriteHandlerPtr wardner_ramrom_banks_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wardner_membank = data;
-	}
+	} };
 	
 	
 	

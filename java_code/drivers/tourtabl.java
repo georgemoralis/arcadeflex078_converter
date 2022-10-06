@@ -33,7 +33,7 @@ public class tourtabl
 	
 	
 	
-	static WRITE_HANDLER( tourtabl_led_w )
+	public static WriteHandlerPtr tourtabl_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, data & 0x40); /* start 1 */
 		set_led_status(1, data & 0x20); /* start 2 */
@@ -41,27 +41,27 @@ public class tourtabl
 		set_led_status(3, data & 0x80); /* select game */
 	
 		coin_lockout_global_w(!(data & 0x80));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( r6532_0_ram_w )
+	public static WriteHandlerPtr r6532_0_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		r6532_0_ram[offset] = data;
-	}
-	static WRITE_HANDLER( r6532_1_ram_w )
+	} };
+	public static WriteHandlerPtr r6532_1_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		r6532_1_ram[offset] = data;
-	}
+	} };
 	
 	
-	static READ_HANDLER( r6532_0_ram_r )
+	public static ReadHandlerPtr r6532_0_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return r6532_0_ram[offset];
-	}
-	static READ_HANDLER( r6532_1_ram_r )
+	} };
+	public static ReadHandlerPtr r6532_1_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return r6532_1_ram[offset];
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

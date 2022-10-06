@@ -21,7 +21,7 @@ public class dorachan
 	
 	WRITE_HANDLER( dorachan_videoram_w );
 	
-	static READ_HANDLER( dorachan_protection_r )
+	public static ReadHandlerPtr dorachan_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	
 		switch (activecpu_get_previouspc())
@@ -32,13 +32,13 @@ public class dorachan
 		}
 		printf("unhandled $2400 read @ %x\n",activecpu_get_previouspc());
 		return 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( dorachan_status_r )
+	public static ReadHandlerPtr dorachan_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	/* to avoid resetting (when player 2 starts) bit 0 need to be reversed when screen is flipped */
 		return ((cpu_getscanline()>100)?1:0)^(dorachan_ctrl>>6);
-	}
+	} };
 	
 	static WRITE_HANDLER(dorachan_ctrl_w)
 	{

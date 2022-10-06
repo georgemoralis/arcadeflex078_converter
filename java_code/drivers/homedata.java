@@ -254,7 +254,7 @@ public class homedata
 	
 	static int keyb;
 	
-	static READ_HANDLER( mrokumei_keyboard_r )
+	public static ReadHandlerPtr mrokumei_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = 0x3f,i;
 	
@@ -285,34 +285,34 @@ public class homedata
 		}
 	
 		return res;
-	}
+	} };
 	
-	static WRITE_HANDLER( mrokumei_keyboard_select_w )
+	public static WriteHandlerPtr mrokumei_keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		keyb = data;
-	}
+	} };
 	
 	
 	
 	static int sndbank;
 	
-	static READ_HANDLER( mrokumei_sound_io_r )
+	public static ReadHandlerPtr mrokumei_sound_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (sndbank & 4)
 			return(soundlatch_r(0));
 		else
 			return memory_region(REGION_CPU2)[0x10000 + offset + (sndbank & 1) * 0x10000];
-	}
+	} };
 	
-	static WRITE_HANDLER( mrokumei_sound_bank_w )
+	public static WriteHandlerPtr mrokumei_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 = ROM bank
 		   bit 2 = ROM or soundlatch
 		 */
 		sndbank = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mrokumei_sound_io_w )
+	public static WriteHandlerPtr mrokumei_sound_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 0xff)
 		{
@@ -323,13 +323,13 @@ public class homedata
 				logerror("%04x: I/O write to port %04x\n",activecpu_get_pc(),offset);
 				break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mrokumei_sound_cmd_w )
+	public static WriteHandlerPtr mrokumei_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(1,0,HOLD_LINE);
-	}
+	} };
 	
 	
 	/********************************************************************************
@@ -342,17 +342,17 @@ public class homedata
 	
 	static int upd7807_porta,upd7807_portc;
 	
-	static READ_HANDLER( reikaids_upd7807_porta_r )
+	public static ReadHandlerPtr reikaids_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return upd7807_porta;
-	}
+	} };
 	
-	static WRITE_HANDLER( reikaids_upd7807_porta_w )
+	public static WriteHandlerPtr reikaids_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		upd7807_porta = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( reikaids_upd7807_portc_w )
+	public static WriteHandlerPtr reikaids_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* port C layout:
 		   7 coin counter
@@ -388,7 +388,7 @@ public class homedata
 		}
 	
 		upd7807_portc = data;
-	}
+	} };
 	
 	static MACHINE_INIT( reikaids_upd7807 )
 	{
@@ -415,17 +415,17 @@ public class homedata
 	
 	static int snd_command;
 	
-	static READ_HANDLER( reikaids_snd_command_r )
+	public static ReadHandlerPtr reikaids_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//logerror("%04x: sndmcd_r (%02x)\n",activecpu_get_pc(),snd_command);
 		return snd_command;
-	}
+	} };
 	
-	static WRITE_HANDLER( reikaids_snd_command_w )
+	public static WriteHandlerPtr reikaids_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_command = data;
 	//logerror("%04x: coprocessor_command_w %02x\n",activecpu_get_pc(),data);
-	}
+	} };
 	
 	
 	
@@ -439,19 +439,19 @@ public class homedata
 	
 	static int to_cpu,from_cpu;
 	
-	static WRITE_HANDLER( pteacher_snd_command_w )
+	public static WriteHandlerPtr pteacher_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x: snd_command_w %02x\n",activecpu_get_pc(),data);
 		from_cpu = data;
-	}
+	} };
 	
-	static READ_HANDLER( pteacher_snd_r )
+	public static ReadHandlerPtr pteacher_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//logerror("%04x: pteacher_snd_r %02x\n",activecpu_get_pc(),to_cpu);
 		return to_cpu;
-	}
+	} };
 	
-	static READ_HANDLER( pteacher_io_r )
+	public static ReadHandlerPtr pteacher_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bit 6: !vblank
 		 * bit 7: visible page
@@ -465,9 +465,9 @@ public class homedata
 		vblank = 0;
 	
 		return res;
-	}
+	} };
 	
-	static READ_HANDLER( pteacher_keyboard_r )
+	public static ReadHandlerPtr pteacher_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int dips = readinputport(0);
 	
@@ -487,9 +487,9 @@ public class homedata
 		}
 	
 		return 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( pteacher_upd7807_porta_r )
+	public static ReadHandlerPtr pteacher_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (!BIT(upd7807_portc,6))
 			upd7807_porta = from_cpu;
@@ -497,20 +497,20 @@ public class homedata
 	logerror("%04x: read PA with PC *not* clear\n",activecpu_get_pc());
 	
 		return upd7807_porta;
-	}
+	} };
 	
-	static WRITE_HANDLER( pteacher_snd_answer_w )
+	public static WriteHandlerPtr pteacher_snd_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		to_cpu = data;
 	//logerror("%04x: to_cpu = %02x\n",activecpu_get_pc(),to_cpu);
-	}
+	} };
 	
-	static WRITE_HANDLER( pteacher_upd7807_porta_w )
+	public static WriteHandlerPtr pteacher_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		upd7807_porta = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( pteacher_upd7807_portc_w )
+	public static WriteHandlerPtr pteacher_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* port C layout:
 		   7 coin counter
@@ -533,7 +533,7 @@ public class homedata
 			SN76496_0_w(0,upd7807_porta);
 	
 		upd7807_portc = data;
-	}
+	} };
 	
 	static MACHINE_INIT( pteacher_upd7807 )
 	{
@@ -545,7 +545,7 @@ public class homedata
 	/********************************************************************************/
 	
 	
-	static WRITE_HANDLER( bankswitch_w )
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU1);
 		int len = memory_region_length(REGION_CPU1) - 0x10000+0x4000;
@@ -560,7 +560,7 @@ public class homedata
 		{
 			cpu_setbank(1, &rom[0xc000]);
 		}
-	}
+	} };
 	
 	
 	/********************************************************************************/

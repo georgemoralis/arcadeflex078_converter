@@ -64,12 +64,12 @@ public class _4enraya
 	
 	static int soundlatch;
 	
-	static WRITE_HANDLER( sound_data_w )
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_control_w )
+	public static WriteHandlerPtr sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 		if ((last & 0x04) == 0x04 && (data & 0x4) == 0x00)
@@ -80,7 +80,7 @@ public class _4enraya
 				AY8910_write_port_0_w(0,soundlatch);
 		}
 		last=data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

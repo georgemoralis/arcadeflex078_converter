@@ -69,18 +69,18 @@ public class msisaac
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_disable_w )
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -88,24 +88,24 @@ public class msisaac
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	#if 0
-	static WRITE_HANDLER( flip_screen_w )
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
-	static WRITE_HANDLER( msisaac_coin_counter_w )
+	public static WriteHandlerPtr msisaac_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	#endif
-	static WRITE_HANDLER( ms_unknown_w )
+	public static WriteHandlerPtr ms_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data!=0x08)
 			usrintf_showmessage("CPU #0 write to 0xf0a3 data=%2x",data);
-	}
+	} };
 	
 	
 	
@@ -123,7 +123,7 @@ public class msisaac
 	#endif
 	
 	
-	static READ_HANDLER( msisaac_mcu_r )
+	public static ReadHandlerPtr msisaac_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef USE_MCU
 		return buggychl_mcu_r(offset);
@@ -197,18 +197,18 @@ public class msisaac
 	 		break;
 		}
 	#endif
-	}
+	} };
 	
-	static READ_HANDLER( msisaac_mcu_status_r )
+	public static ReadHandlerPtr msisaac_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef USE_MCU
 		return buggychl_mcu_status_r(offset);
 	#else
 		return 3;	//mcu ready / cpu data ready
 	#endif
-	}
+	} };
 	
-	static WRITE_HANDLER( msisaac_mcu_w )
+	public static WriteHandlerPtr msisaac_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef USE_MCU
 		buggychl_mcu_w(offset,data);
@@ -217,7 +217,7 @@ public class msisaac
 		//	usrintf_showmessage("PC = %04x %02x",activecpu_get_pc(),data);
 		mcu_val = data;
 	#endif
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -316,7 +316,7 @@ public class msisaac
 	static UINT8 snd_ctrl0=0;
 	static UINT8 snd_ctrl1=0;
 	
-	static WRITE_HANDLER( sound_control_0_w )
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl0 = data & 0xff;
 		//usrintf_showmessage("SND0 0=%2x 1=%2x", snd_ctrl0, snd_ctrl1);
@@ -324,12 +324,12 @@ public class msisaac
 		mixer_set_volume (6, vol_ctrl[  snd_ctrl0     & 15 ]);	/* group1 from msm5232 */
 		mixer_set_volume (7, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group2 from msm5232 */
 	
-	}
-	static WRITE_HANDLER( sound_control_1_w )
+	} };
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl1 = data & 0xff;
 		//usrintf_showmessage("SND1 0=%2x 1=%2x", snd_ctrl0, snd_ctrl1);
-	}
+	} };
 	
 	
 	

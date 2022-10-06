@@ -36,15 +36,15 @@ public class deadang
 	
 	/* Read/Write Handlers */
 	
-	static READ_HANDLER( deadang_shared_r )
+	public static ReadHandlerPtr deadang_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return deadang_shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( deadang_shared_w )
+	public static WriteHandlerPtr deadang_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		deadang_shared_ram[offset] = data;
-	}
+	} };
 	
 	READ_HANDLER( ghunter_trackball_low_r )
 	{

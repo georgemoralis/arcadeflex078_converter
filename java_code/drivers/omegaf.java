@@ -363,7 +363,7 @@ public class omegaf
 	  Memory handlers
 	**************************************************************************/
 	
-	static WRITE_HANDLER( omegaf_bankselect_w )
+	public static WriteHandlerPtr omegaf_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -378,7 +378,7 @@ public class omegaf
 				bankaddress = 0x10000 + ( (omegaf_bank_latch - 2) * 0x4000);
 			cpu_setbank( 1, &RAM[bankaddress] );	 /* Select 16 banks of 16k */
 		}
-	}
+	} };
 	
 	
 	/**************************************************************************

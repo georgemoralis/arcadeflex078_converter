@@ -51,22 +51,22 @@ public class flstory
 	static UINT8 snd_data;
 	static UINT8 snd_flag;
 	
-	static READ_HANDLER( from_snd_r )
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		snd_flag = 0;
 		return snd_data;
-	}
+	} };
 	
-	static READ_HANDLER( snd_flag_r )
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return snd_flag | 0xfd;
-	}
+	} };
 	
-	static WRITE_HANDLER( to_main_w )
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_data = data;
 		snd_flag = 2;
-	}
+	} };
 	
 	
 	static int sound_nmi_enable,pending_nmi;
@@ -77,19 +77,19 @@ public class flstory
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( nmi_disable_w )
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -97,7 +97,7 @@ public class flstory
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -226,7 +226,7 @@ public class flstory
 	static UINT8 snd_ctrl2=0;
 	static UINT8 snd_ctrl3=0;
 	
-	static WRITE_HANDLER( sound_control_0_w )
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl0 = data & 0xff;
 	//	usrintf_showmessage("SND0 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
@@ -234,15 +234,15 @@ public class flstory
 		/* this definitely controls main melody voice on 2'-1 and 4'-1 outputs */
 		mixer_set_volume (3, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group1 from msm5232 */
 	
-	}
-	static WRITE_HANDLER( sound_control_1_w )
+	} };
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl1 = data & 0xff;
 	//	usrintf_showmessage("SND1 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 		mixer_set_volume (4, vol_ctrl[ (snd_ctrl1>>4) & 15 ]);	/* group2 from msm5232 */
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_control_2_w )
+	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 	
@@ -251,13 +251,13 @@ public class flstory
 	
 		for (i=0; i<3; i++)
 			mixer_set_volume (i, vol_ctrl[ (snd_ctrl2>>4) & 15 ]);	/* ym2149f all */
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_control_3_w ) /* unknown */
+	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* unknown */
 	{
 		snd_ctrl3 = data & 0xff;
 	//	usrintf_showmessage("SND3 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
-	}
+	} };
 	
 	
 	public static Memory_WriteAddress sound_writemem[]={

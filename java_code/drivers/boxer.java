@@ -98,7 +98,7 @@ public class boxer
 	}
 	
 	
-	static READ_HANDLER( boxer_input_r )
+	public static ReadHandlerPtr boxer_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(0);
 	
@@ -108,10 +108,10 @@ public class boxer
 		}
 	
 		return (val << ((offset & 7) ^ 7)) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( boxer_misc_r )
+	public static ReadHandlerPtr boxer_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = 0;
 	
@@ -135,28 +135,28 @@ public class boxer
 		}
 	
 		return val ^ 0x3f;
-	}
+	} };
 	
 	
-	static READ_HANDLER( boxer_bad_address_r )
+	public static ReadHandlerPtr boxer_bad_address_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_reset_line(0, PULSE_LINE);
 	
 		return 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_bell_w )
+	public static WriteHandlerPtr boxer_bell_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_sound_w )
+	public static WriteHandlerPtr boxer_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_pot_w )
+	public static WriteHandlerPtr boxer_pot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* BIT0 => HPOT1 */
 		/* BIT1 => VPOT1 */
@@ -168,16 +168,16 @@ public class boxer
 		pot_latch = data & 0x3f;
 	
 		cpu_set_nmi_line(0, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_irq_reset_w )
+	public static WriteHandlerPtr boxer_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_crowd_w )
+	public static WriteHandlerPtr boxer_crowd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* BIT0 => ATTRACT */
 		/* BIT1 => CROWD-1 */
@@ -185,20 +185,20 @@ public class boxer
 		/* BIT3 => CROWD-3 */
 	
 		coin_lockout_global_w(data & 1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_led_w )
+	public static WriteHandlerPtr boxer_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(1, !(data & 1));
 		set_led_status(0, !(data & 2));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( boxer_bad_address_w )
+	public static WriteHandlerPtr boxer_bad_address_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(0, PULSE_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress boxer_readmem[]={

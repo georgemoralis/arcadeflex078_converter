@@ -188,35 +188,35 @@ public class zaxxon
 	
 	/* Read/Write Handlers */
 	
-	static WRITE_HANDLER( zaxxon_coin_counter_w )
+	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset, data & 0x01);
-	}
+	} };
 	
-	static WRITE_HANDLER( zaxxon_coin_lockout_w )
+	public static WriteHandlerPtr zaxxon_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(offset, ~data & 0x01);
-	}
+	} };
 	
-	static WRITE_HANDLER( zaxxon_flipscreen_w )
+	public static WriteHandlerPtr zaxxon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(~data & 0x01);
-	}
+	} };
 	
-	static WRITE_HANDLER( razmataz_flipscreen_w )
+	public static WriteHandlerPtr razmataz_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x01);
-	}
+	} };
 	
-	static READ_HANDLER( razmataz_unknown1_r )
+	public static ReadHandlerPtr razmataz_unknown1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return rand() & 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( razmataz_unknown2_r )
+	public static ReadHandlerPtr razmataz_unknown2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	static int razmataz_dial_r(int num)
 	{
@@ -241,17 +241,17 @@ public class zaxxon
 		return res;
 	}
 	
-	static READ_HANDLER( razmataz_dial_0_r )
+	public static ReadHandlerPtr razmataz_dial_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return razmataz_dial_r(0);
-	}
+	} };
 	
-	static READ_HANDLER( razmataz_dial_1_r )
+	public static ReadHandlerPtr razmataz_dial_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return razmataz_dial_r(1);
-	}
+	} };
 	
-	static WRITE_HANDLER( congo_daio_w )
+	public static WriteHandlerPtr congo_daio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 1)
 		{
@@ -269,7 +269,7 @@ public class zaxxon
 				if (data & 0x01) sample_start(4, 4, 0);
 			}
 		}
-	}
+	} };
 	
 	/* Memory Maps */
 	

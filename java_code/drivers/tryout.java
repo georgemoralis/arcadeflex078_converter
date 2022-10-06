@@ -41,26 +41,26 @@ public class tryout
 		SET_TILE_INFO(0, code, attr >> 4, 0)
 	}
 	
-	static WRITE_HANDLER( tryout_videoram_w )
+	public static WriteHandlerPtr tryout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset] != data )
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset & 0x3ff);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( tryout_nmi_reset_w )
+	public static WriteHandlerPtr tryout_nmi_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_nmi_line( 0, CLEAR_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( tryout_sound_command_w )
+	public static WriteHandlerPtr tryout_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		
 		cpu_set_irq_line(1, 0, PULSE_LINE );
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

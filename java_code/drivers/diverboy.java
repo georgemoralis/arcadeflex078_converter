@@ -74,13 +74,13 @@ public class diverboy
 		}
 	}
 	
-	static WRITE_HANDLER( okibank_w )
+	public static WriteHandlerPtr okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 2 might be reset */
 	//	usrintf_showmessage("%02x",data);
 	
 		OKIM6295_set_bank_base(0,(data & 3) * 0x20000);
-	}
+	} };
 	
 	
 	

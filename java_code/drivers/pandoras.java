@@ -50,23 +50,23 @@ public class pandoras
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 	}
 	
-	static READ_HANDLER( pandoras_sharedram_r ){
+	public static ReadHandlerPtr pandoras_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pandoras_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( pandoras_sharedram_w ){
+	public static WriteHandlerPtr pandoras_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pandoras_sharedram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( pandoras_sharedram2_r ){
+	public static ReadHandlerPtr pandoras_sharedram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pandoras_sharedram2[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( pandoras_sharedram2_w ){
+	public static WriteHandlerPtr pandoras_sharedram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pandoras_sharedram2[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( pandoras_int_control_w ){
+	public static WriteHandlerPtr pandoras_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	byte 0:	irq enable (CPU A)
 			byte 2:	coin counter 1
 			byte 3: coin counter 2
@@ -95,7 +95,7 @@ public class pandoras
 			default:
 				logerror("%04x: (irq_ctrl) write %02x to %02x\n",activecpu_get_pc(), data, offset);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER( pandoras_cpua_irqtrigger_w ){
 		if (!firq_old_data_a && data){
@@ -118,7 +118,7 @@ public class pandoras
 		cpu_set_irq_line(3, 0, ASSERT_LINE);
 	}
 	
-	static WRITE_HANDLER( i8039_irqen_and_status_w )
+	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 7 enables IRQ */
 		if ((data & 0x80) == 0)
@@ -126,7 +126,7 @@ public class pandoras
 	
 		/* bit 5 goes to 8910 port A */
 		i8039_status = (data & 0x20) >> 5;
-	}
+	} };
 	
 	WRITE_HANDLER( pandoras_z80_irqtrigger_w )
 	{
@@ -402,15 +402,15 @@ public class pandoras
 		irq_enable_a = irq_enable_b = 0;
 	}
 	
-	static READ_HANDLER( pandoras_portA_r )
+	public static ReadHandlerPtr pandoras_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return i8039_status;
-	}
+	} };
 	
-	static READ_HANDLER( pandoras_portB_r )
+	public static ReadHandlerPtr pandoras_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (activecpu_gettotalcycles() / 512) & 0x0f;
-	}
+	} };
 	
 	static struct AY8910interface ay8910_interface =
 	{

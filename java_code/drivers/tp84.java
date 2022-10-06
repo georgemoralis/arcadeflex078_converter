@@ -113,28 +113,28 @@ public class tp84
 	
 	static UINT8 *sharedram;
 	
-	static READ_HANDLER( sharedram_r )
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sharedram_w )
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sharedram[offset] = data;
-	}
+	} };
 	
 	
 	
-	static READ_HANDLER( tp84_sh_timer_r )
+	public static ReadHandlerPtr tp84_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* main xtal 14.318MHz, divided by 4 to get the CPU clock, further */
 		/* divided by 2048 to get this timer */
 		/* (divide by (2048/2), and not 1024, because the CPU cycle counter is */
 		/* incremented every other state change of the clock) */
 		return (activecpu_gettotalcycles() / (2048/2)) & 0x0f;
-	}
+	} };
 	
-	static WRITE_HANDLER( tp84_filter_w )
+	public static WriteHandlerPtr tp84_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int C;
 	
@@ -159,12 +159,12 @@ public class tp84
 		C = 0;
 		if (offset & 0x100) C += 470000;	/* 470000pF = 0.47uF */
 		set_RC_filter(2,1000,2200,1000,C);
-	}
+	} };
 	
-	static WRITE_HANDLER( tp84_sh_irqtrigger_w )
+	public static WriteHandlerPtr tp84_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	
 	

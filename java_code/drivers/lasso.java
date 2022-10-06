@@ -59,45 +59,45 @@ public class lasso
 	
 	static data8_t *lasso_sharedram;
 	
-	static READ_HANDLER( lasso_sharedram_r )
+	public static ReadHandlerPtr lasso_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return lasso_sharedram[offset];
-	}
-	static WRITE_HANDLER( lasso_sharedram_w )
+	} };
+	public static WriteHandlerPtr lasso_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lasso_sharedram[offset] = data;
-	}
+	} };
 	
 	
 	/* Write to the sound latch and generate an IRQ on the sound CPU */
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line( 1, 0, PULSE_LINE );
-	}
+	} };
 	
-	static READ_HANDLER( sound_status_r )
+	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/*	0x01: chip#0 ready; 0x02: chip#1 ready */
 		return 0x03;
-	}
+	} };
 	
 	static data8_t lasso_chip_data;
 	
-	static WRITE_HANDLER( sound_data_w )
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lasso_chip_data = BITSWAP8(data,0,1,2,3,4,5,6,7);
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_select_w )
+	public static WriteHandlerPtr sound_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (~data & 0x01)	/* chip #0 */
 			SN76496_0_w(0,lasso_chip_data);
 	
 		if (~data & 0x02)	/* chip #1 */
 			SN76496_1_w(0,lasso_chip_data);
-	}
+	} };
 	
 	
 	

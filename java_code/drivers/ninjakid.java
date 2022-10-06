@@ -45,19 +45,19 @@ public class ninjakid
 	
 	static UINT8 *ninjakid_gfx_rom;
 	
-	static READ_HANDLER( ninjakid_shared_rom_r ){
+	public static ReadHandlerPtr ninjakid_shared_rom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ninjakid_gfx_rom[offset];
-	}
+	} };
 	
 	/* working RAM is shared, but an address line is inverted */
 	static UINT8 *shareram;
 	
-	static WRITE_HANDLER( shareram_w ){
+	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shareram[offset^0x400] = data;
-	}
-	static READ_HANDLER( shareram_r ){
+	} };
+	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shareram[offset^0x400];
-	}
+	} };
 	
 	/*******************************************************************************
 	 0xA000 Read / Write Handlers
@@ -65,19 +65,19 @@ public class ninjakid
 	
 	static UINT8 ninjakun_io_a002_ctrl;
 	
-	static READ_HANDLER( ninjakun_io_A002_r ){
+	public static ReadHandlerPtr ninjakun_io_A002_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ninjakun_io_a002_ctrl | readinputport(2); /* vblank */
-	}
+	} };
 	
-	static WRITE_HANDLER( cpu1_A002_w ){
+	public static WriteHandlerPtr cpu1_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == 0x80 ) ninjakun_io_a002_ctrl |= 0x04;
 		if( data == 0x40 ) ninjakun_io_a002_ctrl &= ~0x08;
-	}
+	} };
 	
-	static WRITE_HANDLER( cpu2_A002_w ){
+	public static WriteHandlerPtr cpu2_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == 0x40 ) ninjakun_io_a002_ctrl |= 0x08;
 		if( data == 0x80 ) ninjakun_io_a002_ctrl &= ~0x04;
-	}
+	} };
 	
 	/*******************************************************************************
 	 Memory Maps

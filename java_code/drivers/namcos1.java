@@ -249,10 +249,10 @@ public class namcos1
 	
 	/**********************************************************************/
 	
-	static WRITE_HANDLER( namcos1_sub_firq_w )
+	public static WriteHandlerPtr namcos1_sub_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, 1, HOLD_LINE);
-	}
+	} };
 	
 	
 	
@@ -348,19 +348,19 @@ public class namcos1
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( dsw_r )
+	public static ReadHandlerPtr dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = readinputport(2);
 		if(offset&2) ret>>=4;
 		return 0xf0 | ret;
-	}
+	} };
 	
-	static WRITE_HANDLER( namcos1_coin_w )
+	public static WriteHandlerPtr namcos1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_global_w(~data & 1);
 		coin_counter_w(0,data & 2);
 		coin_counter_w(1,data & 4);
-	}
+	} };
 	
 	static int dac0_value ,dac1_value, dac0_gain=0, dac1_gain=0;
 	
@@ -369,7 +369,7 @@ public class namcos1
 		DAC_signed_data_16_w(0,0x8000+(dac0_value * dac0_gain)+(dac1_value * dac1_gain));
 	}
 	
-	static WRITE_HANDLER( namcos1_dac_gain_w )
+	public static WriteHandlerPtr namcos1_dac_gain_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int value;
 		/* DAC0 */
@@ -379,23 +379,23 @@ public class namcos1
 		value = (data>>3)&3; /* GAIN2,GAIN3 */
 		dac1_gain = 0x0101 * (value+1) / 4 /2;
 		namcos1_update_DACs();
-	}
+	} };
 	
-	static WRITE_HANDLER( namcos1_dac0_w )
+	public static WriteHandlerPtr namcos1_dac0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dac0_value = data-0x80; /* shift zero point */
 		namcos1_update_DACs();
-	}
+	} };
 	
-	static WRITE_HANDLER( namcos1_dac1_w )
+	public static WriteHandlerPtr namcos1_dac1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dac1_value = data-0x80; /* shift zero point */
 		namcos1_update_DACs();
-	}
+	} };
 	
 	static int num=0, strobe=0;
 	
-	static READ_HANDLER( quester_in0_r )
+	public static ReadHandlerPtr quester_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
@@ -407,9 +407,9 @@ public class namcos1
 		strobe ^= 0x40;
 	
 		return ret;
-	}
+	} };
 	
-	static READ_HANDLER( quester_in1_r )
+	public static ReadHandlerPtr quester_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
@@ -421,9 +421,9 @@ public class namcos1
 		if (!strobe) num ^= 0x20;
 	
 		return ret;
-	}
+	} };
 	
-	static READ_HANDLER( faceoff_in0_r )
+	public static ReadHandlerPtr faceoff_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
@@ -435,9 +435,9 @@ public class namcos1
 			ret = (readinputport(0)&0x80) | (readinputport(6)&0x1f);
 	
 		return ret;
-	}
+	} };
 	
-	static READ_HANDLER( faceoff_in1_r )
+	public static ReadHandlerPtr faceoff_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
@@ -459,7 +459,7 @@ public class namcos1
 		strobe ^= 0x40;
 	
 		return ret;
-	}
+	} };
 	
 	public static Memory_ReadAddress mcu_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

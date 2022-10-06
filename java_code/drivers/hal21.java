@@ -67,12 +67,12 @@ public class hal21
 	/**************************************************************************/
 	// Test Handlers
 	
-	static WRITE_HANDLER( aso_scroll_sync_w )
+	public static WriteHandlerPtr aso_scroll_sync_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data == 0x7f && shared_auxram[0x04d2] & 1) data++;
 	
 		shared_auxram[0x04f8] = data;
-	}
+	} };
 	
 	static void hal21_sound_scheduler(int mode, int data)
 	{
@@ -124,19 +124,19 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	static READ_HANDLER( hal21_videoram_r ){ return videoram[offset]; }
-	static WRITE_HANDLER( hal21_videoram_w ){ videoram[offset] = data; }
-	static READ_HANDLER( hal21_spriteram_r ){ return spriteram[offset]; }
-	static WRITE_HANDLER( hal21_spriteram_w ){ spriteram[offset] = data; }
+	public static ReadHandlerPtr hal21_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){ return videoram[offset]; } };
+	public static WriteHandlerPtr hal21_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ videoram[offset] = data; } };
+	public static ReadHandlerPtr hal21_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){ return spriteram[offset]; } };
+	public static WriteHandlerPtr hal21_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ spriteram[offset] = data; } };
 	
-	static WRITE_HANDLER( hal21_vreg0_w ){ hal21_vreg[0] = data; }
-	static WRITE_HANDLER( hal21_vreg1_w ){ hal21_vreg[1] = data; }
-	static WRITE_HANDLER( hal21_vreg2_w ){ hal21_vreg[2] = data; }
-	static WRITE_HANDLER( hal21_vreg3_w ){ hal21_vreg[3] = data; }
-	static WRITE_HANDLER( hal21_vreg4_w ){ hal21_vreg[4] = data; }
-	static WRITE_HANDLER( hal21_vreg5_w ){ hal21_vreg[5] = data; }
-	static WRITE_HANDLER( hal21_vreg6_w ){ hal21_vreg[6] = data; }
-	static WRITE_HANDLER( hal21_vreg7_w ){ hal21_vreg[7] = data; }
+	public static WriteHandlerPtr hal21_vreg0_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[0] = data; } };
+	public static WriteHandlerPtr hal21_vreg1_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[1] = data; } };
+	public static WriteHandlerPtr hal21_vreg2_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[2] = data; } };
+	public static WriteHandlerPtr hal21_vreg3_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[3] = data; } };
+	public static WriteHandlerPtr hal21_vreg4_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[4] = data; } };
+	public static WriteHandlerPtr hal21_vreg5_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[5] = data; } };
+	public static WriteHandlerPtr hal21_vreg6_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[6] = data; } };
+	public static WriteHandlerPtr hal21_vreg7_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[7] = data; } };
 	
 	
 	PALETTE_INIT( aso )
@@ -568,32 +568,32 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	static READ_HANDLER( shared_auxram_r ) { return shared_auxram[offset]; }
-	static WRITE_HANDLER( shared_auxram_w ) { shared_auxram[offset] = data; }
+	public static ReadHandlerPtr shared_auxram_r  = new ReadHandlerPtr() { public int handler(int offset) { return shared_auxram[offset]; } };
+	public static WriteHandlerPtr shared_auxram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { shared_auxram[offset] = data; } };
 	
-	static READ_HANDLER( shared_ram_r ) { return shared_ram[offset]; }
-	static WRITE_HANDLER( shared_ram_w ) { shared_ram[offset] = data; }
+	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset) { return shared_ram[offset]; } };
+	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { shared_ram[offset] = data; } };
 	
-	static READ_HANDLER( CPUC_ready_r ) { snk_sound_busy_bit = 0; return 0; }
+	public static ReadHandlerPtr CPUC_ready_r  = new ReadHandlerPtr() { public int handler(int offset) { snk_sound_busy_bit = 0; return 0; } };
 	
-	static READ_HANDLER( hal21_input_port_0_r ) { return input_port_0_r(0) | snk_sound_busy_bit; }
+	public static ReadHandlerPtr hal21_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return input_port_0_r(0) | snk_sound_busy_bit; } };
 	
-	static WRITE_HANDLER( hal21_soundcommand_w ) { hal21_sound_scheduler(1, data); }
-	static WRITE_HANDLER( hal21_soundack_w ) { hal21_sound_scheduler(2, data); }
+	public static WriteHandlerPtr hal21_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(1, data); } };
+	public static WriteHandlerPtr hal21_soundack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(2, data); } };
 	
-	static READ_HANDLER( hal21_soundcommand_r )
+	public static ReadHandlerPtr hal21_soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = soundlatch_r(0);
 		soundlatch_clear_w(0, 0);
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( aso_soundcommand_w )
+	public static WriteHandlerPtr aso_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snk_sound_busy_bit = 0x20;
 		soundlatch_w(0, data);
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
-	}
+	} };
 	
 	static INTERRUPT_GEN( hal21_sound_interrupt )
 	{

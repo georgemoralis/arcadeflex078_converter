@@ -149,7 +149,7 @@ public class tubep
 	}
 	
 	
-	static WRITE_HANDLER( tubep_LS259_w )
+	public static WriteHandlerPtr tubep_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(offset)
 		{
@@ -176,13 +176,13 @@ public class tubep
 			default:
 					break;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( tubep_backgroundram_w )
+	public static WriteHandlerPtr tubep_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tubep_backgroundram[offset] = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress tubep_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -215,17 +215,17 @@ public class tubep
 	
 	
 	
-	static WRITE_HANDLER( main_cpu_irq_line_clear_w )
+	public static WriteHandlerPtr main_cpu_irq_line_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	cpu_set_irq_line(0,CLEAR_LINE);
 	//not used - handled by MAME anyway (because it is usual Vblank int)
 		return;
-	}
+	} };
 	
-	static WRITE_HANDLER( tubep_soundlatch_w )
+	public static WriteHandlerPtr tubep_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_latch = (data&0x7f) | 0x80;
-	}
+	} };
 	
 	public static IO_WritePort tubep_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -261,7 +261,7 @@ public class tubep
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( tubep_soundlatch_r )
+	public static ReadHandlerPtr tubep_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	 	int res;
 	
@@ -271,19 +271,19 @@ public class tubep
 		/*logerror("SOUND COMM READ %2x\n",res);*/
 	
 		return res;
-	}
+	} };
 	
-	static READ_HANDLER( tubep_sound_irq_ack )
+	public static ReadHandlerPtr tubep_sound_irq_ack  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(2, 0, CLEAR_LINE);
 		return 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( tubep_sound_unknown )
+	public static WriteHandlerPtr tubep_sound_unknown = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*logerror("Sound CPU writes to port 0x07 - unknown function\n");*/
 		return;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress tubep_sound_readmem[]={
@@ -349,7 +349,7 @@ public class tubep
 	
 	/****************************************************************/
 	
-	static WRITE_HANDLER( rjammer_LS259_w )
+	public static WriteHandlerPtr rjammer_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(offset)
 		{
@@ -363,13 +363,13 @@ public class tubep
 			default:
 					break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( rjammer_soundlatch_w )
+	public static WriteHandlerPtr rjammer_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_latch = data;
 		cpu_set_nmi_line(2, PULSE_LINE);
-	}
+	} };
 	
 	public static IO_ReadPort rjammer_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -466,21 +466,21 @@ public class tubep
 	
 	
 	
-	static READ_HANDLER( rjammer_soundlatch_r )
+	public static ReadHandlerPtr rjammer_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	 	int res = sound_latch;
 		return res;
-	}
+	} };
 	
-	static WRITE_HANDLER( rjammer_voice_startstop_w )
+	public static WriteHandlerPtr rjammer_voice_startstop_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 of data selects voice start/stop (reset pin on MSM5205)*/
 		// 0 -stop; 1-start
 		MSM5205_reset_w (0, (data&1)^1 );
 	
 		return;
-	}
-	static WRITE_HANDLER( rjammer_voice_frequency_select_w )
+	} };
+	public static WriteHandlerPtr rjammer_voice_frequency_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 of data selects voice frequency on MSM5205 */
 		// 0 -4 KHz; 1- 8KHz
@@ -490,7 +490,7 @@ public class tubep
 			MSM5205_playmode_w(0,MSM5205_S96_4B);	/* 4 KHz */
 	
 		return;
-	}
+	} };
 	
 	static int ls74 = 0;
 	static int ls377 = 0;
@@ -511,7 +511,7 @@ public class tubep
 	
 	}
 	
-	static WRITE_HANDLER( rjammer_voice_input_w )
+	public static WriteHandlerPtr rjammer_voice_input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* 8 bits of adpcm data for MSM5205 */
 		/* need to buffer the data, and switch two nibbles on two following interrupts*/
@@ -525,14 +525,14 @@ public class tubep
 		*/
 		cpu_set_irq_line(2, 0, CLEAR_LINE );
 		return;
-	}
+	} };
 	
-	static WRITE_HANDLER( rjammer_voice_intensity_control_w )
+	public static WriteHandlerPtr rjammer_voice_intensity_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* 4 LSB bits select the intensity (analog circuit that alters the output from MSM5205) */
 		// need to buffer the data
 		return;
-	}
+	} };
 	
 	public static Memory_ReadAddress rjammer_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -570,30 +570,30 @@ public class tubep
 	};
 	
 	
-	static WRITE_HANDLER( ay8910_portA_0_w )
+	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
-	static WRITE_HANDLER( ay8910_portB_0_w )
+	} };
+	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
-	static WRITE_HANDLER( ay8910_portA_1_w )
+	} };
+	public static WriteHandlerPtr ay8910_portA_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
-	static WRITE_HANDLER( ay8910_portB_1_w )
+	} };
+	public static WriteHandlerPtr ay8910_portB_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
-	static WRITE_HANDLER( ay8910_portA_2_w )
+	} };
+	public static WriteHandlerPtr ay8910_portA_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
-	static WRITE_HANDLER( ay8910_portB_2_w )
+	} };
+	public static WriteHandlerPtr ay8910_portB_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			//analog sound control
-	}
+	} };
 	
 	
 	

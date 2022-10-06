@@ -278,31 +278,31 @@ public class lazercmd
 	 *************************************************************/
 	
 	/* triggered by WRTC,r opcode */
-	static WRITE_HANDLER( lazercmd_ctrl_port_w )
+	public static WriteHandlerPtr lazercmd_ctrl_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	/* triggered by REDC,r opcode */
-	static READ_HANDLER( lazercmd_ctrl_port_r )
+	public static ReadHandlerPtr lazercmd_ctrl_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 		return data;
-	}
+	} };
 	
 	/* triggered by WRTD,r opcode */
-	static WRITE_HANDLER( lazercmd_data_port_w )
+	public static WriteHandlerPtr lazercmd_data_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	/* triggered by REDD,r opcode */
-	static READ_HANDLER( lazercmd_data_port_r )
+	public static ReadHandlerPtr lazercmd_data_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
 		data = input_port_2_r(0) & 0x0f;
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( lazercmd_hardware_w )
+	public static WriteHandlerPtr lazercmd_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int DAC_data = 0;
 	
@@ -330,9 +330,9 @@ public class lazercmd
 			case 3: /* D4 clears coin detected and D0 toggles on attract mode */
 				break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( medlanes_hardware_w )
+	public static WriteHandlerPtr medlanes_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int DAC_data = 0;
 	
@@ -363,9 +363,9 @@ public class lazercmd
 			case 3: /* D4 clears coin detected and D0 toggles on attract mode */
 				break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bbonk_hardware_w )
+	public static WriteHandlerPtr bbonk_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int DAC_data = 0;
 	
@@ -388,9 +388,9 @@ public class lazercmd
 			case 3: /* D4 clears coin detected and D0 toggles on attract mode */
 				break;
 		}
-	}
+	} };
 	
-	static READ_HANDLER( lazercmd_hardware_r )
+	public static ReadHandlerPtr lazercmd_hardware_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 	
@@ -422,7 +422,7 @@ public class lazercmd
 				break;
 		}
 		return data;
-	}
+	} };
 	
 	
 	/*************************************************************

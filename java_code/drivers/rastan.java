@@ -68,10 +68,10 @@ public class rastan
 	MEMORY_END
 	
 	
-	static WRITE_HANDLER( rastan_bankswitch_w )
+	public static WriteHandlerPtr rastan_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank( 5, memory_region(REGION_CPU2) + ((data ^1) & 0x01) * 0x4000 + 0x10000 );
-	}
+	} };
 	
 	public static Memory_ReadAddress rastan_s_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

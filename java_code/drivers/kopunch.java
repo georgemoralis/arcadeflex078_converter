@@ -39,31 +39,31 @@ public class kopunch
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xff);	/* RST 38h */
 	}
 	
-	static READ_HANDLER( kopunch_in_r )
+	public static ReadHandlerPtr kopunch_in_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* port 31 + low 3 bits of port 32 contain the punch strength */
 		if (offset == 0)
 			return rand();
 		else
 			return (rand() & 0x07) | input_port_1_r(0);
-	}
+	} };
 	
-	static WRITE_HANDLER( kopunch_lamp_w )
+	public static WriteHandlerPtr kopunch_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,~data & 0x80);
 	
 	//	if ((data & 0x7f) != 0x7f)
 	//		usrintf_showmessage("port 38 = %02x",data);
-	}
+	} };
 	
-	static WRITE_HANDLER( kopunch_coin_w )
+	public static WriteHandlerPtr kopunch_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0,~data & 0x80);
 		coin_counter_w(1,~data & 0x40);
 	
 	//	if ((data & 0x3f) != 0x3f)
 	//		usrintf_showmessage("port 34 = %02x",data);
-	}
+	} };
 	
 	
 	
@@ -84,10 +84,10 @@ public class kopunch
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( pip_r )
+	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return rand();
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

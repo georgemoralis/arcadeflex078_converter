@@ -146,28 +146,28 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( hsync_chain_r )
+	public static ReadHandlerPtr hsync_chain_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* horizontal sync divider chain */
 		UINT8 val = (cycles_currently_ran() - cycles_at_vsync) & 0xff;
 		return BITSWAP8(val,0,1,2,3,4,5,6,7);
-	}
+	} };
 	
 	
-	static READ_HANDLER( vsync_chain_hi_r )
+	public static ReadHandlerPtr vsync_chain_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* vertical sync divider chain */
 		UINT8 val = cpu_getscanline();
 		return ((val >> 1) & 0x08) | ((val >> 3) & 0x04) | ((val >> 5) & 0x02) | (val >> 7);
-	}
+	} };
 	
 	
-	static READ_HANDLER( vsync_chain_lo_r )
+	public static ReadHandlerPtr vsync_chain_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* vertical sync divider chain */
 		UINT8 val = cpu_getscanline();
 		return val & 0x0f;
-	}
+	} };
 	
 	
 	
@@ -177,7 +177,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( meadows_sound_w )
+	public static WriteHandlerPtr meadows_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -200,7 +200,7 @@ public class meadows
 	/*			S2650_Clear_Pending_Interrupts(); */
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -256,7 +256,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( sound_hardware_w )
+	public static WriteHandlerPtr sound_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 3)
 		{
@@ -288,7 +288,7 @@ public class meadows
 				meadows_sh_update();
 	            break;
 		}
-	}
+	} };
 	
 	
 	
@@ -298,7 +298,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( sound_hardware_r )
+	public static ReadHandlerPtr sound_hardware_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 	
@@ -313,7 +313,7 @@ public class meadows
 			case 3: break;
 		}
 	    return data;
-	}
+	} };
 	
 	
 	

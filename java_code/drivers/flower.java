@@ -63,20 +63,20 @@ public class flower
 	
 	
 	
-	static WRITE_HANDLER( flower_irq_ack )
+	public static WriteHandlerPtr flower_irq_ack = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
 	static int sn_irq_enable,sn_nmi_enable;
 	
-	static WRITE_HANDLER( sn_irq_enable_w )
+	public static WriteHandlerPtr sn_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sn_irq_enable = data & 1;
 	
 		cpu_set_irq_line(2, 0, CLEAR_LINE);
-	}
+	} };
 	
 	static INTERRUPT_GEN( sn_irq )
 	{
@@ -84,17 +84,17 @@ public class flower
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
 	}
 	
-	static WRITE_HANDLER( sn_nmi_enable_w )
+	public static WriteHandlerPtr sn_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sn_nmi_enable = data & 1;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		if (sn_nmi_enable)
 			cpu_set_nmi_line(2, PULSE_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress flower_mn_readmem[]={

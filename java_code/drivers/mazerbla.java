@@ -297,14 +297,14 @@ public class mazerbla
 	
 	static UINT8 zpu_int_vector;
 	
-	static WRITE_HANDLER( cfb_zpu_int_req_set_w )
+	public static WriteHandlerPtr cfb_zpu_int_req_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		zpu_int_vector &= ~2;	/* clear D1 on INTA (interrupt acknowledge) */
 	
 		cpu_set_irq_line(0, 0, ASSERT_LINE);	/* main cpu interrupt (comes from CFB (generated at the start of INT routine on CFB) - vblank?) */
-	}
+	} };
 	
-	static READ_HANDLER( cfb_zpu_int_req_clr )
+	public static ReadHandlerPtr cfb_zpu_int_req_clr  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		zpu_int_vector |= 2;
 	
@@ -313,7 +313,7 @@ public class mazerbla
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
 		return 0;
-	}
+	} };
 	
 	
 	static int irq_callback(int irqline)
@@ -350,13 +350,13 @@ public class mazerbla
 	static UINT8 ls670_0[4];
 	static UINT8 ls670_1[4];
 	
-	static READ_HANDLER( ls670_0_r )
+	public static ReadHandlerPtr ls670_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 	
 		return ls670_0[offset];
-	}
+	} };
 	
 	static void deferred_ls670_0_w(int param )
 	{
@@ -366,21 +366,21 @@ public class mazerbla
 		ls670_0[offset] = data;
 	}
 	
-	static WRITE_HANDLER( ls670_0_w )
+	public static WriteHandlerPtr ls670_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* do this on a timer to let the CPUs synchronize */
 		timer_set(TIME_NOW, (offset<<8) | data, deferred_ls670_0_w);
-	}
+	} };
 	
 	
 	
-	static READ_HANDLER( ls670_1_r )
+	public static ReadHandlerPtr ls670_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 	
 		return ls670_1[offset];
-	}
+	} };
 	
 	static void deferred_ls670_1_w(int param )
 	{
@@ -390,11 +390,11 @@ public class mazerbla
 		ls670_1[offset] = data;
 	}
 	
-	static WRITE_HANDLER( ls670_1_w )
+	public static WriteHandlerPtr ls670_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* do this on a timer to let the CPUs synchronize */
 		timer_set(TIME_NOW, (offset<<8) | data, deferred_ls670_1_w);
-	}
+	} };
 	
 	
 	/* bcd decoder used a input select (a mux) for reads from port 0x62 */
@@ -451,7 +451,7 @@ public class mazerbla
 		bcd_7445 = data & 15;
 	}
 	
-	static READ_HANDLER( zpu_inputs_r )
+	public static ReadHandlerPtr zpu_inputs_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 ret = 0;
 	
@@ -460,7 +460,7 @@ public class mazerbla
 			ret = readinputport( bcd_7445 );
 		}
 		return ret;
-	}
+	} };
 	
 	
 	
@@ -526,13 +526,13 @@ public class mazerbla
 	
 	
 	static UINT8 vsb_ls273;
-	static WRITE_HANDLER( vsb_ls273_audio_control_w )
+	public static WriteHandlerPtr vsb_ls273_audio_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		vsb_ls273 = data;
 	
 		/* bit 5 - led on */
 		set_led_status(1,(data&0x20)>>5);
-	}
+	} };
 	
 	
 	public static IO_ReadPort readport_cpu2[]={
@@ -646,11 +646,11 @@ public class mazerbla
 	
 	/* ????????????? */
 	static UINT8 port02_status = 0;
-	static READ_HANDLER( cfb_port_02_r )
+	public static ReadHandlerPtr cfb_port_02_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		port02_status ^= 0xff;
 		return (port02_status);
-	}
+	} };
 	
 	public static IO_ReadPort readport_cpu3[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -683,7 +683,7 @@ public class mazerbla
 	
 	
 	static UINT8 VCU_video_reg[4];
-	static WRITE_HANDLER( VCU_video_reg_w )
+	public static WriteHandlerPtr VCU_video_reg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (VCU_video_reg[offset] != data)
 		{
@@ -691,9 +691,9 @@ public class mazerbla
 			//usrintf_showmessage("video_reg= %02x %02x %02x %02x", VCU_video_reg[0], VCU_video_reg[1], VCU_video_reg[2], VCU_video_reg[3] );
 			//logerror("video_reg= %02x %02x %02x %02x\n", VCU_video_reg[0], VCU_video_reg[1], VCU_video_reg[2], VCU_video_reg[3] );
 		}
-	}
+	} };
 	
-	static READ_HANDLER( VCU_set_cmd_param_r )
+	public static ReadHandlerPtr VCU_set_cmd_param_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		VCU_gfx_param_addr = offset;
 	
@@ -709,10 +709,10 @@ public class mazerbla
 		plane = mode & 3;
 	
 		return 0;
-	}
+	} };
 	
 	
-	static READ_HANDLER( VCU_set_gfx_addr_r )
+	public static ReadHandlerPtr VCU_set_gfx_addr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	int offs;
 	int x,y;
@@ -875,9 +875,9 @@ public class mazerbla
 		break;
 		}
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER( VCU_set_clr_addr_r )
+	public static ReadHandlerPtr VCU_set_clr_addr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	int offs;
 	int x,y;
@@ -1072,7 +1072,7 @@ public class mazerbla
 		}
 	
 		return 0;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem_cpu3[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -1105,10 +1105,10 @@ public class mazerbla
 	
 	static UINT8 soundlatch;
 	
-	static READ_HANDLER( soundcommand_r )
+	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return soundlatch;
-	}
+	} };
 	
 	static void delayed_sound_w(int param)
 	{
@@ -1119,10 +1119,10 @@ public class mazerbla
 	}
 	
 	
-	static WRITE_HANDLER( main_sound_w )
+	public static WriteHandlerPtr main_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
-	}
+	} };
 	
 	
 	public static IO_ReadPort gg_readport[]={
@@ -1150,20 +1150,20 @@ public class mazerbla
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
 	}
 	
-	static WRITE_HANDLER( sound_int_clear_w )
+	public static WriteHandlerPtr sound_int_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, 0, CLEAR_LINE);
-	}
-	static WRITE_HANDLER( sound_nmi_clear_w )
+	} };
+	public static WriteHandlerPtr sound_nmi_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_nmi_line(1, CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( gg_led_ctrl_w )
+	public static WriteHandlerPtr gg_led_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0, bit 1 - led on */
 		set_led_status(1,data&0x01);
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

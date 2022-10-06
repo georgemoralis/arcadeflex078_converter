@@ -63,17 +63,17 @@ public class metlclsh
 	static data8_t *sharedram;
 	
 	static READ_HANDLER ( sharedram_r )	{ return sharedram[offset]; }
-	static WRITE_HANDLER( sharedram_w )	{ sharedram[offset] = data; }
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
 	
-	static WRITE_HANDLER( metlclsh_cause_irq )
+	public static WriteHandlerPtr metlclsh_cause_irq = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1,M6809_IRQ_LINE,ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( metlclsh_ack_nmi )
+	public static WriteHandlerPtr metlclsh_ack_nmi = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0,IRQ_LINE_NMI,CLEAR_LINE);
-	}
+	} };
 	
 	public static Memory_ReadAddress metlclsh_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -120,25 +120,25 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	static WRITE_HANDLER( metlclsh_cause_nmi2 )
+	public static WriteHandlerPtr metlclsh_cause_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0,IRQ_LINE_NMI,ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( metlclsh_ack_irq2 )
+	public static WriteHandlerPtr metlclsh_ack_irq2 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1,M6809_IRQ_LINE,CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( metlclsh_ack_nmi2 )
+	public static WriteHandlerPtr metlclsh_ack_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1,IRQ_LINE_NMI,CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( metlclsh_flipscreen_w )
+	public static WriteHandlerPtr metlclsh_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 1);
-	}
+	} };
 	
 	public static Memory_ReadAddress metlclsh_readmem2[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -93,23 +93,23 @@ public class mexico86
 	VIDEO_UPDATE( kikikai );
 	
 	//AT
-	static READ_HANDLER( kiki_2203_r )
+	public static ReadHandlerPtr kiki_2203_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(YM2203Read(0,0) & 0x7f);
-	}
+	} };
 	//ZT
 	
 	static unsigned char *shared;
 	
-	static READ_HANDLER( shared_r )
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( shared_w )
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared[offset] = data;
-	}
+	} };
 	
 	/*
 	$f008 - write
@@ -122,11 +122,11 @@ public class mexico86
 	bit 1 = microcontroller reset line
 	bit 0 = ? (unused?)
 	*/
-	static WRITE_HANDLER( mexico86_f008_w )
+	public static WriteHandlerPtr mexico86_f008_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(1,(data & 4) ? CLEAR_LINE : ASSERT_LINE);
 		cpu_set_reset_line(2,(data & 2) ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
 	
 	

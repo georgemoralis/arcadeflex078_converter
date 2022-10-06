@@ -25,19 +25,19 @@ public class crimfght
 	VIDEO_UPDATE( crimfght );
 	
 	
-	static WRITE_HANDLER( crimfght_coin_w )
+	public static WriteHandlerPtr crimfght_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
-	}
+	} };
 	
-	static WRITE_HANDLER( crimfght_sh_irqtrigger_w )
+	public static WriteHandlerPtr crimfght_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
-	static WRITE_HANDLER( crimfght_snd_bankswitch_w )
+	public static WriteHandlerPtr crimfght_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* b1: bank for channel A */
 		/* b0: bank for channel B */
@@ -45,12 +45,12 @@ public class crimfght
 		int bank_A = ((data >> 1) & 0x01);
 		int bank_B = ((data) & 0x01);
 		K007232_set_bank( 0, bank_A, bank_B );
-	}
+	} };
 	
 	
 	/********************************************/
 	
-	static READ_HANDLER( speedup_r )
+	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -65,7 +65,7 @@ public class crimfght
 		}
 	
 		return RAM[0x0414];
-	}
+	} };
 	
 	public static Memory_ReadAddress crimfght_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

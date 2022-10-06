@@ -44,14 +44,14 @@ public class blktiger
 	
 	/* this is a protection check. The game crashes (thru a jump to 0x8000) */
 	/* if a read from this address doesn't return the value it expects. */
-	static READ_HANDLER( blktiger_protection_r )
+	public static ReadHandlerPtr blktiger_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = activecpu_get_reg(Z80_DE) >> 8;
 		logerror("protection read, PC: %04x Result:%02x\n",activecpu_get_pc(),data);
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( blktiger_bankswitch_w )
+	public static WriteHandlerPtr blktiger_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -59,13 +59,13 @@ public class blktiger
 	
 		bankaddress = 0x10000 + (data & 0x0f) * 0x4000;
 		cpu_setbank(1,&rom[bankaddress]);
-	}
+	} };
 	
-	static WRITE_HANDLER( blktiger_coinlockout_w )
+	public static WriteHandlerPtr blktiger_coinlockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(0,~data & 0x01);
 		coin_lockout_w(1,~data & 0x02);
-	}
+	} };
 	
 	
 	

@@ -311,29 +311,29 @@ public class carpolo
 	}
 	
 	
-	static WRITE_HANDLER( coin1_interrupt_clear_w )
+	public static WriteHandlerPtr coin1_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		TTL7474_clear_w(TTL7474_2S_1, data);
 		TTL7474_update(TTL7474_2S_1);
-	}
+	} };
 	
-	static WRITE_HANDLER( coin2_interrupt_clear_w )
+	public static WriteHandlerPtr coin2_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		TTL7474_clear_w(TTL7474_2S_2, data);
 		TTL7474_update(TTL7474_2S_2);
-	}
+	} };
 	
-	static WRITE_HANDLER( coin3_interrupt_clear_w )
+	public static WriteHandlerPtr coin3_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		TTL7474_clear_w(TTL7474_2U_1, data);
 		TTL7474_update(TTL7474_2U_1);
-	}
+	} };
 	
-	static WRITE_HANDLER( coin4_interrupt_clear_w )
+	public static WriteHandlerPtr coin4_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		TTL7474_clear_w(TTL7474_2U_2, data);
 		TTL7474_update(TTL7474_2U_2);
-	}
+	} };
 	
 	WRITE_HANDLER( carpolo_ball_screen_interrupt_clear_w )
 	{
@@ -378,7 +378,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( pia_0_port_a_w )
+	public static WriteHandlerPtr pia_0_port_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 - Coin counter
 		   bit 1 - Player 4 crash sound
@@ -401,10 +401,10 @@ public class carpolo
 		TTL7474_update(TTL7474_1D_1);
 		TTL7474_update(TTL7474_1C_1);
 		TTL7474_update(TTL7474_1A_1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( pia_0_port_b_w )
+	public static WriteHandlerPtr pia_0_port_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 - Strobe speed bits sound
 		   bit 1 - Speed bit 0 sound
@@ -417,19 +417,19 @@ public class carpolo
 		TTL74153_b_w(TTL74153_1K, data & 0x80);
 	
 		TTL74153_update(TTL74153_1K);
-	}
+	} };
 	
-	static READ_HANDLER( pia_0_port_b_r )
+	public static ReadHandlerPtr pia_0_port_b_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bit 4 - Pedal bit 0
 		   bit 5 - Pedal bit 1 */
 	
 		return (TTL74153_output_r(TTL74153_1K, 0) << 5) |
 			   (TTL74153_output_r(TTL74153_1K, 1) << 4);
-	}
+	} };
 	
 	
-	static READ_HANDLER( pia_1_port_a_r )
+	public static ReadHandlerPtr pia_1_port_a_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t ret;
 	
@@ -449,10 +449,10 @@ public class carpolo
 			  (readinputport(7) & 0xf0);
 	
 		return ret;
-	}
+	} };
 	
 	
-	static READ_HANDLER( pia_1_port_b_r )
+	public static ReadHandlerPtr pia_1_port_b_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t ret;
 	
@@ -467,7 +467,7 @@ public class carpolo
 			  (TTL7474_output_r(TTL7474_1F_1) ? 0x80 : 0x00);
 	
 		return ret;
-	}
+	} };
 	
 	
 	static struct pia6821_interface pia_0_intf =

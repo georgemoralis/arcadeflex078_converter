@@ -43,7 +43,7 @@ public class spy
 	static int rambank,pmcbank;
 	static unsigned char *ram;
 	
-	static READ_HANDLER( spy_bankedram1_r )
+	public static ReadHandlerPtr spy_bankedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (rambank & 1)
 		{
@@ -64,9 +64,9 @@ public class spy
 		}
 		else
 			return ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( spy_bankedram1_w )
+	public static WriteHandlerPtr spy_bankedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (rambank & 1)
 		{
@@ -84,7 +84,7 @@ public class spy
 		}
 		else
 			ram[offset] = data;
-	}
+	} };
 	
 	/*
 	this is the data written to internal ram on startup:
@@ -154,7 +154,7 @@ public class spy
 	3f: 5f 7e 00 ce 08
 	*/
 	
-	static WRITE_HANDLER( bankswitch_w )
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int offs;
@@ -166,7 +166,7 @@ public class spy
 		if (data & 0x10) offs = 0x20000 + (data & 0x06) * 0x1000;
 		else offs = 0x10000 + (data & 0x0e) * 0x1000;
 		cpu_setbank(1,&rom[offs]);
-	}
+	} };
 	
 	//AT
 	void spy_collision(void)
@@ -248,7 +248,7 @@ public class spy
 	}
 	//ZT
 	
-	static WRITE_HANDLER( spy_3f90_w )
+	public static WriteHandlerPtr spy_3f90_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		extern int spy_video_enable;
 		static int old;
@@ -330,15 +330,15 @@ public class spy
 		}
 	
 		old = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( spy_sh_irqtrigger_w )
+	public static WriteHandlerPtr spy_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_bank_w )
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank_A,bank_B;
 	
@@ -348,7 +348,7 @@ public class spy
 		bank_A = (data >> 4) & 0x03;
 		bank_B = (data >> 6) & 0x03;
 		K007232_set_bank(1,bank_A,bank_B);
-	}
+	} };
 	
 	
 	

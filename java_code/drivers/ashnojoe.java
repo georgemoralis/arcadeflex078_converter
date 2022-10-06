@@ -154,11 +154,11 @@ public class ashnojoe
 		return rand();
 	}
 	
-	static WRITE_HANDLER( adpcm_data_w )
+	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		MSM5205_data_w(0, data & 0xf);
 		MSM5205_data_w(0, data>>4);
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

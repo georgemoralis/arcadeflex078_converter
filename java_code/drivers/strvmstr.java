@@ -31,19 +31,19 @@ public class strvmstr
 	static UINT8 *bg_videoram, *fg_videoram;
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	static WRITE_HANDLER( strvmstr_fg_w )
+	public static WriteHandlerPtr strvmstr_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fg_videoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( strvmstr_bg_w )
+	public static WriteHandlerPtr strvmstr_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg_videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( strvmstr_control_w )
+	public static WriteHandlerPtr strvmstr_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	/*
@@ -65,33 +65,33 @@ public class strvmstr
 		{
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( a000_w )
+	public static WriteHandlerPtr a000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* ? */
-	}
+	} };
 	
 	
-	static READ_HANDLER( strvmstr_question_r )
+	public static ReadHandlerPtr strvmstr_question_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t *Question = memory_region(REGION_USER1);
 		return Question[offset + 0x10000 * ((strvmstr_control >> 3) & 3)];
-	}
+	} };
 	
 	static int b800_prev,b000_val,b000_ret;
 	
-	static WRITE_HANDLER( b000_w )
+	public static WriteHandlerPtr b000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		b000_val = data;
-	}
+	} };
 	
-	static READ_HANDLER( b000_r )
+	public static ReadHandlerPtr b000_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return b000_ret;
-	}
+	} };
 	
-	static WRITE_HANDLER( b800_w )
+	public static WriteHandlerPtr b800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(data)
 		{
@@ -115,7 +115,7 @@ public class strvmstr
 		}	
 	
 		b800_prev = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

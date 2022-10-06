@@ -171,7 +171,7 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( register_w )
+	public static WriteHandlerPtr register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int regnum = offset >> 2;
 		UINT16 oldval = tms34061.regs[regnum];
@@ -228,7 +228,7 @@ public class tms34061
 						regnum, tms34061.regs[regnum], activecpu_get_previouspc());
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -238,7 +238,7 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( register_r )
+	public static ReadHandlerPtr register_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int regnum = offset >> 2;
 		data8_t result;
@@ -273,7 +273,7 @@ public class tms34061
 				break;
 		}
 		return result;
-	}
+	} };
 	
 	
 	
@@ -366,7 +366,7 @@ public class tms34061
 	}
 	
 	
-	static WRITE_HANDLER( xypixel_w )
+	public static WriteHandlerPtr xypixel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
@@ -386,10 +386,10 @@ public class tms34061
 			tms34061.latchram[pixeloffs] = tms34061.latchdata;
 			tms34061.dirty[pixeloffs >> tms34061.dirtyshift] = 1;
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( xypixel_r )
+	public static ReadHandlerPtr xypixel_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
@@ -404,7 +404,7 @@ public class tms34061
 	
 		/* return the result */
 		return tms34061.vram[pixeloffs];
-	}
+	} };
 	
 	
 	

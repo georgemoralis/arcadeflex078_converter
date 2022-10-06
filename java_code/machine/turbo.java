@@ -91,43 +91,43 @@ public class turbo
 		3 = IC6 - CPU Board, Sheet 5, D7
 	*/
 	
-	static WRITE_HANDLER( turbo_opa_w )
+	public static WriteHandlerPtr turbo_opa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_opa = data;	/* signals 0PA0 to 0PA7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_opb_w )
+	public static WriteHandlerPtr turbo_opb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_opb = data;	/* signals 0PB0 to 0PB7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_opc_w )
+	public static WriteHandlerPtr turbo_opc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_opc = data;	/* signals 0PC0 to 0PC7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_ipa_w )
+	public static WriteHandlerPtr turbo_ipa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_ipa = data;	/* signals 1PA0 to 1PA7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_ipb_w )
+	public static WriteHandlerPtr turbo_ipb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_ipb = data;	/* signals 1PB0 to 1PB7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_ipc_w )
+	public static WriteHandlerPtr turbo_ipc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_ipc = data;	/* signals 1PC0 to 1PC7 */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_sound_A_w )
+	public static WriteHandlerPtr turbo_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			2PA0 = /CRASH
@@ -148,10 +148,10 @@ public class turbo
 		if (!(data & 0x80)) sample_start(2, 5, 0);
 		osel = (osel & 6) | ((data >> 5) & 1);
 		turbo_update_samples();
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_sound_B_w )
+	public static WriteHandlerPtr turbo_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			2PB0 = ACC0
@@ -175,10 +175,10 @@ public class turbo
 		else
 			sample_stop(7);
 		if (!(data & 0x80)) sample_start(3, 6, 0);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_sound_C_w )
+	public static WriteHandlerPtr turbo_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			2PC0 = OSEL1
@@ -195,17 +195,17 @@ public class turbo
 		osel = (osel & 1) | ((data & 3) << 1);
 		turbo_update_samples();
 		turbo_update_tachometer();
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( turbo_pla_col_w )
+	public static WriteHandlerPtr turbo_pla_col_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0-3 = signals PLA0 to PLA3 */
 		/* bit 4-6 = signals COL0 to COL2 */
 		/* bit 7 = unused */
 		turbo_fbpla = data & 0x0f;
 		turbo_fbcol = (data & 0x70) >> 4;
-	}
+	} };
 	
 	
 	static ppi8255_interface turbo_8255_intf =
@@ -227,37 +227,37 @@ public class turbo
 	
 	*******************************************/
 	
-	static WRITE_HANDLER( subroc3d_sprite_pri_w )
+	public static WriteHandlerPtr subroc3d_sprite_pri_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		subroc3d_ply = data & 0x0f;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( subroc3d_coin_led_w )
+	public static WriteHandlerPtr subroc3d_coin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
 		set_led_status(0, data & 0x04);
 		subroc3d_chofs = ((data >> 4) & 1) * 3;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( subroc3d_palette_w )
+	public static WriteHandlerPtr subroc3d_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		subroc3d_col = data & 0x0f;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( subroc3d_sound_A_w )
+	public static WriteHandlerPtr subroc3d_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 4 to 6 control balance */
 	
 		subroc3d_volume = (data & 0x0f);
 		subroc3d_select = (data & 0x80);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( subroc3d_sound_B_w )
+	public static WriteHandlerPtr subroc3d_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static UINT8 last = 0;
 	
@@ -273,10 +273,10 @@ public class turbo
 			sample_set_volume(3, volume);
 	
 		last = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( subroc3d_sound_C_w )
+	public static WriteHandlerPtr subroc3d_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static UINT8 last = 0;
 	
@@ -294,7 +294,7 @@ public class turbo
 		last = data;
 	
 		mixer_sound_enable_global_w(!(data & 0x80));
-	}
+	} };
 	
 	
 	static ppi8255_interface subroc3d_8255_intf =
@@ -316,33 +316,33 @@ public class turbo
 	
 	*******************************************/
 	
-	static READ_HANDLER( buckrog_cpu2_status_r )
+	public static ReadHandlerPtr buckrog_cpu2_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return buckrog_status;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_cpu2_command_w )
+	public static WriteHandlerPtr buckrog_cpu2_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		buckrog_status &= ~0x80;
 		buckrog_command = data;
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_back_palette_w )
+	public static WriteHandlerPtr buckrog_back_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		buckrog_mov = data & 0x1f;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_fore_palette_w )
+	public static WriteHandlerPtr buckrog_fore_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		buckrog_fchg = data & 0x07;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_sound_A_w )
+	public static WriteHandlerPtr buckrog_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound controls */
 		static int last = -1;
@@ -363,10 +363,10 @@ public class turbo
 		if ((last & 0x80) && !(data & 0x80)) sample_start(5, 1, 0); /* alarm1 */
 	
 		last = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_sound_B_w )
+	public static WriteHandlerPtr buckrog_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound controls */
 		static int last = -1;
@@ -389,17 +389,17 @@ public class turbo
 		mixer_sound_enable_global_w(data & 0x80);
 	
 		last = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( buckrog_extra_w )
+	public static WriteHandlerPtr buckrog_extra_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		buckrog_obch = data & 0x07;
 		coin_counter_w(0, data & 0x10);
 		coin_counter_w(1, data & 0x20);
 		set_led_status(0, data & 0x40);
 		// NOUSE = data & 0x80 -> body sonic???
-	}
+	} };
 	
 	
 	static ppi8255_interface buckrog_8255_intf =

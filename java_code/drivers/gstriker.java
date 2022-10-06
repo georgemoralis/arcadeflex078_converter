@@ -220,19 +220,19 @@ public class gstriker
 	}
 	#endif
 	
-	static WRITE_HANDLER( gs_sh_pending_command_clear_w )
+	public static WriteHandlerPtr gs_sh_pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pending_command = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( gs_sh_bankswitch_w )
+	public static WriteHandlerPtr gs_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bankaddress;
 	
 		bankaddress = 0x10000 + (data & 0x03) * 0x8000;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	/*** GFX DECODE **************************************************************/
 	

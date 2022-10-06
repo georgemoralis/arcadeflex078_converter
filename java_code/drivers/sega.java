@@ -167,13 +167,13 @@ public class sega
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( sega_sh_r )
+	public static ReadHandlerPtr sega_sh_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* 0x80 = universal sound board ready */
 		/* 0x01 = speech ready, theorically, but the schematics show it unconnected */
 	
 		return 0x80;
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

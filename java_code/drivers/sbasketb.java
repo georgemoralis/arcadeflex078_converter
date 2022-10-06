@@ -55,10 +55,10 @@ public class sbasketb
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	}
 	
-	static WRITE_HANDLER( sbasketb_coin_counter_w )
+	public static WriteHandlerPtr sbasketb_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

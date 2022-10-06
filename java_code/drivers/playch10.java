@@ -356,43 +356,43 @@ public class playch10
 	static UINT8 *work_ram, *ram_8w;
 	static int up_8w;
 	
-	static WRITE_HANDLER( up8w_w )
+	public static WriteHandlerPtr up8w_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		up_8w = data & 1;
-	}
+	} };
 	
-	static READ_HANDLER( ram_8w_r )
+	public static ReadHandlerPtr ram_8w_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ( offset >= 0x400 && up_8w )
 			return ram_8w[offset];
 	
 		return ram_8w[offset & 0x3ff];
-	}
+	} };
 	
-	static WRITE_HANDLER( ram_8w_w )
+	public static WriteHandlerPtr ram_8w_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ( offset >= 0x400 && up_8w )
 			ram_8w[offset] = data;
 		else
 			ram_8w[offset & 0x3ff] = data;
-	}
+	} };
 	
-	static READ_HANDLER( mirror_ram_r )
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return work_ram[ offset & 0x7ff ];
-	}
+	} };
 	
-	static WRITE_HANDLER( mirror_ram_w )
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		work_ram[ offset & 0x7ff ] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sprite_dma_w )
+	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 0, &work_ram[source] );
-	}
+	} };
 	
 	static NVRAM_HANDLER( playch10 )
 	{

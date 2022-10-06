@@ -70,9 +70,9 @@ public class system18
 	
 	static UINT8 *sys18_SoundMemBank;
 	
-	static READ_HANDLER( system18_bank_r ){
+	public static ReadHandlerPtr system18_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sys18_SoundMemBank[offset];
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem_18[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -94,7 +94,7 @@ public class system18
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( sys18_soundbank_w ){
+	public static WriteHandlerPtr sys18_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select access bank for a000~bfff */
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int Bank=0;
@@ -113,7 +113,7 @@ public class system18
 				break;
 		}
 		sys18_SoundMemBank = &RAM[Bank+0x10000];
-	}
+	} };
 	
 	public static IO_ReadPort sound_readport_18[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -235,10 +235,10 @@ public class system18
 	/***************************************************************************/
 	
 	/*
-	static READ_HANDLER( shdancer_skip_r ){
+	public static ReadHandlerPtr shdancer_skip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x2f76) {cpu_spinuntil_int(); return 0xffff;}
 		return (*(UINT16 *)(&sys16_workingram[0x0000]));
-	}
+	} };
 	*/
 	
 	static MEMORY_READ16_START( shdancbl_readmem )

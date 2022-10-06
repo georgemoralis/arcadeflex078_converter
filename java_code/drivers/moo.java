@@ -243,10 +243,10 @@ public class moo
 		return latch;
 	}
 	
-	static WRITE_HANDLER( sound_bankswitch_w )
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + (data&0xf)*0x4000);
-	}
+	} };
 	
 	
 	#if 0 // (for reference; do not remove)

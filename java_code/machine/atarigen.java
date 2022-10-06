@@ -116,7 +116,6 @@ public class atarigen
 	static void delayed_sound_w(int param);
 	static void delayed_6502_sound_w(int param);
 	
-	static READ_HANDLER( m6502_speedup_r );
 	static void atarigen_set_vol(int volume, const char *string);
 	
 	static void vblank_timer(int param);
@@ -871,7 +870,7 @@ public class atarigen
 		m6502_speedup_r: Handles speeding up the 6502.
 	---------------------------------------------------------------*/
 	
-	static READ_HANDLER( m6502_speedup_r )
+	public static ReadHandlerPtr m6502_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = speed_b[0];
 	
@@ -879,7 +878,7 @@ public class atarigen
 			cpu_spinuntil_int();
 	
 		return result;
-	}
+	} };
 	
 	
 	

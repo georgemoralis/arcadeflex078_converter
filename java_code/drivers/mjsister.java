@@ -49,12 +49,12 @@ public class mjsister
 			dac_busy = 0;
 	}
 	
-	static WRITE_HANDLER( mjsister_dac_adr_s_w )
+	public static WriteHandlerPtr mjsister_dac_adr_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dac_adr_s = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mjsister_dac_adr_e_w )
+	public static WriteHandlerPtr mjsister_dac_adr_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dac_adr_e = data;
 		dac_adr = dac_adr_s << 8;
@@ -63,14 +63,14 @@ public class mjsister
 			timer_set(TIME_NOW,0,dac_callback);
 	
 		dac_busy = 1;
-	}
+	} };
 	
 	static MACHINE_INIT( mjsister )
 	{
 		dac_busy = 0;
 	}
 	
-	static WRITE_HANDLER( mjsister_banksel1_w )
+	public static WriteHandlerPtr mjsister_banksel1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 		int tmp = colorbank;
@@ -104,9 +104,9 @@ public class mjsister
 			mjsister_screen_redraw = 1;
 	
 		cpu_setbank(1,&BANKROM[rombank0*0x10000+rombank1*0x8000]+0x10000);
-	}
+	} };
 	
-	static WRITE_HANDLER( mjsister_banksel2_w )
+	public static WriteHandlerPtr mjsister_banksel2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 	
@@ -123,19 +123,19 @@ public class mjsister
 		}
 	
 		cpu_setbank(1,&BANKROM[rombank0*0x10000+rombank1*0x8000]+0x10000);
-	}
+	} };
 	
-	static WRITE_HANDLER( mjsister_input_sel1_w )
+	public static WriteHandlerPtr mjsister_input_sel1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsister_input_sel1 = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mjsister_input_sel2_w )
+	public static WriteHandlerPtr mjsister_input_sel2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsister_input_sel2 = data;
-	}
+	} };
 	
-	static READ_HANDLER( mjsister_keys_r )
+	public static ReadHandlerPtr mjsister_keys_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int p,i,ret = 0;
 	
@@ -149,7 +149,7 @@ public class mjsister
 		}
 	
 		return ret;
-	}
+	} };
 	
 	/****************************************************************************/
 	

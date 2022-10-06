@@ -26,11 +26,11 @@ public class solomon
 	extern VIDEO_START( solomon );
 	extern VIDEO_UPDATE( solomon );
 	
-	static WRITE_HANDLER( solomon_sh_command_w )
+	public static WriteHandlerPtr solomon_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

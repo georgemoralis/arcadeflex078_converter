@@ -78,7 +78,7 @@ public class hanaroku
 		hanaroku_draw_sprites(bitmap, cliprect);
 	}
 	
-	static WRITE_HANDLER( hanaroku_out_0_w )
+	public static WriteHandlerPtr hanaroku_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			bit		description
@@ -98,9 +98,9 @@ public class hanaroku
 		coin_counter_w(2, data & 0x04);
 		coin_counter_w(3, data & 0x08);
 		coin_counter_w(4, data & 0x80);
-	}
+	} };
 	
-	static WRITE_HANDLER( hanaroku_out_1_w )
+	public static WriteHandlerPtr hanaroku_out_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			bit		description
@@ -114,12 +114,12 @@ public class hanaroku
 			 6		?
 			 7		?
 		*/
-	}
+	} };
 	
-	static WRITE_HANDLER( hanaroku_out_2_w )
+	public static WriteHandlerPtr hanaroku_out_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// unused
-	}
+	} };
 	
 	/* main cpu */
 	

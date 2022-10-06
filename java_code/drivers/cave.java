@@ -167,14 +167,14 @@ public class cave
 	
 	//static data8_t sound_flag1, sound_flag2;
 	
-	static READ_HANDLER( soundflags_r )
+	public static ReadHandlerPtr soundflags_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		// bit 2 is low: can read command (lo)
 		// bit 3 is low: can read command (hi)
 	//	return	(sound_flag1 ? 0 : 4) |
 	//			(sound_flag2 ? 0 : 8) ;
 	return 0;
-	}
+	} };
 	
 	static READ16_HANDLER( soundflags_ack_r )
 	{
@@ -197,18 +197,18 @@ public class cave
 	}
 	
 	/* Sound CPU: read the low 8 bits of the 16 bit sound latch */
-	static READ_HANDLER( soundlatch_lo_r )
+	public static ReadHandlerPtr soundlatch_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	sound_flag1 = 0;
 		return soundlatch_word_r(offset,0) & 0xff;
-	}
+	} };
 	
 	/* Sound CPU: read the high 8 bits of the 16 bit sound latch */
-	static READ_HANDLER( soundlatch_hi_r )
+	public static ReadHandlerPtr soundlatch_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	sound_flag2 = 0;
 		return soundlatch_word_r(offset,0) >> 8;
-	}
+	} };
 	
 	/* Main CPU: read the latch written by the sound CPU (acknowledge) */
 	static READ16_HANDLER( soundlatch_ack_r )
@@ -227,14 +227,14 @@ public class cave
 	
 	
 	/* Sound CPU: write latch for the main CPU (acknowledge) */
-	static WRITE_HANDLER( soundlatch_ack_w )
+	public static WriteHandlerPtr soundlatch_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundbuf.data[soundbuf.len] = data;
 		if (soundbuf.len<32)
 			soundbuf.len++;
 		else
 			logerror("CPU #1 - PC %04X: Sound Buffer 2 Overflow Error\n",activecpu_get_pc());
-	}
+	} };
 	
 	
 	
@@ -1236,7 +1236,7 @@ public class cave
 	***************************************************************************/
 	
 	// TODO : FIX SAMPLES TABLE BEING OVERWRITTEN IN DONPACHI
-	static WRITE_HANDLER( pwrinst2_okibank_w )
+	public static WriteHandlerPtr pwrinst2_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* The OKI6295 ROM space is divided in four banks, each one indepentently
 		   controlled. The sample table at the beginning of the addressing space is
@@ -1270,7 +1270,7 @@ public class cave
 		/* and also copy the samples address table (only for chip #1) */
 		rom += banknum * TABLESIZE;
 		memcpy(rom,rom + 0x40000 + bankaddr,TABLESIZE);
-	}
+	} };
 	
 	WRITE_HANDLER( pwrinst2_rombank_w )
 	{
@@ -1327,14 +1327,14 @@ public class cave
 	***************************************************************************/
 	
 	static data8_t *mirror_ram;
-	static READ_HANDLER( mirror_ram_r )
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mirror_ram[offset];
-	}
-	static WRITE_HANDLER( mirror_ram_w )
+	} };
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mirror_ram[offset] = data;
-	}
+	} };
 	
 	WRITE_HANDLER( sailormn_rombank_w )
 	{

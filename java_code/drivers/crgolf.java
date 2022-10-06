@@ -51,11 +51,11 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( rom_bank_select_w )
+	public static WriteHandlerPtr rom_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *region_base = memory_region(REGION_CPU1);
 		cpu_setbank(1, region_base + 0x10000 + (data & 15) * 0x2000);
-	}
+	} };
 	
 	
 	static MACHINE_INIT( crgolf )
@@ -71,19 +71,19 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( switch_input_r )
+	public static ReadHandlerPtr switch_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(port_select);
-	}
+	} };
 	
 	
-	static READ_HANDLER( analog_input_r )
+	public static ReadHandlerPtr analog_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ((readinputport(7) >> 4) | (readinputport(8) & 0xf0)) ^ 0x88;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( switch_input_select_w )
+	public static WriteHandlerPtr switch_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (!(data & 0x40)) port_select = 6;
 		if (!(data & 0x20)) port_select = 5;
@@ -92,13 +92,13 @@ public class crgolf
 		if (!(data & 0x04)) port_select = 2;
 		if (!(data & 0x02)) port_select = 1;
 		if (!(data & 0x01)) port_select = 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( unknown_w )
+	public static WriteHandlerPtr unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("%04X:unknown_w = %02X\n", activecpu_get_pc(), data);
-	}
+	} };
 	
 	
 	
@@ -115,17 +115,17 @@ public class crgolf
 	}
 	
 	
-	static WRITE_HANDLER( main_to_sound_w )
+	public static WriteHandlerPtr main_to_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, main_to_sound_callback);
-	}
+	} };
 	
 	
-	static READ_HANDLER( main_to_sound_r )
+	public static ReadHandlerPtr main_to_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
 		return main_to_sound_data;
-	}
+	} };
 	
 	
 	
@@ -142,17 +142,17 @@ public class crgolf
 	}
 	
 	
-	static WRITE_HANDLER( sound_to_main_w )
+	public static WriteHandlerPtr sound_to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, sound_to_main_callback);
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_to_main_r )
+	public static ReadHandlerPtr sound_to_main_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(0, IRQ_LINE_NMI, CLEAR_LINE);
 		return sound_to_main_data;
-	}
+	} };
 	
 	
 	

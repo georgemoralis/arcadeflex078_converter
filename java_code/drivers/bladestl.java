@@ -52,7 +52,7 @@ public class bladestl
 		}
 	}
 	
-	static READ_HANDLER( trackball_r )
+	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int last[4];
 		int curr,delta;
@@ -62,9 +62,9 @@ public class bladestl
 		delta = (curr - last[offset]) & 0xff;
 		last[offset] = curr;
 		return (delta & 0x80) | (curr >> 1);
-	}
+	} };
 	
-	static WRITE_HANDLER( bladestl_bankswitch_w )
+	public static WriteHandlerPtr bladestl_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -86,24 +86,24 @@ public class bladestl
 		/* bit 7 = select sprite bank */
 		bladestl_spritebank = (data & 0x80) << 3;
 	
-	}
+	} };
 	
-	static WRITE_HANDLER( bladestl_sh_irqtrigger_w )
+	public static WriteHandlerPtr bladestl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset, data);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 		//logerror("(sound) write %02x\n", data);
-	}
+	} };
 	
-	static WRITE_HANDLER( bladestl_port_B_w ){
+	public static WriteHandlerPtr bladestl_port_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1, 2 unknown */
 		UPD7759_set_bank_base(0, ((data & 0x38) >> 3)*0x20000);
-	}
+	} };
 	
-	static WRITE_HANDLER( bladestl_speech_ctrl_w ){
+	public static WriteHandlerPtr bladestl_speech_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_reset_w(0, data & 1);
 		UPD7759_start_w(0, data & 2);
-	}
+	} };
 	
 	public static Memory_ReadAddress bladestl_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

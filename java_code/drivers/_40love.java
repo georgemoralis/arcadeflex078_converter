@@ -264,18 +264,18 @@ public class _40love
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_disable_w )
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -283,36 +283,36 @@ public class _40love
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	
 	
 	#if 0
-	static WRITE_HANDLER( fortyl_coin_counter_w )
+	public static WriteHandlerPtr fortyl_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	#endif
 	
 	
-	static READ_HANDLER( fortyl_mcu_r )
+	public static ReadHandlerPtr fortyl_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return buggychl_mcu_r(offset);
-	}
+	} };
 	
-	static READ_HANDLER( fortyl_mcu_status_r )
+	public static ReadHandlerPtr fortyl_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return buggychl_mcu_status_r(offset);
-	}
+	} };
 	
-	static WRITE_HANDLER( fortyl_mcu_w )
+	public static WriteHandlerPtr fortyl_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		buggychl_mcu_w(offset,data);
-	}
+	} };
 	
 	static int banknum = -1;
 	
-	static WRITE_HANDLER( bank_select_w )
+	public static WriteHandlerPtr bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 		if ((data!=0x02) && (data!=0xfd))
@@ -323,36 +323,36 @@ public class _40love
 	
 		banknum = data&1;
 		cpu_setbank( 1, memory_region(REGION_CPU1) + (banknum * 0x2000) + 0x10000 );
-	}
+	} };
 	
 	
 	static UINT8 pix1;
 	static UINT8 pix2[2];
 	
-	static WRITE_HANDLER( pix1_w )
+	public static WriteHandlerPtr pix1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	if ( data > 7 )
 	//		logerror("pix1 = %2x\n",data);
 	
 		pix1 = data;
-	}
-	static WRITE_HANDLER( pix2_w )
+	} };
+	public static WriteHandlerPtr pix2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	if ( (data!=0x00) && (data!=0xff) )
 	//		logerror("pix2 = %2x\n",data);
 	
 		pix2[0] = pix2[1];
 		pix2[1] = data;
-	}
+	} };
 	
 	#if 0
-	static READ_HANDLER( pix1_r )
+	public static ReadHandlerPtr pix1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pix1;
-	}
+	} };
 	#endif
 	
-	static READ_HANDLER( pix2_r )
+	public static ReadHandlerPtr pix2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		int d1 = pix1 & 7;
@@ -360,7 +360,7 @@ public class _40love
 		res = (((pix2[1] << (d1+8)) | (pix2[0] << d1)) & 0xff00) >> 8;
 	
 		return res;
-	}
+	} };
 	
 	
 	/****************************************************************************
@@ -434,7 +434,7 @@ public class _40love
 	};
 	
 	
-	static WRITE_HANDLER( undoukai_mcu_w )
+	public static WriteHandlerPtr undoukai_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 		UINT16 ram_adr = RAM[0xa1b5]*0x100 + RAM[0xa1b4];
@@ -591,22 +591,22 @@ public class _40love
 	//				logerror("unknown cmd%02x: %02x %02x %02x %02x\n",data,mcu_in[0][0],mcu_in[0][1],mcu_in[0][2],mcu_in[0][3]);
 			}
 		}
-	}
+	} };
 	
-	static READ_HANDLER( undoukai_mcu_r )
+	public static ReadHandlerPtr undoukai_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	
 	//	logerror("mcu_r %02x\n",from_mcu);
 	
 		return from_mcu;
-	}
+	} };
 	
-	static READ_HANDLER( undoukai_mcu_status_r )
+	public static ReadHandlerPtr undoukai_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = 3;
 	
 		return res;
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -646,22 +646,22 @@ public class _40love
 	static UINT8 snd_data;
 	static UINT8 snd_flag;
 	
-	static READ_HANDLER( from_snd_r )
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		snd_flag = 0;
 		return snd_data;
-	}
+	} };
 	
-	static READ_HANDLER( snd_flag_r )
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return snd_flag | 0xfd;
-	}
+	} };
 	
-	static WRITE_HANDLER( to_main_w )
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_data = data;
 		snd_flag = 2;
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -831,7 +831,7 @@ public class _40love
 	static UINT8 snd_ctrl2=0;
 	static UINT8 snd_ctrl3=0;
 	
-	static WRITE_HANDLER( sound_control_0_w )
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl0 = data & 0xff;
 	//	usrintf_showmessage("SND0 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
@@ -839,15 +839,15 @@ public class _40love
 		/* this definitely controls main melody voice on 2'-1 and 4'-1 outputs */
 		mixer_set_volume (3, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group1 from msm5232 */
 	
-	}
-	static WRITE_HANDLER( sound_control_1_w )
+	} };
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_ctrl1 = data & 0xff;
 	//	usrintf_showmessage("SND1 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 		mixer_set_volume (4, vol_ctrl[ (snd_ctrl1>>4) & 15 ]);	/* group2 from msm5232 */
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_control_2_w )
+	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 	
@@ -856,13 +856,13 @@ public class _40love
 	
 		for (i=0; i<3; i++)
 			mixer_set_volume (i, vol_ctrl[ (snd_ctrl2>>4) & 15 ]);	/* ym2149f all */
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_control_3_w ) /* unknown */
+	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* unknown */
 	{
 		snd_ctrl3 = data & 0xff;
 	//	usrintf_showmessage("SND3 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
-	}
+	} };
 	
 	public static Memory_WriteAddress writemem_sound[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

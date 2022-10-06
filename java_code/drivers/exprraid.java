@@ -85,32 +85,32 @@ public class exprraid
 	/* Emulate Protection ( only for original express raider, code is cracked on the bootleg */
 	/*****************************************************************************************/
 	
-	static READ_HANDLER( exprraid_prot_0_r )
+	public static ReadHandlerPtr exprraid_prot_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		return RAM[0x02a9];
-	}
+	} };
 	
-	static READ_HANDLER( exprraid_prot_1_r )
+	public static ReadHandlerPtr exprraid_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x02;
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_cpu_command_w )
+	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    soundlatch_w(0,data);
 	    cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
-	static READ_HANDLER( vblank_r ) {
+	public static ReadHandlerPtr vblank_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		int val = readinputport( 0 );
 	
 		if ( ( val & 0x02 ) )
 			cpu_spin();
 	
 		return val;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

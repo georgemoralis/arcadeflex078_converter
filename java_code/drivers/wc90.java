@@ -82,17 +82,17 @@ public class wc90
 	
 	static data8_t *wc90_shared;
 	
-	static READ_HANDLER( wc90_shared_r )
+	public static ReadHandlerPtr wc90_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return wc90_shared[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( wc90_shared_w )
+	public static WriteHandlerPtr wc90_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wc90_shared[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( wc90_bankswitch_w )
+	public static WriteHandlerPtr wc90_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		data8_t *RAM = memory_region(REGION_CPU1);
@@ -100,9 +100,9 @@ public class wc90
 	
 		bankaddress = 0x10000 + ( ( data & 0xf8 ) << 8 );
 		cpu_setbank( 1,&RAM[bankaddress] );
-	}
+	} };
 	
-	static WRITE_HANDLER( wc90_bankswitch1_w )
+	public static WriteHandlerPtr wc90_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		data8_t *RAM = memory_region(REGION_CPU2);
@@ -110,13 +110,13 @@ public class wc90
 	
 		bankaddress = 0x10000 + ( ( data & 0xf8 ) << 8 );
 		cpu_setbank( 2,&RAM[bankaddress] );
-	}
+	} };
 	
-	static WRITE_HANDLER( wc90_sound_command_w )
+	public static WriteHandlerPtr wc90_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	
 	

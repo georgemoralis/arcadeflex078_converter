@@ -129,7 +129,7 @@ public class vball
 	   bit 6 = scroll y hi
 	   bit 7 = ?
 	*/
-	static WRITE_HANDLER( vb_bankswitch_w )
+	public static WriteHandlerPtr vb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank( 1,&RAM[ 0x10000 + ( 0x4000 * ( data & 1 ) ) ] );
@@ -139,7 +139,7 @@ public class vball
 				vb_mark_all_dirty();
 		}
 		vb_scrolly_hi = (data & 0x40)<<2;
-	}
+	} };
 	
 	/* The sound system comes all but verbatim from Double Dragon */
 	

@@ -233,27 +233,27 @@ public class shougi
 	logerror("cpu_sharedram_ctrl=MAIN");
 	}
 	
-	static WRITE_HANDLER( shougi_watchdog_reset_w )
+	public static WriteHandlerPtr shougi_watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		watchdog_reset_w(0,data);
-	}
+	} };
 	
 	
 	static int nmi_enabled = 0;
 	
-	static WRITE_HANDLER( nmi_disable_and_clear_line_w )
+	public static WriteHandlerPtr nmi_disable_and_clear_line_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nmi_enabled = 0; /* disable NMIs */
 	
 		/* NMI lines are tied together on both CPUs and connected to the LS74 /Q output */
 		cpu_set_irq_line(0, IRQ_LINE_NMI, CLEAR_LINE);
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nmi_enabled = 1; /* enable NMIs */
-	}
+	} };
 	
 	static INTERRUPT_GEN( shougi_vblank_nmi )
 	{

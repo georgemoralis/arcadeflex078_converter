@@ -98,32 +98,32 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( sound_data_w )
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_to_main_data = data;
 		sound_to_main_ready = 1;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_data_r )
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		main_to_sound_ready = 0;
 		return main_to_sound_data;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_ready_to_send_r )
+	public static ReadHandlerPtr sound_ready_to_send_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sound_to_main_ready ? 0x00 : 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_data_ready_r )
+	public static ReadHandlerPtr sound_data_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc() == 0xd50 && !main_to_sound_ready)
 			cpu_spinuntil_int();
 		return main_to_sound_ready ? 0x00 : 0x80;
-	}
+	} };
 	
 	
 	
@@ -143,13 +143,13 @@ public class btoads
 	}
 	
 	
-	static WRITE_HANDLER( sound_int_state_w )
+	public static WriteHandlerPtr sound_int_state_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (!(sound_int_state & 0x80) && (data & 0x80))
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
 	
 		sound_int_state = data;
-	}
+	} };
 	
 	
 	
@@ -159,18 +159,18 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( bsmt_ready_r )
+	public static ReadHandlerPtr bsmt_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x80;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( bsmt2000_port_w )
+	public static WriteHandlerPtr bsmt2000_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT16 reg = offset >> 8;
 		UINT16 val = ((offset & 0xff) << 8) | data;
 		BSMT2000_data_0_w(reg, val, 0);
-	}
+	} };
 	
 	
 	

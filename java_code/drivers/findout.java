@@ -25,12 +25,12 @@ public class findout
 	
 	static data8_t drawctrl[3];
 	
-	static WRITE_HANDLER( findout_drawctrl_w )
+	public static WriteHandlerPtr findout_drawctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		drawctrl[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( findout_bitmap_w )
+	public static WriteHandlerPtr findout_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int sx,sy;
 		int fg,bg,mask,bits;
@@ -54,25 +54,25 @@ public class findout
 		if (mask & 0x04) plot_pixel(tmpbitmap,sx+5,sy,(bits & 0x04) ? fg : bg);
 		if (mask & 0x02) plot_pixel(tmpbitmap,sx+6,sy,(bits & 0x02) ? fg : bg);
 		if (mask & 0x01) plot_pixel(tmpbitmap,sx+7,sy,(bits & 0x01) ? fg : bg);
-	}
+	} };
 	
 	
-	static READ_HANDLER( portC_r )
+	public static ReadHandlerPtr portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 4;
 	//	return (rand()&2);
-	}
+	} };
 	
-	static WRITE_HANDLER( lamps_w )
+	public static WriteHandlerPtr lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,data & 0x01);
 		set_led_status(1,data & 0x02);
 		set_led_status(2,data & 0x04);
 		set_led_status(3,data & 0x08);
 		set_led_status(4,data & 0x10);
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_w )
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 3 used but unknown */
 	
@@ -84,7 +84,7 @@ public class findout
 	
 	//	logerror("%04x: sound_w %02x\n",activecpu_get_pc(),data);
 	//	usrintf_showmessage("%02x",data);
-	}
+	} };
 	
 	static ppi8255_interface ppi8255_intf =
 	{
@@ -103,7 +103,7 @@ public class findout
 	}
 	
 	
-	static READ_HANDLER( catchall )
+	public static ReadHandlerPtr catchall  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int pc = activecpu_get_pc();
 	
@@ -111,43 +111,43 @@ public class findout
 			logerror("%04x: unmapped memory read from %04x\n",pc,offset);
 	
 		return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( banksel_main_w )
+	public static WriteHandlerPtr banksel_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x8000);
-	}
-	static WRITE_HANDLER( banksel_1_w )
+	} };
+	public static WriteHandlerPtr banksel_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x10000);
-	}
-	static WRITE_HANDLER( banksel_2_w )
+	} };
+	public static WriteHandlerPtr banksel_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x18000);
-	}
-	static WRITE_HANDLER( banksel_3_w )
+	} };
+	public static WriteHandlerPtr banksel_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x20000);
-	}
-	static WRITE_HANDLER( banksel_4_w )
+	} };
+	public static WriteHandlerPtr banksel_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x28000);
-	}
-	static WRITE_HANDLER( banksel_5_w )
+	} };
+	public static WriteHandlerPtr banksel_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x30000);
-	}
+	} };
 	
 	
 	/* This signature is used to validate the question ROMs. Simple protection check? */
 	static int signature_answer,signature_pos;
 	
-	static READ_HANDLER( signature_r )
+	public static ReadHandlerPtr signature_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return signature_answer;
-	}
+	} };
 	
-	static WRITE_HANDLER( signature_w )
+	public static WriteHandlerPtr signature_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data == 0) signature_pos = 0;
 		else
@@ -158,7 +158,7 @@ public class findout
 	
 			signature_pos &= 7;	/* safety; shouldn't happen */
 		}
-	}
+	} };
 	
 	
 	

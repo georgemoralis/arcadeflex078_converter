@@ -50,26 +50,26 @@ public class tankbust
 		latch = data;
 	}
 	
-	static WRITE_HANDLER( tankbust_soundlatch_w )
+	public static WriteHandlerPtr tankbust_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW,data,soundlatch_callback);
-	}
+	} };
 	
-	static READ_HANDLER( tankbust_soundlatch_r )
+	public static ReadHandlerPtr tankbust_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return latch;
-	}
+	} };
 	
 	//port B of ay8910#0
 	static unsigned int timer1=0;
-	static READ_HANDLER( tankbust_soundtimer_r )
+	public static ReadHandlerPtr tankbust_soundtimer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
 		timer1++;
 		ret = timer1;
 		return ret;
-	}
+	} };
 	
 	static void soundirqline_callback (int param)
 	{
@@ -82,7 +82,7 @@ public class tankbust
 	
 	static int e0xx_data[8] = { 0,0,0,0, 0,0,0,0 };
 	
-	static WRITE_HANDLER( tankbust_e0xx_w )
+	public static WriteHandlerPtr tankbust_e0xx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		e0xx_data[offset] = data;
 	
@@ -123,12 +123,12 @@ public class tankbust
 			cpu_setbank( 2, memory_region(REGION_CPU1) + 0x18000 + ((data&1) * 0x2000) ); /* verified (the game will reset after the "game over" otherwise) */
 		break;
 		}
-	}
+	} };
 	
-	static READ_HANDLER( debug_output_area_r )
+	public static ReadHandlerPtr debug_output_area_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return e0xx_data[offset];
-	}
+	} };
 	
 	
 	
@@ -184,18 +184,18 @@ public class tankbust
 	}
 	
 	#if 0
-	static READ_HANDLER( read_from_unmapped_memory )
+	public static ReadHandlerPtr read_from_unmapped_memory  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	#endif
 	
 	static int variable_data=0x11;
-	static READ_HANDLER( some_changing_input )
+	public static ReadHandlerPtr some_changing_input  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		variable_data = (variable_data+8) & 0xff;
 		return variable_data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

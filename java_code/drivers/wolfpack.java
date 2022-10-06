@@ -88,13 +88,13 @@ public class wolfpack
 	}
 	
 	
-	static READ_HANDLER( wolfpack_zeropage_r )
+	public static ReadHandlerPtr wolfpack_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_CPU1)[offset & 0xff];
-	}
+	} };
 	
 	
-	static READ_HANDLER( wolfpack_input_r )
+	public static ReadHandlerPtr wolfpack_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(0);
 	
@@ -108,10 +108,10 @@ public class wolfpack
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static READ_HANDLER( wolfpack_misc_r )
+	public static ReadHandlerPtr wolfpack_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = 0;
 	
@@ -134,45 +134,45 @@ public class wolfpack
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( wolfpack_zeropage_w )
+	public static WriteHandlerPtr wolfpack_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( wolfpack_high_explo_w ) { }
-	static WRITE_HANDLER( wolfpack_sonar_ping_w ) {}
-	static WRITE_HANDLER( wolfpack_sirlat_w ) {}
-	static WRITE_HANDLER( wolfpack_pt_sound_w ) {}
-	static WRITE_HANDLER( wolfpack_start_speech_w ) {}
-	static WRITE_HANDLER( wolfpack_launch_torpedo_w ) {}
-	static WRITE_HANDLER( wolfpack_low_explo_w ) {}
-	static WRITE_HANDLER( wolfpack_screw_cont_w ) {}
-	static WRITE_HANDLER( wolfpack_lamp_flash_w ) {}
-	static WRITE_HANDLER( wolfpack_warning_light_w ) {}
-	static WRITE_HANDLER( wolfpack_audamp_w ) {}
-	static WRITE_HANDLER( wolfpack_word_w ) {}
+	public static WriteHandlerPtr wolfpack_high_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data) { } };
+	public static WriteHandlerPtr wolfpack_sonar_ping_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_sirlat_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_pt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_start_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_launch_torpedo_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_low_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_screw_cont_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_lamp_flash_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_warning_light_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_audamp_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_word_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
 	
 	
-	static WRITE_HANDLER( wolfpack_attract_w )
+	public static WriteHandlerPtr wolfpack_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_global_w(!(data & 1));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( wolfpack_credit_w )
+	public static WriteHandlerPtr wolfpack_credit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, !(data & 1));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( wolfpack_coldetres_w )
+	public static WriteHandlerPtr wolfpack_coldetres_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_collision = 0;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress wolfpack_readmem[]={

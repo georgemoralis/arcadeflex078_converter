@@ -208,19 +208,19 @@ public class m62
 		set_m64_bank();
 	}
 	
-	static WRITE_HANDLER( kidniki_bankswitch_w )
+	public static WriteHandlerPtr kidniki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bankaddress = 0x10000 + (data & 0x0f) * 0x2000;
 		set_m64_bank();
-	}
+	} };
 	
 	#define battroad_bankswitch_w kidniki_bankswitch_w
 	
-	static WRITE_HANDLER( spelunkr_bankswitch_w )
+	public static WriteHandlerPtr spelunkr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bankaddress = 0x10000 + (data & 0x03) * 0x2000;
 		set_m64_bank();
-	}
+	} };
 	
 	WRITE_HANDLER( spelunk2_bankswitch_w )
 	{
@@ -229,11 +229,11 @@ public class m62
 		set_m64_bank2();
 	}
 	
-	static WRITE_HANDLER( youjyudn_bankswitch_w )
+	public static WriteHandlerPtr youjyudn_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bankaddress = 0x10000 + (data & 0x01) * 0x4000;
 		set_m64_bank();
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress kungfum_readmem[]={

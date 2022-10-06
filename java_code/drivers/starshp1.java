@@ -92,7 +92,7 @@ public class starshp1
 	}
 	
 	
-	static WRITE_HANDLER( starshp1_audio_w )
+	public static WriteHandlerPtr starshp1_audio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 1;
 	
@@ -123,16 +123,16 @@ public class starshp1
 	
 		coin_lockout_w(0, !starshp1_attract);
 		coin_lockout_w(1, !starshp1_attract);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( starshp1_collision_reset_w )
+	public static WriteHandlerPtr starshp1_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		starshp1_collision_latch = 0;
-	}
+	} };
 	
 	
-	static READ_HANDLER( starshp1_port_1_r )
+	public static ReadHandlerPtr starshp1_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int val = 0;
 	
@@ -153,28 +153,28 @@ public class starshp1
 		}
 	
 		return (val & 0x3f) | readinputport(1);
-	}
+	} };
 	
 	
-	static READ_HANDLER( starshp1_port_2_r )
+	public static ReadHandlerPtr starshp1_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(2) | (starshp1_collision_latch & 0x0f);
-	}
+	} };
 	
 	
-	static READ_HANDLER( starshp1_zeropage_r )
+	public static ReadHandlerPtr starshp1_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_CPU1)[offset & 0xff];
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( starshp1_analog_in_w )
+	public static WriteHandlerPtr starshp1_analog_in_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		starshp1_analog_in_select = offset & 3;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( starshp1_analog_out_w )
+	public static WriteHandlerPtr starshp1_analog_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 7)
 		{
@@ -200,10 +200,10 @@ public class starshp1
 			starshp1_circle_size = data;
 			break;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( starshp1_misc_w )
+	public static WriteHandlerPtr starshp1_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 1;
 	
@@ -234,13 +234,13 @@ public class starshp1
 			set_led_status(0, !data);
 			break;
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( starshp1_zeropage_w )
+	public static WriteHandlerPtr starshp1_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

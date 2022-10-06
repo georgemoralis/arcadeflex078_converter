@@ -39,39 +39,23 @@ public class williams
 	static void williams_main_irq(int state);
 	static void williams_main_firq(int state);
 	static void williams_snd_irq(int state);
-	static WRITE_HANDLER( williams_snd_cmd_w );
-	static WRITE_HANDLER( playball_snd_cmd_w );
 	
 	/* input port mapping */
 	static UINT8 port_select;
-	static WRITE_HANDLER( williams_port_select_w );
-	static READ_HANDLER( williams_input_port_0_3_r );
-	static READ_HANDLER( williams_input_port_49way_0_5_r );
-	static READ_HANDLER( williams_input_port_1_4_r );
-	static READ_HANDLER( williams_49way_port_0_r );
 	
 	/* newer-Williams routines */
-	static WRITE_HANDLER( williams2_snd_cmd_w );
 	
 	/* Defender-specific code */
 	READ_HANDLER( defender_input_port_0_r );
-	static READ_HANDLER( defender_io_r );
-	static WRITE_HANDLER( defender_io_w );
 	
 	/* Stargate-specific code */
 	READ_HANDLER( stargate_input_port_0_r );
 	
 	/* Lotto Fun-specific code */
-	static READ_HANDLER( lottofun_input_port_0_r );
 	
 	/* Turkey Shoot-specific code */
-	static READ_HANDLER( tshoot_input_port_0_3_r );
-	static WRITE_HANDLER( tshoot_lamp_w );
-	static WRITE_HANDLER( tshoot_maxvol_w );
 	
 	/* Joust 2-specific code */
-	static WRITE_HANDLER( joust2_snd_cmd_w );
-	static WRITE_HANDLER( joust2_pia_3_cb1_w );
 	
 	
 	
@@ -603,10 +587,10 @@ public class williams
 	}
 	
 	
-	static WRITE_HANDLER( williams2_snd_cmd_w )
+	public static WriteHandlerPtr williams2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, williams2_deferred_snd_cmd_w);
-	}
+	} };
 	
 	
 	
@@ -862,11 +846,11 @@ public class williams
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( lottofun_input_port_0_r )
+	public static ReadHandlerPtr lottofun_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* merge in the ticket dispenser status */
 		return input_port_0_r(offset) | ticket_dispenser_r(offset);
-	}
+	} };
 	
 	
 	
@@ -876,23 +860,23 @@ public class williams
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( tshoot_input_port_0_3_r )
+	public static ReadHandlerPtr tshoot_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* merge in the gun inputs with the standard data */
 		int data = williams_input_port_0_3_r(offset);
 		int gun = (data & 0x3f) ^ ((data & 0x3f) >> 1);
 		return (data & 0xc0) | gun;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( tshoot_maxvol_w )
+	public static WriteHandlerPtr tshoot_maxvol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* something to do with the sound volume */
 		logerror("tshoot maxvol = %d (pc:%x)\n", data, activecpu_get_pc());
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( tshoot_lamp_w )
+	public static WriteHandlerPtr tshoot_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* set the grenade lamp */
 		set_led_status(0,data & 0x04);
@@ -915,7 +899,7 @@ public class williams
 	
 		printf("\n");
 	#endif
-	}
+	} };
 	
 	
 	
@@ -942,17 +926,17 @@ public class williams
 	}
 	
 	
-	static WRITE_HANDLER( joust2_pia_3_cb1_w )
+	public static WriteHandlerPtr joust2_pia_3_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		joust2_current_sound_data = (joust2_current_sound_data & ~0x100) | ((data << 8) & 0x100);
 		pia_3_cb1_w(offset, data);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( joust2_snd_cmd_w )
+	public static WriteHandlerPtr joust2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		joust2_current_sound_data = (joust2_current_sound_data & ~0xff) | (data & 0xff);
 		williams_cvsd_data_w(joust2_current_sound_data);
 		timer_set(TIME_NOW, joust2_current_sound_data, joust2_deferred_snd_cmd_w);
-	}
+	} };
 }

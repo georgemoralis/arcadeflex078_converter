@@ -138,13 +138,13 @@ public class sprint8
 	}
 	
 	
-	static READ_HANDLER( sprint8_collision_r )
+	public static ReadHandlerPtr sprint8_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return collision_index;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sprint8_input_r )
+	public static ReadHandlerPtr sprint8_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(offset);
 	
@@ -158,22 +158,22 @@ public class sprint8
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint8_lockout_w )
+	public static WriteHandlerPtr sprint8_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(offset, !(data & 1));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint8_team_w )
+	public static WriteHandlerPtr sprint8_team_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fill_palette(!(data & 1));
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint8_int_reset_w )
+	public static WriteHandlerPtr sprint8_int_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		collision_reset = !(data & 1);
 	
@@ -181,17 +181,17 @@ public class sprint8
 		{
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
-	}
+	} };
 	
 	
 	/* names of sound effects taken from Tank 8, might differ for Sprint 8 */
 	
-	static WRITE_HANDLER( sprint8_crash_w ) {}
-	static WRITE_HANDLER( sprint8_explosion_w ) {}
-	static WRITE_HANDLER( sprint8_bugle_w ) {}
-	static WRITE_HANDLER( sprint8_bug_w ) {}
-	static WRITE_HANDLER( sprint8_attract_w ) {}
-	static WRITE_HANDLER( sprint8_motor_w ) {}
+	public static WriteHandlerPtr sprint8_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_bugle_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_bug_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

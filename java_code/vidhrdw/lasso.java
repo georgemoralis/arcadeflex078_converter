@@ -208,7 +208,7 @@ public class lasso
 	}
 	
 	
-	static WRITE_HANDLER( lasso_flip_screen_w )
+	public static WriteHandlerPtr lasso_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* don't know which is which, but they are always set together */
 		flip_screen_x = data & 0x01;
@@ -216,7 +216,7 @@ public class lasso
 	
 		tilemap_set_flip(ALL_TILEMAPS, (flip_screen_x ? TILEMAP_FLIPX : 0) |
 									   (flip_screen_y ? TILEMAP_FLIPY : 0));
-	}
+	} };
 	
 	
 	WRITE_HANDLER( lasso_video_control_w )

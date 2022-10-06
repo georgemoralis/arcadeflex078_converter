@@ -48,18 +48,18 @@ public class fantland
 	
 	static data8_t fantland_nmi_enable;
 	
-	static WRITE_HANDLER( fantland_nmi_enable_w )
+	public static WriteHandlerPtr fantland_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fantland_nmi_enable = data;
 	//	if ((fantland_nmi_enable != 0) && (fantland_nmi_enable != 8))
 	//		logerror("CPU #0 : nmi_enable = %02x - PC = %04X\n", data, activecpu_get_pc());
-	}
+	} };
 	
-	static WRITE_HANDLER( fantland_soundlatch_w )
+	public static WriteHandlerPtr fantland_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_nmi_line(1,PULSE_LINE);
-	}
+	} };
 	
 	/***************************************************************************
 									Fantasy Land

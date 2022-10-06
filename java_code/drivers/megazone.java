@@ -58,7 +58,7 @@ public class megazone
 		return (timer << 4) | i8039_status;
 	}
 	
-	static WRITE_HANDLER( megazone_portB_w )
+	public static WriteHandlerPtr megazone_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 	
@@ -74,7 +74,7 @@ public class megazone
 			data >>= 2;
 			set_RC_filter(i,1000,2200,200,C);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER( megazone_videoram2_w )
 	{
@@ -102,10 +102,10 @@ public class megazone
 		megazone_sharedram[offset] = data;
 	}
 	
-	static WRITE_HANDLER( megazone_i8039_irq_w )
+	public static WriteHandlerPtr megazone_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(2, 0, ASSERT_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( i8039_irqen_and_status_w )
 	{
@@ -114,10 +114,10 @@ public class megazone
 		i8039_status = (data & 0x70) >> 4;
 	}
 	
-	static WRITE_HANDLER( megazone_coin_counter_w )
+	public static WriteHandlerPtr megazone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(1-offset,data);		/* 1-offset, because coin counters are in reversed order */
-	}
+	} };
 	
 	
 	

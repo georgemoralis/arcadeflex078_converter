@@ -46,7 +46,7 @@ public class tnzs
 	
 	
 	
-	static READ_HANDLER( mcu_tnzs_r )
+	public static ReadHandlerPtr mcu_tnzs_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char data;
 	
@@ -64,9 +64,9 @@ public class tnzs
 	//	logerror("PC %04x: read %02x from mcu $c00%01x\n", activecpu_get_previouspc(), data, offset);
 	
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_tnzs_w )
+	public static WriteHandlerPtr mcu_tnzs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("PC %04x: write %02x to mcu $c00%01x\n", activecpu_get_previouspc(), data, offset);
 	
@@ -74,7 +74,7 @@ public class tnzs
 			cpunum_set_reg(2, I8X41_DATA, data);
 		else
 			cpunum_set_reg(2, I8X41_CMND, data);
-	}
+	} };
 	
 	
 	READ_HANDLER( tnzs_port1_r )
@@ -221,7 +221,7 @@ public class tnzs
 	
 	
 	
-	static READ_HANDLER( mcu_arknoid2_r )
+	public static ReadHandlerPtr mcu_arknoid2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		const char *mcu_startup = "\x55\xaa\x5a";
 	
@@ -281,9 +281,9 @@ public class tnzs
 			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_arknoid2_w )
+	public static WriteHandlerPtr mcu_arknoid2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0)
 		{
@@ -323,10 +323,10 @@ public class tnzs
 			}
 			mcu_command = data;
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( mcu_extrmatn_r )
+	public static ReadHandlerPtr mcu_extrmatn_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		const char *mcu_startup = "\x5a\xa5\x55";
 	
@@ -409,9 +409,9 @@ public class tnzs
 			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_extrmatn_w )
+	public static WriteHandlerPtr mcu_extrmatn_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0)
 		{
@@ -457,7 +457,7 @@ public class tnzs
 	
 			mcu_command = data;
 		}
-	}
+	} };
 	
 	
 	

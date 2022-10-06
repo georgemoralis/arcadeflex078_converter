@@ -99,13 +99,13 @@ public class bwing
 	//****************************************************************************
 	// Memory and I/O Handlers
 	
-	static WRITE_HANDLER( bwp12_sharedram1_w ) { bwp1_sharedram1[offset] = bwp2_sharedram1[offset] = data; }
-	static WRITE_HANDLER( bwp3_u8F_w ) { bwp3_u8F_d = data; } // prepares custom chip for various operations
-	static WRITE_HANDLER( bwp3_nmiack_w ) { cpu_set_nmi_line(2, CLEAR_LINE); }
-	static WRITE_HANDLER( bwp3_nmimask_w ) { bwp3_nmimask = data & 0x80; }
+	public static WriteHandlerPtr bwp12_sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp1_sharedram1[offset] = bwp2_sharedram1[offset] = data; } };
+	public static WriteHandlerPtr bwp3_u8F_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp3_u8F_d = data; } }; // prepares custom chip for various operations
+	public static WriteHandlerPtr bwp3_nmiack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(2, CLEAR_LINE); } };
+	public static WriteHandlerPtr bwp3_nmimask_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp3_nmimask = data & 0x80; } };
 	
 	
-	static READ_HANDLER( bwp1_io_r )
+	public static ReadHandlerPtr bwp1_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset == 0) return(readinputport(0));
 		if (offset == 1) return(readinputport(1));
@@ -114,10 +114,10 @@ public class bwing
 		if (offset == 4) return(readinputport(4));
 	
 		return((bwp123_membase[0])[0x1b00 + offset]);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( bwp1_ctrl_w )
+	public static WriteHandlerPtr bwp1_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -159,10 +159,10 @@ public class bwing
 		#if BW_DEBUG
 			(bwp123_membase[0])[0x1c00 + offset] = data;
 		#endif
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( bwp2_ctrl_w )
+	public static WriteHandlerPtr bwp2_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -178,7 +178,7 @@ public class bwing
 		#if BW_DEBUG
 			(bwp123_membase[1])[0x1800 + offset] = data;
 		#endif
-	}
+	} };
 	
 	//****************************************************************************
 	// CPU Memory Maps

@@ -47,7 +47,7 @@ public class aeroboto
 	static int disable_irq = 0;
 	
 	
-	static READ_HANDLER( aeroboto_201_r )
+	public static ReadHandlerPtr aeroboto_201_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* if you keep a button pressed during boot, the game will expect this */
 		/* serie of values to be returned from 3004, and display "PASS 201" if it is */
@@ -55,7 +55,7 @@ public class aeroboto
 		static int count;
 		logerror("PC %04x: read 3004\n",activecpu_get_pc());
 		return res[(count++)&3];
-	}
+	} };
 	
 	
 	static INTERRUPT_GEN( aeroboto_interrupt )
@@ -66,11 +66,11 @@ public class aeroboto
 			disable_irq--;
 	}
 	
-	static READ_HANDLER( aeroboto_2973_r )
+	public static ReadHandlerPtr aeroboto_2973_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		aeroboto_mainram[0x02be] = 0;
 		return(0xff);
-	}
+	} };
 	
 	static WRITE_HANDLER ( aeroboto_1a2_w )
 	{

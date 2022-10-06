@@ -28,7 +28,7 @@ public class mosaic
 	
 	static int prot_val;
 	
-	static WRITE_HANDLER( protection_w )
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((data & 0x80) == 0)
 		{
@@ -50,9 +50,9 @@ public class mosaic
 	
 			prot_val = jumptable[data & 0x7f];
 		}
-	}
+	} };
 	
-	static READ_HANDLER( protection_r )
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = (prot_val >> 8) & 0xff;
 	
@@ -61,9 +61,9 @@ public class mosaic
 		prot_val <<= 8;
 	
 		return res;
-	}
+	} };
 	
-	static WRITE_HANDLER( gfire2_protection_w )
+	public static WriteHandlerPtr gfire2_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("%06x: protection_w %02x\n",activecpu_get_pc(),data);
 	
@@ -88,16 +88,16 @@ public class mosaic
 				prot_val = 0x04b4;
 				break;
 		}
-	}
+	} };
 	
-	static READ_HANDLER( gfire2_protection_r )
+	public static ReadHandlerPtr gfire2_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = prot_val & 0xff;
 	
 		prot_val >>= 8;
 	
 		return res;
-	}
+	} };
 	
 	
 	

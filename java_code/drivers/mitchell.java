@@ -73,7 +73,7 @@ public class mitchell
 	
 	
 	
-	static WRITE_HANDLER( pang_bankswitch_w )
+	public static WriteHandlerPtr pang_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -81,7 +81,7 @@ public class mitchell
 		bankaddress = 0x10000 + (data & 0x0f) * 0x4000;
 	
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	
 	
@@ -128,7 +128,7 @@ public class mitchell
 		}
 	}
 	
-	static READ_HANDLER( pang_port5_r )
+	public static ReadHandlerPtr pang_port5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int bit;
 		extern const struct GameDriver driver_mgakuen2;
@@ -146,22 +146,22 @@ public class mitchell
 		bit ^= 0x08;
 	
 		return (input_port_0_r(0) & 0x76) | bit;
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_cs_w )
+	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_set_cs_line(data ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_clock_w )
+	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_set_clock_line(data ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
-	static WRITE_HANDLER( eeprom_serial_w )
+	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		EEPROM_write_bit(data);
-	}
+	} };
 	
 	
 	
@@ -173,7 +173,7 @@ public class mitchell
 	
 	static int dial[2],dial_selected;
 	
-	static READ_HANDLER( block_input_r )
+	public static ReadHandlerPtr block_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int dir[2];
 	
@@ -213,9 +213,9 @@ public class mitchell
 	
 			return res;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( block_dial_control_w )
+	public static WriteHandlerPtr block_dial_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data == 0x08)
 		{
@@ -227,12 +227,12 @@ public class mitchell
 			dial_selected = 0;
 		else
 			dial_selected = 1;
-	}
+	} };
 	
 	
 	static int keymatrix;
 	
-	static READ_HANDLER( mahjong_input_r )
+	public static ReadHandlerPtr mahjong_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int i;
 	
@@ -240,17 +240,17 @@ public class mitchell
 			if (keymatrix & (0x80 >> i)) return readinputport(2 + 5 * offset + i);
 	
 		return 0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( mahjong_input_select_w )
+	public static WriteHandlerPtr mahjong_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		keymatrix = data;
-	}
+	} };
 	
 	
 	static int input_type;
 	
-	static READ_HANDLER( input_r )
+	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (input_type)
 		{
@@ -275,9 +275,9 @@ public class mitchell
 				}
 				break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( input_w )
+	public static WriteHandlerPtr input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (input_type)
 		{
@@ -292,7 +292,7 @@ public class mitchell
 				block_dial_control_w(offset,data);
 				break;
 		}
-	}
+	} };
 	
 	
 	

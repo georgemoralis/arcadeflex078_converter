@@ -46,21 +46,21 @@ public class blockhl
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	}
 	
-	static READ_HANDLER( bankedram_r )
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (palette_selected)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( bankedram_w )
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palette_selected)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
-	}
+	} };
 	
 	WRITE_HANDLER( blockhl_sh_irqtrigger_w )
 	{

@@ -80,10 +80,10 @@ public class sbrkout
 	
 	static UINT8 *sbrkout_sound;
 	
-	static WRITE_HANDLER( sbrkout_dac_w )
+	public static WriteHandlerPtr sbrkout_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sbrkout_sound[offset]=data;
-	}
+	} };
 	
 	
 	static void sbrkout_tones_4V(int foo)

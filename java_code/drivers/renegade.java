@@ -120,7 +120,7 @@ public class renegade
 	
 	/********************************************************************************************/
 	
-	static WRITE_HANDLER( adpcm_play_w )
+	public static WriteHandlerPtr adpcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int offs;
 		int len;
@@ -136,13 +136,13 @@ public class renegade
 			ADPCM_play(0,offs,len);
 		else
 			logerror("out of range adpcm command: 0x%02x\n",data);
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_w )
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
-	}
+	} };
 	
 	/********************************************************************************************/
 	/*	MCU Simulation
@@ -187,15 +187,15 @@ public class renegade
 	static int mcu_output_byte;
 	static int mcu_key;
 	
-	static READ_HANDLER( mcu_reset_r )
+	public static ReadHandlerPtr mcu_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		mcu_key = -1;
 		mcu_input_size = 0;
 		mcu_output_byte = 0;
 		return 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_w )
+	public static WriteHandlerPtr mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mcu_output_byte = 0;
 	
@@ -209,7 +209,7 @@ public class renegade
 			if( ++mcu_key==mcu_encrypt_table_len) mcu_key = 0;
 			if( mcu_input_size<MCU_BUFFER_MAX ) mcu_buffer[mcu_input_size++] = data;
 		}
-	}
+	} };
 	
 	static void mcu_process_command( void )
 	{
@@ -344,7 +344,7 @@ public class renegade
 		}
 	}
 	
-	static READ_HANDLER( mcu_r )
+	public static ReadHandlerPtr mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 1;
 	
@@ -354,13 +354,13 @@ public class renegade
 			result = mcu_buffer[mcu_output_byte++];
 	
 		return result;
-	}
+	} };
 	
 	/********************************************************************************************/
 	
 	static int bank;
 	
-	static WRITE_HANDLER( bankswitch_w )
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( (data&1)!=bank )
 		{
@@ -368,7 +368,7 @@ public class renegade
 			bank = data&1;
 			cpu_setbank(1,&RAM[ bank?0x10000:0x4000 ]);
 		}
-	}
+	} };
 	
 	static INTERRUPT_GEN( renegade_interrupt )
 	{
@@ -392,10 +392,10 @@ public class renegade
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( renegade_coin_counter_w )
+	public static WriteHandlerPtr renegade_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	/********************************************************************************************/

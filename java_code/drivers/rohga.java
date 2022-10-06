@@ -559,11 +559,11 @@ public class rohga
 		cpu_set_irq_line(1,1,state); /* IRQ 2 */
 	}
 	
-	static WRITE_HANDLER( sound_bankswitch_w )
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		OKIM6295_set_bank_base(0, ((data & 1)>>0) * 0x40000);
 		OKIM6295_set_bank_base(1, ((data & 2)>>1) * 0x40000);
-	}
+	} };
 	
 	static struct YM2151interface ym2151_interface =
 	{

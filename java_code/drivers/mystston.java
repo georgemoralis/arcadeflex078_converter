@@ -39,12 +39,12 @@ public class mystston
 	static int soundlatch;
 	
 	
-	static WRITE_HANDLER( mystston_soundlatch_w )
+	public static WriteHandlerPtr mystston_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mystston_soundcontrol_w )
+	public static WriteHandlerPtr mystston_soundcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 	
@@ -68,19 +68,19 @@ public class mystston
 		}
 	
 		last = data;
-	}
+	} };
 	
-	static READ_HANDLER( port3_r )
+	public static ReadHandlerPtr port3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int port = readinputport(3);
 	
 		return port | VBLK;
-	}
+	} };
 	
-	static WRITE_HANDLER( mystston_irq_reset_w )
+	public static WriteHandlerPtr mystston_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

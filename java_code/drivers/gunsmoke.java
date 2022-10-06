@@ -81,7 +81,7 @@ public class gunsmoke
 	
 	
 	#if GUNSMOKE_HACK
-	static READ_HANDLER( gunsmoke_input_r )
+	public static ReadHandlerPtr gunsmoke_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((activecpu_get_pc() == 0x0173) || (activecpu_get_pc() == 0x0181))	// to get correct coinage
 			return (readinputport(4));
@@ -90,11 +90,11 @@ public class gunsmoke
 			return ((readinputport(4) & 0xc0) | (readinputport(5) & 0x3f));
 		else
 			return (readinputport(4));
-	}
+	} };
 	#endif
 	
 	
-	static READ_HANDLER( gunsmoke_unknown_r )
+	public static ReadHandlerPtr gunsmoke_unknown_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    static int gunsmoke_fixed_data[]={ 0xff, 0x00, 0x00 };
 	    /*
@@ -112,7 +112,7 @@ public class gunsmoke
 	    arcade game.  It's hard to tell without pulling the code apart.
 	    */
 	    return gunsmoke_fixed_data[offset];
-	}
+	} };
 	
 	
 	

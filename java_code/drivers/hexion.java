@@ -99,7 +99,7 @@ public class hexion
 	
 	
 	
-	static WRITE_HANDLER( coincntr_w )
+	public static WriteHandlerPtr coincntr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x: coincntr_w %02x\n",activecpu_get_pc(),data);
 	
@@ -112,7 +112,7 @@ public class hexion
 	
 		/* other bit unknown */
 	if ((data & 0xdc) != 0x10) usrintf_showmessage("coincntr %02x",data);
-	}
+	} };
 	
 	
 	

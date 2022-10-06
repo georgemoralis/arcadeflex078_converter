@@ -184,7 +184,7 @@ public class wiz
 	VIDEO_UPDATE( stinger );
 	VIDEO_UPDATE( kungfut );
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int dsc0=1, dsc1=1;
 	
@@ -207,9 +207,9 @@ public class wiz
 				discrete_sound_w(1, dsc0^=1);
 			break;
 		}
-	}
+	} };
 	
-	static READ_HANDLER( wiz_protection_r )
+	public static ReadHandlerPtr wiz_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (wiz_colorram2[0])
 		{
@@ -219,12 +219,12 @@ public class wiz
 		}
 	
 		return wiz_colorram2[0];
-	}
+	} };
 	
-	static WRITE_HANDLER( wiz_coin_counter_w )
+	public static WriteHandlerPtr wiz_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

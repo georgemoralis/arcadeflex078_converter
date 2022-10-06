@@ -56,12 +56,12 @@ public class skykid
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( skykid_irq_ctrl_w )
+	public static WriteHandlerPtr skykid_irq_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		irq_disabled = offset;
-	}
+	} };
 	
-	static WRITE_HANDLER( inputport_select_w )
+	public static WriteHandlerPtr inputport_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((data & 0xe0) == 0x60)
 			inputport_selected = data & 0x07;
@@ -71,12 +71,12 @@ public class skykid
 			coin_counter_w(0,data & 2);
 			coin_counter_w(1,data & 4);
 		}
-	}
+	} };
 	
 	#define reverse_bitstrm(data) ((data & 0x01) << 4) | ((data & 0x02) << 2) | (data & 0x04) \
 								| ((data & 0x08) >> 2) | ((data & 0x10) >> 4)
 	
-	static READ_HANDLER( inputport_r )
+	public static ReadHandlerPtr inputport_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 	
@@ -100,15 +100,15 @@ public class skykid
 		}
 	
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( skykid_led_w )
+	public static WriteHandlerPtr skykid_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
-	}
+	} };
 	
-	static WRITE_HANDLER( skykid_halt_mcu_w )
+	public static WriteHandlerPtr skykid_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0){
 			cpu_set_reset_line(1,PULSE_LINE);
@@ -117,7 +117,7 @@ public class skykid
 		else{
 			cpu_set_halt_line( 1, ASSERT_LINE );
 		}
-	}
+	} };
 	
 	READ_HANDLER( skykid_sharedram_r )
 	{
@@ -199,10 +199,10 @@ public class skykid
 	};
 	
 	
-	static READ_HANDLER( readFF )
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	public static IO_ReadPort mcu_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

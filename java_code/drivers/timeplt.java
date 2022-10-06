@@ -63,15 +63,15 @@ public class timeplt
 	
 	
 	
-	static WRITE_HANDLER( timeplt_coin_counter_w )
+	public static WriteHandlerPtr timeplt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset >> 1, data);
-	}
+	} };
 	
-	static READ_HANDLER( psurge_protection_r )
+	public static ReadHandlerPtr psurge_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x80;
-	}
+	} };
 	
 	
 	

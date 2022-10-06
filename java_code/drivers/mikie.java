@@ -34,7 +34,7 @@ public class mikie
 	extern VIDEO_START( mikie );
 	extern VIDEO_UPDATE( mikie );
 	
-	static READ_HANDLER( mikie_sh_timer_r )
+	public static ReadHandlerPtr mikie_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int clock;
 	
@@ -43,9 +43,9 @@ public class mikie
 		clock = activecpu_gettotalcycles() / TIMER_RATE;
 	
 		return clock;
-	}
+	} };
 	
-	static WRITE_HANDLER( mikie_sh_irqtrigger_w )
+	public static WriteHandlerPtr mikie_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 	
@@ -57,12 +57,12 @@ public class mikie
 		}
 	
 		last = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mikie_coin_counter_w )
+	public static WriteHandlerPtr mikie_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

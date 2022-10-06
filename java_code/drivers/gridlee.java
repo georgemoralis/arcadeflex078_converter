@@ -170,7 +170,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( analog_port_r )
+	public static ReadHandlerPtr analog_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int delta, sign, magnitude;
 		UINT8 newval;
@@ -199,7 +199,7 @@ public class gridlee
 	
 		/* or in the sign bit and return that */
 		return (last_analog_output[offset] & 15) | sign;
-	}
+	} };
 	
 	
 	
@@ -252,7 +252,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( random_num_r )
+	public static ReadHandlerPtr random_num_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned int cc;
 	
@@ -262,7 +262,7 @@ public class gridlee
 		/* 12.5 = 8 + 4 + 0.5 */
 		cc = (cc << 3) + (cc << 2) + (cc >> 1);
 		return rand17[cc & POLY17_SIZE];
-	}
+	} };
 	
 	
 	
@@ -272,25 +272,25 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( led_0_w )
+	public static WriteHandlerPtr led_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, data & 1);
 		logerror("LED 0 %s\n", (data & 1) ? "on" : "off");
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( led_1_w )
+	public static WriteHandlerPtr led_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(1, data & 1);
 		logerror("LED 1 %s\n", (data & 1) ? "on" : "off");
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( gridlee_coin_counter_w )
+	public static WriteHandlerPtr gridlee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0, data & 1);
 		logerror("coin counter %s\n", (data & 1) ? "on" : "off");
-	}
+	} };
 	
 	
 	

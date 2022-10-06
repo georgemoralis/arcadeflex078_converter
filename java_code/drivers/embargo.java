@@ -26,7 +26,7 @@ public class embargo
 	}
 	
 	
-	static WRITE_HANDLER( embargo_videoram_w )
+	public static WriteHandlerPtr embargo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int col = offset % 32;
 		int row = offset / 32;
@@ -39,16 +39,16 @@ public class embargo
 		}
 	
 		videoram[offset] = data;
-	}
+	} };
 	
 	
-	static READ_HANDLER( embargo_input_r )
+	public static ReadHandlerPtr embargo_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(1) << (7 - input_select)) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( embargo_dial_r )
+	public static ReadHandlerPtr embargo_dial_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 lo = 0;
 		UINT8 hi = 0;
@@ -93,23 +93,23 @@ public class embargo
 		}
 	
 		return 16 * mapped_hi + mapped_lo;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( embargo_port1_w )
+	public static WriteHandlerPtr embargo_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dial_enable_1 = data & 1; /* other bits unknown */
-	}
-	static WRITE_HANDLER( embargo_port2_w )
+	} };
+	public static WriteHandlerPtr embargo_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dial_enable_2 = data & 1; /* other bits unknown */
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( embargo_input_w )
+	public static WriteHandlerPtr embargo_input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		input_select = data & 7;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

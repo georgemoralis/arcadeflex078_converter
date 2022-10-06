@@ -42,7 +42,7 @@ public class cosmic
 	
 	/* Schematics show 12 triggers for discrete sound circuits */
 	
-	static WRITE_HANDLER( panic_sound_output_w )
+	public static WriteHandlerPtr panic_sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    static int sound_enabled=1;
 	
@@ -111,7 +111,7 @@ public class cosmic
 	    #ifdef MAME_DEBUG
 	 	logerror("Sound output %x=%x\n",offset,data);
 		#endif
-	}
+	} };
 	
 	WRITE_HANDLER( panic_sound_output2_w )
 	{
@@ -258,27 +258,27 @@ public class cosmic
 	
 	
 	
-	static READ_HANDLER( cosmica_pixel_clock_r )
+	public static ReadHandlerPtr cosmica_pixel_clock_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pixel_clock;
-	}
+	} };
 	
-	static READ_HANDLER( cosmicg_port_0_r )
+	public static ReadHandlerPtr cosmicg_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* The top four address lines from the CRTC are bits 0-3 */
 	
 		return (input_port_0_r(0) & 0xf0) | ((cpu_getscanline() & 0xf0) >> 4);
-	}
+	} };
 	
-	static READ_HANDLER( magspot2_coinage_dip_r )
+	public static ReadHandlerPtr magspot2_coinage_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (input_port_5_r(0) & (1 << (7 - offset))) ? 0 : 1;
-	}
+	} };
 	
 	
 	/* Has 8 way joystick, remap combinations to missing directions */
 	
-	static READ_HANDLER( nomnlnd_port_0_1_r )
+	public static ReadHandlerPtr nomnlnd_port_0_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int control;
 	    int fire = input_port_3_r(0);
@@ -300,14 +300,14 @@ public class cosmic
 	    if ((control & 0xa0) == 0 ) return 0xbf;    /* Up & Right */
 	
 	    return control;
-	}
+	} };
 	
 	
 	
-	static WRITE_HANDLER( flip_screen_w )
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data&0x80);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress panic_readmem[]={

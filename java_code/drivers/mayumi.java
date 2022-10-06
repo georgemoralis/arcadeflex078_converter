@@ -34,7 +34,7 @@ public class mayumi
 			 cpu_set_irq_line(0, 0, HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( bank_sel_w )
+	public static WriteHandlerPtr bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 		int bank = ((data & 0x80)) >> 7 | ((data & 0x40) >> 5);
@@ -43,19 +43,19 @@ public class mayumi
 		int_enable = data & 1;
 	
 		flip_screen_set(data & 2);
-	}
+	} };
 	
 	static MACHINE_INIT( mayumi )
 	{
 		bank_sel_w(0,0);
 	}
 	
-	static WRITE_HANDLER( input_sel_w )
+	public static WriteHandlerPtr input_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		input_sel = data;
-	}
+	} };
 	
-	static READ_HANDLER( key_matrix_r )
+	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int p,i,ret;
 	
@@ -70,7 +70,7 @@ public class mayumi
 		}
 	
 		return ret;
-	}
+	} };
 	
 	/****************************************************************************/
 	

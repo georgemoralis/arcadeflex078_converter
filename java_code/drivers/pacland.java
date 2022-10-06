@@ -53,27 +53,27 @@ public class pacland
 	extern VIDEO_UPDATE( pacland );
 	
 	
-	static READ_HANDLER( sharedram1_r )
+	public static ReadHandlerPtr sharedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sharedram1[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( sharedram1_w )
+	public static WriteHandlerPtr sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sharedram1[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( pacland_halt_mcu_w )
+	public static WriteHandlerPtr pacland_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
-	}
+	} };
 	
 	
 	/* Stubs to pass the correct Dip Switch setup to the MCU */
-	static READ_HANDLER( dsw0_r )
+	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Hi 4 bits = DSWA Hi 4 bits */
 		/* Lo 4 bits = DSWB Hi 4 bits */
@@ -81,29 +81,29 @@ public class pacland
 		r &= 0xf0;
 		r |= ( readinputport( 1 ) >> 4 ) & 0x0f;
 		return ~r; /* Active Low */
-	}
+	} };
 	
-	static READ_HANDLER( dsw1_r )
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Hi 4 bits = DSWA Lo 4 bits */
 		/* Lo 4 bits = DSWB Lo 4 bits */
 		int r = ( readinputport( 0 ) & 0x0f ) << 4;
 		r |= readinputport( 1 ) & 0x0f;
 		return ~r; /* Active Low */
-	}
+	} };
 	
-	static WRITE_HANDLER( pacland_coin_w )
+	public static WriteHandlerPtr pacland_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_global_w(data & 1);
 		coin_counter_w(0,~data & 2);
 		coin_counter_w(1,~data & 4);
-	}
+	} };
 	
-	static WRITE_HANDLER( pacland_led_w )
+	public static WriteHandlerPtr pacland_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -174,10 +174,10 @@ public class pacland
 	};
 	
 	
-	static READ_HANDLER( readFF )
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	public static IO_ReadPort mcu_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

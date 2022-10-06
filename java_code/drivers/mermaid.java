@@ -31,20 +31,20 @@ public class mermaid
 	
 	static unsigned char *mermaid_AY8910_enable;
 	
-	static WRITE_HANDLER( mermaid_AY8910_write_port_w )
+	public static WriteHandlerPtr mermaid_AY8910_write_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (mermaid_AY8910_enable[0])  AY8910_write_port_0_w(offset, data);
 		if (mermaid_AY8910_enable[1])  AY8910_write_port_1_w(offset, data);
-	}
+	} };
 	
-	static WRITE_HANDLER( mermaid_AY8910_control_port_w )
+	public static WriteHandlerPtr mermaid_AY8910_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (mermaid_AY8910_enable[0])  AY8910_control_port_0_w(offset, data);
 		if (mermaid_AY8910_enable[1])  AY8910_control_port_1_w(offset, data);
-	}
+	} };
 	
 	#if 0
-	static READ_HANDLER( mermaid_f800_r )
+	public static ReadHandlerPtr mermaid_f800_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		// collision register active LO
 		// Bit 0
@@ -57,7 +57,7 @@ public class mermaid
 		// Bit 7
 		//return rand() & 0xff;
 		return 0x00;
-	}
+	} };
 	#endif
 	
 	public static Memory_ReadAddress readmem[]={

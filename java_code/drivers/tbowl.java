@@ -44,7 +44,7 @@ public class tbowl
 	
 	***/
 	
-	static WRITE_HANDLER( tbowlb_bankswitch_w )
+	public static WriteHandlerPtr tbowlb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -52,9 +52,9 @@ public class tbowl
 	
 		bankaddress = 0x10000 + ((data & 0xf8) << 8);
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
-	static WRITE_HANDLER( tbowlc_bankswitch_w )
+	public static WriteHandlerPtr tbowlc_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
@@ -64,7 +64,7 @@ public class tbowl
 	
 	
 		cpu_setbank(2,&RAM[bankaddress]);
-	}
+	} };
 	
 	/*** Shared Ram Handlers
 	
@@ -72,21 +72,21 @@ public class tbowl
 	
 	static unsigned char *shared_ram;
 	
-	static READ_HANDLER( shared_r )
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( shared_w )
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared_ram[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( tbowl_sound_command_w )
+	public static WriteHandlerPtr tbowl_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	
 	/*** Memory Structures

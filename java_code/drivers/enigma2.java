@@ -53,7 +53,7 @@ public class enigma2
 		}
 	}
 	
-	static READ_HANDLER( fake_r )
+	public static ReadHandlerPtr fake_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int cnt;
 		/* HACK! to get dip-switches working, since they are read by the sound board
@@ -68,20 +68,20 @@ public class enigma2
 			cnt ^= 1;
 			return cnt ? 0x7d : 0xf4; /*expected values*/
 		}
-	}
+	} };
 	
-	static READ_HANDLER( fake_r2 )
+	public static ReadHandlerPtr fake_r2  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if( activecpu_get_pc() == 0x7e5 ) /* needed by enigma2a*/
 			return 0xaa;
 		else
 			return 0xf4;
-	}
+	} };
 	
-	static READ_HANDLER( fake_r3 )
+	public static ReadHandlerPtr fake_r3  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x38;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

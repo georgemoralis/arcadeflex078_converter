@@ -312,11 +312,11 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( sound_bank_w )
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("sound bank = %02x", data);
 		cpu_setbank(1, &memory_region(REGION_CPU2)[0x10000 + data * 0x4000]);
-	}
+	} };
 	
 	
 	
@@ -349,19 +349,19 @@ public class itech32
 	}
 	
 	
-	static READ_HANDLER( sound_data_r )
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		logerror("sound_data_r() = %02x", sound_data);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
 		sound_int_state = 0;
 		return sound_data;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_data_buffer_r )
+	public static ReadHandlerPtr sound_data_buffer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -371,7 +371,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( pia_portb_out )
+	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("PIA port B write = %02x", data);
 	
@@ -380,15 +380,15 @@ public class itech32
 		/* bit 6 controls the diagnostic sound LED */
 		ticket_dispenser_w(0, (data & 0x10) << 3);
 		coin_counter_w(0, (data & 0x20) >> 5);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sound_output_w )
+	public static WriteHandlerPtr sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("sound output write = %02x", data);
 	
 		coin_counter_w(0, (~data & 0x20) >> 5);
-	}
+	} };
 	
 	
 	
@@ -415,7 +415,7 @@ public class itech32
 	}
 	
 	
-	static WRITE_HANDLER( via6522_w )
+	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		double period;
 	
@@ -448,10 +448,10 @@ public class itech32
 				break;
 		}
 	
-	}
+	} };
 	
 	
-	static READ_HANDLER( via6522_r )
+	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0;
 	
@@ -471,7 +471,7 @@ public class itech32
 	
 		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x", offset, result);
 		return result;
-	}
+	} };
 	
 	
 	
@@ -481,10 +481,10 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( firq_clear_w )
+	public static WriteHandlerPtr firq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, CLEAR_LINE);
-	}
+	} };
 	
 	
 	
@@ -494,12 +494,12 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( sound_speedup_r )
+	public static ReadHandlerPtr sound_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (sound_speedup_data[0] == sound_speedup_data[1] && activecpu_get_previouspc() == sound_speedup_pc)
 			cpu_spinuntil_int();
 		return sound_speedup_data[0];
-	}
+	} };
 	
 	
 	static WRITE32_HANDLER( itech020_watchdog_w )

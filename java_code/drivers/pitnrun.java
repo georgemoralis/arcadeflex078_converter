@@ -109,10 +109,10 @@ public class pitnrun
 		 if(pitnrun_nmi) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
 	}
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        pitnrun_nmi=data&1;
-	}
+	} };
 	
 	static WRITE_HANDLER(pitnrun_hflip_w)
 	{

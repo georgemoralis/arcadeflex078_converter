@@ -41,7 +41,7 @@ public class labyrunr
 		}
 	}
 	
-	static WRITE_HANDLER( labyrunr_bankswitch_w )
+	public static WriteHandlerPtr labyrunr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -55,7 +55,7 @@ public class labyrunr
 		/* bits 3 and 4 are coin counters */
 		coin_counter_w(0,data & 0x08);
 		coin_counter_w(1,data & 0x10);
-	}
+	} };
 	
 	public static Memory_ReadAddress labyrunr_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -73,27 +73,27 @@ public class sgladiat
 	
 	/************************************************************************/
 	
-	static READ_HANDLER( shared_ram_r )
+	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared_ram[offset];
-	}
-	static WRITE_HANDLER( shared_ram_w )
+	} };
+	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared_ram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( shared_ram2_r )
+	public static ReadHandlerPtr shared_ram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared_ram2[offset];
-	}
-	static WRITE_HANDLER( shared_ram2_w )
+	} };
+	public static WriteHandlerPtr shared_ram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared_ram2[offset] = data;
-	}
+	} };
 	
 	/************************************************************************/
 	
-	static WRITE_HANDLER( sgladiat_soundlatch_w )
+	public static WriteHandlerPtr sgladiat_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snk_sound_busy_bit = 0x20;
 		soundlatch_w( offset, data );
@@ -101,32 +101,32 @@ public class sgladiat
 		/* trigger NMI on sound CPU */
 	//	cpu_set_nmi_line(2, PULSE_LINE);
 		cpu_set_nmi_line(2, PULSE_LINE);	// safer because NMI can be lost in rare occations
-	}
+	} };
 	
-	static READ_HANDLER( sgladiat_soundlatch_r )
+	public static ReadHandlerPtr sgladiat_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		snk_sound_busy_bit = 0;
 		return(soundlatch_r(0));
-	}
+	} };
 	
-	static READ_HANDLER( sgladiat_sound_nmi_ack_r )
+	public static ReadHandlerPtr sgladiat_sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
-	}
+	} };
 	
 	/************************************************************************/
 	
-	static READ_HANDLER( sgladiat_inp0_r )
+	public static ReadHandlerPtr sgladiat_inp0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(readinputport(0) | snk_sound_busy_bit);
-	}
+	} };
 	
-	static WRITE_HANDLER( sglatiat_flipscreen_w )
+	public static WriteHandlerPtr sglatiat_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* 0xa006 */
 		/* x-------	screen is flipped */
-	}
+	} };
 	
 	public static Memory_ReadAddress sgladiat_readmem_cpuA[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

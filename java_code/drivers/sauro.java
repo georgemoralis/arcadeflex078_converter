@@ -103,30 +103,30 @@ public class sauro
 	extern VIDEO_UPDATE( trckydoc );
 	
 	
-	static WRITE_HANDLER( sauro_sound_command_w )
+	public static WriteHandlerPtr sauro_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data |= 0x80;
 		soundlatch_w(offset, data);
-	}
+	} };
 	
-	static READ_HANDLER( sauro_sound_command_r )
+	public static ReadHandlerPtr sauro_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret	= soundlatch_r(offset);
 		soundlatch_clear_w(offset, 0);
 		return ret;
-	}
+	} };
 	
-	static WRITE_HANDLER( sauro_coin1_w )
+	public static WriteHandlerPtr sauro_coin1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0, data);
 		coin_counter_w(0, 0); // to get the coin counter working in sauro, as it doesn't write 0
-	}
+	} };
 	
-	static WRITE_HANDLER( sauro_coin2_w )
+	public static WriteHandlerPtr sauro_coin2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(1, data);
 		coin_counter_w(1, 0); // to get the coin counter working in sauro, as it doesn't write 0
-	}
+	} };
 	
 	public static Memory_ReadAddress sauro_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

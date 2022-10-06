@@ -58,7 +58,7 @@ public class shootout
 	
 	/*******************************************************************************/
 	
-	static WRITE_HANDLER( shootout_bankswitch_w )
+	public static WriteHandlerPtr shootout_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		UINT8 *RAM;
@@ -67,23 +67,23 @@ public class shootout
 		bankaddress = 0x10000 + ( 0x4000 * (data & 0x0f) );
 	
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
-	static WRITE_HANDLER( sound_cpu_command_w )
+	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
-	}
+	} };
 	
-	static WRITE_HANDLER( shootout_flipscreen_w )
+	public static WriteHandlerPtr shootout_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x01);
-	}
+	} };
 	
-	static WRITE_HANDLER( shootout_coin_counter_w )
+	public static WriteHandlerPtr shootout_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0, data);
-	}
+	} };
 	
 	/*******************************************************************************/
 	

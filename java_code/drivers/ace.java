@@ -54,16 +54,16 @@ public class ace
 	
 	static int objpos[8];
 	
-	static WRITE_HANDLER( ace_objpos_w )
+	public static WriteHandlerPtr ace_objpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		objpos[offset]=data;
-	}
+	} };
 	
 	#if 0
-	static READ_HANDLER( ace_objpos_r )
+	public static ReadHandlerPtr ace_objpos_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return objpos[offset];
-	}
+	} };
 	#endif
 	
 	VIDEO_UPDATE( ace )
@@ -123,12 +123,12 @@ public class ace
 	}
 	
 	
-	static READ_HANDLER( ace_characterram_r )
+	public static ReadHandlerPtr ace_characterram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ace_characterram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( ace_characterram_w )
+	public static WriteHandlerPtr ace_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (ace_characterram[offset] != data)
 		{
@@ -139,13 +139,13 @@ public class ace
 			}
 			ace_characterram[offset] = data;
 		}
-	}
+	} };
 	
 	
-	static READ_HANDLER( unk_r )
+	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return rand()&0xff;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

@@ -96,7 +96,7 @@ public class videopin
 	}
 	
 	
-	static READ_HANDLER( videopin_misc_r )
+	public static ReadHandlerPtr videopin_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		double plunger = calc_plunger_pos();
 	
@@ -121,10 +121,10 @@ public class videopin
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( videopin_led_w )
+	public static WriteHandlerPtr videopin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static const char* matrix[8][4] =
 		{
@@ -151,10 +151,10 @@ public class videopin
 		}
 	
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( videopin_out1_w )
+	public static WriteHandlerPtr videopin_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* D0 => OCTAVE0  */
 		/* D1 => OCTACE1  */
@@ -173,10 +173,10 @@ public class videopin
 		}
 	
 		coin_lockout_global_w(~data & 0x08);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( videopin_out2_w )
+	public static WriteHandlerPtr videopin_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* D0 => VOL0      */
 		/* D1 => VOL1      */
@@ -188,13 +188,13 @@ public class videopin
 		/* D7 => ATTRACT   */
 	
 		coin_counter_w(0, data & 0x10);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( videopin_note_dvsr_w )
+	public static WriteHandlerPtr videopin_note_dvsr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound not implemented */
-	}
+	} };
 	
 	
 	/*************************************

@@ -866,11 +866,11 @@ public class cninja
 		cpu_set_irq_line(1,0,state);
 	}
 	
-	static WRITE_HANDLER( sound_bankswitch_w )
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* the second OKIM6295 ROM is bank switched */
 		OKIM6295_set_bank_base(1, (data & 1) * 0x40000);
-	}
+	} };
 	
 	static struct YM2151interface ym2151_interface =
 	{

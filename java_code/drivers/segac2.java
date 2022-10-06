@@ -1524,7 +1524,7 @@ public class segac2
 	
 	/* MEGATECH specific */
 	
-	static READ_HANDLER( megatech_instr_r )
+	public static ReadHandlerPtr megatech_instr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char* instr = memory_region(REGION_USER1);
 		unsigned char* ram = memory_region(REGION_CPU3);
@@ -1533,7 +1533,7 @@ public class segac2
 			return instr[offset/2];
 		else
 			return 0xFF;
-	}
+	} };
 	
 	unsigned char bios_ctrl[6];
 	unsigned char bios_6600;
@@ -1541,7 +1541,7 @@ public class segac2
 	unsigned char bios_6403;
 	unsigned char bios_6404;
 	
-	static READ_HANDLER( bios_ctrl_r )
+	public static ReadHandlerPtr bios_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if(offset == 0)
 			return 0;
@@ -1549,43 +1549,43 @@ public class segac2
 			return bios_ctrl[offset] & 0xfe;
 	
 		return bios_ctrl[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( bios_ctrl_w )
+	public static WriteHandlerPtr bios_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(offset == 1)
 		{
 			bios_ctrl_inputs = data & 0x04;  // Genesis/SMS input ports disable bit
 		}
 		bios_ctrl[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( megaplay_bios_banksel_r )
+	public static ReadHandlerPtr megaplay_bios_banksel_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return bios_bank;
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_banksel_w )
+	public static WriteHandlerPtr megaplay_bios_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_bank = data;
 		bios_mode = MP_ROM;
 		logerror("BIOS: ROM bank %i selected [0x%02x]\n",bios_bank >> 6, data);
-	}
+	} };
 	
-	static READ_HANDLER( megaplay_bios_gamesel_r )
+	public static ReadHandlerPtr megaplay_bios_gamesel_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return bios_6403;
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_gamesel_w )
+	public static WriteHandlerPtr megaplay_bios_gamesel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_6403 = data;
 		logerror("BIOS: 0x6403 write: 0x%02x\n",data);
 		bios_mode = data & 0x10;
-	}
+	} };
 	
 	
-	static READ_HANDLER( bank_r )
+	public static ReadHandlerPtr bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char* bank = memory_region(REGION_CPU3);
 	//	unsigned char* instr = memory_region(REGION_USER1);
@@ -1615,7 +1615,7 @@ public class segac2
 			else
 				return game[(game_banksel*0x8000 + (offset ^ 0x01))];
 		}
-	}
+	} };
 	
 	static WRITE_HANDLER ( bank_w )
 	{
@@ -1626,47 +1626,47 @@ public class segac2
 	}
 	
 	
-	static READ_HANDLER( megaplay_bios_6402_r )
+	public static ReadHandlerPtr megaplay_bios_6402_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return bios_6402;// & 0xfe;
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_6402_w )
+	public static WriteHandlerPtr megaplay_bios_6402_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_6402 = data;
 		logerror("BIOS: 0x6402 write: 0x%02x\n",data);
-	}
+	} };
 	
-	static READ_HANDLER( megaplay_bios_6404_r )
+	public static ReadHandlerPtr megaplay_bios_6404_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		logerror("BIOS: 0x6404 read: returned 0x%02x\n",bios_6404 | (bios_6403 & 0x10) >> 4);
 		return bios_6404 | (bios_6403 & 0x10) >> 4;
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_6404_w )
+	public static WriteHandlerPtr megaplay_bios_6404_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_6404 = data;
 		logerror("BIOS: 0x6404 write: 0x%02x\n",data);
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_width_w )
+	public static WriteHandlerPtr megaplay_bios_width_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_width = data;
 	//	usrintf_showmessage("Width write: %02x",data);
-	}
+	} };
 	
-	static READ_HANDLER( megaplay_bios_6600_r )
+	public static ReadHandlerPtr megaplay_bios_6600_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return bios_6600;// & 0xfe;
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_bios_6600_w )
+	public static WriteHandlerPtr megaplay_bios_6600_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bios_6600 = data;
 		logerror("BIOS: 0x6600 write: 0x%02x\n",data);
-	}
+	} };
 	
-	static WRITE_HANDLER( megaplay_game_w )
+	public static WriteHandlerPtr megaplay_game_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(readpos == 1)
 			game_banksel = 0;
@@ -1680,7 +1680,7 @@ public class segac2
 			usrintf_showmessage("Game bank selected: 0x%03x",game_banksel);
 			logerror("BIOS: 68K address space bank selected: 0x%03x\n",game_banksel);
 		}
-	}
+	} };
 	
 	
 	

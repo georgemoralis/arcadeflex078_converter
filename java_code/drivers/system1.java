@@ -53,47 +53,47 @@ public class system1
 	
 	static int inport16_step,inport17_step,inport23_step;
 	
-	static READ_HANDLER( inport16_r )
+	public static ReadHandlerPtr inport16_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("IN  $16 : pc = %04x - data = %02x\n",activecpu_get_pc(),inport16_step);
 		return(inport16_step);
-	}
+	} };
 	
-	static READ_HANDLER( inport1c_r )
+	public static ReadHandlerPtr inport1c_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("IN  $1c : pc = %04x - data = 0x80\n",activecpu_get_pc());
 		return(0x80);	// infinite loop (at 0x0fb3) until bit 7 is set
-	}
+	} };
 	
-	static READ_HANDLER( inport22_r )
+	public static ReadHandlerPtr inport22_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("IN  $22 : pc = %04x - data = %02x\n",activecpu_get_pc(),inport17_step);
 		return(inport17_step);
-	}
+	} };
 	
-	static READ_HANDLER( inport23_r )
+	public static ReadHandlerPtr inport23_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("IN  $23 : pc = %04x - step = %02x\n",activecpu_get_pc(),inport23_step);
 		return(inport23_step);
-	}
+	} };
 	
-	static WRITE_HANDLER( outport16_w )
+	public static WriteHandlerPtr outport16_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("OUT $16 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport16_step = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( outport17_w )
+	public static WriteHandlerPtr outport17_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("OUT $17 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport17_step = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( outport24_w )
+	public static WriteHandlerPtr outport24_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("OUT $24 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport23_step = data;
-	}
+	} };
 	
 	WRITE_HANDLER( hvymetal_videomode_w )
 	{
@@ -351,15 +351,15 @@ public class system1
 	
 	static unsigned char *work_ram;
 	
-	static READ_HANDLER( work_ram_r )
+	public static ReadHandlerPtr work_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return work_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( work_ram_w )
+	public static WriteHandlerPtr work_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		work_ram[offset] = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

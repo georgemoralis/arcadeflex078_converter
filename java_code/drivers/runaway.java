@@ -55,7 +55,7 @@ public class runaway
 	}
 	
 	
-	static READ_HANDLER( runaway_input_r )
+	public static ReadHandlerPtr runaway_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = 0;
 	
@@ -69,25 +69,25 @@ public class runaway
 		}
 	
 		return val;
-	}
+	} };
 	
 	
-	static READ_HANDLER( runaway_pot_r )
+	public static ReadHandlerPtr runaway_pot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(4) << (7 - offset)) & 0x80;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( runaway_led_w )
+	public static WriteHandlerPtr runaway_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset, ~data & 1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( runaway_irq_ack_w )
+	public static WriteHandlerPtr runaway_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

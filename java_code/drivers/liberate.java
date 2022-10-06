@@ -42,7 +42,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	static READ_HANDLER( deco16_bank_r )
+	public static ReadHandlerPtr deco16_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		const data8_t *ROM = memory_region(REGION_USER1);
 	
@@ -58,14 +58,14 @@ public class liberate
 	
 		logerror("%04x: Unmapped bank read %04x\n",activecpu_get_pc(),offset);
 		return 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( deco16_bank_w )
+	public static WriteHandlerPtr deco16_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		deco16_bank=data;
-	}
+	} };
 	
-	static READ_HANDLER( deco16_io_r )
+	public static ReadHandlerPtr deco16_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		const data8_t *ROM = memory_region(REGION_CPU1);
 	
@@ -80,7 +80,7 @@ public class liberate
 			return 0xff;
 		}
 		return ROM[0x8000+offset];
-	}
+	} };
 	
 	/***************************************************************************/
 	

@@ -57,19 +57,19 @@ public class jack
 	
 	static int timer_rate;
 	
-	static READ_HANDLER( timer_r )
+	public static ReadHandlerPtr timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* wrong! there should be no need for timer_rate, the same function */
 		/* should work for both games */
 		return activecpu_gettotalcycles() / timer_rate;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( jack_sh_command_w )
+	public static WriteHandlerPtr jack_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

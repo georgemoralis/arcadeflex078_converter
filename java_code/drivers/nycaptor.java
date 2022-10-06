@@ -190,10 +190,10 @@ public class nycaptor
 	
 	
 	
-	static WRITE_HANDLER( sub_cpu_halt_w )
+	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_halt_line(1, (data )? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
 	static UINT8 snd_data;
 	
@@ -219,26 +219,26 @@ public class nycaptor
 	}
 	
 	
-	static READ_HANDLER( nycaptor_b_r )
+	public static ReadHandlerPtr nycaptor_b_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 			return 1;
-	}
+	} };
 	
-	static READ_HANDLER( nycaptor_by_r )
+	public static ReadHandlerPtr nycaptor_by_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 			return readinputport(6)-8;
-	}
+	} };
 	
-	static READ_HANDLER( nycaptor_bx_r )
+	public static ReadHandlerPtr nycaptor_bx_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 			return (readinputport(5)+0x27)|1;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sound_cpu_reset_w )
+	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(2, (data&1 )? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
 	static int vol_ctrl[16];
 	
@@ -265,18 +265,18 @@ public class nycaptor
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_disable_w )
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -284,7 +284,7 @@ public class nycaptor
 			cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	static struct AY8910interface ay8910_interface =
 	{
@@ -311,11 +311,11 @@ public class nycaptor
 		return generic_control_reg;
 	}
 	
-	static WRITE_HANDLER( nycaptor_generic_control_w )
+	public static WriteHandlerPtr nycaptor_generic_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		generic_control_reg = data;
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + ((data&0x08)>>3)*0x4000 );
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

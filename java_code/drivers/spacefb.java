@@ -148,26 +148,26 @@ public class spacefb
 	
 	unsigned char spacefb_sound_latch;
 	
-	static READ_HANDLER( spacefb_sh_p2_r )
+	public static ReadHandlerPtr spacefb_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ((spacefb_sound_latch & 0x18) << 1);
-	}
+	} };
 	
-	static READ_HANDLER( spacefb_sh_t0_r )
+	public static ReadHandlerPtr spacefb_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return spacefb_sound_latch & 0x20;
-	}
+	} };
 	
-	static READ_HANDLER( spacefb_sh_t1_r )
+	public static ReadHandlerPtr spacefb_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return spacefb_sound_latch & 0x04;
-	}
+	} };
 	
-	static WRITE_HANDLER( spacefb_port_1_w )
+	public static WriteHandlerPtr spacefb_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spacefb_sound_latch = data;
 		cpu_set_irq_line(1, 0, (!(data & 0x02)) ? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

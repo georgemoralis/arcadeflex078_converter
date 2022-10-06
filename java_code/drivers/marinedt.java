@@ -123,15 +123,15 @@ public class marinedt
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER( marinedt_port1_r )
+	public static ReadHandlerPtr marinedt_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//might need to be reversed for cocktail stuff
 	
 		/* x/y multiplexed */
 		return readinputport(3 + ((marinedt_pf&0x08)>>3));
-	}
+	} };
 	
-	static READ_HANDLER( marinedt_coll_r )
+	public static ReadHandlerPtr marinedt_coll_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//76543210
 		//x------- obj1 to obj2 collision
@@ -143,13 +143,13 @@ public class marinedt
 		if (keyboard_pressed(KEYCODE_Z)) return 0x08;
 	
 		return coll | collh;
-	}
+	} };
 	
 	//are these returning only during a collision?
 	//id imagine they are returning the pf char where the collission took place?
 	//what about where there is lots of colls?
 	//maybe the first on a scanline basis
-	static READ_HANDLER( marinedt_obj1_x_r )
+	public static ReadHandlerPtr marinedt_obj1_x_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//76543210
 		//xxxx---- unknown
@@ -159,9 +159,9 @@ public class marinedt
 	if(RAM[0x430e]) --cx; else ++cx;
 	//figure out why inc/dec based on 430e?
 		return cx | (cxh<<4);
-	}
+	} };
 	
-	static READ_HANDLER( marinedt_obj1_yr_r )
+	public static ReadHandlerPtr marinedt_obj1_yr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//76543210
 		//xxxx---- unknown
@@ -170,9 +170,9 @@ public class marinedt
 	if (cx==0x10) cyr++;
 	
 		return cyr | (cyrh<<4);
-	}
+	} };
 	
-	static READ_HANDLER( marinedt_obj1_yq_r )
+	public static ReadHandlerPtr marinedt_obj1_yq_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//76543210
 		//xx------ unknown
@@ -181,7 +181,7 @@ public class marinedt
 		//------xx screen quarter
 	
 		return cyq | (cyqh<<4);
-	}
+	} };
 	
 	public static IO_ReadPort marinedt_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -196,16 +196,16 @@ public class marinedt
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( marinedt_obj1_a_w ) {	marinedt_obj1_a = data; }
-	static WRITE_HANDLER( marinedt_obj1_x_w ) {	marinedt_obj1_x = data; }
-	static WRITE_HANDLER( marinedt_obj1_y_w ) {	marinedt_obj1_y = data; }
-	static WRITE_HANDLER( marinedt_obj2_a_w ) {	marinedt_obj2_a = data; }
-	static WRITE_HANDLER( marinedt_obj2_x_w ) {	marinedt_obj2_x = data; }
-	static WRITE_HANDLER( marinedt_obj2_y_w ) {	marinedt_obj2_y = data; }
+	public static WriteHandlerPtr marinedt_obj1_a_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_a = data; } };
+	public static WriteHandlerPtr marinedt_obj1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_x = data; } };
+	public static WriteHandlerPtr marinedt_obj1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_y = data; } };
+	public static WriteHandlerPtr marinedt_obj2_a_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_a = data; } };
+	public static WriteHandlerPtr marinedt_obj2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_x = data; } };
+	public static WriteHandlerPtr marinedt_obj2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_y = data; } };
 	
-	static WRITE_HANDLER( marinedt_music_w ){	marinedt_music = data; }
+	public static WriteHandlerPtr marinedt_music_w = new WriteHandlerPtr() {public void handler(int offset, int data){	marinedt_music = data; } };
 	
-	static WRITE_HANDLER( marinedt_sound_w )
+	public static WriteHandlerPtr marinedt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//76543210
 		//xx------ ??
@@ -217,9 +217,9 @@ public class marinedt
 		//-------x ??
 	
 		marinedt_sound = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( marinedt_pd_w )
+	public static WriteHandlerPtr marinedt_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//76543210
 		//xxx----- ?? unused
@@ -230,9 +230,9 @@ public class marinedt
 		//-------x obj1 enable
 	
 		marinedt_pd = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( marinedt_pf_w )
+	public static WriteHandlerPtr marinedt_pf_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//76543210
 		//xxxx---- ?? unused (will need to understand table of written values)
@@ -247,7 +247,7 @@ public class marinedt
 	//	logerror("pf:%02x %d\n",marinedt_pf);
 	//logerror("pd:%02x %d\n",marinedt_pd, cpu_getcurrentframe());
 	
-	}
+	} };
 	
 	public static IO_WritePort marinedt_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

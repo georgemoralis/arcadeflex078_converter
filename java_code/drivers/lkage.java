@@ -63,18 +63,18 @@ public class lkage
 		else pending_nmi = 1;
 	}
 	
-	static WRITE_HANDLER( lkage_sound_command_w )
+	public static WriteHandlerPtr lkage_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		timer_set(TIME_NOW,data,nmi_callback);
-	}
+	} };
 	
-	static WRITE_HANDLER( lkage_sh_nmi_disable_w )
+	public static WriteHandlerPtr lkage_sh_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 0;
-	}
+	} };
 	
-	static WRITE_HANDLER( lkage_sh_nmi_enable_w )
+	public static WriteHandlerPtr lkage_sh_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_nmi_enable = 1;
 		if (pending_nmi)
@@ -82,7 +82,7 @@ public class lkage
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
-	}
+	} };
 	
 	
 	
@@ -126,10 +126,10 @@ public class lkage
 		{ 0xf400, 0xffff, lkage_videoram_w, &videoram }, /* videoram */
 	MEMORY_END
 	
-	static READ_HANDLER( port_fetch_r )
+	public static ReadHandlerPtr port_fetch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_USER1)[offset];
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -536,7 +536,7 @@ public class lkage
 	
 	/*Note:This probably uses another MCU dump,which is undumped.*/
 	
-	static READ_HANDLER( fake_mcu_r )
+	public static ReadHandlerPtr fake_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(mcu_val)
 		{
@@ -550,22 +550,22 @@ public class lkage
 	
 			default:   return (mcu_val);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( fake_mcu_w )
+	public static WriteHandlerPtr fake_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//if(data != 1 && data != 0xa6 && data != 0x34 && data != 0x48)
 		//	usrintf_showmessage("PC = %04x %02x",activecpu_get_pc(),data);
 	
 		mcu_val = data;
-	}
+	} };
 	
-	static READ_HANDLER( fake_status_r )
+	public static ReadHandlerPtr fake_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int res = 3;// cpu data/mcu ready status
 	
 		return res;
-	}
+	} };
 	
 	DRIVER_INIT( lkageb )
 	{

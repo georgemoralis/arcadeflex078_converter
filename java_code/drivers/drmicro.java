@@ -41,11 +41,11 @@ public class drmicro
 			 cpu_set_nmi_line(0, PULSE_LINE);
 	}
 	
-	static WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{	// bit2,3 unknown
 		drmicro_nmi_enable = data & 1;
 		drmicro_flip_w(data & 2);
-	}
+	} };
 	
 	/****************************************************************************/
 	
@@ -71,11 +71,11 @@ public class drmicro
 			MSM5205_reset_w(0, 1);
 	}
 	
-	static WRITE_HANDLER( pcm_set_w )
+	public static WriteHandlerPtr pcm_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pcm_adr = ((data & 0x3f) << 9);
 		pcm_w(0);
-	}
+	} };
 	
 	/****************************************************************************/
 	

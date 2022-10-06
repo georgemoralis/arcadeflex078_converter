@@ -119,14 +119,14 @@ public class wallc
 		}
 	}
 	
-	static WRITE_HANDLER( wallc_videoram_w )
+	public static WriteHandlerPtr wallc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
@@ -153,32 +153,32 @@ public class wallc
 	}
 	
 	static int wcb0=-1;
-	static WRITE_HANDLER( wc_b0 )
+	public static WriteHandlerPtr wc_b0 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (wcb0!=data)
 		{
 			wcb0 = data;
 			//logerror("wcb0=%i pc=%4x\n",wcb0, activecpu_get_pc() );
 		}
-	}
+	} };
 	static int wcb1=-1;
-	static WRITE_HANDLER( wc_b1 )
+	public static WriteHandlerPtr wc_b1 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (wcb1!=data)
 		{
 			wcb1 = data;
 			//logerror("wcb1=%i pc=%4x\n",wcb1, activecpu_get_pc() );
 		}
-	}
+	} };
 	static int wcb2=-1;
-	static WRITE_HANDLER( wc_b2 )
+	public static WriteHandlerPtr wc_b2 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (wcb2!=data)
 		{
 			wcb2 = data;
 			//logerror("wcb2=%i pc=%4x\n",wcb2, activecpu_get_pc() );
 		}
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -40,13 +40,13 @@ public class hyperspt
 	extern WRITE_HANDLER( konami_SN76496_0_w );
 	
 	
-	static WRITE_HANDLER( hyperspt_coin_counter_w )
+	public static WriteHandlerPtr hyperspt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
 	/* handle fake button for speed cheat */
-	static READ_HANDLER( konami_IN1_r )
+	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		static int cheat = 0;
@@ -61,7 +61,7 @@ public class hyperspt
 			cheat = (cheat+1)%4;
 		}
 		return res;
-	}
+	} };
 	
 	
 	

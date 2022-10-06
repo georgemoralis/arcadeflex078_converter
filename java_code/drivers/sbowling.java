@@ -73,7 +73,7 @@ public class sbowling
 		plot_pixel(tmpbitmap,x,y,Machine->pens[col]);
 	}
 	
-	static WRITE_HANDLER( sbw_videoram_w )
+	public static WriteHandlerPtr sbw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x,y,i,v1,v2;
 	
@@ -93,7 +93,7 @@ public class sbowling
 			v1 >>= 1;
 			v2 >>= 1;
 		}
-	}
+	} };
 	
 	VIDEO_UPDATE(sbowling)
 	{
@@ -109,16 +109,16 @@ public class sbowling
 		return 0;
 	}
 	
-	static WRITE_HANDLER( pix_shift_w )
+	public static WriteHandlerPtr pix_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pix_sh = data;
-	}
-	static WRITE_HANDLER( pix_data_w )
+	} };
+	public static WriteHandlerPtr pix_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pix[0] = pix[1];
 		pix[1] = data;
-	}
-	static READ_HANDLER( pix_data_r )
+	} };
+	public static ReadHandlerPtr pix_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT32 p1, p0;
 		int res;
@@ -130,7 +130,7 @@ public class sbowling
 		res = (((p1 << (sh+8)) | (p0 << sh)) & 0xff00) >> 8;
 	
 		return res;
-	}
+	} };
 	
 	
 	

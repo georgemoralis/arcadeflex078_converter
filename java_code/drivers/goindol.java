@@ -61,7 +61,7 @@ public class goindol
 	
 	
 	
-	static READ_HANDLER( prot_f422_r )
+	public static ReadHandlerPtr prot_f422_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int toggle;
 	
@@ -69,36 +69,36 @@ public class goindol
 		toggle ^= 0x80;
 	
 		return toggle;
-	}
+	} };
 	
 	
 	static UINT8 *ram;
 	
-	static WRITE_HANDLER( prot_fc44_w )
+	public static WriteHandlerPtr prot_fc44_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: prot_fc44_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0419] = 0x5b;
 		ram[0x041a] = 0x3f;
 		ram[0x041b] = 0x6d;
-	}
+	} };
 	
-	static WRITE_HANDLER( prot_fd99_w )
+	public static WriteHandlerPtr prot_fd99_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: prot_fd99_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0421] = 0x3f;
-	}
+	} };
 	
-	static WRITE_HANDLER( prot_fc66_w )
+	public static WriteHandlerPtr prot_fc66_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: prot_fc66_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0423] = 0x06;
-	}
+	} };
 	
-	static WRITE_HANDLER( prot_fcb0_w )
+	public static WriteHandlerPtr prot_fcb0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: prot_fcb0_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0425] = 0x06;
-	}
+	} };
 	
 	
 	

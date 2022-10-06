@@ -116,7 +116,7 @@ public class namcos1
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? TILEMAP_FLIPX|TILEMAP_FLIPY : 0);
 	}
 	
-	static WRITE_HANDLER( namcos1_playfield_control_w )
+	public static WriteHandlerPtr namcos1_playfield_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		namcos1_playfield_control[offset] = data;
 	#if 0
@@ -144,7 +144,7 @@ public class namcos1
 				tilemap_palette_state[whichone] = 1;
 			}
 		}
-	}
+	} };
 	
 	READ_HANDLER( namcos1_videoram_r )
 	{
@@ -233,7 +233,7 @@ public class namcos1
 	7    sprite offset y
 	8-15 unknown
 	*/
-	static WRITE_HANDLER( namcos1_displaycontrol_w )
+	public static WriteHandlerPtr namcos1_displaycontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *disp_reg = &namcos1_controlram[0xff0];
 		int newflip;
@@ -283,7 +283,7 @@ public class namcos1
 			usrintf_showmessage(buf);
 		}
 	#endif
-	}
+	} };
 	
 	WRITE_HANDLER( namcos1_videocontrol_w )
 	{

@@ -420,15 +420,15 @@ public class zn
 		logerror( "%08x: sio0_w( %04x, %08x )%s\n", activecpu_get_pc(), offset, data, s_char );
 	}
 	
-	static WRITE_HANDLER( qsound_bankswitch_w )
+	public static WriteHandlerPtr qsound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) + 0x10000 + ( ( data & 0x0f ) * 0x4000 ) );
-	}
+	} };
 	
-	static WRITE_HANDLER( fx1a_sound_bankswitch_w )
+	public static WriteHandlerPtr fx1a_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) + 0x10000 + ( ( ( data - 1 ) & 0x07 ) * 0x4000 ) );
-	}
+	} };
 	
 	static MEMORY_READ32_START( zn_readmem )
 		{ 0x00000000, 0x003fffff, MRA32_RAM },		/* ram */

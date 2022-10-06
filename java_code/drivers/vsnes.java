@@ -196,41 +196,41 @@ public class vsnes
 	static UINT8 *work_ram, *work_ram_1;
 	static int coin;
 	
-	static READ_HANDLER( mirror_ram_r )
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return work_ram[ offset & 0x7ff ];
-	}
+	} };
 	
-	static READ_HANDLER( mirror_ram_1_r )
+	public static ReadHandlerPtr mirror_ram_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return work_ram[ offset & 0x7ff ];
-	}
+	} };
 	
-	static WRITE_HANDLER( mirror_ram_w )
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		work_ram[ offset & 0x7ff ] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( mirror_ram_1_w )
+	public static WriteHandlerPtr mirror_ram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		work_ram[ offset & 0x7ff ] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER( sprite_dma_w )
+	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 0, &work_ram[source] );
-	}
+	} };
 	
-	static WRITE_HANDLER( sprite_dma_1_w )
+	public static WriteHandlerPtr sprite_dma_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 1, &work_ram_1[source] );
-	}
+	} };
 	
-	static WRITE_HANDLER( vsnes_coin_counter_w )
+	public static WriteHandlerPtr vsnes_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w( 0, data & 0x01 );
 		coin = data;
@@ -239,15 +239,15 @@ public class vsnes
 			//do something?
 			logerror("vsnes_coin_counter_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( vsnes_coin_counter_r )
+	public static ReadHandlerPtr vsnes_coin_counter_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		//only for platoon
 		return coin;
-	}
+	} };
 	
-	static WRITE_HANDLER( vsnes_coin_counter_1_w )
+	public static WriteHandlerPtr vsnes_coin_counter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w( 1, data & 0x01 );
 		if( data & 0xfe ) //vsbball service mode
@@ -256,7 +256,7 @@ public class vsnes
 			logerror("vsnes_coin_counter_1_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);
 		}
 	
-	}
+	} };
 	/******************************************************************************/
 	
 	static MEMORY_READ_START (readmem)

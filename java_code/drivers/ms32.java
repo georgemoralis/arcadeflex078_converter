@@ -1503,23 +1503,23 @@ public class ms32
 	 code at $38 reads the 2nd command latch ??
 	*/
 	
-	static READ_HANDLER( latch_r )
+	public static ReadHandlerPtr latch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
 		return soundlatch_r(0)^0xff;
-	}
+	} };
 	
-	static WRITE_HANDLER( ms32_snd_bank_w )
+	public static WriteHandlerPtr ms32_snd_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			cpu_setbank(4, memory_region(REGION_CPU2) + 0x14000+0x4000*(data&0xf));
 			cpu_setbank(5, memory_region(REGION_CPU2) + 0x14000+0x4000*(data>>4));
-	}
+	} };
 	
-	static WRITE_HANDLER( to_main_w )
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 			to_main=data;
 			irq_raise(1);
-	}
+	} };
 	
 	public static Memory_ReadAddress ms32_snd_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -65,29 +65,29 @@ public class jcross
 		{ 0 }
 	};
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_cpu_busy = 0x20;
 		soundlatch_w(0, data);
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	static READ_HANDLER( sound_command_r )
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		sound_cpu_busy = 0;
 		return(soundlatch_r(0));
-	}
+	} };
 	
-	static READ_HANDLER( sound_nmi_ack_r )
+	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER( jcross_port_0_r )
+	public static ReadHandlerPtr jcross_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(input_port_0_r(0) | sound_cpu_busy);
-	}
+	} };
 	
 	static WRITE_HANDLER(jcross_vregs0_w){jcross_vregs[0]=data;}
 	static WRITE_HANDLER(jcross_vregs1_w){jcross_vregs[1]=data;}

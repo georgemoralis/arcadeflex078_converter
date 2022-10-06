@@ -41,7 +41,7 @@ public class flkatck
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	}
 	
-	static WRITE_HANDLER( flkatck_bankswitch_w )
+	public static WriteHandlerPtr flkatck_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress = 0;
@@ -54,9 +54,9 @@ public class flkatck
 		bankaddress += 0x10000 + (data & 0x03)*0x2000;
 		if ((data & 0x03) != 0x03)	/* for safety */
 			cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
-	static READ_HANDLER( flkatck_ls138_r )
+	public static ReadHandlerPtr flkatck_ls138_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 	
@@ -74,9 +74,9 @@ public class flkatck
 		}
 	
 		return data;
-	}
+	} };
 	
-	static WRITE_HANDLER( flkatck_ls138_w )
+	public static WriteHandlerPtr flkatck_ls138_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch ((offset & 0x1c) >> 2){
 			case 0x04:	/* bankswitch */
@@ -92,7 +92,7 @@ public class flkatck
 				watchdog_reset_w(0, data);
 				break;
 		}
-	}
+	} };
 	
 	public static Memory_ReadAddress flkatck_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

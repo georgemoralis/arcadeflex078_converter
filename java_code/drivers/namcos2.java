@@ -586,15 +586,15 @@ public class namcos2
 		}
 	}
 	
-	static READ_HANDLER( namcos2_dpram_byte_r )
+	public static ReadHandlerPtr namcos2_dpram_byte_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return namcos2_dpram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( namcos2_dpram_byte_w )
+	public static WriteHandlerPtr namcos2_dpram_byte_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		namcos2_dpram[offset] = data;
-	}
+	} };
 	
 	/*************************************************************/
 	/* SHARED 68000 CPU Memory declarations 					 */

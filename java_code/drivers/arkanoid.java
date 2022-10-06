@@ -95,7 +95,7 @@ public class arkanoid
 	
 	static int paddle2_prot;
 	
-	static READ_HANDLER( paddle2_prot_r )
+	public static ReadHandlerPtr paddle2_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static UINT8 level_table_a[] =
 		{
@@ -137,15 +137,15 @@ public class arkanoid
 			case 0xf7: return 0;
 			default: return paddle2_prot;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( paddle2_prot_w )
+	public static WriteHandlerPtr paddle2_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("%04x: prot_w %02x\n",activecpu_get_pc(),data);
 		paddle2_prot = data;
-	}
+	} };
 	
-	static READ_HANDLER( track_kludge_r )
+	public static ReadHandlerPtr track_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int track = readinputport(2);
 	
@@ -153,7 +153,7 @@ public class arkanoid
 		if(track < 0x44)
 			return 0x23;
 		return 0x03;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

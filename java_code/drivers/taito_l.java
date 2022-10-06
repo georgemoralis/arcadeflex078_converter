@@ -281,30 +281,30 @@ public class taito_l
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_adr_table[2]);
 	}
 	
-	static WRITE_HANDLER( irq_adr_w )
+	public static WriteHandlerPtr irq_adr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("irq_adr_table[%d] = %02x\n",offset,data);
 		irq_adr_table[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( irq_adr_r )
+	public static ReadHandlerPtr irq_adr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return irq_adr_table[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( irq_enable_w )
+	public static WriteHandlerPtr irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("irq_enable = %02x\n",data);
 		irq_enable = data;
-	}
+	} };
 	
-	static READ_HANDLER( irq_enable_r )
+	public static ReadHandlerPtr irq_enable_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return irq_enable;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( rombankswitch_w )
+	public static WriteHandlerPtr rombankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int high = 0;
 		if(cur_rombank != data)
@@ -319,9 +319,9 @@ public class taito_l
 			cur_rombank = data;
 			cpu_setbank(1, memory_region(REGION_CPU1)+0x10000+0x2000*cur_rombank);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( rombank2switch_w )
+	public static WriteHandlerPtr rombank2switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int high = 0;
 	
@@ -340,19 +340,19 @@ public class taito_l
 			cur_rombank2 = data;
 			cpu_setbank(6, memory_region(REGION_CPU3)+0x10000+0x4000*cur_rombank2);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( rombankswitch_r )
+	public static ReadHandlerPtr rombankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cur_rombank;
-	}
+	} };
 	
-	static READ_HANDLER( rombank2switch_r )
+	public static ReadHandlerPtr rombank2switch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cur_rombank2;
-	}
+	} };
 	
-	static WRITE_HANDLER( rambankswitch_w )
+	public static WriteHandlerPtr rambankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(cur_rambank[offset]!=data)
 		{
@@ -377,14 +377,14 @@ public class taito_l
 			}
 			cpu_setbank(2+offset, current_base[offset]);
 		}
-	}
+	} };
 	
-	static READ_HANDLER( rambankswitch_r )
+	public static ReadHandlerPtr rambankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cur_rambank[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( bank0_w )
+	public static WriteHandlerPtr bank0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(current_base[0][offset]!=data)
 		{
@@ -392,9 +392,9 @@ public class taito_l
 			if(current_notifier[0])
 				current_notifier[0](offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bank1_w )
+	public static WriteHandlerPtr bank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(current_base[1][offset]!=data)
 		{
@@ -402,9 +402,9 @@ public class taito_l
 			if(current_notifier[1])
 				current_notifier[1](offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bank2_w )
+	public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(current_base[2][offset]!=data)
 		{
@@ -412,9 +412,9 @@ public class taito_l
 			if(current_notifier[2])
 				current_notifier[2](offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( bank3_w )
+	public static WriteHandlerPtr bank3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(current_base[3][offset]!=data)
 		{
@@ -422,41 +422,41 @@ public class taito_l
 			if(current_notifier[3])
 				current_notifier[3](offset);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( control2_w )
+	public static WriteHandlerPtr control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(0,~data & 0x01);
 		coin_lockout_w(1,~data & 0x02);
 		coin_counter_w(0,data & 0x04);
 		coin_counter_w(1,data & 0x08);
-	}
+	} };
 	
 	static int extport;
 	
-	static READ_HANDLER( portA_r )
+	public static ReadHandlerPtr portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (extport == 0) return porte0_r(0);
 		else return porte1_r(0);
-	}
+	} };
 	
-	static READ_HANDLER( portB_r )
+	public static ReadHandlerPtr portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (extport == 0) return portf0_r(0);
 		else return portf1_r(0);
-	}
+	} };
 	
-	static READ_HANDLER( ym2203_data0_r )
+	public static ReadHandlerPtr ym2203_data0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		extport = 0;
 		return YM2203_read_port_0_r(offset);
-	}
+	} };
 	
-	static READ_HANDLER( ym2203_data1_r )
+	public static ReadHandlerPtr ym2203_data1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		extport = 1;
 		return YM2203_read_port_0_r(offset);
-	}
+	} };
 	
 	static int *mcu_reply;
 	static int mcu_pos = 0, mcu_reply_len = 0;
@@ -464,7 +464,7 @@ public class taito_l
 	
 	static int puzznic_mcu_reply[] = { 0x50, 0x1f, 0xb6, 0xba, 0x06, 0x03, 0x47, 0x05, 0x00 };
 	
-	static WRITE_HANDLER( mcu_data_w )
+	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		last_data = data;
 		last_data_adr = activecpu_get_pc();
@@ -477,48 +477,48 @@ public class taito_l
 			mcu_reply_len = sizeof(puzznic_mcu_reply);
 			break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mcu_control_w )
+	public static WriteHandlerPtr mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("mcu control %02x (%04x)\n", data, activecpu_get_pc());
-	}
+	} };
 	
-	static READ_HANDLER( mcu_data_r )
+	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("mcu read (%04x) [%02x, %04x]\n", activecpu_get_pc(), last_data, last_data_adr);
 		if(mcu_pos==mcu_reply_len)
 			return 0;
 	
 		return mcu_reply[mcu_pos++];
-	}
+	} };
 	
-	static READ_HANDLER( mcu_control_r )
+	public static ReadHandlerPtr mcu_control_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("mcu control read (%04x)\n", activecpu_get_pc());
 		return 0x1;
-	}
+	} };
 	
 	#if 0
-	static WRITE_HANDLER( sound_w )
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("Sound_w %02x (%04x)\n", data, activecpu_get_pc());
-	}
+	} };
 	#endif
 	
-	static READ_HANDLER( shared_r )
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared_ram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER( shared_w )
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared_ram[offset] = data;
-	}
+	} };
 	
 	static int mux_ctrl = 0;
 	
-	static READ_HANDLER( mux_r )
+	public static ReadHandlerPtr mux_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(mux_ctrl)
 		{
@@ -536,9 +536,9 @@ public class taito_l
 			logerror("Mux read from unknown port %d (%04x)\n", mux_ctrl, activecpu_get_pc());
 			return 0xff;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mux_w )
+	public static WriteHandlerPtr mux_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(mux_ctrl)
 		{
@@ -548,24 +548,24 @@ public class taito_l
 		default:
 			logerror("Mux write to unknown port %d, %02x (%04x)\n", mux_ctrl, data, activecpu_get_pc());
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( mux_ctrl_w )
+	public static WriteHandlerPtr mux_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mux_ctrl = data;
-	}
+	} };
 	
 	
 	
 	
 	static int champwr_adpcm_start;
 	
-	static WRITE_HANDLER( champwr_adpcm_lo_w )
+	public static WriteHandlerPtr champwr_adpcm_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		champwr_adpcm_start = (champwr_adpcm_start & 0xff00ff) | (data << 8);
-	}
+	} };
 	
-	static WRITE_HANDLER( champwr_adpcm_hi_w )
+	public static WriteHandlerPtr champwr_adpcm_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *rom = memory_region(REGION_SOUND1);
 		int romlen = memory_region_length(REGION_SOUND1);
@@ -579,45 +579,45 @@ public class taito_l
 		length = i - champwr_adpcm_start;
 	
 		ADPCM_play(0,champwr_adpcm_start,length*2);
-	}
+	} };
 	
 	
 	
 	static int trackx,tracky;
 	
-	static READ_HANDLER( horshoes_tracky_reset_r )
+	public static ReadHandlerPtr horshoes_tracky_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* reset the trackball counter */
 		tracky = readinputport(4);
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER( horshoes_trackx_reset_r )
+	public static ReadHandlerPtr horshoes_trackx_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* reset the trackball counter */
 		trackx = readinputport(5);
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER( horshoes_tracky_lo_r )
+	public static ReadHandlerPtr horshoes_tracky_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(4) - tracky) & 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( horshoes_tracky_hi_r )
+	public static ReadHandlerPtr horshoes_tracky_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(4) - tracky) >> 8;
-	}
+	} };
 	
-	static READ_HANDLER( horshoes_trackx_lo_r )
+	public static ReadHandlerPtr horshoes_trackx_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(5) - trackx) & 0xff;
-	}
+	} };
 	
-	static READ_HANDLER( horshoes_trackx_hi_r )
+	public static ReadHandlerPtr horshoes_trackx_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(5) - trackx) >> 8;
-	}
+	} };
 	
 	
 	
@@ -781,13 +781,13 @@ public class taito_l
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static WRITE_HANDLER( sound_bankswitch_w )
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int banknum = (data - 1) & 3;
 	
 		cpu_setbank (7, &RAM [0x10000 + (banknum * 0x4000)]);
-	}
+	} };
 	
 	public static Memory_WriteAddress raimais_3_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -2216,7 +2216,7 @@ public class taito_l
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	static WRITE_HANDLER( portA_w )
+	public static WriteHandlerPtr portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int cur_bank = 0;
 	
@@ -2230,7 +2230,7 @@ public class taito_l
 			cpu_setbank(7,&RAM[bankaddress]);
 			//logerror ("YM2203 bank change val=%02x  pc=%04x\n",cur_bank, activecpu_get_pc() );
 		}
-	}
+	} };
 	
 	static struct YM2203interface ym2203_interface_triple =
 	{

@@ -618,15 +618,15 @@ public class shanghai
 	
 	static int regno;
 	
-	static READ_HANDLER( HD63484_status_r )
+	public static ReadHandlerPtr HD63484_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset == 1) return 0xff;	/* high 8 bits - not used */
 	
 		if (activecpu_get_pc() != 0xfced6 && activecpu_get_pc() != 0xfe1d6) logerror("%05x: HD63484 status read\n",activecpu_get_pc());
 		return 0x22|4;	/* write FIFO ready + command end    + read FIFO ready */
-	}
+	} };
 	
-	static WRITE_HANDLER( HD63484_address_w )
+	public static WriteHandlerPtr HD63484_address_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static unsigned char reg[2];
 	
@@ -634,9 +634,9 @@ public class shanghai
 		regno = reg[0];	/* only low 8 bits are used */
 	//if (offset == 0)
 	//	logerror("PC %05x: HD63484 select register %02x\n",activecpu_get_pc(),regno);
-	}
+	} };
 	
-	static WRITE_HANDLER( HD63484_data_w )
+	public static WriteHandlerPtr HD63484_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static unsigned char dat[2];
 	
@@ -654,9 +654,9 @@ public class shanghai
 				if (regno & 0x80) regno += 2;	/* autoincrement */
 			}
 		}
-	}
+	} };
 	
-	static READ_HANDLER( HD63484_data_r )
+	public static ReadHandlerPtr HD63484_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -679,7 +679,7 @@ public class shanghai
 			return res & 0xff;
 		else
 			return (res >> 8) & 0xff;
-	}
+	} };
 	
 	
 	
@@ -768,11 +768,11 @@ public class shanghai
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0x80);
 	}
 	
-	static WRITE_HANDLER( shanghai_coin_w )
+	public static WriteHandlerPtr shanghai_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -106,17 +106,17 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	static WRITE_HANDLER( shangkid_maincpu_bank_w )
+	public static WriteHandlerPtr shangkid_maincpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_setbank( 1,&memory_region(REGION_CPU1)[(data&1)?0x10000:0x8000] );
-	}
+	} };
 	
-	static WRITE_HANDLER( shangkid_bbx_enable_w )
+	public static WriteHandlerPtr shangkid_bbx_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_halt_line( 1, data?0:1 );
-	}
+	} };
 	
-	static WRITE_HANDLER( shangkid_cpu_reset_w )
+	public static WriteHandlerPtr shangkid_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( data == 0 )
 		{
@@ -126,12 +126,12 @@ public class shangkid
 		{
 			cpu_set_reset_line(0,PULSE_LINE);
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( shangkid_sound_enable_w )
+	public static WriteHandlerPtr shangkid_sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bbx_sound_enable = data;
-	}
+	} };
 	
 	WRITE_HANDLER( shangkid_bbx_AY8910_control_w )
 	{
@@ -177,15 +177,15 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	static WRITE_HANDLER( shareram_w )
+	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shareram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER( shareram_r )
+	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shareram[offset];
-	}
+	} };
 	
 	/***************************************************************************************/
 	

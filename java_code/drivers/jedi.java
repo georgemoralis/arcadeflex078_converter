@@ -153,16 +153,16 @@ public class jedi
 	}
 	
 	
-	static WRITE_HANDLER( main_irq_ack_w )
+	public static WriteHandlerPtr main_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, M6502_IRQ_LINE, CLEAR_LINE);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sound_irq_ack_w )
+	public static WriteHandlerPtr sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, M6502_IRQ_LINE, CLEAR_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_INIT( jedi )
@@ -188,14 +188,14 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( rom_banksel_w )
+	public static WriteHandlerPtr rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 	    if (data & 0x01) cpu_setbank(1, &RAM[0x10000]);
 	    if (data & 0x02) cpu_setbank(1, &RAM[0x14000]);
 	    if (data & 0x04) cpu_setbank(1, &RAM[0x18000]);
-	}
+	} };
 	
 	
 	
@@ -205,10 +205,10 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( sound_reset_w )
+	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(1, (data & 1) ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 	
 	
 	static void delayed_sound_latch_w(int data)
@@ -218,17 +218,17 @@ public class jedi
 	}
 	
 	
-	static WRITE_HANDLER( sound_latch_w )
+	public static WriteHandlerPtr sound_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, delayed_sound_latch_w);
-	}
+	} };
 	
 	
-	static READ_HANDLER( sound_latch_r )
+	public static ReadHandlerPtr sound_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    sound_comm_stat &= ~0x80;
 	    return sound_latch;
-	}
+	} };
 	
 	
 	
@@ -238,18 +238,18 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( sound_ack_latch_r )
+	public static ReadHandlerPtr sound_ack_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    sound_comm_stat &= ~0x40;
 	    return sound_ack_latch;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sound_ack_latch_w )
+	public static WriteHandlerPtr sound_ack_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    sound_ack_latch = data;
 	    sound_comm_stat |= 0x40;
-	}
+	} };
 	
 	
 	
@@ -259,7 +259,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static READ_HANDLER( a2d_data_r )
+	public static ReadHandlerPtr a2d_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (control_num)
 		{
@@ -268,31 +268,31 @@ public class jedi
 			default:	return 0;
 		}
 	    return 0;
-	}
+	} };
 	
 	
-	static READ_HANDLER( special_port1_r )
+	public static ReadHandlerPtr special_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(1) ^ ((sound_comm_stat >> 1) & 0x60);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( a2d_select_w )
+	public static WriteHandlerPtr a2d_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    control_num = offset;
-	}
+	} };
 	
 	
-	static READ_HANDLER( soundstat_r )
+	public static ReadHandlerPtr soundstat_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return sound_comm_stat;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( jedi_coin_counter_w )
+	public static WriteHandlerPtr jedi_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset, data >> 7);
-	}
+	} };
 	
 	
 	
@@ -302,26 +302,26 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( speech_data_w )
+	public static WriteHandlerPtr speech_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		speech_write_buffer = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( speech_strobe_w )
+	public static WriteHandlerPtr speech_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int state = (~offset >> 8) & 1;
 	
 		if ((state ^ speech_strobe_state) && state)
 			tms5220_data_w(0, speech_write_buffer);
 		speech_strobe_state = state;
-	}
+	} };
 	
 	
-	static READ_HANDLER( speech_ready_r )
+	public static ReadHandlerPtr speech_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (!tms5220_ready_r()) << 7;
-	}
+	} };
 	
 	
 	
@@ -331,17 +331,17 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static WRITE_HANDLER( nvram_data_w )
+	public static WriteHandlerPtr nvram_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (nvram_enabled)
 			generic_nvram[offset] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( nvram_enable_w )
+	public static WriteHandlerPtr nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nvram_enabled = ~offset & 1;
-	}
+	} };
 	
 	
 	

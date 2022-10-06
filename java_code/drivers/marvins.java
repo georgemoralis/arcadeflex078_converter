@@ -129,30 +129,30 @@ public class marvins
 		sound_cpu_busy = 0;
 	}
 	
-	static WRITE_HANDLER( sound_command_w )
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_cpu_busy = snk_sound_busy_bit;
 		soundlatch_w(0, data);
 		cpu_set_irq_line(2, 0, HOLD_LINE);
-	}
+	} };
 	
-	static READ_HANDLER( sound_command_r )
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		sound_cpu_busy = 0;
 		return(soundlatch_r(0));
-	}
+	} };
 	
-	static READ_HANDLER( sound_nmi_ack_r )
+	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
-	}
+	} };
 	
 	/* this input port has one of its bits mapped to sound CPU status */
-	static READ_HANDLER( marvins_port_0_r )
+	public static ReadHandlerPtr marvins_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(input_port_0_r(0) | sound_cpu_busy);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem_sound[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

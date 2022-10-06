@@ -77,7 +77,7 @@ public class lwings
 		return avengers_adpcm;
 	}
 	
-	static WRITE_HANDLER( lwings_bankswitch_w )
+	public static WriteHandlerPtr lwings_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM;
 		int bank;
@@ -96,7 +96,7 @@ public class lwings
 		/* bits 6 and 7 are coin counters */
 		coin_counter_w(1,data & 0x40);
 		coin_counter_w(0,data & 0x80);
-	}
+	} };
 	
 	static INTERRUPT_GEN( lwings_interrupt )
 	{
@@ -112,7 +112,7 @@ public class lwings
 			nmi_line_pulse();
 	}
 	
-	static WRITE_HANDLER( avengers_protection_w )
+	public static WriteHandlerPtr avengers_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int pc = activecpu_get_pc();
 	
@@ -137,12 +137,12 @@ public class lwings
 			avengers_soundstate = 0x80;
 			soundlatch_w( 0, data );
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER( avengers_prot_bank_w )
+	public static WriteHandlerPtr avengers_prot_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		avengers_palette_pen = data*64;
-	}
+	} };
 	
 	static int avengers_fetch_paldata( void )
 	{
@@ -226,7 +226,7 @@ public class lwings
 		return result;
 	}
 	
-	static READ_HANDLER( avengers_protection_r )
+	public static ReadHandlerPtr avengers_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		const int xpos[8] = { 10, 7,  0, -7, -10, -7,   0,  7 };
 		const int ypos[8] = {  0, 7, 10,  7,   0, -7, -10, -7 };
@@ -260,22 +260,22 @@ public class lwings
 			}
 		}
 		return best_dir<<5;
-	}
+	} };
 	
-	static READ_HANDLER( avengers_soundlatch2_r )
+	public static ReadHandlerPtr avengers_soundlatch2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t data = *avengers_soundlatch2 | avengers_soundstate;
 		avengers_soundstate = 0;
 		return(data);
-	}
+	} };
 	
-	static WRITE_HANDLER( msm5205_w )
+	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		MSM5205_reset_w(offset,(data>>7)&1);
 		MSM5205_data_w(offset,data);
 		MSM5205_vclk_w(offset,1);
 		MSM5205_vclk_w(offset,0);
-	}
+	} };
 	
 	public static Memory_ReadAddress avengers_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

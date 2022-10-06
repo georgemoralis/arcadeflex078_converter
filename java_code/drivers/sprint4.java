@@ -115,13 +115,13 @@ public class sprint4
 	}
 	
 	
-	static READ_HANDLER( sprint4_wram_r )
+	public static ReadHandlerPtr sprint4_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sprint4_video_ram[0x380 + offset % 0x80];
-	}
+	} };
 	
 	
-	static READ_HANDLER( sprint4_analog_r )
+	public static ReadHandlerPtr sprint4_analog_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int n = (offset >> 1) & 3;
 	
@@ -137,16 +137,16 @@ public class sprint4
 		}
 	
 		return val > analog ? 0x80 : 0x00;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sprint4_coin_r )
+	public static ReadHandlerPtr sprint4_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(1) << ((offset & 7) ^ 7)) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sprint4_gas_r )
+	public static ReadHandlerPtr sprint4_gas_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(0);
 	
@@ -156,51 +156,51 @@ public class sprint4
 		if (sprint4_collision[3]) val |= 0x80;
 	
 		return (val << ((offset & 7) ^ 7)) & 0x80;
-	}
+	} };
 	
 	
-	static READ_HANDLER( sprint4_dip_r )
+	public static ReadHandlerPtr sprint4_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (readinputport(4) >> (2 * (offset & 3))) & 3;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint4_wram_w )
+	public static WriteHandlerPtr sprint4_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sprint4_video_ram[0x380 + offset % 0x80] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint4_collision_reset_w )
+	public static WriteHandlerPtr sprint4_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sprint4_collision[(offset >> 1) & 3] = 0;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint4_analog_w )
+	public static WriteHandlerPtr sprint4_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		analog = data & 15;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint4_lamp_w )
+	public static WriteHandlerPtr sprint4_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status((offset >> 1) & 3, offset & 1);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER( sprint4_attract_w )
+	public static WriteHandlerPtr sprint4_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound */
-	}
-	static WRITE_HANDLER( sprint4_crash_w )
+	} };
+	public static WriteHandlerPtr sprint4_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound */
-	}
-	static WRITE_HANDLER( sprint4_skid_w )
+	} };
+	public static WriteHandlerPtr sprint4_skid_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* sound */
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={
