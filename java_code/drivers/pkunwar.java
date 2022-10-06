@@ -18,7 +18,6 @@ public class pkunwar
 	
 	
 	PALETTE_INIT( nova2001 );
-	WRITE_HANDLER( pkunwar_flipscreen_w );
 	VIDEO_UPDATE( pkunwar );
 	
 	

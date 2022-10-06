@@ -24,12 +24,7 @@ public class timelimt
 	extern PALETTE_INIT( timelimt );
 	extern VIDEO_UPDATE( timelimt );
 	
-	extern WRITE_HANDLER( timelimt_videoram_w );
-	extern WRITE_HANDLER( timelimt_bg_videoram_w );
-	extern WRITE_HANDLER( timelimt_scroll_y_w );
-	extern WRITE_HANDLER( timelimt_scroll_x_msb_w );
-	extern WRITE_HANDLER( timelimt_scroll_x_lsb_w );
-	
+	extern extern extern extern extern 
 	extern data8_t *timelimt_bg_videoram;
 	extern size_t timelimt_bg_videoram_size;
 	

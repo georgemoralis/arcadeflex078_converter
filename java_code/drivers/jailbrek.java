@@ -30,9 +30,7 @@ public class jailbrek
 	extern UINT8 *jailbrek_scroll_x;
 	extern UINT8 *jailbrek_scroll_dir;
 	
-	extern WRITE_HANDLER( jailbrek_videoram_w );
-	extern WRITE_HANDLER( jailbrek_colorram_w );
-	
+	extern extern 
 	extern PALETTE_INIT( jailbrek );
 	extern VIDEO_START( jailbrek );
 	extern VIDEO_UPDATE( jailbrek );

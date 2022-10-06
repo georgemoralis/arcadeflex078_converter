@@ -30,16 +30,8 @@ package drivers;
 public class dynduke
 {
 	
-	READ_HANDLER( dynduke_background_r );
-	READ_HANDLER( dynduke_foreground_r );
-	WRITE_HANDLER( dynduke_background_w );
-	WRITE_HANDLER( dynduke_foreground_w );
-	WRITE_HANDLER( dynduke_text_w );
-	WRITE_HANDLER( dynduke_gfxbank_w );
 	VIDEO_START( dynduke );
-	WRITE_HANDLER( dynduke_control_w );
 	VIDEO_UPDATE( dynduke );
-	WRITE_HANDLER( dynduke_paletteram_w );
 	
 	static unsigned char *dynduke_shared_ram;
 	extern unsigned char *dynduke_back_data,*dynduke_fore_data,*dynduke_scroll_ram,*dynduke_control_ram;

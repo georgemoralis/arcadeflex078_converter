@@ -169,6 +169,39 @@ public class convertMame {
                     Convertor.inpos = i;
                     break;
                 }
+                case 'W':
+                {
+                    i = Convertor.inpos;
+                    if (sUtil.getToken("WRITE_HANDLER(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        }
+                    }
+                    Convertor.inpos = i;
+                    break;
+                }
+                case 'R':
+                {
+                    i = Convertor.inpos;
+                    if (sUtil.getToken("READ_HANDLER(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        }
+                    }
+                    Convertor.inpos = i;
+                    break;
+                }
+                    
                 case '{': {
                     if (type == MEMORY_READ8) {
                         i3++;

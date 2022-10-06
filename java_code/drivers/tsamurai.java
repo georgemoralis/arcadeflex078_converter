@@ -50,18 +50,9 @@ package drivers;
 public class tsamurai
 {
 	
-	WRITE_HANDLER( vsgongf_color_w );
 	
-	WRITE_HANDLER( tsamurai_bgcolor_w );
-	WRITE_HANDLER( tsamurai_textbank1_w );
-	WRITE_HANDLER( tsamurai_textbank2_w );
 	
-	WRITE_HANDLER( tsamurai_scrolly_w );
-	WRITE_HANDLER( tsamurai_scrollx_w );
 	VIDEO_UPDATE( tsamurai );
-	WRITE_HANDLER( tsamurai_bg_videoram_w );
-	WRITE_HANDLER( tsamurai_fg_videoram_w );
-	WRITE_HANDLER( tsamurai_fg_colorram_w );
 	extern VIDEO_START( tsamurai );
 	extern unsigned char *tsamurai_videoram;
 	

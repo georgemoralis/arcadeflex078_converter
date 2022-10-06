@@ -66,14 +66,10 @@ public class thepit
 	
 	extern unsigned char *thepit_attributesram;
 	extern unsigned char *intrepid_sprite_bank_select;
-	WRITE_HANDLER( thepit_attributes_w );
 	
 	PALETTE_INIT( thepit );
 	PALETTE_INIT( suprmous );
 	VIDEO_UPDATE( thepit );
-	READ_HANDLER( thepit_input_port_0_r );
-	WRITE_HANDLER( thepit_sound_enable_w );
-	WRITE_HANDLER( intrepid_graphics_bank_select_w );
 	
 	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

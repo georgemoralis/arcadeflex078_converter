@@ -32,15 +32,8 @@ public class redclash
 {
 	
 	
-	extern WRITE_HANDLER( redclash_videoram_w );
-	extern WRITE_HANDLER( redclash_gfxbank_w );
-	extern WRITE_HANDLER( redclash_flipscreen_w );
-	
-	extern WRITE_HANDLER( redclash_star0_w );
-	extern WRITE_HANDLER( redclash_star1_w );
-	extern WRITE_HANDLER( redclash_star2_w );
-	extern WRITE_HANDLER( redclash_star_reset_w );
-	
+	extern extern extern 
+	extern extern extern extern 
 	extern PALETTE_INIT( redclash );
 	extern VIDEO_START( redclash );
 	extern VIDEO_UPDATE( redclash );

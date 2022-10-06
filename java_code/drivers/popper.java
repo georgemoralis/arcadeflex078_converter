@@ -90,13 +90,6 @@ public class popper
 	extern data8_t *popper_videoram, *popper_attribram, *popper_ol_videoram, *popper_ol_attribram, *popper_spriteram;
 	extern size_t popper_spriteram_size;
 	
-	WRITE_HANDLER( popper_videoram_w );
-	WRITE_HANDLER( popper_attribram_w );
-	WRITE_HANDLER( popper_ol_videoram_w );
-	WRITE_HANDLER( popper_ol_attribram_w );
-	WRITE_HANDLER( popper_flipscreen_w );
-	WRITE_HANDLER( popper_e002_w );
-	WRITE_HANDLER( popper_gfx_bank_w );
 	
 	PALETTE_INIT( popper );
 	VIDEO_START( popper );

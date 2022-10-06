@@ -76,8 +76,6 @@ public class suna8
 	
 	/* Functions defined in vidhrdw: */
 	
-	WRITE_HANDLER( suna8_spriteram_w );			// for debug
-	WRITE_HANDLER( suna8_banked_spriteram_w );	// for debug
 	
 	VIDEO_START( suna8 );
 	VIDEO_UPDATE( suna8 );

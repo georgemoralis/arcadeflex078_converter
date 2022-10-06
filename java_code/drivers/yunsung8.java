@@ -44,12 +44,9 @@ public class yunsung8
 	
 	/* Functions defined in vidhrdw: */
 	
-	WRITE_HANDLER( yunsung8_videobank_w );
 	
 	READ_HANDLER ( yunsung8_videoram_r );
-	WRITE_HANDLER( yunsung8_videoram_w );
 	
-	WRITE_HANDLER( yunsung8_flipscreen_w );
 	
 	VIDEO_START( yunsung8 );
 	VIDEO_UPDATE( yunsung8 );

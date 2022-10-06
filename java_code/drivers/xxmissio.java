@@ -27,16 +27,8 @@ public class xxmissio
 	static UINT8 xxmissio_status;
 	
 	
-	WRITE_HANDLER( xxmissio_scroll_x_w );
-	WRITE_HANDLER( xxmissio_scroll_y_w );
-	WRITE_HANDLER( xxmissio_flipscreen_w );
 	
-	READ_HANDLER( xxmissio_videoram_r );
-	WRITE_HANDLER( xxmissio_videoram_w );
-	READ_HANDLER( xxmissio_fgram_r );
-	WRITE_HANDLER( xxmissio_fgram_w );
 	
-	WRITE_HANDLER( xxmissio_paletteram_w );
 	
 	WRITE_HANDLER( shared_workram_w )
 	{

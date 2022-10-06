@@ -157,31 +157,14 @@ public class gottlieb
 	
 	extern UINT8 *gottlieb_charram;
 	
-	extern WRITE_HANDLER( gottlieb_videoram_w );
-	extern WRITE_HANDLER( gottlieb_charram_w );
-	extern WRITE_HANDLER( gottlieb_video_outputs_w );
-	extern WRITE_HANDLER( usvsthem_video_outputs_w );
-	extern WRITE_HANDLER( gottlieb_paletteram_w );
-	
+	extern extern extern extern extern 
 	extern VIDEO_START( gottlieb );
 	extern VIDEO_UPDATE( gottlieb );
 	
-	extern WRITE_HANDLER( gottlieb_sh_w );
-	
+	extern 
 	extern UINT8 *riot_ram;
-	extern READ_HANDLER( riot_ram_r );
-	extern READ_HANDLER( gottlieb_riot_r );
-	extern WRITE_HANDLER( riot_ram_w );
-	extern WRITE_HANDLER( gottlieb_riot_w );
-	extern WRITE_HANDLER( gottlieb_speech_w );
-	extern WRITE_HANDLER( gottlieb_speech_clock_DAC_w );
-	extern void gottlieb_sound_init(void);
-	extern READ_HANDLER( stooges_sound_input_r );
-	extern WRITE_HANDLER( stooges_8910_latch_w );
-	extern WRITE_HANDLER( stooges_sound_control_w );
-	extern WRITE_HANDLER( gottlieb_nmi_rate_w );
-	extern WRITE_HANDLER( gottlieb_cause_dac_nmi_w );
-	
+	extern extern extern extern extern extern extern void gottlieb_sound_init(void);
+	extern extern extern extern extern 
 	
 	static UINT8 *audiobuffer_region;
 	

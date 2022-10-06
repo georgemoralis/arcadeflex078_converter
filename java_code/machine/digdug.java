@@ -24,7 +24,6 @@ public class digdug
 	
 	static void *nmi_timer;
 	
-	WRITE_HANDLER( digdug_halt_w );
 	void digdug_nmi_generate (int param);
 	
 	

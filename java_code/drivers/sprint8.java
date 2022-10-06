@@ -17,8 +17,7 @@ public class sprint8
 	extern VIDEO_START( sprint8 );
 	extern VIDEO_UPDATE( sprint8 );
 	
-	extern WRITE_HANDLER( sprint8_video_ram_w );
-	
+	extern 
 	extern UINT8* sprint8_video_ram;
 	extern UINT8* sprint8_pos_h_ram;
 	extern UINT8* sprint8_pos_v_ram;

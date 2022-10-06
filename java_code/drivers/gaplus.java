@@ -23,38 +23,17 @@ public class gaplus
 	extern unsigned char *mappy_soundregs;
 	
 	/* shared memory functions */
-	READ_HANDLER( gaplus_sharedram_r );
-	READ_HANDLER( gaplus_snd_sharedram_r );
-	WRITE_HANDLER( gaplus_sharedram_w );
-	WRITE_HANDLER( gaplus_snd_sharedram_w );
 	
 	/* custom IO chips functions */
-	WRITE_HANDLER( gaplus_customio_1_w );
-	WRITE_HANDLER( gaplus_customio_2_w );
-	WRITE_HANDLER( gaplus_customio_3_w );
-	READ_HANDLER( gaplus_customio_1_r );
-	READ_HANDLER( gaplus_customio_2_r );
-	READ_HANDLER( gaplus_customio_3_r );
-	READ_HANDLER( gapluso_customio_1_r );
-	READ_HANDLER( gapluso_customio_2_r );
-	READ_HANDLER( gapluso_customio_3_r );
-	READ_HANDLER( gaplusa_customio_1_r );
-	READ_HANDLER( gaplusa_customio_2_r );
-	READ_HANDLER( gaplusa_customio_3_r );
 	
 	extern INTERRUPT_GEN( gaplus_interrupt_1 );
-	WRITE_HANDLER( gaplus_reset_2_3_w );
 	extern INTERRUPT_GEN( gaplus_interrupt_2 );
-	WRITE_HANDLER( gaplus_interrupt_ctrl_2_w );
 	extern INTERRUPT_GEN( gaplus_interrupt_3 );
-	WRITE_HANDLER( gaplus_interrupt_ctrl_3a_w );
-	WRITE_HANDLER( gaplus_interrupt_ctrl_3b_w );
 	
 	extern VIDEO_START( gaplus );
 	extern PALETTE_INIT( gaplus );
 	extern VIDEO_UPDATE( gaplus );
 	extern MACHINE_INIT( gaplus );
-	WRITE_HANDLER( gaplus_starfield_control_w );
 	
 	public static Memory_ReadAddress readmem_cpu1[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -29,13 +29,8 @@ public class kingobox
 	extern UINT8 *kingofb_colorram2;
 	extern UINT8 *kingofb_scroll_y;
 	
-	extern WRITE_HANDLER( kingofb_videoram_w );
-	extern WRITE_HANDLER( kingofb_colorram_w );
-	extern WRITE_HANDLER( kingofb_videoram2_w );
-	extern WRITE_HANDLER( kingofb_colorram2_w );
-	
-	extern WRITE_HANDLER( kingofb_f800_w );
-	
+	extern extern extern extern 
+	extern 
 	extern PALETTE_INIT( kingofb );
 	extern VIDEO_START( kingofb );
 	extern VIDEO_UPDATE( kingofb );

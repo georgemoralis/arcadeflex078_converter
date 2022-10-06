@@ -21,10 +21,7 @@ public class strnskil
 	
 	/****************************************************************************/
 	
-	extern WRITE_HANDLER( strnskil_videoram_w );
-	extern WRITE_HANDLER( strnskil_scroll_x_w );
-	extern WRITE_HANDLER( strnskil_scrl_ctrl_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( strnskil );
 	extern VIDEO_START( strnskil );
 	extern VIDEO_UPDATE( strnskil );

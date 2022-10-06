@@ -82,14 +82,6 @@ public class sengokmj
 	extern data8_t *bg_vram,*md_vram,*tx_vram,*fg_vram;
 	static UINT8 sengokumj_mux_data;
 	
-	READ_HANDLER( sengoku_bg_vram_r );
-	READ_HANDLER( sengoku_fg_vram_r );
-	READ_HANDLER( sengoku_md_vram_r );
-	READ_HANDLER( sengoku_tx_vram_r );
-	WRITE_HANDLER( sengoku_bg_vram_w );
-	WRITE_HANDLER( sengoku_fg_vram_w );
-	WRITE_HANDLER( sengoku_md_vram_w );
-	WRITE_HANDLER( sengoku_tx_vram_w );
 	VIDEO_START( sengokmj );
 	VIDEO_UPDATE( sengokmj );
 	

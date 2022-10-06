@@ -52,23 +52,7 @@ public class nbmj8688
 	VIDEO_START( mbmj8688_pure_16bit );
 	VIDEO_START( mbmj8688_pure_16bit_LCD );
 	
-	WRITE_HANDLER( nbmj8688_color_lookup_w );
-	WRITE_HANDLER( nbmj8688_blitter_w );
-	WRITE_HANDLER( mjsikaku_gfxflag1_w );
-	WRITE_HANDLER( mjsikaku_gfxflag2_w );
-	WRITE_HANDLER( mjsikaku_gfxflag3_w );
-	WRITE_HANDLER( mjsikaku_scrolly_w );
-	WRITE_HANDLER( mjsikaku_romsel_w );
-	WRITE_HANDLER( secolove_romsel_w );
-	WRITE_HANDLER( seiha_romsel_w );
-	WRITE_HANDLER( crystal2_romsel_w );
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_0_instr_w );
-	WRITE_HANDLER( nbmj8688_HD61830B_0_data_w );
-	WRITE_HANDLER( nbmj8688_HD61830B_1_instr_w );
-	WRITE_HANDLER( nbmj8688_HD61830B_1_data_w );
-	WRITE_HANDLER( nbmj8688_HD61830B_both_instr_w );
-	WRITE_HANDLER( nbmj8688_HD61830B_both_data_w );
 	
 	
 	static DRIVER_INIT( mjsikaku )

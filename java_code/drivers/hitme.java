@@ -32,7 +32,6 @@ public class hitme
 	static const float tock = .0189;
 	data8_t *hitme_vidram;
 	
-	WRITE_HANDLER( hitme_vidram_w );
 	VIDEO_START (hitme);
 	VIDEO_START (brickyrd);
 	VIDEO_UPDATE (hitme);

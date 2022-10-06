@@ -19,14 +19,7 @@ public class ssozumo
 	extern UINT8 *ssozumo_videoram2;
 	extern UINT8 *ssozumo_colorram2;
 	
-	extern WRITE_HANDLER( ssozumo_videoram_w );
-	extern WRITE_HANDLER( ssozumo_colorram_w );
-	extern WRITE_HANDLER( ssozumo_videoram2_w );
-	extern WRITE_HANDLER( ssozumo_colorram2_w );
-	extern WRITE_HANDLER( ssozumo_paletteram_w );
-	extern WRITE_HANDLER( ssozumo_scroll_w );
-	extern WRITE_HANDLER( ssozumo_flipscreen_w );
-	
+	extern extern extern extern extern extern extern 
 	extern PALETTE_INIT( ssozumo );
 	extern VIDEO_START( ssozumo );
 	extern VIDEO_UPDATE( ssozumo );

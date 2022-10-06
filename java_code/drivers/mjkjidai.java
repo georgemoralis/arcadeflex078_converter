@@ -35,8 +35,6 @@ public class mjkjidai
 	
 	VIDEO_START( mjkjidai );
 	VIDEO_UPDATE( mjkjidai );
-	WRITE_HANDLER( mjkjidai_videoram_w );
-	WRITE_HANDLER( mjkjidai_ctrl_w );
 	
 	
 	

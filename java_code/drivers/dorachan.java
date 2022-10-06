@@ -19,7 +19,6 @@ public class dorachan
 {
 	extern int dorachan_ctrl;
 	
-	WRITE_HANDLER( dorachan_videoram_w );
 	
 	public static ReadHandlerPtr dorachan_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

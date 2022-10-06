@@ -106,22 +106,7 @@ public class cvs
 	extern unsigned char *s2636_2_ram;
 	extern unsigned char *s2636_3_ram;
 	
-	WRITE_HANDLER( cvs_videoram_w );
-	WRITE_HANDLER( cvs_bullet_w );
-	WRITE_HANDLER( cvs_2636_1_w );
-	WRITE_HANDLER( cvs_2636_2_w );
-	WRITE_HANDLER( cvs_2636_3_w );
-	WRITE_HANDLER( cvs_scroll_w );
-	WRITE_HANDLER( cvs_video_fx_w );
 	
-	READ_HANDLER( cvs_collision_r );
-	READ_HANDLER( cvs_collision_clear );
-	READ_HANDLER( cvs_videoram_r );
-	READ_HANDLER( cvs_bullet_r );
-	READ_HANDLER( cvs_2636_1_r );
-	READ_HANDLER( cvs_2636_2_r );
-	READ_HANDLER( cvs_2636_3_r );
-	READ_HANDLER( cvs_character_mode_r );
 	
 	/***************************************************************************
 		S2650 Memory Mirroring calls

@@ -18,12 +18,7 @@ public class shaolins
 	
 	UINT8 shaolins_nmi_enable;
 	
-	extern WRITE_HANDLER( shaolins_videoram_w );
-	extern WRITE_HANDLER( shaolins_colorram_w );
-	extern WRITE_HANDLER( shaolins_palettebank_w );
-	extern WRITE_HANDLER( shaolins_scroll_w );
-	extern WRITE_HANDLER( shaolins_nmi_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( shaolins );
 	extern VIDEO_START( shaolins );
 	extern VIDEO_UPDATE( shaolins );

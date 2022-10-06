@@ -74,11 +74,6 @@ public class gberet
 	extern unsigned char *gberet_videoram,*gberet_colorram;
 	extern unsigned char *gberet_spritebank;
 	extern unsigned char *gberet_scrollram;
-	WRITE_HANDLER( gberet_videoram_w );
-	WRITE_HANDLER( gberet_colorram_w );
-	WRITE_HANDLER( gberet_e044_w );
-	WRITE_HANDLER( gberet_scroll_w );
-	WRITE_HANDLER( gberetb_scroll_w );
 	PALETTE_INIT( gberet );
 	VIDEO_START( gberet );
 	VIDEO_UPDATE( gberet );

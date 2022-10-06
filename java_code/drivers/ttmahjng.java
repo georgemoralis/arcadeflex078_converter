@@ -19,14 +19,6 @@ public class ttmahjng
 	
 	PALETTE_INIT( ttmahjng );
 	VIDEO_START( ttmahjng );
-	WRITE_HANDLER( ttmahjng_out0_w );
-	WRITE_HANDLER( ttmahjng_out1_w );
-	WRITE_HANDLER( ttmahjng_videoram1_w );
-	WRITE_HANDLER( ttmahjng_videoram2_w );
-	READ_HANDLER( ttmahjng_videoram1_r );
-	READ_HANDLER( ttmahjng_videoram2_r );
-	WRITE_HANDLER( ttmahjng_sharedram_w );
-	READ_HANDLER( ttmahjng_sharedram_r );
 	VIDEO_UPDATE( ttmahjng );
 	
 	

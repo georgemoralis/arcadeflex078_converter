@@ -209,57 +209,24 @@ public class xevious
 	
 	/* XEVIOUS */
 	extern unsigned char *xevious_sharedram;
-	READ_HANDLER( xevious_sharedram_r );
-	WRITE_HANDLER( xevious_sharedram_w );
-	READ_HANDLER( xevious_dsw_r );
-	WRITE_HANDLER( xevious_interrupt_enable_1_w );
-	WRITE_HANDLER( xevious_interrupt_enable_2_w );
-	WRITE_HANDLER( xevious_interrupt_enable_3_w );
-	WRITE_HANDLER( xevious_bs_w );
-	READ_HANDLER( xevious_bb_r );
-	READ_HANDLER( xevious_customio_r );
-	READ_HANDLER( xevious_customio_data_r );
-	WRITE_HANDLER( xevious_customio_w );
-	WRITE_HANDLER( xevious_customio_data_w );
-	WRITE_HANDLER( xevious_halt_w );
 	INTERRUPT_GEN( xevious_interrupt_1 );
 	INTERRUPT_GEN( xevious_interrupt_2 );
 	INTERRUPT_GEN( xevious_interrupt_3 );
 	MACHINE_INIT( xevious );
 	
-	WRITE_HANDLER( xevious_vh_latch_w );
 	
 	extern unsigned char *xevious_fg_videoram,*xevious_fg_colorram;
 	extern unsigned char *xevious_bg_videoram,*xevious_bg_colorram;
-	WRITE_HANDLER( xevious_fg_videoram_w );
-	WRITE_HANDLER( xevious_fg_colorram_w );
-	WRITE_HANDLER( xevious_bg_videoram_w );
-	WRITE_HANDLER( xevious_bg_colorram_w );
 	VIDEO_START( xevious );
 	PALETTE_INIT( xevious );
 	VIDEO_UPDATE( xevious );
 	
-	WRITE_HANDLER( pengo_sound_w );
 	extern unsigned char *pengo_soundregs;
 	
 	
 	/* BATTLES */
 	extern unsigned char *battles_sharedram;
-	READ_HANDLER( battles_sharedram_r );
-	READ_HANDLER( battles_customio0_r );
-	READ_HANDLER( battles_customio_data0_r );
-	READ_HANDLER( battles_customio3_r );
-	READ_HANDLER( battles_customio_data3_r );
-	READ_HANDLER( battles_input_port_r );
 	
-	WRITE_HANDLER( battles_halt_w );
-	WRITE_HANDLER( battles_sharedram_w );
-	WRITE_HANDLER( battles_customio0_w );
-	WRITE_HANDLER( battles_customio_data0_w );
-	WRITE_HANDLER( battles_customio3_w );
-	WRITE_HANDLER( battles_customio_data3_w );
-	WRITE_HANDLER( battles_CPU4_4000_w );
-	WRITE_HANDLER( battles_noise_sound_w );
 	
 	INTERRUPT_GEN( battles_interrupt_4 );
 	

@@ -70,13 +70,7 @@ public class exprraid
 {
 	
 	
-	extern WRITE_HANDLER( exprraid_videoram_w );
-	extern WRITE_HANDLER( exprraid_colorram_w );
-	extern WRITE_HANDLER( exprraid_flipscreen_w );
-	extern WRITE_HANDLER( exprraid_bgselect_w );
-	extern WRITE_HANDLER( exprraid_scrollx_w );
-	extern WRITE_HANDLER( exprraid_scrolly_w );
-	
+	extern extern extern extern extern extern 
 	extern VIDEO_START( exprraid );
 	extern VIDEO_UPDATE( exprraid );
 	

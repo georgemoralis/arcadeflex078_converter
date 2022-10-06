@@ -175,15 +175,8 @@ public class dkong
 	static int t[2] = { 1,1 };
 	
 	
-	extern WRITE_HANDLER( radarscp_grid_enable_w );
-	extern WRITE_HANDLER( radarscp_grid_color_w );
-	extern WRITE_HANDLER( dkong_flipscreen_w );
-	extern WRITE_HANDLER( dkongjr_gfxbank_w );
-	extern WRITE_HANDLER( dkong3_gfxbank_w );
-	extern WRITE_HANDLER( dkong_palettebank_w );
-	
-	extern WRITE_HANDLER( dkong_videoram_w );
-	
+	extern extern extern extern extern extern 
+	extern 
 	extern PALETTE_INIT( dkong );
 	extern PALETTE_INIT( dkong3 );
 	extern VIDEO_START( dkong );
@@ -192,18 +185,8 @@ public class dkong
 	extern VIDEO_UPDATE( pestplce );
 	extern VIDEO_UPDATE( spclforc );
 	
-	extern WRITE_HANDLER( dkong_sh_w );
-	extern WRITE_HANDLER( dkongjr_sh_death_w );
-	extern WRITE_HANDLER( dkongjr_sh_drop_w );
-	extern WRITE_HANDLER( dkongjr_sh_roar_w );
-	extern WRITE_HANDLER( dkongjr_sh_jump_w );
-	extern WRITE_HANDLER( dkongjr_sh_walk_w );
-	extern WRITE_HANDLER( dkongjr_sh_climb_w );
-	extern WRITE_HANDLER( dkongjr_sh_land_w );
-	extern WRITE_HANDLER( dkongjr_sh_snapjaw_w );
-	
-	extern WRITE_HANDLER( dkong_sh1_w );
-	
+	extern extern extern extern extern extern extern extern extern 
+	extern 
 	#define ACTIVELOW_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | ((D ^ 1) << A))
 	
 	
@@ -217,8 +200,6 @@ public class dkong
 	WRITE_HANDLER( dkongjr_sh_test4_w )      { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); }
 	WRITE_HANDLER( dkongjr_sh_tuneselect_w ) { soundlatch_w(offset,data); }
 	
-	READ_HANDLER( hunchbks_mirror_r );
-	WRITE_HANDLER( hunchbks_mirror_w );
 	
 	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
 	public static ReadHandlerPtr dkong_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[2]; } };
@@ -238,9 +219,7 @@ public class dkong
 	} };
 	
 	MACHINE_INIT( strtheat );
-	READ_HANDLER( strtheat_decrypt_rom );
-	//WRITE_HANDLER( strtheat_writeport );
-	
+	//
 	
 	
 	static double envelope,tt;

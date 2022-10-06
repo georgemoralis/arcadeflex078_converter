@@ -195,9 +195,6 @@ public class topspeed
 	VIDEO_START( topspeed );
 	VIDEO_UPDATE( topspeed );
 	
-	WRITE_HANDLER( rastan_adpcm_trigger_w );
-	WRITE_HANDLER( rastan_c000_w );
-	WRITE_HANDLER( rastan_d000_w );
 	
 	static UINT16 cpua_ctrl = 0xff;
 	static int ioc220_port = 0;

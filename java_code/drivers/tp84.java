@@ -93,17 +93,7 @@ public class tp84
 	
 	extern UINT8 *tp84_videoram2, *tp84_colorram2;
 	
-	extern WRITE_HANDLER( tp84_videoram_w );
-	extern WRITE_HANDLER( tp84_colorram_w );
-	extern WRITE_HANDLER( tp84_videoram2_w );
-	extern WRITE_HANDLER( tp84_colorram2_w );
-	extern WRITE_HANDLER( tp84_scroll_x_w );
-	extern WRITE_HANDLER( tp84_scroll_y_w );
-	extern WRITE_HANDLER( tp84_flipscreen_x_w );
-	extern WRITE_HANDLER( tp84_flipscreen_y_w );
-	extern WRITE_HANDLER( tp84_col0_w );
-	extern READ_HANDLER( tp84_scanline_r );
-	
+	extern extern extern extern extern extern extern extern extern extern 
 	extern PALETTE_INIT( tp84 );
 	extern VIDEO_START( tp84 );
 	extern VIDEO_UPDATE( tp84 );

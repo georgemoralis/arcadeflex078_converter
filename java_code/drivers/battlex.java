@@ -50,12 +50,7 @@ public class battlex
 {
 	
 	
-	extern WRITE_HANDLER( battlex_palette_w );
-	extern WRITE_HANDLER( battlex_videoram_w );
-	extern WRITE_HANDLER( battlex_scroll_x_lsb_w );
-	extern WRITE_HANDLER( battlex_scroll_x_msb_w );
-	extern WRITE_HANDLER( battlex_flipscreen_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( battlex );
 	extern VIDEO_START( battlex );
 	extern VIDEO_UPDATE( battlex );

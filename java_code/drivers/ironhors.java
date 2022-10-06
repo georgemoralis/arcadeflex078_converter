@@ -19,12 +19,7 @@ public class ironhors
 	extern UINT8 *ironhors_scroll;
 	static UINT8 *ironhors_interrupt_enable;
 	
-	extern WRITE_HANDLER( ironhors_videoram_w );
-	extern WRITE_HANDLER( ironhors_colorram_w );
-	extern WRITE_HANDLER( ironhors_palettebank_w );
-	extern WRITE_HANDLER( ironhors_charbank_w );
-	extern WRITE_HANDLER( ironhors_flipscreen_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( ironhors );
 	extern VIDEO_START( ironhors );
 	extern VIDEO_UPDATE( ironhors );

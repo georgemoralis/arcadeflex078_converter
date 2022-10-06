@@ -26,14 +26,8 @@ public class gomoku
 	VIDEO_START(gomoku);
 	VIDEO_UPDATE(gomoku);
 	
-	WRITE_HANDLER( gomoku_videoram_w );
-	WRITE_HANDLER( gomoku_colorram_w );
-	WRITE_HANDLER( gomoku_bgram_w );
-	WRITE_HANDLER( gomoku_flipscreen_w );
-	WRITE_HANDLER( gomoku_bg_dispsw_w );
 	
 	extern data8_t *gomoku_soundregs;
-	WRITE_HANDLER( gomoku_sound_w );
 	
 	extern data8_t *gomoku_videoram;
 	extern data8_t *gomoku_colorram;

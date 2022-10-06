@@ -38,7 +38,6 @@ public class hyhoo
 	VIDEO_UPDATE( hyhoo );
 	VIDEO_START( hyhoo );
 	
-	WRITE_HANDLER( hyhoo_palette_w );
 	void hyhoo_radrx_w(int data);
 	void hyhoo_radry_w(int data);
 	void hyhoo_sizex_w(int data);

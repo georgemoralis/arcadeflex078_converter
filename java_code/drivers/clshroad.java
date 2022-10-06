@@ -33,9 +33,6 @@ public class clshroad
 	extern data8_t *clshroad_vram_0, *clshroad_vram_1;
 	extern data8_t *clshroad_vregs;
 	
-	WRITE_HANDLER( clshroad_vram_0_w );
-	WRITE_HANDLER( clshroad_vram_1_w );
-	WRITE_HANDLER( clshroad_flipscreen_w );
 	
 	PALETTE_INIT( firebatl );
 	PALETTE_INIT( clshroad );
@@ -46,7 +43,6 @@ public class clshroad
 	extern unsigned char *wiping_soundregs;
 	int wiping_sh_start(const struct MachineSound *msound);
 	void wiping_sh_stop(void);
-	WRITE_HANDLER( wiping_sound_w );
 	
 	
 	

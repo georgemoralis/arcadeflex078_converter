@@ -63,24 +63,6 @@ public class dec8
 	VIDEO_START( gondo );
 	VIDEO_START( garyoret );
 	
-	WRITE_HANDLER( dec8_bac06_0_w );
-	WRITE_HANDLER( dec8_bac06_1_w );
-	WRITE_HANDLER( dec8_pf0_data_w );
-	WRITE_HANDLER( dec8_pf1_data_w );
-	READ_HANDLER( dec8_pf0_data_r );
-	READ_HANDLER( dec8_pf1_data_r );
-	WRITE_HANDLER( srdarwin_videoram_w );
-	WRITE_HANDLER( dec8_scroll1_w );
-	WRITE_HANDLER( dec8_scroll2_w );
-	WRITE_HANDLER( srdarwin_control_w );
-	WRITE_HANDLER( gondo_scroll_w );
-	WRITE_HANDLER( shackled_control_w );
-	WRITE_HANDLER( lastmiss_control_w );
-	WRITE_HANDLER( lastmiss_scrollx_w );
-	WRITE_HANDLER( lastmiss_scrolly_w );
-	WRITE_HANDLER( dec8_bac06_0_w );
-	WRITE_HANDLER( dec8_bac06_1_w );
-	WRITE_HANDLER( dec8_videoram_w );
 	
 	/******************************************************************************/
 	

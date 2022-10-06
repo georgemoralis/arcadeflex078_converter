@@ -32,20 +32,14 @@ public class exctsccr
 {
 	
 	/* from vidhrdw */
-	extern WRITE_HANDLER( exctsccr_videoram_w );
-	extern WRITE_HANDLER( exctsccr_colorram_w );
-	extern WRITE_HANDLER( exctsccr_gfx_bank_w );
-	extern WRITE_HANDLER( exctsccr_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( exctsccr );
 	extern VIDEO_START( exctsccr );
 	extern VIDEO_UPDATE( exctsccr );
 	
 	/* from machine */
 	extern UINT8 *exctsccr_mcu_ram;
-	extern WRITE_HANDLER( exctsccr_mcu_w );
-	extern WRITE_HANDLER( exctsccr_mcu_control_w );
-	
+	extern extern 
 	
 	WRITE_HANDLER( exctsccr_DAC_data_w )
 	{

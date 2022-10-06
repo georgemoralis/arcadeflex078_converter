@@ -29,7 +29,5 @@ enum SEGAPCM_samplerate
 int SEGAPCM_sh_start( const struct MachineSound *msound );
 void SEGAPCM_sh_stop( void );
 
-WRITE_HANDLER( SegaPCM_w );
-READ_HANDLER( SegaPCM_r );
 
 #endif

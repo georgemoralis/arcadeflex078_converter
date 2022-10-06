@@ -49,11 +49,7 @@ public class champbas
 	
 	
 	
-	extern WRITE_HANDLER( champbas_videoram_w );
-	extern WRITE_HANDLER( champbas_colorram_w );
-	extern WRITE_HANDLER( champbas_gfxbank_w );
-	extern WRITE_HANDLER( champbas_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( champbas );
 	extern VIDEO_START( champbas );
 	extern VIDEO_UPDATE( champbas );

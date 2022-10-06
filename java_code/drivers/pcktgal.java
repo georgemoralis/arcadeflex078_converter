@@ -21,9 +21,7 @@ package drivers;
 public class pcktgal
 {
 	
-	extern WRITE_HANDLER( pcktgal_videoram_w );
-	extern WRITE_HANDLER( pcktgal_flipscreen_w );
-	
+	extern extern 
 	extern PALETTE_INIT( pcktgal );
 	extern VIDEO_START( pcktgal );
 	extern VIDEO_UPDATE( pcktgal );

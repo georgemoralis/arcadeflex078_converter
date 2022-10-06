@@ -33,15 +33,11 @@ public class m107
 	#define m107_IRQ_2 ((m107_irq_vectorbase+8)/4) /* Raster interrupt */
 	#define m107_IRQ_3 ((m107_irq_vectorbase+12)/4) /* ??? */
 	
-	WRITE_HANDLER( m107_spritebuffer_w );
 	void m107_vh_raster_partial_refresh(struct mame_bitmap *bitmap,int start_line,int end_line);
 	void m107_screenrefresh(struct mame_bitmap *bitmap,const struct rectangle *clip);
 	VIDEO_UPDATE( m107 );
 	VIDEO_UPDATE( dsoccr );
 	VIDEO_START( m107 );
-	WRITE_HANDLER( m107_control_w );
-	WRITE_HANDLER( m107_vram_w );
-	READ_HANDLER( m107_vram_r );
 	
 	/*****************************************************************************/
 	

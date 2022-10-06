@@ -26,7 +26,6 @@ public class xevious
 	
 	static void *nmi_timer;
 	
-	WRITE_HANDLER( xevious_halt_w );
 	void xevious_nmi_generate (int param);
 	
 	/* namco stick number array */

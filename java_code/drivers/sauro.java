@@ -87,15 +87,7 @@ public class sauro
 	extern UINT8 *tecfri_videoram2;
 	extern UINT8 *tecfri_colorram2;
 	
-	extern WRITE_HANDLER( tecfri_videoram_w );
-	extern WRITE_HANDLER( tecfri_colorram_w );
-	extern WRITE_HANDLER( tecfri_videoram2_w );
-	extern WRITE_HANDLER( tecfri_colorram2_w );
-	extern WRITE_HANDLER( tecfri_scroll_bg_w );
-	extern WRITE_HANDLER( flip_screen_w );
-	extern WRITE_HANDLER( sauro_scroll_fg_w );
-	extern WRITE_HANDLER( trckydoc_spriteram_mirror_w );
-	
+	extern extern extern extern extern extern extern extern 
 	extern VIDEO_START( sauro );
 	extern VIDEO_START( trckydoc );
 	

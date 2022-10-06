@@ -23,11 +23,9 @@ public class m79amb
 	 *
 	 */
 	
-	WRITE_HANDLER( ramtek_videoram_w );
 	
 	INTERRUPT_GEN( invaders_interrupt );
 	void ramtek_sh_update(void);
-	WRITE_HANDLER( ramtek_mask_w );
 	
 	/*
 	 * since these functions aren't used anywhere else, i've made them

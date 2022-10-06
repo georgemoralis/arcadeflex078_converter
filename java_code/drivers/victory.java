@@ -115,13 +115,6 @@ public class victory
 	/* sound driver data & functions */
 	int victory_sh_start(const struct MachineSound *msound);
 	
-	READ_HANDLER( exidy_shriot_r );
-	READ_HANDLER( exidy_sh6840_r );
-	READ_HANDLER( exidy_sh8253_r );
-	WRITE_HANDLER( exidy_shriot_w );
-	WRITE_HANDLER( exidy_sh6840_w );
-	WRITE_HANDLER( exidy_sh8253_w );
-	WRITE_HANDLER( exidy_sfxctrl_w );
 	
 	
 	/* video driver data & functions */
@@ -132,11 +125,6 @@ public class victory
 	VIDEO_UPDATE( victory );
 	INTERRUPT_GEN( victory_vblank_interrupt );
 	
-	READ_HANDLER( victory_video_control_r );
-	WRITE_HANDLER( victory_video_control_w );
-	WRITE_HANDLER( victory_paletteram_w );
-	WRITE_HANDLER( victory_videoram_w );
-	WRITE_HANDLER( victory_charram_w );
 	
 	
 	

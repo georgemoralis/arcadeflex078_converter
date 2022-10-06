@@ -76,10 +76,6 @@ public class geebee
 {
 	
 	/* from machine/geebee.c */
-	READ_HANDLER( geebee_in_r );
-	READ_HANDLER( navalone_in_r );
-	WRITE_HANDLER( geebee_out6_w );
-	WRITE_HANDLER( geebee_out7_w );
 	
 	/* from vidhrdw/geebee.c */
 	extern PALETTE_INIT( geebee );
@@ -92,7 +88,6 @@ public class geebee
 	extern VIDEO_UPDATE( geebee );
 	
 	/* from sndhrdw/geebee.c */
-	WRITE_HANDLER( geebee_sound_w );
 	extern int geebee_sh_start(const struct MachineSound *msound);
 	extern void geebee_sh_stop(void);
 	extern void geebee_sh_update(void);

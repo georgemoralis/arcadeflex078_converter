@@ -119,13 +119,7 @@ public class cloak
 	static UINT8 *cloak_sharedram;
 	static int cloak_nvram_enabled;
 	
-	extern WRITE_HANDLER( cloak_videoram_w );
-	extern WRITE_HANDLER( cloak_paletteram_w );
-	extern WRITE_HANDLER( cloak_clearbmp_w );
-	extern WRITE_HANDLER( graph_processor_w );
-	extern WRITE_HANDLER( cloak_flipscreen_w );
-	extern READ_HANDLER( graph_processor_r );
-	
+	extern extern extern extern extern extern 
 	extern VIDEO_START( cloak );
 	extern VIDEO_UPDATE( cloak );
 	

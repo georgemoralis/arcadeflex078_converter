@@ -27,7 +27,6 @@ public class ojankohs
 	static int ojankoc_screen_refresh;
 	static struct mame_bitmap *ojankoc_tmpbitmap;
 	
-	WRITE_HANDLER( ojankoc_videoram_w );
 	
 	
 	/******************************************************************************

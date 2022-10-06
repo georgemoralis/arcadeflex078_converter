@@ -53,10 +53,6 @@ public class vulgus
 	extern unsigned char *vulgus_bgvideoram;
 	extern unsigned char *vulgus_scroll_low,*vulgus_scroll_high;
 	
-	WRITE_HANDLER( vulgus_fgvideoram_w );
-	WRITE_HANDLER( vulgus_bgvideoram_w );
-	WRITE_HANDLER( vulgus_c804_w );
-	WRITE_HANDLER( vulgus_palette_bank_w );
 	VIDEO_START( vulgus );
 	PALETTE_INIT( vulgus );
 	VIDEO_UPDATE( vulgus );

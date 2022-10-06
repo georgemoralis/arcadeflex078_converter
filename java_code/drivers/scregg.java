@@ -26,11 +26,6 @@ public class scregg
 	VIDEO_START( btime );
 	VIDEO_UPDATE( eggs );
 	
-	READ_HANDLER( btime_mirrorvideoram_r );
-	WRITE_HANDLER( btime_mirrorvideoram_w );
-	READ_HANDLER( btime_mirrorcolorram_r );
-	WRITE_HANDLER( btime_mirrorcolorram_w );
-	WRITE_HANDLER( btime_video_control_w );
 	
 	public static Memory_ReadAddress dommy_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

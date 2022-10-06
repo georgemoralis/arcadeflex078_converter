@@ -114,10 +114,6 @@ public class punchout
 	extern unsigned char *punchout_bigsprite1;
 	extern unsigned char *punchout_bigsprite2;
 	extern unsigned char *punchout_palettebank;
-	WRITE_HANDLER( punchout_videoram2_w );
-	WRITE_HANDLER( punchout_bigsprite1ram_w );
-	WRITE_HANDLER( punchout_bigsprite2ram_w );
-	WRITE_HANDLER( punchout_palettebank_w );
 	VIDEO_START( punchout );
 	VIDEO_START( armwrest );
 	PALETTE_INIT( punchout );

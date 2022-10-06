@@ -32,16 +32,6 @@ public class munchmo
 	
 	PALETTE_INIT( mnchmobl );
 	VIDEO_START( mnchmobl );
-	WRITE_HANDLER( mnchmobl_palette_bank_w );
-	WRITE_HANDLER( mnchmobl_flipscreen_w );
-	READ_HANDLER( mnchmobl_sprite_xpos_r );
-	WRITE_HANDLER( mnchmobl_sprite_xpos_w );
-	READ_HANDLER( mnchmobl_sprite_attr_r );
-	WRITE_HANDLER( mnchmobl_sprite_attr_w );
-	READ_HANDLER( mnchmobl_sprite_tile_r );
-	WRITE_HANDLER( mnchmobl_sprite_tile_w );
-	READ_HANDLER( mnchmobl_videoram_r );
-	WRITE_HANDLER( mnchmobl_videoram_w );
 	VIDEO_UPDATE( mnchmobl );
 	
 	

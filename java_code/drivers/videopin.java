@@ -21,9 +21,7 @@ public class videopin
 	
 	extern UINT8* videopin_video_ram;
 	
-	extern WRITE_HANDLER( videopin_video_ram_w );
-	extern WRITE_HANDLER( videopin_ball_w );
-	
+	extern extern 
 	extern VIDEO_START( videopin );
 	extern VIDEO_UPDATE( videopin );
 	

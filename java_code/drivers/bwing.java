@@ -41,13 +41,7 @@ public class bwing
 	
 	extern struct GfxLayout bwing_tilelayout;
 	
-	extern WRITE_HANDLER( bwing_paletteram_w );
-	extern WRITE_HANDLER( bwing_videoram_w );
-	extern WRITE_HANDLER( bwing_spriteram_w );
-	extern WRITE_HANDLER( bwing_scrollreg_w );
-	extern WRITE_HANDLER( bwing_scrollram_w );
-	extern READ_HANDLER( bwing_scrollram_r );
-	extern VIDEO_START( bwing );
+	extern extern extern extern extern extern extern VIDEO_START( bwing );
 	extern VIDEO_UPDATE( bwing );
 	
 	//****************************************************************************

@@ -43,7 +43,6 @@ public class spcforce
 	
 	extern unsigned char *spcforce_scrollram;
 	
-	WRITE_HANDLER( spcforce_flip_screen_w );
 	VIDEO_UPDATE( spcforce );
 	
 	

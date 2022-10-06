@@ -27,10 +27,7 @@ public class runaway
 	extern UINT8* runaway_video_ram;
 	extern UINT8* runaway_sprite_ram;
 	
-	extern WRITE_HANDLER( runaway_paletteram_w );
-	extern WRITE_HANDLER( runaway_video_ram_w );
-	extern WRITE_HANDLER( runaway_tile_bank_w );
-	
+	extern extern extern 
 	
 	static void interrupt_callback(int scanline)
 	{

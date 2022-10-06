@@ -9,12 +9,7 @@ public class kopunch
 	
 	extern UINT8 *kopunch_videoram2;
 	
-	extern WRITE_HANDLER( kopunch_videoram_w );
-	extern WRITE_HANDLER( kopunch_videoram2_w );
-	extern WRITE_HANDLER( kopunch_scroll_x_w );
-	extern WRITE_HANDLER( kopunch_scroll_y_w );
-	extern WRITE_HANDLER( kopunch_gfxbank_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( kopunch );
 	extern VIDEO_START( kopunch );
 	extern VIDEO_UPDATE( kopunch );

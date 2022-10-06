@@ -70,12 +70,8 @@ public class warpwarp
 	extern unsigned char *warpwarp_bulletsram;
 	PALETTE_INIT( warpwarp );
 	VIDEO_UPDATE( warpwarp );
-	WRITE_HANDLER( warpwarp_flip_screen_w );
 	
 	/* from sndhrdw/warpwarp.c */
-	WRITE_HANDLER( warpwarp_sound_w );
-	WRITE_HANDLER( warpwarp_music1_w );
-	WRITE_HANDLER( warpwarp_music2_w );
 	extern int warpwarp_sh_start(const struct MachineSound *msound);
 	extern void warpwarp_sh_stop(void);
 	extern void warpwarp_sh_update(void);

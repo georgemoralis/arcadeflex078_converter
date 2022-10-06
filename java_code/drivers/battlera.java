@@ -33,14 +33,7 @@ public class battlera
 	VIDEO_START( battlera );
 	INTERRUPT_GEN( battlera_interrupt );
 	
-	READ_HANDLER( HuC6270_register_r );
-	WRITE_HANDLER( HuC6270_register_w );
-	READ_HANDLER( HuC6270_data_r );
-	WRITE_HANDLER( HuC6270_data_w );
-	WRITE_HANDLER( battlera_palette_w );
 	
-	READ_HANDLER( HuC6270_debug_r );
-	WRITE_HANDLER( HuC6270_debug_w );
 	
 	static int control_port_select;
 	

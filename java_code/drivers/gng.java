@@ -30,11 +30,6 @@ public class gng
 	
 	extern unsigned char *gng_fgvideoram;
 	extern unsigned char *gng_bgvideoram;
-	WRITE_HANDLER( gng_fgvideoram_w );
-	WRITE_HANDLER( gng_bgvideoram_w );
-	WRITE_HANDLER( gng_bgscrollx_w );
-	WRITE_HANDLER( gng_bgscrolly_w );
-	WRITE_HANDLER( gng_flipscreen_w );
 	VIDEO_START( gng );
 	VIDEO_UPDATE( gng );
 	VIDEO_EOF( gng );

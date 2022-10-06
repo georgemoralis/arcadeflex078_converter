@@ -66,17 +66,12 @@ public class bagman
 {
 	
 	
-	extern READ_HANDLER( bagman_pal16r6_r );
-	extern MACHINE_INIT( bagman );
-	extern WRITE_HANDLER( bagman_pal16r6_w );
-	
+	extern extern MACHINE_INIT( bagman );
+	extern 
 	
 	extern UINT8 *bagman_video_enable;
 	
-	extern WRITE_HANDLER( bagman_videoram_w );
-	extern WRITE_HANDLER( bagman_colorram_w );
-	extern WRITE_HANDLER( bagman_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( bagman );
 	extern VIDEO_START( bagman );
 	extern VIDEO_UPDATE( bagman );

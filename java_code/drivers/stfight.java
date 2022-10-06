@@ -243,22 +243,10 @@ public class stfight
 	MACHINE_INIT( stfight );
 	INTERRUPT_GEN( stfight_vb_interrupt );
 	INTERRUPT_GEN( stfight_interrupt_1 );
-	READ_HANDLER( stfight_dsw_r );
-	WRITE_HANDLER( stfight_fm_w );
-	WRITE_HANDLER( stfight_voice_w );
-	READ_HANDLER( stfight_coin_r );
-	WRITE_HANDLER( stfight_coin_w );
-	WRITE_HANDLER( stfight_e800_w );
-	READ_HANDLER( stfight_fm_r );
 	void stfight_adpcm_int( int data );
-	WRITE_HANDLER( stfight_adpcm_control_w );
 	
 	// vidhrdw
 	PALETTE_INIT( stfight );
-	WRITE_HANDLER( stfight_text_char_w );
-	WRITE_HANDLER( stfight_text_attr_w );
-	WRITE_HANDLER( stfight_vh_latch_w );
-	WRITE_HANDLER( stfight_sprite_bank_w );
 	VIDEO_START( stfight );
 	VIDEO_UPDATE( stfight );
 	

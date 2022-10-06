@@ -46,15 +46,8 @@ package drivers;
 public class raiden
 {
 	
-	READ_HANDLER( raiden_background_r );
-	READ_HANDLER( raiden_foreground_r );
-	WRITE_HANDLER( raiden_background_w );
-	WRITE_HANDLER( raiden_foreground_w );
-	WRITE_HANDLER( raiden_text_w );
-	WRITE_HANDLER( raidena_text_w );
 	VIDEO_START( raiden );
 	VIDEO_START( raidena );
-	WRITE_HANDLER( raiden_control_w );
 	VIDEO_UPDATE( raiden );
 	
 	static unsigned char *raiden_shared_ram;

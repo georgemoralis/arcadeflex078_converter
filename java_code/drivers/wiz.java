@@ -172,12 +172,6 @@ public class wiz
 	extern unsigned char *wiz_attributesram2;
 	extern unsigned char *wiz_sprite_bank;
 	
-	WRITE_HANDLER( wiz_char_bank_select_w );
-	WRITE_HANDLER( wiz_attributes_w );
-	WRITE_HANDLER( wiz_palettebank_w );
-	WRITE_HANDLER( wiz_bgcolor_w );
-	WRITE_HANDLER( wiz_flipx_w );
-	WRITE_HANDLER( wiz_flipy_w );
 	VIDEO_START( wiz );
 	PALETTE_INIT( wiz );
 	VIDEO_UPDATE( wiz );

@@ -30,8 +30,6 @@ public class skychut
 	
 	VIDEO_UPDATE( skychut );
 	VIDEO_UPDATE( iremm15 );
-	WRITE_HANDLER( skychut_colorram_w );
-	WRITE_HANDLER( skychut_ctrl_w );
 	
 	static UINT8 *memory;
 	

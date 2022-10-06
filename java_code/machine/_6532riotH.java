@@ -26,9 +26,5 @@ public class _6532riotH
 	
 	extern void r6532_init(int n, const struct R6532interface* RI);
 	
-	extern READ_HANDLER( r6532_0_r );
-	extern READ_HANDLER( r6532_1_r );
-	
-	extern WRITE_HANDLER( r6532_0_w );
-	extern WRITE_HANDLER( r6532_1_w );
-}
+	extern extern 
+	extern extern }

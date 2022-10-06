@@ -36,12 +36,8 @@ package drivers;
 public class circus
 {
 	
-	extern WRITE_HANDLER( circus_clown_x_w );
-	extern WRITE_HANDLER( circus_clown_y_w );
-	extern WRITE_HANDLER( circus_clown_z_w );
-	
-	extern WRITE_HANDLER( circus_videoram_w );
-	
+	extern extern extern 
+	extern 
 	extern VIDEO_START( circus );
 	extern VIDEO_UPDATE( crash );
 	extern VIDEO_UPDATE( circus );

@@ -31,11 +31,7 @@ public class sbasketb
 	extern UINT8 *sbasketb_palettebank;
 	extern UINT8 *sbasketb_spriteram_select;
 	
-	extern WRITE_HANDLER( sbasketb_videoram_w );
-	extern WRITE_HANDLER( sbasketb_colorram_w );
-	extern WRITE_HANDLER( sbasketb_flipscreen_w );
-	extern WRITE_HANDLER( sbasketb_scroll_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( sbasketb );
 	extern VIDEO_START( sbasketb );
 	extern VIDEO_UPDATE( sbasketb );
@@ -44,11 +40,7 @@ public class sbasketb
 	extern struct SN76496interface konami_sn76496_interface;
 	extern struct DACinterface konami_dac_interface;
 	
-	extern WRITE_HANDLER( konami_SN76496_latch_w );
-	extern WRITE_HANDLER( konami_SN76496_0_w );
-	extern WRITE_HANDLER( hyperspt_sound_w );
-	extern READ_HANDLER( hyperspt_sh_timer_r );
-	
+	extern extern extern extern 
 	
 	WRITE_HANDLER( sbasketb_sh_irqtrigger_w )
 	{

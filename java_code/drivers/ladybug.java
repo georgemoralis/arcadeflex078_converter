@@ -48,14 +48,9 @@ public class ladybug
 {
 	
 	
-	extern READ_HANDLER( ladybug_IN0_r );
-	extern READ_HANDLER( ladybug_IN1_r );
-	extern INTERRUPT_GEN( ladybug_interrupt );
+	extern extern extern INTERRUPT_GEN( ladybug_interrupt );
 	
-	extern WRITE_HANDLER( ladybug_videoram_w );
-	extern WRITE_HANDLER( ladybug_colorram_w );
-	extern WRITE_HANDLER( ladybug_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( ladybug );
 	extern VIDEO_START( ladybug );
 	extern VIDEO_UPDATE( ladybug );

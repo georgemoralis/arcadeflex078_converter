@@ -27,13 +27,6 @@ public class cbasebal
 	
 	
 	VIDEO_START( cbasebal );
-	WRITE_HANDLER( cbasebal_textram_w );
-	READ_HANDLER( cbasebal_textram_r );
-	WRITE_HANDLER( cbasebal_scrollram_w );
-	READ_HANDLER( cbasebal_scrollram_r );
-	WRITE_HANDLER( cbasebal_gfxctrl_w );
-	WRITE_HANDLER( cbasebal_scrollx_w );
-	WRITE_HANDLER( cbasebal_scrolly_w );
 	VIDEO_UPDATE( cbasebal );
 	
 	

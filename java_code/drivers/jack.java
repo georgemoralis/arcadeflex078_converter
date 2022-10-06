@@ -46,12 +46,7 @@ public class jack
 {
 	
 	
-	extern WRITE_HANDLER( jack_videoram_w );
-	extern WRITE_HANDLER( jack_colorram_w );
-	extern WRITE_HANDLER( jack_paletteram_w );
-	extern READ_HANDLER( jack_flipscreen_r );
-	extern WRITE_HANDLER( jack_flipscreen_w );
-	
+	extern extern extern extern extern 
 	extern VIDEO_START( jack );
 	extern VIDEO_UPDATE( jack );
 	

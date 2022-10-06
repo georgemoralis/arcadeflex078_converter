@@ -13,8 +13,7 @@ package vidhrdw;
 public class tia
 {
 	
-	extern WRITE_HANDLER( tia_sound_w );
-	
+	extern 
 	static UINT32 frame_cycles;
 	static UINT32 paddle_cycles;
 	

@@ -67,14 +67,11 @@ public class gunsmoke
 	#define GUNSMOKE_HACK	0
 	
 	
-	READ_HANDLER( gunsmoke_bankedrom_r );
 	extern MACHINE_INIT( gunsmoke );
 	
 	extern unsigned char *gunsmoke_bg_scrollx;
 	extern unsigned char *gunsmoke_bg_scrolly;
 	
-	WRITE_HANDLER( gunsmoke_c804_w );	/* in vidhrdw/c1943.c */
-	WRITE_HANDLER( gunsmoke_d806_w );	/* in vidhrdw/c1943.c */
 	PALETTE_INIT( gunsmoke );
 	VIDEO_UPDATE( gunsmoke );
 	VIDEO_START( gunsmoke );

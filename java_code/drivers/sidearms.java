@@ -47,13 +47,7 @@ public class sidearms
 	extern UINT8 *sidearms_bg_scrollx;
 	extern UINT8 *sidearms_bg_scrolly;
 	
-	extern WRITE_HANDLER( sidearms_videoram_w );
-	extern WRITE_HANDLER( sidearms_colorram_w );
-	extern WRITE_HANDLER( sidearms_star_scrollx_w );
-	extern WRITE_HANDLER( sidearms_star_scrolly_w );
-	extern WRITE_HANDLER( sidearms_c804_w );
-	extern WRITE_HANDLER( sidearms_gfxctrl_w );
-	
+	extern extern extern extern extern extern 
 	extern PALETTE_INIT( sidearms );
 	extern VIDEO_START( sidearms );
 	extern VIDEO_UPDATE( sidearms );

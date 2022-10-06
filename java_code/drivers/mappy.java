@@ -58,45 +58,22 @@ public class mappy
 	extern unsigned char *mappy_customio_1,*mappy_customio_2;
 	MACHINE_INIT( mappy );
 	MACHINE_INIT( motos );
-	READ_HANDLER( mappy_sharedram_r );
-	WRITE_HANDLER( mappy_sharedram_w );
-	WRITE_HANDLER( mappy_customio_1_w );
-	WRITE_HANDLER( mappy_customio_2_w );
 	INTERRUPT_GEN( mappy_interrupt_1 );
 	INTERRUPT_GEN( mappy_interrupt_2 );
-	WRITE_HANDLER( mappy_interrupt_enable_1_w );
-	WRITE_HANDLER( mappy_interrupt_enable_2_w );
-	WRITE_HANDLER( mappy_cpu_enable_w );
-	WRITE_HANDLER( mappy_reset_2_w );
-	WRITE_HANDLER( mappy_io_chips_enable_w );
-	WRITE_HANDLER( mappy_flipscreen_w );
 	
-	READ_HANDLER( mappy_customio_1_r );
-	READ_HANDLER( mappy_customio_2_r );
 	
-	READ_HANDLER( digdug2_customio_1_r );
-	READ_HANDLER( digdug2_customio_2_r );
 	
-	READ_HANDLER( motos_customio_1_r );
-	READ_HANDLER( motos_customio_2_r );
 	
-	READ_HANDLER( todruaga_customio_1_r );
-	READ_HANDLER( todruaga_customio_2_r );
 	
 	/* video driver data & functions */
 	VIDEO_START( mappy );
 	VIDEO_START( motos );
 	VIDEO_START( todruaga );
 	VIDEO_UPDATE( mappy );
-	WRITE_HANDLER( mappy_videoram_w );
-	WRITE_HANDLER( mappy_colorram_w );
-	WRITE_HANDLER( mappy_scroll_w );
 	PALETTE_INIT( mappy );
 	
 	/* sound driver data & functions */
 	extern unsigned char *mappy_soundregs;
-	WRITE_HANDLER( mappy_sound_w );
-	WRITE_HANDLER( mappy_sound_enable_w );
 	
 	
 	/* CPU 1 read addresses */

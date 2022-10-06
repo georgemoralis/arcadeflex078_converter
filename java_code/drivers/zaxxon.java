@@ -169,9 +169,7 @@ public class zaxxon
 	extern UINT8 *zaxxon_background_color_bank;
 	extern UINT8 *zaxxon_background_enable;
 	
-	extern WRITE_HANDLER( zaxxon_videoram_w );
-	extern WRITE_HANDLER( congo_colorram_w );
-	
+	extern extern 
 	extern PALETTE_INIT( zaxxon );
 	
 	extern VIDEO_START( zaxxon );
@@ -183,9 +181,7 @@ public class zaxxon
 	extern VIDEO_UPDATE( congo );
 	extern VIDEO_UPDATE( futspy );
 	
-	extern READ_HANDLER( zaxxon_IN2_r );
-	extern WRITE_HANDLER( zaxxon_sound_w );
-	
+	extern extern 
 	/* Read/Write Handlers */
 	
 	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)

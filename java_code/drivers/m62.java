@@ -66,19 +66,11 @@ public class m62
 	PALETTE_INIT( battroad );
 	PALETTE_INIT( spelunk2 );
 	
-	WRITE_HANDLER( m62_tileram_w );
-	WRITE_HANDLER( m62_textram_w );
-	WRITE_HANDLER( m62_flipscreen_w );
-	WRITE_HANDLER( m62_hscroll_low_w );
-	WRITE_HANDLER( m62_hscroll_high_w );
-	WRITE_HANDLER( m62_vscroll_low_w );
-	WRITE_HANDLER( m62_vscroll_high_w );
 	extern data8_t *m62_tileram;
 	extern data8_t *m62_textram;
 	
 	VIDEO_START( kungfum );
 	VIDEO_UPDATE( kungfum );
-	WRITE_HANDLER( kungfum_tileram_w );
 	
 	VIDEO_START( ldrun );
 	VIDEO_UPDATE( ldrun );
@@ -92,17 +84,12 @@ public class m62
 	VIDEO_START( lotlot );
 	VIDEO_UPDATE( lotlot );
 	
-	WRITE_HANDLER( kidniki_text_vscroll_low_w );
-	WRITE_HANDLER( kidniki_text_vscroll_high_w );
-	WRITE_HANDLER( kidniki_background_bank_w );
 	VIDEO_START( kidniki );
 	VIDEO_UPDATE( kidniki );
 	
-	WRITE_HANDLER( spelunkr_palbank_w );
 	VIDEO_START( spelunkr );
 	VIDEO_UPDATE( spelunkr );
 	
-	WRITE_HANDLER( spelunk2_gfxport_w );
 	VIDEO_START( spelunk2 );
 	VIDEO_UPDATE( spelunk2 );
 	
@@ -111,7 +98,6 @@ public class m62
 	
 	VIDEO_START( horizon );
 	VIDEO_UPDATE( horizon );
-	WRITE_HANDLER( horizon_scrollram_w );
 	extern data8_t *horizon_scrollram;
 	
 	static int bankaddress;

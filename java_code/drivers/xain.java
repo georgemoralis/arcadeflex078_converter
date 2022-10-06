@@ -27,14 +27,6 @@ public class xain
 	
 	VIDEO_UPDATE( xain );
 	VIDEO_START( xain );
-	WRITE_HANDLER( xain_scrollxP0_w );
-	WRITE_HANDLER( xain_scrollyP0_w );
-	WRITE_HANDLER( xain_scrollxP1_w );
-	WRITE_HANDLER( xain_scrollyP1_w );
-	WRITE_HANDLER( xain_charram_w );
-	WRITE_HANDLER( xain_bgram0_w );
-	WRITE_HANDLER( xain_bgram1_w );
-	WRITE_HANDLER( xain_flipscreen_w );
 	
 	extern unsigned char *xain_charram, *xain_bgram0, *xain_bgram1;
 	

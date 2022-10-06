@@ -17,7 +17,6 @@ public class stfight
 {
 	
 	// this prototype will move to the driver
-	WRITE_HANDLER( stfight_bank_w );
 	
 	
 	/*

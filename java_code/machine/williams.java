@@ -46,10 +46,8 @@ public class williams
 	/* newer-Williams routines */
 	
 	/* Defender-specific code */
-	READ_HANDLER( defender_input_port_0_r );
 	
 	/* Stargate-specific code */
-	READ_HANDLER( stargate_input_port_0_r );
 	
 	/* Lotto Fun-specific code */
 	

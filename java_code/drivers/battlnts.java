@@ -17,7 +17,6 @@ public class battlnts
 {
 	
 	/* from vidhrdw */
-	WRITE_HANDLER( battlnts_spritebank_w );
 	VIDEO_START( battlnts );
 	VIDEO_UPDATE( battlnts );
 	

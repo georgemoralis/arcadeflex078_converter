@@ -58,10 +58,7 @@ public class mrflea
 	static int mrflea_select2;
 	static int mrflea_select3;
 	
-	extern WRITE_HANDLER( mrflea_gfx_bank_w );
-	extern WRITE_HANDLER( mrflea_videoram_w );
-	extern WRITE_HANDLER( mrflea_spriteram_w );
-	extern VIDEO_START( mrflea );
+	extern extern extern extern VIDEO_START( mrflea );
 	extern VIDEO_UPDATE( mrflea );
 	
 	static struct AY8910interface ay8910_interface = {

@@ -20,15 +20,9 @@ public class rollrace
 	PALETTE_INIT( wiz );
 	VIDEO_START( rollrace );
 	
-	WRITE_HANDLER( rollrace_charbank_w );
 	WRITE_HANDLER( rollrace_backgroundpage_w);
 	WRITE_HANDLER( rollrace_backgroundcolor_w);
-	WRITE_HANDLER( rollrace_bkgpen_w );
-	WRITE_HANDLER( rollrace_flipy_w );
-	WRITE_HANDLER( rollrace_spritebank_w );
-	WRITE_HANDLER( rollrace_flipx_w );
 	
-	READ_HANDLER( rollrace_bkgpen_r );
 	
 	READ_HANDLER( ra_fake_d800_r )
 	{

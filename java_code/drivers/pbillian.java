@@ -107,7 +107,6 @@ package drivers;
 
 public class pbillian
 {
-	WRITE_HANDLER( pb_videoram_w );
 	WRITE_HANDLER(data_41a_w);
 	
 	int pbillian_sh_start(const struct MachineSound*);

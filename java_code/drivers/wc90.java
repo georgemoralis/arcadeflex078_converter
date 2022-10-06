@@ -74,9 +74,6 @@ public class wc90
 	
 	VIDEO_START( wc90 );
 	VIDEO_START( wc90t );
-	WRITE_HANDLER( wc90_fgvideoram_w );
-	WRITE_HANDLER( wc90_bgvideoram_w );
-	WRITE_HANDLER( wc90_txvideoram_w );
 	VIDEO_UPDATE( wc90 );
 	
 	

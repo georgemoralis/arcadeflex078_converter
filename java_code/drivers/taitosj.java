@@ -134,22 +134,7 @@ public class taitosj
 	
 	
 	MACHINE_INIT( taitosj );
-	WRITE_HANDLER( taitosj_bankswitch_w );
-	READ_HANDLER( taitosj_fake_data_r );
-	READ_HANDLER( taitosj_fake_status_r );
-	WRITE_HANDLER( taitosj_fake_data_w );
-	READ_HANDLER( taitosj_mcu_data_r );
-	READ_HANDLER( taitosj_mcu_status_r );
-	WRITE_HANDLER( taitosj_mcu_data_w );
-	READ_HANDLER( taitosj_68705_portA_r );
-	READ_HANDLER( taitosj_68705_portB_r );
-	READ_HANDLER( taitosj_68705_portC_r );
-	WRITE_HANDLER( taitosj_68705_portA_w );
-	WRITE_HANDLER( taitosj_68705_portB_w );
 	
-	WRITE_HANDLER( alpine_protection_w );
-	WRITE_HANDLER( alpinea_bankswitch_w );
-	READ_HANDLER( alpine_port_2_r );
 	
 	extern unsigned char *taitosj_videoram2,*taitosj_videoram3;
 	extern unsigned char *taitosj_characterram;
@@ -159,16 +144,6 @@ public class taitosj
 	extern unsigned char *taitosj_colorbank,*taitosj_video_priority;
 	extern unsigned char *kikstart_scrollram;
 	PALETTE_INIT( taitosj );
-	READ_HANDLER( taitosj_gfxrom_r );
-	WRITE_HANDLER( taitosj_videoram2_w );
-	WRITE_HANDLER( taitosj_videoram3_w );
-	WRITE_HANDLER( taitosj_paletteram_w );
-	WRITE_HANDLER( taitosj_colorbank_w );
-	WRITE_HANDLER( taitosj_videoenable_w );
-	WRITE_HANDLER( taitosj_characterram_w );
-	WRITE_HANDLER( junglhbr_characterram_w );
-	READ_HANDLER( taitosj_collision_reg_r );
-	WRITE_HANDLER( taitosj_collision_reg_clear_w );
 	VIDEO_START( taitosj );
 	VIDEO_UPDATE( taitosj );
 	

@@ -90,16 +90,7 @@ public class tehkanwc
 	
 	extern UINT8 *tehkanwc_videoram2;
 	
-	extern WRITE_HANDLER( tehkanwc_videoram_w );
-	extern WRITE_HANDLER( tehkanwc_colorram_w );
-	extern WRITE_HANDLER( tehkanwc_videoram2_w );
-	extern WRITE_HANDLER( tehkanwc_scroll_x_w );
-	extern WRITE_HANDLER( tehkanwc_scroll_y_w );
-	extern WRITE_HANDLER( tehkanwc_flipscreen_x_w );
-	extern WRITE_HANDLER( tehkanwc_flipscreen_y_w );
-	extern WRITE_HANDLER( gridiron_led0_w );
-	extern WRITE_HANDLER( gridiron_led1_w );
-	
+	extern extern extern extern extern extern extern extern extern 
 	extern VIDEO_START( tehkanwc );
 	extern VIDEO_UPDATE( tehkanwc );
 	

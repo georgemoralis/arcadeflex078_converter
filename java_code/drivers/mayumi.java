@@ -20,8 +20,6 @@ public class mayumi
 	VIDEO_START( mayumi );
 	VIDEO_UPDATE( mayumi );
 	
-	WRITE_HANDLER( mayumi_videoram_w );
-	READ_HANDLER( mayumi_videoram_r );
 	
 	static int int_enable;
 	static int input_sel;

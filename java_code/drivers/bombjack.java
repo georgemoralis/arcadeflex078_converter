@@ -76,11 +76,7 @@ public class bombjack
 {
 	
 	
-	extern WRITE_HANDLER( bombjack_videoram_w );
-	extern WRITE_HANDLER( bombjack_colorram_w );
-	extern WRITE_HANDLER( bombjack_background_w );
-	extern WRITE_HANDLER( bombjack_flipscreen_w );
-	
+	extern extern extern extern 
 	extern VIDEO_START( bombjack );
 	extern VIDEO_UPDATE( bombjack );
 	

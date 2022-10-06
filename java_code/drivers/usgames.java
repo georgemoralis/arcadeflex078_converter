@@ -33,8 +33,6 @@ public class usgames
 {
 	
 	/* vidhrdw */
-	WRITE_HANDLER( usg_videoram_w );
-	WRITE_HANDLER( usg_charram_w );
 	VIDEO_START(usg);
 	PALETTE_INIT(usg);
 	VIDEO_UPDATE(usg);

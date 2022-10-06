@@ -319,13 +319,8 @@ public class psychic5
 {
 	
 	
-	extern WRITE_HANDLER( psychic5_paged_ram_w );
-	extern WRITE_HANDLER( psychic5_vram_page_select_w );
-	extern WRITE_HANDLER( psychic5_title_screen_w );
-	
-	extern READ_HANDLER( psychic5_paged_ram_r );
-	extern READ_HANDLER( psychic5_vram_page_select_r );
-	
+	extern extern extern 
+	extern extern 
 	extern MACHINE_INIT( psychic5 );
 	
 	extern VIDEO_START( psychic5 );

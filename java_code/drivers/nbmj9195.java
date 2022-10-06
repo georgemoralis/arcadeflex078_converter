@@ -112,37 +112,11 @@ public class nbmj9195
 	VIDEO_UPDATE( mscoutm );
 	VIDEO_START( mscoutm );
 	
-	READ_HANDLER( sailorws_palette_r );
-	WRITE_HANDLER( sailorws_palette_w );
-	READ_HANDLER( mscoutm_palette_r );
-	WRITE_HANDLER( mscoutm_palette_w );
 	
-	WRITE_HANDLER( sailorws_gfxflag_0_w );
-	WRITE_HANDLER( sailorws_scrollx_0_w );
-	WRITE_HANDLER( sailorws_scrolly_0_w );
-	WRITE_HANDLER( sailorws_radr_0_w );
-	WRITE_HANDLER( sailorws_sizex_0_w );
-	WRITE_HANDLER( sailorws_sizey_0_w );
-	WRITE_HANDLER( sailorws_drawx_0_w );
-	WRITE_HANDLER( sailorws_drawy_0_w );
 	
-	WRITE_HANDLER( sailorws_gfxflag_1_w );
-	WRITE_HANDLER( sailorws_scrollx_1_w );
-	WRITE_HANDLER( sailorws_scrolly_1_w );
-	WRITE_HANDLER( sailorws_radr_1_w );
-	WRITE_HANDLER( sailorws_sizex_1_w );
-	WRITE_HANDLER( sailorws_sizey_1_w );
-	WRITE_HANDLER( sailorws_drawx_1_w );
-	WRITE_HANDLER( sailorws_drawy_1_w );
 	
 	void sailorws_gfxflag2_w(int data);
 	void sailorws_paltblnum_w(int data);
-	WRITE_HANDLER( sailorws_paltbl_0_w );
-	WRITE_HANDLER( sailorws_paltbl_1_w );
-	READ_HANDLER( sailorws_gfxbusy_0_r );
-	READ_HANDLER( sailorws_gfxbusy_1_r );
-	READ_HANDLER( sailorws_gfxrom_0_r );
-	READ_HANDLER( sailorws_gfxrom_1_r );
 	
 	
 	static int sailorws_inputport;

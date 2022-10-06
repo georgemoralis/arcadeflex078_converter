@@ -28,8 +28,6 @@ public class exctsccr
 	
 	/* These are global */
 	unsigned char *exctsccr_mcu_ram;
-	WRITE_HANDLER( exctsccr_mcu_w );
-	WRITE_HANDLER( exctsccr_mcu_control_w );
 	
 	/* Local stuff */
 	static int mcu_code_latch;

@@ -58,9 +58,7 @@ public class tunhunt
 {
 	
 	
-	extern WRITE_HANDLER( tunhunt_videoram_w );
-	extern WRITE_HANDLER( tunhunt_mott_w );
-	
+	extern extern 
 	extern PALETTE_INIT( tunhunt );
 	extern VIDEO_START( tunhunt );
 	extern VIDEO_UPDATE( tunhunt );

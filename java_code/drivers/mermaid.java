@@ -25,8 +25,6 @@ public class mermaid
 	
 	PALETTE_INIT( mermaid );
 	VIDEO_UPDATE( mermaid );
-	WRITE_HANDLER( mermaid_flip_screen_x_w );
-	WRITE_HANDLER( mermaid_flip_screen_y_w );
 	
 	
 	static unsigned char *mermaid_AY8910_enable;

@@ -17,12 +17,6 @@ public class chaknpop
 	/* machine/chaknpop.c */
 	DRIVER_INIT( chaknpop );
 	MACHINE_INIT( chaknpop );
-	READ_HANDLER( chaknpop_mcu_portA_r );
-	READ_HANDLER( chaknpop_mcu_portB_r );
-	READ_HANDLER( chaknpop_mcu_portC_r );
-	WRITE_HANDLER( chaknpop_mcu_portA_w );
-	WRITE_HANDLER( chaknpop_mcu_portB_w );
-	WRITE_HANDLER( chaknpop_mcu_portC_w );
 	
 	
 	/* vidhrdw/chaknpop.c */
@@ -36,12 +30,8 @@ public class chaknpop
 	VIDEO_START( chaknpop );
 	VIDEO_UPDATE( chaknpop );
 	
-	READ_HANDLER( chaknpop_gfxmode_r );
-	WRITE_HANDLER( chaknpop_gfxmode_w );
 	
-	WRITE_HANDLER( chaknpop_txram_w );
 	
-	WRITE_HANDLER( chaknpop_attrram_w );
 	
 	
 	/***************************************************************************

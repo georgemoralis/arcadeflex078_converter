@@ -117,16 +117,10 @@ public class naughtyb
 	extern unsigned char *naughtyb_videoram2;
 	extern unsigned char *naughtyb_scrollreg;
 	
-	WRITE_HANDLER( naughtyb_videoram2_w );
-	WRITE_HANDLER( naughtyb_scrollreg_w );
-	WRITE_HANDLER( naughtyb_videoreg_w );
-	WRITE_HANDLER( popflame_videoreg_w );
 	VIDEO_START( naughtyb );
 	PALETTE_INIT( naughtyb );
 	VIDEO_UPDATE( naughtyb );
 	
-	WRITE_HANDLER( pleiads_sound_control_a_w );
-	WRITE_HANDLER( pleiads_sound_control_b_w );
 	int naughtyb_sh_start(const struct MachineSound *msound);
 	int popflame_sh_start(const struct MachineSound *msound);
 	void pleiads_sh_stop(void);

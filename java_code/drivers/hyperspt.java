@@ -18,27 +18,19 @@ public class hyperspt
 	
 	extern UINT8 *hyperspt_scroll;
 	
-	extern WRITE_HANDLER( hyperspt_videoram_w );
-	extern WRITE_HANDLER( hyperspt_colorram_w );
-	extern WRITE_HANDLER( hyperspt_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( hyperspt );
 	extern VIDEO_START( hyperspt );
 	extern VIDEO_UPDATE( hyperspt );
 	extern VIDEO_START( roadf );
 	extern VIDEO_UPDATE( roadf );
 	
-	extern WRITE_HANDLER( konami_sh_irqtrigger_w );
-	extern READ_HANDLER( hyperspt_sh_timer_r );
-	extern WRITE_HANDLER( hyperspt_sound_w );
-	
+	extern extern extern 
 	/* these routines lurk in sndhrdw/trackfld.c */
 	extern struct VLM5030interface konami_vlm5030_interface;
 	extern struct SN76496interface konami_sn76496_interface;
 	extern struct DACinterface konami_dac_interface;
-	extern WRITE_HANDLER( konami_SN76496_latch_w );
-	extern WRITE_HANDLER( konami_SN76496_0_w );
-	
+	extern extern 
 	
 	public static WriteHandlerPtr hyperspt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -17,10 +17,6 @@ public class segar
 	
 	UINT8 *segar_mem;
 	
-	WRITE_HANDLER( segar_characterram_w );
-	WRITE_HANDLER( segar_characterram2_w );
-	WRITE_HANDLER( segar_colortable_w );
-	WRITE_HANDLER( segar_bcolortable_w );
 	
 	
 	WRITE_HANDLER( segar_w )

@@ -22,9 +22,6 @@ public class rastan
 	VIDEO_START( rastan );
 	VIDEO_UPDATE( rastan );
 	
-	WRITE_HANDLER( rastan_adpcm_trigger_w );
-	WRITE_HANDLER( rastan_c000_w );
-	WRITE_HANDLER( rastan_d000_w );
 	
 	
 	static READ16_HANDLER( rastan_cycle_r )

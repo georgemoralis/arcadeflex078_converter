@@ -66,10 +66,6 @@ public class sprcros2
 	extern data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 	extern size_t sprcros2_spriteram_size;
 	
-	WRITE_HANDLER( sprcros2_fgvideoram_w );
-	WRITE_HANDLER( sprcros2_bgvideoram_w );
-	WRITE_HANDLER( sprcros2_bgscrollx_w );
-	WRITE_HANDLER( sprcros2_bgscrolly_w );
 	
 	PALETTE_INIT( sprcros2 );
 	VIDEO_START( sprcros2 );

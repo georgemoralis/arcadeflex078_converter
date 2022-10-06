@@ -330,17 +330,7 @@
 extern MACHINE_INIT( snes );
 extern MACHINE_STOP( snes );
 
-extern READ_HANDLER( snes_r_bank1 );
-extern READ_HANDLER( snes_r_bank2 );
-extern READ_HANDLER( snes_r_bank3 );
-extern READ_HANDLER( snes_r_bank4 );
-extern READ_HANDLER( snes_r_io );
-extern READ_HANDLER( snes_r_sram );
-extern WRITE_HANDLER( snes_w_bank1 );
-extern WRITE_HANDLER( snes_w_bank2 );
-extern WRITE_HANDLER( snes_w_bank4 );
-extern WRITE_HANDLER( snes_w_io );
-
+extern extern extern extern extern extern extern extern extern extern 
 #ifdef MESS
 extern DEVICE_LOAD(snes_cart);
 #endif
@@ -421,14 +411,8 @@ extern UINT8 *spc_ram;			/* SPC main memory */
 extern UINT8 spc_port_in[4];	/* SPC input ports */
 extern UINT8 spc_port_out[4];	/* SPC output ports */
 extern UINT8 spc_usefakeapu;	/* Fake the APU behaviour */
-extern READ_HANDLER( spc_io_r );
-extern WRITE_HANDLER( spc_io_w );
-extern READ_HANDLER( spc_bank_r );
-extern WRITE_HANDLER( spc_bank_w );
-extern int snes_sh_start( const struct MachineSound *driver );
+extern extern extern extern extern int snes_sh_start( const struct MachineSound *driver );
 extern void snes_sh_update( int param, INT16 **buffer, int length );
 /* Fake APU functions for when sound is disabled */
-extern READ_HANDLER( fakespc_port_r );
-extern WRITE_HANDLER( fakespc_port_w );
-
+extern extern 
 #endif /* _SNES_H_ */

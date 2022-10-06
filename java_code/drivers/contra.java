@@ -28,15 +28,7 @@ public class contra
 	
 	PALETTE_INIT( contra );
 	
-	WRITE_HANDLER( contra_fg_vram_w );
-	WRITE_HANDLER( contra_fg_cram_w );
-	WRITE_HANDLER( contra_bg_vram_w );
-	WRITE_HANDLER( contra_bg_cram_w );
-	WRITE_HANDLER( contra_text_vram_w );
-	WRITE_HANDLER( contra_text_cram_w );
 	
-	WRITE_HANDLER( contra_K007121_ctrl_0_w );
-	WRITE_HANDLER( contra_K007121_ctrl_1_w );
 	VIDEO_UPDATE( contra );
 	VIDEO_START( contra );
 	

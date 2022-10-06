@@ -63,17 +63,7 @@ public class ladyfrog
 	static int snd_flag;
 	static UINT8 snd_data;
 	
-	WRITE_HANDLER( ladyfrog_videoram_w );
-	WRITE_HANDLER( ladyfrog_spriteram_w );
-	WRITE_HANDLER( ladyfrog_palette_w );
-	WRITE_HANDLER( ladyfrog_gfxctrl_w );
-	WRITE_HANDLER( ladyfrog_gfxctrl2_w );
-	WRITE_HANDLER( ladyfrog_scrlram_w );
 	
-	READ_HANDLER( ladyfrog_spriteram_r );
-	READ_HANDLER( ladyfrog_palette_r );
-	READ_HANDLER( ladyfrog_scrlram_r );
-	READ_HANDLER( ladyfrog_videoram_r );
 	
 	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

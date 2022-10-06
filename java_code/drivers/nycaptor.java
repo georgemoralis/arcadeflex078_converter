@@ -163,30 +163,7 @@ public class nycaptor
 	static int sound_nmi_enable=0,pending_nmi=0;
 	
 	
-	WRITE_HANDLER( nycaptor_videoram_w );
-	WRITE_HANDLER( nycaptor_spriteram_w );
-	WRITE_HANDLER( nycaptor_palette_w );
-	WRITE_HANDLER( nycaptor_gfxctrl_w );
-	WRITE_HANDLER( nycaptor_scrlram_w );
-	WRITE_HANDLER( nycaptor_68705_portA_w );
-	WRITE_HANDLER( nycaptor_68705_portB_w );
-	WRITE_HANDLER( nycaptor_68705_portC_w );
-	WRITE_HANDLER( nycaptor_68705_ddrA_w );
-	WRITE_HANDLER( nycaptor_68705_ddrB_w );
-	WRITE_HANDLER( nycaptor_68705_ddrC_w );
-	WRITE_HANDLER( nycaptor_mcu_w );
 	
-	READ_HANDLER( nycaptor_mcu_r );
-	READ_HANDLER( nycaptor_mcu_status_r1 );
-	READ_HANDLER( nycaptor_mcu_status_r2 );
-	READ_HANDLER( nycaptor_spriteram_r );
-	READ_HANDLER( nycaptor_palette_r );
-	READ_HANDLER( nycaptor_gfxctrl_r );
-	READ_HANDLER( nycaptor_scrlram_r );
-	READ_HANDLER( nycaptor_68705_portC_r );
-	READ_HANDLER( nycaptor_68705_portB_r );
-	READ_HANDLER( nycaptor_68705_portA_r );
-	READ_HANDLER( nycaptor_videoram_r );
 	
 	
 	

@@ -27,10 +27,7 @@ public class deadang
 	static UINT8 *deadang_shared_ram;
 	extern UINT8 *deadang_video_data, *deadang_scroll_ram;
 	
-	extern WRITE_HANDLER( deadang_foreground_w );
-	extern WRITE_HANDLER( deadang_text_w );
-	extern WRITE_HANDLER( deadang_bank_w );
-	
+	extern extern extern 
 	extern VIDEO_START( deadang );
 	extern VIDEO_UPDATE( deadang );
 	

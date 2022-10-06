@@ -132,9 +132,6 @@ public class cpuintH
 	   go away in the future! */
 	
 	void cpu_interrupt_enable(int cpu,int enabled);
-	WRITE_HANDLER( interrupt_enable_w );
-	WRITE_HANDLER( interrupt_vector_w );
-	READ_HANDLER( interrupt_enable_r );
 	
 	/* OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE */
 	/* OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE OBSOLETE */

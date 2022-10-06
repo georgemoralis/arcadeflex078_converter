@@ -67,27 +67,9 @@ public class bigevglf
 	VIDEO_START( bigevglf );
 	VIDEO_UPDATE( bigevglf );
 	
-	READ_HANDLER( bigevglf_vidram_r );
-	WRITE_HANDLER( bigevglf_vidram_w );
-	WRITE_HANDLER( bigevglf_vidram_addr_w );
 	
-	READ_HANDLER( bigevglf_68705_portA_r );
-	WRITE_HANDLER( bigevglf_68705_portA_w );
-	READ_HANDLER( bigevglf_68705_portB_r );
-	WRITE_HANDLER( bigevglf_68705_portB_w );
-	READ_HANDLER( bigevglf_68705_portC_r );
-	WRITE_HANDLER( bigevglf_68705_portC_w );
-	WRITE_HANDLER( bigevglf_68705_ddrA_w );
-	WRITE_HANDLER( bigevglf_68705_ddrB_w );
-	WRITE_HANDLER( bigevglf_68705_ddrC_w );
 	
-	WRITE_HANDLER( bigevglf_mcu_w );
-	WRITE_HANDLER( bigevglf_mcu_set_w );
-	READ_HANDLER( bigevglf_mcu_r );
-	READ_HANDLER( bigevglf_mcu_status_r );
 	
-	WRITE_HANDLER( beg_gfxcontrol_w );
-	WRITE_HANDLER( beg_palette_w );
 	
 	extern UINT8 *beg_spriteram1;
 	extern UINT8 *beg_spriteram2;

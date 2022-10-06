@@ -19,12 +19,7 @@ public class zac2650
 	
 	extern UINT8 *s2636ram;
 	
-	extern WRITE_HANDLER( tinvader_videoram_w );
-	extern WRITE_HANDLER( zac_s2636_w );
-	extern WRITE_HANDLER( tinvader_sound_w );
-	extern READ_HANDLER( zac_s2636_r );
-	extern READ_HANDLER( tinvader_port_0_r );
-	
+	extern extern extern extern extern 
 	extern VIDEO_START( tinvader );
 	extern VIDEO_UPDATE( tinvader );
 	

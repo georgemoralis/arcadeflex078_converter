@@ -55,11 +55,6 @@ public class commando
 	extern unsigned char *commando_fgvideoram;
 	extern unsigned char *commando_bgvideoram;
 	
-	WRITE_HANDLER( commando_fgvideoram_w );
-	WRITE_HANDLER( commando_bgvideoram_w );
-	WRITE_HANDLER( commando_scrollx_w );
-	WRITE_HANDLER( commando_scrolly_w );
-	WRITE_HANDLER( commando_c804_w );
 	VIDEO_START( commando );
 	VIDEO_UPDATE( commando );
 	VIDEO_EOF( commando );

@@ -32,9 +32,7 @@ public class orbit
 	extern UINT8* orbit_playfield_ram;
 	extern UINT8* orbit_sprite_ram;
 	
-	extern WRITE_HANDLER( orbit_playfield_w );
-	extern WRITE_HANDLER( orbit_sprite_w );
-	
+	extern extern 
 	static int orbit_nmi_enable;
 	
 	static UINT8 orbit_misc_flags;

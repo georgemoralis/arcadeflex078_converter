@@ -20,9 +20,6 @@ public class cheekyms
 	
 	PALETTE_INIT( cheekyms );
 	VIDEO_UPDATE( cheekyms );
-	WRITE_HANDLER( cheekyms_sprite_w );
-	WRITE_HANDLER( cheekyms_port_40_w );
-	WRITE_HANDLER( cheekyms_port_80_w );
 	
 	
 	public static Memory_ReadAddress readmem[]={

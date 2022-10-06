@@ -22,8 +22,6 @@ public class yamato
 	extern size_t cclimber_bsvideoram_size;
 	extern unsigned char *cclimber_bigspriteram;
 	extern unsigned char *cclimber_column_scroll;
-	WRITE_HANDLER( cclimber_colorram_w );
-	WRITE_HANDLER( cclimber_bigsprite_videoram_w );
 	PALETTE_INIT( cclimber );
 	VIDEO_UPDATE( cclimber );
 	

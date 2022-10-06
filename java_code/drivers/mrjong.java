@@ -52,10 +52,7 @@ public class mrjong
 {
 	
 	
-	extern WRITE_HANDLER( mrjong_videoram_w );
-	extern WRITE_HANDLER( mrjong_colorram_w );
-	extern WRITE_HANDLER( mrjong_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( mrjong );
 	extern VIDEO_START( mrjong );
 	extern VIDEO_UPDATE( mrjong );

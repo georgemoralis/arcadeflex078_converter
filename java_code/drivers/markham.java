@@ -17,10 +17,7 @@ package drivers;
 public class markham
 {
 	
-	extern WRITE_HANDLER( markham_videoram_w );
-	extern WRITE_HANDLER( markham_scroll_x_w );
-	extern WRITE_HANDLER( markham_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( markham );
 	extern VIDEO_START( markham );
 	extern VIDEO_UPDATE( markham );

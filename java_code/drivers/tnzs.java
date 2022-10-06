@@ -195,20 +195,8 @@ public class tnzs
 	DRIVER_INIT( tnzsb );
 	DRIVER_INIT( insectx );
 	DRIVER_INIT( kageki );
-	READ_HANDLER( arknoid2_sh_f000_r );
 	MACHINE_INIT( tnzs );
 	INTERRUPT_GEN( arknoid2_interrupt );
-	READ_HANDLER( tnzs_port1_r );
-	READ_HANDLER( tnzs_port2_r );
-	WRITE_HANDLER( tnzs_port2_w );
-	READ_HANDLER( tnzs_mcu_r );
-	READ_HANDLER( tnzs_workram_r );
-	READ_HANDLER( tnzs_workram_sub_r );
-	WRITE_HANDLER( tnzs_workram_w );
-	WRITE_HANDLER( tnzs_workram_sub_w );
-	WRITE_HANDLER( tnzs_mcu_w );
-	WRITE_HANDLER( tnzs_bankswitch_w );
-	WRITE_HANDLER( tnzs_bankswitch1_w );
 	
 	
 	/* prototypes for functions in ../vidhrdw/tnzs.c */

@@ -53,12 +53,7 @@ public class funkybee
 {
 	
 	
-	extern WRITE_HANDLER( funkybee_videoram_w );
-	extern WRITE_HANDLER( funkybee_colorram_w );
-	extern WRITE_HANDLER( funkybee_gfx_bank_w );
-	extern WRITE_HANDLER( funkybee_scroll_w );
-	extern WRITE_HANDLER( funkybee_flipscreen_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( funkybee );
 	extern VIDEO_START( funkybee );
 	extern VIDEO_UPDATE( funkybee );

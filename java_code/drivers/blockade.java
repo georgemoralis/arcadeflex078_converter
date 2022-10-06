@@ -41,8 +41,7 @@ public class blockade
 	
 	/* #define BLOCKADE_LOG 1 */
 	
-	extern WRITE_HANDLER( blockade_videoram_w );
-	
+	extern 
 	extern VIDEO_START( blockade );
 	extern VIDEO_UPDATE( blockade );
 	

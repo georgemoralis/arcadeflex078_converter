@@ -39,9 +39,6 @@ public class spiders
 	
 	/* Function prototypes */
 	
-	WRITE_HANDLER( spiders_flip_w );
-	WRITE_HANDLER( spiders_vrif_w );
-	READ_HANDLER( spiders_vrom_r );
 	
 	
 	/* Declare PIA structure */

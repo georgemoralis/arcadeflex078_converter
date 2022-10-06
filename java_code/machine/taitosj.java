@@ -23,7 +23,6 @@ public class taitosj
 	static unsigned char fromz80,toz80;
 	static int zaccept,zready;
 	
-	WRITE_HANDLER( taitosj_bankswitch_w );
 	
 	
 	MACHINE_INIT( taitosj )

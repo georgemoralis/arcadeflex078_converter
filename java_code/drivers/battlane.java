@@ -23,14 +23,7 @@ public class battlane
 	
 	extern struct tilemap *bg_tilemap;
 	
-	extern WRITE_HANDLER( battlane_palette_w );
-	extern WRITE_HANDLER( battlane_scrollx_w );
-	extern WRITE_HANDLER( battlane_scrolly_w );
-	extern WRITE_HANDLER( battlane_tileram_w );
-	extern WRITE_HANDLER( battlane_spriteram_w );
-	extern WRITE_HANDLER( battlane_bitmap_w );
-	extern WRITE_HANDLER( battlane_video_ctrl_w );
-	
+	extern extern extern extern extern extern extern 
 	extern PALETTE_INIT( battlane );
 	extern VIDEO_START( battlane );
 	extern VIDEO_UPDATE( battlane );

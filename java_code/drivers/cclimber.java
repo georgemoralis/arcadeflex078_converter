@@ -140,17 +140,12 @@ public class cclimber
 	extern size_t cclimber_bsvideoram_size;
 	extern unsigned char *cclimber_bigspriteram;
 	extern unsigned char *cclimber_column_scroll;
-	WRITE_HANDLER( cclimber_colorram_w );
-	WRITE_HANDLER( cclimber_bigsprite_videoram_w );
 	PALETTE_INIT( cclimber );
 	VIDEO_UPDATE( cclimber );
 	
 	extern struct AY8910interface cclimber_ay8910_interface;
 	extern struct AY8910interface swimmer_ay8910_interface;
 	extern struct CustomSound_interface cclimber_custom_interface;
-	WRITE_HANDLER( cclimber_sample_trigger_w );
-	WRITE_HANDLER( cclimber_sample_rate_w );
-	WRITE_HANDLER( cclimber_sample_volume_w );
 	
 	
 	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -1089,11 +1084,8 @@ public class cclimber
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( swimmer_bgcolor_w );
-	WRITE_HANDLER( swimmer_palettebank_w );
 	PALETTE_INIT( swimmer );
 	VIDEO_UPDATE( swimmer );
-	WRITE_HANDLER( swimmer_sidepanel_enable_w );
 	
 	
 	

@@ -107,17 +107,7 @@ public class pokeyH
 	int pokey_sh_start (const struct MachineSound *msound);
 	void pokey_sh_stop (void);
 	
-	READ_HANDLER( pokey1_r );
-	READ_HANDLER( pokey2_r );
-	READ_HANDLER( pokey3_r );
-	READ_HANDLER( pokey4_r );
-	READ_HANDLER( quad_pokey_r );
 	
-	WRITE_HANDLER( pokey1_w );
-	WRITE_HANDLER( pokey2_w );
-	WRITE_HANDLER( pokey3_w );
-	WRITE_HANDLER( pokey4_w );
-	WRITE_HANDLER( quad_pokey_w );
 	
 	void pokey1_serin_ready (int after);
 	void pokey2_serin_ready (int after);

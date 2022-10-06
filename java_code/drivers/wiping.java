@@ -43,14 +43,12 @@ public class wiping
 {
 	
 	
-	WRITE_HANDLER( wiping_flipscreen_w );
 	PALETTE_INIT( wiping );
 	VIDEO_UPDATE( wiping );
 	
 	extern unsigned char *wiping_soundregs;
 	int wiping_sh_start(const struct MachineSound *msound);
 	void wiping_sh_stop(void);
-	WRITE_HANDLER( wiping_sound_w );
 	
 	
 	static unsigned char *sharedram1,*sharedram2;

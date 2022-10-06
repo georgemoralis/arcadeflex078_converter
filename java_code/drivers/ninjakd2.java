@@ -230,10 +230,6 @@ package drivers;
 public class ninjakd2
 {
 	
-	WRITE_HANDLER( ninjakd2_bgvideoram_w );
-	WRITE_HANDLER( ninjakd2_fgvideoram_w );
-	WRITE_HANDLER( ninjakd2_sprite_overdraw_w );
-	WRITE_HANDLER( ninjakd2_background_enable_w );
 	VIDEO_START( ninjakd2 );
 	VIDEO_UPDATE( ninjakd2 );
 	

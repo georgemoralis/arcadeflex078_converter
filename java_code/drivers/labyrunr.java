@@ -22,8 +22,6 @@ public class labyrunr
 	/* from vidhrdw/labyrunr.c */
 	extern unsigned char *labyrunr_videoram1,*labyrunr_videoram2;
 	PALETTE_INIT( labyrunr );
-	WRITE_HANDLER( labyrunr_vram1_w );
-	WRITE_HANDLER( labyrunr_vram2_w );
 	VIDEO_START( labyrunr );
 	VIDEO_UPDATE( labyrunr );
 	

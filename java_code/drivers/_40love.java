@@ -226,32 +226,15 @@ public class _40love
 {
 	
 	/* in machine/buggychl.c */
-	READ_HANDLER( buggychl_68705_portA_r );
-	WRITE_HANDLER( buggychl_68705_portA_w );
-	WRITE_HANDLER( buggychl_68705_ddrA_w );
-	READ_HANDLER( buggychl_68705_portB_r );
-	WRITE_HANDLER( buggychl_68705_portB_w );
-	WRITE_HANDLER( buggychl_68705_ddrB_w );
-	READ_HANDLER( buggychl_68705_portC_r );
-	WRITE_HANDLER( buggychl_68705_portC_w );
-	WRITE_HANDLER( buggychl_68705_ddrC_w );
-	WRITE_HANDLER( buggychl_mcu_w );
-	READ_HANDLER( buggychl_mcu_r );
-	READ_HANDLER( buggychl_mcu_status_r );
 	
 	
 	extern VIDEO_START( fortyl );
 	extern VIDEO_UPDATE( fortyl );
 	extern PALETTE_INIT( fortyl );
 	
-	extern WRITE_HANDLER( fortyl_bg_videoram_w );
-	extern WRITE_HANDLER( fortyl_bg_colorram_w );
-	extern READ_HANDLER ( fortyl_bg_videoram_r );
+	extern extern extern READ_HANDLER ( fortyl_bg_videoram_r );
 	extern READ_HANDLER ( fortyl_bg_colorram_r );
-	extern WRITE_HANDLER( fortyl_pixram_sel_w );
-	extern READ_HANDLER( fortyl_pixram_r );
-	extern WRITE_HANDLER( fortyl_pixram_w );
-	
+	extern extern extern 
 	extern unsigned char *fortyl_video_ctrl;
 	extern int fortyl_pix_color[4];
 	

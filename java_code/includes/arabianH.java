@@ -25,6 +25,4 @@ public class arabianH
 	VIDEO_START( arabian );
 	VIDEO_UPDATE( arabian );
 	
-	WRITE_HANDLER( arabian_blitter_w );
-	WRITE_HANDLER( arabian_videoram_w );
-}
+	}

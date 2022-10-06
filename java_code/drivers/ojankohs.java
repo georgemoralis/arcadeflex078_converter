@@ -45,19 +45,8 @@ public class ojankohs
 	PALETTE_INIT( ojankoy );
 	VIDEO_START( ojankohs );
 	VIDEO_START( ojankoy );
-	READ_HANDLER( ojankohs_palette_r );
-	WRITE_HANDLER( ojankohs_palette_w );
-	WRITE_HANDLER( ccasino_palette_w );
-	READ_HANDLER( ojankohs_videoram_r );
-	WRITE_HANDLER( ojankohs_videoram_w );
-	READ_HANDLER( ojankohs_colorram_r );
-	WRITE_HANDLER( ojankohs_colorram_w );
-	WRITE_HANDLER( ojankohs_gfxreg_w );
-	WRITE_HANDLER( ojankohs_flipscreen_w );
 	VIDEO_UPDATE( ojankoc );
 	VIDEO_START( ojankoc );
-	WRITE_HANDLER( ojankoc_palette_w );
-	WRITE_HANDLER( ojankoc_videoram_w );
 	void ojankoc_flipscreen(int data);
 	
 	

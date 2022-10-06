@@ -48,9 +48,6 @@ public class clshroad
 	data8_t *clshroad_vram_0, *clshroad_vram_1;
 	data8_t *clshroad_vregs;
 	
-	WRITE_HANDLER( clshroad_vram_0_w );
-	WRITE_HANDLER( clshroad_vram_1_w );
-	WRITE_HANDLER( clshroad_flipscreen_w );
 	
 	
 	WRITE_HANDLER( clshroad_flipscreen_w )

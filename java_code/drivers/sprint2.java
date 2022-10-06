@@ -26,13 +26,8 @@ package drivers;
 public class sprint2
 {
 	
-	extern READ_HANDLER( sprint2_collision1_r );
-	extern READ_HANDLER( sprint2_collision2_r );
-	
-	extern WRITE_HANDLER( sprint2_collision_reset1_w );
-	extern WRITE_HANDLER( sprint2_collision_reset2_w );
-	extern WRITE_HANDLER( sprint2_video_ram_w );
-	
+	extern extern 
+	extern extern extern 
 	extern VIDEO_UPDATE( sprint2 );
 	extern VIDEO_START( sprint2 );
 	extern VIDEO_EOF( sprint2 );

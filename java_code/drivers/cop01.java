@@ -66,9 +66,6 @@ public class cop01
 	PALETTE_INIT( cop01 );
 	VIDEO_START( cop01 );
 	VIDEO_UPDATE( cop01 );
-	WRITE_HANDLER( cop01_background_w );
-	WRITE_HANDLER( cop01_foreground_w );
-	WRITE_HANDLER( cop01_vreg_w );
 	
 	
 	public static WriteHandlerPtr cop01_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)

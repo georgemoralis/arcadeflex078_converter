@@ -17,7 +17,6 @@ public class phoenix
 	
 	
 	/* in sndhrdw/pleiads.c */
-	WRITE_HANDLER( pleiads_sound_control_c_w );
 	
 	static unsigned char *videoram_pg1;
 	static unsigned char *videoram_pg2;

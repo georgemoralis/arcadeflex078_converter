@@ -41,13 +41,7 @@ public class pacland
 	
 	extern UINT8 *pacland_videoram2;
 	
-	extern WRITE_HANDLER( pacland_videoram_w );
-	extern WRITE_HANDLER( pacland_videoram2_w );
-	extern WRITE_HANDLER( pacland_scroll0_w );
-	extern WRITE_HANDLER( pacland_scroll1_w );
-	extern WRITE_HANDLER( pacland_bankswitch_w );
-	extern WRITE_HANDLER( pacland_flipscreen_w );
-	
+	extern extern extern extern extern extern 
 	extern PALETTE_INIT( pacland );
 	extern VIDEO_START( pacland );
 	extern VIDEO_UPDATE( pacland );

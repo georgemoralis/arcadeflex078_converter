@@ -72,10 +72,7 @@ public class pooyan
 {
 	
 	
-	extern WRITE_HANDLER( pooyan_videoram_w );
-	extern WRITE_HANDLER( pooyan_colorram_w );
-	extern WRITE_HANDLER( pooyan_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( pooyan );
 	extern VIDEO_START( pooyan );
 	extern VIDEO_UPDATE( pooyan );

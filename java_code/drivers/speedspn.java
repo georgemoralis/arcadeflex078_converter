@@ -62,9 +62,6 @@ public class speedspn
 	/* in vidhrdw */
 	extern data8_t *speedspn_attram;
 	
-	WRITE_HANDLER( speedspn_vidram_w );
-	WRITE_HANDLER( speedspn_attram_w );
-	READ_HANDLER( speedspn_vidram_r );
 	VIDEO_START(speedspn);
 	VIDEO_UPDATE(speedspn);
 	WRITE_HANDLER(speedspn_banked_vidram_change);

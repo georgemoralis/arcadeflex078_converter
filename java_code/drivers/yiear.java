@@ -58,17 +58,13 @@ public class yiear
 	
 	extern int nmi_enable;
 	
-	extern WRITE_HANDLER( yiear_videoram_w );
-	extern WRITE_HANDLER( yiear_control_w );
-	
+	extern extern 
 	extern PALETTE_INIT( yiear );
 	extern VIDEO_START( yiear );
 	extern VIDEO_UPDATE( yiear );
 	
 	/* in sndhrdw/trackfld.c */
-	extern WRITE_HANDLER( konami_SN76496_latch_w );
-	extern WRITE_HANDLER( konami_SN76496_0_w );
-	
+	extern extern 
 	
 	public static ReadHandlerPtr yiear_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

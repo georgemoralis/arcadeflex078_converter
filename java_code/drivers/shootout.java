@@ -48,9 +48,7 @@ public class shootout
 	
 	UINT8 *shootout_textram;
 	
-	extern WRITE_HANDLER( shootout_videoram_w );
-	extern WRITE_HANDLER( shootout_textram_w );
-	
+	extern extern 
 	extern PALETTE_INIT( shootout );
 	extern VIDEO_START( shootout );
 	extern VIDEO_UPDATE( shootout );

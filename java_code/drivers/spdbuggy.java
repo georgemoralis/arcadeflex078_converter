@@ -51,10 +51,7 @@ public class spdbuggy
 	unsigned char *spdbuggy_ram, *spdbuggy_ram2;
 	
 	/* Functions defined in vidhrdw */
-	WRITE_HANDLER( spdbuggy_bgram_w );
-	WRITE_HANDLER( spdbuggy_fgram_w );
 	
-	WRITE_HANDLER( spdbuggy_scrollregs_w );
 	
 	VIDEO_START( spdbuggy );
 	VIDEO_UPDATE( spdbuggy );

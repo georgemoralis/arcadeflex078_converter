@@ -76,27 +76,11 @@ public class bosco
 {
 	
 	extern unsigned char *bosco_sharedram;
-	READ_HANDLER( bosco_sharedram_r );
-	WRITE_HANDLER( bosco_sharedram_w );
-	READ_HANDLER( bosco_dsw_r );
-	WRITE_HANDLER( bosco_interrupt_enable_1_w );
-	WRITE_HANDLER( bosco_interrupt_enable_2_w );
-	WRITE_HANDLER( bosco_interrupt_enable_3_w );
-	WRITE_HANDLER( bosco_halt_w );
-	READ_HANDLER( bosco_customio_1_r );
-	READ_HANDLER( bosco_customio_2_r );
-	WRITE_HANDLER( bosco_customio_1_w );
-	WRITE_HANDLER( bosco_customio_2_w );
-	READ_HANDLER( bosco_customio_data_1_r );
-	READ_HANDLER( bosco_customio_data_2_r );
-	WRITE_HANDLER( bosco_customio_data_1_w );
-	WRITE_HANDLER( bosco_customio_data_2_w );
 	INTERRUPT_GEN( bosco_interrupt_1 );
 	INTERRUPT_GEN( bosco_interrupt_2 );
 	INTERRUPT_GEN( bosco_interrupt_3 );
 	MACHINE_INIT( bosco );
 	
-	WRITE_HANDLER( bosco_cpu_reset_w );
 	VIDEO_START( bosco );
 	VIDEO_UPDATE( bosco );
 	PALETTE_INIT( bosco );
@@ -106,16 +90,9 @@ public class bosco
 	extern size_t bosco_radarram_size;
 	extern unsigned char *bosco_staronoff;
 	extern unsigned char *bosco_starblink;
-	WRITE_HANDLER( bosco_videoram2_w );
-	WRITE_HANDLER( bosco_colorram2_w );
-	WRITE_HANDLER( bosco_flipscreen_w );
-	WRITE_HANDLER( bosco_scrollx_w );
-	WRITE_HANDLER( bosco_scrolly_w );
-	WRITE_HANDLER( bosco_starcontrol_w );
 	VIDEO_START( bosco );
 	VIDEO_UPDATE( bosco );
 	
-	WRITE_HANDLER( pengo_sound_w );
 	int  bosco_sh_start(const struct MachineSound *msound);
 	void bosco_sh_stop(void);
 	extern unsigned char *pengo_soundregs;

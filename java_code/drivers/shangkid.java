@@ -63,7 +63,6 @@ public class shangkid
 	
 	VIDEO_START( shangkid );
 	VIDEO_UPDATE( shangkid );
-	WRITE_HANDLER( shangkid_videoram_w );
 	
 	PALETTE_INIT( dynamski );
 	VIDEO_UPDATE( dynamski );

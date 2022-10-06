@@ -40,12 +40,8 @@ public class starshp1
 	extern int starshp1_starfield_kill;
 	extern int starshp1_mux;
 	
-	extern READ_HANDLER( starshp1_rng_r );
-	
-	extern WRITE_HANDLER( starshp1_sspic_w );
-	extern WRITE_HANDLER( starshp1_ssadd_w );
-	extern WRITE_HANDLER( starshp1_playfield_w );
-	
+	extern 
+	extern extern extern 
 	extern VIDEO_UPDATE( starshp1 );
 	extern VIDEO_EOF( starshp1 );
 	extern VIDEO_START( starshp1 );

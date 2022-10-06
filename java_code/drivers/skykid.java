@@ -37,11 +37,6 @@ public class skykid
 	
 	/* from vidhrdw/skykid.c */
 	VIDEO_START( skykid );
-	READ_HANDLER( skykid_videoram_r );
-	WRITE_HANDLER( skykid_videoram_w );
-	WRITE_HANDLER( skykid_scroll_x_w );
-	WRITE_HANDLER( skykid_scroll_y_w );
-	WRITE_HANDLER( skykid_flipscreen_w );
 	VIDEO_UPDATE( skykid );
 	VIDEO_UPDATE( drgnbstr );
 	PALETTE_INIT( skykid );

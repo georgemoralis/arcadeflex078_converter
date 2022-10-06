@@ -79,8 +79,6 @@ public class chinagat
 	
 	/**************** Video stuff ******************/
 	
-	WRITE_HANDLER( ddragon_bgvideoram_w );
-	WRITE_HANDLER( ddragon_fgvideoram_w );
 	
 	VIDEO_START( chinagat );
 	VIDEO_UPDATE( ddragon );

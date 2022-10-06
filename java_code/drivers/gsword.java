@@ -144,11 +144,7 @@ public class gsword
 {
 	
 	
-	extern WRITE_HANDLER( gsword_charbank_w );
-	extern WRITE_HANDLER( gsword_videoctrl_w );
-	extern WRITE_HANDLER( gsword_videoram_w );
-	extern WRITE_HANDLER( gsword_scroll_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( josvolly );
 	extern PALETTE_INIT( gsword );
 	extern VIDEO_START( gsword );

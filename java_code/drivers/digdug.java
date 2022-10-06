@@ -121,31 +121,16 @@ public class digdug
 {
 	
 	extern unsigned char *digdug_sharedram;
-	READ_HANDLER( digdug_hiscore_print_r );
-	READ_HANDLER( digdug_sharedram_r );
-	WRITE_HANDLER( digdug_sharedram_w );
-	WRITE_HANDLER( digdug_interrupt_enable_1_w );
-	WRITE_HANDLER( digdug_interrupt_enable_2_w );
-	WRITE_HANDLER( digdug_interrupt_enable_3_w );
-	WRITE_HANDLER( digdug_halt_w );
-	READ_HANDLER( digdug_customio_r );
-	WRITE_HANDLER( digdug_customio_w );
-	READ_HANDLER( digdug_customio_data_r );
-	WRITE_HANDLER( digdug_customio_data_w );
 	INTERRUPT_GEN( digdug_interrupt_1 );
 	INTERRUPT_GEN( digdug_interrupt_2 );
 	INTERRUPT_GEN( digdug_interrupt_3 );
 	MACHINE_INIT( digdig );
 	
-	WRITE_HANDLER( digdug_flipscreen_w );
 	extern unsigned char *digdug_vlatches;
-	WRITE_HANDLER( digdug_cpu_reset_w );
-	WRITE_HANDLER( digdug_vh_latch_w );
 	VIDEO_START( digdug );
 	VIDEO_UPDATE( digdug );
 	PALETTE_INIT( digdug );
 	
-	WRITE_HANDLER( pengo_sound_w );
 	extern unsigned char *pengo_soundregs;
 	
 	

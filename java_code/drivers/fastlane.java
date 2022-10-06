@@ -22,8 +22,6 @@ public class fastlane
 	
 	/* from vidhrdw/fastlane.c */
 	extern unsigned char *fastlane_k007121_regs,*fastlane_videoram1,*fastlane_videoram2;
-	WRITE_HANDLER( fastlane_vram1_w );
-	WRITE_HANDLER( fastlane_vram2_w );
 	PALETTE_INIT( fastlane );
 	VIDEO_START( fastlane );
 	VIDEO_UPDATE( fastlane );

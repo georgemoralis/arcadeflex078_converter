@@ -75,11 +75,7 @@ public class djboy
 	
 	/* public functions from vidhrdw/djboy.h */
 	extern void djboy_set_videoreg( data8_t data );
-	extern WRITE_HANDLER( djboy_scrollx_w );
-	extern WRITE_HANDLER( djboy_scrolly_w );
-	extern WRITE_HANDLER( djboy_videoram_w );
-	extern WRITE_HANDLER( djboy_paletteram_w );
-	extern VIDEO_START( djboy );
+	extern extern extern extern extern VIDEO_START( djboy );
 	extern VIDEO_UPDATE( djboy );
 	
 	static data8_t *sharedram;

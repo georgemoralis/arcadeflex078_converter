@@ -22,9 +22,7 @@ public class tourtabl
 	extern VIDEO_START( tia );
 	extern VIDEO_UPDATE( tia );
 	
-	extern READ_HANDLER( tia_r );
-	extern WRITE_HANDLER( tia_w );
-	
+	extern extern 
 	extern void tia_init(void);
 	
 	

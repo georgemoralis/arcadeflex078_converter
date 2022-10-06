@@ -78,29 +78,11 @@ public class btime
 	VIDEO_UPDATE( disco );
 	VIDEO_UPDATE( eggs );
 	
-	WRITE_HANDLER( btime_paletteram_w );
-	WRITE_HANDLER( bnj_background_w );
-	WRITE_HANDLER( bnj_scroll1_w );
-	WRITE_HANDLER( bnj_scroll2_w );
-	READ_HANDLER( btime_mirrorvideoram_r );
-	WRITE_HANDLER( btime_mirrorvideoram_w );
-	READ_HANDLER( btime_mirrorcolorram_r );
-	WRITE_HANDLER( btime_mirrorcolorram_w );
-	WRITE_HANDLER( lnc_videoram_w );
-	WRITE_HANDLER( lnc_mirrorvideoram_w );
-	WRITE_HANDLER( deco_charram_w );
 	
-	WRITE_HANDLER( zoar_video_control_w );
-	WRITE_HANDLER( btime_video_control_w );
-	WRITE_HANDLER( bnj_video_control_w );
-	WRITE_HANDLER( lnc_video_control_w );
-	WRITE_HANDLER( disco_video_control_w );
 	
 	INTERRUPT_GEN( lnc_sound_interrupt );
 	
 	
-	READ_HANDLER( mmonkey_protection_r );
-	WRITE_HANDLER( mmonkey_protection_w );
 	
 	
 	INLINE int swap_bits_5_6(int data)

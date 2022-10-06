@@ -24,10 +24,6 @@ public class amspdwy
 	
 	/* Variables & functions defined in vidhrdw: */
 	
-	WRITE_HANDLER( amspdwy_videoram_w );
-	WRITE_HANDLER( amspdwy_colorram_w );
-	WRITE_HANDLER( amspdwy_paletteram_w );
-	WRITE_HANDLER( amspdwy_flipscreen_w );
 	
 	VIDEO_START( amspdwy );
 	VIDEO_UPDATE( amspdwy );

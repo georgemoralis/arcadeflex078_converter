@@ -81,22 +81,13 @@ public class pitnrun
 	
 	MACHINE_INIT( pitnrun );
 	
-	READ_HANDLER( pitnrun_mcu_data_r );
-	READ_HANDLER( pitnrun_mcu_status_r );
-	WRITE_HANDLER( pitnrun_mcu_data_w );
 	
 	extern UINT8* videoram2;
 	
-	WRITE_HANDLER( pitnrun_videoram_w );
-	WRITE_HANDLER( pitnrun_videoram2_w );
 	WRITE_HANDLER(pitnrun_ha_w);
 	WRITE_HANDLER(pitnrun_h_heed_w);
 	WRITE_HANDLER(pitnrun_v_heed_w);
 	WRITE_HANDLER(pitnrun_color_select_w);
-	WRITE_HANDLER( pitnrun_char_bank_select );
-	WRITE_HANDLER( pitnrun_scroll_w );
-	READ_HANDLER( pitnrun_videoram_r );
-	READ_HANDLER( pitnrun_videoram2_r );
 	
 	PALETTE_INIT(pitnrun);
 	VIDEO_START(pitnrun);

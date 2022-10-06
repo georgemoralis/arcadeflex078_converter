@@ -62,9 +62,6 @@ public class locomotn
 	extern unsigned char *rallyx_radarx,*rallyx_radary,*rallyx_radarattr;
 	extern size_t rallyx_radarram_size;
 	extern unsigned char *rallyx_scrollx,*rallyx_scrolly;
-	WRITE_HANDLER( rallyx_videoram2_w );
-	WRITE_HANDLER( rallyx_colorram2_w );
-	WRITE_HANDLER( rallyx_flipscreen_w );
 	PALETTE_INIT( locomotn );
 	VIDEO_START( rallyx );
 	VIDEO_UPDATE( locomotn );

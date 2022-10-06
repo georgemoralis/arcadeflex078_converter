@@ -93,12 +93,9 @@ public class junofrst
 	
 	static int i8039_status;
 	
-	WRITE_HANDLER( tutankhm_videoram_w );
-	WRITE_HANDLER( junofrst_blitter_w );
 	VIDEO_UPDATE( tutankhm );
 	
 	
-	WRITE_HANDLER( tutankhm_sh_irqtrigger_w );
 	
 	
 	WRITE_HANDLER( junofrst_bankselect_w )

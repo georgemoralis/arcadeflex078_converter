@@ -46,7 +46,6 @@ public class malzak
 	// in vidhrdw/malzak.c
 	VIDEO_START( malzak );
 	VIDEO_UPDATE( malzak );
-	WRITE_HANDLER( playfield_w );
 	
 	READ_HANDLER( malzak_s2636_1_r )
 	{

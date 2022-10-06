@@ -37,22 +37,9 @@ public class lkage
 	
 	
 	extern unsigned char *lkage_scroll, *lkage_vreg;
-	WRITE_HANDLER( lkage_videoram_w );
 	VIDEO_START( lkage );
 	VIDEO_UPDATE( lkage );
 	
-	READ_HANDLER( lkage_68705_portA_r );
-	WRITE_HANDLER( lkage_68705_portA_w );
-	READ_HANDLER( lkage_68705_portB_r );
-	WRITE_HANDLER( lkage_68705_portB_w );
-	READ_HANDLER( lkage_68705_portC_r );
-	WRITE_HANDLER( lkage_68705_portC_w );
-	WRITE_HANDLER( lkage_68705_ddrA_w );
-	WRITE_HANDLER( lkage_68705_ddrB_w );
-	WRITE_HANDLER( lkage_68705_ddrC_w );
-	WRITE_HANDLER( lkage_mcu_w );
-	READ_HANDLER( lkage_mcu_r );
-	READ_HANDLER( lkage_mcu_status_r );
 	
 	
 	static int sound_nmi_enable,pending_nmi;

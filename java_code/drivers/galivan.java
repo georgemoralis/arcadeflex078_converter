@@ -37,18 +37,10 @@ package drivers;
 public class galivan
 {
 	
-	WRITE_HANDLER( galivan_scrollx_w );
-	WRITE_HANDLER( galivan_scrolly_w );
-	WRITE_HANDLER( galivan_videoram_w );
-	WRITE_HANDLER( galivan_colorram_w );
-	WRITE_HANDLER( galivan_gfxbank_w );
 	PALETTE_INIT( galivan );
 	VIDEO_START( galivan );
 	VIDEO_UPDATE( galivan );
 	
-	WRITE_HANDLER( ninjemak_scrollx_w );
-	WRITE_HANDLER( ninjemak_scrolly_w );
-	WRITE_HANDLER( ninjemak_gfxbank_w );
 	VIDEO_START( ninjemak );
 	VIDEO_UPDATE( ninjemak );
 	

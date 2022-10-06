@@ -72,10 +72,7 @@ public class kchamp
 	
 	
 	/* from vidhrdw */
-	extern WRITE_HANDLER( kchamp_videoram_w );
-	extern WRITE_HANDLER( kchamp_colorram_w );
-	extern WRITE_HANDLER( kchamp_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( kchamp );
 	extern VIDEO_START( kchamp );
 	extern VIDEO_UPDATE( kchamp );

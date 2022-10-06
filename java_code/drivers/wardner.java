@@ -137,10 +137,6 @@ public class wardner
 	
 	/******************** Machine stuff **********************/
 	MACHINE_INIT( wardner );
-	READ_HANDLER( wardner_mainram_r );
-	WRITE_HANDLER( wardner_mainram_w );
-	WRITE_HANDLER( wardner_control_w );
-	WRITE_HANDLER( wardner_coin_dsp_w );
 	READ16_HANDLER( twincobr_dsp_r );
 	WRITE16_HANDLER( twincobr_dsp_w );
 	READ16_HANDLER( twincobr_BIO_r );
@@ -155,15 +151,7 @@ public class wardner
 	
 	
 	/******************** Video stuff **********************/
-	WRITE_HANDLER( wardner_videoram_w );
 	READ_HANDLER ( wardner_videoram_r );
-	WRITE_HANDLER( wardner_bglayer_w );
-	WRITE_HANDLER( wardner_fglayer_w );
-	WRITE_HANDLER( wardner_txlayer_w );
-	WRITE_HANDLER( wardner_bgscroll_w );
-	WRITE_HANDLER( wardner_fgscroll_w );
-	WRITE_HANDLER( wardner_txscroll_w );
-	WRITE_HANDLER( wardner_exscroll_w );
 	
 	VIDEO_START( toaplan0 );
 	VIDEO_UPDATE( toaplan0 );

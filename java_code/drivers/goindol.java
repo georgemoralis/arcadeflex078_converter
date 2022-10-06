@@ -27,8 +27,6 @@ public class goindol
 {
 	
 	VIDEO_START( goindol );
-	WRITE_HANDLER( goindol_fg_videoram_w );
-	WRITE_HANDLER( goindol_bg_videoram_w );
 	VIDEO_UPDATE( goindol );
 	
 	extern UINT8 *goindol_fg_scrollx;

@@ -24,11 +24,6 @@ public class mrdo
 	
 	
 	extern unsigned char *mrdo_bgvideoram,*mrdo_fgvideoram;
-	WRITE_HANDLER( mrdo_bgvideoram_w );
-	WRITE_HANDLER( mrdo_fgvideoram_w );
-	WRITE_HANDLER( mrdo_scrollx_w );
-	WRITE_HANDLER( mrdo_scrolly_w );
-	WRITE_HANDLER( mrdo_flipscreen_w );
 	PALETTE_INIT( mrdo );
 	VIDEO_START( mrdo );
 	VIDEO_UPDATE( mrdo );

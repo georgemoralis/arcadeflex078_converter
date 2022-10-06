@@ -16,9 +16,6 @@ public class citycon
 	extern data8_t *citycon_videoram;
 	extern data8_t *citycon_scroll;
 	extern data8_t *citycon_linecolor;
-	WRITE_HANDLER( citycon_videoram_w );
-	WRITE_HANDLER( citycon_linecolor_w );
-	WRITE_HANDLER( citycon_background_w );
 	
 	VIDEO_UPDATE( citycon );
 	VIDEO_START( citycon );

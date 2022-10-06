@@ -131,22 +131,13 @@ public class combatsc
 	/* from vidhrdw/combasc.c */
 	PALETTE_INIT( combasc );
 	PALETTE_INIT( combascb );
-	READ_HANDLER( combasc_video_r );
-	WRITE_HANDLER( combasc_video_w );
 	VIDEO_START( combasc );
 	VIDEO_START( combascb );
 	
-	WRITE_HANDLER( combascb_bankselect_w );
-	WRITE_HANDLER( combasc_bankselect_w );
 	MACHINE_INIT( combasc );
-	WRITE_HANDLER( combasc_pf_control_w );
-	READ_HANDLER( combasc_scrollram_r );
-	WRITE_HANDLER( combasc_scrollram_w );
 	
 	VIDEO_UPDATE( combascb );
 	VIDEO_UPDATE( combasc );
-	WRITE_HANDLER( combasc_io_w );
-	WRITE_HANDLER( combasc_vreg_w );
 	
 	
 	

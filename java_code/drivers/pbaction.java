@@ -45,13 +45,7 @@ public class pbaction
 	
 	extern UINT8 *pbaction_videoram2,*pbaction_colorram2;
 	
-	extern WRITE_HANDLER( pbaction_videoram_w );
-	extern WRITE_HANDLER( pbaction_colorram_w );
-	extern WRITE_HANDLER( pbaction_videoram2_w );
-	extern WRITE_HANDLER( pbaction_colorram2_w );
-	extern WRITE_HANDLER( pbaction_flipscreen_w );
-	extern WRITE_HANDLER( pbaction_scroll_w );
-	
+	extern extern extern extern extern extern 
 	extern VIDEO_START( pbaction );
 	extern VIDEO_UPDATE( pbaction );
 	

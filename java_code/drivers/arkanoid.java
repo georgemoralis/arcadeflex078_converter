@@ -54,28 +54,16 @@ package drivers;
 public class arkanoid
 {
 	
-	extern WRITE_HANDLER( arkanoid_videoram_w );
-	extern VIDEO_START( arkanoid );
+	extern extern VIDEO_START( arkanoid );
 	extern VIDEO_UPDATE( arkanoid );
 	
 	extern MACHINE_INIT( arkanoid );
 	
-	extern WRITE_HANDLER( arkanoid_d008_w );
-	
-	extern READ_HANDLER( arkanoid_Z80_mcu_r );
-	extern WRITE_HANDLER( arkanoid_Z80_mcu_w );
-	
-	extern READ_HANDLER( arkanoid_68705_portA_r );
-	extern WRITE_HANDLER( arkanoid_68705_portA_w );
-	extern WRITE_HANDLER( arkanoid_68705_ddrA_w );
-	
-	extern READ_HANDLER( arkanoid_68705_portC_r );
-	extern WRITE_HANDLER( arkanoid_68705_portC_w );
-	extern WRITE_HANDLER( arkanoid_68705_ddrC_w );
-	
-	extern READ_HANDLER( arkanoid_68705_input_0_r );
-	extern READ_HANDLER( arkanoid_input_2_r );
-	
+	extern 
+	extern extern 
+	extern extern extern 
+	extern extern extern 
+	extern extern 
 	/*
 	Paddle 2 MCU simulation
 	

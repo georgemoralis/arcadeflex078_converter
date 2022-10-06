@@ -110,9 +110,7 @@ public class vball
 	VIDEO_UPDATE( vb );
 	extern void vb_bgprombank_w(int bank);
 	extern void vb_spprombank_w(int bank);
-	extern WRITE_HANDLER( vb_attrib_w );
-	extern WRITE_HANDLER( vb_videoram_w );
-	extern void vb_mark_all_dirty(void);
+	extern extern extern void vb_mark_all_dirty(void);
 	
 	INTERRUPT_GEN( vball_interrupt );
 	

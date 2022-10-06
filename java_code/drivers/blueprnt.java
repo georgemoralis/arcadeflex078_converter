@@ -55,7 +55,6 @@ public class blueprnt
 	extern unsigned char *blueprnt_scrollram;
 	
 	PALETTE_INIT( blueprnt );
-	WRITE_HANDLER( blueprnt_flipscreen_w );
 	VIDEO_UPDATE( blueprnt );
 	
 	

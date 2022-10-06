@@ -19,17 +19,9 @@ public class simpsons
 	
 	/* from vidhrdw */
 	VIDEO_START( simpsons );
-	WRITE_HANDLER( simpsons_priority_w );
 	VIDEO_UPDATE( simpsons );
 	
 	/* from machine */
-	READ_HANDLER( simpsons_eeprom_r );
-	WRITE_HANDLER( simpsons_eeprom_w );
-	WRITE_HANDLER( simpsons_coin_counter_w );
-	READ_HANDLER( simpsons_sound_interrupt_r );
-	READ_HANDLER( simpsons_sound_r );
-	READ_HANDLER( simpsons_speedup1_r );
-	READ_HANDLER( simpsons_speedup2_r );
 	MACHINE_INIT( simpsons );
 	NVRAM_HANDLER( simpsons );
 	extern int simpsons_firq_enabled;

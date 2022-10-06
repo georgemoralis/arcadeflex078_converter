@@ -205,9 +205,6 @@ public class airbustr
 	extern unsigned char *airbustr_bgram, *airbustr_fgram;
 	
 	/* Functions defined in vidhrdw */
-	WRITE_HANDLER( airbustr_bgram_w );
-	WRITE_HANDLER( airbustr_fgram_w );
-	WRITE_HANDLER( airbustr_scrollregs_w );
 	extern VIDEO_START( airbustr );
 	extern VIDEO_UPDATE( airbustr );
 	

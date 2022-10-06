@@ -24,28 +24,7 @@ public class flstory
 	
 	extern UINT8 *flstory_scrlram;
 	
-	WRITE_HANDLER( flstory_videoram_w );
-	READ_HANDLER( flstory_palette_r );
-	WRITE_HANDLER( flstory_palette_w );
-	WRITE_HANDLER( flstory_gfxctrl_w );
-	READ_HANDLER( flstory_scrlram_r );
-	WRITE_HANDLER( flstory_scrlram_w );
 	
-	READ_HANDLER( flstory_68705_portA_r );
-	WRITE_HANDLER( flstory_68705_portA_w );
-	READ_HANDLER( flstory_68705_portB_r );
-	WRITE_HANDLER( flstory_68705_portB_w );
-	READ_HANDLER( flstory_68705_portC_r );
-	WRITE_HANDLER( flstory_68705_portC_w );
-	WRITE_HANDLER( flstory_68705_ddrA_w );
-	WRITE_HANDLER( flstory_68705_ddrB_w );
-	WRITE_HANDLER( flstory_68705_ddrC_w );
-	WRITE_HANDLER( flstory_mcu_w );
-	READ_HANDLER( flstory_mcu_r );
-	READ_HANDLER( flstory_mcu_status_r );
-	WRITE_HANDLER( onna34ro_mcu_w );
-	READ_HANDLER( onna34ro_mcu_r );
-	READ_HANDLER( onna34ro_mcu_status_r );
 	
 	
 	static UINT8 snd_data;

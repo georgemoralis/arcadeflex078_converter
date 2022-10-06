@@ -36,9 +36,6 @@ public class liberate
 	static int deco16_bank;
 	static data8_t *scratchram;
 	
-	WRITE_HANDLER( deco16_io_w );
-	WRITE_HANDLER( prosport_paletteram_w );
-	WRITE_HANDLER( liberate_videoram_w );
 	
 	/***************************************************************************/
 	

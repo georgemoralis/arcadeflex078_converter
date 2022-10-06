@@ -74,11 +74,6 @@ public class _1942
 	
 	VIDEO_START( 1942 );
 	PALETTE_INIT( 1942 );
-	WRITE_HANDLER( c1942_fgvideoram_w );
-	WRITE_HANDLER( c1942_bgvideoram_w );
-	WRITE_HANDLER( c1942_scroll_w );
-	WRITE_HANDLER( c1942_c804_w );
-	WRITE_HANDLER( c1942_palette_bank_w );
 	VIDEO_UPDATE( 1942 );
 	
 	

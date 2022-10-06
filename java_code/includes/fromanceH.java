@@ -24,16 +24,8 @@ public class fromanceH
 	VIDEO_UPDATE( fromance );
 	VIDEO_UPDATE( pipedrm );
 	
-	WRITE_HANDLER( fromance_crtc_data_w );
-	WRITE_HANDLER( fromance_crtc_register_w );
 	
-	WRITE_HANDLER( fromance_gfxreg_w );
 	
-	WRITE_HANDLER( fromance_scroll_w );
 	
-	READ_HANDLER( fromance_paletteram_r );
-	WRITE_HANDLER( fromance_paletteram_w );
 	
-	READ_HANDLER( fromance_videoram_r );
-	WRITE_HANDLER( fromance_videoram_w );
-}
+	}

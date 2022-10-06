@@ -76,11 +76,6 @@ public class vastar
 	extern data8_t *vastar_bg1_scroll,*vastar_bg2_scroll;
 	extern data8_t *vastar_sprite_priority;
 	
-	WRITE_HANDLER( vastar_bg1videoram_w );
-	WRITE_HANDLER( vastar_bg2videoram_w );
-	WRITE_HANDLER( vastar_fgvideoram_w );
-	READ_HANDLER( vastar_bg1videoram_r );
-	READ_HANDLER( vastar_bg2videoram_r );
 	VIDEO_START( vastar );
 	VIDEO_UPDATE( vastar );
 	

@@ -19,7 +19,6 @@ package drivers;
 
 public class mainsnk
 {
-	WRITE_HANDLER( snkwave_w );
 	
 	extern data8_t *me_fgram;
 	extern data8_t *me_bgram;

@@ -110,11 +110,6 @@ public class renegade
 	
 	extern VIDEO_UPDATE( renegade );
 	extern VIDEO_START( renegade );
-	WRITE_HANDLER( renegade_scroll0_w );
-	WRITE_HANDLER( renegade_scroll1_w );
-	WRITE_HANDLER( renegade_videoram_w );
-	WRITE_HANDLER( renegade_videoram2_w );
-	WRITE_HANDLER( renegade_flipscreen_w );
 	
 	extern UINT8 *renegade_videoram2;
 	

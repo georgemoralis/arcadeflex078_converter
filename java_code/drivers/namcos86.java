@@ -36,17 +36,6 @@ public class namcos86
 	PALETTE_INIT( namcos86 );
 	VIDEO_START( namcos86 );
 	VIDEO_UPDATE( namcos86 );
-	READ_HANDLER( rthunder_videoram1_r );
-	WRITE_HANDLER( rthunder_videoram1_w );
-	READ_HANDLER( rthunder_videoram2_r );
-	WRITE_HANDLER( rthunder_videoram2_w );
-	WRITE_HANDLER( rthunder_scroll0_w );
-	WRITE_HANDLER( rthunder_scroll1_w );
-	WRITE_HANDLER( rthunder_scroll2_w );
-	WRITE_HANDLER( rthunder_scroll3_w );
-	WRITE_HANDLER( rthunder_backcolor_w );
-	WRITE_HANDLER( rthunder_tilebank_select_0_w );
-	WRITE_HANDLER( rthunder_tilebank_select_1_w );
 	
 	
 	

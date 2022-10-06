@@ -32,11 +32,7 @@ public class zodiack
 	extern UINT8 *zodiack_bulletsram;
 	extern size_t zodiack_bulletsram_size;
 	
-	extern WRITE_HANDLER( zodiack_videoram_w );
-	extern WRITE_HANDLER( zodiack_videoram2_w );
-	extern WRITE_HANDLER( zodiack_attributes_w );
-	extern WRITE_HANDLER( zodiack_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( zodiack );
 	extern VIDEO_START( zodiack );
 	extern VIDEO_UPDATE( zodiack );
@@ -44,10 +40,8 @@ public class zodiack
 	int percuss_hardware;
 	
 	extern MACHINE_INIT( espial );
-	extern WRITE_HANDLER( zodiac_master_interrupt_enable_w );
-	extern INTERRUPT_GEN( zodiac_master_interrupt );
-	extern WRITE_HANDLER( zodiac_master_soundlatch_w );
-	
+	extern extern INTERRUPT_GEN( zodiac_master_interrupt );
+	extern 
 	
 	static MACHINE_INIT( zodiack )
 	{

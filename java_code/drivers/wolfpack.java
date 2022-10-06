@@ -21,19 +21,7 @@ public class wolfpack
 	extern VIDEO_START( wolfpack );
 	extern VIDEO_EOF( wolfpack );
 	
-	extern WRITE_HANDLER( wolfpack_video_invert_w );
-	extern WRITE_HANDLER( wolfpack_ship_reflect_w );
-	extern WRITE_HANDLER( wolfpack_pt_pos_select_w );
-	extern WRITE_HANDLER( wolfpack_pt_horz_w );
-	extern WRITE_HANDLER( wolfpack_pt_pic_w );
-	extern WRITE_HANDLER( wolfpack_ship_h_w );
-	extern WRITE_HANDLER( wolfpack_torpedo_pic_w );
-	extern WRITE_HANDLER( wolfpack_ship_size_w );
-	extern WRITE_HANDLER( wolfpack_ship_h_precess_w );
-	extern WRITE_HANDLER( wolfpack_ship_pic_w );
-	extern WRITE_HANDLER( wolfpack_torpedo_h_w );
-	extern WRITE_HANDLER( wolfpack_torpedo_v_w );
-	
+	extern extern extern extern extern extern extern extern extern extern extern extern 
 	
 	static void periodic_callback(int scanline)
 	{

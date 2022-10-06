@@ -25,28 +25,10 @@ public class redalert
 	extern unsigned char *redalert_spriteram3;
 	extern unsigned char *redalert_characterram;
 	extern unsigned char *redalert_characterram2;
-	WRITE_HANDLER( redalert_backram_w );
-	WRITE_HANDLER( redalert_spriteram1_w );
-	WRITE_HANDLER( redalert_spriteram2_w );
-	WRITE_HANDLER( redalert_spriteram3_w );
-	WRITE_HANDLER( redalert_spriteram4_w );
-	WRITE_HANDLER( redalert_characterram_w );
-	WRITE_HANDLER( redalert_characterram2_w );
 	extern VIDEO_UPDATE( redalert );
-	WRITE_HANDLER( redalert_c040_w );
-	WRITE_HANDLER( demoneye_c040_w );
-	WRITE_HANDLER( redalert_backcolor_w );
 	
 	
 	/* sndhrdw/redalert.c */
-	WRITE_HANDLER( redalert_c030_w );
-	READ_HANDLER( redalert_voicecommand_r );
-	WRITE_HANDLER( redalert_soundlatch_w );
-	READ_HANDLER( redalert_AY8910_A_r );
-	WRITE_HANDLER( redalert_AY8910_B_w );
-	WRITE_HANDLER( redalert_AY8910_w );
-	READ_HANDLER( redalert_sound_register_IC1_r );
-	WRITE_HANDLER( redalert_sound_register_IC2_w );
 	
 	
 	public static Memory_ReadAddress redalert_readmem[]={

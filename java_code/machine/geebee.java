@@ -20,7 +20,6 @@ public class geebee
 {
 	
 	/* from sndhrdw/geebee.c */
-	WRITE_HANDLER( geebee_sound_w );
 	
 	/* globals */
 	int geebee_ball_h;

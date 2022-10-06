@@ -53,9 +53,6 @@ public class dooyong
 	extern unsigned char *lastday_bgscroll,*lastday_fgscroll,*bluehawk_fg2scroll;
 	extern data16_t *rshark_scroll1,*rshark_scroll2,*rshark_scroll3,*rshark_scroll4;
 	
-	WRITE_HANDLER( lastday_ctrl_w );
-	WRITE_HANDLER( pollux_ctrl_w );
-	WRITE_HANDLER( primella_ctrl_w );
 	WRITE16_HANDLER( rshark_ctrl_w );
 	VIDEO_UPDATE( lastday );
 	VIDEO_UPDATE( gulfstrm );

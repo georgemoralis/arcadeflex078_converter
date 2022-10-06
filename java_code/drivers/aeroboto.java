@@ -38,10 +38,6 @@ public class aeroboto
 	VIDEO_START( aeroboto );
 	VIDEO_UPDATE( aeroboto );
 	
-	READ_HANDLER( aeroboto_in0_r );
-	WRITE_HANDLER( aeroboto_3000_w );
-	WRITE_HANDLER( aeroboto_videoram_w );
-	WRITE_HANDLER( aeroboto_tilecolor_w );
 	
 	static data8_t *aeroboto_mainram;
 	static int disable_irq = 0;

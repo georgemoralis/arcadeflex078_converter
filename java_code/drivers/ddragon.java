@@ -56,8 +56,6 @@ public class ddragon
 	extern unsigned char *ddragon_scrolly_lo;
 	VIDEO_START( ddragon );
 	VIDEO_UPDATE( ddragon );
-	WRITE_HANDLER( ddragon_bgvideoram_w );
-	WRITE_HANDLER( ddragon_fgvideoram_w );
 	extern unsigned char *ddragon_spriteram;
 	extern int technos_video_hw;
 	/* end of extern code & data */

@@ -105,7 +105,6 @@ public class bosco
 	
 	static void *nmi_timer_1, *nmi_timer_2;
 	
-	WRITE_HANDLER( bosco_halt_w );
 	static void bosco_nmi_generate_1(int);
 	static void bosco_nmi_generate_2(int);
 	

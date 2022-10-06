@@ -27,15 +27,11 @@ public class ddrible
 	extern unsigned char *ddrible_bg_videoram;
 	
 	/* video hardware memory handlers */
-	WRITE_HANDLER( ddrible_fg_videoram_w );
-	WRITE_HANDLER( ddrible_bg_videoram_w );
 	
 	/* video hardware functions */
 	PALETTE_INIT( ddrible );
 	VIDEO_START( ddrible );
 	VIDEO_UPDATE( ddrible );
-	WRITE_HANDLER( K005885_0_w );
-	WRITE_HANDLER( K005885_1_w );
 	
 	
 	static INTERRUPT_GEN( ddrible_interrupt_0 )

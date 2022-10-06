@@ -23,11 +23,7 @@ public class exedexes
 	extern UINT8 *exedexes_nbg_yscroll;
 	extern UINT8 *exedexes_nbg_xscroll;
 	
-	extern WRITE_HANDLER( exedexes_videoram_w );
-	extern WRITE_HANDLER( exedexes_colorram_w );
-	extern WRITE_HANDLER( exedexes_c804_w );
-	extern WRITE_HANDLER( exedexes_gfxctrl_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( exedexes );
 	extern VIDEO_START( exedexes );
 	extern VIDEO_UPDATE( exedexes );

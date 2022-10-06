@@ -41,8 +41,7 @@ package drivers;
 public class canyon
 {
 	
-	extern WRITE_HANDLER( canyon_videoram_w );
-	
+	extern 
 	extern VIDEO_START( canyon );
 	extern VIDEO_UPDATE( canyon );
 	

@@ -67,19 +67,12 @@ public class gyruss
 	
 	void konami1_decode_cpu2(void);
 	
-	WRITE_HANDLER( gyruss_flipscreen_w );
-	READ_HANDLER( gyruss_scanline_r );
 	VIDEO_START( gyruss );
 	PALETTE_INIT( gyruss );
 	VIDEO_UPDATE( gyruss );
 	INTERRUPT_GEN( gyruss_6809_interrupt );
 	
 	
-	READ_HANDLER( gyruss_portA_r );
-	WRITE_HANDLER( gyruss_filter0_w );
-	WRITE_HANDLER( gyruss_filter1_w );
-	WRITE_HANDLER( gyruss_sh_irqtrigger_w );
-	WRITE_HANDLER( gyruss_i8039_irq_w );
 	
 	
 	unsigned char *gyruss_sharedram;

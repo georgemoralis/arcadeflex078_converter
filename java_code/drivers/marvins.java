@@ -42,18 +42,10 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	extern READ_HANDLER( marvins_background_ram_r );
-	extern WRITE_HANDLER( marvins_background_ram_w );
-	
-	extern READ_HANDLER( marvins_foreground_ram_r );
-	extern WRITE_HANDLER( marvins_foreground_ram_w );
-	
-	extern READ_HANDLER( marvins_text_ram_r );
-	extern WRITE_HANDLER( marvins_text_ram_w );
-	
-	extern READ_HANDLER( marvins_spriteram_r );
-	extern WRITE_HANDLER( marvins_spriteram_w );
-	
+	extern extern 
+	extern extern 
+	extern extern 
+	extern extern 
 	
 	/***************************************************************************
 	**
@@ -65,8 +57,7 @@ public class marvins
 	extern VIDEO_UPDATE( marvins );
 	extern VIDEO_UPDATE( madcrash );
 	
-	extern WRITE_HANDLER( marvins_palette_bank_w );
-	
+	extern 
 	
 	/***************************************************************************
 	**
@@ -100,8 +91,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	extern WRITE_HANDLER( snkwave_w );
-	
+	extern 
 	static int sound_cpu_busy;
 	
 	static struct namco_interface snkwave_interface =

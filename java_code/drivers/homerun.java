@@ -28,9 +28,6 @@ public class homerun
 	extern int homerun_xpa,homerun_xpb,homerun_xpc;
 	extern data8_t *homerun_videoram;
 	
-	WRITE_HANDLER( homerun_videoram_w );
-	WRITE_HANDLER( homerun_color_w );
-	WRITE_HANDLER( homerun_banking_w );
 	VIDEO_START(homerun);
 	VIDEO_UPDATE(homerun);
 	

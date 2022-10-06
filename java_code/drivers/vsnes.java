@@ -183,13 +183,7 @@ public class vsnes
 	extern DRIVER_INIT( vsfdf );
 	extern DRIVER_INIT( mightybj);
 	
-	extern READ_HANDLER( vsnes_in0_r );
-	extern READ_HANDLER( vsnes_in1_r );
-	extern READ_HANDLER( vsnes_in0_1_r );
-	extern READ_HANDLER( vsnes_in1_1_r );
-	extern WRITE_HANDLER( vsnes_in0_w );
-	extern WRITE_HANDLER( vsnes_in0_1_w );
-	
+	extern extern extern extern extern extern 
 	/******************************************************************************/
 	
 	/* local stuff */

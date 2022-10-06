@@ -39,7 +39,6 @@ public class bladestl
 	VIDEO_START( bladestl );
 	VIDEO_UPDATE( bladestl );
 	PALETTE_INIT( bladestl );
-	WRITE_HANDLER( bladestl_vreg_w );
 	
 	static INTERRUPT_GEN( bladestl_interrupt )
 	{

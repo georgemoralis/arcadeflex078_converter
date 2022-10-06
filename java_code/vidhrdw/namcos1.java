@@ -25,8 +25,6 @@ public class namcos1
 	#define SUB_COMPLETE 0x20
 	
 	//#define TRY_PDRAWGFX 1
-	WRITE_HANDLER( namcos1_main_update_w );
-	WRITE_HANDLER( namcos1_sub_update_w );
 	
 	struct playfield
 	{

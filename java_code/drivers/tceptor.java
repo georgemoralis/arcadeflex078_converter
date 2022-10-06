@@ -25,14 +25,7 @@ public class tceptor
 	extern VIDEO_START( tceptor );
 	extern VIDEO_UPDATE( tceptor );
 	
-	extern READ_HANDLER( tceptor_tile_ram_r );
-	extern WRITE_HANDLER( tceptor_tile_ram_w );
-	extern READ_HANDLER( tceptor_tile_attr_r );
-	extern WRITE_HANDLER( tceptor_tile_attr_w );
-	extern READ_HANDLER( tceptor_bg_ram_r );
-	extern WRITE_HANDLER( tceptor_bg_ram_w );
-	extern WRITE_HANDLER( tceptor_bg_scroll_w );
-	
+	extern extern extern extern extern extern extern 
 	extern data8_t *tceptor_tile_ram;
 	extern data8_t *tceptor_tile_attr;
 	extern data8_t *tceptor_bg_ram;

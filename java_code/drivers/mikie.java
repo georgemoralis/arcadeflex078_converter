@@ -25,11 +25,7 @@ package drivers;
 public class mikie
 {
 	
-	extern WRITE_HANDLER( mikie_videoram_w );
-	extern WRITE_HANDLER( mikie_colorram_w );
-	extern WRITE_HANDLER( mikie_palettebank_w );
-	extern WRITE_HANDLER( mikie_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( mikie );
 	extern VIDEO_START( mikie );
 	extern VIDEO_UPDATE( mikie );

@@ -32,22 +32,7 @@ public class bking2
 	VIDEO_UPDATE( bking2 );
 	VIDEO_EOF( bking2 );
 	
-	WRITE_HANDLER( bking2_xld1_w );
-	WRITE_HANDLER( bking2_yld1_w );
-	WRITE_HANDLER( bking2_xld2_w );
-	WRITE_HANDLER( bking2_yld2_w );
-	WRITE_HANDLER( bking2_xld3_w );
-	WRITE_HANDLER( bking2_yld3_w );
-	WRITE_HANDLER( bking2_msk_w );
-	WRITE_HANDLER( bking2_cont1_w );
-	WRITE_HANDLER( bking2_cont2_w );
-	WRITE_HANDLER( bking2_cont3_w );
-	WRITE_HANDLER( bking2_hitclr_w );
-	WRITE_HANDLER( bking2_playfield_w );
 	
-	READ_HANDLER( bking2_input_port_5_r );
-	READ_HANDLER( bking2_input_port_6_r );
-	READ_HANDLER( bking2_pos_r );
 	
 	UINT8* bking2_playfield_ram;
 	

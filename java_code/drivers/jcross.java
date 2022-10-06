@@ -27,18 +27,12 @@ public class jcross
 	
 	data8_t *jcr_textram;
 	
-	WRITE_HANDLER( snkwave_w );
 	
-	READ_HANDLER( jcross_background_ram_r );
-	WRITE_HANDLER( jcross_background_ram_w );
 	
-	READ_HANDLER( jcross_text_ram_r );
-	WRITE_HANDLER( jcross_text_ram_w );
 	
 	extern VIDEO_START( jcross );
 	extern VIDEO_UPDATE( jcross );
 	extern int jcross_vregs[5];
-	WRITE_HANDLER( jcross_palettebank_w );
 	
 	static int sound_cpu_busy=0;
 	

@@ -54,29 +54,16 @@ public class grchamp
 	extern PALETTE_INIT( grchamp );
 	extern VIDEO_START( grchamp );
 	extern VIDEO_UPDATE( grchamp );
-	extern WRITE_HANDLER( grchamp_videoram_w );
-	extern UINT8 *grchamp_videoram;
+	extern extern UINT8 *grchamp_videoram;
 	extern UINT8 *grchamp_radar;
 	extern UINT8 grchamp_player_ypos;
 	
-	extern WRITE_HANDLER( grchamp_player_xpos_w );
-	extern WRITE_HANDLER( grchamp_player_ypos_w );
-	extern WRITE_HANDLER( grchamp_tile_select_w );
-	extern WRITE_HANDLER( grchamp_rain_xpos_w );
-	extern WRITE_HANDLER( grchamp_rain_ypos_w );
-	
+	extern extern extern extern extern 
 	/* from machine */
 	extern int grchamp_cpu_irq_enable[2];
 	extern DRIVER_INIT( grchamp );
-	extern READ_HANDLER( grchamp_port_0_r );
-	extern READ_HANDLER( grchamp_port_1_r );
-	extern WRITE_HANDLER( grchamp_port_1_w );
-	
-	extern WRITE_HANDLER( grchamp_control0_w );
-	extern WRITE_HANDLER( grchamp_coinled_w );
-	extern WRITE_HANDLER( grchamp_sound_w );
-	extern WRITE_HANDLER( grchamp_comm_w );
-	
+	extern extern extern 
+	extern extern extern extern 
 	extern int grchamp_collision;
 	
 	/***************************************************************************/

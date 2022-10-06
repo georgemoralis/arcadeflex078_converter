@@ -60,7 +60,6 @@ public class _4enraya
 	VIDEO_START( 4enraya );
 	VIDEO_UPDATE( 4enraya );
 	
-	WRITE_HANDLER( fenraya_videoram_w );
 	
 	static int soundlatch;
 	

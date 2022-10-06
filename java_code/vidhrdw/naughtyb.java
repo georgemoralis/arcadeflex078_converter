@@ -16,7 +16,6 @@ public class naughtyb
 {
 	
 	/* from sndhrdw/pleiads.c */
-	WRITE_HANDLER( pleiads_sound_control_c_w );
 	
 	unsigned char *naughtyb_videoram2;
 	

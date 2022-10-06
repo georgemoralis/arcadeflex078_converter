@@ -14,11 +14,6 @@ public class namcos1
 	#define USE_MTRANDOM 1
 	
 	/* from vidhrdw */
-	READ_HANDLER( namcos1_videoram_r );
-	WRITE_HANDLER( namcos1_videoram_w );
-	READ_HANDLER( namcos1_paletteram_r );
-	WRITE_HANDLER( namcos1_paletteram_w );
-	WRITE_HANDLER( namcos1_videocontrol_w );
 	extern void namcos1_set_scroll_offsets( const int *bgx, const int *bgy, int negative, int optimize );
 	extern void namcos1_set_sprite_offsets( int x, int y );
 	

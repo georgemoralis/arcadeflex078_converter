@@ -53,9 +53,7 @@ public class seicross
 	
 	extern UINT8 *seicross_row_scroll;
 	
-	extern WRITE_HANDLER( seicross_videoram_w );
-	extern WRITE_HANDLER( seicross_colorram_w );
-	
+	extern extern 
 	extern PALETTE_INIT( seicross );
 	extern VIDEO_START( seicross );
 	extern VIDEO_UPDATE( seicross );

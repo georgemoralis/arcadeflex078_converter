@@ -39,8 +39,6 @@ public class m90
 	
 	VIDEO_UPDATE( m90 );
 	VIDEO_UPDATE( m90_bootleg );
-	WRITE_HANDLER( m90_video_control_w );
-	WRITE_HANDLER( m90_video_w );
 	VIDEO_START( m90 );
 	
 	/***************************************************************************/

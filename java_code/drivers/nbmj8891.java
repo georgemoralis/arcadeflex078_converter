@@ -113,10 +113,6 @@ public class nbmj8891
 	VIDEO_START( gionbana );
 	VIDEO_START( hanamomo );
 	
-	READ_HANDLER( gionbana_palette_r );
-	WRITE_HANDLER( gionbana_palette_w );
-	READ_HANDLER( maiko_palette_r );
-	WRITE_HANDLER( maiko_palette_w );
 	void gionbana_radrx_w(int data);
 	void gionbana_radry_w(int data);
 	void gionbana_sizex_w(int data);
@@ -128,8 +124,6 @@ public class nbmj8891
 	void gionbana_vramsel_w(int data);
 	void gionbana_romsel_w(int data);
 	void gionbana_paltblnum_w(int data);
-	READ_HANDLER( gionbana_paltbl_r );
-	WRITE_HANDLER( gionbana_paltbl_w );
 	
 	
 	static DRIVER_INIT( gionbana )

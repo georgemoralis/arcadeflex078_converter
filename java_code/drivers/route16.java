@@ -87,16 +87,7 @@ public class route16
 	DRIVER_INIT( stratvox );
 	PALETTE_INIT( route16 );
 	VIDEO_START( route16 );
-	WRITE_HANDLER( route16_out0_w );
-	WRITE_HANDLER( route16_out1_w );
-	WRITE_HANDLER( route16_videoram1_w );
-	WRITE_HANDLER( route16_videoram2_w );
-	READ_HANDLER( route16_videoram1_r );
-	READ_HANDLER( route16_videoram2_r );
-	WRITE_HANDLER( route16_sharedram_w );
-	READ_HANDLER( route16_sharedram_r );
 	VIDEO_UPDATE( route16 );
-	WRITE_HANDLER( stratvox_sn76477_w );
 	READ_HANDLER ( speakres_in3_r );
 	WRITE_HANDLER ( speakres_out2_w );
 	

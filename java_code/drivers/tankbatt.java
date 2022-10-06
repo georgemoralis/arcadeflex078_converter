@@ -70,8 +70,7 @@ public class tankbatt
 	static int tankbatt_nmi_enable; /* No need to init this - the game will set it on reset */
 	static int tankbatt_sound_enable;
 	
-	extern WRITE_HANDLER( tankbatt_videoram_w );
-	
+	extern 
 	extern PALETTE_INIT( tankbatt );
 	extern VIDEO_START( tankbatt );
 	extern VIDEO_UPDATE( tankbatt );

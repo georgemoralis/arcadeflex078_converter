@@ -109,18 +109,11 @@ public class gladiatr
 	
 	/*Video functions*/
 	extern unsigned char *gladiator_text;
-	WRITE_HANDLER( gladiatr_video_registers_w );
-	READ_HANDLER( gladiatr_video_registers_r );
-	WRITE_HANDLER( gladiatr_paletteram_rg_w );
-	WRITE_HANDLER( gladiatr_paletteram_b_w );
 	extern VIDEO_START( gladiatr );
 	extern VIDEO_UPDATE( gladiatr );
-	WRITE_HANDLER( gladiatr_spritebank_w );
 	
 	/*Rom bankswitching*/
 	static int banka;
-	WRITE_HANDLER( gladiatr_bankswitch_w );
-	READ_HANDLER( gladiatr_bankswitch_r );
 	
 	/*Rom bankswitching*/
 	WRITE_HANDLER( gladiatr_bankswitch_w ){

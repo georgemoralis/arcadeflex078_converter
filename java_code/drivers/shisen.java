@@ -14,10 +14,7 @@ package drivers;
 public class shisen
 {
 	
-	extern WRITE_HANDLER( sichuan2_videoram_w );
-	extern WRITE_HANDLER( sichuan2_bankswitch_w );
-	extern WRITE_HANDLER( sichuan2_paletteram_w );
-	
+	extern extern extern 
 	extern VIDEO_START( sichuan2 );
 	extern VIDEO_UPDATE( sichuan2 );
 	

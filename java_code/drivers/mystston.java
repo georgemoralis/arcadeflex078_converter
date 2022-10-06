@@ -25,11 +25,7 @@ public class mystston
 	
 	extern UINT8 *mystston_videoram2;
 	
-	extern WRITE_HANDLER( mystston_videoram_w );
-	extern WRITE_HANDLER( mystston_videoram2_w );
-	extern WRITE_HANDLER( mystston_scroll_w );
-	extern WRITE_HANDLER( mystston_control_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( mystston );
 	extern VIDEO_START( mystston );
 	extern VIDEO_UPDATE( mystston );

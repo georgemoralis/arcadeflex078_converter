@@ -45,8 +45,7 @@ public class grchamp
 		return comm_latch;
 	}
 	
-	extern WRITE_HANDLER( PC3259_control_w );
-	
+	extern 
 	WRITE_HANDLER( grchamp_control0_w ){
 		/* *OUT0 - Page 42 */
 		/* bit 0 = trigger irq on cpu1 (itself) when vblank arrives */

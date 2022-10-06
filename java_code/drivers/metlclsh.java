@@ -46,10 +46,6 @@ public class metlclsh
 	
 	/* Functions defined in vidhrdw: */
 	
-	WRITE_HANDLER( metlclsh_bgram_w );
-	WRITE_HANDLER( metlclsh_fgram_w );
-	WRITE_HANDLER( metlclsh_gfxbank_w );
-	WRITE_HANDLER( metlclsh_rambank_w );
 	
 	VIDEO_START( metlclsh );
 	VIDEO_UPDATE( metlclsh );

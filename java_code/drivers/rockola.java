@@ -102,33 +102,16 @@ public class rockola
 	extern const char *vanguard_sample_names[];
 	
 	
-	extern WRITE_HANDLER( rockola_colorram_w );
-	extern WRITE_HANDLER( rockola_videoram_w );
-	extern WRITE_HANDLER( rockola_videoram2_w );
-	extern WRITE_HANDLER( rockola_charram_w );
-	extern WRITE_HANDLER( rockola_flipscreen_w );
-	extern WRITE_HANDLER( rockola_scrollx_w );
-	extern WRITE_HANDLER( rockola_scrolly_w );
-	
+	extern extern extern extern extern extern extern 
 	extern PALETTE_INIT( rockola );
 	extern VIDEO_START( rockola );
 	extern VIDEO_UPDATE( rockola );
 	
-	extern WRITE_HANDLER( satansat_charram_w );
-	extern WRITE_HANDLER( satansat_b002_w );
-	extern WRITE_HANDLER( satansat_backcolor_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( satansat );
 	extern VIDEO_START( satansat );
 	
-	extern WRITE_HANDLER( satansat_sound0_w );
-	extern WRITE_HANDLER( satansat_sound1_w );
-	extern WRITE_HANDLER( vanguard_sound0_w );
-	extern WRITE_HANDLER( vanguard_sound1_w );
-	extern WRITE_HANDLER( fantasy_sound0_w );
-	extern WRITE_HANDLER( fantasy_sound1_w );
-	extern WRITE_HANDLER( fantasy_sound2_w );
-	
+	extern extern extern extern extern extern extern 
 	int rockola_sh_start(const struct MachineSound *msound);
 	void rockola_sh_update(void);
 	

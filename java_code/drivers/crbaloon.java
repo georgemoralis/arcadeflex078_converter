@@ -59,11 +59,7 @@ public class crbaloon
 {
 	
 	
-	extern WRITE_HANDLER( crbaloon_videoram_w );
-	extern WRITE_HANDLER( crbaloon_colorram_w );
-	extern WRITE_HANDLER( crbaloon_spritectrl_w );
-	extern WRITE_HANDLER( crbaloon_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( crbaloon );
 	extern VIDEO_START( crbaloon );
 	extern VIDEO_UPDATE( crbaloon );

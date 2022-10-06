@@ -29,12 +29,7 @@ public class popeye
 	extern UINT8 *popeye_background_pos;
 	extern UINT8 *popeye_palettebank;
 	
-	extern WRITE_HANDLER( popeye_videoram_w );
-	extern WRITE_HANDLER( popeye_colorram_w );
-	extern WRITE_HANDLER( popeye_backgroundram_w );
-	extern WRITE_HANDLER( popeye_bitmap_w );
-	extern WRITE_HANDLER( skyskipr_bitmap_w );
-	
+	extern extern extern extern extern 
 	extern PALETTE_INIT( popeye );
 	extern PALETTE_INIT( popeyebl );
 	extern VIDEO_START( skyskipr );

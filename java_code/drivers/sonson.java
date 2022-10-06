@@ -56,11 +56,7 @@ package drivers;
 public class sonson
 {
 	
-	extern WRITE_HANDLER( sonson_videoram_w );
-	extern WRITE_HANDLER( sonson_colorram_w );
-	extern WRITE_HANDLER( sonson_scroll_w );
-	extern WRITE_HANDLER( sonson_flipscreen_w );
-	
+	extern extern extern extern 
 	extern PALETTE_INIT( sonson );
 	extern VIDEO_START( sonson );
 	extern VIDEO_UPDATE( sonson );

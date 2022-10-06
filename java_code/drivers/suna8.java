@@ -49,14 +49,8 @@ public class suna8
 	
 	/* Functions defined in vidhrdw: */
 	
-	WRITE_HANDLER( suna8_spriteram_w );			// for debug
-	WRITE_HANDLER( suna8_banked_spriteram_w );	// for debug
 	
-	READ_HANDLER( suna8_banked_paletteram_r );
-	READ_HANDLER( suna8_banked_spriteram_r );
 	
-	WRITE_HANDLER( suna8_banked_paletteram_w );
-	WRITE_HANDLER( brickzn_banked_paletteram_w );
 	
 	VIDEO_START( suna8_textdim0 );
 	VIDEO_START( suna8_textdim8 );

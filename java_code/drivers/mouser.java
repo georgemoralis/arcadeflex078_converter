@@ -26,10 +26,6 @@ public class mouser
 	
 	/* From "vidhrdw/mouser.c" */
 	PALETTE_INIT( mouser );
-	WRITE_HANDLER( mouser_flip_screen_x_w );
-	WRITE_HANDLER( mouser_flip_screen_y_w );
-	WRITE_HANDLER( mouser_spriteram_w );
-	WRITE_HANDLER( mouser_colorram_w );
 	VIDEO_UPDATE( mouser );
 	
 	/* Mouser has external masking circuitry around

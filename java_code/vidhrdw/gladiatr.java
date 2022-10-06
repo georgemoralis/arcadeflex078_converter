@@ -61,12 +61,10 @@ public class gladiatr
 	}
 	
 	
-	WRITE_HANDLER( gladiatr_spritebank_w );
 	WRITE_HANDLER( gladiatr_spritebank_w ){
 		sprite_bank = (data)?4:2;
 	}
 	
-	READ_HANDLER( gladiatr_video_registers_r );
 	READ_HANDLER( gladiatr_video_registers_r ){
 		switch( offset ){
 			case 0x080: return video_attributes;
@@ -76,7 +74,6 @@ public class gladiatr
 		return 0;
 	}
 	
-	WRITE_HANDLER( gladiatr_video_registers_w );
 	WRITE_HANDLER( gladiatr_video_registers_w ){
 		switch( offset ){
 			case 0x000: break;

@@ -16,10 +16,7 @@ public class rocnrope
 	
 	extern void konami1_decode(void);
 	
-	extern WRITE_HANDLER( rocnrope_videoram_w );
-	extern WRITE_HANDLER( rocnrope_colorram_w );
-	extern WRITE_HANDLER( rocnrope_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( rocnrope );
 	extern VIDEO_START( rocnrope );
 	extern VIDEO_UPDATE( rocnrope );

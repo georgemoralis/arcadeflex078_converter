@@ -32,8 +32,6 @@ public class cosmic
 	VIDEO_UPDATE( cosmica );
 	VIDEO_UPDATE( cosmicg );
 	VIDEO_UPDATE( nomnlnd );
-	WRITE_HANDLER( cosmic_color_register_w );
-	WRITE_HANDLER( cosmic_background_enable_w );
 	
 	
 	static unsigned int pixel_clock = 0;

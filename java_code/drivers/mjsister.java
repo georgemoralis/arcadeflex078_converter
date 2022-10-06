@@ -26,7 +26,6 @@ public class mjsister
 	
 	VIDEO_START( mjsister );
 	VIDEO_UPDATE( mjsister );
-	WRITE_HANDLER( mjsister_videoram_w );
 	
 	static int mjsister_input_sel1;
 	static int mjsister_input_sel2;

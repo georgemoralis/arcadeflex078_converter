@@ -18,32 +18,11 @@ public class retofinv
 {
 	
 	/* in machine */
-	READ_HANDLER( retofinv_68705_portA_r );
-	WRITE_HANDLER( retofinv_68705_portA_w );
-	WRITE_HANDLER( retofinv_68705_ddrA_w );
-	READ_HANDLER( retofinv_68705_portB_r );
-	WRITE_HANDLER( retofinv_68705_portB_w );
-	WRITE_HANDLER( retofinv_68705_ddrB_w );
-	READ_HANDLER( retofinv_68705_portC_r );
-	WRITE_HANDLER( retofinv_68705_portC_w );
-	WRITE_HANDLER( retofinv_68705_ddrC_w );
-	WRITE_HANDLER( retofinv_mcu_w );
-	READ_HANDLER( retofinv_mcu_r );
-	READ_HANDLER( retofinv_mcu_status_r );
 	
 	/* in vidhrdw */
 	VIDEO_START( retofinv );
 	PALETTE_INIT( retofinv );
 	VIDEO_UPDATE( retofinv );
-	READ_HANDLER( retofinv_bg_videoram_r );
-	READ_HANDLER( retofinv_fg_videoram_r );
-	READ_HANDLER( retofinv_bg_colorram_r );
-	READ_HANDLER( retofinv_fg_colorram_r );
-	WRITE_HANDLER( retofinv_bg_videoram_w );
-	WRITE_HANDLER( retofinv_fg_videoram_w );
-	WRITE_HANDLER( retofinv_bg_colorram_w );
-	WRITE_HANDLER( retofinv_fg_colorram_w );
-	WRITE_HANDLER( retofinv_flip_screen_w );
 	
 	extern size_t retofinv_videoram_size;
 	extern unsigned char *retofinv_sprite_ram1;

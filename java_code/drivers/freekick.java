@@ -52,7 +52,6 @@ public class freekick
 	VIDEO_UPDATE(gigas);
 	VIDEO_UPDATE(pbillrd);
 	VIDEO_UPDATE(freekick);
-	WRITE_HANDLER( freek_videoram_w );
 	
 	static int oigas_inval,oigas_outval,oigas_cnt;//oigas
 	static int romaddr;

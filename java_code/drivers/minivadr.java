@@ -20,7 +20,6 @@ public class minivadr
 {
 	
 	
-	WRITE_HANDLER( minivadr_videoram_w );
 	VIDEO_UPDATE( minivadr );
 	PALETTE_INIT( minivadr );
 	

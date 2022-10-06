@@ -20,8 +20,7 @@ public class sprint4
 	extern VIDEO_START( sprint4 );
 	extern VIDEO_UPDATE( sprint4 );
 	
-	extern WRITE_HANDLER( sprint4_video_ram_w );
-	
+	extern 
 	extern UINT8* sprint4_video_ram;
 	
 	extern int sprint4_collision[4];

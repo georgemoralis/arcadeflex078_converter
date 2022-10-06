@@ -19,11 +19,9 @@ public class beezer
 	extern UINT8 *videoram;
 	INTERRUPT_GEN( beezer_interrupt );
 	VIDEO_UPDATE( beezer );
-	WRITE_HANDLER( beezer_ram_w );
 	
 	/* from machine/beezer.c */
 	DRIVER_INIT( beezer );
-	WRITE_HANDLER( beezer_bankswitch_w );
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -71,13 +71,6 @@ public class firetrap
 	extern unsigned char *firetrap_bg2videoram;
 	extern unsigned char *firetrap_fgvideoram;
 	
-	WRITE_HANDLER( firetrap_fgvideoram_w );
-	WRITE_HANDLER( firetrap_bg1videoram_w );
-	WRITE_HANDLER( firetrap_bg2videoram_w );
-	WRITE_HANDLER( firetrap_bg1_scrollx_w );
-	WRITE_HANDLER( firetrap_bg1_scrolly_w );
-	WRITE_HANDLER( firetrap_bg2_scrollx_w );
-	WRITE_HANDLER( firetrap_bg2_scrolly_w );
 	VIDEO_START( firetrap );
 	PALETTE_INIT( firetrap );
 	VIDEO_UPDATE( firetrap );

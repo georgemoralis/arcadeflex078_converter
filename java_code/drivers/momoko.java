@@ -30,13 +30,6 @@ public class momoko
 	
 	VIDEO_UPDATE( momoko );
 	
-	WRITE_HANDLER( momoko_fg_scrollx_w );
-	WRITE_HANDLER( momoko_fg_scrolly_w );
-	WRITE_HANDLER( momoko_text_scrolly_w );
-	WRITE_HANDLER( momoko_text_mode_w );
-	WRITE_HANDLER( momoko_bg_scrollx_w );
-	WRITE_HANDLER( momoko_bg_scrolly_w );
-	WRITE_HANDLER( momoko_flipscreen_w );
 	WRITE_HANDLER( momoko_fg_select_w);
 	WRITE_HANDLER( momoko_bg_select_w);
 	WRITE_HANDLER( momoko_bg_priority_w);

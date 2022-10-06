@@ -54,15 +54,7 @@ public class nyny
 	static unsigned char dac_volume = 0 ;
 	static unsigned char dac_enable = 0 ;
 	
-	READ_HANDLER( nyny_videoram0_r );
-	WRITE_HANDLER( nyny_videoram0_w );
-	READ_HANDLER( nyny_videoram1_r );
-	WRITE_HANDLER( nyny_videoram1_w );
 	
-	READ_HANDLER( nyny_colourram0_r );
-	WRITE_HANDLER( nyny_colourram0_w );
-	READ_HANDLER( nyny_colourram1_r );
-	WRITE_HANDLER( nyny_colourram1_w );
 	WRITE_HANDLER( nyny_flipscreen_w ) ;
 	
 	

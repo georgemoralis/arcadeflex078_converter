@@ -8,7 +8,6 @@ package sndhrdw;
 public class rockola
 {
 	
-	WRITE_HANDLER( rockola_flipscreen_w );
 	
 	#define TONE_VOLUME 25
 	#define SAMPLE_VOLUME 25

@@ -59,12 +59,6 @@ public class tecmo
 	extern int tecmo_video_type;
 	extern unsigned char *tecmo_txvideoram,*tecmo_fgvideoram,*tecmo_bgvideoram;
 	
-	WRITE_HANDLER( tecmo_txvideoram_w );
-	WRITE_HANDLER( tecmo_fgvideoram_w );
-	WRITE_HANDLER( tecmo_bgvideoram_w );
-	WRITE_HANDLER( tecmo_fgscroll_w );
-	WRITE_HANDLER( tecmo_bgscroll_w );
-	WRITE_HANDLER( tecmo_flipscreen_w );
 	
 	VIDEO_START( tecmo );
 	VIDEO_UPDATE( tecmo );

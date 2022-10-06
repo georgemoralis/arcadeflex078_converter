@@ -47,21 +47,11 @@ public class superpac
 	
 	extern unsigned char *superpac_sharedram;
 	extern unsigned char *superpac_customio_1,*superpac_customio_2;
-	READ_HANDLER( superpac_customio_r );
-	READ_HANDLER( superpac_sharedram_r );
-	WRITE_HANDLER( superpac_sharedram_w );
-	READ_HANDLER( superpac_customio_1_r );
-	READ_HANDLER( superpac_customio_2_r );
-	WRITE_HANDLER( superpac_interrupt_enable_w );
-	WRITE_HANDLER( superpac_cpu_enable_w );
-	WRITE_HANDLER( superpac_reset_2_w );
 	
 	VIDEO_START( superpac );
 	VIDEO_UPDATE( superpac );
 	MACHINE_INIT( superpac );
 	PALETTE_INIT( superpac );
-	READ_HANDLER( superpac_flipscreen_r );
-	WRITE_HANDLER( superpac_flipscreen_w );
 	
 	
 	

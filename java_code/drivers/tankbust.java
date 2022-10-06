@@ -31,15 +31,10 @@ public class tankbust
 	
 	extern data8_t * txt_ram;
 	
-	WRITE_HANDLER( tankbust_background_videoram_w );
 	READ_HANDLER ( tankbust_background_videoram_r );
-	WRITE_HANDLER( tankbust_background_colorram_w );
 	READ_HANDLER ( tankbust_background_colorram_r );
-	WRITE_HANDLER( tankbust_txtram_w );
 	READ_HANDLER ( tankbust_txtram_r );
 	
-	WRITE_HANDLER( tankbust_xscroll_w );
-	WRITE_HANDLER( tankbust_yscroll_w );
 	
 	
 	//port A of ay8910#0

@@ -23,36 +23,13 @@ public class msisaac
 	*/
 	
 	/* in machine/buggychl.c */
-	READ_HANDLER( buggychl_68705_portA_r );
-	WRITE_HANDLER( buggychl_68705_portA_w );
-	WRITE_HANDLER( buggychl_68705_ddrA_w );
-	READ_HANDLER( buggychl_68705_portB_r );
-	WRITE_HANDLER( buggychl_68705_portB_w );
-	WRITE_HANDLER( buggychl_68705_ddrB_w );
-	READ_HANDLER( buggychl_68705_portC_r );
-	WRITE_HANDLER( buggychl_68705_portC_w );
-	WRITE_HANDLER( buggychl_68705_ddrC_w );
-	WRITE_HANDLER( buggychl_mcu_w );
-	READ_HANDLER( buggychl_mcu_r );
-	READ_HANDLER( buggychl_mcu_status_r );
 	
 	
 	//not used
-	//WRITE_HANDLER( msisaac_textbank1_w );
-	
+	//
 	//used
-	WRITE_HANDLER( msisaac_fg_scrolly_w );
-	WRITE_HANDLER( msisaac_fg_scrollx_w );
-	WRITE_HANDLER( msisaac_bg_scrolly_w );
-	WRITE_HANDLER( msisaac_bg_scrollx_w );
-	WRITE_HANDLER( msisaac_bg2_scrolly_w );
-	WRITE_HANDLER( msisaac_bg2_scrollx_w );
 	
-	WRITE_HANDLER( msisaac_bg2_textbank_w );
 	
-	WRITE_HANDLER( msisaac_bg_videoram_w );
-	WRITE_HANDLER( msisaac_bg2_videoram_w );
-	WRITE_HANDLER( msisaac_fg_videoram_w );
 	
 	extern VIDEO_UPDATE( msisaac );
 	extern VIDEO_START( msisaac );

@@ -17,12 +17,7 @@ public class solomon
 	extern UINT8 *solomon_videoram2;
 	extern UINT8 *solomon_colorram2;
 	
-	extern WRITE_HANDLER( solomon_videoram_w );
-	extern WRITE_HANDLER( solomon_colorram_w );
-	extern WRITE_HANDLER( solomon_videoram2_w );
-	extern WRITE_HANDLER( solomon_colorram2_w );
-	extern WRITE_HANDLER( solomon_flipscreen_w );
-	
+	extern extern extern extern extern 
 	extern VIDEO_START( solomon );
 	extern VIDEO_UPDATE( solomon );
 	

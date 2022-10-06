@@ -7,9 +7,7 @@ package drivers;
 public class pingpong
 {
 	
-	extern WRITE_HANDLER( pingpong_videoram_w );
-	extern WRITE_HANDLER( pingpong_colorram_w );
-	
+	extern extern 
 	extern PALETTE_INIT( pingpong );
 	extern VIDEO_START( pingpong );
 	extern VIDEO_UPDATE( pingpong );

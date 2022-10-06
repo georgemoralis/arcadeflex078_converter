@@ -85,10 +85,7 @@ public class speedatk
 	
 	static UINT8 mux_data;
 	
-	extern WRITE_HANDLER( speedatk_videoram_w );
-	extern WRITE_HANDLER( speedatk_colorram_w );
-	extern WRITE_HANDLER( speedatk_flip_screen_w );
-	extern PALETTE_INIT( speedatk );
+	extern extern extern extern PALETTE_INIT( speedatk );
 	extern VIDEO_START( speedatk );
 	extern VIDEO_UPDATE( speedatk );
 	

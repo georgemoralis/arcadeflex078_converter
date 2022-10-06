@@ -22,7 +22,6 @@ public class galaga
 	
 	static void *nmi_timer;
 	
-	WRITE_HANDLER( galaga_halt_w );
 	void galaga_vh_interrupt(void);
 	
 	void galaga_nmi_generate (int param);

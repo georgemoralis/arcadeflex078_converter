@@ -33,21 +33,12 @@ public class trackfld
 	extern UINT8 *trackfld_scroll;
 	extern UINT8 *trackfld_scroll2;
 	
-	extern WRITE_HANDLER( trackfld_videoram_w );
-	extern WRITE_HANDLER( trackfld_colorram_w );
-	extern WRITE_HANDLER( trackfld_flipscreen_w );
-	
+	extern extern extern 
 	extern PALETTE_INIT( trackfld );
 	extern VIDEO_START( trackfld );
 	extern VIDEO_UPDATE( trackfld );
 	
-	extern WRITE_HANDLER( konami_sh_irqtrigger_w );
-	extern READ_HANDLER( trackfld_sh_timer_r );
-	extern READ_HANDLER( trackfld_speech_r );
-	extern WRITE_HANDLER( trackfld_sound_w );
-	extern READ_HANDLER( hyprolyb_speech_r );
-	extern WRITE_HANDLER( hyprolyb_ADPCM_data_w );
-	
+	extern extern extern extern extern extern 
 	extern struct SN76496interface konami_sn76496_interface;
 	extern struct DACinterface konami_dac_interface;
 	extern struct ADPCMinterface hyprolyb_adpcm_interface;

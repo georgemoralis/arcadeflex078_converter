@@ -28,12 +28,6 @@ public class baraduke
 	VIDEO_START( metrocrs );
 	VIDEO_UPDATE( baraduke );
 	VIDEO_UPDATE( metrocrs );
-	READ_HANDLER( baraduke_textlayer_r );
-	READ_HANDLER( baraduke_videoram_r );
-	WRITE_HANDLER( baraduke_textlayer_w );
-	WRITE_HANDLER( baraduke_videoram_w );
-	WRITE_HANDLER( baraduke_scroll0_w );
-	WRITE_HANDLER( baraduke_scroll1_w );
 	PALETTE_INIT( baraduke );
 	
 	static int inputport_selected;

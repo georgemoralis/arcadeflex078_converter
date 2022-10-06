@@ -121,9 +121,6 @@ public class asuka
 	VIDEO_UPDATE( asuka );
 	VIDEO_UPDATE( bonzeadv );
 	
-	WRITE_HANDLER( rastan_adpcm_trigger_w );
-	WRITE_HANDLER( rastan_c000_w );
-	WRITE_HANDLER( rastan_d000_w );
 	
 	WRITE16_HANDLER( bonzeadv_c_chip_w );
 	READ16_HANDLER( bonzeadv_c_chip_r );

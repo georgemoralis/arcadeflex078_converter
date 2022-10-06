@@ -82,18 +82,6 @@ public class galaga
 	
 	
 	extern unsigned char *galaga_sharedram;
-	READ_HANDLER( galaga_hiscore_print_r );
-	READ_HANDLER( galaga_sharedram_r );
-	WRITE_HANDLER( galaga_sharedram_w );
-	READ_HANDLER( galaga_dsw_r );
-	WRITE_HANDLER( galaga_interrupt_enable_1_w );
-	WRITE_HANDLER( galaga_interrupt_enable_2_w );
-	WRITE_HANDLER( galaga_interrupt_enable_3_w );
-	READ_HANDLER( galaga_customio_r );
-	READ_HANDLER( galaga_customio_data_r );
-	WRITE_HANDLER( galaga_customio_w );
-	WRITE_HANDLER( galaga_customio_data_w );
-	WRITE_HANDLER( galaga_halt_w );
 	INTERRUPT_GEN( galaga_interrupt_1 );
 	INTERRUPT_GEN( galaga_interrupt_2 );
 	INTERRUPT_GEN( galaga_interrupt_3 );
@@ -106,7 +94,6 @@ public class galaga
 	VIDEO_UPDATE( galaga );
 	PALETTE_INIT( galaga );
 	
-	WRITE_HANDLER( pengo_sound_w );
 	extern unsigned char *pengo_soundregs;
 	
 	

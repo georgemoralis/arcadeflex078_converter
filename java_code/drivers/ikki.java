@@ -24,8 +24,6 @@ public class ikki
 	
 	/****************************************************************************/
 	
-	WRITE_HANDLER( ikki_scroll_w );
-	WRITE_HANDLER( ikki_scrn_ctrl_w );
 	
 	WRITE_HANDLER( ikki_sharedram_w )
 	{
