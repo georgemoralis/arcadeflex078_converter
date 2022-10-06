@@ -69,8 +69,6 @@ public class stvvdp2
 	data8_t*  stv_vdp2_vram_dirty_8x8x8;
 	
 	data32_t* stv_vdp2_cram;
-	extern void video_update_vdp1(struct mame_bitmap *bitmap, const struct rectangle *cliprect);
-	extern int stv_vdp1_start ( void );
 	static void stv_vdp2_dynamic_res_change(void);
 	
 	/*
@@ -2558,7 +2556,6 @@ public class stvvdp2
 		COMBINE_DATA(&stv_vdp2_regs[offset]);
 	}
 	
-	extern int stv_vblank;
 	READ32_HANDLER ( stv_vdp2_regs_r )
 	{
 	//	if (offset!=1) logerror ("VDP2: Read from Registers, Offset %04x\n",offset);
@@ -2642,7 +2639,6 @@ public class stvvdp2
 		set_visible_area(0*8, horz-1,0*8, vert-1);
 	}
 	
-	extern data32_t *stv_vdp1_vram;
 	
 	VIDEO_UPDATE( stv_vdp2 )
 	{

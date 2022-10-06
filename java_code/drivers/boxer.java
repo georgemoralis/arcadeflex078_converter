@@ -17,10 +17,7 @@ package drivers;
 public class boxer
 {
 	
-	extern UINT8* boxer_tile_ram;
-	extern UINT8* boxer_sprite_ram;
 	
-	extern VIDEO_UPDATE( boxer );
 	
 	static UINT8 pot_state;
 	static UINT8 pot_latch;

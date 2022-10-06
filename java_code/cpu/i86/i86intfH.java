@@ -18,25 +18,11 @@ public class i86intfH
 	};
 	
 	/* Public variables */
-	extern int i86_ICount;
 	
 	/* Public functions */
 	
-	extern void i86_init(void);
-	extern void i86_reset(void *param);
-	extern void i86_exit(void);
-	extern int i86_execute(int cycles);
-	extern unsigned i86_get_context(void *dst);
-	extern void i86_set_context(void *src);
-	extern unsigned i86_get_reg(int regnum);
-	extern void i86_set_reg(int regnum, unsigned val);
-	extern void i86_set_irq_line(int irqline, int state);
-	extern void i86_set_irq_callback(int (*callback)(int irqline));
-	extern unsigned i86_dasm(char *buffer, unsigned pc);
-	extern const char *i86_info(void *context, int regnum);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned DasmI86(char* buffer, unsigned pc);
 	#endif
 	
 	#endif

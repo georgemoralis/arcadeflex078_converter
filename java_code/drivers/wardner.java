@@ -141,13 +141,10 @@ public class wardner
 	WRITE16_HANDLER( twincobr_dsp_w );
 	READ16_HANDLER( twincobr_BIO_r );
 	
-	extern int wardner_membank;
-	extern int twincobr_intenable;
 	
 	static data8_t *wardner_sharedram;
 	static data8_t *wardner_spare_pal_ram;
 	
-	extern data8_t *wardner_mainram;
 	
 	
 	/******************** Video stuff **********************/
@@ -156,7 +153,6 @@ public class wardner
 	VIDEO_UPDATE( toaplan0 );
 	VIDEO_EOF( toaplan0 );
 	
-	extern int twincobr_display_on;
 	
 	
 	

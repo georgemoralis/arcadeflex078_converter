@@ -26,11 +26,6 @@ public class tecmo16
 {
 	
 	
-	extern data16_t *tecmo16_videoram;
-	extern data16_t *tecmo16_colorram;
-	extern data16_t *tecmo16_videoram2;
-	extern data16_t *tecmo16_colorram2;
-	extern data16_t *tecmo16_charram;
 	
 	WRITE16_HANDLER( tecmo16_videoram_w );
 	WRITE16_HANDLER( tecmo16_colorram_w );

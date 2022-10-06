@@ -24,7 +24,6 @@ public class ticket
 	
 	#define MAX_DISPENSERS	2
 	
-	extern unsigned int dispensed_tickets;
 	
 	struct ticket_state
 	{

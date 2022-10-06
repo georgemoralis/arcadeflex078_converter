@@ -60,7 +60,6 @@ public class ginganin
 	/* Variables only used here */
 	
 	/* Variables defined in vidhrdw */
-	extern data16_t *ginganin_fgram16, *ginganin_txtram16, *ginganin_vregs16;
 	
 	/* Functions defined in vidhrdw */
 	WRITE16_HANDLER( ginganin_fgram16_w );

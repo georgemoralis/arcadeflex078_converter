@@ -13,12 +13,9 @@ package drivers;
 public class sspeedr
 {
 	
-	extern extern extern extern 
-	extern extern extern extern 
-	extern extern extern extern 
-	extern VIDEO_START( sspeedr );
-	extern VIDEO_UPDATE( sspeedr );
-	extern VIDEO_EOF( sspeedr );
+	
+	
+	
 	
 	static UINT8 led_TIME[2];
 	static UINT8 led_SCORE[24];

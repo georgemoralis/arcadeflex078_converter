@@ -1796,8 +1796,7 @@ public class adsp2100
 	unsigned adsp2100_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm2100(char *, unsigned);
-	    return dasm2100(buffer, pc);
+		    return dasm2100(buffer, pc);
 	#else
 		sprintf(buffer, "$%06X", RWORD_PGM(pc));
 		return 1;
@@ -1880,8 +1879,7 @@ public class adsp2100
 	unsigned adsp2101_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm2100(char *, unsigned);
-	    return dasm2100(buffer, pc);
+		    return dasm2100(buffer, pc);
 	#else
 		sprintf(buffer, "$%06X", RWORD_PGM(pc));
 		return 1;
@@ -1976,8 +1974,7 @@ public class adsp2100
 	unsigned adsp2104_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm2100(char *, unsigned);
-	    return dasm2100(buffer, pc);
+		    return dasm2100(buffer, pc);
 	#else
 		sprintf(buffer, "$%06X", RWORD_PGM(pc));
 		return 1;
@@ -2084,8 +2081,7 @@ public class adsp2100
 	unsigned adsp2105_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm2100(char *, unsigned);
-	    return dasm2100(buffer, pc);
+		    return dasm2100(buffer, pc);
 	#else
 		sprintf(buffer, "$%06X", RWORD_PGM(pc));
 		return 1;
@@ -2186,8 +2182,7 @@ public class adsp2100
 	unsigned adsp2115_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm2100(char *, unsigned);
-	    return dasm2100(buffer, pc);
+		    return dasm2100(buffer, pc);
 	#else
 		sprintf(buffer, "$%06X", RWORD_PGM(pc));
 		return 1;

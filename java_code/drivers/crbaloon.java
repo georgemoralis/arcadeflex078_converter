@@ -59,10 +59,7 @@ public class crbaloon
 {
 	
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( crbaloon );
-	extern VIDEO_START( crbaloon );
-	extern VIDEO_UPDATE( crbaloon );
+	
 	
 	
 	int val06,val08,val0a;
@@ -139,8 +136,7 @@ public class crbaloon
 	
 	READ_HANDLER( crbaloon_IN2_r )
 	{
-		extern int crbaloon_collision;
-	
+		
 		if (crbaloon_collision != 0)
 		{
 			return (input_port_2_r(0) & 0xf0) | 0x08;

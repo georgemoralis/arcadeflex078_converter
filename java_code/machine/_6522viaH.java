@@ -57,7 +57,6 @@ struct via6522_interface
 };
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 void via_set_clock(int which,int clck);
 void via_config(int which, const struct via6522_interface *intf);

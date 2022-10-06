@@ -49,10 +49,7 @@ public class champbas
 	
 	
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( champbas );
-	extern VIDEO_START( champbas );
-	extern VIDEO_UPDATE( champbas );
+	
 	
 	
 	

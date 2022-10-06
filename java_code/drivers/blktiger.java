@@ -23,7 +23,6 @@ public class blktiger
 {
 	
 	
-	extern unsigned char *blktiger_txvideoram;
 	
 	
 	

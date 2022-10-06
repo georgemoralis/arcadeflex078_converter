@@ -1899,8 +1899,7 @@ public class leland
 	*/
 	static void dasm_chunk(char *tag, UINT8 *base, UINT16 pc, UINT32 length, FILE *output)
 	{
-		extern unsigned DasmZ80(char *buffer, unsigned _pc);
-	
+		
 		UINT8 *old_rom = OP_ROM;
 		UINT8 *old_ram = OP_RAM;
 		char buffer[256];

@@ -114,8 +114,6 @@ public class naughtyb
 	
 	
 	
-	extern unsigned char *naughtyb_videoram2;
-	extern unsigned char *naughtyb_scrollreg;
 	
 	VIDEO_START( naughtyb );
 	PALETTE_INIT( naughtyb );

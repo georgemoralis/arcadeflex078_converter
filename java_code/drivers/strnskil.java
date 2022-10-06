@@ -21,10 +21,7 @@ public class strnskil
 	
 	/****************************************************************************/
 	
-	extern extern extern 
-	extern PALETTE_INIT( strnskil );
-	extern VIDEO_START( strnskil );
-	extern VIDEO_UPDATE( strnskil );
+	
 	
 	WRITE_HANDLER( strnskil_sharedram_w )
 	{

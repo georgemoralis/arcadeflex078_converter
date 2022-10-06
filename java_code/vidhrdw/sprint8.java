@@ -13,7 +13,6 @@ package vidhrdw;
 public class sprint8
 {
 	
-	extern void sprint8_collision_callback(int n);
 	
 	UINT8* sprint8_video_ram;
 	UINT8* sprint8_pos_h_ram;

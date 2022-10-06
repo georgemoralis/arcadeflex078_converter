@@ -19,8 +19,6 @@ void slikshot_extra_draw(struct mame_bitmap *bitmap, const struct rectangle *cli
 
 /*----------- defined in vidhrdw/itech8.c -----------*/
 
-extern UINT8 *itech8_grom_bank;
-extern UINT8 *itech8_display_page;
 
 VIDEO_START( itech8 );
 VIDEO_START( slikshot );

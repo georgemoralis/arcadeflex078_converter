@@ -14,7 +14,6 @@ public class starshp1
 {
 	
 	
-	extern int starshp1_attract;
 	
 	unsigned char* starshp1_playfield_ram;
 	unsigned char* starshp1_hpos_ram;

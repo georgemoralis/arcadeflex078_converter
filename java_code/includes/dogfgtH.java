@@ -1,4 +1,3 @@
-extern data8_t *dogfgt_bgvideoram;
 
 
 PALETTE_INIT( dogfgt );

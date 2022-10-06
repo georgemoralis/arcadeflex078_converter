@@ -8,7 +8,6 @@ package vidhrdw;
 public class xyonix
 {
 	
-	extern data8_t *xyonix_vidram;
 	
 	static struct tilemap *xyonix_tilemap;
 	

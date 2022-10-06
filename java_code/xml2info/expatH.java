@@ -36,7 +36,6 @@ public class expatH
 	#endif  /* not defined XMLPARSEAPI */
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	#ifdef XML_UNICODE_WCHAR_T

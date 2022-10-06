@@ -23,13 +23,6 @@
 
 ***************************************************************************/
 
-extern const struct Memory_ReadAddress seibu_sound_readmem[];
-extern const struct Memory_WriteAddress seibu_sound_writemem[];
-extern const struct Memory_ReadAddress seibu2_sound_readmem[];
-extern const struct Memory_WriteAddress seibu2_sound_writemem[];
-extern const struct Memory_ReadAddress seibu3_sound_readmem[];
-extern const struct Memory_WriteAddress seibu3_sound_writemem[];
-extern const struct Memory_WriteAddress seibu3_adpcm_sound_writemem[];
 
 READ16_HANDLER( seibu_main_word_r );
 WRITE16_HANDLER( seibu_main_word_w );

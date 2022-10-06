@@ -19,7 +19,6 @@ public class inptportH
 	
 	/***************************************************************************/
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	struct InputPortTiny
@@ -271,7 +270,6 @@ public class inptportH
 		PORT_BITX(    mask, mask & default, IPT_SERVICE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE )
 	
 	#define MAX_DEFSTR_LEN 20
-	extern const char ipdn_defaultstrings[][MAX_DEFSTR_LEN];
 	
 	/* this must match the ipdn_defaultstrings list in inptport.c */
 	enum {
@@ -453,9 +451,6 @@ public class inptportH
 		UINT32 type;
 		UINT32 val;
 	};
-	extern struct ik input_keywords[];
-	extern struct ik *osd_input_keywords;
-	extern int num_ik;
 	
 	void seq_set_string(InputSeq* a, const char *buf);
 	

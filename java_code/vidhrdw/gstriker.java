@@ -9,8 +9,6 @@ public class gstriker
 {
 	
 	/* imports from driver file */
-	extern data16_t *gs_videoram3;
-	extern data16_t *gs_mixer_regs;
 	
 	
 	/*** VS920A (score tilemap) **********************************************/

@@ -30,14 +30,10 @@ package drivers;
 public class bsktball
 {
 	
-	extern UINT8 *bsktball_motion;
 	
-	extern 
-	extern VIDEO_START( bsktball );
-	extern VIDEO_UPDATE( bsktball );
 	
-	extern extern INTERRUPT_GEN( bsktball_interrupt );
-	extern extern extern extern extern extern extern extern 
+	
+	
 	/*************************************
 	 *
 	 *	Palette generation

@@ -19,7 +19,6 @@ public class fileioH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	

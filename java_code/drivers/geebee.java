@@ -78,19 +78,9 @@ public class geebee
 	/* from machine/geebee.c */
 	
 	/* from vidhrdw/geebee.c */
-	extern PALETTE_INIT( geebee );
-	extern PALETTE_INIT( navalone );
 	
-	extern VIDEO_START( geebee );
-	extern VIDEO_START( navalone );
-	extern VIDEO_START( kaitei );
-	extern VIDEO_START( sos );
-	extern VIDEO_UPDATE( geebee );
 	
 	/* from sndhrdw/geebee.c */
-	extern int geebee_sh_start(const struct MachineSound *msound);
-	extern void geebee_sh_stop(void);
-	extern void geebee_sh_update(void);
 	
 	
 	/*******************************************************

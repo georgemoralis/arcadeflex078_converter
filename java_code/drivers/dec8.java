@@ -67,7 +67,6 @@ public class dec8
 	/******************************************************************************/
 	
 	static unsigned char *dec8_shared_ram,*dec8_shared2_ram;
-	extern unsigned char *dec8_pf0_data,*dec8_pf1_data,*dec8_row;
 	
 	static int nmi_enable,int_enable;
 	static int i8751_return, i8751_value;

@@ -6,8 +6,6 @@
 
 /*----------- defined in machine/sega.c -----------*/
 
-extern UINT8 *sega_mem;
-extern void sega_security(int chip);
 
 
 INTERRUPT_GEN( sega_interrupt );

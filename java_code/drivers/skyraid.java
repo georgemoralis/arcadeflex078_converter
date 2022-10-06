@@ -13,14 +13,8 @@ package drivers;
 public class skyraid
 {
 	
-	extern UINT8* skyraid_alpha_num_ram;
-	extern UINT8* skyraid_pos_ram;
-	extern UINT8* skyraid_obj_ram;
 	
-	extern int skyraid_scroll;
 	
-	extern VIDEO_START(skyraid);
-	extern VIDEO_UPDATE(skyraid);
 	
 	static int analog_range;
 	static int analog_offset;

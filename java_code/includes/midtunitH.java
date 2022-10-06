@@ -40,7 +40,6 @@ public class midtunitH
 	
 	/*----------- defined in vidhrdw/midtunit.c -----------*/
 	
-	extern UINT8 midtunit_gfx_rom_large;
 	
 	VIDEO_START( midtunit );
 	VIDEO_START( midwunit );

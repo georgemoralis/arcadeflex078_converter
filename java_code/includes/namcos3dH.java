@@ -10,7 +10,6 @@ public class namcos3dH
 	#define NAMCOS22_SCREEN_WIDTH  640
 	#define NAMCOS22_SCREEN_HEIGHT 480
 	
-	extern INT32 *namco_zbuffer;
 	
 	struct VerTex
 	{

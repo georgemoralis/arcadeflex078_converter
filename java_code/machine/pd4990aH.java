@@ -14,7 +14,6 @@ struct pd4990a_s
 	int weekday;
 };
 
-extern struct pd4990a_s pd4990a;
 
 void pd4990a_addretrace (void);
 void pd4990a_init(void);

@@ -34,8 +34,6 @@ public class raiders5
 	
 	VIDEO_UPDATE( raiders5 );
 	
-	extern UINT8 *raiders5_fgram;
-	extern size_t raiders5_fgram_size;
 	
 	static UINT8 *raiders5_shared_workram;
 	

@@ -61,17 +61,8 @@ package drivers;
 public class twin16
 {
 	
-	extern WRITE16_HANDLER( twin16_videoram2_w );
-	extern WRITE16_HANDLER( twin16_paletteram_word_w );
-	extern WRITE16_HANDLER( fround_gfx_bank_w );
-	extern WRITE16_HANDLER( twin16_video_register_w );
 	
-	extern VIDEO_START( twin16 );
-	extern VIDEO_START( fround );
-	extern VIDEO_UPDATE( twin16 );
-	extern VIDEO_EOF( twin16 );
 	
-	extern void twin16_spriteram_process( void );
 	
 	UINT16 twin16_custom_vidhrdw;
 	UINT16 *twin16_gfx_rom;

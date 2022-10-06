@@ -11,7 +11,6 @@ public class kingobox
 	UINT8 *kingofb_colorram2;
 	UINT8 *kingofb_scroll_y;
 	
-	extern int kingofb_nmi_enable;
 	
 	static int palette_bank;
 	

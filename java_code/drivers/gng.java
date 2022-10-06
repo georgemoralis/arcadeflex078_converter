@@ -28,8 +28,6 @@ public class gng
 	
 	
 	
-	extern unsigned char *gng_fgvideoram;
-	extern unsigned char *gng_bgvideoram;
 	VIDEO_START( gng );
 	VIDEO_UPDATE( gng );
 	VIDEO_EOF( gng );

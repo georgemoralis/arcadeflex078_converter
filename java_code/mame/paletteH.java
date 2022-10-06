@@ -71,7 +71,6 @@
 #define PALETTE_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 
@@ -115,14 +114,7 @@ typedef UINT32 rgb_t;
 	GLOBAL VARIABLES
 -------------------------------------------------*/
 
-extern UINT32 direct_rgb_components[3];
-extern UINT16 *palette_shadow_table;
 
-extern data8_t *paletteram;
-extern data8_t *paletteram_2;	/* use when palette RAM is split in two parts */
-extern data16_t *paletteram16;
-extern data16_t *paletteram16_2;
-extern data32_t *paletteram32;
 
 
 

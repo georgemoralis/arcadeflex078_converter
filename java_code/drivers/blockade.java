@@ -41,9 +41,7 @@ public class blockade
 	
 	/* #define BLOCKADE_LOG 1 */
 	
-	extern 
-	extern VIDEO_START( blockade );
-	extern VIDEO_UPDATE( blockade );
+	
 	
 	/* These are used to simulate coin latch circuitry */
 	

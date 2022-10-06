@@ -19,14 +19,10 @@ public class missb2
 	data8_t *bg_paletteram,*bg_vram;
 	
 	/* vidhrdw/bublbobl.c */
-	extern unsigned char *bublbobl_objectram;
-	extern size_t bublbobl_objectram_size;
 	VIDEO_UPDATE( bublbobl );
 	
 	/* machine/bublbobl.c */
-	extern unsigned char *bublbobl_sharedram1,*bublbobl_sharedram2;
 	INTERRUPT_GEN( bublbobl_m68705_interrupt );
-	extern int bublbobl_video_enable;
 	
 	
 	VIDEO_UPDATE( missb2 )

@@ -53,7 +53,6 @@ public class m68kmameH
 	#define m68ki_remaining_cycles m68k_ICount
 	
 	
-	extern struct m68k_memory_interface m68k_memory_intf;
 	
 	#define m68k_read_memory_8(address)          (*m68k_memory_intf.read8)(address)
 	#define m68k_read_memory_16(address)         (*m68k_memory_intf.read16)(address)

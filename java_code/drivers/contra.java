@@ -22,9 +22,6 @@ package drivers;
 public class contra
 {
 	
-	extern unsigned char *contra_fg_vram,*contra_fg_cram;
-	extern unsigned char *contra_bg_vram,*contra_bg_cram;
-	extern unsigned char *contra_text_vram,*contra_text_cram;
 	
 	PALETTE_INIT( contra );
 	

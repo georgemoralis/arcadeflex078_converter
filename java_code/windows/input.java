@@ -26,10 +26,6 @@ public class input
 	//	IMPORTS
 	//============================================================
 	
-	extern int verbose;
-	extern int win_physical_width;
-	extern int win_physical_height;
-	extern int win_window_mode;
 	
 	
 	//============================================================
@@ -1667,7 +1663,6 @@ public class input
 	//	osd_customize_inputport_defaults
 	//============================================================
 	
-	extern struct rc_struct *rc;
 	
 	void process_ctrlr_file(struct rc_struct *iptrc, const char *ctype, const char *filename)
 	{

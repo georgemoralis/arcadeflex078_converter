@@ -1,13 +1,5 @@
-extern data16_t *deco16_pf1_data,*deco16_pf2_data;
-extern data16_t *deco16_pf3_data,*deco16_pf4_data;
-extern data16_t *deco16_pf1_rowscroll,*deco16_pf2_rowscroll;
-extern data16_t *deco16_pf3_rowscroll,*deco16_pf4_rowscroll;
 
-extern data16_t *deco16_pf12_control,*deco16_pf34_control;
-extern data16_t deco16_priority;
 
-extern data16_t *deco16_raster_display_list;
-extern int deco16_raster_display_position;
 
 int deco16_1_video_init(void);
 int deco16_2_video_init(int split);

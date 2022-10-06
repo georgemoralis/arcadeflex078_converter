@@ -60,36 +60,12 @@ public class atarigenH
 		GLOBALS
 	##########################################################################*/
 	
-	extern UINT8			atarigen_scanline_int_state;
-	extern UINT8			atarigen_sound_int_state;
-	extern UINT8			atarigen_video_int_state;
 	
-	extern const data16_t *	atarigen_eeprom_default;
-	extern data16_t *		atarigen_eeprom;
-	extern size_t 			atarigen_eeprom_size;
 	
-	extern UINT8			atarigen_cpu_to_sound_ready;
-	extern UINT8			atarigen_sound_to_cpu_ready;
 	
-	extern data16_t *		atarigen_playfield;
-	extern data16_t *		atarigen_playfield2;
-	extern data16_t *		atarigen_playfield_upper;
-	extern data16_t *		atarigen_alpha;
-	extern data16_t *		atarigen_alpha2;
-	extern data16_t *		atarigen_xscroll;
-	extern data16_t *		atarigen_yscroll;
 	
-	extern data32_t *		atarigen_playfield32;
-	extern data32_t *		atarigen_alpha32;
 	
-	extern struct tilemap *	atarigen_playfield_tilemap;
-	extern struct tilemap *	atarigen_playfield2_tilemap;
-	extern struct tilemap *	atarigen_alpha_tilemap;
-	extern struct tilemap *	atarigen_alpha2_tilemap;
 	
-	extern data16_t *		atarivc_data;
-	extern data16_t *		atarivc_eof_data;
-	extern struct atarivc_state_desc atarivc_state;
 	
 	
 	

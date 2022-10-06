@@ -17,8 +17,6 @@ void namco_sh_stop(void);
 
 
 
-extern unsigned char *namco_soundregs;
-extern unsigned char *namco_wavedata;
 
 #define mappy_soundregs namco_soundregs
 #define pengo_soundregs namco_soundregs

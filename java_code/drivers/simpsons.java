@@ -24,7 +24,6 @@ public class simpsons
 	/* from machine */
 	MACHINE_INIT( simpsons );
 	NVRAM_HANDLER( simpsons );
-	extern int simpsons_firq_enabled;
 	
 	/***************************************************************************
 	

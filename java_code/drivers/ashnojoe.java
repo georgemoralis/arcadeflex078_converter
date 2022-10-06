@@ -78,21 +78,8 @@ package drivers;
 public class ashnojoe
 {
 	
-	extern data16_t *ashnojoetileram16, *ashnojoetileram16_2, *ashnojoetileram16_3, *ashnojoetileram16_4, *ashnojoetileram16_5, *ashnojoetileram16_6, *ashnojoetileram16_7;
-	extern data16_t *ashnojoe_tilemap_reg;
 	
-	extern WRITE16_HANDLER( ashnojoe_tileram_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram2_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram3_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram4_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram5_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram6_w );
-	extern WRITE16_HANDLER( ashnojoe_tileram7_w );
-	extern WRITE16_HANDLER( joe_tilemaps_xscroll_w );
-	extern WRITE16_HANDLER( joe_tilemaps_yscroll_w );
 	
-	extern VIDEO_START( ashnojoe );
-	extern VIDEO_UPDATE( ashnojoe );
 	
 	static READ16_HANDLER(fake_4a00a_r)
 	{

@@ -13,7 +13,6 @@ package vidhrdw;
 public class triplhnt
 {
 	
-	extern void triplhnt_hit_callback(int);
 	
 	UINT8* triplhnt_playfield_ram;
 	UINT8* triplhnt_hpos_ram;

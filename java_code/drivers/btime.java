@@ -55,11 +55,6 @@ package drivers;
 public class btime
 {
 	
-	extern unsigned char *lnc_charbank;
-	extern unsigned char *bnj_backgroundram;
-	extern size_t bnj_backgroundram_size;
-	extern unsigned char *zoar_scrollram;
-	extern unsigned char *deco_charram;
 	
 	PALETTE_INIT( btime );
 	PALETTE_INIT( lnc );

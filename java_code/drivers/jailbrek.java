@@ -27,13 +27,8 @@ public class jailbrek
 	
 	void konami1_decode(void);
 	
-	extern UINT8 *jailbrek_scroll_x;
-	extern UINT8 *jailbrek_scroll_dir;
 	
-	extern extern 
-	extern PALETTE_INIT( jailbrek );
-	extern VIDEO_START( jailbrek );
-	extern VIDEO_UPDATE( jailbrek );
+	
 	
 	
 	static int irq_enable,nmi_enable;

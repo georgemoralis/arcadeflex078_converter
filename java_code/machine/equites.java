@@ -35,20 +35,8 @@ public class equites
 		MDRV_SOUND_ADD(AY8910, equites_8910intf) \
 		MDRV_SOUND_ADD(DAC, equites_dacintf)
 	
-	extern void equites_8404init(void);
-	extern void equites_8404rule(unsigned pc, int offset, int data);
 	
-	extern READ16_HANDLER(equites_8404_r);
-	extern WRITE_HANDLER(equites_5232_w);
-	extern WRITE_HANDLER(equites_8910control_w);
-	extern WRITE_HANDLER(equites_8910data_w);
-	extern WRITE_HANDLER(equites_dac0_w);
-	extern WRITE_HANDLER(equites_dac1_w);
 	
-	extern data16_t *equites_8404ram;
-	extern struct MSM5232interface equites_5232intf;
-	extern struct AY8910interface equites_8910intf;
-	extern struct DACinterface equites_dacintf;
 	
 	public static Memory_ReadAddress equites_s_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -86,7 +74,6 @@ public class equites
 	/******************************************************************************/
 	// Imports
 	
-	extern data16_t *equites_workram;
 	
 	/******************************************************************************/
 	// Locals

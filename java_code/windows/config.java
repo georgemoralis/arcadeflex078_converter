@@ -31,16 +31,10 @@ package windows;
 public class config
 {
 	
-	extern struct rc_option frontend_opts[];
-	extern struct rc_option fileio_opts[];
-	extern struct rc_option input_opts[];
-	extern struct rc_option sound_opts[];
-	extern struct rc_option video_opts[];
 	
 	#ifdef MESS
 	#endif
 	
-	extern int frontend_help(char *gamename);
 	static int config_handle_arg(char *arg);
 	
 	static FILE *logfile;
@@ -52,13 +46,11 @@ public class config
 	static int showusage;
 	static int readconfig;
 	static int createconfig;
-	extern int verbose;
 	
 	struct rc_struct *rc;
 	
 	/* fix me - need to have the core call osd_set_mastervolume with this value */
 	/* instead of relying on the name of an osd variable */
-	extern int attenuation;
 	
 	static char *debugres;
 	static char *playbackname;
@@ -808,8 +800,7 @@ public class config
 	
 		if (erroroslog)
 		{
-			//extern int vsnprintf(char *s, size_t maxlen, const char *fmt, va_list _arg);
-			char buffer[2048];
+			//		char buffer[2048];
 			_vsnprintf(buffer, sizeof(buffer) / sizeof(buffer[0]), text, arg);
 			OutputDebugString(buffer);
 		}

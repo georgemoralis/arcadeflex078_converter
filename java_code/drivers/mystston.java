@@ -23,12 +23,8 @@ public class mystston
 {
 	
 	
-	extern UINT8 *mystston_videoram2;
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( mystston );
-	extern VIDEO_START( mystston );
-	extern VIDEO_UPDATE( mystston );
+	
 	
 	
 	static int VBLK = 0x80;

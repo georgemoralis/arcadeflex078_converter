@@ -20,7 +20,6 @@ public class zodiack
 	UINT8 *zodiack_bulletsram;
 	size_t zodiack_bulletsram_size;
 	
-	extern int percuss_hardware;
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	

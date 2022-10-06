@@ -64,9 +64,6 @@
 #define PPC m6502.ppc.d
 
 #if FAST_MEMORY
-extern	MHELE	*cur_mwhard;
-extern	MHELE	*cur_mrhard;
-extern	UINT8	*RAM;
 #endif
 
 #define CHANGE_PC change_pc16(PCD)

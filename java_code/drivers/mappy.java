@@ -54,8 +54,6 @@ public class mappy
 	
 	
 	/* machine driver data & functions */
-	extern unsigned char *mappy_sharedram;
-	extern unsigned char *mappy_customio_1,*mappy_customio_2;
 	MACHINE_INIT( mappy );
 	MACHINE_INIT( motos );
 	INTERRUPT_GEN( mappy_interrupt_1 );
@@ -73,7 +71,6 @@ public class mappy
 	PALETTE_INIT( mappy );
 	
 	/* sound driver data & functions */
-	extern unsigned char *mappy_soundregs;
 	
 	
 	/* CPU 1 read addresses */

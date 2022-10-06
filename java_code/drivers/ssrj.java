@@ -38,7 +38,6 @@ package drivers;
 public class ssrj
 {
 	
-	extern unsigned char *ssrj_vram1,*ssrj_vram2,*ssrj_vram3,*ssrj_vram4,*ssrj_scrollram;
 	
 	WRITE_HANDLER(ssrj_vram1_w);
 	WRITE_HANDLER(ssrj_vram2_w);

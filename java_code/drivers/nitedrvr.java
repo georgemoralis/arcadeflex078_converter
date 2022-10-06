@@ -42,18 +42,11 @@ package drivers;
 public class nitedrvr
 {
 	
-	extern UINT8 *nitedrvr_ram;
 	
-	extern int nitedrvr_gear;
-	extern int nitedrvr_track;
 	
-	extern extern extern extern extern extern extern extern extern void nitedrvr_crash_toggle(int dummy);
 	
-	extern UINT8 *nitedrvr_hvc;
 	
-	extern extern 
-	extern VIDEO_START( nitedrvr );
-	extern VIDEO_UPDATE( nitedrvr );
+	
 	
 	
 	/*************************************

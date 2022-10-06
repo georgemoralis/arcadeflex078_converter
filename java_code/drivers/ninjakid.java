@@ -28,12 +28,10 @@ package drivers;
 public class ninjakid
 {
 	
-	extern extern extern 
-	extern extern 
-	extern VIDEO_START( ninjakid );
-	extern VIDEO_UPDATE( ninjakid );
-	extern 
-	extern 
+	
+	
+	
+	
 	/******************************************************************************/
 	
 	static UINT8 *ninjakid_gfx_rom;

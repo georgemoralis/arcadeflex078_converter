@@ -10,7 +10,6 @@ package vidhrdw;
 public class spbactn
 {
 	
-	extern data16_t *spbactn_bgvideoram, *spbactn_fgvideoram, *spbactn_spvideoram;
 	static struct mame_bitmap *tile_bitmap_bg, *tile_bitmap_fg;
 	
 	/* mix & blend the paletted 16-bit tile and sprite bitmaps into an RGB 32-bit bitmap */

@@ -510,8 +510,7 @@ public class dec0
 	
 	static WRITE16_HANDLER( sprite_mirror_w )
 	{
-		extern data16_t *spriteram16;
-		COMBINE_DATA(&spriteram16[offset]);
+			COMBINE_DATA(&spriteram16[offset]);
 	}
 	
 	/******************************************************************************/

@@ -14,9 +14,7 @@ package drivers;
 public class shisen
 {
 	
-	extern extern extern 
-	extern VIDEO_START( sichuan2 );
-	extern VIDEO_UPDATE( sichuan2 );
+	
 	
 	public static ReadHandlerPtr sichuan2_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

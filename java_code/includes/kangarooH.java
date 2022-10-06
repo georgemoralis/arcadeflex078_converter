@@ -18,10 +18,6 @@ public class kangarooH
 	
 	/*----------- defined in vidhrdw/kangaroo.c -----------*/
 	
-	extern UINT8 *kangaroo_video_control;
-	extern UINT8 *kangaroo_bank_select;
-	extern UINT8 *kangaroo_blitter;
-	extern UINT8 *kangaroo_scroll;
 	
 	PALETTE_INIT( kangaroo );
 	VIDEO_START( kangaroo );

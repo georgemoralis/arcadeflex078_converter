@@ -194,7 +194,6 @@ public class ui_textH
 		char author[255];
 	};
 	
-	extern struct lang_struct lang;
 	
 	int uistring_init (mame_file *language_file);
 	

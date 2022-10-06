@@ -143,8 +143,6 @@ package drivers;
 public class nmk16
 {
 	
-	extern data16_t *nmk_bgvideoram,*nmk_fgvideoram,*nmk_txvideoram;
-	extern data16_t *gunnail_scrollram;
 	
 	READ16_HANDLER( nmk_bgvideoram_r );
 	WRITE16_HANDLER( nmk_bgvideoram_w );

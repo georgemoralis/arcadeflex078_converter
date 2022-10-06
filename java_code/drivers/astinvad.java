@@ -22,16 +22,9 @@ public class astinvad
 {
 	
 	
-	extern VIDEO_UPDATE( astinvad );
-	extern VIDEO_UPDATE( spaceint );
 	
-	extern VIDEO_START( astinvad );
-	extern VIDEO_START( spcking2 );
-	extern VIDEO_START( spaceint );
 	
-	extern extern extern extern extern extern extern WRITE_HANDLER( spaceint_color_w);
 	
-	extern struct Samplesinterface astinvad_samples_interface;
 	
 	
 	static PALETTE_INIT( astinvad )

@@ -24,11 +24,6 @@ public class munchmo
 {
 	
 	
-	extern UINT8 *mnchmobl_vreg;
-	extern UINT8 *mnchmobl_status_vram;
-	extern UINT8 *mnchmobl_sprite_xpos;
-	extern UINT8 *mnchmobl_sprite_attr;
-	extern UINT8 *mnchmobl_sprite_tile;
 	
 	PALETTE_INIT( mnchmobl );
 	VIDEO_START( mnchmobl );

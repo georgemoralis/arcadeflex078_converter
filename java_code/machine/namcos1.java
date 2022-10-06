@@ -14,8 +14,6 @@ public class namcos1
 	#define USE_MTRANDOM 1
 	
 	/* from vidhrdw */
-	extern void namcos1_set_scroll_offsets( const int *bgx, const int *bgy, int negative, int optimize );
-	extern void namcos1_set_sprite_offsets( int x, int y );
 	
 	#define NAMCOS1_MAX_KEY 0x100
 	static unsigned char key[NAMCOS1_MAX_KEY];

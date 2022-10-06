@@ -90,7 +90,6 @@ public class suprslam
 {
 	
 	
-	extern data16_t *suprslam_screen_videoram, *suprslam_bg_videoram,*suprslam_sp_videoram, *suprslam_spriteram;
 	
 	/* in vidhrdw */
 	

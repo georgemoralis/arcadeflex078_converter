@@ -1288,8 +1288,7 @@ public class mame
 		{
 	#ifndef MESS
 			/* from vidhrdw/avgdvg.c */
-			extern int vector_updates;
-	
+			
 			performance.vector_updates_last_second = vector_updates;
 			vector_updates = 0;
 	#endif

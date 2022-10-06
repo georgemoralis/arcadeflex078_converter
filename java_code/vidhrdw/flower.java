@@ -10,7 +10,6 @@ public class flower
 {
 	
 	static struct tilemap *flower_bg0_tilemap, *flower_bg1_tilemap;
-	extern data8_t *flower_sharedram;
 	
 	static void flower_drawtextlayer( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

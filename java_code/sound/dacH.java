@@ -2,7 +2,6 @@
 #define DAC_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 #define MAX_DAC 4

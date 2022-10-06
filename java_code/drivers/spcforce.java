@@ -41,7 +41,6 @@ public class spcforce
 {
 	
 	
-	extern unsigned char *spcforce_scrollram;
 	
 	VIDEO_UPDATE( spcforce );
 	

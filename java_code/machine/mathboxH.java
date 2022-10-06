@@ -9,4 +9,3 @@ typedef short s16;
 typedef int s32;
 
 
-extern s16 mb_result;

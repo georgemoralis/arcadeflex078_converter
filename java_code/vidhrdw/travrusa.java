@@ -20,8 +20,6 @@ package vidhrdw;
 public class travrusa
 {
 	
-	extern unsigned char *spriteram;
-	extern size_t spriteram_size;
 	
 	unsigned char *travrusa_videoram;
 	

@@ -101,9 +101,6 @@ public class fuukifg3
 	static int fuuki32_raster_enable = 1; /* Enabled by default */
 	
 	// Described in src/vidhrdw/fuuki32.c
-	extern data32_t *fuuki32_vram_0, *fuuki32_vram_1;
-	extern data32_t *fuuki32_vram_2, *fuuki32_vram_3;
-	extern data32_t *fuuki32_vregs, *fuuki32_priority, *fuuki32_tilebank;
 	
 	/* Functions defined in vidhrdw: */
 	

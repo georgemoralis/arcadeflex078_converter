@@ -22,7 +22,6 @@ public class wrally
 	static struct tilemap *pant[2];
 	
 	/* from machine/wrally.c */
-	extern data16_t *wrally_encr_table[2];
 	
 	/***************************************************************************
 	

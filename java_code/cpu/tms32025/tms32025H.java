@@ -128,7 +128,6 @@ public class tms32025H
 		TMS32025_IMR,  TMS32025_GREG
 	};
 	
-	extern int tms32025_icount;					/* T-state count */
 	
 	
 	
@@ -239,7 +238,6 @@ public class tms32025H
 	
 	
 	#ifdef	MAME_DEBUG
-	extern unsigned Dasm32025(char *buffer, unsigned pc);
 	#endif
 	
 	#endif	/* _TMS32025_H */

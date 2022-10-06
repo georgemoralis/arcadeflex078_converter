@@ -53,11 +53,7 @@ public class tsamurai
 	
 	
 	VIDEO_UPDATE( tsamurai );
-	extern VIDEO_START( tsamurai );
-	extern unsigned char *tsamurai_videoram;
 	
-	extern VIDEO_START( vsgongf );
-	extern VIDEO_UPDATE( vsgongf );
 	
 	static struct AY8910interface ay8910_interface =
 	{

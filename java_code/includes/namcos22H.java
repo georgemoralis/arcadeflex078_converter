@@ -7,7 +7,6 @@ package includes;
 public class namcos22H
 {
 	
-	extern enum namcos22_gametype
 	{
 		NAMCOS22_AIR_COMBAT22,
 		NAMCOS22_ALPINE_RACER,
@@ -27,10 +26,6 @@ public class namcos22H
 	
 	#define NAMCOS22_PALETTE_SIZE 0x8000
 	
-	extern data32_t *namcos22_cgram;
-	extern data32_t *namcos22_textram;
-	extern data32_t *namcos22_polygonram;
-	extern data32_t *namcos22_gamma;
 	
 	READ32_HANDLER( namcos22_cgram_r );
 	WRITE32_HANDLER( namcos22_cgram_w );

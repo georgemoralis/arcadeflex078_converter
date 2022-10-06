@@ -29,12 +29,6 @@ package drivers;
 public class matmania
 {
 	
-	extern unsigned char *matmania_videoram2,*matmania_colorram2;
-	extern size_t matmania_videoram2_size;
-	extern unsigned char *matmania_videoram3,*matmania_colorram3;
-	extern size_t matmania_videoram3_size;
-	extern unsigned char *matmania_scroll;
-	extern unsigned char *matmania_pageselect;
 	
 	PALETTE_INIT( matmania );
 	VIDEO_UPDATE( matmania );

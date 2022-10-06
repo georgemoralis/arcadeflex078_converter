@@ -175,18 +175,11 @@ public class dkong
 	static int t[2] = { 1,1 };
 	
 	
-	extern extern extern extern extern extern 
-	extern 
-	extern PALETTE_INIT( dkong );
-	extern PALETTE_INIT( dkong3 );
-	extern VIDEO_START( dkong );
-	extern VIDEO_UPDATE( radarscp );
-	extern VIDEO_UPDATE( dkong );
-	extern VIDEO_UPDATE( pestplce );
-	extern VIDEO_UPDATE( spclforc );
 	
-	extern extern extern extern extern extern extern extern extern 
-	extern 
+	
+	
+	
+	
 	#define ACTIVELOW_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | ((D ^ 1) << A))
 	
 	

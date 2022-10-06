@@ -42,10 +42,10 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	extern extern 
-	extern extern 
-	extern extern 
-	extern extern 
+	
+	
+	
+	
 	
 	/***************************************************************************
 	**
@@ -53,11 +53,8 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	extern VIDEO_START( marvins );
-	extern VIDEO_UPDATE( marvins );
-	extern VIDEO_UPDATE( madcrash );
 	
-	extern 
+	
 	
 	/***************************************************************************
 	**
@@ -91,7 +88,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	extern 
+	
 	static int sound_cpu_busy;
 	
 	static struct namco_interface snkwave_interface =

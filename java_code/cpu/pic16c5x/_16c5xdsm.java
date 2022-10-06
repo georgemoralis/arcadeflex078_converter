@@ -34,7 +34,6 @@ public class _16c5xdsm
 	#define READOP16(A)  (cpu_readop16((A)     | PIC16C5X_PGM_OFFSET))
 	#define READARG16(A) (cpu_readop_arg16((A) | PIC16C5X_PGM_OFFSET))
 	#else                               /* Compile interface for standalone */
-	extern unsigned char *Buffer;
 	#ifdef MSB_FIRST
 	#define READOP16(A)  ( ((Buffer[A]<<8) | Buffer[A+1]) )
 	#define READARG16(A) ( ((Buffer[A]<<8) | Buffer[A+1]) )

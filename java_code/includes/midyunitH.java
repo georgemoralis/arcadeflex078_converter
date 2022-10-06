@@ -13,16 +13,8 @@
 
 /*----------- defined in machine/midyunit.c -----------*/
 
-extern data16_t *midyunit_code_rom;
-extern data16_t *midyunit_scratch_ram;
 
-extern data16_t *midyunit_cmos_ram;
-extern UINT32 	midyunit_cmos_page;
 
-extern offs_t 	midyunit_speedup_pc;
-extern offs_t 	midyunit_speedup_offset;
-extern offs_t 	midyunit_speedup_spin[3];
-extern data16_t *midyunit_speedup_base;
 
 WRITE16_HANDLER( midyunit_cmos_w );
 READ16_HANDLER( midyunit_cmos_r );
@@ -74,8 +66,6 @@ WRITE16_HANDLER( midyunit_sound_w );
 
 /*----------- defined in vidhrdw/midyunit.c -----------*/
 
-extern UINT8 *	midyunit_gfx_rom;
-extern size_t	midyunit_gfx_rom_size;
 
 VIDEO_START( midyunit_4bit );
 VIDEO_START( midyunit_6bit );

@@ -877,7 +877,6 @@ public class cheat
 	static int					dontPrintNewLabels = 0;
 	static int					autoSaveEnabled = 0;
 	
-	extern int					uirotcharwidth, uirotcharheight;
 	
 	static const char *	kCheatNameTemplates[] =
 	{
@@ -7925,8 +7924,7 @@ public class cheat
 	#ifndef CPSMAME
 	
 				{
-					extern struct GameDriver	driver_neogeo;
-	
+					
 					// for neogeo, search bank one
 					if(	(Machine->gamedrv->clone_of == &driver_neogeo) &&
 						(info->targetType == kRegionType_CPU) &&

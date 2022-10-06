@@ -7,20 +7,12 @@
 /*----------- defined in sndhrdw/cinemat.c -----------*/
 
 typedef void (*cinemat_sound_handler_proc)(UINT8, UINT8);
-extern cinemat_sound_handler_proc cinemat_sound_handler;
 
 MACHINE_INIT( cinemat_sound );
 
 READ16_HANDLER( cinemat_output_port_r );
 WRITE16_HANDLER( cinemat_output_port_w );
 
-extern struct Samplesinterface starcas_samples_interface;
-extern struct Samplesinterface warrior_samples_interface;
-extern struct Samplesinterface ripoff_samples_interface;
-extern struct Samplesinterface solarq_samples_interface;
-extern struct Samplesinterface spacewar_samples_interface;
-extern struct Samplesinterface armora_samples_interface;
-extern struct Samplesinterface sundance_samples_interface;
 
 void starcas_sound_w(UINT8 sound_val, UINT8 bits_changed);
 void warrior_sound_w(UINT8 sound_val, UINT8 bits_changed);

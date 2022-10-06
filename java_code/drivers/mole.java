@@ -50,9 +50,6 @@ package drivers;
 public class mole
 {
 	
-	extern PALETTE_INIT( moleattack );
-	extern VIDEO_START( moleattack );
-	extern VIDEO_UPDATE( moleattack );
 	
 	
 	static struct GfxLayout tile_layout =

@@ -82,13 +82,8 @@ public class wc90b
 	
 	#define TEST_DIPS false /* enable to test unmapped dip switches */
 	
-	extern data8_t *wc90b_fgvideoram,*wc90b_bgvideoram,*wc90b_txvideoram;
 	
-	extern data8_t *wc90b_scroll1x;
-	extern data8_t *wc90b_scroll2x;
 	
-	extern data8_t *wc90b_scroll1y;
-	extern data8_t *wc90b_scroll2y;
 	
 	VIDEO_START( wc90b );
 	VIDEO_UPDATE( wc90b );

@@ -19,7 +19,6 @@ package drivers;
 public class ajax
 {
 	
-	extern unsigned char *ajax_sharedram;
 	
 	
 	/* from machine/ajax.c */

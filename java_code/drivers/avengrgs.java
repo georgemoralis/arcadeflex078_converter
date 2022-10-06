@@ -69,7 +69,6 @@ public class avengrgs
 	VIDEO_UPDATE( avengrgs );
 	VIDEO_STOP(avengrgs);
 	
-	extern data32_t *avengrgs_vram,*avengrgs_ram1, *avengrgs_ram2;
 	static data32_t *avengrgs_ram;
 	
 	/***************************************************************************/

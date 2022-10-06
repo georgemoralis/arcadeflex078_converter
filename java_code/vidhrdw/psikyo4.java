@@ -40,7 +40,6 @@ public class psikyo4
 	static UINT32 screen; /* for PS4 games when DUAL_SCREEN=0 */
 	
 	/* defined in drivers/psikyo4.c */
-	extern data32_t *bgpen_1, *bgpen_2, *ps4_io_select, *psikyo4_vidregs;
 	
 	/* --- SPRITES --- */
 	static void psikyo4_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, UINT32 scr )

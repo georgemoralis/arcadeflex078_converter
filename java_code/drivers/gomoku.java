@@ -27,11 +27,7 @@ public class gomoku
 	VIDEO_UPDATE(gomoku);
 	
 	
-	extern data8_t *gomoku_soundregs;
 	
-	extern data8_t *gomoku_videoram;
-	extern data8_t *gomoku_colorram;
-	extern data8_t *gomoku_bgram;
 	
 	int gomoku_sh_start(const struct MachineSound *msound);
 	void gomoku_sh_stop(void);

@@ -44,14 +44,8 @@ package drivers;
 public class sidearms
 {
 	
-	extern UINT8 *sidearms_bg_scrollx;
-	extern UINT8 *sidearms_bg_scrolly;
 	
-	extern extern extern extern extern extern 
-	extern PALETTE_INIT( sidearms );
-	extern VIDEO_START( sidearms );
-	extern VIDEO_UPDATE( sidearms );
-	extern VIDEO_EOF( sidearms );
+	
 	
 	int sidearms_gameid;
 	

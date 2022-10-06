@@ -71,9 +71,6 @@ public class sshangha
 	WRITE16_HANDLER( sshangha_palette_24bit_w );
 	WRITE16_HANDLER (sshangha_video_w);
 	
-	extern data16_t *sshangha_pf1_data;
-	extern data16_t *sshangha_pf2_data;
-	extern data16_t *sshangha_pf1_rowscroll, *sshangha_pf2_rowscroll;
 	
 	static data16_t *sshangha_prot_data;
 	

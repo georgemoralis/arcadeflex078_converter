@@ -204,7 +204,6 @@ public class taito_f3
 	data32_t *f3_vram,*f3_line_ram;
 	data32_t *f3_pf_data,*f3_pivot_ram;
 	
-	extern int f3_game;
 	#if DEBUG_F3
 	static int sprite_pri_word;
 	#endif	//DEBUG_F3

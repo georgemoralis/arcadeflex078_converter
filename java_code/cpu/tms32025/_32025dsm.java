@@ -38,14 +38,11 @@ public class _32025dsm
 {
 	
 	#ifdef MAME_DEBUG					/* Compile interface to MAME */
-	extern offs_t TMS32025_DATA_BANK[0x10];
-	extern offs_t TMS32025_PRGM_BANK[0x10];
 	//#define READOP16(A)  (cpu_readop16((A)     | (TMS32025_PGM_OFFSET << 1)))
 	//#define READARG16(A) (cpu_readop_arg16((A) | (TMS32025_PGM_OFFSET << 1)))
 	#define READOP16(A)  (cpu_readop16(TMS32025_PRGM_BANK( (A>>1) )))
 	#define READARG16(A) (cpu_readop_arg16(TMS32025_PRGM_BANK( (A>>1) )))
 	#else								/* Compile interface for standalone */
-	extern unsigned char *Buffer;
 	#ifdef MSB_FIRST
 	#define READOP16(A)  ( ((Buffer[A+1]<<8) | Buffer[A]) )
 	#define READARG16(A) ( ((Buffer[A+1]<<8) | Buffer[A]) )

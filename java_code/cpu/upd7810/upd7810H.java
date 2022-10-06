@@ -2,12 +2,10 @@
 #define _UPD7810_H_
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 #ifdef RUNTIME_LOADER
-	extern void upd7810_runtime_loader_init(void);
-#endif
+	#endif
 
 /*
   all types have internal ram at 0xff00-0xffff
@@ -68,7 +66,6 @@ enum {
 #define UPD7810_INTF2		1
 #define UPD7810_INTFE1      4
 
-extern int upd7810_icount;						/* cycle count */
 
 void upd7810_init (void);				/* Initialize save states */
 void upd7810_reset (void *param);		/* Reset registers to the initial values */
@@ -179,11 +176,8 @@ typedef struct {
 	int (*irq_callback)(int irqline);
 }	UPD7810;
 
-extern UPD7810 upd7810;
 
 #ifdef MAME_DEBUG
-extern unsigned Dasm7810( char *dst, unsigned pc );
-extern unsigned Dasm7807( char *dst, unsigned pc );
 #endif
 
 #ifdef __cplusplus

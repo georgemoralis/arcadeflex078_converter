@@ -320,8 +320,7 @@ public class midwayic
 						pic.index = 0;
 	#ifdef MAME_DEBUG
 	{
-		extern int debug_key_pressed;
-		debug_key_pressed = 1;
+			debug_key_pressed = 1;
 	}
 	#endif
 					}

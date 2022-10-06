@@ -29,7 +29,6 @@ package drivers;
 public class namcos86
 {
 	
-	extern unsigned char *rthunder_videoram1, *rthunder_videoram2, *spriteram, *dirtybuffer;
 	
 	/*******************************************************************/
 	

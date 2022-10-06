@@ -18,7 +18,6 @@ package machine;
 public class jackal
 {
 	
-	extern unsigned char jackal_interrupt_enable;
 	
 	unsigned char *jackal_rambank = 0;
 	unsigned char *jackal_spritebank = 0;

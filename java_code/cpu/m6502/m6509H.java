@@ -32,12 +32,10 @@ public class m6509H
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	#ifdef RUNTIME_LOADER
-		extern void m6509_runtime_loader_init(void);
-	#endif
+		#endif
 	
 	enum {
 		M6509_PC=1, M6509_S, M6509_P, M6509_A, M6509_X, M6509_Y,
@@ -51,27 +49,11 @@ public class m6509H
 	   positiv edge sets overflow flag */
 	#define M6509_SET_OVERFLOW 3
 	
-	extern int m6509_ICount;				/* cycle count */
 	
-	extern void m6509_init(void);
-	extern void m6509_reset(void *param);			/* Reset registers to the initial values */
-	extern void m6509_exit(void);					/* Shut down CPU core */
-	extern int	m6509_execute(int cycles);			/* Execute cycles - returns number of cycles actually run */
-	extern unsigned m6509_get_context (void *dst);	/* Get registers, return context size */
-	extern void m6509_set_context (void *src);		/* Set registers */
-	extern unsigned m6509_get_reg (int regnum);
-	extern void m6509_set_reg (int regnum, unsigned val);
-	extern void m6509_set_irq_line(int irqline, int state);
-	extern void m6509_set_irq_callback(int (*callback)(int irqline));
-	extern void m6509_state_save(void *file);
-	extern void m6509_state_load(void *file);
-	extern const char *m6509_info(void *context, int regnum);
-	extern unsigned m6509_dasm(char *buffer, unsigned pc);
 	
 	
 	
 	#ifdef MAME_DEBUG
-	extern unsigned int Dasm6509( char *dst, unsigned pc );
 	#endif
 	
 	#ifdef __cplusplus

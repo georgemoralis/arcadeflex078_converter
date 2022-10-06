@@ -136,7 +136,6 @@ public class angelkds
 {
 	
 	
-	extern data8_t *angelkds_txvideoram, *angelkds_bgtopvideoram, *angelkds_bgbotvideoram;
 	
 	
 	

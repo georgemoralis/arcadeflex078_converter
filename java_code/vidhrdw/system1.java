@@ -238,7 +238,6 @@ public class system1
 	
 	
 	
-	extern struct GameDriver driver_wbml;
 	
 	static void draw_sprite(struct mame_bitmap *bitmap,int spr_number)
 	{

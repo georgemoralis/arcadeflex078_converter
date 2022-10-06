@@ -33,10 +33,7 @@ package drivers;
 public class tagteam
 {
 	
-	extern extern extern extern extern extern extern extern extern 
-	extern PALETTE_INIT( tagteam );
-	extern VIDEO_START( tagteam );
-	extern VIDEO_UPDATE( tagteam );
+	
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

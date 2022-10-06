@@ -18,9 +18,6 @@ package drivers;
 public class thoop2
 {
 	
-	extern data16_t *thoop2_vregs;
-	extern data16_t *thoop2_videoram;
-	extern data16_t *thoop2_spriteram;
 	
 	/* from vidhrdw/thoop2.c */
 	WRITE16_HANDLER( thoop2_vram_w );

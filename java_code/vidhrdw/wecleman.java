@@ -42,7 +42,6 @@ public class wecleman
 	};
 	
 	/* Variables defined in driver: */
-	extern int wecleman_selected_ip, wecleman_irqctrl;
 	
 	/* Variables that driver has acces to: */
 	data16_t *wecleman_videostatus;

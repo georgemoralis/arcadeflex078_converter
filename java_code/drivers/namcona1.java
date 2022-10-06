@@ -914,13 +914,11 @@ public class namcona1
 	
 	static WRITE16_HANDLER( bogus_w )
 	{
-	//	extern int debug_key_pressed;
-	//	debug_key_pressed = 1;
+	//	//	debug_key_pressed = 1;
 	}
 	static READ16_HANDLER( bogus_r )
 	{
-	//	extern int debug_key_pressed;
-	//	debug_key_pressed = 1;
+	//	//	debug_key_pressed = 1;
 		return 0;
 	}
 	

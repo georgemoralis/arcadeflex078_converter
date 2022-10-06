@@ -14,7 +14,6 @@ public class tmp68301H
 	MACHINE_INIT( tmp68301 );
 	
 	// Hardware Registers
-	extern data16_t *tmp68301_regs;
 	WRITE16_HANDLER( tmp68301_regs_w );
 	
 	// Interrupts

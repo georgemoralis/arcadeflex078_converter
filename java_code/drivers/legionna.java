@@ -69,20 +69,9 @@ package drivers;
 public class legionna
 {
 	
-	extern WRITE16_HANDLER( legionna_background_w );
-	extern WRITE16_HANDLER( legionna_foreground_w );
-	extern WRITE16_HANDLER( legionna_midground_w );
-	extern WRITE16_HANDLER( legionna_text_w );
-	extern WRITE16_HANDLER( legionna_control_w );
 	
-	extern VIDEO_START( legionna );
-	extern VIDEO_START( cupsoc );
-	extern VIDEO_UPDATE( legionna );
-	extern VIDEO_UPDATE( godzilla );
-	extern VIDEO_UPDATE( sdgndmrb );
 	void heatbrl_setgfxbank(UINT16 data);
 	
-	extern data16_t *legionna_back_data,*legionna_fore_data,*legionna_mid_data,*legionna_scrollram16,*legionna_textram;
 	static data16_t *mcu_ram;
 	
 	static WRITE16_HANDLER( legionna_paletteram16_w )	/* xBBBBxRRRRxGGGGx */

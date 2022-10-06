@@ -32,11 +32,8 @@ public class redclash
 {
 	
 	
-	extern extern extern 
-	extern extern extern extern 
-	extern PALETTE_INIT( redclash );
-	extern VIDEO_START( redclash );
-	extern VIDEO_UPDATE( redclash );
+	
+	
 	
 	/*
 	  This game doesn't have VBlank interrupts.

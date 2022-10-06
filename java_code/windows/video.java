@@ -28,12 +28,8 @@ public class video
 	//============================================================
 	
 	// from input.c
-	extern void win_poll_input(void);
-	extern void win_pause_input(int pause);
-	extern UINT8 win_trying_to_quit;
 	
 	// from wind3dfx.c
-	extern struct rc_option win_d3d_opts[];
 	
 	
 	

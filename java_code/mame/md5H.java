@@ -24,7 +24,6 @@
 #define MD5_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 typedef unsigned int UWORD32;

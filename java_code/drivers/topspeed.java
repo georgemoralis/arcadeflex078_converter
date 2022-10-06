@@ -199,12 +199,10 @@ public class topspeed
 	static UINT16 cpua_ctrl = 0xff;
 	static int ioc220_port = 0;
 	
-	extern data16_t *topspeed_spritemap;
 	
 	static size_t sharedram_size;
 	static data16_t *sharedram;
 	
-	extern data16_t *topspeed_raster_ctrl;
 	
 	
 	static READ16_HANDLER( sharedram_r )

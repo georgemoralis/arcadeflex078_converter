@@ -159,20 +159,8 @@ public class equites
 		MDRV_SOUND_ADD(AY8910, equites_8910intf) \
 		MDRV_SOUND_ADD(DAC, equites_dacintf)
 	
-	extern void equites_8404init(void);
-	extern void equites_8404rule(unsigned pc, int offset, int data);
 	
-	extern READ16_HANDLER(equites_8404_r);
-	extern WRITE_HANDLER(equites_5232_w);
-	extern WRITE_HANDLER(equites_8910control_w);
-	extern WRITE_HANDLER(equites_8910data_w);
-	extern WRITE_HANDLER(equites_dac0_w);
-	extern WRITE_HANDLER(equites_dac1_w);
 	
-	extern data16_t *equites_8404ram;
-	extern struct MSM5232interface equites_5232intf;
-	extern struct AY8910interface equites_8910intf;
-	extern struct DACinterface equites_dacintf;
 	
 	public static Memory_ReadAddress equites_s_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -206,27 +194,8 @@ public class equites
 	// Common Hardware End
 	
 	// Equites Hardware
-	extern PALETTE_INIT( equites );
-	extern VIDEO_START( equites );
-	extern VIDEO_UPDATE( equites );
-	extern READ16_HANDLER(equites_spriteram_r);
-	extern WRITE16_HANDLER(equites_charram_w);
-	extern WRITE16_HANDLER(equites_scrollreg_w);
-	extern WRITE16_HANDLER(equites_bgcolor_w);
 	
 	// Splendor Blast Hareware
-	extern MACHINE_INIT( splndrbt );
-	extern PALETTE_INIT( splndrbt );
-	extern VIDEO_START( splndrbt );
-	extern VIDEO_UPDATE( splndrbt );
-	extern READ16_HANDLER(splndrbt_bankedchar_r);
-	extern WRITE16_HANDLER(splndrbt_charram_w);
-	extern WRITE16_HANDLER(splndrbt_bankedchar_w);
-	extern WRITE16_HANDLER(splndrbt_selchar0_w);
-	extern WRITE16_HANDLER(splndrbt_selchar1_w);
-	extern WRITE16_HANDLER(splndrbt_scrollram_w);
-	extern WRITE16_HANDLER(splndrbt_bgcolor_w);
-	extern data16_t *splndrbt_scrollx, *splndrbt_scrolly;
 	
 	/******************************************************************************/
 	// Locals

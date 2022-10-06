@@ -10,10 +10,7 @@ public class neogeo
 	
 	static int sram_locked;
 	static offs_t sram_protection_hack;
-	extern void *record;
-	extern void *playback;
 	
-	extern int neogeo_rng;
 	
 	data16_t *neogeo_ram16;
 	data16_t *neogeo_sram16;
@@ -107,8 +104,7 @@ public class neogeo
 	/* This function is only called once per game. */
 	DRIVER_INIT( neogeo )
 	{
-		extern struct YM2610interface neogeo_ym2610_interface;
-		data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
+			data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 		int tileno,numtiles;
 	
 		numtiles = memory_region_length(REGION_GFX3)/128;

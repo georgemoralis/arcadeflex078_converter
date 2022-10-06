@@ -43,11 +43,8 @@ public class pbaction
 {
 	
 	
-	extern UINT8 *pbaction_videoram2,*pbaction_colorram2;
 	
-	extern extern extern extern extern extern 
-	extern VIDEO_START( pbaction );
-	extern VIDEO_UPDATE( pbaction );
+	
 	
 	
 	public static WriteHandlerPtr pbaction_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)

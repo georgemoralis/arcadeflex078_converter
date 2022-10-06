@@ -41,20 +41,7 @@ public class i8039H
 		   I8039_R3,   I8039_R4, I8039_R5,  I8039_R6, I8039_R7
 	};
 	
-	extern int i8039_ICount;						/* T-state count */
 	
-	extern void i8039_init(void);
-	extern void i8039_reset(void *param);			/* Reset processor & registers	*/
-	extern void i8039_exit(void);					/* Shut down CPU emulation		*/
-	extern int i8039_execute(int cycles);			/* Execute cycles T-States - returns number of cycles actually run */
-	extern unsigned i8039_get_context(void *dst);	/* Get registers				*/
-	extern void i8039_set_context(void *src);		/* Set registers				*/
-	extern unsigned i8039_get_reg(int regnum);		/* Get specific register	  */
-	extern void i8039_set_reg(int regnum, unsigned val);    /* Set specific register 	 */
-	extern void i8039_set_irq_line(int irqline, int state);
-	extern void i8039_set_irq_callback(int (*callback)(int irqline));
-	extern const char *i8039_info(void *context, int regnum);
-	extern unsigned i8039_dasm(char *buffer, unsigned pc);
 	
 	/*   This handling of special I/O ports should be better for actual MAME
 	 *   architecture.  (i.e., define access to ports { I8039_p1, I8039_p1, dkong_out_w })
@@ -95,18 +82,6 @@ public class i8039H
 	#define I8035_CLOCK_DIVIDER		I8039_CLOCK_DIVIDER
 	#define i8035_ICount			i8039_ICount
 	
-	extern void i8035_init(void);
-	extern void i8035_reset(void *param);
-	extern void i8035_exit(void);
-	extern int i8035_execute(int cycles);
-	extern unsigned i8035_get_context(void *dst);
-	extern void i8035_set_context(void *src);
-	extern unsigned i8035_get_reg(int regnum);
-	extern void i8035_set_reg(int regnum, unsigned val);
-	extern void i8035_set_irq_line(int irqline, int state);
-	extern void i8035_set_irq_callback(int (*callback)(int irqline));
-	extern const char *i8035_info(void *context, int regnum);
-	extern unsigned i8035_dasm(char *buffer, unsigned pc);
 	#endif
 	
 	/**************************************************************************
@@ -133,18 +108,7 @@ public class i8039H
 	#define I8048_CLOCK_DIVIDER		I8039_CLOCK_DIVIDER
 	#define i8048_ICount			i8039_ICount
 	
-	extern void i8048_init(void);
-	extern void i8048_reset(void *param);
-	extern void i8048_exit(void);
-	extern int i8048_execute(int cycles);
-	extern unsigned i8048_get_context(void *dst);
-	extern void i8048_set_context(void *src);
-	extern unsigned i8048_get_reg(int regnum);
-	extern void i8048_set_reg(int regnum, unsigned val);
-	extern void i8048_set_irq_line(int irqline, int state);
-	extern void i8048_set_irq_callback(int (*callback)(int irqline));
 	const char *i8048_info(void *context, int regnum);
-	extern unsigned i8048_dasm(char *buffer, unsigned pc);
 	#endif
 	
 	/**************************************************************************
@@ -171,18 +135,6 @@ public class i8039H
 	#define N7751_CLOCK_DIVIDER		I8039_CLOCK_DIVIDER
 	#define n7751_ICount			i8039_ICount
 	
-	extern void n7751_init(void);
-	extern void n7751_reset(void *param);
-	extern void n7751_exit(void);
-	extern int n7751_execute(int cycles);
-	extern unsigned n7751_get_context(void *dst);
-	extern void n7751_set_context(void *src);
-	extern unsigned n7751_get_reg(int regnum);
-	extern void n7751_set_reg(int regnum, unsigned val);
-	extern void n7751_set_irq_line(int irqline, int state);
-	extern void n7751_set_irq_callback(int (*callback)(int irqline));
-	extern const char *n7751_info(void *context, int regnum);
-	extern unsigned n7751_dasm(char *buffer, unsigned pc);
 	#endif
 	
 	

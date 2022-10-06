@@ -56,8 +56,6 @@ public class tecmo
 	
 	
 	
-	extern int tecmo_video_type;
-	extern unsigned char *tecmo_txvideoram,*tecmo_fgvideoram,*tecmo_bgvideoram;
 	
 	
 	VIDEO_START( tecmo );

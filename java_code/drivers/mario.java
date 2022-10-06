@@ -80,15 +80,12 @@ public class mario
 	static int p[8] = { 0,0xf0,0,0,0,0,0,0 };
 	static int t[2] = { 0,0 };
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( mario );
-	extern VIDEO_START( mario );
-	extern VIDEO_UPDATE( mario );
+	
 	
 	/*
 	 *  from sndhrdw/mario.c
 	 */
-	extern extern extern extern 
+	
 	
 	#define ACTIVELOW_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | ((D ^ 1) << A))
 	#define ACTIVEHIGH_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | (D << A))

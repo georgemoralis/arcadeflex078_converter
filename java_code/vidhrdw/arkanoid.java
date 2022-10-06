@@ -16,7 +16,6 @@ public class arkanoid
 {
 	
 	static int gfxbank, palettebank;
-	extern int arkanoid_paddle_select;
 	
 	static struct tilemap *bg_tilemap;
 	

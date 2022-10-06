@@ -140,50 +140,10 @@ public class vsnes
 	#define DUAL_RBI 1
 	
 	/* from vidhrdw */
-	extern VIDEO_START( vsnes );
-	extern PALETTE_INIT( vsnes );
-	extern VIDEO_UPDATE( vsnes );
-	extern VIDEO_START( vsdual );
-	extern VIDEO_UPDATE( vsdual );
-	extern PALETTE_INIT( vsdual );
 	
 	/* from machine */
-	extern MACHINE_INIT( vsnes );
-	extern MACHINE_INIT( vsdual );
-	extern DRIVER_INIT( vsnes );
-	extern DRIVER_INIT( suprmrio );
-	extern DRIVER_INIT( excitebk );
-	extern DRIVER_INIT( excitbkj );
-	extern DRIVER_INIT( vsnormal );
-	extern DRIVER_INIT( duckhunt );
-	extern DRIVER_INIT( hogalley );
-	extern DRIVER_INIT( goonies );
-	extern DRIVER_INIT( machridr );
-	extern DRIVER_INIT( vsslalom );
-	extern DRIVER_INIT( cstlevna );
-	extern DRIVER_INIT( drmario );
-	extern DRIVER_INIT( rbibb );
-	extern DRIVER_INIT( tkoboxng );
-	extern DRIVER_INIT( topgun );
-	extern DRIVER_INIT( vsgradus );
-	extern DRIVER_INIT( vspinbal );
-	extern DRIVER_INIT( MMC3 );
-	extern DRIVER_INIT( platoon );
-	extern DRIVER_INIT( vstennis );
-	extern DRIVER_INIT( wrecking );
-	extern DRIVER_INIT( balonfgt );
-	extern DRIVER_INIT( vsbball );
-	extern DRIVER_INIT( iceclmrj );
-	extern DRIVER_INIT( supxevs );
-	extern DRIVER_INIT( btlecity );
-	extern DRIVER_INIT( vstetris );
-	extern DRIVER_INIT( bnglngby );
-	extern DRIVER_INIT( jajamaru);
-	extern DRIVER_INIT( vsgshoe );
-	extern DRIVER_INIT( vsfdf );
-	extern DRIVER_INIT( mightybj);
 	
-	extern extern extern extern extern extern 
+	
 	/******************************************************************************/
 	
 	/* local stuff */

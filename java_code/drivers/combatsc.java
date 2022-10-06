@@ -126,7 +126,6 @@ package drivers;
 public class combatsc
 {
 	
-	extern unsigned char* banked_area;
 	
 	/* from vidhrdw/combasc.c */
 	PALETTE_INIT( combasc );

@@ -233,14 +233,6 @@ public class ninjakd2
 	VIDEO_START( ninjakd2 );
 	VIDEO_UPDATE( ninjakd2 );
 	
-	extern unsigned char 	*ninjakd2_scrolly_ram;
-	extern unsigned char 	*ninjakd2_scrollx_ram;
-	extern unsigned char 	*ninjakd2_bgenable_ram;
-	extern unsigned char 	*ninjakd2_spoverdraw_ram;
-	extern unsigned char 	*ninjakd2_background_videoram;
-	extern unsigned char 	*ninjakd2_foreground_videoram;
-	extern size_t ninjakd2_backgroundram_size;
-	extern size_t ninjakd2_foregroundram_size;
 	
 	static int ninjakd2_bank_latch = 255;
 	

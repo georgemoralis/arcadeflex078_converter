@@ -54,9 +54,6 @@ public class bionicc
 	WRITE16_HANDLER( bionicc_scroll_w );
 	WRITE16_HANDLER( bionicc_gfxctrl_w );
 	
-	extern data16_t *bionicc_bgvideoram;
-	extern data16_t *bionicc_fgvideoram;
-	extern data16_t *bionicc_txvideoram;
 	
 	VIDEO_START( bionicc );
 	VIDEO_UPDATE( bionicc );

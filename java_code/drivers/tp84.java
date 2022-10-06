@@ -91,14 +91,9 @@ public class tp84
 {
 	
 	
-	extern UINT8 *tp84_videoram2, *tp84_colorram2;
 	
-	extern extern extern extern extern extern extern extern extern extern 
-	extern PALETTE_INIT( tp84 );
-	extern VIDEO_START( tp84 );
-	extern VIDEO_UPDATE( tp84 );
 	
-	extern INTERRUPT_GEN( tp84_6809_interrupt );
+	
 	
 	
 	static UINT8 *sharedram;

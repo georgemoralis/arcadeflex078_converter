@@ -17,11 +17,8 @@ package drivers;
 public class zac2650
 {
 	
-	extern UINT8 *s2636ram;
 	
-	extern extern extern extern extern 
-	extern VIDEO_START( tinvader );
-	extern VIDEO_UPDATE( tinvader );
+	
 	
 	#define WHITE           MAKE_ARGB(0x04,0xff,0xff,0xff)
 	#define GREEN 			MAKE_ARGB(0x04,0x20,0xff,0x20)

@@ -165,7 +165,6 @@ public class tumblep
 	WRITE16_HANDLER( tumblep_control_0_w );
 	WRITE16_HANDLER( semicom_soundcmd_w );
 	
-	extern data16_t *tumblep_pf1_data,*tumblep_pf2_data;
 	data16_t* tumblep_mainram;
 	
 	/******************************************************************************/

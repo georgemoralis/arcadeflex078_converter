@@ -14,7 +14,6 @@ public class silkroad
 	/* is theres a bg colour register? */
 	
 	static struct tilemap *fg_tilemap,*fg2_tilemap,*fg3_tilemap;
-	extern data32_t *silkroad_vidram,*silkroad_vidram2,*silkroad_vidram3, *silkroad_sprram, *silkroad_regs;
 	
 	static void silkroad_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri )
 	{

@@ -23,21 +23,12 @@
 //============================================================
 
 // current frameskip/autoframeskip settings
-extern int			frameskip;
-extern int			autoframeskip;
 
 // speed throttling
-extern int			throttle;
 
 // palette lookups
-extern UINT8		palette_lookups_invalid;
-extern UINT32 		palette_16bit_lookup[];
-extern UINT32 		palette_32bit_lookup[];
 
 // rotation
-extern UINT8		blit_flipx;
-extern UINT8		blit_flipy;
-extern UINT8		blit_swapxy;
 
 
 

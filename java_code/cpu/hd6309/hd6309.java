@@ -111,7 +111,6 @@ public class hd6309
 	/*#define BIG_SWITCH*/
 	
 	#ifdef MAME_DEBUG
-	extern int debug_key_pressed;
 	#endif
 	
 	void CHECK_IRQ_LINES( void );

@@ -160,10 +160,6 @@ public class toaplan2
 	#define TOAPLAN2_TOP_VRAM_SIZE  0x1000	/* Top Layer  RAM size */
 	#define TOAPLAN2_SPRITERAM_SIZE 0x800	/* Sprite     RAM size */
 	#define RAIZING_TX_GFXRAM_SIZE  0x8000	/* GFX data decode RAM size */
-	extern  size_t toaplan2_tx_vram_size;		 /* 0x2000 Text layer RAM size */
-	extern  size_t toaplan2_tx_offs_vram_size;	 /* 0x200 Text layer tile flip and positon ? */
-	extern  size_t toaplan2_tx_scroll_vram_size; /* 0x200 Text layer scroll ? */
-	extern  size_t paletteram_size;
 	
 	
 	
@@ -218,7 +214,6 @@ public class toaplan2
 	static int sprite_flip[2] = { 0, 0 };
 	static int tx_flip = 0;
 	
-	extern int toaplan2_sub_cpu;
 	
 	static UINT8 top_tile_priority[2][16];
 	static UINT8 fg_tile_priority[2][16];

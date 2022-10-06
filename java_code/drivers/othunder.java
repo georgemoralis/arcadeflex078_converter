@@ -63,7 +63,6 @@ public class othunder
 	
 	static data16_t eep_latch = 0;
 	
-	extern data16_t *othunder_ram;
 	
 	
 	/***********************************************************

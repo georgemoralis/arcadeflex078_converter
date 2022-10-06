@@ -25,7 +25,6 @@ public class i88intfH
 	#define i88_set_reg i86_set_reg
 	#define i88_set_irq_line i86_set_irq_line
 	#define i88_set_irq_callback i86_set_irq_callback
-	extern const char *i88_info(void *context, int regnum);
 	#define i88_dasm i86_dasm
 	
 	#endif

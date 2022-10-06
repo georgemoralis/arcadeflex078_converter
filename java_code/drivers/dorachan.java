@@ -17,7 +17,6 @@ package drivers;
 
 public class dorachan
 {
-	extern int dorachan_ctrl;
 	
 	
 	public static ReadHandlerPtr dorachan_protection_r  = new ReadHandlerPtr() { public int handler(int offset)

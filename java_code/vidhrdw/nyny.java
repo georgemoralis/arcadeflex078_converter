@@ -15,8 +15,6 @@ package vidhrdw;
 public class nyny
 {
 	
-	extern unsigned char *nyny_videoram ;
-	extern unsigned char *nyny_colourram ;
 	
 	static struct mame_bitmap *tmpbitmap1;
 	static struct mame_bitmap *tmpbitmap2;

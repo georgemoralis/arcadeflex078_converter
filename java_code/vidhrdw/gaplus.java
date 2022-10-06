@@ -255,7 +255,6 @@ public class gaplus
 		gaplus_starfield_control[offset] = data;
 	}
 	
-	extern unsigned char *gaplus_sharedram;
 	
 	VIDEO_START( gaplus ) {
 	

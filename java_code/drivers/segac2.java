@@ -206,7 +206,6 @@ public class segac2
 	unsigned int bios_width;  // determines the way the game info ROM is read
 	
 	unsigned int readpos = 1;  // serial bank selection position (9-bit)
-	extern UINT16 scanbase;
 	
 	/******************************************************************************
 		Interrupt handling
@@ -1842,9 +1841,6 @@ public class segac2
 	};
 	
 	static UINT8 hintcount;			/* line interrupt counter, decreased each scanline */
-	extern UINT8 vintpending;
-	extern UINT8 hintpending;
-	extern UINT8 *segae_vdp_regs[];		/* pointer to vdp's registers */
 	
 	// Interrupt handler - from drivers/segasyse.c
 	INTERRUPT_GEN (megatech_irq)

@@ -21,12 +21,7 @@ public class wind3dH
 	//	GLOBAL VARIABLES
 	//============================================================
 	
-	extern int win_d3d_use_filter;
-	extern int win_d3d_tex_manage;
 	
-	extern UINT8 win_d3d_effects_swapxy;
-	extern UINT8 win_d3d_effects_flipx;
-	extern UINT8 win_d3d_effects_flipy;
 	
 	
 	

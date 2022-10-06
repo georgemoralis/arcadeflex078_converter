@@ -72,10 +72,7 @@ public class pooyan
 {
 	
 	
-	extern extern extern 
-	extern PALETTE_INIT( pooyan );
-	extern VIDEO_START( pooyan );
-	extern VIDEO_UPDATE( pooyan );
+	
 	
 	
 	public static Memory_ReadAddress readmem[]={

@@ -30,8 +30,6 @@ public class clshroad
 	
 	/* Variables & functions defined in vidhrdw: */
 	
-	extern data8_t *clshroad_vram_0, *clshroad_vram_1;
-	extern data8_t *clshroad_vregs;
 	
 	
 	PALETTE_INIT( firebatl );
@@ -40,7 +38,6 @@ public class clshroad
 	VIDEO_START( clshroad );
 	VIDEO_UPDATE( clshroad );
 	
-	extern unsigned char *wiping_soundregs;
 	int wiping_sh_start(const struct MachineSound *msound);
 	void wiping_sh_stop(void);
 	

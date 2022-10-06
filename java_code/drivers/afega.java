@@ -36,8 +36,6 @@ public class afega
 	
 	/* Variables defined in vidhrdw: */
 	
-	extern data16_t *afega_vram_0, *afega_scroll_0;
-	extern data16_t *afega_vram_1, *afega_scroll_1;
 	
 	/* Functions defined in vidhrdw: */
 	

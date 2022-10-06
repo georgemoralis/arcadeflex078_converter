@@ -39,12 +39,8 @@ public class pacland
 	
 	static UINT8 *sharedram1;
 	
-	extern UINT8 *pacland_videoram2;
 	
-	extern extern extern extern extern extern 
-	extern PALETTE_INIT( pacland );
-	extern VIDEO_START( pacland );
-	extern VIDEO_UPDATE( pacland );
+	
 	
 	
 	public static ReadHandlerPtr sharedram1_r  = new ReadHandlerPtr() { public int handler(int offset)

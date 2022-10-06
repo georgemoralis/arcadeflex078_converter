@@ -19,15 +19,8 @@ public class exedexes
 {
 	
 	
-	extern UINT8 *exedexes_bg_scroll;
-	extern UINT8 *exedexes_nbg_yscroll;
-	extern UINT8 *exedexes_nbg_xscroll;
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( exedexes );
-	extern VIDEO_START( exedexes );
-	extern VIDEO_UPDATE( exedexes );
-	extern VIDEO_EOF( exedexes );
+	
 	
 	
 	

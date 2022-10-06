@@ -11,8 +11,6 @@ public class mugsmash
 	
 	static struct tilemap *mugsmash_tilemap1,  *mugsmash_tilemap2;
 	
-	extern data16_t *mugsmash_videoram1, *mugsmash_videoram2, *mugs_spriteram;
-	extern data16_t *mugsmash_regs1, *mugsmash_regs2;
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

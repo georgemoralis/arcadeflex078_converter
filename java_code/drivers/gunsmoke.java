@@ -67,10 +67,7 @@ public class gunsmoke
 	#define GUNSMOKE_HACK	0
 	
 	
-	extern MACHINE_INIT( gunsmoke );
 	
-	extern unsigned char *gunsmoke_bg_scrollx;
-	extern unsigned char *gunsmoke_bg_scrolly;
 	
 	PALETTE_INIT( gunsmoke );
 	VIDEO_UPDATE( gunsmoke );

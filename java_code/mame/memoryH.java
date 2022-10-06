@@ -19,7 +19,6 @@ public class memoryH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	/*
@@ -829,7 +828,6 @@ public class memoryH
 	/* ----- separate opcode/data encryption helpers ---- */
 	void		memory_set_opcode_base(int cpunum, void *base);
 	void		memory_set_encrypted_opcode_range(int cpunum, offs_t min_address,offs_t max_address);
-	extern offs_t encrypted_opcode_start[],encrypted_opcode_end[];
 	
 	/* ----- return a base pointer to memory ---- */
 	void *		memory_find_base(int cpunum, offs_t offset);
@@ -860,15 +858,6 @@ public class memoryH
 	
 	***************************************************************************/
 	
-	extern UINT8 			opcode_entry;		/* current entry for opcode fetching */
-	extern UINT8 *			OP_ROM;				/* opcode ROM base */
-	extern UINT8 *			OP_RAM;				/* opcode RAM base */
-	extern offs_t			OP_MEM_MIN;			/* opcode memory minimum */
-	extern offs_t			OP_MEM_MAX;			/* opcode memory maximum */
-	extern UINT8 *			cpu_bankbase[];		/* array of bank bases */
-	extern UINT8 *			readmem_lookup;		/* pointer to the readmem lookup table */
-	extern offs_t			mem_amask;			/* memory address mask */
-	extern struct ExtMemory	ext_memory[];		/* externally-allocated memory */
 	
 	
 	

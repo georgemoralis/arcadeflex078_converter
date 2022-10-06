@@ -49,9 +49,6 @@ public class vulgus
 {
 	
 	
-	extern unsigned char *vulgus_fgvideoram;
-	extern unsigned char *vulgus_bgvideoram;
-	extern unsigned char *vulgus_scroll_low,*vulgus_scroll_high;
 	
 	VIDEO_START( vulgus );
 	PALETTE_INIT( vulgus );

@@ -67,14 +67,10 @@ public class warpwarp
 {
 	
 	
-	extern unsigned char *warpwarp_bulletsram;
 	PALETTE_INIT( warpwarp );
 	VIDEO_UPDATE( warpwarp );
 	
 	/* from sndhrdw/warpwarp.c */
-	extern int warpwarp_sh_start(const struct MachineSound *msound);
-	extern void warpwarp_sh_stop(void);
-	extern void warpwarp_sh_update(void);
 	
 	/* Read System Inputs */
 	public static ReadHandlerPtr bombbee_sys_r  = new ReadHandlerPtr() { public int handler(int offset)

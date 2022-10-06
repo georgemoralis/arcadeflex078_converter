@@ -72,8 +72,6 @@ public class psikyo
 	
 	/* Variables defined in vidhrdw */
 	
-	extern data32_t *psikyo_vram_0, *psikyo_vram_1, *psikyo_vregs;
-	extern int psikyo_ka302c_banking;
 	
 	/* Functions defined in vidhrdw */
 	
@@ -84,7 +82,6 @@ public class psikyo
 	VIDEO_EOF( psikyo );
 	VIDEO_UPDATE( psikyo );
 	
-	extern void psikyo_switch_banks( int tilemap, int bank );
 	
 	/* Variables only used here */
 	

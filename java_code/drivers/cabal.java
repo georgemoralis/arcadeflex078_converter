@@ -49,8 +49,6 @@ package drivers;
 public class cabal
 {
 	
-	extern VIDEO_START( cabal );
-	extern VIDEO_UPDATE( cabal );
 	WRITE16_HANDLER( cabal_flipscreen_w );
 	WRITE16_HANDLER( cabal_background_videoram16_w );
 	WRITE16_HANDLER( cabal_text_videoram16_w );

@@ -36,17 +36,9 @@ package drivers;
 public class circus
 {
 	
-	extern extern extern 
-	extern 
-	extern VIDEO_START( circus );
-	extern VIDEO_UPDATE( crash );
-	extern VIDEO_UPDATE( circus );
-	extern VIDEO_UPDATE( robotbwl );
-	extern VIDEO_UPDATE( ripcord ); //AT
-	extern VIDEO_EOF( ripcord ); //AT
 	
-	extern INTERRUPT_GEN( crash_interrupt );
-	extern struct Samplesinterface circus_samples_interface;
+	
+	
 	#if 0
 	static int circus_interrupt;
 	

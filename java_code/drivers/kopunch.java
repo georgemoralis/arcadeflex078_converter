@@ -7,12 +7,8 @@ package drivers;
 public class kopunch
 {
 	
-	extern UINT8 *kopunch_videoram2;
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( kopunch );
-	extern VIDEO_START( kopunch );
-	extern VIDEO_UPDATE( kopunch );
+	
 	
 	
 	INTERRUPT_GEN( kopunch_interrupt )

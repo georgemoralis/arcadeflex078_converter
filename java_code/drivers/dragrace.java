@@ -13,11 +13,7 @@ package drivers;
 public class dragrace
 {
 	
-	extern VIDEO_START( dragrace );
-	extern VIDEO_UPDATE( dragrace );
 	
-	extern UINT8* dragrace_playfield_ram;
-	extern UINT8* dragrace_position_ram;
 	
 	static unsigned dragrace_misc_flags = 0;
 	

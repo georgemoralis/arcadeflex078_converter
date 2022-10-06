@@ -32,24 +32,14 @@ public class wind3dfx
 	//============================================================
 	
 	// from input.c
-	extern int verbose;
 	
 	// from wind3d.c (surfaces)
-	extern LPDIRECTDRAWSURFACE7 win_d3d_background_surface;
-	extern LPDIRECTDRAWSURFACE7 win_d3d_scanline_surface[2];
 	
 	// from wind3d.c (global settings)
-	extern UINT8 win_d3d_use_auto_effect;
-	extern UINT8 win_d3d_use_rgbeffect;
-	extern UINT8 win_d3d_use_scanlines;
-	extern UINT8 win_d3d_use_prescale;
-	extern UINT8 win_d3d_use_feedback;
 	
 	// from wind3d.c (prescale)
-	extern int win_d3d_prescalex, win_d3d_prescaley;
 	
 	// from wind3d.c (zoom level)
-	extern int win_d3d_current_zoom;
 	
 	
 	

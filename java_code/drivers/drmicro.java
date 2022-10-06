@@ -25,7 +25,6 @@ public class drmicro
 	
 	
 	
-	extern void drmicro_flip_w( int flip );
 	
 	/****************************************************************************/
 	

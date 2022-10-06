@@ -176,10 +176,6 @@ package drivers;
 public class taito_b
 {
 	
-	extern data16_t *taitob_scroll;
-	extern data16_t *TC0180VCU_ram;
-	extern data16_t *taitob_spriteram;
-	extern data16_t *taitob_pixelram;
 	
 	
 	VIDEO_START( taitob_color_order0 );

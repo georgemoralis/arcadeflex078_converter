@@ -7,10 +7,7 @@ package drivers;
 public class pingpong
 {
 	
-	extern extern 
-	extern PALETTE_INIT( pingpong );
-	extern VIDEO_START( pingpong );
-	extern VIDEO_UPDATE( pingpong );
+	
 	
 	static int intenable;
 	

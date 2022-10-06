@@ -24,7 +24,6 @@ void cchasm_sh_update(void);
 
 /*----------- defined in vidhrdw/cchasm.c -----------*/
 
-extern data16_t *cchasm_ram;
 
 WRITE16_HANDLER( cchasm_refresh_control_w );
 VIDEO_START( cchasm );

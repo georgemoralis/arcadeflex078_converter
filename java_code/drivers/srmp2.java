@@ -78,9 +78,6 @@ public class srmp2
 	VIDEO_UPDATE( mjyuugi );
 	
 	
-	extern int srmp2_color_bank;
-	extern int srmp3_gfx_bank;
-	extern int mjyuugi_gfx_bank;
 	
 	static int srmp2_adpcm_bank;
 	static int srmp2_adpcm_data;

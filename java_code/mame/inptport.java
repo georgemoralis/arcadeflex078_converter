@@ -38,13 +38,7 @@ public class inptport
 	
 	***************************************************************************/
 	
-	extern void *record;
-	extern void *playback;
 	
-	extern unsigned int dispensed_tickets;
-	extern unsigned int coins[COIN_COUNTERS];
-	extern unsigned int lastcoin[COIN_COUNTERS];
-	extern unsigned int coinlockedout[COIN_COUNTERS];
 	
 	static unsigned short input_port_value[MAX_INPUT_PORTS];
 	static unsigned short input_vblank[MAX_INPUT_PORTS];

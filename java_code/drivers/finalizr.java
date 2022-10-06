@@ -18,8 +18,6 @@ public class finalizr
 	
 	void konami1_decode(void);
 	
-	extern unsigned char *finalizr_scroll;
-	extern unsigned char *finalizr_videoram2,*finalizr_colorram2;
 	static unsigned char *finalizr_interrupt_enable;
 	
 	int finalizr_T1_line;

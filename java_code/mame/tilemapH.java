@@ -39,7 +39,6 @@ struct tilemap; /* appease compiler */
 	available in alpha mode, ignore_transparency isn't.
 */
 
-extern struct tile_info
 {
 	/*
 		you must set tile_info.pen_data, tile_info.pal_data and tile_info.pen_usage
@@ -90,7 +89,6 @@ extern struct tile_info
 
 #define TILE_LINE_DISABLED 0x80000000
 
-extern struct mame_bitmap *priority_bitmap;
 
 /* don't call these from drivers - they are called from mame.c */
 int tilemap_init( void );

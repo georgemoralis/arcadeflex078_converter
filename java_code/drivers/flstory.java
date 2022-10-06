@@ -22,7 +22,6 @@ public class flstory
 	VIDEO_START( flstory );
 	VIDEO_UPDATE( flstory );
 	
-	extern UINT8 *flstory_scrlram;
 	
 	
 	

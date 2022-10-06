@@ -41,7 +41,6 @@ public class deniam
 {
 	
 	
-	extern data16_t *deniam_videoram,*deniam_textram;
 	
 	DRIVER_INIT( logicpro );
 	DRIVER_INIT( karianx );

@@ -35,7 +35,6 @@ public class m90
 	
 	static int bankaddress;
 	
-	extern unsigned char *m90_video_data;
 	
 	VIDEO_UPDATE( m90 );
 	VIDEO_UPDATE( m90_bootleg );

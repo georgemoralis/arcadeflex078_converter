@@ -144,17 +144,9 @@ public class gsword
 {
 	
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( josvolly );
-	extern PALETTE_INIT( gsword );
-	extern VIDEO_START( gsword );
-	extern VIDEO_UPDATE( gsword );
 	
-	extern size_t gsword_spritexy_size;
 	
-	extern UINT8 *gsword_spritexy_ram;
-	extern UINT8 *gsword_spritetile_ram;
-	extern UINT8 *gsword_spriteattrib_ram;
+	
 	
 	static int coins;
 	static int fake8910_0,fake8910_1;

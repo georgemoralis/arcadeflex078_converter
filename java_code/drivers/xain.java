@@ -28,7 +28,6 @@ public class xain
 	VIDEO_UPDATE( xain );
 	VIDEO_START( xain );
 	
-	extern unsigned char *xain_charram, *xain_bgram0, *xain_bgram1;
 	
 	
 	public static ReadHandlerPtr xain_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)

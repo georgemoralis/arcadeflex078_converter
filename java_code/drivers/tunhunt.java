@@ -58,10 +58,7 @@ public class tunhunt
 {
 	
 	
-	extern extern 
-	extern PALETTE_INIT( tunhunt );
-	extern VIDEO_START( tunhunt );
-	extern VIDEO_UPDATE( tunhunt );
+	
 	
 	
 	/*************************************

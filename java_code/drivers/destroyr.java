@@ -13,14 +13,8 @@ package drivers;
 public class destroyr
 {
 	
-	extern VIDEO_UPDATE( destroyr );
 	
-	extern int destroyr_wavemod;
-	extern int destroyr_cursor;
 	
-	extern UINT8* destroyr_major_obj_ram;
-	extern UINT8* destroyr_minor_obj_ram;
-	extern UINT8* destroyr_alpha_num_ram;
 	
 	static int destroyr_potmask[2];
 	static int destroyr_potsense[2];

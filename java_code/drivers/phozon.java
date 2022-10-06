@@ -48,20 +48,12 @@ package drivers;
 public class phozon
 {
 	
-	extern unsigned char *phozon_snd_sharedram;
-	extern unsigned char *phozon_spriteram;
-	extern unsigned char *phozon_customio_1, *phozon_customio_2;
-	extern unsigned char *mappy_soundregs;
 	
 	/* memory functions */
 	
 	/* custom IO chips & CPU functions */
-	extern MACHINE_INIT( phozon );
 	
 	/* video functions */
-	extern VIDEO_START( phozon );
-	extern PALETTE_INIT( phozon );
-	extern VIDEO_UPDATE( phozon );
 	
 		/* CPU 1 (MAIN CPU) read addresses */
 	public static Memory_ReadAddress readmem_cpu1[]={

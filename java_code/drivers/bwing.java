@@ -39,10 +39,7 @@ public class bwing
 	//****************************************************************************
 	// Imports
 	
-	extern struct GfxLayout bwing_tilelayout;
 	
-	extern extern extern extern extern extern extern VIDEO_START( bwing );
-	extern VIDEO_UPDATE( bwing );
 	
 	//****************************************************************************
 	// Local Vars

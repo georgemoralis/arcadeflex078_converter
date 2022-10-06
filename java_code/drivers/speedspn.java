@@ -60,7 +60,6 @@ public class speedspn
 	******************************************************************************/
 	
 	/* in vidhrdw */
-	extern data8_t *speedspn_attram;
 	
 	VIDEO_START(speedspn);
 	VIDEO_UPDATE(speedspn);

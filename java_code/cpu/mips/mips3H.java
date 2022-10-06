@@ -94,28 +94,14 @@ public class mips3H
 	**	PUBLIC GLOBALS
 	**#################################################################################################*/
 	
-	extern int mips3_icount;
 	
 	
 	/*###################################################################################################
 	**	PUBLIC FUNCTIONS
 	**#################################################################################################*/
 	
-	extern void mips3_init(void);
-	extern void mips3_exit(void);
-	extern int mips3_execute(int cycles);
-	extern unsigned mips3_get_context(void *dst);
-	extern void mips3_set_context(void *src);
-	extern unsigned mips3_get_reg(int regnum);
-	extern void mips3_set_reg(int regnum, unsigned val);
-	extern void mips3_set_irq_line(int irqline, int state);
-	extern void mips3_set_irq_callback(int (*callback)(int irqline));
-	extern unsigned mips3_dasm(char *buffer, unsigned pc);
 	
 	#if HAS_R4600
-	extern const char *r4600_info(void *context, int regnum);
-	extern void r4600be_reset(void *param);
-	extern void r4600le_reset(void *param);
 	
 	#define r4600be_init				mips3_init
 	#define r4600be_exit				mips3_exit
@@ -143,9 +129,6 @@ public class mips3H
 	#endif
 	
 	#if HAS_R5000
-	extern const char *r5000_info(void *context, int regnum);
-	extern void r5000be_reset(void *param);
-	extern void r5000le_reset(void *param);
 	
 	#define r5000be_init				mips3_init
 	#define r5000be_exit				mips3_exit

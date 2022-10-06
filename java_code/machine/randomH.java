@@ -11,7 +11,6 @@
 #define MAME_RAND_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 /* initializes random number generator with a seed */

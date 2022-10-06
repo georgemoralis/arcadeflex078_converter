@@ -8,9 +8,7 @@ public class shadfrce
 {
 	
 	static struct tilemap *shadfrce_fgtilemap, *shadfrce_bg0tilemap,  *shadfrce_bg1tilemap;
-	extern data16_t *shadfrce_fgvideoram, *shadfrce_bg0videoram,  *shadfrce_bg1videoram,   *shadfrce_spvideoram;
-	/* extern data16_t *shadfrce_videoregs; */
-	
+	/* 
 	static data16_t *shadfrce_spvideoram_old; /* I *think* the sprites need to be delayed anyway */
 	
 	

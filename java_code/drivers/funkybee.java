@@ -53,10 +53,7 @@ public class funkybee
 {
 	
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( funkybee );
-	extern VIDEO_START( funkybee );
-	extern VIDEO_UPDATE( funkybee );
+	
 	
 	
 	public static ReadHandlerPtr funkybee_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)

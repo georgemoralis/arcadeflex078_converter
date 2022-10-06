@@ -45,7 +45,6 @@ public class driver
 	
 	#ifdef TINY_COMPILE
 	
-	extern struct GameDriver TINY_NAME;
 	
 	const struct GameDriver *drivers[] =
 	{
@@ -65,9 +64,7 @@ public class driver
 	#define DRIVER_RECURSIVE
 	
 	/* step 1: declare all external references */
-	#define DRIVER(NAME) extern struct GameDriver driver_##NAME;
-	#define TESTDRIVER(NAME) extern struct GameDriver driver_##NAME;
-	
+	#define DRIVER(NAME) #define TESTDRIVER(NAME) 
 	/* step 2: define the drivers[] array */
 	#undef DRIVER
 	#undef TESTDRIVER

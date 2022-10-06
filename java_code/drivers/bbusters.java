@@ -182,7 +182,6 @@ public class bbusters
 	VIDEO_UPDATE( mechatt );
 	
 	static data16_t *bbuster_ram, *eprom_data;
-	extern data16_t *bbuster_pf1_data,*bbuster_pf2_data,*bbuster_pf1_scroll_data,*bbuster_pf2_scroll_data;
 	
 	WRITE16_HANDLER( bbuster_pf1_w );
 	WRITE16_HANDLER( bbuster_pf2_w );

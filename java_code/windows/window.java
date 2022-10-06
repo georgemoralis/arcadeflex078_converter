@@ -42,9 +42,6 @@ public class window
 	//============================================================
 	
 	// from input.c
-	extern void win_pause_input(int pause);
-	extern int win_is_mouse_captured(void);
-	extern UINT8 win_trying_to_quit;
 	
 	// from wind3dfx.c
 	int win_d3d_effects_in_use(void);
@@ -755,8 +752,7 @@ public class window
 	
 	static LRESULT CALLBACK video_window_proc(HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
 	{
-		extern void win_timer_enable(int enabled);
-	
+		
 		// handle a few messages
 		switch (message)
 		{

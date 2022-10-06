@@ -30,7 +30,6 @@ void EEPROM_set_data(UINT8 *data, int length);
 UINT8 * EEPROM_get_data_pointer(int * length);
 
 /* 93C46 */
-extern struct EEPROM_interface eeprom_interface_93C46;
 void nvram_handler_93C46(mame_file *file,int read_or_write);
 
 #endif

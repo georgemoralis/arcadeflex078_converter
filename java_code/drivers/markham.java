@@ -17,10 +17,7 @@ package drivers;
 public class markham
 {
 	
-	extern extern extern 
-	extern PALETTE_INIT( markham );
-	extern VIDEO_START( markham );
-	extern VIDEO_UPDATE( markham );
+	
 	
 	static UINT8 *markham_sharedram;
 	

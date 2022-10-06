@@ -30,7 +30,6 @@ public class jackal
 {
 	
 	
-	extern unsigned char *jackal_videoctrl;
 	
 	MACHINE_INIT( jackal );
 	VIDEO_START( jackal );

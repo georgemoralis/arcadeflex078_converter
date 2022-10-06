@@ -64,16 +64,11 @@ package drivers;
 public class tankbatt
 {
 	
-	extern UINT8 *tankbatt_bulletsram;
-	extern size_t tankbatt_bulletsram_size;
 	
 	static int tankbatt_nmi_enable; /* No need to init this - the game will set it on reset */
 	static int tankbatt_sound_enable;
 	
-	extern 
-	extern PALETTE_INIT( tankbatt );
-	extern VIDEO_START( tankbatt );
-	extern VIDEO_UPDATE( tankbatt );
+	
 	
 	WRITE_HANDLER( tankbatt_led_w )
 	{

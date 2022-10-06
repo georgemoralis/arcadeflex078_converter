@@ -11,11 +11,8 @@
 #define __TIMER_H__
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
-extern double cycles_to_sec[];
-extern double sec_to_cycles[];
 
 #define TIME_IN_HZ(hz)        (1.0 / (double)(hz))
 #define TIME_IN_CYCLES(c,cpu) ((double)(c) * cycles_to_sec[cpu])

@@ -19,8 +19,6 @@ public class mameH
 {
 	
 	
-	extern char build_version[];
-	extern int gbPriorityBitmapIsDirty;
 	
 	
 	
@@ -310,8 +308,6 @@ public class mameH
 	
 	***************************************************************************/
 	
-	extern struct GameOptions options;
-	extern struct RunningMachine *Machine;
 	
 	
 	

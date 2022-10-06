@@ -100,15 +100,6 @@ public class argus
 	
 	***************************************************************************/
 	
-	extern data8_t *argus_paletteram;
-	extern data8_t *argus_txram;
-	extern data8_t *argus_bg0ram;
-	extern data8_t *argus_bg0_scrollx;
-	extern data8_t *argus_bg0_scrolly;
-	extern data8_t *argus_bg1ram;
-	extern data8_t *argus_bg1_scrollx;
-	extern data8_t *argus_bg1_scrolly;
-	extern data8_t *butasan_bg1ram;
 	
 	VIDEO_START( argus );
 	VIDEO_START( valtric );

@@ -34,14 +34,6 @@ public class hyprduel
 	#define LAST_VISIBLE_LINE 223
 	
 	/* Variables defined in vidhrdw: */
-	extern data16_t *hyprduel_videoregs;
-	extern data16_t *hyprduel_screenctrl;
-	extern data16_t *hyprduel_tiletable;
-	extern size_t hyprduel_tiletable_size;
-	extern data16_t *hyprduel_vram_0, *hyprduel_vram_1, *hyprduel_vram_2;
-	extern data16_t *hyprduel_window;
-	extern data16_t hyprduel_scrollx[3][RASTER_LINES+1];
-	extern data16_t hyprduel_scrolly[3][RASTER_LINES+1];
 	
 	/* Functions defined in vidhrdw: */
 	WRITE16_HANDLER( hyprduel_paletteram_w );

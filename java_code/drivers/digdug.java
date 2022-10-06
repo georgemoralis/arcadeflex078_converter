@@ -120,18 +120,15 @@ package drivers;
 public class digdug
 {
 	
-	extern unsigned char *digdug_sharedram;
 	INTERRUPT_GEN( digdug_interrupt_1 );
 	INTERRUPT_GEN( digdug_interrupt_2 );
 	INTERRUPT_GEN( digdug_interrupt_3 );
 	MACHINE_INIT( digdig );
 	
-	extern unsigned char *digdug_vlatches;
 	VIDEO_START( digdug );
 	VIDEO_UPDATE( digdug );
 	PALETTE_INIT( digdug );
 	
-	extern unsigned char *pengo_soundregs;
 	
 	
 	

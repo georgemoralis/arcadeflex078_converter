@@ -108,9 +108,6 @@ public class gladiatr
 {
 	
 	/*Video functions*/
-	extern unsigned char *gladiator_text;
-	extern VIDEO_START( gladiatr );
-	extern VIDEO_UPDATE( gladiatr );
 	
 	/*Rom bankswitching*/
 	static int banka;

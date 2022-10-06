@@ -127,12 +127,8 @@ public class docastle
 	
 	
 	
-	extern extern extern extern extern 
-	extern extern extern extern extern extern 
-	extern PALETTE_INIT( docastle );
-	extern PALETTE_INIT( dorunrun );
-	extern VIDEO_START( docastle );
-	extern VIDEO_UPDATE( docastle );
+	
+	
 	
 	public static Memory_ReadAddress docastle_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

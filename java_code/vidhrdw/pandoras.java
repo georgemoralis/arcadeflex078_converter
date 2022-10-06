@@ -9,7 +9,6 @@ public class pandoras
 	
 	static int flipscreen;
 	static struct tilemap *layer0;
-	extern unsigned char *pandoras_sharedram;
 	
 	/***********************************************************************
 	

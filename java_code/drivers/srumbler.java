@@ -17,7 +17,6 @@ package drivers;
 public class srumbler
 {
 	
-	extern unsigned char *srumbler_backgroundram,*srumbler_foregroundram;
 	
 	
 	VIDEO_START( srumbler );

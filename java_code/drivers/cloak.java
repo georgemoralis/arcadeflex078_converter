@@ -119,9 +119,7 @@ public class cloak
 	static UINT8 *cloak_sharedram;
 	static int cloak_nvram_enabled;
 	
-	extern extern extern extern extern extern 
-	extern VIDEO_START( cloak );
-	extern VIDEO_UPDATE( cloak );
+	
 	
 	
 	/*************************************

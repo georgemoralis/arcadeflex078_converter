@@ -18,4 +18,3 @@ WRITE16_HANDLER( atarisy2_paletteram_w );
 VIDEO_START( atarisy2 );
 VIDEO_UPDATE( atarisy2 );
 
-extern data16_t *atarisy2_slapstic;

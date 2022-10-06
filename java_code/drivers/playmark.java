@@ -49,9 +49,6 @@ public class playmark
 	static data8_t playmark_oki_command;
 	
 	
-	extern data16_t *bigtwin_bgvideoram;
-	extern size_t bigtwin_bgvideoram_size;
-	extern data16_t *wbeachvl_videoram1,*wbeachvl_videoram2,*wbeachvl_videoram3;
 	
 	VIDEO_START( bigtwin );
 	VIDEO_START( wbeachvl );

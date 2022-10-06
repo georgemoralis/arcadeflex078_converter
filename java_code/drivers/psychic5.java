@@ -319,12 +319,9 @@ public class psychic5
 {
 	
 	
-	extern extern extern 
-	extern extern 
-	extern MACHINE_INIT( psychic5 );
 	
-	extern VIDEO_START( psychic5 );
-	extern VIDEO_UPDATE( psychic5 );
+	
+	
 	
 	static int psychic5_bank_latch = 0x0;
 	

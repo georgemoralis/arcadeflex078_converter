@@ -20,13 +20,8 @@ public class timelimt
 {
 	
 	/* from vidhrdw */
-	extern VIDEO_START( timelimt );
-	extern PALETTE_INIT( timelimt );
-	extern VIDEO_UPDATE( timelimt );
 	
-	extern extern extern extern extern 
-	extern data8_t *timelimt_bg_videoram;
-	extern size_t timelimt_bg_videoram_size;
+	
 	
 	/***************************************************************************/
 	

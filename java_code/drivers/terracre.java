@@ -93,16 +93,7 @@ public class terracre
 	static data8_t mAmazonProtCmd;
 	static data8_t mAmazonProtReg[6];
 	
-	extern data16_t *amazon_videoram;
 	
-	extern PALETTE_INIT( amazon );
-	extern WRITE16_HANDLER( amazon_background_w );
-	extern WRITE16_HANDLER( amazon_foreground_w );
-	extern WRITE16_HANDLER( amazon_scrolly_w );
-	extern WRITE16_HANDLER( amazon_scrollx_w );
-	extern WRITE16_HANDLER( amazon_flipscreen_w );
-	extern VIDEO_START( amazon );
-	extern VIDEO_UPDATE( amazon );
 	
 	static const data16_t mAmazonProtData[] =
 	{

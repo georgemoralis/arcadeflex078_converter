@@ -28,19 +28,13 @@ public class system32
 	#define MAX_COLOURS (16384)
 	
 	// Debugging flags and kludges
-	extern int system32_temp_kludge;
 	int priloop;
 	
-	extern int multi32;
 	
-	extern data16_t *sys32_spriteram16;
 	data8_t  *sys32_spriteram8; /* I maintain this to make drawing ram based sprites easier */
-	extern data16_t *system32_mixerregs[2];		// mixer registers
 	data16_t *sys32_videoram;
 	data32_t *multi32_videoram;
 	data8_t sys32_ramtile_dirty[0x1000];
-	extern data16_t sys32_displayenable;
-	extern data16_t sys32_tilebank_external;
 	data16_t sys32_old_tilebank_external;
 	
 	int sys32_tilebank_internal;
@@ -51,7 +45,6 @@ public class system32
 	int sys32_old_paletteshift[4];
 	int sys32_old_palettebank[4];
 	
-	extern int system32_mixerShift;
 	int system32_screen_mode;
 	int system32_screen_old_mode;
 	int system32_allow_high_resolution;

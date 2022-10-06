@@ -15,7 +15,6 @@ package vidhrdw;
 public class toypop
 {
 	
-	extern unsigned char *m68000_sharedram;
 	
 	data16_t *toypop_bg_image;
 	static int flipscreen, palettebank;

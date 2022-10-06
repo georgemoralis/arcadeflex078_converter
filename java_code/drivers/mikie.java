@@ -25,10 +25,7 @@ package drivers;
 public class mikie
 {
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( mikie );
-	extern VIDEO_START( mikie );
-	extern VIDEO_UPDATE( mikie );
+	
 	
 	public static ReadHandlerPtr mikie_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

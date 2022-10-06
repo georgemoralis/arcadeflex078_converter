@@ -41,15 +41,8 @@ package drivers;
 public class quizpani
 {
 	
-	extern data16_t *quizpani_bg_videoram, *quizpani_txt_videoram;
-	extern data16_t *quizpani_scrollreg;
 	
-	extern WRITE16_HANDLER( quizpani_bg_videoram_w );
-	extern WRITE16_HANDLER( quizpani_txt_videoram_w );
-	extern WRITE16_HANDLER( quizpani_tilesbank_w );
 	
-	extern VIDEO_START( quizpani );
-	extern VIDEO_UPDATE( quizpani );
 	
 	static WRITE16_HANDLER( quizpani_oki6295_bankswitch_w )
 	{

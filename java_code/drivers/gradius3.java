@@ -29,8 +29,6 @@ public class gradius3
 {
 	
 	
-	extern data16_t *gradius3_gfxram;
-	extern int gradius3_priority;
 	VIDEO_START( gradius3 );
 	READ16_HANDLER( gradius3_gfxrom_r );
 	READ16_HANDLER( gradius3_gfxram_r );

@@ -80,7 +80,6 @@ public class harddriv
 	
 	
 	/* from vidhrdw */
-	extern UINT8 *hdgsp_vram;
 	
 	
 	

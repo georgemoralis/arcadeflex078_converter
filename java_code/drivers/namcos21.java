@@ -205,9 +205,6 @@ public class namcos21
 	static data8_t	*mpDualPortRAM;
 	static data16_t	*mpSharedRAM2;
 	
-	extern WRITE16_HANDLER( namcos21_polyattr0_w );
-	extern WRITE16_HANDLER( namcos21_polyattr1_w );
-	extern WRITE16_HANDLER( namcos21_objattr_w );
 	
 	/* dual port ram memory handlers */
 	

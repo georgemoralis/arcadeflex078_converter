@@ -239,8 +239,7 @@ public class winmain
 	
 	int osd_init(void)
 	{
-		extern int win_init_input(void);
-		int result;
+			int result;
 	
 		result = win_init_window();
 		if (result == 0)
@@ -256,8 +255,7 @@ public class winmain
 	
 	void osd_exit(void)
 	{
-		extern void win_shutdown_input(void);
-		win_shutdown_input();
+			win_shutdown_input();
 		osd_set_leds(0);
 	}
 	

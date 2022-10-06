@@ -165,8 +165,6 @@ public class cischeat
 	
 	/* Variables defined in vidhrdw: */
 	
-	extern data16_t *cischeat_roadram[2];
-	extern data16_t *f1gpstr2_ioready;
 	
 	/* Functions defined in vidhrdw: */
 	

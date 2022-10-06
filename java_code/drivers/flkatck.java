@@ -23,8 +23,6 @@ public class flkatck
 	VIDEO_START( flkatck );
 	VIDEO_UPDATE( flkatck );
 	
-	extern unsigned char *k007121_ram;
-	extern int flkatck_irq_enabled;
 	
 	/***************************************************************************/
 	

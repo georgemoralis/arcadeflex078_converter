@@ -23,10 +23,6 @@ package drivers;
 public class homerun
 {
 	
-	extern int homerun_gc_up;
-	extern int homerun_gc_down;
-	extern int homerun_xpa,homerun_xpb,homerun_xpc;
-	extern data8_t *homerun_videoram;
 	
 	VIDEO_START(homerun);
 	VIDEO_UPDATE(homerun);

@@ -24,24 +24,10 @@ public class i286intfH
 	};
 	
 	/* Public variables */
-	extern int i286_ICount;
 	
 	/* Public functions */
-	extern void i286_init(void);
-	extern void i286_reset(void *param);
-	extern void i286_exit(void);
-	extern int i286_execute(int cycles);
-	extern unsigned i286_get_context(void *dst);
-	extern void i286_set_context(void *src);
-	extern unsigned i286_get_reg(int regnum);
-	extern void i286_set_reg(int regnum, unsigned val);
-	extern void i286_set_irq_line(int irqline, int state);
-	extern void i286_set_irq_callback(int (*callback)(int irqline));
-	extern const char *i286_info(void *context, int regnum);
-	extern unsigned i286_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned DasmI286(char* buffer, unsigned pc);
 	#endif
 	
 	#endif

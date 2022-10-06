@@ -16,13 +16,8 @@ package drivers;
 public class ssozumo
 {
 	
-	extern UINT8 *ssozumo_videoram2;
-	extern UINT8 *ssozumo_colorram2;
 	
-	extern extern extern extern extern extern extern 
-	extern PALETTE_INIT( ssozumo );
-	extern VIDEO_START( ssozumo );
-	extern VIDEO_UPDATE( ssozumo );
+	
 	
 	
 	static INTERRUPT_GEN( ssozumo_interrupt )

@@ -9,7 +9,6 @@ public class profiler
 	
 	
 	/* in usrintf.c */
-	extern int uirotcharwidth, uirotcharheight;
 	
 	
 	static int use_profiler;

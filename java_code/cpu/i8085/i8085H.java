@@ -21,22 +21,7 @@ public class i8085H
 	#define I8085_RST65_LINE	2
 	#define I8085_RST75_LINE	3
 	
-	extern int i8085_ICount;
 	
-	extern void i8085_set_SID(int state);
-	extern void i8085_set_SOD_callback(void (*callback)(int state));
-	extern void i8085_init(void);
-	extern void i8085_reset(void *param);
-	extern void i8085_exit(void);
-	extern int i8085_execute(int cycles);
-	extern unsigned i8085_get_context(void *dst);
-	extern void i8085_set_context(void *src);
-	extern unsigned i8085_get_reg(int regnum);
-	extern void i8085_set_reg(int regnum, unsigned val);
-	extern void i8085_set_irq_line(int irqline, int state);
-	extern void i8085_set_irq_callback(int (*callback)(int irqline));
-	extern const char *i8085_info(void *context, int regnum);
-	extern unsigned i8085_dasm(char *buffer, unsigned pc);
 	
 	/**************************************************************************
 	 * I8080 section
@@ -64,22 +49,9 @@ public class i8085H
 	#define I8080_INTR_LINE         I8085_INTR_LINE
 	
 	#define     i8080_ICount            i8085_ICount
-	extern void i8080_init(void);
-	extern void i8080_reset(void *param);
-	extern void i8080_exit(void);
-	extern int i8080_execute(int cycles);
-	extern unsigned i8080_get_context(void *dst);
-	extern void i8080_set_context(void *src);
-	extern unsigned i8080_get_reg(int regnum);
-	extern void i8080_set_reg(int regnum, unsigned val);
-	extern void i8080_set_irq_line(int irqline, int state);
-	extern void i8080_set_irq_callback(int (*callback)(int irqline));
-	extern const char *i8080_info(void *context, int regnum);
-	extern unsigned i8080_dasm(char *buffer, unsigned pc);
 	#endif
 	
 	#ifdef	MAME_DEBUG
-	extern unsigned Dasm8085(char *buffer, unsigned pc);
 	#endif
 	
 	#endif

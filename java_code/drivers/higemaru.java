@@ -16,10 +16,7 @@ public class higemaru
 {
 	
 	
-	extern extern extern 
-	extern PALETTE_INIT( higemaru );
-	extern VIDEO_START( higemaru );
-	extern VIDEO_UPDATE( higemaru );
+	
 	
 	
 	INTERRUPT_GEN( higemaru_interrupt )

@@ -6,7 +6,6 @@
 #define XmlTok_INCLUDED 1
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 /* The following token may be returned by XmlContentTok */

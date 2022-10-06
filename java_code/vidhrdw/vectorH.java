@@ -45,12 +45,8 @@ public class vectorH
 	#define VECTOR_PIXEL_X(p)	((p) & 0xffff)
 	#define VECTOR_PIXEL_Y(p)	((p) >> 16)
 	
-	extern vector_pixel_t *vector_dirty_list;
 	
-	extern int translucency;  /* translucent vectors  */
 	
-	extern unsigned char *vectorram;
-	extern size_t vectorram_size;
 	
 	VIDEO_START( vector );
 	VIDEO_UPDATE( vector );

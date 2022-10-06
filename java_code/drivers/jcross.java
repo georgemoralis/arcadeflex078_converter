@@ -30,9 +30,6 @@ public class jcross
 	
 	
 	
-	extern VIDEO_START( jcross );
-	extern VIDEO_UPDATE( jcross );
-	extern int jcross_vregs[5];
 	
 	static int sound_cpu_busy=0;
 	

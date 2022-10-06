@@ -1307,7 +1307,6 @@ public class cischeat
 									Scud Hammer
 	**************************************************************************/
 	
-	extern data16_t scudhamm_motor_command;
 	
 		READ16_HANDLER( scudhamm_motor_pos_r );
 		READ16_HANDLER( scudhamm_motor_status_r );

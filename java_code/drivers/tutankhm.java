@@ -188,7 +188,6 @@ public class tutankhm
 	
 	
 	
-	extern unsigned char *tutankhm_scrollx;
 	
 	VIDEO_UPDATE( tutankhm );
 	

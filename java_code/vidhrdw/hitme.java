@@ -8,7 +8,6 @@ package vidhrdw;
 public class hitme
 {
 	
-	extern data8_t *hitme_vidram;
 	
 	
 	/* Palette Init */

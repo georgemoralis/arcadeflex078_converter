@@ -104,16 +104,6 @@ public class punchout
 {
 	
 	
-	extern unsigned char *punchout_videoram2;
-	extern size_t punchout_videoram2_size;
-	extern unsigned char *punchout_bigsprite1ram;
-	extern size_t punchout_bigsprite1ram_size;
-	extern unsigned char *punchout_bigsprite2ram;
-	extern size_t punchout_bigsprite2ram_size;
-	extern unsigned char *punchout_scroll;
-	extern unsigned char *punchout_bigsprite1;
-	extern unsigned char *punchout_bigsprite2;
-	extern unsigned char *punchout_palettebank;
 	VIDEO_START( punchout );
 	VIDEO_START( armwrest );
 	PALETTE_INIT( punchout );

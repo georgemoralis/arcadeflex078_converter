@@ -26,9 +26,6 @@ package drivers;
 public class gaelco2
 {
 	
-	extern data16_t *gaelco_sndregs;
-	extern data16_t *gaelco2_vregs;
-	extern data16_t *snowboar_protection;
 	
 	/* comment this line to display 2 monitors for the dual monitor games */
 	//#define ONE_MONITOR

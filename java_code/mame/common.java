@@ -1222,8 +1222,7 @@ public class common
 		/* only display if we have warnings or errors */
 		if (romdata->warnings || romdata->errors)
 		{
-			extern int bailing;
-	
+			
 			/* display either an error message or a warning message */
 			if (romdata->errors)
 			{

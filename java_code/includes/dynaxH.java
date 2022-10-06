@@ -14,7 +14,6 @@
 
 /* Variables defined in drivers: */
 
-extern UINT8 dynax_blitter_irq;
 
 /* Functions defined in drivers: */
 

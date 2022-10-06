@@ -64,8 +64,6 @@ package drivers;
 public class thepit
 {
 	
-	extern unsigned char *thepit_attributesram;
-	extern unsigned char *intrepid_sprite_bank_select;
 	
 	PALETTE_INIT( thepit );
 	PALETTE_INIT( suprmous );

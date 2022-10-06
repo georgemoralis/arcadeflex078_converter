@@ -5808,8 +5808,7 @@ public class mips3drc
 	unsigned mips3_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmmips3(char *, unsigned);
-		unsigned result;
+			unsigned result;
 		if (mips3.bigendian)
 			change_pc32bedw(pc);
 		else

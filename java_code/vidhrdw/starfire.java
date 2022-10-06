@@ -15,8 +15,6 @@ public class starfire
 	
 	
 	/* from the main driver */
-	extern UINT8 *starfire_videoram;
-	extern UINT8 *starfire_colorram;
 	
 	/* local allocated storage */
 	static UINT8 *scanline_dirty;

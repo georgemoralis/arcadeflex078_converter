@@ -21,15 +21,8 @@ public class tceptor
 	#endif
 	
 	
-	extern PALETTE_INIT( tceptor );
-	extern VIDEO_START( tceptor );
-	extern VIDEO_UPDATE( tceptor );
 	
-	extern extern extern extern extern extern extern 
-	extern data8_t *tceptor_tile_ram;
-	extern data8_t *tceptor_tile_attr;
-	extern data8_t *tceptor_bg_ram;
-	extern data16_t *tceptor_sprite_ram;
+	
 	
 	
 	/*******************************************************************/

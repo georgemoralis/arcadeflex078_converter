@@ -61,16 +61,9 @@ public class wc90
 {
 	
 	
-	extern data8_t *wc90_fgvideoram,*wc90_bgvideoram,*wc90_txvideoram;
 	
 	
-	extern data8_t *wc90_scroll0xlo, *wc90_scroll0xhi;
-	extern data8_t *wc90_scroll1xlo, *wc90_scroll1xhi;
-	extern data8_t *wc90_scroll2xlo, *wc90_scroll2xhi;
 	
-	extern data8_t *wc90_scroll0ylo, *wc90_scroll0yhi;
-	extern data8_t *wc90_scroll1ylo, *wc90_scroll1yhi;
-	extern data8_t *wc90_scroll2ylo, *wc90_scroll2yhi;
 	
 	VIDEO_START( wc90 );
 	VIDEO_START( wc90t );

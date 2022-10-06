@@ -15,7 +15,6 @@ package vidhrdw;
 
 public class portrait
 {
-	extern int portrait_scrollx_hi, portrait_scrollx_lo;
 	data8_t *portrait_bgvideoram, *portrait_fgvideoram, *portrait_spriteram;
 	static struct tilemap *foreground, *background;
 	

@@ -18,10 +18,7 @@ public class shaolins
 	
 	UINT8 shaolins_nmi_enable;
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( shaolins );
-	extern VIDEO_START( shaolins );
-	extern VIDEO_UPDATE( shaolins );
+	
 	
 	
 	INTERRUPT_GEN( shaolins_interrupt )

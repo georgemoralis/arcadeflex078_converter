@@ -16,9 +16,6 @@ public class tnzs
 	
 	
 	
-	extern unsigned char *tnzs_objram;
-	extern unsigned char *tnzs_vdcram;
-	extern unsigned char *tnzs_scrollram;
 	
 	
 	static int tnzs_screenflip;

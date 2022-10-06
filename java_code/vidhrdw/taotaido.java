@@ -21,10 +21,6 @@ public class taotaido
 	static data16_t taotaido_video_bank_select[8];
 	static struct tilemap *bg_tilemap;
 	
-	extern data16_t *taotaido_spriteram;
-	extern data16_t *taotaido_spriteram2;
-	extern data16_t *taotaido_scrollram;
-	extern data16_t *taotaido_bgram;
 	
 	static data16_t *taotaido_spriteram_old, *taotaido_spriteram_older;
 	static data16_t *taotaido_spriteram2_old, *taotaido_spriteram2_older;

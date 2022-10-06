@@ -119,14 +119,7 @@ public class cps2
 	#define CODE_SIZE   0x0400000
 	
 	
-	extern data16_t *cps2_objram1,*cps2_objram2;
-	extern data16_t *cps2_output;
-	extern size_t cps2_output_size;
-	extern VIDEO_START( cps2 );
 	
-	extern int scanline1;
-	extern int scanline2;
-	extern int scancalls;
 	void cps2_objram_latch(void);
 	void cps2_set_sprite_priorities(void);
 	

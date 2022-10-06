@@ -47,12 +47,7 @@ public class esd16
 	data16_t *esd16_vram_0, *esd16_scroll_0;
 	data16_t *esd16_vram_1, *esd16_scroll_1;
 	
-	//extern data16_t *head_unknown1;
-	extern data16_t *head_layersize;
-	//extern data16_t *head_unknown3;
-	//extern data16_t *head_unknown4;
-	//extern data16_t *head_unknown5;
-	
+	////////
 	/* Functions defined in vidhrdw: */
 	
 	WRITE16_HANDLER( esd16_vram_0_w );

@@ -20,14 +20,6 @@ public class mnight
 	VIDEO_START( mnight );
 	VIDEO_UPDATE( mnight );
 	
-	extern unsigned char    *mnight_scrolly_ram;
-	extern unsigned char    *mnight_scrollx_ram;
-	extern unsigned char    *mnight_bgenable_ram;
-	extern unsigned char    *mnight_spoverdraw_ram;
-	extern unsigned char    *mnight_background_videoram;
-	extern unsigned char    *mnight_foreground_videoram;
-	extern size_t mnight_backgroundram_size;
-	extern size_t mnight_foregroundram_size;
 	
 	static int mnight_bank_latch = 255, main_cpu_num;
 	

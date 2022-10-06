@@ -17,7 +17,6 @@ public class ui_text
 {
 	
 	#ifdef MESS
-	extern const char *mess_default_text[];
 	#endif /* MESS */
 	
 	

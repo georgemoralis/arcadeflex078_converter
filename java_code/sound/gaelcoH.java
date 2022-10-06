@@ -9,7 +9,6 @@ struct gaelcosnd_interface
 };
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 int gaelco_cg1v_sh_start(const struct MachineSound *msound);

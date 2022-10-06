@@ -208,24 +208,19 @@ public class xevious
 	
 	
 	/* XEVIOUS */
-	extern unsigned char *xevious_sharedram;
 	INTERRUPT_GEN( xevious_interrupt_1 );
 	INTERRUPT_GEN( xevious_interrupt_2 );
 	INTERRUPT_GEN( xevious_interrupt_3 );
 	MACHINE_INIT( xevious );
 	
 	
-	extern unsigned char *xevious_fg_videoram,*xevious_fg_colorram;
-	extern unsigned char *xevious_bg_videoram,*xevious_bg_colorram;
 	VIDEO_START( xevious );
 	PALETTE_INIT( xevious );
 	VIDEO_UPDATE( xevious );
 	
-	extern unsigned char *pengo_soundregs;
 	
 	
 	/* BATTLES */
-	extern unsigned char *battles_sharedram;
 	
 	
 	INTERRUPT_GEN( battles_interrupt_4 );

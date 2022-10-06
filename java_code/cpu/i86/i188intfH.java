@@ -25,7 +25,6 @@ public class i188intfH
 	#define i188_set_reg i86_set_reg
 	#define i188_set_irq_line i86_set_irq_line
 	#define i188_set_irq_callback i86_set_irq_callback
-	extern const char *i188_info(void *context, int regnum);
 	#define i188_dasm i186_dasm
 	
 	#endif

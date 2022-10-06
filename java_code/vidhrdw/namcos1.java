@@ -85,7 +85,6 @@ public class namcos1
 	static unsigned priority_xlat[8] = {0,1,2,3,4,5,6,7};
 	static int update_status, idle_counter, idle_threshold;
 	static data8_t *sp_updatebuffer, *sp_backbuffer;
-	extern int namcos1_game_id;
 	
 	static void namcos1_set_flipscreen(int flip)
 	{

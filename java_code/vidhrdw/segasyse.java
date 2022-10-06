@@ -46,8 +46,6 @@ public class segasyse
 	
 	/*- in (drivers/segasyse.c) -*/
 	
-	extern UINT8 vintpending;
-	extern UINT8 hintpending;
 	
 	/*-- Prototypes --*/
 	

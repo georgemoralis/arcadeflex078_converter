@@ -24,15 +24,12 @@ public class memdbgH
 	/**
 	 * dumps a list of all current allocations, with module, line number, and allocation size
 	 */
-	extern void memdbg_Debug( void );
 	
 	#if defined(USE_MEMDBG)
 	/* memory tracking is enabled; reroute the MALLOC, FREE macros to the appropriate functions
 	 * in memdbg.c
 	 */
-		extern void *memdbg_Alloc( size_t lSize, const char *pFile, int line );
-		extern void memdbg_Free( void *pMem );
-		#define MALLOC( _SIZE ) memdbg_Alloc( (_SIZE) ,__FILE__, __LINE__)
+				#define MALLOC( _SIZE ) memdbg_Alloc( (_SIZE) ,__FILE__, __LINE__)
 		#define FREE( _PTR ) memdbg_Free( (_PTR) )
 	#else
 	/* memory tracking is not enabled; just route MALLOC, FREE macros directly to the core

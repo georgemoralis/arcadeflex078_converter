@@ -173,18 +173,6 @@ package drivers;
 public class ms32
 {
 	
-	extern data32_t *ms32_fce00000;
-	extern data32_t *ms32_roz_ctrl;
-	extern data32_t *ms32_tx_scroll;
-	extern data32_t *ms32_bg_scroll;
-	extern data32_t *ms32_priram;
-	extern data32_t *ms32_palram;
-	extern data32_t *ms32_bgram;
-	extern data32_t *ms32_rozram;
-	extern data32_t *ms32_lineram;
-	extern data32_t *ms32_spram;
-	extern data32_t *ms32_txram;
-	extern data32_t *ms32_mainram;
 	
 	WRITE32_HANDLER( ms32_brightness_w );
 	WRITE32_HANDLER( ms32_palram_w );

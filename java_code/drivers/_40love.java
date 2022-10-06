@@ -228,13 +228,8 @@ public class _40love
 	/* in machine/buggychl.c */
 	
 	
-	extern VIDEO_START( fortyl );
-	extern VIDEO_UPDATE( fortyl );
-	extern PALETTE_INIT( fortyl );
 	
-	extern extern extern extern extern extern extern 
-	extern unsigned char *fortyl_video_ctrl;
-	extern int fortyl_pix_color[4];
+	
 	
 	
 	static int sound_nmi_enable,pending_nmi;

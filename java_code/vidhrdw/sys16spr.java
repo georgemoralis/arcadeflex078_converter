@@ -45,8 +45,7 @@ public class sys16spr
 		6	------ZZ	ZZZZZZZZ	zoomy: (defaults to zoomx)
 		7	--------	--------
 	*/
-		extern int sys16_wwfix; //*
-		UINT16 ypos = source[0];
+			UINT16 ypos = source[0];
 		UINT16 width = source[2];
 		int top = ypos&0xff;
 		int bottom = ypos>>8;

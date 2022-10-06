@@ -25,19 +25,10 @@ public class kingobox
 {
 	
 	/* from vidhrdw */
-	extern UINT8 *kingofb_videoram2;
-	extern UINT8 *kingofb_colorram2;
-	extern UINT8 *kingofb_scroll_y;
 	
-	extern extern extern extern 
-	extern 
-	extern PALETTE_INIT( kingofb );
-	extern VIDEO_START( kingofb );
-	extern VIDEO_UPDATE( kingofb );
 	
-	extern PALETTE_INIT( ringking );
-	extern VIDEO_START( ringking );
-	extern VIDEO_UPDATE( ringking );
+	
+	
 	
 	static UINT8 *video_shared;
 	static UINT8 *sprite_shared;

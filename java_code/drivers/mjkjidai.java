@@ -31,7 +31,6 @@ public class mjkjidai
 {
 	
 	
-	extern data8_t *mjkjidai_videoram;
 	
 	VIDEO_START( mjkjidai );
 	VIDEO_UPDATE( mjkjidai );

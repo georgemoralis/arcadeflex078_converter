@@ -21,7 +21,6 @@ public class xmlroleH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	enum {

@@ -29,7 +29,6 @@ public class actfancr
 	VIDEO_START( actfancr );
 	VIDEO_START( triothep );
 	
-	extern unsigned char *actfancr_pf1_data,*actfancr_pf2_data,*actfancr_pf1_rowscroll_data;
 	static unsigned char *actfancr_ram;
 	
 	/******************************************************************************/

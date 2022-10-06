@@ -18,7 +18,6 @@ public class dbz2
 {
 	
 	static struct tilemap *dbz2_bg_tilemap, *dbz2_bg2_tilemap;
-	extern data16_t *dbz2_bg_videoram, *dbz2_bg2_videoram;
 	
 	static int scrolld[2][4][2] = {
 	 	{{ 0, 0 }, {0, 0}, {0, 0}, {0, 0}},

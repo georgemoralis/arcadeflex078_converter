@@ -13,7 +13,6 @@ public class mamedbgH
 	#define DEBUGGER_TOTAL_COLORS 16
 	
 	/* If this flag is set, a CPU core should call MAME_Debug from it's execution loop */
-	extern int mame_debug;
 	
 	#ifdef  MAME_DEBUG
 	
@@ -101,16 +100,11 @@ public class mamedbgH
 	 * contains a literal hex string for that address.
 	 * Later it could also return a symbol for that address and access.
 	 ***************************************************************************/
-	extern const char *set_ea_info( int what, unsigned address, int size, int acc );
 	
 	/* Startup and shutdown functions; called from cpu_run */
-	extern void mame_debug_init(void);
-	extern void mame_debug_exit(void);
 	
 	/* This is the main entry into the mame debugger */
-	extern void MAME_Debug(void);
 	
-	extern int debug_trace_delay;	/* set to 0 to force a screen update */
 	
 	/***************************************************************************
 	 * Convenience macro for the CPU cores, this is defined to empty
@@ -135,11 +129,7 @@ public class mamedbgH
 	#define INVALID 0xffffffff
 	#endif
 	
-	extern UINT8 debugger_bitmap_changed;
-	extern UINT8 debugger_focus;
 	
-	extern rgb_t debugger_palette[DEBUGGER_TOTAL_COLORS];
-	extern UINT8 debugger_idle;
 	struct GfxElement *build_debugger_font(void);
 	void dbg_put_screen_char (int ch, int attr, int x, int y);
 	

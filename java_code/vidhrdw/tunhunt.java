@@ -13,7 +13,6 @@ package vidhrdw;
 public class tunhunt
 {
 	
-	extern UINT8 tunhunt_control;
 	
 	/****************************************************************************************/
 	

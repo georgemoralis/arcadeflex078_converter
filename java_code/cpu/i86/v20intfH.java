@@ -26,7 +26,6 @@ public class v20intfH
 	#define v20_set_reg i86_set_reg
 	#define v20_set_irq_line i86_set_irq_line
 	#define v20_set_irq_callback i86_set_irq_callback
-	extern const char *v20_info(void *context, int regnum);
 	#define v20_dasm v30_dasm
 	
 	#endif

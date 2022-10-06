@@ -198,15 +198,11 @@ public class airbustr
 	int soundlatch_status, soundlatch2_status;
 	
 	/* Variables that vidhrdw has access to */
-	extern unsigned char *spriteram;
 	int flipscreen;
 	
 	/* Variables defined in vidhrdw */
-	extern unsigned char *airbustr_bgram, *airbustr_fgram;
 	
 	/* Functions defined in vidhrdw */
-	extern VIDEO_START( airbustr );
-	extern VIDEO_UPDATE( airbustr );
 	
 	/* Debug stuff (bound to go away sometime) */
 	int u1, u2, u3, u4;

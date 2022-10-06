@@ -23,7 +23,6 @@ public class mrdo
 	
 	
 	
-	extern unsigned char *mrdo_bgvideoram,*mrdo_fgvideoram;
 	PALETTE_INIT( mrdo );
 	VIDEO_START( mrdo );
 	VIDEO_UPDATE( mrdo );

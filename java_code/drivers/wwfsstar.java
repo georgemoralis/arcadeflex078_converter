@@ -96,7 +96,6 @@ public class wwfsstar
 	 some unknown writes in the 0x180000 region
 	*******************************************************************************/
 	
-	extern data16_t *wwfsstar_fg0_videoram, *wwfsstar_bg0_videoram;
 	
 	static MEMORY_READ16_START( readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },	/* Rom */

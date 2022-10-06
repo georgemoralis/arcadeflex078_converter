@@ -47,7 +47,6 @@ public class djmain
 {
 	
 	
-	extern data32_t *djmain_obj_ram;
 	
 	VIDEO_UPDATE( djmain );
 	VIDEO_START( djmain );

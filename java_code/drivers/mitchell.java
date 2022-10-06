@@ -52,10 +52,7 @@ public class mitchell
 	
 	
 	
-	extern unsigned char *pang_videoram;
-	extern unsigned char *pang_colorram;
 	
-	extern size_t pang_videoram_size;
 	
 	
 	
@@ -117,8 +114,7 @@ public class mitchell
 	public static ReadHandlerPtr pang_port5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int bit;
-		extern const struct GameDriver driver_mgakuen2;
-	
+		
 		bit = EEPROM_read_bit() << 7;
 	
 		/* bits 0 and (sometimes) 3 are checked in the interrupt handler. */

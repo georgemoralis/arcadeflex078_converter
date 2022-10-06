@@ -71,8 +71,6 @@ public class bigevglf
 	
 	
 	
-	extern UINT8 *beg_spriteram1;
-	extern UINT8 *beg_spriteram2;
 	
 	static UINT32 beg_bank=0;
 	UINT8 *beg_sharedram;

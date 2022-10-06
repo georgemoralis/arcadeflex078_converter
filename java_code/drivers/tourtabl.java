@@ -16,14 +16,9 @@ public class tourtabl
 {
 	
 	
-	extern PALETTE_INIT( tia_NTSC );
-	extern PALETTE_INIT( tia_PAL );
 	
-	extern VIDEO_START( tia );
-	extern VIDEO_UPDATE( tia );
 	
-	extern extern 
-	extern void tia_init(void);
+	
 	
 	
 	static UINT8* r6532_0_ram;

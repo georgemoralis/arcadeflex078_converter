@@ -314,8 +314,7 @@ public class mips3
 			fprintf(stderr, "Exception: PC=%08X, PPC=%08X\n", mips3.pc, mips3.ppc);
 			#ifdef MAME_DEBUG
 			{
-			extern int debug_key_pressed;
-			debug_key_pressed = 1;
+					debug_key_pressed = 1;
 			}
 			#endif
 		}
@@ -1965,8 +1964,7 @@ public class mips3
 	unsigned mips3_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmmips3(char *, unsigned);
-		unsigned result;
+			unsigned result;
 		if (mips3.bigendian)
 			change_pc32bedw(pc);
 		else

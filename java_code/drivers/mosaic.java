@@ -17,8 +17,6 @@ public class mosaic
 {
 	
 	
-	extern data8_t *mosaic_fgvideoram;
-	extern data8_t *mosaic_bgvideoram;
 	VIDEO_START( mosaic );
 	VIDEO_UPDATE( mosaic );
 	

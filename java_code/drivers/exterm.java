@@ -69,7 +69,6 @@ public class exterm
 	static data16_t *exterm_code_rom;
 	static data16_t *exterm_master_speedup, *exterm_slave_speedup;
 	
-	extern data16_t *exterm_master_videoram, *exterm_slave_videoram;
 	
 	static data8_t aimpos[2];
 	static data8_t trackball_old[2];

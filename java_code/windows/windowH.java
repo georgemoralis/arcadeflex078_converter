@@ -50,56 +50,16 @@ public class windowH
 	//============================================================
 	
 	// command line config
-	extern int			win_window_mode;
-	extern int			win_wait_vsync;
-	extern int			win_triple_buffer;
-	extern int			win_use_ddraw;
-	extern int			win_use_d3d;
-	extern int			win_dd_hw_stretch;
-	extern int			win_force_int_stretch;
-	extern int			win_gfx_width;
-	extern int			win_gfx_height;
-	extern int			win_gfx_depth;
-	extern int			win_gfx_zoom;
-	extern int			win_old_scanlines;
-	extern int			win_switch_res;
-	extern int			win_switch_bpp;
-	extern int			win_start_maximized;
-	extern int			win_keep_aspect;
-	extern int			win_gfx_refresh;
-	extern int			win_match_refresh;
-	extern int			win_sync_refresh;
-	extern float		win_gfx_brightness;
-	extern int			win_blit_effect;
-	extern float		win_screen_aspect;
-	extern int			win_force_rdtsc;
-	extern int			win_high_priority;
 	
 	// windows
-	extern HWND			win_video_window;
-	extern HWND			win_debug_window;
 	
 	// video bounds
-	extern double		win_aspect_ratio_adjust;
-	extern int 			win_default_constraints;
 	
 	// visible bounds
-	extern RECT			win_visible_rect;
-	extern int			win_visible_width;
-	extern int			win_visible_height;
 	
 	// 16bpp color conversion
-	extern int			win_color16_rsrc_shift;
-	extern int			win_color16_gsrc_shift;
-	extern int			win_color16_bsrc_shift;
-	extern int			win_color16_rdst_shift;
-	extern int			win_color16_gdst_shift;
-	extern int			win_color16_bdst_shift;
 	
 	// 32bpp color conversion
-	extern int			win_color32_rdst_shift;
-	extern int			win_color32_gdst_shift;
-	extern int			win_color32_bdst_shift;
 	
 	
 	

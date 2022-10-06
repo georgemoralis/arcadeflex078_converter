@@ -15,7 +15,6 @@ package vidhrdw;
 public class bking2
 {
 	
-	extern UINT8* bking2_playfield_ram;
 	
 	
 	static int pc3259_output[4];

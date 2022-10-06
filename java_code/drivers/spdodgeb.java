@@ -27,7 +27,6 @@ public class spdodgeb
 {
 	
 	
-	extern unsigned char *spdodgeb_videoram;
 	
 	PALETTE_INIT( spdodgeb );
 	VIDEO_START( spdodgeb );

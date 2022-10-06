@@ -11,4 +11,3 @@ VIDEO_START( exerion );
 VIDEO_UPDATE( exerion );
 
 
-extern UINT8 exerion_cocktail_flip;

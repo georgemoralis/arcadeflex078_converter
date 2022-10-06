@@ -31,10 +31,6 @@ public class msisaac
 	
 	
 	
-	extern VIDEO_UPDATE( msisaac );
-	extern VIDEO_START( msisaac );
-	extern unsigned char *msisaac_videoram;
-	extern unsigned char *msisaac_videoram2;
 	
 	
 	

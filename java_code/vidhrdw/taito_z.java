@@ -11,7 +11,6 @@ public class taito_z
 	#define TC0480SCP_GFX_NUM 1
 	
 	static int sci_spriteframe;
-	extern data16_t *taitoz_sharedram;
 	
 	
 	

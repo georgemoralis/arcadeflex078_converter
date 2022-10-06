@@ -1500,8 +1500,7 @@ public class chdman
 	
 	int main(int argc, char **argv)
 	{
-		extern char build_version[];
-		printf("chdman - MAME Compressed Hunks of Data (CHD) manager %s\n", build_version);
+			printf("chdman - MAME Compressed Hunks of Data (CHD) manager %s\n", build_version);
 	
 		/* require at least 1 argument */
 		if (argc < 2)

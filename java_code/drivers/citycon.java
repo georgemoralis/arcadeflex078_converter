@@ -13,9 +13,6 @@ public class citycon
 {
 	
 	
-	extern data8_t *citycon_videoram;
-	extern data8_t *citycon_scroll;
-	extern data8_t *citycon_linecolor;
 	
 	VIDEO_UPDATE( citycon );
 	VIDEO_START( citycon );

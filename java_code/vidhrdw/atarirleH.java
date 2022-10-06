@@ -91,7 +91,5 @@ struct mame_bitmap *atarirle_get_vram(int map, int idx);
 	GLOBAL VARIABLES
 ##########################################################################*/
 
-extern data16_t *atarirle_0_spriteram;
-extern data32_t *atarirle_0_spriteram32;
 
 #endif

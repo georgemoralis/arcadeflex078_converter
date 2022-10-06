@@ -58,8 +58,6 @@ public class shangkid
 {
 	
 	/* from vidhrdw/shangkid.c */
-	extern UINT8 *shangkid_videoreg;
-	extern int shangkid_gfx_type;
 	
 	VIDEO_START( shangkid );
 	VIDEO_UPDATE( shangkid );

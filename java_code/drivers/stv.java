@@ -100,9 +100,6 @@ package drivers;
 public class stv
 {
 	
-	extern data32_t* stv_vdp2_regs;
-	extern data32_t* stv_vdp2_vram;
-	extern data32_t* stv_vdp2_cram;
 	
 	#define USE_SLAVE 1
 	
@@ -3040,22 +3037,10 @@ public class stv
 		sh2_set_frt_input(0, PULSE_LINE);
 	}
 	
-	extern WRITE32_HANDLER ( stv_vdp2_vram_w );
-	extern READ32_HANDLER ( stv_vdp2_vram_r );
 	
-	extern WRITE32_HANDLER ( stv_vdp2_cram_w );
-	extern READ32_HANDLER ( stv_vdp2_cram_r );
 	
-	extern WRITE32_HANDLER ( stv_vdp2_regs_w );
-	extern READ32_HANDLER ( stv_vdp2_regs_r );
 	
-	extern VIDEO_START ( stv_vdp2 );
-	extern VIDEO_UPDATE( stv_vdp2 );
 	
-	extern READ32_HANDLER( stv_vdp1_regs_r );
-	extern WRITE32_HANDLER( stv_vdp1_regs_w );
-	extern READ32_HANDLER ( stv_vdp1_vram_r );
-	extern WRITE32_HANDLER ( stv_vdp1_vram_w );
 	
 	static READ32_HANDLER( stv_workram_h_mirror_r )
 	{

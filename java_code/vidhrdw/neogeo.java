@@ -71,7 +71,6 @@ public class neogeo
 	static int palette_swap_pending;
 	static int fix_bank;
 	
-	extern unsigned int neogeo_frame_counter;
 	
 	int neogeo_fix_bank_type;
 	

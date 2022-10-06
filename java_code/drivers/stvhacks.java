@@ -13,7 +13,6 @@ package drivers;
 public class stvhacks
 {
 	
-	extern data32_t *stv_workram_h;
 	DRIVER_INIT ( stv );
 	
 	/* Hack the boot vectors .. not right but allows several IC13 games (which fail the checksums before hacking) to boot */

@@ -67,13 +67,10 @@ public class ccpu
 	#define opcode_table _opcode_table
 	
 	/* This prototype was missing */
-	extern void CinemaVectorData (int fromx, int fromy, int tox, int toy, int color);
 	
 	int ccpu_icount = 1000;
 	
 	
-	extern UINT16 ioSwitches;
-	extern UINT16 ioInputs;
 	
 	
 	void ccpu_init(void)
@@ -498,10 +495,6 @@ public class ccpu
 	int bSwapXY;
 	int bOverlay;
 	
-	extern int sdwGameXSize;
-	extern int sdwGameYSize;
-	extern int sdwXOffset;
-	extern int sdwYOffset;
 	#endif
 	
 	

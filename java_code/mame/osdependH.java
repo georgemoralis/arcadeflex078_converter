@@ -11,7 +11,6 @@ public class osdependH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	/* The Win32 port requires this constant for variable arg routines. */

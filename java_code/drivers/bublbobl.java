@@ -144,12 +144,9 @@ public class bublbobl
 	
 	
 	/* vidhrdw/bublbobl.c */
-	extern unsigned char *bublbobl_objectram;
-	extern size_t bublbobl_objectram_size;
 	VIDEO_UPDATE( bublbobl );
 	
 	/* machine/bublbobl.c */
-	extern unsigned char *bublbobl_sharedram1,*bublbobl_sharedram2;
 	INTERRUPT_GEN( bublbobl_m68705_interrupt );
 	
 	
@@ -1098,8 +1095,7 @@ public class bublbobl
 	
 	static DRIVER_INIT( tokio )
 	{
-		extern int bublbobl_video_enable;
-	
+		
 		/* preemptively enable video, the bit is not mapped for this game and */
 		/* I don't know if it even has it. */
 		bublbobl_video_enable = 1;

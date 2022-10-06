@@ -42,7 +42,6 @@ public class _8080bw
 	
 	
 	
-	extern struct Samplesinterface circus_samples_interface;
 	
 	
 	static int  schaser_sh_start(const struct MachineSound *msound);

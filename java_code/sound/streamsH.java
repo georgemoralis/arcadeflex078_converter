@@ -2,7 +2,6 @@
 #define STREAMS_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 void set_RC_filter(int channel,int R1,int R2,int R3,int C);

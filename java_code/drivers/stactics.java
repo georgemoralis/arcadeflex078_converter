@@ -53,21 +53,10 @@ public class stactics
 	
 	/* Defined in machine/stactics.c */
 	INTERRUPT_GEN( stactics_interrupt );
-	extern unsigned char *stactics_motor_on;
 	
 	/* Defined in vidhrdw/stactics.c */
 	VIDEO_START( stactics );
 	VIDEO_UPDATE( stactics );
-	extern unsigned char *stactics_scroll_ram;
-	extern unsigned char *stactics_videoram_b;
-	extern unsigned char *stactics_chardata_b;
-	extern unsigned char *stactics_videoram_d;
-	extern unsigned char *stactics_chardata_d;
-	extern unsigned char *stactics_videoram_e;
-	extern unsigned char *stactics_chardata_e;
-	extern unsigned char *stactics_videoram_f;
-	extern unsigned char *stactics_chardata_f;
-	extern unsigned char *stactics_display_buffer;
 	
 	PALETTE_INIT( stactics );
 	

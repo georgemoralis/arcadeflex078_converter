@@ -13,15 +13,10 @@ package drivers;
 public class wolfpack
 {
 	
-	extern int wolfpack_collision;
 	
-	extern UINT8* wolfpack_alpha_num_ram;
 	
-	extern VIDEO_UPDATE( wolfpack );
-	extern VIDEO_START( wolfpack );
-	extern VIDEO_EOF( wolfpack );
 	
-	extern extern extern extern extern extern extern extern extern extern extern extern 
+	
 	
 	static void periodic_callback(int scanline)
 	{

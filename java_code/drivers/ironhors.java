@@ -16,13 +16,9 @@ public class ironhors
 {
 	
 	
-	extern UINT8 *ironhors_scroll;
 	static UINT8 *ironhors_interrupt_enable;
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( ironhors );
-	extern VIDEO_START( ironhors );
-	extern VIDEO_UPDATE( ironhors );
+	
 	
 	
 	static INTERRUPT_GEN( ironhors_interrupt )

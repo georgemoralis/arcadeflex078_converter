@@ -163,25 +163,12 @@ package drivers;
 public class zaxxon
 {
 	
-	extern int zaxxon_vid_type;
-	extern UINT8 *zaxxon_char_color_bank;
-	extern UINT8 *zaxxon_background_position;
-	extern UINT8 *zaxxon_background_color_bank;
-	extern UINT8 *zaxxon_background_enable;
 	
-	extern extern 
-	extern PALETTE_INIT( zaxxon );
 	
-	extern VIDEO_START( zaxxon );
-	extern VIDEO_START( razmataz );
-	extern VIDEO_START( congo );
 	
-	extern VIDEO_UPDATE( zaxxon );
-	extern VIDEO_UPDATE( razmataz );
-	extern VIDEO_UPDATE( congo );
-	extern VIDEO_UPDATE( futspy );
 	
-	extern extern 
+	
+	
 	/* Read/Write Handlers */
 	
 	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)

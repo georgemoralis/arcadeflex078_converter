@@ -25,7 +25,6 @@ struct DisplayText
 #define SEL_MASK ((1<<SEL_BITS)-1)
 #define SEL_MASK2 ((1<<SEL_BITS2)-1)
 
-extern UINT8 ui_dirty;
 
 struct GfxElement *builduifont(void);
 void pick_uifont_colors(void);

@@ -19,7 +19,6 @@ public class cpuexecH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	
@@ -30,8 +29,6 @@ public class cpuexecH
 	 *
 	 *************************************/
 	
-	extern double cycles_to_sec[];
-	extern double sec_to_cycles[];
 	
 	
 	

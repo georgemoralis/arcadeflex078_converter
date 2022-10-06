@@ -216,13 +216,3 @@ int nb1413m3_dipsw3_l_r(void);
 int nb1413m3_dipsw3_h_r(void);
 void nb1413m3_vcrctrl_w(int data);
 
-extern int nb1413m3_type;
-extern int nb1413m3_int_count;
-extern int nb1413m3_sndromregion;
-extern int nb1413m3_sndrombank1;
-extern int nb1413m3_sndrombank2;
-extern int nb1413m3_busyctr;
-extern int nb1413m3_busyflag;
-extern int nb1413m3_inputport;
-extern unsigned char *nb1413m3_nvram;
-extern size_t nb1413m3_nvram_size;

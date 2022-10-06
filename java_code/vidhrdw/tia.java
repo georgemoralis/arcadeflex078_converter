@@ -13,7 +13,7 @@ package vidhrdw;
 public class tia
 {
 	
-	extern 
+	
 	static UINT32 frame_cycles;
 	static UINT32 paddle_cycles;
 	

@@ -26,15 +26,8 @@ public class popeye
 {
 	
 	
-	extern UINT8 *popeye_background_pos;
-	extern UINT8 *popeye_palettebank;
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( popeye );
-	extern PALETTE_INIT( popeyebl );
-	extern VIDEO_START( skyskipr );
-	extern VIDEO_START( popeye );
-	extern VIDEO_UPDATE( popeye );
+	
 	
 	
 	

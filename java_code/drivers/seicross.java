@@ -51,12 +51,8 @@ package drivers;
 public class seicross
 {
 	
-	extern UINT8 *seicross_row_scroll;
 	
-	extern extern 
-	extern PALETTE_INIT( seicross );
-	extern VIDEO_START( seicross );
-	extern VIDEO_UPDATE( seicross );
+	
 	
 	static UINT8 *nvram;
 	static size_t nvram_size;

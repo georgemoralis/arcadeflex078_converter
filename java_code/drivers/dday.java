@@ -58,10 +58,6 @@ package drivers;
 public class dday
 {
 	
-	extern unsigned char *dday_bgvideoram;
-	extern unsigned char *dday_fgvideoram;
-	extern unsigned char *dday_textvideoram;
-	extern unsigned char *dday_colorram;
 	
 	PALETTE_INIT( dday );
 	VIDEO_START( dday );

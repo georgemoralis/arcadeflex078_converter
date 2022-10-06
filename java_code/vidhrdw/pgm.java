@@ -10,13 +10,10 @@ package vidhrdw;
 public class pgm
 {
 	
-	extern data16_t *pgm_mainram, *pgm_bg_videoram, *pgm_tx_videoram, *pgm_videoregs, *pgm_rowscrollram;
 	static struct tilemap *pgm_tx_tilemap, *pgm_bg_tilemap;
 	static UINT16 *sprite_bitmap;
 	static data16_t *pgm_spritebufferram; // buffered spriteram
 	
-	extern data8_t *pgm_sprite_a_region;   /* = memory_region       ( REGION_GFX4 ); */
-	extern size_t	pgm_sprite_a_region_allocate;
 	
 	/* Sprites - These are a pain! */
 	

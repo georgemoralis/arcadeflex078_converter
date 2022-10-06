@@ -306,30 +306,9 @@ public class playch10
 	#define N2A03_DEFAULTCLOCK (21477272.724 / 12)
 	
 	/* from vidhrdw */
-	extern extern PALETTE_INIT( playch10 );
-	extern VIDEO_START( playch10 );
-	extern VIDEO_UPDATE( playch10 );
 	
 	/* from machine */
-	extern MACHINE_INIT( pc10 );
-	extern DRIVER_INIT( playch10 );	/* standard games */
-	extern DRIVER_INIT( pc_gun );	/* gun games */
-	extern DRIVER_INIT( pc_hrz );	/* horizontal games */
-	extern DRIVER_INIT( pcaboard );	/* a-board games */
-	extern DRIVER_INIT( pcbboard );	/* b-board games */
-	extern DRIVER_INIT( pccboard );	/* c-board games */
-	extern DRIVER_INIT( pcdboard );	/* d-board games */
-	extern DRIVER_INIT( pceboard );	/* e-board games */
-	extern DRIVER_INIT( pcfboard );	/* f-board games */
-	extern DRIVER_INIT( pcgboard );	/* g-board games */
-	extern DRIVER_INIT( pcgboard_type2 ); /* g-board games with 4 screen mirror */
-	extern DRIVER_INIT( pchboard );	/* h-board games */
-	extern DRIVER_INIT( pciboard );	/* i-board games */
-	extern DRIVER_INIT( pckboard );	/* k-board games */
-	extern extern extern extern extern extern extern extern extern extern extern extern extern extern extern extern extern extern 
-	extern int pc10_sdcs;
-	extern int pc10_nmi_enable;
-	extern int pc10_dog_di;
+	
 	
 	/******************************************************************************/
 	

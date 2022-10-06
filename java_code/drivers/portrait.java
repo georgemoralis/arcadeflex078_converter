@@ -26,7 +26,6 @@ package drivers;
 public class portrait
 {
 	
-	extern data8_t *portrait_bgvideoram,*portrait_fgvideoram,*portrait_spriteram;
 	
 	int portrait_scrollx_hi, portrait_scrollx_lo;
 	

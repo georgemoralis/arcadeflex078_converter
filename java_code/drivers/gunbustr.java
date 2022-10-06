@@ -58,7 +58,6 @@ public class gunbustr
 	
 	static UINT16 coin_word;
 	static data32_t *gunbustr_ram;
-	extern data32_t *f3_shared_ram;
 	
 	/* F3 sound */
 	READ16_HANDLER(f3_68000_share_r);
@@ -70,7 +69,6 @@ public class gunbustr
 	WRITE16_HANDLER(f3_volume_w);
 	WRITE16_HANDLER(f3_es5505_bank_w);
 	void f3_68681_reset(void);
-	extern data32_t *f3_shared_ram;
 	
 	/*********************************************************************/
 	

@@ -15,9 +15,6 @@ package drivers;
 public class gaelco
 {
 	
-	extern data16_t *gaelco_vregs;
-	extern data16_t *gaelco_videoram;
-	extern data16_t *gaelco_spriteram;
 	
 	/* from vidhrdw/gaelco.c */
 	WRITE16_HANDLER( gaelco_vram_w );

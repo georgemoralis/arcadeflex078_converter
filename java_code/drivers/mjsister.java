@@ -17,12 +17,7 @@ public class mjsister
 	
 	#define MCLK 12000000
 	
-	extern int mjsister_flip_screen;
-	extern int mjsister_video_enable;
-	extern int mjsister_screen_redraw;
 	
-	extern int vrambank;
-	extern int colorbank;
 	
 	VIDEO_START( mjsister );
 	VIDEO_UPDATE( mjsister );

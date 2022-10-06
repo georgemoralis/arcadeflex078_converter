@@ -380,7 +380,6 @@ public class upd7810
 	struct cpu_interface upd7810_interface=
 	CPU0(UPD7810,  upd7810,  2,  0,1.00,UPD7810_INT_NONE,  UPD7810_INTF1,  UPD7810_INTNMI, 8, 16,	  0,16,LE,1, 4	);
 	
-	extern void upd7810_runtime_loader_init(void)
 	{
 		cpuintf[CPU_UPD7810]=upd7810_interface;
 	}

@@ -145,7 +145,6 @@ public class darius
 	static UINT16 cpua_ctrl;
 	static UINT16 coin_word=0;
 	
-	extern data16_t *darius_fg_ram;
 	READ16_HANDLER ( darius_fg_layer_r );
 	WRITE16_HANDLER( darius_fg_layer_w );
 	

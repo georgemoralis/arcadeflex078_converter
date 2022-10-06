@@ -26,13 +26,9 @@ package drivers;
 public class sprint2
 {
 	
-	extern extern 
-	extern extern extern 
-	extern VIDEO_UPDATE( sprint2 );
-	extern VIDEO_START( sprint2 );
-	extern VIDEO_EOF( sprint2 );
 	
-	extern UINT8* sprint2_video_ram;
+	
+	
 	
 	
 	static int attract;

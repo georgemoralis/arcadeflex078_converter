@@ -100,7 +100,6 @@ unsigned spc700_dasm(char *buffer, unsigned pc);
 /* Pulse the SO (Set Overflow) pin on the CPU */
 void spc700_pulse_so(void);
 
-extern int spc700_ICount;				/* cycle count */
 
 int spc700_execute(int clocks);
 

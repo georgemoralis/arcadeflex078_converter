@@ -50,7 +50,6 @@ public class timeplt
 {
 	
 	
-	extern unsigned char *timeplt_videoram,*timeplt_colorram;
 	
 	VIDEO_START( timeplt );
 	PALETTE_INIT( timeplt );

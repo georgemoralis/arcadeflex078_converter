@@ -94,8 +94,7 @@ public class gottlieb
 	
 	WRITE_HANDLER( gottlieb_video_outputs_w )
 	{
-		extern void gottlieb_knocker(void);
-		int last = 0;
+			int last = 0;
 	
 		background_priority = data & 0x01;
 	

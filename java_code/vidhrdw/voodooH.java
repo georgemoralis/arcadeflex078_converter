@@ -6,7 +6,6 @@
 
 **************************************************************************/
 
-extern data32_t *voodoo_regs;
 
 VIDEO_START( voodoo_1x4mb );
 VIDEO_START( voodoo_2x4mb );

@@ -11,7 +11,6 @@ public class unzipH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	/***************************************************************************
@@ -136,7 +135,6 @@ public class unzipH
 	void unzip_cache_clear(void);
 	
 	/* public globals */
-	extern int	gUnzipQuiet;	/* flag controls error messages */
 	
 	#ifdef __cplusplus
 	}

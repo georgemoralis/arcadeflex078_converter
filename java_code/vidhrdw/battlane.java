@@ -19,7 +19,6 @@ public class battlane
 	static struct tilemap *bg_tilemap;
 	
 	static int battlane_video_ctrl;
-	extern int battlane_cpu_control;
 	
 	static struct mame_bitmap *screen_bitmap;
 	

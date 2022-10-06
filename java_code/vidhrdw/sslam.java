@@ -11,8 +11,6 @@ public class sslam
 	
 	static struct tilemap *sslam_bg_tilemap, *sslam_tx_tilemap, *sslam_md_tilemap;
 	
-	extern data16_t *sslam_bg_tileram, *sslam_tx_tileram, *sslam_md_tileram;
-	extern data16_t *sslam_spriteram, *sslam_regs;
 	
 	static void sslam_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

@@ -6,8 +6,6 @@
 
 /*----------- defined in vidhrdw/beathead.c -----------*/
 
-extern data32_t *	beathead_vram_bulk_latch;
-extern data32_t *	beathead_palette_select;
 
 VIDEO_START( beathead );
 VIDEO_UPDATE( beathead );

@@ -52,11 +52,7 @@ public class tetrisp2
 	
 	/* Variables defined in vidhrdw: */
 	
-	extern data16_t *tetrisp2_vram_bg, *tetrisp2_scroll_bg;
-	extern data16_t *tetrisp2_vram_fg, *tetrisp2_scroll_fg;
-	extern data16_t *tetrisp2_vram_rot, *tetrisp2_rotregs;
 	
-	extern data16_t *tetrisp2_priority;
 	
 	/* Functions defined in vidhrdw: */
 	

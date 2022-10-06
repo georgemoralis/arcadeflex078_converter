@@ -50,10 +50,7 @@ public class battlex
 {
 	
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( battlex );
-	extern VIDEO_START( battlex );
-	extern VIDEO_UPDATE( battlex );
+	
 	
 	
 	/*** MEMORY & PORT READ / WRITE **********************************************/

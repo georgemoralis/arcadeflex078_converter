@@ -57,10 +57,6 @@ public class aerofgt
 {
 	
 	
-	extern data16_t *aerofgt_rasterram;
-	extern data16_t *aerofgt_bg1videoram,*aerofgt_bg2videoram;
-	extern data16_t *aerofgt_spriteram1,*aerofgt_spriteram2,*aerofgt_spriteram3;
-	extern size_t aerofgt_spriteram1_size,aerofgt_spriteram2_size,aerofgt_spriteram3_size;
 	
 	WRITE16_HANDLER( aerofgt_bg1videoram_w );
 	WRITE16_HANDLER( aerofgt_bg2videoram_w );

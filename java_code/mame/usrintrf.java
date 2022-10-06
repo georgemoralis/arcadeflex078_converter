@@ -27,10 +27,6 @@ public class usrintrf
 	***************************************************************************/
 	
 	/* Variables for stat menu */
-	extern char build_version[];
-	extern unsigned int dispensed_tickets;
-	extern unsigned int coins[COIN_COUNTERS];
-	extern unsigned int coinlockedout[COIN_COUNTERS];
 	
 	/* MARTINEZ.F 990207 Memory Card */
 	#ifndef MESS
@@ -38,12 +34,6 @@ public class usrintrf
 	#ifndef CPSMAME
 	#ifndef MMSND
 	int 		memcard_menu(struct mame_bitmap *bitmap, int);
-	extern int	mcd_action;
-	extern int	mcd_number;
-	extern int	memcard_status;
-	extern int	memcard_number;
-	extern int	memcard_manager;
-	extern struct GameDriver driver_neogeo;
 	#endif
 	#endif
 	#endif
@@ -53,10 +43,6 @@ public class usrintrf
 	static int game_paused = 0; /* not zero if the game is paused */
 	#endif
 	
-	extern int neogeo_memcard_load(int);
-	extern void neogeo_memcard_save(void);
-	extern void neogeo_memcard_eject(void);
-	extern int neogeo_memcard_create(int);
 	/* MARTINEZ.F 990207 Memory Card End */
 	
 	
@@ -489,8 +475,7 @@ public class usrintrf
 		struct rectangle bounds;
 	
 	#ifdef MESS
-		extern int skip_this_frame;
-		skip_this_frame = 0;
+			skip_this_frame = 0;
 	#endif /* MESS */
 	
 		/* construct a rectangle in rotated coordinates, then transform it */
@@ -1729,8 +1714,7 @@ public class usrintrf
 		int i,sel;
 		struct ipd *in;
 		int total;
-		extern struct ipd inputport_defaults[];
-	
+		
 		sel = selected - 1;
 	
 	
@@ -3093,7 +3077,6 @@ public class usrintrf
 	
 	
 	#ifdef XMAME
-	extern int setrapidfire(struct mame_bitmap *bitmap, int selected);
 	#endif
 	
 	
@@ -3137,8 +3120,7 @@ public class usrintrf
 	
 	#ifdef XMAME
 		{
-			extern int rapidfire_enable;
-	
+			
 			if (rapidfire_enable != 0)
 			{
 				menu_item[menu_total] = "Rapid Fire";
@@ -4022,8 +4004,7 @@ public class usrintrf
 	int handle_user_interface(struct mame_bitmap *bitmap)
 	{
 	#ifdef MESS
-		extern int mess_pause_for_ui;
-	#endif
+		#endif
 	
 		/* if the user pressed F12, save the screen to a file */
 		if (input_ui_pressed(IPT_UI_SNAPSHOT))
@@ -4283,8 +4264,7 @@ public class usrintrf
 	
 	void init_user_interface(void)
 	{
-		extern int snapno;	/* in common.c */
-	
+		
 		snapno = 0; /* reset snapshot counter */
 	
 		/* clear the input memory */

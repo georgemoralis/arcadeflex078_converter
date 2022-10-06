@@ -6,7 +6,6 @@
 
 /*----------- defined in drivers/dribling.c -----------*/
 
-extern data8_t dribling_abca;
 
 
 /*----------- defined in vidhrdw/dribling.c -----------*/

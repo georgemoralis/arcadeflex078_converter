@@ -21,7 +21,6 @@ public class ohmygod
 {
 	
 	
-	extern data16_t *ohmygod_videoram;
 	
 	WRITE16_HANDLER( ohmygod_videoram_w );
 	WRITE16_HANDLER( ohmygod_spritebank_w );

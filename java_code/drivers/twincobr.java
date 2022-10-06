@@ -213,8 +213,6 @@ public class twincobr
 	READ16_HANDLER ( twincobr_sharedram_r );
 	WRITE16_HANDLER( twincobr_sharedram_w );
 	
-	extern data16_t *twincobr_68k_dsp_ram;
-	extern data8_t *twincobr_sharedram;
 	
 	
 	/**************** Video stuff ******************/

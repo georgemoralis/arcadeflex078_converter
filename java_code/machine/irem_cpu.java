@@ -650,8 +650,7 @@ public class irem_cpu
 		unsigned char *rom;
 		int t[256];
 	#ifdef MAME_DEBUG
-	    extern char *opmap1[];
-	#endif
+	    #endif
 	
 		rom = memory_region(cpu+REGION_CPU1);
 		diff = memory_region_length(cpu+REGION_CPU1) / 2;

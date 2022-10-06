@@ -17,15 +17,8 @@ package drivers;
 public class prehisle
 {
 	
-	extern WRITE16_HANDLER( prehisle_bg_videoram16_w );
-	extern WRITE16_HANDLER( prehisle_fg_videoram16_w );
-	extern WRITE16_HANDLER( prehisle_control16_w );
-	extern READ16_HANDLER( prehisle_control16_r );
 	
-	extern VIDEO_START( prehisle );
-	extern VIDEO_UPDATE( prehisle );
 	
-	extern UINT16 *prehisle_bg_videoram16;
 	
 	static UINT16 *prehisle_ram16;
 	

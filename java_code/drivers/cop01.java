@@ -61,7 +61,6 @@ public class cop01
 	#define MIGHTGUY_HACK	0
 	
 	
-	extern data8_t *cop01_bgvideoram,*cop01_fgvideoram;
 	
 	PALETTE_INIT( cop01 );
 	VIDEO_START( cop01 );

@@ -6,7 +6,6 @@
 
 /*----------- defined in vidhrdw/thunderj.c -----------*/
 
-extern UINT8 thunderj_alpha_tile_bank;
 
 VIDEO_START( thunderj );
 VIDEO_UPDATE( thunderj );

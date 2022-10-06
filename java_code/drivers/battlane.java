@@ -18,15 +18,9 @@ package drivers;
 public class battlane
 {
 	
-	extern UINT8 *battlane_spriteram;
-	extern UINT8 *battlane_tileram;
 	
-	extern struct tilemap *bg_tilemap;
 	
-	extern extern extern extern extern extern extern 
-	extern PALETTE_INIT( battlane );
-	extern VIDEO_START( battlane );
-	extern VIDEO_UPDATE( battlane );
+	
 	
 	
 	/* CPU interrupt control register */

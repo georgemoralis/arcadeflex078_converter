@@ -13,7 +13,6 @@ public class shootout
 {
 	
 	static struct tilemap *background, *foreground;
-	extern unsigned char *shootout_textram;
 	
 	
 	PALETTE_INIT( shootout )

@@ -16,10 +16,6 @@ public class splash
 {
 	
 	
-	extern data16_t *splash_vregs;
-	extern data16_t *splash_videoram;
-	extern data16_t *splash_spriteram;
-	extern data16_t *splash_pixelram;
 	
 	/* from vidhrdw/gaelco.c */
 	READ16_HANDLER( splash_vram_r );

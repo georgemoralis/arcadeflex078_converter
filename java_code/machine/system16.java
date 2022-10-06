@@ -57,7 +57,6 @@ public class system16
 	
 	void (*sys16_custom_irq)(void);
 	
-	extern int sys16_wwfix, sys16_alienfix;
 	
 	MACHINE_INIT( sys16_onetime ){
 		sys16_wwfix = sys16_alienfix = 0;

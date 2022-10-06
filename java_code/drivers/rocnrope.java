@@ -14,12 +14,8 @@ public class rocnrope
 {
 	
 	
-	extern void konami1_decode(void);
 	
-	extern extern extern 
-	extern PALETTE_INIT( rocnrope );
-	extern VIDEO_START( rocnrope );
-	extern VIDEO_UPDATE( rocnrope );
+	
 	
 	
 	/* Roc'n'Rope has the IRQ vectors in RAM. The rom contains $FFFF at this address! */

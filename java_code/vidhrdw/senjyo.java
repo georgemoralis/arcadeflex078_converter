@@ -17,8 +17,6 @@ public class senjyo
 	
 	
 	
-	extern unsigned char *spriteram;
-	extern size_t spriteram_size;
 	
 	UINT8 *senjyo_fgscroll;
 	UINT8 *senjyo_scrollx1,*senjyo_scrolly1;

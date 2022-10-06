@@ -67,9 +67,6 @@ public class firetrap
 	
 	
 	
-	extern unsigned char *firetrap_bg1videoram;
-	extern unsigned char *firetrap_bg2videoram;
-	extern unsigned char *firetrap_fgvideoram;
 	
 	VIDEO_START( firetrap );
 	PALETTE_INIT( firetrap );

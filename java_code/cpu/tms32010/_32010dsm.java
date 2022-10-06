@@ -37,7 +37,6 @@ public class _32010dsm
 	#define READOP16(A)  (cpu_readop16((A)     | TMS32010_PGM_OFFSET))
 	#define READARG16(A) (cpu_readop_arg16((A) | TMS32010_PGM_OFFSET))
 	#else								/* Compile interface for standalone */
-	extern unsigned char *Buffer;
 	#ifdef MSB_FIRST
 	#define READOP16(A)  ( ((Buffer[A+1]<<8) | Buffer[A]) )
 	#define READARG16(A) ( ((Buffer[A+1]<<8) | Buffer[A]) )

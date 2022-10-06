@@ -7,7 +7,6 @@ package machine;
 public class pgmprot
 {
 	
-	extern data16_t *pgm_mainram;
 	
 	/*** ASIC 3 (oriental legends protection) ****************************************/
 	

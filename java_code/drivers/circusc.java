@@ -18,9 +18,6 @@ public class circusc
 	
 	void konami1_decode(void);
 	
-	extern unsigned char *circusc_spritebank;
-	extern unsigned char *circusc_scroll;
-	extern unsigned char *circusc_videoram,*circusc_colorram;
 	
 	
 	VIDEO_START( circusc );

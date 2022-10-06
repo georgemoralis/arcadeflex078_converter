@@ -21,7 +21,6 @@ public class rungun
 	static data16_t ttl_vram[0x1000];
 	
 	static int sprite_colorbase;
-	extern data16_t *rng_936_videoram;
 	
 	/* TTL text plane stuff */
 	

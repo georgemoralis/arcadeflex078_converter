@@ -9,17 +9,11 @@ package vidhrdw;
 public class fitfight
 {
 	
-	extern data16_t *fitfight_spriteram;
-	extern data16_t *fof_100000, *fof_600000, *fof_700000, *fof_800000, *fof_900000, *fof_a00000;
 	
-	extern data16_t *fof_bak_tileram;
 	static struct tilemap *fof_bak_tilemap;
-	extern data16_t *fof_mid_tileram;
 	static struct tilemap *fof_mid_tilemap;
-	extern data16_t *fof_txt_tileram;
 	static struct tilemap *fof_txt_tilemap;
 	
-	extern char bbprot_kludge;
 	
 	static void fitfight_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

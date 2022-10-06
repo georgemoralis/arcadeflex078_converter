@@ -48,7 +48,6 @@ public class superchs
 	static UINT16 coin_word;
 	static data32_t *superchs_ram;
 	static data32_t *shared_ram;
-	extern data32_t *f3_shared_ram;
 	
 	static int steer=0;
 	
@@ -62,7 +61,6 @@ public class superchs
 	WRITE16_HANDLER(f3_volume_w);
 	WRITE16_HANDLER(f3_es5505_bank_w);
 	void f3_68681_reset(void);
-	extern WRITE16_HANDLER( es5505_bank_w ); /* drivers/f3 */
 	
 	/*********************************************************************/
 	

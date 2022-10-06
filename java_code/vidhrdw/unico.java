@@ -47,7 +47,6 @@ public class unico
 	
 	/* Variables defined in drivers: */
 	
-	extern int unico_has_lightgun;
 	
 	/* Variables needed by drivers: */
 	

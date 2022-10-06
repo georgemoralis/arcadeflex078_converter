@@ -16,14 +16,9 @@ package drivers;
 public class sprint4
 {
 	
-	extern VIDEO_EOF( sprint4 );
-	extern VIDEO_START( sprint4 );
-	extern VIDEO_UPDATE( sprint4 );
 	
-	extern 
-	extern UINT8* sprint4_video_ram;
 	
-	extern int sprint4_collision[4];
+	
 	
 	static int analog;
 	static int steer_dir[4];

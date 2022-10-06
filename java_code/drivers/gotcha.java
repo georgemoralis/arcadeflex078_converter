@@ -35,7 +35,6 @@ public class gotcha
 	WRITE16_HANDLER( gotcha_gfxbank_w );
 	WRITE16_HANDLER( gotcha_scroll_w );
 	
-	extern data16_t *gotcha_fgvideoram,*gotcha_bgvideoram;
 	
 	
 	

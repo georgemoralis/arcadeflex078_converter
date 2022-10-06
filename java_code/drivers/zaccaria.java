@@ -43,7 +43,6 @@ public class zaccaria
 {
 	
 	
-	extern data8_t *zaccaria_videoram,*zaccaria_attributesram;
 	
 	PALETTE_INIT( zaccaria );
 	VIDEO_START( zaccaria );

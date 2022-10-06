@@ -26,8 +26,6 @@ public class malzak
 	
 	static INT8 frame_count;
 	
-	extern int s2636_x_offset;
-	extern int s2636_y_offset;
 	
 	#define SAA5050_DBLHI	0x0001
 	#define SAA5050_SEPGR	0x0002

@@ -43,13 +43,8 @@ public class bankp
 {
 	
 	
-	extern UINT8 *bankp_videoram2;
-	extern UINT8 *bankp_colorram2;
 	
-	extern extern extern extern extern extern 
-	extern PALETTE_INIT( bankp );
-	extern VIDEO_START( bankp );
-	extern VIDEO_UPDATE( bankp );
+	
 	
 	
 	

@@ -48,7 +48,6 @@ public class tetrisp2
 {
 	
 	
-	extern UINT16 tetrisp2_systemregs[0x10];
 	
 	/* Variables needed by driver: */
 	

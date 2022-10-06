@@ -796,8 +796,7 @@ public class asap
 	unsigned asap_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmasap(char *, unsigned);
-	    return dasmasap(buffer, pc);
+		    return dasmasap(buffer, pc);
 	#else
 		sprintf(buffer, "$%04X", ROPCODE(pc));
 		return 2;

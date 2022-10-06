@@ -445,7 +445,6 @@ public class driverH
 	***************************************************************************/
 	
 	#define GAME(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME)	\
-	extern const struct GameDriver driver_##PARENT;	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -463,7 +462,6 @@ public class driverH
 	};
 	
 	#define GAMEX(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME,FLAGS)	\
-	extern const struct GameDriver driver_##PARENT;	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -481,7 +479,6 @@ public class driverH
 	};
 	
 	#define GAMEB(YEAR,NAME,PARENT,BIOS,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME)	\
-	extern const struct GameDriver driver_##PARENT;	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -499,7 +496,6 @@ public class driverH
 	};
 	
 	#define GAMEBX(YEAR,NAME,PARENT,BIOS,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME,FLAGS)	\
-	extern const struct GameDriver driver_##PARENT;	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -535,8 +531,6 @@ public class driverH
 	
 	***************************************************************************/
 	
-	extern const struct GameDriver *drivers[];
-	extern const struct GameDriver *test_drivers[];
 	
 	#endif
 }

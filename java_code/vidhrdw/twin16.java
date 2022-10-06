@@ -24,12 +24,6 @@ package vidhrdw;
 public class twin16
 {
 	
-	extern UINT16 twin16_custom_vidhrdw;
-	extern UINT16 *twin16_gfx_rom;
-	extern UINT16 *twin16_videoram2;
-	extern UINT16 *twin16_sprite_gfx_ram;
-	extern UINT16 *twin16_tile_gfx_ram;
-	extern int twin16_spriteram_process_enable( void );
 	
 	static int need_process_spriteram;
 	static UINT16 gfx_bank;

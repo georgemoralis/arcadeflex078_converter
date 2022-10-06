@@ -71,10 +71,7 @@ package drivers;
 public class astrocde
 {
 	
-	extern unsigned char *wow_videoram;
 	
-	extern const char *wow_sample_names[];
-	extern const char *gorf_sample_names[];
 	
 	PALETTE_INIT( astrocde );
 	VIDEO_UPDATE( astrocde );

@@ -68,7 +68,6 @@ void AY8910_sh_reset(void);
 /* When both of AY8910 and YM2203 or YM2608 or YM2610 are used.      */
 /* It must be called AY8910_sh_start () before AY8910_sh_start_ym()  */
 
-extern int ay8910_index_ym;
 
 void AY8910_sh_stop_ym(void);
 int AY8910_sh_start_ym(const struct MachineSound *msound);

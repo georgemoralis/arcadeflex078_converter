@@ -15,20 +15,10 @@ struct sys16_sprite_attributes {
 	int shadow_pen;
 };
 
-extern int (*sys16_spritesystem)(
 	struct sys16_sprite_attributes *sprite,
 	const UINT16 *source,
 	int bJustGetColor );
 
-extern int sys16_sprite_shinobi( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_passshot( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_aurail( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_fantzone( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_quartet2( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_hangon( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_sharrier( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_outrun( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
-extern int sys16_sprite_aburner( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor );
 
 #define TRANSPARENT_SHADOWS
 
@@ -40,27 +30,11 @@ extern int sys16_sprite_aburner( struct sys16_sprite_attributes *sprite, const U
 #define ShadowColorsMultiplier 1
 #endif
 
-extern int sys16_sh_shadowpal;
-extern int sys16_MaxShadowColors;
 
-extern data16_t *sys16_tileram;
-extern data16_t *sys16_textram;
-extern data16_t *sys16_spriteram;
-extern data16_t *sys16_roadram;
 
 /* machine hardware */
-extern data16_t *sys16_workingram;
-extern data16_t *sys16_workingram2;
-extern data16_t *sys16_extraram;
-extern data16_t *sys16_extraram2;
-extern data16_t *sys16_extraram3;
-extern data16_t *sys16_extraram4;
 
-extern void sys16_patch_code( int offset, int data );
-extern void sys16_patch_code2( int offset, int data );
-extern void sys16_patch_z80code( int offset, int data );
 
-extern void sys16_interleave_sprite_data( int bank_size );
 
 #define SYS16_MWA16_PALETTERAM	sys16_paletteram_w, &paletteram16
 #define SYS16_MRA16_PALETTERAM	paletteram16_word_r
@@ -71,11 +45,7 @@ extern void sys16_interleave_sprite_data( int bank_size );
 #define SYS16_MRA16_WORKINGRAM2	MRA16_RAM
 #define SYS16_MWA16_WORKINGRAM2	MWA16_RAM,&sys16_workingram2
 
-extern READ16_HANDLER( SYS16_MRA16_WORKINGRAM2_SHARE );
-extern WRITE16_HANDLER( SYS16_MWA16_WORKINGRAM2_SHARE );
 
-extern void (*sys16_custom_irq)(void);
-extern MACHINE_INIT( sys16_onetime );
 
 #define SYS16_MRA16_SPRITERAM		MRA16_RAM
 #define SYS16_MWA16_SPRITERAM		MWA16_RAM,&sys16_spriteram
@@ -101,13 +71,8 @@ extern MACHINE_INIT( sys16_onetime );
 #define SYS16_MRA16_ROADRAM		MRA16_RAM
 #define SYS16_MWA16_ROADRAM		MWA16_RAM,&sys16_roadram
 
-extern READ16_HANDLER( SYS16_MRA16_ROADRAM_SHARE );
-extern WRITE16_HANDLER( SYS16_MWA16_ROADRAM_SHARE );
 
-extern READ16_HANDLER( SYS16_CPU3ROM16_r );
-extern READ16_HANDLER( SYS16_CPU2_RESET_HACK );
 
-extern struct GfxDecodeInfo sys16_gfxdecodeinfo[];
 
 // encryption decoding
 void endurob2_decode_data(data16_t *dest,data16_t *source,int size);
@@ -217,109 +182,31 @@ void aurail_decode_opcode2(data16_t *dest,data16_t *source,int size);
 
 
 /* video hardware */
-extern READ16_HANDLER( sys16_tileram_r );
-extern WRITE16_HANDLER( sys16_tileram_w );
-extern READ16_HANDLER( sys16_textram_r );
-extern WRITE16_HANDLER( sys16_textram_w );
-extern WRITE16_HANDLER( sys16_paletteram_w );
 
 /* "normal" video hardware */
-extern VIDEO_START( system16 );
-extern VIDEO_UPDATE( system16 );
 
 /* hang-on video hardware */
-extern VIDEO_START( hangon );
-extern VIDEO_UPDATE( hangon );
 
 /* outrun video hardware */
-extern VIDEO_START( outrun );
-extern VIDEO_UPDATE( outrun );
 
 /* aburner video hardware */
-extern VIDEO_START( aburner );
-extern VIDEO_UPDATE( aburner );
 
 /* system18 video hardware */
-extern VIDEO_START( system18 );
-extern VIDEO_UPDATE( system18 );
 
 /* video driver constants (vary with game) */
-extern int sys16_gr_bitmap_width;
-extern int sys16_sprxoffset;
-extern int sys16_bgxoffset;
-extern int sys16_fgxoffset;
-extern int *sys16_obj_bank;
-extern int sys16_textmode;
-extern int sys16_textlayer_lo_min;
-extern int sys16_textlayer_lo_max;
-extern int sys16_textlayer_hi_min;
-extern int sys16_textlayer_hi_max;
-extern int sys16_dactype;
-extern int sys16_bg1_trans;
-extern int sys16_bg_priority_mode;
-extern int sys16_fg_priority_mode;
-extern int sys16_bg_priority_value;
-extern int sys16_fg_priority_value;
-extern int sys16_spritelist_end;
-extern int sys16_tilebank_switch;
-extern int sys16_rowscroll_scroll;
-extern int sys16_quartet_title_kludge;
-extern void (* sys16_update_proc)( void );
 
 /* video driver registers */
-extern int sys16_refreshenable;
-extern int sys16_tile_bank0;
-extern int sys16_tile_bank1;
-extern int sys16_bg_scrollx, sys16_bg_scrolly;
-extern int sys16_bg_page[4];
-extern int sys16_fg_scrollx, sys16_fg_scrolly;
-extern int sys16_fg_page[4];
 
-extern int sys16_bg2_scrollx, sys16_bg2_scrolly;
-extern int sys16_bg2_page[4];
-extern int sys16_fg2_scrollx, sys16_fg2_scrolly;
-extern int sys16_fg2_page[4];
 
-extern int sys18_bg2_active;
-extern int sys18_fg2_active;
-extern data16_t *sys18_splittab_bg_x;
-extern data16_t *sys18_splittab_bg_y;
-extern data16_t *sys18_splittab_fg_x;
-extern data16_t *sys18_splittab_fg_y;
 
 #ifdef SPACEHARRIER_OFFSETS
-extern data16_t *spaceharrier_patternoffsets;
 #endif
 
-extern data16_t *sys16_gr_ver;
-extern data16_t *sys16_gr_hor;
-extern data16_t *sys16_gr_pal;
-extern data16_t *sys16_gr_flip;
-extern int sys16_gr_palette;
-extern int sys16_gr_palette_default;
-extern unsigned char sys16_gr_colorflip[2][4];
-extern data16_t *sys16_gr_second_road;
 
-extern data16_t *sys16_tileram;
-extern data16_t *sys16_textram;
-extern data16_t *sys16_spriteram;
-extern data16_t *sys16_roadram;
 
 /* sound */
-extern struct SEGAPCMinterface sys16_segapcm_interface_15k;
-extern struct SEGAPCMinterface sys16_segapcm_interface_15k_512;
-extern struct SEGAPCMinterface sys16_segapcm_interface_32k;
 
-extern struct YM2151interface sys16_ym2151_interface;
-extern struct YM2203interface sys16_ym2203_interface;
-extern struct YM2203interface sys16_3xym2203_interface;
 
-extern struct DACinterface sys16_7751_dac_interface;
 
-extern struct UPD7759_interface sys16_upd7759_interface;
-extern struct UPD7759_interface aliensyn_upd7759_interface;
 
-extern struct YM2413interface sys16_ym2413_interface;
 
-extern struct RF5C68interface sys18_rf5c68_interface;
-extern struct YM2612interface sys18_ym3438_interface;

@@ -35,13 +35,7 @@ public class malzak
 	#define SAA5050_VBLANK 2500
 	
 	
-	extern int temp_x,temp_y;
 	
-	extern unsigned char* saa5050_vidram;  /* Video RAM for SAA 5050 */
-	extern unsigned char* s2636_1_ram;  /* Video RAM for S2636 #1 */
-	extern unsigned char* s2636_2_ram;  /* Video RAM for S2636 #2 */
-	extern unsigned char s2636_1_dirty[4];
-	extern unsigned char s2636_2_dirty[4];
 	
 	// in vidhrdw/malzak.c
 	VIDEO_START( malzak );

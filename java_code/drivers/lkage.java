@@ -36,7 +36,6 @@ public class lkage
 {
 	
 	
-	extern unsigned char *lkage_scroll, *lkage_vreg;
 	VIDEO_START( lkage );
 	VIDEO_UPDATE( lkage );
 	

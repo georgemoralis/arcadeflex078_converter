@@ -11,17 +11,11 @@ package vidhrdw;
 public class drgnmst
 {
 	
-	extern data16_t *drgnmst_vidregs;
 	
-	extern data16_t *drgnmst_fg_videoram;
 	static struct tilemap *drgnmst_fg_tilemap;
-	extern data16_t *drgnmst_bg_videoram;
 	static struct tilemap *drgnmst_bg_tilemap;
-	extern data16_t *drgnmst_md_videoram;
 	static struct tilemap *drgnmst_md_tilemap;
 	
-	extern data16_t *drgnmst_rowscrollram;
-	extern data16_t *drgnmst_vidregs2;
 	
 	
 	static void get_drgnmst_fg_tile_info(int tile_index)

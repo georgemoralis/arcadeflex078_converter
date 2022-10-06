@@ -72,7 +72,6 @@ package drivers;
 public class _8080bw
 {
 	
-	extern struct Samplesinterface circus_samples_interface;
 	
 	
 	static PALETTE_INIT( 8080bw )

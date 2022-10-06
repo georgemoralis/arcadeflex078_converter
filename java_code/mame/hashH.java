@@ -10,7 +10,6 @@
 #define HASH_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 #define HASH_INFO_NO_DUMP	0

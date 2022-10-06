@@ -17,7 +17,6 @@ public class ajax
 {
 	
 	unsigned char *ajax_sharedram;
-	extern unsigned char ajax_priority;
 	static int firq_enable;
 	
 	/*	ajax_bankswitch_w:

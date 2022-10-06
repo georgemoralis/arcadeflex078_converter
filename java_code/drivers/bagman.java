@@ -66,15 +66,10 @@ public class bagman
 {
 	
 	
-	extern extern MACHINE_INIT( bagman );
-	extern 
 	
-	extern UINT8 *bagman_video_enable;
 	
-	extern extern extern 
-	extern PALETTE_INIT( bagman );
-	extern VIDEO_START( bagman );
-	extern VIDEO_UPDATE( bagman );
+	
+	
 	
 	
 	static int speech_rom_address = 0;

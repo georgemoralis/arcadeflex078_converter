@@ -108,10 +108,7 @@ package drivers;
 public class renegade
 {
 	
-	extern VIDEO_UPDATE( renegade );
-	extern VIDEO_START( renegade );
 	
-	extern UINT8 *renegade_videoram2;
 	
 	/********************************************************************************************/
 	

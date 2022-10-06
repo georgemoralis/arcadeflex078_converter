@@ -46,7 +46,6 @@ public class ccpuH
 	#endif
 	
 	/* an ICount variable (mostly irrelevant) */
-	extern int ccpu_icount;
 	
 	#define CCPU_DATA_OFFSET    0x0000
 	#define CCPU_PGM_OFFSET     0x8000
@@ -90,7 +89,6 @@ public class ccpuH
 	void ccpu_Config (int jmi, int msize, int monitor);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned DasmCCPU(char *buffer, unsigned pc);
 	#endif
 	
 	/*============================================================================================*
@@ -136,18 +134,7 @@ public class ccpuH
 	
 	typedef struct scCpuStruct CONTEXTCCPU;
 	
-	extern CINELONG cineExec(CINELONG);
-	extern void cineReset(void);
-	extern void cineSetJMI(int);
-	extern void cineSetMSize(int);
-	extern void cineSetMonitor(int);
-	extern void cSetContext(CONTEXTCCPU *);
-	extern void cGetContext(CONTEXTCCPU *);
-	extern CINELONG cineGetElapsedTicks(int);
-	extern void cineReleaseTimeslice(void);
-	extern CINELONG cGetContextSize(void);
 	
-	extern int bNewFrame;
 	
 	#endif
 }

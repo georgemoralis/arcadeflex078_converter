@@ -32,11 +32,8 @@ public class wind3d
 	//============================================================
 	
 	// from input.c
-	extern int verbose;
 	
 	// from wind3dfx.c
-	extern UINT32 win_d3d_tfactor;
-	extern UINT32 win_d3d_preprocess_tfactor;
 	
 	
 	

@@ -166,11 +166,6 @@ package drivers;
 public class wiz
 {
 	
-	extern unsigned char *wiz_videoram2;
-	extern unsigned char *wiz_colorram2;
-	extern unsigned char *wiz_attributesram;
-	extern unsigned char *wiz_attributesram2;
-	extern unsigned char *wiz_sprite_bank;
 	
 	VIDEO_START( wiz );
 	PALETTE_INIT( wiz );

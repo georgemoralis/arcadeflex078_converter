@@ -9,16 +9,12 @@ package vidhrdw;
 public class aquarium
 {
 	
-	extern data16_t *aquarium_scroll, *aquarium_priority;
 	
 	static struct tilemap *aquarium_txt_tilemap;
-	extern data16_t *aquarium_txt_videoram;
 	
 	static struct tilemap *aquarium_mid_tilemap;
-	extern data16_t *aquarium_mid_videoram;
 	
 	static struct tilemap *aquarium_bak_tilemap;
-	extern data16_t *aquarium_bak_videoram;
 	
 	
 	/* gcpinbal.c modified */

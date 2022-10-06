@@ -48,7 +48,6 @@ struct pia6821_interface
 };
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 void pia_init(int count);

@@ -19,8 +19,6 @@ public class xxmissio
 	
 	VIDEO_UPDATE( xxmissio );
 	
-	extern UINT8 *xxmissio_fgram;
-	extern size_t xxmissio_fgram_size;
 	
 	static UINT8 *shared_workram;
 	

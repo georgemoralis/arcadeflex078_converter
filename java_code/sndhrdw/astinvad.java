@@ -23,7 +23,6 @@ package sndhrdw;
 public class astinvad
 {
 	
-	extern void astinvad_set_flash(int flag);
 	
 	
 	static const char *astinvad_sample_names[] =

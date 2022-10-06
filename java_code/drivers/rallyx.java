@@ -64,12 +64,7 @@ public class rallyx
 	
 	
 	
-	extern unsigned char *pengo_soundregs;
 	
-	extern unsigned char *rallyx_videoram2,*rallyx_colorram2;
-	extern unsigned char *rallyx_radarx,*rallyx_radary,*rallyx_radarattr;
-	extern size_t rallyx_radarram_size;
-	extern unsigned char *rallyx_scrollx,*rallyx_scrolly;
 	PALETTE_INIT( rallyx );
 	VIDEO_START( rallyx );
 	VIDEO_UPDATE( rallyx );

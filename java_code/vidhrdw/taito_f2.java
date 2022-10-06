@@ -12,7 +12,6 @@ public class taito_f2
 	#define TC0280GRD_GFX_NUM 2
 	#define TC0430GRW_GFX_NUM 2
 	
-	extern UINT8 TC0360PRI_regs[16];
 	
 	struct tempsprite
 	{

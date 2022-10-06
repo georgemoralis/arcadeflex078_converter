@@ -17,12 +17,8 @@ package drivers;
 public class bogeyman
 {
 	
-	extern UINT8 *bogeyman_videoram2, *bogeyman_colorram2;
 	
-	extern extern extern extern extern 
-	extern PALETTE_INIT( bogeyman );
-	extern VIDEO_START( bogeyman );
-	extern VIDEO_UPDATE( bogeyman );
+	
 	
 	/******************************************************************************/
 	

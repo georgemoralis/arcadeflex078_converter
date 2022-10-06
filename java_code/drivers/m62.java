@@ -66,8 +66,6 @@ public class m62
 	PALETTE_INIT( battroad );
 	PALETTE_INIT( spelunk2 );
 	
-	extern data8_t *m62_tileram;
-	extern data8_t *m62_textram;
 	
 	VIDEO_START( kungfum );
 	VIDEO_UPDATE( kungfum );
@@ -98,7 +96,6 @@ public class m62
 	
 	VIDEO_START( horizon );
 	VIDEO_UPDATE( horizon );
-	extern data8_t *horizon_scrollram;
 	
 	static int bankaddress;
 	static int bankaddress2;

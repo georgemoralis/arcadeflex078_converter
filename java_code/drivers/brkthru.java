@@ -56,8 +56,6 @@ public class brkthru
 	
 	
 	unsigned char *brkthru_nmi_enable; /* needs to be tracked down */
-	extern unsigned char *brkthru_videoram;
-	extern size_t brkthru_videoram_size;
 	
 	VIDEO_START( brkthru );
 	PALETTE_INIT( brkthru );

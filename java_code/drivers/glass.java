@@ -17,10 +17,6 @@ package drivers;
 public class glass
 {
 	
-	extern data16_t *glass_vregs;
-	extern data16_t *glass_videoram;
-	extern data16_t *glass_spriteram;
-	extern int glass_current_bit;
 	
 	/* from vidhrdw/glass.c */
 	WRITE16_HANDLER( glass_vram_w );

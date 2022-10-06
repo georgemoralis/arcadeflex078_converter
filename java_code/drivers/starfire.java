@@ -56,8 +56,6 @@ public class starfire
 	
 	/* In vidhrdw/starfire.c */
 	VIDEO_UPDATE( starfire );
-	extern VIDEO_START( starfire );
-	extern void starfire_video_update(int scanline, int count);
 	
 	
 	

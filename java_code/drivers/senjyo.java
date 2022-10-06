@@ -79,14 +79,6 @@ public class senjyo
 	
 	
 	
-	extern UINT8 *senjyo_fgscroll;
-	extern UINT8 *senjyo_scrollx1,*senjyo_scrolly1;
-	extern UINT8 *senjyo_scrollx2,*senjyo_scrolly2;
-	extern UINT8 *senjyo_scrollx3,*senjyo_scrolly3;
-	extern UINT8 *senjyo_fgvideoram,*senjyo_fgcolorram;
-	extern UINT8 *senjyo_bg1videoram,*senjyo_bg2videoram,*senjyo_bg3videoram;
-	extern UINT8 *senjyo_radarram;
-	extern UINT8 *senjyo_bgstripesram;
 	
 	DRIVER_INIT( starforc );
 	DRIVER_INIT( starfore );

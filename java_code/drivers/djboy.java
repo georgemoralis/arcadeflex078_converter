@@ -74,9 +74,6 @@ public class djboy
 {
 	
 	/* public functions from vidhrdw/djboy.h */
-	extern void djboy_set_videoreg( data8_t data );
-	extern extern extern extern extern VIDEO_START( djboy );
-	extern VIDEO_UPDATE( djboy );
 	
 	static data8_t *sharedram;
 	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return sharedram[offset]; } };

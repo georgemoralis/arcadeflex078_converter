@@ -25,22 +25,12 @@ public class sbasketb
 {
 	
 	
-	extern void konami1_decode(void);
 	
-	extern UINT8 *sbasketb_scroll;
-	extern UINT8 *sbasketb_palettebank;
-	extern UINT8 *sbasketb_spriteram_select;
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( sbasketb );
-	extern VIDEO_START( sbasketb );
-	extern VIDEO_UPDATE( sbasketb );
 	
-	extern struct VLM5030interface konami_vlm5030_interface;
-	extern struct SN76496interface konami_sn76496_interface;
-	extern struct DACinterface konami_dac_interface;
 	
-	extern extern extern extern 
+	
+	
 	
 	WRITE_HANDLER( sbasketb_sh_irqtrigger_w )
 	{

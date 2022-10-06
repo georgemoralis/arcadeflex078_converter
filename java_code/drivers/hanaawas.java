@@ -39,10 +39,7 @@ public class hanaawas
 {
 	
 	
-	extern extern extern 
-	extern PALETTE_INIT( hanaawas );
-	extern VIDEO_START( hanaawas );
-	extern VIDEO_UPDATE( hanaawas );
+	
 	
 	
 	public static ReadHandlerPtr hanaawas_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)

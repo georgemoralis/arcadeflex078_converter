@@ -10,7 +10,6 @@
 #define DRAWGFX_H
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 /*
@@ -111,7 +110,6 @@ public class drawgfxH
 		UINT8 alpha[0x101][0x100];
 	};
 	
-	extern struct _alpha_cache alpha_cache;
 	
 	enum
 	{
@@ -134,10 +132,8 @@ public class drawgfxH
 	};
 	
 	/* drawing mode case TRANSPARENCY_ALPHARANGE */
-	extern UINT8 gfx_alpharange_table[256];
 	
 	/* drawing mode case TRANSPARENCY_PEN_TABLE */
-	extern UINT8 gfx_drawmode_table[256];
 	enum
 	{
 		DRAWMODE_NONE,
@@ -147,7 +143,6 @@ public class drawgfxH
 	
 	/* By default, when drawing sprites with pdrawgfx, shadows affect the sprites below them. */
 	/* Set this flag to 1 to make shadows only affect the background, leaving sprites at full brightness. */
-	extern int pdrawgfx_shadow_lowpri;
 	
 	
 	/* pointers to pixel functions.  They're set based on depth */
@@ -189,7 +184,6 @@ public class drawgfxH
 	
 	
 	/* Alpha blending functions */
-	extern int alpha_active;
 	void alpha_init(void);
 	INLINE void alpha_set_level(int level) {
 		if(level == 0)

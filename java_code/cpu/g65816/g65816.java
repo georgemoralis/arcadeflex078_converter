@@ -114,35 +114,10 @@ public class g65816
 		 0,23,80, 1, /* command line window (bottom rows) */
 	};
 	
-	extern void (*g65816i_opcodes_M0X0[])(void);
-	extern uint g65816i_get_reg_M0X0(int regnum);
-	extern void g65816i_set_reg_M0X0(int regnum, uint val);
-	extern void g65816i_set_line_M0X0(int line, int state);
-	extern int  g65816i_execute_M0X0(int cycles);
 	
-	extern void (*g65816i_opcodes_M0X1[])(void);
-	extern uint g65816i_get_reg_M0X1(int regnum);
-	extern void g65816i_set_reg_M0X1(int regnum, uint val);
-	extern void g65816i_set_line_M0X1(int line, int state);
-	extern int  g65816i_execute_M0X1(int cycles);
 	
-	extern void (*g65816i_opcodes_M1X0[])(void);
-	extern uint g65816i_get_reg_M1X0(int regnum);
-	extern void g65816i_set_reg_M1X0(int regnum, uint val);
-	extern void g65816i_set_line_M1X0(int line, int state);
-	extern int  g65816i_execute_M1X0(int cycles);
 	
-	extern void (*g65816i_opcodes_M1X1[])(void);
-	extern uint g65816i_get_reg_M1X1(int regnum);
-	extern void g65816i_set_reg_M1X1(int regnum, uint val);
-	extern void g65816i_set_line_M1X1(int line, int state);
-	extern int  g65816i_execute_M1X1(int cycles);
 	
-	extern void (*g65816i_opcodes_E[])(void);
-	extern uint g65816i_get_reg_E(int regnum);
-	extern void g65816i_set_reg_E(int regnum, uint val);
-	extern void g65816i_set_line_E(int line, int state);
-	extern int  g65816i_execute_E(int cycles);
 	
 	void (**g65816i_opcodes[5])(void) =
 	{

@@ -21,10 +21,7 @@ package drivers;
 public class pcktgal
 {
 	
-	extern extern 
-	extern PALETTE_INIT( pcktgal );
-	extern VIDEO_START( pcktgal );
-	extern VIDEO_UPDATE( pcktgal );
+	
 	
 	/***************************************************************************/
 	

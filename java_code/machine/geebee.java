@@ -29,8 +29,6 @@ public class geebee
 	int geebee_inv;
 	
 	#ifdef MAME_DEBUG
-	extern char geebee_msg[32+1];
-	extern int geebee_cnt;
 	#endif
 	
 	READ_HANDLER( geebee_in_r )

@@ -13,4 +13,3 @@ void dominos_ac_signal_flip(int dummy);
 
 VIDEO_UPDATE( dominos );
 
-extern unsigned char *dominos_sound_ram;

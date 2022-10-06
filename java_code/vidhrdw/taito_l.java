@@ -8,7 +8,6 @@ public class taito_l
 {
 	
 	
-	extern unsigned char *taitol_rambanks;
 	
 	static struct tilemap *bg18_tilemap;
 	static struct tilemap *bg19_tilemap;

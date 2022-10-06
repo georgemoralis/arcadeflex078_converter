@@ -48,12 +48,8 @@ public class ladybug
 {
 	
 	
-	extern extern extern INTERRUPT_GEN( ladybug_interrupt );
 	
-	extern extern extern 
-	extern PALETTE_INIT( ladybug );
-	extern VIDEO_START( ladybug );
-	extern VIDEO_UPDATE( ladybug );
+	
 	
 	
 	public static Memory_ReadAddress readmem[]={

@@ -33,7 +33,6 @@ public class skykid
 {
 	
 	static unsigned char *sharedram;
-	extern unsigned char *skykid_textram, *spriteram, *skykid_videoram;
 	
 	/* from vidhrdw/skykid.c */
 	VIDEO_START( skykid );

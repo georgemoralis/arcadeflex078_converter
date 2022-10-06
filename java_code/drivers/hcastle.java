@@ -19,7 +19,6 @@ public class hcastle
 	VIDEO_UPDATE( hcastle );
 	VIDEO_START( hcastle );
 	
-	extern data8_t *hcastle_pf1_videoram,*hcastle_pf2_videoram;
 	
 	
 	public static WriteHandlerPtr hcastle_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)

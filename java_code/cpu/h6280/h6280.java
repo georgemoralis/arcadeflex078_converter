@@ -68,7 +68,6 @@ public class h6280
 {
 	
 	
-	extern FILE * errorlog;
 	
 	static UINT8 reg_layout[] = {
 		H6280_PC, H6280_S, H6280_P, H6280_A, H6280_X, H6280_Y, -1,

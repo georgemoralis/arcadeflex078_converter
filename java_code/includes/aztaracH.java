@@ -15,7 +15,6 @@ INTERRUPT_GEN( aztarac_snd_timed_irq );
 
 /*----------- defined in vidhrdw/aztarac.c -----------*/
 
-extern data16_t *aztarac_vectorram;
 
 WRITE16_HANDLER( aztarac_ubr_w );
 

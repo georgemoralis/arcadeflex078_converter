@@ -14,9 +14,6 @@ public class stactics
 	unsigned char *stactics_motor_on;
 	
 	/* defined in vidhrdw/stactics.c */
-	extern int stactics_vblank_count;
-	extern int stactics_shot_standby;
-	extern int stactics_shot_arrive;
 	
 	READ_HANDLER( stactics_port_0_r )
 	{

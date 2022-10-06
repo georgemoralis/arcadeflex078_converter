@@ -76,9 +76,7 @@ public class bombjack
 {
 	
 	
-	extern extern extern extern 
-	extern VIDEO_START( bombjack );
-	extern VIDEO_UPDATE( bombjack );
+	
 	
 	
 	static int latch;

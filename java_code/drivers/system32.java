@@ -381,12 +381,7 @@ public class system32
 	data16_t *scrambled_paletteram16[2];
 	
 	int system32_mixerShift;
-	extern int system32_screen_mode;
-	extern int system32_screen_old_mode;
-	extern int system32_allow_high_resolution;
-	extern int multi32;
 	
-	extern int sys32_brightness[2][3];
 	
 	WRITE16_HANDLER( sys32_videoram_w );
 	WRITE16_HANDLER ( sys32_ramtile_w );

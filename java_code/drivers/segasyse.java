@@ -173,9 +173,6 @@ public class segasyse
 	UINT8 hintpending;				/* scanline interrupt pending flag */
 	
 	/*- in (vidhrdw/segasyse.c) -*/
-	extern UINT8 segae_vdp_vrambank[];	/* vdp's vram bank */
-	extern UINT8 *segae_vdp_vram[];		/* pointer to start of vdp's vram */
-	extern UINT8 *segae_vdp_regs[];		/* pointer to vdp's registers */
 	
 	/*-- Prototypes --*/
 	

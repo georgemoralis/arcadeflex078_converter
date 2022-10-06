@@ -58,7 +58,6 @@ public class ladyfrog
 	VIDEO_START( ladyfrog );
 	VIDEO_UPDATE( ladyfrog );
 	
-	extern UINT8 *ladyfrog_scrlram;
 	static int sound_nmi_enable=0,pending_nmi=0;
 	static int snd_flag;
 	static UINT8 snd_data;

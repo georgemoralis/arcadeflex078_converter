@@ -54,16 +54,13 @@ package drivers;
 public class arkanoid
 {
 	
-	extern extern VIDEO_START( arkanoid );
-	extern VIDEO_UPDATE( arkanoid );
 	
-	extern MACHINE_INIT( arkanoid );
 	
-	extern 
-	extern extern 
-	extern extern extern 
-	extern extern extern 
-	extern extern 
+	
+	
+	
+	
+	
 	/*
 	Paddle 2 MCU simulation
 	

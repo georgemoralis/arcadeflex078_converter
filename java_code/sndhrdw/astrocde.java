@@ -117,9 +117,6 @@ public class astrocde
 	/* Note the definitions for these are global and defined in src/sndhrdw/gorf.c
 	   (not great I know, but it will have to do for the moment ;) ) */
 	
-	extern char totalword[256], *totalword_ptr;
-	extern char oldword[256];
-	extern int plural;
 	
 	int wow_sh_start(const struct MachineSound *msound)
 	{

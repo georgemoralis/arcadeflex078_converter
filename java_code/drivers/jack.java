@@ -46,9 +46,7 @@ public class jack
 {
 	
 	
-	extern extern extern extern extern 
-	extern VIDEO_START( jack );
-	extern VIDEO_UPDATE( jack );
+	
 	
 	static int timer_rate;
 	

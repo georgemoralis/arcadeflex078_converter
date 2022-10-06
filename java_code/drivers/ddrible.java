@@ -21,10 +21,6 @@ public class ddrible
 	static unsigned char *ddrible_sharedram;
 	static unsigned char *ddrible_snd_sharedram;
 	
-	extern unsigned char *ddrible_spriteram_1;
-	extern unsigned char *ddrible_spriteram_2;
-	extern unsigned char *ddrible_fg_videoram;
-	extern unsigned char *ddrible_bg_videoram;
 	
 	/* video hardware memory handlers */
 	

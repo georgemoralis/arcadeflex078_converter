@@ -82,9 +82,7 @@ enum {
 	NAMCONB2_MACH_BREAKERS
 };
 
-extern int namcos2_gametype;
 
-extern data16_t *namcos21_dspram16;
 
 #define NAMCOS21_NUM_COLORS 0x8000
 
@@ -115,7 +113,6 @@ MACHINE_INIT( namcos2 );
 WRITE16_HANDLER( namcos2_gfx_ctrl_w );
 READ16_HANDLER( namcos2_gfx_ctrl_r );
 
-extern data16_t *namcos2_sprite_ram;
 WRITE16_HANDLER( namcos2_sprite_ram_w );
 READ16_HANDLER( namcos2_sprite_ram_r );
 
@@ -129,8 +126,6 @@ READ16_HANDLER( namcos2_flap_prot_r );
 NVRAM_HANDLER( namcos2 );
 WRITE16_HANDLER( namcos2_68k_eeprom_w );
 READ16_HANDLER( namcos2_68k_eeprom_r );
-extern data16_t *namcos2_eeprom;
-extern size_t namcos2_eeprom_size;
 
 /**************************************************************/
 /*	Shared video memory function handlers					  */
@@ -138,7 +133,6 @@ extern size_t namcos2_eeprom_size;
 WRITE16_HANDLER( namcos2_68k_vram_w );
 READ16_HANDLER( namcos2_68k_vram_r );
 
-extern size_t namcos2_68k_vram_size;
 
 READ16_HANDLER( namcos2_68k_vram_ctrl_r );
 WRITE16_HANDLER( namcos2_68k_vram_ctrl_w );
@@ -150,8 +144,6 @@ READ16_HANDLER( namcos2_68k_video_palette_r );
 WRITE16_HANDLER( namcos2_68k_video_palette_w );
 
 #define VIRTUAL_PALETTE_BANKS 30
-extern data16_t *namcos2_68k_palette_ram;
-extern size_t namcos2_68k_palette_size;
 
 
 /**************************************************************/
@@ -168,8 +160,6 @@ WRITE16_HANDLER( namcos2_68k_serial_comms_ram_w );
 READ16_HANDLER( namcos2_68k_serial_comms_ctrl_r );
 WRITE16_HANDLER( namcos2_68k_serial_comms_ctrl_w );
 
-extern data16_t  namcos2_68k_serial_comms_ctrl[];
-extern data16_t *namcos2_68k_serial_comms_ram;
 
 
 
@@ -192,8 +182,6 @@ WRITE16_HANDLER( namcos2_68k_key_w );
 #define NAMCOS2_C148_SERIRQ 	6		/* 0x1cc000 */
 #define NAMCOS2_C148_VBLANKIRQ	7		/* 0x1ce000 */
 
-extern data16_t namcos2_68k_master_C148[];
-extern data16_t namcos2_68k_slave_C148[];
 
 WRITE16_HANDLER( namcos2_68k_master_C148_w );
 READ16_HANDLER( namcos2_68k_master_C148_r );
@@ -210,7 +198,6 @@ void namcos2_68k_slave_posirq( int moog );
 /* MASTER CPU RAM MEMORY									  */
 /**************************************************************/
 
-extern data16_t *namcos2_68k_master_ram;
 
 #define NAMCOS2_68K_MASTER_RAM_W	MWA16_BANK3, &namcos2_68k_master_ram
 #define NAMCOS2_68K_MASTER_RAM_R	MRA16_BANK3
@@ -220,7 +207,6 @@ extern data16_t *namcos2_68k_master_ram;
 /* SLAVE CPU RAM MEMORY 									  */
 /**************************************************************/
 
-extern data16_t *namcos2_68k_slave_ram;
 
 #define NAMCOS2_68K_SLAVE_RAM_W 	MWA16_BANK4, &namcos2_68k_slave_ram
 #define NAMCOS2_68K_SLAVE_RAM_R 	MRA16_BANK4
@@ -235,7 +221,6 @@ READ16_HANDLER( namcos2_68k_roz_ctrl_r );
 
 WRITE16_HANDLER( namcos2_68k_roz_ram_w );
 READ16_HANDLER( namcos2_68k_roz_ram_r );
-extern data16_t *namcos2_68k_roz_ram;
 
 /**************************************************************/
 /*															  */

@@ -25,7 +25,6 @@ public class v33intfH
 	#define v33_set_reg i86_set_reg
 	#define v33_set_irq_line i86_set_irq_line
 	#define v33_set_irq_callback i86_set_irq_callback
-	extern const char *v33_info(void *context, int regnum);
 	#define v33_dasm v30_dasm
 	
 	#endif

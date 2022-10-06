@@ -8,10 +8,6 @@ public class playch10
 {
 	
 	/* from machine */
-	extern int pc10_sdcs;			/* ShareD Chip Select */
-	extern int pc10_dispmask;		/* Display Mask */
-	extern int pc10_gun_controller;	/* wether we need to draw a crosshair or not */
-	extern int pc10_int_detect;
 	
 	static struct tilemap *bg_tilemap;
 	

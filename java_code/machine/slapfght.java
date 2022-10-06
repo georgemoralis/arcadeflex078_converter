@@ -25,7 +25,6 @@ public class slapfght
 	int getstar_sh_intenabled;
 	
 	static int slapfight_status_state;
-	extern unsigned char *getstar_e803;
 	
 	static unsigned char mcu_val;
 	

@@ -87,14 +87,6 @@ public class metro
 	
 	/* Variables defined in vidhrdw: */
 	
-	extern data16_t *metro_videoregs;
-	extern data16_t *metro_screenctrl;
-	extern data16_t *metro_scroll;
-	extern data16_t *metro_tiletable;
-	extern size_t metro_tiletable_size;
-	extern data16_t *metro_vram_0, *metro_vram_1, *metro_vram_2;
-	extern data16_t *metro_window;
-	extern data16_t *metro_K053936_ram;
 	WRITE16_HANDLER( metro_K053936_w );
 	
 	

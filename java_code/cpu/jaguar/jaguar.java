@@ -921,8 +921,7 @@ public class jaguar
 	unsigned jaguargpu_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmjag(int, char *, unsigned);
-	    return dasmjag(JAGUAR_VARIANT_GPU, buffer, pc);
+		    return dasmjag(JAGUAR_VARIANT_GPU, buffer, pc);
 	#else
 		sprintf(buffer, "$%04X", ROPCODE(pc));
 		return 2;
@@ -932,8 +931,7 @@ public class jaguar
 	unsigned jaguardsp_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmjag(int, char *, unsigned);
-	    return dasmjag(JAGUAR_VARIANT_DSP, buffer, pc);
+		    return dasmjag(JAGUAR_VARIANT_DSP, buffer, pc);
 	#else
 		sprintf(buffer, "$%04X", ROPCODE(pc));
 		return 2;

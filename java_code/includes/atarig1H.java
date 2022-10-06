@@ -13,4 +13,3 @@ VIDEO_UPDATE( atarig1 );
 
 void atarig1_scanline_update(int param);
 
-extern UINT8 atarig1_pitfight;

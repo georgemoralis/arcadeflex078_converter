@@ -17,9 +17,6 @@ package drivers;
 public class targeth
 {
 	
-	extern data16_t *targeth_vregs;
-	extern data16_t *targeth_videoram;
-	extern data16_t *targeth_spriteram;
 	
 	/* from vidhrdw/targeth.c */
 	WRITE16_HANDLER( targeth_vram_w );

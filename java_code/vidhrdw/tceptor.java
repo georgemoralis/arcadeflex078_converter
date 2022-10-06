@@ -13,7 +13,6 @@ public class tceptor
 {
 	
 	#ifdef MAME_DEBUG
-	extern int debug_key_pressed;
 	#endif
 	
 	#define TX_TILE_OFFSET_CENTER	(32 * 2)

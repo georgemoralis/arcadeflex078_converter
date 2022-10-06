@@ -24,16 +24,6 @@ public class retofinv
 	PALETTE_INIT( retofinv );
 	VIDEO_UPDATE( retofinv );
 	
-	extern size_t retofinv_videoram_size;
-	extern unsigned char *retofinv_sprite_ram1;
-	extern unsigned char *retofinv_sprite_ram2;
-	extern unsigned char *retofinv_sprite_ram3;
-	extern unsigned char *retofinv_fg_videoram;
-	extern unsigned char *retofinv_bg_videoram;
-	extern unsigned char *retofinv_fg_colorram;
-	extern unsigned char *retofinv_bg_colorram;
-	extern unsigned char *retofinv_fg_char_bank;
-	extern unsigned char *retofinv_bg_char_bank;
 	
 	static unsigned char cpu2_m6000=0;
 	

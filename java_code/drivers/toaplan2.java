@@ -247,10 +247,6 @@ public class toaplan2
 	static data8_t  raizing_cpu_reply[2];	/* Raizing replies to the 68K */
 	
 	/************ Video RAM related values ************/
-	extern data16_t *toaplan2_txvideoram16;
-	extern data16_t *toaplan2_txvideoram16_offs;
-	extern data16_t *toaplan2_txscrollram16;
-	extern data16_t *toaplan2_tx_gfxram16;
 	size_t toaplan2_tx_vram_size;
 	size_t toaplan2_tx_offs_vram_size;
 	size_t toaplan2_tx_scroll_vram_size;

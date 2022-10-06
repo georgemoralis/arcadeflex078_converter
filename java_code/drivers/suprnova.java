@@ -185,7 +185,6 @@ public class suprnova
 	#define BIOS_SKIP 1 // Skip Bios as it takes too long and doesn't complete atm.
 	
 	// Defined in vidhrdw
-	extern void skns_sprite_kludge(int x, int y);
 	
 	data32_t *skns_tilemapA_ram, *skns_tilemapB_ram, *skns_v3slc_ram;
 	data32_t *skns_palette_ram, *skns_v3t_ram, *skns_main_ram, *skns_cache_ram;
@@ -735,8 +734,6 @@ public class suprnova
 		}
 	}
 	
-	extern void *record;
-	extern void *playback;
 	
 	static READ32_HANDLER( msm6242_r )
 	{

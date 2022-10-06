@@ -46,7 +46,6 @@ public class freekick
 {
 	
 	
-	extern data8_t *freek_videoram;
 	
 	VIDEO_START(freekick);
 	VIDEO_UPDATE(gigas);

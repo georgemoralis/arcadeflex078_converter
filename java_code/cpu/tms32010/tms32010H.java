@@ -70,7 +70,6 @@ public class tms32010H
 	const char *tms32010_info(void *context, int regnum);
 	unsigned tms32010_dasm(char *buffer, unsigned pc);
 	
-	extern int tms32010_icount;						/* T-state count */
 	
 	
 	
@@ -162,7 +161,6 @@ public class tms32010H
 	
 	
 	#ifdef	MAME_DEBUG
-	extern unsigned Dasm32010(char *buffer, unsigned pc);
 	#endif
 	
 	#endif	/* _TMS32010_H */

@@ -39,7 +39,6 @@ public class supbtime
 	WRITE16_HANDLER( supbtime_pf1_data_w );
 	WRITE16_HANDLER( supbtime_control_0_w );
 	
-	extern data16_t *supbtime_pf2_data,*supbtime_pf1_data,*supbtime_pf1_row;
 	
 	static READ16_HANDLER( supbtime_pf1_data_r ) { return supbtime_pf1_data[offset]; }
 	static READ16_HANDLER( supbtime_pf2_data_r ) { return supbtime_pf2_data[offset]; }

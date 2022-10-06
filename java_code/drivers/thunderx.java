@@ -21,12 +21,10 @@ public class thunderx
 	static MACHINE_INIT( thunderx );
 	static void thunderx_banking(int lines);
 	
-	extern int scontra_priority;
 	VIDEO_START( scontra );
 	VIDEO_UPDATE( scontra );
 	
 	static int unknown_enable = 0;
-	extern int debug_key_pressed;
 	
 	/***************************************************************************/
 	

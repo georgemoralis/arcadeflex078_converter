@@ -39,8 +39,6 @@ package drivers;
 public class xorworld
 {
 	
-	extern data16_t *xorworld_videoram;
-	extern data16_t *xorworld_spriteram;
 	
 	/* from vidhrdw/xorworld.c */
 	READ16_HANDLER(xorworld_vram_r);

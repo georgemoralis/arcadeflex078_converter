@@ -75,7 +75,6 @@ package drivers;
 public class bosco
 {
 	
-	extern unsigned char *bosco_sharedram;
 	INTERRUPT_GEN( bosco_interrupt_1 );
 	INTERRUPT_GEN( bosco_interrupt_2 );
 	INTERRUPT_GEN( bosco_interrupt_3 );
@@ -85,17 +84,11 @@ public class bosco
 	VIDEO_UPDATE( bosco );
 	PALETTE_INIT( bosco );
 	
-	extern unsigned char *bosco_videoram2,*bosco_colorram2;
-	extern unsigned char *bosco_radarx,*bosco_radary,*bosco_radarattr;
-	extern size_t bosco_radarram_size;
-	extern unsigned char *bosco_staronoff;
-	extern unsigned char *bosco_starblink;
 	VIDEO_START( bosco );
 	VIDEO_UPDATE( bosco );
 	
 	int  bosco_sh_start(const struct MachineSound *msound);
 	void bosco_sh_stop(void);
-	extern unsigned char *pengo_soundregs;
 	
 	
 	public static Memory_ReadAddress readmem_cpu1[]={

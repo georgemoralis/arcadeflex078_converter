@@ -24,7 +24,6 @@ public class _6532riotH
 	};
 	
 	
-	extern void r6532_init(int n, const struct R6532interface* RI);
 	
-	extern extern 
-	extern extern }
+	
+	}

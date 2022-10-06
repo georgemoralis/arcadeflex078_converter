@@ -40,22 +40,9 @@ public class t11H
 	
 	
 	/* PUBLIC GLOBALS */
-	extern int  t11_ICount;
 	
 	
 	/* PUBLIC FUNCTIONS */
-	extern void t11_init(void);
-	extern void t11_reset(void *param);
-	extern void t11_exit(void);
-	extern int t11_execute(int cycles);    /* NS 970908 */
-	extern unsigned t11_get_context(void *dst);
-	extern void t11_set_context(void *src);
-	extern unsigned t11_get_reg(int regnum);
-	extern void t11_set_reg(int regnum, unsigned val);
-	extern void t11_set_irq_line(int irqline, int state);
-	extern void t11_set_irq_callback(int (*callback)(int irqline));
-	extern const char *t11_info(void *context, int regnum);
-	extern unsigned t11_dasm(char *buffer, unsigned pc);
 	
 	/****************************************************************************/
 	/* Read a byte from given memory location                                   */
@@ -70,7 +57,6 @@ public class t11H
 	#define T11_WRMEM_WORD(A,V) (cpu_writemem16lew_word(A,V))
 	
 	#ifdef MAME_DEBUG
-	extern unsigned DasmT11(char *buffer, unsigned pc);
 	#endif
 	
 	#endif /* _T11_H */

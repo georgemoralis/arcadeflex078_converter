@@ -221,11 +221,6 @@ public class macrossp
 	
 	******************************************************************************/
 	
-	extern data32_t *macrossp_scra_videoram, *macrossp_scra_videoregs;
-	extern data32_t *macrossp_scrb_videoram, *macrossp_scrb_videoregs;
-	extern data32_t *macrossp_scrc_videoram, *macrossp_scrc_videoregs;
-	extern data32_t *macrossp_text_videoram, *macrossp_text_videoregs;
-	extern data32_t *macrossp_spriteram;
 	
 	static data32_t *macrossp_mainram;
 	

@@ -522,8 +522,7 @@ public class system16
 					(b << 3) | (b >> 2) /* 5 bits blue */
 				);
 	#else
-			{   extern struct GameDriver driver_aburner, driver_aburner2; //JUN
-				r=(r << 3) | (r >> 2); /* 5 bits red */
+			{   			r=(r << 3) | (r >> 2); /* 5 bits red */
 				g=(g << 2) | (g >> 4); /* 6 bits green */
 				b=(b << 3) | (b >> 2); /* 5 bits blue */
 	

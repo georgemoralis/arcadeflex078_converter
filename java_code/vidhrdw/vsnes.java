@@ -8,7 +8,6 @@ public class vsnes
 {
 	
 	/* from machine */
-	extern int vsnes_gun_controller;
 	
 	
 	PALETTE_INIT( vsnes )

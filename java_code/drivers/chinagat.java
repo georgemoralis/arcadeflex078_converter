@@ -83,11 +83,6 @@ public class chinagat
 	VIDEO_START( chinagat );
 	VIDEO_UPDATE( ddragon );
 	
-	extern int technos_video_hw;
-	extern int ddragon_scrollx_hi, ddragon_scrolly_hi;
-	extern data8_t *ddragon_scrollx_lo;
-	extern data8_t *ddragon_scrolly_lo;
-	extern data8_t *ddragon_bgvideoram,*ddragon_fgvideoram;
 	
 	/**************** Machine stuff ******************/
 	static int sprite_irq, sound_irq, adpcm_sound_irq;

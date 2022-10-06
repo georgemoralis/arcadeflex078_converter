@@ -46,8 +46,6 @@ public class marineb
 	
 	
 	
-	extern unsigned char *marineb_column_scroll;
-	extern int marineb_active_low_flipscreen;
 	
 	MACHINE_INIT( espial );
 	PALETTE_INIT( espial );

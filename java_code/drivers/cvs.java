@@ -97,14 +97,6 @@ public class cvs
 	VIDEO_START( cvs );
 	int  s2650_get_flag(void);
 	
-	extern unsigned char *dirty_character;
-	extern unsigned char *character_1_ram;
-	extern unsigned char *character_2_ram;
-	extern unsigned char *character_3_ram;
-	extern unsigned char *bullet_ram;
-	extern unsigned char *s2636_1_ram;
-	extern unsigned char *s2636_2_ram;
-	extern unsigned char *s2636_3_ram;
 	
 	
 	

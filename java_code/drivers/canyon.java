@@ -41,11 +41,8 @@ package drivers;
 public class canyon
 {
 	
-	extern 
-	extern VIDEO_START( canyon );
-	extern VIDEO_UPDATE( canyon );
 	
-	extern UINT8* canyon_videoram;
+	
 	
 	
 	/*************************************

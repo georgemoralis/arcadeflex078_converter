@@ -27,21 +27,12 @@ package drivers;
 public class zodiack
 {
 	
-	extern UINT8 *zodiack_videoram2;
-	extern UINT8 *zodiack_attributesram;
-	extern UINT8 *zodiack_bulletsram;
-	extern size_t zodiack_bulletsram_size;
 	
-	extern extern extern extern 
-	extern PALETTE_INIT( zodiack );
-	extern VIDEO_START( zodiack );
-	extern VIDEO_UPDATE( zodiack );
+	
 	
 	int percuss_hardware;
 	
-	extern MACHINE_INIT( espial );
-	extern extern INTERRUPT_GEN( zodiac_master_interrupt );
-	extern 
+	
 	
 	static MACHINE_INIT( zodiack )
 	{

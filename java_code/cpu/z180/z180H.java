@@ -113,7 +113,6 @@ public class z180H
 		Z180_TABLE_ex	 /* cycles counts for taken jr/jp/call and interrupt latency (rst opcodes) */
 	};
 	
-	extern int z180_icount; 			/* T-state count */
 	#define z180_ICount z180_icount
 	
 	#define Z180_INT0		0			/* Execute INT1 */
@@ -128,28 +127,9 @@ public class z180H
 	#define Z180_INT_ASCI1	9			/* Internal ASCI channel 1 */
 	
 	/* MMU mapped memory lookup */
-	extern data8_t cpu_readmemz180(offs_t offset);
-	extern void cpu_writememz180(offs_t offset, data8_t data);
-	extern void cpu_setOPbasez180(int pc);
 	
-	extern void z180_init(void);
-	extern void z180_reset (void *param);
-	extern void z180_exit (void);
-	extern int z180_execute(int cycles);
-	extern void z180_burn(int cycles);
-	extern unsigned z180_get_context (void *dst);
-	extern void z180_set_context (void *src);
-	extern const void *z180_get_cycle_table (int which);
-	extern void z180_set_cycle_table (int which, void *new_tbl);
-	extern unsigned z180_get_reg (int regnum);
-	extern extern extern void z180_set_reg (int regnum, unsigned val);
-	extern void z180_set_irq_line(int irqline, int state);
-	extern void z180_set_irq_callback(int (*irq_callback)(int));
-	extern const char *z180_info(void *context, int regnum);
-	extern unsigned z180_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned DasmZ180(char *buffer, unsigned pc);
 	#endif
 	
 	#endif

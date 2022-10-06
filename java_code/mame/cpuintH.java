@@ -19,7 +19,6 @@ public class cpuintH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	
@@ -47,7 +46,6 @@ public class cpuintH
 	
 	void cpuint_reset_cpu(int cpunum);
 	
-	extern int (*cpu_irq_callbacks[])(int);
 	
 	
 	

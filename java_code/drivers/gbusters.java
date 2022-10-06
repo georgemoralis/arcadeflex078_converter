@@ -21,7 +21,6 @@ public class gbusters
 	static void gbusters_banking( int lines );
 	
 	
-	extern int gbusters_priority;
 	
 	VIDEO_START( gbusters );
 	VIDEO_UPDATE( gbusters );

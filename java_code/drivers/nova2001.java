@@ -41,12 +41,8 @@ public class nova2001
 {
 	
 	/* From vidhrdw/nova2001.c */
-	extern UINT8 *nova2001_videoram2, *nova2001_colorram2;
 	
-	extern extern extern extern extern extern extern 
-	extern PALETTE_INIT( nova2001 );
-	extern VIDEO_START( nova2001 );
-	extern VIDEO_UPDATE( nova2001 );
+	
 	
 	
 	

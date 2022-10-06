@@ -45,26 +45,21 @@ public class mcr
 	/* Chip Squeak Deluxe-specific globals */
 	static UINT8 csdeluxe_sound_cpu;
 	static UINT8 csdeluxe_dac_index;
-	extern struct pia6821_interface csdeluxe_pia_intf;
 	
 	/* Turbo Chip Squeak-specific globals */
 	static UINT8 turbocs_sound_cpu;
 	static UINT8 turbocs_dac_index;
 	static UINT8 turbocs_status;
-	extern struct pia6821_interface turbocs_pia_intf;
 	
 	/* Sounds Good-specific globals */
 	static UINT8 soundsgood_sound_cpu;
 	static UINT8 soundsgood_dac_index;
 	static UINT8 soundsgood_status;
-	extern struct pia6821_interface soundsgood_pia_intf;
 	
 	/* Squawk n' Talk-specific globals */
 	static UINT8 squawkntalk_sound_cpu;
 	static UINT8 squawkntalk_tms_command;
 	static UINT8 squawkntalk_tms_strobes;
-	extern struct pia6821_interface squawkntalk_pia0_intf;
-	extern struct pia6821_interface squawkntalk_pia1_intf;
 	
 	
 	

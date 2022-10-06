@@ -49,14 +49,10 @@ public class fileio
 	//	EXTERNALS
 	//============================================================
 	
-	extern char *rompath_extra;
 	
 	// from datafile.c
-	extern const char *history_filename;
-	extern const char *mameinfo_filename;
 	
 	// from cheat.c
-	extern char *cheatfile;
 	
 	
 	

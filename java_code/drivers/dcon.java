@@ -33,7 +33,6 @@ public class dcon
 	VIDEO_UPDATE( dcon );
 	VIDEO_UPDATE( sdgndmps );
 	
-	extern data16_t *dcon_back_data,*dcon_fore_data,*dcon_mid_data,*dcon_scroll_ram,*dcon_textram;
 	
 	/***************************************************************************/
 	

@@ -32,27 +32,14 @@ public class multi32
 	
 	static unsigned char irq_status;
 	static data16_t *system32_shared_ram;
-	extern data16_t *system32_mixerregs[2];  // mixer registers
 	
 	static data16_t *sys32_protram;
 	static data16_t *system32_workram;
-	extern data16_t sys32_tilebank_external;
-	extern data16_t sys32_displayenable;
 	
 	/* Video Hardware */
-	extern int system32_temp_kludge;
-	extern data16_t *sys32_spriteram16;
-	extern data16_t *sys32_txtilemap_ram;
-	extern data16_t *sys32_ramtile_ram;
-	extern data16_t *scrambled_paletteram16[2];
 	static data16_t *paletteram16_b;
 	
-	extern int system32_mixerShift;
-	extern int system32_screen_mode;
-	extern int system32_screen_old_mode;
-	extern int system32_allow_high_resolution;
 	
-	extern int sys32_brightness[2][3];
 	
 	WRITE16_HANDLER( sys32_videoram_w );
 	WRITE16_HANDLER( sys32_ramtile_w );
@@ -63,7 +50,6 @@ public class multi32
 	VIDEO_START( system32 );
 	VIDEO_UPDATE( system32 );
 	
-	extern int system32_use_default_eeprom;
 	
 	static data16_t controlB[256];
 	static data16_t control[256];
@@ -137,7 +123,6 @@ public class multi32
 		return mame_rand(); // new random.c random number code, see clouds in ga2
 	}
 	
-	extern int sys32_brightness[2][3];
 	
 	void multi32_set_colour (int offset, int monitor)
 	{
@@ -261,8 +246,6 @@ public class multi32
 		}
 	}
 	
-	extern int analogRead[8];
-	extern int analogSwitch;
 	
 	static READ16_HANDLER( multi32_io_analog_r )
 	{

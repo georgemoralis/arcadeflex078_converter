@@ -15,7 +15,6 @@ package vidhrdw;
 public class phozon
 {
 	
-	extern unsigned char *phozon_spriteram;
 	
 	/***************************************************************************
 	

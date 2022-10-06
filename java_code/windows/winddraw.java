@@ -30,7 +30,6 @@ public class winddraw
 	//============================================================
 	
 	// from input.c
-	extern int verbose;
 	
 	
 	

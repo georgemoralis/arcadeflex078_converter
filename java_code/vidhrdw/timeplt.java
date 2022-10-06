@@ -7,8 +7,6 @@ package vidhrdw;
 public class timeplt
 {
 	
-	extern unsigned char *spriteram,*spriteram_2;
-	extern size_t spriteram_size;
 	
 	unsigned char *timeplt_videoram,*timeplt_colorram;
 	static struct tilemap *bg_tilemap;

@@ -68,8 +68,6 @@ public class _1942
 {
 	
 	
-	extern unsigned char *c1942_fgvideoram;
-	extern unsigned char *c1942_bgvideoram;
 	
 	
 	VIDEO_START( 1942 );

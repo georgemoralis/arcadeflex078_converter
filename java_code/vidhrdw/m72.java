@@ -17,8 +17,6 @@ public class m72
 	static int xadjust;
 	static int scrollx1[256],scrolly1[256],scrollx2[256],scrolly2[256];
 	static int video_off;
-	extern unsigned char *spriteram,*spriteram_2;
-	extern size_t spriteram_size;
 	
 	static int irqbase;
 	

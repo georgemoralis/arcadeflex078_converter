@@ -82,7 +82,6 @@ public class pitnrun
 	MACHINE_INIT( pitnrun );
 	
 	
-	extern UINT8* videoram2;
 	
 	WRITE_HANDLER(pitnrun_ha_w);
 	WRITE_HANDLER(pitnrun_h_heed_w);

@@ -19,15 +19,11 @@ public class mcrH
 {
 	
 	
-	extern INT16 spyhunt_scrollx, spyhunt_scrolly;
-	extern double mcr68_timing_factor;
 	
 	
 	
 	/************ Generic MCR routines ***************/
 	
-	extern Z80_DaisyChain mcr_daisy_chain[];
-	extern UINT8 mcr_cocktail_flip;
 	
 	MACHINE_INIT( mcr );
 	MACHINE_INIT( mcr68 );
@@ -46,6 +42,4 @@ public class mcrH
 	
 	/************ Generic character and sprite definition ***************/
 	
-	extern struct GfxLayout mcr_bg_layout;
-	extern struct GfxLayout mcr_sprite_layout;
-}
+	}

@@ -17,7 +17,6 @@ public class tms34010
 {
 	
 	#ifdef MAME_DEBUG
-	extern int debug_key_pressed;
 	#endif
 	
 	
@@ -183,38 +182,6 @@ public class tms34010
 	**	FUNCTION TABLES
 	**#################################################################################################*/
 	
-	extern void wfield_01(offs_t offset,data32_t data);
-	extern void wfield_02(offs_t offset,data32_t data);
-	extern void wfield_03(offs_t offset,data32_t data);
-	extern void wfield_04(offs_t offset,data32_t data);
-	extern void wfield_05(offs_t offset,data32_t data);
-	extern void wfield_06(offs_t offset,data32_t data);
-	extern void wfield_07(offs_t offset,data32_t data);
-	extern void wfield_08(offs_t offset,data32_t data);
-	extern void wfield_09(offs_t offset,data32_t data);
-	extern void wfield_10(offs_t offset,data32_t data);
-	extern void wfield_11(offs_t offset,data32_t data);
-	extern void wfield_12(offs_t offset,data32_t data);
-	extern void wfield_13(offs_t offset,data32_t data);
-	extern void wfield_14(offs_t offset,data32_t data);
-	extern void wfield_15(offs_t offset,data32_t data);
-	extern void wfield_16(offs_t offset,data32_t data);
-	extern void wfield_17(offs_t offset,data32_t data);
-	extern void wfield_18(offs_t offset,data32_t data);
-	extern void wfield_19(offs_t offset,data32_t data);
-	extern void wfield_20(offs_t offset,data32_t data);
-	extern void wfield_21(offs_t offset,data32_t data);
-	extern void wfield_22(offs_t offset,data32_t data);
-	extern void wfield_23(offs_t offset,data32_t data);
-	extern void wfield_24(offs_t offset,data32_t data);
-	extern void wfield_25(offs_t offset,data32_t data);
-	extern void wfield_26(offs_t offset,data32_t data);
-	extern void wfield_27(offs_t offset,data32_t data);
-	extern void wfield_28(offs_t offset,data32_t data);
-	extern void wfield_29(offs_t offset,data32_t data);
-	extern void wfield_30(offs_t offset,data32_t data);
-	extern void wfield_31(offs_t offset,data32_t data);
-	extern void wfield_32(offs_t offset,data32_t data);
 	
 	static void (*wfield_functions[32])(offs_t offset,data32_t data) =
 	{
@@ -226,38 +193,6 @@ public class tms34010
 		wfield_30, wfield_31
 	};
 	
-	extern data32_t rfield_z_01(offs_t offset);
-	extern data32_t rfield_z_02(offs_t offset);
-	extern data32_t rfield_z_03(offs_t offset);
-	extern data32_t rfield_z_04(offs_t offset);
-	extern data32_t rfield_z_05(offs_t offset);
-	extern data32_t rfield_z_06(offs_t offset);
-	extern data32_t rfield_z_07(offs_t offset);
-	extern data32_t rfield_z_08(offs_t offset);
-	extern data32_t rfield_z_09(offs_t offset);
-	extern data32_t rfield_z_10(offs_t offset);
-	extern data32_t rfield_z_11(offs_t offset);
-	extern data32_t rfield_z_12(offs_t offset);
-	extern data32_t rfield_z_13(offs_t offset);
-	extern data32_t rfield_z_14(offs_t offset);
-	extern data32_t rfield_z_15(offs_t offset);
-	extern data32_t rfield_z_16(offs_t offset);
-	extern data32_t rfield_z_17(offs_t offset);
-	extern data32_t rfield_z_18(offs_t offset);
-	extern data32_t rfield_z_19(offs_t offset);
-	extern data32_t rfield_z_20(offs_t offset);
-	extern data32_t rfield_z_21(offs_t offset);
-	extern data32_t rfield_z_22(offs_t offset);
-	extern data32_t rfield_z_23(offs_t offset);
-	extern data32_t rfield_z_24(offs_t offset);
-	extern data32_t rfield_z_25(offs_t offset);
-	extern data32_t rfield_z_26(offs_t offset);
-	extern data32_t rfield_z_27(offs_t offset);
-	extern data32_t rfield_z_28(offs_t offset);
-	extern data32_t rfield_z_29(offs_t offset);
-	extern data32_t rfield_z_30(offs_t offset);
-	extern data32_t rfield_z_31(offs_t offset);
-	extern data32_t rfield_32(offs_t offset);
 	
 	static data32_t (*rfield_functions_z[32])(offs_t offset) =
 	{
@@ -269,37 +204,6 @@ public class tms34010
 		rfield_z_30, rfield_z_31
 	};
 	
-	extern data32_t rfield_s_01(offs_t offset);
-	extern data32_t rfield_s_02(offs_t offset);
-	extern data32_t rfield_s_03(offs_t offset);
-	extern data32_t rfield_s_04(offs_t offset);
-	extern data32_t rfield_s_05(offs_t offset);
-	extern data32_t rfield_s_06(offs_t offset);
-	extern data32_t rfield_s_07(offs_t offset);
-	extern data32_t rfield_s_08(offs_t offset);
-	extern data32_t rfield_s_09(offs_t offset);
-	extern data32_t rfield_s_10(offs_t offset);
-	extern data32_t rfield_s_11(offs_t offset);
-	extern data32_t rfield_s_12(offs_t offset);
-	extern data32_t rfield_s_13(offs_t offset);
-	extern data32_t rfield_s_14(offs_t offset);
-	extern data32_t rfield_s_15(offs_t offset);
-	extern data32_t rfield_s_16(offs_t offset);
-	extern data32_t rfield_s_17(offs_t offset);
-	extern data32_t rfield_s_18(offs_t offset);
-	extern data32_t rfield_s_19(offs_t offset);
-	extern data32_t rfield_s_20(offs_t offset);
-	extern data32_t rfield_s_21(offs_t offset);
-	extern data32_t rfield_s_22(offs_t offset);
-	extern data32_t rfield_s_23(offs_t offset);
-	extern data32_t rfield_s_24(offs_t offset);
-	extern data32_t rfield_s_25(offs_t offset);
-	extern data32_t rfield_s_26(offs_t offset);
-	extern data32_t rfield_s_27(offs_t offset);
-	extern data32_t rfield_s_28(offs_t offset);
-	extern data32_t rfield_s_29(offs_t offset);
-	extern data32_t rfield_s_30(offs_t offset);
-	extern data32_t rfield_s_31(offs_t offset);
 	
 	static data32_t (*rfield_functions_s[32])(offs_t offset) =
 	{

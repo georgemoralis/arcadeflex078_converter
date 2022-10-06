@@ -139,11 +139,9 @@ public class undrfire
 	WRITE16_HANDLER(f3_volume_w);
 	WRITE16_HANDLER(f3_es5505_bank_w);
 	void f3_68681_reset(void);
-	extern data32_t *f3_shared_ram;
 	
 	static UINT16 coin_word;
 	static UINT16 port_sel = 0;
-	extern UINT16 undrfire_rotate_ctrl[8];
 	static int frame_counter=0;
 	
 	data32_t *undrfire_ram;	/* will be read in vidhrdw for gun target calcs */

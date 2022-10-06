@@ -27,7 +27,6 @@ public class _6280dasm
 	
 	#ifdef MAME_DEBUG
 	
-	extern UINT8 H6280_debug_mmr[8];
 	
 	#define RDOP(addr)   cpu_readmem21( (H6280_debug_mmr[(addr)>>13] << 13) | ((addr)&0x1fff))
 	#define RDBYTE(addr) cpu_readmem21( (H6280_debug_mmr[(addr)>>13] << 13) | ((addr)&0x1fff))

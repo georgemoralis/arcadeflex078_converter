@@ -22,7 +22,6 @@ public class gaplus
 	static int int_enable_2, int_enable_3;
 	static int credits, coincounter1, coincounter2;
 	
-	extern void gaplus_starfield_update( void );
 	
 	MACHINE_INIT( gaplus )
 	{

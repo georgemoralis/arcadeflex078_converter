@@ -728,8 +728,7 @@ public class tms32031
 	unsigned tms32031_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm_tms32031(char *, unsigned);
-	    return dasm_tms32031(buffer, pc);
+		    return dasm_tms32031(buffer, pc);
 	#else
 		sprintf(buffer, "$%04X", ROPCODE(pc));
 		return 4;

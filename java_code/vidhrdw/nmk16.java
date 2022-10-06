@@ -421,7 +421,6 @@ public class nmk16
 	
 	***************************************************************************/
 	
-	extern int is_blkheart;
 	
 	// manybloc uses extra flip bits on the sprites, but these break other games
 	

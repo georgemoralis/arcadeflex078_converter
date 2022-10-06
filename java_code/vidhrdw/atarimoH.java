@@ -125,11 +125,7 @@ WRITE16_HANDLER( atarimo_1_slipram_w );
 	GLOBAL VARIABLES
 ##########################################################################*/
 
-extern data16_t *atarimo_0_spriteram;
-extern data16_t *atarimo_0_slipram;
 
-extern data16_t *atarimo_1_spriteram;
-extern data16_t *atarimo_1_slipram;
 
 
 #endif

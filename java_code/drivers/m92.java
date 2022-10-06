@@ -126,10 +126,7 @@ public class m92
 	VIDEO_UPDATE( m92 );
 	void m92_vh_raster_partial_refresh(struct mame_bitmap *bitmap,int start_line,int end_line);
 	
-	extern int m92_raster_irq_position,m92_raster_enable;
-	extern unsigned char *m92_vram_data,*m92_spritecontrol;
 	
-	extern int m92_sprite_buffer_busy,m92_game_kludge;
 	
 	/*****************************************************************************/
 	

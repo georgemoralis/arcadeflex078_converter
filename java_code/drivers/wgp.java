@@ -355,20 +355,15 @@ public class wgp
 	VIDEO_START( wgp2 );
 	VIDEO_UPDATE( wgp );
 	
-	extern data16_t *wgp_spritemap;
-	extern size_t    wgp_spritemap_size;
 	
-	extern data16_t *wgp_pivram;
 	READ16_HANDLER ( wgp_pivram_word_r );
 	WRITE16_HANDLER( wgp_pivram_word_w );
 	
-	extern data16_t *wgp_piv_ctrlram;
 	READ16_HANDLER ( wgp_piv_ctrl_word_r );
 	WRITE16_HANDLER( wgp_piv_ctrl_word_w );
 	
 	static UINT16 cpua_ctrl = 0xff;
 	static UINT16 port_sel=0;
-	extern UINT16 wgp_rotate_ctrl[8];
 	
 	static data16_t *sharedram;
 	static size_t sharedram_size;

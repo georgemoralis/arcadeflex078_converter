@@ -288,10 +288,6 @@ public class wecleman
 	int wecleman_selected_ip, wecleman_irqctrl;
 	
 	/* Variables defined in vidhrdw: */
-	extern data16_t *wecleman_videostatus;
-	extern data16_t *wecleman_pageram, *wecleman_txtram, *wecleman_roadram;
-	extern size_t wecleman_roadram_size;
-	extern int wecleman_bgpage[4], wecleman_fgpage[4], *wecleman_gfx16_RAM;
 	
 	/* Functions defined in vidhrdw: */
 	WRITE16_HANDLER( hotchase_paletteram16_SBGRBBBBGGGGRRRR_word_w );

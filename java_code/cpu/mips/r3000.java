@@ -1201,8 +1201,7 @@ public class r3000
 	unsigned r3000_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasmr3k(char *, unsigned);
-	    return dasmr3k(buffer, pc);
+		    return dasmr3k(buffer, pc);
 	#else
 		sprintf(buffer, "$%04X", ROPCODE(pc));
 		return 2;

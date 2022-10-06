@@ -20,8 +20,6 @@ package drivers;
 public class mainsnk
 {
 	
-	extern data8_t *me_fgram;
-	extern data8_t *me_bgram;
 	WRITE_HANDLER(me_c600_w);
 	WRITE_HANDLER(me_fgram_w);
 	WRITE_HANDLER(me_bgram_w);

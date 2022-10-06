@@ -2,7 +2,6 @@
 				Taito Custom Chips
 ***************************************************************************/
 
-extern const int TC0100SCN_SINGLE_VDU;	/* value set in taitoic.c */
 
 int number_of_TC0100SCN(void);
 int has_TC0110PCR(void);
@@ -53,7 +52,6 @@ WRITE16_HANDLER( PC090OJ_word_0_w );
 void PC090OJ_eof_callback(void);
 void PC090OJ_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect,int pri_type);
 
-extern UINT16 PC090OJ_sprite_ctrl;
 
 
 /***************************************************************************/
@@ -165,7 +163,6 @@ void TC0480SCP_tilemap_draw(struct mame_bitmap *bitmap,const struct rectangle *c
 int TC0480SCP_get_bg_priority(void);
 
 /* Undrfire needs to read this for a sprite/tile priority hack */
-extern int TC0480SCP_pri_reg;
 
 
 /***************************************************************************/

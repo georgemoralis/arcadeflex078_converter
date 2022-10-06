@@ -6,10 +6,6 @@
 
 /*----------- defined in machine/irobot.c -----------*/
 
-extern UINT8 irvg_clear;
-extern UINT8 irobot_bufsel;
-extern UINT8 irobot_alphamap;
-extern UINT8 *irobot_combase;
 
 DRIVER_INIT( irobot );
 MACHINE_INIT( irobot );

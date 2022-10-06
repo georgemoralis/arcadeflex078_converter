@@ -16,11 +16,8 @@
 #define SERIAL_TYPE_ENCRYPT		3
 #define SERIAL_TYPE_ENCRYPT_XOR	4
 
-extern UINT8 leland_dac_control;
-extern void (*leland_update_master_bank)(void);
 
 
-extern UINT8 *alleymas_kludge_mem;
 
 
 
@@ -72,20 +69,12 @@ void leland_i186_sound_init(void);
 void leland_i86_optimize_address(offs_t offset);
 
 
-extern const struct Memory_ReadAddress leland_i86_readmem[];
-extern const struct Memory_WriteAddress leland_i86_writemem[];
 
-extern const struct IO_ReadPort leland_i86_readport[];
 
-extern const struct IO_WritePort redline_i86_writeport[];
-extern const struct IO_WritePort leland_i86_writeport[];
-extern const struct IO_WritePort ataxx_i86_writeport[];
 
 
 /*----------- defined in vidhrdw/leland.c -----------*/
 
-extern UINT8 *ataxx_qram;
-extern UINT8 leland_last_scanline_int;
 
 VIDEO_START( leland );
 VIDEO_START( ataxx );

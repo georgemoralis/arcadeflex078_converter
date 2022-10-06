@@ -21,7 +21,6 @@ package machine;
 public class tnzs
 {
 	
-	extern unsigned char *tnzs_workram;
 	
 	static int mcu_type;
 	static int tnzs_input_select;

@@ -46,7 +46,6 @@ public class wiping
 	PALETTE_INIT( wiping );
 	VIDEO_UPDATE( wiping );
 	
-	extern unsigned char *wiping_soundregs;
 	int wiping_sh_start(const struct MachineSound *msound);
 	void wiping_sh_stop(void);
 	

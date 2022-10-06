@@ -36,5 +36,3 @@ VIDEO_UPDATE( cyberbal );
 
 void cyberbal_scanline_update(int param);
 
-extern data16_t *cyberbal_paletteram_0;
-extern data16_t *cyberbal_paletteram_1;

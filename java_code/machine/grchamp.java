@@ -7,8 +7,6 @@ package machine;
 public class grchamp
 {
 	
-	extern UINT8 grchamp_videoreg0;
-	extern UINT8 grchamp_vreg1[0x10];
 	int grchamp_cpu_irq_enable[2];
 	
 	static int comm_latch;
@@ -45,7 +43,7 @@ public class grchamp
 		return comm_latch;
 	}
 	
-	extern 
+	
 	WRITE_HANDLER( grchamp_control0_w ){
 		/* *OUT0 - Page 42 */
 		/* bit 0 = trigger irq on cpu1 (itself) when vblank arrives */

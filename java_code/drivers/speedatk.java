@@ -85,9 +85,6 @@ public class speedatk
 	
 	static UINT8 mux_data;
 	
-	extern extern extern extern PALETTE_INIT( speedatk );
-	extern VIDEO_START( speedatk );
-	extern VIDEO_UPDATE( speedatk );
 	
 	/* This "key matrix" device maps some buttons with multiple bit activations,for        *
 	 * example pressing button A + button B it causes an output of button C.               *

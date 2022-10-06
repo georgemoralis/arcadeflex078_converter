@@ -19,7 +19,6 @@ public class tail2nos
 {
 	
 	
-	extern data16_t *tail2nos_bgvideoram;
 	
 	WRITE16_HANDLER( tail2nos_bgvideoram_w );
 	READ16_HANDLER( tail2nos_zoomdata_r );

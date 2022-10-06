@@ -16,11 +16,6 @@ public class mermaid
 {
 	
 	
-	extern unsigned char* mermaid_background_videoram;
-	extern unsigned char* mermaid_foreground_videoram;
-	extern unsigned char* mermaid_foreground_colorram;
-	extern unsigned char* mermaid_background_scrollram;
-	extern unsigned char* mermaid_foreground_scrollram;
 	
 	
 	PALETTE_INIT( mermaid );

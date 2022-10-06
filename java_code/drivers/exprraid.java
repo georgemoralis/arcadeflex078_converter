@@ -70,9 +70,7 @@ public class exprraid
 {
 	
 	
-	extern extern extern extern extern extern 
-	extern VIDEO_START( exprraid );
-	extern VIDEO_UPDATE( exprraid );
+	
 	
 	
 	/*****************************************************************************************/

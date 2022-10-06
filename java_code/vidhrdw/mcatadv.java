@@ -21,9 +21,6 @@ public class mcatadv
 {
 	
 	/* Defined in driver */
-	extern data16_t *mcatadv_videoram1, *mcatadv_videoram2;
-	extern data16_t *mcatadv_scroll, *mcatadv_scroll2;
-	extern data16_t *mcatadv_vidregs;
 	
 	static struct tilemap *mcatadv_tilemap1,  *mcatadv_tilemap2;
 	static data16_t *spriteram_old, *vidregs_old;

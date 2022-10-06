@@ -14,12 +14,8 @@ package drivers;
 public class solomon
 {
 	
-	extern UINT8 *solomon_videoram2;
-	extern UINT8 *solomon_colorram2;
 	
-	extern extern extern extern extern 
-	extern VIDEO_START( solomon );
-	extern VIDEO_UPDATE( solomon );
+	
 	
 	public static WriteHandlerPtr solomon_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

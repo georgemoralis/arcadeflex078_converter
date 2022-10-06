@@ -15,7 +15,6 @@ struct SAA1099_interface
 };
 
 #ifdef __cplusplus
-extern "C" {
 #endif
 
 int saa1099_sh_start(const struct MachineSound *msound);

@@ -42,10 +42,7 @@ package drivers;
 public class suna8
 {
 	
-	extern int suna8_text_dim; /* specifies format of text layer */
 	
-	extern data8_t suna8_rombank, suna8_spritebank, suna8_palettebank;
-	extern data8_t suna8_unknown;
 	
 	/* Functions defined in vidhrdw: */
 	

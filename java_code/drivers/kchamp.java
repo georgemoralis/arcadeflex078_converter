@@ -72,11 +72,7 @@ public class kchamp
 	
 	
 	/* from vidhrdw */
-	extern extern extern 
-	extern PALETTE_INIT( kchamp );
-	extern VIDEO_START( kchamp );
-	extern VIDEO_UPDATE( kchamp );
-	extern VIDEO_UPDATE( kchampvs );
+	
 	
 	
 	static int nmi_enable = 0;

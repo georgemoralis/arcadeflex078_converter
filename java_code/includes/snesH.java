@@ -327,26 +327,13 @@
 #define DSP_FIR_C6		0x6F
 #define DSP_FIR_C7		0x7F
 
-extern MACHINE_INIT( snes );
-extern MACHINE_STOP( snes );
 
-extern extern extern extern extern extern extern extern extern extern 
+
 #ifdef MESS
-extern DEVICE_LOAD(snes_cart);
 #endif
 
-extern INTERRUPT_GEN(snes_scanline_interrupt);
-extern void snes_gdma( UINT8 channels );
-extern void snes_hdma_init(void);
-extern void snes_hdma(void);
-extern void snes_refresh_scanline( UINT16 curline );
 
 /* (PPU) Video related */
-extern UINT8  *snes_vram;			/* Video RAM (Should be 16-bit, but it's easier this way) */
-extern UINT16 *snes_cgram;			/* Colour RAM */
-extern UINT16 *snes_oam;			/* Object Attribute Memory */
-extern UINT8  *snes_ram;			/* Main memory */
-extern VIDEO_UPDATE( snes );
 struct SNES_PPU_STRUCT
 {
 	struct
@@ -404,15 +391,8 @@ struct SNES_PPU_STRUCT
 	UINT8 update_offsets;
 	UINT8 mode;
 };
-extern struct SNES_PPU_STRUCT snes_ppu;
 
 /* (APU) Sound related */
-extern UINT8 *spc_ram;			/* SPC main memory */
-extern UINT8 spc_port_in[4];	/* SPC input ports */
-extern UINT8 spc_port_out[4];	/* SPC output ports */
-extern UINT8 spc_usefakeapu;	/* Fake the APU behaviour */
-extern extern extern extern extern int snes_sh_start( const struct MachineSound *driver );
-extern void snes_sh_update( int param, INT16 **buffer, int length );
 /* Fake APU functions for when sound is disabled */
-extern extern 
+
 #endif /* _SNES_H_ */

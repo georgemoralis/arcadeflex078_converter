@@ -19,7 +19,6 @@ public class commonH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	
@@ -415,10 +414,6 @@ public class commonH
 	void coin_lockout_global_w(int on);  /* Locks out all coin inputs */
 	
 	/* generic NVRAM handler */
-	extern size_t generic_nvram_size;
-	extern data8_t *generic_nvram;
-	extern void nvram_handler_generic_0fill(mame_file *file, int read_or_write);
-	extern void nvram_handler_generic_1fill(mame_file *file, int read_or_write);
 	
 	/* bitmap allocation */
 	struct mame_bitmap *bitmap_alloc(int width,int height);
@@ -430,8 +425,7 @@ public class commonH
 	void end_resource_tracking(void);
 	INLINE int get_resource_tag(void)
 	{
-		extern int resource_tracking_tag;
-		return resource_tracking_tag;
+			return resource_tracking_tag;
 	}
 	
 	/* automatically-freeing memory */

@@ -49,9 +49,6 @@ public class nes_apuH
 	};
 	
 	
-	extern int NESPSG_sh_start(const struct MachineSound *);
-	extern void NESPSG_sh_stop(void);
-	extern void NESPSG_sh_update(void);
 	
 	#endif
 }

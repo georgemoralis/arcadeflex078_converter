@@ -21,7 +21,6 @@ public class ladyfrog
 	UINT8 *ladyfrog_scrlram;
 	
 	UINT8 *ladyfrog_spriteram;
-	extern UINT8 *ladyfrog_sharedram;
 	
 	WRITE_HANDLER(ladyfrog_spriteram_w)
 	{

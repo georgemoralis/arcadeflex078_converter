@@ -12,7 +12,6 @@ public class taito_f3
 	static data32_t	es5510_gpr[0xc0];
 	static data32_t	es5510_gpr_latch;
 	static void *timer_68681=NULL;
-	extern data32_t *f3_shared_ram;
 	static int timer_mode,m68681_imr;
 	
 	static int es_tmp=1;

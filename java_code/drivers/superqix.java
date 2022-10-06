@@ -24,9 +24,7 @@ public class superqix
 {
 	
 	
-	extern extern extern extern extern extern extern extern 
-	extern VIDEO_START( superqix );
-	extern VIDEO_UPDATE( superqix );
+	
 	
 	
 	public static Memory_ReadAddress readmem[]={

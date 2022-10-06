@@ -100,16 +100,7 @@ public class g65816cmH
 		int  (*execute)(int cycles);
 	} g65816i_cpu_struct;
 	
-	extern g65816i_cpu_struct g65816i_cpu;
-	extern int g65816_ICount;
-	extern uint g65816i_source;
-	extern uint g65816i_destination;
 	
-	extern void (**g65816i_opcodes[])(void);
-	extern uint (*g65816i_get_reg[])(int regnum);
-	extern void (*g65816i_set_reg[])(int regnum, uint val);
-	extern void (*g65816i_set_line[])(int line, int state);
-	extern int (*g65816i_execute[])(int cycles);
 	
 	#define REGISTER_A		g65816i_cpu.a		/* Accumulator */
 	#define REGISTER_B		g65816i_cpu.b		/* Accumulator hi byte */

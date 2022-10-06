@@ -11,9 +11,6 @@ public class bigstrkb
 	
 	static struct tilemap *bsb_tilemap, *bsb_tilemap2, *bsb_tilemap3;
 	
-	extern data16_t *bsb_videoram, *bsb_videoram2, *bsb_videoram3;
-	extern data16_t *bsb_vidreg1, *bsb_vidreg2;
-	extern data16_t *bigstrkb_spriteram;
 	
 	/* Sprites */
 	

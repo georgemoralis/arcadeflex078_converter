@@ -52,10 +52,7 @@ public class mrjong
 {
 	
 	
-	extern extern extern 
-	extern PALETTE_INIT( mrjong );
-	extern VIDEO_START( mrjong );
-	extern VIDEO_UPDATE( mrjong );
+	
 	
 	
 	public static Memory_ReadAddress readmem[]={

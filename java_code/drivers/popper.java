@@ -87,8 +87,6 @@ package drivers;
 public class popper
 {
 	
-	extern data8_t *popper_videoram, *popper_attribram, *popper_ol_videoram, *popper_ol_attribram, *popper_spriteram;
-	extern size_t popper_spriteram_size;
 	
 	
 	PALETTE_INIT( popper );

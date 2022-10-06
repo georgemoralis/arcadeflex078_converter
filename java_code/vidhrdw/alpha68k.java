@@ -16,7 +16,6 @@ public class alpha68k
 	static struct tilemap *fix_tilemap;
 	static int bank_base,flipscreen;
 	
-	extern int microcontroller_id;
 	
 	/******************************************************************************/
 	

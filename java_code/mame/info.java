@@ -410,8 +410,7 @@ public class info
 	{
 		const struct RomModule *region, *rom, *chunk;
 		const struct RomModule *pregion, *prom, *fprom=NULL;
-	//	extern struct GameDriver driver_0;
-	
+	//	
 		if (!game->rom)
 			return;
 	
@@ -873,8 +872,7 @@ public class info
 	/* Print the MAME info record for a game */
 	static void print_game_info(int OUTPUT_XML, FILE* out, const struct GameDriver* game)
 	{
-		extern struct GameDriver driver_0;
-	
+		
 		fprintf(out, SELECT(XML_TOP L1B, "\t<" XML_TOP));
 	
 		fprintf(out, SELECT(L1P "name %s" L1N, " name=\"%s\""), game->name );
@@ -962,8 +960,7 @@ public class info
 	/* Import the driver object and print it as a resource */
 	#define PRINT_RESOURCE(format, s) \
 		{ \
-			extern struct GameDriver driver_##s; \
-			print_resource_info(format, out, &driver_##s); \
+					print_resource_info(format, out, &driver_##s); \
 		}
 	
 	#endif

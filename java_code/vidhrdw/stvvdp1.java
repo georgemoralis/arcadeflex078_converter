@@ -22,7 +22,6 @@ public class stvvdp1
 	
 	data32_t *stv_vdp1_vram;
 	data32_t *stv_vdp1_regs;
-	extern data32_t *stv_scu;
 	char shienryu_sprite_kludge;
 	/*
 	Registers:
@@ -212,7 +211,6 @@ public class stvvdp1
 	and if we skip the drawing the content could be incorrect when it reads it, although i have no idea
 	why they would want to */
 	
-	extern data32_t* stv_vdp2_cram;
 	
 	INLINE void drawpixel(UINT16 *dest, int patterndata, int offsetcnt)
 	{

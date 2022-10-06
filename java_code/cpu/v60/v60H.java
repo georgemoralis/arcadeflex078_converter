@@ -74,9 +74,7 @@ enum {
 	V60_REGMAX
 };
 
-extern int v60_ICount;
 
-extern const char *v60_reg_names[];
 void v60_dasm_init(void);
 
 #if HAS_V60

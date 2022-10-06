@@ -15,7 +15,6 @@ package vidhrdw;
 public class sidearms
 {
 	
-	extern int sidearms_gameid;
 	
 	UINT8 *sidearms_bg_scrollx;
 	UINT8 *sidearms_bg_scrolly;

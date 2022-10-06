@@ -2,26 +2,12 @@
 #define E132XS_H
 
 /* Functions */
-extern void e132xs_init(void);
-extern void e132xs_reset(void *param);
-extern void e132xs_exit(void);
-extern int e132xs_execute(int cycles);
-extern unsigned e132xs_get_context(void *regs);
-extern void e132xs_set_context(void *regs);
-extern unsigned e132xs_get_reg(int regnum);
-extern void e132xs_set_reg(int regnum, unsigned val);
-extern void e132xs_set_irq_line(int irqline, int state);
-extern void e132xs_set_irq_callback(int (*callback)(int irqline));
-extern const char *e132xs_info(void *context, int regnum);
-extern unsigned e132xs_dasm(char *buffer, unsigned pc);
 
 #ifdef MAME_DEBUG
-extern unsigned dasm_e132xs(char *buffer, unsigned pc);
 #endif
 
 
 /* Variables */
-extern int e132xs_ICount;
 
 /* read byte */
 #define READ_B(addr) (cpu_readmem32bedw(addr))

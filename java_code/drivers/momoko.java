@@ -25,8 +25,6 @@ package drivers;
 public class momoko
 {
 	
-	extern data8_t *momoko_bg_scrollx;
-	extern data8_t *momoko_bg_scrolly;
 	
 	VIDEO_UPDATE( momoko );
 	

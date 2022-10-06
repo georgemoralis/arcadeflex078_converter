@@ -21,7 +21,6 @@ public class baraduke
 {
 	
 	static unsigned char *sharedram;
-	extern unsigned char *baraduke_textram, *spriteram, *baraduke_videoram;
 	
 	/* from vidhrdw/baraduke.c */
 	VIDEO_START( baraduke );

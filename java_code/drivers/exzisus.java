@@ -48,12 +48,6 @@ public class exzisus
 	static int exzisus_cpua_bank = 0;
 	static int exzisus_cpub_bank = 0;
 	
-	extern UINT8 *exzisus_videoram0;
-	extern UINT8 *exzisus_videoram1;
-	extern UINT8 *exzisus_objectram0;
-	extern UINT8 *exzisus_objectram1;
-	extern size_t  exzisus_objectram_size0;
-	extern size_t  exzisus_objectram_size1;
 	
 	
 	VIDEO_UPDATE( exzisus );

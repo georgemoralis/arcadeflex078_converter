@@ -148,8 +148,6 @@ public class slapshot
 	
 	static data16_t *color_ram;
 	
-	extern data16_t *taito_sprite_ext;
-	extern size_t taito_spriteext_size;
 	
 	
 	/******************************************************

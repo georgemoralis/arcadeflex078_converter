@@ -19,11 +19,8 @@ package drivers;
 public class videopin
 {
 	
-	extern UINT8* videopin_video_ram;
 	
-	extern extern 
-	extern VIDEO_START( videopin );
-	extern VIDEO_UPDATE( videopin );
+	
 	
 	static double time_pushed;
 	static double time_released;

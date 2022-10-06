@@ -79,7 +79,6 @@ package drivers;
 public class sengokmj
 {
 	
-	extern data8_t *bg_vram,*md_vram,*tx_vram,*fg_vram;
 	static UINT8 sengokumj_mux_data;
 	
 	VIDEO_START( sengokmj );

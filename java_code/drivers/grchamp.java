@@ -51,20 +51,11 @@ public class grchamp
 {
 	
 	/* from vidhrdw */
-	extern PALETTE_INIT( grchamp );
-	extern VIDEO_START( grchamp );
-	extern VIDEO_UPDATE( grchamp );
-	extern extern UINT8 *grchamp_videoram;
-	extern UINT8 *grchamp_radar;
-	extern UINT8 grchamp_player_ypos;
 	
-	extern extern extern extern extern 
+	
 	/* from machine */
-	extern int grchamp_cpu_irq_enable[2];
-	extern DRIVER_INIT( grchamp );
-	extern extern extern 
-	extern extern extern extern 
-	extern int grchamp_collision;
+	
+	
 	
 	/***************************************************************************/
 	

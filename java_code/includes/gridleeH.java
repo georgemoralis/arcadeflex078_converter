@@ -24,7 +24,6 @@ public class gridleeH
 	/*----------- defined in vidhrdw/gridlee.c -----------*/
 	
 	/* video driver data & functions */
-	extern UINT8 gridlee_cocktail_flip;
 	
 	PALETTE_INIT( gridlee );
 	VIDEO_START( gridlee );

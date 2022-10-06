@@ -62,7 +62,6 @@ public class pic16c5xH
 	 *	Public Data
 	 */
 	
-	extern int pic16C5x_icount;						/* T-state count */
 	
 	
 	/****************************************************************************
@@ -155,21 +154,8 @@ public class pic16c5xH
 		  (PIC16C54_DATA_OFFSET + 0x00), (PIC16C54_DATA_OFFSET + 0x1f), MWA_RAM },	\
 		{ (PIC16C54_PGM_OFFSET + 0x000), (PIC16C54_PGM_OFFSET + ((0x1ff*2)+1)), MWA_ROM
 	
-	extern void pic16C54_init(void);
-	extern void pic16C54_reset(void *param);
-	extern void pic16C54_exit(void);
-	extern int	pic16C54_execute(int cycles);
-	extern unsigned pic16C54_get_context(void *dst);
-	extern void pic16C54_set_context(void *src);
-	extern unsigned pic16C54_get_reg(int regnum);
-	extern void pic16C54_set_reg(int regnum, unsigned val);
-	extern void pic16C54_set_irq_line(int irqline, int state);
-	extern void pic16C54_set_irq_callback(int (*callback)(int irqline));
-	extern const char *pic16C54_info(void *context, int regnum);
-	extern unsigned pic16C54_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 	#endif
 	
 	#endif
@@ -193,21 +179,8 @@ public class pic16c5xH
 		  (PIC16C55_DATA_OFFSET + 0x00), (PIC16C55_DATA_OFFSET + 0x1f), MWA_RAM },	\
 		{ (PIC16C55_PGM_OFFSET + 0x000), (PIC16C55_PGM_OFFSET + ((0x1ff*2)+1)), MWA_ROM
 	
-	extern void pic16C55_init(void);
-	extern void pic16C55_reset(void *param);
-	extern void pic16C55_exit(void);
-	extern int	pic16C55_execute(int cycles);
-	extern unsigned pic16C55_get_context(void *dst);
-	extern void pic16C55_set_context(void *src);
-	extern unsigned pic16C55_get_reg(int regnum);
-	extern void pic16C55_set_reg(int regnum, unsigned val);
-	extern void pic16C55_set_irq_line(int irqline, int state);
-	extern void pic16C55_set_irq_callback(int (*callback)(int irqline));
-	extern const char *pic16C55_info(void *context, int regnum);
-	extern unsigned pic16C55_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 	#endif
 	
 	#endif
@@ -231,21 +204,8 @@ public class pic16c5xH
 		  (PIC16C56_DATA_OFFSET + 0x00), (PIC16C56_DATA_OFFSET + 0x1f), MWA_RAM },	\
 		{ (PIC16C56_PGM_OFFSET + 0x000), (PIC16C56_PGM_OFFSET + ((0x3ff*2)+1)), MWA_ROM
 	
-	extern void pic16C56_init(void);
-	extern void pic16C56_reset(void *param);
-	extern void pic16C56_exit(void);
-	extern int	pic16C56_execute(int cycles);
-	extern unsigned pic16C56_get_context(void *dst);
-	extern void pic16C56_set_context(void *src);
-	extern unsigned pic16C56_get_reg(int regnum);
-	extern void pic16C56_set_reg(int regnum, unsigned val);
-	extern void pic16C56_set_irq_line(int irqline, int state);
-	extern void pic16C56_set_irq_callback(int (*callback)(int irqline));
-	extern const char *pic16C56_info(void *context, int regnum);
-	extern unsigned pic16C56_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 	#endif
 	
 	#endif
@@ -275,21 +235,8 @@ public class pic16c5xH
 		{ (PIC16C57_DATA_OFFSET + 0x70), (PIC16C57_DATA_OFFSET + 0x7f), MWA_RAM },	\
 		{ (PIC16C57_PGM_OFFSET + 0x000), (PIC16C57_PGM_OFFSET + ((0x7ff*2)+1)), MWA_ROM
 	
-	extern void pic16C57_init(void);
-	extern void pic16C57_reset(void *param);
-	extern void pic16C57_exit(void);
-	extern int	pic16C57_execute(int cycles);
-	extern unsigned pic16C57_get_context(void *dst);
-	extern void pic16C57_set_context(void *src);
-	extern unsigned pic16C57_get_reg(int regnum);
-	extern void pic16C57_set_reg(int regnum, unsigned val);
-	extern void pic16C57_set_irq_line(int irqline, int state);
-	extern void pic16C57_set_irq_callback(int (*callback)(int irqline));
-	extern const char *pic16C57_info(void *context, int regnum);
-	extern unsigned pic16C57_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 	#endif
 	
 	#endif
@@ -319,21 +266,8 @@ public class pic16c5xH
 		{ (PIC16C58_DATA_OFFSET + 0x70), (PIC16C58_DATA_OFFSET + 0x7f), MWA_RAM },	\
 		{ (PIC16C58_PGM_OFFSET + 0x000), (PIC16C58_PGM_OFFSET + ((0x7ff*2)+1)), MWA_ROM
 	
-	extern void pic16C58_init(void);
-	extern void pic16C58_reset(void *param);
-	extern void pic16C58_exit(void);
-	extern int	pic16C58_execute(int cycles);
-	extern unsigned pic16C58_get_context(void *dst);
-	extern void pic16C58_set_context(void *src);
-	extern unsigned pic16C58_get_reg(int regnum);
-	extern void pic16C58_set_reg(int regnum, unsigned val);
-	extern void pic16C58_set_irq_line(int irqline, int state);
-	extern void pic16C58_set_irq_callback(int (*callback)(int irqline));
-	extern const char *pic16C58_info(void *context, int regnum);
-	extern unsigned pic16C58_dasm(char *buffer, unsigned pc);
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 	#endif
 	
 	#endif

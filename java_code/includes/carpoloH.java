@@ -24,8 +24,6 @@ void carpolo_generate_car_border_interrupt(int car, int horizontal_border);
 
 /* defined in vidhrdw/carpolo.c */
 
-extern data8_t *carpolo_alpharam;
-extern data8_t *carpolo_spriteram;
 
 PALETTE_INIT( carpolo );
 VIDEO_START( carpolo );

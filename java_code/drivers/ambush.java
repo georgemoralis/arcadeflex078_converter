@@ -43,8 +43,6 @@ public class ambush
 {
 	
 	
-	extern unsigned char *ambush_scrollram;
-	extern unsigned char *ambush_colorbank;
 	
 	PALETTE_INIT( ambush );
 	VIDEO_UPDATE( ambush );

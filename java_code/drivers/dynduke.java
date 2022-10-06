@@ -34,7 +34,6 @@ public class dynduke
 	VIDEO_UPDATE( dynduke );
 	
 	static unsigned char *dynduke_shared_ram;
-	extern unsigned char *dynduke_back_data,*dynduke_fore_data,*dynduke_scroll_ram,*dynduke_control_ram;
 	
 	/***************************************************************************/
 	

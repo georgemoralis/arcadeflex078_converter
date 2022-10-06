@@ -89,7 +89,6 @@ public class junofrst
 	
 	void konami1_decode(void);
 	
-	extern unsigned char *tutankhm_scrollx;
 	
 	static int i8039_status;
 	

@@ -63,8 +63,6 @@ package drivers;
 public class sprcros2
 {
 	
-	extern data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
-	extern size_t sprcros2_spriteram_size;
 	
 	
 	PALETTE_INIT( sprcros2 );

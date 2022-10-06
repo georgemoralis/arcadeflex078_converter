@@ -157,7 +157,6 @@ public class nycaptor
 	VIDEO_UPDATE( nycaptor );
 	
 	
-	extern UINT8 *nycaptor_scrlram;
 	UINT8 *nycaptor_sharedram;
 	static int generic_control_reg = 0;
 	static int sound_nmi_enable=0,pending_nmi=0;

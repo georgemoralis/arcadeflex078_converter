@@ -59,7 +59,6 @@ public class karnov
 	
 	static data16_t i8751_return,i8751_needs_ack,i8751_coin_pending,i8751_command_queue;
 	static data16_t *karnov_ram;
-	extern data16_t karnov_scroll[2], *karnov_pf_data;
 	static int microcontroller_id,coin_mask;
 	
 	/******************************************************************************/

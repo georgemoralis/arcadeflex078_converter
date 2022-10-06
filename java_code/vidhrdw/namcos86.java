@@ -19,7 +19,6 @@ public class namcos86
 	#define GFX_SPRITES	2
 	
 	unsigned char *rthunder_videoram1,*rthunder_videoram2;
-	extern unsigned char *spriteram;
 	
 	static int tilebank;
 	static int xscroll[4], yscroll[4];	/* scroll + priority */

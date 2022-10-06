@@ -15,7 +15,6 @@ package drivers;
 public class rockrage
 {
 	
-	extern int rockrage_irq_enable;
 	
 	/* from vidhrdw */
 	VIDEO_START( rockrage );

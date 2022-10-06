@@ -81,19 +81,16 @@ public class galaga
 	
 	
 	
-	extern unsigned char *galaga_sharedram;
 	INTERRUPT_GEN( galaga_interrupt_1 );
 	INTERRUPT_GEN( galaga_interrupt_2 );
 	INTERRUPT_GEN( galaga_interrupt_3 );
 	MACHINE_INIT( galaga );
 	
 	
-	extern unsigned char *galaga_starcontrol;
 	VIDEO_START( galaga );
 	VIDEO_UPDATE( galaga );
 	PALETTE_INIT( galaga );
 	
-	extern unsigned char *pengo_soundregs;
 	
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -748,8 +748,7 @@ public class dsp32
 	unsigned dsp32c_dasm(char *buffer, unsigned pc)
 	{
 	#ifdef MAME_DEBUG
-		extern unsigned dasm_dsp32(char *, unsigned);
-		return dasm_dsp32(buffer, pc);
+			return dasm_dsp32(buffer, pc);
 	#else
 		strcpy(buffer, "???");
 		return 4;

@@ -19,7 +19,6 @@ public class cpuintrfH
 {
 	
 	#ifdef __cplusplus
-	extern "C" {
 	#endif
 	
 	
@@ -798,32 +797,28 @@ public class cpuintrfH
 	/* return a pointer to the interface struct for a given CPU type */
 	INLINE const struct cpu_interface *cputype_get_interface(int cputype)
 	{
-		extern const struct cpu_interface cpuintrf[];
-		return &cpuintrf[cputype];
+			return &cpuintrf[cputype];
 	}
 	
 	
 	/* return a the index of the active CPU */
 	INLINE int cpu_getactivecpu(void)
 	{
-		extern int activecpu;
-		return activecpu;
+			return activecpu;
 	}
 	
 	
 	/* return a the index of the executing CPU */
 	INLINE int cpu_getexecutingcpu(void)
 	{
-		extern int executingcpu;
-		return executingcpu;
+			return executingcpu;
 	}
 	
 	
 	/* return a the total number of registered CPUs */
 	INLINE int cpu_gettotalcpu(void)
 	{
-		extern int totalcpu;
-		return totalcpu;
+			return totalcpu;
 	}
 	
 	

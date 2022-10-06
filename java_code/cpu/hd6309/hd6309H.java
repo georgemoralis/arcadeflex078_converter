@@ -20,22 +20,9 @@ public class hd6309H
 	#define HD6309_FIRQ_LINE 1	 /* FIRQ line number */
 	
 	/* PUBLIC GLOBALS */
-	extern int	hd6309_ICount;
 	
 	
 	/* PUBLIC FUNCTIONS */
-	extern void hd6309_init(void);
-	extern void hd6309_reset(void *param);
-	extern void hd6309_exit(void);
-	extern int hd6309_execute(int cycles);	/* NS 970908 */
-	extern unsigned hd6309_get_context(void *dst);
-	extern void hd6309_set_context(void *src);
-	extern unsigned hd6309_get_reg(int regnum);
-	extern void hd6309_set_reg(int regnum, unsigned val);
-	extern void hd6309_set_irq_line(int irqline, int state);
-	extern void hd6309_set_irq_callback(int (*callback)(int irqline));
-	extern const char *hd6309_info(void *context,int regnum);
-	extern unsigned hd6309_dasm(char *buffer, unsigned pc);
 	
 	/****************************************************************************/
 	/* Read a byte from given memory location									*/
@@ -70,7 +57,6 @@ public class hd6309H
 	#endif
 	
 	#ifdef MAME_DEBUG
-	extern unsigned Dasm6309 (char *buffer, unsigned pc);
 	#endif
 	
 	#endif /* _HD6309_H */

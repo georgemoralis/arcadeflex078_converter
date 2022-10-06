@@ -42,7 +42,6 @@ public class metlclsh
 	
 	/* Variables defined in vidhrdw: */
 	
-	extern data8_t *metlclsh_bgram, *metlclsh_fgram, *metlclsh_scrollx;
 	
 	/* Functions defined in vidhrdw: */
 	

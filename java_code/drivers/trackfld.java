@@ -27,21 +27,12 @@ public class trackfld
 {
 	
 	
-	extern void konami1_decode(void);
 	
 	
-	extern UINT8 *trackfld_scroll;
-	extern UINT8 *trackfld_scroll2;
 	
-	extern extern extern 
-	extern PALETTE_INIT( trackfld );
-	extern VIDEO_START( trackfld );
-	extern VIDEO_UPDATE( trackfld );
 	
-	extern extern extern extern extern extern 
-	extern struct SN76496interface konami_sn76496_interface;
-	extern struct DACinterface konami_dac_interface;
-	extern struct ADPCMinterface hyprolyb_adpcm_interface;
+	
+	
 	
 	
 	/* handle fake button for speed cheat */

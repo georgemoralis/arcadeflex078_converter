@@ -8,7 +8,6 @@ public class bladestl
 {
 	
 	static int layer_colorbase[2];
-	extern int bladestl_spritebank;
 	
 	PALETTE_INIT( bladestl )
 	{
