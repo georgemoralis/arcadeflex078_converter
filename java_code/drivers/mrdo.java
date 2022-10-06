@@ -45,29 +45,33 @@ public class mrdo
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },	/* video and color RAM */
-		{ 0x9803, 0x9803, mrdo_SECRE_r },
-		{ 0xa000, 0xa000, input_port_0_r },	/* IN0 */
-		{ 0xa001, 0xa001, input_port_1_r },	/* IN1 */
-		{ 0xa002, 0xa002, input_port_2_r },	/* DSW1 */
-		{ 0xa003, 0xa003, input_port_3_r },	/* DSW2 */
-		{ 0xe000, 0xefff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x9803, 0x9803, mrdo_SECRE_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0xa001, 0xa001, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xa002, 0xa002, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0xa003, 0xa003, input_port_3_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, mrdo_bgvideoram_w, &mrdo_bgvideoram },
-		{ 0x8800, 0x8fff, mrdo_fgvideoram_w, &mrdo_fgvideoram },
-		{ 0x9000, 0x90ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x9800, 0x9800, mrdo_flipscreen_w },	/* screen flip + playfield priority */
-		{ 0x9801, 0x9801, SN76496_0_w },
-		{ 0x9802, 0x9802, SN76496_1_w },
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xf7ff, mrdo_scrollx_w },
-		{ 0xf800, 0xffff, mrdo_scrolly_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, mrdo_bgvideoram_w, &mrdo_bgvideoram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, mrdo_fgvideoram_w, &mrdo_fgvideoram ),
+		new Memory_WriteAddress( 0x9000, 0x90ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9800, 0x9800, mrdo_flipscreen_w ),	/* screen flip + playfield priority */
+		new Memory_WriteAddress( 0x9801, 0x9801, SN76496_0_w ),
+		new Memory_WriteAddress( 0x9802, 0x9802, SN76496_1_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, mrdo_scrollx_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, mrdo_scrolly_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( mrdo )

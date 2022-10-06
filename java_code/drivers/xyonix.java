@@ -153,30 +153,36 @@ public class xyonix
 	
 	/* Mem / Port Maps ***********************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xffff, MRA_RAM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, xyonix_vidram_w, &xyonix_vidram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort port_readmem[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x20, 0x21, IORP_NOP ),	/* SN76496 ready signal */
+		new IO_ReadPort( 0xe0, 0xe0, xyonix_io_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xffff, xyonix_vidram_w, &xyonix_vidram },
-	MEMORY_END
-	
-	static PORT_READ_START( port_readmem )
-		{ 0x20, 0x21, IORP_NOP },	/* SN76496 ready signal */
-		{ 0xe0, 0xe0, xyonix_io_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( port_writemem )
-		{ 0x20, 0x20, SN76496_0_w },
-		{ 0x21, 0x21, SN76496_1_w },
-		{ 0xe0, 0xe0, xyonix_io_w },
-		{ 0x40, 0x40, IOWP_NOP },	// NMI ack?
-		{ 0x50, 0x50, xyonix_irqack_w },
-		{ 0x60, 0x61, IOWP_NOP },	// crtc6845
+	public static IO_WritePort port_writemem[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x20, 0x20, SN76496_0_w ),
+		new IO_WritePort( 0x21, 0x21, SN76496_1_w ),
+		new IO_WritePort( 0xe0, 0xe0, xyonix_io_w ),
+		new IO_WritePort( 0x40, 0x40, IOWP_NOP ),	// NMI ack?
+		new IO_WritePort( 0x50, 0x50, xyonix_irqack_w ),
+		new IO_WritePort( 0x60, 0x61, IOWP_NOP ),	// crtc6845
 	MEMORY_END
 	
 	/* Inputs Ports **************************************************************/
@@ -227,7 +233,7 @@ public class xyonix
 	/* GFX Decode ****************************************************************/
 	
 	static struct GfxLayout charlayout =
-	{
+	new IO_WritePort(
 		4,8,
 		RGN_FRAC(1,2),
 		4,
@@ -235,22 +241,22 @@ public class xyonix
 		{ 3, 2, 1, 0 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		4*16
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout, 0, 16 },
 		{ -1 }
-	};
+	);
 	
 	/* MACHINE driver *************************************************************/
 	
 	static struct SN76496interface sn76496_interface =
-	{
+	new IO_WritePort(
 		2,						/* 2 chips */
 		{ 16000000/4, 16000000/4 },	/* 4 MHz??? */
 		{ 100, 100 }
-	};
+	);
 	
 	
 	static MACHINE_DRIVER_START( xyonix )

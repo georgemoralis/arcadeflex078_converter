@@ -16,67 +16,79 @@ public class berzerk
 	
 	
 	
-	static MEMORY_READ_START( berzerk_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },
-		{ 0x0800, 0x09ff, MRA_RAM },
-		{ 0x1000, 0x37ff, MRA_ROM },
-		{ 0x4000, 0x87ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress berzerk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0800, 0x09ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x37ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( berzerk_writemem )
-		{ 0x0000, 0x07ff, MWA_ROM },
-		{ 0x0800, 0x09ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x1000, 0x37ff, MWA_ROM },
-		{ 0x4000, 0x5fff, berzerk_videoram_w, &videoram },
-		{ 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram },
-		{ 0x8000, 0x87ff, berzerk_colorram_w, &colorram },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( frenzy_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x87ff, MRA_RAM },
-		{ 0xc000, 0xcfff, MRA_ROM },
-		{ 0xf800, 0xf9ff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( frenzy_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x5fff, berzerk_videoram_w, &videoram },
-		{ 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram },
-		{ 0x8000, 0x87ff, berzerk_colorram_w, &colorram },
-		{ 0xc000, 0xcfff, MWA_ROM },
-		{ 0xf800, 0xf9ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress berzerk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0800, 0x09ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x1000, 0x37ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, &colorram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x44, 0x44, berzerk_voiceboard_r },
-		{ 0x48, 0x48, input_port_0_r },
-		{ 0x49, 0x49, input_port_1_r },
-		{ 0x4a, 0x4a, input_port_2_r },
-		{ 0x4c, 0x4c, berzerk_nmi_enable_r },
-		{ 0x4d, 0x4d, berzerk_nmi_disable_r },
-		{ 0x4e, 0x4e, berzerk_port_4e_r },
-		{ 0x60, 0x60, input_port_4_r },
-		{ 0x61, 0x61, input_port_5_r },
-		{ 0x62, 0x62, input_port_6_r },
-		{ 0x63, 0x63, input_port_7_r },
-		{ 0x64, 0x64, input_port_8_r },
-		{ 0x65, 0x65, input_port_9_r },
-		{ 0x66, 0x66, berzerk_led_off_r },
-		{ 0x67, 0x67, berzerk_led_on_r },
-	PORT_END
+	public static Memory_ReadAddress frenzy_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xf9ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x40, 0x46, berzerk_sound_control_a_w }, /* First sound board */
-		{ 0x47, 0x47, IOWP_NOP }, /* not used sound stuff */
-		{ 0x4b, 0x4b, berzerk_magicram_control_w },
-		{ 0x4c, 0x4c, berzerk_nmi_enable_w },
-		{ 0x4d, 0x4d, berzerk_nmi_disable_w },
-		{ 0x4f, 0x4f, berzerk_irq_enable_w },
-		{ 0x50, 0x57, IOWP_NOP }, /* Second sound board but not used */
-	PORT_END
+	public static Memory_WriteAddress frenzy_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xf9ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x44, 0x44, berzerk_voiceboard_r ),
+		new IO_ReadPort( 0x48, 0x48, input_port_0_r ),
+		new IO_ReadPort( 0x49, 0x49, input_port_1_r ),
+		new IO_ReadPort( 0x4a, 0x4a, input_port_2_r ),
+		new IO_ReadPort( 0x4c, 0x4c, berzerk_nmi_enable_r ),
+		new IO_ReadPort( 0x4d, 0x4d, berzerk_nmi_disable_r ),
+		new IO_ReadPort( 0x4e, 0x4e, berzerk_port_4e_r ),
+		new IO_ReadPort( 0x60, 0x60, input_port_4_r ),
+		new IO_ReadPort( 0x61, 0x61, input_port_5_r ),
+		new IO_ReadPort( 0x62, 0x62, input_port_6_r ),
+		new IO_ReadPort( 0x63, 0x63, input_port_7_r ),
+		new IO_ReadPort( 0x64, 0x64, input_port_8_r ),
+		new IO_ReadPort( 0x65, 0x65, input_port_9_r ),
+		new IO_ReadPort( 0x66, 0x66, berzerk_led_off_r ),
+		new IO_ReadPort( 0x67, 0x67, berzerk_led_on_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x40, 0x46, berzerk_sound_control_a_w ), /* First sound board */
+		new IO_WritePort( 0x47, 0x47, IOWP_NOP ), /* not used sound stuff */
+		new IO_WritePort( 0x4b, 0x4b, berzerk_magicram_control_w ),
+		new IO_WritePort( 0x4c, 0x4c, berzerk_nmi_enable_w ),
+		new IO_WritePort( 0x4d, 0x4d, berzerk_nmi_disable_w ),
+		new IO_WritePort( 0x4f, 0x4f, berzerk_irq_enable_w ),
+		new IO_WritePort( 0x50, 0x57, IOWP_NOP ), /* Second sound board but not used */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	#define COINAGE(CHUTE) \

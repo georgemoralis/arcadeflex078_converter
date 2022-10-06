@@ -40,40 +40,44 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_BANK3 },
-		{ 0x1f80, 0x1f80, input_port_4_r },
-		{ 0x1f81, 0x1f81, simpsons_eeprom_r },
-		{ 0x1f90, 0x1f90, input_port_0_r },
-		{ 0x1f91, 0x1f91, input_port_1_r },
-		{ 0x1f92, 0x1f92, input_port_2_r },
-		{ 0x1f93, 0x1f93, input_port_3_r },
-		{ 0x1fc4, 0x1fc4, simpsons_sound_interrupt_r },
-		{ 0x1fc6, 0x1fc7, simpsons_sound_r },	/* K053260 */
-		{ 0x1fc8, 0x1fc9, K053246_r },
-		{ 0x1fca, 0x1fca, watchdog_reset_r },
-		{ 0x2000, 0x3fff, MRA_BANK4 },
-		{ 0x0000, 0x3fff, K052109_r },
-		{ 0x4856, 0x4856, simpsons_speedup2_r },
-		{ 0x4942, 0x4942, simpsons_speedup1_r },
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_BANK3 ),
+		new Memory_ReadAddress( 0x1f80, 0x1f80, input_port_4_r ),
+		new Memory_ReadAddress( 0x1f81, 0x1f81, simpsons_eeprom_r ),
+		new Memory_ReadAddress( 0x1f90, 0x1f90, input_port_0_r ),
+		new Memory_ReadAddress( 0x1f91, 0x1f91, input_port_1_r ),
+		new Memory_ReadAddress( 0x1f92, 0x1f92, input_port_2_r ),
+		new Memory_ReadAddress( 0x1f93, 0x1f93, input_port_3_r ),
+		new Memory_ReadAddress( 0x1fc4, 0x1fc4, simpsons_sound_interrupt_r ),
+		new Memory_ReadAddress( 0x1fc6, 0x1fc7, simpsons_sound_r ),	/* K053260 */
+		new Memory_ReadAddress( 0x1fc8, 0x1fc9, K053246_r ),
+		new Memory_ReadAddress( 0x1fca, 0x1fca, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK4 ),
+		new Memory_ReadAddress( 0x0000, 0x3fff, K052109_r ),
+		new Memory_ReadAddress( 0x4856, 0x4856, simpsons_speedup2_r ),
+		new Memory_ReadAddress( 0x4942, 0x4942, simpsons_speedup1_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_BANK3 },
-		{ 0x1fa0, 0x1fa7, K053246_w },
-		{ 0x1fb0, 0x1fbf, K053251_w },
-		{ 0x1fc0, 0x1fc0, simpsons_coin_counter_w },
-		{ 0x1fc2, 0x1fc2, simpsons_eeprom_w },
-		{ 0x1fc6, 0x1fc7, K053260_0_w },
-		{ 0x2000, 0x3fff, MWA_BANK4 },
-		{ 0x0000, 0x3fff, K052109_w },
-		{ 0x4000, 0x5fff, MWA_RAM },
-		{ 0x6000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_BANK3 ),
+		new Memory_WriteAddress( 0x1fa0, 0x1fa7, K053246_w ),
+		new Memory_WriteAddress( 0x1fb0, 0x1fbf, K053251_w ),
+		new Memory_WriteAddress( 0x1fc0, 0x1fc0, simpsons_coin_counter_w ),
+		new Memory_WriteAddress( 0x1fc2, 0x1fc2, simpsons_eeprom_w ),
+		new Memory_WriteAddress( 0x1fc6, 0x1fc7, K053260_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_BANK4 ),
+		new Memory_WriteAddress( 0x0000, 0x3fff, K052109_w ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static WRITE_HANDLER( z80_bankswitch_w )
 	{
@@ -107,24 +111,28 @@ public class simpsons
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
 	}
 	
-	static MEMORY_READ_START( z80_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK2 },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf801, 0xf801, YM2151_status_port_0_r },
-		{ 0xfc00, 0xfc2f, K053260_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress z80_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf801, 0xf801, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0xfc00, 0xfc2f, K053260_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( z80_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf800, YM2151_register_port_0_w },
-		{ 0xf801, 0xf801, YM2151_data_port_0_w },
-		{ 0xfa00, 0xfa00, z80_arm_nmi_w },
-		{ 0xfc00, 0xfc2f, K053260_0_w },
-		{ 0xfe00, 0xfe00, z80_bankswitch_w },
-	MEMORY_END
+	public static Memory_WriteAddress z80_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf800, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xf801, 0xf801, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xfa00, 0xfa00, z80_arm_nmi_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc2f, K053260_0_w ),
+		new Memory_WriteAddress( 0xfe00, 0xfe00, z80_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	

@@ -80,43 +80,51 @@ public class dogfgt
 	
 	
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x07ff, sharedram_r },
-		{ 0x1800, 0x1800, input_port_0_r },
-		{ 0x1810, 0x1810, input_port_1_r },
-		{ 0x1820, 0x1820, input_port_2_r },
-		{ 0x1830, 0x1830, input_port_3_r },
-		{ 0x2000, 0x3fff, dogfgt_bitmapram_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, sharedram_r ),
+		new Memory_ReadAddress( 0x1800, 0x1800, input_port_0_r ),
+		new Memory_ReadAddress( 0x1810, 0x1810, input_port_1_r ),
+		new Memory_ReadAddress( 0x1820, 0x1820, input_port_2_r ),
+		new Memory_ReadAddress( 0x1830, 0x1830, input_port_3_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, dogfgt_bitmapram_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x07ff, sharedram_w, &sharedram },
-		{ 0x0f80, 0x0fdf, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x1000, 0x17ff, dogfgt_bgvideoram_w, &dogfgt_bgvideoram },
-		{ 0x1800, 0x1800, dogfgt_1800_w },	/* text color, flip screen & coin counters */
-		{ 0x1810, 0x1810, subirqtrigger_w },
-		{ 0x1820, 0x1823, dogfgt_scroll_w },
-		{ 0x1824, 0x1824, dogfgt_plane_select_w },
-		{ 0x1830, 0x1830, dogfgt_soundlatch_w },
-		{ 0x1840, 0x1840, dogfgt_soundcontrol_w },
-		{ 0x1870, 0x187f, paletteram_BBGGGRRR_w, &paletteram },
-		{ 0x2000, 0x3fff, dogfgt_bitmapram_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, sharedram_w, &sharedram ),
+		new Memory_WriteAddress( 0x0f80, 0x0fdf, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, dogfgt_bgvideoram_w, &dogfgt_bgvideoram ),
+		new Memory_WriteAddress( 0x1800, 0x1800, dogfgt_1800_w ),	/* text color, flip screen & coin counters */
+		new Memory_WriteAddress( 0x1810, 0x1810, subirqtrigger_w ),
+		new Memory_WriteAddress( 0x1820, 0x1823, dogfgt_scroll_w ),
+		new Memory_WriteAddress( 0x1824, 0x1824, dogfgt_plane_select_w ),
+		new Memory_WriteAddress( 0x1830, 0x1830, dogfgt_soundlatch_w ),
+		new Memory_WriteAddress( 0x1840, 0x1840, dogfgt_soundcontrol_w ),
+		new Memory_WriteAddress( 0x1870, 0x187f, paletteram_BBGGGRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, dogfgt_bitmapram_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sub_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x2000, 0x27ff, sharedram_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, sharedram_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sub_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x2000, 0x27ff, sharedram_w },
-		{ 0x4000, 0x4000, sub_irqack_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, sharedram_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, sub_irqack_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -301,26 +301,29 @@ public class gridlee
 	 *************************************/
 	
 	/* CPU 1 read addresses */
-	static MEMORY_READ_START( readmem_cpu1 )
-		{ 0x0000, 0x7fff, MRA_RAM },
-		{ 0x9500, 0x9501, analog_port_r },
-		{ 0x9502, 0x9502, input_port_4_r },
-		{ 0x9503, 0x9503, input_port_5_r },
-		{ 0x9600, 0x9600, input_port_6_r },
-		{ 0x9700, 0x9700, input_port_7_r },
-		{ 0x9820, 0x9820, random_num_r },
-		{ 0x9c00, 0x9cff, MRA_RAM },
-		{ 0xa000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9500, 0x9501, analog_port_r ),
+		new Memory_ReadAddress( 0x9502, 0x9502, input_port_4_r ),
+		new Memory_ReadAddress( 0x9503, 0x9503, input_port_5_r ),
+		new Memory_ReadAddress( 0x9600, 0x9600, input_port_6_r ),
+		new Memory_ReadAddress( 0x9700, 0x9700, input_port_7_r ),
+		new Memory_ReadAddress( 0x9820, 0x9820, random_num_r ),
+		new Memory_ReadAddress( 0x9c00, 0x9cff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_cpu1 )
-		{ 0x0000, 0x07ff, MWA_RAM, &spriteram },
-		{ 0x0800, 0x7fff, gridlee_videoram_w, &videoram, &videoram_size },
-		{ 0x9000, 0x9000, led_0_w },
-		{ 0x9010, 0x9010, led_1_w },
-		{ 0x9020, 0x9020, gridlee_coin_counter_w },
-	/*	{ 0x9060, 0x9060, unknown - only written to at startup */
+	public static Memory_WriteAddress writemem_cpu1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x0800, 0x7fff, gridlee_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9000, 0x9000, led_0_w ),
+		new Memory_WriteAddress( 0x9010, 0x9010, led_1_w ),
+		new Memory_WriteAddress( 0x9020, 0x9020, gridlee_coin_counter_w ),
+	/*	new Memory_WriteAddress( 0x9060, 0x9060, unknown - only written to at startup */
 		{ 0x9070, 0x9070, gridlee_cocktail_flip_w },
 		{ 0x9200, 0x9200, gridlee_palette_select_w },
 		{ 0x9380, 0x9380, watchdog_reset_w },
@@ -328,7 +331,8 @@ public class gridlee
 		{ 0x9828, 0x993f, gridlee_sound_w },
 		{ 0x9c00, 0x9cff, MWA_RAM, &generic_nvram, &generic_nvram_size },
 		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

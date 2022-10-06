@@ -291,24 +291,28 @@ public class shadfrce
 		OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	}
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc801, 0xc801, YM2151_status_port_0_r },
-		{ 0xd800, 0xd800, OKIM6295_status_0_r },
-		{ 0xe000, 0xe000, soundlatch_r },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc801, 0xc801, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xc800, YM2151_register_port_0_w },
-		{ 0xc801, 0xc801, YM2151_data_port_0_w },
-		{ 0xd800, 0xd800, OKIM6295_data_0_w },
-		{ 0xe800, 0xe800, oki_bankswitch_w },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xc800, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xd800, 0xd800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, oki_bankswitch_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Input Ports */

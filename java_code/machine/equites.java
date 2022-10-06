@@ -50,29 +50,35 @@ public class equites
 	extern struct AY8910interface equites_8910intf;
 	extern struct DACinterface equites_dacintf;
 	
-	static MEMORY_READ_START( equites_s_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM }, // sound program
-		{ 0xc000, 0xc000, soundlatch_r },
-		{ 0xe000, 0xe0ff, MRA_RAM }, // stack and variables
-	MEMORY_END
+	public static Memory_ReadAddress equites_s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ), // sound program
+		new Memory_ReadAddress( 0xc000, 0xc000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xe0ff, MRA_RAM ), // stack and variables
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( equites_s_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM }, // sound program
-		{ 0xc080, 0xc08d, equites_5232_w },
-		{ 0xc0a0, 0xc0a0, equites_8910data_w },
-		{ 0xc0a1, 0xc0a1, equites_8910control_w },
-		{ 0xc0b0, 0xc0b0, MWA_NOP }, // INTR: sync with main melody
-		{ 0xc0c0, 0xc0c0, MWA_NOP }, // INTR: sync with specific beats
-		{ 0xc0d0, 0xc0d0, equites_dac0_w },
-		{ 0xc0e0, 0xc0e0, equites_dac1_w },
-		{ 0xc0f8, 0xc0fe, MWA_NOP }, // soundboard I/O, ignored
-		{ 0xc0ff, 0xc0ff, soundlatch_clear_w },
-		{ 0xe000, 0xe0ff, MWA_RAM }, // stack and variables
-	MEMORY_END
+	public static Memory_WriteAddress equites_s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ), // sound program
+		new Memory_WriteAddress( 0xc080, 0xc08d, equites_5232_w ),
+		new Memory_WriteAddress( 0xc0a0, 0xc0a0, equites_8910data_w ),
+		new Memory_WriteAddress( 0xc0a1, 0xc0a1, equites_8910control_w ),
+		new Memory_WriteAddress( 0xc0b0, 0xc0b0, MWA_NOP ), // INTR: sync with main melody
+		new Memory_WriteAddress( 0xc0c0, 0xc0c0, MWA_NOP ), // INTR: sync with specific beats
+		new Memory_WriteAddress( 0xc0d0, 0xc0d0, equites_dac0_w ),
+		new Memory_WriteAddress( 0xc0e0, 0xc0e0, equites_dac1_w ),
+		new Memory_WriteAddress( 0xc0f8, 0xc0fe, MWA_NOP ), // soundboard I/O, ignored
+		new Memory_WriteAddress( 0xc0ff, 0xc0ff, soundlatch_clear_w ),
+		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM ), // stack and variables
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( equites_s_writeport )
-		{ 0x00e0, 0x00e5, MWA_NOP }, // soundboard I/O, ignored
-	PORT_END
+	public static IO_WritePort equites_s_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00e0, 0x00e5, MWA_NOP ), // soundboard I/O, ignored
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	// Common Hardware End
 	
 	#endif

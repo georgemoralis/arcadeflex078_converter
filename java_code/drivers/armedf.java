@@ -345,25 +345,33 @@ public class armedf
 	MEMORY_END
 	
 	
-	static MEMORY_READ_START( soundreadmem )
-		{ 0x0000, 0xf7ff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress soundreadmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xf7ff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( soundwritemem )
-		{ 0x0000, 0xf7ff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress soundwritemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xf7ff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( cclimbr2_soundreadmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress cclimbr2_soundreadmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cclimbr2_soundwritemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress cclimbr2_soundwritemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER( soundlatch_clear_r )
 	{
@@ -371,17 +379,21 @@ public class armedf
 		return 0;
 	}
 	
-	static PORT_READ_START( readport )
-		{ 0x4, 0x4, soundlatch_clear_r },
-		{ 0x6, 0x6, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x4, 0x4, soundlatch_clear_r ),
+		new IO_ReadPort( 0x6, 0x6, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x0, 0x0, YM3812_control_port_0_w },
-		{ 0x1, 0x1, YM3812_write_port_0_w },
-	  	{ 0x2, 0x2, DAC_0_signed_data_w },
-	  	{ 0x3, 0x3, DAC_1_signed_data_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0, 0x0, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x1, 0x1, YM3812_write_port_0_w ),
+	  	new IO_WritePort( 0x2, 0x2, DAC_0_signed_data_w ),
+	  	new IO_WritePort( 0x3, 0x3, DAC_1_signed_data_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/****************

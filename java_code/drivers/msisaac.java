@@ -219,65 +219,71 @@ public class msisaac
 	#endif
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
 	
-		{ 0xf0e0, 0xf0e0, msisaac_mcu_r },
-		{ 0xf0e1, 0xf0e1, msisaac_mcu_status_r },
+		new Memory_ReadAddress( 0xf0e0, 0xf0e0, msisaac_mcu_r ),
+		new Memory_ReadAddress( 0xf0e1, 0xf0e1, msisaac_mcu_status_r ),
 	
-		{ 0xf080, 0xf080, input_port_0_r },
-		{ 0xf081, 0xf081, input_port_1_r },
-		{ 0xf082, 0xf082, input_port_2_r },
-		{ 0xf083, 0xf083, input_port_3_r },
-		{ 0xf084, 0xf084, input_port_4_r },
-	//{ 0xf086, 0xf086, input_port_5_r },
-	MEMORY_END
+		new Memory_ReadAddress( 0xf080, 0xf080, input_port_0_r ),
+		new Memory_ReadAddress( 0xf081, 0xf081, input_port_1_r ),
+		new Memory_ReadAddress( 0xf082, 0xf082, input_port_2_r ),
+		new Memory_ReadAddress( 0xf083, 0xf083, input_port_3_r ),
+		new Memory_ReadAddress( 0xf084, 0xf084, input_port_4_r ),
+	//new Memory_ReadAddress( 0xf086, 0xf086, input_port_5_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe7ff, MWA_RAM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
 	
-		{ 0xe800, 0xefff, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram },
+		new Memory_WriteAddress( 0xe800, 0xefff, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram ),
 	
-	//{ 0xf400, 0xf43f, msisaac_fg_colorram_w, &colorram },
+	//new Memory_WriteAddress( 0xf400, 0xf43f, msisaac_fg_colorram_w, &colorram ),
 	
-		{ 0xf0a3, 0xf0a3, ms_unknown_w },			//???? written in interrupt routine
+		new Memory_WriteAddress( 0xf0a3, 0xf0a3, ms_unknown_w ),			//???? written in interrupt routine
 	
-		{ 0xf060, 0xf060, sound_command_w },		//sound command
-		{ 0xf061, 0xf061, MWA_NOP /*sound_reset*/},	//????
+		new Memory_WriteAddress( 0xf060, 0xf060, sound_command_w ),		//sound command
+		new Memory_WriteAddress( 0xf061, 0xf061, MWA_NOP /*sound_reset*/),	//????
 	
-		{ 0xf000, 0xf000, msisaac_bg2_textbank_w },
-		{ 0xf001, 0xf001, MWA_RAM }, 			//???
-		{ 0xf002, 0xf002, MWA_RAM }, 			//???
+		new Memory_WriteAddress( 0xf000, 0xf000, msisaac_bg2_textbank_w ),
+		new Memory_WriteAddress( 0xf001, 0xf001, MWA_RAM ), 			//???
+		new Memory_WriteAddress( 0xf002, 0xf002, MWA_RAM ), 			//???
 	
-		{ 0xf0c0, 0xf0c0, msisaac_fg_scrollx_w },
-		{ 0xf0c1, 0xf0c1, msisaac_fg_scrolly_w },
-		{ 0xf0c2, 0xf0c2, msisaac_bg2_scrollx_w },
-		{ 0xf0c3, 0xf0c3, msisaac_bg2_scrolly_w },
-		{ 0xf0c4, 0xf0c4, msisaac_bg_scrollx_w },
-		{ 0xf0c5, 0xf0c5, msisaac_bg_scrolly_w },
+		new Memory_WriteAddress( 0xf0c0, 0xf0c0, msisaac_fg_scrollx_w ),
+		new Memory_WriteAddress( 0xf0c1, 0xf0c1, msisaac_fg_scrolly_w ),
+		new Memory_WriteAddress( 0xf0c2, 0xf0c2, msisaac_bg2_scrollx_w ),
+		new Memory_WriteAddress( 0xf0c3, 0xf0c3, msisaac_bg2_scrolly_w ),
+		new Memory_WriteAddress( 0xf0c4, 0xf0c4, msisaac_bg_scrollx_w ),
+		new Memory_WriteAddress( 0xf0c5, 0xf0c5, msisaac_bg_scrolly_w ),
 	
-		{ 0xf0e0, 0xf0e0, msisaac_mcu_w },
+		new Memory_WriteAddress( 0xf0e0, 0xf0e0, msisaac_mcu_w ),
 	
-		{ 0xf100, 0xf17f, MWA_RAM, &spriteram },	//sprites
-		{ 0xf400, 0xf7ff, msisaac_fg_videoram_w, &videoram },
-		{ 0xf800, 0xfbff, msisaac_bg2_videoram_w,&msisaac_videoram2 },
-		{ 0xfc00, 0xffff, msisaac_bg_videoram_w, &msisaac_videoram },
-	
-	
-	//	{ 0xf801, 0xf801, msisaac_bgcolor_w },
-	//	{ 0xfc00, 0xfc00, flip_screen_w },
-	//	{ 0xfc03, 0xfc04, msisaac_coin_counter_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0xf100, 0xf17f, MWA_RAM, &spriteram ),	//sprites
+		new Memory_WriteAddress( 0xf400, 0xf7ff, msisaac_fg_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, msisaac_bg2_videoram_w,&msisaac_videoram2 ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, msisaac_bg_videoram_w, &msisaac_videoram ),
 	
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0xc000, 0xc000, soundlatch_r },
-		{ 0xe000, 0xffff, MRA_NOP }, /*space for diagnostic ROM (not dumped, not reachable) */
-	MEMORY_END
+	//	new Memory_WriteAddress( 0xf801, 0xf801, msisaac_bgcolor_w ),
+	//	new Memory_WriteAddress( 0xfc00, 0xfc00, flip_screen_w ),
+	//	new Memory_WriteAddress( 0xfc03, 0xfc04, msisaac_coin_counter_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_NOP ), /*space for diagnostic ROM (not dumped, not reachable) */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static int vol_ctrl[16];
@@ -327,42 +333,48 @@ public class msisaac
 	
 	
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
 	
-		{ 0x8000, 0x8000, AY8910_control_port_0_w },
-		{ 0x8001, 0x8001, AY8910_write_port_0_w   },
-		{ 0x8002, 0x8002, AY8910_control_port_1_w },
-		{ 0x8003, 0x8003, AY8910_write_port_1_w   },
-		{ 0x8010, 0x801d, MSM5232_0_w },
-		{ 0x8020, 0x8020, sound_control_0_w  },
-		{ 0x8030, 0x8030, sound_control_1_w  },
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8001, 0x8001, AY8910_write_port_0_w   ),
+		new Memory_WriteAddress( 0x8002, 0x8002, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x8003, 0x8003, AY8910_write_port_1_w   ),
+		new Memory_WriteAddress( 0x8010, 0x801d, MSM5232_0_w ),
+		new Memory_WriteAddress( 0x8020, 0x8020, sound_control_0_w  ),
+		new Memory_WriteAddress( 0x8030, 0x8030, sound_control_1_w  ),
 	
-		{ 0xc001, 0xc001, nmi_enable_w },
-		{ 0xc002, 0xc002, nmi_disable_w },
-		{ 0xc003, 0xc003, MWA_NOP }, /*???*/ /* this is NOT mixer_enable */
+		new Memory_WriteAddress( 0xc001, 0xc001, nmi_enable_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, nmi_disable_w ),
+		new Memory_WriteAddress( 0xc003, 0xc003, MWA_NOP ), /*???*/ /* this is NOT mixer_enable */
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x0000, buggychl_68705_portA_r },
-		{ 0x0001, 0x0001, buggychl_68705_portB_r },
-		{ 0x0002, 0x0002, buggychl_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, buggychl_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, buggychl_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, buggychl_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x0000, buggychl_68705_portA_w },
-		{ 0x0001, 0x0001, buggychl_68705_portB_w },
-		{ 0x0002, 0x0002, buggychl_68705_portC_w },
-		{ 0x0004, 0x0004, buggychl_68705_ddrA_w },
-		{ 0x0005, 0x0005, buggychl_68705_ddrB_w },
-		{ 0x0006, 0x0006, buggychl_68705_ddrC_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, buggychl_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, buggychl_68705_portB_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, buggychl_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, buggychl_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0005, 0x0005, buggychl_68705_ddrB_w ),
+		new Memory_WriteAddress( 0x0006, 0x0006, buggychl_68705_ddrC_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( msisaac )

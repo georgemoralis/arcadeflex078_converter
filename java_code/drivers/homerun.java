@@ -86,22 +86,26 @@ public class homerun
 		{ -1 }
 	};
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },		
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0xc000, 0xdfff, MRA_RAM },		
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),		
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),		
 		
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },		
-		{ 0x8000, 0x9fff, homerun_videoram_w, &homerun_videoram },
-		{ 0xa000, 0xa0ff, MWA_RAM, &spriteram,  &spriteram_size },	
-		{ 0xb000, 0xb0ff, homerun_color_w},
-		{ 0xc000, 0xdfff, MWA_RAM },		
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),		
+		new Memory_WriteAddress( 0x8000, 0x9fff, homerun_videoram_w, &homerun_videoram ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram,  &spriteram_size ),	
+		new Memory_WriteAddress( 0xb000, 0xb0ff, homerun_color_w),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),		
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static READ_HANDLER(homerun_40_r)
@@ -113,22 +117,26 @@ public class homerun
 	}
 	
 	
-	static PORT_READ_START( readport )
-		{0x30, 0x33, ppi8255_0_r },
-		{0x40, 0x40, homerun_40_r  },
-		{0x50, 0x50, input_port_2_r },
-		{0x60, 0x60, input_port_1_r },
-		{0x70, 0x70, YM2203_status_port_0_r},
-		{0x71, 0x71, YM2203_read_port_0_r},
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(0x30, 0x33, ppi8255_0_r ),
+		new IO_ReadPort(0x40, 0x40, homerun_40_r  ),
+		new IO_ReadPort(0x50, 0x50, input_port_2_r ),
+		new IO_ReadPort(0x60, 0x60, input_port_1_r ),
+		new IO_ReadPort(0x70, 0x70, YM2203_status_port_0_r),
+		new IO_ReadPort(0x71, 0x71, YM2203_read_port_0_r),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x10, 0x10, IOWP_NOP }, /* ?? */
-		{ 0x20, 0x20, IOWP_NOP }, /* ?? */
-		{ 0x30, 0x33, ppi8255_0_w },
-		{ 0x70, 0x70, YM2203_control_port_0_w },
-		{ 0x71, 0x71, YM2203_write_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, IOWP_NOP ), /* ?? */
+		new IO_WritePort( 0x20, 0x20, IOWP_NOP ), /* ?? */
+		new IO_WritePort( 0x30, 0x33, ppi8255_0_w ),
+		new IO_WritePort( 0x70, 0x70, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x71, 0x71, YM2203_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static struct YM2203interface ym2203_interface =
 	{

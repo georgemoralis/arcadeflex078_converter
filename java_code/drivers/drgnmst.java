@@ -217,29 +217,37 @@ public class drgnmst
 	MEMORY_END
 	
 	
-	static MEMORY_READ_START( drgnmst_sound_readmem )
-		{ PIC16C55_MEMORY_READ },
+	public static Memory_ReadAddress drgnmst_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( PIC16C55_MEMORY_READ ),
 			/* $000 - 01F  Internal memory mapped registers */
 			/* $000 - 1FF  Program ROM for PIC16C55. Note: code is 12bits wide */
 			/*             View the ROM at $1000 in the debugger memory windows */
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( drgnmst_sound_writemem )
-		{ PIC16C55_MEMORY_WRITE },
-	MEMORY_END
+	public static Memory_WriteAddress drgnmst_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( PIC16C55_MEMORY_WRITE ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( drgnmst_sound_readport )
-		{ 0x00, 0x00, pic16c5x_port0_r },		/* 4 bit port */
-		{ 0x01, 0x01, drgnmst_snd_command_r },
-		{ 0x02, 0x02, drgnmst_snd_flag_r },
-		{ PIC16C5x_T0, PIC16C5x_T0, PIC16C5X_T0_clk_r },
-	PORT_END
+	public static IO_ReadPort drgnmst_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, pic16c5x_port0_r ),		/* 4 bit port */
+		new IO_ReadPort( 0x01, 0x01, drgnmst_snd_command_r ),
+		new IO_ReadPort( 0x02, 0x02, drgnmst_snd_flag_r ),
+		new IO_ReadPort( PIC16C5x_T0, PIC16C5x_T0, PIC16C5X_T0_clk_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( drgnmst_sound_writeport )
-		{ 0x00, 0x00, drgnmst_pcm_banksel_w },	/* 4 bit port */
-		{ 0x01, 0x01, drgnmst_oki_w },
-		{ 0x02, 0x02, drgnmst_snd_control_w },
-	PORT_END
+	public static IO_WritePort drgnmst_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, drgnmst_pcm_banksel_w ),	/* 4 bit port */
+		new IO_WritePort( 0x01, 0x01, drgnmst_oki_w ),
+		new IO_WritePort( 0x02, 0x02, drgnmst_snd_control_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

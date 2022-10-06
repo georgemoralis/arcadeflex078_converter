@@ -160,36 +160,40 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( turbo_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0xb000, 0xb1ff, MRA_RAM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf803, ppi8255_0_r },
-		{ 0xf900, 0xf903, ppi8255_1_r },
-		{ 0xfa00, 0xfa03, ppi8255_2_r },
-		{ 0xfb00, 0xfb03, ppi8255_3_r },
-		{ 0xfc00, 0xfcff, turbo_8279_r },
-		{ 0xfd00, 0xfdff, input_port_0_r },
-		{ 0xfe00, 0xfeff, turbo_collision_r },
-	MEMORY_END
+	public static Memory_ReadAddress turbo_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb000, 0xb1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf803, ppi8255_0_r ),
+		new Memory_ReadAddress( 0xf900, 0xf903, ppi8255_1_r ),
+		new Memory_ReadAddress( 0xfa00, 0xfa03, ppi8255_2_r ),
+		new Memory_ReadAddress( 0xfb00, 0xfb03, ppi8255_3_r ),
+		new Memory_ReadAddress( 0xfc00, 0xfcff, turbo_8279_r ),
+		new Memory_ReadAddress( 0xfd00, 0xfdff, input_port_0_r ),
+		new Memory_ReadAddress( 0xfe00, 0xfeff, turbo_collision_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( turbo_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xa800, 0xa807, turbo_coin_and_lamp_w },
-		{ 0xb000, 0xb1ff, MWA_RAM, &sega_sprite_position },
-		{ 0xb800, 0xb800, MWA_NOP },	/* resets the analog wheel value */
-		{ 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size },
-		{ 0xe800, 0xe800, turbo_collision_clear_w },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf803, ppi8255_0_w },
-		{ 0xf900, 0xf903, ppi8255_1_w },
-		{ 0xfa00, 0xfa03, ppi8255_2_w },
-		{ 0xfb00, 0xfb03, ppi8255_3_w },
-		{ 0xfc00, 0xfcff, turbo_8279_w },
-	MEMORY_END
+	public static Memory_WriteAddress turbo_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xa800, 0xa807, turbo_coin_and_lamp_w ),
+		new Memory_WriteAddress( 0xb000, 0xb1ff, MWA_RAM, &sega_sprite_position ),
+		new Memory_WriteAddress( 0xb800, 0xb800, MWA_NOP ),	/* resets the analog wheel value */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe800, 0xe800, turbo_collision_clear_w ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf803, ppi8255_0_w ),
+		new Memory_WriteAddress( 0xf900, 0xf903, ppi8255_1_w ),
+		new Memory_WriteAddress( 0xfa00, 0xfa03, ppi8255_2_w ),
+		new Memory_WriteAddress( 0xfb00, 0xfb03, ppi8255_3_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfcff, turbo_8279_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -199,30 +203,34 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( subroc3d_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xa800, 0xa800, input_port_0_r },
-		{ 0xa801, 0xa801, input_port_1_r },
-		{ 0xa802, 0xa802, input_port_2_r },
-		{ 0xa803, 0xa803, input_port_3_r },
-		{ 0xb000, 0xb7ff, MRA_RAM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xe803, ppi8255_0_r },
-		{ 0xf000, 0xf003, ppi8255_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress subroc3d_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_0_r ),
+		new Memory_ReadAddress( 0xa801, 0xa801, input_port_1_r ),
+		new Memory_ReadAddress( 0xa802, 0xa802, input_port_2_r ),
+		new Memory_ReadAddress( 0xa803, 0xa803, input_port_3_r ),
+		new Memory_ReadAddress( 0xb000, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe803, ppi8255_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf003, ppi8255_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( subroc3d_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0xa000, 0xa3ff, MWA_RAM, &sega_sprite_position },
-		{ 0xa400, 0xa7ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xb000, 0xb7ff, MWA_RAM },
-		{ 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size },
-		{ 0xe800, 0xe803, ppi8255_0_w },
-		{ 0xf000, 0xf003, ppi8255_1_w },
-		{ 0xf800, 0xf801, turbo_8279_w },
-	MEMORY_END
+	public static Memory_WriteAddress subroc3d_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM, &sega_sprite_position ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xb000, 0xb7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe800, 0xe803, ppi8255_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf003, ppi8255_1_w ),
+		new Memory_WriteAddress( 0xf800, 0xf801, turbo_8279_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -232,47 +240,57 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( buckrog_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc803, ppi8255_0_r },
-		{ 0xd000, 0xd003, ppi8255_1_r },
-		{ 0xe000, 0xe1ff, MRA_RAM },
-		{ 0xe800, 0xe800, input_port_0_r },
-		{ 0xe801, 0xe801, input_port_1_r },
-		{ 0xe802, 0xe802, buckrog_port_2_r },
-		{ 0xe803, 0xe803, buckrog_port_3_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress buckrog_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc803, ppi8255_0_r ),
+		new Memory_ReadAddress( 0xd000, 0xd003, ppi8255_1_r ),
+		new Memory_ReadAddress( 0xe000, 0xe1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_0_r ),
+		new Memory_ReadAddress( 0xe801, 0xe801, input_port_1_r ),
+		new Memory_ReadAddress( 0xe802, 0xe802, buckrog_port_2_r ),
+		new Memory_ReadAddress( 0xe803, 0xe803, buckrog_port_3_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( buckrog_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM, &videoram, &videoram_size },
-		{ 0xc800, 0xc803, ppi8255_0_w },
-		{ 0xd000, 0xd003, ppi8255_1_w },
-		{ 0xd800, 0xd801, turbo_8279_w },
-		{ 0xe000, 0xe1ff, MWA_RAM, &sega_sprite_position },
-		{ 0xe400, 0xe4ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress buckrog_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc800, 0xc803, ppi8255_0_w ),
+		new Memory_WriteAddress( 0xd000, 0xd003, ppi8255_1_w ),
+		new Memory_WriteAddress( 0xd800, 0xd801, turbo_8279_w ),
+		new Memory_WriteAddress( 0xe000, 0xe1ff, MWA_RAM, &sega_sprite_position ),
+		new Memory_WriteAddress( 0xe400, 0xe4ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( buckrog_readmem2 )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress buckrog_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( buckrog_readport2 )
-		{ 0x00, 0x00, buckrog_cpu2_command_r },
-	PORT_END
+	public static IO_ReadPort buckrog_readport2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, buckrog_cpu2_command_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( buckrog_writemem2 )
-		{ 0x0000, 0xdfff, buckrog_bitmap_w },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress buckrog_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, buckrog_bitmap_w ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

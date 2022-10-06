@@ -604,63 +604,73 @@ public class homedata
 		{ 0x8080, 0x8080, mrokumei_sound_bank_w },
 	MEMORY_END
 	
-	static PORT_READ_START( mrokumei_sound_readport )
-		{ 0x0000, 0xffff, mrokumei_sound_io_r },
+	public static IO_ReadPort mrokumei_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0xffff, mrokumei_sound_io_r ),
 	MEMORY_END
 	
-	static PORT_WRITE_START( mrokumei_sound_writeport )
-		{ 0x0000, 0xffff, mrokumei_sound_io_w },	/* read address is 16-bit, write address is only 8-bit */
+	public static IO_WritePort mrokumei_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0xffff, mrokumei_sound_io_w ),	/* read address is 16-bit, write address is only 8-bit */
 	MEMORY_END
 	
 	/********************************************************************************/
 	
 	MEMORY_READ_START( reikaids_readmem )
-		{ 0x0000, 0x3fff, MRA_RAM }, /* videoram */
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0x6fff, MRA_RAM }, /* work ram */
-		{ 0x7800, 0x7800, MRA_RAM },
-		{ 0x7801, 0x7801, input_port_0_r },
-		{ 0x7802, 0x7802, input_port_1_r },
-		{ 0x7803, 0x7803, reikaids_io_r },	// coin, blitter, upd7807
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xffff, MRA_ROM },
+		new IO_WritePort( 0x0000, 0x3fff, MRA_RAM ), /* videoram */
+		new IO_WritePort( 0x4000, 0x5fff, MRA_RAM ),
+		new IO_WritePort( 0x6000, 0x6fff, MRA_RAM ), /* work ram */
+		new IO_WritePort( 0x7800, 0x7800, MRA_RAM ),
+		new IO_WritePort( 0x7801, 0x7801, input_port_0_r ),
+		new IO_WritePort( 0x7802, 0x7802, input_port_1_r ),
+		new IO_WritePort( 0x7803, 0x7803, reikaids_io_r ),	// coin, blitter, upd7807
+		new IO_WritePort( 0x8000, 0xbfff, MRA_BANK1 ),
+		new IO_WritePort( 0xc000, 0xffff, MRA_ROM ),
 	MEMORY_END
 	
 	MEMORY_WRITE_START( reikaids_writemem )
-		{ 0x0000, 0x3fff, reikaids_videoram_w, &videoram },
-		{ 0x4000, 0x5fff, MWA_RAM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x7800, 0x7800, MWA_RAM },	/* behaves as normal RAM */
-		{ 0x7ff0, 0x7ffd, MWA_RAM, &homedata_vreg },
-		{ 0x7ffe, 0x7ffe, reikaids_blitter_bank_w },
-		{ 0x7fff, 0x7fff, reikaids_blitter_start_w },
-		{ 0x8000, 0x8000, bankswitch_w },
-		{ 0x8002, 0x8002, reikaids_snd_command_w },
-		{ 0x8005, 0x8005, reikaids_gfx_bank_w },
-		{ 0x8006, 0x8006, homedata_blitter_param_w },
-		{ 0x8000, 0xffff, MWA_ROM },
+		new IO_WritePort( 0x0000, 0x3fff, reikaids_videoram_w, &videoram ),
+		new IO_WritePort( 0x4000, 0x5fff, MWA_RAM ),
+		new IO_WritePort( 0x6000, 0x6fff, MWA_RAM ),
+		new IO_WritePort( 0x7800, 0x7800, MWA_RAM ),	/* behaves as normal RAM */
+		new IO_WritePort( 0x7ff0, 0x7ffd, MWA_RAM, &homedata_vreg ),
+		new IO_WritePort( 0x7ffe, 0x7ffe, reikaids_blitter_bank_w ),
+		new IO_WritePort( 0x7fff, 0x7fff, reikaids_blitter_start_w ),
+		new IO_WritePort( 0x8000, 0x8000, bankswitch_w ),
+		new IO_WritePort( 0x8002, 0x8002, reikaids_snd_command_w ),
+		new IO_WritePort( 0x8005, 0x8005, reikaids_gfx_bank_w ),
+		new IO_WritePort( 0x8006, 0x8006, homedata_blitter_param_w ),
+		new IO_WritePort( 0x8000, 0xffff, MWA_ROM ),
 	MEMORY_END
 	
-	static MEMORY_READ_START( reikaids_upd7807_readmem )
-		{ 0x0000, 0xfeff, MRA_BANK2 },	/* External ROM (Banked) */
-		{ 0xff00, 0xffff, MRA_RAM },	/* Internal RAM */
-	MEMORY_END
+	public static Memory_ReadAddress reikaids_upd7807_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xfeff, MRA_BANK2 ),	/* External ROM (Banked) */
+		new Memory_ReadAddress( 0xff00, 0xffff, MRA_RAM ),	/* Internal RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( reikaids_upd7807_writemem )
-		{ 0x0000, 0xfeff, MWA_ROM },
-		{ 0xff00, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress reikaids_upd7807_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xfeff, MWA_ROM ),
+		new Memory_WriteAddress( 0xff00, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( reikaids_upd7807_readport )
-		{ UPD7807_PORTA, UPD7807_PORTA, reikaids_upd7807_porta_r },
-		{ UPD7807_PORTT, UPD7807_PORTT, reikaids_snd_command_r },
-	PORT_END
+	public static IO_ReadPort reikaids_upd7807_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( UPD7807_PORTA, UPD7807_PORTA, reikaids_upd7807_porta_r ),
+		new IO_ReadPort( UPD7807_PORTT, UPD7807_PORTT, reikaids_snd_command_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( reikaids_upd7807_writeport )
-		{ UPD7807_PORTA, UPD7807_PORTA, reikaids_upd7807_porta_w },
-		{ UPD7807_PORTB, UPD7807_PORTB, DAC_0_signed_data_w },
-		{ UPD7807_PORTC, UPD7807_PORTC, reikaids_upd7807_portc_w },
-	PORT_END
+	public static IO_WritePort reikaids_upd7807_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( UPD7807_PORTA, UPD7807_PORTA, reikaids_upd7807_porta_w ),
+		new IO_WritePort( UPD7807_PORTB, UPD7807_PORTB, DAC_0_signed_data_w ),
+		new IO_WritePort( UPD7807_PORTC, UPD7807_PORTC, reikaids_upd7807_portc_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/**************************************************************************/
@@ -693,28 +703,36 @@ public class homedata
 		{ 0x8000, 0xffff, MWA_ROM },
 	MEMORY_END
 	
-	static MEMORY_READ_START( pteacher_upd7807_readmem )
-		{ 0x0000, 0xfeff, MRA_BANK2 },	/* External ROM (Banked) */
-		{ 0xff00, 0xffff, MRA_RAM },	/* Internal RAM */
-	MEMORY_END
+	public static Memory_ReadAddress pteacher_upd7807_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xfeff, MRA_BANK2 ),	/* External ROM (Banked) */
+		new Memory_ReadAddress( 0xff00, 0xffff, MRA_RAM ),	/* Internal RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( pteacher_upd7807_writemem )
-		{ 0x0000, 0x0000, pteacher_snd_answer_w },
-		{ 0x0000, 0xfeff, MWA_ROM },
-		{ 0xff00, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress pteacher_upd7807_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, pteacher_snd_answer_w ),
+		new Memory_WriteAddress( 0x0000, 0xfeff, MWA_ROM ),
+		new Memory_WriteAddress( 0xff00, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( pteacher_upd7807_readport )
-		{ UPD7807_PORTA, UPD7807_PORTA, pteacher_upd7807_porta_r },
-		{ UPD7807_PORTT, UPD7807_PORTT, pteacher_keyboard_r },
-		{ UPD7807_PORTC, UPD7807_PORTC, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort pteacher_upd7807_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( UPD7807_PORTA, UPD7807_PORTA, pteacher_upd7807_porta_r ),
+		new IO_ReadPort( UPD7807_PORTT, UPD7807_PORTT, pteacher_keyboard_r ),
+		new IO_ReadPort( UPD7807_PORTC, UPD7807_PORTC, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( pteacher_upd7807_writeport )
-		{ UPD7807_PORTA, UPD7807_PORTA, pteacher_upd7807_porta_w },
-		{ UPD7807_PORTB, UPD7807_PORTB, DAC_0_signed_data_w },
-		{ UPD7807_PORTC, UPD7807_PORTC, pteacher_upd7807_portc_w },
-	PORT_END
+	public static IO_WritePort pteacher_upd7807_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( UPD7807_PORTA, UPD7807_PORTA, pteacher_upd7807_porta_w ),
+		new IO_WritePort( UPD7807_PORTB, UPD7807_PORTB, DAC_0_signed_data_w ),
+		new IO_WritePort( UPD7807_PORTC, UPD7807_PORTC, pteacher_upd7807_portc_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/**************************************************************************/

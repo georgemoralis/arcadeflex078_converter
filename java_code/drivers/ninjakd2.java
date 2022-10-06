@@ -320,64 +320,74 @@ public class ninjakd2
 			sample_start(0,i,0);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xc000, input_port_2_r },
-		{ 0xc001, 0xc001, input_port_0_r },
-		{ 0xc002, 0xc002, input_port_1_r },
-		{ 0xc003, 0xc003, input_port_3_r },
-		{ 0xc004, 0xc004, input_port_4_r },
-		{ 0xc200, 0xc200, MRA_RAM },
-		{ 0xc201, 0xc201, MRA_RAM },		// unknown but used
-		{ 0xc202, 0xc202, ninjakd2_bankselect_r },
-		{ 0xc203, 0xc203, MRA_RAM },
-		{ 0xc208, 0xc209, MRA_RAM },
-		{ 0xc20a, 0xc20b, MRA_RAM },
-		{ 0xc20c, 0xc20c, MRA_RAM },
-		{ 0xc800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_2_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_0_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_1_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_4_r ),
+		new Memory_ReadAddress( 0xc200, 0xc200, MRA_RAM ),
+		new Memory_ReadAddress( 0xc201, 0xc201, MRA_RAM ),		// unknown but used
+		new Memory_ReadAddress( 0xc202, 0xc202, ninjakd2_bankselect_r ),
+		new Memory_ReadAddress( 0xc203, 0xc203, MRA_RAM ),
+		new Memory_ReadAddress( 0xc208, 0xc209, MRA_RAM ),
+		new Memory_ReadAddress( 0xc20a, 0xc20b, MRA_RAM ),
+		new Memory_ReadAddress( 0xc20c, 0xc20c, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc200, 0xc200, soundlatch_w },
-		{ 0xc201, 0xc201, MWA_RAM },		// unknown but used
-		{ 0xc202, 0xc202, ninjakd2_bankselect_w },
-		{ 0xc203, 0xc203, ninjakd2_sprite_overdraw_w, &ninjakd2_spoverdraw_ram },
-		{ 0xc208, 0xc209, MWA_RAM, &ninjakd2_scrollx_ram },
-		{ 0xc20a, 0xc20b, MWA_RAM, &ninjakd2_scrolly_ram },
-		{ 0xc20c, 0xc20c, ninjakd2_background_enable_w, &ninjakd2_bgenable_ram },
-		{ 0xc800, 0xcdff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram },
-		{ 0xd000, 0xd7ff, ninjakd2_fgvideoram_w, &ninjakd2_foreground_videoram, &ninjakd2_foregroundram_size },
-		{ 0xd800, 0xdfff, ninjakd2_bgvideoram_w, &ninjakd2_background_videoram, &ninjakd2_backgroundram_size },
-		{ 0xe000, 0xf9ff, MWA_RAM },
-		{ 0xfa00, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc200, 0xc200, soundlatch_w ),
+		new Memory_WriteAddress( 0xc201, 0xc201, MWA_RAM ),		// unknown but used
+		new Memory_WriteAddress( 0xc202, 0xc202, ninjakd2_bankselect_w ),
+		new Memory_WriteAddress( 0xc203, 0xc203, ninjakd2_sprite_overdraw_w, &ninjakd2_spoverdraw_ram ),
+		new Memory_WriteAddress( 0xc208, 0xc209, MWA_RAM, &ninjakd2_scrollx_ram ),
+		new Memory_WriteAddress( 0xc20a, 0xc20b, MWA_RAM, &ninjakd2_scrolly_ram ),
+		new Memory_WriteAddress( 0xc20c, 0xc20c, ninjakd2_background_enable_w, &ninjakd2_bgenable_ram ),
+		new Memory_WriteAddress( 0xc800, 0xcdff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, ninjakd2_fgvideoram_w, &ninjakd2_foreground_videoram, &ninjakd2_foregroundram_size ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, ninjakd2_bgvideoram_w, &ninjakd2_background_videoram, &ninjakd2_backgroundram_size ),
+		new Memory_WriteAddress( 0xe000, 0xf9ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xfa00, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( snd_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xe000, 0xe000, soundlatch_r },
-		{ 0xefee, 0xefee, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress snd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress( 0xefee, 0xefee, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( snd_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xf000, 0xf000, ninjakd2_pcm_play_w },	/* PCM SAMPLE OFFSET*256 */
-		{ 0xeff5, 0xeff6, MWA_NOP },			/* SAMPLE FREQUENCY ??? */
-		{ 0xefee, 0xefee, MWA_NOP },			/* CHIP COMMAND ?? */
-	MEMORY_END
+	public static Memory_WriteAddress snd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf000, ninjakd2_pcm_play_w ),	/* PCM SAMPLE OFFSET*256 */
+		new Memory_WriteAddress( 0xeff5, 0xeff6, MWA_NOP ),			/* SAMPLE FREQUENCY ??? */
+		new Memory_WriteAddress( 0xefee, 0xefee, MWA_NOP ),			/* CHIP COMMAND ?? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( snd_writeport )
-		{ 0x0000, 0x0000, YM2203_control_port_0_w },
-		{ 0x0001, 0x0001, YM2203_write_port_0_w },
-		{ 0x0080, 0x0080, YM2203_control_port_1_w },
-		{ 0x0081, 0x0081, YM2203_write_port_1_w },
-	PORT_END
+	public static IO_WritePort snd_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x0000, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x0001, 0x0001, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x0080, 0x0080, YM2203_control_port_1_w ),
+		new IO_WritePort( 0x0081, 0x0081, YM2203_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

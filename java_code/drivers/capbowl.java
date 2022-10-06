@@ -203,35 +203,41 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( capbowl_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },
-		{ 0x5000, 0x57ff, MRA_RAM },
-		{ 0x5800, 0x5fff, capbowl_tms34061_r },
-		{ 0x7000, 0x7000, track_0_r },	/* + other inputs */
-		{ 0x7800, 0x7800, track_1_r },	/* + other inputs */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress capbowl_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x5000, 0x57ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5800, 0x5fff, capbowl_tms34061_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, track_0_r ),	/* + other inputs */
+		new Memory_ReadAddress( 0x7800, 0x7800, track_1_r ),	/* + other inputs */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( bowlrama_readmem )
-		{ 0x0000, 0x001f, bowlrama_turbo_r },
-		{ 0x5000, 0x57ff, MRA_RAM },
-		{ 0x5800, 0x5fff, capbowl_tms34061_r },
-		{ 0x7000, 0x7000, track_0_r },	/* + other inputs */
-		{ 0x7800, 0x7800, track_1_r },	/* + other inputs */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bowlrama_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, bowlrama_turbo_r ),
+		new Memory_ReadAddress( 0x5000, 0x57ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5800, 0x5fff, capbowl_tms34061_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, track_0_r ),	/* + other inputs */
+		new Memory_ReadAddress( 0x7800, 0x7800, track_1_r ),	/* + other inputs */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x001f, bowlrama_turbo_w },	/* Bowl-O-Rama only */
-		{ 0x4000, 0x4000, MWA_RAM, &capbowl_rowaddress },
-		{ 0x4800, 0x4800, capbowl_rom_select_w },
-		{ 0x5000, 0x57ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x5800, 0x5fff, capbowl_tms34061_w },
-		{ 0x6000, 0x6000, capbowl_sndcmd_w },
-		{ 0x6800, 0x6800, track_reset_w },	/* + watchdog */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, bowlrama_turbo_w ),	/* Bowl-O-Rama only */
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_RAM, &capbowl_rowaddress ),
+		new Memory_WriteAddress( 0x4800, 0x4800, capbowl_rom_select_w ),
+		new Memory_WriteAddress( 0x5000, 0x57ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x5800, 0x5fff, capbowl_tms34061_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, capbowl_sndcmd_w ),
+		new Memory_WriteAddress( 0x6800, 0x6800, track_reset_w ),	/* + watchdog */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -241,22 +247,26 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x1000, 0x1000, YM2203_status_port_0_r },
-		{ 0x1001, 0x1001, YM2203_read_port_0_r },
-		{ 0x7000, 0x7000, soundlatch_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0x1001, 0x1001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, soundlatch_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM},
-		{ 0x1000, 0x1000, YM2203_control_port_0_w },
-		{ 0x1001, 0x1001, YM2203_write_port_0_w },
-		{ 0x2000, 0x2000, MWA_NOP },  /* Not hooked up according to the schematics */
-		{ 0x6000, 0x6000, DAC_0_data_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM),
+		new Memory_WriteAddress( 0x1000, 0x1000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x1001, 0x1001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, MWA_NOP ),  /* Not hooked up according to the schematics */
+		new Memory_WriteAddress( 0x6000, 0x6000, DAC_0_data_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -283,29 +283,37 @@ public class playmark
 	MEMORY_END
 	
 	
-	static MEMORY_READ_START( playmark_sound_readmem )
-		{ PIC16C57_MEMORY_READ },
+	public static Memory_ReadAddress playmark_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( PIC16C57_MEMORY_READ ),
 			/* $000 - 07F  Internal memory mapped registers */
 			/* $000 - 7FF  Program ROM for PIC16C57. Note: code is 12bits wide */
 			/*             View the ROM at $1000 in the debugger memory windows */
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( playmark_sound_writemem )
-		{ PIC16C57_MEMORY_WRITE },
-	MEMORY_END
+	public static Memory_WriteAddress playmark_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( PIC16C57_MEMORY_WRITE ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( playmark_sound_readport )
-		{ 0x00, 0x00, IORP_NOP },				/* 4 bit port */
-		{ 0x01, 0x01, playmark_snd_command_r },
-		{ 0x02, 0x02, playmark_snd_flag_r },
-		{ PIC16C5x_T0, PIC16C5x_T0, PIC16C5X_T0_clk_r },
-	PORT_END
+	public static IO_ReadPort playmark_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, IORP_NOP ),				/* 4 bit port */
+		new IO_ReadPort( 0x01, 0x01, playmark_snd_command_r ),
+		new IO_ReadPort( 0x02, 0x02, playmark_snd_flag_r ),
+		new IO_ReadPort( PIC16C5x_T0, PIC16C5x_T0, PIC16C5X_T0_clk_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( playmark_sound_writeport )
-		{ 0x00, 0x00, IOWP_NOP },				/* 4 bit port */
-		{ 0x01, 0x01, playmark_oki_w },
-		{ 0x02, 0x02, playmark_snd_control_w },
-	PORT_END
+	public static IO_WritePort playmark_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, IOWP_NOP ),				/* 4 bit port */
+		new IO_WritePort( 0x01, 0x01, playmark_oki_w ),
+		new IO_WritePort( 0x02, 0x02, playmark_snd_control_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

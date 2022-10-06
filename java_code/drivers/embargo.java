@@ -112,33 +112,41 @@ public class embargo
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x1e00, 0x3dff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1e00, 0x3dff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x1e00, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x3dff, embargo_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1e00, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x3dff, embargo_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x01, 0x01, input_port_0_r },
-		{ 0x02, 0x02, embargo_dial_r },
-		{ S2650_DATA_PORT, S2650_DATA_PORT, input_port_2_r },
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, embargo_input_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, input_port_0_r ),
+		new IO_ReadPort( 0x02, 0x02, embargo_dial_r ),
+		new IO_ReadPort( S2650_DATA_PORT, S2650_DATA_PORT, input_port_2_r ),
+		new IO_ReadPort( S2650_CTRL_PORT, S2650_CTRL_PORT, embargo_input_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x01, 0x01, embargo_port1_w },
-		{ 0x02, 0x02, embargo_port2_w },
-		{ 0x03, 0x03, IOWP_NOP }, /* always 0xFE */
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, embargo_input_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x01, embargo_port1_w ),
+		new IO_WritePort( 0x02, 0x02, embargo_port2_w ),
+		new IO_WritePort( 0x03, 0x03, IOWP_NOP ), /* always 0xFE */
+		new IO_WritePort( S2650_CTRL_PORT, S2650_CTRL_PORT, embargo_input_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( embargo )

@@ -157,91 +157,101 @@ public class exidy
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x3fff, MRA_ROM },			/* Targ, Spectar only */
-		{ 0x4000, 0x43ff, videoram_r },
-		{ 0x4400, 0x47ff, videoram_r },			/* mirror (sidetrac requires this) */
-		{ 0x4800, 0x4fff, MRA_RAM },
-		{ 0x5100, 0x5100, input_port_0_r },		/* DSW */
-		{ 0x5101, 0x5101, input_port_1_r },		/* IN0 */
-		{ 0x5103, 0x5103, exidy_interrupt_r },	/* IN1 */
-		{ 0x5105, 0x5105, input_port_4_r },		/* IN3 - Targ, Spectar only */
-		{ 0x5200, 0x520F, pia_0_r },
-		{ 0x5213, 0x5213, input_port_3_r },		/* IN2 */
-		{ 0x6000, 0x6fff, MRA_RAM },			/* Pepper II only */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x3fff, MRA_ROM ),			/* Targ, Spectar only */
+		new Memory_ReadAddress( 0x4000, 0x43ff, videoram_r ),
+		new Memory_ReadAddress( 0x4400, 0x47ff, videoram_r ),			/* mirror (sidetrac requires this) */
+		new Memory_ReadAddress( 0x4800, 0x4fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5100, 0x5100, input_port_0_r ),		/* DSW */
+		new Memory_ReadAddress( 0x5101, 0x5101, input_port_1_r ),		/* IN0 */
+		new Memory_ReadAddress( 0x5103, 0x5103, exidy_interrupt_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5105, 0x5105, input_port_4_r ),		/* IN3 - Targ, Spectar only */
+		new Memory_ReadAddress( 0x5200, 0x520F, pia_0_r ),
+		new Memory_ReadAddress( 0x5213, 0x5213, input_port_3_r ),		/* IN2 */
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),			/* Pepper II only */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0800, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, videoram_w },
-		{ 0x4800, 0x4fff, exidy_characterram_w, &exidy_characterram },
-		{ 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos },
-		{ 0x5040, 0x5040, MWA_RAM, &exidy_sprite1_ypos },
-		{ 0x5080, 0x5080, MWA_RAM, &exidy_sprite2_xpos },
-		{ 0x50C0, 0x50C0, MWA_RAM, &exidy_sprite2_ypos },
-		{ 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no },
-		{ 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable },
-		{ 0x5200, 0x520F, pia_0_w },
-		{ 0x5210, 0x5212, exidy_color_w, &exidy_color_latch },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, videoram_w ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, exidy_characterram_w, &exidy_characterram ),
+		new Memory_WriteAddress( 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos ),
+		new Memory_WriteAddress( 0x5040, 0x5040, MWA_RAM, &exidy_sprite1_ypos ),
+		new Memory_WriteAddress( 0x5080, 0x5080, MWA_RAM, &exidy_sprite2_xpos ),
+		new Memory_WriteAddress( 0x50C0, 0x50C0, MWA_RAM, &exidy_sprite2_ypos ),
+		new Memory_WriteAddress( 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no ),
+		new Memory_WriteAddress( 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable ),
+		new Memory_WriteAddress( 0x5200, 0x520F, pia_0_w ),
+		new Memory_WriteAddress( 0x5210, 0x5212, exidy_color_w, &exidy_color_latch ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rallys_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, videoram_w },
-		{ 0x4800, 0x4fff, exidy_characterram_w, &exidy_characterram },
-		{ 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos },
-		{ 0x5001, 0x5001, MWA_RAM, &exidy_sprite1_ypos },
-		{ 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no },
-		{ 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable },
-		{ 0x5200, 0x520F, pia_0_w },
-		{ 0x5210, 0x5212, exidy_color_w, &exidy_color_latch },
-		{ 0x5300, 0x5300, MWA_RAM, &exidy_sprite2_xpos },
-		{ 0x5301, 0x5301, MWA_RAM, &exidy_sprite2_ypos },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress rallys_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, videoram_w ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, exidy_characterram_w, &exidy_characterram ),
+		new Memory_WriteAddress( 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos ),
+		new Memory_WriteAddress( 0x5001, 0x5001, MWA_RAM, &exidy_sprite1_ypos ),
+		new Memory_WriteAddress( 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no ),
+		new Memory_WriteAddress( 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable ),
+		new Memory_WriteAddress( 0x5200, 0x520F, pia_0_w ),
+		new Memory_WriteAddress( 0x5210, 0x5212, exidy_color_w, &exidy_color_latch ),
+		new Memory_WriteAddress( 0x5300, 0x5300, MWA_RAM, &exidy_sprite2_xpos ),
+		new Memory_WriteAddress( 0x5301, 0x5301, MWA_RAM, &exidy_sprite2_ypos ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( fax_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0400, 0x07ff, MRA_RAM },			/* Fax only */
-		{ 0x1a00, 0x1a00, input_port_4_r },		/* IN3 - Fax only */
-		{ 0x1c00, 0x1c00, input_port_3_r },		/* IN2 - Fax only */
-		{ 0x2000, 0x3fff, MRA_BANK1 },			/* Fax only */
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x5100, 0x5100, input_port_0_r },		/* DSW */
-		{ 0x5101, 0x5101, input_port_1_r },		/* IN0 */
-		{ 0x5103, 0x5103, exidy_interrupt_r },	/* IN1 */
-		{ 0x5200, 0x520F, pia_0_r },
-		{ 0x5213, 0x5213, input_port_3_r },		/* IN2 */
-		{ 0x6000, 0x6fff, MRA_RAM },			/* Fax, Pepper II only */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress fax_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),			/* Fax only */
+		new Memory_ReadAddress( 0x1a00, 0x1a00, input_port_4_r ),		/* IN3 - Fax only */
+		new Memory_ReadAddress( 0x1c00, 0x1c00, input_port_3_r ),		/* IN2 - Fax only */
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK1 ),			/* Fax only */
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5100, 0x5100, input_port_0_r ),		/* DSW */
+		new Memory_ReadAddress( 0x5101, 0x5101, input_port_1_r ),		/* IN0 */
+		new Memory_ReadAddress( 0x5103, 0x5103, exidy_interrupt_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5200, 0x520F, pia_0_r ),
+		new Memory_ReadAddress( 0x5213, 0x5213, input_port_3_r ),		/* IN2 */
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),			/* Fax, Pepper II only */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( fax_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07ff, MWA_RAM },			/* Fax only */
-		{ 0x2000, 0x2000, fax_bank_select_w },	/* Fax only */
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos },
-		{ 0x5040, 0x5040, MWA_RAM, &exidy_sprite1_ypos },
-		{ 0x5080, 0x5080, MWA_RAM, &exidy_sprite2_xpos },
-		{ 0x50C0, 0x50C0, MWA_RAM, &exidy_sprite2_ypos },
-		{ 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no },
-		{ 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable },
-		{ 0x5200, 0x520F, pia_0_w },
-		{ 0x5210, 0x5212, exidy_color_w, &exidy_color_latch },
-		{ 0x5213, 0x5217, MWA_NOP },			/* empty control lines on color/sound board */
-		{ 0x6000, 0x6fff, exidy_characterram_w, &exidy_characterram }, /* two 6116 character RAMs */
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress fax_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM ),			/* Fax only */
+		new Memory_WriteAddress( 0x2000, 0x2000, fax_bank_select_w ),	/* Fax only */
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x5000, 0x5000, MWA_RAM, &exidy_sprite1_xpos ),
+		new Memory_WriteAddress( 0x5040, 0x5040, MWA_RAM, &exidy_sprite1_ypos ),
+		new Memory_WriteAddress( 0x5080, 0x5080, MWA_RAM, &exidy_sprite2_xpos ),
+		new Memory_WriteAddress( 0x50C0, 0x50C0, MWA_RAM, &exidy_sprite2_ypos ),
+		new Memory_WriteAddress( 0x5100, 0x5100, MWA_RAM, &exidy_sprite_no ),
+		new Memory_WriteAddress( 0x5101, 0x5101, MWA_RAM, &exidy_sprite_enable ),
+		new Memory_WriteAddress( 0x5200, 0x520F, pia_0_w ),
+		new Memory_WriteAddress( 0x5210, 0x5212, exidy_color_w, &exidy_color_latch ),
+		new Memory_WriteAddress( 0x5213, 0x5217, MWA_NOP ),			/* empty control lines on color/sound board */
+		new Memory_WriteAddress( 0x6000, 0x6fff, exidy_characterram_w, &exidy_characterram ), /* two 6116 character RAMs */
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -251,52 +261,64 @@ public class exidy
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0fff, exidy_shriot_r },
-		{ 0x1000, 0x100f, pia_1_r },
-		{ 0x1800, 0x1fff, exidy_sh8253_r },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x2800, 0x2fff, exidy_sh6840_r },
-		{ 0x5800, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, exidy_shriot_r ),
+		new Memory_ReadAddress( 0x1000, 0x100f, pia_1_r ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, exidy_sh8253_r ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x2fff, exidy_sh6840_r ),
+		new Memory_ReadAddress( 0x5800, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x0fff, exidy_shriot_w },
-		{ 0x1000, 0x100f, pia_1_w },
-		{ 0x1800, 0x1fff, exidy_sh8253_w },
-		{ 0x2000, 0x27ff, MWA_RAM },
-		{ 0x2800, 0x2fff, exidy_sh6840_w },
-		{ 0x3000, 0x3700, exidy_sfxctrl_w },
-		{ 0x5800, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, exidy_shriot_w ),
+		new Memory_WriteAddress( 0x1000, 0x100f, pia_1_w ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, exidy_sh8253_w ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, exidy_sh6840_w ),
+		new Memory_WriteAddress( 0x3000, 0x3700, exidy_sfxctrl_w ),
+		new Memory_WriteAddress( 0x5800, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( cvsd_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress cvsd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( cvsd_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress cvsd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( cvsd_iowrite )
-		{ 0x00, 0xff, mtrap_voiceio_w },
-	PORT_END
+	public static IO_WritePort cvsd_iowrite[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0xff, mtrap_voiceio_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( cvsd_ioread )
-		{ 0x00, 0xff, mtrap_voiceio_r },
-	PORT_END
+	public static IO_ReadPort cvsd_ioread[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0xff, mtrap_voiceio_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

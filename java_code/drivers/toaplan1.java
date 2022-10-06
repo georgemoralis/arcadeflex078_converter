@@ -380,102 +380,128 @@ public class toaplan1
 	
 	
 	/* Z80 memory/port maps */
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_RAM, &toaplan1_sharedram },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_RAM, &toaplan1_sharedram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( truxton_sound_readport )
-		{ 0x00, 0x00, input_port_1_r },	/* Player 1 */
-		{ 0x10, 0x10, input_port_2_r },	/* Player 2 */
-		{ 0x20, 0x20, input_port_5_r },	/* Coin/Start inputs */
-		{ 0x40, 0x40, input_port_3_r },	/* DSW1 */
-		{ 0x50, 0x50, input_port_4_r },	/* DSW2 */
-		{ 0x60, 0x60, YM3812_status_port_0_r },
-		{ 0x70, 0x70, input_port_6_r },	/* Territory Jumper Block for Truxton */
-	PORT_END
+	public static IO_ReadPort truxton_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_1_r ),	/* Player 1 */
+		new IO_ReadPort( 0x10, 0x10, input_port_2_r ),	/* Player 2 */
+		new IO_ReadPort( 0x20, 0x20, input_port_5_r ),	/* Coin/Start inputs */
+		new IO_ReadPort( 0x40, 0x40, input_port_3_r ),	/* DSW1 */
+		new IO_ReadPort( 0x50, 0x50, input_port_4_r ),	/* DSW2 */
+		new IO_ReadPort( 0x60, 0x60, YM3812_status_port_0_r ),
+		new IO_ReadPort( 0x70, 0x70, input_port_6_r ),	/* Territory Jumper Block for Truxton */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( truxton_sound_writeport )
-		{ 0x30, 0x30, toaplan1_coin_w },	/* Coin counter/lockout */
-		{ 0x60, 0x60, YM3812_control_port_0_w },
-		{ 0x61, 0x61, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort truxton_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x30, 0x30, toaplan1_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort( 0x60, 0x60, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x61, 0x61, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rallybik_sound_writeport )
-		{ 0x30, 0x30, rallybik_coin_w },	/* Coin counter/lockout */
-		{ 0x60, 0x60, YM3812_control_port_0_w },
-		{ 0x61, 0x61, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort rallybik_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x30, 0x30, rallybik_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort( 0x60, 0x60, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x61, 0x61, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hellfire_sound_readport )
-		{ 0x00, 0x00, input_port_3_r },	/* DSW1 */
-		{ 0x10, 0x10, input_port_4_r },	/* DSW2 */
-		{ 0x20, 0x20, input_port_6_r },	/* Territory Jumper Block */
-		{ 0x40, 0x40, input_port_1_r },	/* Player 1 */
-		{ 0x50, 0x50, input_port_2_r },	/* Player 2 */
-		{ 0x60, 0x60, input_port_5_r },	/* Coin/Start inputs */
-		{ 0x70, 0x70, YM3812_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort hellfire_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_3_r ),	/* DSW1 */
+		new IO_ReadPort( 0x10, 0x10, input_port_4_r ),	/* DSW2 */
+		new IO_ReadPort( 0x20, 0x20, input_port_6_r ),	/* Territory Jumper Block */
+		new IO_ReadPort( 0x40, 0x40, input_port_1_r ),	/* Player 1 */
+		new IO_ReadPort( 0x50, 0x50, input_port_2_r ),	/* Player 2 */
+		new IO_ReadPort( 0x60, 0x60, input_port_5_r ),	/* Coin/Start inputs */
+		new IO_ReadPort( 0x70, 0x70, YM3812_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hellfire_sound_writeport )
-		{ 0x30, 0x30, toaplan1_coin_w },	/* Coin counter/lockout */
-		{ 0x70, 0x70, YM3812_control_port_0_w },
-		{ 0x71, 0x71, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort hellfire_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x30, 0x30, toaplan1_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort( 0x70, 0x70, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x71, 0x71, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( zerowing_sound_readport )
-		{ 0x00, 0x00, input_port_1_r },	/* Player 1 */
-		{ 0x08, 0x08, input_port_2_r },	/* Player 2 */
-		{ 0x20, 0x20, input_port_3_r },	/* DSW1 */
-		{ 0x28, 0x28, input_port_4_r },	/* DSW2 */
-		{ 0x80, 0x80, input_port_5_r },	/* Coin/Start inputs */
-		{ 0x88, 0x88, input_port_6_r },	/* Territory Jumper Block */
-		{ 0xa8, 0xa8, YM3812_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort zerowing_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_1_r ),	/* Player 1 */
+		new IO_ReadPort( 0x08, 0x08, input_port_2_r ),	/* Player 2 */
+		new IO_ReadPort( 0x20, 0x20, input_port_3_r ),	/* DSW1 */
+		new IO_ReadPort( 0x28, 0x28, input_port_4_r ),	/* DSW2 */
+		new IO_ReadPort( 0x80, 0x80, input_port_5_r ),	/* Coin/Start inputs */
+		new IO_ReadPort( 0x88, 0x88, input_port_6_r ),	/* Territory Jumper Block */
+		new IO_ReadPort( 0xa8, 0xa8, YM3812_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( zerowing_sound_writeport )
-		{ 0xa0, 0xa0, toaplan1_coin_w },	/* Coin counter/lockout */
-		{ 0xa8, 0xa8, YM3812_control_port_0_w },
-		{ 0xa9, 0xa9, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort zerowing_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xa0, 0xa0, toaplan1_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort( 0xa8, 0xa8, YM3812_control_port_0_w ),
+		new IO_WritePort( 0xa9, 0xa9, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( demonwld_sound_readport )
-		{ 0x00, 0x00, YM3812_status_port_0_r },
-		{ 0x20, 0x20, input_port_6_r },
-		{ 0x60, 0x60, input_port_5_r },
-		{ 0x80, 0x80, input_port_1_r },
-		{ 0xa0, 0xa0, input_port_4_r },
-		{ 0xc0, 0xc0, input_port_2_r },
-		{ 0xe0, 0xe0, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort demonwld_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM3812_status_port_0_r ),
+		new IO_ReadPort( 0x20, 0x20, input_port_6_r ),
+		new IO_ReadPort( 0x60, 0x60, input_port_5_r ),
+		new IO_ReadPort( 0x80, 0x80, input_port_1_r ),
+		new IO_ReadPort( 0xa0, 0xa0, input_port_4_r ),
+		new IO_ReadPort( 0xc0, 0xc0, input_port_2_r ),
+		new IO_ReadPort( 0xe0, 0xe0, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( demonwld_sound_writeport )
-		{ 0x00, 0x00, YM3812_control_port_0_w },
-		{ 0x01, 0x01, YM3812_write_port_0_w },
-		{ 0x40, 0x40, toaplan1_coin_w },	/* Coin counter/lockout */
-	PORT_END
+	public static IO_WritePort demonwld_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM3812_write_port_0_w ),
+		new IO_WritePort( 0x40, 0x40, toaplan1_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( outzone_sound_readport )
-		{ 0x08, 0x08, input_port_3_r },
-		{ 0x0c, 0x0c, input_port_4_r },
-		{ 0x10, 0x10, input_port_5_r },
-		{ 0x14, 0x14, input_port_1_r },
-		{ 0x18, 0x18, input_port_2_r },
-		{ 0x1c, 0x1c, input_port_6_r },
-		{ 0x00, 0x00, YM3812_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort outzone_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x08, 0x08, input_port_3_r ),
+		new IO_ReadPort( 0x0c, 0x0c, input_port_4_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_5_r ),
+		new IO_ReadPort( 0x14, 0x14, input_port_1_r ),
+		new IO_ReadPort( 0x18, 0x18, input_port_2_r ),
+		new IO_ReadPort( 0x1c, 0x1c, input_port_6_r ),
+		new IO_ReadPort( 0x00, 0x00, YM3812_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( outzone_sound_writeport )
-		{ 0x00, 0x00, YM3812_control_port_0_w },
-		{ 0x01, 0x01, YM3812_write_port_0_w },
-		{ 0x04, 0x04, toaplan1_coin_w },	/* Coin counter/lockout */
-	PORT_END
+	public static IO_WritePort outzone_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM3812_write_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, toaplan1_coin_w ),	/* Coin counter/lockout */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* TMS32010 memory/port maps */

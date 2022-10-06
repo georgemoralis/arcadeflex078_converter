@@ -170,40 +170,48 @@ public class suna16
 								Back Street Soccer
 	***************************************************************************/
 	
-	static MEMORY_READ_START( bssoccer_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MRA_RAM					},	// RAM
-		{ 0xf801, 0xf801, YM2151_status_port_0_r	},	// YM2151
-		{ 0xfc00, 0xfc00, soundlatch_r				},	// From Main CPU
-	MEMORY_END
+	public static Memory_ReadAddress bssoccer_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xf801, 0xf801, YM2151_status_port_0_r	),	// YM2151
+		new Memory_ReadAddress( 0xfc00, 0xfc00, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bssoccer_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MWA_RAM					},	// RAM
-		{ 0xf800, 0xf800, YM2151_register_port_0_w	},	// YM2151
-		{ 0xf801, 0xf801, YM2151_data_port_0_w		},	//
-		{ 0xfd00, 0xfd00, soundlatch2_w 			},	// To PCM Z80 #1
-		{ 0xfe00, 0xfe00, soundlatch3_w 			},	// To PCM Z80 #2
-	MEMORY_END
+	public static Memory_WriteAddress bssoccer_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xf800, 0xf800, YM2151_register_port_0_w	),	// YM2151
+		new Memory_WriteAddress( 0xf801, 0xf801, YM2151_data_port_0_w		),	//
+		new Memory_WriteAddress( 0xfd00, 0xfd00, soundlatch2_w 			),	// To PCM Z80 #1
+		new Memory_WriteAddress( 0xfe00, 0xfe00, soundlatch3_w 			),	// To PCM Z80 #2
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 									Ultra Balloon
 	***************************************************************************/
 	
-	static MEMORY_READ_START( uballoon_sound_readmem )
-		{ 0x0000, 0xefff, MRA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MRA_RAM					},	// RAM
-		{ 0xf801, 0xf801, YM2151_status_port_0_r	},	// YM2151
-		{ 0xfc00, 0xfc00, soundlatch_r				},	// From Main CPU
-	MEMORY_END
+	public static Memory_ReadAddress uballoon_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xf801, 0xf801, YM2151_status_port_0_r	),	// YM2151
+		new Memory_ReadAddress( 0xfc00, 0xfc00, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( uballoon_sound_writemem )
-		{ 0x0000, 0xefff, MWA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MWA_RAM					},	// RAM
-		{ 0xf800, 0xf800, YM2151_register_port_0_w	},	// YM2151
-		{ 0xf801, 0xf801, YM2151_data_port_0_w		},	//
-		{ 0xfc00, 0xfc00, soundlatch2_w				},	// To PCM Z80
-	MEMORY_END
+	public static Memory_WriteAddress uballoon_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xf800, 0xf800, YM2151_register_port_0_w	),	// YM2151
+		new Memory_WriteAddress( 0xf801, 0xf801, YM2151_data_port_0_w		),	//
+		new Memory_WriteAddress( 0xfc00, 0xfc00, soundlatch2_w				),	// To PCM Z80
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -243,22 +251,30 @@ public class suna16
 	
 	/* Memory maps: Yes, *no* RAM */
 	
-	static MEMORY_READ_START( bssoccer_pcm_1_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM			},	// ROM
-		{ 0x1000, 0xffff, MRA_BANK1 		},	// Banked ROM
-	MEMORY_END
-	static MEMORY_WRITE_START( bssoccer_pcm_1_writemem )
-		{ 0x0000, 0xffff, MWA_ROM			},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress bssoccer_pcm_1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM			),	// ROM
+		new Memory_ReadAddress( 0x1000, 0xffff, MRA_BANK1 		),	// Banked ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress bssoccer_pcm_1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xffff, MWA_ROM			),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( bssoccer_pcm_2_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM			},	// ROM
-		{ 0x1000, 0xffff, MRA_BANK2 		},	// Banked ROM
-	MEMORY_END
-	static MEMORY_WRITE_START( bssoccer_pcm_2_writemem )
-		{ 0x0000, 0xffff, MWA_ROM			},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress bssoccer_pcm_2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM			),	// ROM
+		new Memory_ReadAddress( 0x1000, 0xffff, MRA_BANK2 		),	// Banked ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress bssoccer_pcm_2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xffff, MWA_ROM			),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -276,21 +292,29 @@ public class suna16
 	
 	
 	
-	static PORT_READ_START( bssoccer_pcm_1_readport )
-		{ 0x00, 0x00, soundlatch2_r 				},	// From The Sound Z80
-	PORT_END
-	static PORT_WRITE_START( bssoccer_pcm_1_writeport )
-		{ 0x00, 0x01, bssoccer_DAC_1_w				},	// 2 x DAC
-		{ 0x03, 0x03, bssoccer_pcm_1_bankswitch_w	},	// Rom Bank
-	PORT_END
+	public static IO_ReadPort bssoccer_pcm_1_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch2_r 				),	// From The Sound Z80
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort bssoccer_pcm_1_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, bssoccer_DAC_1_w				),	// 2 x DAC
+		new IO_WritePort( 0x03, 0x03, bssoccer_pcm_1_bankswitch_w	),	// Rom Bank
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( bssoccer_pcm_2_readport )
-		{ 0x00, 0x00, soundlatch3_r 				},	// From The Sound Z80
-	PORT_END
-	static PORT_WRITE_START( bssoccer_pcm_2_writeport )
-		{ 0x00, 0x01, bssoccer_DAC_2_w				},	// 2 x DAC
-		{ 0x03, 0x03, bssoccer_pcm_2_bankswitch_w	},	// Rom Bank
-	PORT_END
+	public static IO_ReadPort bssoccer_pcm_2_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch3_r 				),	// From The Sound Z80
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort bssoccer_pcm_2_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, bssoccer_DAC_2_w				),	// 2 x DAC
+		new IO_WritePort( 0x03, 0x03, bssoccer_pcm_2_bankswitch_w	),	// Rom Bank
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -310,22 +334,30 @@ public class suna16
 	
 	/* Memory maps: Yes, *no* RAM */
 	
-	static MEMORY_READ_START( uballoon_pcm_1_readmem )
-		{ 0x0000, 0x03ff, MRA_ROM			},	// ROM
-		{ 0x0400, 0xffff, MRA_BANK1 		},	// Banked ROM
-	MEMORY_END
-	static MEMORY_WRITE_START( uballoon_pcm_1_writemem )
-		{ 0x0000, 0xffff, MWA_ROM			},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress uballoon_pcm_1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_ROM			),	// ROM
+		new Memory_ReadAddress( 0x0400, 0xffff, MRA_BANK1 		),	// Banked ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress uballoon_pcm_1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xffff, MWA_ROM			),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( uballoon_pcm_1_readport )
-		{ 0x00, 0x00, soundlatch2_r 				},	// From The Sound Z80
-	PORT_END
-	static PORT_WRITE_START( uballoon_pcm_1_writeport )
-		{ 0x00, 0x01, bssoccer_DAC_1_w				},	// 2 x DAC
-		{ 0x03, 0x03, uballoon_pcm_1_bankswitch_w	},	// Rom Bank
-	PORT_END
+	public static IO_ReadPort uballoon_pcm_1_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch2_r 				),	// From The Sound Z80
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort uballoon_pcm_1_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, bssoccer_DAC_1_w				),	// 2 x DAC
+		new IO_WritePort( 0x03, 0x03, uballoon_pcm_1_bankswitch_w	),	// Rom Bank
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	

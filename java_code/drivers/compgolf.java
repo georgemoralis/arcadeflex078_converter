@@ -176,31 +176,35 @@ public class compgolf
 		to have a flipscreen bit though */
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x1000, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x2061, MRA_RAM },
-		{ 0x3000, 0x3000, input_port_0_r }, //player 1 + start buttons
-		{ 0x3001, 0x3001, input_port_1_r }, //player 2 + vblank
-		{ 0x3002, 0x3002, input_port_2_r }, //dip-switches
-		{ 0x3003, 0x3003, input_port_3_r }, //coins
-		{ 0x3800, 0x3800, YM2203_status_port_0_r },
-		{ 0x4000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2061, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, input_port_0_r ), //player 1 + start buttons
+		new Memory_ReadAddress( 0x3001, 0x3001, input_port_1_r ), //player 2 + vblank
+		new Memory_ReadAddress( 0x3002, 0x3002, input_port_2_r ), //dip-switches
+		new Memory_ReadAddress( 0x3003, 0x3003, input_port_3_r ), //coins
+		new Memory_ReadAddress( 0x3800, 0x3800, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x1000, 0x17ff, compgolf_video_w ,&videoram },
-		{ 0x1800, 0x1fff, compgolf_back_w ,&compgolf_bg_ram },
-		{ 0x2000, 0x2061, MWA_RAM ,&spriteram },
-		{ 0x3001, 0x3001, compgolf_ctrl_w },
-		{ 0x3800, 0x3800, YM2203_control_port_0_w },
-		{ 0x3801, 0x3801, YM2203_write_port_0_w },
-		{ 0x4000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, compgolf_video_w ,&videoram ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, compgolf_back_w ,&compgolf_bg_ram ),
+		new Memory_WriteAddress( 0x2000, 0x2061, MWA_RAM ,&spriteram ),
+		new Memory_WriteAddress( 0x3001, 0x3001, compgolf_ctrl_w ),
+		new Memory_WriteAddress( 0x3800, 0x3800, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x3801, 0x3801, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	

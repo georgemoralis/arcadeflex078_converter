@@ -176,25 +176,29 @@ public class dragrace
 	}
 	
 	
-	static MEMORY_READ_START( dragrace_readmem )
-		{ 0x0080, 0x00ff, MRA_RAM },
-		{ 0x0800, 0x083f, dragrace_input_r },
-		{ 0x0c00, 0x0c00, dragrace_steering_r },
-		{ 0x0d00, 0x0d00, dragrace_scanline_r },
-		{ 0x1000, 0x1fff, MRA_ROM }, /* program */
-		{ 0xf800, 0xffff, MRA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_ReadAddress dragrace_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x083f, dragrace_input_r ),
+		new Memory_ReadAddress( 0x0c00, 0x0c00, dragrace_steering_r ),
+		new Memory_ReadAddress( 0x0d00, 0x0d00, dragrace_scanline_r ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_ROM ), /* program */
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ), /* program mirror */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dragrace_writemem )
-		{ 0x0080, 0x00ff, MWA_RAM },
-		{ 0x0900, 0x091f, dragrace_misc_w },
-		{ 0x0920, 0x093f, dragrace_misc_clear_w },
-		{ 0x0a00, 0x0aff, MWA_RAM, &dragrace_playfield_ram },
-		{ 0x0b00, 0x0bff, MWA_RAM, &dragrace_position_ram },
-		{ 0x0e00, 0x0e00, MWA_NOP }, /* watchdog (disabled in service mode) */
-		{ 0x1000, 0x1fff, MWA_ROM }, /* program */
-		{ 0xf800, 0xffff, MWA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_WriteAddress dragrace_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0900, 0x091f, dragrace_misc_w ),
+		new Memory_WriteAddress( 0x0920, 0x093f, dragrace_misc_clear_w ),
+		new Memory_WriteAddress( 0x0a00, 0x0aff, MWA_RAM, &dragrace_playfield_ram ),
+		new Memory_WriteAddress( 0x0b00, 0x0bff, MWA_RAM, &dragrace_position_ram ),
+		new Memory_WriteAddress( 0x0e00, 0x0e00, MWA_NOP ), /* watchdog (disabled in service mode) */
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_ROM ), /* program */
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ), /* program mirror */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( dragrace )

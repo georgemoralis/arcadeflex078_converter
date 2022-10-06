@@ -92,14 +92,16 @@ public class mogura
 	}
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x08, 0x08, input_port_0_r },
-		{ 0x0c, 0x0c, input_port_1_r },
-		{ 0x0d, 0x0d, input_port_2_r },
-		{ 0x0e, 0x0e, input_port_3_r },
-		{ 0x0f, 0x0f, input_port_4_r },
-		{ 0x10, 0x10, input_port_5_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x08, 0x08, input_port_0_r ),
+		new IO_ReadPort( 0x0c, 0x0c, input_port_1_r ),
+		new IO_ReadPort( 0x0d, 0x0d, input_port_2_r ),
+		new IO_ReadPort( 0x0e, 0x0e, input_port_3_r ),
+		new IO_ReadPort( 0x0f, 0x0f, input_port_4_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_5_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static WRITE_HANDLER(dac_w)
@@ -109,10 +111,12 @@ public class mogura
 	}
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, MWA_NOP }, // ??
-		{ 0x14, 0x14, dac_w },	/* 4 bit DAC x 2. MSB = left, LSB = right */
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ), // ??
+		new IO_WritePort( 0x14, 0x14, dac_w ),	/* 4 bit DAC x 2. MSB = left, LSB = right */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	WRITE_HANDLER ( mogura_gfxram_w )
@@ -125,19 +129,23 @@ public class mogura
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_RAM }, // main ram
-		{ 0xe000, 0xefff, MRA_RAM }, // ram based characters
-		{ 0xf000, 0xffff, MRA_RAM }, // tilemap
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ), // main ram
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ), // ram based characters
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ), // tilemap
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xefff, mogura_gfxram_w, &mogura_gfxram },
-		{ 0xf000, 0xffff, mogura_tileram_w, &mogura_tileram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xefff, mogura_gfxram_w, &mogura_gfxram ),
+		new Memory_WriteAddress( 0xf000, 0xffff, mogura_tileram_w, &mogura_tileram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( mogura )

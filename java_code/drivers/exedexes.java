@@ -45,49 +45,57 @@ public class exedexes
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc000, input_port_0_r },
-		{ 0xc001, 0xc001, input_port_1_r },
-		{ 0xc002, 0xc002, input_port_2_r },
-		{ 0xc003, 0xc003, input_port_3_r },
-		{ 0xc004, 0xc004, input_port_4_r },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xe000, 0xefff, MRA_RAM }, /* Work RAM */
-		{ 0xf000, 0xffff, MRA_RAM }, /* Sprite RAM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_4_r ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ), /* Work RAM */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ), /* Sprite RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc800, 0xc800, soundlatch_w },
-		{ 0xc804, 0xc804, exedexes_c804_w },	/* coin counters + text layer enable */
-		{ 0xc806, 0xc806, MWA_NOP }, /* Watchdog ?? */
-		{ 0xd000, 0xd3ff, exedexes_videoram_w, &videoram },
-		{ 0xd400, 0xd7ff, exedexes_colorram_w, &colorram },
-		{ 0xd800, 0xd801, MWA_RAM, &exedexes_nbg_yscroll },
-		{ 0xd802, 0xd803, MWA_RAM, &exedexes_nbg_xscroll },
-		{ 0xd804, 0xd805, MWA_RAM, &exedexes_bg_scroll },
-		{ 0xd807, 0xd807, exedexes_gfxctrl_w },	/* layer enables */
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
+		new Memory_WriteAddress( 0xc804, 0xc804, exedexes_c804_w ),	/* coin counters + text layer enable */
+		new Memory_WriteAddress( 0xc806, 0xc806, MWA_NOP ), /* Watchdog ?? */
+		new Memory_WriteAddress( 0xd000, 0xd3ff, exedexes_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, exedexes_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xd800, 0xd801, MWA_RAM, &exedexes_nbg_yscroll ),
+		new Memory_WriteAddress( 0xd802, 0xd803, MWA_RAM, &exedexes_nbg_xscroll ),
+		new Memory_WriteAddress( 0xd804, 0xd805, MWA_RAM, &exedexes_bg_scroll ),
+		new Memory_WriteAddress( 0xd807, 0xd807, exedexes_gfxctrl_w ),	/* layer enables */
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x6000, 0x6000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x8000, 0x8000, AY8910_control_port_0_w },
-		{ 0x8001, 0x8001, AY8910_write_port_0_w },
-		{ 0x8002, 0x8002, SN76496_0_w },
-		{ 0x8003, 0x8003, SN76496_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8001, 0x8001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x8002, 0x8002, SN76496_0_w ),
+		new Memory_WriteAddress( 0x8003, 0x8003, SN76496_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -145,43 +145,51 @@ public class docastle
 	extern VIDEO_START( docastle );
 	extern VIDEO_UPDATE( docastle );
 	
-	static MEMORY_READ_START( docastle_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x97ff, MRA_RAM },
-		{ 0xa000, 0xa008, docastle_shared0_r },
-		{ 0xb800, 0xbbff, videoram_r }, /* mirror of video ram */
-		{ 0xbc00, 0xbfff, colorram_r }, /* mirror of color ram */
-	MEMORY_END
+	public static Memory_ReadAddress docastle_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa008, docastle_shared0_r ),
+		new Memory_ReadAddress( 0xb800, 0xbbff, videoram_r ), /* mirror of video ram */
+		new Memory_ReadAddress( 0xbc00, 0xbfff, colorram_r ), /* mirror of color ram */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( docastle_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x97ff, MWA_RAM },
-		{ 0x9800, 0x99ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xa000, 0xa008, docastle_shared1_w },
-		{ 0xa800, 0xa800, watchdog_reset_w },
-		{ 0xb000, 0xb3ff, docastle_videoram_w, &videoram },
-		{ 0xb400, 0xb7ff, docastle_colorram_w, &colorram },
-		{ 0xe000, 0xe000, docastle_nmitrigger_w },
-	MEMORY_END
+	public static Memory_WriteAddress docastle_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x97ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9800, 0x99ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xa000, 0xa008, docastle_shared1_w ),
+		new Memory_WriteAddress( 0xa800, 0xa800, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, docastle_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xb400, 0xb7ff, docastle_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe000, docastle_nmitrigger_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( dorunrun_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x37ff, MRA_RAM },
-		{ 0x4000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xa008, docastle_shared0_r },
-	MEMORY_END
+	public static Memory_ReadAddress dorunrun_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x37ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa008, docastle_shared0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dorunrun_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x37ff, MWA_RAM },
-		{ 0x3800, 0x39ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x4000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa008, docastle_shared1_w },
-		{ 0xb000, 0xb3ff, docastle_videoram_w, &videoram },
-		{ 0xb400, 0xb7ff, docastle_colorram_w, &colorram },
-		{ 0xb800, 0xb800, docastle_nmitrigger_w },
-		{ 0xa800, 0xa800, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress dorunrun_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x37ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3800, 0x39ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa008, docastle_shared1_w ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, docastle_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xb400, 0xb7ff, docastle_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xb800, 0xb800, docastle_nmitrigger_w ),
+		new Memory_WriteAddress( 0xa800, 0xa800, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* what is this really, sound related? */
 	static READ_HANDLER(idsoccer_c000_r)
@@ -190,114 +198,132 @@ public class docastle
 		i ^= 0x80; return i;
 	}
 	
-	static MEMORY_READ_START( idsoccer_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x59ff, MRA_RAM },
-		{ 0x6000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xa008, docastle_shared0_r },
-		{ 0xb800, 0xbbff, videoram_r },
-		{ 0xbc00, 0xbfff, colorram_r },
-		{ 0xc000, 0xc000, idsoccer_c000_r }, /* ?? */
-	MEMORY_END
+	public static Memory_ReadAddress idsoccer_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x59ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa008, docastle_shared0_r ),
+		new Memory_ReadAddress( 0xb800, 0xbbff, videoram_r ),
+		new Memory_ReadAddress( 0xbc00, 0xbfff, colorram_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, idsoccer_c000_r ), /* ?? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( idsoccer_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x57ff, MWA_RAM },
-		{ 0x5800, 0x59ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x6000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa008, docastle_shared1_w },
-		{ 0xa800, 0xa800, watchdog_reset_w },
-		{ 0xb000, 0xb3ff, docastle_videoram_w, &videoram },
-		{ 0xb400, 0xb7ff, docastle_colorram_w, &colorram },
-		{ 0xc000, 0xc000, MWA_NOP }, /* ?? */
-		{ 0xe000, 0xe000, docastle_nmitrigger_w },
-	MEMORY_END
+	public static Memory_WriteAddress idsoccer_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x57ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5800, 0x59ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa008, docastle_shared1_w ),
+		new Memory_WriteAddress( 0xa800, 0xa800, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, docastle_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xb400, 0xb7ff, docastle_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_NOP ), /* ?? */
+		new Memory_WriteAddress( 0xe000, 0xe000, docastle_nmitrigger_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( docastle_readmem2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa008, docastle_shared1_r },
-		{ 0xc003, 0xc003, input_port_0_r },
-		{ 0xc083, 0xc083, input_port_0_r },
-		{ 0xc005, 0xc005, input_port_1_r },
-		{ 0xc085, 0xc085, input_port_1_r },
-		{ 0xc007, 0xc007, input_port_2_r },
-		{ 0xc087, 0xc087, input_port_2_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc082, 0xc082, input_port_3_r },
-		{ 0xc001, 0xc001, input_port_4_r },
-		{ 0xc081, 0xc081, input_port_4_r },
-		{ 0xc004, 0xc004, docastle_flipscreen_off_r },
-		{ 0xc084, 0xc084, docastle_flipscreen_on_r },
-	MEMORY_END
+	public static Memory_ReadAddress docastle_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa008, docastle_shared1_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_0_r ),
+		new Memory_ReadAddress( 0xc083, 0xc083, input_port_0_r ),
+		new Memory_ReadAddress( 0xc005, 0xc005, input_port_1_r ),
+		new Memory_ReadAddress( 0xc085, 0xc085, input_port_1_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, input_port_2_r ),
+		new Memory_ReadAddress( 0xc087, 0xc087, input_port_2_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc082, 0xc082, input_port_3_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_4_r ),
+		new Memory_ReadAddress( 0xc081, 0xc081, input_port_4_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, docastle_flipscreen_off_r ),
+		new Memory_ReadAddress( 0xc084, 0xc084, docastle_flipscreen_on_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( docastle_writemem2 )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xa000, 0xa008, docastle_shared0_w },
-		{ 0xe000, 0xe000, SN76496_0_w },
-		{ 0xe400, 0xe400, SN76496_1_w },
-		{ 0xe800, 0xe800, SN76496_2_w },
-		{ 0xec00, 0xec00, SN76496_3_w },
-		{ 0xc004, 0xc004, docastle_flipscreen_off_w },
-		{ 0xc084, 0xc084, docastle_flipscreen_on_w },
-	MEMORY_END
+	public static Memory_WriteAddress docastle_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa008, docastle_shared0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, SN76496_0_w ),
+		new Memory_WriteAddress( 0xe400, 0xe400, SN76496_1_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, SN76496_2_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, SN76496_3_w ),
+		new Memory_WriteAddress( 0xc004, 0xc004, docastle_flipscreen_off_w ),
+		new Memory_WriteAddress( 0xc084, 0xc084, docastle_flipscreen_on_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( idsoccer_readmem2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa008, docastle_shared1_r },
-		{ 0xc003, 0xc003, input_port_0_r },
-		{ 0xc083, 0xc083, input_port_0_r },
-		{ 0xc005, 0xc005, input_port_1_r },
-		{ 0xc085, 0xc085, input_port_1_r },
-		{ 0xc007, 0xc007, input_port_2_r },
-		{ 0xc087, 0xc087, input_port_2_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc082, 0xc082, input_port_3_r },
-		{ 0xc001, 0xc001, input_port_4_r },
-		{ 0xc081, 0xc081, input_port_4_r },
-		{ 0xc004, 0xc004, input_port_5_r },
-		{ 0xc084, 0xc084, input_port_5_r },
-	MEMORY_END
+	public static Memory_ReadAddress idsoccer_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa008, docastle_shared1_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_0_r ),
+		new Memory_ReadAddress( 0xc083, 0xc083, input_port_0_r ),
+		new Memory_ReadAddress( 0xc005, 0xc005, input_port_1_r ),
+		new Memory_ReadAddress( 0xc085, 0xc085, input_port_1_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, input_port_2_r ),
+		new Memory_ReadAddress( 0xc087, 0xc087, input_port_2_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc082, 0xc082, input_port_3_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_4_r ),
+		new Memory_ReadAddress( 0xc081, 0xc081, input_port_4_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_5_r ),
+		new Memory_ReadAddress( 0xc084, 0xc084, input_port_5_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( docastle_readmem3 )
-		{ 0x0000, 0x0100, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress docastle_readmem3[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0100, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( docastle_writemem3 )
-		{ 0x0000, 0x0100, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress docastle_writemem3[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0100, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( dorunrun_readmem2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xc003, 0xc003, input_port_0_r },
-		{ 0xc083, 0xc083, input_port_0_r },
-		{ 0xc005, 0xc005, input_port_1_r },
-		{ 0xc085, 0xc085, input_port_1_r },
-		{ 0xc007, 0xc007, input_port_2_r },
-		{ 0xc087, 0xc087, input_port_2_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc082, 0xc082, input_port_3_r },
-		{ 0xc001, 0xc001, input_port_4_r },
-		{ 0xc081, 0xc081, input_port_4_r },
-		{ 0xc004, 0xc004, docastle_flipscreen_off_r },
-		{ 0xc084, 0xc084, docastle_flipscreen_on_r },
-		{ 0xe000, 0xe008, docastle_shared1_r },
-	MEMORY_END
+	public static Memory_ReadAddress dorunrun_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_0_r ),
+		new Memory_ReadAddress( 0xc083, 0xc083, input_port_0_r ),
+		new Memory_ReadAddress( 0xc005, 0xc005, input_port_1_r ),
+		new Memory_ReadAddress( 0xc085, 0xc085, input_port_1_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, input_port_2_r ),
+		new Memory_ReadAddress( 0xc087, 0xc087, input_port_2_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc082, 0xc082, input_port_3_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_4_r ),
+		new Memory_ReadAddress( 0xc081, 0xc081, input_port_4_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, docastle_flipscreen_off_r ),
+		new Memory_ReadAddress( 0xc084, 0xc084, docastle_flipscreen_on_r ),
+		new Memory_ReadAddress( 0xe000, 0xe008, docastle_shared1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dorunrun_writemem2 )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xa000, 0xa000, SN76496_0_w },
-		{ 0xa400, 0xa400, SN76496_1_w },
-		{ 0xa800, 0xa800, SN76496_2_w },
-		{ 0xac00, 0xac00, SN76496_3_w },
-		{ 0xc004, 0xc004, docastle_flipscreen_off_w },
-		{ 0xc084, 0xc084, docastle_flipscreen_on_w },
-		{ 0xe000, 0xe008, docastle_shared0_w },
-	MEMORY_END
+	public static Memory_WriteAddress dorunrun_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, SN76496_0_w ),
+		new Memory_WriteAddress( 0xa400, 0xa400, SN76496_1_w ),
+		new Memory_WriteAddress( 0xa800, 0xa800, SN76496_2_w ),
+		new Memory_WriteAddress( 0xac00, 0xac00, SN76496_3_w ),
+		new Memory_WriteAddress( 0xc004, 0xc004, docastle_flipscreen_off_w ),
+		new Memory_WriteAddress( 0xc084, 0xc084, docastle_flipscreen_on_w ),
+		new Memory_WriteAddress( 0xe000, 0xe008, docastle_shared0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

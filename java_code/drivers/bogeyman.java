@@ -71,31 +71,35 @@ public class bogeyman
 	
 	/******************************************************************************/
 	
-	static MEMORY_READ_START( bogeyman_readmem )
-		{ 0x0000, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x21ff, MRA_RAM },
-		{ 0x2800, 0x2bff, MRA_RAM },
-		{ 0x3800, 0x3800, input_port_0_r },	/* Player 1 */
-		{ 0x3801, 0x3801, input_port_1_r },	/* Player 2 + VBL */
-		{ 0x3802, 0x3802, input_port_2_r },	/* Dip 1 */
-		{ 0x3803, 0x3803, input_port_3_r },	/* Dip 2 + Coins */
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bogeyman_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x21ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3800, 0x3800, input_port_0_r ),	/* Player 1 */
+		new Memory_ReadAddress( 0x3801, 0x3801, input_port_1_r ),	/* Player 2 + VBL */
+		new Memory_ReadAddress( 0x3802, 0x3802, input_port_2_r ),	/* Dip 1 */
+		new Memory_ReadAddress( 0x3803, 0x3803, input_port_3_r ),	/* Dip 2 + Coins */
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bogeyman_writemem )
-		{ 0x0000, 0x17ff, MWA_RAM },
-		{ 0x1800, 0x1bff, bogeyman_videoram2_w, &bogeyman_videoram2 },
-		{ 0x1c00, 0x1fff, bogeyman_colorram2_w, &bogeyman_colorram2 },
-	  	{ 0x2000, 0x20ff, bogeyman_videoram_w, &videoram },
-	  	{ 0x2100, 0x21ff, bogeyman_colorram_w, &colorram },
-		{ 0x2800, 0x2bff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x3000, 0x300f, bogeyman_paletteram_w, &paletteram },
-		{ 0x3800, 0x3800, bogeyman_8910_control_w },
-		{ 0x3801, 0x3801, bogeyman_8910_latch_w },
-		{ 0x3803, 0x3803, MWA_NOP },	/* ?? This has something to do with sound */
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bogeyman_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, bogeyman_videoram2_w, &bogeyman_videoram2 ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, bogeyman_colorram2_w, &bogeyman_colorram2 ),
+	  	new Memory_WriteAddress( 0x2000, 0x20ff, bogeyman_videoram_w, &videoram ),
+	  	new Memory_WriteAddress( 0x2100, 0x21ff, bogeyman_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x3000, 0x300f, bogeyman_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x3800, 0x3800, bogeyman_8910_control_w ),
+		new Memory_WriteAddress( 0x3801, 0x3801, bogeyman_8910_latch_w ),
+		new Memory_WriteAddress( 0x3803, 0x3803, MWA_NOP ),	/* ?? This has something to do with sound */
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

@@ -61,52 +61,60 @@ public class gng
 		coin_counter_w(offset,data);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3000, input_port_0_r },
-		{ 0x3001, 0x3001, input_port_1_r },
-		{ 0x3002, 0x3002, input_port_2_r },
-		{ 0x3003, 0x3003, input_port_3_r },
-		{ 0x3004, 0x3004, input_port_4_r },
-		{ 0x3c00, 0x3c00, MRA_NOP },	/* watchdog? */
-		{ 0x4000, 0x5fff, MRA_BANK1 },
-		{ 0x6000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, input_port_0_r ),
+		new Memory_ReadAddress( 0x3001, 0x3001, input_port_1_r ),
+		new Memory_ReadAddress( 0x3002, 0x3002, input_port_2_r ),
+		new Memory_ReadAddress( 0x3003, 0x3003, input_port_3_r ),
+		new Memory_ReadAddress( 0x3004, 0x3004, input_port_4_r ),
+		new Memory_ReadAddress( 0x3c00, 0x3c00, MRA_NOP ),	/* watchdog? */
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1dff, MWA_RAM },
-		{ 0x1e00, 0x1fff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x2000, 0x27ff, gng_fgvideoram_w, &gng_fgvideoram },
-		{ 0x2800, 0x2fff, gng_bgvideoram_w, &gng_bgvideoram },
-		{ 0x3800, 0x38ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 },
-		{ 0x3900, 0x39ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram },
-		{ 0x3a00, 0x3a00, soundlatch_w },
-		{ 0x3b08, 0x3b09, gng_bgscrollx_w },
-		{ 0x3b0a, 0x3b0b, gng_bgscrolly_w },
-		{ 0x3c00, 0x3c00, MWA_NOP },   /* watchdog? */
-		{ 0x3d00, 0x3d00, gng_flipscreen_w },
-	//	{ 0x3d01, 0x3d01, reset sound cpu?
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1dff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1e00, 0x1fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, gng_fgvideoram_w, &gng_fgvideoram ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, gng_bgvideoram_w, &gng_bgvideoram ),
+		new Memory_WriteAddress( 0x3800, 0x38ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0x3900, 0x39ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0x3a00, 0x3a00, soundlatch_w ),
+		new Memory_WriteAddress( 0x3b08, 0x3b09, gng_bgscrollx_w ),
+		new Memory_WriteAddress( 0x3b0a, 0x3b0b, gng_bgscrolly_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, MWA_NOP ),   /* watchdog? */
+		new Memory_WriteAddress( 0x3d00, 0x3d00, gng_flipscreen_w ),
+	//	new Memory_WriteAddress( 0x3d01, 0x3d01, reset sound cpu?
 		{ 0x3d02, 0x3d03, gng_coin_counter_w },
 		{ 0x3e00, 0x3e00, gng_bankswitch_w },
 		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc800, soundlatch_r },
-		{ 0x0000, 0x7fff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, soundlatch_r ),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xe000, 0xe000, YM2203_control_port_0_w },
-		{ 0xe001, 0xe001, YM2203_write_port_0_w },
-		{ 0xe002, 0xe002, YM2203_control_port_1_w },
-		{ 0xe003, 0xe003, YM2203_write_port_1_w },
-		{ 0x0000, 0x7fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

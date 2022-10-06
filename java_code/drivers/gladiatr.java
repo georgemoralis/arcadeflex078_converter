@@ -264,83 +264,103 @@ public class gladiatr
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x7fff, MRA_BANK1},
-		{ 0x8000, 0xbfff, MRA_BANK2},
-		{ 0xc000, 0xcbff, MRA_RAM },
-		{ 0xcc00, 0xcfff, gladiatr_video_registers_r },
-		{ 0xd000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK2),
+		new Memory_ReadAddress( 0xc000, 0xcbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xcc00, 0xcfff, gladiatr_video_registers_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcbff, MWA_RAM, &spriteram },
-		{ 0xcc00, 0xcfff, gladiatr_video_registers_w },
-		{ 0xd000, 0xd1ff, gladiatr_paletteram_rg_w, &paletteram },
-		{ 0xd200, 0xd3ff, MWA_RAM },
-		{ 0xd400, 0xd5ff, gladiatr_paletteram_b_w, &paletteram_2 },
-		{ 0xd600, 0xd7ff, MWA_RAM },
-		{ 0xd800, 0xdfff, videoram_w, &videoram },
-		{ 0xe000, 0xe7ff, colorram_w, &colorram },
-		{ 0xe800, 0xefff, MWA_RAM, &gladiator_text },
-		{ 0xf000, 0xf3ff, MWA_RAM, &generic_nvram, &generic_nvram_size }, /* battery backed RAM */
-		{ 0xf400, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcbff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, gladiatr_video_registers_w ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, gladiatr_paletteram_rg_w, &paletteram ),
+		new Memory_WriteAddress( 0xd200, 0xd3ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd400, 0xd5ff, gladiatr_paletteram_b_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xd600, 0xd7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &gladiator_text ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, MWA_RAM, &generic_nvram, &generic_nvram_size ), /* battery backed RAM */
+		new Memory_WriteAddress( 0xf400, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x2000, 0x2fff, glad_cpu_sound_command_r },
-		{ 0x4000, 0x7fff, MRA_BANK3 }, /* BANKED ROM */
-		{ 0x8000, 0xbfff, MRA_BANK4 }, /* BANKED ROM */
-		{ 0xc000, 0xffff, MRA_BANK5 }, /* BANKED ROM */
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x2000, 0x2fff, glad_cpu_sound_command_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK3 ), /* BANKED ROM */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK4 ), /* BANKED ROM */
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK5 ), /* BANKED ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x1000, 0x1fff, glad_adpcm_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x1000, 0x1fff, glad_adpcm_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x02, 0x02, gladiatr_bankswitch_r },
-		{ 0x9e, 0x9f, TAITO8741_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, gladiatr_bankswitch_r ),
+		new IO_ReadPort( 0x9e, 0x9f, TAITO8741_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x01, 0x01, gladiatr_spritebank_w},
-		{ 0x02, 0x02, gladiatr_bankswitch_w},
-		{ 0x04, 0x04, gladiatr_irq_patch_w}, /* !!! patch to 2nd CPU IRQ !!! */
-		{ 0x9e, 0x9f, TAITO8741_0_w },
-		{ 0xbf, 0xbf, IOWP_NOP },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x01, gladiatr_spritebank_w),
+		new IO_WritePort( 0x02, 0x02, gladiatr_bankswitch_w),
+		new IO_WritePort( 0x04, 0x04, gladiatr_irq_patch_w), /* !!! patch to 2nd CPU IRQ !!! */
+		new IO_WritePort( 0x9e, 0x9f, TAITO8741_0_w ),
+		new IO_WritePort( 0xbf, 0xbf, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_cpu2 )
-		{ 0x00, 0x00, YM2203_status_port_0_r },
-		{ 0x01, 0x01, YM2203_read_port_0_r },
-		{ 0x20, 0x21, TAITO8741_1_r },
-		{ 0x40, 0x40, IORP_NOP },
-		{ 0x60, 0x61, TAITO8741_2_r },
-		{ 0x80, 0x81, TAITO8741_3_r },
-	PORT_END
+	public static IO_ReadPort readport_cpu2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x20, 0x21, TAITO8741_1_r ),
+		new IO_ReadPort( 0x40, 0x40, IORP_NOP ),
+		new IO_ReadPort( 0x60, 0x61, TAITO8741_2_r ),
+		new IO_ReadPort( 0x80, 0x81, TAITO8741_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_cpu2 )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-		{ 0x20, 0x21, TAITO8741_1_w },
-		{ 0x60, 0x61, TAITO8741_2_w },
-		{ 0x80, 0x81, TAITO8741_3_w },
-	/*	{ 0x40, 0x40, glad_sh_irq_clr }, */
-		{ 0xe0, 0xe0, glad_cpu_sound_command_w },
-	PORT_END
+	public static IO_WritePort writeport_cpu2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x20, 0x21, TAITO8741_1_w ),
+		new IO_WritePort( 0x60, 0x61, TAITO8741_2_w ),
+		new IO_WritePort( 0x80, 0x81, TAITO8741_3_w ),
+	/*	new IO_WritePort( 0x40, 0x40, glad_sh_irq_clr ), */
+		new IO_WritePort( 0xe0, 0xe0, glad_cpu_sound_command_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( gladiatr )
 		PORT_START		/* DSW1 (8741-0 parallel port)*/

@@ -336,126 +336,158 @@ public class royalmah
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },	// banked ROMs not present in royalmah
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),	// banked ROMs not present in royalmah
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x6fff, royalmah_rom_w },
-		{ 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, royalmah_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, royalmah_rom_w ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, royalmah_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( royalmah_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-	PORT_END
+	public static IO_ReadPort royalmah_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( royalmah_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-	PORT_END
+	public static IO_WritePort royalmah_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( suzume_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x80, 0x80, suzume_dsw_r },
-	PORT_END
+	public static IO_ReadPort suzume_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x80, 0x80, suzume_dsw_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( suzume_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x81, 0x81, suzume_bank_w },
-	PORT_END
+	public static IO_WritePort suzume_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x81, 0x81, suzume_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( dondenmj_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x85, 0x85, input_port_12_r },	// DSW2
-		{ 0x86, 0x86, input_port_13_r },	// DSW3
-	PORT_END
+	public static IO_ReadPort dondenmj_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x85, 0x85, input_port_12_r ),	// DSW2
+		new IO_ReadPort( 0x86, 0x86, input_port_13_r ),	// DSW3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( dondenmj_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x87, 0x87, dynax_bank_w },
-	PORT_END
+	public static IO_WritePort dondenmj_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x87, 0x87, dynax_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mjdiplob_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x62, 0x62, input_port_12_r },	// DSW2
-		{ 0x63, 0x63, input_port_13_r },	// DSW3
-	PORT_END
+	public static IO_ReadPort mjdiplob_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x62, 0x62, input_port_12_r ),	// DSW2
+		new IO_ReadPort( 0x63, 0x63, input_port_13_r ),	// DSW3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mjdiplob_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x61, 0x61, tontonb_bank_w },
-	PORT_END
+	public static IO_WritePort mjdiplob_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x61, 0x61, tontonb_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( tontonb_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x46, 0x46, input_port_13_r },	// DSW2
-		{ 0x47, 0x47, input_port_12_r },	// DSW3
-	PORT_END
+	public static IO_ReadPort tontonb_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x46, 0x46, input_port_13_r ),	// DSW2
+		new IO_ReadPort( 0x47, 0x47, input_port_12_r ),	// DSW3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( tontonb_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x44, 0x44, tontonb_bank_w },
-	PORT_END
+	public static IO_WritePort tontonb_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x44, 0x44, tontonb_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( majs101b_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x00, 0x00, majs101b_dsw_r },
-	PORT_END
+	public static IO_ReadPort majs101b_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x00, 0x00, majs101b_dsw_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( majs101b_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, royalmah_palbank_w },
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x00, 0x00, dynax_bank_w },
-	PORT_END
+	public static IO_WritePort majs101b_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, royalmah_palbank_w ),
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x00, 0x00, dynax_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mjderngr_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-	//	{ 0x10, 0x10, input_port_11_r },
-		{ 0x11, 0x11, input_port_10_r },
-		{ 0x40, 0x40, input_port_13_r },	// DSW2
-		{ 0x4c, 0x4c, input_port_12_r },	// DSW3
-	PORT_END
+	public static IO_ReadPort mjderngr_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+	//	new IO_ReadPort( 0x10, 0x10, input_port_11_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_10_r ),
+		new IO_ReadPort( 0x40, 0x40, input_port_13_r ),	// DSW2
+		new IO_ReadPort( 0x4c, 0x4c, input_port_12_r ),	// DSW3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mjderngr_writeport )
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x03, 0x03, AY8910_control_port_0_w },
-		{ 0x10, 0x10, mjderngr_coin_w },	// palette bank is set separately
-		{ 0x11, 0x11, royalmah_input_port_select_w },
-		{ 0x20, 0x20, dynax_bank_w },
-		{ 0x60, 0x60, mjderngr_palbank_w },
-	PORT_END
+	public static IO_WritePort mjderngr_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, mjderngr_coin_w ),	// palette bank is set separately
+		new IO_WritePort( 0x11, 0x11, royalmah_input_port_select_w ),
+		new IO_WritePort( 0x20, 0x20, dynax_bank_w ),
+		new IO_WritePort( 0x60, 0x60, mjderngr_palbank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -45,88 +45,102 @@ public class espial
 	
 	
 	
-	static MEMORY_READ_START( espial_readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x5800, 0x5fff, MRA_RAM },
-		{ 0x6081, 0x6081, input_port_0_r },
-		{ 0x6082, 0x6082, input_port_1_r },
-		{ 0x6083, 0x6083, input_port_2_r },
-		{ 0x6084, 0x6084, input_port_3_r },
-		{ 0x6090, 0x6090, soundlatch_r },	/* the main CPU reads the command back from the slave */
-		{ 0x7000, 0x7000, watchdog_reset_r },
-		{ 0x8000, 0x803f, MRA_RAM },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8c00, 0x903f, MRA_RAM },
-		{ 0x9400, 0x97ff, MRA_RAM },
-		{ 0xc000, 0xcfff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress espial_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5800, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6081, 0x6081, input_port_0_r ),
+		new Memory_ReadAddress( 0x6082, 0x6082, input_port_1_r ),
+		new Memory_ReadAddress( 0x6083, 0x6083, input_port_2_r ),
+		new Memory_ReadAddress( 0x6084, 0x6084, input_port_3_r ),
+		new Memory_ReadAddress( 0x6090, 0x6090, soundlatch_r ),	/* the main CPU reads the command back from the slave */
+		new Memory_ReadAddress( 0x7000, 0x7000, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x8000, 0x803f, MRA_RAM ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8c00, 0x903f, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( espial_writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x5800, 0x5fff, MWA_RAM },
-		{ 0x6090, 0x6090, zodiac_master_soundlatch_w },
-		{ 0x7000, 0x7000, watchdog_reset_w },
-		{ 0x7100, 0x7100, zodiac_master_interrupt_enable_w },
-		{ 0x7200, 0x7200, espial_flipscreen_w },
-		{ 0x8000, 0x801f, MWA_RAM, &espial_spriteram_1 },
-		{ 0x8400, 0x87ff, espial_videoram_w, &espial_videoram },
-		{ 0x8800, 0x880f, MWA_RAM, &espial_spriteram_3 },
-		{ 0x8c00, 0x8fff, espial_attributeram_w, &espial_attributeram },
-		{ 0x9000, 0x901f, MWA_RAM, &espial_spriteram_2 },
-		{ 0x9020, 0x903f, espial_scrollram_w, &espial_scrollram },
-		{ 0x9400, 0x97ff, espial_colorram_w, &espial_colorram },
-		{ 0xc000, 0xcfff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress espial_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5800, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6090, 0x6090, zodiac_master_soundlatch_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x7100, 0x7100, zodiac_master_interrupt_enable_w ),
+		new Memory_WriteAddress( 0x7200, 0x7200, espial_flipscreen_w ),
+		new Memory_WriteAddress( 0x8000, 0x801f, MWA_RAM, &espial_spriteram_1 ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, espial_videoram_w, &espial_videoram ),
+		new Memory_WriteAddress( 0x8800, 0x880f, MWA_RAM, &espial_spriteram_3 ),
+		new Memory_WriteAddress( 0x8c00, 0x8fff, espial_attributeram_w, &espial_attributeram ),
+		new Memory_WriteAddress( 0x9000, 0x901f, MWA_RAM, &espial_spriteram_2 ),
+		new Memory_WriteAddress( 0x9020, 0x903f, espial_scrollram_w, &espial_scrollram ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, espial_colorram_w, &espial_colorram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* there are a lot of unmapped reads from all over memory as the
 	   code uses POP instructions in a delay loop */
-	static MEMORY_READ_START( netwars_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x5800, 0x5fff, MRA_RAM },
-		{ 0x6081, 0x6081, input_port_0_r },
-		{ 0x6082, 0x6082, input_port_1_r },
-		{ 0x6083, 0x6083, input_port_2_r },
-		{ 0x6084, 0x6084, input_port_3_r },
-		{ 0x6090, 0x6090, soundlatch_r },	/* the main CPU reads the command back from the slave */
-		{ 0x7000, 0x7000, watchdog_reset_r },
-		{ 0x8000, 0x97ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress netwars_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5800, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6081, 0x6081, input_port_0_r ),
+		new Memory_ReadAddress( 0x6082, 0x6082, input_port_1_r ),
+		new Memory_ReadAddress( 0x6083, 0x6083, input_port_2_r ),
+		new Memory_ReadAddress( 0x6084, 0x6084, input_port_3_r ),
+		new Memory_ReadAddress( 0x6090, 0x6090, soundlatch_r ),	/* the main CPU reads the command back from the slave */
+		new Memory_ReadAddress( 0x7000, 0x7000, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x8000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( netwars_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x5800, 0x5fff, MWA_RAM },
-		{ 0x6090, 0x6090, zodiac_master_soundlatch_w },
-		{ 0x7000, 0x7000, watchdog_reset_w },
-		{ 0x7100, 0x7100, zodiac_master_interrupt_enable_w },
-		{ 0x7200, 0x7200, espial_flipscreen_w },
-		{ 0x8000, 0x801f, MWA_RAM, &espial_spriteram_1 },
-		{ 0x8000, 0x87ff, espial_videoram_w, &espial_videoram },
-		{ 0x8800, 0x880f, MWA_RAM, &espial_spriteram_3 },
-		{ 0x8800, 0x8fff, espial_attributeram_w, &espial_attributeram },
-		{ 0x9000, 0x901f, MWA_RAM, &espial_spriteram_2 },
-		{ 0x9020, 0x903f, espial_scrollram_w, &espial_scrollram },
-		{ 0x9000, 0x97ff, espial_colorram_w, &espial_colorram },
-	MEMORY_END
+	public static Memory_WriteAddress netwars_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5800, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6090, 0x6090, zodiac_master_soundlatch_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x7100, 0x7100, zodiac_master_interrupt_enable_w ),
+		new Memory_WriteAddress( 0x7200, 0x7200, espial_flipscreen_w ),
+		new Memory_WriteAddress( 0x8000, 0x801f, MWA_RAM, &espial_spriteram_1 ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, espial_videoram_w, &espial_videoram ),
+		new Memory_WriteAddress( 0x8800, 0x880f, MWA_RAM, &espial_spriteram_3 ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, espial_attributeram_w, &espial_attributeram ),
+		new Memory_WriteAddress( 0x9000, 0x901f, MWA_RAM, &espial_spriteram_2 ),
+		new Memory_WriteAddress( 0x9020, 0x903f, espial_scrollram_w, &espial_scrollram ),
+		new Memory_WriteAddress( 0x9000, 0x97ff, espial_colorram_w, &espial_colorram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x6000, 0x6000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x4000, 0x4000, interrupt_enable_w },
-		{ 0x6000, 0x6000, soundlatch_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( espial )

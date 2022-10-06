@@ -316,40 +316,44 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x01ff, mirror_r },
-		{ 0x0800, 0x0bff, MRA_RAM },
-		{ 0x0c00, 0x0cff, MRA_RAM },
-		{ 0x1000, 0x1000, input_port_1_r }, /* self test, vblank */
-		{ 0x1800, 0x1800, ultratnk_barrier_r }, /* barrier */
-		{ 0x2000, 0x2007, ultratnk_controls_r },
-		{ 0x2020, 0x2026, ultratnk_coin_r },
-		{ 0x2040, 0x2043, ultratnk_collision_r },
-		{ 0x2046, 0x2046, ultratnk_tilt_r },
-		{ 0x2060, 0x2063, ultratnk_dipsw_r },
-		{ 0x2800, 0x2fff, MRA_NOP }, /* diagnostic ROM (see code at B1F3) */
-		{ 0xb000, 0xbfff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x01ff, mirror_r ),
+		new Memory_ReadAddress( 0x0800, 0x0bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0c00, 0x0cff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1000, input_port_1_r ), /* self test, vblank */
+		new Memory_ReadAddress( 0x1800, 0x1800, ultratnk_barrier_r ), /* barrier */
+		new Memory_ReadAddress( 0x2000, 0x2007, ultratnk_controls_r ),
+		new Memory_ReadAddress( 0x2020, 0x2026, ultratnk_coin_r ),
+		new Memory_ReadAddress( 0x2040, 0x2043, ultratnk_collision_r ),
+		new Memory_ReadAddress( 0x2046, 0x2046, ultratnk_tilt_r ),
+		new Memory_ReadAddress( 0x2060, 0x2063, ultratnk_dipsw_r ),
+		new Memory_ReadAddress( 0x2800, 0x2fff, MRA_NOP ), /* diagnostic ROM (see code at B1F3) */
+		new Memory_ReadAddress( 0xb000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x00ff, MWA_RAM, &mirror_ram },
-		{ 0x0100, 0x01ff, mirror_w },
-		{ 0x0800, 0x0bff, ultratnk_videoram_w, &videoram },
-		{ 0x0c00, 0x0cff, MWA_RAM }, /* ? */
-		{ 0x2000, 0x201f, ultratnk_attract_w }, /* attract */
-		{ 0x2020, 0x203f, MWA_NOP }, /* collision reset 1-4, 2020-21=cr1, 22-23=cr2, 24-25=cr3, 26,27=cr4 */
-		{ 0x2040, 0x2041, da_latch_w }, /* D/A LATCH */
-		{ 0x2042, 0x2043, ultratnk_explosion_w }, /* EXPLOSION (sound) */
-		{ 0x2044, 0x2045, MWA_NOP }, /* TIMER (watchdog) RESET */
-		{ 0x2066, 0x2067, MWA_NOP }, /* LOCKOUT */
-		{ 0x2068, 0x206b, ultratnk_leds_w },
-		{ 0x206c, 0x206f, ultratnk_fire_w }, /* fire 1/2 */
-		{ 0xb000, 0xbfff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &mirror_ram ),
+		new Memory_WriteAddress( 0x0100, 0x01ff, mirror_w ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, ultratnk_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x0c00, 0x0cff, MWA_RAM ), /* ? */
+		new Memory_WriteAddress( 0x2000, 0x201f, ultratnk_attract_w ), /* attract */
+		new Memory_WriteAddress( 0x2020, 0x203f, MWA_NOP ), /* collision reset 1-4, 2020-21=cr1, 22-23=cr2, 24-25=cr3, 26,27=cr4 */
+		new Memory_WriteAddress( 0x2040, 0x2041, da_latch_w ), /* D/A LATCH */
+		new Memory_WriteAddress( 0x2042, 0x2043, ultratnk_explosion_w ), /* EXPLOSION (sound) */
+		new Memory_WriteAddress( 0x2044, 0x2045, MWA_NOP ), /* TIMER (watchdog) RESET */
+		new Memory_WriteAddress( 0x2066, 0x2067, MWA_NOP ), /* LOCKOUT */
+		new Memory_WriteAddress( 0x2068, 0x206b, ultratnk_leds_w ),
+		new Memory_WriteAddress( 0x206c, 0x206f, ultratnk_fire_w ), /* fire 1/2 */
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

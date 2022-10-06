@@ -59,53 +59,65 @@ public class mouser
 		return mouser_sound_byte;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6bff, MRA_RAM },
-		{ 0x9000, 0x93ff, videoram_r },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, videoram_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x6bff, MWA_RAM },
-		{ 0x8800, 0x88ff, MWA_NOP }, /* unknown */
-		{ 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size },
-		{ 0x9800, 0x9cff, mouser_spriteram_w, &spriteram, &spriteram_size },
-		{ 0x9c00, 0x9fff, mouser_colorram_w, &colorram },
-		{ 0xa000, 0xa000, mouser_nmi_enable_w }, /* bit 0 = NMI Enable */
-		{ 0xa001, 0xa001, mouser_flip_screen_x_w },
-		{ 0xa002, 0xa002, mouser_flip_screen_y_w },
-		{ 0xb800, 0xb800, mouser_sound_interrupt_w }, /* byte to sound cpu */
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6bff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x88ff, MWA_NOP ), /* unknown */
+		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9800, 0x9cff, mouser_spriteram_w, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9c00, 0x9fff, mouser_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xa000, 0xa000, mouser_nmi_enable_w ), /* bit 0 = NMI Enable */
+		new Memory_WriteAddress( 0xa001, 0xa001, mouser_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, mouser_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, mouser_sound_interrupt_w ), /* byte to sound cpu */
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x3000, 0x3000, mouser_sound_byte_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, mouser_sound_byte_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x4000, 0x4000, MWA_NOP },	/* watchdog? */
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_NOP ),	/* watchdog? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport2 )
-	PORT_END
+	public static IO_ReadPort readport2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport2 )
-		{ 0x00, 0x00, AY8910_write_port_0_w },
-		{ 0x01, 0x01, AY8910_control_port_0_w },
-		{ 0x80, 0x80, AY8910_write_port_1_w },
-		{ 0x81, 0x81, AY8910_control_port_1_w },
-	PORT_END
+	public static IO_WritePort writeport2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x81, 0x81, AY8910_control_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( mouser )
 	    PORT_START

@@ -72,44 +72,48 @@ public class chaknpop
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, chaknpop_mcu_portA_r },
-		{ 0x8801, 0x8801, chaknpop_mcu_portB_r },
-		{ 0x8802, 0x8802, chaknpop_mcu_portC_r },
-		{ 0x8805, 0x8805, AY8910_read_port_0_r },
-		{ 0x8807, 0x8807, AY8910_read_port_1_r },
-		{ 0x8808, 0x8808, input_port_3_r },		// DSW C
-		{ 0x8809, 0x8809, input_port_1_r },		// IN1
-		{ 0x880a, 0x880a, input_port_0_r },		// IN0
-		{ 0x880b, 0x880b, input_port_2_r },		// IN2
-		{ 0x880c, 0x880c, chaknpop_gfxmode_r },
-		{ 0x9000, 0x93ff, MRA_RAM },			// TX tilemap
-		{ 0x9800, 0x983f, MRA_RAM },			// Color attribute
-		{ 0x9840, 0x98ff, MRA_RAM },			// sprite
-		{ 0xa000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xffff, MRA_BANK1 },			// bitmap plane 1-4
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, chaknpop_mcu_portA_r ),
+		new Memory_ReadAddress( 0x8801, 0x8801, chaknpop_mcu_portB_r ),
+		new Memory_ReadAddress( 0x8802, 0x8802, chaknpop_mcu_portC_r ),
+		new Memory_ReadAddress( 0x8805, 0x8805, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0x8807, 0x8807, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0x8808, 0x8808, input_port_3_r ),		// DSW C
+		new Memory_ReadAddress( 0x8809, 0x8809, input_port_1_r ),		// IN1
+		new Memory_ReadAddress( 0x880a, 0x880a, input_port_0_r ),		// IN0
+		new Memory_ReadAddress( 0x880b, 0x880b, input_port_2_r ),		// IN2
+		new Memory_ReadAddress( 0x880c, 0x880c, chaknpop_gfxmode_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),			// TX tilemap
+		new Memory_ReadAddress( 0x9800, 0x983f, MRA_RAM ),			// Color attribute
+		new Memory_ReadAddress( 0x9840, 0x98ff, MRA_RAM ),			// sprite
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK1 ),			// bitmap plane 1-4
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, chaknpop_mcu_portA_w },
-		{ 0x8801, 0x8801, chaknpop_mcu_portB_w },
-		{ 0x8802, 0x8802, chaknpop_mcu_portC_w },
-		{ 0x8804, 0x8804, AY8910_control_port_0_w },
-		{ 0x8805, 0x8805, AY8910_write_port_0_w },
-		{ 0x8806, 0x8806, AY8910_control_port_1_w },
-		{ 0x8807, 0x8807, AY8910_write_port_1_w },
-		{ 0x880c, 0x880c, chaknpop_gfxmode_w },
-		{ 0x880D, 0x880D, coinlock_w },			// coin lock out
-		{ 0x9000, 0x93ff, chaknpop_txram_w, &chaknpop_txram },
-		{ 0x9800, 0x983f, chaknpop_attrram_w, &chaknpop_attrram },
-		{ 0x9840, 0x98ff, MWA_RAM, &chaknpop_sprram, &chaknpop_sprram_size },
-		{ 0xa000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xffff, MWA_BANK1 },			// bitmap plane 1-4
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, chaknpop_mcu_portA_w ),
+		new Memory_WriteAddress( 0x8801, 0x8801, chaknpop_mcu_portB_w ),
+		new Memory_WriteAddress( 0x8802, 0x8802, chaknpop_mcu_portC_w ),
+		new Memory_WriteAddress( 0x8804, 0x8804, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8805, 0x8805, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x8806, 0x8806, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x8807, 0x8807, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x880c, 0x880c, chaknpop_gfxmode_w ),
+		new Memory_WriteAddress( 0x880D, 0x880D, coinlock_w ),			// coin lock out
+		new Memory_WriteAddress( 0x9000, 0x93ff, chaknpop_txram_w, &chaknpop_txram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, chaknpop_attrram_w, &chaknpop_attrram ),
+		new Memory_WriteAddress( 0x9840, 0x98ff, MWA_RAM, &chaknpop_sprram, &chaknpop_sprram_size ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_BANK1 ),			// bitmap plane 1-4
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static struct AY8910interface ay8910_interface =
 	{

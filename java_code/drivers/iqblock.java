@@ -125,36 +125,44 @@ public class iqblock
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x5080, 0x5083, ppi8255_0_r },
-		{ 0x5090, 0x5090, input_port_3_r },
-		{ 0x50a0, 0x50a0, input_port_4_r },
-		{ 0x7000, 0x7fff, iqblock_bgvideoram_r },
-		{ 0x8000, 0xffff, extrarom_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x5080, 0x5083, ppi8255_0_r ),
+		new IO_ReadPort( 0x5090, 0x5090, input_port_3_r ),
+		new IO_ReadPort( 0x50a0, 0x50a0, input_port_4_r ),
+		new IO_ReadPort( 0x7000, 0x7fff, iqblock_bgvideoram_r ),
+		new IO_ReadPort( 0x8000, 0xffff, extrarom_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x2000, 0x23ff, paletteram_xBBBBBGGGGGRRRRR_split1_w },
-		{ 0x2800, 0x2bff, paletteram_xBBBBBGGGGGRRRRR_split2_w },
-		{ 0x6000, 0x603f, iqblock_fgscroll_w },
-		{ 0x6800, 0x69ff, iqblock_fgvideoram_w },	/* initialized up to 6fff... bug or larger tilemap? */
-		{ 0x7000, 0x7fff, iqblock_bgvideoram_w },
-		{ 0x5080, 0x5083, ppi8255_0_w },
-		{ 0x50b0, 0x50b0, YM2413_register_port_0_w }, // UM3567_register_port_0_w
-		{ 0x50b1, 0x50b1, YM2413_data_port_0_w }, // UM3567_data_port_0_w
-		{ 0x50c0, 0x50c0, iqblock_irqack_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x2000, 0x23ff, paletteram_xBBBBBGGGGGRRRRR_split1_w ),
+		new IO_WritePort( 0x2800, 0x2bff, paletteram_xBBBBBGGGGGRRRRR_split2_w ),
+		new IO_WritePort( 0x6000, 0x603f, iqblock_fgscroll_w ),
+		new IO_WritePort( 0x6800, 0x69ff, iqblock_fgvideoram_w ),	/* initialized up to 6fff... bug or larger tilemap? */
+		new IO_WritePort( 0x7000, 0x7fff, iqblock_bgvideoram_w ),
+		new IO_WritePort( 0x5080, 0x5083, ppi8255_0_w ),
+		new IO_WritePort( 0x50b0, 0x50b0, YM2413_register_port_0_w ), // UM3567_register_port_0_w
+		new IO_WritePort( 0x50b1, 0x50b1, YM2413_data_port_0_w ), // UM3567_data_port_0_w
+		new IO_WritePort( 0x50c0, 0x50c0, iqblock_irqack_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

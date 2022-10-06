@@ -106,64 +106,72 @@ public class pacland
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x37ff, MRA_RAM },
-		{ 0x4000, 0x5fff, MRA_BANK1 },
-		{ 0x6800, 0x68ff, namcos1_wavedata_r },		/* PSG device, shared RAM */
-		{ 0x6800, 0x6bff, sharedram1_r },
-		{ 0x7800, 0x7800, MRA_NOP },	/* ??? */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x37ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x6800, 0x68ff, namcos1_wavedata_r ),		/* PSG device, shared RAM */
+		new Memory_ReadAddress( 0x6800, 0x6bff, sharedram1_r ),
+		new Memory_ReadAddress( 0x7800, 0x7800, MRA_NOP ),	/* ??? */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, pacland_videoram_w, &videoram },
-		{ 0x1000, 0x1fff, pacland_videoram2_w, &pacland_videoram2 },
-		{ 0x2000, 0x37ff, MWA_RAM },
-		{ 0x2700, 0x27ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x2f00, 0x2fff, MWA_RAM, &spriteram_2 },
-		{ 0x3700, 0x37ff, MWA_RAM, &spriteram_3 },
-		{ 0x3800, 0x3801, pacland_scroll0_w },
-		{ 0x3a00, 0x3a01, pacland_scroll1_w },
-		{ 0x3c00, 0x3c00, pacland_bankswitch_w },
-		{ 0x4000, 0x5fff, MWA_ROM },
-		{ 0x6800, 0x68ff, namcos1_wavedata_w }, /* PSG device, shared RAM */
-		{ 0x6800, 0x6bff, sharedram1_w, &sharedram1 },
-		{ 0x7000, 0x7000, MWA_NOP },	/* ??? */
-		{ 0x7800, 0x7800, MWA_NOP },	/* ??? */
-		{ 0x8000, 0x8800, pacland_halt_mcu_w },
-		{ 0x9000, 0x9800, pacland_flipscreen_w },
-		//{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, pacland_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, pacland_videoram2_w, &pacland_videoram2 ),
+		new Memory_WriteAddress( 0x2000, 0x37ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2700, 0x27ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x2f00, 0x2fff, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x3700, 0x37ff, MWA_RAM, &spriteram_3 ),
+		new Memory_WriteAddress( 0x3800, 0x3801, pacland_scroll0_w ),
+		new Memory_WriteAddress( 0x3a00, 0x3a01, pacland_scroll1_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, pacland_bankswitch_w ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6800, 0x68ff, namcos1_wavedata_w ), /* PSG device, shared RAM */
+		new Memory_WriteAddress( 0x6800, 0x6bff, sharedram1_w, &sharedram1 ),
+		new Memory_WriteAddress( 0x7000, 0x7000, MWA_NOP ),	/* ??? */
+		new Memory_WriteAddress( 0x7800, 0x7800, MWA_NOP ),	/* ??? */
+		new Memory_WriteAddress( 0x8000, 0x8800, pacland_halt_mcu_w ),
+		new Memory_WriteAddress( 0x9000, 0x9800, pacland_flipscreen_w ),
+		//new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM },
-		{ 0x1000, 0x10ff, namcos1_wavedata_r },			/* PSG device, shared RAM */
-		{ 0x1100, 0x113f, MRA_RAM }, /* PSG device */
-		{ 0x1000, 0x13ff, sharedram1_r },
-		{ 0x8000, 0x9fff, MRA_ROM },
-		{ 0xc000, 0xc800, MRA_RAM },
-		{ 0xd000, 0xd000, dsw0_r },
-		{ 0xd000, 0xd001, dsw1_r },
-		{ 0xd000, 0xd002, input_port_2_r },
-		{ 0xd000, 0xd003, input_port_3_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x10ff, namcos1_wavedata_r ),			/* PSG device, shared RAM */
+		new Memory_ReadAddress( 0x1100, 0x113f, MRA_RAM ), /* PSG device */
+		new Memory_ReadAddress( 0x1000, 0x13ff, sharedram1_r ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc800, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, dsw0_r ),
+		new Memory_ReadAddress( 0xd000, 0xd001, dsw1_r ),
+		new Memory_ReadAddress( 0xd000, 0xd002, input_port_2_r ),
+		new Memory_ReadAddress( 0xd000, 0xd003, input_port_3_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_w },
-		{ 0x0080, 0x00ff, MWA_RAM },
-		{ 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata },		/* PSG device, shared RAM */
-		{ 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs }, /* PSG device */
-		{ 0x1000, 0x13ff, sharedram1_w },
-		{ 0x2000, 0x2000, MWA_NOP }, // ???? (w)
-		{ 0x4000, 0x4000, MWA_NOP }, // ???? (w)
-		{ 0x6000, 0x6000, MWA_NOP }, // ???? (w)
-		{ 0x8000, 0x9fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, hd63701_internal_registers_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata ),		/* PSG device, shared RAM */
+		new Memory_WriteAddress( 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs ), /* PSG device */
+		new Memory_WriteAddress( 0x1000, 0x13ff, sharedram1_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, MWA_NOP ), // ???? (w)
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_NOP ), // ???? (w)
+		new Memory_WriteAddress( 0x6000, 0x6000, MWA_NOP ), // ???? (w)
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static READ_HANDLER( readFF )
@@ -171,15 +179,19 @@ public class pacland
 		return 0xff;
 	}
 	
-	static PORT_READ_START( mcu_readport )
-		{ HD63701_PORT1, HD63701_PORT1, input_port_4_r },
-		{ HD63701_PORT2, HD63701_PORT2, readFF },	/* leds won't work otherwise */
-	PORT_END
+	public static IO_ReadPort mcu_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( HD63701_PORT1, HD63701_PORT1, input_port_4_r ),
+		new IO_ReadPort( HD63701_PORT2, HD63701_PORT2, readFF ),	/* leds won't work otherwise */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mcu_writeport )
-		{ HD63701_PORT1, HD63701_PORT1, pacland_coin_w },
-		{ HD63701_PORT2, HD63701_PORT2, pacland_led_w },
-	PORT_END
+	public static IO_WritePort mcu_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( HD63701_PORT1, HD63701_PORT1, pacland_coin_w ),
+		new IO_WritePort( HD63701_PORT2, HD63701_PORT2, pacland_led_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

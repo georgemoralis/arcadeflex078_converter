@@ -183,65 +183,74 @@ public class rmhaihai
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xa800, 0xb7ff, MRA_RAM },
-		{ 0xc000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xffff, MRA_ROM },	/* rmhaisei only */
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa800, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),	/* rmhaisei only */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress themj_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa800, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa800, 0xafff, rmhaihai_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xb000, 0xb7ff, rmhaihai_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xb83c, 0xb83c, MWA_NOP ),	// ??
+		new Memory_WriteAddress( 0xbc00, 0xbc00, MWA_NOP ),	// ??
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),	/* rmhaisei only */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x7fff, samples_r ),
+		new IO_ReadPort( 0x8000, 0x8000, keyboard_r ),
+		new IO_ReadPort( 0x8001, 0x8001, IORP_NOP ),	// ??
+		new IO_ReadPort( 0x8020, 0x8020, AY8910_read_port_0_r ),
 	MEMORY_END
 	
-	static MEMORY_READ_START( themj_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK1 },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xa800, 0xb7ff, MRA_RAM },
-		{ 0xc000, 0xdfff, MRA_BANK2 },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },
-		{ 0xa800, 0xafff, rmhaihai_colorram_w, &colorram },
-		{ 0xb000, 0xb7ff, rmhaihai_videoram_w, &videoram },
-		{ 0xb83c, 0xb83c, MWA_NOP },	// ??
-		{ 0xbc00, 0xbc00, MWA_NOP },	// ??
-		{ 0xc000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xffff, MWA_ROM },	/* rmhaisei only */
-	MEMORY_END
-	
-	static PORT_READ_START( readport )
-		{ 0x0000, 0x7fff, samples_r },
-		{ 0x8000, 0x8000, keyboard_r },
-		{ 0x8001, 0x8001, IORP_NOP },	// ??
-		{ 0x8020, 0x8020, AY8910_read_port_0_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( writeport )
-		{ 0x8000, 0x8000, IOWP_NOP },	// ??
-		{ 0x8001, 0x8001, keyboard_w },
-		{ 0x8020, 0x8020, AY8910_control_port_0_w },
-		{ 0x8021, 0x8021, AY8910_write_port_0_w },
-		{ 0x8040, 0x8040, adpcm_w },
-		{ 0x8060, 0x8060, ctrl_w },
-		{ 0x8080, 0x8080, IOWP_NOP },	// ??
-		{ 0xbc04, 0xbc04, IOWP_NOP },	// ??
-		{ 0xbc0c, 0xbc0c, IOWP_NOP },	// ??
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x8000, 0x8000, IOWP_NOP ),	// ??
+		new IO_WritePort( 0x8001, 0x8001, keyboard_w ),
+		new IO_WritePort( 0x8020, 0x8020, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x8021, 0x8021, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x8040, 0x8040, adpcm_w ),
+		new IO_WritePort( 0x8060, 0x8060, ctrl_w ),
+		new IO_WritePort( 0x8080, 0x8080, IOWP_NOP ),	// ??
+		new IO_WritePort( 0xbc04, 0xbc04, IOWP_NOP ),	// ??
+		new IO_WritePort( 0xbc0c, 0xbc0c, IOWP_NOP ),	// ??
 	MEMORY_END
 	
 	
-	static PORT_WRITE_START( themj_writeport )
-		{ 0x8000, 0x8000, IOWP_NOP },	// ??
-		{ 0x8001, 0x8001, keyboard_w },
-		{ 0x8020, 0x8020, AY8910_control_port_0_w },
-		{ 0x8021, 0x8021, AY8910_write_port_0_w },
-		{ 0x8040, 0x8040, adpcm_w },
-		{ 0x8060, 0x8060, ctrl_w },
-		{ 0x8080, 0x8080, IOWP_NOP },	// ??
-		{ 0x80a0, 0x80a0, themj_rombank_w },
-		{ 0xbc04, 0xbc04, IOWP_NOP },	// ??
-		{ 0xbc0c, 0xbc0c, IOWP_NOP },	// ??
+	public static IO_WritePort themj_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x8000, 0x8000, IOWP_NOP ),	// ??
+		new IO_WritePort( 0x8001, 0x8001, keyboard_w ),
+		new IO_WritePort( 0x8020, 0x8020, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x8021, 0x8021, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x8040, 0x8040, adpcm_w ),
+		new IO_WritePort( 0x8060, 0x8060, ctrl_w ),
+		new IO_WritePort( 0x8080, 0x8080, IOWP_NOP ),	// ??
+		new IO_WritePort( 0x80a0, 0x80a0, themj_rombank_w ),
+		new IO_WritePort( 0xbc04, 0xbc04, IOWP_NOP ),	// ??
+		new IO_WritePort( 0xbc0c, 0xbc0c, IOWP_NOP ),	// ??
 	MEMORY_END
 	
 	INPUT_PORTS_START( rmhaihai )
@@ -488,7 +497,7 @@ public class rmhaihai
 	
 	
 	static struct GfxLayout charlayout =
-	{
+	new IO_WritePort(
 		8,8,
 		RGN_FRAC(1,2),
 		3,
@@ -496,24 +505,24 @@ public class rmhaihai
 		{ 0, 1, 2, 3, 8*8+0, 8*8+1, 8*8+2, 8*8+3 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		16*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo1[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout, 0, 32 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo2[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout, 0, 64 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	
 	
 	static struct AY8910interface ay8910_interface =
-	{
+	new IO_WritePort(
 		1,	/* 1 chip */
 		20000000/16,	/* 1.25 MHz ??? */
 		{ 30 },
@@ -521,16 +530,16 @@ public class rmhaihai
 		{ input_port_1_r },
 		{ 0 },
 		{ 0 }
-	};
+	);
 	
 	static struct MSM5205interface msm5205_interface =
-	{
+	new IO_WritePort(
 		1,					/* 1 chip             */
 		500000,				/* 500KHz ?? (I don't know what I'm doing, really) */
 		{ 0 },				/* interrupt function */
 		{ MSM5205_SEX_4B },	/* vclk input mode    */
 		{ MIXERG(100,MIXER_GAIN_2x,MIXER_PAN_CENTER) }
-	};
+	);
 	
 	
 	
@@ -734,7 +743,7 @@ public class rmhaihai
 	
 	
 	static DRIVER_INIT( rmhaihai )
-	{
+	new IO_WritePort(
 		data8_t *rom = memory_region(REGION_GFX1);
 		int size = memory_region_length(REGION_GFX1);
 		int a,b;
@@ -752,7 +761,7 @@ public class rmhaihai
 				rom[a + b + 0x2000] = rom[a + b] >> 4;
 			}
 		}
-	}
+	)
 	
 	
 	GAME( 1985, rmhaihai, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai (Japan)" )

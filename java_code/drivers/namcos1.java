@@ -256,85 +256,97 @@ public class namcos1
 	
 	
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x1fff, MRA_BANK1 },
-		{ 0x2000, 0x3fff, MRA_BANK2 },
-		{ 0x4000, 0x5fff, MRA_BANK3 },
-		{ 0x6000, 0x7fff, MRA_BANK4 },
-		{ 0x8000, 0x9fff, MRA_BANK5 },
-		{ 0xa000, 0xbfff, MRA_BANK6 },
-		{ 0xc000, 0xdfff, MRA_BANK7 },
-		{ 0xe000, 0xffff, MRA_BANK8 },
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK3 ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK4 ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK5 ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK6 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_BANK7 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_BANK8 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x1fff, MWA_BANK1 },
-		{ 0x2000, 0x3fff, MWA_BANK2 },
-		{ 0x4000, 0x5fff, MWA_BANK3 },
-		{ 0x6000, 0x7fff, MWA_BANK4 },
-		{ 0x8000, 0x9fff, MWA_BANK5 },
-		{ 0xa000, 0xbfff, MWA_BANK6 },
-		{ 0xc000, 0xdfff, MWA_BANK7 },
-		{ 0xe000, 0xefff, namcos1_bankswitch_w },
-		{ 0xf000, 0xf000, namcos1_cpu_control_w },
-		{ 0xf200, 0xf200, MWA_NOP }, // watchdog
-		{ 0xf400, 0xf400, MWA_NOP }, // unknown
-		{ 0xf600, 0xf600, MWA_NOP }, // main video update(handler installs separately)
-		{ 0xfa00, 0xfa00, namcos1_sub_firq_w }, // asserts FIRQ on CPU1
-		{ 0xfc00, 0xfc01, namcos1_subcpu_bank_w },
-	MEMORY_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_BANK1 ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_BANK2 ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_BANK3 ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_BANK4 ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_BANK5 ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_BANK6 ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_BANK7 ),
+		new Memory_WriteAddress( 0xe000, 0xefff, namcos1_bankswitch_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, namcos1_cpu_control_w ),
+		new Memory_WriteAddress( 0xf200, 0xf200, MWA_NOP ), // watchdog
+		new Memory_WriteAddress( 0xf400, 0xf400, MWA_NOP ), // unknown
+		new Memory_WriteAddress( 0xf600, 0xf600, MWA_NOP ), // main video update(handler installs separately)
+		new Memory_WriteAddress( 0xfa00, 0xfa00, namcos1_sub_firq_w ), // asserts FIRQ on CPU1
+		new Memory_WriteAddress( 0xfc00, 0xfc01, namcos1_subcpu_bank_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sub_readmem )
-		{ 0x0000, 0x1fff, MRA_BANK9 },
-		{ 0x2000, 0x3fff, MRA_BANK10 },
-		{ 0x4000, 0x5fff, MRA_BANK11 },
-		{ 0x6000, 0x7fff, MRA_BANK12 },
-		{ 0x8000, 0x9fff, MRA_BANK13 },
-		{ 0xa000, 0xbfff, MRA_BANK14 },
-		{ 0xc000, 0xdfff, MRA_BANK15 },
-		{ 0xe000, 0xffff, MRA_BANK16 },
-	MEMORY_END
+	public static Memory_ReadAddress sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_BANK9 ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK10 ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK11 ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK12 ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK13 ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK14 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_BANK15 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_BANK16 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sub_writemem )
-		{ 0x0000, 0x1fff, MWA_BANK9 },
-		{ 0x2000, 0x3fff, MWA_BANK10 },
-		{ 0x4000, 0x5fff, MWA_BANK11 },
-		{ 0x6000, 0x7fff, MWA_BANK12 },
-		{ 0x8000, 0x9fff, MWA_BANK13 },
-		{ 0xa000, 0xbfff, MWA_BANK14 },
-		{ 0xc000, 0xdfff, MWA_BANK15 },
-		{ 0xe000, 0xefff, namcos1_bankswitch_w },
-		{ 0xf000, 0xf000, MWA_NOP }, // IO Chip
-		{ 0xf200, 0xf200, MWA_NOP }, // watchdog
-		{ 0xf400, 0xf400, MWA_NOP }, // unknown
-		{ 0xf600, 0xf600, MWA_NOP }, // sub video update(handler installs separately)
-	MEMORY_END
+	public static Memory_WriteAddress sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_BANK9 ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_BANK10 ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_BANK11 ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_BANK12 ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_BANK13 ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_BANK14 ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_BANK15 ),
+		new Memory_WriteAddress( 0xe000, 0xefff, namcos1_bankswitch_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), // IO Chip
+		new Memory_WriteAddress( 0xf200, 0xf200, MWA_NOP ), // watchdog
+		new Memory_WriteAddress( 0xf400, 0xf400, MWA_NOP ), // unknown
+		new Memory_WriteAddress( 0xf600, 0xf600, MWA_NOP ), // sub video update(handler installs separately)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK17 }, /* Banked ROMs */
-		{ 0x4000, 0x4001, YM2151_status_port_0_r },
-		{ 0x5000, 0x50ff, namcos1_wavedata_r }, /* PSG ( Shared ) */
-		{ 0x5100, 0x513f, namcos1_sound_r },    /* PSG ( Shared ) */
-		{ 0x5140, 0x54ff, MRA_RAM },    /* Sound RAM 1 - ( Shared ) */
-		{ 0x7000, 0x77ff, MRA_BANK18 }, /* Sound RAM 2 - ( Shared ) */
-		{ 0x8000, 0x9fff, MRA_RAM },    /* Sound RAM 3 */
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK17 ), /* Banked ROMs */
+		new Memory_ReadAddress( 0x4000, 0x4001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x50ff, namcos1_wavedata_r ), /* PSG ( Shared ) */
+		new Memory_ReadAddress( 0x5100, 0x513f, namcos1_sound_r ),    /* PSG ( Shared ) */
+		new Memory_ReadAddress( 0x5140, 0x54ff, MRA_RAM ),    /* Sound RAM 1 - ( Shared ) */
+		new Memory_ReadAddress( 0x7000, 0x77ff, MRA_BANK18 ), /* Sound RAM 2 - ( Shared ) */
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_RAM ),    /* Sound RAM 3 */
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },    /* Banked ROMs */
-		{ 0x4000, 0x4000, YM2151_register_port_0_w },
-		{ 0x4001, 0x4001, YM2151_data_port_0_w },
-		{ 0x5000, 0x50ff, namcos1_wavedata_w,&namco_wavedata }, /* PSG ( Shared ) */
-		{ 0x5100, 0x513f, namcos1_sound_w,&namco_soundregs },   /* PSG ( Shared ) */
-		{ 0x5140, 0x54ff, MWA_RAM },    /* Sound RAM 1 - ( Shared ) */
-		{ 0x7000, 0x77ff, MWA_BANK18 }, /* Sound RAM 2 - ( Shared ) */
-		{ 0x8000, 0x9fff, MWA_RAM },    /* Sound RAM 3 */
-		{ 0xc000, 0xc001, namcos1_sound_bankswitch_w }, /* bank selector */
-		{ 0xd001, 0xd001, MWA_NOP },    /* watchdog? */
-		{ 0xe000, 0xe000, MWA_NOP },    /* IRQ clear ? */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),    /* Banked ROMs */
+		new Memory_WriteAddress( 0x4000, 0x4000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x4001, 0x4001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x5000, 0x50ff, namcos1_wavedata_w,&namco_wavedata ), /* PSG ( Shared ) */
+		new Memory_WriteAddress( 0x5100, 0x513f, namcos1_sound_w,&namco_soundregs ),   /* PSG ( Shared ) */
+		new Memory_WriteAddress( 0x5140, 0x54ff, MWA_RAM ),    /* Sound RAM 1 - ( Shared ) */
+		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_BANK18 ), /* Sound RAM 2 - ( Shared ) */
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_RAM ),    /* Sound RAM 3 */
+		new Memory_WriteAddress( 0xc000, 0xc001, namcos1_sound_bankswitch_w ), /* bank selector */
+		new Memory_WriteAddress( 0xd001, 0xd001, MWA_NOP ),    /* watchdog? */
+		new Memory_WriteAddress( 0xe000, 0xe000, MWA_NOP ),    /* IRQ clear ? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER( dsw_r )
 	{
@@ -449,64 +461,76 @@ public class namcos1
 		return ret;
 	}
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM }, /* built in RAM */
-		{ 0x1400, 0x1400, input_port_0_r },
-		{ 0x1401, 0x1401, input_port_1_r },
-		{ 0x1000, 0x1003, dsw_r },
-		{ 0x4000, 0xbfff, MRA_BANK20 }, /* banked ROM */
-		{ 0xc000, 0xc7ff, MRA_BANK19 },
-		{ 0xc800, 0xcfff, MRA_RAM }, /* EEPROM */
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ), /* built in RAM */
+		new Memory_ReadAddress( 0x1400, 0x1400, input_port_0_r ),
+		new Memory_ReadAddress( 0x1401, 0x1401, input_port_1_r ),
+		new Memory_ReadAddress( 0x1000, 0x1003, dsw_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK20 ), /* banked ROM */
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_BANK19 ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_RAM ), /* EEPROM */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_w },
-		{ 0x0080, 0x00ff, MWA_RAM }, /* built in RAM */
-		{ 0x4000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc000, namcos1_mcu_patch_w },
-		{ 0xc000, 0xc7ff, MWA_BANK19 },
-		{ 0xc800, 0xcfff, MWA_RAM, &generic_nvram, &generic_nvram_size }, /* EEPROM */
-		{ 0xd000, 0xd000, namcos1_dac0_w },
-		{ 0xd400, 0xd400, namcos1_dac1_w },
-		{ 0xd800, 0xd800, namcos1_mcu_bankswitch_w }, /* BANK selector */
-		{ 0xf000, 0xf000, MWA_NOP }, /* IRQ clear ? */
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, hd63701_internal_registers_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ), /* built in RAM */
+		new Memory_WriteAddress( 0x4000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, namcos1_mcu_patch_w ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_BANK19 ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, &generic_nvram, &generic_nvram_size ), /* EEPROM */
+		new Memory_WriteAddress( 0xd000, 0xd000, namcos1_dac0_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, namcos1_dac1_w ),
+		new Memory_WriteAddress( 0xd800, 0xd800, namcos1_mcu_bankswitch_w ), /* BANK selector */
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), /* IRQ clear ? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( quester_mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM }, /* built in RAM */
-		{ 0x1400, 0x1400, quester_in0_r },
-		{ 0x1401, 0x1401, quester_in1_r },
-		{ 0x1000, 0x1003, dsw_r },
-		{ 0x4000, 0xbfff, MRA_BANK20 }, /* banked ROM */
-		{ 0xc000, 0xc7ff, MRA_BANK19 },
-		{ 0xc800, 0xcfff, MRA_RAM }, /* EEPROM */
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress quester_mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ), /* built in RAM */
+		new Memory_ReadAddress( 0x1400, 0x1400, quester_in0_r ),
+		new Memory_ReadAddress( 0x1401, 0x1401, quester_in1_r ),
+		new Memory_ReadAddress( 0x1000, 0x1003, dsw_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK20 ), /* banked ROM */
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_BANK19 ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_RAM ), /* EEPROM */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( faceoff_mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM }, /* built in RAM */
-		{ 0x1400, 0x1400, faceoff_in0_r },
-		{ 0x1401, 0x1401, faceoff_in1_r },
-		{ 0x1000, 0x1003, dsw_r },
-		{ 0x4000, 0xbfff, MRA_BANK20 }, /* banked ROM */
-		{ 0xc000, 0xc7ff, MRA_BANK19 },
-		{ 0xc800, 0xcfff, MRA_RAM }, /* EEPROM */
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress faceoff_mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ), /* built in RAM */
+		new Memory_ReadAddress( 0x1400, 0x1400, faceoff_in0_r ),
+		new Memory_ReadAddress( 0x1401, 0x1401, faceoff_in1_r ),
+		new Memory_ReadAddress( 0x1000, 0x1003, dsw_r ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK20 ), /* banked ROM */
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_BANK19 ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_RAM ), /* EEPROM */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mcu_readport )
-		{ HD63701_PORT1, HD63701_PORT1, input_port_3_r },
-		{ 0x0101, 0x0101, MRA_NOP }, // unknown port read(added to cut the number of error warnings)
-	PORT_END
+	public static IO_ReadPort mcu_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( HD63701_PORT1, HD63701_PORT1, input_port_3_r ),
+		new IO_ReadPort( 0x0101, 0x0101, MRA_NOP ), // unknown port read(added to cut the number of error warnings)
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mcu_writeport )
-		{ HD63701_PORT1, HD63701_PORT1, namcos1_coin_w },
-		{ HD63701_PORT2, HD63701_PORT2, namcos1_dac_gain_w },
-	PORT_END
+	public static IO_WritePort mcu_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( HD63701_PORT1, HD63701_PORT1, namcos1_coin_w ),
+		new IO_WritePort( HD63701_PORT2, HD63701_PORT2, namcos1_dac_gain_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

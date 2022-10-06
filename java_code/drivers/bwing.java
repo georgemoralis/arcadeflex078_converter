@@ -184,67 +184,83 @@ public class bwing
 	// CPU Memory Maps
 	
 	// Main CPU
-	static MEMORY_READ_START( bwp1_readmem )
-		{ 0x1b00, 0x1b07, bwp1_io_r },
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x3fff, bwing_scrollram_r },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bwp1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x1b00, 0x1b07, bwp1_io_r ),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, bwing_scrollram_r ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bwp1_writemem )
-		{ 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp1_sharedram1 },
-		{ 0x0800, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x13ff, bwing_videoram_w, &videoram },
-		{ 0x1800, 0x19ff, bwing_spriteram_w, &buffered_spriteram },
-		{ 0x1a00, 0x1aff, bwing_paletteram_w, &paletteram },
-		{ 0x1b00, 0x1b07, bwing_scrollreg_w },
-		{ 0x1c00, 0x1c07, bwp1_ctrl_w },
-		{ 0x2000, 0x3fff, bwing_scrollram_w },
-		{ 0x1000, 0x1fff, MWA_RAM }, // falls through
-		{ 0x4000, 0xffff, MWA_NOP }, // "B-Wings US" writes to 9631-9632(debug?)
-	MEMORY_END
+	public static Memory_WriteAddress bwp1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp1_sharedram1 ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, bwing_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x1800, 0x19ff, bwing_spriteram_w, &buffered_spriteram ),
+		new Memory_WriteAddress( 0x1a00, 0x1aff, bwing_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x1b00, 0x1b07, bwing_scrollreg_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c07, bwp1_ctrl_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, bwing_scrollram_w ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM ), // falls through
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_NOP ), // "B-Wings US" writes to 9631-9632(debug?)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	// Sub CPU
-	static MEMORY_READ_START( bwp2_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0xa000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bwp2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bwp2_writemem )
-		{ 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp2_sharedram1 },
-		{ 0x0800, 0x0fff, MWA_RAM },
-		{ 0x1800, 0x1803, bwp2_ctrl_w },
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bwp2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp2_sharedram1 ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1803, bwp2_ctrl_w ),
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	// Sound CPU
-	static MEMORY_READ_START( bwp3_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0xa000, 0xa000, soundlatch_r },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bwp3_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bwp3_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x0200, 0x0200, DAC_0_signed_data_w },
-		{ 0x1000, 0x1000, bwp3_nmiack_w },
-		{ 0x2000, 0x2000, AY8910_write_port_0_w },
-		{ 0x4000, 0x4000, AY8910_control_port_0_w },
-		{ 0x6000, 0x6000, AY8910_write_port_1_w },
-		{ 0x8000, 0x8000, AY8910_control_port_1_w },
-		{ 0xd000, 0xd000, bwp3_nmimask_w },
-		{ 0xe000, 0xffff, MWA_ROM, &bwp3_rombase, &bwp3_romsize },
-	MEMORY_END
+	public static Memory_WriteAddress bwp3_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0200, 0x0200, DAC_0_signed_data_w ),
+		new Memory_WriteAddress( 0x1000, 0x1000, bwp3_nmiack_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xd000, 0xd000, bwp3_nmimask_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM, &bwp3_rombase, &bwp3_romsize ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( bwp3_readport )
-		{ 0x00, 0x00, input_port_6_r },
-	PORT_END
+	public static IO_ReadPort bwp3_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_6_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( bwp3_writeport )
-		{ 0x00, 0x00, bwp3_u8F_w },
-	PORT_END
+	public static IO_WritePort bwp3_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, bwp3_u8F_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	//****************************************************************************
 	// I/O Port Maps

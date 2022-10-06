@@ -150,127 +150,153 @@ public class vicdual
 	}
 	
 	
-	static MEMORY_READ_START( vicdual_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x83ff, videoram_r },
-		{ 0x8400, 0x87ff, vicdual_ram_r },
-		{ 0x8800, 0x8fff, vicdual_characterram_r },
-		{ 0x9000, 0x93ff, videoram_r },
-		{ 0x9400, 0x97ff, vicdual_ram_r },
-		{ 0x9800, 0x9fff, vicdual_characterram_r },
-		{ 0xa000, 0xa3ff, videoram_r },
-		{ 0xa400, 0xa7ff, vicdual_ram_r },
-		{ 0xa800, 0xafff, vicdual_characterram_r },
-		{ 0xb000, 0xb3ff, videoram_r },
-		{ 0xb400, 0xb7ff, vicdual_ram_r },
-		{ 0xb800, 0xbfff, vicdual_characterram_r },
-		{ 0xc000, 0xc3ff, videoram_r },
-		{ 0xc400, 0xc7ff, vicdual_ram_r },
-		{ 0xc800, 0xcfff, vicdual_characterram_r },
-		{ 0xd000, 0xd3ff, videoram_r },
-		{ 0xd400, 0xd7ff, vicdual_ram_r },
-		{ 0xd800, 0xdfff, vicdual_characterram_r },
-		{ 0xe000, 0xe3ff, videoram_r },
-		{ 0xe400, 0xe7ff, vicdual_ram_r },
-		{ 0xe800, 0xefff, vicdual_characterram_r },
-		{ 0xf000, 0xf3ff, videoram_r },
-		{ 0xf400, 0xf7ff, vicdual_ram_r },
-		{ 0xf800, 0xffff, vicdual_characterram_r },
-	MEMORY_END
+	public static Memory_ReadAddress vicdual_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, videoram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0x8800, 0x8fff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, videoram_r ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0x9800, 0x9fff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xa000, 0xa3ff, videoram_r ),
+		new Memory_ReadAddress( 0xa400, 0xa7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xa800, 0xafff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xb000, 0xb3ff, videoram_r ),
+		new Memory_ReadAddress( 0xb400, 0xb7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xb800, 0xbfff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xc000, 0xc3ff, videoram_r ),
+		new Memory_ReadAddress( 0xc400, 0xc7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xd000, 0xd3ff, videoram_r ),
+		new Memory_ReadAddress( 0xd400, 0xd7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xe000, 0xe3ff, videoram_r ),
+		new Memory_ReadAddress( 0xe400, 0xe7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xe800, 0xefff, vicdual_characterram_r ),
+		new Memory_ReadAddress( 0xf000, 0xf3ff, videoram_r ),
+		new Memory_ReadAddress( 0xf400, 0xf7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, vicdual_characterram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( vicdual_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size },
-		{ 0x8400, 0x87ff, vicdual_ram_w, &vicdual_ram },
-		{ 0x8800, 0x8fff, vicdual_characterram_w, &vicdual_characterram },
-		{ 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size },
-		{ 0x9400, 0x97ff, vicdual_ram_w, &vicdual_ram },
-		{ 0x9800, 0x9fff, vicdual_characterram_w, &vicdual_characterram},
-		{ 0xa000, 0xa3ff, videoram_w },
-		{ 0xa400, 0xa7ff, vicdual_ram_w },
-		{ 0xa800, 0xafff, vicdual_characterram_w },
-		{ 0xb000, 0xb3ff, videoram_w },
-		{ 0xb400, 0xb7ff, vicdual_ram_w },
-		{ 0xb800, 0xbfff, vicdual_characterram_w },
-		{ 0xc000, 0xc3ff, videoram_w },
-		{ 0xc400, 0xc7ff, vicdual_ram_w },
-		{ 0xc800, 0xcfff, vicdual_characterram_w },
-		{ 0xd000, 0xd3ff, videoram_w },
-		{ 0xd400, 0xd7ff, vicdual_ram_w },
-		{ 0xd800, 0xdfff, vicdual_characterram_w },
-		{ 0xe000, 0xe3ff, videoram_w },
-		{ 0xe400, 0xe7ff, vicdual_ram_w },
-		{ 0xe800, 0xefff, vicdual_characterram_w },
-		{ 0xf000, 0xf3ff, videoram_w },
-		{ 0xf400, 0xf7ff, vicdual_ram_w },
-		{ 0xf800, 0xffff, vicdual_characterram_w },
-	MEMORY_END
+	public static Memory_WriteAddress vicdual_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, vicdual_ram_w, &vicdual_ram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, vicdual_characterram_w, &vicdual_characterram ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, vicdual_ram_w, &vicdual_ram ),
+		new Memory_WriteAddress( 0x9800, 0x9fff, vicdual_characterram_w, &vicdual_characterram),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, videoram_w ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xa800, 0xafff, vicdual_characterram_w ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, videoram_w ),
+		new Memory_WriteAddress( 0xb400, 0xb7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xb800, 0xbfff, vicdual_characterram_w ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, vicdual_characterram_w ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, videoram_w ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, vicdual_characterram_w ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, videoram_w ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xe800, 0xefff, vicdual_characterram_w ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, videoram_w ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, vicdual_ram_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, vicdual_characterram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Safari has extra RAM */
-	static MEMORY_READ_START( safari_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xe000, 0xe3ff, videoram_r },
-		{ 0xe400, 0xe7ff, vicdual_ram_r },
-		{ 0xe800, 0xefff, vicdual_characterram_r },
-	MEMORY_END
+	public static Memory_ReadAddress safari_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe3ff, videoram_r ),
+		new Memory_ReadAddress( 0xe400, 0xe7ff, vicdual_ram_r ),
+		new Memory_ReadAddress( 0xe800, 0xefff, vicdual_characterram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( safari_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xe000, 0xe3ff, videoram_w, &videoram, &videoram_size },
-		{ 0xe400, 0xe7ff, vicdual_ram_w, &vicdual_ram },
-		{ 0xe800, 0xefff, vicdual_characterram_w, &vicdual_characterram },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( readport_2ports )
-		{ 0x01, 0x01, input_port_0_r },
-		{ 0x08, 0x08, input_port_1_r },
-	PORT_END
-	
-	static PORT_READ_START( readport_3ports )
-		{ 0x01, 0x01, input_port_0_r },
-		{ 0x04, 0x04, input_port_1_r },
-		{ 0x08, 0x08, input_port_2_r },
-	PORT_END
-	
-	static PORT_READ_START( readport_4ports )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x03, 0x03, input_port_3_r },
-	PORT_END
-	
-	static PORT_READ_START( readport_safari )
-		{ 0x03, 0x03, input_port_0_r },
-		{ 0x08, 0x08, input_port_1_r },
-	PORT_END
+	public static Memory_WriteAddress safari_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, vicdual_ram_w, &vicdual_ram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, vicdual_characterram_w, &vicdual_characterram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x40, 0x40, vicdual_palette_bank_w },
-	PORT_END
+	public static IO_ReadPort readport_2ports[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, input_port_0_r ),
+		new IO_ReadPort( 0x08, 0x08, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport_3ports[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, input_port_0_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_1_r ),
+		new IO_ReadPort( 0x08, 0x08, input_port_2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport_4ports[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport_safari[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x03, 0x03, input_port_0_r ),
+		new IO_ReadPort( 0x08, 0x08, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( i8039_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( i8039_writemem )
-		{ 0x0000, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x40, 0x40, vicdual_palette_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( i8039_readport )
-		{ I8039_t1, I8039_t1, carnival_music_port_t1_r },
-	PORT_END
+	public static Memory_ReadAddress i8039_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( i8039_writeport )
-		{ I8039_p1, I8039_p1, carnival_music_port_1_w },
-		{ I8039_p2, I8039_p2, carnival_music_port_2_w },
-	PORT_END
+	public static Memory_WriteAddress i8039_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort i8039_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( I8039_t1, I8039_t1, carnival_music_port_t1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort i8039_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( I8039_p1, I8039_p1, carnival_music_port_1_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, carnival_music_port_2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -69,28 +69,36 @@ public class prehisle
 		UPD7759_start_w (0,1);
 	}
 	
-	static MEMORY_READ_START( prehisle_sound_readmem )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress prehisle_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( prehisle_sound_writemem )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf800, MWA_NOP },	// ???
-	MEMORY_END
+	public static Memory_WriteAddress prehisle_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf800, MWA_NOP ),	// ???
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( prehisle_sound_readport )
-		{ 0x00, 0x00, YM3812_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort prehisle_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM3812_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( prehisle_sound_writeport )
-		{ 0x00, 0x00, YM3812_control_port_0_w },
-		{ 0x20, 0x20, YM3812_write_port_0_w },
-		{ 0x40, 0x40, D7759_write_port_0_w},
-		{ 0x80, 0x80, UPD7759_0_reset_w },
-	PORT_END
+	public static IO_WritePort prehisle_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x20, 0x20, YM3812_write_port_0_w ),
+		new IO_WritePort( 0x40, 0x40, D7759_write_port_0_w),
+		new IO_WritePort( 0x80, 0x80, UPD7759_0_reset_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

@@ -37,50 +37,58 @@ public class _1943
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xc000, 0xc000, input_port_0_r },
-		{ 0xc001, 0xc001, input_port_1_r },
-		{ 0xc002, 0xc002, input_port_2_r },
-		{ 0xc003, 0xc003, input_port_3_r },
-		{ 0xc004, 0xc004, input_port_4_r },
-		{ 0xc007, 0xc007, c1943_protection_r },
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_4_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, c1943_protection_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc800, 0xc800, soundlatch_w },
-		{ 0xc804, 0xc804, c1943_c804_w },	/* ROM bank switch, screen flip */
-		{ 0xc806, 0xc806, watchdog_reset_w },
-		{ 0xc807, 0xc807, MWA_NOP }, 	/* protection chip write (we don't emulate it) */
-		{ 0xd000, 0xd3ff, videoram_w, &videoram, &videoram_size },
-		{ 0xd400, 0xd7ff, colorram_w, &colorram },
-		{ 0xd800, 0xd801, MWA_RAM, &c1943_scrolly },
-		{ 0xd802, 0xd802, MWA_RAM, &c1943_scrollx },
-		{ 0xd803, 0xd804, MWA_RAM, &c1943_bgscrolly },
-		{ 0xd806, 0xd806, c1943_d806_w },	/* sprites, bg1, bg2 enable */
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
+		new Memory_WriteAddress( 0xc804, 0xc804, c1943_c804_w ),	/* ROM bank switch, screen flip */
+		new Memory_WriteAddress( 0xc806, 0xc806, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xc807, 0xc807, MWA_NOP ), 	/* protection chip write (we don't emulate it) */
+		new Memory_WriteAddress( 0xd000, 0xd3ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xd800, 0xd801, MWA_RAM, &c1943_scrolly ),
+		new Memory_WriteAddress( 0xd802, 0xd802, MWA_RAM, &c1943_scrollx ),
+		new Memory_WriteAddress( 0xd803, 0xd804, MWA_RAM, &c1943_bgscrolly ),
+		new Memory_WriteAddress( 0xd806, 0xd806, c1943_d806_w ),	/* sprites, bg1, bg2 enable */
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc800, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xe000, 0xe000, YM2203_control_port_0_w },
-		{ 0xe001, 0xe001, YM2203_write_port_0_w },
-		{ 0xe002, 0xe002, YM2203_control_port_1_w },
-		{ 0xe003, 0xe003, YM2203_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

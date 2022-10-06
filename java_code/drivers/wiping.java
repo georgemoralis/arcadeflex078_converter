@@ -99,45 +99,53 @@ public class wiping
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x8000, 0x8bff, MRA_RAM },
-		{ 0x9000, 0x93ff, shared1_r },
-		{ 0x9800, 0x9bff, shared2_r },
-		{ 0xa800, 0xa807, ports_r },
-		{ 0xb000, 0xb7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, shared1_r ),
+		new Memory_ReadAddress( 0x9800, 0x9bff, shared2_r ),
+		new Memory_ReadAddress( 0xa800, 0xa807, ports_r ),
+		new Memory_ReadAddress( 0xb000, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size },
-		{ 0x8400, 0x87ff, colorram_w, &colorram },
-		{ 0x8800, 0x88ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x8900, 0x8bff, MWA_RAM },
-		{ 0x9000, 0x93ff, shared1_w, &sharedram1 },
-		{ 0x9800, 0x9bff, shared2_w, &sharedram2 },
-		{ 0xa000, 0xa000, interrupt_enable_w },
-		{ 0xa002, 0xa002, wiping_flipscreen_w },
-		{ 0xa003, 0xa003, subcpu_reset_w },
-		{ 0xb000, 0xb7ff, MWA_RAM },
-		{ 0xb800, 0xb800, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8800, 0x88ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x8900, 0x8bff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, shared1_w, &sharedram1 ),
+		new Memory_WriteAddress( 0x9800, 0x9bff, shared2_w, &sharedram2 ),
+		new Memory_WriteAddress( 0xa000, 0xa000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, wiping_flipscreen_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, subcpu_reset_w ),
+		new Memory_WriteAddress( 0xb000, 0xb7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xb800, 0xb800, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Sound cpu data */
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x9000, 0x93ff, shared1_r },
-		{ 0x9800, 0x9bff, shared2_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, shared1_r ),
+		new Memory_ReadAddress( 0x9800, 0x9bff, shared2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x4000, 0x7fff, wiping_sound_w, &wiping_soundregs },
-		{ 0x9000, 0x93ff, shared1_w },
-		{ 0x9800, 0x9bff, shared2_w },
-		{ 0xa001, 0xa001, interrupt_enable_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, wiping_sound_w, &wiping_soundregs ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, shared1_w ),
+		new Memory_WriteAddress( 0x9800, 0x9bff, shared2_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, interrupt_enable_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

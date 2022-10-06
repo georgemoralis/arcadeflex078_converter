@@ -203,37 +203,41 @@ public class sprint4
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x001f, sprint4_analog_r },
-		{ 0x0020, 0x003f, sprint4_coin_r },
-		{ 0x0040, 0x005f, sprint4_gas_r },
-		{ 0x0060, 0x007f, sprint4_dip_r },
-		{ 0x0080, 0x00ff, sprint4_wram_r },
-		{ 0x0180, 0x01ff, sprint4_wram_r },
-		{ 0x0800, 0x0bff, MRA_RAM },
-		{ 0x1000, 0x17ff, input_port_2_r },
-		{ 0x1800, 0x1fff, input_port_3_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xe800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, sprint4_analog_r ),
+		new Memory_ReadAddress( 0x0020, 0x003f, sprint4_coin_r ),
+		new Memory_ReadAddress( 0x0040, 0x005f, sprint4_gas_r ),
+		new Memory_ReadAddress( 0x0060, 0x007f, sprint4_dip_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, sprint4_wram_r ),
+		new Memory_ReadAddress( 0x0180, 0x01ff, sprint4_wram_r ),
+		new Memory_ReadAddress( 0x0800, 0x0bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, input_port_2_r ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, input_port_3_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x001f, sprint4_attract_w },
-		{ 0x0020, 0x003f, sprint4_collision_reset_w },
-		{ 0x0040, 0x0041, sprint4_analog_w },
-		{ 0x0042, 0x0043, sprint4_crash_w },
-		{ 0x0044, 0x0045, MWA_NOP }, /* watchdog, disabled during service mode */
-		{ 0x0046, 0x0047, MWA_NOP }, /* SPARE */
-		{ 0x0060, 0x0067, sprint4_lamp_w },
-		{ 0x0068, 0x006f, sprint4_skid_w },
-		{ 0x0080, 0x00ff, sprint4_wram_w },
-		{ 0x0180, 0x01ff, sprint4_wram_w },
-		{ 0x0800, 0x0bff, sprint4_video_ram_w, &sprint4_video_ram },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4000, MWA_NOP }, /* diagnostic ROM location */
-		{ 0xe800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, sprint4_attract_w ),
+		new Memory_WriteAddress( 0x0020, 0x003f, sprint4_collision_reset_w ),
+		new Memory_WriteAddress( 0x0040, 0x0041, sprint4_analog_w ),
+		new Memory_WriteAddress( 0x0042, 0x0043, sprint4_crash_w ),
+		new Memory_WriteAddress( 0x0044, 0x0045, MWA_NOP ), /* watchdog, disabled during service mode */
+		new Memory_WriteAddress( 0x0046, 0x0047, MWA_NOP ), /* SPARE */
+		new Memory_WriteAddress( 0x0060, 0x0067, sprint4_lamp_w ),
+		new Memory_WriteAddress( 0x0068, 0x006f, sprint4_skid_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, sprint4_wram_w ),
+		new Memory_WriteAddress( 0x0180, 0x01ff, sprint4_wram_w ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, sprint4_video_ram_w, &sprint4_video_ram ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_NOP ), /* diagnostic ROM location */
+		new Memory_WriteAddress( 0xe800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( sprint4 )

@@ -175,30 +175,34 @@ public class flyball
 	}
 	
 	
-	static MEMORY_READ_START( flyball_readmem )
-		{ 0x0000, 0x01ff, flyball_ram_r },
-		{ 0x0800, 0x0800, MRA_NOP },
-		{ 0x0802, 0x0802, flyball_scanline_r },
-		{ 0x0803, 0x0803, flyball_potsense_r },
-		{ 0x0b00, 0x0b00, flyball_input_r },
-		{ 0x1000, 0x1fff, MRA_ROM }, /* program */
-		{ 0xf000, 0xffff, MRA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_ReadAddress flyball_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, flyball_ram_r ),
+		new Memory_ReadAddress( 0x0800, 0x0800, MRA_NOP ),
+		new Memory_ReadAddress( 0x0802, 0x0802, flyball_scanline_r ),
+		new Memory_ReadAddress( 0x0803, 0x0803, flyball_potsense_r ),
+		new Memory_ReadAddress( 0x0b00, 0x0b00, flyball_input_r ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_ROM ), /* program */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ), /* program mirror */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flyball_writemem )
-		{ 0x0000, 0x01ff, flyball_ram_w },
-		{ 0x0800, 0x0800, MWA_NOP },
-		{ 0x0801, 0x0801, flyball_pitcher_pic_w },
-		{ 0x0804, 0x0804, flyball_ball_vert_w },
-		{ 0x0805, 0x0805, flyball_ball_horz_w },
-		{ 0x0806, 0x0806, flyball_pitcher_vert_w },
-		{ 0x0807, 0x0807, flyball_pitcher_horz_w },
-		{ 0x0900, 0x0900, flyball_potmask_w },
-		{ 0x0a00, 0x0a07, flyball_misc_w },
-		{ 0x0d00, 0x0eff, MWA_RAM, &flyball_playfield_ram },
-		{ 0x1000, 0x1fff, MWA_ROM }, /* program */
-		{ 0xf000, 0xffff, MWA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_WriteAddress flyball_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, flyball_ram_w ),
+		new Memory_WriteAddress( 0x0800, 0x0800, MWA_NOP ),
+		new Memory_WriteAddress( 0x0801, 0x0801, flyball_pitcher_pic_w ),
+		new Memory_WriteAddress( 0x0804, 0x0804, flyball_ball_vert_w ),
+		new Memory_WriteAddress( 0x0805, 0x0805, flyball_ball_horz_w ),
+		new Memory_WriteAddress( 0x0806, 0x0806, flyball_pitcher_vert_w ),
+		new Memory_WriteAddress( 0x0807, 0x0807, flyball_pitcher_horz_w ),
+		new Memory_WriteAddress( 0x0900, 0x0900, flyball_potmask_w ),
+		new Memory_WriteAddress( 0x0a00, 0x0a07, flyball_misc_w ),
+		new Memory_WriteAddress( 0x0d00, 0x0eff, MWA_RAM, &flyball_playfield_ram ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_ROM ), /* program */
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ), /* program mirror */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( flyball )

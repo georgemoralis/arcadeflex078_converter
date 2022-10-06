@@ -266,42 +266,46 @@ public class shougi
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },		/* 2114 x 2 (0x400 x 4bit each) */
-		{ 0x4800, 0x4800, input_port_2_r },
-		{ 0x5000, 0x5000, input_port_0_r },
-		{ 0x5800, 0x5800, input_port_0_r },
-		{ 0x7000, 0x73ff, MRA_RAM },		/* 2114 x 2 (0x400 x 4bit each) */
-		{ 0x7800, 0x7bff, cpu_sharedram_r },/* 2114 x 2 (0x400 x 4bit each) */
-		{ 0x8000, 0xffff, MRA_RAM },		/* 4116 x 16 (32K) */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),		/* 2114 x 2 (0x400 x 4bit each) */
+		new Memory_ReadAddress( 0x4800, 0x4800, input_port_2_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, input_port_0_r ),
+		new Memory_ReadAddress( 0x5800, 0x5800, input_port_0_r ),
+		new Memory_ReadAddress( 0x7000, 0x73ff, MRA_RAM ),		/* 2114 x 2 (0x400 x 4bit each) */
+		new Memory_ReadAddress( 0x7800, 0x7bff, cpu_sharedram_r ),/* 2114 x 2 (0x400 x 4bit each) */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_RAM ),		/* 4116 x 16 (32K) */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },		/* main RAM */
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),		/* main RAM */
 		/* 4800-480f connected to the 74LS259, A3 is data line so 4800-4807 write 0, and 4808-480f write 1 */
-		{ 0x4800, 0x4800, cpu_shared_ctrl_sub_w },
-		{ 0x4808, 0x4808, cpu_shared_ctrl_main_w },
-		{ 0x4801, 0x4801, nmi_disable_and_clear_line_w },
-		{ 0x4809, 0x4809, nmi_enable_w },
-		{ 0x4802, 0x4802, MWA_NOP },
-		{ 0x480a, 0x480a, MWA_NOP },
-		{ 0x4803, 0x4803, MWA_NOP },
-		{ 0x480b, 0x480b, MWA_NOP },
-		{ 0x4804, 0x4804, MWA_NOP },//halt/run MCU
-		{ 0x480c, 0x480c, MWA_NOP },//halt/run MCU
+		new Memory_WriteAddress( 0x4800, 0x4800, cpu_shared_ctrl_sub_w ),
+		new Memory_WriteAddress( 0x4808, 0x4808, cpu_shared_ctrl_main_w ),
+		new Memory_WriteAddress( 0x4801, 0x4801, nmi_disable_and_clear_line_w ),
+		new Memory_WriteAddress( 0x4809, 0x4809, nmi_enable_w ),
+		new Memory_WriteAddress( 0x4802, 0x4802, MWA_NOP ),
+		new Memory_WriteAddress( 0x480a, 0x480a, MWA_NOP ),
+		new Memory_WriteAddress( 0x4803, 0x4803, MWA_NOP ),
+		new Memory_WriteAddress( 0x480b, 0x480b, MWA_NOP ),
+		new Memory_WriteAddress( 0x4804, 0x4804, MWA_NOP ),//halt/run MCU
+		new Memory_WriteAddress( 0x480c, 0x480c, MWA_NOP ),//halt/run MCU
 	
-		{ 0x4807, 0x4807, MWA_NOP },//?????? connected to +5v via resistor
-		{ 0x480f, 0x480f, MWA_NOP },
+		new Memory_WriteAddress( 0x4807, 0x4807, MWA_NOP ),//?????? connected to +5v via resistor
+		new Memory_WriteAddress( 0x480f, 0x480f, MWA_NOP ),
 	
-		{ 0x5800, 0x5800, shougi_watchdog_reset_w },		/* game won't boot if watchdog doesn't work */
-		{ 0x6000, 0x6000, AY8910_control_port_0_w },
-		{ 0x6800, 0x6800, AY8910_write_port_0_w },
-		{ 0x7000, 0x73ff, MWA_RAM },						/* sharedram main/MCU */
-		{ 0x7800, 0x7bff, cpu_sharedram_main_w, &cpu_sharedram },/* sharedram main/sub */
-		{ 0x8000, 0xffff, videoram_w, &videoram, &videoram_size },	/* 4116 x 16 (32K) */
-	MEMORY_END
+		new Memory_WriteAddress( 0x5800, 0x5800, shougi_watchdog_reset_w ),		/* game won't boot if watchdog doesn't work */
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6800, 0x6800, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_RAM ),						/* sharedram main/MCU */
+		new Memory_WriteAddress( 0x7800, 0x7bff, cpu_sharedram_main_w, &cpu_sharedram ),/* sharedram main/sub */
+		new Memory_WriteAddress( 0x8000, 0xffff, videoram_w, &videoram, &videoram_size ),	/* 4116 x 16 (32K) */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -316,19 +320,25 @@ public class shougi
 			return 0;
 	}
 	
-	static PORT_READ_START( readport_sub )
-		{ 0x00,0x00, dummy_r},
-	PORT_END
+	public static IO_ReadPort readport_sub[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00,0x00, dummy_r),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sub )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x63ff, cpu_sharedram_r },	/* sharedram main/sub */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sub[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x63ff, cpu_sharedram_r ),	/* sharedram main/sub */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sub )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x63ff, cpu_sharedram_sub_w },	/* sharedram main/sub */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sub[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x63ff, cpu_sharedram_sub_w ),	/* sharedram main/sub */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

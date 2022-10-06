@@ -256,83 +256,97 @@ public class cvs
 		{ 100 }
 	};
 	
-	static MEMORY_READ_START( cvs_readmem )
-		{ 0x0000, 0x13ff, MRA_ROM },
-		{ 0x2000, 0x33ff, MRA_ROM },
-		{ 0x4000, 0x53ff, MRA_ROM },
-		{ 0x6000, 0x73ff, MRA_ROM },
-	    { 0x1400, 0x14ff, cvs_bullet_r },
-	    { 0x1500, 0x15ff, cvs_2636_3_r },
-	    { 0x1600, 0x16ff, cvs_2636_2_r },
-	    { 0x1700, 0x17ff, cvs_2636_1_r },
-		{ 0x1800, 0x1bff, cvs_videoram_r },
-	    { 0x1c00, 0x1fff, MRA_RAM },
-		{ 0x3400, 0x3fff, cvs_mirror_r },
-		{ 0x5400, 0x5fff, cvs_mirror_r },
-		{ 0x7400, 0x7fff, cvs_mirror_r },
-	MEMORY_END
+	public static Memory_ReadAddress cvs_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x13ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x33ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x53ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x73ff, MRA_ROM ),
+	    new Memory_ReadAddress( 0x1400, 0x14ff, cvs_bullet_r ),
+	    new Memory_ReadAddress( 0x1500, 0x15ff, cvs_2636_3_r ),
+	    new Memory_ReadAddress( 0x1600, 0x16ff, cvs_2636_2_r ),
+	    new Memory_ReadAddress( 0x1700, 0x17ff, cvs_2636_1_r ),
+		new Memory_ReadAddress( 0x1800, 0x1bff, cvs_videoram_r ),
+	    new Memory_ReadAddress( 0x1c00, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3400, 0x3fff, cvs_mirror_r ),
+		new Memory_ReadAddress( 0x5400, 0x5fff, cvs_mirror_r ),
+		new Memory_ReadAddress( 0x7400, 0x7fff, cvs_mirror_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cvs_writemem )
-		{ 0x0000, 0x13ff, MWA_ROM },
-		{ 0x2000, 0x33ff, MWA_ROM },
-		{ 0x4000, 0x53ff, MWA_ROM },
-		{ 0x6000, 0x73ff, MWA_ROM },
-	    { 0x1400, 0x14ff, cvs_bullet_w, &bullet_ram },
-	    { 0x1500, 0x15ff, cvs_2636_3_w, &s2636_3_ram },
-	    { 0x1600, 0x16ff, cvs_2636_2_w, &s2636_2_ram },
-	    { 0x1700, 0x17ff, cvs_2636_1_w, &s2636_1_ram },
-		{ 0x1800, 0x1bff, cvs_videoram_w, &videoram, &videoram_size },
-	    { 0x1c00, 0x1fff, MWA_RAM },
-		{ 0x3400, 0x3fff, cvs_mirror_w },
-		{ 0x5400, 0x5fff, cvs_mirror_w },
-		{ 0x7400, 0x7fff, cvs_mirror_w },
+	public static Memory_WriteAddress cvs_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x13ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x33ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x53ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x73ff, MWA_ROM ),
+	    new Memory_WriteAddress( 0x1400, 0x14ff, cvs_bullet_w, &bullet_ram ),
+	    new Memory_WriteAddress( 0x1500, 0x15ff, cvs_2636_3_w, &s2636_3_ram ),
+	    new Memory_WriteAddress( 0x1600, 0x16ff, cvs_2636_2_w, &s2636_2_ram ),
+	    new Memory_WriteAddress( 0x1700, 0x17ff, cvs_2636_1_w, &s2636_1_ram ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, cvs_videoram_w, &videoram, &videoram_size ),
+	    new Memory_WriteAddress( 0x1c00, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3400, 0x3fff, cvs_mirror_w ),
+		new Memory_WriteAddress( 0x5400, 0x5fff, cvs_mirror_w ),
+		new Memory_WriteAddress( 0x7400, 0x7fff, cvs_mirror_w ),
 	
 	    /** Not real addresses, just memory blocks **/
 	
-	    { 0x8000, 0x83ff, MWA_RAM, &character_1_ram },	/* same bitplane */
-	    { 0x8800, 0x8bff, MWA_RAM, &character_2_ram },	/* separation as */
-	    { 0x9000, 0x93ff, MWA_RAM, &character_3_ram },	/* rom character */
-		{ 0x9400, 0x97ff, MWA_RAM, &colorram },
-	    { 0x9800, 0x98ff, MWA_RAM, &paletteram },
-	    { 0x9900, 0x99ff, MWA_RAM, &dirty_character },
-	MEMORY_END
+	    new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM, &character_1_ram ),	/* same bitplane */
+	    new Memory_WriteAddress( 0x8800, 0x8bff, MWA_RAM, &character_2_ram ),	/* separation as */
+	    new Memory_WriteAddress( 0x9000, 0x93ff, MWA_RAM, &character_3_ram ),	/* rom character */
+		new Memory_WriteAddress( 0x9400, 0x97ff, MWA_RAM, &colorram ),
+	    new Memory_WriteAddress( 0x9800, 0x98ff, MWA_RAM, &paletteram ),
+	    new Memory_WriteAddress( 0x9900, 0x99ff, MWA_RAM, &dirty_character ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( cvs_readport )
-		{ 0x000, 0x000, input_port_0_r },
-	    { 0x002, 0x002, input_port_1_r },
-		{ 0x003, 0x003, input_port_2_r },
-	    { 0x004, 0x004, input_port_3_r },
-		{ 0x006, 0x006, input_port_4_r },		// Dip 1
-		{ 0x007, 0x007, input_port_5_r },		// Dip 2
-	    { 0x010, 0x0ff, cvs_character_mode_r },	// Programmable Character Settings
-		{ S2650_DATA_PORT, S2650_DATA_PORT, cvs_collision_clear },
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, cvs_collision_r },
-	    { S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_6_r },
-	PORT_END
+	public static IO_ReadPort cvs_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x000, 0x000, input_port_0_r ),
+	    new IO_ReadPort( 0x002, 0x002, input_port_1_r ),
+		new IO_ReadPort( 0x003, 0x003, input_port_2_r ),
+	    new IO_ReadPort( 0x004, 0x004, input_port_3_r ),
+		new IO_ReadPort( 0x006, 0x006, input_port_4_r ),		// Dip 1
+		new IO_ReadPort( 0x007, 0x007, input_port_5_r ),		// Dip 2
+	    new IO_ReadPort( 0x010, 0x0ff, cvs_character_mode_r ),	// Programmable Character Settings
+		new IO_ReadPort( S2650_DATA_PORT, S2650_DATA_PORT, cvs_collision_clear ),
+		new IO_ReadPort( S2650_CTRL_PORT, S2650_CTRL_PORT, cvs_collision_r ),
+	    new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_6_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( cvs_writeport )
-		{ 0              , 0xff           , cvs_scroll_w },
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, control_port_w },
-		{ S2650_DATA_PORT, S2650_DATA_PORT, cvs_video_fx_w },
-	PORT_END
+	public static IO_WritePort cvs_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0              , 0xff           , cvs_scroll_w ),
+		new IO_WritePort( S2650_CTRL_PORT, S2650_CTRL_PORT, control_port_w ),
+		new IO_WritePort( S2650_DATA_PORT, S2650_DATA_PORT, cvs_video_fx_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( cvs_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-	    { 0x1000, 0x107f, MRA_RAM },
-	    { 0x1800, 0x1800, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress cvs_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+	    new Memory_ReadAddress( 0x1000, 0x107f, MRA_RAM ),
+	    new Memory_ReadAddress( 0x1800, 0x1800, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cvs_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-	    { 0x1000, 0x107f, MWA_RAM },
-	    { 0x1840, 0x1840, DAC_0_data_w },
-	    { 0x1880, 0x1883, cvs_DAC2_w },
-	    { 0x1884, 0x1887, MWA_NOP },		/* Not connected to anything */
-	MEMORY_END
+	public static Memory_WriteAddress cvs_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+	    new Memory_WriteAddress( 0x1000, 0x107f, MWA_RAM ),
+	    new Memory_WriteAddress( 0x1840, 0x1840, DAC_0_data_w ),
+	    new Memory_WriteAddress( 0x1880, 0x1883, cvs_DAC2_w ),
+	    new Memory_WriteAddress( 0x1884, 0x1887, MWA_NOP ),		/* Not connected to anything */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( cvs_sound_readport )
-	    { S2650_SENSE_PORT, S2650_SENSE_PORT, CVS_393hz_Clock_r },
-	PORT_END
+	public static IO_ReadPort cvs_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, CVS_393hz_Clock_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( cvs )
 	

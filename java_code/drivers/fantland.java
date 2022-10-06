@@ -65,60 +65,68 @@ public class fantland
 									Fantasy Land
 	***************************************************************************/
 	
-	static MEMORY_READ_START( fantland_readmem )
-		{ 0x00000, 0x07fff, MRA_RAM			},
-		{ 0x08000, 0x7ffff, MRA_ROM			},
-		{ 0xa2000, 0xa21ff, MRA_RAM			},	// not actually read
-		{ 0xa3000, 0xa3000, input_port_0_r	},
-		{ 0xa3001, 0xa3001, input_port_1_r	},
-		{ 0xa3002, 0xa3002, input_port_2_r	},
-		{ 0xa3003, 0xa3003, input_port_3_r	},
-		{ 0xa4000, 0xa67ff, MRA_RAM			},	// not actually read
-		{ 0xc0000, 0xc03ff, MRA_RAM			},	// ""
-		{ 0xe0000, 0xfffff, MRA_ROM			},
-	MEMORY_END
+	public static Memory_ReadAddress fantland_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x07fff, MRA_RAM			),
+		new Memory_ReadAddress( 0x08000, 0x7ffff, MRA_ROM			),
+		new Memory_ReadAddress( 0xa2000, 0xa21ff, MRA_RAM			),	// not actually read
+		new Memory_ReadAddress( 0xa3000, 0xa3000, input_port_0_r	),
+		new Memory_ReadAddress( 0xa3001, 0xa3001, input_port_1_r	),
+		new Memory_ReadAddress( 0xa3002, 0xa3002, input_port_2_r	),
+		new Memory_ReadAddress( 0xa3003, 0xa3003, input_port_3_r	),
+		new Memory_ReadAddress( 0xa4000, 0xa67ff, MRA_RAM			),	// not actually read
+		new Memory_ReadAddress( 0xc0000, 0xc03ff, MRA_RAM			),	// ""
+		new Memory_ReadAddress( 0xe0000, 0xfffff, MRA_ROM			),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fantland_writemem )
-		{ 0x00000, 0x07fff, MWA_RAM					},
-		{ 0x08000, 0x7ffff, MWA_ROM					},
-		{ 0xa2000, 0xa21ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram	},
-		{ 0xa3000, 0xa3000, fantland_nmi_enable_w	},
-		{ 0xa3002, 0xa3002, fantland_soundlatch_w	},
-		{ 0xa4000, 0xa67ff, MWA_RAM, &spriteram		},
-		{ 0xc0000, 0xc03ff, MWA_RAM, &spriteram_2	},
-		{ 0xe0000, 0xfffff, MWA_ROM					},
-	MEMORY_END
+	public static Memory_WriteAddress fantland_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x07fff, MWA_RAM					),
+		new Memory_WriteAddress( 0x08000, 0x7ffff, MWA_ROM					),
+		new Memory_WriteAddress( 0xa2000, 0xa21ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram	),
+		new Memory_WriteAddress( 0xa3000, 0xa3000, fantland_nmi_enable_w	),
+		new Memory_WriteAddress( 0xa3002, 0xa3002, fantland_soundlatch_w	),
+		new Memory_WriteAddress( 0xa4000, 0xa67ff, MWA_RAM, &spriteram		),
+		new Memory_WriteAddress( 0xc0000, 0xc03ff, MWA_RAM, &spriteram_2	),
+		new Memory_WriteAddress( 0xe0000, 0xfffff, MWA_ROM					),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
 									Galaxy Gunners
 	***************************************************************************/
 	
-	static MEMORY_READ_START( galaxygn_readmem )
-		{ 0x00000, 0x07fff, MRA_RAM			},
-		{ 0x10000, 0x2ffff, MRA_ROM			},
-		{ 0x52000, 0x521ff, MRA_RAM			},	// not actually read
-		{ 0x53000, 0x53000, input_port_0_r	},
-		{ 0x53001, 0x53001, input_port_1_r	},
-		{ 0x53002, 0x53002, input_port_2_r	},
-		{ 0x53003, 0x53003, input_port_3_r	},
-		{ 0x54000, 0x567ff, MRA_RAM			},	// not actually read
-		{ 0x60000, 0x603ff, MRA_RAM			},	// ""
-		{ 0x60000, 0x7ffff, MRA_ROM			},
-		{ 0xf0000, 0xfffff, MRA_ROM			},
-	MEMORY_END
+	public static Memory_ReadAddress galaxygn_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x07fff, MRA_RAM			),
+		new Memory_ReadAddress( 0x10000, 0x2ffff, MRA_ROM			),
+		new Memory_ReadAddress( 0x52000, 0x521ff, MRA_RAM			),	// not actually read
+		new Memory_ReadAddress( 0x53000, 0x53000, input_port_0_r	),
+		new Memory_ReadAddress( 0x53001, 0x53001, input_port_1_r	),
+		new Memory_ReadAddress( 0x53002, 0x53002, input_port_2_r	),
+		new Memory_ReadAddress( 0x53003, 0x53003, input_port_3_r	),
+		new Memory_ReadAddress( 0x54000, 0x567ff, MRA_RAM			),	// not actually read
+		new Memory_ReadAddress( 0x60000, 0x603ff, MRA_RAM			),	// ""
+		new Memory_ReadAddress( 0x60000, 0x7ffff, MRA_ROM			),
+		new Memory_ReadAddress( 0xf0000, 0xfffff, MRA_ROM			),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( galaxygn_writemem )
-		{ 0x00000, 0x07fff, MWA_RAM					},
-		{ 0x10000, 0x2ffff, MWA_ROM					},
-		{ 0x52000, 0x521ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram	},
-		{ 0x53000, 0x53000, fantland_nmi_enable_w	},
-		{ 0x53002, 0x53002, fantland_soundlatch_w	},
-		{ 0x54000, 0x567ff, MWA_RAM, &spriteram		},
-		{ 0x60000, 0x603ff, MWA_RAM, &spriteram_2	},
-		{ 0x60000, 0x7ffff, MWA_ROM					},
-		{ 0xf0000, 0xfffff, MWA_ROM					},
-	MEMORY_END
+	public static Memory_WriteAddress galaxygn_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x07fff, MWA_RAM					),
+		new Memory_WriteAddress( 0x10000, 0x2ffff, MWA_ROM					),
+		new Memory_WriteAddress( 0x52000, 0x521ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram	),
+		new Memory_WriteAddress( 0x53000, 0x53000, fantland_nmi_enable_w	),
+		new Memory_WriteAddress( 0x53002, 0x53002, fantland_soundlatch_w	),
+		new Memory_WriteAddress( 0x54000, 0x567ff, MWA_RAM, &spriteram		),
+		new Memory_WriteAddress( 0x60000, 0x603ff, MWA_RAM, &spriteram_2	),
+		new Memory_WriteAddress( 0x60000, 0x7ffff, MWA_ROM					),
+		new Memory_WriteAddress( 0xf0000, 0xfffff, MWA_ROM					),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -127,28 +135,36 @@ public class fantland
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( fantland_sound_readmem )
-		{ 0x00000, 0x01fff, MRA_RAM },
-		{ 0x80000, 0x9ffff, MRA_ROM	},
-		{ 0xc0000, 0xfffff, MRA_ROM	},
-	MEMORY_END
+	public static Memory_ReadAddress fantland_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x01fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x80000, 0x9ffff, MRA_ROM	),
+		new Memory_ReadAddress( 0xc0000, 0xfffff, MRA_ROM	),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fantland_sound_writemem )
-		{ 0x00000, 0x01fff, MWA_RAM	},
-		{ 0x80000, 0x9ffff, MWA_ROM	},
-		{ 0xc0000, 0xfffff, MWA_ROM	},
-	MEMORY_END
+	public static Memory_WriteAddress fantland_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x01fff, MWA_RAM	),
+		new Memory_WriteAddress( 0x80000, 0x9ffff, MWA_ROM	),
+		new Memory_WriteAddress( 0xc0000, 0xfffff, MWA_ROM	),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( fantland_sound_readport )
-		{ 0x0080, 0x0080, soundlatch_r				},
-		{ 0x0101, 0x0101, YM2151_status_port_0_r	},
-	PORT_END
+	public static IO_ReadPort fantland_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0080, 0x0080, soundlatch_r				),
+		new IO_ReadPort( 0x0101, 0x0101, YM2151_status_port_0_r	),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( fantland_sound_writeport )
-		{ 0x0100, 0x0100, YM2151_register_port_0_w	},
-		{ 0x0101, 0x0101, YM2151_data_port_0_w		},
-		{ 0x0180, 0x0180, DAC_0_data_w				},
-	PORT_END
+	public static IO_WritePort fantland_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0100, 0x0100, YM2151_register_port_0_w	),
+		new IO_WritePort( 0x0101, 0x0101, YM2151_data_port_0_w		),
+		new IO_WritePort( 0x0180, 0x0180, DAC_0_data_w				),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

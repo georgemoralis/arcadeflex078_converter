@@ -80,22 +80,26 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_RAM }, /* RAM SEL */
-		{ 0x2000, 0x2fff, avalnche_input_r }, /* INSEL */
-		{ 0x6000, 0x7fff, MRA_ROM }, /* ROM1-ROM2 */
-		{ 0xe000, 0xffff, MRA_ROM }, /* ROM2 for 6502 vectors */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ), /* RAM SEL */
+		new Memory_ReadAddress( 0x2000, 0x2fff, avalnche_input_r ), /* INSEL */
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_ROM ), /* ROM1-ROM2 */
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ), /* ROM2 for 6502 vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1fff, avalnche_videoram_w, &videoram, &videoram_size }, /* DISPLAY */
-		{ 0x3000, 0x3fff, MWA_NOP }, /* WATCHDOG */
-		{ 0x4000, 0x4fff, avalnche_output_w }, /* OUTSEL */
-		{ 0x5000, 0x5fff, avalnche_noise_amplitude_w }, /* SOUNDLVL */
-		{ 0x6000, 0x7fff, MWA_ROM }, /* ROM1-ROM2 */
-		{ 0xe000, 0xffff, MWA_ROM }, /* ROM1-ROM2 */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, avalnche_videoram_w, &videoram, &videoram_size ), /* DISPLAY */
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_NOP ), /* WATCHDOG */
+		new Memory_WriteAddress( 0x4000, 0x4fff, avalnche_output_w ), /* OUTSEL */
+		new Memory_WriteAddress( 0x5000, 0x5fff, avalnche_noise_amplitude_w ), /* SOUNDLVL */
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ), /* ROM1-ROM2 */
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ), /* ROM1-ROM2 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

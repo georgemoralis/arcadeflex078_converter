@@ -155,71 +155,83 @@ public class arkanoid
 		return 0x03;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd001, 0xd001, AY8910_read_port_0_r },
-		{ 0xd00c, 0xd00c, arkanoid_68705_input_0_r },  /* mainly an input port, with 2 bits from the 68705 */
-		{ 0xd010, 0xd010, input_port_1_r },
-		{ 0xd018, 0xd018, arkanoid_Z80_mcu_r },  /* input from the 68705 */
-		{ 0xe000, 0xefff, MRA_RAM },
-		{ 0xf000, 0xffff, MRA_NOP },	/* fixes instant death in final level */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd001, 0xd001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xd00c, 0xd00c, arkanoid_68705_input_0_r ),  /* mainly an input port, with 2 bits from the 68705 */
+		new Memory_ReadAddress( 0xd010, 0xd010, input_port_1_r ),
+		new Memory_ReadAddress( 0xd018, 0xd018, arkanoid_Z80_mcu_r ),  /* input from the 68705 */
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_NOP ),	/* fixes instant death in final level */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd000, AY8910_control_port_0_w },
-		{ 0xd001, 0xd001, AY8910_write_port_0_w },
-		{ 0xd008, 0xd008, arkanoid_d008_w },	/* gfx bank, flip screen etc. */
-		{ 0xd010, 0xd010, watchdog_reset_w },
-		{ 0xd018, 0xd018, arkanoid_Z80_mcu_w }, /* output to the 68705 */
-		{ 0xe000, 0xe7ff, arkanoid_videoram_w, &videoram },
-		{ 0xe800, 0xe83f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe840, 0xefff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd008, 0xd008, arkanoid_d008_w ),	/* gfx bank, flip screen etc. */
+		new Memory_WriteAddress( 0xd010, 0xd010, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xd018, 0xd018, arkanoid_Z80_mcu_w ), /* output to the 68705 */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, arkanoid_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xe800, 0xe83f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe840, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( boot_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd001, 0xd001, AY8910_read_port_0_r },
-		{ 0xd00c, 0xd00c, input_port_0_r },
-		{ 0xd010, 0xd010, input_port_1_r },
-		{ 0xd018, 0xd018, arkanoid_input_2_r },
-		{ 0xe000, 0xefff, MRA_RAM },
-		{ 0xf000, 0xffff, MRA_NOP },	/* fixes instant death in final level */
-	MEMORY_END
+	public static Memory_ReadAddress boot_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd001, 0xd001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xd00c, 0xd00c, input_port_0_r ),
+		new Memory_ReadAddress( 0xd010, 0xd010, input_port_1_r ),
+		new Memory_ReadAddress( 0xd018, 0xd018, arkanoid_input_2_r ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_NOP ),	/* fixes instant death in final level */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( boot_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd000, AY8910_control_port_0_w },
-		{ 0xd001, 0xd001, AY8910_write_port_0_w },
-		{ 0xd008, 0xd008, arkanoid_d008_w },	/* gfx bank, flip screen etc. */
-		{ 0xd010, 0xd010, watchdog_reset_w },
-		{ 0xd018, 0xd018, MWA_NOP },
-		{ 0xe000, 0xe7ff, arkanoid_videoram_w, &videoram },
-		{ 0xe800, 0xe83f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe840, 0xefff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress boot_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd008, 0xd008, arkanoid_d008_w ),	/* gfx bank, flip screen etc. */
+		new Memory_WriteAddress( 0xd010, 0xd010, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xd018, 0xd018, MWA_NOP ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, arkanoid_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xe800, 0xe83f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe840, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x0000, arkanoid_68705_portA_r },
-		{ 0x0001, 0x0001, arkanoid_input_2_r },
-		{ 0x0002, 0x0002, arkanoid_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, arkanoid_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, arkanoid_input_2_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, arkanoid_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x0000, arkanoid_68705_portA_w },
-		{ 0x0002, 0x0002, arkanoid_68705_portC_w },
-		{ 0x0004, 0x0004, arkanoid_68705_ddrA_w },
-		{ 0x0006, 0x0006, arkanoid_68705_ddrC_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, arkanoid_68705_portA_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, arkanoid_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, arkanoid_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0006, 0x0006, arkanoid_68705_ddrC_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( arkanoid )

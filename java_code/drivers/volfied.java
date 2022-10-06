@@ -74,23 +74,27 @@ public class volfied
 		{ 0xf00000, 0xf00c01, volfied_cchip_w },
 	MEMORY_END
 	
-	static MEMORY_READ_START( z80_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8801, 0x8801, taitosound_slave_comm_r },
-		{ 0x9000, 0x9000, YM2203_status_port_0_r },
-		{ 0x9001, 0x9001, YM2203_read_port_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress z80_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8801, 0x8801, taitosound_slave_comm_r ),
+		new Memory_ReadAddress( 0x9000, 0x9000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0x9001, 0x9001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( z80_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, taitosound_slave_port_w },
-		{ 0x8801, 0x8801, taitosound_slave_comm_w },
-		{ 0x9000, 0x9000, YM2203_control_port_0_w },
-		{ 0x9001, 0x9001, YM2203_write_port_0_w },
-		{ 0x9800, 0x9800, MWA_NOP },    /* ? */
-	MEMORY_END
+	public static Memory_WriteAddress z80_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, taitosound_slave_port_w ),
+		new Memory_WriteAddress( 0x8801, 0x8801, taitosound_slave_comm_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x9001, 0x9001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0x9800, 0x9800, MWA_NOP ),    /* ? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***********************************************************

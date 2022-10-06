@@ -155,43 +155,47 @@ public class starwars
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x2fff, MRA_RAM },			/* vector_ram */
-		{ 0x3000, 0x3fff, MRA_ROM },			/* vector_rom */
-		{ 0x4300, 0x431f, input_port_0_r },		/* Memory mapped input port 0 */
-		{ 0x4320, 0x433f, starwars_input_1_r },	/* Memory mapped input port 1 */
-		{ 0x4340, 0x435f, input_port_2_r },		/* DIP switches bank 0 */
-		{ 0x4360, 0x437f, input_port_3_r },		/* DIP switches bank 1 */
-		{ 0x4380, 0x439f, starwars_adc_r },		/* a-d control result */
-		{ 0x4400, 0x4400, starwars_main_read_r },
-		{ 0x4401, 0x4401, starwars_main_ready_flag_r },
-		{ 0x4500, 0x45ff, MRA_RAM },			/* nov_ram */
-		{ 0x4700, 0x4700, swmathbx_reh_r },
-		{ 0x4701, 0x4701, swmathbx_rel_r },
-		{ 0x4703, 0x4703, swmathbx_prng_r },	/* pseudo random number generator */
-		{ 0x4800, 0x5fff, MRA_RAM },			/* CPU and Math RAM */
-		{ 0x6000, 0x7fff, MRA_BANK1 },			/* banked ROM */
-		{ 0x8000, 0xffff, MRA_ROM },			/* rest of main_rom */
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_RAM ),			/* vector_ram */
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_ROM ),			/* vector_rom */
+		new Memory_ReadAddress( 0x4300, 0x431f, input_port_0_r ),		/* Memory mapped input port 0 */
+		new Memory_ReadAddress( 0x4320, 0x433f, starwars_input_1_r ),	/* Memory mapped input port 1 */
+		new Memory_ReadAddress( 0x4340, 0x435f, input_port_2_r ),		/* DIP switches bank 0 */
+		new Memory_ReadAddress( 0x4360, 0x437f, input_port_3_r ),		/* DIP switches bank 1 */
+		new Memory_ReadAddress( 0x4380, 0x439f, starwars_adc_r ),		/* a-d control result */
+		new Memory_ReadAddress( 0x4400, 0x4400, starwars_main_read_r ),
+		new Memory_ReadAddress( 0x4401, 0x4401, starwars_main_ready_flag_r ),
+		new Memory_ReadAddress( 0x4500, 0x45ff, MRA_RAM ),			/* nov_ram */
+		new Memory_ReadAddress( 0x4700, 0x4700, swmathbx_reh_r ),
+		new Memory_ReadAddress( 0x4701, 0x4701, swmathbx_rel_r ),
+		new Memory_ReadAddress( 0x4703, 0x4703, swmathbx_prng_r ),	/* pseudo random number generator */
+		new Memory_ReadAddress( 0x4800, 0x5fff, MRA_RAM ),			/* CPU and Math RAM */
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),			/* banked ROM */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			/* rest of main_rom */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size },
-		{ 0x3000, 0x3fff, MWA_ROM },								/* vector_rom */
-		{ 0x4400, 0x4400, starwars_main_wr_w },
-		{ 0x4500, 0x45ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x4600, 0x461f, avgdvg_go_w },
-		{ 0x4620, 0x463f, avgdvg_reset_w },
-		{ 0x4640, 0x465f, watchdog_reset_w },
-		{ 0x4660, 0x467f, irq_ack_w },
-		{ 0x4680, 0x4687, starwars_out_w },
-		{ 0x46a0, 0x46bf, MWA_NOP },								/* nstore */
-		{ 0x46c0, 0x46c2, starwars_adc_select_w },
-		{ 0x46e0, 0x46e0, starwars_soundrst_w },
-		{ 0x4700, 0x4707, swmathbx_w },
-		{ 0x4800, 0x5fff, MWA_RAM },		/* CPU and Math RAM */
-		{ 0x6000, 0xffff, MWA_ROM },		/* main_rom */
-	MEMORY_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_ROM ),								/* vector_rom */
+		new Memory_WriteAddress( 0x4400, 0x4400, starwars_main_wr_w ),
+		new Memory_WriteAddress( 0x4500, 0x45ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x4600, 0x461f, avgdvg_go_w ),
+		new Memory_WriteAddress( 0x4620, 0x463f, avgdvg_reset_w ),
+		new Memory_WriteAddress( 0x4640, 0x465f, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x4660, 0x467f, irq_ack_w ),
+		new Memory_WriteAddress( 0x4680, 0x4687, starwars_out_w ),
+		new Memory_WriteAddress( 0x46a0, 0x46bf, MWA_NOP ),								/* nstore */
+		new Memory_WriteAddress( 0x46c0, 0x46c2, starwars_adc_select_w ),
+		new Memory_WriteAddress( 0x46e0, 0x46e0, starwars_soundrst_w ),
+		new Memory_WriteAddress( 0x4700, 0x4707, swmathbx_w ),
+		new Memory_WriteAddress( 0x4800, 0x5fff, MWA_RAM ),		/* CPU and Math RAM */
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),		/* main_rom */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -201,26 +205,30 @@ public class starwars
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0800, 0x0fff, starwars_sin_r },		/* SIN Read */
-		{ 0x1000, 0x107f, MRA_RAM },	/* 6532 RAM */
-		{ 0x1080, 0x109f, starwars_m6532_r },
-		{ 0x2000, 0x27ff, MRA_RAM },	/* program RAM */
-		{ 0x4000, 0xbfff, MRA_ROM },	/* sound roms */
-		{ 0xc000, 0xffff, MRA_ROM },	/* load last rom twice */
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0800, 0x0fff, starwars_sin_r ),		/* SIN Read */
+		new Memory_ReadAddress( 0x1000, 0x107f, MRA_RAM ),	/* 6532 RAM */
+		new Memory_ReadAddress( 0x1080, 0x109f, starwars_m6532_r ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),	/* program RAM */
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_ROM ),	/* sound roms */
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),	/* load last rom twice */
 										/* for proper int vec operation */
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x07ff, starwars_sout_w },
-		{ 0x1000, 0x107f, MWA_RAM }, /* 6532 ram */
-		{ 0x1080, 0x109f, starwars_m6532_w },
-		{ 0x1800, 0x183f, quad_pokey_w },
-		{ 0x2000, 0x27ff, MWA_RAM }, /* program RAM */
-		{ 0x4000, 0xbfff, MWA_ROM }, /* sound rom */
-		{ 0xc000, 0xffff, MWA_ROM }, /* sound rom again, for intvecs */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, starwars_sout_w ),
+		new Memory_WriteAddress( 0x1000, 0x107f, MWA_RAM ), /* 6532 ram */
+		new Memory_WriteAddress( 0x1080, 0x109f, starwars_m6532_w ),
+		new Memory_WriteAddress( 0x1800, 0x183f, quad_pokey_w ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ), /* program RAM */
+		new Memory_WriteAddress( 0x4000, 0xbfff, MWA_ROM ), /* sound rom */
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ), /* sound rom again, for intvecs */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

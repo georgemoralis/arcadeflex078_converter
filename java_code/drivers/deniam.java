@@ -121,27 +121,35 @@ public class deniam
 		{ 0xff0000, 0xffffff, MWA16_RAM },
 	MEMORY_END
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xf7ff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xf7ff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xf7ff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xf7ff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x01, 0x01, soundlatch_r },
-		{ 0x05, 0x05, OKIM6295_status_0_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, soundlatch_r ),
+		new IO_ReadPort( 0x05, 0x05, OKIM6295_status_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x02, 0x02, YM3812_control_port_0_w },
-		{ 0x03, 0x03, YM3812_write_port_0_w },
-		{ 0x05, 0x05, OKIM6295_data_0_w },
-		{ 0x07, 0x07, deniam16b_oki_rom_bank_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, YM3812_write_port_0_w ),
+		new IO_WritePort( 0x05, 0x05, OKIM6295_data_0_w ),
+		new IO_WritePort( 0x07, 0x07, deniam16b_oki_rom_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* identical to 16b, but handles sound directly */

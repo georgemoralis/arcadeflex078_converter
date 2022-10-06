@@ -57,35 +57,39 @@ public class subs
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0007, subs_control_r },
-		{ 0x0020, 0x0027, subs_coin_r },
-		{ 0x0060, 0x0063, subs_options_r },
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x0800, 0x0bff, MRA_RAM },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM }, /* A14/A15 unused, so mirror ROM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0007, subs_control_r ),
+		new Memory_ReadAddress( 0x0020, 0x0027, subs_coin_r ),
+		new Memory_ReadAddress( 0x0060, 0x0063, subs_options_r ),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ), /* A14/A15 unused, so mirror ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0000, subs_noise_reset_w },
-		{ 0x0020, 0x0020, subs_steer_reset_w },
-	//	{ 0x0040, 0x0040, subs_timer_reset_w },
-		{ 0x0060, 0x0061, subs_lamp1_w },
-		{ 0x0062, 0x0063, subs_lamp2_w },
-		{ 0x0064, 0x0065, subs_sonar2_w },
-		{ 0x0066, 0x0067, subs_sonar1_w },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, subs_noise_reset_w ),
+		new Memory_WriteAddress( 0x0020, 0x0020, subs_steer_reset_w ),
+	//	new Memory_WriteAddress( 0x0040, 0x0040, subs_timer_reset_w ),
+		new Memory_WriteAddress( 0x0060, 0x0061, subs_lamp1_w ),
+		new Memory_WriteAddress( 0x0062, 0x0063, subs_lamp2_w ),
+		new Memory_WriteAddress( 0x0064, 0x0065, subs_sonar2_w ),
+		new Memory_WriteAddress( 0x0066, 0x0067, subs_sonar1_w ),
 	// Schematics show crash and explode reversed.  But this is proper.
-		{ 0x0068, 0x0069, subs_explode_w },
-		{ 0x006a, 0x006b, subs_crash_w },
-		{ 0x006c, 0x006d, subs_invert1_w },
-		{ 0x006e, 0x006f, subs_invert2_w },
-		{ 0x0090, 0x009f, spriteram_w, &spriteram },
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x0bff, videoram_w, &videoram, &videoram_size },
-		{ 0x2000, 0x3fff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0068, 0x0069, subs_explode_w ),
+		new Memory_WriteAddress( 0x006a, 0x006b, subs_crash_w ),
+		new Memory_WriteAddress( 0x006c, 0x006d, subs_invert1_w ),
+		new Memory_WriteAddress( 0x006e, 0x006f, subs_invert2_w ),
+		new Memory_WriteAddress( 0x0090, 0x009f, spriteram_w, &spriteram ),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -162,32 +162,36 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8800, 0x8800, sound_to_main_r },
-		{ 0xa000, 0xbfff, crgolf_videoram_bit1_r },
-		{ 0xc000, 0xdfff, crgolf_videoram_bit0_r },
-		{ 0xe000, 0xffff, crgolf_videoram_bit2_r },
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8800, 0x8800, sound_to_main_r ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, crgolf_videoram_bit1_r ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, crgolf_videoram_bit0_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, crgolf_videoram_bit2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x5fff, MWA_RAM },
-		{ 0x6000, 0x7fff, MWA_ROM },
-		{ 0x8003, 0x8003, MWA_RAM, &crgolf_color_select },
-		{ 0x8004, 0x8004, MWA_RAM, &crgolf_screen_flip },
-		{ 0x8005, 0x8005, MWA_RAM, &crgolf_screen_select },
-		{ 0x8006, 0x8006, MWA_RAM, &crgolf_screenb_enable },
-		{ 0x8007, 0x8007, MWA_RAM, &crgolf_screena_enable },
-		{ 0x8800, 0x8800, main_to_sound_w },
-		{ 0x9000, 0x9000, rom_bank_select_w },
-		{ 0xa000, 0xbfff, crgolf_videoram_bit1_w },
-		{ 0xc000, 0xdfff, crgolf_videoram_bit0_w },
-		{ 0xe000, 0xffff, crgolf_videoram_bit2_w },
-	MEMORY_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8003, 0x8003, MWA_RAM, &crgolf_color_select ),
+		new Memory_WriteAddress( 0x8004, 0x8004, MWA_RAM, &crgolf_screen_flip ),
+		new Memory_WriteAddress( 0x8005, 0x8005, MWA_RAM, &crgolf_screen_select ),
+		new Memory_WriteAddress( 0x8006, 0x8006, MWA_RAM, &crgolf_screenb_enable ),
+		new Memory_WriteAddress( 0x8007, 0x8007, MWA_RAM, &crgolf_screena_enable ),
+		new Memory_WriteAddress( 0x8800, 0x8800, main_to_sound_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, rom_bank_select_w ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, crgolf_videoram_bit1_w ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, crgolf_videoram_bit0_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, crgolf_videoram_bit2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -197,25 +201,29 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xe000, 0xe000, switch_input_r },
-		{ 0xe001, 0xe001, analog_input_r },
-		{ 0xe003, 0xe003, main_to_sound_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, switch_input_r ),
+		new Memory_ReadAddress( 0xe001, 0xe001, analog_input_r ),
+		new Memory_ReadAddress( 0xe003, 0xe003, main_to_sound_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xc000, 0xc000, AY8910_control_port_0_w },
-		{ 0xc001, 0xc001, AY8910_write_port_0_w },
-		{ 0xc002, 0xc002, MWA_NOP },
-		{ 0xe000, 0xe000, switch_input_select_w },
-		{ 0xe001, 0xe001, unknown_w },
-		{ 0xe003, 0xe003, sound_to_main_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, MWA_NOP ),
+		new Memory_WriteAddress( 0xe000, 0xe000, switch_input_select_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, unknown_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, sound_to_main_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -97,51 +97,63 @@ public class flower
 	}
 	
 	
-	static MEMORY_READ_START( flower_mn_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa102, 0xa102, input_port_0_r },
-		{ 0xa103, 0xa103, input_port_1_r },
-		{ 0xc000, 0xffff, flower_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress flower_mn_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa102, 0xa102, input_port_0_r ),
+		new Memory_ReadAddress( 0xa103, 0xa103, input_port_1_r ),
+		new Memory_ReadAddress( 0xc000, 0xffff, flower_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flower_mn_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa000, MWA_NOP },	//watchdog?
-		{ 0xa001, 0xa001, MWA_NOP },	//flip screen - check code at 0x759f
-		{ 0xa002, 0xa002, flower_irq_ack },	//irq ack / enable, maybe?
-		{ 0xa004, 0xa004, MWA_NOP },	//nmi enable (routine is empty)
-		{ 0xc000, 0xffff, flower_sharedram_w, &flower_sharedram },	//c23b-c62a cleared for something
-	MEMORY_END
+	public static Memory_WriteAddress flower_mn_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ),	//watchdog?
+		new Memory_WriteAddress( 0xa001, 0xa001, MWA_NOP ),	//flip screen - check code at 0x759f
+		new Memory_WriteAddress( 0xa002, 0xa002, flower_irq_ack ),	//irq ack / enable, maybe?
+		new Memory_WriteAddress( 0xa004, 0xa004, MWA_NOP ),	//nmi enable (routine is empty)
+		new Memory_WriteAddress( 0xc000, 0xffff, flower_sharedram_w, &flower_sharedram ),	//c23b-c62a cleared for something
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( flower_sl_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa100, 0xa100, input_port_2_r },
-		{ 0xa101, 0xa101, input_port_3_r },
-		{ 0xc000, 0xffff, flower_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress flower_sl_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa100, 0xa100, input_port_2_r ),
+		new Memory_ReadAddress( 0xa101, 0xa101, input_port_3_r ),
+		new Memory_ReadAddress( 0xc000, 0xffff, flower_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flower_sl_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa003, 0xa003, MWA_NOP },	//irq enable
-		{ 0xa005, 0xa005, MWA_NOP },	//nmi enable (routine is empty)
-		{ 0xa400, 0xa400, sound_command_w },
-		{ 0xc000, 0xffff, flower_sharedram_w },
-	MEMORY_END
+	public static Memory_WriteAddress flower_sl_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa003, 0xa003, MWA_NOP ),	//irq enable
+		new Memory_WriteAddress( 0xa005, 0xa005, MWA_NOP ),	//nmi enable (routine is empty)
+		new Memory_WriteAddress( 0xa400, 0xa400, sound_command_w ),
+		new Memory_WriteAddress( 0xc000, 0xffff, flower_sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( flower_sn_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x6000, 0x6000, soundlatch_r },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress flower_sn_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flower_sn_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4000, sn_irq_enable_w },
-		{ 0x4001, 0x4001, sn_nmi_enable_w },
-		{ 0x8000, 0x803f, flower_sound1_w, &flower_soundregs1 },
-		{ 0xa000, 0xa03f, flower_sound2_w, &flower_soundregs2 },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress flower_sn_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, sn_irq_enable_w ),
+		new Memory_WriteAddress( 0x4001, 0x4001, sn_nmi_enable_w ),
+		new Memory_WriteAddress( 0x8000, 0x803f, flower_sound1_w, &flower_soundregs1 ),
+		new Memory_WriteAddress( 0xa000, 0xa03f, flower_sound2_w, &flower_soundregs2 ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

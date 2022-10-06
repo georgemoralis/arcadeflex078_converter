@@ -631,18 +631,22 @@ public class multi32
 		RAM[offset] = data;
 	}
 	
-	static MEMORY_READ_START( multi32_sound_readmem )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xbfff, system32_bank_r },
-		{ 0xc000, 0xdfff, MultiPCM_reg_0_r },
-		{ 0xe000, 0xffff, sys32_shared_snd_r },
-	MEMORY_END
+	public static Memory_ReadAddress multi32_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, system32_bank_r ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MultiPCM_reg_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, sys32_shared_snd_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( multi32_sound_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xc000, 0xdfff, MultiPCM_reg_0_w },
-		{ 0xe000, 0xffff, sys32_shared_snd_w },
-	MEMORY_END
+	public static Memory_WriteAddress multi32_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MultiPCM_reg_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, sys32_shared_snd_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static WRITE_HANDLER( sys32_soundbank_w )
 	{
@@ -654,19 +658,23 @@ public class multi32
 		sys32_SoundMemBank = &RAM[Bank+0x10000];
 	}
 	
-	static PORT_READ_START( multi32_sound_readport )
-		{ 0x80, 0x80, YM2612_status_port_0_A_r },
-	PORT_END
+	public static IO_ReadPort multi32_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x80, 0x80, YM2612_status_port_0_A_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( multi32_sound_writeport )
-		{ 0x80, 0x80, YM2612_control_port_0_A_w },
-		{ 0x81, 0x81, YM2612_data_port_0_A_w },
-		{ 0x82, 0x82, YM2612_control_port_0_B_w },
-		{ 0x83, 0x83, YM2612_data_port_0_B_w },
-		{ 0xa0, 0xa0, sys32_soundbank_w },
-		{ 0xb0, 0xb0, MultiPCM_bank_0_w },
-		{ 0xc1, 0xc1, IOWP_NOP },
-	PORT_END
+	public static IO_WritePort multi32_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x80, 0x80, YM2612_control_port_0_A_w ),
+		new IO_WritePort( 0x81, 0x81, YM2612_data_port_0_A_w ),
+		new IO_WritePort( 0x82, 0x82, YM2612_control_port_0_B_w ),
+		new IO_WritePort( 0x83, 0x83, YM2612_data_port_0_B_w ),
+		new IO_WritePort( 0xa0, 0xa0, sys32_soundbank_w ),
+		new IO_WritePort( 0xb0, 0xb0, MultiPCM_bank_0_w ),
+		new IO_WritePort( 0xc1, 0xc1, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	struct YM2612interface mul32_ym3438_interface =
 	{

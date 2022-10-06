@@ -401,24 +401,28 @@ public class gaiden
 		{ 0x07a808, 0x07a809, gaiden_flip_w },
 	MEMORY_END
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, OKIM6295_status_0_r },
-		{ 0xfc00, 0xfc00, MRA_NOP },	/* ?? */
-		{ 0xfc20, 0xfc20, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xfc00, 0xfc00, MRA_NOP ),	/* ?? */
+		new Memory_ReadAddress( 0xfc20, 0xfc20, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf800, OKIM6295_data_0_w },
-		{ 0xf810, 0xf810, YM2203_control_port_0_w },
-		{ 0xf811, 0xf811, YM2203_write_port_0_w },
-		{ 0xf820, 0xf820, YM2203_control_port_1_w },
-		{ 0xf821, 0xf821, YM2203_write_port_1_w },
-		{ 0xfc00, 0xfc00, MWA_NOP },	/* ?? */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0xf810, 0xf810, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xf811, 0xf811, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xf820, 0xf820, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xf821, 0xf821, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc00, MWA_NOP ),	/* ?? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -226,39 +226,47 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_RAM },
-		{ 0xa000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xffff, fromance_videoram_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xffff, fromance_videoram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x9fff, MWA_RAM },
-		{ 0xa000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram },
-		{ 0xd000, 0xffff, fromance_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress( 0xd000, 0xffff, fromance_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x20, 0x20, input_port_0_r },
-		{ 0x21, 0x21, input_port_1_r },
-		{ 0x22, 0x22, input_port_2_r },
-		{ 0x23, 0x23, input_port_3_r },
-		{ 0x24, 0x24, input_port_4_r },
-		{ 0x25, 0x25, pending_command_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x20, 0x20, input_port_0_r ),
+		new IO_ReadPort( 0x21, 0x21, input_port_1_r ),
+		new IO_ReadPort( 0x22, 0x22, input_port_2_r ),
+		new IO_ReadPort( 0x23, 0x23, input_port_3_r ),
+		new IO_ReadPort( 0x24, 0x24, input_port_4_r ),
+		new IO_ReadPort( 0x25, 0x25, pending_command_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x20, 0x20, sound_command_w },
-		{ 0x21, 0x21, pipedrm_bankswitch_w },
-		{ 0x22, 0x25, fromance_scroll_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x20, 0x20, sound_command_w ),
+		new IO_WritePort( 0x21, 0x21, pipedrm_bankswitch_w ),
+		new IO_WritePort( 0x22, 0x25, fromance_scroll_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -268,54 +276,66 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK2 },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK2 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x16, 0x16, sound_command_r },
-		{ 0x18, 0x18, YM2610_status_port_0_A_r },
-		{ 0x1a, 0x1a, YM2610_status_port_0_B_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x16, 0x16, sound_command_r ),
+		new IO_ReadPort( 0x18, 0x18, YM2610_status_port_0_A_r ),
+		new IO_ReadPort( 0x1a, 0x1a, YM2610_status_port_0_B_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x04, 0x04, sound_bankswitch_w },
-		{ 0x17, 0x17, pending_command_clear_w },
-		{ 0x18, 0x18, YM2610_control_port_0_A_w },
-		{ 0x19, 0x19, YM2610_data_port_0_A_w },
-		{ 0x1a, 0x1a, YM2610_control_port_0_B_w },
-		{ 0x1b, 0x1b, YM2610_data_port_0_B_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x04, 0x04, sound_bankswitch_w ),
+		new IO_WritePort( 0x17, 0x17, pending_command_clear_w ),
+		new IO_WritePort( 0x18, 0x18, YM2610_control_port_0_A_w ),
+		new IO_WritePort( 0x19, 0x19, YM2610_data_port_0_A_w ),
+		new IO_WritePort( 0x1a, 0x1a, YM2610_control_port_0_B_w ),
+		new IO_WritePort( 0x1b, 0x1b, YM2610_data_port_0_B_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( hatris_sound_readport )
-		{ 0x04, 0x04, sound_command_r },
-		{ 0x05, 0x05, pending_command_r },
-		{ 0x08, 0x08, YM2608_status_port_0_A_r },
-		{ 0x0a, 0x0a, YM2608_status_port_0_B_r },
-	PORT_END
+	public static IO_ReadPort hatris_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x04, 0x04, sound_command_r ),
+		new IO_ReadPort( 0x05, 0x05, pending_command_r ),
+		new IO_ReadPort( 0x08, 0x08, YM2608_status_port_0_A_r ),
+		new IO_ReadPort( 0x0a, 0x0a, YM2608_status_port_0_B_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( hatris_sound_writeport )
-		{ 0x02, 0x02, YM2608_control_port_0_B_w },
-		{ 0x03, 0x03, YM2608_data_port_0_B_w },
-		{ 0x05, 0x05, pending_command_clear_w },
-		{ 0x08, 0x08, YM2608_control_port_0_A_w },
-		{ 0x09, 0x09, YM2608_data_port_0_A_w },
-		{ 0x0a, 0x0a, YM2608_control_port_0_B_w },
-		{ 0x0b, 0x0b, YM2608_data_port_0_B_w },
-	PORT_END
+	public static IO_WritePort hatris_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, YM2608_control_port_0_B_w ),
+		new IO_WritePort( 0x03, 0x03, YM2608_data_port_0_B_w ),
+		new IO_WritePort( 0x05, 0x05, pending_command_clear_w ),
+		new IO_WritePort( 0x08, 0x08, YM2608_control_port_0_A_w ),
+		new IO_WritePort( 0x09, 0x09, YM2608_data_port_0_A_w ),
+		new IO_WritePort( 0x0a, 0x0a, YM2608_control_port_0_B_w ),
+		new IO_WritePort( 0x0b, 0x0b, YM2608_data_port_0_B_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

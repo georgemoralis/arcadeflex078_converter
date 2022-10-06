@@ -71,27 +71,31 @@ public class travrusa
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },        /* Video and Color ram */
-		{ 0xd000, 0xd000, input_port_0_r },	/* IN0 */
-		{ 0xd001, 0xd001, input_port_1_r },	/* IN1 */
-		{ 0xd002, 0xd002, input_port_2_r },	/* IN2 */
-		{ 0xd003, 0xd003, input_port_3_r },	/* DSW1 */
-		{ 0xd004, 0xd004, input_port_4_r },	/* DSW2 */
-		{ 0xe000, 0xefff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),        /* Video and Color ram */
+		new Memory_ReadAddress( 0xd000, 0xd000, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0xd001, 0xd001, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xd002, 0xd002, input_port_2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0xd003, 0xd003, input_port_3_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0xd004, 0xd004, input_port_4_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, travrusa_videoram_w, &travrusa_videoram },
-		{ 0x9000, 0x9000, travrusa_scroll_x_low_w },
-		{ 0xa000, 0xa000, travrusa_scroll_x_high_w },
-		{ 0xc800, 0xc9ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd000, 0xd000, irem_sound_cmd_w },
-		{ 0xd001, 0xd001, travrusa_flipscreen_w },	/* + coin counters - not written by shtrider */
-		{ 0xe000, 0xefff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, travrusa_videoram_w, &travrusa_videoram ),
+		new Memory_WriteAddress( 0x9000, 0x9000, travrusa_scroll_x_low_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, travrusa_scroll_x_high_w ),
+		new Memory_WriteAddress( 0xc800, 0xc9ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd000, irem_sound_cmd_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, travrusa_flipscreen_w ),	/* + coin counters - not written by shtrider */
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

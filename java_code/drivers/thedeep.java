@@ -149,40 +149,44 @@ public class thedeep
 			logerror("pc %04x: e100 = %02x\n", activecpu_get_pc(),data);
 	}
 	
-	static MEMORY_READ_START( thedeep_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1				},	// ROM (banked)
-		{ 0xc000, 0xcfff, MRA_RAM				},	// RAM
-		{ 0xd000, 0xdfff, MRA_RAM				},	// RAM (MCU data copied here)
-		{ 0xe000, 0xe000, thedeep_protection_r	},	// From MCU
-		{ 0xe004, 0xe004, thedeep_e004_r		},	// ?
-		{ 0xe008, 0xe008, input_port_0_r		},	// P1 (Inputs)
-		{ 0xe009, 0xe009, input_port_1_r		},	// P2
-		{ 0xe00a, 0xe00a, input_port_2_r		},	// DSW1
-		{ 0xe00b, 0xe00b, input_port_3_r		},	// DSW2
-		{ 0xe400, 0xe7ff, MRA_RAM				},	// Sprites
-		{ 0xe800, 0xefff, MRA_RAM				},	// Text Layer
-		{ 0xf000, 0xf7ff, MRA_RAM				},	// Background Layer
-		{ 0xf800, 0xf83f, MRA_RAM				},	// Column Scroll
-		{ 0xf840, 0xffff, MRA_RAM				},	//
-	MEMORY_END
+	public static Memory_ReadAddress thedeep_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM				),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1				),	// ROM (banked)
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM				),	// RAM
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM				),	// RAM (MCU data copied here)
+		new Memory_ReadAddress( 0xe000, 0xe000, thedeep_protection_r	),	// From MCU
+		new Memory_ReadAddress( 0xe004, 0xe004, thedeep_e004_r		),	// ?
+		new Memory_ReadAddress( 0xe008, 0xe008, input_port_0_r		),	// P1 (Inputs)
+		new Memory_ReadAddress( 0xe009, 0xe009, input_port_1_r		),	// P2
+		new Memory_ReadAddress( 0xe00a, 0xe00a, input_port_2_r		),	// DSW1
+		new Memory_ReadAddress( 0xe00b, 0xe00b, input_port_3_r		),	// DSW2
+		new Memory_ReadAddress( 0xe400, 0xe7ff, MRA_RAM				),	// Sprites
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM				),	// Text Layer
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM				),	// Background Layer
+		new Memory_ReadAddress( 0xf800, 0xf83f, MRA_RAM				),	// Column Scroll
+		new Memory_ReadAddress( 0xf840, 0xffff, MRA_RAM				),	//
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( thedeep_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM				},	// ROM (banked)
-		{ 0xc000, 0xcfff, MWA_RAM				},	// RAM
-		{ 0xd000, 0xdfff, MWA_RAM				},	// RAM (MCU data copied here)
-		{ 0xe000, 0xe000, thedeep_protection_w	},	// To MCU
-		{ 0xe004, 0xe004, thedeep_nmi_w			},	//
-		{ 0xe00c, 0xe00c, thedeep_sound_w		},	// To Sound CPU
-		{ 0xe100, 0xe100, thedeep_e100_w		},	// ?
-		{ 0xe210, 0xe213, MWA_RAM, &thedeep_scroll				},	// Scroll
-		{ 0xe400, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size	},	// Sprites
-		{ 0xe800, 0xefff, thedeep_vram_1_w, &thedeep_vram_1		},	// Text Layer
-		{ 0xf000, 0xf7ff, thedeep_vram_0_w, &thedeep_vram_0		},	// Background Layer
-		{ 0xf800, 0xf83f, MWA_RAM, &thedeep_scroll2				},	// Column Scroll
-		{ 0xf840, 0xffff, MWA_RAM								},	//
-	MEMORY_END
+	public static Memory_WriteAddress thedeep_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM				),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM				),	// ROM (banked)
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM				),	// RAM
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM				),	// RAM (MCU data copied here)
+		new Memory_WriteAddress( 0xe000, 0xe000, thedeep_protection_w	),	// To MCU
+		new Memory_WriteAddress( 0xe004, 0xe004, thedeep_nmi_w			),	//
+		new Memory_WriteAddress( 0xe00c, 0xe00c, thedeep_sound_w		),	// To Sound CPU
+		new Memory_WriteAddress( 0xe100, 0xe100, thedeep_e100_w		),	// ?
+		new Memory_WriteAddress( 0xe210, 0xe213, MWA_RAM, &thedeep_scroll				),	// Scroll
+		new Memory_WriteAddress( 0xe400, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size	),	// Sprites
+		new Memory_WriteAddress( 0xe800, 0xefff, thedeep_vram_1_w, &thedeep_vram_1		),	// Text Layer
+		new Memory_WriteAddress( 0xf000, 0xf7ff, thedeep_vram_0_w, &thedeep_vram_0		),	// Background Layer
+		new Memory_WriteAddress( 0xf800, 0xf83f, MWA_RAM, &thedeep_scroll2				),	// Column Scroll
+		new Memory_WriteAddress( 0xf840, 0xffff, MWA_RAM								),	//
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	
@@ -190,18 +194,22 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( thedeep_sound_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM					},	// RAM
-		{ 0x3000, 0x3000, soundlatch_r				},	// From Main CPU
-		{ 0x8000, 0xffff, MRA_ROM					},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress thedeep_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x3000, 0x3000, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( thedeep_sound_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM					},	// RAM
-		{ 0x0800, 0x0800, YM2203_control_port_0_w	},	// YM2203
-		{ 0x0801, 0x0801, YM2203_write_port_0_w		},	//
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM
-	MEMORY_END
+	public static Memory_WriteAddress thedeep_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x0800, 0x0800, YM2203_control_port_0_w	),	// YM2203
+		new Memory_WriteAddress( 0x0801, 0x0801, YM2203_write_port_0_w		),	//
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

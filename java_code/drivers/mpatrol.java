@@ -71,39 +71,45 @@ public class mpatrol
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, mpatrol_protection_r },
-		{ 0xd000, 0xd000, input_port_0_r },          /* IN0 */
-		{ 0xd001, 0xd001, input_port_1_r },          /* IN1 */
-		{ 0xd002, 0xd002, input_port_2_r },          /* IN2 */
-		{ 0xd003, 0xd003, mpatrol_input_port_3_r },  /* DSW1 */
-		{ 0xd004, 0xd004, input_port_4_r },          /* DSW2 */
-		{ 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, mpatrol_protection_r ),
+		new Memory_ReadAddress( 0xd000, 0xd000, input_port_0_r ),          /* IN0 */
+		new Memory_ReadAddress( 0xd001, 0xd001, input_port_1_r ),          /* IN1 */
+		new Memory_ReadAddress( 0xd002, 0xd002, input_port_2_r ),          /* IN2 */
+		new Memory_ReadAddress( 0xd003, 0xd003, mpatrol_input_port_3_r ),  /* DSW1 */
+		new Memory_ReadAddress( 0xd004, 0xd004, input_port_4_r ),          /* DSW2 */
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size },
-		{ 0x8400, 0x87ff, colorram_w, &colorram },
-		{ 0xc820, 0xc87f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xc8a0, 0xc8ff, MWA_RAM, &spriteram_2 },
-		{ 0xd000, 0xd000, irem_sound_cmd_w },
-		{ 0xd001, 0xd001, mpatrol_flipscreen_w },	/* + coin counters */
-		{ 0xe000, 0xe7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc820, 0xc87f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc8a0, 0xc8ff, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0xd000, 0xd000, irem_sound_cmd_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, mpatrol_flipscreen_w ),	/* + coin counters */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x10, 0x1f, mpatrol_scroll_w },
-		{ 0x40, 0x40, mpatrol_bg1xpos_w },
-		{ 0x60, 0x60, mpatrol_bg1ypos_w },
-		{ 0x80, 0x80, mpatrol_bg2xpos_w },
-		{ 0xa0, 0xa0, mpatrol_bg2ypos_w },
-		{ 0xc0, 0xc0, mpatrol_bgcontrol_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x1f, mpatrol_scroll_w ),
+		new IO_WritePort( 0x40, 0x40, mpatrol_bg1xpos_w ),
+		new IO_WritePort( 0x60, 0x60, mpatrol_bg1ypos_w ),
+		new IO_WritePort( 0x80, 0x80, mpatrol_bg2xpos_w ),
+		new IO_WritePort( 0xa0, 0xa0, mpatrol_bg2ypos_w ),
+		new IO_WritePort( 0xc0, 0xc0, mpatrol_bgcontrol_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

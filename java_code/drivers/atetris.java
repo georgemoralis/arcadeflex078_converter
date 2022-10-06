@@ -177,30 +177,34 @@ public class atetris
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x20ff, MRA_RAM },
-		{ 0x2400, 0x25ff, MRA_RAM },
-		{ 0x2800, 0x280f, pokey1_r },
-		{ 0x2810, 0x281f, pokey2_r },
-		{ 0x4000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x7fff, atetris_slapstic_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x20ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2400, 0x25ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x280f, pokey1_r ),
+		new Memory_ReadAddress( 0x2810, 0x281f, pokey2_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, atetris_slapstic_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x1fff, atetris_videoram_w, &videoram, &videoram_size },
-		{ 0x2000, 0x20ff, paletteram_RRRGGGBB_w, &paletteram },
-		{ 0x2400, 0x25ff, nvram_w, &generic_nvram, &generic_nvram_size },
-		{ 0x2800, 0x280f, pokey1_w },
-		{ 0x2810, 0x281f, pokey2_w },
-		{ 0x3000, 0x3000, watchdog_reset_w },
-		{ 0x3400, 0x3400, nvram_enable_w },
-		{ 0x3800, 0x3800, irq_ack_w },
-		{ 0x3c00, 0x3c00, coincount_w },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, atetris_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x20ff, paletteram_RRRGGGBB_w, &paletteram ),
+		new Memory_WriteAddress( 0x2400, 0x25ff, nvram_w, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x2800, 0x280f, pokey1_w ),
+		new Memory_WriteAddress( 0x2810, 0x281f, pokey2_w ),
+		new Memory_WriteAddress( 0x3000, 0x3000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x3400, 0x3400, nvram_enable_w ),
+		new Memory_WriteAddress( 0x3800, 0x3800, irq_ack_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, coincount_w ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -78,58 +78,66 @@ public class aeroboto
 		if (data) disable_irq = 1;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x07ff, MRA_RAM }, // main RAM
-		{ 0x0800, 0x08ff, MRA_RAM }, // tile color buffer; copied to 0x2000
-		{ 0x1000, 0x17ff, MRA_RAM }, // tile RAM
-		{ 0x1800, 0x183f, MRA_RAM }, // horizontal scroll regs
-		{ 0x2000, 0x20ff, MRA_RAM }, // tile color RAM
-		{ 0x2800, 0x28ff, MRA_RAM }, // sprite RAM
-		{ 0x2973, 0x2973, aeroboto_2973_r }, // protection read
-		{ 0x3000, 0x3000, aeroboto_in0_r },
-		{ 0x3001, 0x3001, input_port_2_r },
-		{ 0x3002, 0x3002, input_port_3_r },
-		{ 0x3004, 0x3004, aeroboto_201_r }, // protection read
-		{ 0x3800, 0x3800, MRA_NOP }, // watchdog or IRQ ack
-		{ 0x4000, 0xffff, MRA_ROM }, // main ROM
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ), // main RAM
+		new Memory_ReadAddress( 0x0800, 0x08ff, MRA_RAM ), // tile color buffer; copied to 0x2000
+		new Memory_ReadAddress( 0x1000, 0x17ff, MRA_RAM ), // tile RAM
+		new Memory_ReadAddress( 0x1800, 0x183f, MRA_RAM ), // horizontal scroll regs
+		new Memory_ReadAddress( 0x2000, 0x20ff, MRA_RAM ), // tile color RAM
+		new Memory_ReadAddress( 0x2800, 0x28ff, MRA_RAM ), // sprite RAM
+		new Memory_ReadAddress( 0x2973, 0x2973, aeroboto_2973_r ), // protection read
+		new Memory_ReadAddress( 0x3000, 0x3000, aeroboto_in0_r ),
+		new Memory_ReadAddress( 0x3001, 0x3001, input_port_2_r ),
+		new Memory_ReadAddress( 0x3002, 0x3002, input_port_3_r ),
+		new Memory_ReadAddress( 0x3004, 0x3004, aeroboto_201_r ), // protection read
+		new Memory_ReadAddress( 0x3800, 0x3800, MRA_NOP ), // watchdog or IRQ ack
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ), // main ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x01a2, 0x01a2, aeroboto_1a2_w }, // affects IRQ line (more protection?)
-		{ 0x0000, 0x07ff, MWA_RAM, &aeroboto_mainram },
-		{ 0x0800, 0x08ff, MWA_RAM },
-		{ 0x0900, 0x09ff, MWA_RAM }, // a backup of default tile colors
-		{ 0x1000, 0x17ff, aeroboto_videoram_w, &aeroboto_videoram },
-		{ 0x1800, 0x183f, MWA_RAM, &aeroboto_hscroll },
-		{ 0x2000, 0x20ff, aeroboto_tilecolor_w, &aeroboto_tilecolor },
-		{ 0x1840, 0x27ff, MWA_NOP }, // cleared during custom LSI test
-		{ 0x2800, 0x28ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x2900, 0x2fff, MWA_NOP }, // cleared along with sprite RAM
-		{ 0x3000, 0x3000, aeroboto_3000_w },
-		{ 0x3001, 0x3001, soundlatch_w },
-		{ 0x3002, 0x3002, soundlatch2_w },
-		{ 0x3003, 0x3003, MWA_RAM, &aeroboto_vscroll },
-		{ 0x3004, 0x3004, MWA_RAM, &aeroboto_starx },
-		{ 0x3005, 0x3005, MWA_RAM, &aeroboto_stary }, // usable but probably wrong
-		{ 0x3006, 0x3006, MWA_RAM, &aeroboto_bgcolor },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x01a2, 0x01a2, aeroboto_1a2_w ), // affects IRQ line (more protection?)
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &aeroboto_mainram ),
+		new Memory_WriteAddress( 0x0800, 0x08ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0900, 0x09ff, MWA_RAM ), // a backup of default tile colors
+		new Memory_WriteAddress( 0x1000, 0x17ff, aeroboto_videoram_w, &aeroboto_videoram ),
+		new Memory_WriteAddress( 0x1800, 0x183f, MWA_RAM, &aeroboto_hscroll ),
+		new Memory_WriteAddress( 0x2000, 0x20ff, aeroboto_tilecolor_w, &aeroboto_tilecolor ),
+		new Memory_WriteAddress( 0x1840, 0x27ff, MWA_NOP ), // cleared during custom LSI test
+		new Memory_WriteAddress( 0x2800, 0x28ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x2900, 0x2fff, MWA_NOP ), // cleared along with sprite RAM
+		new Memory_WriteAddress( 0x3000, 0x3000, aeroboto_3000_w ),
+		new Memory_WriteAddress( 0x3001, 0x3001, soundlatch_w ),
+		new Memory_WriteAddress( 0x3002, 0x3002, soundlatch2_w ),
+		new Memory_WriteAddress( 0x3003, 0x3003, MWA_RAM, &aeroboto_vscroll ),
+		new Memory_WriteAddress( 0x3004, 0x3004, MWA_RAM, &aeroboto_starx ),
+		new Memory_WriteAddress( 0x3005, 0x3005, MWA_RAM, &aeroboto_stary ), // usable but probably wrong
+		new Memory_WriteAddress( 0x3006, 0x3006, MWA_RAM, &aeroboto_bgcolor ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x9002, 0x9002, AY8910_read_port_0_r },
-		{ 0xa002, 0xa002, AY8910_read_port_1_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9002, 0x9002, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xa002, 0xa002, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x9000, 0x9000, AY8910_control_port_0_w },
-		{ 0x9001, 0x9001, AY8910_write_port_0_w },
-		{ 0xa000, 0xa000, AY8910_control_port_1_w },
-		{ 0xa001, 0xa001, AY8910_write_port_1_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x9000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x9001, 0x9001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -157,58 +157,70 @@ public class thief
 		return 0x00;
 	}
 	
-	static MEMORY_READ_START( sharkatt_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },			/* 2114 (working RAM) */
-		{ 0xc000, 0xdfff, thief_videoram_r },	/* 4116 */
-	MEMORY_END
+	public static Memory_ReadAddress sharkatt_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),			/* 2114 (working RAM) */
+		new Memory_ReadAddress( 0xc000, 0xdfff, thief_videoram_r ),	/* 4116 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sharkatt_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, MWA_RAM },			/* 2114 */
-		{ 0xc000, 0xdfff, thief_videoram_w },	/* 4116 */
-	MEMORY_END
+	public static Memory_WriteAddress sharkatt_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_RAM ),			/* 2114 */
+		new Memory_WriteAddress( 0xc000, 0xdfff, thief_videoram_w ),	/* 4116 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( thief_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },			/* 2114 (working RAM) */
-		{ 0xa000, 0xafff, MRA_ROM },			/* NATO Defense diagnostic ROM */
-		{ 0xc000, 0xdfff, thief_videoram_r },	/* 4116 */
-		{ 0xe000, 0xe008, thief_coprocessor_r },
-		{ 0xe010, 0xe02f, MRA_ROM },
-		{ 0xe080, 0xe0bf, thief_context_ram_r },
-	MEMORY_END
+	public static Memory_ReadAddress thief_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),			/* 2114 (working RAM) */
+		new Memory_ReadAddress( 0xa000, 0xafff, MRA_ROM ),			/* NATO Defense diagnostic ROM */
+		new Memory_ReadAddress( 0xc000, 0xdfff, thief_videoram_r ),	/* 4116 */
+		new Memory_ReadAddress( 0xe000, 0xe008, thief_coprocessor_r ),
+		new Memory_ReadAddress( 0xe010, 0xe02f, MRA_ROM ),
+		new Memory_ReadAddress( 0xe080, 0xe0bf, thief_context_ram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( thief_writemem )
-		{ 0x0000, 0x0000, thief_blit_w },
-		{ 0x0001, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, MWA_RAM },			/* 2114 */
-		{ 0xc000, 0xdfff, thief_videoram_w },	/* 4116 */
-		{ 0xe000, 0xe008, thief_coprocessor_w },
-		{ 0xe010, 0xe02f, MWA_ROM },
-		{ 0xe080, 0xe0bf, thief_context_ram_w },
-		{ 0xe0c0, 0xe0c0, thief_context_bank_w },
-	MEMORY_END
+	public static Memory_WriteAddress thief_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, thief_blit_w ),
+		new Memory_WriteAddress( 0x0001, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_RAM ),			/* 2114 */
+		new Memory_WriteAddress( 0xc000, 0xdfff, thief_videoram_w ),	/* 4116 */
+		new Memory_WriteAddress( 0xe000, 0xe008, thief_coprocessor_w ),
+		new Memory_WriteAddress( 0xe010, 0xe02f, MWA_ROM ),
+		new Memory_WriteAddress( 0xe080, 0xe0bf, thief_context_ram_w ),
+		new Memory_WriteAddress( 0xe0c0, 0xe0c0, thief_context_bank_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x31, 0x31, thief_io_r }, // 8255
-		{ 0x41, 0x41, AY8910_read_port_0_r },
-		{ 0x43, 0x43, AY8910_read_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x31, 0x31, thief_io_r ), // 8255
+		new IO_ReadPort( 0x41, 0x41, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x43, 0x43, AY8910_read_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, MWA_NOP }, /* watchdog */
-		{ 0x10, 0x10, thief_video_control_w },
-		{ 0x30, 0x30, thief_input_select_w }, // 8255
-		{ 0x33, 0x33, tape_control_w },
-		{ 0x40, 0x40, AY8910_control_port_0_w },
-		{ 0x41, 0x41, AY8910_write_port_0_w },
-		{ 0x42, 0x42, AY8910_control_port_1_w },
-		{ 0x43, 0x43, AY8910_write_port_1_w },
-		{ 0x50, 0x50, thief_color_plane_w },
-		{ 0x60, 0x6f, thief_vtcsel_w },
-		{ 0x70, 0x7f, thief_color_map_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ), /* watchdog */
+		new IO_WritePort( 0x10, 0x10, thief_video_control_w ),
+		new IO_WritePort( 0x30, 0x30, thief_input_select_w ), // 8255
+		new IO_WritePort( 0x33, 0x33, tape_control_w ),
+		new IO_WritePort( 0x40, 0x40, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x41, 0x41, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x42, 0x42, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x43, 0x43, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x50, 0x50, thief_color_plane_w ),
+		new IO_WritePort( 0x60, 0x6f, thief_vtcsel_w ),
+		new IO_WritePort( 0x70, 0x7f, thief_color_map_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

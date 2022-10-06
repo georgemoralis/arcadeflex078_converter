@@ -57,33 +57,37 @@ public class nova2001
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa000, 0xb7ff, MRA_RAM },
-		{ 0xc000, 0xc000, AY8910_read_port_0_r },
-		{ 0xc001, 0xc001, AY8910_read_port_1_r },
-		{ 0xc004, 0xc004, watchdog_reset_r },
-		{ 0xc006, 0xc006, input_port_0_r },
-		{ 0xc007, 0xc007, input_port_1_r },
-		{ 0xc00e, 0xc00e, input_port_2_r },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, watchdog_reset_r ),
+		new Memory_ReadAddress( 0xc006, 0xc006, input_port_0_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, input_port_1_r ),
+		new Memory_ReadAddress( 0xc00e, 0xc00e, input_port_2_r ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa3ff, nova2001_videoram2_w, &nova2001_videoram2 },
-		{ 0xa400, 0xa7ff, nova2001_colorram2_w, &nova2001_colorram2 },
-		{ 0xa800, 0xabff, nova2001_videoram_w, &videoram },
-		{ 0xac00, 0xafff, nova2001_colorram_w, &colorram },
-		{ 0xb000, 0xb7ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xbfff, 0xbfff, nova2001_flipscreen_w },
-		{ 0xc000, 0xc000, AY8910_write_port_0_w },
-		{ 0xc001, 0xc001, AY8910_write_port_1_w },
-		{ 0xc002, 0xc002, AY8910_control_port_0_w },
-		{ 0xc003, 0xc003, AY8910_control_port_1_w },
-		{ 0xe000, 0xe7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, nova2001_videoram2_w, &nova2001_videoram2 ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, nova2001_colorram2_w, &nova2001_colorram2 ),
+		new Memory_WriteAddress( 0xa800, 0xabff, nova2001_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xac00, 0xafff, nova2001_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xb000, 0xb7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xbfff, 0xbfff, nova2001_flipscreen_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xc003, 0xc003, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

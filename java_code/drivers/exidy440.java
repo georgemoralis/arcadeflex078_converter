@@ -548,37 +548,41 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_cpu1 )
-		{ 0x0000, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x209f, MRA_RAM },
-		{ 0x20a0, 0x29ff, MRA_RAM },
-		{ 0x2a00, 0x2aff, exidy440_videoram_r },
-		{ 0x2b00, 0x2b00, exidy440_vertical_pos_r },
-		{ 0x2b01, 0x2b01, exidy440_horizontal_pos_r },
-		{ 0x2b02, 0x2b02, MRA_RAM },
-		{ 0x2b03, 0x2b03, input_r },
-		{ 0x2c00, 0x2dff, exidy440_paletteram_r },
-		{ 0x2e00, 0x2eff, io1_r },
-		{ 0x3000, 0x3fff, MRA_RAM },
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x209f, MRA_RAM ),
+		new Memory_ReadAddress( 0x20a0, 0x29ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2a00, 0x2aff, exidy440_videoram_r ),
+		new Memory_ReadAddress( 0x2b00, 0x2b00, exidy440_vertical_pos_r ),
+		new Memory_ReadAddress( 0x2b01, 0x2b01, exidy440_horizontal_pos_r ),
+		new Memory_ReadAddress( 0x2b02, 0x2b02, MRA_RAM ),
+		new Memory_ReadAddress( 0x2b03, 0x2b03, input_r ),
+		new Memory_ReadAddress( 0x2c00, 0x2dff, exidy440_paletteram_r ),
+		new Memory_ReadAddress( 0x2e00, 0x2eff, io1_r ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_cpu1 )
-		{ 0x0000, 0x1fff, MWA_RAM, &exidy440_imageram },
-		{ 0x2000, 0x209f, exidy440_spriteram_w, &spriteram },
-		{ 0x20a0, 0x29ff, MWA_RAM },
-		{ 0x2a00, 0x2aff, exidy440_videoram_w },
-		{ 0x2b01, 0x2b01, exidy440_interrupt_clear_w },
-		{ 0x2b02, 0x2b02, MWA_RAM, &exidy440_scanline },
-		{ 0x2b03, 0x2b03, exidy440_control_w },
-		{ 0x2c00, 0x2dff, exidy440_paletteram_w },
-		{ 0x2e00, 0x2eff, io1_w },
-		{ 0x3000, 0x3fff, MWA_RAM },
-		{ 0x4000, 0x7fff, bankram_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM, &exidy440_imageram ),
+		new Memory_WriteAddress( 0x2000, 0x209f, exidy440_spriteram_w, &spriteram ),
+		new Memory_WriteAddress( 0x20a0, 0x29ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2a00, 0x2aff, exidy440_videoram_w ),
+		new Memory_WriteAddress( 0x2b01, 0x2b01, exidy440_interrupt_clear_w ),
+		new Memory_WriteAddress( 0x2b02, 0x2b02, MWA_RAM, &exidy440_scanline ),
+		new Memory_WriteAddress( 0x2b03, 0x2b03, exidy440_control_w ),
+		new Memory_WriteAddress( 0x2c00, 0x2dff, exidy440_paletteram_w ),
+		new Memory_WriteAddress( 0x2e00, 0x2eff, io1_w ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, bankram_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -588,24 +592,28 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x8000, 0x8016, exidy440_m6844_r },
-		{ 0x8400, 0x8407, MRA_RAM },
-		{ 0x8800, 0x8800, exidy440_sound_command_r },
-		{ 0x9800, 0x9800, MRA_NOP },
-		{ 0xa000, 0xbfff, MRA_RAM },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x8000, 0x8016, exidy440_m6844_r ),
+		new Memory_ReadAddress( 0x8400, 0x8407, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, exidy440_sound_command_r ),
+		new Memory_ReadAddress( 0x9800, 0x9800, MRA_NOP ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x8000, 0x8016, exidy440_m6844_w, &exidy440_m6844_data },
-		{ 0x8400, 0x8407, exidy440_sound_volume_w, &exidy440_sound_volume },
-		{ 0x9400, 0x9403, MWA_RAM, &exidy440_sound_banks },
-		{ 0x9800, 0x9800, exidy440_sound_interrupt_clear_w },
-		{ 0xa000, 0xbfff, MWA_RAM },
-		{ 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x8000, 0x8016, exidy440_m6844_w, &exidy440_m6844_data ),
+		new Memory_WriteAddress( 0x8400, 0x8407, exidy440_sound_volume_w, &exidy440_sound_volume ),
+		new Memory_WriteAddress( 0x9400, 0x9403, MWA_RAM, &exidy440_sound_banks ),
+		new Memory_WriteAddress( 0x9800, 0x9800, exidy440_sound_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -149,65 +149,73 @@ public class ladyfrog
 		return snd_flag | 0xfd;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc07f, MRA_RAM },
-		{ 0xc080, 0xc87f, ladyfrog_videoram_r },
-		{ 0xd400, 0xd400, from_snd_r },
-		{ 0xd401, 0xd401, snd_flag_r },
-		{ 0xd800, 0xd800, input_port_0_r },
-		{ 0xd801, 0xd801, input_port_1_r },
-		{ 0xd804, 0xd804, input_port_2_r },
-		{ 0xd806, 0xd806, input_port_3_r },
-		{ 0xdc00, 0xdc9f, ladyfrog_spriteram_r},
-		{ 0xdca0, 0xdcbf, ladyfrog_scrlram_r },
-		{ 0xdcc0, 0xdcff, MRA_RAM },
-		{ 0xdd00, 0xdeff, ladyfrog_palette_r },
-		{ 0xd0d0, 0xd0d0, MRA_NOP }, /* code jumps to ASCII text "Alfa tecnology"  @ $b7 */
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc07f, MRA_RAM ),
+		new Memory_ReadAddress( 0xc080, 0xc87f, ladyfrog_videoram_r ),
+		new Memory_ReadAddress( 0xd400, 0xd400, from_snd_r ),
+		new Memory_ReadAddress( 0xd401, 0xd401, snd_flag_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ),
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ),
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_2_r ),
+		new Memory_ReadAddress( 0xd806, 0xd806, input_port_3_r ),
+		new Memory_ReadAddress( 0xdc00, 0xdc9f, ladyfrog_spriteram_r),
+		new Memory_ReadAddress( 0xdca0, 0xdcbf, ladyfrog_scrlram_r ),
+		new Memory_ReadAddress( 0xdcc0, 0xdcff, MRA_RAM ),
+		new Memory_ReadAddress( 0xdd00, 0xdeff, ladyfrog_palette_r ),
+		new Memory_ReadAddress( 0xd0d0, 0xd0d0, MRA_NOP ), /* code jumps to ASCII text "Alfa tecnology"  @ $b7 */
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc07f, MWA_RAM },
-		{ 0xc080, 0xc87f, ladyfrog_videoram_w, &videoram, &videoram_size },
-		{ 0xd000, 0xd000, ladyfrog_gfxctrl2_w},
-		{ 0xd400, 0xd400, sound_command_w },
-		{ 0xd403, 0xd403, sound_cpu_reset_w },
-		{ 0xdc00, 0xdc9f, ladyfrog_spriteram_w },
-		{ 0xdca0, 0xdcbf, ladyfrog_scrlram_w, &ladyfrog_scrlram },
-		{ 0xdcc0, 0xdcff, MWA_RAM },
-		{ 0xdd00, 0xdeff, ladyfrog_palette_w },
-		{ 0xdf03, 0xdf03, ladyfrog_gfxctrl_w },
-		{ 0xe000, 0xffff, MWA_RAM},
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc07f, MWA_RAM ),
+		new Memory_WriteAddress( 0xc080, 0xc87f, ladyfrog_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd000, ladyfrog_gfxctrl2_w),
+		new Memory_WriteAddress( 0xd400, 0xd400, sound_command_w ),
+		new Memory_WriteAddress( 0xd403, 0xd403, sound_cpu_reset_w ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, ladyfrog_spriteram_w ),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, ladyfrog_scrlram_w, &ladyfrog_scrlram ),
+		new Memory_WriteAddress( 0xdcc0, 0xdcff, MWA_RAM ),
+		new Memory_WriteAddress( 0xdd00, 0xdeff, ladyfrog_palette_w ),
+		new Memory_WriteAddress( 0xdf03, 0xdf03, ladyfrog_gfxctrl_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, soundlatch_r },
-		{ 0xd200, 0xd200, MRA_NOP },
-		{ 0xe000, 0xefff, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, soundlatch_r ),
+		new Memory_ReadAddress( 0xd200, 0xd200, MRA_NOP ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800,0xc801, MWA_NOP },
-		{ 0xc802, 0xc802, AY8910_control_port_0_w },
-		{ 0xc803, 0xc803, AY8910_write_port_0_w },
-		{ 0xc900, 0xc90d, MSM5232_0_w },
-		{ 0xca00, 0xca00, MWA_NOP},
-		{ 0xcb00, 0xcb00, MWA_NOP},
-		{ 0xcc00, 0xcc00, MWA_NOP},
-		{ 0xd000, 0xd000, to_main_w },
-		{ 0xd200, 0xd200, nmi_enable_w },
-		{ 0xd400, 0xd400, nmi_disable_w },
-		{ 0xd600, 0xd600, MWA_NOP},
-		{ 0xe000, 0xefff, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800,0xc801, MWA_NOP ),
+		new Memory_WriteAddress( 0xc802, 0xc802, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xc803, 0xc803, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xc900, 0xc90d, MSM5232_0_w ),
+		new Memory_WriteAddress( 0xca00, 0xca00, MWA_NOP),
+		new Memory_WriteAddress( 0xcb00, 0xcb00, MWA_NOP),
+		new Memory_WriteAddress( 0xcc00, 0xcc00, MWA_NOP),
+		new Memory_WriteAddress( 0xd000, 0xd000, to_main_w ),
+		new Memory_WriteAddress( 0xd200, 0xd200, nmi_enable_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, nmi_disable_w ),
+		new Memory_WriteAddress( 0xd600, 0xd600, MWA_NOP),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ladyfrog )

@@ -101,174 +101,210 @@ public class lasso
 	
 	
 	
-	static MEMORY_READ_START( lasso_readmem )
-		{ 0x0000, 0x0c7f, MRA_RAM },
-		{ 0x1000, 0x17ff, lasso_sharedram_r	},
-		{ 0x1804, 0x1804, input_port_0_r },
-		{ 0x1805, 0x1805, input_port_1_r },
-		{ 0x1806, 0x1806, input_port_2_r },
-		{ 0x1807, 0x1807, input_port_3_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress lasso_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0c7f, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, lasso_sharedram_r	),
+		new Memory_ReadAddress( 0x1804, 0x1804, input_port_0_r ),
+		new Memory_ReadAddress( 0x1805, 0x1805, input_port_1_r ),
+		new Memory_ReadAddress( 0x1806, 0x1806, input_port_2_r ),
+		new Memory_ReadAddress( 0x1807, 0x1807, input_port_3_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( lasso_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram },
-		{ 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram },
-		{ 0x0c00, 0x0c7f, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size },
-		{ 0x1000, 0x17ff, lasso_sharedram_w	},
-		{ 0x1800, 0x1800, sound_command_w },
-		{ 0x1801, 0x1801, lasso_backcolor_w	},
-		{ 0x1802, 0x1802, lasso_video_control_w },
-		{ 0x1806, 0x1806, MWA_NOP },	// games uses 'lsr' to read port
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( chameleo_readmem )
-		{ 0x0000, 0x10ff, MRA_RAM },
-		{ 0x1804, 0x1804, input_port_0_r },
-		{ 0x1805, 0x1805, input_port_1_r },
-		{ 0x1806, 0x1806, input_port_2_r },
-		{ 0x1807, 0x1807, input_port_3_r },
-		{ 0x2000, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( chameleo_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram },
-		{ 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram },
-		{ 0x0c00, 0x0fff, MWA_RAM },	//
-		{ 0x1000, 0x107f, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size },
-		{ 0x1080, 0x10ff, MWA_RAM },
-		{ 0x1800, 0x1800, sound_command_w },
-		{ 0x1801, 0x1801, lasso_backcolor_w	},
-		{ 0x1802, 0x1802, lasso_video_control_w },
-		{ 0x2000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress lasso_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram ),
+		new Memory_WriteAddress( 0x0c00, 0x0c7f, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, lasso_sharedram_w	),
+		new Memory_WriteAddress( 0x1800, 0x1800, sound_command_w ),
+		new Memory_WriteAddress( 0x1801, 0x1801, lasso_backcolor_w	),
+		new Memory_WriteAddress( 0x1802, 0x1802, lasso_video_control_w ),
+		new Memory_WriteAddress( 0x1806, 0x1806, MWA_NOP ),	// games uses 'lsr' to read port
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( wwjgtin_readmem )
-		{ 0x0000, 0x10ff, MRA_RAM },
-		{ 0x1804, 0x1804, input_port_0_r },
-		{ 0x1805, 0x1805, input_port_1_r },
-		{ 0x1806, 0x1806, input_port_2_r },
-		{ 0x1807, 0x1807, input_port_3_r },
-		{ 0x5000, 0xbfff, MRA_ROM },
-		{ 0xfffa, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress chameleo_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x10ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1804, 0x1804, input_port_0_r ),
+		new Memory_ReadAddress( 0x1805, 0x1805, input_port_1_r ),
+		new Memory_ReadAddress( 0x1806, 0x1806, input_port_2_r ),
+		new Memory_ReadAddress( 0x1807, 0x1807, input_port_3_r ),
+		new Memory_ReadAddress( 0x2000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( wwjgtin_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x0bff, lasso_videoram_w, &lasso_videoram },
-		{ 0x0c00, 0x0fff, lasso_colorram_w, &lasso_colorram },
-		{ 0x1000, 0x10ff, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size },
-		{ 0x1800, 0x1800, sound_command_w },
-		{ 0x1801, 0x1801, lasso_backcolor_w	},
-		{ 0x1802, 0x1802, wwjgtin_video_control_w	},
-		{ 0x1c00, 0x1c03, wwjgtin_lastcolor_w },
-		{ 0x1c04, 0x1c07, MWA_RAM, &wwjgtin_track_scroll },
-		{ 0x5000, 0xbfff, MWA_ROM },
-		{ 0xfffa, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( pinbo_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram },
-		{ 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram },
-		{ 0x1000, 0x10ff, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size },
-		{ 0x1800, 0x1800, sound_command_w },
-		{ 0x1802, 0x1802, pinbo_video_control_w },
-		{ 0x2000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress chameleo_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram ),
+		new Memory_WriteAddress( 0x0c00, 0x0fff, MWA_RAM ),	//
+		new Memory_WriteAddress( 0x1000, 0x107f, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size ),
+		new Memory_WriteAddress( 0x1080, 0x10ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1800, sound_command_w ),
+		new Memory_WriteAddress( 0x1801, 0x1801, lasso_backcolor_w	),
+		new Memory_WriteAddress( 0x1802, 0x1802, lasso_video_control_w ),
+		new Memory_WriteAddress( 0x2000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( lasso_coprocessor_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x2000, 0x3fff, MRA_RAM },
-		{ 0x8000, 0x8fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress wwjgtin_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x10ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1804, 0x1804, input_port_0_r ),
+		new Memory_ReadAddress( 0x1805, 0x1805, input_port_1_r ),
+		new Memory_ReadAddress( 0x1806, 0x1806, input_port_2_r ),
+		new Memory_ReadAddress( 0x1807, 0x1807, input_port_3_r ),
+		new Memory_ReadAddress( 0x5000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xfffa, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( lasso_coprocessor_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM, &lasso_sharedram},
-		{ 0x2000, 0x3fff, MWA_RAM, &lasso_bitmap_ram },
-		{ 0x8000, 0x8fff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( lasso_sound_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x5000, 0x7fff, MRA_ROM },
-		{ 0xb004, 0xb004, sound_status_r },
-		{ 0xb005, 0xb005, soundlatch_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( lasso_sound_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x5000, 0x7fff, MWA_ROM },
-		{ 0xb000, 0xb000, sound_data_w },
-		{ 0xb001, 0xb001, sound_select_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress wwjgtin_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, lasso_videoram_w, &lasso_videoram ),
+		new Memory_WriteAddress( 0x0c00, 0x0fff, lasso_colorram_w, &lasso_colorram ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size ),
+		new Memory_WriteAddress( 0x1800, 0x1800, sound_command_w ),
+		new Memory_WriteAddress( 0x1801, 0x1801, lasso_backcolor_w	),
+		new Memory_WriteAddress( 0x1802, 0x1802, wwjgtin_video_control_w	),
+		new Memory_WriteAddress( 0x1c00, 0x1c03, wwjgtin_lastcolor_w ),
+		new Memory_WriteAddress( 0x1c04, 0x1c07, MWA_RAM, &wwjgtin_track_scroll ),
+		new Memory_WriteAddress( 0x5000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xfffa, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( chameleo_sound_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x1000, 0x1fff, MRA_ROM },
-		{ 0x6000, 0x7fff, MRA_ROM },
-		{ 0xb004, 0xb004, sound_status_r },
-		{ 0xb005, 0xb005, soundlatch_r },
-		{ 0xfffa, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( chameleo_sound_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x1000, 0x1fff, MWA_ROM },
-		{ 0x6000, 0x7fff, MWA_ROM },
-		{ 0xb000, 0xb000, sound_data_w },
-		{ 0xb001, 0xb001, sound_select_w },
-		{ 0xfffa, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress pinbo_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, lasso_videoram_w, &lasso_videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, lasso_colorram_w, &lasso_colorram ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, MWA_RAM, &lasso_spriteram, &lasso_spriteram_size ),
+		new Memory_WriteAddress( 0x1800, 0x1800, sound_command_w ),
+		new Memory_WriteAddress( 0x1802, 0x1802, pinbo_video_control_w ),
+		new Memory_WriteAddress( 0x2000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( wwjgtin_sound_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x5000, 0x7fff, MWA_ROM },
-		{ 0xb000, 0xb000, sound_data_w },
-		{ 0xb001, 0xb001, sound_select_w },
-		{ 0xb003, 0xb003, DAC_0_data_w },
-		{ 0xfffa, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress lasso_coprocessor_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress lasso_coprocessor_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &lasso_sharedram),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_RAM, &lasso_bitmap_ram ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( pinbo_sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress lasso_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb004, 0xb004, sound_status_r ),
+		new Memory_ReadAddress( 0xb005, 0xb005, soundlatch_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( pinbo_sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress lasso_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xb000, 0xb000, sound_data_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, sound_select_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( pinbo_sound_readport )
-		{ 0x02, 0x02, AY8910_read_port_0_r },
-		{ 0x06, 0x06, AY8910_read_port_1_r },
-		{ 0x08, 0x08, soundlatch_r },
-	PORT_END
 	
-	static PORT_WRITE_START( pinbo_sound_writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-		{ 0x04, 0x04, AY8910_control_port_1_w },
-		{ 0x05, 0x05, AY8910_write_port_1_w },
-		{ 0x08, 0x08, MWA_NOP },	/* ??? */
-		{ 0x14, 0x14, MWA_NOP },	/* ??? */
-	PORT_END
+	public static Memory_ReadAddress chameleo_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb004, 0xb004, sound_status_r ),
+		new Memory_ReadAddress( 0xb005, 0xb005, soundlatch_r ),
+		new Memory_ReadAddress( 0xfffa, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress chameleo_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xb000, 0xb000, sound_data_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, sound_select_w ),
+		new Memory_WriteAddress( 0xfffa, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress wwjgtin_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xb000, 0xb000, sound_data_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, sound_select_w ),
+		new Memory_WriteAddress( 0xb003, 0xb003, DAC_0_data_w ),
+		new Memory_WriteAddress( 0xfffa, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress pinbo_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress pinbo_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort pinbo_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x06, 0x06, AY8910_read_port_1_r ),
+		new IO_ReadPort( 0x08, 0x08, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort pinbo_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x05, 0x05, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x08, 0x08, MWA_NOP ),	/* ??? */
+		new IO_WritePort( 0x14, 0x14, MWA_NOP ),	/* ??? */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

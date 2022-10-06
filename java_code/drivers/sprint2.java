@@ -256,42 +256,46 @@ public class sprint2
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x03ff, sprint2_wram_r },
-		{ 0x0400, 0x07ff, MRA_RAM },
-		{ 0x0818, 0x081f, sprint2_input_A_r },
-		{ 0x0828, 0x082f, sprint2_input_B_r },
-		{ 0x0830, 0x0837, sprint2_dip_r },
-		{ 0x0840, 0x087f, input_port_3_r },
-		{ 0x0880, 0x08bf, sprint2_steering1_r },
-		{ 0x08c0, 0x08ff, sprint2_steering2_r },
-		{ 0x0c00, 0x0fff, sprint2_sync_r },
-		{ 0x1000, 0x13ff, sprint2_collision1_r },
-		{ 0x1400, 0x17ff, sprint2_collision2_r },
-		{ 0x1800, 0x1800, MRA_NOP },  /* debugger ROM location? */
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, sprint2_wram_r ),
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0818, 0x081f, sprint2_input_A_r ),
+		new Memory_ReadAddress( 0x0828, 0x082f, sprint2_input_B_r ),
+		new Memory_ReadAddress( 0x0830, 0x0837, sprint2_dip_r ),
+		new Memory_ReadAddress( 0x0840, 0x087f, input_port_3_r ),
+		new Memory_ReadAddress( 0x0880, 0x08bf, sprint2_steering1_r ),
+		new Memory_ReadAddress( 0x08c0, 0x08ff, sprint2_steering2_r ),
+		new Memory_ReadAddress( 0x0c00, 0x0fff, sprint2_sync_r ),
+		new Memory_ReadAddress( 0x1000, 0x13ff, sprint2_collision1_r ),
+		new Memory_ReadAddress( 0x1400, 0x17ff, sprint2_collision2_r ),
+		new Memory_ReadAddress( 0x1800, 0x1800, MRA_NOP ),  /* debugger ROM location? */
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x03ff, sprint2_wram_w },
-		{ 0x0400, 0x07ff, sprint2_video_ram_w, &sprint2_video_ram },
-		{ 0x0c00, 0x0c0f, sprint2_attract_w },
-		{ 0x0c10, 0x0c1f, sprint2_skid1_w },
-		{ 0x0c20, 0x0c2f, sprint2_skid2_w },
-		{ 0x0c30, 0x0c3f, sprint2_lamp1_w },
-		{ 0x0c40, 0x0c4f, sprint2_lamp2_w },
-		{ 0x0c60, 0x0c6f, MWA_NOP }, /* SPARE */
-		{ 0x0c80, 0x0cff, MWA_NOP }, /* watchdog, disabled during service mode */
-		{ 0x0d00, 0x0d7f, sprint2_collision_reset1_w },
-		{ 0x0d80, 0x0dff, sprint2_collision_reset2_w },
-		{ 0x0e00, 0x0e7f, sprint2_steering_reset1_w },
-		{ 0x0e80, 0x0eff, sprint2_steering_reset2_w },
-		{ 0x0f00, 0x0f7f, sprint2_noise_reset_w },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, sprint2_wram_w ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, sprint2_video_ram_w, &sprint2_video_ram ),
+		new Memory_WriteAddress( 0x0c00, 0x0c0f, sprint2_attract_w ),
+		new Memory_WriteAddress( 0x0c10, 0x0c1f, sprint2_skid1_w ),
+		new Memory_WriteAddress( 0x0c20, 0x0c2f, sprint2_skid2_w ),
+		new Memory_WriteAddress( 0x0c30, 0x0c3f, sprint2_lamp1_w ),
+		new Memory_WriteAddress( 0x0c40, 0x0c4f, sprint2_lamp2_w ),
+		new Memory_WriteAddress( 0x0c60, 0x0c6f, MWA_NOP ), /* SPARE */
+		new Memory_WriteAddress( 0x0c80, 0x0cff, MWA_NOP ), /* watchdog, disabled during service mode */
+		new Memory_WriteAddress( 0x0d00, 0x0d7f, sprint2_collision_reset1_w ),
+		new Memory_WriteAddress( 0x0d80, 0x0dff, sprint2_collision_reset2_w ),
+		new Memory_WriteAddress( 0x0e00, 0x0e7f, sprint2_steering_reset1_w ),
+		new Memory_WriteAddress( 0x0e80, 0x0eff, sprint2_steering_reset2_w ),
+		new Memory_WriteAddress( 0x0f00, 0x0f7f, sprint2_noise_reset_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( sprint2 )

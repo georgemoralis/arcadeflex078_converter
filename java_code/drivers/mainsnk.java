@@ -84,60 +84,70 @@ public class mainsnk
 		{ 0 }
 	};
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc000, mainsnk_port_0_r },
-		{ 0xC100, 0xC100, input_port_1_r },
-		{ 0xC200, 0xC200, input_port_2_r },
-		{ 0xC300, 0xC300, input_port_3_r },
-		{ 0xC500, 0xC500, input_port_4_r },
-		{ 0xd800, 0xdbff, me_bgram_r },
-		{ 0xdc00, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe3ff, MRA_RAM },
-		{ 0xe400, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xebff, MRA_RAM },
-		{ 0xec00, 0xefff, MRA_RAM },
-		{ 0xf000, 0xf3ff, me_fgram_r },
-		{ 0xf400, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xfbff, MRA_RAM },
-		{ 0xfc00, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, mainsnk_port_0_r ),
+		new Memory_ReadAddress( 0xC100, 0xC100, input_port_1_r ),
+		new Memory_ReadAddress( 0xC200, 0xC200, input_port_2_r ),
+		new Memory_ReadAddress( 0xC300, 0xC300, input_port_3_r ),
+		new Memory_ReadAddress( 0xC500, 0xC500, input_port_4_r ),
+		new Memory_ReadAddress( 0xd800, 0xdbff, me_bgram_r ),
+		new Memory_ReadAddress( 0xdc00, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe400, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xebff, MRA_RAM ),
+		new Memory_ReadAddress( 0xec00, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf3ff, me_fgram_r ),
+		new Memory_ReadAddress( 0xf400, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xfbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xC600, 0xC600, me_c600_w },
-		{ 0xc700, 0xc700, sound_command_w },
-		{ 0xd800, 0xdbff, me_bgram_w, &me_bgram },
-		{ 0xdc00, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe3ff, MWA_RAM },
-		{ 0xe400, 0xe7ff, MWA_RAM },
-		{ 0xe800, 0xebff, MWA_RAM },
-		{ 0xec00, 0xefff, MWA_RAM },
-		{ 0xf000, 0xf3ff, me_fgram_w, &me_fgram },
-		{ 0xf400, 0xf7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xC600, 0xC600, me_c600_w ),
+		new Memory_WriteAddress( 0xc700, 0xc700, sound_command_w ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, me_bgram_w, &me_bgram ),
+		new Memory_WriteAddress( 0xdc00, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM ),
+		new Memory_WriteAddress( 0xec00, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, me_fgram_w, &me_fgram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa000, sound_command_r },
-		{ 0xc000, 0xc000, sound_ack_r },
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, sound_command_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, sound_ack_r ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xe000, 0xe000, AY8910_control_port_0_w },
-		{ 0xe001, 0xe001, AY8910_write_port_0_w },
-		{ 0xe002, 0xe007, snkwave_w },
-		{ 0xe008, 0xe008, AY8910_control_port_1_w },
-		{ 0xe009, 0xe009, AY8910_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe007, snkwave_w ),
+		new Memory_WriteAddress( 0xe008, 0xe008, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xe009, 0xe009, AY8910_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_sound )
-		{ 0x0000, 0x0000, MRA_NOP },
-	PORT_END
+	public static IO_ReadPort readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x0000, MRA_NOP ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( mainsnk )
 		PORT_START

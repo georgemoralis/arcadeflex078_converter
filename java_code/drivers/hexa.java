@@ -49,23 +49,27 @@ public class hexa
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd001, 0xd001, AY8910_read_port_0_r },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd001, 0xd001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd000, AY8910_control_port_0_w },
-		{ 0xd001, 0xd001, AY8910_write_port_0_w },
-		{ 0xd008, 0xd008, hexa_d008_w },
-		{ 0xd010, 0xd010, watchdog_reset_w },	/* or IRQ acknowledge, or both */
-		{ 0xe000, 0xe7ff, hexa_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd008, 0xd008, hexa_d008_w ),
+		new Memory_WriteAddress( 0xd010, 0xd010, watchdog_reset_w ),	/* or IRQ acknowledge, or both */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, hexa_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

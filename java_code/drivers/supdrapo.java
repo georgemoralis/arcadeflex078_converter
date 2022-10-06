@@ -53,43 +53,47 @@ public class supdrapo
 		}
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x5800, 0x5817, MRA_RAM },
-		{ 0x6000, 0x67ff, MRA_RAM },
-		{ 0x6c00, 0x6fff, MRA_RAM },
-		{ 0x8000, 0x8000, input_port_4_r }, //?
-		{ 0x8001, 0x8001, input_port_0_r }, //input
-		{ 0x8002, 0x8002, input_port_1_r }, //input
-		{ 0x8003, 0x8003, input_port_2_r }, //input
-		{ 0x8004, 0x8004, input_port_3_r }, //input
-		{ 0x8005, 0x8005, input_port_6_r }, //?
-		{ 0x8006, 0x8006, input_port_5_r }, //dip?
-		{ 0x9000, 0x9097, MRA_RAM },
-		{ 0x909d, 0x909d, MRA_RAM },
-		{ 0x9400, 0x9400, input_port_7_r }, //need check
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5800, 0x5817, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6c00, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8000, input_port_4_r ), //?
+		new Memory_ReadAddress( 0x8001, 0x8001, input_port_0_r ), //input
+		new Memory_ReadAddress( 0x8002, 0x8002, input_port_1_r ), //input
+		new Memory_ReadAddress( 0x8003, 0x8003, input_port_2_r ), //input
+		new Memory_ReadAddress( 0x8004, 0x8004, input_port_3_r ), //input
+		new Memory_ReadAddress( 0x8005, 0x8005, input_port_6_r ), //?
+		new Memory_ReadAddress( 0x8006, 0x8006, input_port_5_r ), //dip?
+		new Memory_ReadAddress( 0x9000, 0x9097, MRA_RAM ),
+		new Memory_ReadAddress( 0x909d, 0x909d, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x9400, input_port_7_r ), //need check
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x5000, 0x50ff, MWA_RAM },
-		{ 0x5800, 0x5837, MWA_RAM }, //every 2, starts 5801
-		{ 0x583b, 0x583b, MWA_RAM },
-		{ 0x6000, 0x67ff, MWA_RAM },
-		{ 0x6800, 0x6bff, supdrapo_videoram_w , &videoram },
-		{ 0x6c00, 0x6fff, MWA_RAM, &char_bank },
-		{ 0x7000, 0x77ff, MWA_RAM },
-		{ 0x7800, 0x7c00, MWA_RAM },
-		{ 0x8000, 0x8000, MWA_RAM },
-		{ 0x8003, 0x8003, MWA_RAM },
-		{ 0x8004, 0x8004, MWA_RAM },
-		{ 0x9000, 0x9097, MWA_RAM },
-		{ 0x9081, 0x9081, MWA_RAM },
-		{ 0x909d, 0x909d, MWA_RAM },
-		{ 0x9800, 0x9800, AY8910_write_port_0_w },
-		{ 0x9801, 0x9801, AY8910_control_port_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x50ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5800, 0x5837, MWA_RAM ), //every 2, starts 5801
+		new Memory_WriteAddress( 0x583b, 0x583b, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6800, 0x6bff, supdrapo_videoram_w , &videoram ),
+		new Memory_WriteAddress( 0x6c00, 0x6fff, MWA_RAM, &char_bank ),
+		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7800, 0x7c00, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, MWA_RAM ),
+		new Memory_WriteAddress( 0x8003, 0x8003, MWA_RAM ),
+		new Memory_WriteAddress( 0x8004, 0x8004, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x9097, MWA_RAM ),
+		new Memory_WriteAddress( 0x9081, 0x9081, MWA_RAM ),
+		new Memory_WriteAddress( 0x909d, 0x909d, MWA_RAM ),
+		new Memory_WriteAddress( 0x9800, 0x9800, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x9801, 0x9801, AY8910_control_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( supdrapo )
 		PORT_START

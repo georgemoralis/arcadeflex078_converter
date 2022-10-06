@@ -35,35 +35,39 @@ public class rocnrope
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x3080, 0x3080, input_port_0_r }, /* IO Coin */
-		{ 0x3081, 0x3081, input_port_1_r }, /* P1 IO */
-		{ 0x3082, 0x3082, input_port_2_r }, /* P2 IO */
-		{ 0x3083, 0x3083, input_port_3_r }, /* DSW 0 */
-		{ 0x3000, 0x3000, input_port_4_r }, /* DSW 1 */
-		{ 0x3100, 0x3100, input_port_5_r }, /* DSW 2 */
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x3080, 0x3080, input_port_0_r ), /* IO Coin */
+		new Memory_ReadAddress( 0x3081, 0x3081, input_port_1_r ), /* P1 IO */
+		new Memory_ReadAddress( 0x3082, 0x3082, input_port_2_r ), /* P2 IO */
+		new Memory_ReadAddress( 0x3083, 0x3083, input_port_3_r ), /* DSW 0 */
+		new Memory_ReadAddress( 0x3000, 0x3000, input_port_4_r ), /* DSW 1 */
+		new Memory_ReadAddress( 0x3100, 0x3100, input_port_5_r ), /* DSW 2 */
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x4000, 0x402f, MWA_RAM, &spriteram_2 },
-		{ 0x4400, 0x442f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4800, 0x4bff, rocnrope_colorram_w, &colorram },
-		{ 0x4c00, 0x4fff, rocnrope_videoram_w, &videoram },
-		{ 0x5000, 0x5fff, MWA_RAM },
-		{ 0x8000, 0x8000, watchdog_reset_w },
-		{ 0x8080, 0x8080, rocnrope_flipscreen_w },
-		{ 0x8081, 0x8081, timeplt_sh_irqtrigger_w },  /* cause interrupt on audio CPU */
-		{ 0x8082, 0x8082, MWA_NOP },	/* interrupt acknowledge??? */
-		{ 0x8083, 0x8083, MWA_NOP },	/* Coin counter 1 */
-		{ 0x8084, 0x8084, MWA_NOP },	/* Coin counter 2 */
-		{ 0x8087, 0x8087, interrupt_enable_w },
-		{ 0x8100, 0x8100, soundlatch_w },
-		{ 0x8182, 0x818d, rocnrope_interrupt_vector_w },
-		{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x4000, 0x402f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x4400, 0x442f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, rocnrope_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, rocnrope_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x5000, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x8080, 0x8080, rocnrope_flipscreen_w ),
+		new Memory_WriteAddress( 0x8081, 0x8081, timeplt_sh_irqtrigger_w ),  /* cause interrupt on audio CPU */
+		new Memory_WriteAddress( 0x8082, 0x8082, MWA_NOP ),	/* interrupt acknowledge??? */
+		new Memory_WriteAddress( 0x8083, 0x8083, MWA_NOP ),	/* Coin counter 1 */
+		new Memory_WriteAddress( 0x8084, 0x8084, MWA_NOP ),	/* Coin counter 2 */
+		new Memory_WriteAddress( 0x8087, 0x8087, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x8100, 0x8100, soundlatch_w ),
+		new Memory_WriteAddress( 0x8182, 0x818d, rocnrope_interrupt_vector_w ),
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( rocnrope )

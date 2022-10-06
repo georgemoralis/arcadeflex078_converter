@@ -564,44 +564,52 @@ public class srmp2
 	}
 	
 	
-	static MEMORY_READ_START( srmp3_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK1 },						/* rom bank */
-		{ 0xa000, 0xa7ff, MRA_RAM },						/* work ram */
-		{ 0xb000, 0xb303, MRA_RAM },						/* Sprites Y */
-		{ 0xc000, 0xdfff, MRA_RAM },						/* Sprites Code + X + Attr */
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress srmp3_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK1 ),						/* rom bank */
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),						/* work ram */
+		new Memory_ReadAddress( 0xb000, 0xb303, MRA_RAM ),						/* Sprites Y */
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),						/* Sprites Code + X + Attr */
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( srmp3_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x9fff, MWA_ROM },						/* rom bank */
-		{ 0xa000, 0xa7ff, MWA_RAM, &generic_nvram, &generic_nvram_size },	/* work ram */
-		{ 0xa800, 0xa800, MWA_NOP },						/* flag ? */
-		{ 0xb000, 0xb303, MWA_RAM, &spriteram },			/* Sprites Y */
-		{ 0xb800, 0xb800, MWA_NOP },						/* flag ? */
-		{ 0xc000, 0xdfff, MWA_RAM, &spriteram_2 },			/* Sprites Code + X + Attr */
-		{ 0xe000, 0xffff, MWA_RAM, &spriteram_3 },
-	MEMORY_END
+	public static Memory_WriteAddress srmp3_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_ROM ),						/* rom bank */
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),	/* work ram */
+		new Memory_WriteAddress( 0xa800, 0xa800, MWA_NOP ),						/* flag ? */
+		new Memory_WriteAddress( 0xb000, 0xb303, MWA_RAM, &spriteram ),			/* Sprites Y */
+		new Memory_WriteAddress( 0xb800, 0xb800, MWA_NOP ),						/* flag ? */
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, &spriteram_2 ),			/* Sprites Code + X + Attr */
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM, &spriteram_3 ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( srmp3_readport )
-		{ 0x40, 0x40, input_port_0_r },						/* coin, service */
-		{ 0xa1, 0xa1, srmp3_cchip_status_0_r },				/* custom chip status ??? */
-		{ 0xc0, 0xc0, srmp3_input_r },						/* key matrix */
-		{ 0xc1, 0xc1, srmp3_cchip_status_1_r },				/* custom chip status ??? */
-		{ 0xe2, 0xe2, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort srmp3_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x40, 0x40, input_port_0_r ),						/* coin, service */
+		new IO_ReadPort( 0xa1, 0xa1, srmp3_cchip_status_0_r ),				/* custom chip status ??? */
+		new IO_ReadPort( 0xc0, 0xc0, srmp3_input_r ),						/* key matrix */
+		new IO_ReadPort( 0xc1, 0xc1, srmp3_cchip_status_1_r ),				/* custom chip status ??? */
+		new IO_ReadPort( 0xe2, 0xe2, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( srmp3_writeport )
-		{ 0x20, 0x20, IOWP_NOP },							/* elapsed interrupt signal */
-		{ 0x40, 0x40, srmp3_flags_w },						/* GFX bank, counter, lockout */
-		{ 0x60, 0x60, srmp3_rombank_w },					/* ROM bank select */
-		{ 0xa0, 0xa0, srmp3_adpcm_code_w },					/* ADPCM number */
-		{ 0xc0, 0xc0, srmp3_input_1_w },					/* I/O ??? */
-		{ 0xc1, 0xc1, srmp3_input_2_w },					/* I/O ??? */
-		{ 0xe0, 0xe0, AY8910_control_port_0_w },
-		{ 0xe1, 0xe1, AY8910_write_port_0_w },
-	PORT_END
+	public static IO_WritePort srmp3_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x20, 0x20, IOWP_NOP ),							/* elapsed interrupt signal */
+		new IO_WritePort( 0x40, 0x40, srmp3_flags_w ),						/* GFX bank, counter, lockout */
+		new IO_WritePort( 0x60, 0x60, srmp3_rombank_w ),					/* ROM bank select */
+		new IO_WritePort( 0xa0, 0xa0, srmp3_adpcm_code_w ),					/* ADPCM number */
+		new IO_WritePort( 0xc0, 0xc0, srmp3_input_1_w ),					/* I/O ??? */
+		new IO_WritePort( 0xc1, 0xc1, srmp3_input_2_w ),					/* I/O ??? */
+		new IO_WritePort( 0xe0, 0xe0, AY8910_control_port_0_w ),
+		new IO_WritePort( 0xe1, 0xe1, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

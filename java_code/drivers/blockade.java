@@ -188,32 +188,40 @@ public class blockade
 	    return;
 	}
 	
-	static MEMORY_READ_START( readmem )
-	    { 0x0000, 0x07ff, MRA_ROM },
-	    { 0x4000, 0x47ff, MRA_ROM },  /* same image */
-	    { 0xe000, 0xe3ff, MRA_RAM },
-	    { 0xff00, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+	    new Memory_ReadAddress( 0x4000, 0x47ff, MRA_ROM ),  /* same image */
+	    new Memory_ReadAddress( 0xe000, 0xe3ff, MRA_RAM ),
+	    new Memory_ReadAddress( 0xff00, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-	    { 0x0000, 0x07ff, MWA_ROM },
-	    { 0x4000, 0x47ff, MWA_ROM },  /* same image */
-	    { 0xe000, 0xe3ff, blockade_videoram_w, &videoram },
-	    { 0xff00, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+	    new Memory_WriteAddress( 0x4000, 0x47ff, MWA_ROM ),  /* same image */
+	    new Memory_WriteAddress( 0xe000, 0xe3ff, blockade_videoram_w, &videoram ),
+	    new Memory_WriteAddress( 0xff00, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-	    { 0x01, 0x01, blockade_input_port_0_r },
-	    { 0x02, 0x02, input_port_1_r },
-	    { 0x04, 0x04, input_port_2_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_ReadPort( 0x01, 0x01, blockade_input_port_0_r ),
+	    new IO_ReadPort( 0x02, 0x02, input_port_1_r ),
+	    new IO_ReadPort( 0x04, 0x04, input_port_2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-	    { 0x01, 0x01, blockade_coin_latch_w },
-	    { 0x02, 0x02, blockade_sound_freq_w },
-	    { 0x04, 0x04, blockade_env_on_w },
-	    { 0x08, 0x08, blockade_env_off_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_WritePort( 0x01, 0x01, blockade_coin_latch_w ),
+	    new IO_WritePort( 0x02, 0x02, blockade_sound_freq_w ),
+	    new IO_WritePort( 0x04, 0x04, blockade_env_on_w ),
+	    new IO_WritePort( 0x08, 0x08, blockade_env_off_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* These are not dip switches, they are mapped to */
 	/* connectors on the board.  Different games had  */

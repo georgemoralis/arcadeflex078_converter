@@ -63,42 +63,48 @@ public class battlex
 	
 	/*** MEMORY & PORT READ / WRITE **********************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM }, /* not read? */
-		{ 0x9000, 0x91ff, MRA_RAM }, /* not read? */
-		{ 0xa000, 0xa3ff, MRA_RAM },
-		{ 0xe000, 0xe03f, MRA_RAM }, /* not read? */
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ), /* not read? */
+		new Memory_ReadAddress( 0x9000, 0x91ff, MRA_RAM ), /* not read? */
+		new Memory_ReadAddress( 0xa000, 0xa3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe03f, MRA_RAM ), /* not read? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, battlex_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM ), /* main */
+		new Memory_WriteAddress( 0xe000, 0xe03f, battlex_palette_w ), /* probably palette */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x8000, 0x8fff, battlex_videoram_w, &videoram },
-		{ 0x9000, 0x91ff, MWA_RAM, &spriteram },
-		{ 0xa000, 0xa3ff, MWA_RAM }, /* main */
-		{ 0xe000, 0xe03f, battlex_palette_w }, /* probably palette */
-	MEMORY_END
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x03, 0x03, input_port_3_r },
-	MEMORY_END
-	
-	
-	static PORT_WRITE_START( writeport )
-		{ 0x10, 0x10, battlex_flipscreen_w },
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, battlex_flipscreen_w ),
 		/* verify all of these */
-		{ 0x22, 0x22, AY8910_write_port_0_w },
-		{ 0x23, 0x23, AY8910_control_port_0_w },
+		new IO_WritePort( 0x22, 0x22, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x23, 0x23, AY8910_control_port_0_w ),
 	
 		/* 0x30 looks like scroll, but can't be ? changes (increases or decreases)
 			depending on the direction your ship is facing on lev 2. at least */
-		{ 0x30, 0x30, MWA_NOP },
+		new IO_WritePort( 0x30, 0x30, MWA_NOP ),
 	
-		{ 0x32, 0x32, battlex_scroll_x_lsb_w },
-		{ 0x33, 0x33, battlex_scroll_x_msb_w },
+		new IO_WritePort( 0x32, 0x32, battlex_scroll_x_lsb_w ),
+		new IO_WritePort( 0x33, 0x33, battlex_scroll_x_msb_w ),
 	MEMORY_END
 	
 	/*** INPUT PORTS *************************************************************/
@@ -176,7 +182,7 @@ public class battlex
 	
 	
 	static struct GfxLayout battlex_charlayout =
-	{
+	new IO_WritePort(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
@@ -184,11 +190,11 @@ public class battlex
 		{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
 		{ 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },
 		8*8*4
-	};
+	);
 	
 	
 	static struct GfxLayout battlex_spritelayout =
-	{
+	new IO_WritePort(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
@@ -198,20 +204,20 @@ public class battlex
 		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		16*16
-	};
+	);
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &battlex_charlayout,      0, 8 },
 		{ REGION_GFX2, 0, &battlex_spritelayout, 16*8, 8 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	/*** SOUND *******************************************************************/
 	
 	static struct AY8910interface battlex_ay8910_interface =
-	{
+	new IO_WritePort(
 		1,	/* 1 chip */
 		10000000/8,
 		{ 40 },
@@ -219,7 +225,7 @@ public class battlex
 		{ 0 },
 		{ 0 },
 		{ 0 }
-	};
+	);
 	
 	/*** MACHINE DRIVERS *********************************************************/
 	
@@ -278,7 +284,7 @@ public class battlex
 	ROM_END
 	
 	static DRIVER_INIT( battlex )
-	{
+	new IO_WritePort(
 		UINT8 *cold    = memory_region       ( REGION_USER1 );
 		UINT8 *mskd    = memory_region       ( REGION_USER2 );
 		UINT8 *dest    = memory_region       ( REGION_GFX1 );
@@ -307,7 +313,7 @@ public class battlex
 				}
 			}
 		}
-	}
+	)
 	
 	/*** GAME DRIVERS ************************************************************/
 	

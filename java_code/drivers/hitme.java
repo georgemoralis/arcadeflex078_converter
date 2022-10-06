@@ -246,36 +246,44 @@ public class hitme
 	}
 	#endif
 	
-	static MEMORY_READ_START( hitme_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },
-		{ 0x0c00, 0x0eff, MRA_RAM },
-		{ 0x1000, 0x13ff, MRA_RAM },
+	public static Memory_ReadAddress hitme_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0c00, 0x0eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x13ff, MRA_RAM ),
 		/* guesswork, probably wrong but it reads from these addresses */
-		{ 0x1420, 0x1420, hitme_port_0_r },
-		{ 0x1520, 0x1520, hitme_port_1_r },
-		{ 0x1620, 0x1620, hitme_port_2_r },
-		{ 0x1720, 0x1720, hitme_port_3_r },
-	MEMORY_END
+		new Memory_ReadAddress( 0x1420, 0x1420, hitme_port_0_r ),
+		new Memory_ReadAddress( 0x1520, 0x1520, hitme_port_1_r ),
+		new Memory_ReadAddress( 0x1620, 0x1620, hitme_port_2_r ),
+		new Memory_ReadAddress( 0x1720, 0x1720, hitme_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hitme_writemem )
-		{ 0x0000, 0x07ff, MWA_ROM },
-		{ 0x0c00, 0x0eff, hitme_vidram_w, &hitme_vidram },
-		{ 0x1000, 0x13ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress hitme_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0c00, 0x0eff, hitme_vidram_w, &hitme_vidram ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hitme_readport )
-		{ 0x14, 0x14, hitme_port_0_r },
-		{ 0x15, 0x15, hitme_port_1_r },
-		{ 0x16, 0x16, hitme_port_2_r },
-		{ 0x17, 0x17, hitme_port_3_r },
-		{ 0x18, 0x18, input_port_4_r },
-		{ 0x19, 0x19, input_port_5_r },
-	PORT_END
+	public static IO_ReadPort hitme_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x14, 0x14, hitme_port_0_r ),
+		new IO_ReadPort( 0x15, 0x15, hitme_port_1_r ),
+		new IO_ReadPort( 0x16, 0x16, hitme_port_2_r ),
+		new IO_ReadPort( 0x17, 0x17, hitme_port_3_r ),
+		new IO_ReadPort( 0x18, 0x18, input_port_4_r ),
+		new IO_ReadPort( 0x19, 0x19, input_port_5_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hitme_writeport )
-		{ 0x1d, 0x1d, output_port_0_w }, /* OUT0 */
-	//	{ 0x1e, 0x1e, output_port_1_r }, /* OUT1 */
-	PORT_END
+	public static IO_WritePort hitme_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x1d, 0x1d, output_port_0_w ), /* OUT0 */
+	//	new IO_WritePort( 0x1e, 0x1e, output_port_1_r ), /* OUT1 */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MACHINE_DRIVER_START( hitme )
 	

@@ -641,1355 +641,1471 @@ public class nbmj9195
 	static DRIVER_INIT( mjegolf ) { initialize_driver(); }
 	
 	
-	static MEMORY_READ_START( readmem_sailorws )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xf1ff, sailorws_palette_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_sailorws )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xf1ff, sailorws_palette_w },
-		{ 0xf800, 0xffff, MWA_RAM, &sailorws_nvram, &sailorws_nvram_size },
-	MEMORY_END
-	
-	static MEMORY_READ_START( readmem_mjuraden )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf200, 0xf3ff, sailorws_palette_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_mjuraden )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf200, 0xf3ff, sailorws_palette_w },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	static MEMORY_READ_START( readmem_koinomp )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xe1ff, sailorws_palette_r },
-		{ 0xe800, 0xefff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_koinomp )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe1ff, sailorws_palette_w },
-		{ 0xe800, 0xefff, MWA_RAM, &sailorws_nvram, &sailorws_nvram_size },
-	MEMORY_END
-	
-	static MEMORY_READ_START( readmem_ngpgal )
-		{ 0x0000, 0xcfff, MRA_ROM },
-		{ 0xd000, 0xd1ff, sailorws_palette_r },
-		{ 0xd800, 0xdfff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_ngpgal )
-		{ 0x0000, 0xcfff, MWA_ROM },
-		{ 0xd000, 0xd1ff, sailorws_palette_w },
-		{ 0xd800, 0xdfff, MWA_RAM },
-	MEMORY_END
-	
-	static MEMORY_READ_START( readmem_mscoutm )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xe5ff, MRA_RAM },
-		{ 0xe600, 0xebff, mscoutm_palette_r },
-		{ 0xec00, 0xf1ff, MRA_RAM },
-		{ 0xf200, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_mscoutm )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe5ff, MWA_RAM },
-		{ 0xe600, 0xebff, mscoutm_palette_w },
-		{ 0xec00, 0xf1ff, MWA_RAM },
-		{ 0xf200, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	static MEMORY_READ_START( readmem_mjegolf )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xe5ff, mscoutm_palette_r },
-		{ 0xe600, 0xebff, MRA_RAM },
-		{ 0xec00, 0xf1ff, MRA_RAM },
-		{ 0xf200, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem_mjegolf )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe5ff, mscoutm_palette_w },
-		{ 0xe600, 0xebff, MWA_RAM },
-		{ 0xec00, 0xf1ff, MWA_RAM },
-		{ 0xf200, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( readport_mjuraden )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mjuraden )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xb0, 0xb0, sailorws_sound_w },
-		{ 0xb2, 0xb2, IOWP_NOP },
-		{ 0xb4, 0xb4, IOWP_NOP },
-		{ 0xb6, 0xb6, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_koinomp )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_1_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_koinomp )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-		{ 0xb0, 0xbf, sailorws_paltbl_1_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_1_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_1_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_1_w },
-		{ 0xa5, 0xa7, sailorws_radr_1_w },
-		{ 0xa8, 0xa8, sailorws_sizex_1_w },
-		{ 0xa9, 0xa9, sailorws_sizey_1_w },
-		{ 0xaa, 0xab, sailorws_drawx_1_w },
-		{ 0xac, 0xad, sailorws_drawy_1_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xc0, 0xc0, sailorws_sound_w },
-		{ 0xc2, 0xc2, IOWP_NOP },
-		{ 0xc4, 0xc4, IOWP_NOP },
-		{ 0xc6, 0xc6, sailorws_inputportsel_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_patimono )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0xc0, 0xc0, sailorws_gfxbusy_0_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_0_r },
-		{ 0x80, 0x80, sailorws_gfxbusy_1_r },
-		{ 0x81, 0x81, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_patimono )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-		{ 0xd0, 0xdf, sailorws_paltbl_1_w },
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_0_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_0_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_0_w },
-		{ 0xc5, 0xc7, sailorws_radr_0_w },
-		{ 0xc8, 0xc8, sailorws_sizex_0_w },
-		{ 0xc9, 0xc9, sailorws_sizey_0_w },
-		{ 0xca, 0xcb, sailorws_drawx_0_w },
-		{ 0xcc, 0xcd, sailorws_drawy_0_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_1_w },
-		{ 0x81, 0x82, sailorws_scrollx_1_w },
-		{ 0x83, 0x84, sailorws_scrolly_1_w },
-		{ 0x85, 0x87, sailorws_radr_1_w },
-		{ 0x88, 0x88, sailorws_sizex_1_w },
-		{ 0x89, 0x89, sailorws_sizey_1_w },
-		{ 0x8a, 0x8b, sailorws_drawx_1_w },
-		{ 0x8c, 0x8d, sailorws_drawy_1_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa4, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb8, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mmehyou )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mmehyou )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa4, 0xa4, IOWP_NOP },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_gal10ren )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_1_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_gal10ren )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0xb0, 0xbf, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_1_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_1_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_1_w },
-		{ 0xa5, 0xa7, sailorws_radr_1_w },
-		{ 0xa8, 0xa8, sailorws_sizex_1_w },
-		{ 0xa9, 0xa9, sailorws_sizey_1_w },
-		{ 0xaa, 0xab, sailorws_drawx_1_w },
-		{ 0xac, 0xad, sailorws_drawy_1_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xc0, 0xc0, sailorws_sound_w },
-		{ 0xc8, 0xc8, IOWP_NOP },
-		{ 0xd0, 0xd0, IOWP_NOP },
-		{ 0xd8, 0xd8, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_renaiclb )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_1_r },
-		{ 0x61, 0x61, sailorws_gfxrom_1_r },
-		{ 0xe0, 0xe0, sailorws_gfxbusy_0_r },
-		{ 0xe1, 0xe1, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_renaiclb )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_1_w },
-		{ 0xf0, 0xff, sailorws_paltbl_0_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_1_w },
-		{ 0x61, 0x62, sailorws_scrollx_1_w },
-		{ 0x63, 0x64, sailorws_scrolly_1_w },
-		{ 0x65, 0x67, sailorws_radr_1_w },
-		{ 0x68, 0x68, sailorws_sizex_1_w },
-		{ 0x69, 0x69, sailorws_sizey_1_w },
-		{ 0x6a, 0x6b, sailorws_drawx_1_w },
-		{ 0x6c, 0x6d, sailorws_drawy_1_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_gfxflag_0_w },
-		{ 0xe1, 0xe2, sailorws_scrollx_0_w },
-		{ 0xe3, 0xe4, sailorws_scrolly_0_w },
-		{ 0xe5, 0xe7, sailorws_radr_0_w },
-		{ 0xe8, 0xe8, sailorws_sizex_0_w },
-		{ 0xe9, 0xe9, sailorws_sizey_0_w },
-		{ 0xea, 0xeb, sailorws_drawx_0_w },
-		{ 0xec, 0xed, sailorws_drawy_0_w },
-		{ 0xef, 0xef, IOWP_NOP },
-	
-		{ 0x20, 0x20, sailorws_sound_w },
-		{ 0x24, 0x24, IOWP_NOP },
-		{ 0x28, 0x28, IOWP_NOP },
-		{ 0x2c, 0x2c, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mjlaman )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-		{ 0xe0, 0xe0, sailorws_gfxbusy_1_r },
-		{ 0xe1, 0xe1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mjlaman )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-		{ 0xf0, 0xff, sailorws_paltbl_1_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_gfxflag_1_w },
-		{ 0xe1, 0xe2, sailorws_scrollx_1_w },
-		{ 0xe3, 0xe4, sailorws_scrolly_1_w },
-		{ 0xe5, 0xe7, sailorws_radr_1_w },
-		{ 0xe8, 0xe8, sailorws_sizex_1_w },
-		{ 0xe9, 0xe9, sailorws_sizey_1_w },
-		{ 0xea, 0xeb, sailorws_drawx_1_w },
-		{ 0xec, 0xed, sailorws_drawy_1_w },
-		{ 0xef, 0xef, IOWP_NOP },
-	
-		{ 0x20, 0x20, sailorws_sound_w },
-		{ 0x22, 0x22, IOWP_NOP },
-		{ 0x24, 0x24, IOWP_NOP },
-		{ 0x26, 0x26, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mkeibaou )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_1_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mkeibaou )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-		{ 0xb0, 0xbf, sailorws_paltbl_1_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_1_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_1_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_1_w },
-		{ 0xa5, 0xa7, sailorws_radr_1_w },
-		{ 0xa8, 0xa8, sailorws_sizex_1_w },
-		{ 0xa9, 0xa9, sailorws_sizey_1_w },
-		{ 0xaa, 0xab, sailorws_drawx_1_w },
-		{ 0xac, 0xad, sailorws_drawy_1_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xd8, 0xd8, sailorws_sound_w },
-		{ 0xda, 0xda, IOWP_NOP },
-		{ 0xdc, 0xdc, IOWP_NOP },
-		{ 0xde, 0xde, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_pachiten )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_1_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_pachiten )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0xb0, 0xbf, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_1_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_1_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_1_w },
-		{ 0xa5, 0xa7, sailorws_radr_1_w },
-		{ 0xa8, 0xa8, sailorws_sizex_1_w },
-		{ 0xa9, 0xa9, sailorws_sizey_1_w },
-		{ 0xaa, 0xab, sailorws_drawx_1_w },
-		{ 0xac, 0xad, sailorws_drawy_1_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_sound_w },
-		{ 0xe2, 0xe2, IOWP_NOP },
-		{ 0xe4, 0xe4, IOWP_NOP },
-		{ 0xe6, 0xe6, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_sailorws )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0x80, 0x80, sailorws_gfxbusy_1_r },
-		{ 0x81, 0x81, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_sailorws )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0x90, 0x9f, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_1_w },
-		{ 0x81, 0x82, sailorws_scrollx_1_w },
-		{ 0x83, 0x84, sailorws_scrolly_1_w },
-		{ 0x85, 0x87, sailorws_radr_1_w },
-		{ 0x88, 0x88, sailorws_sizex_1_w },
-		{ 0x89, 0x89, sailorws_sizey_1_w },
-		{ 0x8a, 0x8b, sailorws_drawx_1_w },
-		{ 0x8c, 0x8d, sailorws_drawy_1_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xf0, 0xf0, sailorws_sound_w },
-		{ 0xf2, 0xf2, IOWP_NOP },
-		{ 0xf4, 0xf4, IOWP_NOP },
-		{ 0xf6, 0xf6, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_sailorwr )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0x80, 0x80, sailorws_gfxbusy_1_r },
-		{ 0x81, 0x81, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_sailorwr )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0x90, 0x9f, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_1_w },
-		{ 0x81, 0x82, sailorws_scrollx_1_w },
-		{ 0x83, 0x84, sailorws_scrolly_1_w },
-		{ 0x85, 0x87, sailorws_radr_1_w },
-		{ 0x88, 0x88, sailorws_sizex_1_w },
-		{ 0x89, 0x89, sailorws_sizey_1_w },
-		{ 0x8a, 0x8b, sailorws_drawx_1_w },
-		{ 0x8c, 0x8d, sailorws_drawy_1_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xf8, 0xf8, sailorws_sound_w },
-		{ 0xfa, 0xfa, IOWP_NOP },
-		{ 0xfc, 0xfc, IOWP_NOP },
-		{ 0xfe, 0xfe, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_psailor1 )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0xc0, 0xc0, sailorws_gfxbusy_1_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_psailor1 )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0xd0, 0xdf, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_1_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_1_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_1_w },
-		{ 0xc5, 0xc7, sailorws_radr_1_w },
-		{ 0xc8, 0xc8, sailorws_sizex_1_w },
-		{ 0xc9, 0xc9, sailorws_sizey_1_w },
-		{ 0xca, 0xcb, sailorws_drawx_1_w },
-		{ 0xcc, 0xcd, sailorws_drawy_1_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xf0, 0xf0, sailorws_sound_w },
-		{ 0xf2, 0xf2, IOWP_NOP },
-		{ 0xf4, 0xf4, IOWP_NOP },
-		{ 0xf6, 0xf6, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_psailor2 )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_1_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_psailor2 )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0xb0, 0xbf, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_1_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_1_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_1_w },
-		{ 0xa5, 0xa7, sailorws_radr_1_w },
-		{ 0xa8, 0xa8, sailorws_sizex_1_w },
-		{ 0xa9, 0xa9, sailorws_sizey_1_w },
-		{ 0xaa, 0xab, sailorws_drawx_1_w },
-		{ 0xac, 0xad, sailorws_drawy_1_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_sound_w },
-		{ 0xe2, 0xe2, IOWP_NOP },
-		{ 0xe4, 0xe4, IOWP_NOP },
-		{ 0xf6, 0xf6, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_otatidai )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x60, 0x60, sailorws_gfxbusy_0_r },
-		{ 0x61, 0x61, sailorws_gfxrom_0_r },
-		{ 0x80, 0x80, sailorws_gfxbusy_1_r },
-		{ 0x81, 0x81, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_otatidai )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x70, 0x7f, sailorws_paltbl_0_w },
-		{ 0x90, 0x9f, sailorws_paltbl_1_w },
-	
-		{ 0x60, 0x60, sailorws_gfxflag_0_w },
-		{ 0x61, 0x62, sailorws_scrollx_0_w },
-		{ 0x63, 0x64, sailorws_scrolly_0_w },
-		{ 0x65, 0x67, sailorws_radr_0_w },
-		{ 0x68, 0x68, sailorws_sizex_0_w },
-		{ 0x69, 0x69, sailorws_sizey_0_w },
-		{ 0x6a, 0x6b, sailorws_drawx_0_w },
-		{ 0x6c, 0x6d, sailorws_drawy_0_w },
-		{ 0x6f, 0x6f, IOWP_NOP },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_1_w },
-		{ 0x81, 0x82, sailorws_scrollx_1_w },
-		{ 0x83, 0x84, sailorws_scrolly_1_w },
-		{ 0x85, 0x87, sailorws_radr_1_w },
-		{ 0x88, 0x88, sailorws_sizex_1_w },
-		{ 0x89, 0x89, sailorws_sizey_1_w },
-		{ 0x8a, 0x8b, sailorws_drawx_1_w },
-		{ 0x8c, 0x8d, sailorws_drawy_1_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, IOWP_NOP },
-		{ 0xb8, 0xb8, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_ngpgal )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0xc0, 0xc0, sailorws_gfxbusy_0_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_ngpgal )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0xd0, 0xdf, sailorws_paltbl_0_w },
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_0_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_0_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_0_w },
-		{ 0xc5, 0xc7, sailorws_radr_0_w },
-		{ 0xc8, 0xc8, sailorws_sizex_0_w },
-		{ 0xc9, 0xc9, sailorws_sizey_0_w },
-		{ 0xca, 0xcb, sailorws_drawx_0_w },
-		{ 0xcc, 0xcd, sailorws_drawy_0_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa4, 0xa4, IOWP_NOP },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mjgottsu )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mjgottsu )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa4, 0xa4, IOWP_NOP },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_cmehyou )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0xc0, 0xc0, sailorws_gfxbusy_0_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_cmehyou )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0xd0, 0xdf, sailorws_paltbl_0_w },
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_0_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_0_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_0_w },
-		{ 0xc5, 0xc7, sailorws_radr_0_w },
-		{ 0xc8, 0xc8, sailorws_sizex_0_w },
-		{ 0xc9, 0xc9, sailorws_sizey_0_w },
-		{ 0xca, 0xcb, sailorws_drawx_0_w },
-		{ 0xcc, 0xcd, sailorws_drawy_0_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, sailorws_inputportsel_w },
-		{ 0xb4, 0xb4, IOWP_NOP },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mjkoiura )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, sailorws_gfxbusy_0_r },
-		{ 0x81, 0x81, sailorws_gfxrom_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mjkoiura )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0x90, 0x9f, sailorws_paltbl_0_w },
-	
-		{ 0x80, 0x80, sailorws_gfxflag_0_w },
-		{ 0x81, 0x82, sailorws_scrollx_0_w },
-		{ 0x83, 0x84, sailorws_scrolly_0_w },
-		{ 0x85, 0x87, sailorws_radr_0_w },
-		{ 0x88, 0x88, sailorws_sizex_0_w },
-		{ 0x89, 0x89, sailorws_sizey_0_w },
-		{ 0x8a, 0x8b, sailorws_drawx_0_w },
-		{ 0x8c, 0x8d, sailorws_drawy_0_w },
-		{ 0x8f, 0x8f, IOWP_NOP },
-	
-		{ 0xa0, 0xa0, sailorws_sound_w },
-		{ 0xa4, 0xa4, IOWP_NOP },
-		{ 0xa8, 0xa8, IOWP_NOP },
-		{ 0xb0, 0xb0, sailorws_inputportsel_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mscoutm )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, mscoutm_dipsw_1_r },
-		{ 0x82, 0x82, mscoutm_dipsw_0_r },
-		{ 0xc0, 0xc0, sailorws_gfxbusy_0_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_0_r },
-		{ 0xe0, 0xe0, sailorws_gfxbusy_1_r },
-		{ 0xe1, 0xe1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mscoutm )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0xd0, 0xdf, sailorws_paltbl_0_w },
-		{ 0xf0, 0xff, sailorws_paltbl_1_w },
-	
-		{ 0xa0, 0xa6, IOWP_NOP },			// nb22090 param ?
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_0_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_0_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_0_w },
-		{ 0xc5, 0xc7, sailorws_radr_0_w },
-		{ 0xc8, 0xc8, sailorws_sizex_0_w },
-		{ 0xc9, 0xc9, sailorws_sizey_0_w },
-		{ 0xca, 0xcb, sailorws_drawx_0_w },
-		{ 0xcc, 0xcd, sailorws_drawy_0_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_gfxflag_1_w },
-		{ 0xe1, 0xe2, sailorws_scrollx_1_w },
-		{ 0xe3, 0xe4, sailorws_scrolly_1_w },
-		{ 0xe5, 0xe7, sailorws_radr_1_w },
-		{ 0xe8, 0xe8, sailorws_sizex_1_w },
-		{ 0xe9, 0xe9, sailorws_sizey_1_w },
-		{ 0xea, 0xeb, sailorws_drawx_1_w },
-		{ 0xec, 0xed, sailorws_drawy_1_w },
-		{ 0xef, 0xef, IOWP_NOP },
-	
-		{ 0x84, 0x84, sailorws_sound_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_imekura )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0x80, 0x80, mscoutm_dipsw_1_r },
-		{ 0x82, 0x82, mscoutm_dipsw_0_r },
-		{ 0xc0, 0xc0, sailorws_gfxbusy_0_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_0_r },
-		{ 0xe0, 0xe0, sailorws_gfxbusy_1_r },
-		{ 0xe1, 0xe1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_imekura )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0xd0, 0xdf, sailorws_paltbl_0_w },
-		{ 0xf0, 0xff, sailorws_paltbl_1_w },
-	
-		{ 0xb0, 0xb6, IOWP_NOP },			// nb22090 param ?
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_0_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_0_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_0_w },
-		{ 0xc5, 0xc7, sailorws_radr_0_w },
-		{ 0xc8, 0xc8, sailorws_sizex_0_w },
-		{ 0xc9, 0xc9, sailorws_sizey_0_w },
-		{ 0xca, 0xcb, sailorws_drawx_0_w },
-		{ 0xcc, 0xcd, sailorws_drawy_0_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xe0, 0xe0, sailorws_gfxflag_1_w },
-		{ 0xe1, 0xe2, sailorws_scrollx_1_w },
-		{ 0xe3, 0xe4, sailorws_scrolly_1_w },
-		{ 0xe5, 0xe7, sailorws_radr_1_w },
-		{ 0xe8, 0xe8, sailorws_sizex_1_w },
-		{ 0xe9, 0xe9, sailorws_sizey_1_w },
-		{ 0xea, 0xeb, sailorws_drawx_1_w },
-		{ 0xec, 0xed, sailorws_drawy_1_w },
-		{ 0xef, 0xef, IOWP_NOP },
-	
-		{ 0x84, 0x84, sailorws_sound_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( readport_mjegolf )
-		{ 0x10, 0x13, z80ctc_0_r },
-		{ 0x50, 0x50, tmpz84c011_0_pa_r },
-		{ 0x51, 0x51, tmpz84c011_0_pb_r },
-		{ 0x52, 0x52, tmpz84c011_0_pc_r },
-		{ 0x30, 0x30, tmpz84c011_0_pd_r },
-		{ 0x40, 0x40, tmpz84c011_0_pe_r },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_r },
-	
-		{ 0xe0, 0xe0, mscoutm_dipsw_1_r },
-		{ 0xe2, 0xe2, mscoutm_dipsw_0_r },
-		{ 0xa0, 0xa0, sailorws_gfxbusy_0_r },
-		{ 0xa1, 0xa1, sailorws_gfxrom_0_r },
-		{ 0xc0, 0xc0, sailorws_gfxbusy_1_r },
-		{ 0xc1, 0xc1, sailorws_gfxrom_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport_mjegolf )
-		{ 0x10, 0x13, z80ctc_0_w },
-		{ 0x50, 0x50, tmpz84c011_0_pa_w },
-		{ 0x51, 0x51, tmpz84c011_0_pb_w },
-		{ 0x52, 0x52, tmpz84c011_0_pc_w },
-		{ 0x30, 0x30, tmpz84c011_0_pd_w },
-		{ 0x40, 0x40, tmpz84c011_0_pe_w },
-		{ 0x54, 0x54, tmpz84c011_0_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_0_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_0_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_0_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_0_dir_pe_w },
-	
-		{ 0xb0, 0xbf, sailorws_paltbl_0_w },
-		{ 0xd0, 0xdf, sailorws_paltbl_1_w },
-	
-		{ 0x80, 0x86, IOWP_NOP },			// nb22090 param ?
-	
-		{ 0xa0, 0xa0, sailorws_gfxflag_0_w },
-		{ 0xa1, 0xa2, sailorws_scrollx_0_w },
-		{ 0xa3, 0xa4, sailorws_scrolly_0_w },
-		{ 0xa5, 0xa7, sailorws_radr_0_w },
-		{ 0xa8, 0xa8, sailorws_sizex_0_w },
-		{ 0xa9, 0xa9, sailorws_sizey_0_w },
-		{ 0xaa, 0xab, sailorws_drawx_0_w },
-		{ 0xac, 0xad, sailorws_drawy_0_w },
-		{ 0xaf, 0xaf, IOWP_NOP },
-	
-		{ 0xc0, 0xc0, sailorws_gfxflag_1_w },
-		{ 0xc1, 0xc2, sailorws_scrollx_1_w },
-		{ 0xc3, 0xc4, sailorws_scrolly_1_w },
-		{ 0xc5, 0xc7, sailorws_radr_1_w },
-		{ 0xc8, 0xc8, sailorws_sizex_1_w },
-		{ 0xc9, 0xc9, sailorws_sizey_1_w },
-		{ 0xca, 0xcb, sailorws_drawx_1_w },
-		{ 0xcc, 0xcd, sailorws_drawy_1_w },
-		{ 0xcf, 0xcf, IOWP_NOP },
-	
-		{ 0xe4, 0xe4, sailorws_sound_w },
-	PORT_END
-	
-	
-	static PORT_READ_START( sound_readport )
-		{ 0x10, 0x13, z80ctc_1_r },
-		{ 0x50, 0x50, tmpz84c011_1_pa_r },
-		{ 0x51, 0x51, tmpz84c011_1_pb_r },
-		{ 0x52, 0x52, tmpz84c011_1_pc_r },
-		{ 0x30, 0x30, tmpz84c011_1_pd_r },
-		{ 0x40, 0x40, tmpz84c011_1_pe_r },
-		{ 0x54, 0x54, tmpz84c011_1_dir_pa_r },
-		{ 0x55, 0x55, tmpz84c011_1_dir_pb_r },
-		{ 0x56, 0x56, tmpz84c011_1_dir_pc_r },
-		{ 0x34, 0x34, tmpz84c011_1_dir_pd_r },
-		{ 0x44, 0x44, tmpz84c011_1_dir_pe_r },
-	PORT_END
-	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x10, 0x13, z80ctc_1_w },
-		{ 0x50, 0x50, tmpz84c011_1_pa_w },
-		{ 0x51, 0x51, tmpz84c011_1_pb_w },
-		{ 0x52, 0x52, tmpz84c011_1_pc_w },
-		{ 0x30, 0x30, tmpz84c011_1_pd_w },
-		{ 0x40, 0x40, tmpz84c011_1_pe_w },
-		{ 0x54, 0x54, tmpz84c011_1_dir_pa_w },
-		{ 0x55, 0x55, tmpz84c011_1_dir_pb_w },
-		{ 0x56, 0x56, tmpz84c011_1_dir_pc_w },
-		{ 0x34, 0x34, tmpz84c011_1_dir_pd_w },
-		{ 0x44, 0x44, tmpz84c011_1_dir_pe_w },
-	
-		{ 0x80, 0x80, YM3812_control_port_0_w },
-		{ 0x81, 0x81, YM3812_write_port_0_w },
-	PORT_END
+	public static Memory_ReadAddress readmem_sailorws[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf1ff, sailorws_palette_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_sailorws[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf1ff, sailorws_palette_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM, &sailorws_nvram, &sailorws_nvram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress readmem_mjuraden[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf200, 0xf3ff, sailorws_palette_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_mjuraden[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf200, 0xf3ff, sailorws_palette_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress readmem_koinomp[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe1ff, sailorws_palette_r ),
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_koinomp[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe1ff, sailorws_palette_w ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &sailorws_nvram, &sailorws_nvram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress readmem_ngpgal[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xd1ff, sailorws_palette_r ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_ngpgal[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xcfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, sailorws_palette_w ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress readmem_mscoutm[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe5ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe600, 0xebff, mscoutm_palette_r ),
+		new Memory_ReadAddress( 0xec00, 0xf1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf200, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_mscoutm[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe5ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe600, 0xebff, mscoutm_palette_w ),
+		new Memory_WriteAddress( 0xec00, 0xf1ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf200, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress readmem_mjegolf[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe5ff, mscoutm_palette_r ),
+		new Memory_ReadAddress( 0xe600, 0xebff, MRA_RAM ),
+		new Memory_ReadAddress( 0xec00, 0xf1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf200, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_mjegolf[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe5ff, mscoutm_palette_w ),
+		new Memory_WriteAddress( 0xe600, 0xebff, MWA_RAM ),
+		new Memory_WriteAddress( 0xec00, 0xf1ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf200, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mjuraden[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mjuraden[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xb0, 0xb0, sailorws_sound_w ),
+		new IO_WritePort( 0xb2, 0xb2, IOWP_NOP ),
+		new IO_WritePort( 0xb4, 0xb4, IOWP_NOP ),
+		new IO_WritePort( 0xb6, 0xb6, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_koinomp[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_koinomp[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_sound_w ),
+		new IO_WritePort( 0xc2, 0xc2, IOWP_NOP ),
+		new IO_WritePort( 0xc4, 0xc4, IOWP_NOP ),
+		new IO_WritePort( 0xc6, 0xc6, sailorws_inputportsel_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_patimono[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_patimono[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_1_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_1_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_1_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_1_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_1_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa4, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb8, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mmehyou[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mmehyou[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa4, 0xa4, IOWP_NOP ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_gal10ren[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_gal10ren[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_sound_w ),
+		new IO_WritePort( 0xc8, 0xc8, IOWP_NOP ),
+		new IO_WritePort( 0xd0, 0xd0, IOWP_NOP ),
+		new IO_WritePort( 0xd8, 0xd8, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_renaiclb[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_1_r ),
+		new IO_ReadPort( 0xe0, 0xe0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xe1, 0xe1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_renaiclb[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_1_w ),
+		new IO_WritePort( 0xf0, 0xff, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_1_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_1_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_1_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_1_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_1_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xe1, 0xe2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xe3, 0xe4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xe5, 0xe7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xe8, 0xe8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xe9, 0xe9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xea, 0xeb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xec, 0xed, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xef, 0xef, IOWP_NOP ),
+	
+		new IO_WritePort( 0x20, 0x20, sailorws_sound_w ),
+		new IO_WritePort( 0x24, 0x24, IOWP_NOP ),
+		new IO_WritePort( 0x28, 0x28, IOWP_NOP ),
+		new IO_WritePort( 0x2c, 0x2c, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mjlaman[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xe0, 0xe0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xe1, 0xe1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mjlaman[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xf0, 0xff, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xe1, 0xe2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xe3, 0xe4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xe5, 0xe7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xe8, 0xe8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xe9, 0xe9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xea, 0xeb, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xec, 0xed, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xef, 0xef, IOWP_NOP ),
+	
+		new IO_WritePort( 0x20, 0x20, sailorws_sound_w ),
+		new IO_WritePort( 0x22, 0x22, IOWP_NOP ),
+		new IO_WritePort( 0x24, 0x24, IOWP_NOP ),
+		new IO_WritePort( 0x26, 0x26, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mkeibaou[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mkeibaou[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xd8, 0xd8, sailorws_sound_w ),
+		new IO_WritePort( 0xda, 0xda, IOWP_NOP ),
+		new IO_WritePort( 0xdc, 0xdc, IOWP_NOP ),
+		new IO_WritePort( 0xde, 0xde, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_pachiten[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_pachiten[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_sound_w ),
+		new IO_WritePort( 0xe2, 0xe2, IOWP_NOP ),
+		new IO_WritePort( 0xe4, 0xe4, IOWP_NOP ),
+		new IO_WritePort( 0xe6, 0xe6, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_sailorws[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_sailorws[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_1_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_1_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_1_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_1_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_1_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xf0, 0xf0, sailorws_sound_w ),
+		new IO_WritePort( 0xf2, 0xf2, IOWP_NOP ),
+		new IO_WritePort( 0xf4, 0xf4, IOWP_NOP ),
+		new IO_WritePort( 0xf6, 0xf6, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_sailorwr[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_sailorwr[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_1_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_1_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_1_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_1_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_1_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xf8, 0xf8, sailorws_sound_w ),
+		new IO_WritePort( 0xfa, 0xfa, IOWP_NOP ),
+		new IO_WritePort( 0xfc, 0xfc, IOWP_NOP ),
+		new IO_WritePort( 0xfe, 0xfe, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_psailor1[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_psailor1[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xf0, 0xf0, sailorws_sound_w ),
+		new IO_WritePort( 0xf2, 0xf2, IOWP_NOP ),
+		new IO_WritePort( 0xf4, 0xf4, IOWP_NOP ),
+		new IO_WritePort( 0xf6, 0xf6, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_psailor2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_psailor2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_sound_w ),
+		new IO_WritePort( 0xe2, 0xe2, IOWP_NOP ),
+		new IO_WritePort( 0xe4, 0xe4, IOWP_NOP ),
+		new IO_WritePort( 0xf6, 0xf6, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_otatidai[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x60, 0x60, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x61, 0x61, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_otatidai[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x70, 0x7f, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x60, 0x60, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x61, 0x62, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x63, 0x64, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x65, 0x67, sailorws_radr_0_w ),
+		new IO_WritePort( 0x68, 0x68, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x69, 0x69, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x6a, 0x6b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x6c, 0x6d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x6f, 0x6f, IOWP_NOP ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_1_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_1_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_1_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_1_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_1_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, IOWP_NOP ),
+		new IO_WritePort( 0xb8, 0xb8, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_ngpgal[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_ngpgal[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa4, 0xa4, IOWP_NOP ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mjgottsu[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mjgottsu[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa4, 0xa4, IOWP_NOP ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_cmehyou[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_cmehyou[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, sailorws_inputportsel_w ),
+		new IO_WritePort( 0xb4, 0xb4, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mjkoiura[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0x81, 0x81, sailorws_gfxrom_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mjkoiura[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0x90, 0x9f, sailorws_paltbl_0_w ),
+	
+		new IO_WritePort( 0x80, 0x80, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0x81, 0x82, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0x83, 0x84, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0x85, 0x87, sailorws_radr_0_w ),
+		new IO_WritePort( 0x88, 0x88, sailorws_sizex_0_w ),
+		new IO_WritePort( 0x89, 0x89, sailorws_sizey_0_w ),
+		new IO_WritePort( 0x8a, 0x8b, sailorws_drawx_0_w ),
+		new IO_WritePort( 0x8c, 0x8d, sailorws_drawy_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, IOWP_NOP ),
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_sound_w ),
+		new IO_WritePort( 0xa4, 0xa4, IOWP_NOP ),
+		new IO_WritePort( 0xa8, 0xa8, IOWP_NOP ),
+		new IO_WritePort( 0xb0, 0xb0, sailorws_inputportsel_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mscoutm[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, mscoutm_dipsw_1_r ),
+		new IO_ReadPort( 0x82, 0x82, mscoutm_dipsw_0_r ),
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xe0, 0xe0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xe1, 0xe1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mscoutm[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xf0, 0xff, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0xa0, 0xa6, IOWP_NOP ),			// nb22090 param ?
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xe1, 0xe2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xe3, 0xe4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xe5, 0xe7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xe8, 0xe8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xe9, 0xe9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xea, 0xeb, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xec, 0xed, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xef, 0xef, IOWP_NOP ),
+	
+		new IO_WritePort( 0x84, 0x84, sailorws_sound_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_imekura[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0x80, 0x80, mscoutm_dipsw_1_r ),
+		new IO_ReadPort( 0x82, 0x82, mscoutm_dipsw_0_r ),
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xe0, 0xe0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xe1, 0xe1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_imekura[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xf0, 0xff, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0xb0, 0xb6, IOWP_NOP ),			// nb22090 param ?
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe0, 0xe0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xe1, 0xe2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xe3, 0xe4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xe5, 0xe7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xe8, 0xe8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xe9, 0xe9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xea, 0xeb, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xec, 0xed, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xef, 0xef, IOWP_NOP ),
+	
+		new IO_WritePort( 0x84, 0x84, sailorws_sound_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport_mjegolf[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_0_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_0_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_0_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_0_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_0_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_0_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_0_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_0_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_0_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_0_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_0_dir_pe_r ),
+	
+		new IO_ReadPort( 0xe0, 0xe0, mscoutm_dipsw_1_r ),
+		new IO_ReadPort( 0xe2, 0xe2, mscoutm_dipsw_0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, sailorws_gfxbusy_0_r ),
+		new IO_ReadPort( 0xa1, 0xa1, sailorws_gfxrom_0_r ),
+		new IO_ReadPort( 0xc0, 0xc0, sailorws_gfxbusy_1_r ),
+		new IO_ReadPort( 0xc1, 0xc1, sailorws_gfxrom_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_mjegolf[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_0_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_0_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_0_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_0_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_0_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_0_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_0_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_0_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_0_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_0_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_0_dir_pe_w ),
+	
+		new IO_WritePort( 0xb0, 0xbf, sailorws_paltbl_0_w ),
+		new IO_WritePort( 0xd0, 0xdf, sailorws_paltbl_1_w ),
+	
+		new IO_WritePort( 0x80, 0x86, IOWP_NOP ),			// nb22090 param ?
+	
+		new IO_WritePort( 0xa0, 0xa0, sailorws_gfxflag_0_w ),
+		new IO_WritePort( 0xa1, 0xa2, sailorws_scrollx_0_w ),
+		new IO_WritePort( 0xa3, 0xa4, sailorws_scrolly_0_w ),
+		new IO_WritePort( 0xa5, 0xa7, sailorws_radr_0_w ),
+		new IO_WritePort( 0xa8, 0xa8, sailorws_sizex_0_w ),
+		new IO_WritePort( 0xa9, 0xa9, sailorws_sizey_0_w ),
+		new IO_WritePort( 0xaa, 0xab, sailorws_drawx_0_w ),
+		new IO_WritePort( 0xac, 0xad, sailorws_drawy_0_w ),
+		new IO_WritePort( 0xaf, 0xaf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xc0, 0xc0, sailorws_gfxflag_1_w ),
+		new IO_WritePort( 0xc1, 0xc2, sailorws_scrollx_1_w ),
+		new IO_WritePort( 0xc3, 0xc4, sailorws_scrolly_1_w ),
+		new IO_WritePort( 0xc5, 0xc7, sailorws_radr_1_w ),
+		new IO_WritePort( 0xc8, 0xc8, sailorws_sizex_1_w ),
+		new IO_WritePort( 0xc9, 0xc9, sailorws_sizey_1_w ),
+		new IO_WritePort( 0xca, 0xcb, sailorws_drawx_1_w ),
+		new IO_WritePort( 0xcc, 0xcd, sailorws_drawy_1_w ),
+		new IO_WritePort( 0xcf, 0xcf, IOWP_NOP ),
+	
+		new IO_WritePort( 0xe4, 0xe4, sailorws_sound_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x13, z80ctc_1_r ),
+		new IO_ReadPort( 0x50, 0x50, tmpz84c011_1_pa_r ),
+		new IO_ReadPort( 0x51, 0x51, tmpz84c011_1_pb_r ),
+		new IO_ReadPort( 0x52, 0x52, tmpz84c011_1_pc_r ),
+		new IO_ReadPort( 0x30, 0x30, tmpz84c011_1_pd_r ),
+		new IO_ReadPort( 0x40, 0x40, tmpz84c011_1_pe_r ),
+		new IO_ReadPort( 0x54, 0x54, tmpz84c011_1_dir_pa_r ),
+		new IO_ReadPort( 0x55, 0x55, tmpz84c011_1_dir_pb_r ),
+		new IO_ReadPort( 0x56, 0x56, tmpz84c011_1_dir_pc_r ),
+		new IO_ReadPort( 0x34, 0x34, tmpz84c011_1_dir_pd_r ),
+		new IO_ReadPort( 0x44, 0x44, tmpz84c011_1_dir_pe_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x13, z80ctc_1_w ),
+		new IO_WritePort( 0x50, 0x50, tmpz84c011_1_pa_w ),
+		new IO_WritePort( 0x51, 0x51, tmpz84c011_1_pb_w ),
+		new IO_WritePort( 0x52, 0x52, tmpz84c011_1_pc_w ),
+		new IO_WritePort( 0x30, 0x30, tmpz84c011_1_pd_w ),
+		new IO_WritePort( 0x40, 0x40, tmpz84c011_1_pe_w ),
+		new IO_WritePort( 0x54, 0x54, tmpz84c011_1_dir_pa_w ),
+		new IO_WritePort( 0x55, 0x55, tmpz84c011_1_dir_pb_w ),
+		new IO_WritePort( 0x56, 0x56, tmpz84c011_1_dir_pc_w ),
+		new IO_WritePort( 0x34, 0x34, tmpz84c011_1_dir_pd_w ),
+		new IO_WritePort( 0x44, 0x44, tmpz84c011_1_dir_pe_w ),
+	
+		new IO_WritePort( 0x80, 0x80, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x81, 0x81, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	#define MJCTRL_SAILORWS_PORT1 \

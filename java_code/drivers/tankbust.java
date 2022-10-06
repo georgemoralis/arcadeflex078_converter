@@ -197,75 +197,87 @@ public class tankbust
 		return variable_data;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x9fff, MRA_BANK1 },
-		{ 0xa000, 0xbfff, MRA_BANK2 },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x9fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK2 ),
 	
-		{ 0xe000, 0xe007, debug_output_area_r },
+		new Memory_ReadAddress( 0xe000, 0xe007, debug_output_area_r ),
 	
-		{ 0xf000, 0xf7ff, MRA_RAM },
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
 	
-	//{ 0xf800, 0xffff, read_from_unmapped_memory },	/* a bug in game code ? */
+	//new Memory_ReadAddress( 0xf800, 0xffff, read_from_unmapped_memory ),	/* a bug in game code ? */
 	
-		{ 0xe800, 0xe800, input_port_0_r },
-		{ 0xe801, 0xe801, input_port_1_r },
-		{ 0xe802, 0xe802, input_port_2_r },
-		{ 0xe803, 0xe803, some_changing_input },/*unknown. Game expects this to change so this is not player input */
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_0_r ),
+		new Memory_ReadAddress( 0xe801, 0xe801, input_port_1_r ),
+		new Memory_ReadAddress( 0xe802, 0xe802, input_port_2_r ),
+		new Memory_ReadAddress( 0xe803, 0xe803, some_changing_input ),/*unknown. Game expects this to change so this is not player input */
 	
-		{ 0xc000, 0xc7ff, tankbust_background_videoram_r },
-		{ 0xc800, 0xcfff, tankbust_background_colorram_r },
-		{ 0xd000, 0xd7ff, tankbust_txtram_r },
-		{ 0xd800, 0xd8ff, MRA_RAM },
-	MEMORY_END
+		new Memory_ReadAddress( 0xc000, 0xc7ff, tankbust_background_videoram_r ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, tankbust_background_colorram_r ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, tankbust_txtram_r ),
+		new Memory_ReadAddress( 0xd800, 0xd8ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xbfff, MWA_ROM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM ),
 	
-		{ 0xf000, 0xf7ff, MWA_RAM },
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
 	
-		{ 0xe000, 0xe007, tankbust_e0xx_w },
+		new Memory_WriteAddress( 0xe000, 0xe007, tankbust_e0xx_w ),
 	
-		{ 0xe800, 0xe800, tankbust_yscroll_w },
-		{ 0xe801, 0xe802, tankbust_xscroll_w },
-		{ 0xe803, 0xe803, tankbust_soundlatch_w },
-		{ 0xe804, 0xe804, MWA_NOP },	/* watchdog ? ; written in long-lasting loops */
+		new Memory_WriteAddress( 0xe800, 0xe800, tankbust_yscroll_w ),
+		new Memory_WriteAddress( 0xe801, 0xe802, tankbust_xscroll_w ),
+		new Memory_WriteAddress( 0xe803, 0xe803, tankbust_soundlatch_w ),
+		new Memory_WriteAddress( 0xe804, 0xe804, MWA_NOP ),	/* watchdog ? ; written in long-lasting loops */
 	
-		{ 0xc000, 0xc7ff, tankbust_background_videoram_w, &videoram },
-		{ 0xc800, 0xcfff, tankbust_background_colorram_w, &colorram },
-		{ 0xd000, 0xd7ff, tankbust_txtram_w, &txt_ram },
-		{ 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( readport2 )
-		{ 0xc0, 0xc0, AY8910_read_port_0_r },
-		{ 0x30, 0x30, AY8910_read_port_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport2 )
-		{ 0xc0, 0xc0, AY8910_control_port_0_w },
-		{ 0x40, 0x40, AY8910_write_port_0_w },
-		{ 0x30, 0x30, AY8910_control_port_1_w },
-		{ 0x10, 0x10, AY8910_write_port_1_w },
-	PORT_END
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tankbust_background_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, tankbust_background_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, tankbust_txtram_w, &txt_ram ),
+		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-	MEMORY_END
+	public static IO_ReadPort readport2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0xc0, 0xc0, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x30, 0x30, AY8910_read_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
+	public static IO_WritePort writeport2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xc0, 0xc0, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x40, 0x40, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x30, 0x30, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x10, 0x10, AY8910_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-		{ 0x2000, 0x3fff, MWA_NOP },	/* garbage, written in initialization loop */
+	
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+	
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_NOP ),	/* garbage, written in initialization loop */
 	//0x4000 and 0x4040-0x4045 seem to be used (referenced in the code)
-		{ 0x4000, 0x7fff, MWA_NOP },	/* garbage, written in initialization loop */
-	MEMORY_END
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_NOP ),	/* garbage, written in initialization loop */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

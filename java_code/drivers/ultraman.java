@@ -145,26 +145,32 @@ public class ultraman
 		{ 0x304800, 0x304fff, ultraman_K051960_w },			/* Sprite RAM */
 	MEMORY_END
 	
-	static MEMORY_READ_START( ultraman_readmem_sound )
-		{ 0x0000, 0x7fff, MRA_ROM },					/* ROM */
-		{ 0x8000, 0xbfff, MRA_RAM },					/* RAM */
-		{ 0xc000, 0xc000, soundlatch_r },				/* Sound latch read */
-		{ 0xe000, 0xe000, OKIM6295_status_0_r },		/* M6295 */
-		{ 0xf001, 0xf001, YM2151_status_port_0_r },		/* YM2151 */
-	MEMORY_END
+	public static Memory_ReadAddress ultraman_readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),					/* ROM */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_RAM ),					/* RAM */
+		new Memory_ReadAddress( 0xc000, 0xc000, soundlatch_r ),				/* Sound latch read */
+		new Memory_ReadAddress( 0xe000, 0xe000, OKIM6295_status_0_r ),		/* M6295 */
+		new Memory_ReadAddress( 0xf001, 0xf001, YM2151_status_port_0_r ),		/* YM2151 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ultraman_writemem_sound )
-		{ 0x0000, 0x7fff, MWA_ROM },					/* ROM */
-		{ 0x8000, 0xbfff, MWA_RAM },					/* RAM */
-	//	{ 0xd000, 0xd000, MWA_NOP },					/* ??? */
-		{ 0xe000, 0xe000, OKIM6295_data_0_w },			/* M6295 */
-		{ 0xf000, 0xf000, YM2151_register_port_0_w },	/* YM2151 */
-		{ 0xf001, 0xf001, YM2151_data_port_0_w },		/* YM2151 */
-	MEMORY_END
+	public static Memory_WriteAddress ultraman_writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),					/* ROM */
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_RAM ),					/* RAM */
+	//	new Memory_WriteAddress( 0xd000, 0xd000, MWA_NOP ),					/* ??? */
+		new Memory_WriteAddress( 0xe000, 0xe000, OKIM6295_data_0_w ),			/* M6295 */
+		new Memory_WriteAddress( 0xf000, 0xf000, YM2151_register_port_0_w ),	/* YM2151 */
+		new Memory_WriteAddress( 0xf001, 0xf001, YM2151_data_port_0_w ),		/* YM2151 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( ultraman_writeport_sound )
-	//	{ 0x00, 0x00, MWA_NOP },						/* ??? */
-	PORT_END
+	public static IO_WritePort ultraman_writeport_sound[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	//	new IO_WritePort( 0x00, 0x00, MWA_NOP ),						/* ??? */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ultraman )

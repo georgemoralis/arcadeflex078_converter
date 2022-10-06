@@ -65,34 +65,40 @@ public class sbugger
 	
 	/* memory maps */
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x37ff, MRA_ROM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x37ff, MRA_ROM ),
 	
-		{ 0xc800, 0xcfff, MRA_RAM }, /* video ram */
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_RAM ), /* video ram */
 	
-		{ 0xe000, 0xe0ff, MRA_RAM }, /* sp is set to e0ff */
+		new Memory_ReadAddress( 0xe000, 0xe0ff, MRA_RAM ), /* sp is set to e0ff */
 	
-		{ 0xf400, 0xffff, MRA_RAM },
+		new Memory_ReadAddress( 0xf400, 0xffff, MRA_RAM ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x37ff, MWA_ROM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
 	
-		{ 0xc800, 0xcbff, sbugger_videoram_attr_w, &sbugger_videoram_attr },
-		{ 0xcc00, 0xcfff, sbugger_videoram_w, &sbugger_videoram },
+		new Memory_WriteAddress( 0xc800, 0xcbff, sbugger_videoram_attr_w, &sbugger_videoram_attr ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, sbugger_videoram_w, &sbugger_videoram ),
 	
-		{ 0xe000, 0xe0ff, MWA_RAM }, /* sp is set to e0ff */
+		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM ), /* sp is set to e0ff */
 	
-		{ 0xf400, 0xffff, MWA_RAM },
+		new Memory_WriteAddress( 0xf400, 0xffff, MWA_RAM ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0xe1, 0xe1, input_port_0_r },
-		{ 0xe2, 0xe2, input_port_1_r },
-		{ 0xe3, 0xe3, input_port_2_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0xe1, 0xe1, input_port_0_r ),
+		new IO_ReadPort( 0xe2, 0xe2, input_port_1_r ),
+		new IO_ReadPort( 0xe3, 0xe3, input_port_2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	/* there are some port writes */
 	

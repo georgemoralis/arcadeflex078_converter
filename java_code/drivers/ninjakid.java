@@ -83,57 +83,65 @@ public class ninjakid
 	 Memory Maps
 	*******************************************************************************/
 	
-	static MEMORY_READ_START( ninjakid_primary_readmem )
-	    { 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8003, ninjakun_io_8000_r },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa001, 0xa001, input_port_1_r },
-		{ 0xa002, 0xa002, ninjakun_io_A002_r },
-		{ 0xc000, 0xc7ff, MRA_RAM },	/* tilemaps */
-		{ 0xc800, 0xcfff, ninjakid_bg_videoram_r },
-	    { 0xd000, 0xd7ff, MRA_RAM },	/* spriteram */
-	    { 0xd800, 0xd9ff, paletteram_r },
-	    { 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress ninjakid_primary_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8003, ninjakun_io_8000_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, input_port_1_r ),
+		new Memory_ReadAddress( 0xa002, 0xa002, ninjakun_io_A002_r ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),	/* tilemaps */
+		new Memory_ReadAddress( 0xc800, 0xcfff, ninjakid_bg_videoram_r ),
+	    new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),	/* spriteram */
+	    new Memory_ReadAddress( 0xd800, 0xd9ff, paletteram_r ),
+	    new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ninjakid_primary_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x7fff, MWA_ROM, &ninjakid_gfx_rom },
-		{ 0x8000, 0x8003, ninjakun_io_8000_w },
-		{ 0xa002, 0xa002, cpu1_A002_w },
-		{ 0xa003, 0xa003, ninjakun_flipscreen_w },
-		{ 0xc000, 0xc7ff, ninjakid_fg_videoram_w, &videoram },
-		{ 0xc800, 0xcfff, ninjakid_bg_videoram_w },
-		{ 0xd000, 0xd7ff, MWA_RAM, &spriteram },
-		{ 0xd800, 0xd9ff, ninjakun_paletteram_w, &paletteram },
-		{ 0xe000, 0xe7ff, MWA_RAM, &shareram },
-	MEMORY_END
+	public static Memory_WriteAddress ninjakid_primary_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x7fff, MWA_ROM, &ninjakid_gfx_rom ),
+		new Memory_WriteAddress( 0x8000, 0x8003, ninjakun_io_8000_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, cpu1_A002_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, ninjakun_flipscreen_w ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, ninjakid_fg_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, ninjakid_bg_videoram_w ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xd800, 0xd9ff, ninjakun_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &shareram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( ninjakid_secondary_readmem )
-	    { 0x0000, 0x1fff, MRA_ROM },
-	    { 0x2000, 0x7fff, ninjakid_shared_rom_r },
-		{ 0x8000, 0x8003, ninjakun_io_8000_r },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa001, 0xa001, input_port_1_r },
-		{ 0xa002, 0xa002, ninjakun_io_A002_r },
-		{ 0xc000, 0xc7ff, videoram_r },		/* tilemaps */
-		{ 0xc800, 0xcfff, ninjakid_bg_videoram_r },
-	    { 0xd000, 0xd7ff, spriteram_r },	/* shareram */
-	    { 0xd800, 0xd9ff, paletteram_r },
-	    { 0xe000, 0xe7ff, shareram_r },
-	MEMORY_END
+	public static Memory_ReadAddress ninjakid_secondary_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+	    new Memory_ReadAddress( 0x2000, 0x7fff, ninjakid_shared_rom_r ),
+		new Memory_ReadAddress( 0x8000, 0x8003, ninjakun_io_8000_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, input_port_1_r ),
+		new Memory_ReadAddress( 0xa002, 0xa002, ninjakun_io_A002_r ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, videoram_r ),		/* tilemaps */
+		new Memory_ReadAddress( 0xc800, 0xcfff, ninjakid_bg_videoram_r ),
+	    new Memory_ReadAddress( 0xd000, 0xd7ff, spriteram_r ),	/* shareram */
+	    new Memory_ReadAddress( 0xd800, 0xd9ff, paletteram_r ),
+	    new Memory_ReadAddress( 0xe000, 0xe7ff, shareram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ninjakid_secondary_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x8000, 0x8003, ninjakun_io_8000_w },
-		{ 0xa002, 0xa002, cpu2_A002_w },
-		{ 0xa003, 0xa003, ninjakun_flipscreen_w },
-		{ 0xc000, 0xc7ff, ninjakid_fg_videoram_w },
-		{ 0xc800, 0xcfff, ninjakid_bg_videoram_w },
-		{ 0xd000, 0xd7ff, spriteram_w },	/* shareram */
-		{ 0xd800, 0xd9ff, ninjakun_paletteram_w },
-	    { 0xe000, 0xe7ff, shareram_w },
-	MEMORY_END
+	public static Memory_WriteAddress ninjakid_secondary_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8003, ninjakun_io_8000_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, cpu2_A002_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, ninjakun_flipscreen_w ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, ninjakid_fg_videoram_w ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, ninjakid_bg_videoram_w ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, spriteram_w ),	/* shareram */
+		new Memory_WriteAddress( 0xd800, 0xd9ff, ninjakun_paletteram_w ),
+	    new Memory_WriteAddress( 0xe000, 0xe7ff, shareram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*******************************************************************************
 	 GFX Decoding Information

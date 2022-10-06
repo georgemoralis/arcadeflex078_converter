@@ -1196,88 +1196,104 @@ public class ddenlovr
 	
 	
 	
-	static MEMORY_READ_START( quizchq_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MRA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MRA_BANK2					},	// RAM (Banked)
-		{ 0x8000, 0xffff, MRA_BANK1					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress quizchq_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_BANK2					),	// RAM (Banked)
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1					),	// ROM (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( quizchq_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MWA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MWA_BANK2					},	// RAM (Banked)
-		{ 0x8000, 0x81ff, rongrong_palette_w	},	// ROM (Banked)
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress quizchq_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_BANK2					),	// RAM (Banked)
+		new Memory_WriteAddress( 0x8000, 0x81ff, rongrong_palette_w	),	// ROM (Banked)
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( quizchq_readport )
-		{ 0x03, 0x03, rongrong_gfxrom_r			},	// Video Chip
-	//	{ 0x1b, 0x1b,	// bit 5 = busy flag?
+	public static IO_ReadPort quizchq_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x03, 0x03, rongrong_gfxrom_r			),	// Video Chip
+	//	new IO_ReadPort( 0x1b, 0x1b,	// bit 5 = busy flag?
 		{ 0x1c, 0x1c, rongrong_input_r		},	//
 		{ 0x22, 0x23, rongrong_input2_r		},	//
 		{ 0x40, 0x40, OKIM6295_status_0_r	},	//
 		{ 0x98, 0x98, unk_r		},	// ? must be 78 on startup
 		{ 0xa0, 0xaf, rtc_r },	// 6242RTC
-	PORT_END
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( quizchq_writeport )
-		{ 0x00, 0x01, rongrong_blitter_w	},
-		{ 0x1e, 0x1e, rongrong_select_w		},	//
-		{ 0x20, 0x20, rongrong_select2_w	},	//
-		{ 0x40, 0x40, OKIM6295_data_0_w		},	//
-		{ 0x60, 0x60, YM2413_register_port_0_w	},	// Sound
-		{ 0x61, 0x61, YM2413_data_port_0_w		},	//
-		{ 0x80, 0x83, rongrong_palette_base_w },	// palette base for the 4 layers
-		{ 0x94, 0x94, dynax_bgcolor_w },
-		{ 0x95, 0x95, dynax_priority_w },
-		{ 0x96, 0x96, dynax_layer_enable_w },
-	//	{ 0xa0, 0xaf, },	// 6242RTC
-		{ 0xc0, 0xc0, quizchq_oki_bank_w },
-		{ 0xc2, 0xc2, IOWP_NOP },	// enables palette RAM at f000
-	PORT_END
+	public static IO_WritePort quizchq_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, rongrong_blitter_w	),
+		new IO_WritePort( 0x1e, 0x1e, rongrong_select_w		),	//
+		new IO_WritePort( 0x20, 0x20, rongrong_select2_w	),	//
+		new IO_WritePort( 0x40, 0x40, OKIM6295_data_0_w		),	//
+		new IO_WritePort( 0x60, 0x60, YM2413_register_port_0_w	),	// Sound
+		new IO_WritePort( 0x61, 0x61, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x80, 0x83, rongrong_palette_base_w ),	// palette base for the 4 layers
+		new IO_WritePort( 0x94, 0x94, dynax_bgcolor_w ),
+		new IO_WritePort( 0x95, 0x95, dynax_priority_w ),
+		new IO_WritePort( 0x96, 0x96, dynax_layer_enable_w ),
+	//	new IO_WritePort( 0xa0, 0xaf, ),	// 6242RTC
+		new IO_WritePort( 0xc0, 0xc0, quizchq_oki_bank_w ),
+		new IO_WritePort( 0xc2, 0xc2, IOWP_NOP ),	// enables palette RAM at f000
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static MEMORY_READ_START( rongrong_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MRA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MRA_BANK2					},	// RAM (Banked)
-		{ 0x8000, 0xffff, MRA_BANK1					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress rongrong_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_BANK2					),	// RAM (Banked)
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1					),	// ROM (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rongrong_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MWA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MWA_BANK2					},	// RAM (Banked)
-		{ 0xf000, 0xf1ff, rongrong_palette_w	},
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress rongrong_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_BANK2					),	// RAM (Banked)
+		new Memory_WriteAddress( 0xf000, 0xf1ff, rongrong_palette_w	),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( rongrong_readport )
-		{ 0x03, 0x03, rongrong_gfxrom_r			},	// Video Chip
-	//	{ 0x1b, 0x1b,	// bit 5 = busy flag?
+	public static IO_ReadPort rongrong_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x03, 0x03, rongrong_gfxrom_r			),	// Video Chip
+	//	new IO_ReadPort( 0x1b, 0x1b,	// bit 5 = busy flag?
 		{ 0x1c, 0x1c, rongrong_input_r		},	//
 		{ 0xa2, 0xa3, rongrong_input2_r		},	//
 		{ 0x40, 0x40, OKIM6295_status_0_r	},	//
 		{ 0x98, 0x98, unk_r		},	// ? must be 78 on startup
 		{ 0x20, 0x2f, rtc_r },	// 6242RTC
-	PORT_END
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rongrong_writeport )
-		{ 0x00, 0x01, rongrong_blitter_w	},
-		{ 0x1e, 0x1e, rongrong_select_w		},	//
-		{ 0xa0, 0xa0, rongrong_select2_w	},	//
-		{ 0x40, 0x40, OKIM6295_data_0_w		},	//
-		{ 0x60, 0x60, YM2413_register_port_0_w	},	// Sound
-		{ 0x61, 0x61, YM2413_data_port_0_w		},	//
-		{ 0x80, 0x83, rongrong_palette_base_w },	// palette base for the 4 layers
-		{ 0x94, 0x94, dynax_bgcolor_w },
-		{ 0x95, 0x95, dynax_priority_w },
-		{ 0x96, 0x96, dynax_layer_enable_w },
-	//	{ 0x20, 0x2f, },	// 6242RTC
-		{ 0xc2, 0xc2, IOWP_NOP },	// enables palette RAM at f000, and protection device at f705/f706/f601
-	PORT_END
+	public static IO_WritePort rongrong_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, rongrong_blitter_w	),
+		new IO_WritePort( 0x1e, 0x1e, rongrong_select_w		),	//
+		new IO_WritePort( 0xa0, 0xa0, rongrong_select2_w	),	//
+		new IO_WritePort( 0x40, 0x40, OKIM6295_data_0_w		),	//
+		new IO_WritePort( 0x60, 0x60, YM2413_register_port_0_w	),	// Sound
+		new IO_WritePort( 0x61, 0x61, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x80, 0x83, rongrong_palette_base_w ),	// palette base for the 4 layers
+		new IO_WritePort( 0x94, 0x94, dynax_bgcolor_w ),
+		new IO_WritePort( 0x95, 0x95, dynax_priority_w ),
+		new IO_WritePort( 0x96, 0x96, dynax_layer_enable_w ),
+	//	new IO_WritePort( 0x20, 0x2f, ),	// 6242RTC
+		new IO_WritePort( 0xc2, 0xc2, IOWP_NOP ),	// enables palette RAM at f000, and protection device at f705/f706/f601
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	/*
 	1e input select,1c input read
 		3e=dsw1	3d=dsw2
@@ -1360,92 +1376,108 @@ public class ddenlovr
 	
 	/* Main CPU */
 	
-	static MEMORY_READ_START( mmpanic_readmem )
-		{ 0x0051, 0x0051, magic_r					},	// ?
-		{ 0x0000, 0x5fff, MRA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MRA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MRA_BANK2					},	// RAM (Banked)
-		{ 0x8000, 0xffff, MRA_BANK1					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress mmpanic_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0051, 0x0051, magic_r					),	// ?
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_BANK2					),	// RAM (Banked)
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1					),	// ROM (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mmpanic_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MWA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MWA_BANK2					},	// RAM (Banked)
-		{ 0x8000, 0x81ff, rongrong_palette_w		},	// ROM (Banked)
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress mmpanic_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_BANK2					),	// RAM (Banked)
+		new Memory_WriteAddress( 0x8000, 0x81ff, rongrong_palette_w		),	// ROM (Banked)
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mmpanic_readport )
-		{ 0x00, 0x0f, rtc_r					},	// 6242RTC
-		{ 0x38, 0x38, unk_r					},	// ? must be 78 on startup
-		{ 0x58, 0x58, unk_r					},	// ? must be 78 on startup
-		{ 0x63, 0x63, rongrong_gfxrom_r		},	// Video Chip
-		{ 0x6a, 0x6a, input_port_0_r		},
-		{ 0x6b, 0x6b, input_port_1_r		},
-		{ 0x6c, 0x6d, mmpanic_link_r		},	// Other cabinets?
-		{ 0x7c, 0x7c, OKIM6295_status_0_r	},	// Sound
-		{ 0x94, 0x94, input_port_2_r		},	// DSW 1
-		{ 0x98, 0x98, input_port_3_r		},	// DSW 2
-		{ 0x9c, 0x9c, input_port_4_r		},	// DSW 1&2 high bits
-	PORT_END
+	public static IO_ReadPort mmpanic_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x0f, rtc_r					),	// 6242RTC
+		new IO_ReadPort( 0x38, 0x38, unk_r					),	// ? must be 78 on startup
+		new IO_ReadPort( 0x58, 0x58, unk_r					),	// ? must be 78 on startup
+		new IO_ReadPort( 0x63, 0x63, rongrong_gfxrom_r		),	// Video Chip
+		new IO_ReadPort( 0x6a, 0x6a, input_port_0_r		),
+		new IO_ReadPort( 0x6b, 0x6b, input_port_1_r		),
+		new IO_ReadPort( 0x6c, 0x6d, mmpanic_link_r		),	// Other cabinets?
+		new IO_ReadPort( 0x7c, 0x7c, OKIM6295_status_0_r	),	// Sound
+		new IO_ReadPort( 0x94, 0x94, input_port_2_r		),	// DSW 1
+		new IO_ReadPort( 0x98, 0x98, input_port_3_r		),	// DSW 2
+		new IO_ReadPort( 0x9c, 0x9c, input_port_4_r		),	// DSW 1&2 high bits
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mmpanic_writeport )
-		{ 0x00, 0x0f, IOWP_NOP					},	// 6242RTC
+	public static IO_WritePort mmpanic_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x0f, IOWP_NOP					),	// 6242RTC
 		// Layers 0-3:
-		{ 0x20, 0x23, rongrong_palette_base_w	},
-		{ 0x34, 0x34, dynax_bgcolor_w			},
-		{ 0x35, 0x35, dynax_priority_w			},
-		{ 0x36, 0x36, dynax_layer_enable_w		},
+		new IO_WritePort( 0x20, 0x23, rongrong_palette_base_w	),
+		new IO_WritePort( 0x34, 0x34, dynax_bgcolor_w			),
+		new IO_WritePort( 0x35, 0x35, dynax_priority_w			),
+		new IO_WritePort( 0x36, 0x36, dynax_layer_enable_w		),
 		// Layers 4-7:
-		{ 0x40, 0x43, dynax_palette_base2_w		},
-		{ 0x54, 0x54, dynax_bgcolor2_w			},
-		{ 0x55, 0x55, dynax_priority2_w			},
-		{ 0x56, 0x56, dynax_layer_enable2_w		},
+		new IO_WritePort( 0x40, 0x43, dynax_palette_base2_w		),
+		new IO_WritePort( 0x54, 0x54, dynax_bgcolor2_w			),
+		new IO_WritePort( 0x55, 0x55, dynax_priority2_w			),
+		new IO_WritePort( 0x56, 0x56, dynax_layer_enable2_w		),
 	
-		{ 0x60, 0x61, mmpanic_blitter_w			},
-		{ 0x64, 0x65, mmpanic_blitter2_w		},
-		{ 0x68, 0x68, mmpanic_select_w			},
-		{ 0x69, 0x69, mmpanic_lockout_w			},
-		{ 0x74, 0x74, mmpanic_rombank_w			},
+		new IO_WritePort( 0x60, 0x61, mmpanic_blitter_w			),
+		new IO_WritePort( 0x64, 0x65, mmpanic_blitter2_w		),
+		new IO_WritePort( 0x68, 0x68, mmpanic_select_w			),
+		new IO_WritePort( 0x69, 0x69, mmpanic_lockout_w			),
+		new IO_WritePort( 0x74, 0x74, mmpanic_rombank_w			),
 	
-		{ 0x78, 0x78, IOWP_NOP					},	// 0, during RST 08 (irq acknowledge?)
+		new IO_WritePort( 0x78, 0x78, IOWP_NOP					),	// 0, during RST 08 (irq acknowledge?)
 	
-		{ 0x7c, 0x7c, OKIM6295_data_0_w			},	// Sound
-		{ 0x8c, 0x8c, mmpanic_soundlatch_w		},	//
-		{ 0x88, 0x88, mmpanic_leds_w			},	// Leds
-		{ 0x90, 0x90, IOWP_NOP					},	// written just before port 8c
-		{ 0xa6, 0xa6, mmpanic_leds2_w			},	//
-	PORT_END
+		new IO_WritePort( 0x7c, 0x7c, OKIM6295_data_0_w			),	// Sound
+		new IO_WritePort( 0x8c, 0x8c, mmpanic_soundlatch_w		),	//
+		new IO_WritePort( 0x88, 0x88, mmpanic_leds_w			),	// Leds
+		new IO_WritePort( 0x90, 0x90, IOWP_NOP					),	// written just before port 8c
+		new IO_WritePort( 0xa6, 0xa6, mmpanic_leds2_w			),	//
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* Sound CPU */
 	
-	static MEMORY_READ_START( mmpanic_sound_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM					},	// ROM
-		{ 0x6000, 0x66ff, MRA_RAM					},	// RAM
-		{ 0x8000, 0xffff, MRA_ROM					},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress mmpanic_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x66ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mmpanic_sound_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x66ff, MWA_RAM					},	// RAM
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM
-	MEMORY_END
+	public static Memory_WriteAddress mmpanic_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x66ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mmpanic_sound_readport )
-		{ 0x00, 0x00, soundlatch_r		},
-		{ 0x02, 0x02, IORP_NOP			},	// read just before port 00
-		{ 0x04, 0x04, IORP_NOP			},	// read only once at the start
-	PORT_END
+	public static IO_ReadPort mmpanic_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r		),
+		new IO_ReadPort( 0x02, 0x02, IORP_NOP			),	// read just before port 00
+		new IO_ReadPort( 0x04, 0x04, IORP_NOP			),	// read only once at the start
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mmpanic_sound_writeport )
-		{ 0x04, 0x04, IOWP_NOP					},	// 0, during NMI
-		{ 0x06, 0x06, IOWP_NOP					},	// almost always 1, sometimes 0
-		{ 0x08, 0x08, YM2413_register_port_0_w	},
-		{ 0x09, 0x09, YM2413_data_port_0_w		},
-		{ 0x0c, 0x0c, AY8910_write_port_0_w		},
-		{ 0x0e, 0x0e, AY8910_control_port_0_w	},
-	PORT_END
+	public static IO_WritePort mmpanic_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x04, 0x04, IOWP_NOP					),	// 0, during NMI
+		new IO_WritePort( 0x06, 0x06, IOWP_NOP					),	// almost always 1, sometimes 0
+		new IO_WritePort( 0x08, 0x08, YM2413_register_port_0_w	),
+		new IO_WritePort( 0x09, 0x09, YM2413_data_port_0_w		),
+		new IO_WritePort( 0x0c, 0x0c, AY8910_write_port_0_w		),
+		new IO_WritePort( 0x0e, 0x0e, AY8910_control_port_0_w	),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

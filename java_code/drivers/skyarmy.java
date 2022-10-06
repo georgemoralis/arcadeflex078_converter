@@ -161,30 +161,34 @@ public class skyarmy
 	}
 	
 	
-	static MEMORY_READ_START( skyarmy_readmem )
-		{ 0x0000, 0x7FFF, MRA_ROM },
-	        { 0x8000, 0x87FF, MRA_RAM },
-	        { 0x8800, 0x93FF, MRA_RAM }, /* Video RAM */
-	        { 0x9800, 0x983F, MRA_RAM }, /* Sprites */
-	        { 0x9840, 0x985F, skyarmy_scrollram_r }, /* Sroll RAM */
-	        { 0xA000, 0xA000, input_port_0_r },
-	        { 0xA001, 0xA001, input_port_1_r },
-	        { 0xA002, 0xA002, input_port_2_r },
-	        { 0xA003, 0xA003, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress skyarmy_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7FFF, MRA_ROM ),
+	        new Memory_ReadAddress( 0x8000, 0x87FF, MRA_RAM ),
+	        new Memory_ReadAddress( 0x8800, 0x93FF, MRA_RAM ), /* Video RAM */
+	        new Memory_ReadAddress( 0x9800, 0x983F, MRA_RAM ), /* Sprites */
+	        new Memory_ReadAddress( 0x9840, 0x985F, skyarmy_scrollram_r ), /* Sroll RAM */
+	        new Memory_ReadAddress( 0xA000, 0xA000, input_port_0_r ),
+	        new Memory_ReadAddress( 0xA001, 0xA001, input_port_1_r ),
+	        new Memory_ReadAddress( 0xA002, 0xA002, input_port_2_r ),
+	        new Memory_ReadAddress( 0xA003, 0xA003, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( skyarmy_writemem )
-		{ 0x0000, 0x7FFF, MWA_ROM },
-	        { 0x8000, 0x87FF, MWA_RAM },
-	        { 0x8800, 0x8BFF, skyarmy_videoram_w, &skyarmy_videoram }, /* Video RAM */
-	        { 0x9000, 0x93FF, skyarmy_colorram_w, &skyarmy_colorram }, /* Color RAM */
-	        { 0x9800, 0x983F, spriteram_w, &spriteram, &spriteram_size }, /* Sprites */
-	        { 0x9840, 0x985F, skyarmy_scrollram_w, &skyarmy_scrollram }, /* Sprites */
-	        { 0xa004, 0xa004, nmi_enable_w }, // ???
-	        { 0xa005, 0xa005, MWA_NOP }, 
-	        { 0xa006, 0xa006, MWA_NOP }, 
-	        { 0xa007, 0xa007, MWA_NOP }, 
-	MEMORY_END
+	public static Memory_WriteAddress skyarmy_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7FFF, MWA_ROM ),
+	        new Memory_WriteAddress( 0x8000, 0x87FF, MWA_RAM ),
+	        new Memory_WriteAddress( 0x8800, 0x8BFF, skyarmy_videoram_w, &skyarmy_videoram ), /* Video RAM */
+	        new Memory_WriteAddress( 0x9000, 0x93FF, skyarmy_colorram_w, &skyarmy_colorram ), /* Color RAM */
+	        new Memory_WriteAddress( 0x9800, 0x983F, spriteram_w, &spriteram, &spriteram_size ), /* Sprites */
+	        new Memory_WriteAddress( 0x9840, 0x985F, skyarmy_scrollram_w, &skyarmy_scrollram ), /* Sprites */
+	        new Memory_WriteAddress( 0xa004, 0xa004, nmi_enable_w ), // ???
+	        new Memory_WriteAddress( 0xa005, 0xa005, MWA_NOP ), 
+	        new Memory_WriteAddress( 0xa006, 0xa006, MWA_NOP ), 
+	        new Memory_WriteAddress( 0xa007, 0xa007, MWA_NOP ), 
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( skyarmy )
 	        PORT_START
@@ -259,14 +263,18 @@ public class skyarmy
 		{ -1 } /* end of array */
 	};
 	
-	static PORT_READ_START( readport )
-		{ 0x06, 0x06, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x06, 0x06, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x04, 0x04, AY8910_control_port_0_w },
-		{ 0x05, 0x05, AY8910_write_port_0_w   },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x05, 0x05, AY8910_write_port_0_w   ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static struct AY8910interface ay8910_interface =
 	{

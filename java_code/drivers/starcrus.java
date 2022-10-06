@@ -39,37 +39,45 @@ public class starcrus
 	extern int s1_sprite;
 	extern int s2_sprite;
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_ROM }, /* Program ROM */
-		{ 0x1000, 0x10ff, MRA_RAM }, /* RAM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ), /* Program ROM */
+		new Memory_ReadAddress( 0x1000, 0x10ff, MRA_RAM ), /* RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-	    { 0x0000, 0x0fff, MWA_ROM }, /* Program ROM */
-	    { 0x1000, 0x10ff, MWA_RAM }, /* RAM */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ), /* Program ROM */
+	    new Memory_WriteAddress( 0x1000, 0x10ff, MWA_RAM ), /* RAM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-	    { 0x00, 0x00, input_port_0_r },
-	    { 0x01, 0x01, input_port_1_r },
-	    { 0x02, 0x02, starcrus_coll_det_r },
-	    { 0x03, 0x03, input_port_2_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+	    new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+	    new IO_ReadPort( 0x02, 0x02, starcrus_coll_det_r ),
+	    new IO_ReadPort( 0x03, 0x03, input_port_2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-	    { 0x00, 0x00, starcrus_s1_x_w },
-	    { 0x01, 0x01, starcrus_s1_y_w },
-	    { 0x02, 0x02, starcrus_s2_x_w },
-	    { 0x03, 0x03, starcrus_s2_y_w },
-	    { 0x04, 0x04, starcrus_p1_x_w },
-	    { 0x05, 0x05, starcrus_p1_y_w },
-	    { 0x06, 0x06, starcrus_p2_x_w },
-	    { 0x07, 0x07, starcrus_p2_y_w },
-	    { 0x08, 0x08, starcrus_ship_parm_1_w },
-	    { 0x09, 0x09, starcrus_ship_parm_2_w },
-	    { 0x0a, 0x0a, starcrus_proj_parm_1_w },
-	    { 0x0b, 0x0b, starcrus_proj_parm_2_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_WritePort( 0x00, 0x00, starcrus_s1_x_w ),
+	    new IO_WritePort( 0x01, 0x01, starcrus_s1_y_w ),
+	    new IO_WritePort( 0x02, 0x02, starcrus_s2_x_w ),
+	    new IO_WritePort( 0x03, 0x03, starcrus_s2_y_w ),
+	    new IO_WritePort( 0x04, 0x04, starcrus_p1_x_w ),
+	    new IO_WritePort( 0x05, 0x05, starcrus_p1_y_w ),
+	    new IO_WritePort( 0x06, 0x06, starcrus_p2_x_w ),
+	    new IO_WritePort( 0x07, 0x07, starcrus_p2_y_w ),
+	    new IO_WritePort( 0x08, 0x08, starcrus_ship_parm_1_w ),
+	    new IO_WritePort( 0x09, 0x09, starcrus_ship_parm_2_w ),
+	    new IO_WritePort( 0x0a, 0x0a, starcrus_proj_parm_1_w ),
+	    new IO_WritePort( 0x0b, 0x0b, starcrus_proj_parm_2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

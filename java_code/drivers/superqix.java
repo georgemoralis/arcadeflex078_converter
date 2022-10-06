@@ -37,41 +37,49 @@ public class superqix
 	extern VIDEO_UPDATE( superqix );
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xe000, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe100, 0xe7ff, MWA_RAM },
-		{ 0xe800, 0xebff, superqix_videoram_w, &videoram },
-		{ 0xec00, 0xefff, superqix_colorram_w, &colorram },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe100, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe800, 0xebff, superqix_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xec00, 0xefff, superqix_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x0000, 0x00ff, paletteram_r },
-		{ 0x0401, 0x0401, AY8910_read_port_0_r },
-		{ 0x0405, 0x0405, AY8910_read_port_1_r },
-		{ 0x0418, 0x0418, input_port_4_r },
-		{ 0x0800, 0x77ff, superqix_bitmapram_r },
-		{ 0x8800, 0xf7ff, superqix_bitmapram2_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x00ff, paletteram_r ),
+		new IO_ReadPort( 0x0401, 0x0401, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x0405, 0x0405, AY8910_read_port_1_r ),
+		new IO_ReadPort( 0x0418, 0x0418, input_port_4_r ),
+		new IO_ReadPort( 0x0800, 0x77ff, superqix_bitmapram_r ),
+		new IO_ReadPort( 0x8800, 0xf7ff, superqix_bitmapram2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x0000, 0x00ff, paletteram_BBGGRRII_w },
-		{ 0x0402, 0x0402, AY8910_write_port_0_w },
-		{ 0x0403, 0x0403, AY8910_control_port_0_w },
-		{ 0x0406, 0x0406, AY8910_write_port_1_w },
-		{ 0x0407, 0x0407, AY8910_control_port_1_w },
-		{ 0x0408, 0x0408, superqix_flipscreen_w },
-		{ 0x0410, 0x0410, superqix_0410_w },	/* ROM bank, NMI enable, tile bank */
-		{ 0x0800, 0x77ff, superqix_bitmapram_w },
-		{ 0x8800, 0xf7ff, superqix_bitmapram2_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x00ff, paletteram_BBGGRRII_w ),
+		new IO_WritePort( 0x0402, 0x0402, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x0403, 0x0403, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x0406, 0x0406, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x0407, 0x0407, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x0408, 0x0408, superqix_flipscreen_w ),
+		new IO_WritePort( 0x0410, 0x0410, superqix_0410_w ),	/* ROM bank, NMI enable, tile bank */
+		new IO_WritePort( 0x0800, 0x77ff, superqix_bitmapram_w ),
+		new IO_WritePort( 0x8800, 0xf7ff, superqix_bitmapram2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

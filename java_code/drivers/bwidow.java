@@ -326,68 +326,76 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( bwidow_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x2800, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x600f, pokey1_r },
-		{ 0x6800, 0x680f, pokey2_r },
-		{ 0x7000, 0x7000, atari_vg_earom_r },
-		{ 0x7800, 0x7800, bzone_IN0_r },	/* IN0 */
-		{ 0x8000, 0x8000, input_port_3_r },	/* IN1 */
-		{ 0x8800, 0x8800, input_port_4_r },	/* IN1 */
-		{ 0x9000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bwidow_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x600f, pokey1_r ),
+		new Memory_ReadAddress( 0x6800, 0x680f, pokey2_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x7800, 0x7800, bzone_IN0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x8000, 0x8000, input_port_3_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x8800, 0x8800, input_port_4_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x9000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( bwidow_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x2000, 0x27ff, MWA_RAM, &vectorram, &vectorram_size },
-		{ 0x2800, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x67ff, pokey1_w },
-		{ 0x6800, 0x6fff, pokey2_w },
-		{ 0x8800, 0x8800, bwidow_misc_w }, /* coin counters, leds */
-		{ 0x8840, 0x8840, avgdvg_go_w },
-		{ 0x8880, 0x8880, avgdvg_reset_w },
-		{ 0x88c0, 0x88c0, MWA_NOP }, /* interrupt acknowledge */
-		{ 0x8900, 0x8900, atari_vg_earom_ctrl_w },
-		{ 0x8940, 0x897f, atari_vg_earom_w },
-		{ 0x8980, 0x89ed, MWA_NOP }, /* watchdog clear */
-		{ 0x9000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bwidow_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM, &vectorram, &vectorram_size ),
+		new Memory_WriteAddress( 0x2800, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, pokey1_w ),
+		new Memory_WriteAddress( 0x6800, 0x6fff, pokey2_w ),
+		new Memory_WriteAddress( 0x8800, 0x8800, bwidow_misc_w ), /* coin counters, leds */
+		new Memory_WriteAddress( 0x8840, 0x8840, avgdvg_go_w ),
+		new Memory_WriteAddress( 0x8880, 0x8880, avgdvg_reset_w ),
+		new Memory_WriteAddress( 0x88c0, 0x88c0, MWA_NOP ), /* interrupt acknowledge */
+		new Memory_WriteAddress( 0x8900, 0x8900, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x8940, 0x897f, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x8980, 0x89ed, MWA_NOP ), /* watchdog clear */
+		new Memory_WriteAddress( 0x9000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( spacduel_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x0800, bzone_IN0_r },	/* IN0 */
-		{ 0x0900, 0x0907, spacduel_IN3_r },	/* IN1 */
-		{ 0x0a00, 0x0a00, atari_vg_earom_r },
-		{ 0x1000, 0x100f, pokey1_r },
-		{ 0x1400, 0x140f, pokey2_r },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x2800, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x8fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress spacduel_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, bzone_IN0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x0900, 0x0907, spacduel_IN3_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x0a00, 0x0a00, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),
+		new Memory_ReadAddress( 0x1400, 0x140f, pokey2_r ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x8fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( spacduel_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0905, 0x0906, MWA_NOP }, /* ignore? */
-	//	{ 0x0c00, 0x0c00, coin_counter_w }, /* coin out */
-		{ 0x0c80, 0x0c80, avgdvg_go_w },
-		{ 0x0d00, 0x0d00, MWA_NOP }, /* watchdog clear */
-		{ 0x0d80, 0x0d80, avgdvg_reset_w },
-		{ 0x0e00, 0x0e00, MWA_NOP }, /* interrupt acknowledge */
-		{ 0x0e80, 0x0e80, atari_vg_earom_ctrl_w },
-		{ 0x0f00, 0x0f3f, atari_vg_earom_w },
-		{ 0x1000, 0x13ff, pokey1_w },
-		{ 0x1400, 0x17ff, pokey2_w },
-		{ 0x2000, 0x27ff, MWA_RAM, &vectorram, &vectorram_size },
-		{ 0x2800, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x8fff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress spacduel_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0905, 0x0906, MWA_NOP ), /* ignore? */
+	//	new Memory_WriteAddress( 0x0c00, 0x0c00, coin_counter_w ), /* coin out */
+		new Memory_WriteAddress( 0x0c80, 0x0c80, avgdvg_go_w ),
+		new Memory_WriteAddress( 0x0d00, 0x0d00, MWA_NOP ), /* watchdog clear */
+		new Memory_WriteAddress( 0x0d80, 0x0d80, avgdvg_reset_w ),
+		new Memory_WriteAddress( 0x0e00, 0x0e00, MWA_NOP ), /* interrupt acknowledge */
+		new Memory_WriteAddress( 0x0e80, 0x0e80, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x0f00, 0x0f3f, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, pokey1_w ),
+		new Memory_WriteAddress( 0x1400, 0x17ff, pokey2_w ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM, &vectorram, &vectorram_size ),
+		new Memory_WriteAddress( 0x2800, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x8fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

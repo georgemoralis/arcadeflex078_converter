@@ -134,100 +134,116 @@ public class mainevt
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x1f94, 0x1f94, input_port_0_r }, /* Coins */
-		{ 0x1f95, 0x1f95, input_port_1_r }, /* Player 1 */
-		{ 0x1f96, 0x1f96, input_port_2_r }, /* Player 2 */
-		{ 0x1f97, 0x1f97, input_port_5_r }, /* Dip 1 */
-		{ 0x1f98, 0x1f98, input_port_7_r }, /* Dip 3 */
-		{ 0x1f99, 0x1f99, input_port_3_r }, /* Player 3 */
-		{ 0x1f9a, 0x1f9a, input_port_4_r }, /* Player 4 */
-		{ 0x1f9b, 0x1f9b, input_port_6_r }, /* Dip 2 */
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x1f94, 0x1f94, input_port_0_r ), /* Coins */
+		new Memory_ReadAddress( 0x1f95, 0x1f95, input_port_1_r ), /* Player 1 */
+		new Memory_ReadAddress( 0x1f96, 0x1f96, input_port_2_r ), /* Player 2 */
+		new Memory_ReadAddress( 0x1f97, 0x1f97, input_port_5_r ), /* Dip 1 */
+		new Memory_ReadAddress( 0x1f98, 0x1f98, input_port_7_r ), /* Dip 3 */
+		new Memory_ReadAddress( 0x1f99, 0x1f99, input_port_3_r ), /* Player 3 */
+		new Memory_ReadAddress( 0x1f9a, 0x1f9a, input_port_4_r ), /* Player 4 */
+		new Memory_ReadAddress( 0x1f9b, 0x1f9b, input_port_6_r ), /* Dip 2 */
 	
-		{ 0x0000, 0x3fff, K052109_051960_r },
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x3fff, K052109_051960_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x1f80, 0x1f80, mainevt_bankswitch_w },
-		{ 0x1f84, 0x1f84, soundlatch_w },				/* probably */
-		{ 0x1f88, 0x1f88, mainevt_sh_irqtrigger_w },	/* probably */
-		{ 0x1f8c, 0x1f8d, MWA_NOP },	/* ??? */
-		{ 0x1f90, 0x1f90, mainevt_coin_w },	/* coin counters + lamps */
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x1f80, 0x1f80, mainevt_bankswitch_w ),
+		new Memory_WriteAddress( 0x1f84, 0x1f84, soundlatch_w ),				/* probably */
+		new Memory_WriteAddress( 0x1f88, 0x1f88, mainevt_sh_irqtrigger_w ),	/* probably */
+		new Memory_WriteAddress( 0x1f8c, 0x1f8d, MWA_NOP ),	/* ??? */
+		new Memory_WriteAddress( 0x1f90, 0x1f90, mainevt_coin_w ),	/* coin counters + lamps */
 	
-		{ 0x0000, 0x3fff, K052109_051960_w },
-		{ 0x4000, 0x5dff, MWA_RAM },
-		{ 0x5e00, 0x5fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram },
-	 	{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( dv_readmem )
-		{ 0x1f94, 0x1f94, input_port_0_r }, /* Coins */
-		{ 0x1f95, 0x1f95, input_port_1_r }, /* Player 1 */
-		{ 0x1f96, 0x1f96, input_port_2_r }, /* Player 2 */
-		{ 0x1f97, 0x1f97, input_port_5_r }, /* Dip 1 */
-		{ 0x1f98, 0x1f98, input_port_7_r }, /* Dip 3 */
-		{ 0x1f9b, 0x1f9b, input_port_6_r }, /* Dip 2 */
-		{ 0x1fa0, 0x1fbf, K051733_r },
-	
-		{ 0x0000, 0x3fff, K052109_051960_r },
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( dv_writemem )
-		{ 0x1f80, 0x1f80, mainevt_bankswitch_w },
-		{ 0x1f84, 0x1f84, soundlatch_w },				/* probably */
-		{ 0x1f88, 0x1f88, mainevt_sh_irqtrigger_w },	/* probably */
-		{ 0x1f90, 0x1f90, mainevt_coin_w },	/* coin counters + lamps */
-		{ 0x1fb2, 0x1fb2, dv_nmienable_w },
-		{ 0x1fa0, 0x1fbf, K051733_w },
-	
-		{ 0x0000, 0x3fff, K052109_051960_w },
-		{ 0x4000, 0x5dff, MWA_RAM },
-		{ 0x5e00, 0x5fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram },
-		{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x3fff, K052109_051960_w ),
+		new Memory_WriteAddress( 0x4000, 0x5dff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5e00, 0x5fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram ),
+	 	new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa000, 0xa000, soundlatch_r },
-		{ 0xb000, 0xb00d, K007232_read_port_0_r },
-		{ 0xd000, 0xd000, UPD7759_0_busy_r },
-	MEMORY_END
+	public static Memory_ReadAddress dv_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x1f94, 0x1f94, input_port_0_r ), /* Coins */
+		new Memory_ReadAddress( 0x1f95, 0x1f95, input_port_1_r ), /* Player 1 */
+		new Memory_ReadAddress( 0x1f96, 0x1f96, input_port_2_r ), /* Player 2 */
+		new Memory_ReadAddress( 0x1f97, 0x1f97, input_port_5_r ), /* Dip 1 */
+		new Memory_ReadAddress( 0x1f98, 0x1f98, input_port_7_r ), /* Dip 3 */
+		new Memory_ReadAddress( 0x1f9b, 0x1f9b, input_port_6_r ), /* Dip 2 */
+		new Memory_ReadAddress( 0x1fa0, 0x1fbf, K051733_r ),
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0xb000, 0xb00d, K007232_write_port_0_w },
-		{ 0x9000, 0x9000, UPD7759_0_port_w },
-		{ 0xe000, 0xe000, mainevt_sh_irqcontrol_w },
-		{ 0xf000, 0xf000, mainevt_sh_bankswitch_w },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x3fff, K052109_051960_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( dv_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa000, 0xa000, soundlatch_r },
-		{ 0xb000, 0xb00d, K007232_read_port_0_r },
-		{ 0xc001, 0xc001, YM2151_status_port_0_r },
-	MEMORY_END
+	public static Memory_WriteAddress dv_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x1f80, 0x1f80, mainevt_bankswitch_w ),
+		new Memory_WriteAddress( 0x1f84, 0x1f84, soundlatch_w ),				/* probably */
+		new Memory_WriteAddress( 0x1f88, 0x1f88, mainevt_sh_irqtrigger_w ),	/* probably */
+		new Memory_WriteAddress( 0x1f90, 0x1f90, mainevt_coin_w ),	/* coin counters + lamps */
+		new Memory_WriteAddress( 0x1fb2, 0x1fb2, dv_nmienable_w ),
+		new Memory_WriteAddress( 0x1fa0, 0x1fbf, K051733_w ),
 	
-	static MEMORY_WRITE_START( dv_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0xb000, 0xb00d, K007232_write_port_0_w },
-		{ 0xc000, 0xc000, YM2151_register_port_0_w },
-		{ 0xc001, 0xc001, YM2151_data_port_0_w },
-		{ 0xe000, 0xe000, devstor_sh_irqcontrol_w },
-		{ 0xf000, 0xf000, dv_sh_bankswitch_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x3fff, K052109_051960_w ),
+		new Memory_WriteAddress( 0x4000, 0x5dff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5e00, 0x5fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram ),
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress( 0xb000, 0xb00d, K007232_read_port_0_r ),
+		new Memory_ReadAddress( 0xd000, 0xd000, UPD7759_0_busy_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xb000, 0xb00d, K007232_write_port_0_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, UPD7759_0_port_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, mainevt_sh_irqcontrol_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, mainevt_sh_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress dv_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress( 0xb000, 0xb00d, K007232_read_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress dv_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xb000, 0xb00d, K007232_write_port_0_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, devstor_sh_irqcontrol_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, dv_sh_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

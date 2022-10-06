@@ -49,114 +49,134 @@ public class redalert
 	WRITE_HANDLER( redalert_sound_register_IC2_w );
 	
 	
-	static MEMORY_READ_START( redalert_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM }, /* Zero page / stack */
-		{ 0x0200, 0x0fff, MRA_RAM }, /* ? */
-		{ 0x1000, 0x1fff, MRA_RAM }, /* Scratchpad video RAM */
-		{ 0x2000, 0x4fff, MRA_RAM }, /* Video RAM */
-		{ 0x5000, 0xbfff, MRA_ROM },
-		{ 0xc100, 0xc100, input_port_0_r },
-		{ 0xc110, 0xc110, input_port_1_r },
-		{ 0xc120, 0xc120, input_port_2_r },
-		{ 0xc170, 0xc170, watchdog_reset_r },
-		{ 0xf000, 0xffff, MRA_ROM }, /* remapped ROM for 6502 vectors */
-	MEMORY_END
+	public static Memory_ReadAddress redalert_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ), /* Zero page / stack */
+		new Memory_ReadAddress( 0x0200, 0x0fff, MRA_RAM ), /* ? */
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_RAM ), /* Scratchpad video RAM */
+		new Memory_ReadAddress( 0x2000, 0x4fff, MRA_RAM ), /* Video RAM */
+		new Memory_ReadAddress( 0x5000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_0_r ),
+		new Memory_ReadAddress( 0xc110, 0xc110, input_port_1_r ),
+		new Memory_ReadAddress( 0xc120, 0xc120, input_port_2_r ),
+		new Memory_ReadAddress( 0xc170, 0xc170, watchdog_reset_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ), /* remapped ROM for 6502 vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( redalert_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x0200, 0x0fff, MWA_RAM }, /* ? */
-		{ 0x1000, 0x1fff, MWA_RAM }, /* Scratchpad video RAM */
-		{ 0x2000, 0x3fff, redalert_backram_w, &redalert_backram },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, redalert_spriteram1_w, &redalert_spriteram1 },
-		{ 0x4800, 0x4bff, redalert_characterram_w, &redalert_characterram },
-		{ 0x4c00, 0x4fff, redalert_spriteram2_w, &redalert_spriteram2 },
-		{ 0x5000, 0xbfff, MWA_ROM },
-		{ 0xc130, 0xc130, redalert_c030_w },
-		{ 0xc140, 0xc140, redalert_c040_w },
-		{ 0xc150, 0xc150, redalert_backcolor_w },
-		{ 0xc160, 0xc160, redalert_soundlatch_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress redalert_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0200, 0x0fff, MWA_RAM ), /* ? */
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM ), /* Scratchpad video RAM */
+		new Memory_WriteAddress( 0x2000, 0x3fff, redalert_backram_w, &redalert_backram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, redalert_spriteram1_w, &redalert_spriteram1 ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, redalert_characterram_w, &redalert_characterram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, redalert_spriteram2_w, &redalert_spriteram2 ),
+		new Memory_WriteAddress( 0x5000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc130, 0xc130, redalert_c030_w ),
+		new Memory_WriteAddress( 0xc140, 0xc140, redalert_c040_w ),
+		new Memory_WriteAddress( 0xc150, 0xc150, redalert_backcolor_w ),
+		new Memory_WriteAddress( 0xc160, 0xc160, redalert_soundlatch_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( redalert_sound_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x7800, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },
-		{ 0x1001, 0x1001, redalert_sound_register_IC1_r },
-	MEMORY_END
+	public static Memory_ReadAddress redalert_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1001, 0x1001, redalert_sound_register_IC1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( redalert_sound_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x7800, 0x7fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_ROM },
-		{ 0x1000, 0x1000, redalert_AY8910_w },
-		{ 0x1001, 0x1001, redalert_sound_register_IC2_w },
-	MEMORY_END
+	public static Memory_WriteAddress redalert_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1000, 0x1000, redalert_AY8910_w ),
+		new Memory_WriteAddress( 0x1001, 0x1001, redalert_sound_register_IC2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( redalert_voice_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xc000, 0xc000, redalert_voicecommand_r }, /* reads command from D0-D5? */
-	MEMORY_END
+	public static Memory_ReadAddress redalert_voice_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, redalert_voicecommand_r ), /* reads command from D0-D5? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( redalert_voice_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress redalert_voice_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( demoneye_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM }, /* Zero page / stack */
-		{ 0x0200, 0x0fff, MRA_RAM }, /* ? */
-		{ 0x1000, 0x1fff, MRA_RAM }, /* Scratchpad video RAM */
-		{ 0x2000, 0x4fff, MRA_RAM }, /* Video RAM */
-		{ 0x5000, 0x5fff, MRA_RAM },
-		{ 0x6000, 0xbfff, MRA_ROM },
-		{ 0xc100, 0xc100, input_port_0_r },
-		{ 0xc110, 0xc110, input_port_1_r },
-		{ 0xc120, 0xc120, input_port_2_r },
-		{ 0xf000, 0xffff, MRA_ROM }, /* remapped ROM for 6502 vectors */
-	MEMORY_END
+	public static Memory_ReadAddress demoneye_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ), /* Zero page / stack */
+		new Memory_ReadAddress( 0x0200, 0x0fff, MRA_RAM ), /* ? */
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_RAM ), /* Scratchpad video RAM */
+		new Memory_ReadAddress( 0x2000, 0x4fff, MRA_RAM ), /* Video RAM */
+		new Memory_ReadAddress( 0x5000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_0_r ),
+		new Memory_ReadAddress( 0xc110, 0xc110, input_port_1_r ),
+		new Memory_ReadAddress( 0xc120, 0xc120, input_port_2_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ), /* remapped ROM for 6502 vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( demoneye_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x0200, 0x0fff, MWA_RAM }, /* ? */
-		{ 0x1000, 0x1fff, MWA_RAM }, /* Scratchpad video RAM */
-		{ 0x2000, 0x3fff, redalert_backram_w, &redalert_backram },
-		{ 0x4000, 0x43ff, redalert_characterram_w, &redalert_characterram },
-		{ 0x4400, 0x47ff, redalert_spriteram1_w, &redalert_spriteram1 },
-		{ 0x4800, 0x4bff, redalert_characterram2_w, &redalert_characterram2 },
-		{ 0x4c00, 0x4fff, redalert_spriteram2_w, &redalert_spriteram2 },
-		{ 0x5000, 0x53ff, videoram_w, &videoram, &videoram_size },
-		{ 0x5400, 0x57ff, redalert_spriteram3_w, &redalert_spriteram3 },
-		{ 0x5800, 0x5bff, MWA_RAM }, //???
-		{ 0x5c00, 0x5fff, MWA_RAM }, //???
-		{ 0x6000, 0xbfff, MWA_ROM },
-		{ 0xc130, 0xc130, MWA_NOP },
-		{ 0xc140, 0xc140, demoneye_c040_w },
-		{ 0xc150, 0xc150, redalert_backcolor_w },
-		{ 0xc160, 0xc160, MWA_NOP },
-		{ 0xc161, 0xc161, MWA_NOP },
-		{ 0xc162, 0xc162, watchdog_reset_w },
-		{ 0xc163, 0xc163, MWA_NOP },
-		{ 0xc170, 0xc170, MWA_NOP },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress demoneye_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0200, 0x0fff, MWA_RAM ), /* ? */
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM ), /* Scratchpad video RAM */
+		new Memory_WriteAddress( 0x2000, 0x3fff, redalert_backram_w, &redalert_backram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, redalert_characterram_w, &redalert_characterram ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, redalert_spriteram1_w, &redalert_spriteram1 ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, redalert_characterram2_w, &redalert_characterram2 ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, redalert_spriteram2_w, &redalert_spriteram2 ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x5400, 0x57ff, redalert_spriteram3_w, &redalert_spriteram3 ),
+		new Memory_WriteAddress( 0x5800, 0x5bff, MWA_RAM ), //???
+		new Memory_WriteAddress( 0x5c00, 0x5fff, MWA_RAM ), //???
+		new Memory_WriteAddress( 0x6000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc130, 0xc130, MWA_NOP ),
+		new Memory_WriteAddress( 0xc140, 0xc140, demoneye_c040_w ),
+		new Memory_WriteAddress( 0xc150, 0xc150, redalert_backcolor_w ),
+		new Memory_WriteAddress( 0xc160, 0xc160, MWA_NOP ),
+		new Memory_WriteAddress( 0xc161, 0xc161, MWA_NOP ),
+		new Memory_WriteAddress( 0xc162, 0xc162, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xc163, 0xc163, MWA_NOP ),
+		new Memory_WriteAddress( 0xc170, 0xc170, MWA_NOP ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( demoneye_sound_readmem )
-		{ 0x0000, 0x007f, MRA_RAM },
-		{ 0x0500, 0x0503, pia_0_r },
-		{ 0x2000, 0x2fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress demoneye_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0500, 0x0503, pia_0_r ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( demoneye_sound_writemem )
-		{ 0x0000, 0x007f, MWA_RAM },
-		{ 0x0500, 0x0503, pia_0_w },
-		{ 0x2000, 0x2fff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress demoneye_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0500, 0x0503, pia_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( redalert )

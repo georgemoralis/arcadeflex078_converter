@@ -33,36 +33,40 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x5400, 0x5403, pia_0_r },
-		{ 0x5800, 0x5803, pia_1_r },
-		{ 0xa000, 0xa000, carpolo_ball_screen_collision_cause_r },
-		{ 0xa001, 0xa001, carpolo_car_ball_collision_x_r },
-		{ 0xa002, 0xa002, carpolo_car_ball_collision_y_r },
-		{ 0xa003, 0xa003, carpolo_car_car_collision_cause_r },
-		{ 0xa004, 0xa004, carpolo_car_border_collision_cause_r },
-		{ 0xa005, 0xa005, carpolo_car_ball_collision_cause_r },
-		{ 0xa006, 0xa006, carpolo_car_goal_collision_cause_r },
-		{ 0xa007, 0xa007, input_port_1_r },
-		{ 0xc000, 0xc000, carpolo_interrupt_cause_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5400, 0x5403, pia_0_r ),
+		new Memory_ReadAddress( 0x5800, 0x5803, pia_1_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, carpolo_ball_screen_collision_cause_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, carpolo_car_ball_collision_x_r ),
+		new Memory_ReadAddress( 0xa002, 0xa002, carpolo_car_ball_collision_y_r ),
+		new Memory_ReadAddress( 0xa003, 0xa003, carpolo_car_car_collision_cause_r ),
+		new Memory_ReadAddress( 0xa004, 0xa004, carpolo_car_border_collision_cause_r ),
+		new Memory_ReadAddress( 0xa005, 0xa005, carpolo_car_ball_collision_cause_r ),
+		new Memory_ReadAddress( 0xa006, 0xa006, carpolo_car_goal_collision_cause_r ),
+		new Memory_ReadAddress( 0xa007, 0xa007, input_port_1_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, carpolo_interrupt_cause_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x3000, 0x30ff, MWA_RAM, &carpolo_alpharam },
-		{ 0x4000, 0x400f, MWA_RAM, &carpolo_spriteram },
-		{ 0x5400, 0x5403, pia_0_w },
-		{ 0x5800, 0x5803, pia_1_w },
-		{ 0xb000, 0xb000, carpolo_ball_screen_interrupt_clear_w },
-		{ 0xb001, 0xb001, carpolo_timer_interrupt_clear_w },
-		{ 0xb003, 0xb003, carpolo_car_car_interrupt_clear_w },
-		{ 0xb004, 0xb004, carpolo_car_border_interrupt_clear_w },
-		{ 0xb005, 0xb005, carpolo_car_ball_interrupt_clear_w },
-		{ 0xb006, 0xb006, carpolo_car_goal_interrupt_clear_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, &carpolo_alpharam ),
+		new Memory_WriteAddress( 0x4000, 0x400f, MWA_RAM, &carpolo_spriteram ),
+		new Memory_WriteAddress( 0x5400, 0x5403, pia_0_w ),
+		new Memory_WriteAddress( 0x5800, 0x5803, pia_1_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, carpolo_ball_screen_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, carpolo_timer_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xb003, 0xb003, carpolo_car_car_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, carpolo_car_border_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xb005, 0xb005, carpolo_car_ball_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, carpolo_car_goal_interrupt_clear_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

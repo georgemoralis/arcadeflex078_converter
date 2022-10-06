@@ -69,66 +69,78 @@ public class blktiger
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xcfff, blktiger_bgvideoram_r },
-		{ 0xd000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, blktiger_bgvideoram_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, blktiger_bgvideoram_w },
-		{ 0xd000, 0xd7ff, blktiger_txvideoram_w, &blktiger_txvideoram },
-		{ 0xd800, 0xdbff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram },
-		{ 0xdc00, 0xdfff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 },
-		{ 0xe000, 0xfdff, MWA_RAM },
-		{ 0xfe00, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, blktiger_bgvideoram_w ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, blktiger_txvideoram_w, &blktiger_txvideoram ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xdc00, 0xdfff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xe000, 0xfdff, MWA_RAM ),
+		new Memory_WriteAddress( 0xfe00, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x03, 0x03, input_port_3_r },
-		{ 0x04, 0x04, input_port_4_r },
-		{ 0x05, 0x05, input_port_5_r },
-		{ 0x07, 0x07, blktiger_protection_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_4_r ),
+		new IO_ReadPort( 0x05, 0x05, input_port_5_r ),
+		new IO_ReadPort( 0x07, 0x07, blktiger_protection_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, soundlatch_w },
-		{ 0x01, 0x01, blktiger_bankswitch_w },
-		{ 0x03, 0x03, blktiger_coinlockout_w },
-		{ 0x04, 0x04, blktiger_video_control_w },
-		{ 0x06, 0x06, watchdog_reset_w },
-		{ 0x07, 0x07, IOWP_NOP }, /* Software protection (7) */
-		{ 0x08, 0x09, blktiger_scrollx_w },
-		{ 0x0a, 0x0b, blktiger_scrolly_w },
-		{ 0x0c, 0x0c, blktiger_video_enable_w },
-		{ 0x0d, 0x0d, blktiger_bgvideoram_bank_w },
-		{ 0x0e, 0x0e, blktiger_screen_layout_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, soundlatch_w ),
+		new IO_WritePort( 0x01, 0x01, blktiger_bankswitch_w ),
+		new IO_WritePort( 0x03, 0x03, blktiger_coinlockout_w ),
+		new IO_WritePort( 0x04, 0x04, blktiger_video_control_w ),
+		new IO_WritePort( 0x06, 0x06, watchdog_reset_w ),
+		new IO_WritePort( 0x07, 0x07, IOWP_NOP ), /* Software protection (7) */
+		new IO_WritePort( 0x08, 0x09, blktiger_scrollx_w ),
+		new IO_WritePort( 0x0a, 0x0b, blktiger_scrolly_w ),
+		new IO_WritePort( 0x0c, 0x0c, blktiger_video_enable_w ),
+		new IO_WritePort( 0x0d, 0x0d, blktiger_bgvideoram_bank_w ),
+		new IO_WritePort( 0x0e, 0x0e, blktiger_screen_layout_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc800, soundlatch_r },
-		{ 0xe000, 0xe000, YM2203_status_port_0_r },
-		{ 0xe001, 0xe001, YM2203_read_port_0_r },
-		{ 0xe002, 0xe002, YM2203_status_port_1_r },
-		{ 0xe003, 0xe003, YM2203_read_port_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xe001, 0xe001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xe002, 0xe002, YM2203_status_port_1_r ),
+		new Memory_ReadAddress( 0xe003, 0xe003, YM2203_read_port_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xe000, 0xe000, YM2203_control_port_0_w },
-		{ 0xe001, 0xe001, YM2203_write_port_0_w },
-		{ 0xe002, 0xe002, YM2203_control_port_1_w },
-		{ 0xe003, 0xe003, YM2203_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

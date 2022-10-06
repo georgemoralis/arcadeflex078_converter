@@ -1521,27 +1521,31 @@ public class ms32
 			irq_raise(1);
 	}
 	
-	static MEMORY_READ_START( ms32_snd_readmem )
-		{ 0x0000, 0x3eff, MRA_ROM },
-		{ 0x3f00, 0x3f0f, YMF271_0_r },
-		{ 0x3f10, 0x3f10, latch_r },
-		{ 0x3f20, 0x3f20, MRA_NOP }, /* 2nd latch ? */
-		{ 0x4000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xbfff, MRA_BANK4 },
-		{ 0xc000, 0xffff, MRA_BANK5 },
-	MEMORY_END
+	public static Memory_ReadAddress ms32_snd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3eff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3f00, 0x3f0f, YMF271_0_r ),
+		new Memory_ReadAddress( 0x3f10, 0x3f10, latch_r ),
+		new Memory_ReadAddress( 0x3f20, 0x3f20, MRA_NOP ), /* 2nd latch ? */
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK4 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK5 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ms32_snd_writemem )
-		{ 0x0000, 0x3eff, MWA_ROM },
-		{ 0x3f00, 0x3f0f, YMF271_0_w },
-		{ 0x3f10, 0x3f10, to_main_w },
-		{ 0x3f20, 0x3f20, MWA_NOP }, /* to_main2_w  ? */
-		{ 0x3f40, 0x3f40, MWA_NOP },   /* YMF271 pin 4 (bit 1) , YMF271 pin 39 (bit 4) */
-		{ 0x3f70, 0x3f70, MWA_NOP },   // watchdog? banking? very noisy
-		{ 0x3f80, 0x3f80, ms32_snd_bank_w },
-		{ 0x4000, 0x7fff, MWA_RAM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress ms32_snd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3eff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3f00, 0x3f0f, YMF271_0_w ),
+		new Memory_WriteAddress( 0x3f10, 0x3f10, to_main_w ),
+		new Memory_WriteAddress( 0x3f20, 0x3f20, MWA_NOP ), /* to_main2_w  ? */
+		new Memory_WriteAddress( 0x3f40, 0x3f40, MWA_NOP ),   /* YMF271 pin 4 (bit 1) , YMF271 pin 39 (bit 4) */
+		new Memory_WriteAddress( 0x3f70, 0x3f70, MWA_NOP ),   // watchdog? banking? very noisy
+		new Memory_WriteAddress( 0x3f80, 0x3f80, ms32_snd_bank_w ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static struct YMF271interface ymf271_interface =
 	{

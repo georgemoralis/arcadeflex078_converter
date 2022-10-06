@@ -151,24 +151,28 @@ public class toki
 	
 	/*****************************************************************************/
 	
-	static MEMORY_READ_START( tokib_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xec00, 0xec00, YM3812_status_port_0_r },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress tokib_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xec00, 0xec00, YM3812_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tokib_sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xe000, 0xe000, toki_adpcm_control_w },	/* MSM5205 + ROM bank */
-		{ 0xe400, 0xe400, toki_adpcm_data_w },
-		{ 0xec00, 0xec00, YM3812_control_port_0_w },
-		{ 0xec01, 0xec01, YM3812_write_port_0_w },
-		{ 0xec08, 0xec08, YM3812_control_port_0_w },	/* mirror address, it seems */
-		{ 0xec09, 0xec09, YM3812_write_port_0_w },	/* mirror address, it seems */
-		{ 0xf000, 0xf7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress tokib_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, toki_adpcm_control_w ),	/* MSM5205 + ROM bank */
+		new Memory_WriteAddress( 0xe400, 0xe400, toki_adpcm_data_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, YM3812_control_port_0_w ),
+		new Memory_WriteAddress( 0xec01, 0xec01, YM3812_write_port_0_w ),
+		new Memory_WriteAddress( 0xec08, 0xec08, YM3812_control_port_0_w ),	/* mirror address, it seems */
+		new Memory_WriteAddress( 0xec09, 0xec09, YM3812_write_port_0_w ),	/* mirror address, it seems */
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*****************************************************************************/
 	

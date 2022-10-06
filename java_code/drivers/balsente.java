@@ -159,37 +159,41 @@ public class balsente
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_cpu1 )
-		{ 0x0000, 0x8fff, MRA_RAM },
-		{ 0x9400, 0x9401, balsente_adc_data_r },
-		{ 0x9900, 0x9900, input_port_0_r },
-		{ 0x9901, 0x9901, input_port_1_r },
-		{ 0x9902, 0x9902, input_port_2_r },
-		{ 0x9903, 0x9903, input_port_3_r },
-		{ 0x9a00, 0x9a03, balsente_random_num_r },
-		{ 0x9a04, 0x9a05, balsente_m6850_r },
-		{ 0x9b00, 0x9bff, MRA_RAM },		/* system NOVRAM */
-		{ 0x9c00, 0x9cff, MRA_RAM },		/* cart NOVRAM */
-		{ 0xa000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xffff, MRA_BANK2 },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x9401, balsente_adc_data_r ),
+		new Memory_ReadAddress( 0x9900, 0x9900, input_port_0_r ),
+		new Memory_ReadAddress( 0x9901, 0x9901, input_port_1_r ),
+		new Memory_ReadAddress( 0x9902, 0x9902, input_port_2_r ),
+		new Memory_ReadAddress( 0x9903, 0x9903, input_port_3_r ),
+		new Memory_ReadAddress( 0x9a00, 0x9a03, balsente_random_num_r ),
+		new Memory_ReadAddress( 0x9a04, 0x9a05, balsente_m6850_r ),
+		new Memory_ReadAddress( 0x9b00, 0x9bff, MRA_RAM ),		/* system NOVRAM */
+		new Memory_ReadAddress( 0x9c00, 0x9cff, MRA_RAM ),		/* cart NOVRAM */
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK2 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_cpu1 )
-		{ 0x0000, 0x07ff, MWA_RAM, &spriteram },
-		{ 0x0800, 0x7fff, balsente_videoram_w, &videoram, &videoram_size },
-		{ 0x8000, 0x8fff, balsente_paletteram_w, &paletteram },
-		{ 0x9000, 0x9007, balsente_adc_select_w },
-		{ 0x9800, 0x987f, balsente_misc_output_w },
-		{ 0x9880, 0x989f, balsente_random_reset_w },
-		{ 0x98a0, 0x98bf, balsente_rombank_select_w },
-		{ 0x98c0, 0x98df, balsente_palette_select_w },
-		{ 0x98e0, 0x98ff, watchdog_reset_w },
-		{ 0x9903, 0x9903, MWA_NOP },
-		{ 0x9a04, 0x9a05, balsente_m6850_w },
-		{ 0x9b00, 0x9cff, MWA_RAM, &generic_nvram, &generic_nvram_size },		/* system NOVRAM + cart NOVRAM */
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x0800, 0x7fff, balsente_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, balsente_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x9000, 0x9007, balsente_adc_select_w ),
+		new Memory_WriteAddress( 0x9800, 0x987f, balsente_misc_output_w ),
+		new Memory_WriteAddress( 0x9880, 0x989f, balsente_random_reset_w ),
+		new Memory_WriteAddress( 0x98a0, 0x98bf, balsente_rombank_select_w ),
+		new Memory_WriteAddress( 0x98c0, 0x98df, balsente_palette_select_w ),
+		new Memory_WriteAddress( 0x98e0, 0x98ff, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x9903, 0x9903, MWA_NOP ),
+		new Memory_WriteAddress( 0x9a04, 0x9a05, balsente_m6850_w ),
+		new Memory_WriteAddress( 0x9b00, 0x9cff, MWA_RAM, &generic_nvram, &generic_nvram_size ),		/* system NOVRAM + cart NOVRAM */
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -199,33 +203,41 @@ public class balsente
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x5fff, MRA_RAM },
-		{ 0xe000, 0xffff, balsente_m6850_sound_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, balsente_m6850_sound_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x5fff, MWA_RAM },
-		{ 0x6000, 0x7fff, balsente_m6850_sound_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x5fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, balsente_m6850_sound_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport_cpu2 )
-		{ 0x00, 0x03, balsente_counter_8253_r },
-		{ 0x08, 0x0f, balsente_counter_state_r },
-	PORT_END
+	public static IO_ReadPort readport_cpu2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x03, balsente_counter_8253_r ),
+		new IO_ReadPort( 0x08, 0x0f, balsente_counter_state_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport_cpu2 )
-		{ 0x00, 0x03, balsente_counter_8253_w },
-		{ 0x08, 0x09, balsente_counter_control_w },
-		{ 0x0a, 0x0b, balsente_dac_data_w },
-		{ 0x0c, 0x0d, balsente_register_addr_w },
-		{ 0x0e, 0x0f, balsente_chip_select_w },
-	PORT_END
+	public static IO_WritePort writeport_cpu2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x03, balsente_counter_8253_w ),
+		new IO_WritePort( 0x08, 0x09, balsente_counter_control_w ),
+		new IO_WritePort( 0x0a, 0x0b, balsente_dac_data_w ),
+		new IO_WritePort( 0x0c, 0x0d, balsente_register_addr_w ),
+		new IO_WritePort( 0x0e, 0x0f, balsente_chip_select_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

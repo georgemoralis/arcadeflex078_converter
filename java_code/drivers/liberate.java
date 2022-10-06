@@ -84,101 +84,125 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	static MEMORY_READ_START( prosport_readmem )
-		{ 0x0200, 0x021f, paletteram_r },
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x2fff, MRA_RAM },
-		{ 0x8000, 0x800f, deco16_io_r },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress prosport_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0200, 0x021f, paletteram_r ),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x800f, deco16_io_r ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( prosport_writemem )
-		{ 0x0200, 0x021f, prosport_paletteram_w, &paletteram },
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1200, 0x1fff, MWA_RAM },
-		{ 0x3000, 0x37ff, liberate_videoram_w, &videoram },
-		{ 0x3800, 0x3fff, MWA_RAM, &spriteram },
-		{ 0x8000, 0x800f, deco16_io_w },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress prosport_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0200, 0x021f, prosport_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1200, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x37ff, liberate_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x8000, 0x800f, deco16_io_w ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( liberate_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x3fff, MRA_ROM }, /* Mirror of main rom */
-		{ 0x4000, 0x7fff, deco16_bank_r },
-		{ 0x8000, 0x800f, deco16_io_r },
-		{ 0x6200, 0x67ff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress liberate_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x3fff, MRA_ROM ), /* Mirror of main rom */
+		new Memory_ReadAddress( 0x4000, 0x7fff, deco16_bank_r ),
+		new Memory_ReadAddress( 0x8000, 0x800f, deco16_io_r ),
+		new Memory_ReadAddress( 0x6200, 0x67ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( liberate_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x3fff, MWA_ROM }, /* Mirror of main rom */
-		{ 0x4000, 0x47ff, liberate_videoram_w, &videoram },
-		{ 0x4800, 0x4fff, MWA_RAM, &spriteram },
-		{ 0x6200, 0x67ff, MWA_RAM, &scratchram },
-		{ 0x8000, 0x800f, deco16_io_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress liberate_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x3fff, MWA_ROM ), /* Mirror of main rom */
+		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, &scratchram ),
+		new Memory_WriteAddress( 0x8000, 0x800f, deco16_io_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( deco16_readport )
-		{ 0x00, 0x00, input_port_0_r },
-	PORT_END
+	public static IO_ReadPort deco16_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( deco16_writeport )
-		{ 0x00, 0x00, deco16_bank_w },
-	PORT_END
+	public static IO_WritePort deco16_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, deco16_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( liberatb_readmem )
-		{ 0x00fe, 0x00fe, input_port_0_r },
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x3fff, MRA_ROM }, /* Mirror of main rom */
-		{ 0x4000, 0x7fff, deco16_bank_r },
-		{ 0xf000, 0xf00f, deco16_io_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress liberatb_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00fe, 0x00fe, input_port_0_r ),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x3fff, MRA_ROM ), /* Mirror of main rom */
+		new Memory_ReadAddress( 0x4000, 0x7fff, deco16_bank_r ),
+		new Memory_ReadAddress( 0xf000, 0xf00f, deco16_io_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( liberatb_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x3fff, MWA_ROM }, /* Mirror of main rom */
-		{ 0x4000, 0x47ff, liberate_videoram_w, &videoram },
-		{ 0x4800, 0x4fff, MWA_RAM, &spriteram },
-		{ 0x6200, 0x67ff, MWA_RAM, &scratchram },
-	//	{ 0xf000, 0xf00f, deco16_io_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress liberatb_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x3fff, MWA_ROM ), /* Mirror of main rom */
+		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, &scratchram ),
+	//	new Memory_WriteAddress( 0xf000, 0xf00f, deco16_io_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	
-	static MEMORY_READ_START( prosoccr_sound_readmem )
-	    { 0x0000, 0x01ff, MRA_RAM },
-		{ 0xa000, 0xa000, soundlatch_r },
-	    { 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress prosoccr_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+	    new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( prosoccr_sound_writemem )
-	    { 0x0000, 0x01ff, MWA_RAM },
-		{ 0x2000, 0x2000, AY8910_write_port_0_w },
-		{ 0x4000, 0x4000, AY8910_control_port_0_w },
-		{ 0x6000, 0x6000, AY8910_write_port_1_w },
-		{ 0x8000, 0x8000, AY8910_control_port_1_w },
-	    { 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress prosoccr_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_1_w ),
+	    new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-	    { 0x0000, 0x01ff, MRA_RAM },
-		{ 0xb000, 0xb000, soundlatch_r },
-	    { 0xc000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb000, 0xb000, soundlatch_r ),
+	    new Memory_ReadAddress( 0xc000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-	    { 0x0000, 0x01ff, MWA_RAM },
-		{ 0x3000, 0x3000, AY8910_write_port_0_w },
-		{ 0x4000, 0x4000, AY8910_control_port_0_w },
-		{ 0x7000, 0x7000, AY8910_write_port_1_w },
-		{ 0x8000, 0x8000, AY8910_control_port_1_w },
-	    { 0xc000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x3000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_1_w ),
+	    new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	

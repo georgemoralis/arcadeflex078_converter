@@ -164,28 +164,32 @@ public class toratora
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x2fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_RAM },
-		{ 0xf04b, 0xf04b, toratora_timer_r },
-		{ 0xf0a0, 0xf0a3, pia_0_r },
-		{ 0xf0a4, 0xf0a7, pia_1_r },
-		{ 0xf0a8, 0xf0ab, pia_2_r },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf04b, 0xf04b, toratora_timer_r ),
+		new Memory_ReadAddress( 0xf0a0, 0xf0a3, pia_0_r ),
+		new Memory_ReadAddress( 0xf0a4, 0xf0a7, pia_1_r ),
+		new Memory_ReadAddress( 0xf0a8, 0xf0ab, pia_2_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x2fff, MWA_ROM },
-		{ 0x8000, 0x9fff, toratora_videoram_w, &videoram },
-		{ 0xf04a, 0xf04a, toratora_clear_tv_w },
-		{ 0xf04b, 0xf04b, toratora_clear_timer_w },
-		{ 0xf0a0, 0xf0a3, pia_0_w },
-		{ 0xf0a4, 0xf0a7, pia_1_w },
-		{ 0xf0a8, 0xf0ab, pia_2_w },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, toratora_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xf04a, 0xf04a, toratora_clear_tv_w ),
+		new Memory_WriteAddress( 0xf04b, 0xf04b, toratora_clear_timer_w ),
+		new Memory_WriteAddress( 0xf0a0, 0xf0a3, pia_0_w ),
+		new Memory_WriteAddress( 0xf0a4, 0xf0a7, pia_1_w ),
+		new Memory_WriteAddress( 0xf0a8, 0xf0ab, pia_2_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

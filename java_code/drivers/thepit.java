@@ -86,90 +86,106 @@ public class thepit
 	}
 	
 	
-	static MEMORY_READ_START( thepit_readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x97ff, videoram_r },
-		{ 0x9800, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, thepit_input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
+	public static Memory_ReadAddress thepit_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, videoram_r ),
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, thepit_input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( thepit_writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8bff, colorram_w, &colorram },
-		{ 0x8c00, 0x8fff, colorram_w },
-		{ 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size },
-		{ 0x9400, 0x97ff, videoram_w },
-		{ 0x9800, 0x983f, thepit_attributes_w, &thepit_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x9860, 0x98ff, MWA_RAM }, // Probably unused
-		{ 0xa000, 0xa000, MWA_NOP }, // Not hooked up according to the schematics
-		{ 0xb000, 0xb000, interrupt_enable_w },
-		{ 0xb001, 0xb001, MWA_NOP }, // Unused, but initialized
-		{ 0xb002, 0xb002, MWA_NOP }, // coin_lockout_w
-		{ 0xb003, 0xb003, thepit_sound_enable_w },
-		{ 0xb004, 0xb005, MWA_NOP }, // Unused, but initialized
-		{ 0xb006, 0xb006, flip_screen_x_w },
-		{ 0xb007, 0xb007, flip_screen_y_w },
-		{ 0xb800, 0xb800, soundlatch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( intrepid_readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9000, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, thepit_input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( intrepid_writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size },
-		{ 0x9400, 0x97ff, colorram_w, &colorram },
-		{ 0x9800, 0x983f, thepit_attributes_w, &thepit_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x9860, 0x98ff, MWA_RAM }, // Probably unused
-		{ 0xb000, 0xb000, interrupt_enable_w },
-		{ 0xb001, 0xb001, MWA_NOP }, // Unused, but initialized
-		{ 0xb002, 0xb002, MWA_NOP }, // coin_lockout_w
-		{ 0xb003, 0xb003, thepit_sound_enable_w },
-		{ 0xb004, 0xb004, MWA_NOP }, // Unused, but initialized
-		{ 0xb005, 0xb005, intrepid_graphics_bank_select_w },
-		{ 0xb006, 0xb006, flip_screen_x_w },
-		{ 0xb007, 0xb007, flip_screen_y_w },
-		{ 0xb800, 0xb800, soundlatch_w },
-	MEMORY_END
+	public static Memory_WriteAddress thepit_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8bff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8c00, 0x8fff, colorram_w ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, videoram_w ),
+		new Memory_WriteAddress( 0x9800, 0x983f, thepit_attributes_w, &thepit_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x98ff, MWA_RAM ), // Probably unused
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ), // Not hooked up according to the schematics
+		new Memory_WriteAddress( 0xb000, 0xb000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xb002, 0xb002, MWA_NOP ), // coin_lockout_w
+		new Memory_WriteAddress( 0xb003, 0xb003, thepit_sound_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb005, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xb006, 0xb006, flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x3800, 0x3bff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress intrepid_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, thepit_input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x3800, 0x3bff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress intrepid_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, thepit_attributes_w, &thepit_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x98ff, MWA_RAM ), // Probably unused
+		new Memory_WriteAddress( 0xb000, 0xb000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xb002, 0xb002, MWA_NOP ), // coin_lockout_w
+		new Memory_WriteAddress( 0xb003, 0xb003, thepit_sound_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xb005, 0xb005, intrepid_graphics_bank_select_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x8f, 0x8f, AY8910_read_port_0_r },
-	PORT_END
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, soundlatch_clear_w },
-		{ 0x8c, 0x8c, AY8910_control_port_1_w },
-		{ 0x8d, 0x8d, AY8910_write_port_1_w },
-		{ 0x8e, 0x8e, AY8910_control_port_0_w },
-		{ 0x8f, 0x8f, AY8910_write_port_0_w },
-	PORT_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3800, 0x3bff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x3800, 0x3bff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x8f, 0x8f, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, soundlatch_clear_w ),
+		new IO_WritePort( 0x8c, 0x8c, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x8d, 0x8d, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x8e, 0x8e, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x8f, 0x8f, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( thepit )

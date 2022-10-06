@@ -37,16 +37,20 @@ package drivers;
 public class sg1000a
 {
 	
-	static MEMORY_READ_START( readmem )
-	    { 0x0000, 0xbFFF, MRA_ROM },
-	    { 0xc000, 0xc3ff, MRA_RAM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_ReadAddress( 0x0000, 0xbFFF, MRA_ROM ),
+	    new Memory_ReadAddress( 0xc000, 0xc3ff, MRA_RAM ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-	    { 0x0000, 0xbFFF, MWA_ROM },
-	    { 0xc000, 0xc3ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	    new Memory_WriteAddress( 0x0000, 0xbFFF, MWA_ROM ),
+	    new Memory_WriteAddress( 0xc000, 0xc3ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static PORT_READ_START ( readport )

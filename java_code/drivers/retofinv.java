@@ -110,106 +110,122 @@ public class retofinv
 	      cpu_set_irq_line(2, 0, HOLD_LINE);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x7b00, 0x7b00, MRA_NOP },	/* space for diagnostic ROM? The code looks */
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7b00, 0x7b00, MRA_NOP ),	/* space for diagnostic ROM? The code looks */
 										/* for a string here, and jumps if it's present */
-		{ 0x8000, 0x83ff, retofinv_fg_videoram_r },
-		{ 0x8400, 0x87ff, retofinv_fg_colorram_r },
-		{ 0x8800, 0x9fff, MRA_RAM },
-		{ 0xa000, 0xa3ff, retofinv_bg_videoram_r },
-		{ 0xa400, 0xa7ff, retofinv_bg_colorram_r },
-		{ 0xc800, 0xc800, MRA_NOP },
-		{ 0xc000, 0xc000, input_port_1_r },
-		{ 0xc001, 0xc001, input_port_2_r },
-		{ 0xc002, 0xc002, MRA_NOP },	/* bit 7 must be 0, otherwise game resets */
-		{ 0xc003, 0xc003, retofinv_mcu_status_r },
-		{ 0xc004, 0xc004, input_port_0_r },
-		{ 0xc005, 0xc005, input_port_3_r },
-		{ 0xc006, 0xc006, input_port_5_r },
-		{ 0xc007, 0xc007, input_port_4_r },
-		{ 0xe000, 0xe000, retofinv_mcu_r },
-		{ 0xf800, 0xf800, cpu0_mf800_r },
-	MEMORY_END
+		new Memory_ReadAddress( 0x8000, 0x83ff, retofinv_fg_videoram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, retofinv_fg_colorram_r ),
+		new Memory_ReadAddress( 0x8800, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa3ff, retofinv_bg_videoram_r ),
+		new Memory_ReadAddress( 0xa400, 0xa7ff, retofinv_bg_colorram_r ),
+		new Memory_ReadAddress( 0xc800, 0xc800, MRA_NOP ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_1_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_2_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, MRA_NOP ),	/* bit 7 must be 0, otherwise game resets */
+		new Memory_ReadAddress( 0xc003, 0xc003, retofinv_mcu_status_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_0_r ),
+		new Memory_ReadAddress( 0xc005, 0xc005, input_port_3_r ),
+		new Memory_ReadAddress( 0xc006, 0xc006, input_port_5_r ),
+		new Memory_ReadAddress( 0xc007, 0xc007, input_port_4_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, retofinv_mcu_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, cpu0_mf800_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-	//	{ 0x7fff, 0x7fff, MWA_NOP },
-		{ 0x8000, 0x83ff, retofinv_fg_videoram_w, &retofinv_fg_videoram, &retofinv_videoram_size },
-		{ 0x8400, 0x87ff, retofinv_fg_colorram_w, &retofinv_fg_colorram },
-		{ 0x8800, 0x9fff, MWA_RAM, &sharedram },
-		{ 0x8f00, 0x8f7f, MWA_RAM, &retofinv_sprite_ram1 },	/* covered by the above, */
-		{ 0x9700, 0x977f, MWA_RAM, &retofinv_sprite_ram2 },	/* here only to */
-		{ 0x9f00, 0x9f7f, MWA_RAM, &retofinv_sprite_ram3 },	/* initialize the pointers */
-		{ 0xa000, 0xa3ff, retofinv_bg_videoram_w, &retofinv_bg_videoram },
-		{ 0xa400, 0xa7ff, retofinv_bg_colorram_w, &retofinv_bg_colorram },
-		{ 0xb800, 0xb800, retofinv_flip_screen_w },
-		{ 0xb801, 0xb801, MWA_RAM, &retofinv_fg_char_bank },
-		{ 0xb802, 0xb802, MWA_RAM, &retofinv_bg_char_bank },
-		{ 0xc800, 0xc800, MWA_NOP },
-		{ 0xc801, 0xc801, reset_cpu2_w },
-		{ 0xc802, 0xc802, reset_cpu1_w },
-		{ 0xc803, 0xc803, MWA_NOP },
-		{ 0xc804, 0xc804, MWA_NOP },
-		{ 0xc805, 0xc805, cpu1_halt_w },
-		{ 0xd800, 0xd800, soundcommand_w },
-		{ 0xd000, 0xd000, MWA_NOP },
-		{ 0xe800, 0xe800, retofinv_mcu_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+	//	new Memory_WriteAddress( 0x7fff, 0x7fff, MWA_NOP ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, retofinv_fg_videoram_w, &retofinv_fg_videoram, &retofinv_videoram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, retofinv_fg_colorram_w, &retofinv_fg_colorram ),
+		new Memory_WriteAddress( 0x8800, 0x9fff, MWA_RAM, &sharedram ),
+		new Memory_WriteAddress( 0x8f00, 0x8f7f, MWA_RAM, &retofinv_sprite_ram1 ),	/* covered by the above, */
+		new Memory_WriteAddress( 0x9700, 0x977f, MWA_RAM, &retofinv_sprite_ram2 ),	/* here only to */
+		new Memory_WriteAddress( 0x9f00, 0x9f7f, MWA_RAM, &retofinv_sprite_ram3 ),	/* initialize the pointers */
+		new Memory_WriteAddress( 0xa000, 0xa3ff, retofinv_bg_videoram_w, &retofinv_bg_videoram ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, retofinv_bg_colorram_w, &retofinv_bg_colorram ),
+		new Memory_WriteAddress( 0xb800, 0xb800, retofinv_flip_screen_w ),
+		new Memory_WriteAddress( 0xb801, 0xb801, MWA_RAM, &retofinv_fg_char_bank ),
+		new Memory_WriteAddress( 0xb802, 0xb802, MWA_RAM, &retofinv_bg_char_bank ),
+		new Memory_WriteAddress( 0xc800, 0xc800, MWA_NOP ),
+		new Memory_WriteAddress( 0xc801, 0xc801, reset_cpu2_w ),
+		new Memory_WriteAddress( 0xc802, 0xc802, reset_cpu1_w ),
+		new Memory_WriteAddress( 0xc803, 0xc803, MWA_NOP ),
+		new Memory_WriteAddress( 0xc804, 0xc804, MWA_NOP ),
+		new Memory_WriteAddress( 0xc805, 0xc805, cpu1_halt_w ),
+		new Memory_WriteAddress( 0xd800, 0xd800, soundcommand_w ),
+		new Memory_WriteAddress( 0xd000, 0xd000, MWA_NOP ),
+		new Memory_WriteAddress( 0xe800, 0xe800, retofinv_mcu_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sub )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x8000, 0x83ff, retofinv_fg_videoram_r },
-		{ 0x8400, 0x87ff, retofinv_fg_colorram_r },
-		{ 0x8800, 0x9fff, retofinv_shared_ram_r },
-		{ 0xa000, 0xa3ff, retofinv_bg_videoram_r },
-		{ 0xa400, 0xa7ff, retofinv_bg_colorram_r },
-		{ 0xc804, 0xc804, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sub[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, retofinv_fg_videoram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, retofinv_fg_colorram_r ),
+		new Memory_ReadAddress( 0x8800, 0x9fff, retofinv_shared_ram_r ),
+		new Memory_ReadAddress( 0xa000, 0xa3ff, retofinv_bg_videoram_r ),
+		new Memory_ReadAddress( 0xa400, 0xa7ff, retofinv_bg_colorram_r ),
+		new Memory_ReadAddress( 0xc804, 0xc804, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sub )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x8000, 0x83ff, retofinv_fg_videoram_w },
-		{ 0x8400, 0x87ff, retofinv_fg_colorram_w },
-		{ 0x8800, 0x9fff, retofinv_shared_ram_w },
-		{ 0xa000, 0xa3ff, retofinv_bg_videoram_w },
-		{ 0xa400, 0xa7ff, retofinv_bg_colorram_w },
-		{ 0xc804, 0xc804, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sub[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, retofinv_fg_videoram_w ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, retofinv_fg_colorram_w ),
+		new Memory_WriteAddress( 0x8800, 0x9fff, retofinv_shared_ram_w ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, retofinv_bg_videoram_w ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, retofinv_bg_colorram_w ),
+		new Memory_WriteAddress( 0xc804, 0xc804, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x4000, 0x4000, soundlatch_r },
-		{ 0xe000, 0xe000, MRA_NOP },  		/* Rom version ? */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, MRA_NOP ),  		/* Rom version ? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x27ff, MWA_RAM },
-		{ 0x6000, 0x6000, cpu2_m6000_w },
-		{ 0x8000, 0x8000, SN76496_0_w },
-		{ 0xa000, 0xa000, SN76496_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6000, cpu2_m6000_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, SN76496_0_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, SN76496_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x0000, retofinv_68705_portA_r },
-		{ 0x0001, 0x0001, retofinv_68705_portB_r },
-		{ 0x0002, 0x0002, retofinv_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, retofinv_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, retofinv_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, retofinv_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x0000, retofinv_68705_portA_w },
-		{ 0x0001, 0x0001, retofinv_68705_portB_w },
-		{ 0x0002, 0x0002, retofinv_68705_portC_w },
-		{ 0x0004, 0x0004, retofinv_68705_ddrA_w },
-		{ 0x0005, 0x0005, retofinv_68705_ddrB_w },
-		{ 0x0006, 0x0006, retofinv_68705_ddrC_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, retofinv_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, retofinv_68705_portB_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, retofinv_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, retofinv_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0005, 0x0005, retofinv_68705_ddrB_w ),
+		new Memory_WriteAddress( 0x0006, 0x0006, retofinv_68705_ddrC_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

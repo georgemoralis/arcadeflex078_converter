@@ -67,45 +67,53 @@ public class kopunch
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x6000, 0x63ff, kopunch_videoram_w, &videoram },
-		{ 0x7000, 0x70ff, kopunch_videoram2_w, &kopunch_videoram2 },
-		{ 0x7100, 0x7aff, MWA_RAM },	// ???
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x63ff, kopunch_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7000, 0x70ff, kopunch_videoram2_w, &kopunch_videoram2 ),
+		new Memory_WriteAddress( 0x7100, 0x7aff, MWA_RAM ),	// ???
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER( pip_r )
 	{
 		return rand();
 	}
 	
-	static PORT_READ_START( readport )
-		{ 0x30, 0x30, input_port_0_r },
-		{ 0x31, 0x32, kopunch_in_r },
-		{ 0x3a, 0x3a, input_port_2_r },
-		{ 0x3e, 0x3e, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x30, 0x30, input_port_0_r ),
+		new IO_ReadPort( 0x31, 0x32, kopunch_in_r ),
+		new IO_ReadPort( 0x3a, 0x3a, input_port_2_r ),
+		new IO_ReadPort( 0x3e, 0x3e, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x33, 0x33, IOWP_NOP },	// ???
-		{ 0x34, 0x34, kopunch_coin_w },
-		{ 0x35, 0x35, IOWP_NOP },	// ???
-		{ 0x36, 0x36, IOWP_NOP },	// ???
-		{ 0x37, 0x37, IOWP_NOP },	// ???
-		{ 0x38, 0x38, kopunch_lamp_w },
-		{ 0x39, 0x39, IOWP_NOP },	// ???
-		{ 0x3b, 0x3b, IOWP_NOP },	// ???
-		{ 0x3c, 0x3c, kopunch_scroll_x_w },
-		{ 0x3d, 0x3d, kopunch_scroll_y_w },
-		{ 0x3e, 0x3e, kopunch_gfxbank_w },
-		{ 0x3f, 0x3f, IOWP_NOP },	// ???
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x33, 0x33, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x34, 0x34, kopunch_coin_w ),
+		new IO_WritePort( 0x35, 0x35, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x36, 0x36, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x37, 0x37, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x38, 0x38, kopunch_lamp_w ),
+		new IO_WritePort( 0x39, 0x39, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x3b, 0x3b, IOWP_NOP ),	// ???
+		new IO_WritePort( 0x3c, 0x3c, kopunch_scroll_x_w ),
+		new IO_WritePort( 0x3d, 0x3d, kopunch_scroll_y_w ),
+		new IO_WritePort( 0x3e, 0x3e, kopunch_gfxbank_w ),
+		new IO_WritePort( 0x3f, 0x3f, IOWP_NOP ),	// ???
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( kopunch )

@@ -90,32 +90,36 @@ public class yiear
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0000, yiear_speech_r },
-		{ 0x4c00, 0x4c00, input_port_3_r },
-		{ 0x4d00, 0x4d00, input_port_4_r },
-		{ 0x4e00, 0x4e00, input_port_0_r },
-		{ 0x4e01, 0x4e01, input_port_1_r },
-		{ 0x4e02, 0x4e02, input_port_2_r },
-		{ 0x4e03, 0x4e03, input_port_5_r },
-		{ 0x5000, 0x5fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, yiear_speech_r ),
+		new Memory_ReadAddress( 0x4c00, 0x4c00, input_port_3_r ),
+		new Memory_ReadAddress( 0x4d00, 0x4d00, input_port_4_r ),
+		new Memory_ReadAddress( 0x4e00, 0x4e00, input_port_0_r ),
+		new Memory_ReadAddress( 0x4e01, 0x4e01, input_port_1_r ),
+		new Memory_ReadAddress( 0x4e02, 0x4e02, input_port_2_r ),
+		new Memory_ReadAddress( 0x4e03, 0x4e03, input_port_5_r ),
+		new Memory_ReadAddress( 0x5000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x4000, 0x4000, yiear_control_w },
-		{ 0x4800, 0x4800, konami_SN76496_latch_w },
-		{ 0x4900, 0x4900, konami_SN76496_0_w },
-		{ 0x4a00, 0x4a00, yiear_VLM5030_control_w },
-		{ 0x4b00, 0x4b00, VLM5030_data_w },
-		{ 0x4f00, 0x4f00, watchdog_reset_w },
-		{ 0x5000, 0x502f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x5030, 0x53ff, MWA_RAM },
-		{ 0x5400, 0x542f, MWA_RAM, &spriteram_2 },
-		{ 0x5430, 0x57ff, MWA_RAM },
-		{ 0x5800, 0x5fff, yiear_videoram_w, &videoram },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x4000, 0x4000, yiear_control_w ),
+		new Memory_WriteAddress( 0x4800, 0x4800, konami_SN76496_latch_w ),
+		new Memory_WriteAddress( 0x4900, 0x4900, konami_SN76496_0_w ),
+		new Memory_WriteAddress( 0x4a00, 0x4a00, yiear_VLM5030_control_w ),
+		new Memory_WriteAddress( 0x4b00, 0x4b00, VLM5030_data_w ),
+		new Memory_WriteAddress( 0x4f00, 0x4f00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x5000, 0x502f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x5030, 0x53ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5400, 0x542f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x5430, 0x57ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5800, 0x5fff, yiear_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

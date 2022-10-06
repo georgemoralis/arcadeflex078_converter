@@ -119,42 +119,50 @@ public class r2dtank
 		pia_1_w(offset, ~data);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0x8003, pia_0_r },
-		{ 0x8004, 0x8004, dipsw_r },
-	//	{ 0x8004, 0x8007, pia_1_r },
-		{ 0xc000, 0xc007, MRA_RAM },
-		{ 0xc800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8003, pia_0_r ),
+		new Memory_ReadAddress( 0x8004, 0x8004, dipsw_r ),
+	//	new Memory_ReadAddress( 0x8004, 0x8007, pia_1_r ),
+		new Memory_ReadAddress( 0xc000, 0xc007, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_RAM },	
-		{ 0x8000, 0x8003, r2dtank_pia_0_w },
-	//	{ 0x8004, 0x8007, r2dtank_pia_1_w },
-		{ 0x8004, 0x8004, dipsw_bank_w },
-		{ 0xb000, 0xb000, crtc6845_address_w }, 
-		{ 0xb001, 0xb001, crtc6845_register_w },
-		{ 0xc000, 0xc007, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0xc800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_RAM ),	
+		new Memory_WriteAddress( 0x8000, 0x8003, r2dtank_pia_0_w ),
+	//	new Memory_WriteAddress( 0x8004, 0x8007, r2dtank_pia_1_w ),
+		new Memory_WriteAddress( 0x8004, 0x8004, dipsw_bank_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, crtc6845_address_w ), 
+		new Memory_WriteAddress( 0xb001, 0xb001, crtc6845_register_w ),
+		new Memory_WriteAddress( 0xc000, 0xc007, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xc800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0xd000, 0xd000, MRA_RAM }, // AY8910_read_port_0_r ?
-		{ 0xf000, 0xf000, MRA_RAM }, // soundlatch_r ?
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, MRA_RAM ), // AY8910_read_port_0_r ?
+		new Memory_ReadAddress( 0xf000, 0xf000, MRA_RAM ), // soundlatch_r ?
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x0027, MWA_RAM },
-		{ 0x0077, 0x007f, MWA_RAM },
-		{ 0xd000, 0xd000, MWA_RAM },
-		{ 0xd001, 0xd001, MWA_RAM },
-		{ 0xd002, 0xd002, MWA_RAM },
-		{ 0xd003, 0xd003, MWA_RAM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0027, MWA_RAM ),
+		new Memory_WriteAddress( 0x0077, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, MWA_RAM ),
+		new Memory_WriteAddress( 0xd001, 0xd001, MWA_RAM ),
+		new Memory_WriteAddress( 0xd002, 0xd002, MWA_RAM ),
+		new Memory_WriteAddress( 0xd003, 0xd003, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( r2dtank )
 	

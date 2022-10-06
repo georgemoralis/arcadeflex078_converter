@@ -65,64 +65,74 @@ public class mnight
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, input_port_2_r },
-		{ 0xf801, 0xf801, input_port_0_r },
-		{ 0xf802, 0xf802, input_port_1_r },
-		{ 0xf803, 0xf803, input_port_3_r },
-		{ 0xf804, 0xf804, input_port_4_r },
-		{ 0xfa00, 0xfa00, MRA_RAM },
-		{ 0xfa01, 0xfa01, MRA_RAM },
-		{ 0xfa02, 0xfa02, mnight_bankselect_r },
-		{ 0xfa03, 0xfa03, MRA_RAM },
-		{ 0xfa08, 0xfa09, MRA_RAM },
-		{ 0xfa0a, 0xfa0b, MRA_RAM },
-		{ 0xfa0c, 0xfa0c, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_2_r ),
+		new Memory_ReadAddress( 0xf801, 0xf801, input_port_0_r ),
+		new Memory_ReadAddress( 0xf802, 0xf802, input_port_1_r ),
+		new Memory_ReadAddress( 0xf803, 0xf803, input_port_3_r ),
+		new Memory_ReadAddress( 0xf804, 0xf804, input_port_4_r ),
+		new Memory_ReadAddress( 0xfa00, 0xfa00, MRA_RAM ),
+		new Memory_ReadAddress( 0xfa01, 0xfa01, MRA_RAM ),
+		new Memory_ReadAddress( 0xfa02, 0xfa02, mnight_bankselect_r ),
+		new Memory_ReadAddress( 0xfa03, 0xfa03, MRA_RAM ),
+		new Memory_ReadAddress( 0xfa08, 0xfa09, MRA_RAM ),
+		new Memory_ReadAddress( 0xfa0a, 0xfa0b, MRA_RAM ),
+		new Memory_ReadAddress( 0xfa0c, 0xfa0c, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xd9ff, MWA_RAM },
-		{ 0xda00, 0xdfff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe000, 0xe7ff, mnight_bgvideoram_w, &mnight_background_videoram, &mnight_backgroundram_size }, // VFY
-		{ 0xe800, 0xefff, mnight_fgvideoram_w, &mnight_foreground_videoram, &mnight_foregroundram_size }, //VFY
-		{ 0xf000, 0xf5ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram },
-		{ 0xf600, 0xf7ff, MWA_RAM },
-		{ 0xfa00, 0xfa00, soundlatch_w },
-		{ 0xfa01, 0xfa01, MWA_RAM },		   // unknown but used
-		{ 0xfa02, 0xfa02, mnight_bankselect_w },
-		{ 0xfa03, 0xfa03, mnight_sprite_overdraw_w, &mnight_spoverdraw_ram },
-		{ 0xfa08, 0xfa09, MWA_RAM, &mnight_scrollx_ram },
-		{ 0xfa0a, 0xfa0b, MWA_RAM, &mnight_scrolly_ram },
-		{ 0xfa0c, 0xfa0c, mnight_background_enable_w, &mnight_bgenable_ram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xd9ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xda00, 0xdfff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, mnight_bgvideoram_w, &mnight_background_videoram, &mnight_backgroundram_size ), // VFY
+		new Memory_WriteAddress( 0xe800, 0xefff, mnight_fgvideoram_w, &mnight_foreground_videoram, &mnight_foregroundram_size ), //VFY
+		new Memory_WriteAddress( 0xf000, 0xf5ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram ),
+		new Memory_WriteAddress( 0xf600, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xfa00, 0xfa00, soundlatch_w ),
+		new Memory_WriteAddress( 0xfa01, 0xfa01, MWA_RAM ),		   // unknown but used
+		new Memory_WriteAddress( 0xfa02, 0xfa02, mnight_bankselect_w ),
+		new Memory_WriteAddress( 0xfa03, 0xfa03, mnight_sprite_overdraw_w, &mnight_spoverdraw_ram ),
+		new Memory_WriteAddress( 0xfa08, 0xfa09, MWA_RAM, &mnight_scrollx_ram ),
+		new Memory_WriteAddress( 0xfa0a, 0xfa0b, MWA_RAM, &mnight_scrolly_ram ),
+		new Memory_WriteAddress( 0xfa0c, 0xfa0c, mnight_background_enable_w, &mnight_bgenable_ram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( snd_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xe000, 0xe000, soundlatch_r },
-		{ 0xefee, 0xefee, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress snd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress( 0xefee, 0xefee, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( snd_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xeff5, 0xeff6, MWA_NOP },			   /* SAMPLE FREQUENCY ??? */
-		{ 0xefee, 0xefee, MWA_NOP },			   /* CHIP COMMAND ?? */
-	MEMORY_END
+	public static Memory_WriteAddress snd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xeff5, 0xeff6, MWA_NOP ),			   /* SAMPLE FREQUENCY ??? */
+		new Memory_WriteAddress( 0xefee, 0xefee, MWA_NOP ),			   /* CHIP COMMAND ?? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( snd_writeport )
-		{ 0x0000, 0x0000, YM2203_control_port_0_w },
-		{ 0x0001, 0x0001, YM2203_write_port_0_w },
-		{ 0x0080, 0x0080, YM2203_control_port_1_w },
-		{ 0x0081, 0x0081, YM2203_write_port_1_w },
-	PORT_END
+	public static IO_WritePort snd_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x0000, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x0001, 0x0001, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x0080, 0x0080, YM2203_control_port_1_w ),
+		new IO_WritePort( 0x0081, 0x0081, YM2203_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

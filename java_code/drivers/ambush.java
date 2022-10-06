@@ -62,37 +62,45 @@ public class ambush
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa000, watchdog_reset_r },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc800, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, watchdog_reset_r ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xc080, 0xc09f, MWA_RAM, &ambush_scrollram },
-		{ 0xc100, 0xc1ff, MWA_RAM, &colorram },
-		{ 0xc200, 0xc3ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xc400, 0xc7ff, MWA_RAM, &videoram, &videoram_size },
-		{ 0xcc00, 0xcc03, MWA_NOP },
-		{ 0xcc04, 0xcc04, flip_screen_w },
-		{ 0xcc05, 0xcc05, MWA_RAM, &ambush_colorbank },
-		{ 0xcc07, 0xcc07, ambush_coin_counter_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc080, 0xc09f, MWA_RAM, &ambush_scrollram ),
+		new Memory_WriteAddress( 0xc100, 0xc1ff, MWA_RAM, &colorram ),
+		new Memory_WriteAddress( 0xc200, 0xc3ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xcc00, 0xcc03, MWA_NOP ),
+		new Memory_WriteAddress( 0xcc04, 0xcc04, flip_screen_w ),
+		new Memory_WriteAddress( 0xcc05, 0xcc05, MWA_RAM, &ambush_colorbank ),
+		new Memory_WriteAddress( 0xcc07, 0xcc07, ambush_coin_counter_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, AY8910_read_port_0_r },
-		{ 0x80, 0x80, AY8910_read_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x80, 0x80, AY8910_read_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-		{ 0x80, 0x80, AY8910_control_port_1_w },
-		{ 0x81, 0x81, AY8910_write_port_1_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x81, 0x81, AY8910_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ambush )

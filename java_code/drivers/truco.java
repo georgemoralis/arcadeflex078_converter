@@ -34,24 +34,28 @@ public class truco
 	/***************************************************************************/
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x17ff, MRA_RAM },		/* general purpose ram */
-		{ 0x1800, 0x7bff, MRA_RAM },		/* video ram */
-		{ 0x7c00, 0x7fff, MRA_RAM },		/* battery backed ram */
-		{ 0x8000, 0x8000, input_port_0_r },	/* controls (and irq ack?) */
-		{ 0x8001, 0x8001, MRA_NOP },		/* unknown */
-		{ 0x8002, 0x8002, input_port_1_r },	/* dipswitches */
-		{ 0x8003, 0x8007, MRA_NOP },		/* unknown */
-		{ 0x8008, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x17ff, MRA_RAM ),		/* general purpose ram */
+		new Memory_ReadAddress( 0x1800, 0x7bff, MRA_RAM ),		/* video ram */
+		new Memory_ReadAddress( 0x7c00, 0x7fff, MRA_RAM ),		/* battery backed ram */
+		new Memory_ReadAddress( 0x8000, 0x8000, input_port_0_r ),	/* controls (and irq ack?) */
+		new Memory_ReadAddress( 0x8001, 0x8001, MRA_NOP ),		/* unknown */
+		new Memory_ReadAddress( 0x8002, 0x8002, input_port_1_r ),	/* dipswitches */
+		new Memory_ReadAddress( 0x8003, 0x8007, MRA_NOP ),		/* unknown */
+		new Memory_ReadAddress( 0x8008, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x17ff, MWA_RAM },		/* general purpose ram */
-		{ 0x1800, 0x7bff, MWA_RAM },		/* video ram */
-		{ 0x7c00, 0x7fff, MWA_RAM },		/* battery backed ram */
-		{ 0x8000, 0x8007, MWA_NOP },		/* unknown (dac?) */
-		{ 0x8008, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_RAM ),		/* general purpose ram */
+		new Memory_WriteAddress( 0x1800, 0x7bff, MWA_RAM ),		/* video ram */
+		new Memory_WriteAddress( 0x7c00, 0x7fff, MWA_RAM ),		/* battery backed ram */
+		new Memory_WriteAddress( 0x8000, 0x8007, MWA_NOP ),		/* unknown (dac?) */
+		new Memory_WriteAddress( 0x8008, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( truco )
 		PORT_START	/* IN0 */

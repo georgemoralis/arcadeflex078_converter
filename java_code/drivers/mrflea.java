@@ -105,32 +105,40 @@ public class mrflea
 	
 	/*******************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xcfff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, mrflea_videoram_w, &videoram },
-		{ 0xe800, 0xe83f, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram },
-		{ 0xec00, 0xecff, mrflea_spriteram_w, &spriteram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, mrflea_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xe800, 0xe83f, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram ),
+		new Memory_WriteAddress( 0xec00, 0xecff, mrflea_spriteram_w, &spriteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_io )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x80ff, MRA_RAM },
-		{ 0x9000, 0x905a, MRA_RAM }, /* ? */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_io[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x80ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x905a, MRA_RAM ), /* ? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_io )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x80ff, MWA_RAM },
-		{ 0x9000, 0x905a, MWA_RAM }, /* ? */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_io[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x80ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x905a, MWA_RAM ), /* ? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*******************************************************/
 	
@@ -185,17 +193,21 @@ public class mrflea
 	
 	/*******************************************************/
 	
-	static PORT_READ_START( readport )
-		{ 0x41, 0x41, mrflea_main_r },
-		{ 0x42, 0x42, mrflea_main_status_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x41, 0x41, mrflea_main_r ),
+		new IO_ReadPort( 0x42, 0x42, mrflea_main_status_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, MWA_NOP }, /* watchdog? */
-		{ 0x40, 0x40, mrflea_io_w },
-		{ 0x43, 0x43, MWA_NOP }, /* 0xa6,0x0d,0x05 */
-		{ 0x60, 0x60, mrflea_gfx_bank_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ), /* watchdog? */
+		new IO_WritePort( 0x40, 0x40, mrflea_io_w ),
+		new IO_WritePort( 0x43, 0x43, MWA_NOP ), /* 0xa6,0x0d,0x05 */
+		new IO_WritePort( 0x60, 0x60, mrflea_gfx_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/*******************************************************/
 	
@@ -239,15 +251,17 @@ public class mrflea
 	
 	/*******************************************************/
 	
-	static PORT_READ_START( readport_io )
-		{ 0x10, 0x10, mrflea_interrupt_type_r }, /* ? */
-		{ 0x20, 0x20, mrflea_io_r },
-		{ 0x22, 0x22, mrflea_io_status_r },
-		{ 0x40, 0x40, mrflea_input0_r },
-		{ 0x42, 0x42, mrflea_input1_r },
-		{ 0x44, 0x44, mrflea_input2_r },
-		{ 0x46, 0x46, mrflea_input3_r },
-	PORT_END
+	public static IO_ReadPort readport_io[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x10, mrflea_interrupt_type_r ), /* ? */
+		new IO_ReadPort( 0x20, 0x20, mrflea_io_r ),
+		new IO_ReadPort( 0x22, 0x22, mrflea_io_status_r ),
+		new IO_ReadPort( 0x40, 0x40, mrflea_input0_r ),
+		new IO_ReadPort( 0x42, 0x42, mrflea_input1_r ),
+		new IO_ReadPort( 0x44, 0x44, mrflea_input2_r ),
+		new IO_ReadPort( 0x46, 0x46, mrflea_input3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	static WRITE_HANDLER( mrflea_data0_w ){
 		AY8910_control_port_0_w( offset, mrflea_select0 );
@@ -267,21 +281,23 @@ public class mrflea
 		AY8910_write_port_2_w( offset, data );
 	}
 	
-	static PORT_WRITE_START( writeport_io )
-		{ 0x00, 0x00, MWA_NOP }, /* watchdog */
-		{ 0x10, 0x10, MWA_NOP }, /* irq ACK */
-		{ 0x11, 0x11, MWA_NOP }, /* 0x83,0x00,0xfc */
-		{ 0x21, 0x21, mrflea_main_w },
-		{ 0x23, 0x23, MWA_NOP }, /* 0xb4,0x09,0x05 */
-		{ 0x40, 0x40, mrflea_data0_w },
-		{ 0x41, 0x41, mrflea_select0_w },
-		{ 0x42, 0x42, mrflea_data1_w },
-		{ 0x43, 0x43, mrflea_select1_w },
-		{ 0x44, 0x44, mrflea_data2_w },
-		{ 0x45, 0x45, mrflea_select2_w },
-		{ 0x46, 0x46, mrflea_data3_w },
-		{ 0x47, 0x47, mrflea_select3_w },
-	PORT_END
+	public static IO_WritePort writeport_io[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ), /* watchdog */
+		new IO_WritePort( 0x10, 0x10, MWA_NOP ), /* irq ACK */
+		new IO_WritePort( 0x11, 0x11, MWA_NOP ), /* 0x83,0x00,0xfc */
+		new IO_WritePort( 0x21, 0x21, mrflea_main_w ),
+		new IO_WritePort( 0x23, 0x23, MWA_NOP ), /* 0xb4,0x09,0x05 */
+		new IO_WritePort( 0x40, 0x40, mrflea_data0_w ),
+		new IO_WritePort( 0x41, 0x41, mrflea_select0_w ),
+		new IO_WritePort( 0x42, 0x42, mrflea_data1_w ),
+		new IO_WritePort( 0x43, 0x43, mrflea_select1_w ),
+		new IO_WritePort( 0x44, 0x44, mrflea_data2_w ),
+		new IO_WritePort( 0x45, 0x45, mrflea_select2_w ),
+		new IO_WritePort( 0x46, 0x46, mrflea_data3_w ),
+		new IO_WritePort( 0x47, 0x47, mrflea_select3_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MACHINE_DRIVER_START( mrflea )
 	

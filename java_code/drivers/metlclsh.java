@@ -75,39 +75,43 @@ public class metlclsh
 		cpu_set_irq_line(0,IRQ_LINE_NMI,CLEAR_LINE);
 	}
 	
-	static MEMORY_READ_START( metlclsh_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},
-		{ 0x8000, 0x9fff, sharedram_r				},
-		{ 0xa000, 0xbfff, MRA_ROM					},
-		{ 0xc000, 0xc000, input_port_0_r			},
-		{ 0xc001, 0xc001, input_port_1_r			},
-		{ 0xc002, 0xc002, input_port_2_r			},
-		{ 0xc003, 0xc003, input_port_3_r			},
-	//	{ 0xc800, 0xc82f, MRA_RAM					},	// not actually read
-	//	{ 0xcc00, 0xcc2f, MRA_RAM					},	// ""
-		{ 0xd000, 0xd000, YM2203_status_port_0_r	},
-	//	{ 0xd800, 0xdfff, MRA_RAM					},	// not actually read
-		{ 0xe800, 0xe9ff, MRA_RAM					},
-		{ 0xfff0, 0xffff, MRA_ROM					},	// Reset/IRQ vectors
-	MEMORY_END
+	public static Memory_ReadAddress metlclsh_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),
+		new Memory_ReadAddress( 0x8000, 0x9fff, sharedram_r				),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_ROM					),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r			),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r			),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r			),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r			),
+	//	new Memory_ReadAddress( 0xc800, 0xc82f, MRA_RAM					),	// not actually read
+	//	new Memory_ReadAddress( 0xcc00, 0xcc2f, MRA_RAM					),	// ""
+		new Memory_ReadAddress( 0xd000, 0xd000, YM2203_status_port_0_r	),
+	//	new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM					),	// not actually read
+		new Memory_ReadAddress( 0xe800, 0xe9ff, MRA_RAM					),
+		new Memory_ReadAddress( 0xfff0, 0xffff, MRA_ROM					),	// Reset/IRQ vectors
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( metlclsh_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},
-		{ 0x8000, 0x9fff, sharedram_w, &sharedram	},
-		{ 0xa000, 0xbfff, MWA_ROM					},
-		{ 0xc080, 0xc080, MWA_NOP					},	// ? 0
-		{ 0xc0c2, 0xc0c2, metlclsh_cause_irq		},	// cause irq on cpu #2
-		{ 0xc0c3, 0xc0c3, metlclsh_ack_nmi			},	// nmi ack
-		{ 0xc800, 0xc82f, paletteram_xxxxBBBBGGGGRRRR_split1_w, &paletteram		},
-		{ 0xcc00, 0xcc2f, paletteram_xxxxBBBBGGGGRRRR_split2_w, &paletteram_2	},
-		{ 0xd000, 0xd000, YM2203_control_port_0_w	},
-		{ 0xd001, 0xd001, YM2203_write_port_0_w		},
-		{ 0xe000, 0xe000, YM3526_control_port_0_w	},
-		{ 0xe001, 0xe001, YM3526_write_port_0_w		},
-		{ 0xe800, 0xe9ff, MWA_RAM, &spriteram, &spriteram_size	},
-		{ 0xd800, 0xdfff, metlclsh_fgram_w, &metlclsh_fgram		},
-		{ 0xfff0, 0xffff, MWA_ROM					},
-	MEMORY_END
+	public static Memory_WriteAddress metlclsh_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),
+		new Memory_WriteAddress( 0x8000, 0x9fff, sharedram_w, &sharedram	),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM					),
+		new Memory_WriteAddress( 0xc080, 0xc080, MWA_NOP					),	// ? 0
+		new Memory_WriteAddress( 0xc0c2, 0xc0c2, metlclsh_cause_irq		),	// cause irq on cpu #2
+		new Memory_WriteAddress( 0xc0c3, 0xc0c3, metlclsh_ack_nmi			),	// nmi ack
+		new Memory_WriteAddress( 0xc800, 0xc82f, paletteram_xxxxBBBBGGGGRRRR_split1_w, &paletteram		),
+		new Memory_WriteAddress( 0xcc00, 0xcc2f, paletteram_xxxxBBBBGGGGRRRR_split2_w, &paletteram_2	),
+		new Memory_WriteAddress( 0xd000, 0xd000, YM2203_control_port_0_w	),
+		new Memory_WriteAddress( 0xd001, 0xd001, YM2203_write_port_0_w		),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM3526_control_port_0_w	),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM3526_write_port_0_w		),
+		new Memory_WriteAddress( 0xe800, 0xe9ff, MWA_RAM, &spriteram, &spriteram_size	),
+		new Memory_WriteAddress( 0xd800, 0xdfff, metlclsh_fgram_w, &metlclsh_fgram		),
+		new Memory_WriteAddress( 0xfff0, 0xffff, MWA_ROM					),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -136,32 +140,36 @@ public class metlclsh
 		flip_screen_set(data & 1);
 	}
 	
-	static MEMORY_READ_START( metlclsh_readmem2 )
-		{ 0x0000, 0x7fff, MRA_ROM			},
-		{ 0x8000, 0x9fff, sharedram_r		},
-		{ 0xc000, 0xc000, input_port_0_r	},
-		{ 0xc001, 0xc001, input_port_1_r	},
-		{ 0xc002, 0xc002, input_port_2_r	},
-		{ 0xc003, 0xc003, input_port_3_r	},
-		{ 0xd000, 0xd7ff, MRA_BANK1			},
-		{ 0xfff0, 0xffff, MRA_ROM			},	// Reset/IRQ vectors
-	MEMORY_END
+	public static Memory_ReadAddress metlclsh_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM			),
+		new Memory_ReadAddress( 0x8000, 0x9fff, sharedram_r		),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r	),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r	),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r	),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r	),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_BANK1			),
+		new Memory_ReadAddress( 0xfff0, 0xffff, MRA_ROM			),	// Reset/IRQ vectors
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( metlclsh_writemem2 )
-		{ 0x0000, 0x7fff, MWA_ROM						},
-		{ 0x8000, 0x9fff, sharedram_w					},
-		{ 0xc000, 0xc000, metlclsh_gfxbank_w			},	// bg tiles bank
-		{ 0xc0c0, 0xc0c0, metlclsh_cause_nmi2			},	// cause nmi on cpu #1
-		{ 0xc0c1, 0xc0c1, metlclsh_ack_irq2				},	// irq ack
-		{ 0xd000, 0xd7ff, metlclsh_bgram_w, &metlclsh_bgram	},	// this is banked
-		{ 0xe417, 0xe417, metlclsh_ack_nmi2				},	// nmi ack
-		{ 0xe301, 0xe301, metlclsh_flipscreen_w			},	// 0/1
-		{ 0xe401, 0xe401, metlclsh_rambank_w			},
-		{ 0xe402, 0xe403, MWA_RAM, &metlclsh_scrollx	},
-	//	{ 0xe404, 0xe404, MWA_NOP						},	// ? 0
-	//	{ 0xe410, 0xe410, MWA_NOP						},	// ? 0 on startup only
-		{ 0xfff0, 0xffff, MWA_ROM						},
-	MEMORY_END
+	public static Memory_WriteAddress metlclsh_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM						),
+		new Memory_WriteAddress( 0x8000, 0x9fff, sharedram_w					),
+		new Memory_WriteAddress( 0xc000, 0xc000, metlclsh_gfxbank_w			),	// bg tiles bank
+		new Memory_WriteAddress( 0xc0c0, 0xc0c0, metlclsh_cause_nmi2			),	// cause nmi on cpu #1
+		new Memory_WriteAddress( 0xc0c1, 0xc0c1, metlclsh_ack_irq2				),	// irq ack
+		new Memory_WriteAddress( 0xd000, 0xd7ff, metlclsh_bgram_w, &metlclsh_bgram	),	// this is banked
+		new Memory_WriteAddress( 0xe417, 0xe417, metlclsh_ack_nmi2				),	// nmi ack
+		new Memory_WriteAddress( 0xe301, 0xe301, metlclsh_flipscreen_w			),	// 0/1
+		new Memory_WriteAddress( 0xe401, 0xe401, metlclsh_rambank_w			),
+		new Memory_WriteAddress( 0xe402, 0xe403, MWA_RAM, &metlclsh_scrollx	),
+	//	new Memory_WriteAddress( 0xe404, 0xe404, MWA_NOP						),	// ? 0
+	//	new Memory_WriteAddress( 0xe410, 0xe410, MWA_NOP						),	// ? 0 on startup only
+		new Memory_WriteAddress( 0xfff0, 0xffff, MWA_ROM						),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

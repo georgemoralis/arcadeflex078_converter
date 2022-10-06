@@ -214,37 +214,49 @@ public class nbmj8688
 	
 	
 	
-	static MEMORY_READ_START( readmem_mjsikaku )
-		{ 0x0000, 0xf7ff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_mjsikaku[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xf7ff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_mjsikaku )
-		{ 0x0000, 0xf7ff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_mjsikaku[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xf7ff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_secolove )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_secolove[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_secolove )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_secolove[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_ojousan )
-		{ 0x0000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_ojousan[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_ojousan )
-		{ 0x0000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_ojousan[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &nb1413m3_nvram, &nb1413m3_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -264,24 +276,27 @@ public class nbmj8688
 	
 	
 	
-	static PORT_READ_START( readport_secolove )
-		{ 0x00, 0x7f, sndrom_r },
-		{ 0x81, 0x81, AY8910_read_port_0_r },
-		{ 0x90, 0x90, nb1413m3_inputport0_r },
-		{ 0xa0, 0xa0, nb1413m3_inputport1_r },
-		{ 0xb0, 0xb0, nb1413m3_inputport2_r },
-		{ 0xd0, 0xd0, ff_r },	// irq ack? watchdog?
-		{ 0xf0, 0xf0, nb1413m3_dipsw1_r },
-		{ 0xf1, 0xf1, nb1413m3_dipsw2_r },
-	PORT_END
+	public static IO_ReadPort readport_secolove[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x7f, sndrom_r ),
+		new IO_ReadPort( 0x81, 0x81, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x90, 0x90, nb1413m3_inputport0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, nb1413m3_inputport1_r ),
+		new IO_ReadPort( 0xb0, 0xb0, nb1413m3_inputport2_r ),
+		new IO_ReadPort( 0xd0, 0xd0, ff_r ),	// irq ack? watchdog?
+		new IO_ReadPort( 0xf0, 0xf0, nb1413m3_dipsw1_r ),
+		new IO_ReadPort( 0xf1, 0xf1, nb1413m3_dipsw2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_secolove )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x82, 0x82, AY8910_write_port_0_w },
-		{ 0x83, 0x83, AY8910_control_port_0_w },
-		{ 0x90, 0x95, nbmj8688_blitter_w },
-		{ 0x96, 0x96, mjsikaku_gfxflag1_w },
-	//	{ 0x97, 0x97,
+	public static IO_WritePort writeport_secolove[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x82, 0x82, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x83, 0x83, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x90, 0x95, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x96, 0x96, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x97, 0x97,
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
 		{ 0xb0, 0xb0, nb1413m3_sndrombank1_w },
 		{ 0xc0, 0xcf, nbmj8688_color_lookup_w },
@@ -292,15 +307,17 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, secolove_romsel_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_crystal2 )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x82, 0x82, AY8910_write_port_0_w },
-		{ 0x83, 0x83, AY8910_control_port_0_w },
-		{ 0x90, 0x95, nbmj8688_blitter_w },
-		{ 0x96, 0x96, mjsikaku_gfxflag1_w },
-	//	{ 0x97, 0x97,
+	public static IO_WritePort writeport_crystal2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x82, 0x82, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x83, 0x83, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x90, 0x95, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x96, 0x96, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x97, 0x97,
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
 		{ 0xb0, 0xb0, nb1413m3_sndrombank1_w },
 		{ 0xc0, 0xcf, nbmj8688_color_lookup_w },
@@ -311,27 +328,31 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, crystal2_romsel_w },
 	//	{ 0xf0, 0xf0,
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport_otonano )
-		{ 0x00, 0x7f, sndrom_r },
-		{ 0x80, 0x80, YM3812_status_port_0_r },
-		{ 0x90, 0x90, nb1413m3_inputport0_r },
-		{ 0xa0, 0xa0, nb1413m3_inputport1_r },
-		{ 0xb0, 0xb0, nb1413m3_inputport2_r },
-		{ 0xd0, 0xd0, ff_r },	// irq ack? watchdog?
-		{ 0xf0, 0xf0, nb1413m3_dipsw1_r },
-		{ 0xf1, 0xf1, nb1413m3_dipsw2_r },
-	PORT_END
+	public static IO_ReadPort readport_otonano[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x7f, sndrom_r ),
+		new IO_ReadPort( 0x80, 0x80, YM3812_status_port_0_r ),
+		new IO_ReadPort( 0x90, 0x90, nb1413m3_inputport0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, nb1413m3_inputport1_r ),
+		new IO_ReadPort( 0xb0, 0xb0, nb1413m3_inputport2_r ),
+		new IO_ReadPort( 0xd0, 0xd0, ff_r ),	// irq ack? watchdog?
+		new IO_ReadPort( 0xf0, 0xf0, nb1413m3_dipsw1_r ),
+		new IO_ReadPort( 0xf1, 0xf1, nb1413m3_dipsw2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_otonano )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x20, 0x3f, nbmj8688_color_lookup_w },
-		{ 0x50, 0x50, mjsikaku_romsel_w },
-		{ 0x70, 0x75, nbmj8688_blitter_w },
-		{ 0x76, 0x76, mjsikaku_gfxflag1_w },
-	//	{ 0x77, 0x77,
+	public static IO_WritePort writeport_otonano[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x20, 0x3f, nbmj8688_color_lookup_w ),
+		new IO_WritePort( 0x50, 0x50, mjsikaku_romsel_w ),
+		new IO_WritePort( 0x70, 0x75, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x76, 0x76, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x77, 0x77,
 		{ 0x80, 0x80, YM3812_control_port_0_w },
 		{ 0x81, 0x81, YM3812_write_port_0_w },
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
@@ -343,27 +364,31 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, mjsikaku_gfxflag2_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport_kaguya )
-		{ 0x00, 0x7f, sndrom_r },
-		{ 0x81, 0x81, AY8910_read_port_0_r },
-		{ 0x90, 0x90, nb1413m3_inputport0_r },
-		{ 0xa0, 0xa0, nb1413m3_inputport1_r },
-		{ 0xb0, 0xb0, nb1413m3_inputport2_r },
-		{ 0xd0, 0xd0, ff_r },	// irq ack? watchdog?
-		{ 0xf0, 0xf0, nb1413m3_dipsw1_r },
-		{ 0xf1, 0xf1, nb1413m3_dipsw2_r },
-	PORT_END
+	public static IO_ReadPort readport_kaguya[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x7f, sndrom_r ),
+		new IO_ReadPort( 0x81, 0x81, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x90, 0x90, nb1413m3_inputport0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, nb1413m3_inputport1_r ),
+		new IO_ReadPort( 0xb0, 0xb0, nb1413m3_inputport2_r ),
+		new IO_ReadPort( 0xd0, 0xd0, ff_r ),	// irq ack? watchdog?
+		new IO_ReadPort( 0xf0, 0xf0, nb1413m3_dipsw1_r ),
+		new IO_ReadPort( 0xf1, 0xf1, nb1413m3_dipsw2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_kaguya )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x20, 0x3f, nbmj8688_color_lookup_w },
-		{ 0x50, 0x50, mjsikaku_romsel_w },
-		{ 0x70, 0x75, nbmj8688_blitter_w },
-		{ 0x76, 0x76, mjsikaku_gfxflag1_w },
-	//	{ 0x77, 0x77,
+	public static IO_WritePort writeport_kaguya[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x20, 0x3f, nbmj8688_color_lookup_w ),
+		new IO_WritePort( 0x50, 0x50, mjsikaku_romsel_w ),
+		new IO_WritePort( 0x70, 0x75, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x76, 0x76, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x77, 0x77,
 		{ 0x82, 0x82, AY8910_write_port_0_w },
 		{ 0x83, 0x83, AY8910_control_port_0_w },
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
@@ -375,16 +400,18 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, mjsikaku_gfxflag2_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport_iemoto )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x20, 0x3f, nbmj8688_color_lookup_w },
-		{ 0x10, 0x10, nb1413m3_sndrombank2_w },
-		{ 0x40, 0x45, nbmj8688_blitter_w },
-		{ 0x46, 0x46, mjsikaku_gfxflag1_w },
-	//	{ 0x47, 0x47,
+	public static IO_WritePort writeport_iemoto[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x20, 0x3f, nbmj8688_color_lookup_w ),
+		new IO_WritePort( 0x10, 0x10, nb1413m3_sndrombank2_w ),
+		new IO_WritePort( 0x40, 0x45, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x46, 0x46, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x47, 0x47,
 		{ 0x50, 0x50, seiha_romsel_w },
 		{ 0x82, 0x82, AY8910_write_port_0_w },
 		{ 0x83, 0x83, AY8910_control_port_0_w },
@@ -397,7 +424,8 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, mjsikaku_gfxflag2_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static WRITE_HANDLER( seiha_b0_w )
@@ -406,16 +434,17 @@ public class nbmj8688
 		nb1413m3_sndrombank1_w(0,data);
 	}
 	
-	static PORT_WRITE_START( writeport_seiha )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x10, 0x10, nb1413m3_sndrombank2_w },
-		{ 0x20, 0x3f, nbmj8688_color_lookup_w },
-		{ 0x50, 0x50, seiha_romsel_w },
-		{ 0x82, 0x82, AY8910_write_port_0_w },
-		{ 0x83, 0x83, AY8910_control_port_0_w },
-		{ 0x90, 0x95, nbmj8688_blitter_w },
-		{ 0x96, 0x96, mjsikaku_gfxflag1_w },
-	//	{ 0x97, 0x97,
+	public static IO_WritePort writeport_seiha[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x10, 0x10, nb1413m3_sndrombank2_w ),
+		new IO_WritePort( 0x20, 0x3f, nbmj8688_color_lookup_w ),
+		new IO_WritePort( 0x50, 0x50, seiha_romsel_w ),
+		new IO_WritePort( 0x82, 0x82, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x83, 0x83, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x90, 0x95, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x96, 0x96, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x97, 0x97,
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
 		{ 0xb0, 0xb0, seiha_b0_w },
 	#if SIGNED_DAC
@@ -425,22 +454,24 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, mjsikaku_gfxflag2_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport_p16bit_LCD )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x42, 0x42, nbmj8688_HD61830B_0_data_w },
-		{ 0x43, 0x43, nbmj8688_HD61830B_0_instr_w },
-		{ 0x44, 0x44, nbmj8688_HD61830B_1_data_w },
-		{ 0x45, 0x45, nbmj8688_HD61830B_1_instr_w },
-		{ 0x46, 0x46, nbmj8688_HD61830B_both_data_w },
-		{ 0x47, 0x47, nbmj8688_HD61830B_both_instr_w },
-		{ 0x82, 0x82, AY8910_write_port_0_w },
-		{ 0x83, 0x83, AY8910_control_port_0_w },
-		{ 0x90, 0x95, nbmj8688_blitter_w },
-		{ 0x96, 0x96, mjsikaku_gfxflag1_w },
-	//	{ 0x97, 0x97,
+	public static IO_WritePort writeport_p16bit_LCD[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x42, 0x42, nbmj8688_HD61830B_0_data_w ),
+		new IO_WritePort( 0x43, 0x43, nbmj8688_HD61830B_0_instr_w ),
+		new IO_WritePort( 0x44, 0x44, nbmj8688_HD61830B_1_data_w ),
+		new IO_WritePort( 0x45, 0x45, nbmj8688_HD61830B_1_instr_w ),
+		new IO_WritePort( 0x46, 0x46, nbmj8688_HD61830B_both_data_w ),
+		new IO_WritePort( 0x47, 0x47, nbmj8688_HD61830B_both_instr_w ),
+		new IO_WritePort( 0x82, 0x82, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x83, 0x83, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x90, 0x95, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x96, 0x96, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x97, 0x97,
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
 		{ 0xb0, 0xb0, nb1413m3_sndrombank1_w },
 		{ 0xc0, 0xcf, nbmj8688_color_lookup_w },
@@ -451,27 +482,31 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, secolove_romsel_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport_mjsikaku )
-		{ 0x00, 0x7f, sndrom_r },
-		{ 0x90, 0x90, nb1413m3_inputport0_r },
-		{ 0xa0, 0xa0, nb1413m3_inputport1_r },
-		{ 0xb0, 0xb0, nb1413m3_inputport2_r },
-		{ 0xd0, 0xd0, ff_r },	// irq ack? watchdog?
-		{ 0xf0, 0xf0, nb1413m3_dipsw1_r },
-		{ 0xf1, 0xf1, nb1413m3_dipsw2_r },
-	PORT_END
+	public static IO_ReadPort readport_mjsikaku[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x7f, sndrom_r ),
+		new IO_ReadPort( 0x90, 0x90, nb1413m3_inputport0_r ),
+		new IO_ReadPort( 0xa0, 0xa0, nb1413m3_inputport1_r ),
+		new IO_ReadPort( 0xb0, 0xb0, nb1413m3_inputport2_r ),
+		new IO_ReadPort( 0xd0, 0xd0, ff_r ),	// irq ack? watchdog?
+		new IO_ReadPort( 0xf0, 0xf0, nb1413m3_dipsw1_r ),
+		new IO_ReadPort( 0xf1, 0xf1, nb1413m3_dipsw2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_mjsikaku )
-		{ 0x00, 0x00, nb1413m3_nmi_clock_w },
-		{ 0x10, 0x10, nb1413m3_sndrombank2_w },
-		{ 0x20, 0x3f, nbmj8688_color_lookup_w },
-		{ 0x50, 0x50, mjsikaku_romsel_w },
-		{ 0x60, 0x65, nbmj8688_blitter_w },
-		{ 0x66, 0x66, mjsikaku_gfxflag1_w },
-	//	{ 0x67, 0x67,
+	public static IO_WritePort writeport_mjsikaku[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nb1413m3_nmi_clock_w ),
+		new IO_WritePort( 0x10, 0x10, nb1413m3_sndrombank2_w ),
+		new IO_WritePort( 0x20, 0x3f, nbmj8688_color_lookup_w ),
+		new IO_WritePort( 0x50, 0x50, mjsikaku_romsel_w ),
+		new IO_WritePort( 0x60, 0x65, nbmj8688_blitter_w ),
+		new IO_WritePort( 0x66, 0x66, mjsikaku_gfxflag1_w ),
+	//	new IO_WritePort( 0x67, 0x67,
 		{ 0x80, 0x80, YM3812_control_port_0_w },
 		{ 0x81, 0x81, YM3812_write_port_0_w },
 		{ 0xa0, 0xa0, nb1413m3_inputportsel_w },
@@ -483,7 +518,8 @@ public class nbmj8688
 	#endif
 		{ 0xe0, 0xe0, mjsikaku_gfxflag2_w },
 		{ 0xf0, 0xf0, mjsikaku_scrolly_w },
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -465,29 +465,37 @@ public class metro
 	}
 	
 	
-	static MEMORY_READ_START( upd7810_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },	/* External ROM */
-	//	{ 0x4000, 0x7fff, MRA_BANK1 },	/* External ROM (Banked) */
-		{ 0x8000, 0x87ff, MRA_RAM },	/* External RAM */
-		{ 0xff00, 0xffff, MRA_RAM },	/* Internal RAM */
-	MEMORY_END
+	public static Memory_ReadAddress upd7810_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),	/* External ROM */
+	//	new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),	/* External ROM (Banked) */
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),	/* External RAM */
+		new Memory_ReadAddress( 0xff00, 0xffff, MRA_RAM ),	/* Internal RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( upd7810_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },	/* External ROM */
-		{ 0x4000, 0x7fff, MWA_ROM },	/* External ROM (Banked) */
-		{ 0x8000, 0x87ff, MWA_RAM },	/* External RAM */
-		{ 0xff00, 0xffff, MWA_RAM },	/* Internal RAM */
-	MEMORY_END
+	public static Memory_WriteAddress upd7810_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),	/* External ROM */
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),	/* External ROM (Banked) */
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),	/* External RAM */
+		new Memory_WriteAddress( 0xff00, 0xffff, MWA_RAM ),	/* Internal RAM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( upd7810_readport )
-		{ UPD7810_PORTA, UPD7810_PORTA, daitorid_porta_r },
-	PORT_END
+	public static IO_ReadPort upd7810_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( UPD7810_PORTA, UPD7810_PORTA, daitorid_porta_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( upd7810_writeport )
-		{ UPD7810_PORTA, UPD7810_PORTA, daitorid_porta_w },
-		{ UPD7810_PORTB, UPD7810_PORTB, daitorid_portb_w },
-	//	{ UPD7810_PORTC, UPD7810_PORTC, daitorid_sound_rombank_w },
-	PORT_END
+	public static IO_WritePort upd7810_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( UPD7810_PORTA, UPD7810_PORTA, daitorid_porta_w ),
+		new IO_WritePort( UPD7810_PORTB, UPD7810_PORTB, daitorid_portb_w ),
+	//	new IO_WritePort( UPD7810_PORTC, UPD7810_PORTC, daitorid_sound_rombank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static void metro_sound_irq_handler(int state)
 	{
@@ -1857,32 +1865,40 @@ public class metro
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	static MEMORY_READ_START( blzntrnd_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress blzntrnd_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( blzntrnd_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_ROM },
-		{ 0xe000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress blzntrnd_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( blzntrnd_sound_readport )
-		{ 0x40, 0x40, soundlatch_r },
-		{ 0x80, 0x80, YM2610_status_port_0_A_r },
-		{ 0x82, 0x82, YM2610_status_port_0_B_r },
-	PORT_END
+	public static IO_ReadPort blzntrnd_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x40, 0x40, soundlatch_r ),
+		new IO_ReadPort( 0x80, 0x80, YM2610_status_port_0_A_r ),
+		new IO_ReadPort( 0x82, 0x82, YM2610_status_port_0_B_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( blzntrnd_sound_writeport )
-		{ 0x00, 0x00, blzntrnd_sh_bankswitch_w },
-		{ 0x40, 0x40, IOWP_NOP },
-		{ 0x80, 0x80, YM2610_control_port_0_A_w },
-		{ 0x81, 0x81, YM2610_data_port_0_A_w },
-		{ 0x82, 0x82, YM2610_control_port_0_B_w },
-		{ 0x83, 0x83, YM2610_data_port_0_B_w },
-	PORT_END
+	public static IO_WritePort blzntrnd_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, blzntrnd_sh_bankswitch_w ),
+		new IO_WritePort( 0x40, 0x40, IOWP_NOP ),
+		new IO_WritePort( 0x80, 0x80, YM2610_control_port_0_A_w ),
+		new IO_WritePort( 0x81, 0x81, YM2610_data_port_0_A_w ),
+		new IO_WritePort( 0x82, 0x82, YM2610_control_port_0_B_w ),
+		new IO_WritePort( 0x83, 0x83, YM2610_data_port_0_B_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MEMORY_READ16_START( blzntrnd_readmem )
 		{ 0x000000, 0x1fffff, MRA16_ROM				},	// ROM

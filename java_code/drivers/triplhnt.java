@@ -141,35 +141,39 @@ public class triplhnt
 	}
 	
 	
-	static MEMORY_READ_START( triplhnt_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x03ff, triplhnt_zeropage_r },
-		{ 0x0c00, 0x0c00, input_port_0_r },
-		{ 0x0c08, 0x0c08, input_port_1_r },
-		{ 0x0c09, 0x0c09, input_port_2_r },
-		{ 0x0c0a, 0x0c0a, input_port_3_r },
-		{ 0x0c0b, 0x0c0b, triplhnt_input_port_4_r },
-		{ 0x0c10, 0x0c1f, triplhnt_da_latch_r },
-		{ 0x0c20, 0x0c2f, triplhnt_cmos_r },
-		{ 0x0c30, 0x0c3f, triplhnt_misc_r },
-		{ 0x0c40, 0x0c40, input_port_5_r },
-		{ 0x0c48, 0x0c48, input_port_6_r },
-		{ 0x7000, 0x7fff, MRA_ROM }, /* program */
-		{ 0xf800, 0xffff, MRA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_ReadAddress triplhnt_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x03ff, triplhnt_zeropage_r ),
+		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_0_r ),
+		new Memory_ReadAddress( 0x0c08, 0x0c08, input_port_1_r ),
+		new Memory_ReadAddress( 0x0c09, 0x0c09, input_port_2_r ),
+		new Memory_ReadAddress( 0x0c0a, 0x0c0a, input_port_3_r ),
+		new Memory_ReadAddress( 0x0c0b, 0x0c0b, triplhnt_input_port_4_r ),
+		new Memory_ReadAddress( 0x0c10, 0x0c1f, triplhnt_da_latch_r ),
+		new Memory_ReadAddress( 0x0c20, 0x0c2f, triplhnt_cmos_r ),
+		new Memory_ReadAddress( 0x0c30, 0x0c3f, triplhnt_misc_r ),
+		new Memory_ReadAddress( 0x0c40, 0x0c40, input_port_5_r ),
+		new Memory_ReadAddress( 0x0c48, 0x0c48, input_port_6_r ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_ROM ), /* program */
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ), /* program mirror */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( triplhnt_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x03ff, triplhnt_zeropage_w },
-		{ 0x0400, 0x04ff, MWA_RAM, &triplhnt_playfield_ram },
-		{ 0x0800, 0x080f, MWA_RAM, &triplhnt_vpos_ram },
-		{ 0x0810, 0x081f, MWA_RAM, &triplhnt_hpos_ram },
-		{ 0x0820, 0x082f, MWA_RAM, &triplhnt_orga_ram },
-		{ 0x0830, 0x083f, MWA_RAM, &triplhnt_code_ram },
-		{ 0x0c30, 0x0c3f, triplhnt_misc_w },
-		{ 0x7000, 0x7fff, MWA_ROM }, /* program */
-		{ 0xf800, 0xffff, MWA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_WriteAddress triplhnt_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x03ff, triplhnt_zeropage_w ),
+		new Memory_WriteAddress( 0x0400, 0x04ff, MWA_RAM, &triplhnt_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x080f, MWA_RAM, &triplhnt_vpos_ram ),
+		new Memory_WriteAddress( 0x0810, 0x081f, MWA_RAM, &triplhnt_hpos_ram ),
+		new Memory_WriteAddress( 0x0820, 0x082f, MWA_RAM, &triplhnt_orga_ram ),
+		new Memory_WriteAddress( 0x0830, 0x083f, MWA_RAM, &triplhnt_code_ram ),
+		new Memory_WriteAddress( 0x0c30, 0x0c3f, triplhnt_misc_w ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_ROM ), /* program */
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ), /* program mirror */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( triplhnt )

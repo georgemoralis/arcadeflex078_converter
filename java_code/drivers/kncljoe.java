@@ -42,29 +42,33 @@ public class kncljoe
 	extern UINT8 *kncljoe_scrollregs;
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xcfff, videoram_r },		/* videoram */
-		{ 0xd800, 0xd800, input_port_0_r }, /* IN 0 */
-		{ 0xd801, 0xd801, input_port_1_r }, /* IN 1 */
-		{ 0xd802, 0xd802, input_port_2_r }, /* IN 2 */
-		{ 0xd803, 0xd803, input_port_3_r },	/* DSW A */
-		{ 0xd804, 0xd804, input_port_4_r },	/* DSW B */
-		{ 0xd807, 0xd807, MRA_NOP },		/* unknown read */
-		{ 0xd817, 0xd817, MRA_NOP },		/* unknown read */
-		{ 0xe800, 0xefff, MRA_RAM },		/* spriteram */
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, videoram_r ),		/* videoram */
+		new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ), /* IN 0 */
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ), /* IN 1 */
+		new Memory_ReadAddress( 0xd802, 0xd802, input_port_2_r ), /* IN 2 */
+		new Memory_ReadAddress( 0xd803, 0xd803, input_port_3_r ),	/* DSW A */
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_4_r ),	/* DSW B */
+		new Memory_ReadAddress( 0xd807, 0xd807, MRA_NOP ),		/* unknown read */
+		new Memory_ReadAddress( 0xd817, 0xd817, MRA_NOP ),		/* unknown read */
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM ),		/* spriteram */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, kncljoe_videoram_w, &videoram },
-		{ 0xd000, 0xd001, kncljoe_scroll_w, &kncljoe_scrollregs },
-		{ 0xd800, 0xd800, irem_sound_cmd_w },
-		{ 0xd801, 0xd803, kncljoe_control_w },
-		{ 0xe800, 0xefff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, kncljoe_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xd000, 0xd001, kncljoe_scroll_w, &kncljoe_scrollregs ),
+		new Memory_WriteAddress( 0xd800, 0xd800, irem_sound_cmd_w ),
+		new Memory_WriteAddress( 0xd801, 0xd803, kncljoe_control_w ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

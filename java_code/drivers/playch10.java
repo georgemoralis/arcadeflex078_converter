@@ -409,68 +409,80 @@ public class playch10
 	/******************************************************************************/
 	
 	/* BIOS */
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },	/* 8V */
-		{ 0x8800, 0x8fff, ram_8w_r },	/* 8W */
-		{ 0x9000, 0x97ff, MRA_RAM },
-		{ 0xc000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xffff, pc10_prot_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),	/* 8V */
+		new Memory_ReadAddress( 0x8800, 0x8fff, ram_8w_r ),	/* 8W */
+		new Memory_ReadAddress( 0x9000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, pc10_prot_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM }, /* 8V */
-		{ 0x8800, 0x8fff, ram_8w_w, &ram_8w }, /* 8W */
-		{ 0x9000, 0x97ff, playch10_videoram_w, &videoram },
-		{ 0xc000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xffff, pc10_prot_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), /* 8V */
+		new Memory_WriteAddress( 0x8800, 0x8fff, ram_8w_w, &ram_8w ), /* 8W */
+		new Memory_WriteAddress( 0x9000, 0x97ff, playch10_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, pc10_prot_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, pc10_port_0_r },	/* coins, service */
-		{ 0x01, 0x01, input_port_1_r },	/* dipswitch 1 */
-		{ 0x02, 0x02, input_port_2_r }, /* dipswitch 2 */
-		{ 0x03, 0x03, pc10_detectclr_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, pc10_port_0_r ),	/* coins, service */
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),	/* dipswitch 1 */
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ), /* dipswitch 2 */
+		new IO_ReadPort( 0x03, 0x03, pc10_detectclr_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, pc10_SDCS_w },
-		{ 0x01, 0x01, pc10_CNTRLMASK_w },
-		{ 0x02, 0x02, pc10_DISPMASK_w },
-		{ 0x03, 0x03, pc10_SOUNDMASK_w },
-		{ 0x04, 0x04, pc10_GAMERES_w },
-		{ 0x05, 0x05, pc10_GAMESTOP_w },
-		{ 0x06, 0x07, IOWP_NOP },
-		{ 0x08, 0x08, pc10_NMIENABLE_w },
-		{ 0x09, 0x09, pc10_DOGDI_w },
-		{ 0x0a, 0x0a, pc10_PPURES_w },
-		{ 0x0b, 0x0e, pc10_CARTSEL_w },
-		{ 0x0f, 0x0f, up8w_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, pc10_SDCS_w ),
+		new IO_WritePort( 0x01, 0x01, pc10_CNTRLMASK_w ),
+		new IO_WritePort( 0x02, 0x02, pc10_DISPMASK_w ),
+		new IO_WritePort( 0x03, 0x03, pc10_SOUNDMASK_w ),
+		new IO_WritePort( 0x04, 0x04, pc10_GAMERES_w ),
+		new IO_WritePort( 0x05, 0x05, pc10_GAMESTOP_w ),
+		new IO_WritePort( 0x06, 0x07, IOWP_NOP ),
+		new IO_WritePort( 0x08, 0x08, pc10_NMIENABLE_w ),
+		new IO_WritePort( 0x09, 0x09, pc10_DOGDI_w ),
+		new IO_WritePort( 0x0a, 0x0a, pc10_PPURES_w ),
+		new IO_WritePort( 0x0b, 0x0e, pc10_CARTSEL_w ),
+		new IO_WritePort( 0x0f, 0x0f, up8w_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* Cart */
-	static MEMORY_READ_START( cart_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x1fff, mirror_ram_r },
-		{ 0x2000, 0x3fff, ppu2c03b_0_r },
-		{ 0x4000, 0x4015, NESPSG_0_r },
-		{ 0x4016, 0x4016, pc10_in0_r },
-		{ 0x4017, 0x4017, pc10_in1_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress cart_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x1fff, mirror_ram_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, ppu2c03b_0_r ),
+		new Memory_ReadAddress( 0x4000, 0x4015, NESPSG_0_r ),
+		new Memory_ReadAddress( 0x4016, 0x4016, pc10_in0_r ),
+		new Memory_ReadAddress( 0x4017, 0x4017, pc10_in1_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cart_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM, &work_ram },
-		{ 0x0800, 0x1fff, mirror_ram_w },
-		{ 0x2000, 0x3fff, ppu2c03b_0_w },
-		{ 0x4011, 0x4011, DAC_0_data_w },
-		{ 0x4014, 0x4014, sprite_dma_w },
-		{ 0x4000, 0x4015, NESPSG_0_w },
-		{ 0x4016, 0x4016, pc10_in0_w },
-		{ 0x4017, 0x4017, MWA_NOP }, /* in 1 writes ignored */
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress cart_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &work_ram ),
+		new Memory_WriteAddress( 0x0800, 0x1fff, mirror_ram_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, ppu2c03b_0_w ),
+		new Memory_WriteAddress( 0x4011, 0x4011, DAC_0_data_w ),
+		new Memory_WriteAddress( 0x4014, 0x4014, sprite_dma_w ),
+		new Memory_WriteAddress( 0x4000, 0x4015, NESPSG_0_w ),
+		new Memory_WriteAddress( 0x4016, 0x4016, pc10_in0_w ),
+		new Memory_WriteAddress( 0x4017, 0x4017, MWA_NOP ), /* in 1 writes ignored */
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

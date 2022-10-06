@@ -145,21 +145,25 @@ public class dlair
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },
-		{ 0xc000, 0xc3ff, videoram_w, &videoram, &videoram_size },
-		{ 0xc400, 0xc7ff, MWA_RAM },
-		{ 0xe000, 0xe000, dlair_led0_w },
-		{ 0xe008, 0xe008, dlair_led1_w },
-		{ 0xe030, 0xe030, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, dlair_led0_w ),
+		new Memory_WriteAddress( 0xe008, 0xe008, dlair_led1_w ),
+		new Memory_WriteAddress( 0xe030, 0xe030, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static unsigned char pip[4];
 	static READ_HANDLER( pip_r )
@@ -174,15 +178,19 @@ public class dlair
 	z80ctc_0_w(offset,data);
 	}
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x03, pip_r },
-	//	{ 0x80, 0x83, z80ctc_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x03, pip_r ),
+	//	new IO_ReadPort( 0x80, 0x83, z80ctc_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x03, pip_w },
-	//	{ 0x80, 0x83, z80ctc_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x03, pip_w ),
+	//	new IO_WritePort( 0x80, 0x83, z80ctc_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

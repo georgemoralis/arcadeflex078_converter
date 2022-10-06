@@ -25,29 +25,37 @@ public class cheekyms
 	WRITE_HANDLER( cheekyms_port_80_w );
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_ROM},
-		{ 0x3000, 0x33ff, MRA_RAM},
-		{ 0x3800, 0x3bff, MRA_RAM},	/* screen RAM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM),
+		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM),
+		new Memory_ReadAddress( 0x3800, 0x3bff, MRA_RAM),	/* screen RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x3000, 0x33ff, MWA_RAM },
-		{ 0x3800, 0x3bff, videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3000, 0x33ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3800, 0x3bff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x20, 0x3f, cheekyms_sprite_w },
-		{ 0x40, 0x40, cheekyms_port_40_w },
-		{ 0x80, 0x80, cheekyms_port_80_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x20, 0x3f, cheekyms_sprite_w ),
+		new IO_WritePort( 0x40, 0x40, cheekyms_port_40_w ),
+		new IO_WritePort( 0x80, 0x80, cheekyms_port_80_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static INTERRUPT_GEN( cheekyms_interrupt )

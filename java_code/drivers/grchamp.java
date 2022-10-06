@@ -258,101 +258,121 @@ public class grchamp
 	}
 	#endif
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x4800, 0x4bff, MRA_RAM }, /* radar */
-		{ 0x5000, 0x53ff, MRA_RAM }, /* text layer */
-		{ 0x5800, 0x58ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4800, 0x4bff, MRA_RAM ), /* radar */
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ), /* text layer */
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-	 	{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0x4800, 0x4bff, MWA_RAM, &grchamp_radar },
-		{ 0x5000, 0x53ff, MWA_RAM, &videoram },
-		{ 0x5800, 0x583f, MWA_RAM, &colorram },
-		{ 0x5840, 0x58ff, MWA_RAM, &spriteram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	 	new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, MWA_RAM, &grchamp_radar ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, MWA_RAM, &videoram ),
+		new Memory_WriteAddress( 0x5800, 0x583f, MWA_RAM, &colorram ),
+		new Memory_WriteAddress( 0x5840, 0x58ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_3_r },		/* accel */
-		{ 0x01, 0x01, PC3259_0_r },
-		{ 0x02, 0x02, grchamp_port_0_r },	/* comm */
-		{ 0x03, 0x03, input_port_4_r },		/* wheel */
-		{ 0x00, 0x03, grchamp_port_0_r },	/* scanline read, cpu2 read, etc */
-		{ 0x04, 0x04, input_port_0_r },		/* DSWA */
-		{ 0x05, 0x05, input_port_1_r },		/* DSWB */
-		{ 0x06, 0x06, input_port_2_r },		/* tilt, coin, reset HS, etc */
-		{ 0x09, 0x09, PC3259_1_r },
-		{ 0x11, 0x11, PC3259_2_r },
-		{ 0x19, 0x19, PC3259_3_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_3_r ),		/* accel */
+		new IO_ReadPort( 0x01, 0x01, PC3259_0_r ),
+		new IO_ReadPort( 0x02, 0x02, grchamp_port_0_r ),	/* comm */
+		new IO_ReadPort( 0x03, 0x03, input_port_4_r ),		/* wheel */
+		new IO_ReadPort( 0x00, 0x03, grchamp_port_0_r ),	/* scanline read, cpu2 read, etc */
+		new IO_ReadPort( 0x04, 0x04, input_port_0_r ),		/* DSWA */
+		new IO_ReadPort( 0x05, 0x05, input_port_1_r ),		/* DSWB */
+		new IO_ReadPort( 0x06, 0x06, input_port_2_r ),		/* tilt, coin, reset HS, etc */
+		new IO_ReadPort( 0x09, 0x09, PC3259_1_r ),
+		new IO_ReadPort( 0x11, 0x11, PC3259_2_r ),
+		new IO_ReadPort( 0x19, 0x19, PC3259_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, grchamp_control0_w },
-		{ 0x01, 0x01, PC3259_control_w }, // ?
-		{ 0x02, 0x02, grchamp_player_xpos_w },
-		{ 0x03, 0x03, grchamp_player_ypos_w },
-		{ 0x04, 0x04, grchamp_tile_select_w },
-		{ 0x07, 0x07, grchamp_rain_xpos_w },
-		{ 0x08, 0x08, grchamp_rain_ypos_w },
-		{ 0x09, 0x09, grchamp_coinled_w },
-		{ 0x0a, 0x0a, MWA_NOP }, // ?
-		{ 0x0d, 0x0d, MWA_NOP }, // watchdog?
-		{ 0x0e, 0x0e, grchamp_sound_w },
-		{ 0x10, 0x13, grchamp_comm_w },
-		{ 0x20, 0x20, grchamp_led_data0_w },
-		{ 0x24, 0x24, grchamp_led_data1_w },
-		{ 0x28, 0x28, grchamp_led_data2_w },
-		{ 0x2c, 0x2c, grchamp_led_data3_w },
-	PORT_END
-	
-	/***************************************************************************/
-	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x37ff, MRA_RAM }, /* tilemaps */
-		{ 0x3800, 0x3fff, MRA_RAM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x5000, 0x6fff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( writemem2 )
-	 	{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x37ff, grchamp_videoram_w, &grchamp_videoram },
-		{ 0x3800, 0x3fff, MWA_RAM },
-		{ 0x4000, 0x43ff, MWA_RAM }, /* working ram */
-		{ 0x5000, 0x6fff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( readport2 )
-		{ 0x00, 0x03, grchamp_port_1_r },
-	PORT_END
-	
-	static PORT_WRITE_START( writeport2 )
-		{ 0x00, 0x0f, grchamp_port_1_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, grchamp_control0_w ),
+		new IO_WritePort( 0x01, 0x01, PC3259_control_w ), // ?
+		new IO_WritePort( 0x02, 0x02, grchamp_player_xpos_w ),
+		new IO_WritePort( 0x03, 0x03, grchamp_player_ypos_w ),
+		new IO_WritePort( 0x04, 0x04, grchamp_tile_select_w ),
+		new IO_WritePort( 0x07, 0x07, grchamp_rain_xpos_w ),
+		new IO_WritePort( 0x08, 0x08, grchamp_rain_ypos_w ),
+		new IO_WritePort( 0x09, 0x09, grchamp_coinled_w ),
+		new IO_WritePort( 0x0a, 0x0a, MWA_NOP ), // ?
+		new IO_WritePort( 0x0d, 0x0d, MWA_NOP ), // watchdog?
+		new IO_WritePort( 0x0e, 0x0e, grchamp_sound_w ),
+		new IO_WritePort( 0x10, 0x13, grchamp_comm_w ),
+		new IO_WritePort( 0x20, 0x20, grchamp_led_data0_w ),
+		new IO_WritePort( 0x24, 0x24, grchamp_led_data1_w ),
+		new IO_WritePort( 0x28, 0x28, grchamp_led_data2_w ),
+		new IO_WritePort( 0x2c, 0x2c, grchamp_led_data3_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x5000, 0x5000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x37ff, MRA_RAM ), /* tilemaps */
+		new Memory_ReadAddress( 0x3800, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-	 	{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0x4800, 0x4800, AY8910_control_port_0_w },
-		{ 0x4801, 0x4801, AY8910_write_port_0_w },
-		{ 0x4802, 0x4802, AY8910_control_port_1_w },
-		{ 0x4803, 0x4803, AY8910_write_port_1_w },
-		{ 0x4804, 0x4804, AY8910_control_port_2_w },
-		{ 0x4805, 0x4805, AY8910_write_port_2_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	 	new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x37ff, grchamp_videoram_w, &grchamp_videoram ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ), /* working ram */
+		new Memory_WriteAddress( 0x5000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort readport2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x03, grchamp_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x0f, grchamp_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	/***************************************************************************/
+	
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x5000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	 	new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4800, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x4801, 0x4801, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4802, 0x4802, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x4803, 0x4803, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x4804, 0x4804, AY8910_control_port_2_w ),
+		new Memory_WriteAddress( 0x4805, 0x4805, AY8910_write_port_2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	

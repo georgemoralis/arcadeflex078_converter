@@ -201,32 +201,36 @@ public class boxer
 	}
 	
 	
-	static MEMORY_READ_START( boxer_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x0200, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x08ff, boxer_input_r },
-		{ 0x1000, 0x17ff, boxer_misc_r },
-		{ 0x3000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0xbfff, boxer_bad_address_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress boxer_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0200, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x08ff, boxer_input_r ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, boxer_misc_r ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0xbfff, boxer_bad_address_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( boxer_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x0200, 0x03ff, MWA_RAM, &boxer_tile_ram },
-		{ 0x1800, 0x1800, boxer_pot_w },
-		{ 0x1900, 0x19ff, boxer_led_w },
-		{ 0x1a00, 0x1aff, boxer_sound_w },
-		{ 0x1b00, 0x1bff, boxer_crowd_w },
-		{ 0x1c00, 0x1cff, boxer_irq_reset_w },
-		{ 0x1d00, 0x1dff, boxer_bell_w },
-		{ 0x1e00, 0x1eff, MWA_RAM, &boxer_sprite_ram },
-		{ 0x1f00, 0x1fff, watchdog_reset_w },
-		{ 0x3000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0xbfff, boxer_bad_address_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress boxer_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0200, 0x03ff, MWA_RAM, &boxer_tile_ram ),
+		new Memory_WriteAddress( 0x1800, 0x1800, boxer_pot_w ),
+		new Memory_WriteAddress( 0x1900, 0x19ff, boxer_led_w ),
+		new Memory_WriteAddress( 0x1a00, 0x1aff, boxer_sound_w ),
+		new Memory_WriteAddress( 0x1b00, 0x1bff, boxer_crowd_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1cff, boxer_irq_reset_w ),
+		new Memory_WriteAddress( 0x1d00, 0x1dff, boxer_bell_w ),
+		new Memory_WriteAddress( 0x1e00, 0x1eff, MWA_RAM, &boxer_sprite_ram ),
+		new Memory_WriteAddress( 0x1f00, 0x1fff, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0xbfff, boxer_bad_address_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( boxer )

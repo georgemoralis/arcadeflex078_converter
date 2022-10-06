@@ -71,44 +71,48 @@ public class jailbrek
 		VLM5030_RST( ( data >> 2 ) & 1 );
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x10bf, MRA_RAM }, /* sprites */
-		{ 0x10c0, 0x14ff, MRA_RAM }, /* ??? */
-		{ 0x1500, 0x1fff, MRA_RAM }, /* work ram */
-		{ 0x2000, 0x203f, MRA_RAM }, /* scroll registers */
-		{ 0x3000, 0x307f, MRA_NOP }, /* related to sprites? */
-		{ 0x3100, 0x3100, input_port_4_r }, /* DSW1 */
-		{ 0x3200, 0x3200, input_port_5_r }, /* DSW2 */
-		{ 0x3300, 0x3300, input_port_0_r }, /* coins, start */
-		{ 0x3301, 0x3301, input_port_1_r }, /* joy1 */
-		{ 0x3302, 0x3302, input_port_2_r }, /* joy2 */
-		{ 0x3303, 0x3303, input_port_3_r }, /* DSW0 */
-		{ 0x6000, 0x6000, jailbrek_speech_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x10bf, MRA_RAM ), /* sprites */
+		new Memory_ReadAddress( 0x10c0, 0x14ff, MRA_RAM ), /* ??? */
+		new Memory_ReadAddress( 0x1500, 0x1fff, MRA_RAM ), /* work ram */
+		new Memory_ReadAddress( 0x2000, 0x203f, MRA_RAM ), /* scroll registers */
+		new Memory_ReadAddress( 0x3000, 0x307f, MRA_NOP ), /* related to sprites? */
+		new Memory_ReadAddress( 0x3100, 0x3100, input_port_4_r ), /* DSW1 */
+		new Memory_ReadAddress( 0x3200, 0x3200, input_port_5_r ), /* DSW2 */
+		new Memory_ReadAddress( 0x3300, 0x3300, input_port_0_r ), /* coins, start */
+		new Memory_ReadAddress( 0x3301, 0x3301, input_port_1_r ), /* joy1 */
+		new Memory_ReadAddress( 0x3302, 0x3302, input_port_2_r ), /* joy2 */
+		new Memory_ReadAddress( 0x3303, 0x3303, input_port_3_r ), /* DSW0 */
+		new Memory_ReadAddress( 0x6000, 0x6000, jailbrek_speech_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x07ff, jailbrek_colorram_w, &colorram },
-	    { 0x0800, 0x0fff, jailbrek_videoram_w, &videoram },
-	    { 0x1000, 0x10bf, MWA_RAM, &spriteram, &spriteram_size }, /* sprites */
-	    { 0x10c0, 0x14ff, MWA_RAM }, /* ??? */
-		{ 0x1500, 0x1fff, MWA_RAM }, /* work ram */
-	    { 0x2000, 0x203f, MWA_RAM, &jailbrek_scroll_x }, /* scroll registers */
-	    { 0x2040, 0x2040, MWA_NOP }, /* ??? */
-	    { 0x2041, 0x2041, MWA_NOP }, /* ??? */
-	    { 0x2042, 0x2042, MWA_RAM, &jailbrek_scroll_dir }, /* bit 2 = scroll direction */
-	    { 0x2043, 0x2043, MWA_NOP }, /* ??? */
-	    { 0x2044, 0x2044, ctrl_w }, /* irq, nmi enable, screen flip */
-	    { 0x3000, 0x307f, MWA_RAM }, /* ??? */
-		{ 0x3100, 0x3100, SN76496_0_w }, /* SN76496 data write */
-		{ 0x3200, 0x3200, MWA_NOP },	/* mirror of the previous? */
-	    { 0x3300, 0x3300, watchdog_reset_w }, /* watchdog */
-		{ 0x4000, 0x4000, jailbrek_speech_w }, /* speech pins */
-		{ 0x5000, 0x5000, VLM5030_data_w }, /* speech data */
-	    { 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, jailbrek_colorram_w, &colorram ),
+	    new Memory_WriteAddress( 0x0800, 0x0fff, jailbrek_videoram_w, &videoram ),
+	    new Memory_WriteAddress( 0x1000, 0x10bf, MWA_RAM, &spriteram, &spriteram_size ), /* sprites */
+	    new Memory_WriteAddress( 0x10c0, 0x14ff, MWA_RAM ), /* ??? */
+		new Memory_WriteAddress( 0x1500, 0x1fff, MWA_RAM ), /* work ram */
+	    new Memory_WriteAddress( 0x2000, 0x203f, MWA_RAM, &jailbrek_scroll_x ), /* scroll registers */
+	    new Memory_WriteAddress( 0x2040, 0x2040, MWA_NOP ), /* ??? */
+	    new Memory_WriteAddress( 0x2041, 0x2041, MWA_NOP ), /* ??? */
+	    new Memory_WriteAddress( 0x2042, 0x2042, MWA_RAM, &jailbrek_scroll_dir ), /* bit 2 = scroll direction */
+	    new Memory_WriteAddress( 0x2043, 0x2043, MWA_NOP ), /* ??? */
+	    new Memory_WriteAddress( 0x2044, 0x2044, ctrl_w ), /* irq, nmi enable, screen flip */
+	    new Memory_WriteAddress( 0x3000, 0x307f, MWA_RAM ), /* ??? */
+		new Memory_WriteAddress( 0x3100, 0x3100, SN76496_0_w ), /* SN76496 data write */
+		new Memory_WriteAddress( 0x3200, 0x3200, MWA_NOP ),	/* mirror of the previous? */
+	    new Memory_WriteAddress( 0x3300, 0x3300, watchdog_reset_w ), /* watchdog */
+		new Memory_WriteAddress( 0x4000, 0x4000, jailbrek_speech_w ), /* speech pins */
+		new Memory_WriteAddress( 0x5000, 0x5000, VLM5030_data_w ), /* speech data */
+	    new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

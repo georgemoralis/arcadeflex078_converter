@@ -32,59 +32,67 @@ public class scregg
 	WRITE_HANDLER( btime_mirrorcolorram_w );
 	WRITE_HANDLER( btime_video_control_w );
 	
-	static MEMORY_READ_START( dommy_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x2800, 0x2bff, btime_mirrorvideoram_r },
-		{ 0x4000, 0x4000, input_port_2_r },     /* DSW1 */
-		{ 0x4001, 0x4001, input_port_3_r },     /* DSW2 */
-	/*	{ 0x4004, 0x4004, },  */ /* this is read */
-		{ 0x4002, 0x4002, input_port_0_r },     /* IN0 */
-		{ 0x4003, 0x4003, input_port_1_r },     /* IN1 */
-		{ 0xa000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress dommy_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2800, 0x2bff, btime_mirrorvideoram_r ),
+		new Memory_ReadAddress( 0x4000, 0x4000, input_port_2_r ),     /* DSW1 */
+		new Memory_ReadAddress( 0x4001, 0x4001, input_port_3_r ),     /* DSW2 */
+	/*	new Memory_ReadAddress( 0x4004, 0x4004, ),  */ /* this is read */
+		new Memory_ReadAddress( 0x4002, 0x4002, input_port_0_r ),     /* IN0 */
+		new Memory_ReadAddress( 0x4003, 0x4003, input_port_1_r ),     /* IN1 */
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dommy_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x2000, 0x23ff, videoram_w, &videoram, &videoram_size },
-		{ 0x2400, 0x27ff, colorram_w, &colorram },
-		{ 0x2800, 0x2bff, btime_mirrorvideoram_w },
-		{ 0x4000, 0x4000, MWA_NOP },
-		{ 0x4001, 0x4001, btime_video_control_w },
-		{ 0x4004, 0x4004, AY8910_control_port_0_w },
-		{ 0x4005, 0x4005, AY8910_write_port_0_w },
-		{ 0x4006, 0x4006, AY8910_control_port_1_w },
-		{ 0x4007, 0x4007, AY8910_write_port_1_w },
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress dommy_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2400, 0x27ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, btime_mirrorvideoram_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_NOP ),
+		new Memory_WriteAddress( 0x4001, 0x4001, btime_video_control_w ),
+		new Memory_WriteAddress( 0x4004, 0x4004, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x4005, 0x4005, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x4006, 0x4006, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x4007, 0x4007, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( eggs_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x1000, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x1bff, btime_mirrorvideoram_r },
-		{ 0x1c00, 0x1fff, btime_mirrorcolorram_r },
-		{ 0x2000, 0x2000, input_port_2_r },     /* DSW1 */
-		{ 0x2001, 0x2001, input_port_3_r },     /* DSW2 */
-		{ 0x2002, 0x2002, input_port_0_r },     /* IN0 */
-		{ 0x2003, 0x2003, input_port_1_r },     /* IN1 */
-		{ 0x3000, 0x7fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },    /* reset/interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress eggs_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1bff, btime_mirrorvideoram_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1fff, btime_mirrorcolorram_r ),
+		new Memory_ReadAddress( 0x2000, 0x2000, input_port_2_r ),     /* DSW1 */
+		new Memory_ReadAddress( 0x2001, 0x2001, input_port_3_r ),     /* DSW2 */
+		new Memory_ReadAddress( 0x2002, 0x2002, input_port_0_r ),     /* IN0 */
+		new Memory_ReadAddress( 0x2003, 0x2003, input_port_1_r ),     /* IN1 */
+		new Memory_ReadAddress( 0x3000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),    /* reset/interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( eggs_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x1000, 0x13ff, videoram_w, &videoram, &videoram_size },
-		{ 0x1400, 0x17ff, colorram_w, &colorram },
-		{ 0x1800, 0x1bff, btime_mirrorvideoram_w },
-		{ 0x1c00, 0x1fff, btime_mirrorcolorram_w },
-		{ 0x2000, 0x2000, btime_video_control_w },
-		{ 0x2001, 0x2001, MWA_NOP },
-		{ 0x2004, 0x2004, AY8910_control_port_0_w },
-		{ 0x2005, 0x2005, AY8910_write_port_0_w },
-		{ 0x2006, 0x2006, AY8910_control_port_1_w },
-		{ 0x2007, 0x2007, AY8910_write_port_1_w },
-		{ 0x3000, 0x7fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress eggs_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x1400, 0x17ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, btime_mirrorvideoram_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, btime_mirrorcolorram_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, btime_video_control_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, MWA_NOP ),
+		new Memory_WriteAddress( 0x2004, 0x2004, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x2005, 0x2005, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x2006, 0x2006, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x2007, 0x2007, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x3000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

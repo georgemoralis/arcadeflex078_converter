@@ -56,97 +56,113 @@ public class gaplus
 	extern MACHINE_INIT( gaplus );
 	WRITE_HANDLER( gaplus_starfield_control_w );
 	
-	static MEMORY_READ_START( readmem_cpu1 )
-		{ 0x0000, 0x03ff, videoram_r },				/* video RAM */
-		{ 0x0400, 0x07ff, colorram_r },				/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_r },		/* shared RAM with CPU #2 & spriteram */
-		{ 0x6040, 0x63ff, gaplus_snd_sharedram_r }, /* shared RAM with CPU #3 */
-		{ 0x6800, 0x680f, gaplus_customio_1_r },	/* custom I/O chip #1 interface */
-		{ 0x6810, 0x681f, gaplus_customio_2_r },	/* custom I/O chip #2 interface */
-		{ 0x6820, 0x682f, gaplus_customio_3_r },	/* custom I/O chip #3 interface */
-		{ 0x7820, 0x782f, MRA_RAM },				/* ??? */
-		{ 0x7c00, 0x7c01, MRA_NOP },				/* ??? */
-		{ 0xa000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, videoram_r ),				/* video RAM */
+		new Memory_ReadAddress( 0x0400, 0x07ff, colorram_r ),				/* color RAM */
+		new Memory_ReadAddress( 0x0800, 0x1fff, gaplus_sharedram_r ),		/* shared RAM with CPU #2 & spriteram */
+		new Memory_ReadAddress( 0x6040, 0x63ff, gaplus_snd_sharedram_r ), /* shared RAM with CPU #3 */
+		new Memory_ReadAddress( 0x6800, 0x680f, gaplus_customio_1_r ),	/* custom I/O chip #1 interface */
+		new Memory_ReadAddress( 0x6810, 0x681f, gaplus_customio_2_r ),	/* custom I/O chip #2 interface */
+		new Memory_ReadAddress( 0x6820, 0x682f, gaplus_customio_3_r ),	/* custom I/O chip #3 interface */
+		new Memory_ReadAddress( 0x7820, 0x782f, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0x7c00, 0x7c01, MRA_NOP ),				/* ??? */
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu1 )
-		{ 0x0000, 0x03ff, videoram_w, &videoram, &videoram_size },  /* video RAM */
-		{ 0x0400, 0x07ff, colorram_w, &colorram },					/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_w, &gaplus_sharedram },	/* shared RAM with CPU #2 */
-		{ 0x6040, 0x63ff, gaplus_snd_sharedram_w, &gaplus_snd_sharedram }, /* shared RAM with CPU #3 */
-		{ 0x6800, 0x680f, gaplus_customio_1_w, &gaplus_customio_1 },/* custom I/O chip #1 interface */
-		{ 0x6810, 0x681f, gaplus_customio_2_w, &gaplus_customio_2 },/* custom I/O chip #2 interface */
-		{ 0x6820, 0x682f, gaplus_customio_3_w, &gaplus_customio_3 },/* custom I/O chip #3 interface */
-		{ 0x7820, 0x782f, MWA_RAM },								/* ??? */
-	//	{ 0x7c00, 0x7c00, MWA_NOP },								/* ??? */
-	//	{ 0x8400, 0x8400, MWA_NOP },								/* ??? */
-		{ 0x8c00, 0x8c00, gaplus_reset_2_3_w },	 					/* reset CPU #2 y #3? */
-	//	{ 0x9400, 0x9400, MWA_NOP },								/* ??? */
-	//	{ 0x9c00, 0x9c00, MWA_NOP },								/* ??? */
-		{ 0xa000, 0xa003, gaplus_starfield_control_w },				/* starfield control */
-		{ 0xa000, 0xffff, MWA_ROM },								/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, videoram_w, &videoram, &videoram_size ),  /* video RAM */
+		new Memory_WriteAddress( 0x0400, 0x07ff, colorram_w, &colorram ),					/* color RAM */
+		new Memory_WriteAddress( 0x0800, 0x1fff, gaplus_sharedram_w, &gaplus_sharedram ),	/* shared RAM with CPU #2 */
+		new Memory_WriteAddress( 0x6040, 0x63ff, gaplus_snd_sharedram_w, &gaplus_snd_sharedram ), /* shared RAM with CPU #3 */
+		new Memory_WriteAddress( 0x6800, 0x680f, gaplus_customio_1_w, &gaplus_customio_1 ),/* custom I/O chip #1 interface */
+		new Memory_WriteAddress( 0x6810, 0x681f, gaplus_customio_2_w, &gaplus_customio_2 ),/* custom I/O chip #2 interface */
+		new Memory_WriteAddress( 0x6820, 0x682f, gaplus_customio_3_w, &gaplus_customio_3 ),/* custom I/O chip #3 interface */
+		new Memory_WriteAddress( 0x7820, 0x782f, MWA_RAM ),								/* ??? */
+	//	new Memory_WriteAddress( 0x7c00, 0x7c00, MWA_NOP ),								/* ??? */
+	//	new Memory_WriteAddress( 0x8400, 0x8400, MWA_NOP ),								/* ??? */
+		new Memory_WriteAddress( 0x8c00, 0x8c00, gaplus_reset_2_3_w ),	 					/* reset CPU #2 y #3? */
+	//	new Memory_WriteAddress( 0x9400, 0x9400, MWA_NOP ),								/* ??? */
+	//	new Memory_WriteAddress( 0x9c00, 0x9c00, MWA_NOP ),								/* ??? */
+		new Memory_WriteAddress( 0xa000, 0xa003, gaplus_starfield_control_w ),				/* starfield control */
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),								/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x0000, 0x03ff, videoram_r },				/* video RAM */
-		{ 0x0400, 0x07ff, colorram_r },				/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_r },		/* shared RAM with CPU #1 & spriteram */
-		{ 0xa000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, videoram_r ),				/* video RAM */
+		new Memory_ReadAddress( 0x0400, 0x07ff, colorram_r ),				/* color RAM */
+		new Memory_ReadAddress( 0x0800, 0x1fff, gaplus_sharedram_r ),		/* shared RAM with CPU #1 & spriteram */
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x0000, 0x03ff, videoram_w },				/* video RAM */
-		{ 0x0400, 0x07ff, colorram_w },				/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_w },		/* shared RAM with CPU #1 */
-	//	{ 0x500f, 0x500f, MWA_NOP },				/* ??? */
-	//	{ 0x6001, 0x6001, MWA_NOP },				/* ??? */
-		{ 0x6080, 0x6081, gaplus_interrupt_ctrl_2_w },/* IRQ 2 enable */
-		{ 0xa000, 0xffff, MWA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, videoram_w ),				/* video RAM */
+		new Memory_WriteAddress( 0x0400, 0x07ff, colorram_w ),				/* color RAM */
+		new Memory_WriteAddress( 0x0800, 0x1fff, gaplus_sharedram_w ),		/* shared RAM with CPU #1 */
+	//	new Memory_WriteAddress( 0x500f, 0x500f, MWA_NOP ),				/* ??? */
+	//	new Memory_WriteAddress( 0x6001, 0x6001, MWA_NOP ),				/* ??? */
+		new Memory_WriteAddress( 0x6080, 0x6081, gaplus_interrupt_ctrl_2_w ),/* IRQ 2 enable */
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),				/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_cpu3 )
-		{ 0x0000, 0x003f, MRA_RAM },				/* sound registers? */
-		{ 0x0040, 0x03ff, gaplus_snd_sharedram_r }, /* shared RAM with CPU #1 */
-	//	{ 0x3000, 0x3001, MRA_NOP },				/* ???*/
-		{ 0xe000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu3[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x003f, MRA_RAM ),				/* sound registers? */
+		new Memory_ReadAddress( 0x0040, 0x03ff, gaplus_snd_sharedram_r ), /* shared RAM with CPU #1 */
+	//	new Memory_ReadAddress( 0x3000, 0x3001, MRA_NOP ),				/* ???*/
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 		/* CPU 3 (SOUND CPU) write addresses */
-	static MEMORY_WRITE_START( writemem_cpu3 )
-		{ 0x0000, 0x003f, mappy_sound_w, &mappy_soundregs },/* sound registers */
-		{ 0x0040, 0x03ff, gaplus_snd_sharedram_w },			/* shared RAM with the main CPU */
-	//	{ 0x2007, 0x2007, MWA_NOP },	/* ??? */
-		{ 0x3000, 0x3000, watchdog_reset_w },				/* watchdog */
-		{ 0x4000, 0x4000, gaplus_interrupt_ctrl_3a_w },		/* interrupt enable */
-		{ 0x6000, 0x6000, gaplus_interrupt_ctrl_3b_w },		/* interrupt disable */
-		{ 0xe000, 0xffff, MWA_ROM },						/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu3[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x003f, mappy_sound_w, &mappy_soundregs ),/* sound registers */
+		new Memory_WriteAddress( 0x0040, 0x03ff, gaplus_snd_sharedram_w ),			/* shared RAM with the main CPU */
+	//	new Memory_WriteAddress( 0x2007, 0x2007, MWA_NOP ),	/* ??? */
+		new Memory_WriteAddress( 0x3000, 0x3000, watchdog_reset_w ),				/* watchdog */
+		new Memory_WriteAddress( 0x4000, 0x4000, gaplus_interrupt_ctrl_3a_w ),		/* interrupt enable */
+		new Memory_WriteAddress( 0x6000, 0x6000, gaplus_interrupt_ctrl_3b_w ),		/* interrupt disable */
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),						/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( gapluso_readmem_cpu1 )
-		{ 0x0000, 0x03ff, videoram_r },				/* video RAM */
-		{ 0x0400, 0x07ff, colorram_r },				/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_r },		/* shared RAM with CPU #2 & spriteram */
-		{ 0x6040, 0x63ff, gaplus_snd_sharedram_r }, /* shared RAM with CPU #3 */
-		{ 0x6800, 0x680f, gapluso_customio_1_r },	/* custom I/O chip #1 interface */
-		{ 0x6810, 0x681f, gapluso_customio_2_r },	/* custom I/O chip #2 interface */
-		{ 0x6820, 0x682f, gapluso_customio_3_r },	/* custom I/O chip #3 interface */
-		{ 0x7820, 0x782f, MRA_RAM },				/* ??? */
-		{ 0x7c00, 0x7c01, MRA_NOP },				/* ??? */
-		{ 0xa000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress gapluso_readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, videoram_r ),				/* video RAM */
+		new Memory_ReadAddress( 0x0400, 0x07ff, colorram_r ),				/* color RAM */
+		new Memory_ReadAddress( 0x0800, 0x1fff, gaplus_sharedram_r ),		/* shared RAM with CPU #2 & spriteram */
+		new Memory_ReadAddress( 0x6040, 0x63ff, gaplus_snd_sharedram_r ), /* shared RAM with CPU #3 */
+		new Memory_ReadAddress( 0x6800, 0x680f, gapluso_customio_1_r ),	/* custom I/O chip #1 interface */
+		new Memory_ReadAddress( 0x6810, 0x681f, gapluso_customio_2_r ),	/* custom I/O chip #2 interface */
+		new Memory_ReadAddress( 0x6820, 0x682f, gapluso_customio_3_r ),	/* custom I/O chip #3 interface */
+		new Memory_ReadAddress( 0x7820, 0x782f, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0x7c00, 0x7c01, MRA_NOP ),				/* ??? */
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( gaplusa_readmem_cpu1 )
-		{ 0x0000, 0x03ff, videoram_r },				/* video RAM */
-		{ 0x0400, 0x07ff, colorram_r },				/* color RAM */
-		{ 0x0800, 0x1fff, gaplus_sharedram_r },		/* shared RAM with CPU #2 & spriteram */
-		{ 0x6040, 0x63ff, gaplus_snd_sharedram_r }, /* shared RAM with CPU #3 */
-		{ 0x6800, 0x680f, gaplusa_customio_1_r },	/* custom I/O chip #1 interface */
-		{ 0x6810, 0x681f, gaplusa_customio_2_r },	/* custom I/O chip #2 interface */
-		{ 0x6820, 0x682f, gaplusa_customio_3_r },	/* custom I/O chip #3 interface */
-		{ 0x7820, 0x782f, MRA_RAM },				/* ??? */
-		{ 0x7c00, 0x7c01, MRA_NOP },				/* ??? */
-		{ 0xa000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress gaplusa_readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, videoram_r ),				/* video RAM */
+		new Memory_ReadAddress( 0x0400, 0x07ff, colorram_r ),				/* color RAM */
+		new Memory_ReadAddress( 0x0800, 0x1fff, gaplus_sharedram_r ),		/* shared RAM with CPU #2 & spriteram */
+		new Memory_ReadAddress( 0x6040, 0x63ff, gaplus_snd_sharedram_r ), /* shared RAM with CPU #3 */
+		new Memory_ReadAddress( 0x6800, 0x680f, gaplusa_customio_1_r ),	/* custom I/O chip #1 interface */
+		new Memory_ReadAddress( 0x6810, 0x681f, gaplusa_customio_2_r ),	/* custom I/O chip #2 interface */
+		new Memory_ReadAddress( 0x6820, 0x682f, gaplusa_customio_3_r ),	/* custom I/O chip #3 interface */
+		new Memory_ReadAddress( 0x7820, 0x782f, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0x7c00, 0x7c01, MRA_NOP ),				/* ??? */
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* The dipswitches and player inputs are not memory mapped, they are handled by an I/O chip. */

@@ -535,36 +535,40 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x180f, pokey1_r },
-		{ 0x1810, 0x1813, leta_r },
-		{ 0x1830, 0x183f, pokey2_r },
-		{ 0x1840, 0x1840, switch_6502_r },
-		{ 0x1850, 0x1851, YM2151_status_port_0_r },
-		{ 0x1860, 0x1860, sound_6502_r },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x180f, pokey1_r ),
+		new Memory_ReadAddress( 0x1810, 0x1813, leta_r ),
+		new Memory_ReadAddress( 0x1830, 0x183f, pokey2_r ),
+		new Memory_ReadAddress( 0x1840, 0x1840, switch_6502_r ),
+		new Memory_ReadAddress( 0x1850, 0x1851, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x1860, 0x1860, sound_6502_r ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x17ff, MWA_RAM, (data8_t **)&atarigen_eeprom, &atarigen_eeprom_size },
-		{ 0x1800, 0x180f, pokey1_w },
-		{ 0x1830, 0x183f, pokey2_w },
-		{ 0x1850, 0x1850, YM2151_register_port_0_w },
-		{ 0x1851, 0x1851, YM2151_data_port_0_w },
-		{ 0x1870, 0x1870, tms5220_w },
-		{ 0x1872, 0x1873, tms5220_strobe_w },
-		{ 0x1874, 0x1874, sound_6502_w },
-		{ 0x1876, 0x1876, coincount_w },
-		{ 0x1878, 0x1878, atarigen_6502_irq_ack_w },
-		{ 0x187a, 0x187a, mixer_w },
-		{ 0x187c, 0x187c, switch_6502_w },
-		{ 0x187e, 0x187e, sound_enable_w },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, MWA_RAM, (data8_t **)&atarigen_eeprom, &atarigen_eeprom_size ),
+		new Memory_WriteAddress( 0x1800, 0x180f, pokey1_w ),
+		new Memory_WriteAddress( 0x1830, 0x183f, pokey2_w ),
+		new Memory_WriteAddress( 0x1850, 0x1850, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x1851, 0x1851, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x1870, 0x1870, tms5220_w ),
+		new Memory_WriteAddress( 0x1872, 0x1873, tms5220_strobe_w ),
+		new Memory_WriteAddress( 0x1874, 0x1874, sound_6502_w ),
+		new Memory_WriteAddress( 0x1876, 0x1876, coincount_w ),
+		new Memory_WriteAddress( 0x1878, 0x1878, atarigen_6502_irq_ack_w ),
+		new Memory_WriteAddress( 0x187a, 0x187a, mixer_w ),
+		new Memory_WriteAddress( 0x187c, 0x187c, switch_6502_w ),
+		new Memory_WriteAddress( 0x187e, 0x187e, sound_enable_w ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

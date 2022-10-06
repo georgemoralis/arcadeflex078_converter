@@ -243,34 +243,38 @@ public class starshp1
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x01ff, starshp1_zeropage_r },
-		{ 0x2c00, 0x3fff, MRA_ROM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xb000, 0xb000, starshp1_port_1_r },
-		{ 0xc400, 0xc400, starshp1_port_2_r },
-		{ 0xd800, 0xd800, starshp1_rng_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x01ff, starshp1_zeropage_r ),
+		new Memory_ReadAddress( 0x2c00, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, starshp1_port_1_r ),
+		new Memory_ReadAddress( 0xc400, 0xc400, starshp1_port_2_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, starshp1_rng_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x01ff, starshp1_zeropage_w },
-		{ 0x2c00, 0x3fff, MWA_ROM },
-		{ 0xc300, 0xc3ff, starshp1_sspic_w }, /* spaceship picture */
-		{ 0xc400, 0xc4ff, starshp1_ssadd_w }, /* spaceship address */
-		{ 0xc800, 0xc9ff, starshp1_playfield_w, &starshp1_playfield_ram },
-		{ 0xcc00, 0xcc0f, MWA_RAM, &starshp1_hpos_ram },
-		{ 0xd000, 0xd00f, MWA_RAM, &starshp1_vpos_ram },
-		{ 0xd400, 0xd40f, MWA_RAM, &starshp1_obj_ram },
-		{ 0xd800, 0xd80f, starshp1_collision_reset_w },
-		{ 0xdc00, 0xdc0f, starshp1_misc_w },
-		{ 0xdd00, 0xdd0f, starshp1_analog_in_w },
-		{ 0xde00, 0xde0f, starshp1_audio_w },
-		{ 0xdf00, 0xdf0f, starshp1_analog_out_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x01ff, starshp1_zeropage_w ),
+		new Memory_WriteAddress( 0x2c00, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc300, 0xc3ff, starshp1_sspic_w ), /* spaceship picture */
+		new Memory_WriteAddress( 0xc400, 0xc4ff, starshp1_ssadd_w ), /* spaceship address */
+		new Memory_WriteAddress( 0xc800, 0xc9ff, starshp1_playfield_w, &starshp1_playfield_ram ),
+		new Memory_WriteAddress( 0xcc00, 0xcc0f, MWA_RAM, &starshp1_hpos_ram ),
+		new Memory_WriteAddress( 0xd000, 0xd00f, MWA_RAM, &starshp1_vpos_ram ),
+		new Memory_WriteAddress( 0xd400, 0xd40f, MWA_RAM, &starshp1_obj_ram ),
+		new Memory_WriteAddress( 0xd800, 0xd80f, starshp1_collision_reset_w ),
+		new Memory_WriteAddress( 0xdc00, 0xdc0f, starshp1_misc_w ),
+		new Memory_WriteAddress( 0xdd00, 0xdd0f, starshp1_analog_in_w ),
+		new Memory_WriteAddress( 0xde00, 0xde0f, starshp1_audio_w ),
+		new Memory_WriteAddress( 0xdf00, 0xdf0f, starshp1_analog_out_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( starshp1 )

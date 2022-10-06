@@ -531,13 +531,15 @@ public class nmk16
 		{ 0x0f9000, 0x0fffff, MWA16_RAM, &ram },
 	MEMORY_END
 	
-	static MEMORY_READ_START( manybloc_sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xf000, 0xf000, soundlatch_r },
-		{ 0xf400, 0xf400, OKIM6295_status_0_r },
-		{ 0xf500, 0xf500, OKIM6295_status_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress manybloc_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf000, soundlatch_r ),
+		new Memory_ReadAddress( 0xf400, 0xf400, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xf500, 0xf500, OKIM6295_status_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static MEMORY_WRITE_START( manybloc_sound_writemem)
 		{ 0x0000, 0xbfff, MWA_ROM },
@@ -549,15 +551,19 @@ public class nmk16
 		{ 0xf700, 0xf700, MWA_NOP },
 	MEMORY_END
 	
-	static PORT_READ_START( manybloc_sound_readport )
-		{ 0x00, 0x00, YM2203_status_port_0_r },
-		{ 0x01, 0x01, YM2203_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort manybloc_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( manybloc_sound_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-	PORT_END
+	public static IO_WritePort manybloc_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MEMORY_READ16_START( tharrier_readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },
@@ -789,19 +795,23 @@ public class nmk16
 	
 	
 	
-	static MEMORY_READ_START( ssmissin_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9800, 0x9800, OKIM6295_status_0_r },
-		{ 0xa000, 0xa000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress ssmissin_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9800, 0x9800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ssmissin_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x9000, ssmissin_soundbank_w },
-		{ 0x9800, 0x9800, OKIM6295_data_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress ssmissin_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x9000, ssmissin_soundbank_w ),
+		new Memory_WriteAddress( 0x9800, 0x9800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static MEMORY_READ16_START( strahl_readmem )
@@ -948,35 +958,43 @@ public class nmk16
 		{ 0x1f9000, 0x1fffff, MWA16_RAM, &ram },	/* Work RAM again */
 	MEMORY_END
 	
-	static MEMORY_READ_START( macross2_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },	/* banked ROM */
-		{ 0xa000, 0xa000, MRA_NOP },	/* IRQ ack? watchdog? */
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xf000, 0xf000, soundlatch_r },	/* from 68000 */
-	MEMORY_END
+	public static Memory_ReadAddress macross2_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),	/* banked ROM */
+		new Memory_ReadAddress( 0xa000, 0xa000, MRA_NOP ),	/* IRQ ack? watchdog? */
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf000, soundlatch_r ),	/* from 68000 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( macross2_sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-		{ 0xe001, 0xe001, macross2_sound_bank_w },
-		{ 0xf000, 0xf000, soundlatch2_w },	/* to 68000 */
-	MEMORY_END
+	public static Memory_WriteAddress macross2_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe001, 0xe001, macross2_sound_bank_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, soundlatch2_w ),	/* to 68000 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( macross2_sound_readport )
-		{ 0x00, 0x00, YM2203_status_port_0_r },
-		{ 0x01, 0x01, YM2203_read_port_0_r },
-		{ 0x80, 0x80, OKIM6295_status_0_r },
-		{ 0x88, 0x88, OKIM6295_status_1_r },
-	PORT_END
+	public static IO_ReadPort macross2_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x80, 0x80, OKIM6295_status_0_r ),
+		new IO_ReadPort( 0x88, 0x88, OKIM6295_status_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( macross2_sound_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-		{ 0x80, 0x80, OKIM6295_data_0_w },
-		{ 0x88, 0x88, OKIM6295_data_1_w },
-		{ 0x90, 0x97, macross2_oki6295_bankswitch_w },
-	PORT_END
+	public static IO_WritePort macross2_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, OKIM6295_data_0_w ),
+		new IO_WritePort( 0x88, 0x88, OKIM6295_data_1_w ),
+		new IO_WritePort( 0x90, 0x97, macross2_oki6295_bankswitch_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MEMORY_READ16_START( bjtwin_readmem )
 		{ 0x000000, 0x07ffff, MRA16_ROM },

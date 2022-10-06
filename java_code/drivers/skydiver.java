@@ -146,59 +146,63 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x007f, skydiver_wram_r },
-		{ 0x0080, 0x00ff, MRA_RAM },		/* RAM B1 */
-		{ 0x0400, 0x07ff, MRA_RAM },		/* RAMs K1,M1,P1,J1,N1,K/L1,L1,H/J1 */
-		{ 0x1800, 0x1800, input_port_0_r },
-		{ 0x1801, 0x1801, input_port_1_r },
-		{ 0x1802, 0x1802, input_port_2_r },
-		{ 0x1803, 0x1803, input_port_3_r },
-		{ 0x1804, 0x1804, input_port_4_r },
-		{ 0x1805, 0x1805, input_port_5_r },
-		{ 0x1806, 0x1806, input_port_6_r },
-		{ 0x1807, 0x1807, input_port_7_r },
-		{ 0x1808, 0x1808, input_port_8_r },
-		{ 0x1809, 0x1809, input_port_9_r },
-		{ 0x180a, 0x180a, input_port_10_r },
-		{ 0x180b, 0x180b, input_port_11_r },
-		{ 0x1810, 0x1810, input_port_12_r },
-		{ 0x1811, 0x1811, input_port_13_r },
-		{ 0x2000, 0x2000, watchdog_reset_r },
-		{ 0x2800, 0x3fff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x007f, skydiver_wram_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),		/* RAM B1 */
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),		/* RAMs K1,M1,P1,J1,N1,K/L1,L1,H/J1 */
+		new Memory_ReadAddress( 0x1800, 0x1800, input_port_0_r ),
+		new Memory_ReadAddress( 0x1801, 0x1801, input_port_1_r ),
+		new Memory_ReadAddress( 0x1802, 0x1802, input_port_2_r ),
+		new Memory_ReadAddress( 0x1803, 0x1803, input_port_3_r ),
+		new Memory_ReadAddress( 0x1804, 0x1804, input_port_4_r ),
+		new Memory_ReadAddress( 0x1805, 0x1805, input_port_5_r ),
+		new Memory_ReadAddress( 0x1806, 0x1806, input_port_6_r ),
+		new Memory_ReadAddress( 0x1807, 0x1807, input_port_7_r ),
+		new Memory_ReadAddress( 0x1808, 0x1808, input_port_8_r ),
+		new Memory_ReadAddress( 0x1809, 0x1809, input_port_9_r ),
+		new Memory_ReadAddress( 0x180a, 0x180a, input_port_10_r ),
+		new Memory_ReadAddress( 0x180b, 0x180b, input_port_11_r ),
+		new Memory_ReadAddress( 0x1810, 0x1810, input_port_12_r ),
+		new Memory_ReadAddress( 0x1811, 0x1811, input_port_13_r ),
+		new Memory_ReadAddress( 0x2000, 0x2000, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x2800, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x007f, skydiver_wram_w },
-		{ 0x0080, 0x00ff, MWA_RAM },
-		{ 0x0400, 0x07ff, skydiver_videoram_w, &skydiver_videoram },
-		{ 0x0800, 0x0801, skydiver_lamp_s_w },
-		{ 0x0802, 0x0803, skydiver_lamp_k_w },
-		{ 0x0804, 0x0805, skydiver_start_lamp_1_w },
-		{ 0x0806, 0x0807, skydiver_start_lamp_2_w },
-		{ 0x0808, 0x0809, skydiver_lamp_y_w },
-		{ 0x080a, 0x080b, skydiver_lamp_d_w },
-		// { 0x080c, 0x080d, skydiver_sound_enable_w },
-		// { 0x1000, 0x1001, skydiver_jump1_lamps_w },
-		{ 0x1002, 0x1003, skydiver_coin_lockout_w },
-		// { 0x1006, 0x1007, skydiver_jump2_lamps_w },
-		// { 0x1008, 0x100b, skydiver_whistle_w },
-		{ 0x100c, 0x100d, skydiver_nmion_w },
-		{ 0x100e, 0x100f, skydiver_width_w },
-		{ 0x2000, 0x2000, watchdog_reset_w },
-		{ 0x2002, 0x2003, skydiver_lamp_i_w },
-		{ 0x2004, 0x2005, skydiver_lamp_v_w },
-		{ 0x2006, 0x2007, skydiver_lamp_e_w },
-		{ 0x2008, 0x2009, skydiver_lamp_r_w },
-		// { 0x200a, 0x200d, skydiver_oct_w },
-		// { 0x200e, 0x200f, skydiver_noise_reset_w },
-		{ 0x2800, 0x3fff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007f, skydiver_wram_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, skydiver_videoram_w, &skydiver_videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0801, skydiver_lamp_s_w ),
+		new Memory_WriteAddress( 0x0802, 0x0803, skydiver_lamp_k_w ),
+		new Memory_WriteAddress( 0x0804, 0x0805, skydiver_start_lamp_1_w ),
+		new Memory_WriteAddress( 0x0806, 0x0807, skydiver_start_lamp_2_w ),
+		new Memory_WriteAddress( 0x0808, 0x0809, skydiver_lamp_y_w ),
+		new Memory_WriteAddress( 0x080a, 0x080b, skydiver_lamp_d_w ),
+		// new Memory_WriteAddress( 0x080c, 0x080d, skydiver_sound_enable_w ),
+		// new Memory_WriteAddress( 0x1000, 0x1001, skydiver_jump1_lamps_w ),
+		new Memory_WriteAddress( 0x1002, 0x1003, skydiver_coin_lockout_w ),
+		// new Memory_WriteAddress( 0x1006, 0x1007, skydiver_jump2_lamps_w ),
+		// new Memory_WriteAddress( 0x1008, 0x100b, skydiver_whistle_w ),
+		new Memory_WriteAddress( 0x100c, 0x100d, skydiver_nmion_w ),
+		new Memory_WriteAddress( 0x100e, 0x100f, skydiver_width_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x2002, 0x2003, skydiver_lamp_i_w ),
+		new Memory_WriteAddress( 0x2004, 0x2005, skydiver_lamp_v_w ),
+		new Memory_WriteAddress( 0x2006, 0x2007, skydiver_lamp_e_w ),
+		new Memory_WriteAddress( 0x2008, 0x2009, skydiver_lamp_r_w ),
+		// new Memory_WriteAddress( 0x200a, 0x200d, skydiver_oct_w ),
+		// new Memory_WriteAddress( 0x200e, 0x200f, skydiver_noise_reset_w ),
+		new Memory_WriteAddress( 0x2800, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

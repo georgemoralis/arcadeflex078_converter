@@ -71,27 +71,31 @@ public class circus
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x1000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x8000, 0x8000, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xc000, 0xc000, input_port_1_r }, /* DSW */
-		{ 0xd000, 0xd000, input_port_2_r }, //AT
-		//{ 0xd000, 0xd000, ripcord_IN2_r },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8000, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_1_r ), /* DSW */
+		new Memory_ReadAddress( 0xd000, 0xd000, input_port_2_r ), //AT
+		//new Memory_ReadAddress( 0xd000, 0xd000, ripcord_IN2_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },
-		{ 0x1000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x2000, circus_clown_x_w },
-		{ 0x3000, 0x3000, circus_clown_y_w },
-		{ 0x4000, 0x43ff, circus_videoram_w, &videoram },
-		{ 0x8000, 0x8000, circus_clown_z_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, circus_clown_x_w ),
+		new Memory_WriteAddress( 0x3000, 0x3000, circus_clown_y_w ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, circus_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8000, 0x8000, circus_clown_z_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( circus )

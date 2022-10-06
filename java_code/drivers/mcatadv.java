@@ -169,60 +169,76 @@ public class mcatadv
 	}
 	
 	
-	static MEMORY_READ_START( mcatadv_sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM		},	// ROM
-		{ 0x4000, 0xbfff, MRA_BANK1		},	// ROM
-		{ 0xc000, 0xdfff, MRA_RAM		},	// RAM
-		{ 0xe000, 0xe000, YM2610_status_port_0_A_r		},
-		{ 0xe002, 0xe002, YM2610_status_port_0_B_r		},
-	MEMORY_END
+	public static Memory_ReadAddress mcatadv_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM		),	// ROM
+		new Memory_ReadAddress( 0x4000, 0xbfff, MRA_BANK1		),	// ROM
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM		),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xe000, YM2610_status_port_0_A_r		),
+		new Memory_ReadAddress( 0xe002, 0xe002, YM2610_status_port_0_B_r		),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcatadv_sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM		},	// ROM
-		{ 0x4000, 0xbfff, MWA_ROM		},	// ROM
-		{ 0xc000, 0xdfff, MWA_RAM		},	// RAM
-		{ 0xe000, 0xe000, YM2610_control_port_0_A_w },
-		{ 0xe001, 0xe001, YM2610_data_port_0_A_w },
-		{ 0xe002, 0xe002, YM2610_control_port_0_B_w },
-		{ 0xe003, 0xe003, YM2610_data_port_0_B_w },
-		{ 0xf000, 0xf000, mcatadv_sound_bw_w },
-	MEMORY_END
+	public static Memory_WriteAddress mcatadv_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM		),	// ROM
+		new Memory_WriteAddress( 0x4000, 0xbfff, MWA_ROM		),	// ROM
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM		),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2610_control_port_0_A_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2610_data_port_0_A_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2610_control_port_0_B_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2610_data_port_0_B_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, mcatadv_sound_bw_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mcatadv_sound_readport )
-		{ 0x80, 0x80, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort mcatadv_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x80, 0x80, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mcatadv_sound_writeport )
-		{ 0x80, 0x80, soundlatch2_w },
-	PORT_END
+	public static IO_WritePort mcatadv_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x80, 0x80, soundlatch2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( nost_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM		},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1		},	// ROM
-		{ 0xc000, 0xdfff, MRA_RAM		},	// RAM
-	MEMORY_END
+	public static Memory_ReadAddress nost_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM		),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1		),	// ROM
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM		),	// RAM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( nost_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM		},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM		},	// ROM
-		{ 0xc000, 0xdfff, MWA_RAM		},	// RAM
-	MEMORY_END
+	public static Memory_WriteAddress nost_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM		),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM		),	// ROM
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM		),	// RAM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( nost_sound_readport )
-		{ 0x04, 0x05, YM2610_status_port_0_A_r },
-		{ 0x06, 0x07, YM2610_status_port_0_B_r },
-		{ 0x80, 0x80, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort nost_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x04, 0x05, YM2610_status_port_0_A_r ),
+		new IO_ReadPort( 0x06, 0x07, YM2610_status_port_0_B_r ),
+		new IO_ReadPort( 0x80, 0x80, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( nost_sound_writeport )
-		{ 0x00, 0x00, YM2610_control_port_0_A_w },
-		{ 0x01, 0x01, YM2610_data_port_0_A_w },
-		{ 0x02, 0x02, YM2610_control_port_0_B_w },
-		{ 0x03, 0x03, YM2610_data_port_0_B_w },
-		{ 0x40, 0x40, mcatadv_sound_bw_w },
-		{ 0x80, 0x80, soundlatch2_w },
-	PORT_END
+	public static IO_WritePort nost_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2610_control_port_0_A_w ),
+		new IO_WritePort( 0x01, 0x01, YM2610_data_port_0_A_w ),
+		new IO_WritePort( 0x02, 0x02, YM2610_control_port_0_B_w ),
+		new IO_WritePort( 0x03, 0x03, YM2610_data_port_0_B_w ),
+		new IO_WritePort( 0x40, 0x40, mcatadv_sound_bw_w ),
+		new IO_WritePort( 0x80, 0x80, soundlatch2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/*** Inputs ***/
 	

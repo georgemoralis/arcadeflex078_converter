@@ -134,50 +134,54 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0002, 0x0002, ccastles_bitmode_r },
-		{ 0x0000, 0x8fff, MRA_RAM },
-		{ 0x9000, 0x90ff, MRA_RAM },
-		{ 0x9400, 0x9400, input_port_2_r },	/* trackball y - player 1 */
-		{ 0x9402, 0x9402, input_port_2_r },	/* trackball y - player 2 */
-		{ 0x9500, 0x9500, input_port_2_r },	/* trackball y - player 1 mirror */
-		{ 0x9401, 0x9401, input_port_3_r },	/* trackball x - player 1 */
-		{ 0x9403, 0x9403, input_port_3_r },	/* trackball x - player 2 */
-		{ 0x9501, 0x9501, input_port_3_r },	/* trackball x - player 1 mirror */
-		{ 0x9600, 0x9600, input_port_0_r },	/* IN0 */
-		{ 0x9800, 0x980f, pokey1_r }, /* Random # generator on a Pokey */
-		{ 0x9a00, 0x9a0f, pokey2_r }, /* Random #, IN1 */
-		{ 0xa000, 0xdfff, MRA_BANK1 },
-		{ 0xe000, 0xffff, MRA_ROM },	/* ROMs/interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0002, 0x0002, ccastles_bitmode_r ),
+		new Memory_ReadAddress( 0x0000, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x90ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x9400, input_port_2_r ),	/* trackball y - player 1 */
+		new Memory_ReadAddress( 0x9402, 0x9402, input_port_2_r ),	/* trackball y - player 2 */
+		new Memory_ReadAddress( 0x9500, 0x9500, input_port_2_r ),	/* trackball y - player 1 mirror */
+		new Memory_ReadAddress( 0x9401, 0x9401, input_port_3_r ),	/* trackball x - player 1 */
+		new Memory_ReadAddress( 0x9403, 0x9403, input_port_3_r ),	/* trackball x - player 2 */
+		new Memory_ReadAddress( 0x9501, 0x9501, input_port_3_r ),	/* trackball x - player 1 mirror */
+		new Memory_ReadAddress( 0x9600, 0x9600, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x9800, 0x980f, pokey1_r ), /* Random # generator on a Pokey */
+		new Memory_ReadAddress( 0x9a00, 0x9a0f, pokey2_r ), /* Random #, IN1 */
+		new Memory_ReadAddress( 0xa000, 0xdfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),	/* ROMs/interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0001, MWA_RAM, &ccastles_screen_addr },
-		{ 0x0002, 0x0002, ccastles_bitmode_w },
-		{ 0x0003, 0x0bff, MWA_RAM },
-		{ 0x0c00, 0x7fff, MWA_RAM, &videoram },
-		{ 0x8000, 0x8dff, MWA_RAM },
-		{ 0x8e00, 0x8eff, MWA_RAM, &spriteram_2, &spriteram_size },
-		{ 0x8f00, 0x8fff, MWA_RAM, &spriteram },
-		{ 0x9000, 0x90ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x9800, 0x980f, pokey1_w },
-		{ 0x9a00, 0x9a0f, pokey2_w },
-		{ 0x9c80, 0x9c80, MWA_RAM, &ccastles_scrollx },
-		{ 0x9d00, 0x9d00, MWA_RAM, &ccastles_scrolly },
-		{ 0x9d80, 0x9d80, MWA_NOP },
-		{ 0x9e00, 0x9e00, watchdog_reset_w },
-		{ 0x9e80, 0x9e81, ccastles_led_w },
-		{ 0x9e85, 0x9e86, ccastles_coin_counter_w },
-		{ 0x9e87, 0x9e87, ccastles_bankswitch_w },
-		{ 0x9f00, 0x9f01, MWA_RAM, &ccastles_screen_inc_enable },
-		{ 0x9f02, 0x9f03, MWA_RAM, &ccastles_screen_inc },
-		{ 0x9f04, 0x9f04, flip_screen_w },
-		{ 0x9f05, 0x9f06, MWA_RAM },
-		{ 0x9f07, 0x9f07, MWA_RAM, &ccastles_sprite_bank },
-		{ 0x9f80, 0x9fbf, ccastles_paletteram_w },
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0001, MWA_RAM, &ccastles_screen_addr ),
+		new Memory_WriteAddress( 0x0002, 0x0002, ccastles_bitmode_w ),
+		new Memory_WriteAddress( 0x0003, 0x0bff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0c00, 0x7fff, MWA_RAM, &videoram ),
+		new Memory_WriteAddress( 0x8000, 0x8dff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8e00, 0x8eff, MWA_RAM, &spriteram_2, &spriteram_size ),
+		new Memory_WriteAddress( 0x8f00, 0x8fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x9000, 0x90ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x9800, 0x980f, pokey1_w ),
+		new Memory_WriteAddress( 0x9a00, 0x9a0f, pokey2_w ),
+		new Memory_WriteAddress( 0x9c80, 0x9c80, MWA_RAM, &ccastles_scrollx ),
+		new Memory_WriteAddress( 0x9d00, 0x9d00, MWA_RAM, &ccastles_scrolly ),
+		new Memory_WriteAddress( 0x9d80, 0x9d80, MWA_NOP ),
+		new Memory_WriteAddress( 0x9e00, 0x9e00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x9e80, 0x9e81, ccastles_led_w ),
+		new Memory_WriteAddress( 0x9e85, 0x9e86, ccastles_coin_counter_w ),
+		new Memory_WriteAddress( 0x9e87, 0x9e87, ccastles_bankswitch_w ),
+		new Memory_WriteAddress( 0x9f00, 0x9f01, MWA_RAM, &ccastles_screen_inc_enable ),
+		new Memory_WriteAddress( 0x9f02, 0x9f03, MWA_RAM, &ccastles_screen_inc ),
+		new Memory_WriteAddress( 0x9f04, 0x9f04, flip_screen_w ),
+		new Memory_WriteAddress( 0x9f05, 0x9f06, MWA_RAM ),
+		new Memory_WriteAddress( 0x9f07, 0x9f07, MWA_RAM, &ccastles_sprite_bank ),
+		new Memory_WriteAddress( 0x9f80, 0x9fbf, ccastles_paletteram_w ),
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

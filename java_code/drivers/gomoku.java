@@ -55,29 +55,33 @@ public class gomoku
 	}
 	
 	
-	static MEMORY_READ_START( readmem_gomoku )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4800, 0x4fff, MRA_RAM },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x5400, 0x57ff, MRA_RAM },
-		{ 0x5800, 0x58ff, MRA_RAM },
-		{ 0x7800, 0x7807, input_port_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_gomoku[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4800, 0x4fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5400, 0x57ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x7800, 0x7807, input_port_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_gomoku )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4800, 0x4fff, MWA_RAM },
-		{ 0x5000, 0x53ff, gomoku_videoram_w, &gomoku_videoram },
-		{ 0x5400, 0x57ff, gomoku_colorram_w, &gomoku_colorram },
-		{ 0x5800, 0x58ff, gomoku_bgram_w, &gomoku_bgram },
+	public static Memory_WriteAddress writemem_gomoku[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, gomoku_videoram_w, &gomoku_videoram ),
+		new Memory_WriteAddress( 0x5400, 0x57ff, gomoku_colorram_w, &gomoku_colorram ),
+		new Memory_WriteAddress( 0x5800, 0x58ff, gomoku_bgram_w, &gomoku_bgram ),
 		// sound: 0x6000 - 0x601f, 0x6800 - 0x681f
-		{ 0x6000, 0x681f, gomoku_sound_w, &gomoku_soundregs },
-		{ 0x7000, 0x7000, MWA_NOP },
-		{ 0x7001, 0x7001, gomoku_flipscreen_w },
-		{ 0x7002, 0x7002, gomoku_bg_dispsw_w },
-		{ 0x7003, 0x7007, MWA_NOP },
-		{ 0x7800, 0x7800, MWA_NOP },
-	MEMORY_END
+		new Memory_WriteAddress( 0x6000, 0x681f, gomoku_sound_w, &gomoku_soundregs ),
+		new Memory_WriteAddress( 0x7000, 0x7000, MWA_NOP ),
+		new Memory_WriteAddress( 0x7001, 0x7001, gomoku_flipscreen_w ),
+		new Memory_WriteAddress( 0x7002, 0x7002, gomoku_bg_dispsw_w ),
+		new Memory_WriteAddress( 0x7003, 0x7007, MWA_NOP ),
+		new Memory_WriteAddress( 0x7800, 0x7800, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( gomoku )

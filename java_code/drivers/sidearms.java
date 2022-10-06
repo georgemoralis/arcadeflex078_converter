@@ -89,82 +89,94 @@ public class sidearms
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc800, 0xc800, input_port_0_r },
-		{ 0xc801, 0xc801, input_port_1_r },
-		{ 0xc802, 0xc802, input_port_2_r },
-		{ 0xc803, 0xc803, input_port_3_r },
-		{ 0xc804, 0xc804, input_port_4_r },
-		{ 0xc805, 0xc805, input_port_5_r },
-		{ 0xd000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc800, 0xc800, input_port_0_r ),
+		new Memory_ReadAddress( 0xc801, 0xc801, input_port_1_r ),
+		new Memory_ReadAddress( 0xc802, 0xc802, input_port_2_r ),
+		new Memory_ReadAddress( 0xc803, 0xc803, input_port_3_r ),
+		new Memory_ReadAddress( 0xc804, 0xc804, input_port_4_r ),
+		new Memory_ReadAddress( 0xc805, 0xc805, input_port_5_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram },
-		{ 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 },
-		{ 0xc800, 0xc800, soundlatch_w },
-		{ 0xc801, 0xc801, sidearms_bankswitch_w },
-		{ 0xc802, 0xc802, watchdog_reset_w },
-		{ 0xc804, 0xc804, sidearms_c804_w },
-		{ 0xc805, 0xc805, sidearms_star_scrollx_w },
-		{ 0xc806, 0xc806, sidearms_star_scrolly_w },
-		{ 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx },
-		{ 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly },
-		{ 0xc80c, 0xc80c, sidearms_gfxctrl_w },	/* background and sprite enable */
-		{ 0xd000, 0xd7ff, sidearms_videoram_w, &videoram },
-		{ 0xd800, 0xdfff, sidearms_colorram_w, &colorram },
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( turtship_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xe807, turtship_ports_r },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( turtship_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xdfff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe000, 0xe3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram },
-		{ 0xe400, 0xe7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 },
-		{ 0xe800, 0xe800, soundlatch_w },
-		{ 0xe801, 0xe801, sidearms_bankswitch_w },
-		{ 0xe802, 0xe802, watchdog_reset_w },
-		{ 0xe804, 0xe804, sidearms_c804_w },
-		{ 0xe805, 0xe805, sidearms_star_scrollx_w },
-		{ 0xe806, 0xe806, sidearms_star_scrolly_w },
-		{ 0xe808, 0xe809, MWA_RAM, &sidearms_bg_scrollx },
-		{ 0xe80a, 0xe80b, MWA_RAM, &sidearms_bg_scrolly },
-		{ 0xe80c, 0xe80c, sidearms_gfxctrl_w },	/* background and sprite enable */
-		{ 0xf000, 0xf7ff, sidearms_videoram_w, &videoram },
-		{ 0xf800, 0xffff, sidearms_colorram_w, &colorram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, sidearms_bankswitch_w ),
+		new Memory_WriteAddress( 0xc802, 0xc802, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xc804, 0xc804, sidearms_c804_w ),
+		new Memory_WriteAddress( 0xc805, 0xc805, sidearms_star_scrollx_w ),
+		new Memory_WriteAddress( 0xc806, 0xc806, sidearms_star_scrolly_w ),
+		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xc80c, 0xc80c, sidearms_gfxctrl_w ),	/* background and sprite enable */
+		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, soundlatch_r },
-		{ 0xf000, 0xf000, YM2203_status_port_0_r },
-		{ 0xf002, 0xf002, YM2203_status_port_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress turtship_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe807, turtship_ports_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xf000, 0xf000, YM2203_control_port_0_w },
-		{ 0xf001, 0xf001, YM2203_write_port_0_w },
-		{ 0xf002, 0xf002, YM2203_control_port_1_w },
-		{ 0xf003, 0xf003, YM2203_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress turtship_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xe800, 0xe800, soundlatch_w ),
+		new Memory_WriteAddress( 0xe801, 0xe801, sidearms_bankswitch_w ),
+		new Memory_WriteAddress( 0xe802, 0xe802, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xe804, 0xe804, sidearms_c804_w ),
+		new Memory_WriteAddress( 0xe805, 0xe805, sidearms_star_scrollx_w ),
+		new Memory_WriteAddress( 0xe806, 0xe806, sidearms_star_scrolly_w ),
+		new Memory_WriteAddress( 0xe808, 0xe809, MWA_RAM, &sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xe80a, 0xe80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xe80c, 0xe80c, sidearms_gfxctrl_w ),	/* background and sprite enable */
+		new Memory_WriteAddress( 0xf000, 0xf7ff, sidearms_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xf800, 0xffff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, soundlatch_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xf002, 0xf002, YM2203_status_port_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xf001, 0xf001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* Whizz */
 	
@@ -177,58 +189,68 @@ public class sidearms
 	}
 	
 	
-	static MEMORY_READ_START( whizz_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc800, 0xc800, input_port_0_r },
-		{ 0xc801, 0xc801, input_port_1_r },
-		{ 0xc802, 0xc802, input_port_2_r },
-		{ 0xc803, 0xc803, input_port_3_r },
-		{ 0xc804, 0xc804, input_port_4_r },
-		{ 0xc805, 0xc805, input_port_5_r },
-		{ 0xc806, 0xc806, input_port_6_r },
-		{ 0xc807, 0xc807, input_port_7_r },
-		{ 0xd000, 0xffff, MRA_RAM},
+	public static Memory_ReadAddress whizz_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc800, 0xc800, input_port_0_r ),
+		new Memory_ReadAddress( 0xc801, 0xc801, input_port_1_r ),
+		new Memory_ReadAddress( 0xc802, 0xc802, input_port_2_r ),
+		new Memory_ReadAddress( 0xc803, 0xc803, input_port_3_r ),
+		new Memory_ReadAddress( 0xc804, 0xc804, input_port_4_r ),
+		new Memory_ReadAddress( 0xc805, 0xc805, input_port_5_r ),
+		new Memory_ReadAddress( 0xc806, 0xc806, input_port_6_r ),
+		new Memory_ReadAddress( 0xc807, 0xc807, input_port_7_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_RAM),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress whizz_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, whizz_bankswitch_w ),
+		new Memory_WriteAddress( 0xc802, 0xc802, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xc804, 0xc804, sidearms_c804_w ),
+		new Memory_WriteAddress( 0xe805, 0xe805, sidearms_star_scrollx_w ),
+		new Memory_WriteAddress( 0xe806, 0xe806, sidearms_star_scrolly_w ),
+		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xc80c, 0xc80c, sidearms_gfxctrl_w ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress whizz_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress whizz_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort whizz_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, YM2203_status_port_0_r ) ,
+		new IO_ReadPort( 0xc0, 0xc0, soundlatch_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( whizz_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram },
-		{ 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 },
-		{ 0xc800, 0xc800, soundlatch_w },
-		{ 0xc801, 0xc801, whizz_bankswitch_w },
-		{ 0xc802, 0xc802, watchdog_reset_w },
-		{ 0xc804, 0xc804, sidearms_c804_w },
-		{ 0xe805, 0xe805, sidearms_star_scrollx_w },
-		{ 0xe806, 0xe806, sidearms_star_scrolly_w },
-		{ 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx },
-		{ 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly },
-		{ 0xc80c, 0xc80c, sidearms_gfxctrl_w },
-		{ 0xd000, 0xd7ff, sidearms_videoram_w, &videoram },
-		{ 0xd800, 0xdfff, sidearms_colorram_w, &colorram },
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
-	
-	static MEMORY_READ_START( whizz_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( whizz_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	static PORT_READ_START( whizz_readport )
-		{ 0x01, 0x01, YM2203_status_port_0_r } ,
-		{ 0xc0, 0xc0, soundlatch_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( whizz_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-		{ 0x40, 0x40, IOWP_NOP },
+	public static IO_WritePort whizz_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x40, 0x40, IOWP_NOP ),
 	MEMORY_END
 	
 	
@@ -537,7 +559,7 @@ public class sidearms
 	
 	
 	static struct GfxLayout charlayout =
-	{
+	new IO_WritePort(
 		8,8,    /* 8*8 characters */
 		1024,   /* 1024 characters */
 		2,      /* 2 bits per pixel */
@@ -545,10 +567,10 @@ public class sidearms
 		{ 0, 1, 2, 3, 8+0, 8+1, 8+2, 8+3 },
 		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
 		16*8    /* every char takes 16 consecutive bytes */
-	};
+	);
 	
 	static struct GfxLayout spritelayout =
-	{
+	new IO_WritePort(
 		16,16,  /* 16*16 sprites */
 		2048,   /* 2048 sprites */
 		4,      /* 4 bits per pixel */
@@ -558,10 +580,10 @@ public class sidearms
 		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 				8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		64*8    /* every sprite takes 64 consecutive bytes */
-	};
+	);
 	
 	static struct GfxLayout tilelayout =
-	{
+	new IO_WritePort(
 		32,32,  /* 32*32 tiles */
 		512,    /* 512 tiles */
 		4,      /* 4 bits per pixel */
@@ -579,20 +601,20 @@ public class sidearms
 			24*16, 25*16, 26*16, 27*16, 28*16, 29*16, 30*16, 31*16
 		},
 		256*8   /* every tile takes 256 consecutive bytes */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout,   768, 64 }, /* colors 768-1023 */
 		{ REGION_GFX2, 0, &tilelayout,     0, 32 }, /* colors   0-511 */
 		{ REGION_GFX3, 0, &spritelayout, 512, 16 }, /* colors 512-767 */
 		{ -1 } /* end of array */
-	};
+	);
 	
 	
 	
 	static struct GfxLayout turtship_tilelayout =
-	{
+	new IO_WritePort(
 		32,32,  /* 32*32 tiles */
 		768,    /* 768 tiles */
 		4,      /* 4 bits per pixel */
@@ -610,24 +632,24 @@ public class sidearms
 			24*16, 25*16, 26*16, 27*16, 28*16, 29*16, 30*16, 31*16
 		},
 		256*8   /* every tile takes 256 consecutive bytes */
-	};
+	);
 	
 	static struct GfxDecodeInfo turtship_gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout,          768, 64 },	/* colors 768-1023 */
 		{ REGION_GFX2, 0, &turtship_tilelayout,   0, 32 },	/* colors   0-511 */
 		{ REGION_GFX3, 0, &spritelayout,        512, 16 },	/* colors 512-767 */
 		{ -1 } /* end of array */
-	};
+	);
 	
 	/* handler called by the 2203 emulator when the internal timers cause an IRQ */
 	static void irqhandler(int irq)
-	{
+	new IO_WritePort(
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
-	}
+	)
 	
 	static struct YM2203interface ym2203_interface =
-	{
+	new IO_WritePort(
 		2,			/* 2 chips */
 		4000000,	/* 4 MHz ? (hand tuned) */
 		{ YM2203_VOL(15,25), YM2203_VOL(15,25) },
@@ -636,10 +658,10 @@ public class sidearms
 		{ 0 },
 		{ 0 },
 		{ irqhandler }
-	};
+	);
 	
 	static struct YM2203interface ym2203_whizz_interface =
-	{
+	new IO_WritePort(
 		2,			/* 2 chips */
 		4000000,	/* 4 MHz ? (hand tuned) */
 		{ YM2203_VOL(15,25), YM2203_VOL(15,25) },
@@ -648,7 +670,7 @@ public class sidearms
 		{ 0 },
 		{ 0 },
 		{ 0 }
-	};
+	);
 	
 	static MACHINE_DRIVER_START( sidearms )
 	
@@ -1001,10 +1023,10 @@ public class sidearms
 	
 	ROM_END
 	
-	static DRIVER_INIT( sidearms ) { sidearms_gameid = 0; }
-	static DRIVER_INIT( turtship ) { sidearms_gameid = 1; }
-	static DRIVER_INIT( dyger    ) { sidearms_gameid = 2; }
-	static DRIVER_INIT( whizz    ) { sidearms_gameid = 3; }
+	static DRIVER_INIT( sidearms ) new IO_WritePort( sidearms_gameid = 0; )
+	static DRIVER_INIT( turtship ) new IO_WritePort( sidearms_gameid = 1; )
+	static DRIVER_INIT( dyger    ) new IO_WritePort( sidearms_gameid = 2; )
+	static DRIVER_INIT( whizz    ) new IO_WritePort( sidearms_gameid = 3; )
 	
 	GAMEX(1986, sidearms, 0,        sidearms, sidearms, sidearms, ROT0,   "Capcom", "Side Arms - Hyper Dyne (World)", GAME_IMPERFECT_GRAPHICS )
 	GAMEX(1986, sidearmr, sidearms, sidearms, sidearms, sidearms, ROT0,   "Capcom (Romstar license)", "Side Arms - Hyper Dyne (US)", GAME_IMPERFECT_GRAPHICS )

@@ -608,23 +608,27 @@ public class hal21
 		{ 100 }
 	};
 	
-	static MEMORY_READ_START( aso_readmem_sound )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, hal21_soundcommand_r },
-		{ 0xe000, 0xe000, CPUC_ready_r },
-		{ 0xf000, 0xf000, YM3526_status_port_0_r },
-		{ 0xf002, 0xf002, MRA_NOP }, // unknown read
-		{ 0xf004, 0xf004, MRA_NOP }, // unknown read
-		{ 0xf006, 0xf006, MRA_NOP }, // unknown read
-	MEMORY_END
+	public static Memory_ReadAddress aso_readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, hal21_soundcommand_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, CPUC_ready_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, YM3526_status_port_0_r ),
+		new Memory_ReadAddress( 0xf002, 0xf002, MRA_NOP ), // unknown read
+		new Memory_ReadAddress( 0xf004, 0xf004, MRA_NOP ), // unknown read
+		new Memory_ReadAddress( 0xf006, 0xf006, MRA_NOP ), // unknown read
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( aso_writemem_sound )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xf000, 0xf000, YM3526_control_port_0_w }, /* YM3526 #1 control port? */
-		{ 0xf001, 0xf001, YM3526_write_port_0_w },   /* YM3526 #1 write port?  */
-	MEMORY_END
+	public static Memory_WriteAddress aso_writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf000, YM3526_control_port_0_w ), /* YM3526 #1 control port? */
+		new Memory_WriteAddress( 0xf001, 0xf001, YM3526_write_port_0_w ),   /* YM3526 #1 write port?  */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/**************************************************************************/
 	
@@ -638,122 +642,146 @@ public class hal21
 		{ 0 }
 	};
 	
-	static MEMORY_READ_START( hal21_readmem_sound )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa000, hal21_soundcommand_r },
-		{ 0xc000, 0xc000, CPUC_ready_r },
-	MEMORY_END
+	public static Memory_ReadAddress hal21_readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, hal21_soundcommand_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, CPUC_ready_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hal21_writemem_sound )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xe000, 0xe000, AY8910_control_port_0_w },
-		{ 0xe001, 0xe001, AY8910_write_port_0_w },
-		{ 0xe002, 0xe002, hal21_soundack_w }, // bitfielded(0-5) acknowledge write, details unknown
-		{ 0xe008, 0xe008, AY8910_control_port_1_w },
-		{ 0xe009, 0xe009, AY8910_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress hal21_writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, hal21_soundack_w ), // bitfielded(0-5) acknowledge write, details unknown
+		new Memory_WriteAddress( 0xe008, 0xe008, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xe009, 0xe009, AY8910_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hal21_readport_sound )
-		{ 0x0000, 0x0000, MRA_NOP }, // external sound ROM detection?
-	PORT_END
+	public static IO_ReadPort hal21_readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x0000, MRA_NOP ), // external sound ROM detection?
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hal21_writeport_sound )
-		{ 0x0000, 0x0000, MWA_NOP }, // external sound ROM switch?
-	PORT_END
+	public static IO_WritePort hal21_writeport_sound[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x0000, MWA_NOP ), // external sound ROM switch?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/**************************** ASO/Alpha Mission *************************/
 	
-	static MEMORY_READ_START( aso_readmem_cpuA )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc000, hal21_input_port_0_r }, /* coin, start */
-		{ 0xc100, 0xc100, input_port_1_r }, /* P1 */
-		{ 0xc200, 0xc200, input_port_2_r }, /* P2 */
-		{ 0xc500, 0xc500, input_port_3_r }, /* DSW1 */
-		{ 0xc600, 0xc600, input_port_4_r }, /* DSW2 */
-		{ 0xc700, 0xc700, snk_cpuB_nmi_trigger_r },
-		{ 0xd800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress aso_readmem_cpuA[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, hal21_input_port_0_r ), /* coin, start */
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_1_r ), /* P1 */
+		new Memory_ReadAddress( 0xc200, 0xc200, input_port_2_r ), /* P2 */
+		new Memory_ReadAddress( 0xc500, 0xc500, input_port_3_r ), /* DSW1 */
+		new Memory_ReadAddress( 0xc600, 0xc600, input_port_4_r ), /* DSW2 */
+		new Memory_ReadAddress( 0xc700, 0xc700, snk_cpuB_nmi_trigger_r ),
+		new Memory_ReadAddress( 0xd800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( aso_writemem_cpuA )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc400, 0xc400, aso_soundcommand_w },
-		{ 0xc700, 0xc700, snk_cpuA_nmi_ack_w },
-		{ 0xc800, 0xc800, hal21_vreg1_w },
-		{ 0xc900, 0xc900, hal21_vreg2_w },
-		{ 0xca00, 0xca00, hal21_vreg3_w },
-		{ 0xcb00, 0xcb00, hal21_vreg4_w },
-		{ 0xcc00, 0xcc00, hal21_vreg5_w },
-		{ 0xcd00, 0xcd00, hal21_vreg6_w },
-		{ 0xce00, 0xce00, hal21_vreg7_w },
-		{ 0xcf00, 0xcf00, hal21_vreg0_w },
-		{ 0xdcf8, 0xdcf8, aso_scroll_sync_w },
-		{ 0xd800, 0xdfff, MWA_RAM, &shared_auxram },
-		{ 0xe000, 0xe7ff, MWA_RAM, &spriteram },
-		{ 0xe800, 0xf7ff, MWA_RAM, &videoram },
-		{ 0xf800, 0xffff, MWA_RAM, &shared_ram },
-	MEMORY_END
+	public static Memory_WriteAddress aso_writemem_cpuA[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc400, 0xc400, aso_soundcommand_w ),
+		new Memory_WriteAddress( 0xc700, 0xc700, snk_cpuA_nmi_ack_w ),
+		new Memory_WriteAddress( 0xc800, 0xc800, hal21_vreg1_w ),
+		new Memory_WriteAddress( 0xc900, 0xc900, hal21_vreg2_w ),
+		new Memory_WriteAddress( 0xca00, 0xca00, hal21_vreg3_w ),
+		new Memory_WriteAddress( 0xcb00, 0xcb00, hal21_vreg4_w ),
+		new Memory_WriteAddress( 0xcc00, 0xcc00, hal21_vreg5_w ),
+		new Memory_WriteAddress( 0xcd00, 0xcd00, hal21_vreg6_w ),
+		new Memory_WriteAddress( 0xce00, 0xce00, hal21_vreg7_w ),
+		new Memory_WriteAddress( 0xcf00, 0xcf00, hal21_vreg0_w ),
+		new Memory_WriteAddress( 0xdcf8, 0xdcf8, aso_scroll_sync_w ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &shared_auxram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xe800, 0xf7ff, MWA_RAM, &videoram ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM, &shared_ram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( aso_readmem_cpuB )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc000, snk_cpuA_nmi_trigger_r },
-		{ 0xc800, 0xe7ff, shared_auxram_r },
-		{ 0xe800, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xffff, shared_ram_r },
-	MEMORY_END
+	public static Memory_ReadAddress aso_readmem_cpuB[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, snk_cpuA_nmi_trigger_r ),
+		new Memory_ReadAddress( 0xc800, 0xe7ff, shared_auxram_r ),
+		new Memory_ReadAddress( 0xe800, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, shared_ram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( aso_writemem_cpuB )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc000, snk_cpuB_nmi_ack_w },
-		{ 0xc800, 0xd7ff, shared_auxram_w },
-		{ 0xd800, 0xe7ff, hal21_videoram_w },
-		{ 0xe800, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xffff, shared_ram_w },
-	MEMORY_END
+	public static Memory_WriteAddress aso_writemem_cpuB[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, snk_cpuB_nmi_ack_w ),
+		new Memory_WriteAddress( 0xc800, 0xd7ff, shared_auxram_w ),
+		new Memory_WriteAddress( 0xd800, 0xe7ff, hal21_videoram_w ),
+		new Memory_WriteAddress( 0xe800, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, shared_ram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/**************************** HAL21 *************************/
 	
-	static MEMORY_READ_START( hal21_readmem_CPUA )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc000, hal21_input_port_0_r }, /* coin, start */
-		{ 0xc100, 0xc100, input_port_1_r }, /* P1 */
-		{ 0xc200, 0xc200, input_port_2_r }, /* P2 */
-		{ 0xc400, 0xc400, input_port_3_r }, /* DSW1 */
-		{ 0xc500, 0xc500, input_port_4_r }, /* DSW2 */
-		{ 0xc700, 0xc700, snk_cpuB_nmi_trigger_r },
-		{ 0xe000, 0xefff, MRA_RAM },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress hal21_readmem_CPUA[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, hal21_input_port_0_r ), /* coin, start */
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_1_r ), /* P1 */
+		new Memory_ReadAddress( 0xc200, 0xc200, input_port_2_r ), /* P2 */
+		new Memory_ReadAddress( 0xc400, 0xc400, input_port_3_r ), /* DSW1 */
+		new Memory_ReadAddress( 0xc500, 0xc500, input_port_4_r ), /* DSW2 */
+		new Memory_ReadAddress( 0xc700, 0xc700, snk_cpuB_nmi_trigger_r ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hal21_writemem_CPUA )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc300, 0xc300, hal21_soundcommand_w },
-		{ 0xc600, 0xc600, hal21_vreg0_w },
-		{ 0xc700, 0xc700, snk_cpuA_nmi_ack_w },
-		{ 0xd300, 0xd300, hal21_vreg1_w },
-		{ 0xd400, 0xd400, hal21_vreg2_w },
-		{ 0xd500, 0xd500, hal21_vreg3_w },
-		{ 0xd600, 0xd600, hal21_vreg4_w },
-		{ 0xd700, 0xd700, hal21_vreg5_w },
-		{ 0xe000, 0xefff, MWA_RAM, &spriteram },
-		{ 0xf000, 0xffff, MWA_RAM, &shared_ram },
-	MEMORY_END
+	public static Memory_WriteAddress hal21_writemem_CPUA[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc300, 0xc300, hal21_soundcommand_w ),
+		new Memory_WriteAddress( 0xc600, 0xc600, hal21_vreg0_w ),
+		new Memory_WriteAddress( 0xc700, 0xc700, snk_cpuA_nmi_ack_w ),
+		new Memory_WriteAddress( 0xd300, 0xd300, hal21_vreg1_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, hal21_vreg2_w ),
+		new Memory_WriteAddress( 0xd500, 0xd500, hal21_vreg3_w ),
+		new Memory_WriteAddress( 0xd600, 0xd600, hal21_vreg4_w ),
+		new Memory_WriteAddress( 0xd700, 0xd700, hal21_vreg5_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &shared_ram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( hal21_readmem_CPUB )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xc000, 0xcfff, hal21_spriteram_r },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, shared_ram_r },
-	MEMORY_END
+	public static Memory_ReadAddress hal21_readmem_CPUB[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, hal21_spriteram_r ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, shared_ram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hal21_writemem_CPUB )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, snk_cpuB_nmi_ack_w },
-		{ 0xc000, 0xcfff, hal21_spriteram_w },
-		{ 0xd000, 0xdfff, MWA_RAM, &videoram },
-		{ 0xe000, 0xefff, shared_ram_w },
-	MEMORY_END
+	public static Memory_WriteAddress hal21_writemem_CPUB[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, snk_cpuB_nmi_ack_w ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, hal21_spriteram_w ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, &videoram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, shared_ram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/**************************************************************************/
 	

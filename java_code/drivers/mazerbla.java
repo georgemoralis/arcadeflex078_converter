@@ -487,33 +487,41 @@ public class mazerbla
 		coin_counter_w(offset, (data&0x40)>>6 );
 	}
 	
-	static PORT_READ_START( readport )
-		{ 0x4c, 0x4f, ls670_1_r },
-		{ 0x62, 0x62, zpu_inputs_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x4c, 0x4f, ls670_1_r ),
+		new IO_ReadPort( 0x62, 0x62, zpu_inputs_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x4c, 0x4f, ls670_0_w },
-		{ 0x60, 0x60, zpu_bcd_decoder_w },
-		{ 0x68, 0x68, zpu_coin_counter_w },
-		{ 0x6a, 0x6a, zpu_lamps_w },
-		{ 0x6e, 0x6f, zpu_led_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x4c, 0x4f, ls670_0_w ),
+		new IO_WritePort( 0x60, 0x60, zpu_bcd_decoder_w ),
+		new IO_WritePort( 0x68, 0x68, zpu_coin_counter_w ),
+		new IO_WritePort( 0x6a, 0x6a, zpu_lamps_w ),
+		new IO_WritePort( 0x6e, 0x6f, zpu_led_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, sharedram_CFB_ZPU_r },
-		{ 0xd800, 0xd800, cfb_zpu_int_req_clr },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xefff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, sharedram_CFB_ZPU_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, cfb_zpu_int_req_clr ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, sharedram_CFB_ZPU_w },
-		{ 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size },
-		{ 0xe800, 0xefff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, sharedram_CFB_ZPU_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -527,26 +535,34 @@ public class mazerbla
 	}
 	
 	
-	static PORT_READ_START( readport_cpu2 )
-		{ 0x80, 0x83, ls670_0_r },
-	PORT_END
+	public static IO_ReadPort readport_cpu2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x80, 0x83, ls670_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_cpu2 )
-		{ 0x00, 0x00, vsb_ls273_audio_control_w },
-		{ 0x80, 0x83, ls670_1_w },
-	PORT_END
+	public static IO_WritePort writeport_cpu2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, vsb_ls273_audio_control_w ),
+		new IO_WritePort( 0x80, 0x83, ls670_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM }, /* main RAM (stack) */
-		{ 0x8000, 0x83ff, MWA_RAM }, /* waveform ???*/
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ), /* main RAM (stack) */
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ), /* waveform ???*/
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -636,27 +652,33 @@ public class mazerbla
 		return (port02_status);
 	}
 	
-	static PORT_READ_START( readport_cpu3 )
-		{ 0x02, 0x02, cfb_port_02_r },	/* VCU status ? */
-	PORT_END
+	public static IO_ReadPort readport_cpu3[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, cfb_port_02_r ),	/* VCU status ? */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_cpu3_mb )
-		{ 0x01, 0x01, cfb_backgnd_color_w },
-		{ 0x02, 0x02, cfb_led_w },
-		{ 0x03, 0x03, cfb_zpu_int_req_set_w },
-		{ 0x04, 0x04, cfb_rom_bank_sel_w },
-		{ 0x05, 0x05, cfb_vbank_w },	//visible/writable videopage select?
-	PORT_END
+	public static IO_WritePort writeport_cpu3_mb[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x01, cfb_backgnd_color_w ),
+		new IO_WritePort( 0x02, 0x02, cfb_led_w ),
+		new IO_WritePort( 0x03, 0x03, cfb_zpu_int_req_set_w ),
+		new IO_WritePort( 0x04, 0x04, cfb_rom_bank_sel_w ),
+		new IO_WritePort( 0x05, 0x05, cfb_vbank_w ),	//visible/writable videopage select?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* Great Guns has a little different banking layout */
-	static PORT_WRITE_START( writeport_cpu3_gg )
-		{ 0x00, 0x00, IOWP_NOP },
-		{ 0x01, 0x01, cfb_backgnd_color_w },
-		{ 0x02, 0x02, cfb_led_w },
-		{ 0x03, 0x03, cfb_zpu_int_req_set_w },
-		{ 0x04, 0x04, cfb_rom_bank_sel_w_gg },
-		{ 0x05, 0x05, cfb_vbank_w },	//visible/writable videopage select?
-	PORT_END
+	public static IO_WritePort writeport_cpu3_gg[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, IOWP_NOP ),
+		new IO_WritePort( 0x01, 0x01, cfb_backgnd_color_w ),
+		new IO_WritePort( 0x02, 0x02, cfb_led_w ),
+		new IO_WritePort( 0x03, 0x03, cfb_zpu_int_req_set_w ),
+		new IO_WritePort( 0x04, 0x04, cfb_rom_bank_sel_w_gg ),
+		new IO_WritePort( 0x05, 0x05, cfb_vbank_w ),	//visible/writable videopage select?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -1052,23 +1074,27 @@ public class mazerbla
 		return 0;
 	}
 	
-	static MEMORY_READ_START( readmem_cpu3 )
-		{ 0x0000, 0x37ff, MRA_ROM },
-		{ 0x3800, 0x3fff, sharedram_CFB_ZPU_r },
-		{ 0x4000, 0x5fff, MRA_BANK1 },				/* GFX roms */
-		{ 0x6000, 0x67ff, cfb_ram_r },				/* RAM for VCU commands and parameters */
+	public static Memory_ReadAddress readmem_cpu3[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x37ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3800, 0x3fff, sharedram_CFB_ZPU_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),				/* GFX roms */
+		new Memory_ReadAddress( 0x6000, 0x67ff, cfb_ram_r ),				/* RAM for VCU commands and parameters */
 	
-		{ 0xa000, 0xa7ff, VCU_set_cmd_param_r },	/* VCU command and parameters LOAD */
-		{ 0xc000, 0xdfff, VCU_set_gfx_addr_r },		/* gfx LOAD (blit) */
-		{ 0xe000, 0xffff, VCU_set_clr_addr_r },		/* palette? LOAD */
-	MEMORY_END
+		new Memory_ReadAddress( 0xa000, 0xa7ff, VCU_set_cmd_param_r ),	/* VCU command and parameters LOAD */
+		new Memory_ReadAddress( 0xc000, 0xdfff, VCU_set_gfx_addr_r ),		/* gfx LOAD (blit) */
+		new Memory_ReadAddress( 0xe000, 0xffff, VCU_set_clr_addr_r ),		/* palette? LOAD */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu3 )
-		{ 0x0000, 0x37ff, MWA_ROM },
-		{ 0x3800, 0x3fff, sharedram_CFB_ZPU_w, &cfb_zpu_sharedram },
-		{ 0x4000, 0x4003, VCU_video_reg_w },
-		{ 0x6000, 0x67ff, cfb_ram_w, &cfb_ram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_cpu3[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, sharedram_CFB_ZPU_w, &cfb_zpu_sharedram ),
+		new Memory_WriteAddress( 0x4000, 0x4003, VCU_video_reg_w ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, cfb_ram_w, &cfb_ram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -1099,17 +1125,21 @@ public class mazerbla
 	}
 	
 	
-	static PORT_READ_START( gg_readport )
-		{ 0x62, 0x62, zpu_inputs_r },
-	PORT_END
-	static PORT_WRITE_START( gg_writeport )
-		{ 0x4c, 0x4c, main_sound_w },
-		{ 0x60, 0x60, zpu_bcd_decoder_w },
-		{ 0x66, 0x66, IOWP_NOP },
-		{ 0x68, 0x68, IOWP_NOP },
+	public static IO_ReadPort gg_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x62, 0x62, zpu_inputs_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort gg_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x4c, 0x4c, main_sound_w ),
+		new IO_WritePort( 0x60, 0x60, zpu_bcd_decoder_w ),
+		new IO_WritePort( 0x66, 0x66, IOWP_NOP ),
+		new IO_WritePort( 0x68, 0x68, IOWP_NOP ),
 	
-		{ 0x6e, 0x6f, zpu_led_w },
-	PORT_END
+		new IO_WritePort( 0x6e, 0x6f, zpu_led_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -1135,24 +1165,28 @@ public class mazerbla
 		set_led_status(1,data&0x01);
 	}
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x27ff, MRA_RAM },
-		{ 0x4000, 0x4000, AY8910_read_port_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, AY8910_read_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x27ff, MWA_RAM }, /* main RAM (stack) */
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ), /* main RAM (stack) */
 	
-		{ 0x4000, 0x4000, AY8910_control_port_0_w },
-		{ 0x4001, 0x4001, AY8910_write_port_0_w },
-		{ 0x6000, 0x6000, AY8910_control_port_1_w },
-		{ 0x6001, 0x6001, AY8910_write_port_1_w },
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x4001, 0x4001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x6001, 0x6001, AY8910_write_port_1_w ),
 	
-		{ 0x8000, 0x8000, sound_int_clear_w },
-		{ 0xa000, 0xa000, sound_nmi_clear_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0x8000, 0x8000, sound_int_clear_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, sound_nmi_clear_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

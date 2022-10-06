@@ -187,40 +187,44 @@ public class cloak
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0fff, cloak_sharedram_r },
-		{ 0x2800, 0x29ff, MRA_RAM },
-		{ 0x1000, 0x100f, pokey1_r },		/* DSW0 also */
-	//	{ 0x1008, 0x1008, MRA_RAM },
-		{ 0x1800, 0x180f, pokey2_r },		/* DSW1 also */
-		{ 0x2000, 0x2000, input_port_0_r },	/* IN0 */
-		{ 0x2200, 0x2200, input_port_1_r },	/* IN1 */
-		{ 0x2400, 0x2400, input_port_2_r },	/* IN2 */
-		{ 0x2800, 0x29ff, MRA_RAM },
-		{ 0x3000, 0x30ff, MRA_RAM },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, cloak_sharedram_r ),
+		new Memory_ReadAddress( 0x2800, 0x29ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),		/* DSW0 also */
+	//	new Memory_ReadAddress( 0x1008, 0x1008, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x180f, pokey2_r ),		/* DSW1 also */
+		new Memory_ReadAddress( 0x2000, 0x2000, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x2200, 0x2200, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x2400, 0x2400, input_port_2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0x2800, 0x29ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x30ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07ff, cloak_videoram_w, &videoram },
-		{ 0x0800, 0x0fff, cloak_sharedram_w, &cloak_sharedram },
-		{ 0x1000, 0x100f, pokey1_w },
-		{ 0x1800, 0x180f, pokey2_w },
-		{ 0x2600, 0x2600, cloak_custom_w },
-		{ 0x2800, 0x29ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x3000, 0x30ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x3200, 0x327f, cloak_paletteram_w },
-		{ 0x3800, 0x3801, cloak_coin_counter_w },
-		{ 0x3803, 0x3803, cloak_flipscreen_w },
-		{ 0x3805, 0x3805, MWA_NOP },	// ???
-		{ 0x3806, 0x3807, cloak_led_w },
-		{ 0x3a00, 0x3a00, watchdog_reset_w },
-		{ 0x3c00, 0x3c00, cloak_irq_reset_0_w },
-		{ 0x3e00, 0x3e00, cloak_nvram_enable_w },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, cloak_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, cloak_sharedram_w, &cloak_sharedram ),
+		new Memory_WriteAddress( 0x1000, 0x100f, pokey1_w ),
+		new Memory_WriteAddress( 0x1800, 0x180f, pokey2_w ),
+		new Memory_WriteAddress( 0x2600, 0x2600, cloak_custom_w ),
+		new Memory_WriteAddress( 0x2800, 0x29ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x3200, 0x327f, cloak_paletteram_w ),
+		new Memory_WriteAddress( 0x3800, 0x3801, cloak_coin_counter_w ),
+		new Memory_WriteAddress( 0x3803, 0x3803, cloak_flipscreen_w ),
+		new Memory_WriteAddress( 0x3805, 0x3805, MWA_NOP ),	// ???
+		new Memory_WriteAddress( 0x3806, 0x3807, cloak_led_w ),
+		new Memory_WriteAddress( 0x3a00, 0x3a00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c00, cloak_irq_reset_0_w ),
+		new Memory_WriteAddress( 0x3e00, 0x3e00, cloak_nvram_enable_w ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*************************************
 	 *
@@ -228,24 +232,28 @@ public class cloak
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x0007, MRA_RAM },
-		{ 0x0008, 0x000f, graph_processor_r },
-		{ 0x0010, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0fff, cloak_sharedram_r },
-		{ 0x2000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0007, MRA_RAM ),
+		new Memory_ReadAddress( 0x0008, 0x000f, graph_processor_r ),
+		new Memory_ReadAddress( 0x0010, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, cloak_sharedram_r ),
+		new Memory_ReadAddress( 0x2000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x0007, MWA_RAM },
-		{ 0x0008, 0x000f, graph_processor_w },
-		{ 0x0010, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x0fff, cloak_sharedram_w },
-		{ 0x1000, 0x1000, cloak_irq_reset_1_w },
-		{ 0x1200, 0x1200, cloak_clearbmp_w },
-		{ 0x1400, 0x1400, cloak_custom_w },
-		{ 0x2000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0007, MWA_RAM ),
+		new Memory_WriteAddress( 0x0008, 0x000f, graph_processor_w ),
+		new Memory_WriteAddress( 0x0010, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, cloak_sharedram_w ),
+		new Memory_WriteAddress( 0x1000, 0x1000, cloak_irq_reset_1_w ),
+		new Memory_WriteAddress( 0x1200, 0x1200, cloak_clearbmp_w ),
+		new Memory_WriteAddress( 0x1400, 0x1400, cloak_custom_w ),
+		new Memory_WriteAddress( 0x2000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*************************************
 	 *

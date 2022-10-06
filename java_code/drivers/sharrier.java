@@ -245,29 +245,37 @@ public class sharrier
 		{ 0xc7e000, 0xc7ffff, SYS16_MWA16_EXTRAM3 },
 	MEMORY_END
 	
-	static MEMORY_READ_START( hangon_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, YM2203_status_port_0_r },
-		{ 0xe000, 0xe7ff, SegaPCM_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress hangon_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, SegaPCM_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hangon_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd000, YM2203_control_port_0_w },
-		{ 0xd001, 0xd001, YM2203_write_port_0_w },
-		{ 0xe000, 0xe7ff, SegaPCM_w },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress hangon_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, SegaPCM_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hangon_sound_readport )
-		{ 0x40, 0x40, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort hangon_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x40, 0x40, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hangon_sound_writeport )
-	PORT_END
+	public static IO_WritePort hangon_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	
@@ -415,28 +423,36 @@ public class sharrier
 		{ 0xc7c000, 0xc7ffff, shared_ram_w, &shared_ram },
 	MEMORY_END
 	
-	static MEMORY_READ_START( harrier_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xd000, 0xd000, YM2203_status_port_0_r },
-		{ 0xe000, 0xe0ff, SegaPCM_r },
-		{ 0x8000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress harrier_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe0ff, SegaPCM_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( harrier_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xd000, 0xd000, YM2203_control_port_0_w },
-		{ 0xd001, 0xd001, YM2203_write_port_0_w },
-		{ 0xe000, 0xe0ff, SegaPCM_w },
-		{ 0x8000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress harrier_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe0ff, SegaPCM_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( harrier_sound_readport )
-		{ 0x40, 0x40, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort harrier_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x40, 0x40, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( harrier_sound_writeport )
-	PORT_END
+	public static IO_WritePort harrier_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	
@@ -642,57 +658,73 @@ public class sharrier
 		{ 0xc7c000, 0xc7ffff, shared_ram_w, &shared_ram },
 	MEMORY_END
 	
-	static MEMORY_READ_START( enduror_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, YM2203_status_port_0_r },
-		{ 0xe000, 0xe7ff, SegaPCM_r },
-	MEMORY_END
+	public static Memory_ReadAddress enduror_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, SegaPCM_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( enduror_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd000, YM2203_control_port_0_w },
-		{ 0xd001, 0xd001, YM2203_write_port_0_w },
-		{ 0xe000, 0xe7ff, SegaPCM_w },
-	MEMORY_END
+	public static Memory_WriteAddress enduror_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, SegaPCM_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( enduror_sound_readport )
-		{ 0x40, 0x40, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort enduror_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x40, 0x40, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( enduror_sound_writeport )
-	PORT_END
+	public static IO_WritePort enduror_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( enduror_b2_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-	//	{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xf000, 0xf7ff, SegaPCM_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress enduror_b2_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+	//	new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, SegaPCM_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( enduror_b2_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-	//	{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xf000, 0xf7ff, SegaPCM_w },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress enduror_b2_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+	//	new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, SegaPCM_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( enduror_b2_sound_readport )
-		{ 0x00, 0x00, YM2203_status_port_0_r },
-		{ 0x80, 0x80, YM2203_status_port_1_r },
-		{ 0xc0, 0xc0, YM2203_status_port_2_r },
-		{ 0x40, 0x40, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort enduror_b2_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x80, 0x80, YM2203_status_port_1_r ),
+		new IO_ReadPort( 0xc0, 0xc0, YM2203_status_port_2_r ),
+		new IO_ReadPort( 0x40, 0x40, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( enduror_b2_sound_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-		{ 0x80, 0x80, YM2203_control_port_1_w },
-		{ 0x81, 0x81, YM2203_write_port_1_w },
-		{ 0xc0, 0xc0, YM2203_control_port_2_w },
-		{ 0xc1, 0xc1, YM2203_write_port_2_w },
-	PORT_END
+	public static IO_WritePort enduror_b2_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, YM2203_control_port_1_w ),
+		new IO_WritePort( 0x81, 0x81, YM2203_write_port_1_w ),
+		new IO_WritePort( 0xc0, 0xc0, YM2203_control_port_2_w ),
+		new IO_WritePort( 0xc1, 0xc1, YM2203_write_port_2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	

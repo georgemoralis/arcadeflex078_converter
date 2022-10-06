@@ -265,81 +265,97 @@ public class wardner
 	
 	
 	/* Z80 #1 memory/port maps */
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x6fff, MRA_ROM },			/* Main CPU ROM code */
-		{ 0x7000, 0x7fff, wardner_mainram_r },	/* Main RAM */
-		{ 0x8000, 0xffff, wardner_ram_rom_r },	/* Overlapped RAM/Banked ROM - See below */
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),			/* Main CPU ROM code */
+		new Memory_ReadAddress( 0x7000, 0x7fff, wardner_mainram_r ),	/* Main RAM */
+		new Memory_ReadAddress( 0x8000, 0xffff, wardner_ram_rom_r ),	/* Overlapped RAM/Banked ROM - See below */
 		/* memory layout in bank 0 is really as follows */
-	//	{ 0x8000, 0x8fff, wardner_sprite_r },	/* Sprite RAM data */
-	//	{ 0x9000, 0x9fff, MRA_ROM },			/* Banked ROM */
-	//	{ 0xa000, 0xadff, paletteram_r },		/* Palette RAM */
-	//	{ 0xae00, 0xafff, MRA_BANK2 },			/* Unused Palette RAM */
-	//	{ 0xb000, 0xbfff, MRA_ROM },			/* Banked ROM */
-	//	{ 0xc000, 0xc7ff, MRA_BANK3 },			/* Shared RAM with Sound CPU RAM */
-	//	{ 0xc800, 0xffff, MRA_ROM },			/* Banked ROM */
-	MEMORY_END
+	//	new Memory_ReadAddress( 0x8000, 0x8fff, wardner_sprite_r ),	/* Sprite RAM data */
+	//	new Memory_ReadAddress( 0x9000, 0x9fff, MRA_ROM ),			/* Banked ROM */
+	//	new Memory_ReadAddress( 0xa000, 0xadff, paletteram_r ),		/* Palette RAM */
+	//	new Memory_ReadAddress( 0xae00, 0xafff, MRA_BANK2 ),			/* Unused Palette RAM */
+	//	new Memory_ReadAddress( 0xb000, 0xbfff, MRA_ROM ),			/* Banked ROM */
+	//	new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_BANK3 ),			/* Shared RAM with Sound CPU RAM */
+	//	new Memory_ReadAddress( 0xc800, 0xffff, MRA_ROM ),			/* Banked ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, wardner_mainram_w, &wardner_mainram },
-		{ 0x8000, 0x8fff, wardner_sprite_w, (data8_t **)&spriteram16, &spriteram_size },
-		{ 0x9000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xadff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },
-		{ 0xae00, 0xafff, wardner_spare_pal_ram_w, &wardner_spare_pal_ram },
-		{ 0xc000, 0xc7ff, wardner_sharedram_w, &wardner_sharedram },
-		{ 0xb000, 0xbfff, MWA_ROM },
-		{ 0xc800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, wardner_mainram_w, &wardner_mainram ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, wardner_sprite_w, (data8_t **)&spriteram16, &spriteram_size ),
+		new Memory_WriteAddress( 0x9000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xadff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0xae00, 0xafff, wardner_spare_pal_ram_w, &wardner_spare_pal_ram ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, wardner_sharedram_w, &wardner_sharedram ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x50, 0x50, input_port_3_r },			/* DSW A */
-		{ 0x52, 0x52, input_port_4_r },			/* DSW B */
-		{ 0x54, 0x54, input_port_1_r },			/* Player 1 */
-		{ 0x56, 0x56, input_port_2_r },			/* Player 2 */
-		{ 0x58, 0x58, input_port_0_r },			/* V-Blank/Coin/Start */
-		{ 0x60, 0x65, wardner_videoram_r },		/* data from video layer RAM */
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x50, 0x50, input_port_3_r ),			/* DSW A */
+		new IO_ReadPort( 0x52, 0x52, input_port_4_r ),			/* DSW B */
+		new IO_ReadPort( 0x54, 0x54, input_port_1_r ),			/* Player 1 */
+		new IO_ReadPort( 0x56, 0x56, input_port_2_r ),			/* Player 2 */
+		new IO_ReadPort( 0x58, 0x58, input_port_0_r ),			/* V-Blank/Coin/Start */
+		new IO_ReadPort( 0x60, 0x65, wardner_videoram_r ),		/* data from video layer RAM */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, CRTC_reg_sel_w },
-		{ 0x02, 0x02, CRTC_data_w },
-		{ 0x10, 0x13, wardner_txscroll_w },		/* scroll text layer */
-		{ 0x14, 0x15, wardner_txlayer_w },		/* offset in text video RAM */
-		{ 0x20, 0x23, wardner_bgscroll_w },		/* scroll bg layer */
-		{ 0x24, 0x25, wardner_bglayer_w },		/* offset in bg video RAM */
-		{ 0x30, 0x33, wardner_fgscroll_w },		/* scroll fg layer */
-		{ 0x34, 0x35, wardner_fglayer_w },		/* offset in fg video RAM */
-		{ 0x40, 0x43, wardner_exscroll_w },		/* scroll extra layer (not used) */
-		{ 0x60, 0x65, wardner_videoram_w },		/* data for video layer RAM */
-		{ 0x5a, 0x5a, wardner_coin_dsp_w },		/* Machine system control */
-		{ 0x5c, 0x5c, wardner_control_w },		/* Machine system control */
-		{ 0x70, 0x70, wardner_ramrom_banks_w },	/* ROM bank select */
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, CRTC_reg_sel_w ),
+		new IO_WritePort( 0x02, 0x02, CRTC_data_w ),
+		new IO_WritePort( 0x10, 0x13, wardner_txscroll_w ),		/* scroll text layer */
+		new IO_WritePort( 0x14, 0x15, wardner_txlayer_w ),		/* offset in text video RAM */
+		new IO_WritePort( 0x20, 0x23, wardner_bgscroll_w ),		/* scroll bg layer */
+		new IO_WritePort( 0x24, 0x25, wardner_bglayer_w ),		/* offset in bg video RAM */
+		new IO_WritePort( 0x30, 0x33, wardner_fgscroll_w ),		/* scroll fg layer */
+		new IO_WritePort( 0x34, 0x35, wardner_fglayer_w ),		/* offset in fg video RAM */
+		new IO_WritePort( 0x40, 0x43, wardner_exscroll_w ),		/* scroll extra layer (not used) */
+		new IO_WritePort( 0x60, 0x65, wardner_videoram_w ),		/* data for video layer RAM */
+		new IO_WritePort( 0x5a, 0x5a, wardner_coin_dsp_w ),		/* Machine system control */
+		new IO_WritePort( 0x5c, 0x5c, wardner_control_w ),		/* Machine system control */
+		new IO_WritePort( 0x70, 0x70, wardner_ramrom_banks_w ),	/* ROM bank select */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Z80 #2 memory/port maps */
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x807f, MRA_BANK4 },
-		{ 0xc000, 0xc7ff, wardner_sharedram_r },
-		{ 0xc800, 0xcfff, MRA_BANK5 },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x807f, MRA_BANK4 ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, wardner_sharedram_r ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_BANK5 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x807f, MWA_BANK4 },
-		{ 0xc000, 0xc7ff, wardner_sharedram_w },
-		{ 0xc800, 0xcfff, MWA_BANK5 },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x807f, MWA_BANK4 ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, wardner_sharedram_w ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_BANK5 ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x00, 0x00, YM3812_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM3812_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, YM3812_control_port_0_w },
-		{ 0x01, 0x01, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* TMS32010 memory/port maps */

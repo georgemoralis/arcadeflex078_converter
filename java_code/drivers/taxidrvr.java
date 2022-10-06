@@ -115,86 +115,102 @@ public class taxidrvr
 	
 	
 	
-	static MEMORY_READ_START( readmem1 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },
-		{ 0x9000, 0x9fff, MRA_RAM },
-		{ 0xa000, 0xafff, MRA_RAM },
-		{ 0xb000, 0xbfff, MRA_RAM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xf3ff, MRA_RAM },
-		{ 0xf400, 0xf403, ppi8255_0_r },
-		{ 0xf480, 0xf483, ppi8255_2_r },
-		{ 0xf500, 0xf503, ppi8255_3_r },
-		{ 0xf580, 0xf583, ppi8255_4_r },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xafff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xf3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf400, 0xf403, ppi8255_0_r ),
+		new Memory_ReadAddress( 0xf480, 0xf483, ppi8255_2_r ),
+		new Memory_ReadAddress( 0xf500, 0xf503, ppi8255_3_r ),
+		new Memory_ReadAddress( 0xf580, 0xf583, ppi8255_4_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem1 )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, MWA_RAM },	/* ??? */
-		{ 0x9000, 0x9fff, MWA_RAM },	/* ??? */
-		{ 0xa000, 0xafff, MWA_RAM },	/* ??? */
-		{ 0xb000, 0xbfff, MWA_RAM },	/* ??? */
-		{ 0xc000, 0xc7ff, MWA_RAM, &taxidrvr_vram4 },	/* radar bitmap */
-		{ 0xc800, 0xcfff, MWA_RAM, &taxidrvr_vram5 },	/* "sprite1" bitmap */
-		{ 0xd000, 0xd7ff, MWA_RAM, &taxidrvr_vram6 },	/* "sprite2" bitmap */
-		{ 0xd800, 0xdfff, MWA_RAM, &taxidrvr_vram7 },	/* "sprite3" bitmap */
-		{ 0xe000, 0xe3ff, MWA_RAM, &taxidrvr_vram1 },	/* car tilemap */
-		{ 0xe400, 0xebff, MWA_RAM, &taxidrvr_vram2 },	/* bg1 tilemap */
-		{ 0xec00, 0xefff, MWA_RAM, &taxidrvr_vram0 },	/* fg tilemap */
-		{ 0xf000, 0xf3ff, MWA_RAM, &taxidrvr_vram3 },	/* bg2 tilemap */
-		{ 0xf400, 0xf403, ppi8255_0_w },
-		{ 0xf480, 0xf483, ppi8255_2_w },	/* "sprite1" placement */
-		{ 0xf500, 0xf503, ppi8255_3_w },	/* "sprite2" placement */
-		{ 0xf580, 0xf583, ppi8255_4_w },	/* "sprite3" placement */
-	//	{ 0xf780, 0xf781, MWA_RAM },		/* more scroll registers? */
-		{ 0xf782, 0xf787, MWA_RAM, &taxidrvr_scroll },	/* bg scroll (three copies always identical) */
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_RAM ),	/* ??? */
+		new Memory_WriteAddress( 0x9000, 0x9fff, MWA_RAM ),	/* ??? */
+		new Memory_WriteAddress( 0xa000, 0xafff, MWA_RAM ),	/* ??? */
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM ),	/* ??? */
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, &taxidrvr_vram4 ),	/* radar bitmap */
+		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, &taxidrvr_vram5 ),	/* "sprite1" bitmap */
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, &taxidrvr_vram6 ),	/* "sprite2" bitmap */
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &taxidrvr_vram7 ),	/* "sprite3" bitmap */
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM, &taxidrvr_vram1 ),	/* car tilemap */
+		new Memory_WriteAddress( 0xe400, 0xebff, MWA_RAM, &taxidrvr_vram2 ),	/* bg1 tilemap */
+		new Memory_WriteAddress( 0xec00, 0xefff, MWA_RAM, &taxidrvr_vram0 ),	/* fg tilemap */
+		new Memory_WriteAddress( 0xf000, 0xf3ff, MWA_RAM, &taxidrvr_vram3 ),	/* bg2 tilemap */
+		new Memory_WriteAddress( 0xf400, 0xf403, ppi8255_0_w ),
+		new Memory_WriteAddress( 0xf480, 0xf483, ppi8255_2_w ),	/* "sprite1" placement */
+		new Memory_WriteAddress( 0xf500, 0xf503, ppi8255_3_w ),	/* "sprite2" placement */
+		new Memory_WriteAddress( 0xf580, 0xf583, ppi8255_4_w ),	/* "sprite3" placement */
+	//	new Memory_WriteAddress( 0xf780, 0xf781, MWA_RAM ),		/* more scroll registers? */
+		new Memory_WriteAddress( 0xf782, 0xf787, MWA_RAM, &taxidrvr_scroll ),	/* bg scroll (three copies always identical) */
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x6000, 0x67ff, MRA_RAM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa003, ppi8255_1_r },
-		{ 0xe000, 0xe000, input_port_0_r },
-		{ 0xe001, 0xe001, input_port_1_r },
-		{ 0xe002, 0xe002, input_port_2_r },
-		{ 0xe003, 0xe003, input_port_3_r },
-		{ 0xe004, 0xe004, input_port_4_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa003, ppi8255_1_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_0_r ),
+		new Memory_ReadAddress( 0xe001, 0xe001, input_port_1_r ),
+		new Memory_ReadAddress( 0xe002, 0xe002, input_port_2_r ),
+		new Memory_ReadAddress( 0xe003, 0xe003, input_port_3_r ),
+		new Memory_ReadAddress( 0xe004, 0xe004, input_port_4_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x6000, 0x67ff, MWA_RAM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xa000, 0xa003, ppi8255_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa003, ppi8255_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem3 )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x2000, MRA_NOP },	/* irq ack? */
-		{ 0xfc00, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem3[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x2000, MRA_NOP ),	/* irq ack? */
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem3 )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0xfc00, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem3[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport3 )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-		{ 0x03, 0x03, AY8910_read_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport3[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x03, 0x03, AY8910_read_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport3 )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-		{ 0x02, 0x02, AY8910_control_port_1_w },
-		{ 0x03, 0x03, AY8910_write_port_1_w },
-	PORT_END
+	public static IO_WritePort writeport3[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

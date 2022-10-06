@@ -79,26 +79,32 @@ public class crospang
 	
 	/* sound cpu */
 	
-	static MEMORY_READ_START( crospang_sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
+	public static Memory_ReadAddress crospang_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress crospang_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort crospang_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort( 0x02, 0x02, OKIM6295_status_0_r ),
+		new IO_ReadPort( 0x06, 0x06, MRA_NOP  ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( crospang_sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-	MEMORY_END
-	
-	static PORT_READ_START( crospang_sound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-		{ 0x02, 0x02, OKIM6295_status_0_r },
-		{ 0x06, 0x06, MRA_NOP  },
-	MEMORY_END
-	
-	static PORT_WRITE_START( crospang_sound_writeport )
-		{ 0x00, 0x00, MWA_NOP },
-		{ 0x01, 0x01, MWA_NOP },
-		{ 0x02, 0x02, OKIM6295_data_0_w },
+	public static IO_WritePort crospang_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ),
+		new IO_WritePort( 0x01, 0x01, MWA_NOP ),
+		new IO_WritePort( 0x02, 0x02, OKIM6295_data_0_w ),
 	MEMORY_END
 	
 	INPUT_PORTS_START( crospang )
@@ -220,7 +226,7 @@ public class crospang
 	INPUT_PORTS_END
 	
 	static struct GfxLayout layout_16x16x4a =
-	{
+	new IO_WritePort(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
@@ -228,10 +234,10 @@ public class crospang
 		{ 128,129,130,131,132,133,134,135, 0,1,2,3,4,5,6,7 },
 		{ 8*0, 8*1, 8*2, 8*3, 8*4, 8*5, 8*6, 8*7, 8*8, 8*9, 8*10, 8*11, 8*12, 8*13, 8*14, 8*15 },
 		8*32
-	};
+	);
 	
 	static struct GfxLayout layout_16x16x4 =
-	{
+	new IO_WritePort(
 		16,16,
 		RGN_FRAC(1,4),
 		4,
@@ -239,41 +245,41 @@ public class crospang
 		{ 0,1,2,3,4,5,6,7, 128,129,130,131,132,133,134,135 },
 		{ 8*0, 8*1, 8*2, 8*3, 8*4, 8*5, 8*6, 8*7, 8*8, 8*9, 8*10, 8*11, 8*12, 8*13, 8*14, 8*15 },
 		8*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &layout_16x16x4a, 0x0000, 0x40 }, // [0] Sprites
 		{ REGION_GFX2, 0, &layout_16x16x4,  0x0000, 0x40 }, // [1] Tiles
 		{ -1 }
-	};
+	);
 	
 	/* todo : is this correct? */
 	
 	static struct OKIM6295interface okim6295_interface =
-	{
+	new IO_WritePort(
 		1,
 		{ 6000 },	/* ? guess */
 		{ REGION_SOUND1 },
 		{ 60 }
-	};
+	);
 	static void get_bg_tile_info(int tile_index)
-	{
+	new IO_WritePort(
 		int data  = bg_videoram[tile_index];
 		int tile  = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x20,0)
-	}
+	)
 	
 	static void get_fg_tile_info(int tile_index)
-	{
+	new IO_WritePort(
 		int data  = fg_videoram[tile_index];
 		int tile  = data & 0xfff;
 		int color = (data >> 12) & 0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x10,0)
-	}
+	)
 	
 	/*
 	
@@ -300,7 +306,7 @@ public class crospang
 	
 	/* todo fix x co-ord */
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
-	{
+	new IO_WritePort(
 		int offs,fx,fy,x,y,color,sprite,attr,dy,ay;
 	
 		for (offs = 0; offs < spriteram_size/2; offs += 4)
@@ -358,10 +364,10 @@ public class crospang
 					cliprect,TRANSPARENCY_PEN,0);
 			}
 		}
-	}
+	)
 	
 	VIDEO_START(crospang)
-	{
+	new IO_WritePort(
 		bg_layer = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 		fg_layer = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 	
@@ -371,10 +377,10 @@ public class crospang
 		tilemap_set_transparent_pen(fg_layer,0);
 	
 		return 0;
-	}
+	)
 	
 	VIDEO_UPDATE(crospang)
-	{
+	new IO_WritePort(
 	/*
 		if(keyboard_pressed(KEYCODE_X))
 		{
@@ -416,7 +422,7 @@ public class crospang
 		tilemap_draw(bitmap,cliprect,fg_layer,0,0);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	)
 	
 	static MACHINE_DRIVER_START( crospang )
 		/* basic machine hardware */

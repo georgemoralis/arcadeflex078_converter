@@ -94,29 +94,33 @@ public class baraduke
 		sharedram[offset] = data;
 	}
 	
-	static MEMORY_READ_START( baraduke_readmem )
-		{ 0x0000, 0x17ff, MRA_RAM },				/* RAM */
-		{ 0x1800, 0x1fff, MRA_RAM },				/* Sprite RAM */
-		{ 0x2000, 0x3fff, baraduke_videoram_r },	/* Video RAM */
-		{ 0x4000, 0x40ff, namcos1_wavedata_r },		/* PSG device, shared RAM */
-		{ 0x4000, 0x43ff, baraduke_sharedram_r },	/* shared RAM with the MCU */
-		{ 0x4800, 0x4fff, MRA_RAM },				/* video RAM (text layer) */
-		{ 0x6000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress baraduke_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x17ff, MRA_RAM ),				/* RAM */
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),				/* Sprite RAM */
+		new Memory_ReadAddress( 0x2000, 0x3fff, baraduke_videoram_r ),	/* Video RAM */
+		new Memory_ReadAddress( 0x4000, 0x40ff, namcos1_wavedata_r ),		/* PSG device, shared RAM */
+		new Memory_ReadAddress( 0x4000, 0x43ff, baraduke_sharedram_r ),	/* shared RAM with the MCU */
+		new Memory_ReadAddress( 0x4800, 0x4fff, MRA_RAM ),				/* video RAM (text layer) */
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( baraduke_writemem )
-		{ 0x0000, 0x17ff, MWA_RAM },				/* RAM */
-		{ 0x1800, 0x1fff, MWA_RAM, &spriteram },	/* Sprite RAM */
-		{ 0x2000, 0x3fff, baraduke_videoram_w, &baraduke_videoram },/* Video RAM */
-		{ 0x4000, 0x40ff, namcos1_wavedata_w },		/* PSG device, shared RAM */
-		{ 0x4000, 0x43ff, baraduke_sharedram_w, &sharedram },/* shared RAM with the MCU */
-		{ 0x4800, 0x4fff, MWA_RAM, &baraduke_textram },/* video RAM (text layer) */
-		{ 0x8000, 0x8000, watchdog_reset_w },		/* watchdog reset */
-	//	{ 0x8800, 0x8800, MWA_NOP },				/* ??? */
-		{ 0xb000, 0xb002, baraduke_scroll0_w },		/* scroll (layer 0) */
-		{ 0xb004, 0xb006, baraduke_scroll1_w },		/* scroll (layer 1) */
-		{ 0x6000, 0xffff, MWA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress baraduke_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_RAM ),				/* RAM */
+		new Memory_WriteAddress( 0x1800, 0x1fff, MWA_RAM, &spriteram ),	/* Sprite RAM */
+		new Memory_WriteAddress( 0x2000, 0x3fff, baraduke_videoram_w, &baraduke_videoram ),/* Video RAM */
+		new Memory_WriteAddress( 0x4000, 0x40ff, namcos1_wavedata_w ),		/* PSG device, shared RAM */
+		new Memory_WriteAddress( 0x4000, 0x43ff, baraduke_sharedram_w, &sharedram ),/* shared RAM with the MCU */
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, &baraduke_textram ),/* video RAM (text layer) */
+		new Memory_WriteAddress( 0x8000, 0x8000, watchdog_reset_w ),		/* watchdog reset */
+	//	new Memory_WriteAddress( 0x8800, 0x8800, MWA_NOP ),				/* ??? */
+		new Memory_WriteAddress( 0xb000, 0xb002, baraduke_scroll0_w ),		/* scroll (layer 0) */
+		new Memory_WriteAddress( 0xb004, 0xb006, baraduke_scroll1_w ),		/* scroll (layer 1) */
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),				/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	READ_HANDLER( soundkludge_r )
 	{
@@ -125,39 +129,47 @@ public class baraduke
 		return ((counter++) >> 4) & 0xff;
 	}
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },/* internal registers */
-		{ 0x0080, 0x00ff, MRA_RAM },					/* built in RAM */
-		{ 0x1000, 0x10ff, namcos1_wavedata_r },			/* PSG device, shared RAM */
-		{ 0x1105, 0x1105, soundkludge_r },				/* cures speech */
-		{ 0x1100, 0x113f, MRA_RAM },					/* PSG device */
-		{ 0x1000, 0x13ff, baraduke_sharedram_r },		/* shared RAM with the 6809 */
-		{ 0x8000, 0xbfff, MRA_ROM },					/* MCU external ROM */
-		{ 0xc000, 0xc800, MRA_RAM },					/* RAM */
-		{ 0xf000, 0xffff, MRA_ROM },					/* MCU internal ROM */
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),/* internal registers */
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),					/* built in RAM */
+		new Memory_ReadAddress( 0x1000, 0x10ff, namcos1_wavedata_r ),			/* PSG device, shared RAM */
+		new Memory_ReadAddress( 0x1105, 0x1105, soundkludge_r ),				/* cures speech */
+		new Memory_ReadAddress( 0x1100, 0x113f, MRA_RAM ),					/* PSG device */
+		new Memory_ReadAddress( 0x1000, 0x13ff, baraduke_sharedram_r ),		/* shared RAM with the 6809 */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_ROM ),					/* MCU external ROM */
+		new Memory_ReadAddress( 0xc000, 0xc800, MRA_RAM ),					/* RAM */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),					/* MCU internal ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_w },/* internal registers */
-		{ 0x0080, 0x00ff, MWA_RAM },				/* built in RAM */
-		{ 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata },/* PSG device, shared RAM */
-		{ 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs },/* PSG device */
-		{ 0x1000, 0x13ff, baraduke_sharedram_w },	/* shared RAM with the 6809 */
-	//	{ 0x8000, 0x8000, MWA_NOP },				/* ??? */
-	//	{ 0x8800, 0x8800, MWA_NOP },				/* ??? */
-		{ 0x8000, 0xbfff, MWA_ROM },				/* MCU external ROM */
-		{ 0xc000, 0xc800, MWA_RAM },				/* RAM */
-		{ 0xf000, 0xffff, MWA_ROM },				/* MCU internal ROM */
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, hd63701_internal_registers_w ),/* internal registers */
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),				/* built in RAM */
+		new Memory_WriteAddress( 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata ),/* PSG device, shared RAM */
+		new Memory_WriteAddress( 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs ),/* PSG device */
+		new Memory_WriteAddress( 0x1000, 0x13ff, baraduke_sharedram_w ),	/* shared RAM with the 6809 */
+	//	new Memory_WriteAddress( 0x8000, 0x8000, MWA_NOP ),				/* ??? */
+	//	new Memory_WriteAddress( 0x8800, 0x8800, MWA_NOP ),				/* ??? */
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),				/* MCU external ROM */
+		new Memory_WriteAddress( 0xc000, 0xc800, MWA_RAM ),				/* RAM */
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),				/* MCU internal ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mcu_readport )
-		{ HD63701_PORT1, HD63701_PORT1, inputport_r },			/* input ports read */
-	PORT_END
+	public static IO_ReadPort mcu_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( HD63701_PORT1, HD63701_PORT1, inputport_r ),			/* input ports read */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mcu_writeport )
-		{ HD63701_PORT1, HD63701_PORT1, inputport_select_w },	/* input port select */
-		{ HD63701_PORT2, HD63701_PORT2, baraduke_lamps_w },		/* lamps */
-	PORT_END
+	public static IO_WritePort mcu_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( HD63701_PORT1, HD63701_PORT1, inputport_select_w ),	/* input port select */
+		new IO_WritePort( HD63701_PORT2, HD63701_PORT2, baraduke_lamps_w ),		/* lamps */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( baraduke )
 		PORT_START	/* DSW A */

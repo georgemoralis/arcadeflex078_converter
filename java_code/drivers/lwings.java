@@ -277,120 +277,144 @@ public class lwings
 		MSM5205_vclk_w(offset,0);
 	}
 	
-	static MEMORY_READ_START( avengers_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xf7ff, MRA_RAM },
-		{ 0xf808, 0xf808, input_port_0_r },
-		{ 0xf809, 0xf809, input_port_1_r },
-		{ 0xf80a, 0xf80a, input_port_2_r },
-		{ 0xf80b, 0xf80b, input_port_3_r },
-		{ 0xf80c, 0xf80c, input_port_4_r },
-		{ 0xf80d, 0xf80d, avengers_protection_r },
-	MEMORY_END
+	public static Memory_ReadAddress avengers_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf808, 0xf808, input_port_0_r ),
+		new Memory_ReadAddress( 0xf809, 0xf809, input_port_1_r ),
+		new Memory_ReadAddress( 0xf80a, 0xf80a, input_port_2_r ),
+		new Memory_ReadAddress( 0xf80b, 0xf80b, input_port_3_r ),
+		new Memory_ReadAddress( 0xf80c, 0xf80c, input_port_4_r ),
+		new Memory_ReadAddress( 0xf80d, 0xf80d, avengers_protection_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( avengers_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xddff, MWA_RAM },
-		{ 0xde00, 0xdf7f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xdf80, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram },
-		{ 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram },
-		{ 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 },
-		{ 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram },
-		{ 0xf800, 0xf801, lwings_bg1_scrollx_w },
-		{ 0xf802, 0xf803, lwings_bg1_scrolly_w },
-		{ 0xf804, 0xf804, trojan_bg2_scrollx_w },
-		{ 0xf805, 0xf805, trojan_bg2_image_w },
-		{ 0xf808, 0xf808, MWA_NOP }, /* ? */
-		{ 0xf809, 0xf809, avengers_protection_w },
-		{ 0xf80c, 0xf80c, avengers_prot_bank_w },
-		{ 0xf80d, 0xf80d, avengers_adpcm_w },
-		{ 0xf80e, 0xf80e, lwings_bankswitch_w },
-	MEMORY_END
+	public static Memory_WriteAddress avengers_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xddff, MWA_RAM ),
+		new Memory_WriteAddress( 0xde00, 0xdf7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xdf80, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xf800, 0xf801, lwings_bg1_scrollx_w ),
+		new Memory_WriteAddress( 0xf802, 0xf803, lwings_bg1_scrolly_w ),
+		new Memory_WriteAddress( 0xf804, 0xf804, trojan_bg2_scrollx_w ),
+		new Memory_WriteAddress( 0xf805, 0xf805, trojan_bg2_image_w ),
+		new Memory_WriteAddress( 0xf808, 0xf808, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0xf809, 0xf809, avengers_protection_w ),
+		new Memory_WriteAddress( 0xf80c, 0xf80c, avengers_prot_bank_w ),
+		new Memory_WriteAddress( 0xf80d, 0xf80d, avengers_adpcm_w ),
+		new Memory_WriteAddress( 0xf80e, 0xf80e, lwings_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem ) /* common to trojan and lwings */
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xf7ff, MRA_RAM },
-		{ 0xf808, 0xf808, input_port_0_r },
-		{ 0xf809, 0xf809, input_port_1_r },
-		{ 0xf80a, 0xf80a, input_port_2_r },
-		{ 0xf80b, 0xf80b, input_port_3_r },
-		{ 0xf80c, 0xf80c, input_port_4_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),/* common to trojan and lwings */
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf808, 0xf808, input_port_0_r ),
+		new Memory_ReadAddress( 0xf809, 0xf809, input_port_1_r ),
+		new Memory_ReadAddress( 0xf80a, 0xf80a, input_port_2_r ),
+		new Memory_ReadAddress( 0xf80b, 0xf80b, input_port_3_r ),
+		new Memory_ReadAddress( 0xf80c, 0xf80c, input_port_4_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem ) /* lwings */
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xddff, MWA_RAM },
-		{ 0xde00, 0xdfff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram },
-		{ 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram },
-		{ 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 },
-		{ 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram },
-		{ 0xf808, 0xf809, lwings_bg1_scrollx_w },
-		{ 0xf80a, 0xf80b, lwings_bg1_scrolly_w },
-		{ 0xf80c, 0xf80c, soundlatch_w },
-		{ 0xf80d, 0xf80d, watchdog_reset_w },
-		{ 0xf80e, 0xf80e, lwings_bankswitch_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),/* lwings */
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xddff, MWA_RAM ),
+		new Memory_WriteAddress( 0xde00, 0xdfff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xf808, 0xf809, lwings_bg1_scrollx_w ),
+		new Memory_WriteAddress( 0xf80a, 0xf80b, lwings_bg1_scrolly_w ),
+		new Memory_WriteAddress( 0xf80c, 0xf80c, soundlatch_w ),
+		new Memory_WriteAddress( 0xf80d, 0xf80d, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xf80e, 0xf80e, lwings_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( trojan_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xddff, MWA_RAM },
-		{ 0xde00, 0xdf7f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xdf80, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram },
-		{ 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram },
-		{ 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 },
-		{ 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram },
-		{ 0xf800, 0xf801, lwings_bg1_scrollx_w },
-		{ 0xf802, 0xf803, lwings_bg1_scrolly_w },
-		{ 0xf804, 0xf804, trojan_bg2_scrollx_w },
-		{ 0xf805, 0xf805, trojan_bg2_image_w },
-		{ 0xf80c, 0xf80c, soundlatch_w },
-		{ 0xf80d, 0xf80d, watchdog_reset_w },
-		{ 0xf80e, 0xf80e, lwings_bankswitch_w },
-	MEMORY_END
+	public static Memory_WriteAddress trojan_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xddff, MWA_RAM ),
+		new Memory_WriteAddress( 0xde00, 0xdf7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xdf80, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, lwings_fgvideoram_w, &lwings_fgvideoram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, lwings_bg1videoram_w, &lwings_bg1videoram ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, paletteram_RRRRGGGGBBBBxxxx_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, paletteram_RRRRGGGGBBBBxxxx_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xf800, 0xf801, lwings_bg1_scrollx_w ),
+		new Memory_WriteAddress( 0xf802, 0xf803, lwings_bg1_scrolly_w ),
+		new Memory_WriteAddress( 0xf804, 0xf804, trojan_bg2_scrollx_w ),
+		new Memory_WriteAddress( 0xf805, 0xf805, trojan_bg2_image_w ),
+		new Memory_WriteAddress( 0xf80c, 0xf80c, soundlatch_w ),
+		new Memory_WriteAddress( 0xf80d, 0xf80d, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xf80e, 0xf80e, lwings_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc800, soundlatch_r },
-		{ 0xe006, 0xe006, avengers_soundlatch2_r }, //AT: (avengers061gre)
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, soundlatch_r ),
+		new Memory_ReadAddress( 0xe006, 0xe006, avengers_soundlatch2_r ), //AT: (avengers061gre)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xe000, 0xe000, YM2203_control_port_0_w },
-		{ 0xe001, 0xe001, YM2203_write_port_0_w },
-		{ 0xe002, 0xe002, YM2203_control_port_1_w },
-		{ 0xe003, 0xe003, YM2203_write_port_1_w },
-		{ 0xe006, 0xe006, MWA_RAM, &avengers_soundlatch2 },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0xe006, 0xe006, MWA_RAM, &avengers_soundlatch2 ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( adpcm_readmem )
-		{ 0x0000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress adpcm_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* Yes, _no_ ram */
-	static MEMORY_WRITE_START( adpcm_writemem )
-	/*	{ 0x0000, 0xffff, MWA_ROM }, avoid cluttering up error.log */
-		{ 0x0000, 0xffff, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress adpcm_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	/*	new Memory_WriteAddress( 0x0000, 0xffff, MWA_ROM ), avoid cluttering up error.log */
+		new Memory_WriteAddress( 0x0000, 0xffff, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( avengers_adpcm_readport )
-		{ 0x00, 0x00, avengers_adpcm_r },
-	PORT_END
+	public static IO_ReadPort avengers_adpcm_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, avengers_adpcm_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( adpcm_readport )
-		{ 0x00, 0x00, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort adpcm_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( adpcm_writeport )
-		{ 0x01, 0x01, msm5205_w },
-	PORT_END
+	public static IO_WritePort adpcm_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x01, msm5205_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( sectionz )
 		PORT_START      /* IN0 */

@@ -911,39 +911,47 @@ public class suna8
 		coin_lockout_w ( 1,	data & 0x10);
 	}
 	
-	static MEMORY_READ_START( hardhead_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1				},	// Banked ROM
-		{ 0xc000, 0xd7ff, MRA_RAM				},	// RAM
-		{ 0xd800, 0xd9ff, MRA_RAM				},	// Palette
-		{ 0xda00, 0xda00, hardhead_ip_r			},	// Input Ports
-		{ 0xda80, 0xda80, soundlatch2_r			},	// From Sound CPU
-		{ 0xdd80, 0xddff, hardhead_protection_r	},	// Protection
-		{ 0xe000, 0xffff, MRA_RAM				},	// Sprites
-	MEMORY_END
+	public static Memory_ReadAddress hardhead_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM				),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1				),	// Banked ROM
+		new Memory_ReadAddress( 0xc000, 0xd7ff, MRA_RAM				),	// RAM
+		new Memory_ReadAddress( 0xd800, 0xd9ff, MRA_RAM				),	// Palette
+		new Memory_ReadAddress( 0xda00, 0xda00, hardhead_ip_r			),	// Input Ports
+		new Memory_ReadAddress( 0xda80, 0xda80, soundlatch2_r			),	// From Sound CPU
+		new Memory_ReadAddress( 0xdd80, 0xddff, hardhead_protection_r	),	// Protection
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM				),	// Sprites
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hardhead_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM				},	// Banked ROM
-		{ 0xc000, 0xd7ff, MWA_RAM				},	// RAM
-		{ 0xd800, 0xd9ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	},	// Palette
-		{ 0xda00, 0xda00, MWA_RAM, &hardhead_ip	},	// Input Port Select
-		{ 0xda80, 0xda80, hardhead_bankswitch_w	},	// ROM Banking
-		{ 0xdb00, 0xdb00, soundlatch_w			},	// To Sound CPU
-		{ 0xdb80, 0xdb80, hardhead_flipscreen_w	},	// Flip Screen + Coin Lockout
-		{ 0xdc00, 0xdc00, MWA_NOP				},	// <- R	(after bank select)
-		{ 0xdc80, 0xdc80, MWA_NOP				},	// <- R (after bank select)
-		{ 0xdd00, 0xdd00, MWA_NOP				},	// <- R (after ip select)
-		{ 0xdd80, 0xddff, hardhead_protection_w	},	// Protection
-		{ 0xe000, 0xffff, suna8_spriteram_w, &spriteram	},	// Sprites
-	MEMORY_END
+	public static Memory_WriteAddress hardhead_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM				),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM				),	// Banked ROM
+		new Memory_WriteAddress( 0xc000, 0xd7ff, MWA_RAM				),	// RAM
+		new Memory_WriteAddress( 0xd800, 0xd9ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	),	// Palette
+		new Memory_WriteAddress( 0xda00, 0xda00, MWA_RAM, &hardhead_ip	),	// Input Port Select
+		new Memory_WriteAddress( 0xda80, 0xda80, hardhead_bankswitch_w	),	// ROM Banking
+		new Memory_WriteAddress( 0xdb00, 0xdb00, soundlatch_w			),	// To Sound CPU
+		new Memory_WriteAddress( 0xdb80, 0xdb80, hardhead_flipscreen_w	),	// Flip Screen + Coin Lockout
+		new Memory_WriteAddress( 0xdc00, 0xdc00, MWA_NOP				),	// <- R	(after bank select)
+		new Memory_WriteAddress( 0xdc80, 0xdc80, MWA_NOP				),	// <- R (after bank select)
+		new Memory_WriteAddress( 0xdd00, 0xdd00, MWA_NOP				),	// <- R (after ip select)
+		new Memory_WriteAddress( 0xdd80, 0xddff, hardhead_protection_w	),	// Protection
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_spriteram_w, &spriteram	),	// Sprites
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hardhead_readport )
-		{ 0x00, 0x00, IORP_NOP	},	// ? IRQ Ack
-	PORT_END
+	public static IO_ReadPort hardhead_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, IORP_NOP	),	// ? IRQ Ack
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hardhead_writeport )
-	PORT_END
+	public static IO_WritePort hardhead_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -987,39 +995,47 @@ public class suna8
 		return 0x02;
 	}
 	
-	static MEMORY_READ_START( rranger_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1				},	// Banked ROM
-		{ 0xc000, 0xc000, watchdog_reset_r		},	// Watchdog (Tested!)
-		{ 0xc002, 0xc002, input_port_0_r		},	// P1 (Inputs)
-		{ 0xc003, 0xc003, input_port_1_r		},	// P2
-		{ 0xc004, 0xc004, rranger_soundstatus_r	},	// Latch Status?
-		{ 0xc200, 0xc200, MRA_NOP				},	// Protection?
-		{ 0xc280, 0xc280, input_port_2_r		},	// DSW 1
-		{ 0xc2c0, 0xc2c0, input_port_3_r		},	// DSW 2
-		{ 0xc600, 0xc7ff, MRA_RAM				},	// Palette
-		{ 0xc800, 0xdfff, MRA_RAM				},	// RAM
-		{ 0xe000, 0xffff, MRA_RAM				},	// Sprites
-	MEMORY_END
+	public static Memory_ReadAddress rranger_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM				),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1				),	// Banked ROM
+		new Memory_ReadAddress( 0xc000, 0xc000, watchdog_reset_r		),	// Watchdog (Tested!)
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_0_r		),	// P1 (Inputs)
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_1_r		),	// P2
+		new Memory_ReadAddress( 0xc004, 0xc004, rranger_soundstatus_r	),	// Latch Status?
+		new Memory_ReadAddress( 0xc200, 0xc200, MRA_NOP				),	// Protection?
+		new Memory_ReadAddress( 0xc280, 0xc280, input_port_2_r		),	// DSW 1
+		new Memory_ReadAddress( 0xc2c0, 0xc2c0, input_port_3_r		),	// DSW 2
+		new Memory_ReadAddress( 0xc600, 0xc7ff, MRA_RAM				),	// Palette
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM				),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM				),	// Sprites
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rranger_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM				},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM				},	// Banked ROM
-		{ 0xc000, 0xc000, soundlatch_w			},	// To Sound CPU
-		{ 0xc002, 0xc002, rranger_bankswitch_w	},	// ROM Banking
-		{ 0xc200, 0xc200, MWA_NOP				},	// Protection?
-		{ 0xc280, 0xc280, MWA_NOP				},	// ? NMI Ack
-		{ 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	},	// Palette
-		{ 0xc800, 0xdfff, MWA_RAM				},	// RAM
-		{ 0xe000, 0xffff, suna8_spriteram_w, &spriteram	},	// Sprites
-	MEMORY_END
+	public static Memory_WriteAddress rranger_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM				),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM				),	// Banked ROM
+		new Memory_WriteAddress( 0xc000, 0xc000, soundlatch_w			),	// To Sound CPU
+		new Memory_WriteAddress( 0xc002, 0xc002, rranger_bankswitch_w	),	// ROM Banking
+		new Memory_WriteAddress( 0xc200, 0xc200, MWA_NOP				),	// Protection?
+		new Memory_WriteAddress( 0xc280, 0xc280, MWA_NOP				),	// ? NMI Ack
+		new Memory_WriteAddress( 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	),	// Palette
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM				),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_spriteram_w, &spriteram	),	// Sprites
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( rranger_readport )
-		{ 0x00, 0x00, IORP_NOP	},	// ? IRQ Ack
-	PORT_END
+	public static IO_ReadPort rranger_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, IORP_NOP	),	// ? IRQ Ack
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rranger_writeport )
-	PORT_END
+	public static IO_WritePort rranger_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -1079,38 +1095,46 @@ public class suna8
 		suna8_rombank = data;
 	}
 	
-	static MEMORY_READ_START( brickzn_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1					},	// Banked ROM
-		{ 0xc100, 0xc100, input_port_0_r			},	// P1 (Buttons)
-		{ 0xc101, 0xc101, input_port_1_r			},	// P2
-		{ 0xc102, 0xc102, input_port_2_r			},	// DSW 1
-		{ 0xc103, 0xc103, input_port_3_r			},	// DSW 2
-		{ 0xc108, 0xc108, input_port_4_r			},	// P1 (Analog)
-		{ 0xc10c, 0xc10c, input_port_5_r			},	// P2
-		{ 0xc140, 0xc140, brickzn_c140_r			},	// ???
-		{ 0xc600, 0xc7ff, suna8_banked_paletteram_r	},	// Palette (Banked)
-		{ 0xc800, 0xdfff, MRA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_r	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress brickzn_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1					),	// Banked ROM
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_0_r			),	// P1 (Buttons)
+		new Memory_ReadAddress( 0xc101, 0xc101, input_port_1_r			),	// P2
+		new Memory_ReadAddress( 0xc102, 0xc102, input_port_2_r			),	// DSW 1
+		new Memory_ReadAddress( 0xc103, 0xc103, input_port_3_r			),	// DSW 2
+		new Memory_ReadAddress( 0xc108, 0xc108, input_port_4_r			),	// P1 (Analog)
+		new Memory_ReadAddress( 0xc10c, 0xc10c, input_port_5_r			),	// P2
+		new Memory_ReadAddress( 0xc140, 0xc140, brickzn_c140_r			),	// ???
+		new Memory_ReadAddress( 0xc600, 0xc7ff, suna8_banked_paletteram_r	),	// Palette (Banked)
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xffff, suna8_banked_spriteram_r	),	// Sprites (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( brickzn_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM						},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM						},	// Banked ROM
-		{ 0xc040, 0xc040, brickzn_rombank_w				},	// ROM Bank
-		{ 0xc060, 0xc060, brickzn_spritebank_w			},	// Sprite  RAM Bank + Flip Screen
-		{ 0xc0a0, 0xc0a0, brickzn_palettebank_w			},	// Palette RAM Bank + ?
-		{ 0xc0c0, 0xc0c0, brickzn_unknown_w				},	// ???
-		{ 0xc600, 0xc7ff, brickzn_banked_paletteram_w	},	// Palette (Banked)
-		{ 0xc800, 0xdfff, MWA_RAM						},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_w		},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress brickzn_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM						),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM						),	// Banked ROM
+		new Memory_WriteAddress( 0xc040, 0xc040, brickzn_rombank_w				),	// ROM Bank
+		new Memory_WriteAddress( 0xc060, 0xc060, brickzn_spritebank_w			),	// Sprite  RAM Bank + Flip Screen
+		new Memory_WriteAddress( 0xc0a0, 0xc0a0, brickzn_palettebank_w			),	// Palette RAM Bank + ?
+		new Memory_WriteAddress( 0xc0c0, 0xc0c0, brickzn_unknown_w				),	// ???
+		new Memory_WriteAddress( 0xc600, 0xc7ff, brickzn_banked_paletteram_w	),	// Palette (Banked)
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM						),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_banked_spriteram_w		),	// Sprites (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( brickzn_readport )
-	PORT_END
+	public static IO_ReadPort brickzn_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( brickzn_writeport )
-	PORT_END
+	public static IO_WritePort brickzn_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -1177,39 +1201,47 @@ public class suna8
 		suna8_rombank = data;
 	}
 	
-	static MEMORY_READ_START( hardhea2_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1					},	// Banked ROM
-		{ 0xc000, 0xc000, input_port_0_r			},	// P1 (Inputs)
-		{ 0xc001, 0xc001, input_port_1_r			},	// P2
-		{ 0xc002, 0xc002, input_port_2_r			},	// DSW 1
-		{ 0xc003, 0xc003, input_port_3_r			},	// DSW 2
-		{ 0xc080, 0xc080, hardhea2_c080_r			},	// ???
-		{ 0xc600, 0xc7ff, paletteram_r				},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MRA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_r	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress hardhea2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1					),	// Banked ROM
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r			),	// P1 (Inputs)
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r			),	// P2
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r			),	// DSW 1
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r			),	// DSW 2
+		new Memory_ReadAddress( 0xc080, 0xc080, hardhea2_c080_r			),	// ???
+		new Memory_ReadAddress( 0xc600, 0xc7ff, paletteram_r				),	// Palette (Banked??)
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xffff, suna8_banked_spriteram_r	),	// Sprites (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hardhea2_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM					},	// Banked ROM
-		{ 0xc200, 0xc200, hardhea2_spritebank_w		},	// Sprite RAM Bank
-		{ 0xc280, 0xc280, hardhea2_rombank_w		},	// ROM Bank (?mirrored up to c2ff?)
-		{ 0xc300, 0xc300, hardhea2_flipscreen_w		},	// Flip Screen
-		{ 0xc380, 0xc380, hardhea2_nmi_w			},	// ? NMI related ?
-		{ 0xc400, 0xc400, hardhea2_leds_w			},	// Leds + Coin Counter
-		{ 0xc480, 0xc480, MWA_NOP					},	// ~ROM Bank
-		{ 0xc500, 0xc500, soundlatch_w				},	// To Sound CPU
-		{ 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MWA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_w	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress hardhea2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM					),	// Banked ROM
+		new Memory_WriteAddress( 0xc200, 0xc200, hardhea2_spritebank_w		),	// Sprite RAM Bank
+		new Memory_WriteAddress( 0xc280, 0xc280, hardhea2_rombank_w		),	// ROM Bank (?mirrored up to c2ff?)
+		new Memory_WriteAddress( 0xc300, 0xc300, hardhea2_flipscreen_w		),	// Flip Screen
+		new Memory_WriteAddress( 0xc380, 0xc380, hardhea2_nmi_w			),	// ? NMI related ?
+		new Memory_WriteAddress( 0xc400, 0xc400, hardhea2_leds_w			),	// Leds + Coin Counter
+		new Memory_WriteAddress( 0xc480, 0xc480, MWA_NOP					),	// ~ROM Bank
+		new Memory_WriteAddress( 0xc500, 0xc500, soundlatch_w				),	// To Sound CPU
+		new Memory_WriteAddress( 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	),	// Palette (Banked??)
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_banked_spriteram_w	),	// Sprites (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hardhea2_readport )
-	PORT_END
+	public static IO_ReadPort hardhea2_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hardhea2_writeport )
-	PORT_END
+	public static IO_WritePort hardhea2_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -1228,37 +1260,45 @@ public class suna8
 		suna8_spritebank = spritebank_latch;
 	}
 	
-	static MEMORY_READ_START( starfigh_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1					},	// Banked ROM
-		{ 0xc000, 0xc000, input_port_0_r			},	// P1 (Inputs)
-		{ 0xc001, 0xc001, input_port_1_r			},	// P2
-		{ 0xc002, 0xc002, input_port_2_r			},	// DSW 1
-		{ 0xc003, 0xc003, input_port_3_r			},	// DSW 2
-		{ 0xc600, 0xc7ff, suna8_banked_paletteram_r	},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MRA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_r	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress starfigh_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1					),	// Banked ROM
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r			),	// P1 (Inputs)
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r			),	// P2
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r			),	// DSW 1
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r			),	// DSW 2
+		new Memory_ReadAddress( 0xc600, 0xc7ff, suna8_banked_paletteram_r	),	// Palette (Banked??)
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xffff, suna8_banked_spriteram_r	),	// Sprites (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( starfigh_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM						},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM						},	// Banked ROM
-		{ 0xc200, 0xc200, starfigh_spritebank_w			},	// Sprite RAM Bank
-		{ 0xc380, 0xc3ff, starfigh_spritebank_latch_w	},	// Sprite RAM Bank
-		{ 0xc280, 0xc280, hardhea2_rombank_w			},	// ROM Bank (?mirrored up to c2ff?)
-		{ 0xc300, 0xc300, hardhea2_flipscreen_w			},	// Flip Screen
-		{ 0xc400, 0xc400, hardhea2_leds_w				},	// Leds + Coin Counter
-		{ 0xc500, 0xc500, soundlatch_w					},	// To Sound CPU
-		{ 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MWA_RAM						},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_w		},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress starfigh_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM						),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM						),	// Banked ROM
+		new Memory_WriteAddress( 0xc200, 0xc200, starfigh_spritebank_w			),	// Sprite RAM Bank
+		new Memory_WriteAddress( 0xc380, 0xc3ff, starfigh_spritebank_latch_w	),	// Sprite RAM Bank
+		new Memory_WriteAddress( 0xc280, 0xc280, hardhea2_rombank_w			),	// ROM Bank (?mirrored up to c2ff?)
+		new Memory_WriteAddress( 0xc300, 0xc300, hardhea2_flipscreen_w			),	// Flip Screen
+		new Memory_WriteAddress( 0xc400, 0xc400, hardhea2_leds_w				),	// Leds + Coin Counter
+		new Memory_WriteAddress( 0xc500, 0xc500, soundlatch_w					),	// To Sound CPU
+		new Memory_WriteAddress( 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	),	// Palette (Banked??)
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM						),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_banked_spriteram_w		),	// Sprites (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( starfigh_readport )
-	PORT_END
+	public static IO_ReadPort starfigh_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( starfigh_writeport )
-	PORT_END
+	public static IO_WritePort starfigh_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -1323,33 +1363,37 @@ public class suna8
 		return (cpu_getcurrentframe() & 1) ? 0x80 : 0;
 	}
 	
-	static MEMORY_READ_START( sparkman_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1					},	// Banked ROM
-		{ 0xc000, 0xc000, input_port_0_r			},	// P1 (Inputs)
-		{ 0xc001, 0xc001, input_port_1_r			},	// P2
-		{ 0xc002, 0xc002, input_port_2_r			},	// DSW 1
-		{ 0xc003, 0xc003, input_port_3_r			},	// DSW 2
-		{ 0xc080, 0xc080, input_port_4_r			},	// Buttons
-		{ 0xc0a3, 0xc0a3, sparkman_c0a3_r			},	// ???
-		{ 0xc600, 0xc7ff, paletteram_r				},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MRA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_r	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress sparkman_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1					),	// Banked ROM
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r			),	// P1 (Inputs)
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r			),	// P2
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_2_r			),	// DSW 1
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_3_r			),	// DSW 2
+		new Memory_ReadAddress( 0xc080, 0xc080, input_port_4_r			),	// Buttons
+		new Memory_ReadAddress( 0xc0a3, 0xc0a3, sparkman_c0a3_r			),	// ???
+		new Memory_ReadAddress( 0xc600, 0xc7ff, paletteram_r				),	// Palette (Banked??)
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xe000, 0xffff, suna8_banked_spriteram_r	),	// Sprites (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sparkman_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM					},	// Banked ROM
-		{ 0xc200, 0xc200, sparkman_spritebank_w		},	// Sprite RAM Bank
-		{ 0xc280, 0xc280, sparkman_rombank_w		},	// ROM Bank (?mirrored up to c2ff?)
-		{ 0xc300, 0xc300, sparkman_flipscreen_w		},	// Flip Screen
-		{ 0xc380, 0xc380, sparkman_nmi_w			},	// ? NMI related ?
-		{ 0xc400, 0xc400, sparkman_leds_w			},	// Leds + Coin Counter
-		{ 0xc500, 0xc500, soundlatch_w				},	// To Sound CPU
-		{ 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	},	// Palette (Banked??)
-		{ 0xc800, 0xdfff, MWA_RAM					},	// RAM
-		{ 0xe000, 0xffff, suna8_banked_spriteram_w	},	// Sprites (Banked)
-	MEMORY_END
+	public static Memory_WriteAddress sparkman_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM					),	// Banked ROM
+		new Memory_WriteAddress( 0xc200, 0xc200, sparkman_spritebank_w		),	// Sprite RAM Bank
+		new Memory_WriteAddress( 0xc280, 0xc280, sparkman_rombank_w		),	// ROM Bank (?mirrored up to c2ff?)
+		new Memory_WriteAddress( 0xc300, 0xc300, sparkman_flipscreen_w		),	// Flip Screen
+		new Memory_WriteAddress( 0xc380, 0xc380, sparkman_nmi_w			),	// ? NMI related ?
+		new Memory_WriteAddress( 0xc400, 0xc400, sparkman_leds_w			),	// Leds + Coin Counter
+		new Memory_WriteAddress( 0xc500, 0xc500, soundlatch_w				),	// To Sound CPU
+		new Memory_WriteAddress( 0xc600, 0xc7ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram	),	// Palette (Banked??)
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xe000, 0xffff, suna8_banked_spriteram_w	),	// Sprites (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
@@ -1364,29 +1408,37 @@ public class suna8
 									Hard Head
 	***************************************************************************/
 	
-	static MEMORY_READ_START( hardhead_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0xc000, 0xc7ff, MRA_RAM					},	// RAM
-		{ 0xc800, 0xc800, YM3812_status_port_0_r 	},	// ? unsure
-		{ 0xd800, 0xd800, soundlatch_r				},	// From Main CPU
-	MEMORY_END
+	public static Memory_ReadAddress hardhead_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xc800, 0xc800, YM3812_status_port_0_r 	),	// ? unsure
+		new Memory_ReadAddress( 0xd800, 0xd800, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hardhead_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},	// ROM
-		{ 0xc000, 0xc7ff, MWA_RAM					},	// RAM
-		{ 0xd000, 0xd000, soundlatch2_w				},	//
-		{ 0xa000, 0xa000, YM3812_control_port_0_w	},	// YM3812
-		{ 0xa001, 0xa001, YM3812_write_port_0_w		},
-		{ 0xa002, 0xa002, AY8910_control_port_0_w	},	// AY8910
-		{ 0xa003, 0xa003, AY8910_write_port_0_w		},
-	MEMORY_END
+	public static Memory_WriteAddress hardhead_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xd000, 0xd000, soundlatch2_w				),	//
+		new Memory_WriteAddress( 0xa000, 0xa000, YM3812_control_port_0_w	),	// YM3812
+		new Memory_WriteAddress( 0xa001, 0xa001, YM3812_write_port_0_w		),
+		new Memory_WriteAddress( 0xa002, 0xa002, AY8910_control_port_0_w	),	// AY8910
+		new Memory_WriteAddress( 0xa003, 0xa003, AY8910_write_port_0_w		),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( hardhead_sound_readport )
-		{ 0x01, 0x01, IORP_NOP	},	// ? IRQ Ack
-	PORT_END
+	public static IO_ReadPort hardhead_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, IORP_NOP	),	// ? IRQ Ack
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hardhead_sound_writeport )
-	PORT_END
+	public static IO_WritePort hardhead_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -1394,64 +1446,84 @@ public class suna8
 									Rough Ranger
 	***************************************************************************/
 	
-	static MEMORY_READ_START( rranger_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM					},	// ROM
-		{ 0xc000, 0xc7ff, MRA_RAM					},	// RAM
-		{ 0xd800, 0xd800, soundlatch_r				},	// From Main CPU
-	MEMORY_END
+	public static Memory_ReadAddress rranger_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xd800, 0xd800, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rranger_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM					},	// ROM
-		{ 0xc000, 0xc7ff, MWA_RAM					},	// RAM
-		{ 0xd000, 0xd000, soundlatch2_w				},	//
-		{ 0xa000, 0xa000, YM2203_control_port_0_w	},	// YM2203
-		{ 0xa001, 0xa001, YM2203_write_port_0_w		},
-		{ 0xa002, 0xa002, YM2203_control_port_1_w	},	// AY8910
-		{ 0xa003, 0xa003, YM2203_write_port_1_w		},
-	MEMORY_END
+	public static Memory_WriteAddress rranger_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xd000, 0xd000, soundlatch2_w				),	//
+		new Memory_WriteAddress( 0xa000, 0xa000, YM2203_control_port_0_w	),	// YM2203
+		new Memory_WriteAddress( 0xa001, 0xa001, YM2203_write_port_0_w		),
+		new Memory_WriteAddress( 0xa002, 0xa002, YM2203_control_port_1_w	),	// AY8910
+		new Memory_WriteAddress( 0xa003, 0xa003, YM2203_write_port_1_w		),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( rranger_sound_readport )
-	PORT_END
+	public static IO_ReadPort rranger_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rranger_sound_writeport )
-	PORT_END
+	public static IO_WritePort rranger_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************
 									Brick Zone
 	***************************************************************************/
 	
-	static MEMORY_READ_START( brickzn_sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM					},	// ROM
-		{ 0xe000, 0xe7ff, MRA_RAM					},	// RAM
-		{ 0xf800, 0xf800, soundlatch_r				},	// From Main CPU
-	MEMORY_END
+	public static Memory_ReadAddress brickzn_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( brickzn_sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM					},	// ROM
-		{ 0xc000, 0xc000, YM3812_control_port_0_w	},	// YM3812
-		{ 0xc001, 0xc001, YM3812_write_port_0_w		},
-		{ 0xc002, 0xc002, AY8910_control_port_0_w	},	// AY8910
-		{ 0xc003, 0xc003, AY8910_write_port_0_w		},
-		{ 0xe000, 0xe7ff, MWA_RAM					},	// RAM
-		{ 0xf000, 0xf000, soundlatch2_w				},	// To PCM CPU
-	MEMORY_END
+	public static Memory_WriteAddress brickzn_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xc000, 0xc000, YM3812_control_port_0_w	),	// YM3812
+		new Memory_WriteAddress( 0xc001, 0xc001, YM3812_write_port_0_w		),
+		new Memory_WriteAddress( 0xc002, 0xc002, AY8910_control_port_0_w	),	// AY8910
+		new Memory_WriteAddress( 0xc003, 0xc003, AY8910_write_port_0_w		),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xf000, 0xf000, soundlatch2_w				),	// To PCM CPU
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( brickzn_sound_readport )
-	PORT_END
+	public static IO_ReadPort brickzn_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( brickzn_sound_writeport )
-	PORT_END
+	public static IO_WritePort brickzn_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* PCM Z80 , 4 DACs (4 bits per sample), NO RAM !! */
 	
-	static MEMORY_READ_START( brickzn_pcm_readmem )
-		{ 0x0000, 0xffff, MRA_ROM	},	// ROM
-	MEMORY_END
-	static MEMORY_WRITE_START( brickzn_pcm_writemem )
-		{ 0x0000, 0xffff, MWA_ROM	},	// ROM
-	MEMORY_END
+	public static Memory_ReadAddress brickzn_pcm_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xffff, MRA_ROM	),	// ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress brickzn_pcm_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xffff, MWA_ROM	),	// ROM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static WRITE_HANDLER( brickzn_pcm_w )
@@ -1459,12 +1531,16 @@ public class suna8
 		DAC_data_w( offset & 3, (data & 0xf) * 0x11 );
 	}
 	
-	static PORT_READ_START( brickzn_pcm_readport )
-		{ 0x00, 0x00, soundlatch2_r		},	// From Sound CPU
-	PORT_END
-	static PORT_WRITE_START( brickzn_pcm_writeport )
-		{ 0x00, 0x03, brickzn_pcm_w			},	// 4 x DAC
-	PORT_END
+	public static IO_ReadPort brickzn_pcm_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch2_r		),	// From Sound CPU
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort brickzn_pcm_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x03, brickzn_pcm_w			),	// 4 x DAC
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

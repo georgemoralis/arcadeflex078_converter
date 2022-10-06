@@ -187,97 +187,105 @@ public class taitosj
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, taitosj_fake_data_r },
-		{ 0x8801, 0x8801, taitosj_fake_status_r },
-		{ 0xc400, 0xd015, MRA_RAM },
-		{ 0xd100, 0xd17f, MRA_RAM },
-		{ 0xd400, 0xd403, taitosj_collision_reg_r },
-		{ 0xd404, 0xd404, taitosj_gfxrom_r },
-		{ 0xd408, 0xd408, input_port_0_r },     /* IN0 */
-		{ 0xd409, 0xd409, input_port_1_r },     /* IN1 */
-		{ 0xd40a, 0xd40a, input_port_5_r },     /* DSW1 */
-		{ 0xd40b, 0xd40b, input_port_2_r },     /* IN2 */
-		{ 0xd40c, 0xd40c, input_port_3_r },     /* Service */
-		{ 0xd40d, 0xd40d, input_port_4_r },
-		{ 0xd40f, 0xd40f, AY8910_read_port_0_r },       /* DSW2 and DSW3 */
-		{ 0xe000, 0xefff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, taitosj_fake_data_r ),
+		new Memory_ReadAddress( 0x8801, 0x8801, taitosj_fake_status_r ),
+		new Memory_ReadAddress( 0xc400, 0xd015, MRA_RAM ),
+		new Memory_ReadAddress( 0xd100, 0xd17f, MRA_RAM ),
+		new Memory_ReadAddress( 0xd400, 0xd403, taitosj_collision_reg_r ),
+		new Memory_ReadAddress( 0xd404, 0xd404, taitosj_gfxrom_r ),
+		new Memory_ReadAddress( 0xd408, 0xd408, input_port_0_r ),     /* IN0 */
+		new Memory_ReadAddress( 0xd409, 0xd409, input_port_1_r ),     /* IN1 */
+		new Memory_ReadAddress( 0xd40a, 0xd40a, input_port_5_r ),     /* DSW1 */
+		new Memory_ReadAddress( 0xd40b, 0xd40b, input_port_2_r ),     /* IN2 */
+		new Memory_ReadAddress( 0xd40c, 0xd40c, input_port_3_r ),     /* Service */
+		new Memory_ReadAddress( 0xd40d, 0xd40d, input_port_4_r ),
+		new Memory_ReadAddress( 0xd40f, 0xd40f, AY8910_read_port_0_r ),       /* DSW2 and DSW3 */
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, taitosj_fake_data_w },
-		{ 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram },
-		{ 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size },
-		{ 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 },
-		{ 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 },
-		{ 0xd000, 0xd05f, MWA_RAM, &taitosj_colscrolly },
-		{ 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram },
-		{ 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority },
-		{ 0xd40e, 0xd40e, AY8910_control_port_0_w },
-		{ 0xd40f, 0xd40f, AY8910_write_port_0_w },
-		{ 0xd500, 0xd505, MWA_RAM, &taitosj_scroll },
-		{ 0xd506, 0xd507, taitosj_colorbank_w, &taitosj_colorbank },
-		{ 0xd508, 0xd508, taitosj_collision_reg_clear_w },
-		{ 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer },
-		{ 0xd50b, 0xd50b, taitosj_soundcommand_w },
-		{ 0xd50d, 0xd50d, MWA_RAM, /*watchdog_reset_w*/ },  /* Bio Attack reset sometimes after you die */
-		{ 0xd50e, 0xd50e, taitosj_bankswitch_w },
-		{ 0xd50f, 0xd50f, MWA_NOP },
-		{ 0xd600, 0xd600, taitosj_videoenable_w },
-		{ 0xe000, 0xefff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, taitosj_fake_data_w ),
+		new Memory_WriteAddress( 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 ),
+		new Memory_WriteAddress( 0xd000, 0xd05f, MWA_RAM, &taitosj_colscrolly ),
+		new Memory_WriteAddress( 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority ),
+		new Memory_WriteAddress( 0xd40e, 0xd40e, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd40f, 0xd40f, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd500, 0xd505, MWA_RAM, &taitosj_scroll ),
+		new Memory_WriteAddress( 0xd506, 0xd507, taitosj_colorbank_w, &taitosj_colorbank ),
+		new Memory_WriteAddress( 0xd508, 0xd508, taitosj_collision_reg_clear_w ),
+		new Memory_WriteAddress( 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer ),
+		new Memory_WriteAddress( 0xd50b, 0xd50b, taitosj_soundcommand_w ),
+		new Memory_WriteAddress( 0xd50d, 0xd50d, MWA_RAM, /*watchdog_reset_w*/ ),  /* Bio Attack reset sometimes after you die */
+		new Memory_WriteAddress( 0xd50e, 0xd50e, taitosj_bankswitch_w ),
+		new Memory_WriteAddress( 0xd50f, 0xd50f, MWA_NOP ),
+		new Memory_WriteAddress( 0xd600, 0xd600, taitosj_videoenable_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* only difference is taitosj_fake_ replaced with taitosj_mcu_ */
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, taitosj_mcu_data_r },
-		{ 0x8801, 0x8801, taitosj_mcu_status_r },
-		{ 0xc400, 0xd05f, MRA_RAM },
-		{ 0xd100, 0xd17f, MRA_RAM },
-		{ 0xd400, 0xd403, taitosj_collision_reg_r },
-		{ 0xd404, 0xd404, taitosj_gfxrom_r },
-		{ 0xd408, 0xd408, input_port_0_r },     /* IN0 */
-		{ 0xd409, 0xd409, input_port_1_r },     /* IN1 */
-		{ 0xd40a, 0xd40a, input_port_5_r },     /* DSW1 */
-		{ 0xd40b, 0xd40b, input_port_2_r },     /* IN2 */
-		{ 0xd40c, 0xd40c, input_port_3_r },     /* Service */
-		{ 0xd40d, 0xd40d, input_port_4_r },
-		{ 0xd40f, 0xd40f, AY8910_read_port_0_r },       /* DSW2 and DSW3 */
-		{ 0xe000, 0xefff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, taitosj_mcu_data_r ),
+		new Memory_ReadAddress( 0x8801, 0x8801, taitosj_mcu_status_r ),
+		new Memory_ReadAddress( 0xc400, 0xd05f, MRA_RAM ),
+		new Memory_ReadAddress( 0xd100, 0xd17f, MRA_RAM ),
+		new Memory_ReadAddress( 0xd400, 0xd403, taitosj_collision_reg_r ),
+		new Memory_ReadAddress( 0xd404, 0xd404, taitosj_gfxrom_r ),
+		new Memory_ReadAddress( 0xd408, 0xd408, input_port_0_r ),     /* IN0 */
+		new Memory_ReadAddress( 0xd409, 0xd409, input_port_1_r ),     /* IN1 */
+		new Memory_ReadAddress( 0xd40a, 0xd40a, input_port_5_r ),     /* DSW1 */
+		new Memory_ReadAddress( 0xd40b, 0xd40b, input_port_2_r ),     /* IN2 */
+		new Memory_ReadAddress( 0xd40c, 0xd40c, input_port_3_r ),     /* Service */
+		new Memory_ReadAddress( 0xd40d, 0xd40d, input_port_4_r ),
+		new Memory_ReadAddress( 0xd40f, 0xd40f, AY8910_read_port_0_r ),       /* DSW2 and DSW3 */
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, taitosj_mcu_data_w },
-		{ 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram },
-		{ 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size },
-		{ 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 },
-		{ 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 },
-		{ 0xd000, 0xd05f, MWA_RAM, &taitosj_colscrolly },
-		{ 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram },
-		{ 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority },
-		{ 0xd40e, 0xd40e, AY8910_control_port_0_w },
-		{ 0xd40f, 0xd40f, AY8910_write_port_0_w },
-		{ 0xd500, 0xd505, MWA_RAM, &taitosj_scroll },
-		{ 0xd506, 0xd507, taitosj_colorbank_w, &taitosj_colorbank },
-		{ 0xd508, 0xd508, taitosj_collision_reg_clear_w },
-		{ 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer },
-		{ 0xd50b, 0xd50b, taitosj_soundcommand_w },
-		{ 0xd50d, 0xd50d, watchdog_reset_w },
-		{ 0xd50e, 0xd50e, taitosj_bankswitch_w },
-		{ 0xd600, 0xd600, taitosj_videoenable_w },
-		{ 0xe000, 0xefff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, taitosj_mcu_data_w ),
+		new Memory_WriteAddress( 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 ),
+		new Memory_WriteAddress( 0xd000, 0xd05f, MWA_RAM, &taitosj_colscrolly ),
+		new Memory_WriteAddress( 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority ),
+		new Memory_WriteAddress( 0xd40e, 0xd40e, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd40f, 0xd40f, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd500, 0xd505, MWA_RAM, &taitosj_scroll ),
+		new Memory_WriteAddress( 0xd506, 0xd507, taitosj_colorbank_w, &taitosj_colorbank ),
+		new Memory_WriteAddress( 0xd508, 0xd508, taitosj_collision_reg_clear_w ),
+		new Memory_WriteAddress( 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer ),
+		new Memory_WriteAddress( 0xd50b, 0xd50b, taitosj_soundcommand_w ),
+		new Memory_WriteAddress( 0xd50d, 0xd50d, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xd50e, 0xd50e, taitosj_bankswitch_w ),
+		new Memory_WriteAddress( 0xd600, 0xd600, taitosj_videoenable_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* seems the most logical way to do the gears */
 	static int kikstart_gear;
@@ -301,92 +309,104 @@ public class taitosj
 		return portreturn;
 	}
 	
-	static MEMORY_READ_START( kikstart_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, taitosj_mcu_data_r },
-		{ 0x8801, 0x8801, taitosj_mcu_status_r },
-		{ 0x8802, 0x8802, MRA_NOP },
-		{ 0xc400, 0xd05f, MRA_RAM },
-		{ 0xd100, 0xd17f, MRA_RAM },
-		{ 0xd400, 0xd403, taitosj_collision_reg_r },
-		{ 0xd404, 0xd404, taitosj_gfxrom_r },
-		{ 0xd408, 0xd408, input_port_0_r },     /* IN0 */
-		{ 0xd409, 0xd409, input_port_1_r },     /* IN1 */
-		{ 0xd40a, 0xd40a, input_port_5_r },     /* DSW1 */
-		{ 0xd40b, 0xd40b, input_port_2_r },     /* IN2 */
-		{ 0xd40c, 0xd40c, kikstart_gears_read },     /* Service */
-		{ 0xd40d, 0xd40d, input_port_4_r },
-		{ 0xd40f, 0xd40f, AY8910_read_port_0_r },       /* DSW2 and DSW3 */
-		{ 0xd800, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress kikstart_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, taitosj_mcu_data_r ),
+		new Memory_ReadAddress( 0x8801, 0x8801, taitosj_mcu_status_r ),
+		new Memory_ReadAddress( 0x8802, 0x8802, MRA_NOP ),
+		new Memory_ReadAddress( 0xc400, 0xd05f, MRA_RAM ),
+		new Memory_ReadAddress( 0xd100, 0xd17f, MRA_RAM ),
+		new Memory_ReadAddress( 0xd400, 0xd403, taitosj_collision_reg_r ),
+		new Memory_ReadAddress( 0xd404, 0xd404, taitosj_gfxrom_r ),
+		new Memory_ReadAddress( 0xd408, 0xd408, input_port_0_r ),     /* IN0 */
+		new Memory_ReadAddress( 0xd409, 0xd409, input_port_1_r ),     /* IN1 */
+		new Memory_ReadAddress( 0xd40a, 0xd40a, input_port_5_r ),     /* DSW1 */
+		new Memory_ReadAddress( 0xd40b, 0xd40b, input_port_2_r ),     /* IN2 */
+		new Memory_ReadAddress( 0xd40c, 0xd40c, kikstart_gears_read ),     /* Service */
+		new Memory_ReadAddress( 0xd40d, 0xd40d, input_port_4_r ),
+		new Memory_ReadAddress( 0xd40f, 0xd40f, AY8910_read_port_0_r ),       /* DSW2 and DSW3 */
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( kikstart_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, taitosj_mcu_data_w },
-		{ 0x8802, 0x8802, MWA_NOP },
-		{ 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram },
-		{ 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size },
-		{ 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 },
-		{ 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 },
-		{ 0x8a00, 0x8a5f, MWA_RAM, &taitosj_colscrolly },
-		{ 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram },
-		{ 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority },
-		{ 0xd40e, 0xd40e, AY8910_control_port_0_w },
-		{ 0xd40f, 0xd40f, AY8910_write_port_0_w },
-		{ 0xd000, 0xd001, taitosj_colorbank_w, &taitosj_colorbank },
-		{ 0xd002, 0xd007, MWA_RAM, &taitosj_scroll },
-		{ 0xd508, 0xd508, taitosj_collision_reg_clear_w },
-		{ 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer },
-		{ 0xd50b, 0xd50b, taitosj_soundcommand_w },
-		{ 0xd50d, 0xd50d, watchdog_reset_w },
-		{ 0xd50e, 0xd50e, taitosj_bankswitch_w },
-		{ 0xd600, 0xd600, taitosj_videoenable_w },
-		{ 0xd800, 0xdfff, MWA_RAM,&kikstart_scrollram },// scroll ram + ???
-		{ 0xe000, 0xefff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress kikstart_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, taitosj_mcu_data_w ),
+		new Memory_WriteAddress( 0x8802, 0x8802, MWA_NOP ),
+		new Memory_WriteAddress( 0x9000, 0xbfff, taitosj_characterram_w, &taitosj_characterram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, taitosj_videoram2_w, &taitosj_videoram2 ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, taitosj_videoram3_w, &taitosj_videoram3 ),
+		new Memory_WriteAddress( 0x8a00, 0x8a5f, MWA_RAM, &taitosj_colscrolly ),
+		new Memory_WriteAddress( 0xd100, 0xd17f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd200, 0xd27f, taitosj_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xd300, 0xd300, MWA_RAM, &taitosj_video_priority ),
+		new Memory_WriteAddress( 0xd40e, 0xd40e, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd40f, 0xd40f, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd000, 0xd001, taitosj_colorbank_w, &taitosj_colorbank ),
+		new Memory_WriteAddress( 0xd002, 0xd007, MWA_RAM, &taitosj_scroll ),
+		new Memory_WriteAddress( 0xd508, 0xd508, taitosj_collision_reg_clear_w ),
+		new Memory_WriteAddress( 0xd509, 0xd50a, MWA_RAM, &taitosj_gfxpointer ),
+		new Memory_WriteAddress( 0xd50b, 0xd50b, taitosj_soundcommand_w ),
+		new Memory_WriteAddress( 0xd50d, 0xd50d, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xd50e, 0xd50e, taitosj_bankswitch_w ),
+		new Memory_WriteAddress( 0xd600, 0xd600, taitosj_videoenable_w ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM,&kikstart_scrollram ),// scroll ram + ???
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x4801, 0x4801, AY8910_read_port_1_r },
-		{ 0x4803, 0x4803, AY8910_read_port_2_r },
-		{ 0x4805, 0x4805, AY8910_read_port_3_r },
-		{ 0x5000, 0x5000, soundlatch_r },
-		{ 0xe000, 0xefff, MRA_ROM },	/* space for diagnostic ROM */
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4801, 0x4801, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0x4803, 0x4803, AY8910_read_port_2_r ),
+		new Memory_ReadAddress( 0x4805, 0x4805, AY8910_read_port_3_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ),	/* space for diagnostic ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0x4800, 0x4800, AY8910_control_port_1_w },
-		{ 0x4801, 0x4801, AY8910_write_port_1_w },
-		{ 0x4802, 0x4802, AY8910_control_port_2_w },
-		{ 0x4803, 0x4803, AY8910_write_port_2_w },
-		{ 0x4804, 0x4804, AY8910_control_port_3_w },
-		{ 0x4805, 0x4805, AY8910_write_port_3_w },
-		{ 0xe000, 0xefff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4800, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x4801, 0x4801, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x4802, 0x4802, AY8910_control_port_2_w ),
+		new Memory_WriteAddress( 0x4803, 0x4803, AY8910_write_port_2_w ),
+		new Memory_WriteAddress( 0x4804, 0x4804, AY8910_control_port_3_w ),
+		new Memory_WriteAddress( 0x4805, 0x4805, AY8910_write_port_3_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( m68705_readmem )
-		{ 0x0000, 0x0000, taitosj_68705_portA_r },
-		{ 0x0001, 0x0001, taitosj_68705_portB_r },
-		{ 0x0002, 0x0002, taitosj_68705_portC_r },
-		{ 0x0003, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m68705_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, taitosj_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, taitosj_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, taitosj_68705_portC_r ),
+		new Memory_ReadAddress( 0x0003, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m68705_writemem )
-		{ 0x0000, 0x0000, taitosj_68705_portA_w },
-		{ 0x0001, 0x0001, taitosj_68705_portB_w },
-		{ 0x0003, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m68705_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, taitosj_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, taitosj_68705_portB_w ),
+		new Memory_WriteAddress( 0x0003, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

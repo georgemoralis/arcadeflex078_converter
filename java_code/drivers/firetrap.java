@@ -247,86 +247,98 @@ public class firetrap
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xe97f, MRA_RAM },
-		{ 0xf010, 0xf010, input_port_0_r },
-		{ 0xf011, 0xf011, input_port_1_r },
-		{ 0xf012, 0xf012, input_port_2_r },
-		{ 0xf013, 0xf013, input_port_3_r },
-		{ 0xf014, 0xf014, input_port_4_r },
-		{ 0xf016, 0xf016, firetrap_8751_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xe97f, MRA_RAM ),
+		new Memory_ReadAddress( 0xf010, 0xf010, input_port_0_r ),
+		new Memory_ReadAddress( 0xf011, 0xf011, input_port_1_r ),
+		new Memory_ReadAddress( 0xf012, 0xf012, input_port_2_r ),
+		new Memory_ReadAddress( 0xf013, 0xf013, input_port_3_r ),
+		new Memory_ReadAddress( 0xf014, 0xf014, input_port_4_r ),
+		new Memory_ReadAddress( 0xf016, 0xf016, firetrap_8751_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, firetrap_bg1videoram_w, &firetrap_bg1videoram },
-		{ 0xd800, 0xdfff, firetrap_bg2videoram_w, &firetrap_bg2videoram },
-		{ 0xe000, 0xe7ff, firetrap_fgvideoram_w,  &firetrap_fgvideoram },
-		{ 0xe800, 0xe97f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf000, 0xf000, MWA_NOP },	/* IRQ acknowledge */
-		{ 0xf001, 0xf001, firetrap_sound_command_w },
-		{ 0xf002, 0xf002, firetrap_bankselect_w },
-		{ 0xf003, 0xf003, flip_screen_w },
-		{ 0xf004, 0xf004, firetrap_nmi_disable_w },
-		{ 0xf005, 0xf005, firetrap_8751_w },
-		{ 0xf008, 0xf009, firetrap_bg1_scrollx_w },
-		{ 0xf00a, 0xf00b, firetrap_bg1_scrolly_w },
-		{ 0xf00c, 0xf00d, firetrap_bg2_scrollx_w },
-		{ 0xf00e, 0xf00f, firetrap_bg2_scrolly_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, firetrap_bg1videoram_w, &firetrap_bg1videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, firetrap_bg2videoram_w, &firetrap_bg2videoram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, firetrap_fgvideoram_w,  &firetrap_fgvideoram ),
+		new Memory_WriteAddress( 0xe800, 0xe97f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ),	/* IRQ acknowledge */
+		new Memory_WriteAddress( 0xf001, 0xf001, firetrap_sound_command_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, firetrap_bankselect_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, flip_screen_w ),
+		new Memory_WriteAddress( 0xf004, 0xf004, firetrap_nmi_disable_w ),
+		new Memory_WriteAddress( 0xf005, 0xf005, firetrap_8751_w ),
+		new Memory_WriteAddress( 0xf008, 0xf009, firetrap_bg1_scrollx_w ),
+		new Memory_WriteAddress( 0xf00a, 0xf00b, firetrap_bg1_scrolly_w ),
+		new Memory_WriteAddress( 0xf00c, 0xf00d, firetrap_bg2_scrollx_w ),
+		new Memory_WriteAddress( 0xf00e, 0xf00f, firetrap_bg2_scrolly_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_bootleg )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xe97f, MRA_RAM },
-		{ 0xf010, 0xf010, input_port_0_r },
-		{ 0xf011, 0xf011, input_port_1_r },
-		{ 0xf012, 0xf012, input_port_2_r },
-		{ 0xf013, 0xf013, input_port_3_r },
-		{ 0xf014, 0xf014, input_port_4_r },
-		{ 0xf016, 0xf016, firetrap_8751_bootleg_r },
-		{ 0xf800, 0xf8ff, MRA_ROM },	/* extra ROM in the bootleg with unprotection code */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_bootleg[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xe97f, MRA_RAM ),
+		new Memory_ReadAddress( 0xf010, 0xf010, input_port_0_r ),
+		new Memory_ReadAddress( 0xf011, 0xf011, input_port_1_r ),
+		new Memory_ReadAddress( 0xf012, 0xf012, input_port_2_r ),
+		new Memory_ReadAddress( 0xf013, 0xf013, input_port_3_r ),
+		new Memory_ReadAddress( 0xf014, 0xf014, input_port_4_r ),
+		new Memory_ReadAddress( 0xf016, 0xf016, firetrap_8751_bootleg_r ),
+		new Memory_ReadAddress( 0xf800, 0xf8ff, MRA_ROM ),	/* extra ROM in the bootleg with unprotection code */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_bootleg )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, firetrap_bg1videoram_w, &firetrap_bg1videoram },
-		{ 0xd800, 0xdfff, firetrap_bg2videoram_w, &firetrap_bg2videoram },
-		{ 0xe000, 0xe7ff, firetrap_fgvideoram_w,  &firetrap_fgvideoram },
-		{ 0xe800, 0xe97f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf000, 0xf000, MWA_NOP },	/* IRQ acknowledge */
-		{ 0xf001, 0xf001, firetrap_sound_command_w },
-		{ 0xf002, 0xf002, firetrap_bankselect_w },
-		{ 0xf003, 0xf003, flip_screen_w },
-		{ 0xf004, 0xf004, firetrap_nmi_disable_w },
-		{ 0xf005, 0xf005, MWA_NOP },
-		{ 0xf008, 0xf009, firetrap_bg1_scrollx_w },
-		{ 0xf00a, 0xf00b, firetrap_bg1_scrolly_w },
-		{ 0xf00c, 0xf00d, firetrap_bg2_scrollx_w },
-		{ 0xf00e, 0xf00f, firetrap_bg2_scrolly_w },
-		{ 0xf800, 0xf8ff, MWA_ROM },	/* extra ROM in the bootleg with unprotection code */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_bootleg[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, firetrap_bg1videoram_w, &firetrap_bg1videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, firetrap_bg2videoram_w, &firetrap_bg2videoram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, firetrap_fgvideoram_w,  &firetrap_fgvideoram ),
+		new Memory_WriteAddress( 0xe800, 0xe97f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ),	/* IRQ acknowledge */
+		new Memory_WriteAddress( 0xf001, 0xf001, firetrap_sound_command_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, firetrap_bankselect_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, flip_screen_w ),
+		new Memory_WriteAddress( 0xf004, 0xf004, firetrap_nmi_disable_w ),
+		new Memory_WriteAddress( 0xf005, 0xf005, MWA_NOP ),
+		new Memory_WriteAddress( 0xf008, 0xf009, firetrap_bg1_scrollx_w ),
+		new Memory_WriteAddress( 0xf00a, 0xf00b, firetrap_bg1_scrolly_w ),
+		new Memory_WriteAddress( 0xf00c, 0xf00d, firetrap_bg2_scrollx_w ),
+		new Memory_WriteAddress( 0xf00e, 0xf00f, firetrap_bg2_scrolly_w ),
+		new Memory_WriteAddress( 0xf800, 0xf8ff, MWA_ROM ),	/* extra ROM in the bootleg with unprotection code */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x3400, 0x3400, soundlatch_r },
-		{ 0x4000, 0x7fff, MRA_BANK2 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3400, 0x3400, soundlatch_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x1000, 0x1000, YM3526_control_port_0_w },
-		{ 0x1001, 0x1001, YM3526_write_port_0_w },
-		{ 0x2000, 0x2000, firetrap_adpcm_data_w },	/* ADPCM data for the MSM5205 chip */
-		{ 0x2400, 0x2400, firetrap_sound_2400_w },
-		{ 0x2800, 0x2800, firetrap_sound_bankselect_w },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1000, YM3526_control_port_0_w ),
+		new Memory_WriteAddress( 0x1001, 0x1001, YM3526_write_port_0_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, firetrap_adpcm_data_w ),	/* ADPCM data for the MSM5205 chip */
+		new Memory_WriteAddress( 0x2400, 0x2400, firetrap_sound_2400_w ),
+		new Memory_WriteAddress( 0x2800, 0x2800, firetrap_sound_bankselect_w ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

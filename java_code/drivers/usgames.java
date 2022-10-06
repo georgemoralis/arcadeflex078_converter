@@ -73,77 +73,85 @@ public class usgames
 	
 	
 	
-	static MEMORY_READ_START( usg_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x1fff, MRA_RAM },
+	public static Memory_ReadAddress usg_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_RAM ),
 	
-		{ 0x2000, 0x2000, input_port_1_r },
-		{ 0x2010, 0x2010, input_port_0_r },
-		{ 0x2041, 0x2041, input_port_2_r },
-		{ 0x2070, 0x2070, input_port_3_r },
+		new Memory_ReadAddress( 0x2000, 0x2000, input_port_1_r ),
+		new Memory_ReadAddress( 0x2010, 0x2010, input_port_0_r ),
+		new Memory_ReadAddress( 0x2041, 0x2041, input_port_2_r ),
+		new Memory_ReadAddress( 0x2070, 0x2070, input_port_3_r ),
 	
-		{ 0x2800, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3fff, MRA_RAM },
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x2800, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( usg185_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x1fff, MRA_RAM },
+	public static Memory_ReadAddress usg185_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_RAM ),
 	
-		{ 0x2400, 0x2400, input_port_1_r },
-		{ 0x2410, 0x2410, input_port_0_r },
-		{ 0x2441, 0x2441, input_port_2_r },
-		{ 0x2470, 0x2470, input_port_3_r },
+		new Memory_ReadAddress( 0x2400, 0x2400, input_port_1_r ),
+		new Memory_ReadAddress( 0x2410, 0x2410, input_port_0_r ),
+		new Memory_ReadAddress( 0x2441, 0x2441, input_port_2_r ),
+		new Memory_ReadAddress( 0x2470, 0x2470, input_port_3_r ),
 	
-		{ 0x2800, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3fff, MRA_RAM },
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x2800, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( usg_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
+	public static Memory_WriteAddress usg_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
 	
-		{ 0x2020, 0x2020, lamps1_w },
-		{ 0x2030, 0x2030, lamps2_w },
+		new Memory_WriteAddress( 0x2020, 0x2020, lamps1_w ),
+		new Memory_WriteAddress( 0x2030, 0x2030, lamps2_w ),
 	
-		{ 0x2040, 0x2040, crtc6845_address_w },
-		{ 0x2041, 0x2041, crtc6845_register_w },
+		new Memory_WriteAddress( 0x2040, 0x2040, crtc6845_address_w ),
+		new Memory_WriteAddress( 0x2041, 0x2041, crtc6845_register_w ),
 	
-		{ 0x2400, 0x2400, AY8910_control_port_0_w },
-		{ 0x2401, 0x2401, AY8910_write_port_0_w },
+		new Memory_WriteAddress( 0x2400, 0x2400, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x2401, 0x2401, AY8910_write_port_0_w ),
 	
-		{ 0x2060, 0x2060, usg_rombank_w },
+		new Memory_WriteAddress( 0x2060, 0x2060, usg_rombank_w ),
 	
-		{ 0x2800, 0x2fff, usg_charram_w, &usg_charram },
-		{ 0x3000, 0x3fff, usg_videoram_w, &usg_videoram },
-		{ 0x4000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, &usg_charram ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, &usg_videoram ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( usg185_writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
+	public static Memory_WriteAddress usg185_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
 	
-		{ 0x2420, 0x2420, lamps1_w },
-		{ 0x2430, 0x2430, lamps2_w },
+		new Memory_WriteAddress( 0x2420, 0x2420, lamps1_w ),
+		new Memory_WriteAddress( 0x2430, 0x2430, lamps2_w ),
 	
-		{ 0x2440, 0x2440, crtc6845_address_w },
-		{ 0x2441, 0x2441, crtc6845_register_w },
+		new Memory_WriteAddress( 0x2440, 0x2440, crtc6845_address_w ),
+		new Memory_WriteAddress( 0x2441, 0x2441, crtc6845_register_w ),
 	
-		{ 0x2000, 0x2000, AY8910_control_port_0_w },
-		{ 0x2001, 0x2001, AY8910_write_port_0_w },
+		new Memory_WriteAddress( 0x2000, 0x2000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, AY8910_write_port_0_w ),
 	
-		{ 0x2460, 0x2460, usg_rombank_w },
+		new Memory_WriteAddress( 0x2460, 0x2460, usg_rombank_w ),
 	
-		{ 0x2800, 0x2fff, usg_charram_w, &usg_charram },
-		{ 0x3000, 0x3fff, usg_videoram_w, &usg_videoram },
-		{ 0x4000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, &usg_charram ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, &usg_videoram ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

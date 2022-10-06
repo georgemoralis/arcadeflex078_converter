@@ -273,148 +273,168 @@ public class zaxxon
 	
 	/* Memory Maps */
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa000, 0xa0ff, MRA_RAM },
-		{ 0xc000, 0xc000, input_port_0_r },
-		{ 0xc001, 0xc001, input_port_1_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc003, 0xc003, input_port_4_r },
-		{ 0xc100, 0xc100, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa0ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_4_r ),
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x8000, 0x83ff, zaxxon_videoram_w, &videoram },
-		{ 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xc000, 0xc001, zaxxon_coin_lockout_w },
-		{ 0xc002, 0xc002, MWA_NOP },	// service coin lockout
-		{ 0xc003, 0xc004, zaxxon_coin_counter_w },
-		{ 0xc006, 0xc006, zaxxon_flipscreen_w },
-		{ 0xff3c, 0xff3f, zaxxon_sound_w },
-		{ 0xfff0, 0xfff0, interrupt_enable_w },
-		{ 0xfff1, 0xfff1, MWA_RAM, &zaxxon_char_color_bank },
-		{ 0xfff2, 0xfff7, MWA_NOP },
-		{ 0xfff8, 0xfff9, MWA_RAM, &zaxxon_background_position },
-		{ 0xfffa, 0xfffa, MWA_RAM, &zaxxon_background_color_bank },
-		{ 0xfffb, 0xfffb, MWA_RAM, &zaxxon_background_enable },
-		{ 0xfffc, 0xffff, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, zaxxon_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc001, zaxxon_coin_lockout_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, MWA_NOP ),	// service coin lockout
+		new Memory_WriteAddress( 0xc003, 0xc004, zaxxon_coin_counter_w ),
+		new Memory_WriteAddress( 0xc006, 0xc006, zaxxon_flipscreen_w ),
+		new Memory_WriteAddress( 0xff3c, 0xff3f, zaxxon_sound_w ),
+		new Memory_WriteAddress( 0xfff0, 0xfff0, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xfff1, 0xfff1, MWA_RAM, &zaxxon_char_color_bank ),
+		new Memory_WriteAddress( 0xfff2, 0xfff7, MWA_NOP ),
+		new Memory_WriteAddress( 0xfff8, 0xfff9, MWA_RAM, &zaxxon_background_position ),
+		new Memory_WriteAddress( 0xfffa, 0xfffa, MWA_RAM, &zaxxon_background_color_bank ),
+		new Memory_WriteAddress( 0xfffb, 0xfffb, MWA_RAM, &zaxxon_background_enable ),
+		new Memory_WriteAddress( 0xfffc, 0xffff, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( razmataz_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa000, 0xa0ff, MRA_RAM },
-		{ 0xc000, 0xc000, razmataz_dial_0_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc003, 0xc003, input_port_4_r },
-		{ 0xc004, 0xc004, input_port_6_r },
-		{ 0xc008, 0xc008, razmataz_dial_1_r },
-		{ 0xc00c, 0xc00c, input_port_7_r },
-		{ 0xc100, 0xc100, input_port_2_r },
-		{ 0xc80a, 0xc80a, razmataz_unknown1_r },	// needed, otherwise the game hangs
-		{ 0xff3c, 0xff3c, razmataz_unknown2_r },	// timer? if 0, "duck season" ends
-	MEMORY_END
+	public static Memory_ReadAddress razmataz_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa0ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, razmataz_dial_0_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_4_r ),
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_6_r ),
+		new Memory_ReadAddress( 0xc008, 0xc008, razmataz_dial_1_r ),
+		new Memory_ReadAddress( 0xc00c, 0xc00c, input_port_7_r ),
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_2_r ),
+		new Memory_ReadAddress( 0xc80a, 0xc80a, razmataz_unknown1_r ),	// needed, otherwise the game hangs
+		new Memory_ReadAddress( 0xff3c, 0xff3c, razmataz_unknown2_r ),	// timer? if 0, "duck season" ends
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( razmataz_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x8000, 0x83ff, zaxxon_videoram_w, &videoram },
-		{ 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xc000, 0xc001, zaxxon_coin_lockout_w },
-		{ 0xc002, 0xc002, MWA_NOP },	// service coin lockout
-		{ 0xc003, 0xc004, zaxxon_coin_counter_w },
-		{ 0xc006, 0xc006, razmataz_flipscreen_w },
-		{ 0xe0f0, 0xe0f0, interrupt_enable_w },
-		{ 0xe0f1, 0xe0f1, MWA_RAM, &zaxxon_char_color_bank },
-		{ 0xe0f2, 0xe0f7, MWA_NOP },
-		{ 0xe0f8, 0xe0f9, MWA_RAM, &zaxxon_background_position },
-		{ 0xe0fa, 0xe0fa, MWA_RAM, &zaxxon_background_color_bank },
-		{ 0xe0fb, 0xe0fb, MWA_RAM, &zaxxon_background_enable },
-		{ 0xe0fc, 0xe0ff, MWA_NOP },
-		{ 0xff3c, 0xff3c, MWA_NOP },	// sound
-	MEMORY_END
+	public static Memory_WriteAddress razmataz_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, zaxxon_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc001, zaxxon_coin_lockout_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, MWA_NOP ),	// service coin lockout
+		new Memory_WriteAddress( 0xc003, 0xc004, zaxxon_coin_counter_w ),
+		new Memory_WriteAddress( 0xc006, 0xc006, razmataz_flipscreen_w ),
+		new Memory_WriteAddress( 0xe0f0, 0xe0f0, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xe0f1, 0xe0f1, MWA_RAM, &zaxxon_char_color_bank ),
+		new Memory_WriteAddress( 0xe0f2, 0xe0f7, MWA_NOP ),
+		new Memory_WriteAddress( 0xe0f8, 0xe0f9, MWA_RAM, &zaxxon_background_position ),
+		new Memory_WriteAddress( 0xe0fa, 0xe0fa, MWA_RAM, &zaxxon_background_color_bank ),
+		new Memory_WriteAddress( 0xe0fb, 0xe0fb, MWA_RAM, &zaxxon_background_enable ),
+		new Memory_WriteAddress( 0xe0fc, 0xe0ff, MWA_NOP ),
+		new Memory_WriteAddress( 0xff3c, 0xff3c, MWA_NOP ),	// sound
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( ixion_readmem )
-		{ 0x0000, 0x4fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa000, 0xa0ff, MRA_RAM },
-		{ 0xc000, 0xc000, razmataz_dial_0_r },
-		{ 0xc001, 0xc001, input_port_1_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc003, 0xc003, input_port_4_r },
-		{ 0xc100, 0xc100, input_port_2_r },
-		{ 0xff3c, 0xff3c, razmataz_unknown2_r },	// no idea .. timer? in razmataz
-	MEMORY_END
+	public static Memory_ReadAddress ixion_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa0ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, razmataz_dial_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_4_r ),
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_2_r ),
+		new Memory_ReadAddress( 0xff3c, 0xff3c, razmataz_unknown2_r ),	// no idea .. timer? in razmataz
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( congo_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xc000, 0xc000, input_port_0_r },
-		{ 0xc001, 0xc001, input_port_1_r },
-		{ 0xc002, 0xc002, input_port_3_r },
-		{ 0xc003, 0xc003, input_port_4_r },
-		{ 0xc008, 0xc008, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress congo_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_3_r ),
+		new Memory_ReadAddress( 0xc003, 0xc003, input_port_4_r ),
+		new Memory_ReadAddress( 0xc008, 0xc008, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( congo_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0x8400, 0x8fff, MWA_RAM, &spriteram },
-		{ 0xa000, 0xa3ff, zaxxon_videoram_w, &videoram },
-		{ 0xa400, 0xa7ff, congo_colorram_w, &colorram },
-		{ 0xc018, 0xc019, zaxxon_coin_lockout_w },
-		{ 0xc01a, 0xc01a, MWA_NOP },	// service coin lockout
-		{ 0xc01b, 0xc01c, zaxxon_coin_counter_w },
-		{ 0xc01d, 0xc01d, MWA_RAM, &zaxxon_background_enable },
-		{ 0xc01e, 0xc01e, zaxxon_flipscreen_w },
-		{ 0xc01f, 0xc01f, interrupt_enable_w },
-		{ 0xc021, 0xc021, MWA_NOP },
-		{ 0xc023, 0xc023, MWA_NOP },
-		{ 0xc026, 0xc026, MWA_NOP },
-		{ 0xc027, 0xc027, MWA_NOP },
-		{ 0xc028, 0xc029, MWA_RAM, &zaxxon_background_position },
-		{ 0xc030, 0xc033, MWA_NOP },
-		{ 0xc038, 0xc038, soundlatch_w },
-	MEMORY_END
+	public static Memory_WriteAddress congo_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8400, 0x8fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, zaxxon_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, congo_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc018, 0xc019, zaxxon_coin_lockout_w ),
+		new Memory_WriteAddress( 0xc01a, 0xc01a, MWA_NOP ),	// service coin lockout
+		new Memory_WriteAddress( 0xc01b, 0xc01c, zaxxon_coin_counter_w ),
+		new Memory_WriteAddress( 0xc01d, 0xc01d, MWA_RAM, &zaxxon_background_enable ),
+		new Memory_WriteAddress( 0xc01e, 0xc01e, zaxxon_flipscreen_w ),
+		new Memory_WriteAddress( 0xc01f, 0xc01f, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xc021, 0xc021, MWA_NOP ),
+		new Memory_WriteAddress( 0xc023, 0xc023, MWA_NOP ),
+		new Memory_WriteAddress( 0xc026, 0xc026, MWA_NOP ),
+		new Memory_WriteAddress( 0xc027, 0xc027, MWA_NOP ),
+		new Memory_WriteAddress( 0xc028, 0xc029, MWA_RAM, &zaxxon_background_position ),
+		new Memory_WriteAddress( 0xc030, 0xc033, MWA_NOP ),
+		new Memory_WriteAddress( 0xc038, 0xc038, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( congo_snd_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x8000, 0x8003, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress congo_snd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8003, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( congo_snd_writemem )
-		{ 0x0000, 0x2000, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x6000, 0x6003, SN76496_0_w },
-		{ 0x8000, 0x8003, congo_daio_w },
-		{ 0xa000, 0xa003, SN76496_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress congo_snd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2000, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6003, SN76496_0_w ),
+		new Memory_WriteAddress( 0x8000, 0x8003, congo_daio_w ),
+		new Memory_WriteAddress( 0xa000, 0xa003, SN76496_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( futspy_writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x8000, 0x83ff, zaxxon_videoram_w, &videoram },
-		{ 0x8400, 0x8fff, MWA_RAM },
-		{ 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xc000, 0xc001, zaxxon_coin_lockout_w },
-		{ 0xc002, 0xc002, MWA_NOP },	// service coin lockout
-		{ 0xc003, 0xc003, zaxxon_coin_counter_w },
-		{ 0xc006, 0xc006, razmataz_flipscreen_w },
-		{ 0xe03c, 0xe03f, zaxxon_sound_w },
-		{ 0xe0f0, 0xe0f0, interrupt_enable_w },
-		{ 0xe0f1, 0xe0f1, MWA_RAM, &zaxxon_char_color_bank },
-		{ 0xe0f8, 0xe0f9, MWA_RAM, &zaxxon_background_position },
-		{ 0xe0fa, 0xe0fa, MWA_RAM, &zaxxon_background_color_bank },
-		{ 0xe0fb, 0xe0fb, MWA_RAM, &zaxxon_background_enable },
-	MEMORY_END
+	public static Memory_WriteAddress futspy_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, zaxxon_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8400, 0x8fff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc001, zaxxon_coin_lockout_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, MWA_NOP ),	// service coin lockout
+		new Memory_WriteAddress( 0xc003, 0xc003, zaxxon_coin_counter_w ),
+		new Memory_WriteAddress( 0xc006, 0xc006, razmataz_flipscreen_w ),
+		new Memory_WriteAddress( 0xe03c, 0xe03f, zaxxon_sound_w ),
+		new Memory_WriteAddress( 0xe0f0, 0xe0f0, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xe0f1, 0xe0f1, MWA_RAM, &zaxxon_char_color_bank ),
+		new Memory_WriteAddress( 0xe0f8, 0xe0f9, MWA_RAM, &zaxxon_background_position ),
+		new Memory_WriteAddress( 0xe0fa, 0xe0fa, MWA_RAM, &zaxxon_background_color_bank ),
+		new Memory_WriteAddress( 0xe0fb, 0xe0fb, MWA_RAM, &zaxxon_background_enable ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* Input Ports */
 	

@@ -127,46 +127,54 @@ public class sspeedr
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x2000, 0x21ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x21ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x21ff, MWA_RAM },
-		{ 0x7f00, 0x7f17, sspeedr_score_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x21ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7f00, 0x7f17, sspeedr_score_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, sspeedr_steering_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x03, 0x03, input_port_2_r },
-		{ 0x04, 0x04, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, sspeedr_steering_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_2_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x01, sspeedr_sound_w },
-		{ 0x02, 0x02, sspeedr_lamp_w },
-		{ 0x04, 0x05, sspeedr_time_w },
-		{ 0x06, 0x06, watchdog_reset_w },
-		{ 0x10, 0x10, sspeedr_driver_horz_w },
-		{ 0x11, 0x11, sspeedr_driver_pic_w },
-		{ 0x12, 0x12, sspeedr_driver_horz_2_w },
-		{ 0x13, 0x13, sspeedr_drones_horz_w },
-		{ 0x14, 0x14, sspeedr_drones_horz_2_w },
-		{ 0x15, 0x15, sspeedr_drones_mask_w },
-		{ 0x16, 0x16, sspeedr_driver_vert_w },
-		{ 0x17, 0x18, sspeedr_track_vert_w },
-		{ 0x19, 0x19, sspeedr_track_horz_w },
-		{ 0x1a, 0x1a, sspeedr_track_horz_2_w },
-		{ 0x1b, 0x1b, sspeedr_track_ice_w },
-		{ 0x1c, 0x1e, sspeedr_drones_vert_w },
-		{ 0x1f, 0x1f, sspeedr_int_ack_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, sspeedr_sound_w ),
+		new IO_WritePort( 0x02, 0x02, sspeedr_lamp_w ),
+		new IO_WritePort( 0x04, 0x05, sspeedr_time_w ),
+		new IO_WritePort( 0x06, 0x06, watchdog_reset_w ),
+		new IO_WritePort( 0x10, 0x10, sspeedr_driver_horz_w ),
+		new IO_WritePort( 0x11, 0x11, sspeedr_driver_pic_w ),
+		new IO_WritePort( 0x12, 0x12, sspeedr_driver_horz_2_w ),
+		new IO_WritePort( 0x13, 0x13, sspeedr_drones_horz_w ),
+		new IO_WritePort( 0x14, 0x14, sspeedr_drones_horz_2_w ),
+		new IO_WritePort( 0x15, 0x15, sspeedr_drones_mask_w ),
+		new IO_WritePort( 0x16, 0x16, sspeedr_driver_vert_w ),
+		new IO_WritePort( 0x17, 0x18, sspeedr_track_vert_w ),
+		new IO_WritePort( 0x19, 0x19, sspeedr_track_horz_w ),
+		new IO_WritePort( 0x1a, 0x1a, sspeedr_track_horz_2_w ),
+		new IO_WritePort( 0x1b, 0x1b, sspeedr_track_ice_w ),
+		new IO_WritePort( 0x1c, 0x1e, sspeedr_drones_vert_w ),
+		new IO_WritePort( 0x1f, 0x1f, sspeedr_int_ack_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( sspeedr )

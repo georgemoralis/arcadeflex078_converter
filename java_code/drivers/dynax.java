@@ -359,307 +359,355 @@ public class dynax
 	}
 	
 	
-	static MEMORY_READ_START( sprtmtch_readmem )
-		{ 0x0000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
-	static MEMORY_WRITE_START( sprtmtch_writemem )
-		{ 0x0000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, MWA_RAM },
-		{ 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sprtmtch_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress sprtmtch_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( hnoridur_readmem )
-		{ 0x0000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
-	static MEMORY_WRITE_START( hnoridur_writemem )
-		{ 0x0000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, hnoridur_palette_w },
-	MEMORY_END
+	public static Memory_ReadAddress hnoridur_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress hnoridur_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, hnoridur_palette_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( mcnpshnt_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x7000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
-	static MEMORY_WRITE_START( mcnpshnt_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0x8fff, hnoridur_palette_w },
-	MEMORY_END
+	public static Memory_ReadAddress mcnpshnt_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress mcnpshnt_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, hnoridur_palette_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( mjdialq2_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },
-		{ 0x0800, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
-	static MEMORY_WRITE_START( mjdialq2_writemem )
-		{ 0x0000, 0x07ff, MWA_ROM },
-		{ 0x0800, 0x0fff, MWA_RAM },
-		{ 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x2000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mjdialq2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress mjdialq2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x2000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( yarunara_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM		},	// ROM
-		{ 0x6000, 0x6fff, MRA_RAM		},	// RAM
-		{ 0x7000, 0x7fff, MRA_RAM		},	// NVRAM
-		{ 0x8000, 0xffff, MRA_BANK1		},	// ROM (Banked)
-	MEMORY_END
-	static MEMORY_WRITE_START( yarunara_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x6fff, MWA_RAM					},	// RAM
-		{ 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0x81ff, yarunara_palette_w		},	// Palette or RTC
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress yarunara_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM		),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM		),	// RAM
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_RAM		),	// NVRAM
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1		),	// ROM (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress yarunara_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0x81ff, yarunara_palette_w		),	// Palette or RTC
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( nanajign_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM					},	// ROM
-		{ 0x6000, 0x7fff, MRA_RAM					},	// RAM
-		{ 0x8000, 0xffff, MRA_BANK1					},	// ROM (Banked)
-	MEMORY_END
-	static MEMORY_WRITE_START( nanajign_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM					},	// ROM
-		{ 0x6000, 0x7fff, MWA_RAM					},	// RAM
-		{ 0x8000, 0x80ff, nanajign_palette_w		},
-		{ 0x8000, 0xffff, MWA_ROM					},	// ROM (Banked)
-	MEMORY_END
+	public static Memory_ReadAddress nanajign_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1					),	// ROM (Banked)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress nanajign_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0x8000, 0x80ff, nanajign_palette_w		),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
 	
 	
-	static PORT_READ_START( hanamai_readport )
-		{ 0x60, 0x60, hanamai_keyboard_0_r		},	// P1
-		{ 0x61, 0x61, hanamai_keyboard_1_r		},	// P2
-		{ 0x62, 0x62, input_port_2_r			},	// Coins
-		{ 0x63, 0x63, ret_ff					},	// ?
-		{ 0x78, 0x78, YM2203_status_port_0_r	},	// YM2203
-		{ 0x79, 0x79, YM2203_read_port_0_r		},	// 2 x DSW
-	PORT_END
-	static PORT_WRITE_START( hanamai_writeport )
-		{ 0x00, 0x00, dynax_extra_scrollx_w		},	// screen scroll X
-		{ 0x20, 0x20, dynax_extra_scrolly_w		},	// screen scroll Y
-		{ 0x41, 0x47, dynax_blitter_rev2_w		},	// Blitter
-		{ 0x50, 0x50, dynax_rombank_w			},	// BANK ROM Select	hnkochou only
-		{ 0x64, 0x64, hanamai_keyboard_w		},	// keyboard row select
-		{ 0x65, 0x65, dynax_rombank_w			},	// BANK ROM Select  hanamai only
-		{ 0x66, 0x66, dynax_vblank_ack_w		},	// VBlank IRQ Ack
-		{ 0x67, 0x67, adpcm_data_w				},	// MSM5205 data
-		{ 0x68, 0x68, dynax_layer_enable_w		},	// Layers Enable
-		{ 0x69, 0x69, hanamai_priority_w		},	// layer priority
-		{ 0x6a, 0x6a, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x6b, 0x6b, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x6c, 0x6c, dynax_blit_palette01_w	},	// Layers Palettes (Low Bits)
-		{ 0x6d, 0x6d, dynax_blit_palette2_w		},	//
-		{ 0x6e, 0x6e, dynax_blit_backpen_w		},	// Background Color
-		{ 0x70, 0x70, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x71, 0x71, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x72, 0x72, dynax_coincounter_0_w		},	// Coin Counters
-		{ 0x73, 0x73, dynax_coincounter_1_w		},	//
-		{ 0x74, 0x74, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x76, 0x76, dynax_blit_palbank_w		},	// Layers Palettes (High Bit)
-		{ 0x77, 0x77, hanamai_layer_half_w		},	// half of the interleaved layer to write to
-		{ 0x78, 0x78, YM2203_control_port_0_w	},	// YM2203
-		{ 0x79, 0x79, YM2203_write_port_0_w		},	//
-		{ 0x7a, 0x7a, AY8910_control_port_0_w	},	// AY8910
-		{ 0x7b, 0x7b, AY8910_write_port_0_w		},	//
-	//	{ 0x7c, 0x7c, IOWP_NOP					},	// CRT Controller
-	//	{ 0x7d, 0x7d, IOWP_NOP					},	// CRT Controller
-	PORT_END
+	public static IO_ReadPort hanamai_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x60, 0x60, hanamai_keyboard_0_r		),	// P1
+		new IO_ReadPort( 0x61, 0x61, hanamai_keyboard_1_r		),	// P2
+		new IO_ReadPort( 0x62, 0x62, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x63, 0x63, ret_ff					),	// ?
+		new IO_ReadPort( 0x78, 0x78, YM2203_status_port_0_r	),	// YM2203
+		new IO_ReadPort( 0x79, 0x79, YM2203_read_port_0_r		),	// 2 x DSW
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort hanamai_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, dynax_extra_scrollx_w		),	// screen scroll X
+		new IO_WritePort( 0x20, 0x20, dynax_extra_scrolly_w		),	// screen scroll Y
+		new IO_WritePort( 0x41, 0x47, dynax_blitter_rev2_w		),	// Blitter
+		new IO_WritePort( 0x50, 0x50, dynax_rombank_w			),	// BANK ROM Select	hnkochou only
+		new IO_WritePort( 0x64, 0x64, hanamai_keyboard_w		),	// keyboard row select
+		new IO_WritePort( 0x65, 0x65, dynax_rombank_w			),	// BANK ROM Select  hanamai only
+		new IO_WritePort( 0x66, 0x66, dynax_vblank_ack_w		),	// VBlank IRQ Ack
+		new IO_WritePort( 0x67, 0x67, adpcm_data_w				),	// MSM5205 data
+		new IO_WritePort( 0x68, 0x68, dynax_layer_enable_w		),	// Layers Enable
+		new IO_WritePort( 0x69, 0x69, hanamai_priority_w		),	// layer priority
+		new IO_WritePort( 0x6a, 0x6a, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x6b, 0x6b, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x6c, 0x6c, dynax_blit_palette01_w	),	// Layers Palettes (Low Bits)
+		new IO_WritePort( 0x6d, 0x6d, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x6e, 0x6e, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x70, 0x70, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x71, 0x71, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x72, 0x72, dynax_coincounter_0_w		),	// Coin Counters
+		new IO_WritePort( 0x73, 0x73, dynax_coincounter_1_w		),	//
+		new IO_WritePort( 0x74, 0x74, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x76, 0x76, dynax_blit_palbank_w		),	// Layers Palettes (High Bit)
+		new IO_WritePort( 0x77, 0x77, hanamai_layer_half_w		),	// half of the interleaved layer to write to
+		new IO_WritePort( 0x78, 0x78, YM2203_control_port_0_w	),	// YM2203
+		new IO_WritePort( 0x79, 0x79, YM2203_write_port_0_w		),	//
+		new IO_WritePort( 0x7a, 0x7a, AY8910_control_port_0_w	),	// AY8910
+		new IO_WritePort( 0x7b, 0x7b, AY8910_write_port_0_w		),	//
+	//	new IO_WritePort( 0x7c, 0x7c, IOWP_NOP					),	// CRT Controller
+	//	new IO_WritePort( 0x7d, 0x7d, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( hnoridur_readport )
-		{ 0x21, 0x21, input_port_2_r			},	// Coins
-		{ 0x22, 0x22, hanamai_keyboard_1_r		},	// P2
-		{ 0x23, 0x23, hanamai_keyboard_0_r		},	// P1
-		{ 0x24, 0x24, input_port_1_r			},	// DSW2
-		{ 0x25, 0x25, input_port_9_r			},	// DSW4
-		{ 0x26, 0x26, input_port_8_r			},	// DSW3
-		{ 0x36, 0x36, AY8910_read_port_0_r		},	// AY8910, DSW1
-		{ 0x57, 0x57, ret_ff					},	// ?
-	PORT_END
-	static PORT_WRITE_START( hnoridur_writeport )
-		{ 0x01, 0x07, dynax_blitter_rev2_w		},	// Blitter
-		{ 0x20, 0x20, hanamai_keyboard_w		},	// keyboard row select
-		{ 0x30, 0x30, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x32, 0x32, adpcm_data_w				},	// MSM5205 data
-		{ 0x34, 0x34, YM2413_register_port_0_w	},	// YM2413
-		{ 0x35, 0x35, YM2413_data_port_0_w		},	//
-		{ 0x38, 0x38, AY8910_write_port_0_w		},	// AY8910
-		{ 0x3a, 0x3a, AY8910_control_port_0_w	},	//
-	//	{ 0x10, 0x10, IOWP_NOP					},	// CRT Controller
-	//	{ 0x11, 0x11, IOWP_NOP					},	// CRT Controller
-		{ 0x40, 0x40, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x41, 0x41, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x42, 0x42, dynax_blit_palette01_w	},	// Layers Palettes
-		{ 0x43, 0x43, dynax_blit_palette2_w		},	//
-		{ 0x44, 0x44, hanamai_priority_w		},	// layer priority and enable
-		{ 0x45, 0x45, dynax_blit_backpen_w		},	// Background Color
-		{ 0x47, 0x47, hnoridur_palbank_w		},
-		{ 0x50, 0x50, dynax_extra_scrollx_w		},	// screen scroll X
-		{ 0x51, 0x51, dynax_extra_scrolly_w		},	// screen scroll Y
-		{ 0x54, 0x54, hnoridur_rombank_w		},	// BANK ROM Select
-		{ 0x56, 0x56, dynax_vblank_ack_w		},	// VBlank IRQ Ack
-		{ 0x60, 0x60, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x61, 0x61, hanamai_layer_half_w		},	// half of the interleaved layer to write to
-		{ 0x62, 0x62, hnoridur_layer_half2_w		},	//
-		{ 0x67, 0x67, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x70, 0x70, dynax_coincounter_0_w		},	// Coin Counters
-		{ 0x71, 0x71, dynax_coincounter_1_w		},	//
-	PORT_END
+	public static IO_ReadPort hnoridur_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x21, 0x21, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x22, 0x22, hanamai_keyboard_1_r		),	// P2
+		new IO_ReadPort( 0x23, 0x23, hanamai_keyboard_0_r		),	// P1
+		new IO_ReadPort( 0x24, 0x24, input_port_1_r			),	// DSW2
+		new IO_ReadPort( 0x25, 0x25, input_port_9_r			),	// DSW4
+		new IO_ReadPort( 0x26, 0x26, input_port_8_r			),	// DSW3
+		new IO_ReadPort( 0x36, 0x36, AY8910_read_port_0_r		),	// AY8910, DSW1
+		new IO_ReadPort( 0x57, 0x57, ret_ff					),	// ?
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort hnoridur_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x07, dynax_blitter_rev2_w		),	// Blitter
+		new IO_WritePort( 0x20, 0x20, hanamai_keyboard_w		),	// keyboard row select
+		new IO_WritePort( 0x30, 0x30, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x32, 0x32, adpcm_data_w				),	// MSM5205 data
+		new IO_WritePort( 0x34, 0x34, YM2413_register_port_0_w	),	// YM2413
+		new IO_WritePort( 0x35, 0x35, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x38, 0x38, AY8910_write_port_0_w		),	// AY8910
+		new IO_WritePort( 0x3a, 0x3a, AY8910_control_port_0_w	),	//
+	//	new IO_WritePort( 0x10, 0x10, IOWP_NOP					),	// CRT Controller
+	//	new IO_WritePort( 0x11, 0x11, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort( 0x40, 0x40, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x41, 0x41, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x42, 0x42, dynax_blit_palette01_w	),	// Layers Palettes
+		new IO_WritePort( 0x43, 0x43, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x44, 0x44, hanamai_priority_w		),	// layer priority and enable
+		new IO_WritePort( 0x45, 0x45, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x47, 0x47, hnoridur_palbank_w		),
+		new IO_WritePort( 0x50, 0x50, dynax_extra_scrollx_w		),	// screen scroll X
+		new IO_WritePort( 0x51, 0x51, dynax_extra_scrolly_w		),	// screen scroll Y
+		new IO_WritePort( 0x54, 0x54, hnoridur_rombank_w		),	// BANK ROM Select
+		new IO_WritePort( 0x56, 0x56, dynax_vblank_ack_w		),	// VBlank IRQ Ack
+		new IO_WritePort( 0x60, 0x60, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x61, 0x61, hanamai_layer_half_w		),	// half of the interleaved layer to write to
+		new IO_WritePort( 0x62, 0x62, hnoridur_layer_half2_w		),	//
+		new IO_WritePort( 0x67, 0x67, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x70, 0x70, dynax_coincounter_0_w		),	// Coin Counters
+		new IO_WritePort( 0x71, 0x71, dynax_coincounter_1_w		),	//
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	// Almost identical to hnoridur
-	static PORT_READ_START( mcnpshnt_readport )
-		{ 0x21, 0x21, input_port_2_r			},	// Coins
-		{ 0x22, 0x22, hanamai_keyboard_1_r		},	// P2
-		{ 0x23, 0x23, hanamai_keyboard_0_r		},	// P1
-		{ 0x24, 0x24, input_port_0_r			},	// DSW2
-		{ 0x26, 0x26, input_port_1_r			},	// DSW3
-		{ 0x57, 0x57, ret_ff					},	// ?
-	PORT_END
-	static PORT_WRITE_START( mcnpshnt_writeport )
-		{ 0x01, 0x07, dynax_blitter_rev2_w		},	// Blitter
-	//	{ 0x10, 0x10, IOWP_NOP					},	// CRT Controller
-	//	{ 0x11, 0x11, IOWP_NOP					},	// CRT Controller
-		{ 0x20, 0x20, hanamai_keyboard_w		},	// keyboard row select
-		{ 0x30, 0x30, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x32, 0x32, adpcm_data_w				},	// MSM5205 data
-		{ 0x34, 0x34, YM2413_register_port_0_w	},	// YM2413
-		{ 0x35, 0x35, YM2413_data_port_0_w		},	//
-		{ 0x38, 0x38, AY8910_write_port_0_w		},	// AY8910
-		{ 0x3a, 0x3a, AY8910_control_port_0_w	},	//
-		{ 0x40, 0x40, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x41, 0x41, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x42, 0x42, dynax_blit_palette01_w	},	// Layers Palettes
-		{ 0x43, 0x43, dynax_blit_palette2_w		},	//
-		{ 0x44, 0x44, hanamai_priority_w		},	// layer priority and enable
-		{ 0x45, 0x45, dynax_blit_backpen_w		},	// Background Color
-		{ 0x47, 0x47, hnoridur_palbank_w		},
-		{ 0x50, 0x50, dynax_extra_scrollx_w		},	// screen scroll X
-		{ 0x51, 0x51, dynax_extra_scrolly_w		},	// screen scroll Y
-		{ 0x54, 0x54, hnoridur_rombank_w		},	// BANK ROM Select
-		{ 0x56, 0x56, dynax_vblank_ack_w		},	// VBlank IRQ Ack
-		{ 0x60, 0x60, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x61, 0x61, nanajign_layer_half_w		},	// half of the interleaved layer to write to
-		{ 0x62, 0x62, hnoridur_layer_half2_w		},	//
-		{ 0x67, 0x67, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x70, 0x70, dynax_coincounter_0_w		},	// Coin Counters
-		{ 0x71, 0x71, dynax_coincounter_1_w		},	//
-	PORT_END
+	public static IO_ReadPort mcnpshnt_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x21, 0x21, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x22, 0x22, hanamai_keyboard_1_r		),	// P2
+		new IO_ReadPort( 0x23, 0x23, hanamai_keyboard_0_r		),	// P1
+		new IO_ReadPort( 0x24, 0x24, input_port_0_r			),	// DSW2
+		new IO_ReadPort( 0x26, 0x26, input_port_1_r			),	// DSW3
+		new IO_ReadPort( 0x57, 0x57, ret_ff					),	// ?
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort mcnpshnt_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x07, dynax_blitter_rev2_w		),	// Blitter
+	//	new IO_WritePort( 0x10, 0x10, IOWP_NOP					),	// CRT Controller
+	//	new IO_WritePort( 0x11, 0x11, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort( 0x20, 0x20, hanamai_keyboard_w		),	// keyboard row select
+		new IO_WritePort( 0x30, 0x30, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x32, 0x32, adpcm_data_w				),	// MSM5205 data
+		new IO_WritePort( 0x34, 0x34, YM2413_register_port_0_w	),	// YM2413
+		new IO_WritePort( 0x35, 0x35, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x38, 0x38, AY8910_write_port_0_w		),	// AY8910
+		new IO_WritePort( 0x3a, 0x3a, AY8910_control_port_0_w	),	//
+		new IO_WritePort( 0x40, 0x40, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x41, 0x41, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x42, 0x42, dynax_blit_palette01_w	),	// Layers Palettes
+		new IO_WritePort( 0x43, 0x43, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x44, 0x44, hanamai_priority_w		),	// layer priority and enable
+		new IO_WritePort( 0x45, 0x45, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x47, 0x47, hnoridur_palbank_w		),
+		new IO_WritePort( 0x50, 0x50, dynax_extra_scrollx_w		),	// screen scroll X
+		new IO_WritePort( 0x51, 0x51, dynax_extra_scrolly_w		),	// screen scroll Y
+		new IO_WritePort( 0x54, 0x54, hnoridur_rombank_w		),	// BANK ROM Select
+		new IO_WritePort( 0x56, 0x56, dynax_vblank_ack_w		),	// VBlank IRQ Ack
+		new IO_WritePort( 0x60, 0x60, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x61, 0x61, nanajign_layer_half_w		),	// half of the interleaved layer to write to
+		new IO_WritePort( 0x62, 0x62, hnoridur_layer_half2_w		),	//
+		new IO_WritePort( 0x67, 0x67, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x70, 0x70, dynax_coincounter_0_w		),	// Coin Counters
+		new IO_WritePort( 0x71, 0x71, dynax_coincounter_1_w		),	//
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( sprtmtch_readport )
-		{ 0x10, 0x10, YM2203_status_port_0_r	},	// YM2203
-		{ 0x11, 0x11, YM2203_read_port_0_r		},	// 2 x DSW
-		{ 0x20, 0x20, input_port_0_r			},	// P1
-		{ 0x21, 0x21, input_port_1_r			},	// P2
-		{ 0x22, 0x22, input_port_2_r			},	// Coins
-		{ 0x23, 0x23, ret_ff					},	// ?
-	PORT_END
-	static PORT_WRITE_START( sprtmtch_writeport )
-		{ 0x01, 0x07, dynax_blitter_rev2_w		},	// Blitter
-		{ 0x10, 0x10, YM2203_control_port_0_w	},	// YM2203
-		{ 0x11, 0x11, YM2203_write_port_0_w		},	//
-	//	{ 0x12, 0x12, IOWP_NOP					},	// CRT Controller
-	//	{ 0x13, 0x13, IOWP_NOP					},	// CRT Controller
-		{ 0x30, 0x30, dynax_layer_enable_w		},	// Layers Enable
-		{ 0x31, 0x31, dynax_rombank_w			},	// BANK ROM Select
-		{ 0x32, 0x32, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x33, 0x33, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x34, 0x34, dynax_blit_palette01_w	},	// Layers Palettes (Low Bits)
-		{ 0x35, 0x35, dynax_blit_palette2_w		},	//
-		{ 0x36, 0x36, dynax_blit_backpen_w		},	// Background Color
-		{ 0x37, 0x37, dynax_vblank_ack_w		},	// VBlank IRQ Ack
-	//	{ 0x40, 0x40, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x41, 0x41, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x42, 0x42, dynax_coincounter_0_w		},	// Coin Counters
-		{ 0x43, 0x43, dynax_coincounter_1_w		},	//
-		{ 0x44, 0x44, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x45, 0x45, dynax_blit_palbank_w		},	// Layers Palettes (High Bit)
-	PORT_END
+	public static IO_ReadPort sprtmtch_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x10, YM2203_status_port_0_r	),	// YM2203
+		new IO_ReadPort( 0x11, 0x11, YM2203_read_port_0_r		),	// 2 x DSW
+		new IO_ReadPort( 0x20, 0x20, input_port_0_r			),	// P1
+		new IO_ReadPort( 0x21, 0x21, input_port_1_r			),	// P2
+		new IO_ReadPort( 0x22, 0x22, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x23, 0x23, ret_ff					),	// ?
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort sprtmtch_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x07, dynax_blitter_rev2_w		),	// Blitter
+		new IO_WritePort( 0x10, 0x10, YM2203_control_port_0_w	),	// YM2203
+		new IO_WritePort( 0x11, 0x11, YM2203_write_port_0_w		),	//
+	//	new IO_WritePort( 0x12, 0x12, IOWP_NOP					),	// CRT Controller
+	//	new IO_WritePort( 0x13, 0x13, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort( 0x30, 0x30, dynax_layer_enable_w		),	// Layers Enable
+		new IO_WritePort( 0x31, 0x31, dynax_rombank_w			),	// BANK ROM Select
+		new IO_WritePort( 0x32, 0x32, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x33, 0x33, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x34, 0x34, dynax_blit_palette01_w	),	// Layers Palettes (Low Bits)
+		new IO_WritePort( 0x35, 0x35, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x36, 0x36, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x37, 0x37, dynax_vblank_ack_w		),	// VBlank IRQ Ack
+	//	new IO_WritePort( 0x40, 0x40, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x41, 0x41, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x42, 0x42, dynax_coincounter_0_w		),	// Coin Counters
+		new IO_WritePort( 0x43, 0x43, dynax_coincounter_1_w		),	//
+		new IO_WritePort( 0x44, 0x44, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x45, 0x45, dynax_blit_palbank_w		),	// Layers Palettes (High Bit)
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static PORT_READ_START( mjfriday_readport )
-		{ 0x63, 0x63, hanamai_keyboard_0_r		},	// P1
-		{ 0x62, 0x62, hanamai_keyboard_1_r		},	// P2
-		{ 0x61, 0x61, input_port_2_r			},	// Coins
-		{ 0x64, 0x64, input_port_0_r			},	// DSW
-		{ 0x67, 0x67, input_port_1_r			},	// DSW
-	PORT_END
-	static PORT_WRITE_START( mjfriday_writeport )
-		{ 0x41, 0x47, dynax_blitter_rev2_w		},	// Blitter
-	//	{ 0x50, 0x50, IOWP_NOP					},	// CRT Controller
-	//	{ 0x51, 0x51, IOWP_NOP					},	// CRT Controller
-		{ 0x60, 0x60, hanamai_keyboard_w		},	// keyboard row select
-		{ 0x70, 0x70, YM2413_register_port_0_w	},	// YM2413
-		{ 0x71, 0x71, YM2413_data_port_0_w		},	//
-		{ 0x00, 0x00, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x01, 0x01, dynax_blit_palette01_w	},	// Layers Palettes (Low Bits)
-		{ 0x02, 0x02, dynax_rombank_w			},	// BANK ROM Select
-		{ 0x03, 0x03, dynax_blit_backpen_w		},	// Background Color
-		{ 0x10, 0x11, mjdialq2_blit_dest_w		},	// Destination Layer
-		{ 0x12, 0x12, dynax_blit_palbank_w		},	// Layers Palettes (High Bit)
-		{ 0x13, 0x13, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x14, 0x14, dynax_coincounter_0_w		},	// Coin Counters
-		{ 0x15, 0x15, dynax_coincounter_1_w		},	//
-		{ 0x16, 0x17, mjdialq2_layer_enable_w	},	// Layers Enable
-	//	{ 0x80, 0x80, IOWP_NOP					},	// IRQ ack?
-	PORT_END
+	public static IO_ReadPort mjfriday_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x63, 0x63, hanamai_keyboard_0_r		),	// P1
+		new IO_ReadPort( 0x62, 0x62, hanamai_keyboard_1_r		),	// P2
+		new IO_ReadPort( 0x61, 0x61, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x64, 0x64, input_port_0_r			),	// DSW
+		new IO_ReadPort( 0x67, 0x67, input_port_1_r			),	// DSW
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort mjfriday_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x41, 0x47, dynax_blitter_rev2_w		),	// Blitter
+	//	new IO_WritePort( 0x50, 0x50, IOWP_NOP					),	// CRT Controller
+	//	new IO_WritePort( 0x51, 0x51, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort( 0x60, 0x60, hanamai_keyboard_w		),	// keyboard row select
+		new IO_WritePort( 0x70, 0x70, YM2413_register_port_0_w	),	// YM2413
+		new IO_WritePort( 0x71, 0x71, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x00, 0x00, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x01, 0x01, dynax_blit_palette01_w	),	// Layers Palettes (Low Bits)
+		new IO_WritePort( 0x02, 0x02, dynax_rombank_w			),	// BANK ROM Select
+		new IO_WritePort( 0x03, 0x03, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x10, 0x11, mjdialq2_blit_dest_w		),	// Destination Layer
+		new IO_WritePort( 0x12, 0x12, dynax_blit_palbank_w		),	// Layers Palettes (High Bit)
+		new IO_WritePort( 0x13, 0x13, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x14, 0x14, dynax_coincounter_0_w		),	// Coin Counters
+		new IO_WritePort( 0x15, 0x15, dynax_coincounter_1_w		),	//
+		new IO_WritePort( 0x16, 0x17, mjdialq2_layer_enable_w	),	// Layers Enable
+	//	new IO_WritePort( 0x80, 0x80, IOWP_NOP					),	// IRQ ack?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( nanajign_readport )
-		{ 0x11, 0x11, input_port_2_r			},	// Coins
-		{ 0x12, 0x12, hanamai_keyboard_1_r		},	// P2
-		{ 0x13, 0x13, hanamai_keyboard_0_r		},	// P1
-		{ 0x14, 0x14, input_port_0_r			},	// DSW1
-		{ 0x15, 0x15, input_port_1_r			},	// DSW2
-		{ 0x16, 0x16, input_port_8_r			},	// DSW3
-	PORT_END
-	static PORT_WRITE_START( nanajign_writeport )
-		{ 0x00, 0x00, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x02, 0x02, adpcm_data_w				},	// MSM5205 data
-		{ 0x04, 0x04, YM2413_register_port_0_w	},	// YM2413
-		{ 0x05, 0x05, YM2413_data_port_0_w		},	//
-		{ 0x08, 0x08, AY8910_write_port_0_w		},	// AY8910
-		{ 0x0a, 0x0a, AY8910_control_port_0_w	},	//
-		{ 0x10, 0x10, hanamai_keyboard_w		},	// keyboard row select
-	//	{ 0x20, 0x21, IOWP_NOP					},	// CRT Controller
-		{ 0x31, 0x37, dynax_blitter_rev2_w		},	// Blitter
-		{ 0x40, 0x40, dynax_coincounter_0_w		},	// Coin Counter
-		{ 0x50, 0x50, dynax_flipscreen_w		},	// Flip Screen
-		{ 0x51, 0x51, hanamai_layer_half_w		},	// half of the interleaved layer to write to
-		{ 0x52, 0x52, hnoridur_layer_half2_w		},	//
-		{ 0x57, 0x57, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x60, 0x60, dynax_extra_scrollx_w		},	// screen scroll X
-		{ 0x62, 0x62, dynax_extra_scrolly_w		},	// screen scroll Y
-		{ 0x6a, 0x6a, hnoridur_rombank_w		},	// BANK ROM Select
-		{ 0x6c, 0x6c, dynax_vblank_ack_w		},	// VBlank IRQ Ack
-		{ 0x70, 0x70, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x71, 0x71, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x72, 0x72, dynax_blit_palette01_w	},	// Layers Palettes
-		{ 0x73, 0x73, dynax_blit_palette2_w		},	//
-		{ 0x74, 0x74, hanamai_priority_w		},	// layer priority and enable
-		{ 0x75, 0x75, dynax_blit_backpen_w		},	// Background Color
-		{ 0x77, 0x77, hnoridur_palbank_w		},
-	PORT_END
+	public static IO_ReadPort nanajign_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x11, 0x11, input_port_2_r			),	// Coins
+		new IO_ReadPort( 0x12, 0x12, hanamai_keyboard_1_r		),	// P2
+		new IO_ReadPort( 0x13, 0x13, hanamai_keyboard_0_r		),	// P1
+		new IO_ReadPort( 0x14, 0x14, input_port_0_r			),	// DSW1
+		new IO_ReadPort( 0x15, 0x15, input_port_1_r			),	// DSW2
+		new IO_ReadPort( 0x16, 0x16, input_port_8_r			),	// DSW3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort nanajign_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x02, 0x02, adpcm_data_w				),	// MSM5205 data
+		new IO_WritePort( 0x04, 0x04, YM2413_register_port_0_w	),	// YM2413
+		new IO_WritePort( 0x05, 0x05, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x08, 0x08, AY8910_write_port_0_w		),	// AY8910
+		new IO_WritePort( 0x0a, 0x0a, AY8910_control_port_0_w	),	//
+		new IO_WritePort( 0x10, 0x10, hanamai_keyboard_w		),	// keyboard row select
+	//	new IO_WritePort( 0x20, 0x21, IOWP_NOP					),	// CRT Controller
+		new IO_WritePort( 0x31, 0x37, dynax_blitter_rev2_w		),	// Blitter
+		new IO_WritePort( 0x40, 0x40, dynax_coincounter_0_w		),	// Coin Counter
+		new IO_WritePort( 0x50, 0x50, dynax_flipscreen_w		),	// Flip Screen
+		new IO_WritePort( 0x51, 0x51, hanamai_layer_half_w		),	// half of the interleaved layer to write to
+		new IO_WritePort( 0x52, 0x52, hnoridur_layer_half2_w		),	//
+		new IO_WritePort( 0x57, 0x57, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x60, 0x60, dynax_extra_scrollx_w		),	// screen scroll X
+		new IO_WritePort( 0x62, 0x62, dynax_extra_scrolly_w		),	// screen scroll Y
+		new IO_WritePort( 0x6a, 0x6a, hnoridur_rombank_w		),	// BANK ROM Select
+		new IO_WritePort( 0x6c, 0x6c, dynax_vblank_ack_w		),	// VBlank IRQ Ack
+		new IO_WritePort( 0x70, 0x70, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x71, 0x71, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x72, 0x72, dynax_blit_palette01_w	),	// Layers Palettes
+		new IO_WritePort( 0x73, 0x73, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x74, 0x74, hanamai_priority_w		),	// layer priority and enable
+		new IO_WritePort( 0x75, 0x75, dynax_blit_backpen_w		),	// Background Color
+		new IO_WritePort( 0x77, 0x77, hnoridur_palbank_w		),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -737,40 +785,44 @@ public class dynax
 		dynax_flipscreen_w(0,(data&2)?1:0);
 	}
 	
-	static PORT_READ_START( yarunara_readport )
-		{ 0x02, 0x03, yarunara_input_r		},	// Controls
-		{ 0x4c, 0x4c, input_port_0_r		},	// DSW 1
-		{ 0x4f, 0x4f, input_port_1_r		},	// DSW 2
-	PORT_END
+	public static IO_ReadPort yarunara_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x03, yarunara_input_r		),	// Controls
+		new IO_ReadPort( 0x4c, 0x4c, input_port_0_r		),	// DSW 1
+		new IO_ReadPort( 0x4f, 0x4f, input_port_1_r		),	// DSW 2
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( yarunara_writeport )
-		{ 0x00, 0x01, yarunara_input_w			},	// Controls
-		{ 0x11, 0x17, dynax_blitter_rev2_w		},	// Blitter
-		{ 0x20, 0x20, adpcm_reset_w				},	// MSM5205 reset
-		{ 0x22, 0x22, adpcm_data_w				},	// MSM5205 data
-		{ 0x24, 0x24, YM2413_register_port_0_w	},	// YM2413
-		{ 0x25, 0x25, YM2413_data_port_0_w		},	//
-		{ 0x28, 0x28, AY8910_write_port_0_w		},	// AY8910
-		{ 0x2a, 0x2a, AY8910_control_port_0_w	},	//
-		{ 0x48, 0x48, dynax_extra_scrollx_w		},	// screen scroll X
-		{ 0x49, 0x49, dynax_extra_scrolly_w		},	// screen scroll Y
-		{ 0x4a, 0x4a, yarunara_rombank_w		},	// BANK ROM Select
-		{ 0x4b, 0x4b, dynax_vblank_ack_w		},	// VBlank IRQ Ack
+	public static IO_WritePort yarunara_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, yarunara_input_w			),	// Controls
+		new IO_WritePort( 0x11, 0x17, dynax_blitter_rev2_w		),	// Blitter
+		new IO_WritePort( 0x20, 0x20, adpcm_reset_w				),	// MSM5205 reset
+		new IO_WritePort( 0x22, 0x22, adpcm_data_w				),	// MSM5205 data
+		new IO_WritePort( 0x24, 0x24, YM2413_register_port_0_w	),	// YM2413
+		new IO_WritePort( 0x25, 0x25, YM2413_data_port_0_w		),	//
+		new IO_WritePort( 0x28, 0x28, AY8910_write_port_0_w		),	// AY8910
+		new IO_WritePort( 0x2a, 0x2a, AY8910_control_port_0_w	),	//
+		new IO_WritePort( 0x48, 0x48, dynax_extra_scrollx_w		),	// screen scroll X
+		new IO_WritePort( 0x49, 0x49, dynax_extra_scrolly_w		),	// screen scroll Y
+		new IO_WritePort( 0x4a, 0x4a, yarunara_rombank_w		),	// BANK ROM Select
+		new IO_WritePort( 0x4b, 0x4b, dynax_vblank_ack_w		),	// VBlank IRQ Ack
 	
-		{ 0x50, 0x50, yarunara_flipscreen_w		},
-		{ 0x51, 0x51, yarunara_layer_half_w		},	// half of the interleaved layer to write to
-		{ 0x52, 0x52, yarunara_layer_half2_w	},	//
+		new IO_WritePort( 0x50, 0x50, yarunara_flipscreen_w		),
+		new IO_WritePort( 0x51, 0x51, yarunara_layer_half_w		),	// half of the interleaved layer to write to
+		new IO_WritePort( 0x52, 0x52, yarunara_layer_half2_w	),	//
 		// 53 ?
 		// 54 ?
-		{ 0x57, 0x57, dynax_blitter_ack_w		},	// Blitter IRQ Ack
-		{ 0x68, 0x68, dynax_blit_pen_w			},	// Destination Pen
-		{ 0x69, 0x69, dynax_blit_dest_w			},	// Destination Layer
-		{ 0x6a, 0x6a, dynax_blit_palette01_w	},	// Layers Palettes
-		{ 0x6b, 0x6b, dynax_blit_palette2_w		},	//
-		{ 0x6c, 0x6c, hanamai_priority_w		},	// layer priority and enable
-		{ 0x6d, 0x6d, dynax_blit_backpen_w		},	// Background Color
+		new IO_WritePort( 0x57, 0x57, dynax_blitter_ack_w		),	// Blitter IRQ Ack
+		new IO_WritePort( 0x68, 0x68, dynax_blit_pen_w			),	// Destination Pen
+		new IO_WritePort( 0x69, 0x69, dynax_blit_dest_w			),	// Destination Layer
+		new IO_WritePort( 0x6a, 0x6a, dynax_blit_palette01_w	),	// Layers Palettes
+		new IO_WritePort( 0x6b, 0x6b, dynax_blit_palette2_w		),	//
+		new IO_WritePort( 0x6c, 0x6c, hanamai_priority_w		),	// layer priority and enable
+		new IO_WritePort( 0x6d, 0x6d, dynax_blit_backpen_w		),	// Background Color
 		// 6e ?
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

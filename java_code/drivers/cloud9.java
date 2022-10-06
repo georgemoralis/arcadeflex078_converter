@@ -93,42 +93,46 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0002, cloud9_bitmap_regs_r },
-		{ 0x0003, 0x05ff, MRA_RAM },
-		{ 0x0600, 0x3fff, MRA_RAM },
-		{ 0x5500, 0x557f, MRA_RAM },
-		{ 0x5800, 0x5800, input_port_0_r },
-		{ 0x5801, 0x5801, input_port_1_r },
-		{ 0x5900, 0x5900, input_port_2_r },
-		{ 0x5901, 0x5901, input_port_3_r },
-		{ 0x5a00, 0x5a0f, pokey1_r },
-		{ 0x5b00, 0x5b0f, pokey2_r },
-		{ 0x5c00, 0x5cff, MRA_RAM },	/* EAROM */
-		{ 0x6000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0002, cloud9_bitmap_regs_r ),
+		new Memory_ReadAddress( 0x0003, 0x05ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0600, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5500, 0x557f, MRA_RAM ),
+		new Memory_ReadAddress( 0x5800, 0x5800, input_port_0_r ),
+		new Memory_ReadAddress( 0x5801, 0x5801, input_port_1_r ),
+		new Memory_ReadAddress( 0x5900, 0x5900, input_port_2_r ),
+		new Memory_ReadAddress( 0x5901, 0x5901, input_port_3_r ),
+		new Memory_ReadAddress( 0x5a00, 0x5a0f, pokey1_r ),
+		new Memory_ReadAddress( 0x5b00, 0x5b0f, pokey2_r ),
+		new Memory_ReadAddress( 0x5c00, 0x5cff, MRA_RAM ),	/* EAROM */
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0002, cloud9_bitmap_regs_w, &cloud9_bitmap_regs },
-		{ 0x0003, 0x05ff, MWA_RAM },
-		{ 0x0600, 0x3fff, cloud9_bitmap_w, &videoram, &videoram_size },
-		{ 0x5000, 0x50ff, MWA_RAM, &spriteram },
-		{ 0x5400, 0x5400, watchdog_reset_w },
-		{ 0x5480, 0x5480, MWA_NOP },	/* IRQ Ack */
-		{ 0x5500, 0x557f, cloud9_paletteram_w, &paletteram },
-		{ 0x5580, 0x5580, MWA_RAM, &cloud9_auto_inc_x },
-		{ 0x5581, 0x5581, MWA_RAM, &cloud9_auto_inc_y },
-		{ 0x5584, 0x5584, MWA_RAM, &cloud9_both_banks },
-		{ 0x5586, 0x5586, MWA_RAM, &cloud9_vram_bank },
-		{ 0x5587, 0x5587, MWA_RAM, &cloud9_color_bank },
-		{ 0x5600, 0x5601, cloud9_coin_counter_w },
-		{ 0x5602, 0x5603, cloud9_led_w },
-		{ 0x5a00, 0x5a0f, pokey1_w },
-		{ 0x5b00, 0x5b0f, pokey2_w },
-		{ 0x5c00, 0x5cff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0002, cloud9_bitmap_regs_w, &cloud9_bitmap_regs ),
+		new Memory_WriteAddress( 0x0003, 0x05ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0600, 0x3fff, cloud9_bitmap_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x5000, 0x50ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x5400, 0x5400, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x5480, 0x5480, MWA_NOP ),	/* IRQ Ack */
+		new Memory_WriteAddress( 0x5500, 0x557f, cloud9_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x5580, 0x5580, MWA_RAM, &cloud9_auto_inc_x ),
+		new Memory_WriteAddress( 0x5581, 0x5581, MWA_RAM, &cloud9_auto_inc_y ),
+		new Memory_WriteAddress( 0x5584, 0x5584, MWA_RAM, &cloud9_both_banks ),
+		new Memory_WriteAddress( 0x5586, 0x5586, MWA_RAM, &cloud9_vram_bank ),
+		new Memory_WriteAddress( 0x5587, 0x5587, MWA_RAM, &cloud9_color_bank ),
+		new Memory_WriteAddress( 0x5600, 0x5601, cloud9_coin_counter_w ),
+		new Memory_WriteAddress( 0x5602, 0x5603, cloud9_led_w ),
+		new Memory_WriteAddress( 0x5a00, 0x5a0f, pokey1_w ),
+		new Memory_WriteAddress( 0x5b00, 0x5b0f, pokey2_w ),
+		new Memory_WriteAddress( 0x5c00, 0x5cff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -96,97 +96,121 @@ public class gyruss
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9000, 0x9fff, MRA_RAM },
-		{ 0xa000, 0xa7ff, gyruss_sharedram_r },
-		{ 0xc000, 0xc000, input_port_4_r },	/* DSW1 */
-		{ 0xc080, 0xc080, input_port_0_r },	/* IN0 */
-		{ 0xc0a0, 0xc0a0, input_port_1_r },	/* IN1 */
-		{ 0xc0c0, 0xc0c0, input_port_2_r },	/* IN2 */
-		{ 0xc0e0, 0xc0e0, input_port_3_r },	/* DSW0 */
-		{ 0xc100, 0xc100, input_port_5_r },	/* DSW2 */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, gyruss_sharedram_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_4_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0xc080, 0xc080, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0xc0a0, 0xc0a0, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xc0c0, 0xc0c0, input_port_2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0xc0e0, 0xc0e0, input_port_3_r ),	/* DSW0 */
+		new Memory_ReadAddress( 0xc100, 0xc100, input_port_5_r ),	/* DSW2 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },                 /* rom space+1        */
-		{ 0x8000, 0x83ff, colorram_w, &colorram },
-		{ 0x8400, 0x87ff, videoram_w, &videoram, &videoram_size },
-		{ 0x9000, 0x9fff, MWA_RAM },
-		{ 0xa000, 0xa7ff, gyruss_sharedram_w, &gyruss_sharedram },
-		{ 0xc000, 0xc000, MWA_NOP },	/* watchdog reset */
-		{ 0xc080, 0xc080, gyruss_sh_irqtrigger_w },
-		{ 0xc100, 0xc100, soundlatch_w },         /* command to soundb  */
-		{ 0xc180, 0xc180, interrupt_enable_w },      /* NMI enable         */
-		{ 0xc185, 0xc185, gyruss_flipscreen_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),                 /* rom space+1        */
+		new Memory_WriteAddress( 0x8000, 0x83ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9000, 0x9fff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, gyruss_sharedram_w, &gyruss_sharedram ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_NOP ),	/* watchdog reset */
+		new Memory_WriteAddress( 0xc080, 0xc080, gyruss_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0xc100, 0xc100, soundlatch_w ),         /* command to soundb  */
+		new Memory_WriteAddress( 0xc180, 0xc180, interrupt_enable_w ),      /* NMI enable         */
+		new Memory_WriteAddress( 0xc185, 0xc185, gyruss_flipscreen_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( m6809_readmem )
-		{ 0x0000, 0x0000, gyruss_scanline_r },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x6000, 0x67ff, gyruss_sharedram_r },
-		{ 0xe000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m6809_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, gyruss_scanline_r ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, gyruss_sharedram_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m6809_writemem )
-		{ 0x2000, 0x2000, interrupt_enable_w },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4040, 0x40ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x6000, 0x67ff, gyruss_sharedram_w },
-		{ 0xe000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m6809_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x2000, 0x2000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4040, 0x40ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, gyruss_sharedram_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },                 /* rom soundboard     */
-		{ 0x6000, 0x63ff, MRA_RAM },                 /* ram soundboard     */
-		{ 0x8000, 0x8000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),                 /* rom soundboard     */
+		new Memory_ReadAddress( 0x6000, 0x63ff, MRA_RAM ),                 /* ram soundboard     */
+		new Memory_ReadAddress( 0x8000, 0x8000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },                 /* rom soundboard     */
-		{ 0x6000, 0x63ff, MWA_RAM },                 /* ram soundboard     */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),                 /* rom soundboard     */
+		new Memory_WriteAddress( 0x6000, 0x63ff, MWA_RAM ),                 /* ram soundboard     */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x01, 0x01, AY8910_read_port_0_r },
-	  	{ 0x05, 0x05, AY8910_read_port_1_r },
-		{ 0x09, 0x09, AY8910_read_port_2_r },
-	  	{ 0x0d, 0x0d, AY8910_read_port_3_r },
-	  	{ 0x11, 0x11, AY8910_read_port_4_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, AY8910_read_port_0_r ),
+	  	new IO_ReadPort( 0x05, 0x05, AY8910_read_port_1_r ),
+		new IO_ReadPort( 0x09, 0x09, AY8910_read_port_2_r ),
+	  	new IO_ReadPort( 0x0d, 0x0d, AY8910_read_port_3_r ),
+	  	new IO_ReadPort( 0x11, 0x11, AY8910_read_port_4_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-		{ 0x04, 0x04, AY8910_control_port_1_w },
-		{ 0x06, 0x06, AY8910_write_port_1_w },
-		{ 0x08, 0x08, AY8910_control_port_2_w },
-		{ 0x0a, 0x0a, AY8910_write_port_2_w },
-		{ 0x0c, 0x0c, AY8910_control_port_3_w },
-		{ 0x0e, 0x0e, AY8910_write_port_3_w },
-		{ 0x10, 0x10, AY8910_control_port_4_w },
-		{ 0x12, 0x12, AY8910_write_port_4_w },
-		{ 0x14, 0x14, gyruss_i8039_irq_w },
-		{ 0x18, 0x18, soundlatch2_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x06, 0x06, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x08, 0x08, AY8910_control_port_2_w ),
+		new IO_WritePort( 0x0a, 0x0a, AY8910_write_port_2_w ),
+		new IO_WritePort( 0x0c, 0x0c, AY8910_control_port_3_w ),
+		new IO_WritePort( 0x0e, 0x0e, AY8910_write_port_3_w ),
+		new IO_WritePort( 0x10, 0x10, AY8910_control_port_4_w ),
+		new IO_WritePort( 0x12, 0x12, AY8910_write_port_4_w ),
+		new IO_WritePort( 0x14, 0x14, gyruss_i8039_irq_w ),
+		new IO_WritePort( 0x18, 0x18, soundlatch2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( i8039_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress i8039_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( i8039_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress i8039_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( i8039_readport )
-		{ 0x00, 0xff, soundlatch2_r },
-	PORT_END
+	public static IO_ReadPort i8039_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0xff, soundlatch2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( i8039_writeport )
-		{ I8039_p1, I8039_p1, DAC_0_data_w },
-		{ I8039_p2, I8039_p2, IOWP_NOP },
-	PORT_END
+	public static IO_WritePort i8039_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( I8039_p1, I8039_p1, DAC_0_data_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

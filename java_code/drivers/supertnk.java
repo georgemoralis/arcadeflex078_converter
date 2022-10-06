@@ -243,25 +243,29 @@ public class supertnk
 	
 	
 	
-	static MEMORY_READ_START( supertnk_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },			/* Fixed ROM */
-		{ 0x0800, 0x17ff, MRA_BANK1 },			/* Banked ROM */
-		{ 0x2000, 0x3fff, supertnk_videoram_r },	/* Video RAM */
-		{ 0x1efc, 0x1efc, input_port_0_r },		/* Input ports */
-		{ 0x1efd, 0x1efd, input_port_1_r },
-		{ 0x1efe, 0x1efe, input_port_2_r },		/* DIP switch ports */
-		{ 0x1eff, 0x1eff, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress supertnk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),			/* Fixed ROM */
+		new Memory_ReadAddress( 0x0800, 0x17ff, MRA_BANK1 ),			/* Banked ROM */
+		new Memory_ReadAddress( 0x2000, 0x3fff, supertnk_videoram_r ),	/* Video RAM */
+		new Memory_ReadAddress( 0x1efc, 0x1efc, input_port_0_r ),		/* Input ports */
+		new Memory_ReadAddress( 0x1efd, 0x1efd, input_port_1_r ),
+		new Memory_ReadAddress( 0x1efe, 0x1efe, input_port_2_r ),		/* DIP switch ports */
+		new Memory_ReadAddress( 0x1eff, 0x1eff, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static MEMORY_WRITE_START( supertnk_writemem )
-		{ 0x0000, 0x17ff, MWA_ROM },
-		{ 0x1800, 0x1bff, MWA_RAM },
-		{ 0x1efe, 0x1efe, AY8910_control_port_0_w },	/* Sound chip control port */
-		{ 0x1eff, 0x1eff, AY8910_write_port_0_w },	/* Sound chip data port */
-		{ 0x2000, 0x3fff, supertnk_videoram_w },	/* Video RAM */
-	MEMORY_END
+	public static Memory_WriteAddress supertnk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1efe, 0x1efe, AY8910_control_port_0_w ),	/* Sound chip control port */
+		new Memory_WriteAddress( 0x1eff, 0x1eff, AY8910_write_port_0_w ),	/* Sound chip data port */
+		new Memory_WriteAddress( 0x2000, 0x3fff, supertnk_videoram_w ),	/* Video RAM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

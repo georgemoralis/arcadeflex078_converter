@@ -358,41 +358,49 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, soundlatch_r },
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2610_status_port_0_A_r ),
+		new IO_ReadPort( 0x02, 0x02, YM2610_status_port_0_B_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2610_control_port_0_A_w ),
+		new IO_WritePort( 0x01, 0x01, YM2610_data_port_0_A_w ),
+		new IO_WritePort( 0x02, 0x02, YM2610_control_port_0_B_w ),
+		new IO_WritePort( 0x03, 0x03, YM2610_data_port_0_B_w ),
+		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* -> Main CPU */
 	MEMORY_END
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x00, 0x00, YM2610_status_port_0_A_r },
-		{ 0x02, 0x02, YM2610_status_port_0_B_r },
+	public static IO_ReadPort sounda_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2608_status_port_0_A_r ),
+		new IO_ReadPort( 0x02, 0x02, YM2608_status_port_0_B_r ),
 	MEMORY_END
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, YM2610_control_port_0_A_w },
-		{ 0x01, 0x01, YM2610_data_port_0_A_w },
-		{ 0x02, 0x02, YM2610_control_port_0_B_w },
-		{ 0x03, 0x03, YM2610_data_port_0_B_w },
-		{ 0xc0, 0xc1, MWA_NOP }, /* -> Main CPU */
-	MEMORY_END
-	
-	static PORT_READ_START( sounda_readport )
-		{ 0x00, 0x00, YM2608_status_port_0_A_r },
-		{ 0x02, 0x02, YM2608_status_port_0_B_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( sounda_writeport )
-		{ 0x00, 0x00, YM2608_control_port_0_A_w },
-		{ 0x01, 0x01, YM2608_data_port_0_A_w },
-		{ 0x02, 0x02, YM2608_control_port_0_B_w },
-		{ 0x03, 0x03, YM2608_data_port_0_B_w },
-		{ 0xc0, 0xc1, MWA_NOP }, /* -> Main CPU */
+	public static IO_WritePort sounda_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2608_control_port_0_A_w ),
+		new IO_WritePort( 0x01, 0x01, YM2608_data_port_0_A_w ),
+		new IO_WritePort( 0x02, 0x02, YM2608_control_port_0_B_w ),
+		new IO_WritePort( 0x03, 0x03, YM2608_data_port_0_B_w ),
+		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* -> Main CPU */
 	MEMORY_END
 	
 	/******************************************************************************/
@@ -581,7 +589,7 @@ public class bbusters
 	/******************************************************************************/
 	
 	static struct GfxLayout charlayout =
-	{
+	new IO_WritePort(
 		8,8,
 		RGN_FRAC(1,1),
 		4,
@@ -589,10 +597,10 @@ public class bbusters
 		{ 0,4,8,12,16,20,24,28 },
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	};
+	);
 	
 	static struct GfxLayout spritelayout =
-	{
+	new IO_WritePort(
 		16,16,
 		RGN_FRAC(1,1),
 		4,
@@ -607,10 +615,10 @@ public class bbusters
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 				16*32, 17*32, 18*32, 19*32, 20*32, 21*32, 22*32, 23*32 },
 		128*8
-	};
+	);
 	
 	static struct GfxLayout tilelayout =
-	{
+	new IO_WritePort(
 		16,16,	/* 16*16 sprites */
 		RGN_FRAC(1,1),
 		4,	/* 4 bits per pixel */
@@ -622,37 +630,37 @@ public class bbusters
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 			8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
 		128*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout,     0, 16 },
 		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
 		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
 		{ REGION_GFX4, 0, &tilelayout,   768, 16 },
 		{ REGION_GFX5, 0, &tilelayout,  1024+256, 16 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_mechatt[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout,     0, 16 },
 		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
 		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
 		{ REGION_GFX4, 0, &tilelayout,   512, 16 },
 		{ REGION_GFX5, 0, &tilelayout,   768, 16 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	/******************************************************************************/
 	
 	static void sound_irq( int irq )
-	{
+	new IO_WritePort(
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
-	}
+	)
 	
 	static struct YM2608interface ym2608_interface =
-	{
+	new IO_WritePort(
 		1,
 		8000000,	/* 8 MHz */
 		{ 50 },
@@ -663,10 +671,10 @@ public class bbusters
 		{ sound_irq },
 		{ REGION_SOUND1 },
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
-	};
+	);
 	
 	struct YM2610interface ym2610_interface =
-	{
+	new IO_WritePort(
 		1,
 		8000000,
 		{ MIXERG(15,MIXER_GAIN_4x,MIXER_PAN_CENTER) },
@@ -678,12 +686,12 @@ public class bbusters
 		{ REGION_SOUND2 },
 		{ REGION_SOUND1 },
 		{ YM3012_VOL(20,MIXER_PAN_LEFT,20,MIXER_PAN_RIGHT) }
-	};
+	);
 	
 	/******************************************************************************/
 	
 	static NVRAM_HANDLER( bbusters )
-	{
+	new IO_WritePort(
 		if( read_or_write ) {
 			mame_fwrite (file, eprom_data, 0x80);
 		}
@@ -693,26 +701,26 @@ public class bbusters
 			else
 				memset (eprom_data, 0xff, 0x80);
 		}
-	}
+	)
 	
 	static INTERRUPT_GEN( bbuster )
-	{
+	new IO_WritePort(
 		if (cpu_getiloops()==0)
 			cpu_set_irq_line(0, 6, HOLD_LINE); /* VBL */
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
-	}
+	)
 	
 	static VIDEO_EOF( bbuster )
-	{
+	new IO_WritePort(
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	}
+	)
 	
 	static VIDEO_EOF( mechatt )
-	{
+	new IO_WritePort(
 		buffer_spriteram16_w(0,0,0);
-	}
+	)
 	
 	static MACHINE_DRIVER_START( bbusters )
 	
@@ -868,7 +876,7 @@ public class bbusters
 	
 	#if 0
 	static void bbusters_patch_code(UINT16 offset)
-	{
+	new IO_WritePort(
 		/* To avoid checksum error */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		RAM[(offset +  0)/2] = 0x4e71;
@@ -879,22 +887,22 @@ public class bbusters
 		RAM[(offset + 22)/2] = 0x4e71;
 		RAM[(offset + 30)/2] = 0x4e71;
 		RAM[(offset + 32)/2] = 0x4e71;
-	}
+	)
 	#endif
 	
 	DRIVER_INIT( bbusters )
-	{
+	new IO_WritePort(
 		#if BBUSTERS_HACK
 		bbusters_patch_code(0x00234c);
 		#endif
-	}
+	)
 	
 	DRIVER_INIT( mechatt )
-	{
+	new IO_WritePort(
 		#if MECHATT_HACK
 		bbusters_patch_code(0x003306);
 		#endif
-	}
+	)
 	
 	/******************************************************************************/
 	

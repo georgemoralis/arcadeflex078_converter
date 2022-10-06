@@ -162,35 +162,39 @@ public class findout
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x4800, 0x4803, ppi8255_0_r },
-		{ 0x5000, 0x5003, ppi8255_1_r },
-		{ 0x6400, 0x6400, signature_r },
-		{ 0x7800, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-		{ 0x0000, 0xffff, catchall },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4800, 0x4803, ppi8255_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x5003, ppi8255_1_r ),
+		new Memory_ReadAddress( 0x6400, 0x6400, signature_r ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x0000, 0xffff, catchall ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x4800, 0x4803, ppi8255_0_w },
-		{ 0x5000, 0x5003, ppi8255_1_w },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x4800, 0x4803, ppi8255_0_w ),
+		new Memory_WriteAddress( 0x5000, 0x5003, ppi8255_1_w ),
 		/* banked ROMs are enabled by low 6 bits of the address */
-		{ 0x603e, 0x603e, banksel_1_w },
-		{ 0x603d, 0x603d, banksel_2_w },
-		{ 0x603b, 0x603b, banksel_3_w },
-		{ 0x6037, 0x6037, banksel_4_w },
-		{ 0x602f, 0x602f, banksel_5_w },
-		{ 0x601f, 0x601f, banksel_main_w },
-		{ 0x6200, 0x6200, signature_w },
-		{ 0x7800, 0x7fff, MWA_ROM },	/* space for diagnostic ROM? */
-		{ 0x8000, 0x8002, findout_drawctrl_w },
-		{ 0xc000, 0xffff, findout_bitmap_w },
-		{ 0x8000, 0xffff, MWA_ROM },	/* overlapped by the above */
-	MEMORY_END
+		new Memory_WriteAddress( 0x603e, 0x603e, banksel_1_w ),
+		new Memory_WriteAddress( 0x603d, 0x603d, banksel_2_w ),
+		new Memory_WriteAddress( 0x603b, 0x603b, banksel_3_w ),
+		new Memory_WriteAddress( 0x6037, 0x6037, banksel_4_w ),
+		new Memory_WriteAddress( 0x602f, 0x602f, banksel_5_w ),
+		new Memory_WriteAddress( 0x601f, 0x601f, banksel_main_w ),
+		new Memory_WriteAddress( 0x6200, 0x6200, signature_w ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_ROM ),	/* space for diagnostic ROM? */
+		new Memory_WriteAddress( 0x8000, 0x8002, findout_drawctrl_w ),
+		new Memory_WriteAddress( 0xc000, 0xffff, findout_bitmap_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),	/* overlapped by the above */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

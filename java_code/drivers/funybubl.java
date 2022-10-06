@@ -76,31 +76,37 @@ public class funybubl
 		return 0xff;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK2 }, // banked port 1?
-		{ 0xc400, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xdfff, MRA_BANK1 }, // banked port 0?
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK2 ), // banked port 1?
+		new Memory_ReadAddress( 0xc400, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_BANK1 ), // banked port 0?
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_ROM },
-		{ 0xc400, 0xcfff, funybubl_paldatawrite, &funybubl_paletteram }, // palette?
-		{ 0xd000, 0xdfff, MWA_BANK1 }, // banked port 0?
-		{ 0xe000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc400, 0xcfff, funybubl_paldatawrite, &funybubl_paletteram ), // palette?
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_BANK1 ), // banked port 0?
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r	},
-		{ 0x01, 0x01, input_port_1_r	},
-		{ 0x02, 0x02, input_port_2_r	},
-		{ 0x03, 0x03, input_port_3_r	},
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r	),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r	),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r	),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r	),
 	
-		{ 0x06, 0x06, input_port_4_r	},
-	PORT_END
+		new IO_ReadPort( 0x06, 0x06, input_port_4_r	),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	WRITE_HANDLER( funybubl_soundcommand_w )
 	{
@@ -110,30 +116,36 @@ public class funybubl
 	
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, vidram_bank_w	},	// vidram bank
-		{ 0x01, 0x01, bank2_w }, // rom bank?
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, vidram_bank_w	),	// vidram bank
+		new IO_WritePort( 0x01, 0x01, bank2_w ), // rom bank?
 	
-		{ 0x03, 0x03, funybubl_soundcommand_w	},
+		new IO_WritePort( 0x03, 0x03, funybubl_soundcommand_w	),
 	
 	
-	PORT_END
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* sound cpu */
 	
 	
-	static MEMORY_READ_START( soundreadmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM }, // ram?
-		{ 0x9800, 0x9800, OKIM6295_status_0_r },
-		{ 0xa000, 0xa000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress soundreadmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ), // ram?
+		new Memory_ReadAddress( 0x9800, 0x9800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( soundwritemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM }, // ram?
-		{ 0x9800, 0x9800, OKIM6295_data_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress soundwritemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), // ram?
+		new Memory_WriteAddress( 0x9800, 0x9800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

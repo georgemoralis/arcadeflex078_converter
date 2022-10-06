@@ -64,30 +64,34 @@ public class tourtabl
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x007F, tia_r },
-		{ 0x0080, 0x00FF, r6532_0_ram_r },
-		{ 0x0100, 0x017F, tia_r },
-		{ 0x0180, 0x01FF, r6532_0_ram_r },
-		{ 0x0280, 0x029F, r6532_0_r },
-		{ 0x0400, 0x047F, r6532_1_ram_r },
-		{ 0x0500, 0x051F, r6532_1_r },
-		{ 0x0800, 0x1FFF, MRA_ROM },
-		{ 0xE800, 0xFFFF, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x007F, tia_r ),
+		new Memory_ReadAddress( 0x0080, 0x00FF, r6532_0_ram_r ),
+		new Memory_ReadAddress( 0x0100, 0x017F, tia_r ),
+		new Memory_ReadAddress( 0x0180, 0x01FF, r6532_0_ram_r ),
+		new Memory_ReadAddress( 0x0280, 0x029F, r6532_0_r ),
+		new Memory_ReadAddress( 0x0400, 0x047F, r6532_1_ram_r ),
+		new Memory_ReadAddress( 0x0500, 0x051F, r6532_1_r ),
+		new Memory_ReadAddress( 0x0800, 0x1FFF, MRA_ROM ),
+		new Memory_ReadAddress( 0xE800, 0xFFFF, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x007F, tia_w },
-		{ 0x0080, 0x00FF, r6532_0_ram_w, &r6532_0_ram },
-		{ 0x0100, 0x017F, tia_w },
-		{ 0x0180, 0x01FF, r6532_0_ram_w },
-		{ 0x0280, 0x029F, r6532_0_w },
-		{ 0x0400, 0x047F, r6532_1_ram_w, &r6532_1_ram },
-		{ 0x0500, 0x051F, r6532_1_w },
-		{ 0x0800, 0x1FFF, MWA_ROM },
-		{ 0xE800, 0xFFFF, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007F, tia_w ),
+		new Memory_WriteAddress( 0x0080, 0x00FF, r6532_0_ram_w, &r6532_0_ram ),
+		new Memory_WriteAddress( 0x0100, 0x017F, tia_w ),
+		new Memory_WriteAddress( 0x0180, 0x01FF, r6532_0_ram_w ),
+		new Memory_WriteAddress( 0x0280, 0x029F, r6532_0_w ),
+		new Memory_WriteAddress( 0x0400, 0x047F, r6532_1_ram_w, &r6532_1_ram ),
+		new Memory_WriteAddress( 0x0500, 0x051F, r6532_1_w ),
+		new Memory_WriteAddress( 0x0800, 0x1FFF, MWA_ROM ),
+		new Memory_WriteAddress( 0xE800, 0xFFFF, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static const struct R6532interface r6532_interface_0 =

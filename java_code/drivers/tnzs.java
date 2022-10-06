@@ -327,75 +327,87 @@ public class tnzs
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 }, /* ROM + RAM */
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_r },	/* WORK RAM (shared by the 2 z80's */
-		{ 0xf000, 0xf1ff, MRA_RAM },	/* VDC RAM */
-		{ 0xf600, 0xf600, MRA_NOP },	/* ? */
-		{ 0xf800, 0xfbff, MRA_RAM },	/* not in extrmatn and arknoid2 (PROMs instead) */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ), /* ROM + RAM */
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, tnzs_workram_r ),	/* WORK RAM (shared by the 2 z80's */
+		new Memory_ReadAddress( 0xf000, 0xf1ff, MRA_RAM ),	/* VDC RAM */
+		new Memory_ReadAddress( 0xf600, 0xf600, MRA_NOP ),	/* ? */
+		new Memory_ReadAddress( 0xf800, 0xfbff, MRA_RAM ),	/* not in extrmatn and arknoid2 (PROMs instead) */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_BANK1 },	/* ROM + RAM */
-		{ 0xc000, 0xdfff, MWA_RAM, &tnzs_objram },
-		{ 0xe000, 0xefff, tnzs_workram_w, &tnzs_workram },
-		{ 0xf000, 0xf1ff, MWA_RAM, &tnzs_vdcram },
-		{ 0xf200, 0xf3ff, MWA_RAM, &tnzs_scrollram }, /* scrolling info */
-		{ 0xf400, 0xf400, MWA_NOP },	/* ? */
-		{ 0xf600, 0xf600, tnzs_bankswitch_w },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_BANK1 ),	/* ROM + RAM */
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, &tnzs_objram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_w, &tnzs_workram ),
+		new Memory_WriteAddress( 0xf000, 0xf1ff, MWA_RAM, &tnzs_vdcram ),
+		new Memory_WriteAddress( 0xf200, 0xf3ff, MWA_RAM, &tnzs_scrollram ), /* scrolling info */
+		new Memory_WriteAddress( 0xf400, 0xf400, MWA_NOP ),	/* ? */
+		new Memory_WriteAddress( 0xf600, 0xf600, tnzs_bankswitch_w ),
 		/* arknoid2, extrmatn, plumppop and drtoppel have PROMs instead of RAM */
 		/* drtoppel writes here anyway! (maybe leftover from tests during development) */
 		/* so the handler is patched out in init_drtopple() */
-		{ 0xf800, 0xfbff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram },
-	MEMORY_END
+		new Memory_WriteAddress( 0xf800, 0xfbff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sub_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK2 },
-		{ 0xb000, 0xb000, YM2203_status_port_0_r },
-		{ 0xb001, 0xb001, YM2203_read_port_0_r },
-		{ 0xc000, 0xc001, tnzs_mcu_r },	/* plain input ports in insectx (memory handler */
+	public static Memory_ReadAddress sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xc000, 0xc001, tnzs_mcu_r ),	/* plain input ports in insectx (memory handler */
 										/* changed in insectx_init() ) */
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_r },
-		{ 0xf000, 0xf003, arknoid2_sh_f000_r },	/* paddles in arkanoid2/plumppop. The ports are */
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, tnzs_workram_sub_r ),
+		new Memory_ReadAddress( 0xf000, 0xf003, arknoid2_sh_f000_r ),	/* paddles in arkanoid2/plumppop. The ports are */
 							/* read but not used by the other games, and are not read at */
 							/* all by insectx. */
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sub_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, tnzs_bankswitch1_w },
-		{ 0xb000, 0xb000, YM2203_control_port_0_w },
-		{ 0xb001, 0xb001, YM2203_write_port_0_w },
-		{ 0xc000, 0xc001, tnzs_mcu_w },	/* not present in insectx */
-		{ 0xd000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_w },
-	MEMORY_END
+	public static Memory_WriteAddress sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, tnzs_bankswitch1_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xc000, 0xc001, tnzs_mcu_w ),	/* not present in insectx */
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_sub_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( kageki_sub_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK2 },
-		{ 0xb000, 0xb000, YM2203_status_port_0_r },
-		{ 0xb001, 0xb001, YM2203_read_port_0_r },
-		{ 0xc000, 0xc000, input_port_2_r },
-		{ 0xc001, 0xc001, input_port_3_r },
-		{ 0xc002, 0xc002, input_port_4_r },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_r },
-	MEMORY_END
+	public static Memory_ReadAddress kageki_sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xb000, 0xb000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_2_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_3_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_4_r ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, tnzs_workram_sub_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( kageki_sub_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, tnzs_bankswitch1_w },
-		{ 0xb000, 0xb000, YM2203_control_port_0_w },
-		{ 0xb001, 0xb001, YM2203_write_port_0_w },
-		{ 0xd000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_w },
-	MEMORY_END
+	public static Memory_WriteAddress kageki_sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, tnzs_bankswitch1_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_sub_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* the bootleg board is different, it has a third CPU (and of course no mcu) */
 	
@@ -405,69 +417,89 @@ public class tnzs
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	}
 	
-	static MEMORY_READ_START( tnzsb_readmem1 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK2 },
-		{ 0xb002, 0xb002, input_port_0_r },
-		{ 0xb003, 0xb003, input_port_1_r },
-		{ 0xc000, 0xc000, input_port_2_r },
-		{ 0xc001, 0xc001, input_port_3_r },
-		{ 0xc002, 0xc002, input_port_4_r },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_r },
-		{ 0xf000, 0xf003, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress tnzsb_readmem1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xb002, 0xb002, input_port_0_r ),
+		new Memory_ReadAddress( 0xb003, 0xb003, input_port_1_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_2_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_3_r ),
+		new Memory_ReadAddress( 0xc002, 0xc002, input_port_4_r ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, tnzs_workram_sub_r ),
+		new Memory_ReadAddress( 0xf000, 0xf003, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tnzsb_writemem1 )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, tnzs_bankswitch1_w },
-		{ 0xb004, 0xb004, tnzsb_sound_command_w },
-		{ 0xd000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xefff, tnzs_workram_sub_w },
-		{ 0xf000, 0xf3ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram },
-	MEMORY_END
+	public static Memory_WriteAddress tnzsb_writemem1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, tnzs_bankswitch1_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, tnzsb_sound_command_w ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xefff, tnzs_workram_sub_w ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( tnzsb_readmem2 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress tnzsb_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tnzsb_writemem2 )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress tnzsb_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( tnzsb_readport )
-		{ 0x00, 0x00, YM2203_status_port_0_r  },
-		{ 0x02, 0x02, soundlatch_r  },
-	PORT_END
+	public static IO_ReadPort tnzsb_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r  ),
+		new IO_ReadPort( 0x02, 0x02, soundlatch_r  ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( tnzsb_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w  },
-		{ 0x01, 0x01, YM2203_write_port_0_w  },
-	PORT_END
+	public static IO_WritePort tnzsb_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w  ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w  ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( i8742_readmem )
-		{ 0x0000, 0x07ff, MRA_ROM },
-		{ 0x0800, 0x08ff, MRA_RAM },	/* Internal i8742 RAM */
-	MEMORY_END
+	public static Memory_ReadAddress i8742_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0800, 0x08ff, MRA_RAM ),	/* Internal i8742 RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( i8742_writemem )
-		{ 0x0000, 0x07ff, MWA_ROM },
-		{ 0x0800, 0x08ff, MWA_RAM },	/* Internal i8742 RAM */
-	MEMORY_END
+	public static Memory_WriteAddress i8742_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0800, 0x08ff, MWA_RAM ),	/* Internal i8742 RAM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( i8742_readport )
-		{ 0x01, 0x01, tnzs_port1_r },
-		{ 0x02, 0x02, tnzs_port2_r },
-		{ I8X41_t0, I8X41_t0, input_port_5_r },
-		{ I8X41_t1, I8X41_t1, input_port_6_r },
-	PORT_END
+	public static IO_ReadPort i8742_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, tnzs_port1_r ),
+		new IO_ReadPort( 0x02, 0x02, tnzs_port2_r ),
+		new IO_ReadPort( I8X41_t0, I8X41_t0, input_port_5_r ),
+		new IO_ReadPort( I8X41_t1, I8X41_t1, input_port_6_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( i8742_writeport )
-		{ 0x02, 0x02, tnzs_port2_w },
-	PORT_END
+	public static IO_WritePort i8742_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, tnzs_port2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

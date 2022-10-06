@@ -142,33 +142,36 @@ public class senjyo
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x97ff, MRA_RAM },
-		{ 0x9800, 0x987f, MRA_RAM },
-		{ 0x9c00, 0x9d8f, MRA_RAM },
-		{ 0x9e00, 0x9e3f, MRA_RAM },
-		{ 0xa000, 0xa37f, MRA_RAM },
-		{ 0xa800, 0xaaff, MRA_RAM },
-		{ 0xb000, 0xb1ff, MRA_RAM },
-		{ 0xb800, 0xbbff, MRA_RAM },
-		{ 0xd000, 0xd000, input_port_0_r },	/* player 1 input */
-		{ 0xd001, 0xd001, input_port_1_r },	/* player 2 input */
-		{ 0xd002, 0xd002, input_port_2_r },	/* coin */
-		{ 0xd004, 0xd004, input_port_3_r },	/* DSW1 */
-		{ 0xd005, 0xd005, input_port_4_r },	/* DSW2 */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9800, 0x987f, MRA_RAM ),
+		new Memory_ReadAddress( 0x9c00, 0x9d8f, MRA_RAM ),
+		new Memory_ReadAddress( 0x9e00, 0x9e3f, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa37f, MRA_RAM ),
+		new Memory_ReadAddress( 0xa800, 0xaaff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb000, 0xb1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb800, 0xbbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, input_port_0_r ),	/* player 1 input */
+		new Memory_ReadAddress( 0xd001, 0xd001, input_port_1_r ),	/* player 2 input */
+		new Memory_ReadAddress( 0xd002, 0xd002, input_port_2_r ),	/* coin */
+		new Memory_ReadAddress( 0xd004, 0xd004, input_port_3_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0xd005, 0xd005, input_port_4_r ),	/* DSW2 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, MWA_RAM },
-		{ 0x9000, 0x93ff, senjyo_fgvideoram_w, &senjyo_fgvideoram },
-		{ 0x9400, 0x97ff, senjyo_fgcolorram_w, &senjyo_fgcolorram },
-		{ 0x9800, 0x987f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x9c00, 0x9d8f, paletteram_IIBBGGRR_w, &paletteram },
-		{ 0x9e00, 0x9e1f, MWA_RAM, &senjyo_fgscroll },
-		{ 0x9e20, 0x9e21, MWA_RAM, &senjyo_scrolly3 },
-	/*	{ 0x9e22, 0x9e23, height of the layer (Senjyo only, fixed at 0x380) */
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, senjyo_fgvideoram_w, &senjyo_fgvideoram ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, senjyo_fgcolorram_w, &senjyo_fgcolorram ),
+		new Memory_WriteAddress( 0x9800, 0x987f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9c00, 0x9d8f, paletteram_IIBBGGRR_w, &paletteram ),
+		new Memory_WriteAddress( 0x9e00, 0x9e1f, MWA_RAM, &senjyo_fgscroll ),
+		new Memory_WriteAddress( 0x9e20, 0x9e21, MWA_RAM, &senjyo_scrolly3 ),
+	/*	new Memory_WriteAddress( 0x9e22, 0x9e23, height of the layer (Senjyo only, fixed at 0x380) */
 		{ 0x9e25, 0x9e25, MWA_RAM, &senjyo_scrollx3 },
 		{ 0x9e27, 0x9e27, senjyo_bgstripes_w, &senjyo_bgstripesram },	/* controls width of background stripes */
 		{ 0x9e28, 0x9e29, MWA_RAM, &senjyo_scrolly2 },
@@ -186,36 +189,45 @@ public class senjyo
 		{ 0xb800, 0xbbff, MWA_RAM, &senjyo_radarram },
 		{ 0xd000, 0xd000, flip_screen_w },
 		{ 0xd004, 0xd004, z80pioA_0_p_w },
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0x8000, 0x8000, SN76496_0_w },
-		{ 0x9000, 0x9000, SN76496_1_w },
-		{ 0xa000, 0xa000, SN76496_2_w },
-		{ 0xd000, 0xd000, senjyo_volume_w },
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, SN76496_0_w ),
+		new Memory_WriteAddress( 0x9000, 0x9000, SN76496_1_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, SN76496_2_w ),
+		new Memory_WriteAddress( 0xd000, 0xd000, senjyo_volume_w ),
 	#if 0
-		{ 0xe000, 0xe000, unknown },
-		{ 0xf000, 0xf000, unknown },
+		new Memory_WriteAddress( 0xe000, 0xe000, unknown ),
+		new Memory_WriteAddress( 0xf000, 0xf000, unknown ),
 	#endif
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x00, 0x03, z80pio_0_r },
-		{ 0x08, 0x0b, z80ctc_0_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x03, z80pio_0_r ),
+		new IO_ReadPort( 0x08, 0x0b, z80ctc_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x03, z80pio_0_w },
-		{ 0x08, 0x0b, z80ctc_0_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x03, z80pio_0_w ),
+		new IO_WritePort( 0x08, 0x0b, z80ctc_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

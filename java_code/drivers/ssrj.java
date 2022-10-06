@@ -68,34 +68,38 @@ public class ssrj
 		return retval;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, ssrj_vram1_r},
-		{ 0xc800, 0xcfff, ssrj_vram2_r},
-		{ 0xd000, 0xd7ff, MRA_RAM},
-		{ 0xd800, 0xdfff, ssrj_vram4_r},
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xefff, MRA_RAM },
-		{ 0xf000, 0xf000, input_port_0_r},
-		{ 0xf001, 0xf001, ssrj_wheel_r },
-		{ 0xf002, 0xf002, input_port_2_r},
-		{ 0xf401, 0xf401 ,AY8910_read_port_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, ssrj_vram1_r),
+		new Memory_ReadAddress( 0xc800, 0xcfff, ssrj_vram2_r),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM),
+		new Memory_ReadAddress( 0xd800, 0xdfff, ssrj_vram4_r),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_0_r),
+		new Memory_ReadAddress( 0xf001, 0xf001, ssrj_wheel_r ),
+		new Memory_ReadAddress( 0xf002, 0xf002, input_port_2_r),
+		new Memory_ReadAddress( 0xf401, 0xf401 ,AY8910_read_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, ssrj_vram1_w,&ssrj_vram1 },
-		{ 0xc800, 0xcfff, ssrj_vram2_w,&ssrj_vram2 },
-		{ 0xd000, 0xd7ff, MWA_RAM,&ssrj_vram3 },
-		{ 0xd800, 0xdfff, ssrj_vram4_w,&ssrj_vram4 },
-		{ 0xe000, 0xe7ff, MWA_RAM },
-		{ 0xe800, 0xefff, MWA_RAM,&ssrj_scrollram },
-		{ 0xf003, 0xf003, MWA_NOP }, /* unknown */
-		{ 0xf401, 0xf401, AY8910_write_port_0_w  },
-		{ 0xf400, 0xf400, AY8910_control_port_0_w },
-		{ 0xfc00, 0xfc00, MWA_NOP }, /* unknown */
-		{ 0xf800, 0xf800, MWA_NOP }, /* wheel ? */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, ssrj_vram1_w,&ssrj_vram1 ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, ssrj_vram2_w,&ssrj_vram2 ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM,&ssrj_vram3 ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, ssrj_vram4_w,&ssrj_vram4 ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM,&ssrj_scrollram ),
+		new Memory_WriteAddress( 0xf003, 0xf003, MWA_NOP ), /* unknown */
+		new Memory_WriteAddress( 0xf401, 0xf401, AY8910_write_port_0_w  ),
+		new Memory_WriteAddress( 0xf400, 0xf400, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc00, MWA_NOP ), /* unknown */
+		new Memory_WriteAddress( 0xf800, 0xf800, MWA_NOP ), /* wheel ? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( ssrj )
 	

@@ -187,27 +187,31 @@ public class tugboat
 	}
 	
 	
-	static MEMORY_READ_START( tugboat_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },
-		{ 0x11e4, 0x11e7, pia_0_r },
-		{ 0x11e8, 0x11eb, pia_1_r },
-		{ 0x2000, 0x2fff, MRA_RAM },
-		{ 0x5000, 0x7fff, MRA_ROM },
-		{ 0xfff0, 0xffff, MRA_ROM },	/* vectors */
-	MEMORY_END
+	public static Memory_ReadAddress tugboat_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x11e4, 0x11e7, pia_0_r ),
+		new Memory_ReadAddress( 0x11e8, 0x11eb, pia_1_r ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xfff0, 0xffff, MRA_ROM ),	/* vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tugboat_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM, &tugboat_ram },
-		{ 0x1060, 0x1060, AY8910_control_port_0_w },
-		{ 0x1061, 0x1061, AY8910_write_port_0_w },
-		{ 0x10a0, 0x10a1, tugboat_hd46505_0_w },	// scrolling is performed changing the start_addr register (0C/0D)
-		{ 0x10c0, 0x10c1, tugboat_hd46505_1_w },
-		{ 0x11e4, 0x11e7, pia_0_w },
-		{ 0x11e8, 0x11eb, pia_1_w },
-		{ 0x18e0, 0x18ef, tugboat_score_w },
-		{ 0x2000, 0x2fff, MWA_RAM },	/* tilemap RAM */
-	    { 0x5000, 0x7fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress tugboat_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM, &tugboat_ram ),
+		new Memory_WriteAddress( 0x1060, 0x1060, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x1061, 0x1061, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x10a0, 0x10a1, tugboat_hd46505_0_w ),	// scrolling is performed changing the start_addr register (0C/0D)
+		new Memory_WriteAddress( 0x10c0, 0x10c1, tugboat_hd46505_1_w ),
+		new Memory_WriteAddress( 0x11e4, 0x11e7, pia_0_w ),
+		new Memory_WriteAddress( 0x11e8, 0x11eb, pia_1_w ),
+		new Memory_WriteAddress( 0x18e0, 0x18ef, tugboat_score_w ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM ),	/* tilemap RAM */
+	    new Memory_WriteAddress( 0x5000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

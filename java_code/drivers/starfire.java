@@ -198,19 +198,23 @@ public class starfire
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, starfire_scratch_r },
-		{ 0xa000, 0xbfff, starfire_colorram_r },
-		{ 0xc000, 0xffff, starfire_videoram_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, starfire_scratch_r ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, starfire_colorram_r ),
+		new Memory_ReadAddress( 0xc000, 0xffff, starfire_videoram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x9fff, starfire_scratch_w },
-		{ 0xa000, 0xbfff, starfire_colorram_w, &starfire_colorram },
-		{ 0xc000, 0xffff, starfire_videoram_w, &starfire_videoram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, starfire_scratch_w ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, starfire_colorram_w, &starfire_colorram ),
+		new Memory_WriteAddress( 0xc000, 0xffff, starfire_videoram_w, &starfire_videoram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

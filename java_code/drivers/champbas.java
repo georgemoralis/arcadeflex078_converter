@@ -65,49 +65,57 @@ public class champbas
 		DAC_signed_data_w(0,data<<2);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa040, 0xa040, input_port_1_r },
-		{ 0xa080, 0xa080, input_port_2_r },
-	/*	{ 0xa0a0, 0xa0a0,  },	???? */
-		{ 0xa0c0, 0xa0c0, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa040, 0xa040, input_port_1_r ),
+		new Memory_ReadAddress( 0xa080, 0xa080, input_port_2_r ),
+	/*	new Memory_ReadAddress( 0xa0a0, 0xa0a0,  ),	???? */
+		new Memory_ReadAddress( 0xa0c0, 0xa0c0, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		//{ 0x6000, 0x63ff, champbas_protection_w },
-		{ 0x7000, 0x7000, AY8910_write_port_0_w },
-		{ 0x7001, 0x7001, AY8910_control_port_0_w },
-		{ 0x7800, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, champbas_videoram_w, &videoram },
-		{ 0x8400, 0x87ff, champbas_colorram_w, &colorram },
-		{ 0x8800, 0x8fef, MWA_RAM },
-		{ 0x8ff0, 0x8fff, MWA_RAM, &spriteram, &spriteram_size},
-		{ 0xa000, 0xa000, interrupt_enable_w },
-		{ 0xa002, 0xa002, champbas_gfxbank_w },
-		{ 0xa003, 0xa003, champbas_flipscreen_w },
-		//{ 0xa006, 0xa007, champbas_protection_w },
-		{ 0xa060, 0xa06f, MWA_RAM, &spriteram_2 },
-		{ 0xa080, 0xa080, soundlatch_w },
-		{ 0xa0c0, 0xa0c0, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		//new Memory_WriteAddress( 0x6000, 0x63ff, champbas_protection_w ),
+		new Memory_WriteAddress( 0x7000, 0x7000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, champbas_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, champbas_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8800, 0x8fef, MWA_RAM ),
+		new Memory_WriteAddress( 0x8ff0, 0x8fff, MWA_RAM, &spriteram, &spriteram_size),
+		new Memory_WriteAddress( 0xa000, 0xa000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, champbas_gfxbank_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, champbas_flipscreen_w ),
+		//new Memory_WriteAddress( 0xa006, 0xa007, champbas_protection_w ),
+		new Memory_WriteAddress( 0xa060, 0xa06f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0xa080, 0xa080, soundlatch_w ),
+		new Memory_WriteAddress( 0xa0c0, 0xa0c0, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6000, soundlatch_r },
-		{ 0xe000, 0xe3ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xe3ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x5fff, MWA_ROM },
-	/*	{ 0x8000, 0x8000, MWA_NOP },	unknown - maybe DAC enable */
-		{ 0xa000, 0xa000, soundlatch_w },	/* probably. The sound latch has to be cleared some way */
-		{ 0xc000, 0xc000, champbas_dac_w },
-		{ 0xe000, 0xe3ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+	/*	new Memory_WriteAddress( 0x8000, 0x8000, MWA_NOP ),	unknown - maybe DAC enable */
+		new Memory_WriteAddress( 0xa000, 0xa000, soundlatch_w ),	/* probably. The sound latch has to be cleared some way */
+		new Memory_WriteAddress( 0xc000, 0xc000, champbas_dac_w ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

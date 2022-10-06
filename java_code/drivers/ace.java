@@ -148,64 +148,68 @@ public class ace
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 	
-		{ 0x0000, 0x09ff, MRA_ROM },
+		new Memory_ReadAddress( 0x0000, 0x09ff, MRA_ROM ),
 	
-		{ 0x2000, 0x20ff, MRA_RAM },
-		{ 0x8300, 0x83ff, MRA_RAM },
-		{ 0x8000, 0x80ff, ace_characterram_r },
+		new Memory_ReadAddress( 0x2000, 0x20ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8300, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x80ff, ace_characterram_r ),
 	
 		/* players inputs */
-		{ 0xc008, 0xc008, input_port_0_r },
-		{ 0xc009, 0xc009, input_port_1_r },
-		{ 0xc00a, 0xc00a, input_port_2_r },
-		{ 0xc00b, 0xc00b, input_port_3_r },
-		{ 0xc00c, 0xc00c, input_port_4_r },
-		{ 0xc00d, 0xc00d, input_port_5_r },
-		{ 0xc00e, 0xc00e, input_port_6_r },
-		{ 0xc00f, 0xc00f, input_port_7_r },
-		{ 0xc010, 0xc010, input_port_8_r },
-		{ 0xc011, 0xc011, input_port_9_r },
+		new Memory_ReadAddress( 0xc008, 0xc008, input_port_0_r ),
+		new Memory_ReadAddress( 0xc009, 0xc009, input_port_1_r ),
+		new Memory_ReadAddress( 0xc00a, 0xc00a, input_port_2_r ),
+		new Memory_ReadAddress( 0xc00b, 0xc00b, input_port_3_r ),
+		new Memory_ReadAddress( 0xc00c, 0xc00c, input_port_4_r ),
+		new Memory_ReadAddress( 0xc00d, 0xc00d, input_port_5_r ),
+		new Memory_ReadAddress( 0xc00e, 0xc00e, input_port_6_r ),
+		new Memory_ReadAddress( 0xc00f, 0xc00f, input_port_7_r ),
+		new Memory_ReadAddress( 0xc010, 0xc010, input_port_8_r ),
+		new Memory_ReadAddress( 0xc011, 0xc011, input_port_9_r ),
 	
-		{ 0xc012, 0xc012, unk_r },
+		new Memory_ReadAddress( 0xc012, 0xc012, unk_r ),
 	
 		/* vblank */
-		{ 0xc014, 0xc014, input_port_10_r },
+		new Memory_ReadAddress( 0xc014, 0xc014, input_port_10_r ),
 	
 		/* coin */
-		{ 0xc015, 0xc015, input_port_11_r },
+		new Memory_ReadAddress( 0xc015, 0xc015, input_port_11_r ),
 	
 		/* start (must read 1 at least once to make the game run) */
-		{ 0xc016, 0xc016, input_port_12_r },
+		new Memory_ReadAddress( 0xc016, 0xc016, input_port_12_r ),
 	
-		{ 0xc017, 0xc017, unk_r },
-		{ 0xc018, 0xc018, unk_r },
-		{ 0xc019, 0xc019, unk_r },
+		new Memory_ReadAddress( 0xc017, 0xc017, unk_r ),
+		new Memory_ReadAddress( 0xc018, 0xc018, unk_r ),
+		new Memory_ReadAddress( 0xc019, 0xc019, unk_r ),
 	
-		{ 0xc020, 0xc020, unk_r },
-		{ 0xc021, 0xc021, unk_r },
-		{ 0xc022, 0xc022, unk_r },
-		{ 0xc023, 0xc023, unk_r },
-		{ 0xc024, 0xc024, unk_r },
-		{ 0xc025, 0xc025, unk_r },
-		{ 0xc026, 0xc026, unk_r },
+		new Memory_ReadAddress( 0xc020, 0xc020, unk_r ),
+		new Memory_ReadAddress( 0xc021, 0xc021, unk_r ),
+		new Memory_ReadAddress( 0xc022, 0xc022, unk_r ),
+		new Memory_ReadAddress( 0xc023, 0xc023, unk_r ),
+		new Memory_ReadAddress( 0xc024, 0xc024, unk_r ),
+		new Memory_ReadAddress( 0xc025, 0xc025, unk_r ),
+		new Memory_ReadAddress( 0xc026, 0xc026, unk_r ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* 5x2101 - SRAM 256x4 */
 	/* 3x3106 - SRAM 256x1 */
 	/* 1x3622 - ROM 512x4  - doesn't seem to be used ????????????*/
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x09ff, MWA_ROM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x09ff, MWA_ROM ),
 	
-		{ 0x2000, 0x20ff, MWA_RAM, &ace_scoreram },	/* 2x2101 */
-		{ 0x8300, 0x83ff, MWA_RAM, &ace_ram2 },		/* 2x2101 */
-		{ 0x8000, 0x80ff, ace_characterram_w, &ace_characterram },	/* 3x3101 (3bits: 0, 1, 2) */
+		new Memory_WriteAddress( 0x2000, 0x20ff, MWA_RAM, &ace_scoreram ),	/* 2x2101 */
+		new Memory_WriteAddress( 0x8300, 0x83ff, MWA_RAM, &ace_ram2 ),		/* 2x2101 */
+		new Memory_WriteAddress( 0x8000, 0x80ff, ace_characterram_w, &ace_characterram ),	/* 3x3101 (3bits: 0, 1, 2) */
 	
-		{ 0xc000, 0xc005, ace_objpos_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0xc000, 0xc005, ace_objpos_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ace )

@@ -141,40 +141,48 @@ public class freekick
 		if (nmi_en) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
 	}
 	
-	static MEMORY_READ_START( gigas_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe000, input_port_2_r },
-		{ 0xe800, 0xe800, input_port_3_r },
-		{ 0xf000, 0xf000, input_port_4_r },
-		{ 0xf800, 0xf800, input_port_5_r },
-	MEMORY_END
+	public static Memory_ReadAddress gigas_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_2_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_3_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_4_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_5_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( gigas_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, freek_videoram_w, &freek_videoram },
-		{ 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd900, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe001, MWA_NOP },// probably not flipscreen
-		{ 0xe002, 0xe003, coin_w },
-		{ 0xe004, 0xe004, nmi_enable_w },
-		{ 0xe005, 0xe005, MWA_NOP},
-		{ 0xf000, 0xf000, MWA_NOP }, //bankswitch ?
-		{ 0xfc00, 0xfc00, SN76496_0_w },
-		{ 0xfc01, 0xfc01, SN76496_1_w },
-		{ 0xfc02, 0xfc02, SN76496_2_w },
-		{ 0xfc03, 0xfc03, SN76496_3_w },
-	MEMORY_END
+	public static Memory_WriteAddress gigas_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, freek_videoram_w, &freek_videoram ),
+		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd900, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe001, MWA_NOP ),// probably not flipscreen
+		new Memory_WriteAddress( 0xe002, 0xe003, coin_w ),
+		new Memory_WriteAddress( 0xe004, 0xe004, nmi_enable_w ),
+		new Memory_WriteAddress( 0xe005, 0xe005, MWA_NOP),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), //bankswitch ?
+		new Memory_WriteAddress( 0xfc00, 0xfc00, SN76496_0_w ),
+		new Memory_WriteAddress( 0xfc01, 0xfc01, SN76496_1_w ),
+		new Memory_WriteAddress( 0xfc02, 0xfc02, SN76496_2_w ),
+		new Memory_WriteAddress( 0xfc03, 0xfc03, SN76496_3_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( gigas_readport )
-		{ 0x00, 0x00, gigas_spinner_r },
-		{ 0x01, 0x01, MRA_NOP }, //unused dip 3
-	PORT_END
+	public static IO_ReadPort gigas_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, gigas_spinner_r ),
+		new IO_ReadPort( 0x01, 0x01, MRA_NOP ), //unused dip 3
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( gigas_writeport )
-		{ 0x00, 0x00 ,spinner_select_w },
-	PORT_END
+	public static IO_WritePort gigas_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00 ,spinner_select_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -229,76 +237,88 @@ public class freekick
 		return 1;
 	}
 	
-	static PORT_READ_START( oigas_readport )
-		{ 0x00, 0x00, gigas_spinner_r },
-		{ 0x01, 0x01, IORP_NOP }, //unused dip 3
-		{ 0x02, 0x02, oigas_2_r },
-		{ 0x03, 0x03, oigas_3_r },
-	PORT_END
+	public static IO_ReadPort oigas_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, gigas_spinner_r ),
+		new IO_ReadPort( 0x01, 0x01, IORP_NOP ), //unused dip 3
+		new IO_ReadPort( 0x02, 0x02, oigas_2_r ),
+		new IO_ReadPort( 0x03, 0x03, oigas_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( oigas_writeport )
-		{ 0x00, 0x00, spinner_select_w },
-		{ 0x05, 0x05, oigas_5_w },
-	PORT_END
+	public static IO_WritePort oigas_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, spinner_select_w ),
+		new IO_WritePort( 0x05, 0x05, oigas_5_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
 	
-	static MEMORY_READ_START( pbillrd_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe000, input_port_0_r },
-		{ 0xe800, 0xe800, input_port_1_r },
-		{ 0xf000, 0xf000, input_port_2_r },
-		{ 0xf800, 0xf800, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress pbillrd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_0_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_1_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_2_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( pbillrd_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, freek_videoram_w, &freek_videoram },
-		{ 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd900, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe001, flipscreen_w },
-		{ 0xe002, 0xe003, coin_w },
-		{ 0xe004, 0xe004, nmi_enable_w },
-		{ 0xf000, 0xf000, pbillrd_bankswitch_w },
-		{ 0xfc00, 0xfc00, SN76496_0_w },
-		{ 0xfc01, 0xfc01, SN76496_1_w },
-		{ 0xfc02, 0xfc02, SN76496_2_w },
-		{ 0xfc03, 0xfc03, SN76496_3_w },
-	MEMORY_END
+	public static Memory_WriteAddress pbillrd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, freek_videoram_w, &freek_videoram ),
+		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd900, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe001, flipscreen_w ),
+		new Memory_WriteAddress( 0xe002, 0xe003, coin_w ),
+		new Memory_WriteAddress( 0xe004, 0xe004, nmi_enable_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, pbillrd_bankswitch_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc00, SN76496_0_w ),
+		new Memory_WriteAddress( 0xfc01, 0xfc01, SN76496_1_w ),
+		new Memory_WriteAddress( 0xfc02, 0xfc02, SN76496_2_w ),
+		new Memory_WriteAddress( 0xfc03, 0xfc03, SN76496_3_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( freekckb_readmem )
-		{ 0x0000, 0xcfff, MRA_ROM },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe7ff, MRA_RAM },	// tilemap
-		{ 0xe800, 0xe8ff, MRA_RAM },	// sprites
-		{ 0xec00, 0xec03, ppi8255_0_r },
-		{ 0xf000, 0xf003, ppi8255_1_r },
-		{ 0xf800, 0xf800, input_port_3_r },
-		{ 0xf801, 0xf801, input_port_4_r },
-		{ 0xf802, 0xf802, MRA_NOP },	//MUST return bit 0 = 0, otherwise game resets
-		{ 0xf803, 0xf803, spinner_r },
-	MEMORY_END
+	public static Memory_ReadAddress freekckb_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),	// tilemap
+		new Memory_ReadAddress( 0xe800, 0xe8ff, MRA_RAM ),	// sprites
+		new Memory_ReadAddress( 0xec00, 0xec03, ppi8255_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf003, ppi8255_1_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_3_r ),
+		new Memory_ReadAddress( 0xf801, 0xf801, input_port_4_r ),
+		new Memory_ReadAddress( 0xf802, 0xf802, MRA_NOP ),	//MUST return bit 0 = 0, otherwise game resets
+		new Memory_ReadAddress( 0xf803, 0xf803, spinner_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( freekckb_writemem )
-		{ 0x0000, 0xcfff, MWA_ROM },
-		{ 0xd000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, freek_videoram_w, &freek_videoram },
-		{ 0xe800, 0xe8ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xec00, 0xec03, ppi8255_0_w },
-		{ 0xf000, 0xf003, ppi8255_1_w },
-		{ 0xf800, 0xf801, flipscreen_w },
-		{ 0xf802, 0xf803, coin_w },
-		{ 0xf804, 0xf804, nmi_enable_w },
-		{ 0xf806, 0xf806, spinner_select_w },
-		{ 0xfc00, 0xfc00, SN76496_0_w },
-		{ 0xfc01, 0xfc01, SN76496_1_w },
-		{ 0xfc02, 0xfc02, SN76496_2_w },
-		{ 0xfc03, 0xfc03, SN76496_3_w },
-	MEMORY_END
+	public static Memory_WriteAddress freekckb_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xcfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, freek_videoram_w, &freek_videoram ),
+		new Memory_WriteAddress( 0xe800, 0xe8ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xec00, 0xec03, ppi8255_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf003, ppi8255_1_w ),
+		new Memory_WriteAddress( 0xf800, 0xf801, flipscreen_w ),
+		new Memory_WriteAddress( 0xf802, 0xf803, coin_w ),
+		new Memory_WriteAddress( 0xf804, 0xf804, nmi_enable_w ),
+		new Memory_WriteAddress( 0xf806, 0xf806, spinner_select_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc00, SN76496_0_w ),
+		new Memory_WriteAddress( 0xfc01, 0xfc01, SN76496_1_w ),
+		new Memory_WriteAddress( 0xfc02, 0xfc02, SN76496_2_w ),
+		new Memory_WriteAddress( 0xfc03, 0xfc03, SN76496_3_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static int ff_data;
@@ -313,13 +333,17 @@ public class freekick
 		ff_data = data;
 	}
 	
-	static PORT_READ_START( freekckb_readport )
-		{ 0xff, 0xff, freekick_ff_r },
-	PORT_END
+	public static IO_ReadPort freekckb_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0xff, 0xff, freekick_ff_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( freekckb_writeport )
-		{ 0xff, 0xff, freekick_ff_w },
-	PORT_END
+	public static IO_WritePort freekckb_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xff, 0xff, freekick_ff_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( gigas )
 	

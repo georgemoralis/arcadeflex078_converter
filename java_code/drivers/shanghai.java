@@ -774,63 +774,79 @@ public class shanghai
 		coin_counter_w(1,data & 2);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x00000, 0x03fff, MRA_RAM },
-		{ 0x80000, 0xfffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x03fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x80000, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x00000, 0x03fff, MWA_RAM },
-		{ 0x80000, 0xfffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x03fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x80000, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x01, HD63484_status_r },
-		{ 0x02, 0x03, HD63484_data_r },
-		{ 0x20, 0x20, YM2203_status_port_0_r },
-		{ 0x22, 0x22, YM2203_read_port_0_r },
-		{ 0x40, 0x40, input_port_0_r },
-		{ 0x44, 0x44, input_port_1_r },
-		{ 0x48, 0x48, input_port_2_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x01, HD63484_status_r ),
+		new IO_ReadPort( 0x02, 0x03, HD63484_data_r ),
+		new IO_ReadPort( 0x20, 0x20, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x22, 0x22, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x40, 0x40, input_port_0_r ),
+		new IO_ReadPort( 0x44, 0x44, input_port_1_r ),
+		new IO_ReadPort( 0x48, 0x48, input_port_2_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x01, HD63484_address_w },
-		{ 0x02, 0x03, HD63484_data_w },
-		{ 0x20, 0x20, YM2203_control_port_0_w },
-		{ 0x22, 0x22, YM2203_write_port_0_w },
-		{ 0x4c, 0x4c, shanghai_coin_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, HD63484_address_w ),
+		new IO_WritePort( 0x02, 0x03, HD63484_data_w ),
+		new IO_WritePort( 0x20, 0x20, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x22, 0x22, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x4c, 0x4c, shanghai_coin_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( shangha2_readmem )
-		{ 0x00000, 0x03fff, MRA_RAM },
-		{ 0x80000, 0xfffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress shangha2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x03fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x80000, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( shangha2_writemem )
-		{ 0x00000, 0x03fff, MWA_RAM },
-		{ 0x04000, 0x041ff, paletteram_xxxxBBBBGGGGRRRR_w, &paletteram },
-		{ 0x80000, 0xfffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress shangha2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x03fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x04000, 0x041ff, paletteram_xxxxBBBBGGGGRRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0x80000, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( shangha2_readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x10, 0x10, input_port_1_r },
-		{ 0x20, 0x20, input_port_2_r },
-		{ 0x30, 0x31, HD63484_status_r },
-		{ 0x32, 0x33, HD63484_data_r },
-		{ 0x40, 0x40, YM2203_status_port_0_r },
-		{ 0x42, 0x42, YM2203_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort shangha2_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_1_r ),
+		new IO_ReadPort( 0x20, 0x20, input_port_2_r ),
+		new IO_ReadPort( 0x30, 0x31, HD63484_status_r ),
+		new IO_ReadPort( 0x32, 0x33, HD63484_data_r ),
+		new IO_ReadPort( 0x40, 0x40, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x42, 0x42, YM2203_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( shangha2_writeport )
-		{ 0x30, 0x31, HD63484_address_w },
-		{ 0x32, 0x33, HD63484_data_w },
-		{ 0x40, 0x40, YM2203_control_port_0_w },
-		{ 0x42, 0x42, YM2203_write_port_0_w },
-		{ 0x50, 0x50, shanghai_coin_w },
-	PORT_END
+	public static IO_WritePort shangha2_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x30, 0x31, HD63484_address_w ),
+		new IO_WritePort( 0x32, 0x33, HD63484_data_w ),
+		new IO_WritePort( 0x40, 0x40, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x42, 0x42, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x50, 0x50, shanghai_coin_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

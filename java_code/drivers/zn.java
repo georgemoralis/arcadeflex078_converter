@@ -454,58 +454,72 @@ public class zn
 		{ 0xbfc00000, 0xbfc7ffff, MWA32_ROM },		/* bios */
 	MEMORY_END
 	
-	static MEMORY_READ_START( qsound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK10 },	/* banked (contains music data) */
-		{ 0xd007, 0xd007, qsound_status_r },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress qsound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK10 ),	/* banked (contains music data) */
+		new Memory_ReadAddress( 0xd007, 0xd007, qsound_status_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( qsound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xd000, 0xd000, qsound_data_h_w },
-		{ 0xd001, 0xd001, qsound_data_l_w },
-		{ 0xd002, 0xd002, qsound_cmd_w },
-		{ 0xd003, 0xd003, qsound_bankswitch_w },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress qsound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xd000, qsound_data_h_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, qsound_data_l_w ),
+		new Memory_WriteAddress( 0xd002, 0xd002, qsound_cmd_w ),
+		new Memory_WriteAddress( 0xd003, 0xd003, qsound_bankswitch_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( qsound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort qsound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( link_readmem )
-	MEMORY_END
+	public static Memory_ReadAddress link_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( link_writemem )
-	MEMORY_END
+	public static Memory_WriteAddress link_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( fx1a_sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x7fff, MRA_BANK10 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe000, YM2610_status_port_0_A_r },
-		{ 0xe001, 0xe001, YM2610_read_port_0_r },
-		{ 0xe002, 0xe002, YM2610_status_port_0_B_r },
-		{ 0xe200, 0xe200, MRA_NOP },
-		{ 0xe201, 0xe201, taitosound_slave_comm_r },
-		{ 0xea00, 0xea00, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress fx1a_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK10 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, YM2610_status_port_0_A_r ),
+		new Memory_ReadAddress( 0xe001, 0xe001, YM2610_read_port_0_r ),
+		new Memory_ReadAddress( 0xe002, 0xe002, YM2610_status_port_0_B_r ),
+		new Memory_ReadAddress( 0xe200, 0xe200, MRA_NOP ),
+		new Memory_ReadAddress( 0xe201, 0xe201, taitosound_slave_comm_r ),
+		new Memory_ReadAddress( 0xea00, 0xea00, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fx1a_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe000, YM2610_control_port_0_A_w },
-		{ 0xe001, 0xe001, YM2610_data_port_0_A_w },
-		{ 0xe002, 0xe002, YM2610_control_port_0_B_w },
-		{ 0xe003, 0xe003, YM2610_data_port_0_B_w },
-		{ 0xe200, 0xe200, taitosound_slave_port_w },
-		{ 0xe201, 0xe201, taitosound_slave_comm_w },
-		{ 0xe400, 0xe403, MWA_NOP }, /* pan */
-		{ 0xee00, 0xee00, MWA_NOP }, /* ? */
-		{ 0xf000, 0xf000, MWA_NOP }, /* ? */
-		{ 0xf200, 0xf200, fx1a_sound_bankswitch_w },
-	MEMORY_END
+	public static Memory_WriteAddress fx1a_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, YM2610_control_port_0_A_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, YM2610_data_port_0_A_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, YM2610_control_port_0_B_w ),
+		new Memory_WriteAddress( 0xe003, 0xe003, YM2610_data_port_0_B_w ),
+		new Memory_WriteAddress( 0xe200, 0xe200, taitosound_slave_port_w ),
+		new Memory_WriteAddress( 0xe201, 0xe201, taitosound_slave_comm_w ),
+		new Memory_WriteAddress( 0xe400, 0xe403, MWA_NOP ), /* pan */
+		new Memory_WriteAddress( 0xee00, 0xee00, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0xf200, 0xf200, fx1a_sound_bankswitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static DRIVER_INIT( zn )
 	{

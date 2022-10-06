@@ -71,55 +71,67 @@ public class phoenix
 	void pleiads_sh_update(void);
 	
 	
-	static MEMORY_READ_START( phoenix_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_r },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x7000, 0x73ff, phoenix_input_port_0_r }, /* IN0 or IN1 */
-		{ 0x7800, 0x7bff, input_port_2_r }, 		/* DSW */
-	MEMORY_END
+	public static Memory_ReadAddress phoenix_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, phoenix_videoram_r ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_ReadAddress( 0x7000, 0x73ff, phoenix_input_port_0_r ), /* IN0 or IN1 */
+		new Memory_ReadAddress( 0x7800, 0x7bff, input_port_2_r ), 		/* DSW */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( pleiads_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_r },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x7000, 0x73ff, pleiads_input_port_0_r }, /* IN0 or IN1 + protection */
-		{ 0x7800, 0x7bff, input_port_2_r }, 		/* DSW */
-	MEMORY_END
+	public static Memory_ReadAddress pleiads_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, phoenix_videoram_r ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_ReadAddress( 0x7000, 0x73ff, pleiads_input_port_0_r ), /* IN0 or IN1 + protection */
+		new Memory_ReadAddress( 0x7800, 0x7bff, input_port_2_r ), 		/* DSW */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( survival_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_r },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x6900, 0x69ff, AY8910_read_port_0_r },
-		{ 0x7000, 0x73ff, survival_input_port_0_r },/* IN0 or IN1 */
-		{ 0x7800, 0x7bff, input_port_2_r },			/* DSW */
-	MEMORY_END
+	public static Memory_ReadAddress survival_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, phoenix_videoram_r ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_ReadAddress( 0x6900, 0x69ff, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0x7000, 0x73ff, survival_input_port_0_r ),/* IN0 or IN1 */
+		new Memory_ReadAddress( 0x7800, 0x7bff, input_port_2_r ),			/* DSW */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( phoenix_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_w },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x5000, 0x53ff, phoenix_videoreg_w },
-		{ 0x5800, 0x5bff, phoenix_scroll_w },
-		{ 0x6000, 0x63ff, phoenix_sound_control_a_w },
-		{ 0x6800, 0x6bff, phoenix_sound_control_b_w },
-	MEMORY_END
+	public static Memory_WriteAddress phoenix_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, phoenix_videoram_w ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_WriteAddress( 0x5000, 0x53ff, phoenix_videoreg_w ),
+		new Memory_WriteAddress( 0x5800, 0x5bff, phoenix_scroll_w ),
+		new Memory_WriteAddress( 0x6000, 0x63ff, phoenix_sound_control_a_w ),
+		new Memory_WriteAddress( 0x6800, 0x6bff, phoenix_sound_control_b_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( pleiads_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_w },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x5000, 0x53ff, pleiads_videoreg_w },
-		{ 0x5800, 0x5bff, phoenix_scroll_w },
-		{ 0x6000, 0x63ff, pleiads_sound_control_a_w },
-		{ 0x6800, 0x6bff, pleiads_sound_control_b_w },
-	MEMORY_END
+	public static Memory_WriteAddress pleiads_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, phoenix_videoram_w ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_WriteAddress( 0x5000, 0x53ff, pleiads_videoreg_w ),
+		new Memory_WriteAddress( 0x5800, 0x5bff, phoenix_scroll_w ),
+		new Memory_WriteAddress( 0x6000, 0x63ff, pleiads_sound_control_a_w ),
+		new Memory_WriteAddress( 0x6800, 0x6bff, pleiads_sound_control_b_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( survival_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4fff, phoenix_videoram_w },		/* 2 pages selected by bit 0 of the video register */
-		{ 0x5000, 0x53ff, phoenix_videoreg_w },
-		{ 0x5800, 0x5bff, phoenix_scroll_w },
-		{ 0x6800, 0x68ff, AY8910_control_port_0_w },
-		{ 0x6900, 0x69ff, AY8910_write_port_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress survival_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, phoenix_videoram_w ),		/* 2 pages selected by bit 0 of the video register */
+		new Memory_WriteAddress( 0x5000, 0x53ff, phoenix_videoreg_w ),
+		new Memory_WriteAddress( 0x5800, 0x5bff, phoenix_scroll_w ),
+		new Memory_WriteAddress( 0x6800, 0x68ff, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6900, 0x69ff, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

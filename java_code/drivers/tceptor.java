@@ -225,78 +225,90 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static MEMORY_READ_START( m6809_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x16ff, MRA_RAM },
-		{ 0x1700, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x1bff, tceptor_tile_ram_r },
-		{ 0x1c00, 0x1fff, tceptor_tile_attr_r },
-		{ 0x2000, 0x3fff, tceptor_bg_ram_r },		// background (VIEW RAM)
-		{ 0x4000, 0x40ff, namcos1_wavedata_r },
-		{ 0x4000, 0x43ff, mcu_shared_r },
-		{ 0x4f00, 0x4f00, MRA_NOP },			// unknown
-		{ 0x4f01, 0x4f01, input_port_4_r },		// analog input (accel)
-		{ 0x4f02, 0x4f02, input_port_5_r },		// analog input (left/right)
-		{ 0x4f03, 0x4f03, input_port_6_r },		// analog input (up/down)
-		{ 0x6000, 0x7fff, m68k_shared_r },		// COM RAM
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m6809_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x16ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1700, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1bff, tceptor_tile_ram_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1fff, tceptor_tile_attr_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, tceptor_bg_ram_r ),		// background (VIEW RAM)
+		new Memory_ReadAddress( 0x4000, 0x40ff, namcos1_wavedata_r ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, mcu_shared_r ),
+		new Memory_ReadAddress( 0x4f00, 0x4f00, MRA_NOP ),			// unknown
+		new Memory_ReadAddress( 0x4f01, 0x4f01, input_port_4_r ),		// analog input (accel)
+		new Memory_ReadAddress( 0x4f02, 0x4f02, input_port_5_r ),		// analog input (left/right)
+		new Memory_ReadAddress( 0x4f03, 0x4f03, input_port_6_r ),		// analog input (up/down)
+		new Memory_ReadAddress( 0x6000, 0x7fff, m68k_shared_r ),		// COM RAM
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m6809_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x16ff, MWA_RAM },
-		{ 0x1700, 0x17ff, MWA_RAM },
-		{ 0x1800, 0x1bff, tceptor_tile_ram_w, &tceptor_tile_ram },
-		{ 0x1c00, 0x1fff, tceptor_tile_attr_w, &tceptor_tile_attr },
-		{ 0x2000, 0x3fff, tceptor_bg_ram_w, &tceptor_bg_ram },	// background (VIEW RAM)
-		{ 0x4000, 0x40ff, namcos1_wavedata_w },
-		{ 0x4000, 0x43ff, mcu_shared_w },
-		{ 0x4800, 0x4800, MWA_NOP },			// 3D scope left/right?
-		{ 0x4f00, 0x4f03, MWA_NOP },			// analog input control?
-		{ 0x5000, 0x5006, tceptor_bg_scroll_w },	// bg scroll
-		{ 0x6000, 0x7fff, m68k_shared_w, &m68k_shared_ram },
-		{ 0x8000, 0x8000, m6809_irq_disable_w },
-		{ 0x8800, 0x8800, m6809_irq_enable_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( m6502_a_readmem )
-		{ 0x0000, 0x00ff, m6502_b_shared_r },
-		{ 0x0100, 0x01ff, MRA_RAM },
-		{ 0x0200, 0x02ff, MRA_RAM },
-		{ 0x0300, 0x030f, MRA_RAM },
-		{ 0x2001, 0x2001, YM2151_status_port_0_r },
-		{ 0x3000, 0x30ff, m6502_a_shared_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( m6502_a_writemem )
-		{ 0x0000, 0x00ff, m6502_b_shared_w },
-		{ 0x0100, 0x01ff, MWA_RAM },
-		{ 0x0200, 0x02ff, MWA_RAM },
-		{ 0x0300, 0x030f, MWA_RAM },
-		{ 0x2000, 0x2000, YM2151_register_port_0_w },
-		{ 0x2001, 0x2001, YM2151_data_port_0_w },
-		{ 0x3000, 0x30ff, m6502_a_shared_w, &m6502_a_shared_ram },
-		{ 0x3c01, 0x3c01, MWA_RAM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m6809_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x16ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1700, 0x17ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, tceptor_tile_ram_w, &tceptor_tile_ram ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, tceptor_tile_attr_w, &tceptor_tile_attr ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, tceptor_bg_ram_w, &tceptor_bg_ram ),	// background (VIEW RAM)
+		new Memory_WriteAddress( 0x4000, 0x40ff, namcos1_wavedata_w ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, mcu_shared_w ),
+		new Memory_WriteAddress( 0x4800, 0x4800, MWA_NOP ),			// 3D scope left/right?
+		new Memory_WriteAddress( 0x4f00, 0x4f03, MWA_NOP ),			// analog input control?
+		new Memory_WriteAddress( 0x5000, 0x5006, tceptor_bg_scroll_w ),	// bg scroll
+		new Memory_WriteAddress( 0x6000, 0x7fff, m68k_shared_w, &m68k_shared_ram ),
+		new Memory_WriteAddress( 0x8000, 0x8000, m6809_irq_disable_w ),
+		new Memory_WriteAddress( 0x8800, 0x8800, m6809_irq_enable_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( m6502_b_readmem )
-		{ 0x0000, 0x00ff, m6502_b_shared_r },
-		{ 0x0100, 0x01ff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m6502_a_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, m6502_b_shared_r ),
+		new Memory_ReadAddress( 0x0100, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0200, 0x02ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0300, 0x030f, MRA_RAM ),
+		new Memory_ReadAddress( 0x2001, 0x2001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x3000, 0x30ff, m6502_a_shared_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m6502_b_writemem )
-		{ 0x0000, 0x00ff, m6502_b_shared_w, &m6502_b_shared_ram },
-		{ 0x0100, 0x01ff, MWA_RAM },
-		{ 0x4000, 0x4000, voice_w },			// voice data
-		{ 0x5000, 0x5000, MWA_RAM },			// voice ctrl??
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m6502_a_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, m6502_b_shared_w ),
+		new Memory_WriteAddress( 0x0100, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0200, 0x02ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0300, 0x030f, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, m6502_a_shared_w, &m6502_a_shared_ram ),
+		new Memory_WriteAddress( 0x3c01, 0x3c01, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress m6502_b_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, m6502_b_shared_r ),
+		new Memory_ReadAddress( 0x0100, 0x01ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress m6502_b_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, m6502_b_shared_w, &m6502_b_shared_ram ),
+		new Memory_WriteAddress( 0x0100, 0x01ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, voice_w ),			// voice data
+		new Memory_WriteAddress( 0x5000, 0x5000, MWA_RAM ),			// voice ctrl??
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static MEMORY_READ16_START( m68k_readmem )
@@ -318,51 +330,59 @@ public class tceptor
 	MEMORY_END
 	
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_r },
-		{ 0x0080, 0x00ff, MRA_RAM },
-		{ 0x1000, 0x10ff, namcos1_wavedata_r },
-		{ 0x1000, 0x13ff, mcu_shared_r },
-		{ 0x1400, 0x154d, MRA_RAM },
-		{ 0x17c0, 0x17ff, MRA_RAM },
-		{ 0x2000, 0x20ff, m6502_a_shared_r },
-		{ 0x2100, 0x2100, dsw0_r },
-		{ 0x2101, 0x2101, dsw1_r },
-		{ 0x2200, 0x2200, input0_r },
-		{ 0x2201, 0x2201, input1_r },
-		{ 0x8000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xdfff, MRA_RAM },			// Battery Backup
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x001f, hd63701_internal_registers_r ),
+		new Memory_ReadAddress( 0x0080, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x10ff, namcos1_wavedata_r ),
+		new Memory_ReadAddress( 0x1000, 0x13ff, mcu_shared_r ),
+		new Memory_ReadAddress( 0x1400, 0x154d, MRA_RAM ),
+		new Memory_ReadAddress( 0x17c0, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x20ff, m6502_a_shared_r ),
+		new Memory_ReadAddress( 0x2100, 0x2100, dsw0_r ),
+		new Memory_ReadAddress( 0x2101, 0x2101, dsw1_r ),
+		new Memory_ReadAddress( 0x2200, 0x2200, input0_r ),
+		new Memory_ReadAddress( 0x2201, 0x2201, input1_r ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xdfff, MRA_RAM ),			// Battery Backup
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x001f, hd63701_internal_registers_w },
-		{ 0x0080, 0x00ff, MWA_RAM },
-		{ 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata },
-		{ 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs },
-		{ 0x1000, 0x13ff, mcu_shared_w, &mcu_shared_ram },
-		{ 0x1400, 0x154d, MWA_RAM },
-		{ 0x17c0, 0x17ff, MWA_RAM },
-		{ 0x2000, 0x20ff, m6502_a_shared_w },
-		{ 0x8000, 0x8000, mcu_irq_disable_w },
-		{ 0x8800, 0x8800, mcu_irq_enable_w },
-		{ 0x8000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xdfff, MWA_RAM, &generic_nvram, &generic_nvram_size },	// Battery Backup
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x001f, hd63701_internal_registers_w ),
+		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, namcos1_wavedata_w, &namco_wavedata ),
+		new Memory_WriteAddress( 0x1100, 0x113f, namcos1_sound_w, &namco_soundregs ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, mcu_shared_w, &mcu_shared_ram ),
+		new Memory_WriteAddress( 0x1400, 0x154d, MWA_RAM ),
+		new Memory_WriteAddress( 0x17c0, 0x17ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x20ff, m6502_a_shared_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, mcu_irq_disable_w ),
+		new Memory_WriteAddress( 0x8800, 0x8800, mcu_irq_enable_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xdfff, MWA_RAM, &generic_nvram, &generic_nvram_size ),	// Battery Backup
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( mcu_readport )
-		{ HD63701_PORT1, HD63701_PORT1, readFF },
-		{ HD63701_PORT2, HD63701_PORT2, readFF },
-	PORT_END
+	public static IO_ReadPort mcu_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( HD63701_PORT1, HD63701_PORT1, readFF ),
+		new IO_ReadPort( HD63701_PORT2, HD63701_PORT2, readFF ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mcu_writeport )
-		{ HD63701_PORT1, HD63701_PORT1, MWA_NOP },
-		{ HD63701_PORT2, HD63701_PORT2, MWA_NOP },
-	PORT_END
+	public static IO_WritePort mcu_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( HD63701_PORT1, HD63701_PORT1, MWA_NOP ),
+		new IO_WritePort( HD63701_PORT2, HD63701_PORT2, MWA_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/*******************************************************************/

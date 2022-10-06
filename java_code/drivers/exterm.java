@@ -314,32 +314,40 @@ public class exterm
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_dac_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x4000, 0x4000, soundlatch_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_dac_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, soundlatch_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_dac_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x8000, 0x8000, exterm_dac_vol_w },
-		{ 0x8001, 0x8001, exterm_dac_data_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_dac_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, exterm_dac_vol_w ),
+		new Memory_WriteAddress( 0x8001, 0x8001, exterm_dac_data_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_ym2151_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x6800, 0x6800, soundlatch_r },
-		{ 0x7000, 0x7000, gottlieb_cause_dac_nmi_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_ym2151_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6800, 0x6800, soundlatch_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, gottlieb_cause_dac_nmi_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_ym2151_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x4000, 0x4000, exterm_ym2151_w },
-		{ 0x6000, 0x6000, gottlieb_nmi_rate_w },
-		{ 0xa000, 0xa000, exterm_sound_control_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_ym2151_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, exterm_ym2151_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, gottlieb_nmi_rate_w ),
+		new Memory_WriteAddress( 0xa000, 0xa000, exterm_sound_control_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

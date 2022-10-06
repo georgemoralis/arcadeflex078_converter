@@ -40,21 +40,25 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x17ff, MRA_ROM },
-		{ 0x1800, 0x1fff, MRA_RAM },
-		{ 0x2400, 0x2400, input_port_0_r },
-		{ 0x2800, 0x28ff, input_port_1_r },
-		{ 0x3400, 0x3400, input_port_2_r },
-		{ 0x3800, 0x3800, beaminv_input_port_3_r },
-		{ 0x4000, 0x5fff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x17ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2400, 0x2400, input_port_0_r ),
+		new Memory_ReadAddress( 0x2800, 0x28ff, input_port_1_r ),
+		new Memory_ReadAddress( 0x3400, 0x3400, input_port_2_r ),
+		new Memory_ReadAddress( 0x3800, 0x3800, beaminv_input_port_3_r ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x17ff, MWA_ROM },
-		{ 0x1800, 0x1fff, MWA_RAM },
-		{ 0x4000, 0x5fff, beaminv_videoram_w, &videoram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, beaminv_videoram_w, &videoram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/*************************************
@@ -63,8 +67,10 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	static PORT_WRITE_START( writeport )
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/*************************************

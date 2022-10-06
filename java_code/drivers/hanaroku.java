@@ -123,36 +123,40 @@ public class hanaroku
 	
 	/* main cpu */
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9000, 0x97ff, MRA_RAM },
-		{ 0xa000, 0xa1ff, MRA_RAM },
-		{ 0xc000, 0xc3ff, MRA_RAM },
-		{ 0xc400, 0xc4ff, MRA_RAM },
-		{ 0xd000, 0xd000, AY8910_read_port_0_r },
-		{ 0xe000, 0xe000, input_port_0_r },
-		{ 0xe001, 0xe001, input_port_1_r },
-		{ 0xe002, 0xe002, input_port_2_r },
-		{ 0xe004, 0xe004, input_port_5_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc400, 0xc4ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_0_r ),
+		new Memory_ReadAddress( 0xe001, 0xe001, input_port_1_r ),
+		new Memory_ReadAddress( 0xe002, 0xe002, input_port_2_r ),
+		new Memory_ReadAddress( 0xe004, 0xe004, input_port_5_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM, &hanaroku_spriteram1 },
-		{ 0x9000, 0x97ff, MWA_RAM, &hanaroku_spriteram2 },
-		{ 0xa000, 0xa1ff, MWA_RAM, &hanaroku_spriteram3 },
-		{ 0xa200, 0xa2ff, MWA_NOP },	// ??? written once during P.O.S.T.
-		{ 0xa300, 0xa304, MWA_NOP },	// ???
-		{ 0xc000, 0xc3ff, MWA_RAM },				// main ram
-		{ 0xc400, 0xc4ff, MWA_RAM },	// ???
-		{ 0xb000, 0xb000, MWA_NOP },	// ??? always 0x40
-		{ 0xd000, 0xd000, AY8910_control_port_0_w },
-		{ 0xd001, 0xd001, AY8910_write_port_0_w },
-		{ 0xe000, 0xe000, hanaroku_out_0_w },
-		{ 0xe002, 0xe002, hanaroku_out_1_w },
-		{ 0xe004, 0xe004, hanaroku_out_2_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM, &hanaroku_spriteram1 ),
+		new Memory_WriteAddress( 0x9000, 0x97ff, MWA_RAM, &hanaroku_spriteram2 ),
+		new Memory_WriteAddress( 0xa000, 0xa1ff, MWA_RAM, &hanaroku_spriteram3 ),
+		new Memory_WriteAddress( 0xa200, 0xa2ff, MWA_NOP ),	// ??? written once during P.O.S.T.
+		new Memory_WriteAddress( 0xa300, 0xa304, MWA_NOP ),	// ???
+		new Memory_WriteAddress( 0xc000, 0xc3ff, MWA_RAM ),				// main ram
+		new Memory_WriteAddress( 0xc400, 0xc4ff, MWA_RAM ),	// ???
+		new Memory_WriteAddress( 0xb000, 0xb000, MWA_NOP ),	// ??? always 0x40
+		new Memory_WriteAddress( 0xd000, 0xd000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, hanaroku_out_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, hanaroku_out_1_w ),
+		new Memory_WriteAddress( 0xe004, 0xe004, hanaroku_out_2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( hanaroku )

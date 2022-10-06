@@ -156,635 +156,729 @@ public class galaxian
 	}
 	
 	
-	static MEMORY_READ_START( galaxian_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x5400, 0x57ff, galaxian_videoram_r },
-		{ 0x5800, 0x58ff, MRA_RAM },
-		{ 0x6000, 0x6000, input_port_0_r },
-		{ 0x6800, 0x6800, input_port_1_r },
-		{ 0x7000, 0x7000, input_port_2_r },
-		{ 0x7800, 0x78ff, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( galaxian_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x5880, 0x58ff, MWA_RAM },
-		{ 0x6000, 0x6001, galaxian_leds_w },
-		{ 0x6002, 0x6002, galaxian_coin_lockout_w },
-		{ 0x6003, 0x6003, galaxian_coin_counter_w },
-		{ 0x6004, 0x6007, galaxian_lfo_freq_w },
-		{ 0x6800, 0x6802, galaxian_background_enable_w },
-		{ 0x6803, 0x6803, galaxian_noise_enable_w },
-		{ 0x6805, 0x6805, galaxian_shoot_enable_w },
-		{ 0x6806, 0x6807, galaxian_vol_w },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7004, 0x7004, galaxian_stars_enable_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-		{ 0x7800, 0x7800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( gmgalax_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },	/* banked code */
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x5400, 0x57ff, galaxian_videoram_r },
-		{ 0x5800, 0x58ff, MRA_RAM },
-		{ 0x6000, 0x6000, gmgalax_input_port_0_r },
-		{ 0x6800, 0x6800, gmgalax_input_port_1_r },
-		{ 0x7000, 0x7000, gmgalax_input_port_2_r },
-		{ 0x7800, 0x78ff, watchdog_reset_r },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( mooncrst_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x97ff, galaxian_videoram_r },
-		{ 0x9800, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( mooncrst_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb000, 0xb000, galaxian_nmi_enable_w },
-		{ 0xb004, 0xb004, galaxian_stars_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	static MEMORY_READ_START( rockclim_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, rockclim_videoram_r  },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x6000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, input_port_3_r },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x97ff, galaxian_videoram_r },
-		{ 0x9800, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( rockclim_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, rockclim_videoram_w,&rockclim_videoram  },//4800 - 4803 = bg scroll ?
-		{ 0x4800, 0x4803, rockclim_scroll_w },
-		{ 0x5000, 0x53ff, MWA_RAM },//?
-		{ 0x6000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa000, 0xa002, galaxian_gfxbank_w },// a002 - sprite bank
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb000, 0xb000, galaxian_nmi_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( mshuttle_writemem )
-		{ 0x0000, 0x4fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa000, 0xa000, galaxian_nmi_enable_w },
-		{ 0xa001, 0xa001, galaxian_flip_screen_x_w },
-		{ 0xa002, 0xa002, galaxian_flip_screen_y_w },
-		{ 0xa004, 0xa004, cclimber_sample_trigger_w },
-		{ 0xa800, 0xa800, cclimber_sample_rate_w },
-		{ 0xb000, 0xb000, cclimber_sample_volume_w },
-	MEMORY_END
-	
-	static PORT_READ_START( mshuttle_readport )
-		{ 0x0c, 0x0c, AY8910_read_port_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( mshuttle_writeport )
-		{ 0x08, 0x08, AY8910_control_port_0_w },
-		{ 0x09, 0x09, AY8910_write_port_0_w },
-	PORT_END
-	
-	
-	static MEMORY_WRITE_START( skybase_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa002, 0xa002, galaxian_gfxbank_w },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb000, 0xb000, galaxian_nmi_enable_w },
-		{ 0xb004, 0xb004, galaxian_stars_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( scramblb_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4bff, MRA_RAM },
-		{ 0x5000, 0x50ff, MRA_RAM },
-		{ 0x6000, 0x6000, input_port_0_r },
-		{ 0x6800, 0x6800, input_port_1_r },
-		{ 0x7000, 0x7000, input_port_2_r },
-		{ 0x7800, 0x7800, watchdog_reset_r },
-		{ 0x8102, 0x8102, scramblb_protection_1_r },
-		{ 0x8202, 0x8202, scramblb_protection_2_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( scramblb_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5060, 0x507f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x5080, 0x50ff, MWA_RAM },
-		{ 0x6000, 0x6001, MWA_NOP },  /* sound triggers */
-		{ 0x6003, 0x6003, galaxian_coin_counter_w },
-		{ 0x6004, 0x6007, galaxian_lfo_freq_w },
-		{ 0x6800, 0x6802, galaxian_background_enable_w },
-		{ 0x6803, 0x6803, galaxian_noise_enable_w },
-		{ 0x6805, 0x6805, galaxian_shoot_enable_w },
-		{ 0x6806, 0x6807, galaxian_vol_w },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7002, 0x7002, galaxian_coin_counter_w },
-		{ 0x7003, 0x7003, scramble_background_enable_w },
-		{ 0x7004, 0x7004, galaxian_stars_enable_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-		{ 0x7800, 0x7800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( jumpbug_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4bff, MRA_RAM },
-		{ 0x4c00, 0x4fff, galaxian_videoram_r },
-		{ 0x5000, 0x50ff, MRA_RAM },
-		{ 0x6000, 0x6000, input_port_0_r },
-		{ 0x6800, 0x6800, input_port_1_r },
-		{ 0x7000, 0x7000, input_port_2_r },
-		{ 0x8000, 0xafff, MRA_ROM },
-		{ 0xb000, 0xbfff, jumpbug_protection_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( jumpbug_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x4c00, 0x4fff, galaxian_videoram_w },
-		{ 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5060, 0x507f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x5080, 0x50ff, MWA_RAM },
-		{ 0x5800, 0x5800, AY8910_write_port_0_w },
-		{ 0x5900, 0x5900, AY8910_control_port_0_w },
-		{ 0x6002, 0x6006, galaxian_gfxbank_w },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7002, 0x7002, galaxian_coin_counter_w },
-		{ 0x7004, 0x7004, galaxian_stars_enable_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-		{ 0x8000, 0xafff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( checkman_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb001, 0xb001, galaxian_nmi_enable_w },
-		{ 0xb004, 0xb004, galaxian_stars_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( checkmaj_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x5880, 0x58ff, MWA_RAM },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-		{ 0x7800, 0x7800, checkman_sound_command_w },
-	MEMORY_END
-	
-	
-	static PORT_WRITE_START( checkman_writeport )
-		{ 0, 0, checkman_sound_command_w },
-	PORT_END
-	
-	
-	static MEMORY_READ_START( checkman_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( checkman_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( checkman_sound_readport )
-		{ 0x03, 0x03, soundlatch_r },
-		{ 0x06, 0x06, AY8910_read_port_0_r },
-	PORT_END
-	
-	static PORT_WRITE_START( checkman_sound_writeport )
-		{ 0x04, 0x04, AY8910_control_port_0_w },
-		{ 0x05, 0x05, AY8910_write_port_0_w },
-	PORT_END
-	
-	
-	static MEMORY_READ_START( checkmaj_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0xa002, 0xa002, AY8910_read_port_0_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( checkmaj_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0xa000, 0xa000, AY8910_control_port_0_w },
-		{ 0xa001, 0xa001, AY8910_write_port_0_w },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( kingball_writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-		{ 0x8000, 0x83ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa000, 0xa001, galaxian_leds_w },
-		{ 0xa002, 0xa002, galaxian_coin_lockout_w },
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w }, //
-		{ 0xb000, 0xb000, kingball_sound1_w },
-		{ 0xb001, 0xb001, galaxian_nmi_enable_w },
-		{ 0xb002, 0xb002, kingball_sound2_w },
-		{ 0xb003, 0xb003, kingball_speech_dip_w },
-		{ 0xb004, 0xb004, MWA_NOP },					/* noise generator enable */
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	static MEMORY_READ_START( kingball_sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( kingball_sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-	MEMORY_END
-	
-	static PORT_READ_START( kingball_sound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-	PORT_END
-	
-	static PORT_WRITE_START( kingball_sound_writeport )
-		{ 0x00, 0x00, DAC_0_data_w },
-	PORT_END
-	
-	
-	static MEMORY_READ_START( _4in1_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },	/* banked game code */
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x5400, 0x57ff, galaxian_videoram_r },
-		{ 0x5800, 0x58ff, MRA_RAM },
-		{ 0x6000, 0x6000, input_port_0_r },
-		{ 0x6800, 0x6800, _4in1_input_port_1_r },
-		{ 0x7000, 0x7000, _4in1_input_port_2_r },
-		{ 0x7800, 0x78ff, watchdog_reset_r },
-		{ 0xc000, 0xdfff, MRA_ROM },	/* fixed menu code */
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( _4in1_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },	/* banked game code */
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x5880, 0x58ff, MWA_RAM },
-		{ 0x6000, 0x6001, galaxian_leds_w },
-	//	{ 0x6002, 0x6002, galaxian_coin_lockout_w },
-		{ 0x6003, 0x6003, galaxian_coin_counter_w },
-		{ 0x6004, 0x6007, galaxian_lfo_freq_w },
-		{ 0x6800, 0x6802, galaxian_background_enable_w },
-	//	{ 0x6803, 0x6803, galaxian_noise_enable_w }, /* not hooked up? */
-		{ 0x6805, 0x6805, galaxian_shoot_enable_w },
-		{ 0x6806, 0x6807, galaxian_vol_w },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7004, 0x7004, galaxian_stars_enable_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-		{ 0x7800, 0x7800, galaxian_pitch_w },
-		{ 0x8000, 0x8000, _4in1_bank_w },
-		{ 0xc000, 0xdfff, MWA_ROM }, /* Fixed Menu Code */
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( bagmanmc_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x67ff, MRA_RAM },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x97ff, galaxian_videoram_r },
-		{ 0x9800, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb000, 0xb000, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( bagmanmc_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x67ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xb001, 0xb001, galaxian_nmi_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( froggrmc_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x98ff, MWA_RAM },
-		{ 0xa800, 0xa800, soundlatch_w },
-		{ 0xb000, 0xb000, galaxian_nmi_enable_w },
-		{ 0xb001, 0xb001, froggrmc_sh_irqtrigger_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( zigzag_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x2fff, MRA_BANK1 },
-		{ 0x3000, 0x3fff, MRA_BANK2 },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x5000, 0x53ff, MRA_RAM },
-		{ 0x5800, 0x58ff, MRA_RAM },
-		{ 0x6000, 0x6000, input_port_0_r },
-		{ 0x6800, 0x6800, input_port_1_r },
-		{ 0x7000, 0x7000, input_port_2_r },
-		{ 0x7800, 0x7800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( zigzag_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4800, 0x4800, MWA_NOP },	/* part of the 8910 interface */
-		{ 0x4801, 0x4801, zigzag_8910_data_trigger_w },
-		{ 0x4803, 0x4803, zigzag_8910_control_trigger_w },
-		{ 0x4900, 0x49ff, zigzag_8910_latch_w },
-		{ 0x4a00, 0x4a00, MWA_NOP },	/* part of the 8910 interface */
-		{ 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5840, 0x587f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },	/* no bulletsram, all sprites */
-		{ 0x5880, 0x58ff, MWA_RAM },
-		{ 0x7001, 0x7001, galaxian_nmi_enable_w },
-		{ 0x7002, 0x7002, zigzag_sillyprotection_w },
-		{ 0x7006, 0x7006, galaxian_flip_screen_x_w },
-		{ 0x7007, 0x7007, galaxian_flip_screen_y_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( scorpnmc_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x5000, 0x67ff, MRA_ROM },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x97ff, galaxian_videoram_r },
-		{ 0x9800, 0x98ff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb001, 0xb001, input_port_2_r },
-		{ 0xb002, 0xb002, input_port_3_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( scorpnmc_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x5000, 0x67ff, MWA_ROM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size },
-		{ 0x9880, 0x98ff, MWA_RAM },
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-		{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-		{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb001, 0xb001, galaxian_nmi_enable_w },
-		{ 0xb004, 0xb004, galaxian_stars_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( dkongjrm_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x7000, 0x7fff, MRA_ROM },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0xa000, 0xa0ff, input_port_0_r },
-		{ 0xa800, 0xa8ff, input_port_1_r },
-		{ 0xb000, 0xb0ff, input_port_2_r },
-		{ 0xb800, 0xb800, watchdog_reset_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( dkongjrm_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_RAM },
-		{ 0x7000, 0x7fff, MWA_ROM },
-		{ 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x9840, 0x987f, MWA_RAM, &galaxian_spriteram,  &galaxian_spriteram_size },
-		{ 0x98c0, 0x98ff, MWA_RAM, &galaxian_spriteram2, &galaxian_spriteram2_size },
-		{ 0xa003, 0xa003, galaxian_coin_counter_w },
-	  //{ 0xa004, 0xa007, galaxian_lfo_freq_w },
-		{ 0xa800, 0xa802, galaxian_background_enable_w },
-		{ 0xa803, 0xa803, galaxian_noise_enable_w },
-	  //{ 0xa805, 0xa805, galaxian_shoot_enable_w },
-		{ 0xa806, 0xa807, galaxian_vol_w },
-		{ 0xb000, 0xb000, galaxian_gfxbank_w },
-		{ 0xb001, 0xb001, galaxian_nmi_enable_w },
-	  //{ 0xb004, 0xb004, galaxian_stars_enable_w },
-		{ 0xb006, 0xb006, galaxian_flip_screen_x_w },
-		{ 0xb007, 0xb007, galaxian_flip_screen_y_w },
-		{ 0xb800, 0xb800, galaxian_pitch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( ozon1_readmem )
-		{ 0x0000, 0x2fff, MRA_ROM },
-		{ 0x4000, 0x4200, MRA_RAM },
-		{ 0x4300, 0x43ff, MRA_RAM },
-		{ 0x4800, 0x4bff, galaxian_videoram_r },
-		{ 0x5000, 0x503f, MRA_RAM },
-		{ 0x5040, 0x505f, MRA_RAM },
-		{ 0x8100, 0x8100, input_port_0_r },
-		{ 0x8101, 0x8101, input_port_1_r },
-		{ 0x8102, 0x8102, input_port_2_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( ozon1_writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-		{ 0x4000, 0x4200, MWA_RAM },
-		{ 0x4300, 0x43ff, MWA_RAM },
-		{ 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x4c18, 0x4c1f, MWA_NOP },
-		{ 0x4c38, 0x4c3f, MWA_NOP },
-		{ 0x4de0, 0x4fe0, MWA_NOP }, //writes every 0x20
-		{ 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x5060, 0x5060, MWA_NOP }, //after this, it writes 0x4fe0 - 0x4de0
-		{ 0x6801, 0x6801, MWA_NOP }, //continuosly 0 and 1
-		{ 0x6802, 0x6802, galaxian_coin_counter_w },
-		{ 0x6806, 0x6806, MWA_NOP }, //only one 0 at reset
-		{ 0x6807, 0x6807, MWA_NOP }, //only one 0 at reset
-		{ 0x8103, 0x8103, MWA_NOP }, //only one 9b at reset
-	MEMORY_END
-	
-	static PORT_WRITE_START( ozon1_writeport )
-		{ 0x00, 0x00, AY8910_write_port_0_w },
-		{ 0x01, 0x01, AY8910_control_port_0_w },
-	PORT_END
-	
-	
-	static MEMORY_READ_START( drivfrcg_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x1500, 0x1500, input_port_0_r },
-		{ 0x1580, 0x1580, input_port_1_r },
-		{ 0x1600, 0x1600, input_port_2_r },
-		{ 0x1700, 0x1700, input_port_3_r },
-		{ 0x1c00, 0x1eff, MRA_RAM },
-		{ 0x2000, 0x2fff, MRA_ROM },
-		{ 0x3000, 0x3fff, hunchbks_mirror_r },
-		{ 0x4000, 0x4fff, MRA_ROM },
-		{ 0x5000, 0x5fff, hunchbks_mirror_r },
-		{ 0x6000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, hunchbks_mirror_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( drivfrcg_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x1480, 0x14bf, galaxian_attributesram_w, &galaxian_attributesram },
-		{ 0x14c0, 0x14ff, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size },
-		{ 0x1503, 0x1503, galaxian_coin_counter_w },
-		{ 0x1580, 0x1582, galaxian_background_enable_w },
-		{ 0x1583, 0x1583, MWA_NOP },
-		{ 0x1585, 0x1585, MWA_NOP },
-		{ 0x1586, 0x1587, galaxian_lfo_freq_w },
-		{ 0x1600, 0x1600, galaxian_pitch_w },
-		{ 0x1700, 0x1700, MWA_NOP },
-		{ 0x1701, 0x1701, MWA_NOP },
-		{ 0x1704, 0x1707, galaxian_vol_w },
-		{ 0x1800, 0x1bff, galaxian_videoram_w, &galaxian_videoram },
-		{ 0x1c00, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2fff, MWA_ROM },
-		{ 0x3000, 0x3fff, hunchbks_mirror_w },
-		{ 0x4000, 0x4fff, MWA_ROM },
-		{ 0x5000, 0x5fff, hunchbks_mirror_w },
-		{ 0x6000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, hunchbks_mirror_w },
-	MEMORY_END
-	
-	static PORT_READ_START( drivfrcg_readport )
-		{ 0x00, 0x00, drivfrcg_port0_r },
-		{ S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r },
-	PORT_END
-	
-	static PORT_WRITE_START( drivfrcg_writeport )
-		{ S2650_DATA_PORT, S2650_DATA_PORT, MWA_NOP },
-	PORT_END
+	public static Memory_ReadAddress galaxian_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5400, 0x57ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, input_port_2_r ),
+		new Memory_ReadAddress( 0x7800, 0x78ff, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress galaxian_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x5880, 0x58ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6001, galaxian_leds_w ),
+		new Memory_WriteAddress( 0x6002, 0x6002, galaxian_coin_lockout_w ),
+		new Memory_WriteAddress( 0x6003, 0x6003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x6004, 0x6007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0x6800, 0x6802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0x6803, 0x6803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0x6805, 0x6805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0x6806, 0x6807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7004, 0x7004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0x7800, 0x7800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress gmgalax_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),	/* banked code */
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5400, 0x57ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, gmgalax_input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, gmgalax_input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, gmgalax_input_port_2_r ),
+		new Memory_ReadAddress( 0x7800, 0x78ff, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress mooncrst_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress mooncrst_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress rockclim_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, rockclim_videoram_r  ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, input_port_3_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress rockclim_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, rockclim_videoram_w,&rockclim_videoram  ),//4800 - 4803 = bg scroll ?
+		new Memory_WriteAddress( 0x4800, 0x4803, rockclim_scroll_w ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, MWA_RAM ),//?
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa002, galaxian_gfxbank_w ),// a002 - sprite bank
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress mshuttle_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xa004, 0xa004, cclimber_sample_trigger_w ),
+		new Memory_WriteAddress( 0xa800, 0xa800, cclimber_sample_rate_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, cclimber_sample_volume_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort mshuttle_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0c, 0x0c, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort mshuttle_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x08, 0x08, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x09, 0x09, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress skybase_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa002, 0xa002, galaxian_gfxbank_w ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress scramblb_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x50ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, input_port_2_r ),
+		new Memory_ReadAddress( 0x7800, 0x7800, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x8102, 0x8102, scramblb_protection_1_r ),
+		new Memory_ReadAddress( 0x8202, 0x8202, scramblb_protection_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress scramblb_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5060, 0x507f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x5080, 0x50ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6001, MWA_NOP ),  /* sound triggers */
+		new Memory_WriteAddress( 0x6003, 0x6003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x6004, 0x6007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0x6800, 0x6802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0x6803, 0x6803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0x6805, 0x6805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0x6806, 0x6807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7002, 0x7002, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x7003, 0x7003, scramble_background_enable_w ),
+		new Memory_WriteAddress( 0x7004, 0x7004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0x7800, 0x7800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress jumpbug_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4c00, 0x4fff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x5000, 0x50ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, input_port_2_r ),
+		new Memory_ReadAddress( 0x8000, 0xafff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb000, 0xbfff, jumpbug_protection_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress jumpbug_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, galaxian_videoram_w ),
+		new Memory_WriteAddress( 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5060, 0x507f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x5080, 0x50ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5800, 0x5800, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x5900, 0x5900, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x6002, 0x6006, galaxian_gfxbank_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7002, 0x7002, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x7004, 0x7004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0x8000, 0xafff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress checkman_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress checkmaj_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x5880, 0x58ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0x7800, 0x7800, checkman_sound_command_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_WritePort checkman_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0, 0, checkman_sound_command_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress checkman_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress checkman_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort checkman_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x03, 0x03, soundlatch_r ),
+		new IO_ReadPort( 0x06, 0x06, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort checkman_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x05, 0x05, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress checkmaj_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa002, 0xa002, AY8910_read_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress checkmaj_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress kingball_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa001, galaxian_leds_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, galaxian_coin_lockout_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ), //
+		new Memory_WriteAddress( 0xb000, 0xb000, kingball_sound1_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb002, 0xb002, kingball_sound2_w ),
+		new Memory_WriteAddress( 0xb003, 0xb003, kingball_speech_dip_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, MWA_NOP ),					/* noise generator enable */
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress kingball_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress kingball_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort kingball_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort kingball_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, DAC_0_data_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress _4in1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),	/* banked game code */
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5400, 0x57ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, _4in1_input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, _4in1_input_port_2_r ),
+		new Memory_ReadAddress( 0x7800, 0x78ff, watchdog_reset_r ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_ROM ),	/* fixed menu code */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress _4in1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),	/* banked game code */
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5840, 0x585f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5860, 0x587f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x5880, 0x58ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6001, galaxian_leds_w ),
+	//	new Memory_WriteAddress( 0x6002, 0x6002, galaxian_coin_lockout_w ),
+		new Memory_WriteAddress( 0x6003, 0x6003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x6004, 0x6007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0x6800, 0x6802, galaxian_background_enable_w ),
+	//	new Memory_WriteAddress( 0x6803, 0x6803, galaxian_noise_enable_w ), /* not hooked up? */
+		new Memory_WriteAddress( 0x6805, 0x6805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0x6806, 0x6807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7004, 0x7004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0x7800, 0x7800, galaxian_pitch_w ),
+		new Memory_WriteAddress( 0x8000, 0x8000, _4in1_bank_w ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_ROM ), /* Fixed Menu Code */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress bagmanmc_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress bagmanmc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress froggrmc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa800, 0xa800, soundlatch_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, froggrmc_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress zigzag_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5800, 0x58ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, input_port_1_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, input_port_2_r ),
+		new Memory_ReadAddress( 0x7800, 0x7800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress zigzag_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4800, MWA_NOP ),	/* part of the 8910 interface */
+		new Memory_WriteAddress( 0x4801, 0x4801, zigzag_8910_data_trigger_w ),
+		new Memory_WriteAddress( 0x4803, 0x4803, zigzag_8910_control_trigger_w ),
+		new Memory_WriteAddress( 0x4900, 0x49ff, zigzag_8910_latch_w ),
+		new Memory_WriteAddress( 0x4a00, 0x4a00, MWA_NOP ),	/* part of the 8910 interface */
+		new Memory_WriteAddress( 0x5000, 0x53ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x5800, 0x583f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5840, 0x587f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),	/* no bulletsram, all sprites */
+		new Memory_WriteAddress( 0x5880, 0x58ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7001, 0x7001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0x7002, 0x7002, zigzag_sillyprotection_w ),
+		new Memory_WriteAddress( 0x7006, 0x7006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0x7007, 0x7007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress scorpnmc_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5000, 0x67ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb001, 0xb001, input_port_2_r ),
+		new Memory_ReadAddress( 0xb002, 0xb002, input_port_3_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress scorpnmc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x67ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x985f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x9860, 0x987f, MWA_RAM, &galaxian_bulletsram, &galaxian_bulletsram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+		new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, galaxian_nmi_enable_w ),
+		new Memory_WriteAddress( 0xb004, 0xb004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress dkongjrm_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa0ff, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa8ff, input_port_1_r ),
+		new Memory_ReadAddress( 0xb000, 0xb0ff, input_port_2_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress dkongjrm_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x9840, 0x987f, MWA_RAM, &galaxian_spriteram,  &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x98c0, 0x98ff, MWA_RAM, &galaxian_spriteram2, &galaxian_spriteram2_size ),
+		new Memory_WriteAddress( 0xa003, 0xa003, galaxian_coin_counter_w ),
+	  //new Memory_WriteAddress( 0xa004, 0xa007, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0xa800, 0xa802, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0xa803, 0xa803, galaxian_noise_enable_w ),
+	  //new Memory_WriteAddress( 0xa805, 0xa805, galaxian_shoot_enable_w ),
+		new Memory_WriteAddress( 0xa806, 0xa807, galaxian_vol_w ),
+		new Memory_WriteAddress( 0xb000, 0xb000, galaxian_gfxbank_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, galaxian_nmi_enable_w ),
+	  //new Memory_WriteAddress( 0xb004, 0xb004, galaxian_stars_enable_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, galaxian_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xb007, 0xb007, galaxian_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xb800, 0xb800, galaxian_pitch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress ozon1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4200, MRA_RAM ),
+		new Memory_ReadAddress( 0x4300, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4800, 0x4bff, galaxian_videoram_r ),
+		new Memory_ReadAddress( 0x5000, 0x503f, MRA_RAM ),
+		new Memory_ReadAddress( 0x5040, 0x505f, MRA_RAM ),
+		new Memory_ReadAddress( 0x8100, 0x8100, input_port_0_r ),
+		new Memory_ReadAddress( 0x8101, 0x8101, input_port_1_r ),
+		new Memory_ReadAddress( 0x8102, 0x8102, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress ozon1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4200, MWA_RAM ),
+		new Memory_WriteAddress( 0x4300, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x4c18, 0x4c1f, MWA_NOP ),
+		new Memory_WriteAddress( 0x4c38, 0x4c3f, MWA_NOP ),
+		new Memory_WriteAddress( 0x4de0, 0x4fe0, MWA_NOP ), //writes every 0x20
+		new Memory_WriteAddress( 0x5000, 0x503f, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x5040, 0x505f, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x5060, 0x5060, MWA_NOP ), //after this, it writes 0x4fe0 - 0x4de0
+		new Memory_WriteAddress( 0x6801, 0x6801, MWA_NOP ), //continuosly 0 and 1
+		new Memory_WriteAddress( 0x6802, 0x6802, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x6806, 0x6806, MWA_NOP ), //only one 0 at reset
+		new Memory_WriteAddress( 0x6807, 0x6807, MWA_NOP ), //only one 0 at reset
+		new Memory_WriteAddress( 0x8103, 0x8103, MWA_NOP ), //only one 9b at reset
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort ozon1_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_ReadAddress drivfrcg_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1500, 0x1500, input_port_0_r ),
+		new Memory_ReadAddress( 0x1580, 0x1580, input_port_1_r ),
+		new Memory_ReadAddress( 0x1600, 0x1600, input_port_2_r ),
+		new Memory_ReadAddress( 0x1700, 0x1700, input_port_3_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, hunchbks_mirror_r ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5000, 0x5fff, hunchbks_mirror_r ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, hunchbks_mirror_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress drivfrcg_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1480, 0x14bf, galaxian_attributesram_w, &galaxian_attributesram ),
+		new Memory_WriteAddress( 0x14c0, 0x14ff, MWA_RAM, &galaxian_spriteram, &galaxian_spriteram_size ),
+		new Memory_WriteAddress( 0x1503, 0x1503, galaxian_coin_counter_w ),
+		new Memory_WriteAddress( 0x1580, 0x1582, galaxian_background_enable_w ),
+		new Memory_WriteAddress( 0x1583, 0x1583, MWA_NOP ),
+		new Memory_WriteAddress( 0x1585, 0x1585, MWA_NOP ),
+		new Memory_WriteAddress( 0x1586, 0x1587, galaxian_lfo_freq_w ),
+		new Memory_WriteAddress( 0x1600, 0x1600, galaxian_pitch_w ),
+		new Memory_WriteAddress( 0x1700, 0x1700, MWA_NOP ),
+		new Memory_WriteAddress( 0x1701, 0x1701, MWA_NOP ),
+		new Memory_WriteAddress( 0x1704, 0x1707, galaxian_vol_w ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, galaxian_videoram_w, &galaxian_videoram ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, hunchbks_mirror_w ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x5fff, hunchbks_mirror_w ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, hunchbks_mirror_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort drivfrcg_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, drivfrcg_port0_r ),
+		new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_4_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort drivfrcg_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( S2650_DATA_PORT, S2650_DATA_PORT, MWA_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( galaxian )

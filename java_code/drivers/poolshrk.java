@@ -99,29 +99,33 @@ public class poolshrk
 	}
 	
 	
-	static MEMORY_READ_START( poolshrk_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x1000, 0x1003, poolshrk_input_r },
-		{ 0x6800, 0x6800, poolshrk_interrupt_ack_r },
-		{ 0x7000, 0x7fff, MRA_ROM }, /* program */
-		{ 0xf800, 0xffff, MRA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_ReadAddress poolshrk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1003, poolshrk_input_r ),
+		new Memory_ReadAddress( 0x6800, 0x6800, poolshrk_interrupt_ack_r ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_ROM ), /* program */
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ), /* program mirror */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( poolshrk_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0400, 0x07ff, MWA_RAM, &poolshrk_playfield_ram },
-		{ 0x0800, 0x0810, MWA_RAM, &poolshrk_hpos_ram },
-		{ 0x0c00, 0x0c10, MWA_RAM, &poolshrk_vpos_ram },
-		{ 0x1003, 0x1003, watchdog_reset_w },
-		{ 0x1400, 0x1401, poolshrk_scratch_sound_w },
-		{ 0x1800, 0x1800, poolshrk_score_sound_w },
-		{ 0x1c00, 0x1c00, poolshrk_click_sound_w },
-		{ 0x6000, 0x6000, poolshrk_da_latch_w },
-		{ 0x6400, 0x6401, poolshrk_bump_sound_w },
-		{ 0x6c00, 0x6c07, poolshrk_led_w },
-		{ 0x7000, 0x7fff, MWA_ROM }, /* program */
-		{ 0xf800, 0xffff, MWA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_WriteAddress poolshrk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM, &poolshrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x0810, MWA_RAM, &poolshrk_hpos_ram ),
+		new Memory_WriteAddress( 0x0c00, 0x0c10, MWA_RAM, &poolshrk_vpos_ram ),
+		new Memory_WriteAddress( 0x1003, 0x1003, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x1400, 0x1401, poolshrk_scratch_sound_w ),
+		new Memory_WriteAddress( 0x1800, 0x1800, poolshrk_score_sound_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c00, poolshrk_click_sound_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, poolshrk_da_latch_w ),
+		new Memory_WriteAddress( 0x6400, 0x6401, poolshrk_bump_sound_w ),
+		new Memory_WriteAddress( 0x6c00, 0x6c07, poolshrk_led_w ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_ROM ), /* program */
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ), /* program mirror */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( poolshrk )

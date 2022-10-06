@@ -106,87 +106,109 @@ public class galivan
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_BANK1 },
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xd800, 0xdbff, galivan_videoram_w, &videoram, &videoram_size },
-		{ 0xdc00, 0xdfff, galivan_colorram_w, &colorram },
-		{ 0xe000, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe100, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, galivan_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xdc00, 0xdfff, galivan_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe100, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ninjemak_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xd800, 0xd81f, ninjemak_videoreg_w },
-		{ 0xd800, 0xdbff, galivan_videoram_w, &videoram, &videoram_size },
-		{ 0xdc00, 0xdfff, galivan_colorram_w, &colorram },
-		{ 0xe000, 0xe1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe200, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x03, 0x03, input_port_3_r },
-		{ 0x04, 0x04, input_port_4_r },
-		{ 0xc0, 0xc0, IO_port_c0_r }, /* dangar needs to return 0x58 */
-	PORT_END
-	
-	static PORT_WRITE_START( writeport )
-		{ 0x40, 0x40, galivan_gfxbank_w },
-		{ 0x41, 0x42, galivan_scrollx_w },
-		{ 0x43, 0x44, galivan_scrolly_w },
-		{ 0x45, 0x45, galivan_sound_command_w },
-	/*	{ 0x46, 0x46, IOWP_NOP }, */
-	/*	{ 0x47, 0x47, IOWP_NOP }, */
-	PORT_END
-	
-	static PORT_READ_START( ninjemak_readport )
-		{ 0x80, 0x80, input_port_0_r },
-		{ 0x81, 0x81, input_port_1_r },
-		{ 0x82, 0x82, input_port_2_r },
-		{ 0x83, 0x83, input_port_3_r },
-		{ 0x84, 0x84, input_port_4_r },
-		{ 0x85, 0x85, input_port_5_r },
-	PORT_END
-	
-	static PORT_WRITE_START( ninjemak_writeport )
-		{ 0x80, 0x80, ninjemak_gfxbank_w },
-		{ 0x85, 0x85, galivan_sound_command_w },
-	//	{ 0x86, 0x86, IOWP_NOP },			// ??
-	//	{ 0x87, 0x87, IOWP_NOP },			// ??
-	PORT_END
+	public static Memory_WriteAddress ninjemak_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd800, 0xd81f, ninjemak_videoreg_w ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, galivan_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xdc00, 0xdfff, galivan_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe200, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-	MEMORY_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_4_r ),
+		new IO_ReadPort( 0xc0, 0xc0, IO_port_c0_r ), /* dangar needs to return 0x58 */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-	MEMORY_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x40, 0x40, galivan_gfxbank_w ),
+		new IO_WritePort( 0x41, 0x42, galivan_scrollx_w ),
+		new IO_WritePort( 0x43, 0x44, galivan_scrolly_w ),
+		new IO_WritePort( 0x45, 0x45, galivan_sound_command_w ),
+	/*	new IO_WritePort( 0x46, 0x46, IOWP_NOP ), */
+	/*	new IO_WritePort( 0x47, 0x47, IOWP_NOP ), */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort ninjemak_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x80, 0x80, input_port_0_r ),
+		new IO_ReadPort( 0x81, 0x81, input_port_1_r ),
+		new IO_ReadPort( 0x82, 0x82, input_port_2_r ),
+		new IO_ReadPort( 0x83, 0x83, input_port_3_r ),
+		new IO_ReadPort( 0x84, 0x84, input_port_4_r ),
+		new IO_ReadPort( 0x85, 0x85, input_port_5_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort ninjemak_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x80, 0x80, ninjemak_gfxbank_w ),
+		new IO_WritePort( 0x85, 0x85, galivan_sound_command_w ),
+	//	new IO_WritePort( 0x86, 0x86, IOWP_NOP ),			// ??
+	//	new IO_WritePort( 0x87, 0x87, IOWP_NOP ),			// ??
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( sound_readport )
-	/*	{ 0x04, 0x04, IORP_NOP },    value read and *discarded*    */
-		{ 0x06, 0x06, galivan_sound_command_r },
-	PORT_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, YM3526_control_port_0_w },
-		{ 0x01, 0x01, YM3526_write_port_0_w },
-		{ 0x02, 0x02, DAC_0_data_w },
-		{ 0x03, 0x03, DAC_1_data_w },
-	PORT_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	/*	new IO_ReadPort( 0x04, 0x04, IORP_NOP ),    value read and *discarded*    */
+		new IO_ReadPort( 0x06, 0x06, galivan_sound_command_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3526_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM3526_write_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, DAC_0_data_w ),
+		new IO_WritePort( 0x03, 0x03, DAC_1_data_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************

@@ -61,52 +61,60 @@ public class rockrage
 		VLM5030_ST(  ( data >> 0 ) & 0x01 );
 	}
 	
-	static MEMORY_READ_START( rockrage_readmem )
-		{ 0x0000, 0x1fff, K007342_r },			/* Color RAM + Video RAM */
-		{ 0x2000, 0x21ff, K007420_r },			/* Sprite RAM */
-		{ 0x2200, 0x23ff, K007342_scroll_r },	/* Scroll RAM */
-		{ 0x2400, 0x247f, paletteram_r },		/* Palette */
-		{ 0x2e01, 0x2e01, input_port_3_r },		/* 1P controls */
-		{ 0x2e02, 0x2e02, input_port_4_r },		/* 2P controls */
-		{ 0x2e03, 0x2e03, input_port_1_r },		/* DISPW #2 */
-		{ 0x2e40, 0x2e40, input_port_0_r },		/* DIPSW #1 */
-		{ 0x2e00, 0x2e00, input_port_2_r },		/* coinsw, testsw, startsw */
-		{ 0x4000, 0x5fff, MRA_RAM },			/* RAM */
-		{ 0x6000, 0x7fff, MRA_BANK1 },			/* banked ROM */
-		{ 0x8000, 0xffff, MRA_ROM },			/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress rockrage_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, K007342_r ),			/* Color RAM + Video RAM */
+		new Memory_ReadAddress( 0x2000, 0x21ff, K007420_r ),			/* Sprite RAM */
+		new Memory_ReadAddress( 0x2200, 0x23ff, K007342_scroll_r ),	/* Scroll RAM */
+		new Memory_ReadAddress( 0x2400, 0x247f, paletteram_r ),		/* Palette */
+		new Memory_ReadAddress( 0x2e01, 0x2e01, input_port_3_r ),		/* 1P controls */
+		new Memory_ReadAddress( 0x2e02, 0x2e02, input_port_4_r ),		/* 2P controls */
+		new Memory_ReadAddress( 0x2e03, 0x2e03, input_port_1_r ),		/* DISPW #2 */
+		new Memory_ReadAddress( 0x2e40, 0x2e40, input_port_0_r ),		/* DIPSW #1 */
+		new Memory_ReadAddress( 0x2e00, 0x2e00, input_port_2_r ),		/* coinsw, testsw, startsw */
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),			/* RAM */
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),			/* banked ROM */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rockrage_writemem )
-		{ 0x0000, 0x1fff, K007342_w },				/* Color RAM + Video RAM */
-		{ 0x2000, 0x21ff, K007420_w },				/* Sprite RAM */
-		{ 0x2200, 0x23ff, K007342_scroll_w },		/* Scroll RAM */
-		{ 0x2400, 0x247f, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },/* palette */
-		{ 0x2600, 0x2607, K007342_vreg_w },			/* Video Registers */
-		{ 0x2e80, 0x2e80, rockrage_sh_irqtrigger_w },/* cause interrupt on audio CPU */
-		{ 0x2ec0, 0x2ec0, watchdog_reset_w },		/* watchdog reset */
-		{ 0x2f00, 0x2f00, rockrage_vreg_w },		/* ??? */
-		{ 0x2f40, 0x2f40, rockrage_bankswitch_w },	/* bankswitch control */
-		{ 0x4000, 0x5fff, MWA_RAM },				/* RAM */
-		{ 0x6000, 0x7fff, MWA_RAM },				/* banked ROM */
-		{ 0x8000, 0xffff, MWA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress rockrage_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, K007342_w ),				/* Color RAM + Video RAM */
+		new Memory_WriteAddress( 0x2000, 0x21ff, K007420_w ),				/* Sprite RAM */
+		new Memory_WriteAddress( 0x2200, 0x23ff, K007342_scroll_w ),		/* Scroll RAM */
+		new Memory_WriteAddress( 0x2400, 0x247f, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),/* palette */
+		new Memory_WriteAddress( 0x2600, 0x2607, K007342_vreg_w ),			/* Video Registers */
+		new Memory_WriteAddress( 0x2e80, 0x2e80, rockrage_sh_irqtrigger_w ),/* cause interrupt on audio CPU */
+		new Memory_WriteAddress( 0x2ec0, 0x2ec0, watchdog_reset_w ),		/* watchdog reset */
+		new Memory_WriteAddress( 0x2f00, 0x2f00, rockrage_vreg_w ),		/* ??? */
+		new Memory_WriteAddress( 0x2f40, 0x2f40, rockrage_bankswitch_w ),	/* bankswitch control */
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_RAM ),				/* RAM */
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_RAM ),				/* banked ROM */
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),				/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( rockrage_readmem_sound )
-		{ 0x3000, 0x3000, rockrage_VLM5030_busy_r },/* VLM5030 */
-		{ 0x5000, 0x5000, soundlatch_r },			/* soundlatch_r */
-		{ 0x6001, 0x6001, YM2151_status_port_0_r },	/* YM 2151 */
-		{ 0x7000, 0x77ff, MRA_RAM },				/* RAM */
-		{ 0x8000, 0xffff, MRA_ROM },				/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress rockrage_readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x3000, 0x3000, rockrage_VLM5030_busy_r ),/* VLM5030 */
+		new Memory_ReadAddress( 0x5000, 0x5000, soundlatch_r ),			/* soundlatch_r */
+		new Memory_ReadAddress( 0x6001, 0x6001, YM2151_status_port_0_r ),	/* YM 2151 */
+		new Memory_ReadAddress( 0x7000, 0x77ff, MRA_RAM ),				/* RAM */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rockrage_writemem_sound )
-		{ 0x2000, 0x2000, VLM5030_data_w }, 			/* VLM5030 */
-		{ 0x4000, 0x4000, rockrage_speech_w },			/* VLM5030 */
-		{ 0x6000, 0x6000, YM2151_register_port_0_w },	/* YM 2151 */
-		{ 0x6001, 0x6001, YM2151_data_port_0_w },		/* YM 2151 */
-		{ 0x7000, 0x77ff, MWA_RAM },					/* RAM */
-		{ 0x8000, 0xffff, MWA_ROM },					/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress rockrage_writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x2000, 0x2000, VLM5030_data_w ), 			/* VLM5030 */
+		new Memory_WriteAddress( 0x4000, 0x4000, rockrage_speech_w ),			/* VLM5030 */
+		new Memory_WriteAddress( 0x6000, 0x6000, YM2151_register_port_0_w ),	/* YM 2151 */
+		new Memory_WriteAddress( 0x6001, 0x6001, YM2151_data_port_0_w ),		/* YM 2151 */
+		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_RAM ),					/* RAM */
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),					/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	

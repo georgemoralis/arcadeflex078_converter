@@ -385,50 +385,60 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x0c00, 0x0c03, meadows_sound_w },
-		{ 0x0d00, 0x0d0f, meadows_spriteram_w, &spriteram },
-		{ 0x0e00, 0x0eff, MWA_RAM },
-		{ 0x1000, 0x1bff, MWA_ROM },
-		{ 0x1c00, 0x1fff, meadows_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0c00, 0x0c03, meadows_sound_w ),
+		new Memory_WriteAddress( 0x0d00, 0x0d0f, meadows_spriteram_w, &spriteram ),
+		new Memory_WriteAddress( 0x0e00, 0x0eff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, meadows_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x0c00, 0x0c00, input_port_0_r },
-		{ 0x0c01, 0x0c01, input_port_1_r },
-		{ 0x0c02, 0x0c02, hsync_chain_r },
-		{ 0x0c03, 0x0c03, input_port_2_r },
-		{ 0x0e00, 0x0eff, MRA_RAM },
-		{ 0x1000, 0x1bff, MRA_ROM },
-		{ 0x1c00, 0x1fff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_0_r ),
+		new Memory_ReadAddress( 0x0c01, 0x0c01, input_port_1_r ),
+		new Memory_ReadAddress( 0x0c02, 0x0c02, hsync_chain_r ),
+		new Memory_ReadAddress( 0x0c03, 0x0c03, input_port_2_r ),
+		new Memory_ReadAddress( 0x0e00, 0x0eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1c00, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( minferno_writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x1c00, 0x1eff, meadows_videoram_w, &videoram, &videoram_size },
-		{ 0x1f00, 0x1f03, meadows_sound_w },
-	MEMORY_END
+	public static Memory_WriteAddress minferno_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1c00, 0x1eff, meadows_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x1f00, 0x1f03, meadows_sound_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( minferno_readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x1c00, 0x1eff, MRA_RAM },
-		{ 0x1f00, 0x1f00, input_port_0_r },
-		{ 0x1f01, 0x1f01, input_port_1_r },
-		{ 0x1f02, 0x1f02, input_port_2_r },
-		{ 0x1f03, 0x1f03, input_port_3_r },
-		{ 0x1f04, 0x1f04, vsync_chain_hi_r },
-		{ 0x1f05, 0x1f05, vsync_chain_lo_r },
-	MEMORY_END
+	public static Memory_ReadAddress minferno_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1c00, 0x1eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1f00, 0x1f00, input_port_0_r ),
+		new Memory_ReadAddress( 0x1f01, 0x1f01, input_port_1_r ),
+		new Memory_ReadAddress( 0x1f02, 0x1f02, input_port_2_r ),
+		new Memory_ReadAddress( 0x1f03, 0x1f03, input_port_3_r ),
+		new Memory_ReadAddress( 0x1f04, 0x1f04, vsync_chain_hi_r ),
+		new Memory_ReadAddress( 0x1f05, 0x1f05, vsync_chain_lo_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( minferno_readport )
-		{ S2650_DATA_PORT, S2650_DATA_PORT, input_port_4_r },
-	PORT_END
+	public static IO_ReadPort minferno_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( S2650_DATA_PORT, S2650_DATA_PORT, input_port_4_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -438,18 +448,22 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x0c00, 0x0c03, sound_hardware_w },
-		{ 0x0e00, 0x0eff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x0c00, 0x0c03, sound_hardware_w ),
+		new Memory_WriteAddress( 0x0e00, 0x0eff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x0c00, 0x0c03, sound_hardware_r },
-		{ 0x0e00, 0x0eff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0c00, 0x0c03, sound_hardware_r ),
+		new Memory_ReadAddress( 0x0e00, 0x0eff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

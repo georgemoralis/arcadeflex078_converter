@@ -102,37 +102,43 @@ public class mjkjidai
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xf7ff, MRA_RAM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, &nvram, &nvram_size ),	// cleared and initialized on startup if bit 6 if port 00 is 0
+		new Memory_WriteAddress( 0xe000, 0xe01f, MWA_RAM, &spriteram ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xe800, 0xe81f, MWA_RAM, &spriteram_2 ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xf000, 0xf01f, MWA_RAM, &spriteram_3 ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xe000, 0xf7ff, mjkjidai_videoram_w, &mjkjidai_videoram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, keyboard_r ),
+		new IO_ReadPort( 0x01, 0x01, IORP_NOP ),	// ???
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x11, 0x11, input_port_0_r ),
+		new IO_ReadPort( 0x12, 0x12, input_port_1_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xdfff, MWA_RAM, &nvram, &nvram_size },	// cleared and initialized on startup if bit 6 if port 00 is 0
-		{ 0xe000, 0xe01f, MWA_RAM, &spriteram },	// shared with tilemap ram
-		{ 0xe800, 0xe81f, MWA_RAM, &spriteram_2 },	// shared with tilemap ram
-		{ 0xf000, 0xf01f, MWA_RAM, &spriteram_3 },	// shared with tilemap ram
-		{ 0xe000, 0xf7ff, mjkjidai_videoram_w, &mjkjidai_videoram },
-	MEMORY_END
-	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, keyboard_r },
-		{ 0x01, 0x01, IORP_NOP },	// ???
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x11, 0x11, input_port_0_r },
-		{ 0x12, 0x12, input_port_1_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( writeport )
-		{ 0x01, 0x02, keyboard_select_w },
-		{ 0x10, 0x10, mjkjidai_ctrl_w },	// rom bank, coin counter, flip screen etc
-		{ 0x20, 0x20, SN76496_0_w },
-		{ 0x30, 0x30, SN76496_1_w },
-		{ 0x40, 0x40, adpcm_w },
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x02, keyboard_select_w ),
+		new IO_WritePort( 0x10, 0x10, mjkjidai_ctrl_w ),	// rom bank, coin counter, flip screen etc
+		new IO_WritePort( 0x20, 0x20, SN76496_0_w ),
+		new IO_WritePort( 0x30, 0x30, SN76496_1_w ),
+		new IO_WritePort( 0x40, 0x40, adpcm_w ),
 	MEMORY_END
 	
 	
@@ -260,7 +266,7 @@ public class mjkjidai
 	
 	
 	static struct GfxLayout charlayout =
-	{
+	new IO_WritePort(
 		8,8,
 		RGN_FRAC(1,3),
 		3,
@@ -268,10 +274,10 @@ public class mjkjidai
 		{ 0, 1, 2, 3, 4, 5, 6, 7 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	};
+	);
 	
 	static struct GfxLayout spritelayout =
-	{
+	new IO_WritePort(
 		16,16,
 		RGN_FRAC(1,3),
 		3,
@@ -281,31 +287,31 @@ public class mjkjidai
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 			16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 },
 		32*8
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &charlayout,   0, 32 },
 		{ REGION_GFX1, 0, &spritelayout, 0, 16 },
 		{ -1 } /* end of array */
-	};
+	);
 	
 	
 	
 	static struct SN76496interface sn76496_interface =
-	{
+	new IO_WritePort(
 		2,	/* 2 chips */
 		{ 10000000/4, 10000000/4, 10000000/4 },	/* 2.5 MHz ??? */
 		{ 50, 50 }
-	};
+	);
 	
 	static struct ADPCMinterface adpcm_interface =
-	{
+	new IO_WritePort(
 		1,          	/* 1 channel */
 		6000,       	/* 6000Hz playback */
 		REGION_SOUND1,	/* memory region */
 		{ 100 }
-	};
+	);
 	
 	
 	

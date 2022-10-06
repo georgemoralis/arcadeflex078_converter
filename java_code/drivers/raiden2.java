@@ -170,55 +170,59 @@ public class raiden2
 	
 	/* MEMORY MAPS */
 	
-	static MEMORY_READ_START( raiden2_readmem )
-		{ 0x00000, 0x003ff, MRA_RAM },
+	public static Memory_ReadAddress raiden2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x003ff, MRA_RAM ),
 	
 		/* I have my doubts these are really mapped here, protection? */
-		{ 0x00740, 0x00740, input_port_2_r }, // dip 1
-		{ 0x00741, 0x00741, input_port_3_r }, // dip 2
-		{ 0x00744, 0x00744, input_port_0_r }, // player 1
-		{ 0x00745, 0x00745, input_port_1_r }, // player 2
-		{ 0x0074b, 0x0074d, input_port_4_r }, // start buttons
-		{ 0x00400, 0x007ff, raiden2_kludge_r },
+		new Memory_ReadAddress( 0x00740, 0x00740, input_port_2_r ), // dip 1
+		new Memory_ReadAddress( 0x00741, 0x00741, input_port_3_r ), // dip 2
+		new Memory_ReadAddress( 0x00744, 0x00744, input_port_0_r ), // player 1
+		new Memory_ReadAddress( 0x00745, 0x00745, input_port_1_r ), // player 2
+		new Memory_ReadAddress( 0x0074b, 0x0074d, input_port_4_r ), // start buttons
+		new Memory_ReadAddress( 0x00400, 0x007ff, raiden2_kludge_r ),
 	
-		{ 0x00800, 0x0afff, MRA_RAM },
+		new Memory_ReadAddress( 0x00800, 0x0afff, MRA_RAM ),
 	
-		{ 0x0b000, 0x0bfff, MRA_RAM }, // protection?
+		new Memory_ReadAddress( 0x0b000, 0x0bfff, MRA_RAM ), // protection?
 	
-		{ 0x0c000, 0x0cfff, MRA_RAM }, // sprites
-		{ 0x0d000, 0x0d7ff, MRA_RAM }, // background
-		{ 0x0d800, 0x0dfff, MRA_RAM }, // middle
-		{ 0x0e800, 0x0f7ff, MRA_RAM }, // front
-		{ 0x0f800, 0x0ffff, MRA_RAM }, /* Stack area */
+		new Memory_ReadAddress( 0x0c000, 0x0cfff, MRA_RAM ), // sprites
+		new Memory_ReadAddress( 0x0d000, 0x0d7ff, MRA_RAM ), // background
+		new Memory_ReadAddress( 0x0d800, 0x0dfff, MRA_RAM ), // middle
+		new Memory_ReadAddress( 0x0e800, 0x0f7ff, MRA_RAM ), // front
+		new Memory_ReadAddress( 0x0f800, 0x0ffff, MRA_RAM ), /* Stack area */
 	
-		{ 0x10000, 0x1efff, MRA_RAM },
+		new Memory_ReadAddress( 0x10000, 0x1efff, MRA_RAM ),
 	
-		{ 0x1f000, 0x1ffff, MRA_RAM }, // palette
+		new Memory_ReadAddress( 0x1f000, 0x1ffff, MRA_RAM ), // palette
 	
-		{ 0x20000, 0x3ffff, MRA_BANK1 }, // rom
-		{ 0x40000, 0xfffff, MRA_BANK2 }, // rom
-	MEMORY_END
+		new Memory_ReadAddress( 0x20000, 0x3ffff, MRA_BANK1 ), // rom
+		new Memory_ReadAddress( 0x40000, 0xfffff, MRA_BANK2 ), // rom
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( raiden2_writemem )
-		{ 0x00000, 0x003ff, MWA_RAM },
-	//	{ 0x00400, 0x007ff, MWA_RAM },
-		{ 0x00800, 0x0afff, MWA_RAM },
+	public static Memory_WriteAddress raiden2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x003ff, MWA_RAM ),
+	//	new Memory_WriteAddress( 0x00400, 0x007ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x00800, 0x0afff, MWA_RAM ),
 	
-		{ 0x0b000, 0x0bfff, MWA_RAM }, // protection?
+		new Memory_WriteAddress( 0x0b000, 0x0bfff, MWA_RAM ), // protection?
 	
-		{ 0x0c000, 0x0cfff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x0d000, 0x0d7ff, raiden2_background_w, &back_data },
-		{ 0x0d800, 0x0dfff, raiden2_midground_w, &mid_data },
-		{ 0x0e000, 0x0e7ff, raiden2_foreground_w, &fore_data },
-		{ 0x0e800, 0x0f7ff, raiden2_text_w, &videoram },
-		{ 0x0f800, 0x0ffff, MWA_RAM }, /* Stack area */
+		new Memory_WriteAddress( 0x0c000, 0x0cfff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x0d000, 0x0d7ff, raiden2_background_w, &back_data ),
+		new Memory_WriteAddress( 0x0d800, 0x0dfff, raiden2_midground_w, &mid_data ),
+		new Memory_WriteAddress( 0x0e000, 0x0e7ff, raiden2_foreground_w, &fore_data ),
+		new Memory_WriteAddress( 0x0e800, 0x0f7ff, raiden2_text_w, &videoram ),
+		new Memory_WriteAddress( 0x0f800, 0x0ffff, MWA_RAM ), /* Stack area */
 	
-		{ 0x10000, 0x1efff, MWA_RAM },
+		new Memory_WriteAddress( 0x10000, 0x1efff, MWA_RAM ),
 	
-		{ 0x1f000, 0x1ffff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },
+		new Memory_WriteAddress( 0x1f000, 0x1ffff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),
 	
-		{ 0x20000, 0xfffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x20000, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* INPUT PORTS */
 	

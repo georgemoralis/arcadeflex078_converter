@@ -168,31 +168,35 @@ public class vball
 		//logerror("%04x: vb_scrollx_hi = %d\n",activecpu_get_previouspc(), vb_scrollx_hi);
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x1000, input_port_0_r },
-		{ 0x1001, 0x1001, input_port_1_r },
-		{ 0x1002, 0x1002, input_port_2_r },
-		{ 0x1003, 0x1003, input_port_3_r },
-		{ 0x1004, 0x1004, input_port_4_r },
-		{ 0x1005, 0x1005, input_port_5_r },
-		{ 0x1006, 0x1006, input_port_6_r },
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1000, input_port_0_r ),
+		new Memory_ReadAddress( 0x1001, 0x1001, input_port_1_r ),
+		new Memory_ReadAddress( 0x1002, 0x1002, input_port_2_r ),
+		new Memory_ReadAddress( 0x1003, 0x1003, input_port_3_r ),
+		new Memory_ReadAddress( 0x1004, 0x1004, input_port_4_r ),
+		new Memory_ReadAddress( 0x1005, 0x1005, input_port_5_r ),
+		new Memory_ReadAddress( 0x1006, 0x1006, input_port_6_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( vball2pj_readmem )
-		{ 0x0000, 0x0fff, MRA_RAM },
-		{ 0x1000, 0x1000, input_port_0_r },
-		{ 0x1001, 0x1001, input_port_1_r },
-		{ 0x1002, 0x1002, input_port_2_r },
-		{ 0x1003, 0x1003, input_port_3_r },
-		{ 0x1004, 0x1004, input_port_4_r },
-		{ 0x1005, 0x1005, MRA_RAM },		//Strange, that these are read!
-		{ 0x1006, 0x1006, MRA_RAM },		//Strange, that these are read!
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress vball2pj_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x1000, input_port_0_r ),
+		new Memory_ReadAddress( 0x1001, 0x1001, input_port_1_r ),
+		new Memory_ReadAddress( 0x1002, 0x1002, input_port_2_r ),
+		new Memory_ReadAddress( 0x1003, 0x1003, input_port_3_r ),
+		new Memory_ReadAddress( 0x1004, 0x1004, input_port_4_r ),
+		new Memory_ReadAddress( 0x1005, 0x1005, MRA_RAM ),		//Strange, that these are read!
+		new Memory_ReadAddress( 0x1006, 0x1006, MRA_RAM ),		//Strange, that these are read!
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	WRITE_HANDLER(vb_scrollx_lo_w)
 	{
@@ -201,36 +205,42 @@ public class vball
 	}
 	
 	//Cheaters note: Scores are stored in ram @ 0x57-0x58 (though the space is used for other things between matches)
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x08ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x1008, 0x1008, vb_scrollx_hi_w },
-		{ 0x1009, 0x1009, vb_bankswitch_w },
-		{ 0x100a, 0x100a, MWA_RAM },
-		{ 0x100b, 0x100b, MWA_RAM },		//Counts from 0 to 7 continuously
-		{ 0x100c, 0x100c, vb_scrollx_lo_w },
-		{ 0x100d, 0x100d, cpu_sound_command_w },
-		{ 0x100e, 0x100e, MWA_RAM, &vb_scrolly_lo },
-		{ 0x2000, 0x2fff, vb_videoram_w, &vb_videoram },
-		{ 0x3000, 0x3fff, vb_attrib_w, &vb_attribram },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x08ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x1008, 0x1008, vb_scrollx_hi_w ),
+		new Memory_WriteAddress( 0x1009, 0x1009, vb_bankswitch_w ),
+		new Memory_WriteAddress( 0x100a, 0x100a, MWA_RAM ),
+		new Memory_WriteAddress( 0x100b, 0x100b, MWA_RAM ),		//Counts from 0 to 7 continuously
+		new Memory_WriteAddress( 0x100c, 0x100c, vb_scrollx_lo_w ),
+		new Memory_WriteAddress( 0x100d, 0x100d, cpu_sound_command_w ),
+		new Memory_WriteAddress( 0x100e, 0x100e, MWA_RAM, &vb_scrolly_lo ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, vb_videoram_w, &vb_videoram ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, vb_attrib_w, &vb_attribram ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8801, 0x8801, YM2151_status_port_0_r },
-		{ 0x9800, 0x9800, OKIM6295_status_0_r },
-		{ 0xA000, 0xA000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8801, 0x8801, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x9800, 0x9800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xA000, 0xA000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x8800, YM2151_register_port_0_w },
-		{ 0x8801, 0x8801, YM2151_data_port_0_w },
-		{ 0x9800, 0x9803, OKIM6295_data_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x8800, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x8801, 0x8801, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x9800, 0x9803, OKIM6295_data_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	#define COMMON_PORTS_BEFORE  PORT_START \
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 ) \

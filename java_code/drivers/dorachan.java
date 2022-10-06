@@ -45,35 +45,43 @@ public class dorachan
 		dorachan_ctrl=data;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{0x0000, 0x17ff, MRA_ROM },
-		{0x1800, 0x1fff, MRA_RAM },
-		{0x2000, 0x23ff, MRA_ROM },
-		{0x2400, 0x2400, dorachan_protection_r},
-		{0x2800, 0x2800, input_port_0_r },
-		{0x2c00, 0x2c00, input_port_1_r},
-		{0x3800, 0x3800, dorachan_status_r },
-		{0x4000, 0x5fff, MRA_RAM },
-		{0x6000, 0x77ff, MRA_ROM},
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress(0x0000, 0x17ff, MRA_ROM ),
+		new Memory_ReadAddress(0x1800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress(0x2000, 0x23ff, MRA_ROM ),
+		new Memory_ReadAddress(0x2400, 0x2400, dorachan_protection_r),
+		new Memory_ReadAddress(0x2800, 0x2800, input_port_0_r ),
+		new Memory_ReadAddress(0x2c00, 0x2c00, input_port_1_r),
+		new Memory_ReadAddress(0x3800, 0x3800, dorachan_status_r ),
+		new Memory_ReadAddress(0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress(0x6000, 0x77ff, MRA_ROM),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{0x0000, 0x17ff, MWA_ROM},
-		{0x1800, 0x1fff, MWA_RAM },
-		{0x2000, 0x23ff, MWA_ROM},
-		{0x4000, 0x5fff, dorachan_videoram_w,&videoram},
-		{0x6000, 0x77ff, MWA_ROM},
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress(0x0000, 0x17ff, MWA_ROM),
+		new Memory_WriteAddress(0x1800, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress(0x2000, 0x23ff, MWA_ROM),
+		new Memory_WriteAddress(0x4000, 0x5fff, dorachan_videoram_w,&videoram),
+		new Memory_WriteAddress(0x6000, 0x77ff, MWA_ROM),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 	
-	PORT_END
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{0x01, 0x01, IOWP_NOP},
-		{0x02, 0x02, IOWP_NOP},
-		{0x03, 0x03, dorachan_ctrl_w},
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(0x01, 0x01, IOWP_NOP),
+		new IO_WritePort(0x02, 0x02, IOWP_NOP),
+		new IO_WritePort(0x03, 0x03, dorachan_ctrl_w),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( dorachan )
 		PORT_START

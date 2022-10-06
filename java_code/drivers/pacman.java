@@ -655,241 +655,269 @@ public class pacman
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },	/* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM },	/* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x503f, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r },	/* DSW1 */
-		{ 0x50c0, 0x50ff, input_port_3_r },	/* DSW2 */
-		{ 0x8000, 0xbfff, MRA_ROM },	/* Ms. Pac-Man / Ponpoko only */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ),	/* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50ff, input_port_3_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_ROM ),	/* Ms. Pac-Man / Ponpoko only */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, colorram_w, &colorram },
-		{ 0x4c00, 0x4fef, MWA_RAM },
-		{ 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x5000, 0x5000, interrupt_enable_w },
-		{ 0x5001, 0x5001, pengo_sound_enable_w },
-		{ 0x5002, 0x5002, MWA_NOP },
-		{ 0x5003, 0x5003, pengo_flipscreen_w },
-	 	{ 0x5004, 0x5005, pacman_leds_w },
-	// 	{ 0x5006, 0x5006, pacman_coin_lockout_global_w },	this breaks many games
-	 	{ 0x5007, 0x5007, pacman_coin_counter_w },
-		{ 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs },
-		{ 0x5060, 0x506f, MWA_RAM, &spriteram_2 },
-		{ 0x50c0, 0x50c0, watchdog_reset_w },
-		{ 0x8000, 0xbfff, MWA_ROM },	/* Ms. Pac-Man / Ponpoko only */
-		{ 0xc000, 0xc3ff, videoram_w }, /* mirror address for video ram, */
-		{ 0xc400, 0xc7ef, colorram_w }, /* used to display HIGH SCORE and CREDITS */
-		{ 0xffff, 0xffff, MWA_NOP },	/* Eyes writes to this location to simplify code */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fef, MWA_RAM ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
+		new Memory_WriteAddress( 0x5002, 0x5002, MWA_NOP ),
+		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
+	 	new Memory_WriteAddress( 0x5004, 0x5005, pacman_leds_w ),
+	// 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),	this breaks many games
+	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),	/* Ms. Pac-Man / Ponpoko only */
+		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ), /* mirror address for video ram, */
+		new Memory_WriteAddress( 0xc400, 0xc7ef, colorram_w ), /* used to display HIGH SCORE and CREDITS */
+		new Memory_WriteAddress( 0xffff, 0xffff, MWA_NOP ),	/* Eyes writes to this location to simplify code */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( mschamp_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },		/* By Sil: Zola/Ms. Champ */
-		{ 0x4000, 0x47ff, MRA_RAM },		/* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM },		/* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x503f, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r },	/* DSW */
-		{ 0x8000, 0x9fff, MRA_BANK2 },		/* By Sil: Zola/Ms. Champ */
-	MEMORY_END
+	public static Memory_ReadAddress mschamp_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),		/* By Sil: Zola/Ms. Champ */
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),		/* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ),		/* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ),	/* DSW */
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK2 ),		/* By Sil: Zola/Ms. Champ */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( mspacman_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },
-		{ 0x4000, 0x47ff, MRA_RAM },	/* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM },	/* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x503f, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r },	/* DSW1 */
-		{ 0x50c0, 0x50ff, input_port_3_r },	/* DSW2 */
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-	MEMORY_END
+	public static Memory_ReadAddress mspacman_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ),	/* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50ff, input_port_3_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( mspacman_writemem )
-		{ 0x0000, 0x3fff, MWA_BANK1 },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, colorram_w, &colorram },
-		{ 0x4c00, 0x4fef, MWA_RAM },
-		{ 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x5000, 0x5000, interrupt_enable_w },
-		{ 0x5001, 0x5001, pengo_sound_enable_w },
-		{ 0x5002, 0x5002, MWA_NOP },
-		{ 0x5003, 0x5003, pengo_flipscreen_w },
-	 	{ 0x5004, 0x5005, pacman_leds_w },
-		{ 0x5006, 0x5006, mspacman_activate_rom },	/* Not actually, just handy */
-	// 	{ 0x5006, 0x5006, pacman_coin_lockout_global_w },	this breaks many games
-	 	{ 0x5007, 0x5007, pacman_coin_counter_w },
-		{ 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs },
-		{ 0x5060, 0x506f, MWA_RAM, &spriteram_2 },
-		{ 0x50c0, 0x50c0, watchdog_reset_w },
-		{ 0x8000, 0xbfff, MWA_BANK1 },	/* Ms. Pac-Man / Ponpoko only */
-		{ 0xc000, 0xc3ff, videoram_w }, /* mirror address for video ram, */
-		{ 0xc400, 0xc7ef, colorram_w }, /* used to display HIGH SCORE and CREDITS */
-		{ 0xffff, 0xffff, MWA_NOP },	/* Eyes writes to this location to simplify code */
-	MEMORY_END
+	public static Memory_WriteAddress mspacman_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_BANK1 ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fef, MWA_RAM ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
+		new Memory_WriteAddress( 0x5002, 0x5002, MWA_NOP ),
+		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
+	 	new Memory_WriteAddress( 0x5004, 0x5005, pacman_leds_w ),
+		new Memory_WriteAddress( 0x5006, 0x5006, mspacman_activate_rom ),	/* Not actually, just handy */
+	// 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),	this breaks many games
+	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_BANK1 ),	/* Ms. Pac-Man / Ponpoko only */
+		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ), /* mirror address for video ram, */
+		new Memory_WriteAddress( 0xc400, 0xc7ef, colorram_w ), /* used to display HIGH SCORE and CREDITS */
+		new Memory_WriteAddress( 0xffff, 0xffff, MWA_NOP ),	/* Eyes writes to this location to simplify code */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( alibaba_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },	/* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM },	/* including sprite codes at 4ef0-4eff */
-		{ 0x5000, 0x503f, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r },	/* DSW1 */
-		{ 0x50c0, 0x50c0, alibaba_mystery_1_r },
-		{ 0x50c1, 0x50c1, alibaba_mystery_2_r },
-		{ 0x8000, 0x8fff, MRA_ROM },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0xa000, 0xa7ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress alibaba_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ),	/* including sprite codes at 4ef0-4eff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50c0, alibaba_mystery_1_r ),
+		new Memory_ReadAddress( 0x50c1, 0x50c1, alibaba_mystery_2_r ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( alibaba_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, colorram_w, &colorram },
-		{ 0x4ef0, 0x4eff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x4c00, 0x4fff, MWA_RAM },
-		{ 0x5000, 0x5000, watchdog_reset_w },
-	 	{ 0x5004, 0x5005, pacman_leds_w },
-	 	{ 0x5006, 0x5006, pacman_coin_lockout_global_w },
-	 	{ 0x5007, 0x5007, pacman_coin_counter_w },
-		{ 0x5040, 0x506f, alibaba_sound_w, &pengo_soundregs },  /* the sound region is not contiguous */
-		{ 0x5060, 0x506f, MWA_RAM, &spriteram_2 }, /* actually at 5050-505f, here to point to free RAM */
-		{ 0x50c0, 0x50c0, pengo_sound_enable_w },
-		{ 0x50c1, 0x50c1, pengo_flipscreen_w },
-		{ 0x50c2, 0x50c2, interrupt_enable_w },
-		{ 0x8000, 0x8fff, MWA_ROM },
-		{ 0x9000, 0x93ff, MWA_RAM },
-		{ 0xa000, 0xa7ff, MWA_ROM },
-		{ 0xc000, 0xc3ff, videoram_w }, /* mirror address for video ram, */
-		{ 0xc400, 0xc7ef, colorram_w }, /* used to display HIGH SCORE and CREDITS */
-	MEMORY_END
+	public static Memory_WriteAddress alibaba_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4ef0, 0x4eff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x5000, watchdog_reset_w ),
+	 	new Memory_WriteAddress( 0x5004, 0x5005, pacman_leds_w ),
+	 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),
+	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
+		new Memory_WriteAddress( 0x5040, 0x506f, alibaba_sound_w, &pengo_soundregs ),  /* the sound region is not contiguous */
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ), /* actually at 5050-505f, here to point to free RAM */
+		new Memory_WriteAddress( 0x50c0, 0x50c0, pengo_sound_enable_w ),
+		new Memory_WriteAddress( 0x50c1, 0x50c1, pengo_flipscreen_w ),
+		new Memory_WriteAddress( 0x50c2, 0x50c2, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ), /* mirror address for video ram, */
+		new Memory_WriteAddress( 0xc400, 0xc7ef, colorram_w ), /* used to display HIGH SCORE and CREDITS */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( theglobp_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },
-		{ 0x4000, 0x47ff, MRA_RAM },	/* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM },	/* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x503f, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r },	/* DSW1 */
-		{ 0x50c0, 0x50ff, input_port_3_r },	/* DSW2 */
-	MEMORY_END
+	public static Memory_ReadAddress theglobp_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ),	/* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50ff, input_port_3_r ),	/* DSW2 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( vanvan_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },	/* video and color RAM */
-		{ 0x4800, 0x4fff, MRA_RAM },	/* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x5000, input_port_0_r },	/* IN0 */
-		{ 0x5040, 0x5040, input_port_1_r },	/* IN1 */
-		{ 0x5080, 0x5080, input_port_2_r },	/* DSW1 */
-		{ 0x50c0, 0x50c0, input_port_3_r },	/* DSW2 */
-		{ 0x8000, 0x8fff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress vanvan_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),	/* video and color RAM */
+		new Memory_ReadAddress( 0x4800, 0x4fff, MRA_RAM ),	/* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x5000, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x5040, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x5080, input_port_2_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50c0, input_port_3_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x8000, 0x8fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( vanvan_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, colorram_w, &colorram },
-		{ 0x4800, 0x4fef, MWA_RAM },
-		{ 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x5000, 0x5000, interrupt_enable_w },
-		{ 0x5001, 0x5001, vanvan_bgcolor_w },
-		{ 0x5003, 0x5003, pengo_flipscreen_w },
-		{ 0x5005, 0x5006, MWA_NOP },	/* always written together with 5001 */
-	 	{ 0x5007, 0x5007, pacman_coin_counter_w },
-		{ 0x5060, 0x506f, MWA_RAM, &spriteram_2 },
-		{ 0x5080, 0x5080, MWA_NOP },	/* ??? toggled before reading 5000 */
-		{ 0x50c0, 0x50c0, watchdog_reset_w },
-		{ 0x8000, 0x8fff, MWA_ROM },
-		{ 0xb800, 0xb87f, MWA_NOP },	/* probably a leftover from development: the Sanritsu version */
+	public static Memory_WriteAddress vanvan_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4800, 0x4fef, MWA_RAM ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x5001, 0x5001, vanvan_bgcolor_w ),
+		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
+		new Memory_WriteAddress( 0x5005, 0x5006, MWA_NOP ),	/* always written together with 5001 */
+	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x5080, 0x5080, MWA_NOP ),	/* ??? toggled before reading 5000 */
+		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xb800, 0xb87f, MWA_NOP ),	/* probably a leftover from development: the Sanritsu version */
 										/* writes the color lookup table here, while the Karateko version */
 										/* writes garbage. */
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( acitya_readmem )
-		{ 0x0000, 0x3fff, MRA_BANK1 },
-		{ 0x4000, 0x47ff, MRA_RAM }, /* video and color RAM */
-		{ 0x4c00, 0x4fff, MRA_RAM }, /* including sprite codes at 4ff0-4fff */
-		{ 0x5000, 0x503f, input_port_0_r }, /* IN0 */
-		{ 0x5040, 0x507f, input_port_1_r }, /* IN1 */
-		{ 0x5080, 0x50bf, input_port_2_r }, /* DSW1 */
-		{ 0x50c0, 0x50ff, input_port_3_r }, /* DSW2 */
-		{ 0x8000, 0xbfff, MRA_ROM }, /* Ms. Pac-Man / Ponpoko only */
-	MEMORY_END
+	public static Memory_ReadAddress acitya_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ), /* video and color RAM */
+		new Memory_ReadAddress( 0x4c00, 0x4fff, MRA_RAM ), /* including sprite codes at 4ff0-4fff */
+		new Memory_ReadAddress( 0x5000, 0x503f, input_port_0_r ), /* IN0 */
+		new Memory_ReadAddress( 0x5040, 0x507f, input_port_1_r ), /* IN1 */
+		new Memory_ReadAddress( 0x5080, 0x50bf, input_port_2_r ), /* DSW1 */
+		new Memory_ReadAddress( 0x50c0, 0x50ff, input_port_3_r ), /* DSW2 */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_ROM ), /* Ms. Pac-Man / Ponpoko only */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( bigbucks_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4400, 0x47ff, colorram_w, &colorram },
-		{ 0x4c00, 0x4fbf, MWA_RAM },
-		{ 0x5000, 0x5000, interrupt_enable_w },
-		{ 0x5001, 0x5001, pengo_sound_enable_w },
-		{ 0x5003, 0x5003, pengo_flipscreen_w },
-		{ 0x5007, 0x5007, MWA_NOP }, //?
-		{ 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs },
-		{ 0x50c0, 0x50c0, watchdog_reset_w },
-		{ 0x5100, 0x5100, MWA_NOP }, //?
-		{ 0x6000, 0x6000, bigbucks_bank_w },
-		{ 0x8000, 0x9fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bigbucks_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fbf, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
+		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
+		new Memory_WriteAddress( 0x5007, 0x5007, MWA_NOP ), //?
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
+		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x5100, 0x5100, MWA_NOP ), //?
+		new Memory_WriteAddress( 0x6000, 0x6000, bigbucks_bank_w ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( s2650games_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x1500, 0x1500, input_port_0_r },
-		{ 0x1540, 0x1540, input_port_1_r },
-		{ 0x1580, 0x1580, input_port_2_r },
-		{ 0x1c00, 0x1fef, MRA_RAM },
-		{ 0x2000, 0x2fff, MRA_ROM },
-		{ 0x3000, 0x3fff, s2650_mirror_r },
-		{ 0x4000, 0x4fff, MRA_ROM },
-		{ 0x5000, 0x5fff, s2650_mirror_r },
-		{ 0x6000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x7fff, s2650_mirror_r },
-	MEMORY_END
+	public static Memory_ReadAddress s2650games_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1500, 0x1500, input_port_0_r ),
+		new Memory_ReadAddress( 0x1540, 0x1540, input_port_1_r ),
+		new Memory_ReadAddress( 0x1580, 0x1580, input_port_2_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1fef, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, s2650_mirror_r ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5000, 0x5fff, s2650_mirror_r ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, s2650_mirror_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( s2650games_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x1000, 0x13ff, s2650games_colorram_w },
-		{ 0x1400, 0x141f, s2650games_scroll_w },
-		{ 0x1420, 0x148f, MWA_RAM },
-		{ 0x1490, 0x149f, MWA_RAM, &sprite_bank },
-		{ 0x14a0, 0x14bf, s2650games_tilesbank_w, &tiles_bankram },
-		{ 0x14c0, 0x14ff, MWA_RAM },
-		{ 0x1500, 0x1502, MWA_NOP },
-		{ 0x1503, 0x1503, s2650games_flipscreen_w },
-		{ 0x1504, 0x1506, MWA_NOP },
-		{ 0x1507, 0x1507, pacman_coin_counter_w },
-		{ 0x1508, 0x155f, MWA_RAM },
-		{ 0x1560, 0x156f, MWA_RAM, &spriteram_2 },
-		{ 0x1570, 0x157f, MWA_RAM },
-		{ 0x1586, 0x1587, MWA_NOP },
-		{ 0x15c0, 0x15c0, watchdog_reset_w },
-		{ 0x15c7, 0x15c7, MWA_RAM },
-		{ 0x1800, 0x1bff, s2650games_videoram_w, &videoram },
-		{ 0x1c00, 0x1fef, MWA_RAM },
-		{ 0x1ff0, 0x1fff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x2000, 0x2fff, MWA_ROM },
-		{ 0x3000, 0x3fff, s2650_mirror_w },
-		{ 0x4000, 0x4fff, MWA_ROM },
-		{ 0x5000, 0x5fff, s2650_mirror_w },
-		{ 0x6000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x7fff, s2650_mirror_w },
-	MEMORY_END
+	public static Memory_WriteAddress s2650games_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, s2650games_colorram_w ),
+		new Memory_WriteAddress( 0x1400, 0x141f, s2650games_scroll_w ),
+		new Memory_WriteAddress( 0x1420, 0x148f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1490, 0x149f, MWA_RAM, &sprite_bank ),
+		new Memory_WriteAddress( 0x14a0, 0x14bf, s2650games_tilesbank_w, &tiles_bankram ),
+		new Memory_WriteAddress( 0x14c0, 0x14ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1500, 0x1502, MWA_NOP ),
+		new Memory_WriteAddress( 0x1503, 0x1503, s2650games_flipscreen_w ),
+		new Memory_WriteAddress( 0x1504, 0x1506, MWA_NOP ),
+		new Memory_WriteAddress( 0x1507, 0x1507, pacman_coin_counter_w ),
+		new Memory_WriteAddress( 0x1508, 0x155f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1560, 0x156f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x1570, 0x157f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1586, 0x1587, MWA_NOP ),
+		new Memory_WriteAddress( 0x15c0, 0x15c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x15c7, 0x15c7, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, s2650games_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x1c00, 0x1fef, MWA_RAM ),
+		new Memory_WriteAddress( 0x1ff0, 0x1fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, s2650_mirror_w ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x5fff, s2650_mirror_w ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, s2650_mirror_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/*************************************
@@ -898,65 +926,91 @@ public class pacman
 	 *
 	 *************************************/
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, interrupt_vector_w },	/* Pac-Man only */
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, interrupt_vector_w ),	/* Pac-Man only */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( vanvan_writeport )
-		{ 0x01, 0x01, SN76496_0_w },
-		{ 0x02, 0x02, SN76496_1_w },
-	PORT_END
+	public static IO_WritePort vanvan_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x01, 0x01, SN76496_0_w ),
+		new IO_WritePort( 0x02, 0x02, SN76496_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( dremshpr_writeport )
-		{ 0x06, 0x06, AY8910_write_port_0_w },
-		{ 0x07, 0x07, AY8910_control_port_0_w },
-	PORT_END
+	public static IO_WritePort dremshpr_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x06, 0x06, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x07, 0x07, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( piranha_writeport )
-		{ 0x00, 0x00, piranha_interrupt_vector_w },
-	PORT_END
+	public static IO_WritePort piranha_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, piranha_interrupt_vector_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( nmouse_writeport )
-		{ 0x00, 0x00, nmouse_interrupt_vector_w },
-	PORT_END
+	public static IO_WritePort nmouse_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, nmouse_interrupt_vector_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( theglobp_readport )
-		{ 0x00, 0xff, theglobp_decrypt_rom },	/* Switch protection logic */
-	PORT_END
+	public static IO_ReadPort theglobp_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0xff, theglobp_decrypt_rom ),	/* Switch protection logic */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( acitya_readport )
-		{ 0x00, 0xff, acitya_decrypt_rom }, /* Switch protection logic */
-	PORT_END
+	public static IO_ReadPort acitya_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0xff, acitya_decrypt_rom ), /* Switch protection logic */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( mschamp_readport )
-		{ 0x00,0x00, mschamp_kludge_r },
-	PORT_END
+	public static IO_ReadPort mschamp_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00,0x00, mschamp_kludge_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( bigbucks_readport )
-		{ 0x0000, 0xffff, bigbucks_question_r },
-	PORT_END
+	public static IO_ReadPort bigbucks_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0xffff, bigbucks_question_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( drivfrcp_readport )
-		{ 0x00, 0x00, MRA_NOP },
-		{ 0x01, 0x01, drivfrcp_port1_r },
-		{ S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort drivfrcp_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, MRA_NOP ),
+		new IO_ReadPort( 0x01, 0x01, drivfrcp_port1_r ),
+		new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( _8bpm_readport )
-		{ 0x00, 0x00, MRA_NOP },
-		{ 0x01, 0x01, _8bpm_port1_r },
-		{ 0xe0, 0xe0, MRA_NOP },
-		{ S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort _8bpm_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, MRA_NOP ),
+		new IO_ReadPort( 0x01, 0x01, _8bpm_port1_r ),
+		new IO_ReadPort( 0xe0, 0xe0, MRA_NOP ),
+		new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( porky_readport )
-		{ 0x01, 0x01, porky_port1_r },
-		{ S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort porky_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, porky_port1_r ),
+		new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( s2650games_writeport )
-		{ S2650_DATA_PORT, S2650_DATA_PORT, SN76496_0_w },
-	PORT_END
+	public static IO_WritePort s2650games_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( S2650_DATA_PORT, S2650_DATA_PORT, SN76496_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/*************************************

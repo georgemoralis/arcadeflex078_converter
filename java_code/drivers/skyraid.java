@@ -119,35 +119,39 @@ public class skyraid
 	}
 	
 	
-	static MEMORY_READ_START( skyraid_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x03ff, skyraid_zeropage_r },
-		{ 0x0800, 0x087f, MRA_RAM },
-		{ 0x0880, 0x0bff, skyraid_alpha_num_r },
-		{ 0x1000, 0x1000, skyraid_port_0_r },
-		{ 0x1000, 0x1001, input_port_1_r },
-		{ 0x1400, 0x1400, input_port_2_r },
-		{ 0x1400, 0x1401, input_port_3_r },
-		{ 0x7000, 0x7fff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress skyraid_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x03ff, skyraid_zeropage_r ),
+		new Memory_ReadAddress( 0x0800, 0x087f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0880, 0x0bff, skyraid_alpha_num_r ),
+		new Memory_ReadAddress( 0x1000, 0x1000, skyraid_port_0_r ),
+		new Memory_ReadAddress( 0x1000, 0x1001, input_port_1_r ),
+		new Memory_ReadAddress( 0x1400, 0x1400, input_port_2_r ),
+		new Memory_ReadAddress( 0x1400, 0x1401, input_port_3_r ),
+		new Memory_ReadAddress( 0x7000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( skyraid_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x03ff, skyraid_zeropage_w },
-		{ 0x0400, 0x040f, MWA_RAM, &skyraid_pos_ram },
-		{ 0x0800, 0x087f, MWA_RAM, &skyraid_alpha_num_ram },
-		{ 0x0880, 0x0bff, skyraid_alpha_num_w },
-		{ 0x1c00, 0x1c0f, MWA_RAM, &skyraid_obj_ram },
-		{ 0x4000, 0x4000, skyraid_scroll_w },
-		{ 0x4400, 0x4400, skyraid_sound_w },
-		{ 0x4800, 0x4800, skyraid_range_w },
-		{ 0x5000, 0x5000, watchdog_reset_w },
-		{ 0x5800, 0x5800, skyraid_offset_w },
-		{ 0x7000, 0x7fff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress skyraid_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x03ff, skyraid_zeropage_w ),
+		new Memory_WriteAddress( 0x0400, 0x040f, MWA_RAM, &skyraid_pos_ram ),
+		new Memory_WriteAddress( 0x0800, 0x087f, MWA_RAM, &skyraid_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0880, 0x0bff, skyraid_alpha_num_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c0f, MWA_RAM, &skyraid_obj_ram ),
+		new Memory_WriteAddress( 0x4000, 0x4000, skyraid_scroll_w ),
+		new Memory_WriteAddress( 0x4400, 0x4400, skyraid_sound_w ),
+		new Memory_WriteAddress( 0x4800, 0x4800, skyraid_range_w ),
+		new Memory_WriteAddress( 0x5000, 0x5000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x5800, 0x5800, skyraid_offset_w ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( skyraid )

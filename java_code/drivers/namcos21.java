@@ -374,65 +374,73 @@ public class namcos21
 	/* SOUND 6809 CPU Memory declarations						 */
 	/*************************************************************/
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x3fff, BANKED_SOUND_ROM_R }, /* banked */
-		{ 0x4000, 0x4001, YM2151_status_port_0_r },
-		{ 0x5000, 0x6fff, C140_r },
-		{ 0x7000, 0x77ff, namcos2_dualportram_byte_r },
-		{ 0x7800, 0x7fff, namcos2_dualportram_byte_r },	/* mirror */
-		{ 0x8000, 0x9fff, MRA_RAM },
-		{ 0xd000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, BANKED_SOUND_ROM_R ), /* banked */
+		new Memory_ReadAddress( 0x4000, 0x4001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x6fff, C140_r ),
+		new Memory_ReadAddress( 0x7000, 0x77ff, namcos2_dualportram_byte_r ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, namcos2_dualportram_byte_r ),	/* mirror */
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x4000, YM2151_register_port_0_w },
-		{ 0x4001, 0x4001, YM2151_data_port_0_w },
-		{ 0x5000, 0x6fff, C140_w },
-		{ 0x7000, 0x77ff, namcos2_dualportram_byte_w, &mpDualPortRAM },
-		{ 0x7800, 0x7fff, namcos2_dualportram_byte_w }, /* mirror */
-		{ 0x8000, 0x9fff, MWA_RAM },
-		{ 0xa000, 0xbfff, MWA_NOP }, /* amplifier enable on 1st write */
-		{ 0xc000, 0xc001, namcos2_sound_bankselect_w },
-		{ 0xd001, 0xd001, MWA_NOP }, /* watchdog */
-		{ 0xc000, 0xffff, MWA_NOP }, /* avoid debug log noise; games write frequently to 0xe000 */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0x4001, 0x4001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0x5000, 0x6fff, C140_w ),
+		new Memory_WriteAddress( 0x7000, 0x77ff, namcos2_dualportram_byte_w, &mpDualPortRAM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, namcos2_dualportram_byte_w ), /* mirror */
+		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_NOP ), /* amplifier enable on 1st write */
+		new Memory_WriteAddress( 0xc000, 0xc001, namcos2_sound_bankselect_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, MWA_NOP ), /* watchdog */
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_NOP ), /* avoid debug log noise; games write frequently to 0xe000 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*************************************************************/
 	/* I/O HD63705 MCU Memory declarations						 */
 	/*************************************************************/
 	
-	static MEMORY_READ_START( readmem_mcu )
-		{ 0x0000, 0x0000, MRA_NOP },
-		{ 0x0001, 0x0001, input_port_0_r },			/* p1,p2 start */
-		{ 0x0002, 0x0002, input_port_1_r },			/* coins */
-		{ 0x0003, 0x0003, namcos2_mcu_port_d_r },
-		{ 0x0007, 0x0007, input_port_10_r },		/* fire buttons */
-		{ 0x0010, 0x0010, namcos2_mcu_analog_ctrl_r },
-		{ 0x0011, 0x0011, namcos2_mcu_analog_port_r },
-		{ 0x0008, 0x003f, MRA_RAM },
-		{ 0x0040, 0x01bf, MRA_RAM },
-		{ 0x01c0, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x2000, input_port_11_r }, /* dipswitches */
-		{ 0x3000, 0x3000, input_port_12_r }, /* DIAL0 */
-		{ 0x3001, 0x3001, input_port_13_r }, /* DIAL1 */
-		{ 0x3002, 0x3002, input_port_14_r }, /* DIAL2 */
-		{ 0x3003, 0x3003, input_port_15_r }, /* DIAL3 */
-		{ 0x5000, 0x57ff, namcos2_dualportram_byte_r },
-		{ 0x6000, 0x6fff, MRA_NOP }, /* watchdog */
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_mcu[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, MRA_NOP ),
+		new Memory_ReadAddress( 0x0001, 0x0001, input_port_0_r ),			/* p1,p2 start */
+		new Memory_ReadAddress( 0x0002, 0x0002, input_port_1_r ),			/* coins */
+		new Memory_ReadAddress( 0x0003, 0x0003, namcos2_mcu_port_d_r ),
+		new Memory_ReadAddress( 0x0007, 0x0007, input_port_10_r ),		/* fire buttons */
+		new Memory_ReadAddress( 0x0010, 0x0010, namcos2_mcu_analog_ctrl_r ),
+		new Memory_ReadAddress( 0x0011, 0x0011, namcos2_mcu_analog_port_r ),
+		new Memory_ReadAddress( 0x0008, 0x003f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0040, 0x01bf, MRA_RAM ),
+		new Memory_ReadAddress( 0x01c0, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x2000, input_port_11_r ), /* dipswitches */
+		new Memory_ReadAddress( 0x3000, 0x3000, input_port_12_r ), /* DIAL0 */
+		new Memory_ReadAddress( 0x3001, 0x3001, input_port_13_r ), /* DIAL1 */
+		new Memory_ReadAddress( 0x3002, 0x3002, input_port_14_r ), /* DIAL2 */
+		new Memory_ReadAddress( 0x3003, 0x3003, input_port_15_r ), /* DIAL3 */
+		new Memory_ReadAddress( 0x5000, 0x57ff, namcos2_dualportram_byte_r ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_NOP ), /* watchdog */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_mcu )
-		{ 0x0003, 0x0003, namcos2_mcu_port_d_w },
-		{ 0x0010, 0x0010, namcos2_mcu_analog_ctrl_w },
-		{ 0x0011, 0x0011, namcos2_mcu_analog_port_w },
-		{ 0x0000, 0x003f, MWA_RAM },
-		{ 0x0040, 0x01bf, MWA_RAM },
-		{ 0x01c0, 0x1fff, MWA_ROM },
-		{ 0x5000, 0x57ff, namcos2_dualportram_byte_w, &mpDualPortRAM },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_mcu[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0003, 0x0003, namcos2_mcu_port_d_w ),
+		new Memory_WriteAddress( 0x0010, 0x0010, namcos2_mcu_analog_ctrl_w ),
+		new Memory_WriteAddress( 0x0011, 0x0011, namcos2_mcu_analog_port_w ),
+		new Memory_WriteAddress( 0x0000, 0x003f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0040, 0x01bf, MWA_RAM ),
+		new Memory_WriteAddress( 0x01c0, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x57ff, namcos2_dualportram_byte_w, &mpDualPortRAM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static struct GfxLayout tile_layout =
 	{

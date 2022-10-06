@@ -63,43 +63,47 @@ public class ltcasino
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xcfff, MRA_ROM },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
 	
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xe800, 0xebff, MRA_RAM },
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xebff, MRA_RAM ),
 	
-		{ 0xec00, 0xec00, input_port_0_r },
-		{ 0xec01, 0xec01, input_port_1_r },
-		{ 0xec02, 0xec02, input_port_2_r },
-		{ 0xec03, 0xec03, input_port_3_r },
-		{ 0xec10, 0xec10, input_port_4_r },
-		{ 0xec12, 0xec12, input_port_5_r },
-		{ 0xec20, 0xec20, AY8910_read_port_0_r },
-		{ 0xec21, 0xec21, input_port_6_r }, //ltcasino -> pc: F3F3 (A in service) and F3FD (B in service)
-		{ 0xec3e, 0xec3e, MRA_NOP }, //not used
+		new Memory_ReadAddress( 0xec00, 0xec00, input_port_0_r ),
+		new Memory_ReadAddress( 0xec01, 0xec01, input_port_1_r ),
+		new Memory_ReadAddress( 0xec02, 0xec02, input_port_2_r ),
+		new Memory_ReadAddress( 0xec03, 0xec03, input_port_3_r ),
+		new Memory_ReadAddress( 0xec10, 0xec10, input_port_4_r ),
+		new Memory_ReadAddress( 0xec12, 0xec12, input_port_5_r ),
+		new Memory_ReadAddress( 0xec20, 0xec20, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xec21, 0xec21, input_port_6_r ), //ltcasino -> pc: F3F3 (A in service) and F3FD (B in service)
+		new Memory_ReadAddress( 0xec3e, 0xec3e, MRA_NOP ), //not used
 	
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_RAM },
-		{ 0x8000, 0xcfff, MWA_ROM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0xcfff, MWA_ROM ),
 	
-		{ 0xd000, 0xd7ff, ltcasino_tile_num_w, &ltcasino_tile_num_ram },
-		{ 0xd800, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, ltcasino_tile_atr_w, &ltcasino_tile_atr_ram },
-		{ 0xe800, 0xebff, MWA_RAM },
+		new Memory_WriteAddress( 0xd000, 0xd7ff, ltcasino_tile_num_w, &ltcasino_tile_num_ram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, ltcasino_tile_atr_w, &ltcasino_tile_atr_ram ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM ),
 	
-		{ 0xec20, 0xec20, AY8910_write_port_0_w },
-		{ 0xec21, 0xec21, AY8910_control_port_0_w },
+		new Memory_WriteAddress( 0xec20, 0xec20, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xec21, 0xec21, AY8910_control_port_0_w ),
 	
-		{ 0xec30, 0xec3f, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0xec30, 0xec3f, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ltcasino )

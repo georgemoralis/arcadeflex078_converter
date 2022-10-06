@@ -270,82 +270,100 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	static MEMORY_READ_START( main_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK1 },
-		{ 0xb800, 0xb800, input_port_0_r }, /* SW1 */
-		{ 0xb801, 0xb801, input_port_1_r }, /* coin/start */
-		{ 0xb802, 0xb802, input_port_2_r }, /* player#2 */
-		{ 0xb803, 0xb803, input_port_3_r }, /* player#1 */
-		{ 0xd000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress main_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xb800, 0xb800, input_port_0_r ), /* SW1 */
+		new Memory_ReadAddress( 0xb801, 0xb801, input_port_1_r ), /* coin/start */
+		new Memory_ReadAddress( 0xb802, 0xb802, input_port_2_r ), /* player#2 */
+		new Memory_ReadAddress( 0xb803, 0xb803, input_port_3_r ), /* player#1 */
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( main_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, MWA_NOP }, /* ? */
-		{ 0xb000, 0xb000, shangkid_bbx_enable_w },
-		{ 0xb001, 0xb001, shangkid_sound_enable_w },
-		{ 0xb002, 0xb002, MWA_NOP },		/* main CPU interrupt-related */
-		{ 0xb003, 0xb003, MWA_NOP },		/* BBX interrupt-related */
-		{ 0xb004, 0xb004, shangkid_cpu_reset_w },
-		{ 0xb006, 0xb006, MWA_NOP },		/* coin counter */
-		{ 0xb007, 0xb007, shangkid_maincpu_bank_w },
-		{ 0xc000, 0xc002, MWA_RAM, &shangkid_videoreg },
-		{ 0xd000, 0xdfff, shangkid_videoram_w, &videoram },
-		{ 0xe000, 0xfdff, MWA_RAM, &shareram },
-		{ 0xfe00, 0xffff, MWA_RAM, &spriteram },
-	MEMORY_END
-	
-	/***************************************************************************************/
-	
-	static MEMORY_READ_START( bbx_readmem )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xb800, 0xb800, input_port_0_r }, /* SW1 */
-		{ 0xb801, 0xb801, input_port_1_r }, /* coin/start */
-		{ 0xb802, 0xb802, input_port_2_r }, /* player#2 */
-		{ 0xb803, 0xb803, input_port_3_r }, /* player#1 */
-		{ 0xd000, 0xdfff, videoram_r },
-		{ 0xe000, 0xffff, shareram_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( bbx_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa000, MWA_NOP }, /* ? */
-		{ 0xb000, 0xb000, shangkid_bbx_enable_w },
-		{ 0xb001, 0xb001, shangkid_sound_enable_w },
-		{ 0xb002, 0xb002, MWA_NOP },		/* main CPU interrupt-related */
-		{ 0xb003, 0xb003, MWA_NOP },		/* BBX interrupt-related */
-		{ 0xb004, 0xb004, shangkid_cpu_reset_w },
-		{ 0xb006, 0xb006, MWA_NOP },		/* coin counter */
-		{ 0xb007, 0xb007, shangkid_maincpu_bank_w },
-		{ 0xd000, 0xdfff, shangkid_videoram_w },
-		{ 0xe000, 0xffff, shareram_w },
-	MEMORY_END
-	
-	static PORT_WRITE_START( bbx_writeport )
-		{ 0x00, 0x00, shangkid_bbx_AY8910_control_w },
-		{ 0x01, 0x01, shangkid_bbx_AY8910_write_w },
-	PORT_END
+	public static Memory_WriteAddress main_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0xb000, 0xb000, shangkid_bbx_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, shangkid_sound_enable_w ),
+		new Memory_WriteAddress( 0xb002, 0xb002, MWA_NOP ),		/* main CPU interrupt-related */
+		new Memory_WriteAddress( 0xb003, 0xb003, MWA_NOP ),		/* BBX interrupt-related */
+		new Memory_WriteAddress( 0xb004, 0xb004, shangkid_cpu_reset_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, MWA_NOP ),		/* coin counter */
+		new Memory_WriteAddress( 0xb007, 0xb007, shangkid_maincpu_bank_w ),
+		new Memory_WriteAddress( 0xc000, 0xc002, MWA_RAM, &shangkid_videoreg ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, shangkid_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xe000, 0xfdff, MWA_RAM, &shareram ),
+		new Memory_WriteAddress( 0xfe00, 0xffff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xdfff, MRA_BANK2 },
-		{ 0xe000, 0xefff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress bbx_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb800, 0xb800, input_port_0_r ), /* SW1 */
+		new Memory_ReadAddress( 0xb801, 0xb801, input_port_1_r ), /* coin/start */
+		new Memory_ReadAddress( 0xb802, 0xb802, input_port_2_r ), /* player#2 */
+		new Memory_ReadAddress( 0xb803, 0xb803, input_port_3_r ), /* player#1 */
+		new Memory_ReadAddress( 0xd000, 0xdfff, videoram_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, shareram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xdfff, MWA_NOP }, /* sample player writes to ROM area */
-		{ 0xe000, 0xefff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress bbx_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0xb000, 0xb000, shangkid_bbx_enable_w ),
+		new Memory_WriteAddress( 0xb001, 0xb001, shangkid_sound_enable_w ),
+		new Memory_WriteAddress( 0xb002, 0xb002, MWA_NOP ),		/* main CPU interrupt-related */
+		new Memory_WriteAddress( 0xb003, 0xb003, MWA_NOP ),		/* BBX interrupt-related */
+		new Memory_WriteAddress( 0xb004, 0xb004, shangkid_cpu_reset_w ),
+		new Memory_WriteAddress( 0xb006, 0xb006, MWA_NOP ),		/* coin counter */
+		new Memory_WriteAddress( 0xb007, 0xb007, shangkid_maincpu_bank_w ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, shangkid_videoram_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, shareram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_sound )
-		{ 0x00, 0x00, shangkid_soundlatch_r },
-	PORT_END
+	public static IO_WritePort bbx_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, shangkid_bbx_AY8910_control_w ),
+		new IO_WritePort( 0x01, 0x01, shangkid_bbx_AY8910_write_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_sound )
-		{ 0x00, 0x00, DAC_0_data_w },
-	PORT_END
+	/***************************************************************************************/
+	
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_NOP ), /* sample player writes to ROM area */
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, shangkid_soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort writeport_sound[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, DAC_0_data_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************************/
 	
@@ -398,36 +416,42 @@ public class shangkid
 	
 	
 	
-	static MEMORY_READ_START( dynamski_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xcbff, MRA_RAM },
-		{ 0xd000, 0xd3ff, MRA_RAM },
-		{ 0xd800, 0xdbff, MRA_RAM },
-		{ 0xe000, 0xe002, MRA_RAM },
-		{ 0xe800, 0xe800, input_port_0_r },
-		{ 0xe801, 0xe801, input_port_1_r },
-		{ 0xe802, 0xe802, input_port_2_r },
-		{ 0xe803, 0xe803, input_port_3_r },
-		{ 0xf000, 0xf7ff, MRA_RAM }, /* work ram */
-	MEMORY_END
+	public static Memory_ReadAddress dynamski_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xcbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe002, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_0_r ),
+		new Memory_ReadAddress( 0xe801, 0xe801, input_port_1_r ),
+		new Memory_ReadAddress( 0xe802, 0xe802, input_port_2_r ),
+		new Memory_ReadAddress( 0xe803, 0xe803, input_port_3_r ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ), /* work ram */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dynamski_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM, &videoram }, /* tilemap */
-		{ 0xc800, 0xcbff, MWA_RAM },
-		{ 0xd000, 0xd3ff, MWA_RAM },
-		{ 0xd800, 0xdbff, MWA_RAM },
-		{ 0xe000, 0xe000, MWA_NOP }, /* IRQ disable */
-		{ 0xe001, 0xe002, MWA_RAM }, /* screen flip */
-		{ 0xf000, 0xf7ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress dynamski_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, &videoram ), /* tilemap */
+		new Memory_WriteAddress( 0xc800, 0xcbff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, MWA_NOP ), /* IRQ disable */
+		new Memory_WriteAddress( 0xe001, 0xe002, MWA_RAM ), /* screen flip */
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( dynamski_writeport )
+	public static IO_WritePort dynamski_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 		/* ports are reversed */
-		{ 0x00, 0x00, AY8910_write_port_0_w },
-		{ 0x01, 0x01, AY8910_control_port_0_w },
-	PORT_END
+		new IO_WritePort( 0x00, 0x00, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static MACHINE_DRIVER_START( dynamski )
 	

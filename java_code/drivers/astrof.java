@@ -62,34 +62,40 @@ public class astrof
 	extern struct Samplesinterface astrof_samples_interface;
 	extern struct Samplesinterface tomahawk_samples_interface;
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x4000, 0x5fff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa001, 0xa001, input_port_1_r },	/* IN1 */
-		{ 0xa003, 0xa003, tomahawk_protection_r },   // Only on Tomahawk
-		{ 0xd000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xa003, 0xa003, tomahawk_protection_r ),   // Only on Tomahawk
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( astrof_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x4000, 0x5fff, astrof_videoram_w, &videoram, &videoram_size },
-		{ 0x8003, 0x8003, MWA_RAM, &astrof_color },
-		{ 0x8004, 0x8004, astrof_video_control1_w },
-		{ 0x8005, 0x8005, astrof_video_control2_w },
-		{ 0x8006, 0x8006, astrof_sample1_w },
-		{ 0x8007, 0x8007, astrof_sample2_w },
-	MEMORY_END
+	public static Memory_WriteAddress astrof_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, astrof_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8003, 0x8003, MWA_RAM, &astrof_color ),
+		new Memory_WriteAddress( 0x8004, 0x8004, astrof_video_control1_w ),
+		new Memory_WriteAddress( 0x8005, 0x8005, astrof_video_control2_w ),
+		new Memory_WriteAddress( 0x8006, 0x8006, astrof_sample1_w ),
+		new Memory_WriteAddress( 0x8007, 0x8007, astrof_sample2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tomahawk_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x4000, 0x5fff, tomahawk_videoram_w, &videoram, &videoram_size },
-		{ 0x8003, 0x8003, MWA_RAM, &astrof_color },
-		{ 0x8004, 0x8004, astrof_video_control1_w },
-		{ 0x8005, 0x8005, tomahawk_video_control2_w },
-		{ 0x8006, 0x8006, MWA_NOP },                        // Sound triggers
-		{ 0x8007, 0x8007, MWA_RAM, &tomahawk_protection },
-	MEMORY_END
+	public static Memory_WriteAddress tomahawk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, tomahawk_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8003, 0x8003, MWA_RAM, &astrof_color ),
+		new Memory_WriteAddress( 0x8004, 0x8004, astrof_video_control1_w ),
+		new Memory_WriteAddress( 0x8005, 0x8005, tomahawk_video_control2_w ),
+		new Memory_WriteAddress( 0x8006, 0x8006, MWA_NOP ),                        // Sound triggers
+		new Memory_WriteAddress( 0x8007, 0x8007, MWA_RAM, &tomahawk_protection ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

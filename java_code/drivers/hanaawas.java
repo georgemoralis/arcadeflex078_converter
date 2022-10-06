@@ -73,31 +73,39 @@ public class hanaawas
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x2fff, MRA_ROM },
-		{ 0x4000, 0x4fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_ROM },
-		{ 0x8000, 0x8bff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8bff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-		{ 0x4000, 0x4fff, MWA_ROM },
-		{ 0x6000, 0x6fff, MWA_ROM },
-		{ 0x8000, 0x83ff, hanaawas_videoram_w, &videoram },
-		{ 0x8400, 0x87ff, hanaawas_colorram_w, &colorram },
-		{ 0x8800, 0x8bff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, hanaawas_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, hanaawas_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8800, 0x8bff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, hanaawas_input_port_0_r },
-		{ 0x10, 0x10, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, hanaawas_input_port_0_r ),
+		new IO_ReadPort( 0x10, 0x10, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x10, 0x10, AY8910_control_port_0_w },
-		{ 0x11, 0x11, AY8910_write_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x11, 0x11, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( hanaawas )

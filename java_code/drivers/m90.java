@@ -79,99 +79,123 @@ public class m90
 	
 	/***************************************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x00000, 0x7ffff, MRA_ROM },
-		{ 0x80000, 0x8ffff, MRA_BANK1 },	/* Quiz F1 only */
-		{ 0xa0000, 0xa3fff, MRA_RAM },
-		{ 0xd0000, 0xdffff, MRA_RAM },
-		{ 0xe0000, 0xe03ff, paletteram_r },
-		{ 0xffff0, 0xfffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x7ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x80000, 0x8ffff, MRA_BANK1 ),	/* Quiz F1 only */
+		new Memory_ReadAddress( 0xa0000, 0xa3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd0000, 0xdffff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe0000, 0xe03ff, paletteram_r ),
+		new Memory_ReadAddress( 0xffff0, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x00000, 0x7ffff, MWA_ROM },
-		{ 0x80000, 0x8ffff, MWA_ROM },	/* Quiz F1 only */
-		{ 0xa0000, 0xa3fff, MWA_RAM },
-		{ 0xd0000, 0xdffff, m90_video_w, &m90_video_data },
-		{ 0xe0000, 0xe03ff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },
-		{ 0xffff0, 0xfffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x7ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x80000, 0x8ffff, MWA_ROM ),	/* Quiz F1 only */
+		new Memory_WriteAddress( 0xa0000, 0xa3fff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd0000, 0xdffff, m90_video_w, &m90_video_data ),
+		new Memory_WriteAddress( 0xe0000, 0xe03ff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0xffff0, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( bootleg_readmem )
-		{ 0x00000, 0x3ffff, MRA_ROM },
-		{ 0x60000, 0x60fff, MRA_RAM },
-		{ 0xa0000, 0xa3fff, MRA_RAM },
-		{ 0xd0000, 0xdffff, MRA_RAM },
-		{ 0xe0000, 0xe03ff, paletteram_r },
-		{ 0xffff0, 0xfffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress bootleg_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x3ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x60000, 0x60fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa0000, 0xa3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd0000, 0xdffff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe0000, 0xe03ff, paletteram_r ),
+		new Memory_ReadAddress( 0xffff0, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bootleg_writemem )
-		{ 0x00000, 0x3ffff, MWA_ROM },
-		{ 0x6000e, 0x60fff, MWA_RAM, &spriteram },
-		{ 0xa0000, 0xa3fff, MWA_RAM },
-	//	{ 0xd0000, 0xdffff, m90_bootleg_video_w, &m90_video_data },
-		{ 0xe0000, 0xe03ff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },
-		{ 0xffff0, 0xfffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bootleg_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x3ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000e, 0x60fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xa0000, 0xa3fff, MWA_RAM ),
+	//	new Memory_WriteAddress( 0xd0000, 0xdffff, m90_bootleg_video_w, &m90_video_data ),
+		new Memory_WriteAddress( 0xe0000, 0xe03ff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0xffff0, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r }, /* Player 1 */
-		{ 0x01, 0x01, input_port_1_r }, /* Player 2 */
-		{ 0x02, 0x02, input_port_2_r }, /* Coins */
-		{ 0x03, 0x03, MRA_NOP },		/* Unused?  High byte of above */
-		{ 0x04, 0x04, input_port_3_r }, /* Dip 1 */
-		{ 0x05, 0x05, input_port_4_r }, /* Dip 2 */
-		{ 0x06, 0x06, input_port_5_r }, /* Player 3 */
-		{ 0x07, 0x07, input_port_6_r }, /* Player 4 */
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ), /* Player 1 */
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ), /* Player 2 */
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ), /* Coins */
+		new IO_ReadPort( 0x03, 0x03, MRA_NOP ),		/* Unused?  High byte of above */
+		new IO_ReadPort( 0x04, 0x04, input_port_3_r ), /* Dip 1 */
+		new IO_ReadPort( 0x05, 0x05, input_port_4_r ), /* Dip 2 */
+		new IO_ReadPort( 0x06, 0x06, input_port_5_r ), /* Player 3 */
+		new IO_ReadPort( 0x07, 0x07, input_port_6_r ), /* Player 4 */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x01, m72_sound_command_w },
-		{ 0x02, 0x03, m90_coincounter_w },
-		{ 0x04, 0x05, quizf1_bankswitch_w },
-		{ 0x80, 0x8f, m90_video_control_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x01, m72_sound_command_w ),
+		new IO_WritePort( 0x02, 0x03, m90_coincounter_w ),
+		new IO_WritePort( 0x04, 0x05, quizf1_bankswitch_w ),
+		new IO_WritePort( 0x80, 0x8f, m90_video_control_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/*****************************************************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x01, 0x01, YM2151_status_port_0_r },
-		{ 0x80, 0x80, soundlatch_r },
-		{ 0x84, 0x84, m72_sample_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, YM2151_status_port_0_r ),
+		new IO_ReadPort( 0x80, 0x80, soundlatch_r ),
+		new IO_ReadPort( 0x84, 0x84, m72_sample_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, YM2151_register_port_0_w },
-		{ 0x01, 0x01, YM2151_data_port_0_w },
-		{ 0x80, 0x81, rtype2_sample_addr_w },
-		{ 0x82, 0x82, m72_sample_w },
-		{ 0x83, 0x83, m72_sound_irq_ack_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2151_register_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2151_data_port_0_w ),
+		new IO_WritePort( 0x80, 0x81, rtype2_sample_addr_w ),
+		new IO_WritePort( 0x82, 0x82, m72_sample_w ),
+		new IO_WritePort( 0x83, 0x83, m72_sound_irq_ack_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( bbmanw_sound_readport )
-		{ 0x41, 0x41, YM2151_status_port_0_r },
-		{ 0x42, 0x42, soundlatch_r },
-	//	{ 0x41, 0x41, m72_sample_r },
-	PORT_END
+	public static IO_ReadPort bbmanw_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x41, 0x41, YM2151_status_port_0_r ),
+		new IO_ReadPort( 0x42, 0x42, soundlatch_r ),
+	//	new IO_ReadPort( 0x41, 0x41, m72_sample_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( bbmanw_sound_writeport )
-		{ 0x40, 0x40, YM2151_register_port_0_w },
-		{ 0x41, 0x41, YM2151_data_port_0_w },
-		{ 0x42, 0x42, m72_sound_irq_ack_w },
-	//	{ 0x40, 0x41, rtype2_sample_addr_w },
-	//	{ 0x42, 0x42, m72_sample_w },
-	PORT_END
+	public static IO_WritePort bbmanw_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x40, 0x40, YM2151_register_port_0_w ),
+		new IO_WritePort( 0x41, 0x41, YM2151_data_port_0_w ),
+		new IO_WritePort( 0x42, 0x42, m72_sound_irq_ack_w ),
+	//	new IO_WritePort( 0x40, 0x41, rtype2_sample_addr_w ),
+	//	new IO_WritePort( 0x42, 0x42, m72_sample_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/*****************************************************************************/
 	

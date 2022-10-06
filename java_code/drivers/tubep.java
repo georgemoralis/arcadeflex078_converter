@@ -184,28 +184,34 @@ public class tubep
 		tubep_backgroundram[offset] = data;
 	}
 	
-	static MEMORY_READ_START( tubep_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress tubep_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tubep_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },
-		{ 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram },	/* RAM on GFX PCB @B13 */
-		{ 0xe000, 0xe7ff, cpu_sharedram_w },
-		{ 0xe800, 0xebff, tubep_backgroundram_w },				/* row of 8 x 2147 RAMs on main PCB */
-	MEMORY_END
+	public static Memory_WriteAddress tubep_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram ),	/* RAM on GFX PCB @B13 */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w ),
+		new Memory_WriteAddress( 0xe800, 0xebff, tubep_backgroundram_w ),				/* row of 8 x 2147 RAMs on main PCB */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( tubep_readport )
-		{ 0x80, 0x80, input_port_3_r },
-		{ 0x90, 0x90, input_port_4_r },
-		{ 0xa0, 0xa0, input_port_5_r },
+	public static IO_ReadPort tubep_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x80, 0x80, input_port_3_r ),
+		new IO_ReadPort( 0x90, 0x90, input_port_4_r ),
+		new IO_ReadPort( 0xa0, 0xa0, input_port_5_r ),
 	
-		{ 0xb0, 0xb0, input_port_2_r },
-		{ 0xc0, 0xc0, input_port_1_r },
-		{ 0xd0, 0xd0, input_port_0_r },
-	PORT_END
+		new IO_ReadPort( 0xb0, 0xb0, input_port_2_r ),
+		new IO_ReadPort( 0xc0, 0xc0, input_port_1_r ),
+		new IO_ReadPort( 0xd0, 0xd0, input_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -221,33 +227,39 @@ public class tubep
 		sound_latch = (data&0x7f) | 0x80;
 	}
 	
-	static PORT_WRITE_START( tubep_writeport )
-		{ 0x80, 0x80, main_cpu_irq_line_clear_w },
-		{ 0xb0, 0xb7, tubep_LS259_w },
-		{ 0xd0, 0xd0, tubep_soundlatch_w },
-	PORT_END
+	public static IO_WritePort tubep_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x80, 0x80, main_cpu_irq_line_clear_w ),
+		new IO_WritePort( 0xb0, 0xb7, tubep_LS259_w ),
+		new IO_WritePort( 0xd0, 0xd0, tubep_soundlatch_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
 	
 	/************************** Slave CPU on main PCB ****************************/
 	
-	static MEMORY_READ_START( tubep_g_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xe000, 0xe7ff, cpu_sharedram_r },
-		{ 0xf800, 0xffff, tubep_sprite_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress tubep_g_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, cpu_sharedram_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, tubep_sprite_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( tubep_g_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa000, tubep_background_a000_w },
-		{ 0xc000, 0xc000, tubep_background_c000_w },
-		{ 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram },	/* 6116 #1 */
-		{ 0xe800, 0xebff, MWA_RAM, &tubep_backgroundram },		/* row of 8 x 2147 RAMs on main PCB */
-		{ 0xf000, 0xf3ff, tubep_sprite_colorsharedram_w },		/* sprites color lookup table */
-		{ 0xf800, 0xffff, tubep_sprite_sharedram_w },			/* program copies here part of shared ram ?? */
-	MEMORY_END
+	public static Memory_WriteAddress tubep_g_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, tubep_background_a000_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, tubep_background_c000_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram ),	/* 6116 #1 */
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &tubep_backgroundram ),		/* row of 8 x 2147 RAMs on main PCB */
+		new Memory_WriteAddress( 0xf000, 0xf3ff, tubep_sprite_colorsharedram_w ),		/* sprites color lookup table */
+		new Memory_WriteAddress( 0xf800, 0xffff, tubep_sprite_sharedram_w ),			/* program copies here part of shared ram ?? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER( tubep_soundlatch_r )
 	{
@@ -274,30 +286,38 @@ public class tubep
 	}
 	
 	
-	static MEMORY_READ_START( tubep_sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0xd000, 0xd000, tubep_sound_irq_ack },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress tubep_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, tubep_sound_irq_ack ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tubep_sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0xe000, 0xe7ff, MWA_RAM },		/* 6116 #3 */
-	MEMORY_END
+	public static Memory_WriteAddress tubep_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),		/* 6116 #3 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( tubep_sound_readport )
-		{ 0x06, 0x06, tubep_soundlatch_r },
-	PORT_END
+	public static IO_ReadPort tubep_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x06, 0x06, tubep_soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( tubep_sound_writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-		{ 0x02, 0x02, AY8910_control_port_1_w },
-		{ 0x03, 0x03, AY8910_write_port_1_w },
-		{ 0x04, 0x04, AY8910_control_port_2_w },
-		{ 0x05, 0x05, AY8910_write_port_2_w },
-		{ 0x07, 0x07, tubep_sound_unknown },
-	PORT_END
+	public static IO_WritePort tubep_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_2_w ),
+		new IO_WritePort( 0x05, 0x05, AY8910_write_port_2_w ),
+		new IO_WritePort( 0x07, 0x07, tubep_sound_unknown ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static void scanline_callback(int scanline)
 	{
@@ -351,73 +371,91 @@ public class tubep
 		cpu_set_nmi_line(2, PULSE_LINE);
 	}
 	
-	static PORT_READ_START( rjammer_readport )
-		{ 0x00, 0x00, input_port_2_r },	/* a bug in game code (during attract mode) */
-		{ 0x80, 0x80, input_port_2_r },
-		{ 0x90, 0x90, input_port_3_r },
-		{ 0xa0, 0xa0, input_port_4_r },
-		{ 0xb0, 0xb0, input_port_0_r },
-		{ 0xc0, 0xc0, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort rjammer_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_2_r ),	/* a bug in game code (during attract mode) */
+		new IO_ReadPort( 0x80, 0x80, input_port_2_r ),
+		new IO_ReadPort( 0x90, 0x90, input_port_3_r ),
+		new IO_ReadPort( 0xa0, 0xa0, input_port_4_r ),
+		new IO_ReadPort( 0xb0, 0xb0, input_port_0_r ),
+		new IO_ReadPort( 0xc0, 0xc0, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rjammer_writeport )
-		{ 0xd0, 0xd7, rjammer_LS259_w },
-		{ 0xe0, 0xe0, main_cpu_irq_line_clear_w },	/* clear IRQ interrupt */
-		{ 0xf0, 0xf0, rjammer_soundlatch_w },
-	PORT_END
-	
-	
-	static MEMORY_READ_START( rjammer_readmem )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xe000, 0xe7ff, cpu_sharedram_r },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( rjammer_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },						/* MB8416 SRAM on daughterboard on main PCB (there are two SRAMs, this is the one on the left) */
-		{ 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram },/* RAM on GFX PCB @B13 */
-		{ 0xe000, 0xe7ff, cpu_sharedram_w },				/* MB8416 SRAM on daughterboard (the one on the right) */
-	MEMORY_END
+	public static IO_WritePort rjammer_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xd0, 0xd7, rjammer_LS259_w ),
+		new IO_WritePort( 0xe0, 0xe0, main_cpu_irq_line_clear_w ),	/* clear IRQ interrupt */
+		new IO_WritePort( 0xf0, 0xf0, rjammer_soundlatch_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
+	public static Memory_ReadAddress rjammer_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, cpu_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rjammer_slave_writeport )
-		{ 0xb0, 0xb0, rjammer_background_page_w },
-		{ 0xd0, 0xd0, rjammer_background_LS377_w },
-	PORT_END
+	public static Memory_WriteAddress rjammer_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),						/* MB8416 SRAM on daughterboard on main PCB (there are two SRAMs, this is the one on the left) */
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram ),/* RAM on GFX PCB @B13 */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w ),				/* MB8416 SRAM on daughterboard (the one on the right) */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( rjammer_slave_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },			/* M5M5117P @21G */
-		{ 0xe000, 0xe7ff, cpu_sharedram_r },	/* MB8416 on daughterboard (the one on the right) */
-		{ 0xe800, 0xefff, MRA_RAM },			/* M5M5117P @19B (background) */
-		{ 0xf800, 0xffff, tubep_sprite_sharedram_r },
-	MEMORY_END
 	
-	static MEMORY_WRITE_START( rjammer_slave_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },						/* M5M5117P @21G */
-		{ 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram },/* MB8416 on daughterboard (the one on the right) */
-		{ 0xe800, 0xefff, MWA_RAM, &rjammer_backgroundram },/* M5M5117P @19B (background) */
-		{ 0xf800, 0xffff, tubep_sprite_sharedram_w },
-	MEMORY_END
+	
+	public static IO_WritePort rjammer_slave_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xb0, 0xb0, rjammer_background_page_w ),
+		new IO_WritePort( 0xd0, 0xd0, rjammer_background_LS377_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress rjammer_slave_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),			/* M5M5117P @21G */
+		new Memory_ReadAddress( 0xe000, 0xe7ff, cpu_sharedram_r ),	/* MB8416 on daughterboard (the one on the right) */
+		new Memory_ReadAddress( 0xe800, 0xefff, MRA_RAM ),			/* M5M5117P @19B (background) */
+		new Memory_ReadAddress( 0xf800, 0xffff, tubep_sprite_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress rjammer_slave_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),						/* M5M5117P @21G */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram ),/* MB8416 on daughterboard (the one on the right) */
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &rjammer_backgroundram ),/* M5M5117P @19B (background) */
+		new Memory_WriteAddress( 0xf800, 0xffff, tubep_sprite_sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* MS2010-A CPU (equivalent to NSC8105 with one new opcode: 0xec) on graphics PCB */
-	static MEMORY_READ_START( nsc_readmem )
-		{ 0x0000, 0x03ff, tubep_sprite_colorsharedram_r },
-		{ 0x0800, 0x0fff, tubep_sprite_sharedram_r },
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress nsc_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, tubep_sprite_colorsharedram_r ),
+		new Memory_ReadAddress( 0x0800, 0x0fff, tubep_sprite_sharedram_r ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( nsc_writemem )
-		{ 0x0000, 0x03ff, tubep_sprite_colorsharedram_w, &tubep_sprite_colorsharedram },
-		{ 0x0800, 0x0fff, tubep_sprite_sharedram_w, &tubep_sprite_sharedram },
-		{ 0x2000, 0x2009, tubep_sprite_control_w },
-		{ 0x200a, 0x200b, MWA_NOP }, /* not used by the games - perhaps designed for debugging */
-		{ 0xc000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress nsc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, tubep_sprite_colorsharedram_w, &tubep_sprite_colorsharedram ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, tubep_sprite_sharedram_w, &tubep_sprite_sharedram ),
+		new Memory_WriteAddress( 0x2000, 0x2009, tubep_sprite_control_w ),
+		new Memory_WriteAddress( 0x200a, 0x200b, MWA_NOP ), /* not used by the games - perhaps designed for debugging */
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -496,32 +534,40 @@ public class tubep
 		return;
 	}
 	
-	static MEMORY_READ_START( rjammer_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress rjammer_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( rjammer_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xe000, 0xe7ff, MWA_RAM },	/* M5M5117P (M58125P @2C on schematics) */
-	MEMORY_END
+	public static Memory_WriteAddress rjammer_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),	/* M5M5117P (M58125P @2C on schematics) */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( rjammer_sound_readport )
-		{ 0x00, 0x00, rjammer_soundlatch_r },
-	PORT_END
+	public static IO_ReadPort rjammer_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, rjammer_soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( rjammer_sound_writeport )
-		{ 0x10, 0x10, rjammer_voice_startstop_w },
-		{ 0x18, 0x18, rjammer_voice_frequency_select_w },
-		{ 0x80, 0x80, rjammer_voice_input_w },
-		{ 0x90, 0x90, AY8910_control_port_0_w },
-		{ 0x91, 0x91, AY8910_write_port_0_w },
-		{ 0x92, 0x92, AY8910_control_port_1_w },
-		{ 0x93, 0x93, AY8910_write_port_1_w },
-		{ 0x94, 0x94, AY8910_control_port_2_w },
-		{ 0x95, 0x95, AY8910_write_port_2_w },
-		{ 0x96, 0x96, rjammer_voice_intensity_control_w },
-	PORT_END
+	public static IO_WritePort rjammer_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, rjammer_voice_startstop_w ),
+		new IO_WritePort( 0x18, 0x18, rjammer_voice_frequency_select_w ),
+		new IO_WritePort( 0x80, 0x80, rjammer_voice_input_w ),
+		new IO_WritePort( 0x90, 0x90, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x91, 0x91, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x92, 0x92, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x93, 0x93, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x94, 0x94, AY8910_control_port_2_w ),
+		new IO_WritePort( 0x95, 0x95, AY8910_write_port_2_w ),
+		new IO_WritePort( 0x96, 0x96, rjammer_voice_intensity_control_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static WRITE_HANDLER( ay8910_portA_0_w )

@@ -274,93 +274,105 @@ public class vendetta
 	
 	/********************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_BANK1	},
-		{ 0x2000, 0x3fff, MRA_RAM },
-		{ 0x5f80, 0x5f9f, K054000_r },
-		{ 0x5fc0, 0x5fc0, input_port_0_r },
-		{ 0x5fc1, 0x5fc1, input_port_1_r },
-		{ 0x5fc2, 0x5fc2, input_port_4_r },
-		{ 0x5fc3, 0x5fc3, input_port_5_r },
-		{ 0x5fd0, 0x5fd0, vendetta_eeprom_r }, /* vblank, service */
-		{ 0x5fd1, 0x5fd1, input_port_2_r },
-		{ 0x5fe4, 0x5fe4, vendetta_sound_interrupt_r },
-		{ 0x5fe6, 0x5fe7, vendetta_sound_r },
-		{ 0x5fe8, 0x5fe9, K053246_r },
-		{ 0x5fea, 0x5fea, watchdog_reset_r },
-		{ 0x4000, 0x4fff, MRA_BANK3 },
-		{ 0x6000, 0x6fff, MRA_BANK2 },
-		{ 0x4000, 0x7fff, K052109_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_BANK1	),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x5f80, 0x5f9f, K054000_r ),
+		new Memory_ReadAddress( 0x5fc0, 0x5fc0, input_port_0_r ),
+		new Memory_ReadAddress( 0x5fc1, 0x5fc1, input_port_1_r ),
+		new Memory_ReadAddress( 0x5fc2, 0x5fc2, input_port_4_r ),
+		new Memory_ReadAddress( 0x5fc3, 0x5fc3, input_port_5_r ),
+		new Memory_ReadAddress( 0x5fd0, 0x5fd0, vendetta_eeprom_r ), /* vblank, service */
+		new Memory_ReadAddress( 0x5fd1, 0x5fd1, input_port_2_r ),
+		new Memory_ReadAddress( 0x5fe4, 0x5fe4, vendetta_sound_interrupt_r ),
+		new Memory_ReadAddress( 0x5fe6, 0x5fe7, vendetta_sound_r ),
+		new Memory_ReadAddress( 0x5fe8, 0x5fe9, K053246_r ),
+		new Memory_ReadAddress( 0x5fea, 0x5fea, watchdog_reset_r ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_BANK3 ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, K052109_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x3fff, MWA_RAM },
-		{ 0x5f80, 0x5f9f, K054000_w },
-		{ 0x5fa0, 0x5faf, K053251_w },
-		{ 0x5fb0, 0x5fb7, K053246_w },
-		{ 0x5fe0, 0x5fe0, vendetta_5fe0_w },
-		{ 0x5fe2, 0x5fe2, vendetta_eeprom_w },
-		{ 0x5fe4, 0x5fe4, z80_irq_w },
-		{ 0x5fe6, 0x5fe7, K053260_0_w },
-		{ 0x4000, 0x4fff, MWA_BANK3 },
-		{ 0x6000, 0x6fff, MWA_BANK2 },
-		{ 0x4000, 0x7fff, K052109_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5f80, 0x5f9f, K054000_w ),
+		new Memory_WriteAddress( 0x5fa0, 0x5faf, K053251_w ),
+		new Memory_WriteAddress( 0x5fb0, 0x5fb7, K053246_w ),
+		new Memory_WriteAddress( 0x5fe0, 0x5fe0, vendetta_5fe0_w ),
+		new Memory_WriteAddress( 0x5fe2, 0x5fe2, vendetta_eeprom_w ),
+		new Memory_WriteAddress( 0x5fe4, 0x5fe4, z80_irq_w ),
+		new Memory_WriteAddress( 0x5fe6, 0x5fe7, K053260_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_BANK3 ),
+		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_BANK2 ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, K052109_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( esckids_readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },			// 053248 64K SRAM
-		{ 0x3f80, 0x3f80, input_port_0_r },		// Player 1 Control
-		{ 0x3f81, 0x3f81, input_port_1_r },		// Player 2 Control
-		{ 0x3f82, 0x3f82, input_port_4_r }, 	// Player 3 Control ???  (But not used)
-		{ 0x3f83, 0x3f83, input_port_5_r },		// Player 4 Control ???  (But not used)
-		{ 0x3f92, 0x3f92, vendetta_eeprom_r },	// vblank, TEST SW on PCB
-		{ 0x3f93, 0x3f93, input_port_2_r },		// Start, Service
-		{ 0x3fd4, 0x3fd4, vendetta_sound_interrupt_r },		// Sound
-		{ 0x3fd6, 0x3fd7, vendetta_sound_r },				// Sound
-		{ 0x3fd8, 0x3fd9, K053246_r },			// 053246 (Sprite)
-		{ 0x2000, 0x2fff, MRA_BANK3 },			// 052109 (Tilemap) 0x0000-0x0fff
-		{ 0x4000, 0x5fff, MRA_BANK2 },			// 052109 (Tilemap) 0x2000-0x3fff, Tilemap MASK-ROM bank selector (MASK-ROM Test)
-		{ 0x2000, 0x5fff, K052109_r },			// 052109 (Tilemap)
-		{ 0x6000, 0x7fff, MRA_BANK1 },			// 053248 '975r01' 1M ROM (Banked)
-		{ 0x8000, 0xffff, MRA_ROM },			// 053248 '975r01' 1M ROM (0x18000-0x1ffff)
-	MEMORY_END
+	public static Memory_ReadAddress esckids_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),			// 053248 64K SRAM
+		new Memory_ReadAddress( 0x3f80, 0x3f80, input_port_0_r ),		// Player 1 Control
+		new Memory_ReadAddress( 0x3f81, 0x3f81, input_port_1_r ),		// Player 2 Control
+		new Memory_ReadAddress( 0x3f82, 0x3f82, input_port_4_r ), 	// Player 3 Control ???  (But not used)
+		new Memory_ReadAddress( 0x3f83, 0x3f83, input_port_5_r ),		// Player 4 Control ???  (But not used)
+		new Memory_ReadAddress( 0x3f92, 0x3f92, vendetta_eeprom_r ),	// vblank, TEST SW on PCB
+		new Memory_ReadAddress( 0x3f93, 0x3f93, input_port_2_r ),		// Start, Service
+		new Memory_ReadAddress( 0x3fd4, 0x3fd4, vendetta_sound_interrupt_r ),		// Sound
+		new Memory_ReadAddress( 0x3fd6, 0x3fd7, vendetta_sound_r ),				// Sound
+		new Memory_ReadAddress( 0x3fd8, 0x3fd9, K053246_r ),			// 053246 (Sprite)
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_BANK3 ),			// 052109 (Tilemap) 0x0000-0x0fff
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK2 ),			// 052109 (Tilemap) 0x2000-0x3fff, Tilemap MASK-ROM bank selector (MASK-ROM Test)
+		new Memory_ReadAddress( 0x2000, 0x5fff, K052109_r ),			// 052109 (Tilemap)
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK1 ),			// 053248 '975r01' 1M ROM (Banked)
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			// 053248 '975r01' 1M ROM (0x18000-0x1ffff)
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( esckids_writemem )
-		{ 0x0000, 0x1fff, MWA_RAM },			// 053248 64K SRAM
-		{ 0x3fa0, 0x3fa7, K053246_w },			// 053246 (Sprite)
-		{ 0x3fb0, 0x3fbf, K053251_w },			// 053251 (Priority Encoder)
-		{ 0x3fc0, 0x3fcf, MWA_NOP },			// Not Emulated (053252 ???)
-		{ 0x3fd0, 0x3fd0, vendetta_5fe0_w },	// Coin Counter, 052109 RMRD, 053246 OBJCHA
-		{ 0x3fd2, 0x3fd2, vendetta_eeprom_w },	// EEPROM, Video banking
-		{ 0x3fd4, 0x3fd4, z80_irq_w },			// Sound
-		{ 0x3fd6, 0x3fd7, K053260_0_w },		// Sound
-		{ 0x3fda, 0x3fda, MWA_NOP },			// Not Emulated (Watchdog ???)
-		{ 0x2000, 0x2fff, MWA_BANK3 },			// 052109 (Tilemap) 0x0000-0x0fff
-		{ 0x4000, 0x5fff, MWA_BANK2 },			// 052109 (Tilemap) 0x2000-0x3fff, Tilemap MASK-ROM bank selector (MASK-ROM Test)
-		{ 0x2000, 0x5fff, K052109_w },			// 052109 (Tilemap)
-		{ 0x6000, 0x7fff, MWA_ROM },			// 053248 '975r01' 1M ROM (Banked)
-		{ 0x8000, 0xffff, MWA_ROM },			// 053248 '975r01' 1M ROM (0x18000-0x1ffff)
-	MEMORY_END
+	public static Memory_WriteAddress esckids_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_RAM ),			// 053248 64K SRAM
+		new Memory_WriteAddress( 0x3fa0, 0x3fa7, K053246_w ),			// 053246 (Sprite)
+		new Memory_WriteAddress( 0x3fb0, 0x3fbf, K053251_w ),			// 053251 (Priority Encoder)
+		new Memory_WriteAddress( 0x3fc0, 0x3fcf, MWA_NOP ),			// Not Emulated (053252 ???)
+		new Memory_WriteAddress( 0x3fd0, 0x3fd0, vendetta_5fe0_w ),	// Coin Counter, 052109 RMRD, 053246 OBJCHA
+		new Memory_WriteAddress( 0x3fd2, 0x3fd2, vendetta_eeprom_w ),	// EEPROM, Video banking
+		new Memory_WriteAddress( 0x3fd4, 0x3fd4, z80_irq_w ),			// Sound
+		new Memory_WriteAddress( 0x3fd6, 0x3fd7, K053260_0_w ),		// Sound
+		new Memory_WriteAddress( 0x3fda, 0x3fda, MWA_NOP ),			// Not Emulated (Watchdog ???)
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_BANK3 ),			// 052109 (Tilemap) 0x0000-0x0fff
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_BANK2 ),			// 052109 (Tilemap) 0x2000-0x3fff, Tilemap MASK-ROM bank selector (MASK-ROM Test)
+		new Memory_WriteAddress( 0x2000, 0x5fff, K052109_w ),			// 052109 (Tilemap)
+		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_ROM ),			// 053248 '975r01' 1M ROM (Banked)
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),			// 053248 '975r01' 1M ROM (0x18000-0x1ffff)
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf801, 0xf801, YM2151_status_port_0_r },
-		{ 0xfc00, 0xfc2f, K053260_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf801, 0xf801, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0xfc00, 0xfc2f, K053260_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf800, YM2151_register_port_0_w },
-		{ 0xf801, 0xf801, YM2151_data_port_0_w },
-		{ 0xfa00, 0xfa00, z80_arm_nmi_w },
-		{ 0xfc00, 0xfc2f, K053260_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf800, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xf801, 0xf801, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xfa00, 0xfa00, z80_arm_nmi_w ),
+		new Memory_WriteAddress( 0xfc00, 0xfc2f, K053260_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

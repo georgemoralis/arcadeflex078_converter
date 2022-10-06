@@ -144,175 +144,209 @@ public class system1
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xf3ff, MRA_RAM },
-		{ 0xf800, 0xfbff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xf3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xfbff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAMROM },
-		{ 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd800, 0xddff, system1_paletteram_w, &paletteram },
-		{ 0xe000, 0xe7ff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size },
-		{ 0xe800, 0xeeff, MWA_RAM, &system1_videoram, &system1_videoram_size },
-		{ 0xefbd, 0xefbd, MWA_RAM, &system1_scroll_y },
-		{ 0xeffc, 0xeffd, MWA_RAM, &system1_scroll_x },
-		{ 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram },
-		{ 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAMROM ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xddff, system1_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size ),
+		new Memory_WriteAddress( 0xe800, 0xeeff, MWA_RAM, &system1_videoram, &system1_videoram_size ),
+		new Memory_WriteAddress( 0xefbd, 0xefbd, MWA_RAM, &system1_scroll_y ),
+		new Memory_WriteAddress( 0xeffc, 0xeffd, MWA_RAM, &system1_scroll_x ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( blockgal_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAMROM },
-		{ 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd800, 0xddff, system1_paletteram_w, &paletteram },
-		{ 0xe800, 0xeeff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size },
-		{ 0xe000, 0xe6ff, MWA_RAM, &system1_videoram, &system1_videoram_size },
-		{ 0xe7bd, 0xe7bd, MWA_RAM, &system1_scroll_y },	// ???
-		{ 0xe7c0, 0xe7c1, MWA_RAM, &system1_scroll_x },
-		{ 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram },
-		{ 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram },
-	MEMORY_END
+	public static Memory_WriteAddress blockgal_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAMROM ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xddff, system1_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe800, 0xeeff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe6ff, MWA_RAM, &system1_videoram, &system1_videoram_size ),
+		new Memory_WriteAddress( 0xe7bd, 0xe7bd, MWA_RAM, &system1_scroll_y ),	// ???
+		new Memory_WriteAddress( 0xe7c0, 0xe7c1, MWA_RAM, &system1_scroll_x ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( brain_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xf3ff, MRA_RAM },
-		{ 0xf800, 0xfbff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress brain_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xf3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xfbff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( wbml_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, wbml_paged_videoram_r },
-		{ 0xf020, 0xf03f, MRA_RAM },
-		{ 0xf800, 0xfbff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress wbml_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, wbml_paged_videoram_r ),
+		new Memory_ReadAddress( 0xf020, 0xf03f, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xfbff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( wbml_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAMROM },
-		{ 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd800, 0xddff, system1_paletteram_w, &paletteram },
-		{ 0xe000, 0xefff, wbml_paged_videoram_w },
-		{ 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram },
-		{ 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram },
-	MEMORY_END
+	public static Memory_WriteAddress wbml_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAMROM ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xddff, system1_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, wbml_paged_videoram_w ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( chplft_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, MWA_RAMROM },
-		{ 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd800, 0xddff, system1_paletteram_w, &paletteram },
-		{ 0xe7c0, 0xe7ff, choplifter_scroll_x_w, &system1_scrollx_ram },
-		{ 0xe000, 0xe7ff, MWA_RAM, &system1_videoram, &system1_videoram_size },
-		{ 0xe800, 0xeeff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size },
-		{ 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram },
-		{ 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram },
-	MEMORY_END
+	public static Memory_WriteAddress chplft_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAMROM ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xddff, system1_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe7c0, 0xe7ff, choplifter_scroll_x_w, &system1_scrollx_ram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &system1_videoram, &system1_videoram_size ),
+		new Memory_WriteAddress( 0xe800, 0xeeff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, system1_background_collisionram_w, &system1_background_collisionram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, system1_sprites_collisionram_w, &system1_sprites_collisionram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( nobo_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc3ff, system1_background_collisionram_w, &system1_background_collisionram },
-		{ 0xc800, 0xcbff, system1_sprites_collisionram_w, &system1_sprites_collisionram },
-		{ 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd200, 0xd7ff, MWA_RAM },
-		{ 0xd800, 0xddff, system1_paletteram_w, &paletteram },
-		{ 0xde00, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe7ff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size },
-		{ 0xe800, 0xeeff, MWA_RAM, &system1_videoram, &system1_videoram_size },
-		{ 0xefbd, 0xefbd, MWA_RAM, &system1_scroll_y },
-		{ 0xeffc, 0xeffd, MWA_RAM, &system1_scroll_x },
-		{ 0xf000, 0xffff, MWA_RAM },
+	public static Memory_WriteAddress nobo_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, system1_background_collisionram_w, &system1_background_collisionram ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, system1_sprites_collisionram_w, &system1_sprites_collisionram ),
+		new Memory_WriteAddress( 0xd000, 0xd1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd200, 0xd7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd800, 0xddff, system1_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xde00, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, system1_backgroundram_w, &system1_backgroundram, &system1_backgroundram_size ),
+		new Memory_WriteAddress( 0xe800, 0xeeff, MWA_RAM, &system1_videoram, &system1_videoram_size ),
+		new Memory_WriteAddress( 0xefbd, 0xefbd, MWA_RAM, &system1_scroll_y ),
+		new Memory_WriteAddress( 0xeffc, 0xeffd, MWA_RAM, &system1_scroll_x ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
 	
 		/* These addresses are written during P.O.S.T. but don't seem to be used after */
-		{ 0xc400, 0xc7ff, MWA_RAM },
-		{ 0xcc00, 0xcfff, MWA_RAM },
-		{ 0xd200, 0xd7ff, MWA_RAM },
-		{ 0xde00, 0xdfff, MWA_RAM },
-		{ 0xef00, 0xefbc, MWA_RAM },
-		{ 0xefbf, 0xeffb, MWA_RAM },
-		{ 0xeffe, 0xefff, MWA_RAM },
-	MEMORY_END
+		new Memory_WriteAddress( 0xc400, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd200, 0xd7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xde00, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xef00, 0xefbc, MWA_RAM ),
+		new Memory_WriteAddress( 0xefbf, 0xeffb, MWA_RAM ),
+		new Memory_WriteAddress( 0xeffe, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r }, /* joy1 */
-		{ 0x04, 0x04, input_port_1_r }, /* joy2 */
-		{ 0x08, 0x08, input_port_2_r }, /* coin,start */
-		{ 0x0c, 0x0c, input_port_3_r }, /* DIP2 */
-		{ 0x0e, 0x0e, input_port_3_r }, /* DIP2 blckgalb reads it from here */
-		{ 0x0d, 0x0d, input_port_4_r }, /* DIP1 some games read it from here... */
-		{ 0x10, 0x10, input_port_4_r }, /* DIP1 ... and some others from here */
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ), /* joy1 */
+		new IO_ReadPort( 0x04, 0x04, input_port_1_r ), /* joy2 */
+		new IO_ReadPort( 0x08, 0x08, input_port_2_r ), /* coin,start */
+		new IO_ReadPort( 0x0c, 0x0c, input_port_3_r ), /* DIP2 */
+		new IO_ReadPort( 0x0e, 0x0e, input_port_3_r ), /* DIP2 blckgalb reads it from here */
+		new IO_ReadPort( 0x0d, 0x0d, input_port_4_r ), /* DIP1 some games read it from here... */
+		new IO_ReadPort( 0x10, 0x10, input_port_4_r ), /* DIP1 ... and some others from here */
 										/* but there are games which check BOTH! */
-		{ 0x15, 0x15, system1_videomode_r },
-		{ 0x19, 0x19, system1_videomode_r },    /* mirror address */
-	PORT_END
+		new IO_ReadPort( 0x15, 0x15, system1_videomode_r ),
+		new IO_ReadPort( 0x19, 0x19, system1_videomode_r ),    /* mirror address */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x14, 0x14, system1_soundport_w },    /* sound commands */
-		{ 0x15, 0x15, system1_videomode_w },    /* video control and (in some games) bank switching */
-		{ 0x18, 0x18, system1_soundport_w },    /* mirror address */
-		{ 0x19, 0x19, system1_videomode_w },    /* mirror address */
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x14, 0x14, system1_soundport_w ),    /* sound commands */
+		new IO_WritePort( 0x15, 0x15, system1_videomode_w ),    /* video control and (in some games) bank switching */
+		new IO_WritePort( 0x18, 0x18, system1_soundport_w ),    /* mirror address */
+		new IO_WritePort( 0x19, 0x19, system1_videomode_w ),    /* mirror address */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( wbml_readport )
-		{ 0x00, 0x00, input_port_0_r }, /* joy1 */
-		{ 0x04, 0x04, input_port_1_r }, /* joy2 */
-		{ 0x08, 0x08, input_port_2_r }, /* coin,start */
-		{ 0x0c, 0x0c, input_port_3_r }, /* DIP2 */
-		{ 0x0d, 0x0d, input_port_4_r }, /* DIP1 some games read it from here... */
-		{ 0x10, 0x10, input_port_4_r }, /* DIP1 ... and some others from here */
+	public static IO_ReadPort wbml_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ), /* joy1 */
+		new IO_ReadPort( 0x04, 0x04, input_port_1_r ), /* joy2 */
+		new IO_ReadPort( 0x08, 0x08, input_port_2_r ), /* coin,start */
+		new IO_ReadPort( 0x0c, 0x0c, input_port_3_r ), /* DIP2 */
+		new IO_ReadPort( 0x0d, 0x0d, input_port_4_r ), /* DIP1 some games read it from here... */
+		new IO_ReadPort( 0x10, 0x10, input_port_4_r ), /* DIP1 ... and some others from here */
 										/* but there are games which check BOTH! */
-		{ 0x15, 0x15, system1_videomode_r },
-		{ 0x16, 0x16, wbml_videoram_bank_latch_r },
-		{ 0x19, 0x19, system1_videomode_r },  /* mirror address */
-	PORT_END
+		new IO_ReadPort( 0x15, 0x15, system1_videomode_r ),
+		new IO_ReadPort( 0x16, 0x16, wbml_videoram_bank_latch_r ),
+		new IO_ReadPort( 0x19, 0x19, system1_videomode_r ),  /* mirror address */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( nobo_readport )
-		{ 0x00, 0x00, input_port_0_r },	/* Player 1 inputs */
-		{ 0x04, 0x04, input_port_1_r },	/* Player 2 inputs */
-		{ 0x08, 0x08, input_port_2_r },	/* System inputs */
-		{ 0x0c, 0x0c, input_port_3_r },	/* DSW1 */
-		{ 0x0d, 0x0d, input_port_4_r },	/* DSW0 */
-		{ 0x15, 0x15, system1_videomode_r },
-		{ 0x16, 0x16, inport16_r },			/* Used - check code at 0x05cb */
-		{ 0x1c, 0x1c, inport1c_r },			/* Shouldn't be called ! */
-		{ 0x22, 0x22, inport22_r },			/* Used - check code at 0xb253 */
-		{ 0x23, 0x23, inport23_r },			/* Used - check code at 0xb275 and 0xb283 */
-	PORT_END
+	public static IO_ReadPort nobo_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),	/* Player 1 inputs */
+		new IO_ReadPort( 0x04, 0x04, input_port_1_r ),	/* Player 2 inputs */
+		new IO_ReadPort( 0x08, 0x08, input_port_2_r ),	/* System inputs */
+		new IO_ReadPort( 0x0c, 0x0c, input_port_3_r ),	/* DSW1 */
+		new IO_ReadPort( 0x0d, 0x0d, input_port_4_r ),	/* DSW0 */
+		new IO_ReadPort( 0x15, 0x15, system1_videomode_r ),
+		new IO_ReadPort( 0x16, 0x16, inport16_r ),			/* Used - check code at 0x05cb */
+		new IO_ReadPort( 0x1c, 0x1c, inport1c_r ),			/* Shouldn't be called ! */
+		new IO_ReadPort( 0x22, 0x22, inport22_r ),			/* Used - check code at 0xb253 */
+		new IO_ReadPort( 0x23, 0x23, inport23_r ),			/* Used - check code at 0xb275 and 0xb283 */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( wbml_writeport )
-		{ 0x14, 0x14, system1_soundport_w },    /* sound commands */
-		{ 0x15, 0x15, chplft_videomode_w },
-		{ 0x16, 0x16, wbml_videoram_bank_latch_w },
-	PORT_END
+	public static IO_WritePort wbml_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x14, 0x14, system1_soundport_w ),    /* sound commands */
+		new IO_WritePort( 0x15, 0x15, chplft_videomode_w ),
+		new IO_WritePort( 0x16, 0x16, wbml_videoram_bank_latch_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hvymetal_writeport )
-		{ 0x18, 0x18, system1_soundport_w },    /* sound commands */
-		{ 0x19, 0x19, hvymetal_videomode_w },
-	PORT_END
+	public static IO_WritePort hvymetal_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x18, 0x18, system1_soundport_w ),    /* sound commands */
+		new IO_WritePort( 0x19, 0x19, hvymetal_videomode_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( brain_writeport )
-		{ 0x18, 0x18, system1_soundport_w },    /* sound commands */
-		{ 0x19, 0x19, brain_videomode_w },
-	PORT_END
+	public static IO_WritePort brain_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x18, 0x18, system1_soundport_w ),    /* sound commands */
+		new IO_WritePort( 0x19, 0x19, brain_videomode_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( chplft_writeport )
-		{ 0x14, 0x14, system1_soundport_w },    /* sound commands */
-		{ 0x15, 0x15, chplft_videomode_w },
-	PORT_END
+	public static IO_WritePort chplft_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x14, 0x14, system1_soundport_w ),    /* sound commands */
+		new IO_WritePort( 0x15, 0x15, chplft_videomode_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( nobo_writeport )
-		{ 0x14, 0x14, system1_soundport_w },	/* sound commands ? */
-		{ 0x15, 0x15, brain_videomode_w },	/* video control + bank switching */
-		{ 0x16, 0x16, outport16_w },			/* Used - check code at 0x05cb */
-		{ 0x17, 0x17, outport17_w },			/* Not handled in emul. of other SS1/2 games */
-		{ 0x24, 0x24, outport24_w },			/* Used - check code at 0xb24e and 0xb307 */
-	PORT_END
+	public static IO_WritePort nobo_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x14, 0x14, system1_soundport_w ),	/* sound commands ? */
+		new IO_WritePort( 0x15, 0x15, brain_videomode_w ),	/* video control + bank switching */
+		new IO_WritePort( 0x16, 0x16, outport16_w ),			/* Used - check code at 0x05cb */
+		new IO_WritePort( 0x17, 0x17, outport17_w ),			/* Not handled in emul. of other SS1/2 games */
+		new IO_WritePort( 0x24, 0x24, outport24_w ),			/* Used - check code at 0xb24e and 0xb307 */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static unsigned char *work_ram;
@@ -327,21 +361,25 @@ public class system1
 		work_ram[offset] = data;
 	}
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, work_ram_r },
-		{ 0x8800, 0x8fff, work_ram_r },
-		{ 0xe000, 0xe000, soundlatch_r },
-		{ 0xffff, 0xffff, soundlatch_r },   /* 4D warriors reads also from here - bug? */
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, work_ram_r ),
+		new Memory_ReadAddress( 0x8800, 0x8fff, work_ram_r ),
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress( 0xffff, 0xffff, soundlatch_r ),   /* 4D warriors reads also from here - bug? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, work_ram_w, &work_ram },
-		{ 0x8800, 0x8fff, work_ram_w },
-		{ 0xa000, 0xa003, SN76496_0_w },    /* Choplifter writes to the four addresses */
-		{ 0xc000, 0xc003, SN76496_1_w },    /* in sequence */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, work_ram_w, &work_ram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, work_ram_w ),
+		new Memory_WriteAddress( 0xa000, 0xa003, SN76496_0_w ),    /* Choplifter writes to the four addresses */
+		new Memory_WriteAddress( 0xc000, 0xc003, SN76496_1_w ),    /* in sequence */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	#define IN0_PORT \

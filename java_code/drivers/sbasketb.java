@@ -61,50 +61,58 @@ public class sbasketb
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x2000, 0x3bff, MRA_RAM },
-		{ 0x3c10, 0x3c10, MRA_NOP },    /* ???? */
-		{ 0x3e00, 0x3e00, input_port_0_r },
-		{ 0x3e01, 0x3e01, input_port_1_r },
-		{ 0x3e02, 0x3e02, input_port_2_r },
-		{ 0x3e03, 0x3e03, MRA_NOP },
-		{ 0x3e80, 0x3e80, input_port_3_r },
-		{ 0x3f00, 0x3f00, input_port_4_r },
-		{ 0x6000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x2000, 0x3bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3c10, 0x3c10, MRA_NOP ),    /* ???? */
+		new Memory_ReadAddress( 0x3e00, 0x3e00, input_port_0_r ),
+		new Memory_ReadAddress( 0x3e01, 0x3e01, input_port_1_r ),
+		new Memory_ReadAddress( 0x3e02, 0x3e02, input_port_2_r ),
+		new Memory_ReadAddress( 0x3e03, 0x3e03, MRA_NOP ),
+		new Memory_ReadAddress( 0x3e80, 0x3e80, input_port_3_r ),
+		new Memory_ReadAddress( 0x3f00, 0x3f00, input_port_4_r ),
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x2000, 0x2fff, MWA_RAM },
-		{ 0x3000, 0x33ff, sbasketb_colorram_w, &colorram },
-		{ 0x3400, 0x37ff, sbasketb_videoram_w, &videoram },
-		{ 0x3800, 0x39ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x3a00, 0x3bff, MWA_RAM },           /* Probably unused, but initialized */
-		{ 0x3c00, 0x3c00, watchdog_reset_w },
-		{ 0x3c20, 0x3c20, MWA_RAM, &sbasketb_palettebank },
-		{ 0x3c80, 0x3c80, sbasketb_flipscreen_w },
-		{ 0x3c81, 0x3c81, interrupt_enable_w },
-		{ 0x3c83, 0x3c84, sbasketb_coin_counter_w },
-		{ 0x3c85, 0x3c85, MWA_RAM, &sbasketb_spriteram_select },
-		{ 0x3d00, 0x3d00, soundlatch_w },
-		{ 0x3d80, 0x3d80, sbasketb_sh_irqtrigger_w },
-		{ 0x3f80, 0x3f80, sbasketb_scroll_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x33ff, sbasketb_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x3400, 0x37ff, sbasketb_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x3800, 0x39ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x3a00, 0x3bff, MWA_RAM ),           /* Probably unused, but initialized */
+		new Memory_WriteAddress( 0x3c00, 0x3c00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x3c20, 0x3c20, MWA_RAM, &sbasketb_palettebank ),
+		new Memory_WriteAddress( 0x3c80, 0x3c80, sbasketb_flipscreen_w ),
+		new Memory_WriteAddress( 0x3c81, 0x3c81, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x3c83, 0x3c84, sbasketb_coin_counter_w ),
+		new Memory_WriteAddress( 0x3c85, 0x3c85, MWA_RAM, &sbasketb_spriteram_select ),
+		new Memory_WriteAddress( 0x3d00, 0x3d00, soundlatch_w ),
+		new Memory_WriteAddress( 0x3d80, 0x3d80, sbasketb_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0x3f80, 0x3f80, sbasketb_scroll_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x6000, 0x6000, soundlatch_r },
-		{ 0x8000, 0x8000, hyperspt_sh_timer_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress( 0x8000, 0x8000, hyperspt_sh_timer_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0xa000, 0xa000, VLM5030_data_w }, /* speech data */
-		{ 0xc000, 0xdfff, hyperspt_sound_w },     /* speech and output controll */
-		{ 0xe000, 0xe000, DAC_0_data_w },
-		{ 0xe001, 0xe001, konami_SN76496_latch_w },  /* Loads the snd command into the snd latch */
-		{ 0xe002, 0xe002, konami_SN76496_0_w },      /* This address triggers the SN chip to read the data port. */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, VLM5030_data_w ), /* speech data */
+		new Memory_WriteAddress( 0xc000, 0xdfff, hyperspt_sound_w ),     /* speech and output controll */
+		new Memory_WriteAddress( 0xe000, 0xe000, DAC_0_data_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, konami_SN76496_latch_w ),  /* Loads the snd command into the snd latch */
+		new Memory_WriteAddress( 0xe002, 0xe002, konami_SN76496_0_w ),      /* This address triggers the SN chip to read the data port. */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

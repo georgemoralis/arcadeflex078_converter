@@ -543,113 +543,125 @@ public class firetrk
 	}
 	
 	
-	static MEMORY_READ_START( firetrk_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x07ff, firetrk_zeropage_r },
-		{ 0x0800, 0x08ff, MRA_RAM },
-		{ 0x0900, 0x0fff, firetrk_playfield_r },
-		{ 0x1800, 0x1807, firetrk_input_r },
-		{ 0x1c00, 0x1c03, firetrk_dip_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress firetrk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x07ff, firetrk_zeropage_r ),
+		new Memory_ReadAddress( 0x0800, 0x08ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0900, 0x0fff, firetrk_playfield_r ),
+		new Memory_ReadAddress( 0x1800, 0x1807, firetrk_input_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1c03, firetrk_dip_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( firetrk_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram },
-		{ 0x0100, 0x07ff, firetrk_zeropage_w },
-		{ 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram },
-		{ 0x1000, 0x1000, firetrk_vert_w },
-		{ 0x1020, 0x1020, firetrk_horz_w },
-		{ 0x1040, 0x104f, firetrk_crash_reset_w },
-		{ 0x1060, 0x1060, firetrk_skid_reset_w },
-		{ 0x1080, 0x1080, firetrk_car_rot_w },
-		{ 0x10a0, 0x10a0, firetrk_steer_reset_w },
-		{ 0x10c0, 0x10c0, watchdog_reset_w },
-		{ 0x10e0, 0x10e0, firetrk_arrow_off_w },
-		{ 0x1400, 0x1400, firetrk_motor_snd_w },
-		{ 0x1420, 0x1420, firetrk_crash_snd_w },
-		{ 0x1440, 0x1440, firetrk_skid_snd_w },
-		{ 0x1460, 0x1460, firetrk_drone_hpos_w },
-		{ 0x1480, 0x1480, firetrk_drone_vpos_w },
-		{ 0x14a0, 0x14a0, firetrk_drone_rot_w },
-		{ 0x14c0, 0x14c0, firetrk_out_w },
-		{ 0x14e0, 0x14e0, firetrk_xtndply_w },
-		{ 0x1800, 0x1807, MWA_NOP },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress firetrk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0100, 0x07ff, firetrk_zeropage_w ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x1000, 0x1000, firetrk_vert_w ),
+		new Memory_WriteAddress( 0x1020, 0x1020, firetrk_horz_w ),
+		new Memory_WriteAddress( 0x1040, 0x104f, firetrk_crash_reset_w ),
+		new Memory_WriteAddress( 0x1060, 0x1060, firetrk_skid_reset_w ),
+		new Memory_WriteAddress( 0x1080, 0x1080, firetrk_car_rot_w ),
+		new Memory_WriteAddress( 0x10a0, 0x10a0, firetrk_steer_reset_w ),
+		new Memory_WriteAddress( 0x10c0, 0x10c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x10e0, 0x10e0, firetrk_arrow_off_w ),
+		new Memory_WriteAddress( 0x1400, 0x1400, firetrk_motor_snd_w ),
+		new Memory_WriteAddress( 0x1420, 0x1420, firetrk_crash_snd_w ),
+		new Memory_WriteAddress( 0x1440, 0x1440, firetrk_skid_snd_w ),
+		new Memory_WriteAddress( 0x1460, 0x1460, firetrk_drone_hpos_w ),
+		new Memory_WriteAddress( 0x1480, 0x1480, firetrk_drone_vpos_w ),
+		new Memory_WriteAddress( 0x14a0, 0x14a0, firetrk_drone_rot_w ),
+		new Memory_WriteAddress( 0x14c0, 0x14c0, firetrk_out_w ),
+		new Memory_WriteAddress( 0x14e0, 0x14e0, firetrk_xtndply_w ),
+		new Memory_WriteAddress( 0x1800, 0x1807, MWA_NOP ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( superbug_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0200, 0x0207, firetrk_input_r },
-		{ 0x0240, 0x0243, firetrk_dip_r },
-		{ 0x0400, 0x041f, MRA_RAM },
-		{ 0x0500, 0x05ff, MRA_RAM },
-		{ 0x0800, 0x1fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress superbug_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0200, 0x0207, firetrk_input_r ),
+		new Memory_ReadAddress( 0x0240, 0x0243, firetrk_dip_r ),
+		new Memory_ReadAddress( 0x0400, 0x041f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0500, 0x05ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( superbug_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x0100, firetrk_vert_w },
-		{ 0x0120, 0x0120, firetrk_horz_w },
-		{ 0x0140, 0x0140, firetrk_crash_reset_w },
-		{ 0x0160, 0x0160, firetrk_skid_reset_w },
-		{ 0x0180, 0x0180, firetrk_car_rot_w },
-		{ 0x01a0, 0x01a0, firetrk_steer_reset_w },
-		{ 0x01c0, 0x01c0, watchdog_reset_w },
-		{ 0x01e0, 0x01e0, firetrk_arrow_off_w },
-		{ 0x0220, 0x0220, firetrk_asr_w },
-		{ 0x0260, 0x026f, firetrk_out_w },
-		{ 0x0280, 0x0280, firetrk_motor_snd_w },
-		{ 0x02a0, 0x02a0, firetrk_crash_snd_w },
-		{ 0x02c0, 0x02c0, firetrk_skid_snd_w },
-		{ 0x0400, 0x041f, MWA_RAM, &firetrk_alpha_num_ram },
-		{ 0x0500, 0x05ff, firetrk_playfield_w, &firetrk_playfield_ram },
-		{ 0x0800, 0x1fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress superbug_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x0100, firetrk_vert_w ),
+		new Memory_WriteAddress( 0x0120, 0x0120, firetrk_horz_w ),
+		new Memory_WriteAddress( 0x0140, 0x0140, firetrk_crash_reset_w ),
+		new Memory_WriteAddress( 0x0160, 0x0160, firetrk_skid_reset_w ),
+		new Memory_WriteAddress( 0x0180, 0x0180, firetrk_car_rot_w ),
+		new Memory_WriteAddress( 0x01a0, 0x01a0, firetrk_steer_reset_w ),
+		new Memory_WriteAddress( 0x01c0, 0x01c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x01e0, 0x01e0, firetrk_arrow_off_w ),
+		new Memory_WriteAddress( 0x0220, 0x0220, firetrk_asr_w ),
+		new Memory_WriteAddress( 0x0260, 0x026f, firetrk_out_w ),
+		new Memory_WriteAddress( 0x0280, 0x0280, firetrk_motor_snd_w ),
+		new Memory_WriteAddress( 0x02a0, 0x02a0, firetrk_crash_snd_w ),
+		new Memory_WriteAddress( 0x02c0, 0x02c0, firetrk_skid_snd_w ),
+		new Memory_WriteAddress( 0x0400, 0x041f, MWA_RAM, &firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0500, 0x05ff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( montecar_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x07ff, firetrk_zeropage_r },
-		{ 0x0800, 0x08ff, MRA_RAM },
-		{ 0x0900, 0x0fff, firetrk_playfield_r },
-		{ 0x1800, 0x1807, firetrk_input_r },
-		{ 0x1c00, 0x1c03, firetrk_dip_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress montecar_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x07ff, firetrk_zeropage_r ),
+		new Memory_ReadAddress( 0x0800, 0x08ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0900, 0x0fff, firetrk_playfield_r ),
+		new Memory_ReadAddress( 0x1800, 0x1807, firetrk_input_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1c03, firetrk_dip_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( montecar_writemem )
-		{ 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram },
-		{ 0x0100, 0x07ff, firetrk_zeropage_w },
-		{ 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram },
-		{ 0x1000, 0x1000, firetrk_vert_w },
-		{ 0x1020, 0x1020, firetrk_horz_w },
-		{ 0x1040, 0x1040, firetrk_drone_reset_w },
-		{ 0x1060, 0x1060, firetrk_car_reset_w },
-		{ 0x1080, 0x1080, firetrk_car_rot_w },
-		{ 0x10a0, 0x10a0, firetrk_steer_reset_w },
-		{ 0x10c0, 0x10c0, watchdog_reset_w },
-		{ 0x10e0, 0x10e0, firetrk_skid_reset_w },
-		{ 0x1400, 0x1400, firetrk_motor_snd_w },
-		{ 0x1420, 0x1420, firetrk_crash_snd_w },
-		{ 0x1440, 0x1440, firetrk_skid_snd_w },
-		{ 0x1460, 0x1460, firetrk_drone_hpos_w },
-		{ 0x1480, 0x1480, firetrk_drone_vpos_w },
-		{ 0x14a0, 0x14a0, firetrk_drone_rot_w },
-		{ 0x14c0, 0x14c0, firetrk_out_w },
-		{ 0x14e0, 0x14e0, firetrk_out2_w },
-		{ 0x1800, 0x1807, MWA_NOP },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress montecar_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0100, 0x07ff, firetrk_zeropage_w ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x1000, 0x1000, firetrk_vert_w ),
+		new Memory_WriteAddress( 0x1020, 0x1020, firetrk_horz_w ),
+		new Memory_WriteAddress( 0x1040, 0x1040, firetrk_drone_reset_w ),
+		new Memory_WriteAddress( 0x1060, 0x1060, firetrk_car_reset_w ),
+		new Memory_WriteAddress( 0x1080, 0x1080, firetrk_car_rot_w ),
+		new Memory_WriteAddress( 0x10a0, 0x10a0, firetrk_steer_reset_w ),
+		new Memory_WriteAddress( 0x10c0, 0x10c0, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x10e0, 0x10e0, firetrk_skid_reset_w ),
+		new Memory_WriteAddress( 0x1400, 0x1400, firetrk_motor_snd_w ),
+		new Memory_WriteAddress( 0x1420, 0x1420, firetrk_crash_snd_w ),
+		new Memory_WriteAddress( 0x1440, 0x1440, firetrk_skid_snd_w ),
+		new Memory_WriteAddress( 0x1460, 0x1460, firetrk_drone_hpos_w ),
+		new Memory_WriteAddress( 0x1480, 0x1480, firetrk_drone_vpos_w ),
+		new Memory_WriteAddress( 0x14a0, 0x14a0, firetrk_drone_rot_w ),
+		new Memory_WriteAddress( 0x14c0, 0x14c0, firetrk_out_w ),
+		new Memory_WriteAddress( 0x14e0, 0x14e0, firetrk_out2_w ),
+		new Memory_WriteAddress( 0x1800, 0x1807, MWA_NOP ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( firetrk )

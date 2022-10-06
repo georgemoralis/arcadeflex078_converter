@@ -106,117 +106,141 @@ public class hnayayoi
 	
 	
 	
-	static MEMORY_READ_START( hnayayoi_readmem )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress hnayayoi_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hnayayoi_writemem )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( hnayayoi_readport )
-		{ 0x02, 0x02, YM2203_status_port_0_r },
-		{ 0x03, 0x03, YM2203_read_port_0_r },
-		{ 0x04, 0x04, input_port_2_r },
-		{ 0x41, 0x41, keyboard_0_r },
-		{ 0x42, 0x42, keyboard_1_r },
-		{ 0x43, 0x43, input_port_3_r },
-	PORT_END
-	
-	static PORT_WRITE_START( hnayayoi_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-		{ 0x06, 0x06, adpcm_data_w },
-	//	{ 0x08, 0x08, IOWP_NOP },	// CRT Controller
-	//	{ 0x09, 0x09, IOWP_NOP },	// CRT Controller
-		{ 0x0a, 0x0a, dynax_blitter_rev1_start_w },
-		{ 0x0c, 0x0c, dynax_blitter_rev1_clear_w },
-		{ 0x23, 0x23, adpcm_vclk_w },
-		{ 0x24, 0x24, adpcm_reset_w },
-		{ 0x40, 0x40, keyboard_w },
-		{ 0x60, 0x61, hnayayoi_palbank_w },
-		{ 0x62, 0x67, dynax_blitter_rev1_param_w },
-	PORT_END
+	public static Memory_WriteAddress hnayayoi_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( hnfubuki_readmem )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xfeff, MRA_ROM },
-		{ 0xff02, 0xff02, YM2203_status_port_0_r },
-		{ 0xff03, 0xff03, YM2203_read_port_0_r },
-		{ 0xff04, 0xff04, input_port_2_r },
-		{ 0xff41, 0xff41, keyboard_0_r },
-		{ 0xff42, 0xff42, keyboard_1_r },
-		{ 0xff43, 0xff43, input_port_3_r },
-	MEMORY_END
+	public static IO_ReadPort hnayayoi_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x03, 0x03, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_2_r ),
+		new IO_ReadPort( 0x41, 0x41, keyboard_0_r ),
+		new IO_ReadPort( 0x42, 0x42, keyboard_1_r ),
+		new IO_ReadPort( 0x43, 0x43, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hnfubuki_writemem )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xfeff, MWA_ROM },
-		{ 0xff00, 0xff00, YM2203_control_port_0_w },
-		{ 0xff01, 0xff01, YM2203_write_port_0_w },
-		{ 0xff06, 0xff06, adpcm_data_w },
-	//	{ 0xff08, 0xff08, IOWP_NOP },	// CRT Controller
-	//	{ 0xff09, 0xff09, IOWP_NOP },	// CRT Controller
-		{ 0xff0a, 0xff0a, dynax_blitter_rev1_start_w },
-		{ 0xff0c, 0xff0c, dynax_blitter_rev1_clear_w },
-		{ 0xff23, 0xff23, adpcm_vclk_w },
-		{ 0xff24, 0xff24, adpcm_reset_inv_w },
-		{ 0xff40, 0xff40, keyboard_w },
-		{ 0xff60, 0xff61, hnayayoi_palbank_w },
-		{ 0xff62, 0xff67, dynax_blitter_rev1_param_w },
-	MEMORY_END
+	public static IO_WritePort hnayayoi_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x06, 0x06, adpcm_data_w ),
+	//	new IO_WritePort( 0x08, 0x08, IOWP_NOP ),	// CRT Controller
+	//	new IO_WritePort( 0x09, 0x09, IOWP_NOP ),	// CRT Controller
+		new IO_WritePort( 0x0a, 0x0a, dynax_blitter_rev1_start_w ),
+		new IO_WritePort( 0x0c, 0x0c, dynax_blitter_rev1_clear_w ),
+		new IO_WritePort( 0x23, 0x23, adpcm_vclk_w ),
+		new IO_WritePort( 0x24, 0x24, adpcm_reset_w ),
+		new IO_WritePort( 0x40, 0x40, keyboard_w ),
+		new IO_WritePort( 0x60, 0x61, hnayayoi_palbank_w ),
+		new IO_WritePort( 0x62, 0x67, dynax_blitter_rev1_param_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( hnfubuki_readport )
-	PORT_END
+	public static Memory_ReadAddress hnfubuki_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xfeff, MRA_ROM ),
+		new Memory_ReadAddress( 0xff02, 0xff02, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xff03, 0xff03, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xff04, 0xff04, input_port_2_r ),
+		new Memory_ReadAddress( 0xff41, 0xff41, keyboard_0_r ),
+		new Memory_ReadAddress( 0xff42, 0xff42, keyboard_1_r ),
+		new Memory_ReadAddress( 0xff43, 0xff43, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( hnfubuki_writeport )
-	PORT_END
+	public static Memory_WriteAddress hnfubuki_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xfeff, MWA_ROM ),
+		new Memory_WriteAddress( 0xff00, 0xff00, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xff01, 0xff01, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xff06, 0xff06, adpcm_data_w ),
+	//	new Memory_WriteAddress( 0xff08, 0xff08, IOWP_NOP ),	// CRT Controller
+	//	new Memory_WriteAddress( 0xff09, 0xff09, IOWP_NOP ),	// CRT Controller
+		new Memory_WriteAddress( 0xff0a, 0xff0a, dynax_blitter_rev1_start_w ),
+		new Memory_WriteAddress( 0xff0c, 0xff0c, dynax_blitter_rev1_clear_w ),
+		new Memory_WriteAddress( 0xff23, 0xff23, adpcm_vclk_w ),
+		new Memory_WriteAddress( 0xff24, 0xff24, adpcm_reset_inv_w ),
+		new Memory_WriteAddress( 0xff40, 0xff40, keyboard_w ),
+		new Memory_WriteAddress( 0xff60, 0xff61, hnayayoi_palbank_w ),
+		new Memory_WriteAddress( 0xff62, 0xff67, dynax_blitter_rev1_param_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( untoucha_readmem )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static IO_ReadPort hnfubuki_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( untoucha_writemem )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static IO_WritePort hnfubuki_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( untoucha_readport )
-		{ 0x11, 0x11, YM2203_status_port_0_r },
-		{ 0x51, 0x51, YM2203_read_port_0_r },
-		{ 0x16, 0x16, keyboard_0_r },	// bit 7 = blitter busy flag
-		{ 0x15, 0x15, keyboard_1_r },
-		{ 0x14, 0x14, input_port_3_r },
-	PORT_END
+	public static Memory_ReadAddress untoucha_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( untoucha_writeport )
-		{ 0x10, 0x10, YM2203_control_port_0_w },
-		{ 0x50, 0x50, YM2203_write_port_0_w },
-		{ 0x13, 0x13, adpcm_data_w },
-	//	{ 0x12, 0x12, IOWP_NOP },	// CRT Controller
-	//	{ 0x52, 0x52, IOWP_NOP },	// CRT Controller
-		{ 0x28, 0x28, dynax_blitter_rev1_start_w },
-		{ 0x20, 0x20, dynax_blitter_rev1_clear_w },
-		{ 0x31, 0x31, adpcm_vclk_w },
-		{ 0x32, 0x32, adpcm_reset_inv_w },
-		{ 0x17, 0x17, keyboard_w },
-		{ 0x18, 0x19, hnayayoi_palbank_w },
-		{ 0x1a, 0x1f, dynax_blitter_rev1_param_w },
-	PORT_END
+	public static Memory_WriteAddress untoucha_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort untoucha_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x11, 0x11, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x51, 0x51, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x16, 0x16, keyboard_0_r ),	// bit 7 = blitter busy flag
+		new IO_ReadPort( 0x15, 0x15, keyboard_1_r ),
+		new IO_ReadPort( 0x14, 0x14, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_WritePort untoucha_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x50, 0x50, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x13, 0x13, adpcm_data_w ),
+	//	new IO_WritePort( 0x12, 0x12, IOWP_NOP ),	// CRT Controller
+	//	new IO_WritePort( 0x52, 0x52, IOWP_NOP ),	// CRT Controller
+		new IO_WritePort( 0x28, 0x28, dynax_blitter_rev1_start_w ),
+		new IO_WritePort( 0x20, 0x20, dynax_blitter_rev1_clear_w ),
+		new IO_WritePort( 0x31, 0x31, adpcm_vclk_w ),
+		new IO_WritePort( 0x32, 0x32, adpcm_reset_inv_w ),
+		new IO_WritePort( 0x17, 0x17, keyboard_w ),
+		new IO_WritePort( 0x18, 0x19, hnayayoi_palbank_w ),
+		new IO_WritePort( 0x1a, 0x1f, dynax_blitter_rev1_param_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

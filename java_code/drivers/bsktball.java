@@ -159,33 +159,37 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x01ff, MRA_RAM }, /* Zero Page RAM */
-		{ 0x0800, 0x0800, bsktball_in0_r },
-		{ 0x0802, 0x0802, input_port_5_r },
-		{ 0x0803, 0x0803, input_port_6_r },
-		{ 0x1800, 0x1cff, MRA_RAM }, /* video ram */
-		{ 0x2000, 0x3fff, MRA_ROM }, /* PROGRAM */
-		{ 0xfff0, 0xffff, MRA_ROM }, /* PROM8 for 6502 vectors */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ), /* Zero Page RAM */
+		new Memory_ReadAddress( 0x0800, 0x0800, bsktball_in0_r ),
+		new Memory_ReadAddress( 0x0802, 0x0802, input_port_5_r ),
+		new Memory_ReadAddress( 0x0803, 0x0803, input_port_6_r ),
+		new Memory_ReadAddress( 0x1800, 0x1cff, MRA_RAM ), /* video ram */
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ), /* PROGRAM */
+		new Memory_ReadAddress( 0xfff0, 0xffff, MRA_ROM ), /* PROM8 for 6502 vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x01ff, MWA_RAM }, /* WRAM */
-		{ 0x1000, 0x1000, MWA_NOP }, /* Timer Reset */
-		{ 0x1010, 0x1010, bsktball_bounce_w }, /* Crowd Amp / Bounce */
-		{ 0x1022, 0x1023, MWA_NOP }, /* Coin Counter */
-		{ 0x1024, 0x1025, bsktball_led1_w }, /* LED 1 */
-		{ 0x1026, 0x1027, bsktball_led2_w }, /* LED 2 */
-		{ 0x1028, 0x1029, bsktball_ld1_w }, /* LD 1 */
-		{ 0x102a, 0x102b, bsktball_ld2_w }, /* LD 2 */
-		{ 0x102c, 0x102d, bsktball_noise_reset_w }, /* Noise Reset */
-		{ 0x102e, 0x102f, bsktball_nmion_w }, /* NMI On */
-		{ 0x1030, 0x1030, bsktball_note_w }, /* Music Ckt Note Dvsr */
-		{ 0x1800, 0x1bbf, bsktball_videoram_w, &videoram }, /* DISPLAY */
-		{ 0x1bc0, 0x1bff, MWA_RAM, &bsktball_motion },
-		{ 0x2000, 0x3fff, MWA_ROM }, /* PROM1-PROM8 */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ), /* WRAM */
+		new Memory_WriteAddress( 0x1000, 0x1000, MWA_NOP ), /* Timer Reset */
+		new Memory_WriteAddress( 0x1010, 0x1010, bsktball_bounce_w ), /* Crowd Amp / Bounce */
+		new Memory_WriteAddress( 0x1022, 0x1023, MWA_NOP ), /* Coin Counter */
+		new Memory_WriteAddress( 0x1024, 0x1025, bsktball_led1_w ), /* LED 1 */
+		new Memory_WriteAddress( 0x1026, 0x1027, bsktball_led2_w ), /* LED 2 */
+		new Memory_WriteAddress( 0x1028, 0x1029, bsktball_ld1_w ), /* LD 1 */
+		new Memory_WriteAddress( 0x102a, 0x102b, bsktball_ld2_w ), /* LD 2 */
+		new Memory_WriteAddress( 0x102c, 0x102d, bsktball_noise_reset_w ), /* Noise Reset */
+		new Memory_WriteAddress( 0x102e, 0x102f, bsktball_nmion_w ), /* NMI On */
+		new Memory_WriteAddress( 0x1030, 0x1030, bsktball_note_w ), /* Music Ckt Note Dvsr */
+		new Memory_WriteAddress( 0x1800, 0x1bbf, bsktball_videoram_w, &videoram ), /* DISPLAY */
+		new Memory_WriteAddress( 0x1bc0, 0x1bff, MWA_RAM, &bsktball_motion ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ), /* PROM1-PROM8 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

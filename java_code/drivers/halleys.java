@@ -1684,66 +1684,74 @@ public class halleys
 	//**************************************************************************
 	// Memory Maps
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, blitter_r },
-		{ 0x1000, 0xefff, MRA_ROM },
-		{ 0xf000, 0xfeff, MRA_RAM },        // work ram
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, blitter_r ),
+		new Memory_ReadAddress( 0x1000, 0xefff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xfeff, MRA_RAM ),        // work ram
 	
-		{ 0xff66, 0xff66, collision_id_r }, // HACK: collision detection bypass(Halley's Comet only)
-		{ 0xff71, 0xff71, blitter_status_r },
-		{ 0xff80, 0xff83, io_mirror_r },
-		{ 0xff90, 0xff90, input_port_3_r }, // coin/start
-		{ 0xff91, 0xff91, input_port_4_r }, // player 1
-		{ 0xff92, 0xff92, input_port_5_r }, // player 2
-		{ 0xff93, 0xff93, input_port_6_r }, // unused?
-		{ 0xff94, 0xff94, coin_lockout_r },
-		{ 0xff95, 0xff95, input_port_0_r }, // dipswitch 4
-		{ 0xff96, 0xff96, input_port_1_r }, // dipswitch 3
-		{ 0xff97, 0xff97, input_port_2_r }, // dipswitch 2
-		{ 0xff00, 0xffbf, MRA_RAM },        // I/O read fall-through
+		new Memory_ReadAddress( 0xff66, 0xff66, collision_id_r ), // HACK: collision detection bypass(Halley's Comet only)
+		new Memory_ReadAddress( 0xff71, 0xff71, blitter_status_r ),
+		new Memory_ReadAddress( 0xff80, 0xff83, io_mirror_r ),
+		new Memory_ReadAddress( 0xff90, 0xff90, input_port_3_r ), // coin/start
+		new Memory_ReadAddress( 0xff91, 0xff91, input_port_4_r ), // player 1
+		new Memory_ReadAddress( 0xff92, 0xff92, input_port_5_r ), // player 2
+		new Memory_ReadAddress( 0xff93, 0xff93, input_port_6_r ), // unused?
+		new Memory_ReadAddress( 0xff94, 0xff94, coin_lockout_r ),
+		new Memory_ReadAddress( 0xff95, 0xff95, input_port_0_r ), // dipswitch 4
+		new Memory_ReadAddress( 0xff96, 0xff96, input_port_1_r ), // dipswitch 3
+		new Memory_ReadAddress( 0xff97, 0xff97, input_port_2_r ), // dipswitch 2
+		new Memory_ReadAddress( 0xff00, 0xffbf, MRA_RAM ),        // I/O read fall-through
 	
-		{ 0xffc0, 0xffdf, MRA_RAM },        // palette read
-		{ 0xffe0, 0xffff, vector_r },
-	MEMORY_END
-	
-	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, blitter_w, &blitter_ram, &blitter_ramsize },
-		{ 0x1f00, 0x1fff, bgtile_w },       // background tiles?(Ben Bero Beh only)
-		{ 0x1000, 0xefff, MWA_ROM },
-		{ 0xf000, 0xfeff, MWA_RAM },        // work ram
-	
-		{ 0xff8a, 0xff8a, soundcommand_w },
-		{ 0xff9c, 0xff9c, firq_ack_w },
-		{ 0xff00, 0xffbf, MWA_RAM, &io_ram, &io_ramsize }, // I/O write fall-through
-	
-		{ 0xffc0, 0xffdf, halleys_paletteram_IIRRGGBB_w, &paletteram },
-		{ 0xffe0, 0xffff, MWA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0xffc0, 0xffdf, MRA_RAM ),        // palette read
+		new Memory_ReadAddress( 0xffe0, 0xffff, vector_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x4801, 0x4801, AY8910_read_port_1_r },
-		{ 0x4803, 0x4803, AY8910_read_port_2_r },
-		{ 0x4805, 0x4805, AY8910_read_port_3_r },
-		{ 0x5000, 0x5000, soundlatch_r },
-		{ 0xe000, 0xefff, MRA_ROM }, // space for diagnostic ROM
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, blitter_w, &blitter_ram, &blitter_ramsize ),
+		new Memory_WriteAddress( 0x1f00, 0x1fff, bgtile_w ),       // background tiles?(Ben Bero Beh only)
+		new Memory_WriteAddress( 0x1000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xfeff, MWA_RAM ),        // work ram
+	
+		new Memory_WriteAddress( 0xff8a, 0xff8a, soundcommand_w ),
+		new Memory_WriteAddress( 0xff9c, 0xff9c, firq_ack_w ),
+		new Memory_WriteAddress( 0xff00, 0xffbf, MWA_RAM, &io_ram, &io_ramsize ), // I/O write fall-through
+	
+		new Memory_WriteAddress( 0xffc0, 0xffdf, halleys_paletteram_IIRRGGBB_w, &paletteram ),
+		new Memory_WriteAddress( 0xffe0, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x4800, 0x4800, AY8910_control_port_1_w },
-		{ 0x4801, 0x4801, AY8910_write_port_1_w },
-		{ 0x4802, 0x4802, AY8910_control_port_2_w },
-		{ 0x4803, 0x4803, AY8910_write_port_2_w },
-		{ 0x4804, 0x4804, AY8910_control_port_3_w },
-		{ 0x4805, 0x4805, AY8910_write_port_3_w },
-		{ 0xe000, 0xefff, MWA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4801, 0x4801, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0x4803, 0x4803, AY8910_read_port_2_r ),
+		new Memory_ReadAddress( 0x4805, 0x4805, AY8910_read_port_3_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ), // space for diagnostic ROM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4800, 0x4800, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x4801, 0x4801, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0x4802, 0x4802, AY8910_control_port_2_w ),
+		new Memory_WriteAddress( 0x4803, 0x4803, AY8910_write_port_2_w ),
+		new Memory_WriteAddress( 0x4804, 0x4804, AY8910_control_port_3_w ),
+		new Memory_WriteAddress( 0x4805, 0x4805, AY8910_write_port_3_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	//**************************************************************************

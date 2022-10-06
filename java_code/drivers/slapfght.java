@@ -245,171 +245,203 @@ public class slapfght
 	
 	
 	
-	static MEMORY_READ_START( perfrman_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x880f, slapfight_dpram_r },
-		{ 0x8810, 0x8fff, MRA_BANK1 },
-		{ 0x9000, 0x97ff, MRA_RAM },
-		{ 0x9800, 0x9fff, MRA_RAM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress perfrman_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x880f, slapfight_dpram_r ),
+		new Memory_ReadAddress( 0x8810, 0x8fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x9000, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9800, 0x9fff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( perfrman_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8800, 0x880f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size },
-		{ 0x8810, 0x8fff, MWA_BANK1 },	/* Shared RAM with sound CPU */
-		{ 0x9000, 0x97ff, slapfight_videoram_w, &videoram, &videoram_size },
-		{ 0x9800, 0x9fff, slapfight_colorram_w, &colorram },
-		{ 0xa000, 0xa7ff, MWA_RAM, &spriteram, &spriteram_size },
-	MEMORY_END
+	public static Memory_WriteAddress perfrman_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8800, 0x880f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size ),
+		new Memory_WriteAddress( 0x8810, 0x8fff, MWA_BANK1 ),	/* Shared RAM with sound CPU */
+		new Memory_WriteAddress( 0x9000, 0x97ff, slapfight_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x9800, 0x9fff, slapfight_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( tigerh_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc80f, slapfight_dpram_r },
-		{ 0xc810, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress tigerh_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc80f, slapfight_dpram_r ),
+		new Memory_ReadAddress( 0xc810, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xc80f, slapfight_dpram_r },
-		{ 0xc810, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xe803, 0xe803, getstar_e803_r },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xc80f, slapfight_dpram_r ),
+		new Memory_ReadAddress( 0xc810, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe803, 0xe803, getstar_e803_r ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xc80f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size },
-		{ 0xc810, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, slapfight_videoram_w, &videoram, &videoram_size },
-		{ 0xd800, 0xdfff, slapfight_colorram_w, &colorram },
-		{ 0xe000, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe800, 0xe800, MWA_RAM, &slapfight_scrollx_lo },
-		{ 0xe801, 0xe801, MWA_RAM, &slapfight_scrollx_hi },
-		{ 0xe802, 0xe802, MWA_RAM, &slapfight_scrolly },
-		{ 0xf000, 0xf7ff, slapfight_fixram_w, &slapfight_videoram, &slapfight_videoram_size },
-		{ 0xf800, 0xffff, slapfight_fixcol_w, &slapfight_colorram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xc80f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size ),
+		new Memory_WriteAddress( 0xc810, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, slapfight_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, slapfight_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe800, 0xe800, MWA_RAM, &slapfight_scrollx_lo ),
+		new Memory_WriteAddress( 0xe801, 0xe801, MWA_RAM, &slapfight_scrollx_hi ),
+		new Memory_WriteAddress( 0xe802, 0xe802, MWA_RAM, &slapfight_scrolly ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, slapfight_fixram_w, &slapfight_videoram, &slapfight_videoram_size ),
+		new Memory_WriteAddress( 0xf800, 0xffff, slapfight_fixcol_w, &slapfight_colorram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( slapbtuk_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xc80f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size },
-		{ 0xc810, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, slapfight_videoram_w, &videoram, &videoram_size },
-		{ 0xd800, 0xdfff, slapfight_colorram_w, &colorram },
-		{ 0xe000, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe800, 0xe800, MWA_RAM, &slapfight_scrollx_hi },
-		{ 0xe802, 0xe802, MWA_RAM, &slapfight_scrolly },
-		{ 0xe803, 0xe803, MWA_RAM, &slapfight_scrollx_lo },
-		{ 0xf000, 0xf7ff, slapfight_fixram_w, &slapfight_videoram, &slapfight_videoram_size },
-		{ 0xf800, 0xffff, slapfight_fixcol_w, &slapfight_colorram },
-	MEMORY_END
+	public static Memory_WriteAddress slapbtuk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xc80f, slapfight_dpram_w, &slapfight_dpram, &slapfight_dpram_size ),
+		new Memory_WriteAddress( 0xc810, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, slapfight_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, slapfight_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe800, 0xe800, MWA_RAM, &slapfight_scrollx_hi ),
+		new Memory_WriteAddress( 0xe802, 0xe802, MWA_RAM, &slapfight_scrolly ),
+		new Memory_WriteAddress( 0xe803, 0xe803, MWA_RAM, &slapfight_scrollx_lo ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, slapfight_fixram_w, &slapfight_videoram, &slapfight_videoram_size ),
+		new Memory_WriteAddress( 0xf800, 0xffff, slapfight_fixcol_w, &slapfight_colorram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, slapfight_port_00_r },	/* status register */
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, slapfight_port_00_r ),	/* status register */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER(tigerh_status_r)
 	{
 		return (slapfight_port_00_r(0)&0xf9)| ((tigerh_mcu_status_r(0)));
 	}
 	
-	static PORT_READ_START( tigerh_readport )
-		{ 0x00, 0x00, tigerh_status_r },	/* status register */
-	PORT_END
+	public static IO_ReadPort tigerh_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, tigerh_status_r ),	/* status register */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( m68705_readmem )
-		{ 0x0000, 0x0000, tigerh_68705_portA_r },
-		{ 0x0001, 0x0001, tigerh_68705_portB_r },
-		{ 0x0002, 0x0002, tigerh_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m68705_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, tigerh_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, tigerh_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, tigerh_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m68705_writemem )
-		{ 0x0000, 0x0000, tigerh_68705_portA_w },
-		{ 0x0001, 0x0001, tigerh_68705_portB_w },
-		{ 0x0002, 0x0002, tigerh_68705_portC_w },
-		{ 0x0004, 0x0004, tigerh_68705_ddrA_w },
-		{ 0x0005, 0x0005, tigerh_68705_ddrB_w },
-		{ 0x0006, 0x0006, tigerh_68705_ddrC_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m68705_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, tigerh_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, tigerh_68705_portB_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, tigerh_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, tigerh_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0005, 0x0005, tigerh_68705_ddrB_w ),
+		new Memory_WriteAddress( 0x0006, 0x0006, tigerh_68705_ddrC_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( tigerh_writeport )
-		{ 0x00, 0x00, slapfight_port_00_w },
-		{ 0x01, 0x01, slapfight_port_01_w },
-		{ 0x02, 0x03, slapfight_flipscreen_w },
-		{ 0x06, 0x06, slapfight_port_06_w },
-		{ 0x07, 0x07, slapfight_port_07_w },
-	PORT_END
+	public static IO_WritePort tigerh_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, slapfight_port_00_w ),
+		new IO_WritePort( 0x01, 0x01, slapfight_port_01_w ),
+		new IO_WritePort( 0x02, 0x03, slapfight_flipscreen_w ),
+		new IO_WritePort( 0x06, 0x06, slapfight_port_06_w ),
+		new IO_WritePort( 0x07, 0x07, slapfight_port_07_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, slapfight_port_00_w },
-		{ 0x01, 0x01, slapfight_port_01_w },
-		{ 0x02, 0x03, slapfight_flipscreen_w },
-	//	{ 0x04, 0x04, getstar_port_04_w   },
-		{ 0x06, 0x06, slapfight_port_06_w },
-		{ 0x07, 0x07, slapfight_port_07_w },
-		{ 0x08, 0x08, slapfight_port_08_w },	/* select bank 0 */
-		{ 0x09, 0x09, slapfight_port_09_w },	/* select bank 1 */
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, slapfight_port_00_w ),
+		new IO_WritePort( 0x01, 0x01, slapfight_port_01_w ),
+		new IO_WritePort( 0x02, 0x03, slapfight_flipscreen_w ),
+	//	new IO_WritePort( 0x04, 0x04, getstar_port_04_w   ),
+		new IO_WritePort( 0x06, 0x06, slapfight_port_06_w ),
+		new IO_WritePort( 0x07, 0x07, slapfight_port_07_w ),
+		new IO_WritePort( 0x08, 0x08, slapfight_port_08_w ),	/* select bank 0 */
+		new IO_WritePort( 0x09, 0x09, slapfight_port_09_w ),	/* select bank 1 */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( perfrman_sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x8800, 0x880f, slapfight_dpram_r },
-		{ 0x8810, 0x8fff, MRA_BANK1 },
-		{ 0xa081, 0xa081, AY8910_read_port_0_r },
-		{ 0xa091, 0xa091, AY8910_read_port_1_r },
-	MEMORY_END
+	public static Memory_ReadAddress perfrman_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8800, 0x880f, slapfight_dpram_r ),
+		new Memory_ReadAddress( 0x8810, 0x8fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xa081, 0xa081, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xa091, 0xa091, AY8910_read_port_1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( perfrman_sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x8800, 0x880f, slapfight_dpram_w },
-		{ 0x8810, 0x8fff, MWA_BANK1 },	/* Shared RAM with main CPU */
-		{ 0xa080, 0xa080, AY8910_control_port_0_w },
-		{ 0xa082, 0xa082, AY8910_write_port_0_w },
-		{ 0xa090, 0xa090, AY8910_control_port_1_w },
-		{ 0xa092, 0xa092, AY8910_write_port_1_w },
-		{ 0xa0e0, 0xa0e0, getstar_sh_intenable_w }, /* maybe a0f0 also -LE */
-	//	{ 0xa0f0, 0xa0f0, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress perfrman_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8800, 0x880f, slapfight_dpram_w ),
+		new Memory_WriteAddress( 0x8810, 0x8fff, MWA_BANK1 ),	/* Shared RAM with main CPU */
+		new Memory_WriteAddress( 0xa080, 0xa080, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xa082, 0xa082, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xa090, 0xa090, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xa092, 0xa092, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xa0e0, 0xa0e0, getstar_sh_intenable_w ), /* maybe a0f0 also -LE */
+	//	new Memory_WriteAddress( 0xa0f0, 0xa0f0, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0xa081, 0xa081, AY8910_read_port_0_r },
-		{ 0xa091, 0xa091, AY8910_read_port_1_r },
-		{ 0xc800, 0xc80f, slapfight_dpram_r },
-		{ 0xc810, 0xcfff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa081, 0xa081, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xa091, 0xa091, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0xc800, 0xc80f, slapfight_dpram_r ),
+		new Memory_ReadAddress( 0xc810, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0xa080, 0xa080, AY8910_control_port_0_w },
-		{ 0xa082, 0xa082, AY8910_write_port_0_w },
-		{ 0xa090, 0xa090, AY8910_control_port_1_w },
-		{ 0xa092, 0xa092, AY8910_write_port_1_w },
-		{ 0xa0e0, 0xa0e0, getstar_sh_intenable_w }, /* maybe a0f0 also -LE */
-		{ 0xc800, 0xc80f, slapfight_dpram_w },
-		{ 0xc810, 0xcfff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa080, 0xa080, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xa082, 0xa082, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xa090, 0xa090, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xa092, 0xa092, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xa0e0, 0xa0e0, getstar_sh_intenable_w ), /* maybe a0f0 also -LE */
+		new Memory_WriteAddress( 0xc800, 0xc80f, slapfight_dpram_w ),
+		new Memory_WriteAddress( 0xc810, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -129,28 +129,32 @@ public class mole
 		return 0x00;
 	}
 	
-	static MEMORY_READ_START( moleattack_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x08ff, mole_prot_r },
-		{ 0x5000, 0x7fff, MRA_ROM },
-		{ 0x8d00, 0x8d00, input_port_0_r },
-		{ 0x8d40, 0x8d40, input_port_1_r },
-		{ 0x8d80, 0x8d80, input_port_2_r },
-		{ 0x8dc0, 0x8dc0, input_port_3_r },
-		{ 0xd000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress moleattack_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x08ff, mole_prot_r ),
+		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8d00, 0x8d00, input_port_0_r ),
+		new Memory_ReadAddress( 0x8d40, 0x8d40, input_port_1_r ),
+		new Memory_ReadAddress( 0x8d80, 0x8d80, input_port_2_r ),
+		new Memory_ReadAddress( 0x8dc0, 0x8dc0, input_port_3_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( moleattack_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x5000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x83ff, moleattack_videoram_w },
-		{ 0x8400, 0x8400, moleattack_tilesetselector_w},
-		{ 0x8c00, 0x8c00, AY8910_write_port_0_w },
-		{ 0x8c01, 0x8c01, AY8910_control_port_0_w },
-		{ 0x8d00, 0x8d00, watchdog_reset_w },
-		{ 0x8dc0, 0x8dc0, moleattack_flipscreen_w },
-		{ 0xd000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress moleattack_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x5000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, moleattack_videoram_w ),
+		new Memory_WriteAddress( 0x8400, 0x8400, moleattack_tilesetselector_w),
+		new Memory_WriteAddress( 0x8c00, 0x8c00, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x8c01, 0x8c01, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8d00, 0x8d00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x8dc0, 0x8dc0, moleattack_flipscreen_w ),
+		new Memory_WriteAddress( 0xd000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static MACHINE_DRIVER_START( mole )
 	

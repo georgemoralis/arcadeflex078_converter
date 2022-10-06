@@ -121,74 +121,94 @@ public class megazone
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x2000, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x33ff, MRA_RAM },
-		{ 0x3800, 0x3fff, megazone_sharedram_r },
-		{ 0x4000, 0xffff, MRA_ROM },		/* 4000->5FFF is a debug rom */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3800, 0x3fff, megazone_sharedram_r ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),		/* 4000->5FFF is a debug rom */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0001, megazone_coin_counter_w }, /* coin counter 2, coin counter 1 */
-		{ 0x0005, 0x0005, megazone_flipscreen_w },
-		{ 0x0007, 0x0007, interrupt_enable_w },
-		{ 0x0800, 0x0800, watchdog_reset_w },
-		{ 0x1800, 0x1800, MWA_RAM, &megazone_scrollx },
-		{ 0x1000, 0x1000, MWA_RAM, &megazone_scrolly },
-		{ 0x2000, 0x23ff, videoram_w, &videoram, &videoram_size },
-		{ 0x2400, 0x27ff, megazone_videoram2_w, &megazone_videoram2, &megazone_videoram2_size },
-		{ 0x2800, 0x2bff, colorram_w, &colorram },
-		{ 0x2c00, 0x2fff, megazone_colorram2_w, &megazone_colorram2 },
-		{ 0x3000, 0x33ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x3800, 0x3fff, megazone_sharedram_w, &megazone_sharedram },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0001, megazone_coin_counter_w ), /* coin counter 2, coin counter 1 */
+		new Memory_WriteAddress( 0x0005, 0x0005, megazone_flipscreen_w ),
+		new Memory_WriteAddress( 0x0007, 0x0007, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x0800, 0x0800, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x1800, 0x1800, MWA_RAM, &megazone_scrollx ),
+		new Memory_WriteAddress( 0x1000, 0x1000, MWA_RAM, &megazone_scrolly ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2400, 0x27ff, megazone_videoram2_w, &megazone_videoram2, &megazone_videoram2_size ),
+		new Memory_WriteAddress( 0x2800, 0x2bff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x2c00, 0x2fff, megazone_colorram2_w, &megazone_colorram2 ),
+		new Memory_WriteAddress( 0x3000, 0x33ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, megazone_sharedram_w, &megazone_sharedram ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x6000, 0x6000, input_port_0_r }, /* IO Coin */
-		{ 0x6001, 0x6001, input_port_1_r }, /* P1 IO */
-		{ 0x6002, 0x6002, input_port_2_r }, /* P2 IO */
-		{ 0x8000, 0x8000, input_port_3_r }, /* DIP 1 */
-		{ 0x8001, 0x8001, input_port_4_r }, /* DIP 2 */
-		{ 0xe000, 0xe7ff, megazone_sharedram_r },  /* Shared with $3800->3fff of main CPU */
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, input_port_0_r ), /* IO Coin */
+		new Memory_ReadAddress( 0x6001, 0x6001, input_port_1_r ), /* P1 IO */
+		new Memory_ReadAddress( 0x6002, 0x6002, input_port_2_r ), /* P2 IO */
+		new Memory_ReadAddress( 0x8000, 0x8000, input_port_3_r ), /* DIP 1 */
+		new Memory_ReadAddress( 0x8001, 0x8001, input_port_4_r ), /* DIP 2 */
+		new Memory_ReadAddress( 0xe000, 0xe7ff, megazone_sharedram_r ),  /* Shared with $3800->3fff of main CPU */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x2000, megazone_i8039_irq_w },	/* START line. Interrupts 8039 */
-		{ 0x4000, 0x4000, soundlatch_w },			/* CODE  line. Command Interrupts 8039 */
-		{ 0xa000, 0xa000, MWA_RAM },				/* INTMAIN - Interrupts main CPU (unused) */
-		{ 0xc000, 0xc000, MWA_RAM },				/* INT (Actually is NMI) enable/disable (unused)*/
-		{ 0xc001, 0xc001, watchdog_reset_w },
-		{ 0xe000, 0xe7ff, megazone_sharedram_w },	/* Shared with $3800->3fff of main CPU */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x2000, megazone_i8039_irq_w ),	/* START line. Interrupts 8039 */
+		new Memory_WriteAddress( 0x4000, 0x4000, soundlatch_w ),			/* CODE  line. Command Interrupts 8039 */
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_RAM ),				/* INTMAIN - Interrupts main CPU (unused) */
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ),				/* INT (Actually is NMI) enable/disable (unused)*/
+		new Memory_WriteAddress( 0xc001, 0xc001, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, megazone_sharedram_w ),	/* Shared with $3800->3fff of main CPU */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x00, 0x02, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x02, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x02, 0x02, AY8910_write_port_0_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, AY8910_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( i8039_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress i8039_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( i8039_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress i8039_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( i8039_readport )
-		{ 0x00, 0xff, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort i8039_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0xff, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( i8039_writeport )
-		{ I8039_p1, I8039_p1, DAC_0_data_w },
-		{ I8039_p2, I8039_p2, i8039_irqen_and_status_w },
-	PORT_END
+	public static IO_WritePort i8039_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( I8039_p1, I8039_p1, DAC_0_data_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, i8039_irqen_and_status_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( megazone )
 		PORT_START      /* IN0 */

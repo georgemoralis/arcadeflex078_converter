@@ -29,32 +29,40 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x4000, 0x47ff, MRA_ROM },
-		{ 0xc800, 0xc800, clayshoo_analog_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc800, 0xc800, clayshoo_analog_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x4000, 0x47ff, MWA_ROM },
-		{ 0x8000, 0x97ff, clayshoo_videoram_w },	 /* 6k of video ram according to readme */
-		{ 0x9800, 0xa800, MWA_NOP },				 /* not really mapped, but cleared */
-		{ 0xc800, 0xc800, clayshoo_analog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x97ff, clayshoo_videoram_w ),	 /* 6k of video ram according to readme */
+		new Memory_WriteAddress( 0x9800, 0xa800, MWA_NOP ),				 /* not really mapped, but cleared */
+		new Memory_WriteAddress( 0xc800, 0xc800, clayshoo_analog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x20, 0x23, ppi8255_0_r },
-		{ 0x30, 0x33, ppi8255_1_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x20, 0x23, ppi8255_0_r ),
+		new IO_ReadPort( 0x30, 0x33, ppi8255_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, watchdog_reset_w },
-		{ 0x20, 0x23, ppi8255_0_w },
-		{ 0x30, 0x33, ppi8255_1_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, watchdog_reset_w ),
+		new IO_WritePort( 0x20, 0x23, ppi8255_0_w ),
+		new IO_WritePort( 0x30, 0x33, ppi8255_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

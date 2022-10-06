@@ -158,42 +158,50 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x6fff, MRA_ROM },
-		{ 0x7000, 0x77ff, MRA_RAM },
-		{ 0xf000, 0xf1ff, MRA_RAM },
-		{ 0xfc00, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7000, 0x77ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xf1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x6fff, MWA_ROM },
-		{ 0x7000, 0x77ff, MWA_RAM },
-		{ 0xf000, 0xf1ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf400, 0xf41f, paletteram_xxxxRRRRBBBBGGGG_split1_w, &paletteram },
-		{ 0xf800, 0xf81f, paletteram_xxxxRRRRBBBBGGGG_split2_w, &paletteram_2 },
-		{ 0xfc00, 0xffff, mcr1_videoram_w, &videoram, &videoram_size },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf1ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf400, 0xf41f, paletteram_xxxxRRRRBBBBGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xf800, 0xf81f, paletteram_xxxxRRRRBBBBGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, mcr1_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x02, 0x02, input_port_2_r },
-		{ 0x03, 0x03, input_port_3_r },
-		{ 0x04, 0x04, input_port_4_r },
-		{ 0x07, 0x07, ssio_status_r },
-		{ 0x10, 0x10, input_port_0_r },
-		{ 0xf0, 0xf3, z80ctc_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_2_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_3_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_4_r ),
+		new IO_ReadPort( 0x07, 0x07, ssio_status_r ),
+		new IO_ReadPort( 0x10, 0x10, input_port_0_r ),
+		new IO_ReadPort( 0xf0, 0xf3, z80ctc_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x1c, 0x1f, ssio_data_w },
-		{ 0xe0, 0xe0, watchdog_reset_w },
-		{ 0xe8, 0xe8, MWA_NOP },
-		{ 0xf0, 0xf3, z80ctc_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x1c, 0x1f, ssio_data_w ),
+		new IO_WritePort( 0xe0, 0xe0, watchdog_reset_w ),
+		new IO_WritePort( 0xe8, 0xe8, MWA_NOP ),
+		new IO_WritePort( 0xf0, 0xf3, z80ctc_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

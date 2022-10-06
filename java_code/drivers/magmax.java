@@ -202,29 +202,37 @@ public class magmax
 		{ 0x03001e, 0x03001f, MWA16_NOP },	/* IRQ ack */
 	MEMORY_END
 	
-	static MEMORY_READ_START( magmax_soundreadmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x4000, magmax_sound_irq_ack },
-		{ 0x6000, 0x67ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress magmax_soundreadmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, magmax_sound_irq_ack ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( magmax_soundwritemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x6000, 0x67ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress magmax_soundwritemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( magmax_soundreadport )
-		{ 0x06, 0x06, magmax_sound_r },
-	PORT_END
+	public static IO_ReadPort magmax_soundreadport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x06, 0x06, magmax_sound_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( magmax_soundwriteport )
-		{ 0x00, 0x00, AY8910_control_port_0_w },
-		{ 0x01, 0x01, AY8910_write_port_0_w },
-		{ 0x02, 0x02, AY8910_control_port_1_w },
-		{ 0x03, 0x03, AY8910_write_port_1_w },
-		{ 0x04, 0x04, AY8910_control_port_2_w },
-		{ 0x05, 0x05, AY8910_write_port_2_w },
-	PORT_END
+	public static IO_WritePort magmax_soundwriteport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x02, 0x02, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x03, 0x03, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x04, 0x04, AY8910_control_port_2_w ),
+		new IO_WritePort( 0x05, 0x05, AY8910_write_port_2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( magmax )

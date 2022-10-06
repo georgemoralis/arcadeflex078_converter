@@ -129,34 +129,38 @@ public class orbit
 	}
 	
 	
-	static MEMORY_READ_START( orbit_readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x07ff, orbit_zeropage_r },
-		{ 0x0800, 0x0800, input_port_0_r },
-		{ 0x1000, 0x1000, input_port_1_r },
-		{ 0x1800, 0x1800, input_port_2_r },
-		{ 0x2000, 0x2000, input_port_3_r },
-		{ 0x2800, 0x2800, input_port_4_r },
-		{ 0x3000, 0x33ff, MRA_RAM },
-		{ 0x6800, 0x7fff, MRA_ROM }, /* program */
-		{ 0xfc00, 0xffff, MRA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_ReadAddress orbit_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x07ff, orbit_zeropage_r ),
+		new Memory_ReadAddress( 0x0800, 0x0800, input_port_0_r ),
+		new Memory_ReadAddress( 0x1000, 0x1000, input_port_1_r ),
+		new Memory_ReadAddress( 0x1800, 0x1800, input_port_2_r ),
+		new Memory_ReadAddress( 0x2000, 0x2000, input_port_3_r ),
+		new Memory_ReadAddress( 0x2800, 0x2800, input_port_4_r ),
+		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6800, 0x7fff, MRA_ROM ), /* program */
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_ROM ), /* program mirror */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( orbit_writemem )
-		{ 0x0000, 0x07ff, orbit_zeropage_w },
-		{ 0x3000, 0x33bf, orbit_playfield_w, &orbit_playfield_ram },
-		{ 0x33c0, 0x33ff, orbit_sprite_w, &orbit_sprite_ram },
-		{ 0x3400, 0x37bf, orbit_playfield_w },
-		{ 0x37c0, 0x37ff, orbit_sprite_w },
-		{ 0x3800, 0x3800, orbit_note_w },
-		{ 0x3900, 0x3900, orbit_noise_amp_w },
-		{ 0x3a00, 0x3a00, orbit_note_amp_w },
-		{ 0x3c00, 0x3c0f, orbit_misc_w },
-		{ 0x3e00, 0x3e00, orbit_noise_rst_w },
-		{ 0x3f00, 0x3f00, watchdog_reset_w },
-		{ 0x6800, 0x7fff, MWA_ROM }, /* program */
-		{ 0xfc00, 0xffff, MWA_ROM }, /* program mirror */
-	MEMORY_END
+	public static Memory_WriteAddress orbit_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, orbit_zeropage_w ),
+		new Memory_WriteAddress( 0x3000, 0x33bf, orbit_playfield_w, &orbit_playfield_ram ),
+		new Memory_WriteAddress( 0x33c0, 0x33ff, orbit_sprite_w, &orbit_sprite_ram ),
+		new Memory_WriteAddress( 0x3400, 0x37bf, orbit_playfield_w ),
+		new Memory_WriteAddress( 0x37c0, 0x37ff, orbit_sprite_w ),
+		new Memory_WriteAddress( 0x3800, 0x3800, orbit_note_w ),
+		new Memory_WriteAddress( 0x3900, 0x3900, orbit_noise_amp_w ),
+		new Memory_WriteAddress( 0x3a00, 0x3a00, orbit_note_amp_w ),
+		new Memory_WriteAddress( 0x3c00, 0x3c0f, orbit_misc_w ),
+		new Memory_WriteAddress( 0x3e00, 0x3e00, orbit_noise_rst_w ),
+		new Memory_WriteAddress( 0x3f00, 0x3f00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x6800, 0x7fff, MWA_ROM ), /* program */
+		new Memory_WriteAddress( 0xfc00, 0xffff, MWA_ROM ), /* program mirror */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( orbit )

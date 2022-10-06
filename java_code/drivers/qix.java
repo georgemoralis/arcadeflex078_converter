@@ -215,58 +215,66 @@ public class qix
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_data )
-		{ 0x8000, 0x83ff, qix_sharedram_r },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, MRA_NOP },   /* ACIA */
-		{ 0x8c00, 0x8c00, qix_video_firq_r },
-		{ 0x8c01, 0x8c01, qix_data_firq_ack_r },
-		{ 0x9000, 0x93ff, pia_3_r },
-		{ 0x9400, 0x97ff, pia_0_r },
-		{ 0x9800, 0x9bff, pia_1_r },
-		{ 0x9c00, 0x9fff, pia_2_r },
-		{ 0xa000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_data[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x8000, 0x83ff, qix_sharedram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, MRA_NOP ),   /* ACIA */
+		new Memory_ReadAddress( 0x8c00, 0x8c00, qix_video_firq_r ),
+		new Memory_ReadAddress( 0x8c01, 0x8c01, qix_data_firq_ack_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, pia_3_r ),
+		new Memory_ReadAddress( 0x9400, 0x97ff, pia_0_r ),
+		new Memory_ReadAddress( 0x9800, 0x9bff, pia_1_r ),
+		new Memory_ReadAddress( 0x9c00, 0x9fff, pia_2_r ),
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_data )
-		{ 0x8000, 0x83ff, qix_sharedram_w, &qix_sharedram },
-		{ 0x8400, 0x87ff, MWA_RAM },
-		{ 0x8c00, 0x8c00, qix_video_firq_w },
-		{ 0x8c01, 0x8c01, qix_data_firq_ack_w },
-		{ 0x9000, 0x93ff, pia_3_w },
-		{ 0x9400, 0x97ff, qix_pia_0_w },
-		{ 0x9800, 0x9bff, pia_1_w },
-		{ 0x9c00, 0x9fff, pia_2_w },
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_data[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w, &qix_sharedram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_video_firq_w ),
+		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_data_firq_ack_w ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, pia_3_w ),
+		new Memory_WriteAddress( 0x9400, 0x97ff, qix_pia_0_w ),
+		new Memory_WriteAddress( 0x9800, 0x9bff, pia_1_w ),
+		new Memory_WriteAddress( 0x9c00, 0x9fff, pia_2_w ),
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( zoo_readmem_data )
-		{ 0x0000, 0x03ff, qix_sharedram_r },
-		{ 0x0400, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0800, MRA_NOP },   /* ACIA */
-		{ 0x0c00, 0x0c00, qix_video_firq_r },
-		{ 0x0c01, 0x0c01, qix_data_firq_ack_r },
-		{ 0x1000, 0x13ff, pia_3_r },
-		{ 0x1400, 0x17ff, pia_0_r },
-		{ 0x1900, 0x1bff, pia_1_r },
-		{ 0x1c00, 0x1fff, pia_2_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress zoo_readmem_data[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, qix_sharedram_r ),
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, MRA_NOP ),   /* ACIA */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, qix_video_firq_r ),
+		new Memory_ReadAddress( 0x0c01, 0x0c01, qix_data_firq_ack_r ),
+		new Memory_ReadAddress( 0x1000, 0x13ff, pia_3_r ),
+		new Memory_ReadAddress( 0x1400, 0x17ff, pia_0_r ),
+		new Memory_ReadAddress( 0x1900, 0x1bff, pia_1_r ),
+		new Memory_ReadAddress( 0x1c00, 0x1fff, pia_2_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( zoo_writemem_data )
-		{ 0x0000, 0x03ff, qix_sharedram_w, &qix_sharedram },
-		{ 0x0400, 0x07ff, MWA_RAM },
-		{ 0x0c00, 0x0c00, qix_video_firq_w },
-		{ 0x0c01, 0x0c01, qix_data_firq_ack_w },
-		{ 0x1000, 0x13ff, pia_3_w },
-		{ 0x1400, 0x17ff, qix_pia_0_w },
-		{ 0x1900, 0x1bff, pia_1_w },
-		{ 0x1c00, 0x1fff, pia_2_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress zoo_writemem_data[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, qix_sharedram_w, &qix_sharedram ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0c00, 0x0c00, qix_video_firq_w ),
+		new Memory_WriteAddress( 0x0c01, 0x0c01, qix_data_firq_ack_w ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, pia_3_w ),
+		new Memory_WriteAddress( 0x1400, 0x17ff, qix_pia_0_w ),
+		new Memory_WriteAddress( 0x1900, 0x1bff, pia_1_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1fff, pia_2_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -276,62 +284,70 @@ public class qix
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_video )
-		{ 0x0000, 0x7fff, qix_videoram_r },
-		{ 0x8000, 0x83ff, qix_sharedram_r },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8c00, 0x8c00, qix_data_firq_r },
-		{ 0x8c01, 0x8c01, qix_video_firq_ack_r },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x9400, qix_addresslatch_r },
-		{ 0x9800, 0x9800, qix_scanline_r },
-		{ 0xa000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_video[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, qix_videoram_r ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, qix_sharedram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8c00, 0x8c00, qix_data_firq_r ),
+		new Memory_ReadAddress( 0x8c01, 0x8c01, qix_video_firq_ack_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x9400, qix_addresslatch_r ),
+		new Memory_ReadAddress( 0x9800, 0x9800, qix_scanline_r ),
+		new Memory_ReadAddress( 0xa000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_video )
-		{ 0x0000, 0x7fff, qix_videoram_w },
-		{ 0x8000, 0x83ff, qix_sharedram_w },
-		{ 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8800, 0x8800, qix_palettebank_w },
-		{ 0x8c00, 0x8c00, qix_data_firq_w },
-		{ 0x8c01, 0x8c01, qix_video_firq_ack_w },
-		{ 0x9000, 0x93ff, qix_paletteram_w, &paletteram },
-		{ 0x9400, 0x9400, qix_addresslatch_w },
-		{ 0x9402, 0x9403, MWA_RAM, &qix_videoaddress },
-		{ 0x9c00, 0x9fff, MWA_RAM }, /* Video controller */
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_video[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, qix_videoram_w ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8800, 0x8800, qix_palettebank_w ),
+		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_data_firq_w ),
+		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_video_firq_ack_w ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x9400, 0x9400, qix_addresslatch_w ),
+		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, &qix_videoaddress ),
+		new Memory_WriteAddress( 0x9c00, 0x9fff, MWA_RAM ), /* Video controller */
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( zoo_readmem_video )
-		{ 0x0000, 0x7fff, qix_videoram_r },
-		{ 0x8000, 0x83ff, qix_sharedram_r },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8c00, 0x8c00, qix_data_firq_r },
-		{ 0x8c01, 0x8c01, qix_video_firq_ack_r },
-		{ 0x9000, 0x93ff, MRA_RAM },
-		{ 0x9400, 0x9400, qix_addresslatch_r },
-		{ 0x9800, 0x9800, qix_scanline_r },
-		{ 0xa000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress zoo_readmem_video[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, qix_videoram_r ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, qix_sharedram_r ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8c00, 0x8c00, qix_data_firq_r ),
+		new Memory_ReadAddress( 0x8c01, 0x8c01, qix_video_firq_ack_r ),
+		new Memory_ReadAddress( 0x9000, 0x93ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9400, 0x9400, qix_addresslatch_r ),
+		new Memory_ReadAddress( 0x9800, 0x9800, qix_scanline_r ),
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( zoo_writemem_video )
-		{ 0x0000, 0x7fff, qix_videoram_w },
-		{ 0x8000, 0x83ff, qix_sharedram_w },
-		{ 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8800, 0x8800, qix_palettebank_w },
-		{ 0x8801, 0x8801, zoo_bankswitch_w },
-		{ 0x8c00, 0x8c00, qix_data_firq_w },
-		{ 0x8c01, 0x8c01, qix_video_firq_ack_w },
-		{ 0x9000, 0x93ff, qix_paletteram_w, &paletteram },
-		{ 0x9400, 0x9400, qix_addresslatch_w },
-		{ 0x9402, 0x9403, MWA_RAM, &qix_videoaddress },
-		{ 0x9c00, 0x9fff, MWA_RAM }, /* Video controller */
-		{ 0xa000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress zoo_writemem_video[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, qix_videoram_w ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8800, 0x8800, qix_palettebank_w ),
+		new Memory_WriteAddress( 0x8801, 0x8801, zoo_bankswitch_w ),
+		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_data_firq_w ),
+		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_video_firq_ack_w ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x9400, 0x9400, qix_addresslatch_w ),
+		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, &qix_videoaddress ),
+		new Memory_WriteAddress( 0x9c00, 0x9fff, MWA_RAM ), /* Video controller */
+		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -341,20 +357,24 @@ public class qix
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x007f, MRA_RAM },
-		{ 0x2000, 0x2003, pia_5_r },
-		{ 0x4000, 0x4003, pia_4_r },
-		{ 0xd000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2003, pia_5_r ),
+		new Memory_ReadAddress( 0x4000, 0x4003, pia_4_r ),
+		new Memory_ReadAddress( 0xd000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x007f, MWA_RAM },
-		{ 0x2000, 0x2003, pia_5_w },
-		{ 0x4000, 0x4003, pia_4_w },
-		{ 0xd000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2003, pia_5_w ),
+		new Memory_WriteAddress( 0x4000, 0x4003, pia_4_w ),
+		new Memory_WriteAddress( 0xd000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -364,23 +384,27 @@ public class qix
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( mcu_readmem )
-		{ 0x0000, 0x0000, qix_68705_portA_r },
-		{ 0x0001, 0x0001, qix_68705_portB_r },
-		{ 0x0002, 0x0002, qix_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress mcu_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, qix_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, qix_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, qix_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( mcu_writemem )
-		{ 0x0000, 0x0000, qix_68705_portA_w, &qix_68705_port_out },
-		{ 0x0001, 0x0001, qix_68705_portB_w },
-		{ 0x0002, 0x0002, qix_68705_portC_w },
-		{ 0x0004, 0x0007, MWA_RAM, &qix_68705_ddr },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress mcu_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, qix_68705_portA_w, &qix_68705_port_out ),
+		new Memory_WriteAddress( 0x0001, 0x0001, qix_68705_portB_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, qix_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0007, MWA_RAM, &qix_68705_ddr ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

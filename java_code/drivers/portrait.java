@@ -139,26 +139,30 @@ public class portrait
 		}
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8fff, MRA_RAM },
-		{ 0x9000, 0x91ff, MRA_RAM },
-		{ 0x9200, 0x97ff, MRA_RAM },
-		{ 0xa000, 0xafff, a000_r },
-		{ 0xffff, 0xffff, MRA_RAM }, /* unknown */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x91ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9200, 0x97ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xafff, a000_r ),
+		new Memory_ReadAddress( 0xffff, 0xffff, MRA_RAM ), /* unknown */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, portrait_bgvideo_write, &portrait_bgvideoram },
-		{ 0x8800, 0x8fff, portrait_fgvideo_write, &portrait_fgvideoram },
-		{ 0x9000, 0x91ff, MWA_RAM, &portrait_spriteram },
-		{ 0x9200, 0x97ff, MWA_RAM },
-		{ 0xa000, 0xafff, a000_w },
-		{ 0xb000, 0xbfff, MWA_RAM }, /* unknown */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, portrait_bgvideo_write, &portrait_bgvideoram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, portrait_fgvideo_write, &portrait_fgvideoram ),
+		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, &portrait_spriteram ),
+		new Memory_WriteAddress( 0x9200, 0x97ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xafff, a000_w ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM ), /* unknown */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( portrait )
 		PORT_START		/* IN 0 */

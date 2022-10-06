@@ -109,85 +109,103 @@ public class route16
 	
 	}
 	
-	static MEMORY_READ_START( cpu1_readmem )
-		{ 0x0000, 0x2fff, MRA_ROM },
-	  /*{ 0x3000, 0x3001, MRA_NOP },	 Route 16 protection device */
-		{ 0x4000, 0x43ff, route16_sharedram_r },
-		{ 0x4800, 0x4800, input_port_0_r },
-		{ 0x5000, 0x5000, input_port_1_r },
-		{ 0x5800, 0x5800, input_port_2_r },
-		{ 0x8000, 0xbfff, route16_videoram1_r },
-	MEMORY_END
+	public static Memory_ReadAddress cpu1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_ROM ),
+	  /*new Memory_ReadAddress( 0x3000, 0x3001, MRA_NOP ),	 Route 16 protection device */
+		new Memory_ReadAddress( 0x4000, 0x43ff, route16_sharedram_r ),
+		new Memory_ReadAddress( 0x4800, 0x4800, input_port_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, input_port_1_r ),
+		new Memory_ReadAddress( 0x5800, 0x5800, input_port_2_r ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, route16_videoram1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cpu1_writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-	 	/*{ 0x3001, 0x3001, MWA_NOP },	 Route 16 protection device */
-		{ 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram },
-		{ 0x4800, 0x4800, route16_out0_w },
-		{ 0x5000, 0x5000, route16_out1_w },
-		{ 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size },
-		{ 0xc000, 0xc000, MWA_RAM }, // Stratvox has an off by one error
+	public static Memory_WriteAddress cpu1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+	 	/*new Memory_WriteAddress( 0x3001, 0x3001, MWA_NOP ),	 Route 16 protection device */
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
+		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Stratvox has an off by one error
 	                                 // when clearing the screen
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( routex_cpu1_readmem )
-		{ 0x0000, 0x37ff, MRA_ROM },
-		{ 0x4000, 0x43ff, route16_sharedram_r },
-		{ 0x4800, 0x4800, input_port_0_r },
-		{ 0x5000, 0x5000, input_port_1_r },
-		{ 0x5800, 0x5800, input_port_2_r },
-	 	{ 0x6400, 0x6400, routex_prot_read },
-		{ 0x8000, 0xbfff, route16_videoram1_r },
-	MEMORY_END
+	public static Memory_ReadAddress routex_cpu1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x37ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, route16_sharedram_r ),
+		new Memory_ReadAddress( 0x4800, 0x4800, input_port_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, input_port_1_r ),
+		new Memory_ReadAddress( 0x5800, 0x5800, input_port_2_r ),
+	 	new Memory_ReadAddress( 0x6400, 0x6400, routex_prot_read ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, route16_videoram1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( routex_cpu1_writemem )
-		{ 0x0000, 0x37ff, MWA_ROM },
-		{ 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram },
-		{ 0x4800, 0x4800, route16_out0_w },
-		{ 0x5000, 0x5000, route16_out1_w },
-		{ 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size },
-		{ 0xc000, 0xc000, MWA_RAM }, // Stratvox has an off by one error
+	public static Memory_WriteAddress routex_cpu1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
+		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Stratvox has an off by one error
 	                                 // when clearing the screen
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( altcpu1_readmem )
-		{ 0x0000, 0x2fff, MRA_ROM },
-		{ 0x4000, 0x43ff, route16_sharedram_r },
-		{ 0x4800, 0x4800, input_port_0_r },
-		{ 0x5000, 0x5000, input_port_1_r },
-		{ 0x5800, 0x5800, input_port_2_r },
-		{ 0x6000, 0x6000, speakres_in3_r },
-		{ 0x8000, 0xbfff, route16_videoram1_r },
-	MEMORY_END
+	public static Memory_ReadAddress altcpu1_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, route16_sharedram_r ),
+		new Memory_ReadAddress( 0x4800, 0x4800, input_port_0_r ),
+		new Memory_ReadAddress( 0x5000, 0x5000, input_port_1_r ),
+		new Memory_ReadAddress( 0x5800, 0x5800, input_port_2_r ),
+		new Memory_ReadAddress( 0x6000, 0x6000, speakres_in3_r ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, route16_videoram1_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( altcpu1_writemem )
-		{ 0x0000, 0x2fff, MWA_ROM },
-		{ 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram },
-		{ 0x4800, 0x4800, route16_out0_w },
-		{ 0x5000, 0x5000, route16_out1_w },
-		{ 0x5800, 0x5800, speakres_out2_w },
-		{ 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size },
-		{ 0xc000, 0xc000, MWA_RAM }, // Speak & Rescue/Space Echo have same off by one error
-	MEMORY_END
+	public static Memory_WriteAddress altcpu1_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
+		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
+		new Memory_WriteAddress( 0x5800, 0x5800, speakres_out2_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Speak & Rescue/Space Echo have same off by one error
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( cpu1_writeport )
-		{ 0x6800, 0x6800, AY8910_write_port_0_w },
-		{ 0x6900, 0x6900, AY8910_control_port_0_w },
-	PORT_END
+	public static IO_WritePort cpu1_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x6800, 0x6800, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x6900, 0x6900, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( cpu2_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x4000, 0x43ff, route16_sharedram_r },
-		{ 0x8000, 0xbfff, route16_videoram2_r },
-	MEMORY_END
+	public static Memory_ReadAddress cpu2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, route16_sharedram_r ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, route16_videoram2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cpu2_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2800, 0x2800, DAC_0_data_w }, // Not used by Route 16
-		{ 0x4000, 0x43ff, route16_sharedram_w },
-		{ 0x8000, 0xbfff, route16_videoram2_w, &route16_videoram2 },
-		{ 0xc000, 0xc1ff, MWA_NOP }, // Route 16 sometimes writes outside of
-	MEMORY_END
+	public static Memory_WriteAddress cpu2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2800, 0x2800, DAC_0_data_w ), // Not used by Route 16
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram2_w, &route16_videoram2 ),
+		new Memory_WriteAddress( 0xc000, 0xc1ff, MWA_NOP ), // Route 16 sometimes writes outside of
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( route16 )

@@ -60,130 +60,146 @@ public class fastfred
 	}
 	
 	
-	static MEMORY_READ_START( fastfred_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd3ff, MRA_RAM },
-		{ 0xd800, 0xd8ff, MRA_RAM },
-		{ 0xe000, 0xe000, input_port_0_r },
-		{ 0xe800, 0xe800, input_port_1_r },
-		{ 0xf000, 0xf000, input_port_2_r },
-		{ 0xf800, 0xf800, watchdog_reset_r },
-	MEMORY_END
+	public static Memory_ReadAddress fastfred_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xd8ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_0_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_1_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_2_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fastfred_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd3ff, fastfred_videoram_w, &fastfred_videoram },
-		{ 0xd400, 0xd7ff, fastfred_videoram_w },  // Mirrored for above
-		{ 0xd800, 0xd83f, fastfred_attributes_w, &fastfred_attributesram },
-		{ 0xd840, 0xd85f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size },
-		{ 0xd860, 0xdbff, MWA_RAM }, // Unused, but initialized
-		{ 0xe000, 0xe000, fastfred_background_color_w },
-		{ 0xf000, 0xf000, MWA_NOP }, // Unused, but initialized
-		{ 0xf001, 0xf001, interrupt_enable_w },
-		{ 0xf002, 0xf002, fastfred_colorbank1_w },
-		{ 0xf003, 0xf003, fastfred_colorbank2_w },
-		{ 0xf004, 0xf004, fastfred_charbank1_w },
-		{ 0xf005, 0xf005, fastfred_charbank2_w },
-		{ 0xf006, 0xf006, fastfred_flip_screen_x_w },
-		{ 0xf007, 0xf007, fastfred_flip_screen_y_w },
-		{ 0xf116, 0xf116, fastfred_flip_screen_x_w },
-		{ 0xf117, 0xf117, fastfred_flip_screen_y_w },
-		{ 0xf800, 0xf800, soundlatch_w },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( jumpcoas_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd3ff, MRA_RAM },
-		{ 0xd800, 0xdbff, MRA_RAM },
-		{ 0xe800, 0xe800, input_port_0_r },
-		{ 0xe801, 0xe801, input_port_1_r },
-		{ 0xe802, 0xe802, input_port_2_r },
-		{ 0xe803, 0xe803, input_port_3_r },
-		//{ 0xf800, 0xf800, watchdog_reset_r },  // Why doesn't this work???
-		{ 0xf800, 0xf800, MRA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress fastfred_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, fastfred_videoram_w, &fastfred_videoram ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, fastfred_videoram_w ),  // Mirrored for above
+		new Memory_WriteAddress( 0xd800, 0xd83f, fastfred_attributes_w, &fastfred_attributesram ),
+		new Memory_WriteAddress( 0xd840, 0xd85f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size ),
+		new Memory_WriteAddress( 0xd860, 0xdbff, MWA_RAM ), // Unused, but initialized
+		new Memory_WriteAddress( 0xe000, 0xe000, fastfred_background_color_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xf001, 0xf001, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, fastfred_colorbank1_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, fastfred_colorbank2_w ),
+		new Memory_WriteAddress( 0xf004, 0xf004, fastfred_charbank1_w ),
+		new Memory_WriteAddress( 0xf005, 0xf005, fastfred_charbank2_w ),
+		new Memory_WriteAddress( 0xf006, 0xf006, fastfred_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xf007, 0xf007, fastfred_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xf116, 0xf116, fastfred_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xf117, 0xf117, fastfred_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xf800, 0xf800, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( jumpcoas_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd03f, fastfred_attributes_w, &fastfred_attributesram },
-		{ 0xd040, 0xd05f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size },
-		{ 0xd060, 0xd3ff, MWA_NOP },
-		{ 0xd800, 0xdbff, fastfred_videoram_w, &fastfred_videoram },
-		{ 0xdc00, 0xdfff, fastfred_videoram_w },	/* mirror address, used in the name entry screen */
-		{ 0xe000, 0xe000, fastfred_background_color_w },
-		{ 0xf000, 0xf000, MWA_NOP }, // Unused, but initialized
-		{ 0xf001, 0xf001, interrupt_enable_w },
-		{ 0xf002, 0xf002, fastfred_colorbank1_w },
-		{ 0xf003, 0xf003, fastfred_colorbank2_w },
-		{ 0xf004, 0xf004, fastfred_charbank1_w },
-		{ 0xf005, 0xf005, fastfred_charbank2_w },
-		{ 0xf006, 0xf006, fastfred_flip_screen_x_w },
-		{ 0xf007, 0xf007, fastfred_flip_screen_y_w },
-		{ 0xf116, 0xf116, fastfred_flip_screen_x_w },
-		{ 0xf117, 0xf117, fastfred_flip_screen_y_w },
-		{ 0xf800, 0xf800, AY8910_control_port_0_w },
-		{ 0xf801, 0xf801, AY8910_write_port_0_w },
-	MEMORY_END
-	
-	static MEMORY_READ_START( imago_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x2000, 0x6fff, MRA_ROM },
-		{ 0xb000, 0xb3ff, MRA_RAM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xc800, 0xcbff, MRA_RAM },
-		{ 0xd000, 0xd3ff, MRA_RAM },
-		{ 0xd800, 0xd8ff, MRA_RAM },
-		{ 0xe000, 0xe000, input_port_0_r },
-		{ 0xe800, 0xe800, input_port_1_r },
-		{ 0xf000, 0xf000, input_port_2_r },
-		{ 0xf800, 0xf800, MRA_NOP },
-	MEMORY_END
-	
-	static MEMORY_WRITE_START( imago_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x6fff, MWA_ROM },
-		{ 0xb000, 0xb3ff, MWA_RAM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xcbff, imago_fg_videoram_w, &imago_fg_videoram },
-		{ 0xd000, 0xd3ff, fastfred_videoram_w, &fastfred_videoram },
-		{ 0xd800, 0xd83f, fastfred_attributes_w, &fastfred_attributesram },
-		{ 0xd840, 0xd85f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size },
-		{ 0xd860, 0xd8ff, MWA_RAM }, // Unused, but initialized
-		{ 0xf000, 0xf000, MWA_NOP }, // writes 1 when level starts, 0 when game over
-		{ 0xf001, 0xf001, interrupt_enable_w },
-		{ 0xf002, 0xf002, fastfred_colorbank1_w },
-		{ 0xf003, 0xf003, fastfred_colorbank2_w },
-		{ 0xf004, 0xf004, MWA_NOP }, // initialized with 0 then when written always 1
-		{ 0xf005, 0xf005, imago_charbank_w },
-		{ 0xf006, 0xf006, MWA_NOP }, // always 0
-		{ 0xf007, 0xf007, MWA_NOP }, // always 0
-		{ 0xf800, 0xf800, soundlatch_w },
-	MEMORY_END
-	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x1fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x3000, 0x3000, soundlatch_r },
-		{ 0x7000, 0x7000, MRA_NOP }, // only for Imago, read but not used
-	MEMORY_END
+	public static Memory_ReadAddress jumpcoas_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_0_r ),
+		new Memory_ReadAddress( 0xe801, 0xe801, input_port_1_r ),
+		new Memory_ReadAddress( 0xe802, 0xe802, input_port_2_r ),
+		new Memory_ReadAddress( 0xe803, 0xe803, input_port_3_r ),
+		//new Memory_ReadAddress( 0xf800, 0xf800, watchdog_reset_r ),  // Why doesn't this work???
+		new Memory_ReadAddress( 0xf800, 0xf800, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x1fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x3000, 0x3000, interrupt_enable_w },
-		{ 0x4000, 0x4000, MWA_RAM },  // Reset PSG's
-		{ 0x5000, 0x5000, AY8910_control_port_0_w },
-		{ 0x5001, 0x5001, AY8910_write_port_0_w },
-		{ 0x6000, 0x6000, AY8910_control_port_1_w },
-		{ 0x6001, 0x6001, AY8910_write_port_1_w },
-	MEMORY_END
+	public static Memory_WriteAddress jumpcoas_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd03f, fastfred_attributes_w, &fastfred_attributesram ),
+		new Memory_WriteAddress( 0xd040, 0xd05f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size ),
+		new Memory_WriteAddress( 0xd060, 0xd3ff, MWA_NOP ),
+		new Memory_WriteAddress( 0xd800, 0xdbff, fastfred_videoram_w, &fastfred_videoram ),
+		new Memory_WriteAddress( 0xdc00, 0xdfff, fastfred_videoram_w ),	/* mirror address, used in the name entry screen */
+		new Memory_WriteAddress( 0xe000, 0xe000, fastfred_background_color_w ),
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), // Unused, but initialized
+		new Memory_WriteAddress( 0xf001, 0xf001, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, fastfred_colorbank1_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, fastfred_colorbank2_w ),
+		new Memory_WriteAddress( 0xf004, 0xf004, fastfred_charbank1_w ),
+		new Memory_WriteAddress( 0xf005, 0xf005, fastfred_charbank2_w ),
+		new Memory_WriteAddress( 0xf006, 0xf006, fastfred_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xf007, 0xf007, fastfred_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xf116, 0xf116, fastfred_flip_screen_x_w ),
+		new Memory_WriteAddress( 0xf117, 0xf117, fastfred_flip_screen_y_w ),
+		new Memory_WriteAddress( 0xf800, 0xf800, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xf801, 0xf801, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress imago_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x6fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xb000, 0xb3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc800, 0xcbff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd3ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xd8ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, input_port_0_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_1_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, input_port_2_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress imago_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x6fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, imago_fg_videoram_w, &imago_fg_videoram ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, fastfred_videoram_w, &fastfred_videoram ),
+		new Memory_WriteAddress( 0xd800, 0xd83f, fastfred_attributes_w, &fastfred_attributesram ),
+		new Memory_WriteAddress( 0xd840, 0xd85f, MWA_RAM, &fastfred_spriteram, &fastfred_spriteram_size ),
+		new Memory_WriteAddress( 0xd860, 0xd8ff, MWA_RAM ), // Unused, but initialized
+		new Memory_WriteAddress( 0xf000, 0xf000, MWA_NOP ), // writes 1 when level starts, 0 when game over
+		new Memory_WriteAddress( 0xf001, 0xf001, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, fastfred_colorbank1_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, fastfred_colorbank2_w ),
+		new Memory_WriteAddress( 0xf004, 0xf004, MWA_NOP ), // initialized with 0 then when written always 1
+		new Memory_WriteAddress( 0xf005, 0xf005, imago_charbank_w ),
+		new Memory_WriteAddress( 0xf006, 0xf006, MWA_NOP ), // always 0
+		new Memory_WriteAddress( 0xf007, 0xf007, MWA_NOP ), // always 0
+		new Memory_WriteAddress( 0xf800, 0xf800, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, soundlatch_r ),
+		new Memory_ReadAddress( 0x7000, 0x7000, MRA_NOP ), // only for Imago, read but not used
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x3000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, MWA_RAM ),  // Reset PSG's
+		new Memory_WriteAddress( 0x5000, 0x5000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x5001, 0x5001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0x6001, 0x6001, AY8910_write_port_1_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( fastfred )

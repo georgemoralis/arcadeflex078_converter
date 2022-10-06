@@ -246,28 +246,34 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xffff, MRA_RAM },
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x8000, 0x8000, sound_data_r ),
+		new IO_ReadPort( 0x8004, 0x8004, sound_data_ready_r ),
+		new IO_ReadPort( 0x8005, 0x8005, sound_ready_to_send_r ),
+		new IO_ReadPort( 0x8006, 0x8006, bsmt_ready_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	
-	static PORT_READ_START( sound_readport )
-		{ 0x8000, 0x8000, sound_data_r },
-		{ 0x8004, 0x8004, sound_data_ready_r },
-		{ 0x8005, 0x8005, sound_ready_to_send_r },
-		{ 0x8006, 0x8006, bsmt_ready_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x0000, 0x7fff, bsmt2000_port_w },
-		{ 0x8000, 0x8000, sound_data_w },
-		{ 0x8002, 0x8002, sound_int_state_w },
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x7fff, bsmt2000_port_w ),
+		new IO_WritePort( 0x8000, 0x8000, sound_data_w ),
+		new IO_WritePort( 0x8002, 0x8002, sound_int_state_w ),
 	MEMORY_END
 	
 	
@@ -356,14 +362,14 @@ public class btoads
 	 *************************************/
 	
 	static struct tms34010_config cpu_config =
-	{
+	new IO_WritePort(
 		0,								/* halt on reset */
 		NULL,							/* generate interrupt */
 		btoads_to_shiftreg,				/* write to shiftreg function */
 		btoads_from_shiftreg,			/* read from shiftreg function */
 		0,								/* display address changed */
 		0								/* display interrupt callback */
-	};
+	);
 	
 	
 	
@@ -374,13 +380,13 @@ public class btoads
 	 *************************************/
 	
 	static struct BSMT2000interface bsmt2000_interface =
-	{
+	new IO_WritePort(
 		1,
 		{ 24000000 },
 		{ 12 },
 		{ REGION_SOUND1 },
 		{ 100 }
-	};
+	);
 	
 	
 	
@@ -452,13 +458,13 @@ public class btoads
 	 *************************************/
 	
 	static DRIVER_INIT( btoads )
-	{
+	new IO_WritePort(
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		/* install main CPU speedup */
 		main_speedup = install_mem_read16_handler(0, TOBYTE(0x22410), TOBYTE(0x2241f), main_speedup_r);
-	}
+	)
 	
 	
 	

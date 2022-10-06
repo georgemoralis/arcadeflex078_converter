@@ -128,84 +128,100 @@ public class sauro
 		coin_counter_w(1, 0); // to get the coin counter working in sauro, as it doesn't write 0
 	}
 	
-	static MEMORY_READ_START( sauro_readmem )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xebff, MRA_RAM },
-		{ 0xf000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sauro_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xebff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sauro_writemem )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe7ff, MWA_RAM },
-		{ 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram },
-		{ 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram },
-		{ 0xf800, 0xfbff, tecfri_videoram2_w, &tecfri_videoram2 },
-		{ 0xfc00, 0xffff, tecfri_colorram2_w, &tecfri_colorram2 },
-	MEMORY_END
+	public static Memory_WriteAddress sauro_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, tecfri_videoram2_w, &tecfri_videoram2 ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, tecfri_colorram2_w, &tecfri_colorram2 ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sauro_readport )
-		{ 0x00, 0x00, input_port_2_r },
-		{ 0x20, 0x20, input_port_3_r },
-		{ 0x40, 0x40, input_port_0_r },
-		{ 0x60, 0x60, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort sauro_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_2_r ),
+		new IO_ReadPort( 0x20, 0x20, input_port_3_r ),
+		new IO_ReadPort( 0x40, 0x40, input_port_0_r ),
+		new IO_ReadPort( 0x60, 0x60, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sauro_writeport )
-		{ 0xa0, 0xa0, tecfri_scroll_bg_w, },
-		{ 0xa1, 0xa1, sauro_scroll_fg_w, },
-		{ 0x80, 0x80, sauro_sound_command_w, },
-		{ 0xc0, 0xc0, flip_screen_w, },
-		{ 0xc1, 0xc2, MWA_NOP },
-		{ 0xc3, 0xc3, sauro_coin1_w },
-		{ 0xc4, 0xc4, MWA_NOP },
-		{ 0xc5, 0xc5, sauro_coin2_w },
-		{ 0xc6, 0xce, MWA_NOP },
-		{ 0xe0, 0xe0, watchdog_reset_w },
-	PORT_END
+	public static IO_WritePort sauro_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0xa0, 0xa0, tecfri_scroll_bg_w, ),
+		new IO_WritePort( 0xa1, 0xa1, sauro_scroll_fg_w, ),
+		new IO_WritePort( 0x80, 0x80, sauro_sound_command_w, ),
+		new IO_WritePort( 0xc0, 0xc0, flip_screen_w, ),
+		new IO_WritePort( 0xc1, 0xc2, MWA_NOP ),
+		new IO_WritePort( 0xc3, 0xc3, sauro_coin1_w ),
+		new IO_WritePort( 0xc4, 0xc4, MWA_NOP ),
+		new IO_WritePort( 0xc5, 0xc5, sauro_coin2_w ),
+		new IO_WritePort( 0xc6, 0xce, MWA_NOP ),
+		new IO_WritePort( 0xe0, 0xe0, watchdog_reset_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sauro_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xe000, 0xe000, sauro_sound_command_r },
-	MEMORY_END
+	public static Memory_ReadAddress sauro_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, sauro_sound_command_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sauro_sound_writemem )
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xc000, 0xc000, YM3812_control_port_0_w },
-		{ 0xc001, 0xc001, YM3812_write_port_0_w },
-	//	{ 0xa000, 0xa000, ADPCM_trigger },
-		{ 0xe000, 0xe006, MWA_NOP },
-		{ 0xe00e, 0xe00f, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress sauro_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, YM3812_control_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, YM3812_write_port_0_w ),
+	//	new Memory_WriteAddress( 0xa000, 0xa000, ADPCM_trigger ),
+		new Memory_WriteAddress( 0xe000, 0xe006, MWA_NOP ),
+		new Memory_WriteAddress( 0xe00e, 0xe00f, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( trckydoc_readmem )
-		{ 0x0000, 0xdfff, MRA_ROM },
-		{ 0xe000, 0xe7ff, MRA_RAM },
-		{ 0xf800, 0xf800, input_port_2_r },
-		{ 0xf808, 0xf808, input_port_3_r },
-		{ 0xf810, 0xf810, input_port_0_r },
-		{ 0xf818, 0xf818, input_port_1_r },
-		{ 0xf828, 0xf828, watchdog_reset_r },
-	MEMORY_END
+	public static Memory_ReadAddress trckydoc_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xdfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_2_r ),
+		new Memory_ReadAddress( 0xf808, 0xf808, input_port_3_r ),
+		new Memory_ReadAddress( 0xf810, 0xf810, input_port_0_r ),
+		new Memory_ReadAddress( 0xf818, 0xf818, input_port_1_r ),
+		new Memory_ReadAddress( 0xf828, 0xf828, watchdog_reset_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( trckydoc_writemem )
-		{ 0x0000, 0xdfff, MWA_ROM },
-		{ 0xe000, 0xe7ff, MWA_RAM },
-		{ 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xec00, 0xefff, trckydoc_spriteram_mirror_w }, // it clears sprites from the screen by writing here to set some of the attributes
-		{ 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram },
-		{ 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram },
-		{ 0xf820, 0xf820, YM3812_control_port_0_w },
-		{ 0xf821, 0xf821, YM3812_write_port_0_w },
-		{ 0xf830, 0xf830, tecfri_scroll_bg_w },
-		{ 0xf838, 0xf838, MWA_NOP },
-		{ 0xf839, 0xf839, flip_screen_w },
-		{ 0xf83a, 0xf83a, sauro_coin1_w },
-		{ 0xf83b, 0xf83b, sauro_coin2_w },
-		{ 0xf83c, 0xf83c, watchdog_reset_w },
-		{ 0xf83f, 0xf83f, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress trckydoc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xec00, 0xefff, trckydoc_spriteram_mirror_w ), // it clears sprites from the screen by writing here to set some of the attributes
+		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram ),
+		new Memory_WriteAddress( 0xf820, 0xf820, YM3812_control_port_0_w ),
+		new Memory_WriteAddress( 0xf821, 0xf821, YM3812_write_port_0_w ),
+		new Memory_WriteAddress( 0xf830, 0xf830, tecfri_scroll_bg_w ),
+		new Memory_WriteAddress( 0xf838, 0xf838, MWA_NOP ),
+		new Memory_WriteAddress( 0xf839, 0xf839, flip_screen_w ),
+		new Memory_WriteAddress( 0xf83a, 0xf83a, sauro_coin1_w ),
+		new Memory_WriteAddress( 0xf83b, 0xf83b, sauro_coin2_w ),
+		new Memory_WriteAddress( 0xf83c, 0xf83c, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xf83f, 0xf83f, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( tecfri )
 		PORT_START      /* IN0 */

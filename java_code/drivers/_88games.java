@@ -119,51 +119,59 @@ public class _88games
 		UPD7759_port_w( speech_chip, data );
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x1fff, MRA_RAM },	/* banked ROM + palette RAM */
-		{ 0x2000, 0x37ff, MRA_RAM },
-		{ 0x3800, 0x3fff, bankedram_r },
-		{ 0x5f94, 0x5f94, input_port_0_r },
-	//	{ 0x5f95, 0x5f95, input_port_1_r },
-	//	{ 0x5f96, 0x5f96, input_port_2_r },
-		{ 0x5f95, 0x5f95, cheat1_r },	/* P1 and P2 IO and handle fake button for cheating */
-		{ 0x5f96, 0x5f96, cheat2_r },	/* P3 and P4 IO and handle fake button for cheating */
-		{ 0x5f97, 0x5f97, input_port_3_r },
-		{ 0x5f9b, 0x5f9b, input_port_4_r },
-		{ 0x4000, 0x7fff, K052109_051960_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_RAM ),	/* banked ROM + palette RAM */
+		new Memory_ReadAddress( 0x2000, 0x37ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3800, 0x3fff, bankedram_r ),
+		new Memory_ReadAddress( 0x5f94, 0x5f94, input_port_0_r ),
+	//	new Memory_ReadAddress( 0x5f95, 0x5f95, input_port_1_r ),
+	//	new Memory_ReadAddress( 0x5f96, 0x5f96, input_port_2_r ),
+		new Memory_ReadAddress( 0x5f95, 0x5f95, cheat1_r ),	/* P1 and P2 IO and handle fake button for cheating */
+		new Memory_ReadAddress( 0x5f96, 0x5f96, cheat2_r ),	/* P3 and P4 IO and handle fake button for cheating */
+		new Memory_ReadAddress( 0x5f97, 0x5f97, input_port_3_r ),
+		new Memory_ReadAddress( 0x5f9b, 0x5f9b, input_port_4_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, K052109_051960_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_RAM },	/* banked ROM */
-		{ 0x1000, 0x1fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram },	/* banked ROM + palette RAM */
-		{ 0x2000, 0x2fff, MWA_RAM },
-		{ 0x3000, 0x37ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x3800, 0x3fff, bankedram_w, &ram },
-		{ 0x5f84, 0x5f84, k88games_5f84_w },
-		{ 0x5f88, 0x5f88, watchdog_reset_w },
-		{ 0x5f8c, 0x5f8c, soundlatch_w },
-		{ 0x5f90, 0x5f90, k88games_sh_irqtrigger_w },
-		{ 0x5fc0, 0x5fcf, K051316_ctrl_0_w },
-		{ 0x4000, 0x7fff, K052109_051960_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),	/* banked ROM */
+		new Memory_WriteAddress( 0x1000, 0x1fff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram ),	/* banked ROM + palette RAM */
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x37ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, bankedram_w, &ram ),
+		new Memory_WriteAddress( 0x5f84, 0x5f84, k88games_5f84_w ),
+		new Memory_WriteAddress( 0x5f88, 0x5f88, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x5f8c, 0x5f8c, soundlatch_w ),
+		new Memory_WriteAddress( 0x5f90, 0x5f90, k88games_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0x5fc0, 0x5fcf, K051316_ctrl_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, K052109_051960_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa000, soundlatch_r },
-		{ 0xc001, 0xc001, YM2151_status_port_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x9000, speech_msg_w },
-		{ 0xc000, 0xc000, YM2151_register_port_0_w },
-		{ 0xc001, 0xc001, YM2151_data_port_0_w },
-		{ 0xe000, 0xe000, speech_control_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x9000, speech_msg_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xe000, 0xe000, speech_control_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

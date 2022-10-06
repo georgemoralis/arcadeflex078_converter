@@ -445,59 +445,75 @@ public class lazercmd
 	
 	
 	
-	static MEMORY_WRITE_START( lazercmd_writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x1c00, 0x1c1f, MWA_RAM },
-		{ 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size },
-		{ 0x1f00, 0x1f03, lazercmd_hardware_w },
-	MEMORY_END
+	public static Memory_WriteAddress lazercmd_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1c00, 0x1c1f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x1f00, 0x1f03, lazercmd_hardware_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( lazercmd_readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x1c00, 0x1c1f, MRA_RAM },
-		{ 0x1c20, 0x1eff, MRA_RAM },
-		{ 0x1f00, 0x1f07, lazercmd_hardware_r },
-	MEMORY_END
+	public static Memory_ReadAddress lazercmd_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1c00, 0x1c1f, MRA_RAM ),
+		new Memory_ReadAddress( 0x1c20, 0x1eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1f00, 0x1f07, lazercmd_hardware_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( medlanes_writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x1000, 0x1800, MWA_ROM },
-		{ 0x1c00, 0x1c1f, MWA_RAM },
-		{ 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size },
-		{ 0x1f00, 0x1f03, medlanes_hardware_w },
-	MEMORY_END
+	public static Memory_WriteAddress medlanes_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1000, 0x1800, MWA_ROM ),
+		new Memory_WriteAddress( 0x1c00, 0x1c1f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x1f00, 0x1f03, medlanes_hardware_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( medlanes_readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x1000, 0x1800, MRA_ROM },
-		{ 0x1c00, 0x1c1f, MRA_RAM },
-		{ 0x1c20, 0x1eff, MRA_RAM },
-		{ 0x1f00, 0x1f07, lazercmd_hardware_r },
-	MEMORY_END
+	public static Memory_ReadAddress medlanes_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1000, 0x1800, MRA_ROM ),
+		new Memory_ReadAddress( 0x1c00, 0x1c1f, MRA_RAM ),
+		new Memory_ReadAddress( 0x1c20, 0x1eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1f00, 0x1f07, lazercmd_hardware_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bbonk_writemem )
-		{ 0x0000, 0x0bff, MWA_ROM },
-		{ 0x1c00, 0x1c1f, MWA_RAM },
-		{ 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size },
-		{ 0x1f00, 0x1f03, bbonk_hardware_w },
-	MEMORY_END
+	public static Memory_WriteAddress bbonk_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0bff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1c00, 0x1c1f, MWA_RAM ),
+		new Memory_WriteAddress( 0x1c20, 0x1eff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x1f00, 0x1f03, bbonk_hardware_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( bbonk_readmem )
-		{ 0x0000, 0x0bff, MRA_ROM },
-		{ 0x1c00, 0x1c1f, MRA_RAM },
-		{ 0x1c20, 0x1eff, MRA_RAM },
-		{ 0x1f00, 0x1f07, lazercmd_hardware_r },
-	MEMORY_END
+	public static Memory_ReadAddress bbonk_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0bff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1c00, 0x1c1f, MRA_RAM ),
+		new Memory_ReadAddress( 0x1c20, 0x1eff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1f00, 0x1f07, lazercmd_hardware_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( lazercmd_writeport )
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, lazercmd_ctrl_port_w },
-		{ S2650_DATA_PORT, S2650_DATA_PORT, lazercmd_data_port_w },
-	PORT_END
+	public static IO_WritePort lazercmd_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( S2650_CTRL_PORT, S2650_CTRL_PORT, lazercmd_ctrl_port_w ),
+		new IO_WritePort( S2650_DATA_PORT, S2650_DATA_PORT, lazercmd_data_port_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( lazercmd_readport )
-		{ S2650_CTRL_PORT, S2650_CTRL_PORT, lazercmd_ctrl_port_r },
-		{ S2650_DATA_PORT, S2650_DATA_PORT, lazercmd_data_port_r },
-	PORT_END
+	public static IO_ReadPort lazercmd_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( S2650_CTRL_PORT, S2650_CTRL_PORT, lazercmd_ctrl_port_r ),
+		new IO_ReadPort( S2650_DATA_PORT, S2650_DATA_PORT, lazercmd_data_port_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( lazercmd )

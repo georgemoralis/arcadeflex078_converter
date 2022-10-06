@@ -317,117 +317,133 @@ public class nycaptor
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + ((data&0x08)>>3)*0x4000 );
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xc7ff, nycaptor_videoram_r },
-		{ 0xd000, 0xd000, nycaptor_mcu_r },
-		{ 0xd002, 0xd002, nycaptor_generic_control_r },
-		{ 0xd400, 0xd400, from_snd_r },
-		{ 0xd401, 0xd401, MRA_NOP },
-		{ 0xd800, 0xd800, input_port_0_r },
-		{ 0xd801, 0xd801, input_port_1_r },
-		{ 0xd802, 0xd802, input_port_2_r },
-		{ 0xd803, 0xd803, input_port_3_r },
-		{ 0xd804, 0xd804, input_port_4_r },
-		{ 0xd805, 0xd805, nycaptor_mcu_status_r1 },
-		{ 0xd806, 0xd806, MRA_NOP }, /* unknown ?sound? */
-		{ 0xd807, 0xd807, nycaptor_mcu_status_r2 },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_r},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_r },
-		{ 0xdd00, 0xdeff, nycaptor_palette_r },
-		{ 0xdf03, 0xdf03, nycaptor_gfxctrl_r },
-		{ 0xe000, 0xffff, nycaptor_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, nycaptor_videoram_r ),
+		new Memory_ReadAddress( 0xd000, 0xd000, nycaptor_mcu_r ),
+		new Memory_ReadAddress( 0xd002, 0xd002, nycaptor_generic_control_r ),
+		new Memory_ReadAddress( 0xd400, 0xd400, from_snd_r ),
+		new Memory_ReadAddress( 0xd401, 0xd401, MRA_NOP ),
+		new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ),
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ),
+		new Memory_ReadAddress( 0xd802, 0xd802, input_port_2_r ),
+		new Memory_ReadAddress( 0xd803, 0xd803, input_port_3_r ),
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_4_r ),
+		new Memory_ReadAddress( 0xd805, 0xd805, nycaptor_mcu_status_r1 ),
+		new Memory_ReadAddress( 0xd806, 0xd806, MRA_NOP ), /* unknown ?sound? */
+		new Memory_ReadAddress( 0xd807, 0xd807, nycaptor_mcu_status_r2 ),
+		new Memory_ReadAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_r),
+		new Memory_ReadAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_r ),
+		new Memory_ReadAddress( 0xdd00, 0xdeff, nycaptor_palette_r ),
+		new Memory_ReadAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, nycaptor_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size },
-		{ 0xd000, 0xd000, nycaptor_mcu_w },
-		{ 0xd001, 0xd001, sub_cpu_halt_w },
-		{ 0xd002, 0xd002, nycaptor_generic_control_w },	/* bit 3 - memory bank at 0x8000-0xbfff */
-		{ 0xd400, 0xd400, sound_command_w },
-		{ 0xd403, 0xd403, sound_cpu_reset_w },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_w},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram },
-		{ 0xdce1, 0xdce1, MWA_NOP},
-		{ 0xdd00, 0xdeff, nycaptor_palette_w },
-		{ 0xdf03, 0xdf03, nycaptor_gfxctrl_w },
-		{ 0xe000, 0xffff, nycaptor_sharedram_w,&nycaptor_sharedram },
-	MEMORY_END
-	
-	
-	static MEMORY_READ_START( readmem_sub )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xd800, 0xd800, input_port_0_r },
-		{ 0xd801, 0xd801, input_port_1_r },
-		{ 0xd802, 0xd802, input_port_2_r },
-		{ 0xd803, 0xd803, input_port_3_r },
-		{ 0xd804, 0xd804, input_port_4_r },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_r},
-		{ 0xdd00, 0xdeff, nycaptor_palette_r },
-		{ 0xdf00, 0xdf00, nycaptor_bx_r },
-		{ 0xdf01, 0xdf01, nycaptor_by_r },
-		{ 0xdf02, 0xdf02, nycaptor_b_r },
-		{ 0xdf03, 0xdf03, nycaptor_gfxctrl_r },
-		{ 0xe000, 0xffff, nycaptor_sharedram_r },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd000, nycaptor_mcu_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, sub_cpu_halt_w ),
+		new Memory_WriteAddress( 0xd002, 0xd002, nycaptor_generic_control_w ),	/* bit 3 - memory bank at 0x8000-0xbfff */
+		new Memory_WriteAddress( 0xd400, 0xd400, sound_command_w ),
+		new Memory_WriteAddress( 0xd403, 0xd403, sound_cpu_reset_w ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_w),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram ),
+		new Memory_WriteAddress( 0xdce1, 0xdce1, MWA_NOP),
+		new Memory_WriteAddress( 0xdd00, 0xdeff, nycaptor_palette_w ),
+		new Memory_WriteAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, nycaptor_sharedram_w,&nycaptor_sharedram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem_sub )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_w},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram },
-		{ 0xdd00, 0xdeff, nycaptor_palette_w },
-		{ 0xdf03, 0xdf03, MWA_NOP },/* ? gfx control ? */
-		{ 0xe000, 0xffff, nycaptor_sharedram_w },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sub[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ),
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ),
+		new Memory_ReadAddress( 0xd802, 0xd802, input_port_2_r ),
+		new Memory_ReadAddress( 0xd803, 0xd803, input_port_3_r ),
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_4_r ),
+		new Memory_ReadAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_r),
+		new Memory_ReadAddress( 0xdd00, 0xdeff, nycaptor_palette_r ),
+		new Memory_ReadAddress( 0xdf00, 0xdf00, nycaptor_bx_r ),
+		new Memory_ReadAddress( 0xdf01, 0xdf01, nycaptor_by_r ),
+		new Memory_ReadAddress( 0xdf02, 0xdf02, nycaptor_b_r ),
+		new Memory_ReadAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_r ),
+		new Memory_ReadAddress( 0xe000, 0xffff, nycaptor_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xd000, 0xd000, soundlatch_r },
-		{ 0xd200, 0xd200, MRA_NOP },
-		{ 0xe000, 0xefff, MRA_NOP },
-	MEMORY_END
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xc800, 0xc800, AY8910_control_port_0_w },
-		{ 0xc801, 0xc801, AY8910_write_port_0_w },
-		{ 0xc802, 0xc802, AY8910_control_port_1_w },
-		{ 0xc803, 0xc803, AY8910_write_port_1_w },
-		{ 0xc900, 0xc90d, MSM5232_0_w },
-		{ 0xca00, 0xca00, MWA_NOP},
-		{ 0xcb00, 0xcb00, MWA_NOP},
-		{ 0xcc00, 0xcc00, MWA_NOP},
-		{ 0xd000, 0xd000, to_main_w },
-		{ 0xd200, 0xd200, nmi_enable_w },
-		{ 0xd400, 0xd400, nmi_disable_w },
-		{ 0xd600, 0xd600, MWA_NOP},
-		{ 0xe000, 0xefff, MWA_NOP },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sub[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_w),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram ),
+		new Memory_WriteAddress( 0xdd00, 0xdeff, nycaptor_palette_w ),
+		new Memory_WriteAddress( 0xdf03, 0xdf03, MWA_NOP ),/* ? gfx control ? */
+		new Memory_WriteAddress( 0xe000, 0xffff, nycaptor_sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( m68705_readmem )
-		{ 0x0000, 0x0000, nycaptor_68705_portA_r },
-		{ 0x0001, 0x0001, nycaptor_68705_portB_r },
-		{ 0x0002, 0x0002, nycaptor_68705_portC_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd000, soundlatch_r ),
+		new Memory_ReadAddress( 0xd200, 0xd200, MRA_NOP ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m68705_writemem )
-		{ 0x0000, 0x0000, nycaptor_68705_portA_w },
-		{ 0x0001, 0x0001, nycaptor_68705_portB_w },
-		{ 0x0002, 0x0002, nycaptor_68705_portC_w },
-		{ 0x0004, 0x0004, nycaptor_68705_ddrA_w },
-		{ 0x0005, 0x0005, nycaptor_68705_ddrB_w },
-		{ 0x0006, 0x0006, nycaptor_68705_ddrC_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc800, 0xc800, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xc802, 0xc802, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xc803, 0xc803, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xc900, 0xc90d, MSM5232_0_w ),
+		new Memory_WriteAddress( 0xca00, 0xca00, MWA_NOP),
+		new Memory_WriteAddress( 0xcb00, 0xcb00, MWA_NOP),
+		new Memory_WriteAddress( 0xcc00, 0xcc00, MWA_NOP),
+		new Memory_WriteAddress( 0xd000, 0xd000, to_main_w ),
+		new Memory_WriteAddress( 0xd200, 0xd200, nmi_enable_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, nmi_disable_w ),
+		new Memory_WriteAddress( 0xd600, 0xd600, MWA_NOP),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_NOP ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_ReadAddress m68705_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, nycaptor_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, nycaptor_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, nycaptor_68705_portC_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress m68705_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, nycaptor_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, nycaptor_68705_portB_w ),
+		new Memory_WriteAddress( 0x0002, 0x0002, nycaptor_68705_portC_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, nycaptor_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0005, 0x0005, nycaptor_68705_ddrB_w ),
+		new Memory_WriteAddress( 0x0006, 0x0006, nycaptor_68705_ddrC_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Cycle Shooting */
@@ -447,70 +463,78 @@ public class nycaptor
 	
 	
 	
-	static MEMORY_READ_START( cyclshtg_readmem )
-	  { 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-	  { 0xc000, 0xcfff, nycaptor_videoram_r },
-	  { 0xd000, 0xd000, cyclshtg_mcu_r },
-		{ 0xd002, 0xd002, nycaptor_generic_control_r },
-	  { 0xd400, 0xd400, from_snd_r },
-		{ 0xd800, 0xd800, input_port_0_r },
-		{ 0xd801, 0xd801, input_port_1_r },
-		{ 0xd802, 0xd802, input_port_2_r },
-		{ 0xd803, 0xd803, input_port_3_r },
-		{ 0xd804, 0xd804, input_port_4_r },
-		{ 0xd805, 0xd805, cyclshtg_mcu_status_r },
-		{ 0xd806, 0xd806, MRA_NOP },
-		{ 0xd807, 0xd807, cyclshtg_mcu_status_r },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_r},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_r },
-		{ 0xdd00, 0xdeff, nycaptor_palette_r },
-		{ 0xdf03, 0xdf03, nycaptor_gfxctrl_r },
-	  { 0xe000, 0xffff, nycaptor_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress cyclshtg_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	  new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+	  new Memory_ReadAddress( 0xc000, 0xcfff, nycaptor_videoram_r ),
+	  new Memory_ReadAddress( 0xd000, 0xd000, cyclshtg_mcu_r ),
+		new Memory_ReadAddress( 0xd002, 0xd002, nycaptor_generic_control_r ),
+	  new Memory_ReadAddress( 0xd400, 0xd400, from_snd_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ),
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ),
+		new Memory_ReadAddress( 0xd802, 0xd802, input_port_2_r ),
+		new Memory_ReadAddress( 0xd803, 0xd803, input_port_3_r ),
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_4_r ),
+		new Memory_ReadAddress( 0xd805, 0xd805, cyclshtg_mcu_status_r ),
+		new Memory_ReadAddress( 0xd806, 0xd806, MRA_NOP ),
+		new Memory_ReadAddress( 0xd807, 0xd807, cyclshtg_mcu_status_r ),
+		new Memory_ReadAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_r),
+		new Memory_ReadAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_r ),
+		new Memory_ReadAddress( 0xdd00, 0xdeff, nycaptor_palette_r ),
+		new Memory_ReadAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_r ),
+	  new Memory_ReadAddress( 0xe000, 0xffff, nycaptor_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cyclshtg_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xcfff, nycaptor_videoram_w, &videoram, &videoram_size },
-		{ 0xd000, 0xd000, cyclshtg_mcu_w },
-		{ 0xd001, 0xd001, sub_cpu_halt_w },
-		{ 0xd002, 0xd002, nycaptor_generic_control_w },
-		{ 0xd400, 0xd400, sound_command_w },
-		{ 0xd403, 0xd403, sound_cpu_reset_w },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_w},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram },
-		{ 0xdce1, 0xdce1, MWA_NOP},
-		{ 0xdd00, 0xdeff, nycaptor_palette_w },
-		//{ 0xdf03, 0xdf03, nycaptor_gfxctrl_w },
-		{ 0xe000, 0xffff, nycaptor_sharedram_w,&nycaptor_sharedram },
-	MEMORY_END
+	public static Memory_WriteAddress cyclshtg_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, nycaptor_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd000, cyclshtg_mcu_w ),
+		new Memory_WriteAddress( 0xd001, 0xd001, sub_cpu_halt_w ),
+		new Memory_WriteAddress( 0xd002, 0xd002, nycaptor_generic_control_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, sound_command_w ),
+		new Memory_WriteAddress( 0xd403, 0xd403, sound_cpu_reset_w ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_w),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram ),
+		new Memory_WriteAddress( 0xdce1, 0xdce1, MWA_NOP),
+		new Memory_WriteAddress( 0xdd00, 0xdeff, nycaptor_palette_w ),
+		//new Memory_WriteAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_w ),
+		new Memory_WriteAddress( 0xe000, 0xffff, nycaptor_sharedram_w,&nycaptor_sharedram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( cyclshtg_readmem_sub )
-	  { 0x0000, 0xbfff, MRA_ROM },
-	  { 0xd800, 0xd800, input_port_0_r },
-		{ 0xd801, 0xd801, input_port_1_r },
-		{ 0xd802, 0xd802, input_port_2_r },
-		{ 0xd803, 0xd803, input_port_3_r },
-		{ 0xd804, 0xd804, input_port_4_r },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_r},
-		{ 0xdd00, 0xdeff, nycaptor_palette_r },
-		{ 0xdf00, 0xdf00, nycaptor_bx_r },
-		{ 0xdf01, 0xdf01, nycaptor_by_r },
-		{ 0xdf02, 0xdf02, nycaptor_b_r },
-		{ 0xdf03, 0xdf03, nycaptor_gfxctrl_r },
-	  { 0xe000, 0xffff, nycaptor_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress cyclshtg_readmem_sub[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+	  new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+	  new Memory_ReadAddress( 0xd800, 0xd800, input_port_0_r ),
+		new Memory_ReadAddress( 0xd801, 0xd801, input_port_1_r ),
+		new Memory_ReadAddress( 0xd802, 0xd802, input_port_2_r ),
+		new Memory_ReadAddress( 0xd803, 0xd803, input_port_3_r ),
+		new Memory_ReadAddress( 0xd804, 0xd804, input_port_4_r ),
+		new Memory_ReadAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_r),
+		new Memory_ReadAddress( 0xdd00, 0xdeff, nycaptor_palette_r ),
+		new Memory_ReadAddress( 0xdf00, 0xdf00, nycaptor_bx_r ),
+		new Memory_ReadAddress( 0xdf01, 0xdf01, nycaptor_by_r ),
+		new Memory_ReadAddress( 0xdf02, 0xdf02, nycaptor_b_r ),
+		new Memory_ReadAddress( 0xdf03, 0xdf03, nycaptor_gfxctrl_r ),
+	  new Memory_ReadAddress( 0xe000, 0xffff, nycaptor_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( cyclshtg_writemem_sub )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size },
-		{ 0xdc00, 0xdc9f, nycaptor_spriteram_w},
-		{ 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram },
-		{ 0xdd00, 0xdeff, nycaptor_palette_w },
-		{ 0xdf03, 0xdf03, MWA_NOP },
-		{ 0xe000, 0xffff, nycaptor_sharedram_w },
-	MEMORY_END
+	public static Memory_WriteAddress cyclshtg_writemem_sub[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, nycaptor_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, nycaptor_spriteram_w),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, nycaptor_scrlram_w, &nycaptor_scrlram ),
+		new Memory_WriteAddress( 0xdd00, 0xdeff, nycaptor_palette_w ),
+		new Memory_WriteAddress( 0xdf03, 0xdf03, MWA_NOP ),
+		new Memory_WriteAddress( 0xe000, 0xffff, nycaptor_sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Cycle Shooting */

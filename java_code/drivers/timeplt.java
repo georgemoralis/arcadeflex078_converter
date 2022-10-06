@@ -75,32 +75,36 @@ public class timeplt
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6004, 0x6004, psurge_protection_r },	/* psurge only */
-		{ 0xa000, 0xbfff, MRA_RAM },
-		{ 0xc000, 0xc000, timeplt_scanline_r },
-		{ 0xc200, 0xc200, input_port_4_r },	/* DSW2 */
-		{ 0xc300, 0xc300, input_port_0_r },	/* IN0 */
-		{ 0xc320, 0xc320, input_port_1_r },	/* IN1 */
-		{ 0xc340, 0xc340, input_port_2_r },	/* IN2 */
-		{ 0xc360, 0xc360, input_port_3_r },	/* DSW1 */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6004, 0x6004, psurge_protection_r ),	/* psurge only */
+		new Memory_ReadAddress( 0xa000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc000, timeplt_scanline_r ),
+		new Memory_ReadAddress( 0xc200, 0xc200, input_port_4_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0xc300, 0xc300, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0xc320, 0xc320, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xc340, 0xc340, input_port_2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0xc360, 0xc360, input_port_3_r ),	/* DSW1 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0xa000, 0xa3ff, timeplt_colorram_w, &timeplt_colorram },
-		{ 0xa400, 0xa7ff, timeplt_videoram_w, &timeplt_videoram },
-		{ 0xa800, 0xafff, MWA_RAM },
-		{ 0xb010, 0xb03f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xb410, 0xb43f, MWA_RAM, &spriteram_2 },
-		{ 0xc000, 0xc000, soundlatch_w },
-		{ 0xc200, 0xc200, watchdog_reset_w },
-		{ 0xc300, 0xc300, interrupt_enable_w },
-		{ 0xc302, 0xc302, timeplt_flipscreen_w },
-		{ 0xc304, 0xc304, timeplt_sh_irqtrigger_w },
-		{ 0xc30a, 0xc30c, timeplt_coin_counter_w },  /* c30b is not used */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, timeplt_colorram_w, &timeplt_colorram ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, timeplt_videoram_w, &timeplt_videoram ),
+		new Memory_WriteAddress( 0xa800, 0xafff, MWA_RAM ),
+		new Memory_WriteAddress( 0xb010, 0xb03f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xb410, 0xb43f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0xc000, 0xc000, soundlatch_w ),
+		new Memory_WriteAddress( 0xc200, 0xc200, watchdog_reset_w ),
+		new Memory_WriteAddress( 0xc300, 0xc300, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xc302, 0xc302, timeplt_flipscreen_w ),
+		new Memory_WriteAddress( 0xc304, 0xc304, timeplt_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0xc30a, 0xc30c, timeplt_coin_counter_w ),  /* c30b is not used */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( timeplt )

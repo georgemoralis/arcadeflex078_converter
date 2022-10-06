@@ -77,73 +77,85 @@ public class lsasquad
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, MRA_BANK1 },
-		{ 0xa000, 0xe5ff, MRA_RAM },
-		{ 0xe800, 0xe800, input_port_0_r },	/* DSWA */
-		{ 0xe801, 0xe801, input_port_1_r },	/* DSWB */
-		{ 0xe802, 0xe802, input_port_2_r },	/* DSWC */
-		{ 0xe803, 0xe803, lsasquad_mcu_status_r },	/* COIN + 68705 status */
-		{ 0xe804, 0xe804, input_port_4_r },	/* IN0 */
-		{ 0xe805, 0xe805, input_port_5_r },	/* IN1 */
-		{ 0xe806, 0xe806, input_port_6_r },	/* START */
-		{ 0xe807, 0xe807, input_port_7_r },	/* SERVICE/TILT */
-		{ 0xec00, 0xec00, lsasquad_sound_result_r },
-		{ 0xec01, 0xec01, lsasquad_sound_status_r },
-		{ 0xee00, 0xee00, lsasquad_mcu_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xa000, 0xe5ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe800, 0xe800, input_port_0_r ),	/* DSWA */
+		new Memory_ReadAddress( 0xe801, 0xe801, input_port_1_r ),	/* DSWB */
+		new Memory_ReadAddress( 0xe802, 0xe802, input_port_2_r ),	/* DSWC */
+		new Memory_ReadAddress( 0xe803, 0xe803, lsasquad_mcu_status_r ),	/* COIN + 68705 status */
+		new Memory_ReadAddress( 0xe804, 0xe804, input_port_4_r ),	/* IN0 */
+		new Memory_ReadAddress( 0xe805, 0xe805, input_port_5_r ),	/* IN1 */
+		new Memory_ReadAddress( 0xe806, 0xe806, input_port_6_r ),	/* START */
+		new Memory_ReadAddress( 0xe807, 0xe807, input_port_7_r ),	/* SERVICE/TILT */
+		new Memory_ReadAddress( 0xec00, 0xec00, lsasquad_sound_result_r ),
+		new Memory_ReadAddress( 0xec01, 0xec01, lsasquad_sound_status_r ),
+		new Memory_ReadAddress( 0xee00, 0xee00, lsasquad_mcu_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa000, 0xbfff, MWA_RAM },	/* SRAM */
-		{ 0xc000, 0xdfff, MWA_RAM, &videoram, &videoram_size },	/* SCREEN RAM */
-		{ 0xe000, 0xe3ff, MWA_RAM, &lsasquad_scrollram },	/* SCROLL RAM */
-		{ 0xe400, 0xe5ff, MWA_RAM, &spriteram, &spriteram_size },	/* OBJECT RAM */
-		{ 0xea00, 0xea00, lsasquad_bankswitch_w },
-		{ 0xec00, 0xec00, lsasquad_sound_command_w },
-		{ 0xee00, 0xee00, lsasquad_mcu_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_RAM ),	/* SRAM */
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, &videoram, &videoram_size ),	/* SCREEN RAM */
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM, &lsasquad_scrollram ),	/* SCROLL RAM */
+		new Memory_WriteAddress( 0xe400, 0xe5ff, MWA_RAM, &spriteram, &spriteram_size ),	/* OBJECT RAM */
+		new Memory_WriteAddress( 0xea00, 0xea00, lsasquad_bankswitch_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, lsasquad_sound_command_w ),
+		new Memory_WriteAddress( 0xee00, 0xee00, lsasquad_mcu_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xa000, 0xa000, YM2203_status_port_0_r },
-		{ 0xa001, 0xa001, YM2203_read_port_0_r },
-		{ 0xd000, 0xd000, lsasquad_sh_sound_command_r },
-		{ 0xd800, 0xd800, lsasquad_sound_status_r },
-		{ 0xe000, 0xefff, MRA_ROM },	/* space for diagnostic ROM? */
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xd000, 0xd000, lsasquad_sh_sound_command_r ),
+		new Memory_ReadAddress( 0xd800, 0xd800, lsasquad_sound_status_r ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_ROM ),	/* space for diagnostic ROM? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xa000, 0xa000, YM2203_control_port_0_w },
-		{ 0xa001, 0xa001, YM2203_write_port_0_w },
-		{ 0xc000, 0xc000, AY8910_control_port_0_w },
-		{ 0xc001, 0xc001, AY8910_write_port_0_w },
-		{ 0xd000, 0xd000, lsasquad_sh_result_w },
-		{ 0xd400, 0xd400, lsasquad_sh_nmi_disable_w },
-		{ 0xd800, 0xd800, lsasquad_sh_nmi_enable_w },
-		{ 0xe000, 0xefff, MWA_ROM },	/* space for diagnostic ROM? */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa000, 0xa000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xc000, 0xc000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xd000, 0xd000, lsasquad_sh_result_w ),
+		new Memory_WriteAddress( 0xd400, 0xd400, lsasquad_sh_nmi_disable_w ),
+		new Memory_WriteAddress( 0xd800, 0xd800, lsasquad_sh_nmi_enable_w ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_ROM ),	/* space for diagnostic ROM? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( m68705_readmem )
-		{ 0x0000, 0x0000, lsasquad_68705_portA_r },
-		{ 0x0001, 0x0001, lsasquad_68705_portB_r },
-		{ 0x0002, 0x0002, lsasquad_mcu_status_r },
-		{ 0x0010, 0x007f, MRA_RAM },
-		{ 0x0080, 0x07ff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress m68705_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0000, lsasquad_68705_portA_r ),
+		new Memory_ReadAddress( 0x0001, 0x0001, lsasquad_68705_portB_r ),
+		new Memory_ReadAddress( 0x0002, 0x0002, lsasquad_mcu_status_r ),
+		new Memory_ReadAddress( 0x0010, 0x007f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0080, 0x07ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( m68705_writemem )
-		{ 0x0000, 0x0000, lsasquad_68705_portA_w },
-		{ 0x0001, 0x0001, lsasquad_68705_portB_w },
-		{ 0x0004, 0x0004, lsasquad_68705_ddrA_w },
-		{ 0x0005, 0x0005, lsasquad_68705_ddrB_w },
-		{ 0x0010, 0x007f, MWA_RAM },
-		{ 0x0080, 0x07ff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress m68705_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0000, lsasquad_68705_portA_w ),
+		new Memory_WriteAddress( 0x0001, 0x0001, lsasquad_68705_portB_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, lsasquad_68705_ddrA_w ),
+		new Memory_WriteAddress( 0x0005, 0x0005, lsasquad_68705_ddrB_w ),
+		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
+		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

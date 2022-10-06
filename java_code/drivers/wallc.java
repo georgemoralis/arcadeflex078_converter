@@ -180,40 +180,44 @@ public class wallc
 		}
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
 	
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0x8400, 0x87ff, MRA_RAM }, /* mirror */
-		{ 0x8800, 0x8bff, MRA_RAM }, /* mirror */
-		{ 0x8c00, 0x8fff, MRA_RAM }, /* mirror */
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ), /* mirror */
+		new Memory_ReadAddress( 0x8800, 0x8bff, MRA_RAM ), /* mirror */
+		new Memory_ReadAddress( 0x8c00, 0x8fff, MRA_RAM ), /* mirror */
 	
-		{ 0xa000, 0xa3ff, MRA_RAM },
+		new Memory_ReadAddress( 0xa000, 0xa3ff, MRA_RAM ),
 	
-		{ 0xb000, 0xb000, input_port_0_r },
-		{ 0xb200, 0xb200, input_port_1_r },
-		{ 0xb400, 0xb400, input_port_2_r },
-		{ 0xb600, 0xb600, input_port_3_r },
-	MEMORY_END
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_0_r ),
+		new Memory_ReadAddress( 0xb200, 0xb200, input_port_1_r ),
+		new Memory_ReadAddress( 0xb400, 0xb400, input_port_2_r ),
+		new Memory_ReadAddress( 0xb600, 0xb600, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 	
-		{ 0x8000, 0x83ff, wallc_videoram_w, &videoram },	/* 2114, 2114 */
-		{ 0x8400, 0x87ff, wallc_videoram_w },	/* mirror */
-		{ 0x8800, 0x8bff, wallc_videoram_w },	/* mirror */
-		{ 0x8c00, 0x8fff, wallc_videoram_w },	/* mirror */
+		new Memory_WriteAddress( 0x8000, 0x83ff, wallc_videoram_w, &videoram ),	/* 2114, 2114 */
+		new Memory_WriteAddress( 0x8400, 0x87ff, wallc_videoram_w ),	/* mirror */
+		new Memory_WriteAddress( 0x8800, 0x8bff, wallc_videoram_w ),	/* mirror */
+		new Memory_WriteAddress( 0x8c00, 0x8fff, wallc_videoram_w ),	/* mirror */
 	
-		{ 0xa000, 0xa3ff, MWA_RAM },		/* 2114, 2114 */
+		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM ),		/* 2114, 2114 */
 	
-		{ 0xb000, 0xb000, wc_b0 }, /*?*/
-		{ 0xb100, 0xb100, wc_b1 }, /*?*/
-		{ 0xb200, 0xb200, wc_b2 }, /*?*/
+		new Memory_WriteAddress( 0xb000, 0xb000, wc_b0 ), /*?*/
+		new Memory_WriteAddress( 0xb100, 0xb100, wc_b1 ), /*?*/
+		new Memory_WriteAddress( 0xb200, 0xb200, wc_b2 ), /*?*/
 	
-		{ 0xb500, 0xb500, AY8910_control_port_0_w },
-		{ 0xb600, 0xb600, AY8910_write_port_0_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0xb500, 0xb500, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xb600, 0xb600, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( wallc )

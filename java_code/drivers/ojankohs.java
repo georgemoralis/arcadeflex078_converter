@@ -232,119 +232,145 @@ public class ojankohs
 	}
 	
 	
-	static MEMORY_READ_START( readmem_ojankohs )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x8fff, ojankohs_videoram_r },
-		{ 0x9000, 0x9fff, ojankohs_colorram_r },
-		{ 0xa000, 0xb7ff, MRA_RAM },
-		{ 0xb800, 0xbfff, ojankohs_palette_r },
-		{ 0xc000, 0xffff, MRA_BANK1 },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_ojankohs[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x8fff, ojankohs_videoram_r ),
+		new Memory_ReadAddress( 0x9000, 0x9fff, ojankohs_colorram_r ),
+		new Memory_ReadAddress( 0xa000, 0xb7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb800, 0xbfff, ojankohs_palette_r ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_ojankohs )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x8fff, ojankohs_videoram_w },
-		{ 0x9000, 0x9fff, ojankohs_colorram_w },
-		{ 0xa000, 0xb7ff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0xb800, 0xbfff, ojankohs_palette_w },
-		{ 0xc000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_ojankohs[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, ojankohs_videoram_w ),
+		new Memory_WriteAddress( 0x9000, 0x9fff, ojankohs_colorram_w ),
+		new Memory_WriteAddress( 0xa000, 0xb7ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xb800, 0xbfff, ojankohs_palette_w ),
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_ojankoy )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x9fff, ojankohs_videoram_r },
-		{ 0xa000, 0xafff, ojankohs_colorram_r },
-		{ 0xb000, 0xbfff, MRA_RAM },
-		{ 0xc000, 0xffff, MRA_BANK1 },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_ojankoy[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x9fff, ojankohs_videoram_r ),
+		new Memory_ReadAddress( 0xa000, 0xafff, ojankohs_colorram_r ),
+		new Memory_ReadAddress( 0xb000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_ojankoy )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x9fff, ojankohs_videoram_w },
-		{ 0xa000, 0xafff, ojankohs_colorram_w },
-		{ 0xb000, 0xbfff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0xc000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_ojankoy[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, ojankohs_videoram_w ),
+		new Memory_WriteAddress( 0xa000, 0xafff, ojankohs_colorram_w ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_ojankoc )
-		{ 0x0000, 0x77ff, MRA_ROM },
-		{ 0x7800, 0x7fff, MRA_RAM },
-		{ 0x8000, 0xffff, MRA_BANK1 },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_ojankoc[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x77ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x7800, 0x7fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_BANK1 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_ojankoc )
-		{ 0x0000, 0x77ff, MWA_ROM },
-		{ 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0x8000, 0xffff, ojankoc_videoram_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_ojankoc[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, ojankoc_videoram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static PORT_READ_START( readport_ojankohs )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, ojankohs_keymatrix_r },
-		{ 0x02, 0x02, input_port_1_r },
-		{ 0x06, 0x06, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport_ojankohs[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, ojankohs_keymatrix_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_1_r ),
+		new IO_ReadPort( 0x06, 0x06, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_ojankohs )
-		{ 0x00, 0x00, ojankohs_portselect_w },
-		{ 0x01, 0x01, ojankohs_rombank_w },
-		{ 0x02, 0x02, ojankohs_gfxreg_w },
-		{ 0x03, 0x03, ojankohs_adpcm_reset_w },
-		{ 0x04, 0x04, ojankohs_flipscreen_w },
-		{ 0x05, 0x05, ojankohs_msm5205_w },
-		{ 0x06, 0x06, AY8910_write_port_0_w },
-		{ 0x07, 0x07, AY8910_control_port_0_w },
-		{ 0x10, 0x10, IOWP_NOP },				// unknown
-		{ 0x11, 0x11, IOWP_NOP },				// unknown
-	PORT_END
+	public static IO_WritePort writeport_ojankohs[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, ojankohs_portselect_w ),
+		new IO_WritePort( 0x01, 0x01, ojankohs_rombank_w ),
+		new IO_WritePort( 0x02, 0x02, ojankohs_gfxreg_w ),
+		new IO_WritePort( 0x03, 0x03, ojankohs_adpcm_reset_w ),
+		new IO_WritePort( 0x04, 0x04, ojankohs_flipscreen_w ),
+		new IO_WritePort( 0x05, 0x05, ojankohs_msm5205_w ),
+		new IO_WritePort( 0x06, 0x06, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x07, 0x07, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x10, 0x10, IOWP_NOP ),				// unknown
+		new IO_WritePort( 0x11, 0x11, IOWP_NOP ),				// unknown
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_ojankoy )
-		{ 0x00, 0x00, ojankohs_portselect_w },
-		{ 0x01, 0x01, ojankoy_rombank_w },
-		{ 0x02, 0x02, ojankoy_coinctr_w },
-		{ 0x04, 0x04, ojankohs_flipscreen_w },
-		{ 0x05, 0x05, ojankohs_msm5205_w },
-		{ 0x06, 0x06, AY8910_write_port_0_w },
-		{ 0x07, 0x07, AY8910_control_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport_ojankoy[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, ojankohs_portselect_w ),
+		new IO_WritePort( 0x01, 0x01, ojankoy_rombank_w ),
+		new IO_WritePort( 0x02, 0x02, ojankoy_coinctr_w ),
+		new IO_WritePort( 0x04, 0x04, ojankohs_flipscreen_w ),
+		new IO_WritePort( 0x05, 0x05, ojankohs_msm5205_w ),
+		new IO_WritePort( 0x06, 0x06, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x07, 0x07, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_ccasino )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, ojankohs_keymatrix_r },
-		{ 0x02, 0x02, input_port_1_r },
-		{ 0x03, 0x03, ccasino_dipsw3_r },
-		{ 0x04, 0x04, ccasino_dipsw4_r },
-		{ 0x06, 0x06, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport_ccasino[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, ojankohs_keymatrix_r ),
+		new IO_ReadPort( 0x02, 0x02, input_port_1_r ),
+		new IO_ReadPort( 0x03, 0x03, ccasino_dipsw3_r ),
+		new IO_ReadPort( 0x04, 0x04, ccasino_dipsw4_r ),
+		new IO_ReadPort( 0x06, 0x06, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_ccasino )
-		{ 0x00, 0x00, ojankohs_portselect_w },
-		{ 0x01, 0x01, ojankohs_rombank_w },
-		{ 0x02, 0x02, ccasino_coinctr_w },
-		{ 0x03, 0x03, ojankohs_adpcm_reset_w },
-		{ 0x04, 0x04, ojankohs_flipscreen_w },
-		{ 0x05, 0x05, ojankohs_msm5205_w },
-		{ 0x06, 0x06, AY8910_write_port_0_w },
-		{ 0x07, 0x07, AY8910_control_port_0_w },
-		{ 0x08, 0x0f, ccasino_palette_w },		// 16bit address access
-		{ 0x10, 0x10, IOWP_NOP },
-		{ 0x11, 0x11, IOWP_NOP },
-	PORT_END
+	public static IO_WritePort writeport_ccasino[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, ojankohs_portselect_w ),
+		new IO_WritePort( 0x01, 0x01, ojankohs_rombank_w ),
+		new IO_WritePort( 0x02, 0x02, ccasino_coinctr_w ),
+		new IO_WritePort( 0x03, 0x03, ojankohs_adpcm_reset_w ),
+		new IO_WritePort( 0x04, 0x04, ojankohs_flipscreen_w ),
+		new IO_WritePort( 0x05, 0x05, ojankohs_msm5205_w ),
+		new IO_WritePort( 0x06, 0x06, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x07, 0x07, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x08, 0x0f, ccasino_palette_w ),		// 16bit address access
+		new IO_WritePort( 0x10, 0x10, IOWP_NOP ),
+		new IO_WritePort( 0x11, 0x11, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_ojankoc )
-		{ 0xfc, 0xfd, ojankoc_keymatrix_r },
-		{ 0xff, 0xff, AY8910_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport_ojankoc[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0xfc, 0xfd, ojankoc_keymatrix_r ),
+		new IO_ReadPort( 0xff, 0xff, AY8910_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_ojankoc )
-		{ 0x00, 0x1f, ojankoc_palette_w },
-		{ 0xf9, 0xf9, ojankohs_msm5205_w },
-		{ 0xfb, 0xfb, ojankoc_ctrl_w },
-		{ 0xfd, 0xfd, ojankohs_portselect_w },
-		{ 0xfe, 0xfe, AY8910_write_port_0_w },
-		{ 0xff, 0xff, AY8910_control_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport_ojankoc[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x1f, ojankoc_palette_w ),
+		new IO_WritePort( 0xf9, 0xf9, ojankohs_msm5205_w ),
+		new IO_WritePort( 0xfb, 0xfb, ojankoc_ctrl_w ),
+		new IO_WritePort( 0xfd, 0xfd, ojankohs_portselect_w ),
+		new IO_WritePort( 0xfe, 0xfe, AY8910_write_port_0_w ),
+		new IO_WritePort( 0xff, 0xff, AY8910_control_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( ojankohs )

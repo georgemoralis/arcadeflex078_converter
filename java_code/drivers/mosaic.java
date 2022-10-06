@@ -101,67 +101,83 @@ public class mosaic
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x00000, 0x0ffff, MRA_ROM },
-		{ 0x20000, 0x21fff, MRA_RAM },
-		{ 0x22000, 0x23fff, MRA_RAM },
-		{ 0x24000, 0x241ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x0ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x20000, 0x21fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x22000, 0x23fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x24000, 0x241ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x00000, 0x0ffff, MWA_ROM },
-		{ 0x20000, 0x21fff, MWA_RAM },
-		{ 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram },
-		{ 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram },
-		{ 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x0ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x20000, 0x21fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram ),
+		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram ),
+		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( gfire2_readmem )
-		{ 0x00000, 0x0ffff, MRA_ROM },
-		{ 0x10000, 0x17fff, MRA_RAM },
-		{ 0x22000, 0x23fff, MRA_RAM },
-		{ 0x24000, 0x241ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress gfire2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x0ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x10000, 0x17fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x22000, 0x23fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x24000, 0x241ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( gfire2_writemem )
-		{ 0x00000, 0x0ffff, MWA_ROM },
-		{ 0x10000, 0x17fff, MWA_RAM },
-		{ 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram },
-		{ 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram },
-		{ 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram },
-	MEMORY_END
+	public static Memory_WriteAddress gfire2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x0ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x10000, 0x17fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram ),
+		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram ),
+		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x30, 0x30, IORP_NOP },	/* Z180 internal registers */
-		{ 0x70, 0x70, YM2203_status_port_0_r },
-		{ 0x71, 0x71, YM2203_read_port_0_r },
-		{ 0x72, 0x72, protection_r },
-		{ 0x74, 0x74, input_port_0_r },
-		{ 0x76, 0x76, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x30, 0x30, IORP_NOP ),	/* Z180 internal registers */
+		new IO_ReadPort( 0x70, 0x70, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x71, 0x71, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x72, 0x72, protection_r ),
+		new IO_ReadPort( 0x74, 0x74, input_port_0_r ),
+		new IO_ReadPort( 0x76, 0x76, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x3f, IOWP_NOP },	/* Z180 internal registers */
-		{ 0x70, 0x70, YM2203_control_port_0_w },
-		{ 0x71, 0x71, YM2203_write_port_0_w },
-		{ 0x72, 0x72, protection_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x3f, IOWP_NOP ),	/* Z180 internal registers */
+		new IO_WritePort( 0x70, 0x70, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x71, 0x71, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x72, 0x72, protection_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( gfire2_readport )
-		{ 0x30, 0x30, IORP_NOP },	/* Z180 internal registers */
-		{ 0x70, 0x70, YM2203_status_port_0_r },
-		{ 0x71, 0x71, YM2203_read_port_0_r },
-		{ 0x72, 0x72, gfire2_protection_r },
-		{ 0x74, 0x74, input_port_0_r },
-		{ 0x76, 0x76, input_port_1_r },
-	PORT_END
+	public static IO_ReadPort gfire2_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x30, 0x30, IORP_NOP ),	/* Z180 internal registers */
+		new IO_ReadPort( 0x70, 0x70, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x71, 0x71, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x72, 0x72, gfire2_protection_r ),
+		new IO_ReadPort( 0x74, 0x74, input_port_0_r ),
+		new IO_ReadPort( 0x76, 0x76, input_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( gfire2_writeport )
-		{ 0x00, 0x3f, IOWP_NOP },	/* Z180 internal registers */
-		{ 0x70, 0x70, YM2203_control_port_0_w },
-		{ 0x71, 0x71, YM2203_write_port_0_w },
-		{ 0x72, 0x72, gfire2_protection_w },
-	PORT_END
+	public static IO_WritePort gfire2_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x3f, IOWP_NOP ),	/* Z180 internal registers */
+		new IO_WritePort( 0x70, 0x70, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x71, 0x71, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x72, 0x72, gfire2_protection_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

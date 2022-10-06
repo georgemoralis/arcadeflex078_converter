@@ -95,44 +95,48 @@ public class malzak
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x1000, 0x10ff, MRA_RAM },
-		{ 0x1100, 0x11ff, MRA_RAM },
-		{ 0x1200, 0x12ff, MRA_RAM },
-		{ 0x1300, 0x13ff, MRA_RAM },
-		{ 0x14cb, 0x14cb, fake_VRLE_r },
-		{ 0x1400, 0x14ff, malzak_s2636_1_r },
-		{ 0x1500, 0x15ff, malzak_s2636_2_r },
-		{ 0x1600, 0x16ff, MRA_RAM },
-		{ 0x1700, 0x17ff, MRA_RAM },
-		{ 0x1800, 0x1fff, saa5050_r },  // SAA 5050 video RAM
-		{ 0x2000, 0x2fff, MRA_ROM },
-		{ 0x3000, 0x3fff, ram_mirror_r },
-		{ 0x4000, 0x4fff, MRA_ROM },
-		{ 0x5000, 0x5fff, ram_mirror_r },
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1000, 0x10ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1100, 0x11ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1200, 0x12ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1300, 0x13ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x14cb, 0x14cb, fake_VRLE_r ),
+		new Memory_ReadAddress( 0x1400, 0x14ff, malzak_s2636_1_r ),
+		new Memory_ReadAddress( 0x1500, 0x15ff, malzak_s2636_2_r ),
+		new Memory_ReadAddress( 0x1600, 0x16ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1700, 0x17ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, saa5050_r ),  // SAA 5050 video RAM
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, ram_mirror_r ),
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5000, 0x5fff, ram_mirror_r ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x1000, 0x10ff, MWA_RAM },
-		{ 0x1100, 0x11ff, MWA_RAM },
-		{ 0x1200, 0x12ff, MWA_RAM },
-		{ 0x1300, 0x13ff, MWA_RAM },
-		{ 0x1400, 0x14ff, malzak_s2636_1_w }, // S2636 offset $CB bit 40 tested as collision ?
-		{ 0x1500, 0x15ff, malzak_s2636_2_w },
-		{ 0x1600, 0x16ff, playfield_w },
-		{ 0x1600, 0x16ff, MWA_RAM },
-		{ 0x1700, 0x17ff, MWA_RAM },
-		{ 0x1800, 0x1fff, saa5050_w },  // SAA 5050 video RAM
-		{ 0x2000, 0x2fff, MWA_ROM },
-		{ 0x3000, 0x3fff, ram_mirror_w },
-		{ 0x4000, 0x4fff, MWA_ROM },
-		{ 0x5000, 0x5dff, ram_mirror_w },
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1100, 0x11ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1200, 0x12ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1300, 0x13ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1400, 0x14ff, malzak_s2636_1_w ), // S2636 offset $CB bit 40 tested as collision ?
+		new Memory_WriteAddress( 0x1500, 0x15ff, malzak_s2636_2_w ),
+		new Memory_WriteAddress( 0x1600, 0x16ff, playfield_w ),
+		new Memory_WriteAddress( 0x1600, 0x16ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1700, 0x17ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, saa5050_w ),  // SAA 5050 video RAM
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, ram_mirror_w ),
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x5dff, ram_mirror_w ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static READ_HANDLER( s2650_data_r )
 	{
@@ -169,19 +173,23 @@ public class malzak
 		return 0xd0 + counter;
 	}
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, collision_r }, // returns where a collision can occur.
-	    { 0x80, 0x80, input_port_0_r },  //controls
-		{ S2650_DATA_PORT, S2650_DATA_PORT, s2650_data_r },  // read upon death
-	    { S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, collision_r ), // returns where a collision can occur.
+	    new IO_ReadPort( 0x80, 0x80, input_port_0_r ),  //controls
+		new IO_ReadPort( S2650_DATA_PORT, S2650_DATA_PORT, s2650_data_r ),  // read upon death
+	    new IO_ReadPort( S2650_SENSE_PORT, S2650_SENSE_PORT, input_port_3_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x40, 0x40, port40_w },  // possibly sound codes for dual SN76477s
-		{ 0x60, 0x60, port60_w },  // possibly playfield scroll X offset
-		{ 0xa0, 0xa0, MWA_NOP },  // echoes I/O port read from port 0x80
-		{ 0xc0, 0xc0, portc0_w },  // possibly playfield scroll Y offset
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x40, 0x40, port40_w ),  // possibly sound codes for dual SN76477s
+		new IO_WritePort( 0x60, 0x60, port60_w ),  // possibly playfield scroll X offset
+		new IO_WritePort( 0xa0, 0xa0, MWA_NOP ),  // echoes I/O port read from port 0x80
+		new IO_WritePort( 0xc0, 0xc0, portc0_w ),  // possibly playfield scroll Y offset
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( malzak )
 	

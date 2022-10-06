@@ -58,59 +58,71 @@ public class carjmbre
 	VIDEO_UPDATE( carjmbre );
 	
 	
-	static MEMORY_READ_START( carjmbre_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8800, MRA_NOP },			//?? possibly watchdog
-		{ 0x9000, 0x97ff, videoram_r },
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa800, 0xa800, input_port_1_r },
-		{ 0xb800, 0xb800, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress carjmbre_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8800, MRA_NOP ),			//?? possibly watchdog
+		new Memory_ReadAddress( 0x9000, 0x97ff, videoram_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),
+		new Memory_ReadAddress( 0xb800, 0xb800, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( carjmbre_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x8803, 0x8803, interrupt_enable_w },
-		{ 0x8805, 0x8806, carjmbre_bgcolor_w },	//guess
-		{ 0x8807, 0x8807, carjmbre_flipscreen_w },
-		{ 0x8fc1, 0x8fc1, MWA_NOP },			//overrun during initial screen clear
-		{ 0x8fe1, 0x8fe1, MWA_NOP },			//overrun during initial screen clear
-		{ 0x9000, 0x97ff, carjmbre_videoram_w, &videoram },
-		{ 0x9800, 0x985f, spriteram_w, &spriteram, &spriteram_size },
-		{ 0x9880, 0x98df, MWA_RAM },			//spriteram mirror
-		{ 0xb800, 0xb800, soundlatch_w },
-	MEMORY_END
+	public static Memory_WriteAddress carjmbre_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8803, 0x8803, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x8805, 0x8806, carjmbre_bgcolor_w ),	//guess
+		new Memory_WriteAddress( 0x8807, 0x8807, carjmbre_flipscreen_w ),
+		new Memory_WriteAddress( 0x8fc1, 0x8fc1, MWA_NOP ),			//overrun during initial screen clear
+		new Memory_WriteAddress( 0x8fe1, 0x8fe1, MWA_NOP ),			//overrun during initial screen clear
+		new Memory_WriteAddress( 0x9000, 0x97ff, carjmbre_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x9800, 0x985f, spriteram_w, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9880, 0x98df, MWA_RAM ),			//spriteram mirror
+		new Memory_WriteAddress( 0xb800, 0xb800, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( carjmbre_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x1000, 0x10ff, MRA_NOP },			//look to be stray reads from 10/12/14/16/18xx
-		{ 0x1200, 0x12ff, MRA_NOP },
-		{ 0x1400, 0x14ff, MRA_NOP },
-		{ 0x1600, 0x16ff, MRA_NOP },
-		{ 0x1800, 0x18ff, MRA_NOP },
-		{ 0x2000, 0x27ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress carjmbre_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1000, 0x10ff, MRA_NOP ),			//look to be stray reads from 10/12/14/16/18xx
+		new Memory_ReadAddress( 0x1200, 0x12ff, MRA_NOP ),
+		new Memory_ReadAddress( 0x1400, 0x14ff, MRA_NOP ),
+		new Memory_ReadAddress( 0x1600, 0x16ff, MRA_NOP ),
+		new Memory_ReadAddress( 0x1800, 0x18ff, MRA_NOP ),
+		new Memory_ReadAddress( 0x2000, 0x27ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( carjmbre_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x27ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress carjmbre_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x27ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( carjmbre_sound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-		{ 0x24, 0x24, IORP_NOP },				//??
-	PORT_END
+	public static IO_ReadPort carjmbre_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort( 0x24, 0x24, IORP_NOP ),				//??
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( carjmbre_sound_writeport )
-		{ 0x10, 0x10, IOWP_NOP },				//?? written on init/0xff sound command reset
-		{ 0x20, 0x20, AY8910_control_port_0_w },
-		{ 0x21, 0x21, AY8910_write_port_0_w },
-		{ 0x22, 0x22, IOWP_NOP },				//?? written before and after 0x21 with same value
-		{ 0x30, 0x30, AY8910_control_port_1_w },
-		{ 0x31, 0x31, AY8910_write_port_1_w },
-		{ 0x32, 0x32, IOWP_NOP },				//?? written before and after 0x31 with same value
-	PORT_END
+	public static IO_WritePort carjmbre_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, IOWP_NOP ),				//?? written on init/0xff sound command reset
+		new IO_WritePort( 0x20, 0x20, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x21, 0x21, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x22, 0x22, IOWP_NOP ),				//?? written before and after 0x21 with same value
+		new IO_WritePort( 0x30, 0x30, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x31, 0x31, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x32, 0x32, IOWP_NOP ),				//?? written before and after 0x31 with same value
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( carjmbre )
 		PORT_START	/* IN0 */

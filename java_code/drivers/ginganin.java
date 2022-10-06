@@ -170,24 +170,28 @@ public class ginganin
 		MC6840_register1 = data;
 	}
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x1800, 0x1800, soundlatch_r },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1800, 0x1800, soundlatch_r ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },
-		{ 0x0800, 0x0800, MC6840_control_port_0_w },	/* Takahiro Nogi. 1999/09/27 */
-		{ 0x0801, 0x0801, MC6840_control_port_1_w },	/* Takahiro Nogi. 1999/09/27 */
-		{ 0x0802, 0x0802, MC6840_write_port_0_w },		/* Takahiro Nogi. 1999/09/27 */
-		{ 0x0803, 0x0803, MC6840_write_port_1_w },		/* Takahiro Nogi. 1999/09/27 */
-		{ 0x2000, 0x2000, Y8950_control_port_0_w },
-		{ 0x2001, 0x2001, Y8950_write_port_0_w },
-		{ 0x2800, 0x2800, AY8910_control_port_0_w },
-		{ 0x2801, 0x2801, AY8910_write_port_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0800, MC6840_control_port_0_w ),	/* Takahiro Nogi. 1999/09/27 */
+		new Memory_WriteAddress( 0x0801, 0x0801, MC6840_control_port_1_w ),	/* Takahiro Nogi. 1999/09/27 */
+		new Memory_WriteAddress( 0x0802, 0x0802, MC6840_write_port_0_w ),		/* Takahiro Nogi. 1999/09/27 */
+		new Memory_WriteAddress( 0x0803, 0x0803, MC6840_write_port_1_w ),		/* Takahiro Nogi. 1999/09/27 */
+		new Memory_WriteAddress( 0x2000, 0x2000, Y8950_control_port_0_w ),
+		new Memory_WriteAddress( 0x2001, 0x2001, Y8950_write_port_0_w ),
+		new Memory_WriteAddress( 0x2800, 0x2800, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x2801, 0x2801, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

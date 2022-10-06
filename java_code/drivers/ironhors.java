@@ -57,70 +57,86 @@ public class ironhors
 	}
 	
 	
-	static MEMORY_READ_START( ironhors_readmem )
-		{ 0x0020, 0x003f, MRA_RAM },
-		{ 0x0900, 0x0900, input_port_5_r },	/* Dipswitch settings 2 */
-		{ 0x0a00, 0x0a00, input_port_3_r },	/* Dipswitch settings 0 */
-		{ 0x0b00, 0x0b00, input_port_4_r },	/* Dipswitch settings 1 */
-		{ 0x0b01, 0x0b01, input_port_2_r },	/* player 2 controls */
-		{ 0x0b02, 0x0b02, input_port_1_r },	/* player 1 controls */
-		{ 0x0b03, 0x0b03, input_port_0_r },	/* coins + selftest */
-		{ 0x2000, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3fff, MRA_RAM },
-		{ 0x4000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress ironhors_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0020, 0x003f, MRA_RAM ),
+		new Memory_ReadAddress( 0x0900, 0x0900, input_port_5_r ),	/* Dipswitch settings 2 */
+		new Memory_ReadAddress( 0x0a00, 0x0a00, input_port_3_r ),	/* Dipswitch settings 0 */
+		new Memory_ReadAddress( 0x0b00, 0x0b00, input_port_4_r ),	/* Dipswitch settings 1 */
+		new Memory_ReadAddress( 0x0b01, 0x0b01, input_port_2_r ),	/* player 2 controls */
+		new Memory_ReadAddress( 0x0b02, 0x0b02, input_port_1_r ),	/* player 1 controls */
+		new Memory_ReadAddress( 0x0b03, 0x0b03, input_port_0_r ),	/* coins + selftest */
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ironhors_writemem )
-		{ 0x0003, 0x0003, ironhors_charbank_w },
-		{ 0x0004, 0x0004, MWA_RAM, &ironhors_interrupt_enable },
-		{ 0x0020, 0x003f, MWA_RAM, &ironhors_scroll },
-		{ 0x0800, 0x0800, soundlatch_w },
-		{ 0x0900, 0x0900, ironhors_sh_irqtrigger_w },  /* cause interrupt on audio CPU */
-		{ 0x0a00, 0x0a00, ironhors_palettebank_w },	/* + coin counters */
-		{ 0x0b00, 0x0b00, ironhors_flipscreen_w },
-		{ 0x2000, 0x23ff, ironhors_colorram_w, &colorram },
-		{ 0x2400, 0x27ff, ironhors_videoram_w, &videoram },
-		{ 0x2800, 0x2fff, MWA_RAM },
-		{ 0x3000, 0x30ff, MWA_RAM, &spriteram_2 },
-		{ 0x3100, 0x37ff, MWA_RAM },
-		{ 0x3800, 0x38ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x3900, 0x3fff, MWA_RAM },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress ironhors_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0003, 0x0003, ironhors_charbank_w ),
+		new Memory_WriteAddress( 0x0004, 0x0004, MWA_RAM, &ironhors_interrupt_enable ),
+		new Memory_WriteAddress( 0x0020, 0x003f, MWA_RAM, &ironhors_scroll ),
+		new Memory_WriteAddress( 0x0800, 0x0800, soundlatch_w ),
+		new Memory_WriteAddress( 0x0900, 0x0900, ironhors_sh_irqtrigger_w ),  /* cause interrupt on audio CPU */
+		new Memory_WriteAddress( 0x0a00, 0x0a00, ironhors_palettebank_w ),	/* + coin counters */
+		new Memory_WriteAddress( 0x0b00, 0x0b00, ironhors_flipscreen_w ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, ironhors_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x2400, 0x27ff, ironhors_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x3100, 0x37ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x3800, 0x38ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x3900, 0x3fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( ironhors_sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x8000, 0x8000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress ironhors_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( ironhors_sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress ironhors_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( ironhors_sound_readport )
-		{ 0x00, 0x00, YM2203_status_port_0_r },
-	PORT_END
+	public static IO_ReadPort ironhors_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( ironhors_sound_writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-	PORT_END
+	public static IO_WritePort ironhors_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( farwest_sound_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x8000, 0x8000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress farwest_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8000, 0x8000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( farwest_sound_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x43ff, MWA_RAM },
-		{ 0x8000, 0x8000, YM2203_control_port_0_w },
-		{ 0x8001, 0x8001, YM2203_write_port_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress farwest_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x8001, 0x8001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

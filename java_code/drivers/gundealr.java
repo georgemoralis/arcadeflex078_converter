@@ -161,37 +161,45 @@ public class gundealr
 	
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xc000, input_port_0_r },	/* DSW0 */
-		{ 0xc001, 0xc001, input_port_1_r },	/* DSW1 */
-		{ 0xc004, 0xc004, input_port_2_r },	/* COIN (Gun Dealer only) */
-		{ 0xc005, 0xc005, input_port_3_r },	/* IN1 (Gun Dealer only) */
-		{ 0xc006, 0xc006, input_port_4_r },	/* IN0 (Gun Dealer only) */
-		{ 0xc400, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xc000, input_port_0_r ),	/* DSW0 */
+		new Memory_ReadAddress( 0xc001, 0xc001, input_port_1_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0xc004, 0xc004, input_port_2_r ),	/* COIN (Gun Dealer only) */
+		new Memory_ReadAddress( 0xc005, 0xc005, input_port_3_r ),	/* IN1 (Gun Dealer only) */
+		new Memory_ReadAddress( 0xc006, 0xc006, input_port_4_r ),	/* IN0 (Gun Dealer only) */
+		new Memory_ReadAddress( 0xc400, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc010, 0xc013, yamyam_fg_scroll_w },		/* Yam Yam only */
-		{ 0xc014, 0xc014, gundealr_flipscreen_w },
-		{ 0xc016, 0xc016, yamyam_bankswitch_w },
-		{ 0xc020, 0xc023, gundealr_fg_scroll_w },	/* Gun Dealer only */
-		{ 0xc400, 0xc7ff, gundealr_paletteram_w, &paletteram },
-		{ 0xc800, 0xcfff, gundealr_bg_videoram_w, &gundealr_bg_videoram },
-		{ 0xd000, 0xdfff, gundealr_fg_videoram_w, &gundealr_fg_videoram },
-		{ 0xe000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc010, 0xc013, yamyam_fg_scroll_w ),		/* Yam Yam only */
+		new Memory_WriteAddress( 0xc014, 0xc014, gundealr_flipscreen_w ),
+		new Memory_WriteAddress( 0xc016, 0xc016, yamyam_bankswitch_w ),
+		new Memory_WriteAddress( 0xc020, 0xc023, gundealr_fg_scroll_w ),	/* Gun Dealer only */
+		new Memory_WriteAddress( 0xc400, 0xc7ff, gundealr_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, gundealr_bg_videoram_w, &gundealr_bg_videoram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, gundealr_fg_videoram_w, &gundealr_fg_videoram ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x01, 0x01, YM2203_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, YM2203_control_port_0_w },
-		{ 0x01, 0x01, YM2203_write_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x01, 0x01, YM2203_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

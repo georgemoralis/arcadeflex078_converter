@@ -59,105 +59,123 @@ public class exctsccr
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x63ff, MRA_RAM }, /* Alpha mcu (protection) */
-		{ 0x7c00, 0x7fff, MRA_RAM }, /* work ram */
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8bff, MRA_RAM }, /* ??? */
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa040, 0xa040, input_port_1_r },
-		{ 0xa080, 0xa080, input_port_3_r },
-		{ 0xa0c0, 0xa0c0, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x63ff, MRA_RAM ), /* Alpha mcu (protection) */
+		new Memory_ReadAddress( 0x7c00, 0x7fff, MRA_RAM ), /* work ram */
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8bff, MRA_RAM ), /* ??? */
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa040, 0xa040, input_port_1_r ),
+		new Memory_ReadAddress( 0xa080, 0xa080, input_port_3_r ),
+		new Memory_ReadAddress( 0xa0c0, 0xa0c0, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x63ff, exctsccr_mcu_w, &exctsccr_mcu_ram }, /* Alpha mcu (protection) */
-		{ 0x7c00, 0x7fff, MWA_RAM }, /* work ram */
-		{ 0x8000, 0x83ff, exctsccr_videoram_w, &videoram },
-		{ 0x8400, 0x87ff, exctsccr_colorram_w, &colorram },
-		{ 0x8800, 0x8bff, MWA_RAM }, /* ??? */
-		{ 0xa000, 0xa000, MWA_NOP }, /* ??? */
-		{ 0xa001, 0xa001, MWA_NOP }, /* ??? */
-		{ 0xa002, 0xa002, exctsccr_gfx_bank_w },
-		{ 0xa003, 0xa003, exctsccr_flipscreen_w }, /* Cocktail mode ( 0xff = flip screen, 0x00 = normal ) */
-		{ 0xa006, 0xa006, exctsccr_mcu_control_w }, /* MCU control */
-		{ 0xa007, 0xa007, MWA_NOP }, /* This is also MCU control, but i dont need it */
-		{ 0xa040, 0xa06f, MWA_RAM, &spriteram }, /* Sprite pos */
-		{ 0xa080, 0xa080, soundlatch_w },
-		{ 0xa0c0, 0xa0c0, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x63ff, exctsccr_mcu_w, &exctsccr_mcu_ram ), /* Alpha mcu (protection) */
+		new Memory_WriteAddress( 0x7c00, 0x7fff, MWA_RAM ), /* work ram */
+		new Memory_WriteAddress( 0x8000, 0x83ff, exctsccr_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, exctsccr_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8800, 0x8bff, MWA_RAM ), /* ??? */
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ), /* ??? */
+		new Memory_WriteAddress( 0xa001, 0xa001, MWA_NOP ), /* ??? */
+		new Memory_WriteAddress( 0xa002, 0xa002, exctsccr_gfx_bank_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, exctsccr_flipscreen_w ), /* Cocktail mode ( 0xff = flip screen, 0x00 = normal ) */
+		new Memory_WriteAddress( 0xa006, 0xa006, exctsccr_mcu_control_w ), /* MCU control */
+		new Memory_WriteAddress( 0xa007, 0xa007, MWA_NOP ), /* This is also MCU control, but i dont need it */
+		new Memory_WriteAddress( 0xa040, 0xa06f, MWA_RAM, &spriteram ), /* Sprite pos */
+		new Memory_WriteAddress( 0xa080, 0xa080, soundlatch_w ),
+		new Memory_WriteAddress( 0xa0c0, 0xa0c0, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x8fff, MRA_ROM },
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xc00d, 0xc00d, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x8fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc00d, 0xc00d, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x8fff, MWA_ROM },
-		{ 0xa000, 0xa7ff, MWA_RAM },
-		{ 0xc008, 0xc009, exctsccr_DAC_data_w },
-		{ 0xc00c, 0xc00c, soundlatch_w }, /* used to clear the latch */
-		{ 0xc00f, 0xc00f, MWA_NOP }, /* ??? */
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x8fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc008, 0xc009, exctsccr_DAC_data_w ),
+		new Memory_WriteAddress( 0xc00c, 0xc00c, soundlatch_w ), /* used to clear the latch */
+		new Memory_WriteAddress( 0xc00f, 0xc00f, MWA_NOP ), /* ??? */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x82, 0x82, AY8910_write_port_0_w },
-		{ 0x83, 0x83, AY8910_control_port_0_w },
-		{ 0x86, 0x86, AY8910_write_port_1_w },
-		{ 0x87, 0x87, AY8910_control_port_1_w },
-		{ 0x8a, 0x8a, AY8910_write_port_2_w },
-		{ 0x8b, 0x8b, AY8910_control_port_2_w },
-		{ 0x8e, 0x8e, AY8910_write_port_3_w },
-		{ 0x8f, 0x8f, AY8910_control_port_3_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x82, 0x82, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x83, 0x83, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x86, 0x86, AY8910_write_port_1_w ),
+		new IO_WritePort( 0x87, 0x87, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x8a, 0x8a, AY8910_write_port_2_w ),
+		new IO_WritePort( 0x8b, 0x8b, AY8910_control_port_2_w ),
+		new IO_WritePort( 0x8e, 0x8e, AY8910_write_port_3_w ),
+		new IO_WritePort( 0x8f, 0x8f, AY8910_control_port_3_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* Bootleg */
-	static MEMORY_READ_START( bl_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x8000, 0x83ff, MRA_RAM },
-		{ 0x8400, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8fff, MRA_RAM }, /* ??? */
-		{ 0xa000, 0xa000, input_port_0_r },
-		{ 0xa040, 0xa040, input_port_1_r },
-		{ 0xa080, 0xa080, input_port_3_r },
-		{ 0xa0c0, 0xa0c0, input_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress bl_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x83ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8400, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8fff, MRA_RAM ), /* ??? */
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ),
+		new Memory_ReadAddress( 0xa040, 0xa040, input_port_1_r ),
+		new Memory_ReadAddress( 0xa080, 0xa080, input_port_3_r ),
+		new Memory_ReadAddress( 0xa0c0, 0xa0c0, input_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bl_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x7000, 0x7000, AY8910_write_port_0_w },
-		{ 0x7001, 0x7001, AY8910_control_port_0_w },
-		{ 0x8000, 0x83ff, exctsccr_videoram_w, &videoram },
-		{ 0x8400, 0x87ff, exctsccr_colorram_w, &colorram },
-		{ 0x8800, 0x8fff, MWA_RAM }, /* ??? */
-		{ 0xa000, 0xa000, MWA_NOP }, /* ??? */
-		{ 0xa001, 0xa001, MWA_NOP }, /* ??? */
-		{ 0xa002, 0xa002, exctsccr_gfx_bank_w }, /* ??? */
-		{ 0xa003, 0xa003, exctsccr_flipscreen_w }, /* Cocktail mode ( 0xff = flip screen, 0x00 = normal ) */
-		{ 0xa006, 0xa006, MWA_NOP }, /* no MCU, but some leftover code still writes here */
-		{ 0xa007, 0xa007, MWA_NOP }, /* no MCU, but some leftover code still writes here */
-		{ 0xa040, 0xa06f, MWA_RAM, &spriteram }, /* Sprite Pos */
-		{ 0xa080, 0xa080, soundlatch_w },
-		{ 0xa0c0, 0xa0c0, watchdog_reset_w },
-	MEMORY_END
+	public static Memory_WriteAddress bl_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x7000, 0x7000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x7001, 0x7001, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, exctsccr_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, exctsccr_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, MWA_RAM ), /* ??? */
+		new Memory_WriteAddress( 0xa000, 0xa000, MWA_NOP ), /* ??? */
+		new Memory_WriteAddress( 0xa001, 0xa001, MWA_NOP ), /* ??? */
+		new Memory_WriteAddress( 0xa002, 0xa002, exctsccr_gfx_bank_w ), /* ??? */
+		new Memory_WriteAddress( 0xa003, 0xa003, exctsccr_flipscreen_w ), /* Cocktail mode ( 0xff = flip screen, 0x00 = normal ) */
+		new Memory_WriteAddress( 0xa006, 0xa006, MWA_NOP ), /* no MCU, but some leftover code still writes here */
+		new Memory_WriteAddress( 0xa007, 0xa007, MWA_NOP ), /* no MCU, but some leftover code still writes here */
+		new Memory_WriteAddress( 0xa040, 0xa06f, MWA_RAM, &spriteram ), /* Sprite Pos */
+		new Memory_WriteAddress( 0xa080, 0xa080, soundlatch_w ),
+		new Memory_WriteAddress( 0xa0c0, 0xa0c0, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( bl_sound_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6000, soundlatch_r },
-		{ 0xe000, 0xe3ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress bl_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe000, 0xe3ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( bl_sound_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x8000, 0x8000, MWA_NOP }, /* 0 = DAC sound off, 1 = DAC sound on */
-		{ 0xa000, 0xa000, soundlatch_w }, /* used to clear the latch */
-		{ 0xc000, 0xc000, exctsccr_DAC_data_w },
-		{ 0xe000, 0xe3ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress bl_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, MWA_NOP ), /* 0 = DAC sound off, 1 = DAC sound on */
+		new Memory_WriteAddress( 0xa000, 0xa000, soundlatch_w ), /* used to clear the latch */
+		new Memory_WriteAddress( 0xc000, 0xc000, exctsccr_DAC_data_w ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	

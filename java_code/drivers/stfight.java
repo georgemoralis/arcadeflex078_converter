@@ -268,57 +268,65 @@ public class stfight
 	extern unsigned char *stfight_vh_latch_ram;
 	extern unsigned char *stfight_sprite_ram;
 	
-	static MEMORY_READ_START( readmem_cpu1 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },          /* sf02.bin */
-		{ 0xc000, 0xc1ff, MRA_RAM },            /* palette ram */
-		{ 0xc200, 0xc200, input_port_0_r },     /* IN1 */
-		{ 0xc201, 0xc201, input_port_1_r },     /* IN2 */
-		{ 0xc202, 0xc202, input_port_2_r },     /* IN3 */
-		{ 0xc203, 0xc204, stfight_dsw_r },      /* DS0,1 */
-		{ 0xc205, 0xc205, stfight_coin_r },     /* coin mech */
-		{ 0xd000, 0xd7ff, MRA_RAM },            /* video */
-		{ 0xe000, 0xffff, MRA_RAM },
+	public static Memory_ReadAddress readmem_cpu1[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),          /* sf02.bin */
+		new Memory_ReadAddress( 0xc000, 0xc1ff, MRA_RAM ),            /* palette ram */
+		new Memory_ReadAddress( 0xc200, 0xc200, input_port_0_r ),     /* IN1 */
+		new Memory_ReadAddress( 0xc201, 0xc201, input_port_1_r ),     /* IN2 */
+		new Memory_ReadAddress( 0xc202, 0xc202, input_port_2_r ),     /* IN3 */
+		new Memory_ReadAddress( 0xc203, 0xc204, stfight_dsw_r ),      /* DS0,1 */
+		new Memory_ReadAddress( 0xc205, 0xc205, stfight_coin_r ),     /* coin mech */
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),            /* video */
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu1 )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_BANK1 },                  /* sf02.bin */
-		{ 0xc000, 0xc0ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram },
-		{ 0xc100, 0xc1ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 },
-		{ 0xc500, 0xc500, stfight_fm_w },               /* play fm sound */
-		{ 0xc600, 0xc600, stfight_adpcm_control_w },    /* voice control */
-		{ 0xc700, 0xc700, stfight_coin_w },             /* coin mech */
-		{ 0xc804, 0xc806, MWA_NOP },                    /* TBD */
-		{ 0xc807, 0xc807, stfight_sprite_bank_w },
-		{ 0xd000, 0xd3ff, stfight_text_char_w,      &stfight_text_char_ram },
-		{ 0xd400, 0xd7ff, stfight_text_attr_w,      &stfight_text_attr_ram },
-		{ 0xd800, 0xd808, stfight_vh_latch_w,       &stfight_vh_latch_ram },
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, MWA_RAM,                  &stfight_sprite_ram },
+	public static Memory_WriteAddress writemem_cpu1[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_BANK1 ),                  /* sf02.bin */
+		new Memory_WriteAddress( 0xc000, 0xc0ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
+		new Memory_WriteAddress( 0xc100, 0xc1ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xc500, 0xc500, stfight_fm_w ),               /* play fm sound */
+		new Memory_WriteAddress( 0xc600, 0xc600, stfight_adpcm_control_w ),    /* voice control */
+		new Memory_WriteAddress( 0xc700, 0xc700, stfight_coin_w ),             /* coin mech */
+		new Memory_WriteAddress( 0xc804, 0xc806, MWA_NOP ),                    /* TBD */
+		new Memory_WriteAddress( 0xc807, 0xc807, stfight_sprite_bank_w ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, stfight_text_char_w,      &stfight_text_char_ram ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, stfight_text_attr_w,      &stfight_text_attr_ram ),
+		new Memory_WriteAddress( 0xd800, 0xd808, stfight_vh_latch_w,       &stfight_vh_latch_ram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM,                  &stfight_sprite_ram ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_cpu2 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xc001, 0xc001, YM2203_read_port_0_r },
-		{ 0xc801, 0xc801, YM2203_read_port_1_r },
-		{ 0xf000, 0xf000, stfight_fm_r },
-		{ 0xf800, 0xffff, MRA_RAM },
+	public static Memory_ReadAddress readmem_cpu2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc001, 0xc001, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0xc801, 0xc801, YM2203_read_port_1_r ),
+		new Memory_ReadAddress( 0xf000, 0xf000, stfight_fm_r ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
 	
-	MEMORY_END
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_cpu2 )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc000, YM2203_control_port_0_w },
-		{ 0xc001, 0xc001, YM2203_write_port_0_w },
-		{ 0xc800, 0xc800, YM2203_control_port_1_w },
-		{ 0xc801, 0xc801, YM2203_write_port_1_w },
-		{ 0xe800, 0xe800, stfight_e800_w },
-		{ 0xf800, 0xffff, MWA_RAM },
+	public static Memory_WriteAddress writemem_cpu2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0xc800, 0xc800, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, stfight_e800_w ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( stfight )

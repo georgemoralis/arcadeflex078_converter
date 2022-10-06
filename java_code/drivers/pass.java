@@ -147,27 +147,33 @@ public class pass
 	
 	/* sound cpu */
 	
-	static MEMORY_READ_START( pass_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
+	public static Memory_ReadAddress pass_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static Memory_WriteAddress pass_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	
+	public static IO_ReadPort pass_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort( 0x70, 0x70, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x71, 0x71, YM2203_read_port_0_r ),
 	MEMORY_END
 	
-	static MEMORY_WRITE_START( pass_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
-	
-	static PORT_READ_START( pass_sound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-		{ 0x70, 0x70, YM2203_status_port_0_r },
-		{ 0x71, 0x71, YM2203_read_port_0_r },
-	MEMORY_END
-	
-	static PORT_WRITE_START( pass_sound_writeport )
-		{ 0x70, 0x70, YM2203_control_port_0_w },
-		{ 0x71, 0x71, YM2203_write_port_0_w },
-		{ 0x80, 0x80, OKIM6295_data_0_w },
-		{ 0xc0, 0xc0, soundlatch_clear_w },
+	public static IO_WritePort pass_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x70, 0x70, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x71, 0x71, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, OKIM6295_data_0_w ),
+		new IO_WritePort( 0xc0, 0xc0, soundlatch_clear_w ),
 	MEMORY_END
 	
 	
@@ -241,7 +247,7 @@ public class pass
 	INPUT_PORTS_END
 	
 	static struct GfxLayout tiles8x8_layout =
-	{
+	new IO_WritePort(
 		8,8,
 		RGN_FRAC(1,1),
 		8,
@@ -249,11 +255,11 @@ public class pass
 		{ 0, 8, 16, 24, 32, 40, 48, 56 },
 		{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64 },
 		64*8
-	};
+	);
 	
 	/* for something so simple this took a while to see */
 	static struct GfxLayout tiles4x4_fg_layout =
-	{
+	new IO_WritePort(
 		4,4,
 		RGN_FRAC(1,1),
 		8,
@@ -261,21 +267,21 @@ public class pass
 		{ 0, 8, 16, 24 },
 		{ 0*32, 1*32, 2*32, 3*32 },
 		4*32
-	};
+	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	{
+	new IO_WritePort(
 		{ REGION_GFX1, 0, &tiles4x4_fg_layout, 256, 2 },
 		{ REGION_GFX2, 0, &tiles8x8_layout, 0, 2 },
 		{ -1 }
-	};
+	);
 	
 	/* todo : is this correct? */
 	
 	
 	
 	static struct YM2203interface ym2203_interface =
-	{
+	new IO_WritePort(
 		1,
 		14318180/4, /* guess */
 		{ YM2203_VOL(60,60) },
@@ -283,15 +289,15 @@ public class pass
 		{ 0 },
 		{ 0 },
 		{ 0 },
-	};
+	);
 	
 	static struct OKIM6295interface okim6295_interface =
-	{
+	new IO_WritePort(
 		1,
 		{ 6000 },	/* ? guess */
 		{ REGION_SOUND1 },
 		{ 60 }
-	};
+	);
 	
 	static MACHINE_DRIVER_START( pass )
 		/* basic machine hardware */

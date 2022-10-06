@@ -1809,29 +1809,37 @@ public class segac2
 	}
 	
 	
-	static PORT_READ_START( megatech_bios_readport )
-		{ 0xdc, 0xdc, megatech_bios_port_dc_r },  // player inputs
-		{ 0xdd, 0xdd, megatech_bios_port_dd_r },  // other player 2 inputs
-		{ 0xbe, 0xbf, megatech_bios_port_be_bf_r },			/* VDP */
-	PORT_END
+	public static IO_ReadPort megatech_bios_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0xdc, 0xdc, megatech_bios_port_dc_r ),  // player inputs
+		new IO_ReadPort( 0xdd, 0xdd, megatech_bios_port_dd_r ),  // other player 2 inputs
+		new IO_ReadPort( 0xbe, 0xbf, megatech_bios_port_be_bf_r ),			/* VDP */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( megatech_bios_writeport )
-		{ 0x3f, 0x3f, megatech_bios_port_ctrl_w },
-		{ 0x7f, 0x7f, megatech_bios_port_7f_w },
-		{ 0xbe, 0xbf, megatech_bios_port_be_bf_w },			/* VDP */
-	PORT_END
+	public static IO_WritePort megatech_bios_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x3f, 0x3f, megatech_bios_port_ctrl_w ),
+		new IO_WritePort( 0x7f, 0x7f, megatech_bios_port_7f_w ),
+		new IO_WritePort( 0xbe, 0xbf, megatech_bios_port_be_bf_w ),			/* VDP */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( megaplay_bios_readport )
-	//	{ 0xdc, 0xdc, megatech_bios_port_dc_r },  // player inputs
-	//	{ 0xdd, 0xdd, megatech_bios_port_dd_r },  // other player 2 inputs
-		{ 0xbe, 0xbf, megatech_bios_port_be_bf_r },			/* VDP */
-	PORT_END
+	public static IO_ReadPort megaplay_bios_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	//	new IO_ReadPort( 0xdc, 0xdc, megatech_bios_port_dc_r ),  // player inputs
+	//	new IO_ReadPort( 0xdd, 0xdd, megatech_bios_port_dd_r ),  // other player 2 inputs
+		new IO_ReadPort( 0xbe, 0xbf, megatech_bios_port_be_bf_r ),			/* VDP */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( megaplay_bios_writeport )
-	//	{ 0x3f, 0x3f, megatech_bios_port_ctrl_w },
-	//	{ 0x7f, 0x7f, megatech_bios_port_7f_w },
-		{ 0xbe, 0xbf, megatech_bios_port_be_bf_w },			/* VDP */
-	PORT_END
+	public static IO_WritePort megaplay_bios_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	//	new IO_WritePort( 0x3f, 0x3f, megatech_bios_port_ctrl_w ),
+	//	new IO_WritePort( 0x7f, 0x7f, megatech_bios_port_7f_w ),
+		new IO_WritePort( 0xbe, 0xbf, megatech_bios_port_be_bf_w ),			/* VDP */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	static UINT8 hintcount;			/* line interrupt counter, decreased each scanline */
 	extern UINT8 vintpending;

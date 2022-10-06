@@ -140,79 +140,95 @@ public class mario
 		last = data;
 	}
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0x6000, 0x6fff, MRA_RAM },
-		{ 0x7400, 0x77ff, MRA_RAM },	/* video RAM */
-		{ 0x7c00, 0x7c00, input_port_0_r },	/* IN0 */
-		{ 0x7c80, 0x7c80, input_port_1_r },	/* IN1 */
-		{ 0x7f80, 0x7f80, input_port_2_r },	/* DSW */
-		{ 0xf000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x6fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x7400, 0x77ff, MRA_RAM ),	/* video RAM */
+		new Memory_ReadAddress( 0x7c00, 0x7c00, input_port_0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x7c80, 0x7c80, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x7f80, 0x7f80, input_port_2_r ),	/* DSW */
+		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x68ff, MWA_RAM },
-		{ 0x6a80, 0x6fff, MWA_RAM },
-		{ 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x7400, 0x77ff, mario_videoram_w, &videoram },
-		{ 0x7c00, 0x7c00, mario_sh1_w }, /* Mario run sample */
-		{ 0x7c80, 0x7c80, mario_sh2_w }, /* Luigi run sample */
-		{ 0x7d00, 0x7d00, mario_scroll_w },
-		{ 0x7e80, 0x7e80, mario_gfxbank_w },
-		{ 0x7e83, 0x7e83, mario_palettebank_w },
-		{ 0x7e84, 0x7e84, interrupt_enable_w },
-		{ 0x7f00, 0x7f00, mario_sh_w },	/* death */
-		{ 0x7f01, 0x7f01, mario_sh_getcoin_w },
-		{ 0x7f03, 0x7f03, mario_sh_crab_w },
-		{ 0x7f04, 0x7f04, mario_sh_turtle_w },
-		{ 0x7f05, 0x7f05, mario_sh_fly_w },
-		{ 0x7f00, 0x7f07, mario_sh3_w }, /* Misc discrete samples */
-		{ 0x7e00, 0x7e00, mario_sh_tuneselect_w },
-		{ 0x7000, 0x73ff, MWA_NOP },	/* ??? */
-	//	{ 0x7e85, 0x7e85, MWA_RAM },	/* Sets alternative 1 and 0 */
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7c00, 0x7c00, mario_sh1_w ), /* Mario run sample */
+		new Memory_WriteAddress( 0x7c80, 0x7c80, mario_sh2_w ), /* Luigi run sample */
+		new Memory_WriteAddress( 0x7d00, 0x7d00, mario_scroll_w ),
+		new Memory_WriteAddress( 0x7e80, 0x7e80, mario_gfxbank_w ),
+		new Memory_WriteAddress( 0x7e83, 0x7e83, mario_palettebank_w ),
+		new Memory_WriteAddress( 0x7e84, 0x7e84, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x7f00, 0x7f00, mario_sh_w ),	/* death */
+		new Memory_WriteAddress( 0x7f01, 0x7f01, mario_sh_getcoin_w ),
+		new Memory_WriteAddress( 0x7f03, 0x7f03, mario_sh_crab_w ),
+		new Memory_WriteAddress( 0x7f04, 0x7f04, mario_sh_turtle_w ),
+		new Memory_WriteAddress( 0x7f05, 0x7f05, mario_sh_fly_w ),
+		new Memory_WriteAddress( 0x7f00, 0x7f07, mario_sh3_w ), /* Misc discrete samples */
+		new Memory_WriteAddress( 0x7e00, 0x7e00, mario_sh_tuneselect_w ),
+		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_NOP ),	/* ??? */
+	//	new Memory_WriteAddress( 0x7e85, 0x7e85, MWA_RAM ),	/* Sets alternative 1 and 0 */
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( masao_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0x6000, 0x68ff, MWA_RAM },
-		{ 0x6a80, 0x6fff, MWA_RAM },
-		{ 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0x7400, 0x77ff, mario_videoram_w, &videoram },
-		{ 0x7d00, 0x7d00, mario_scroll_w },
-		{ 0x7e00, 0x7e00, soundlatch_w },
-		{ 0x7e80, 0x7e80, mario_gfxbank_w },
-		{ 0x7e83, 0x7e83, mario_palettebank_w },
-		{ 0x7e84, 0x7e84, interrupt_enable_w },
-		{ 0x7000, 0x73ff, MWA_NOP },	/* ??? */
-		{ 0x7f00, 0x7f00, masao_sh_irqtrigger_w },
-		{ 0xf000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress masao_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7d00, 0x7d00, mario_scroll_w ),
+		new Memory_WriteAddress( 0x7e00, 0x7e00, soundlatch_w ),
+		new Memory_WriteAddress( 0x7e80, 0x7e80, mario_gfxbank_w ),
+		new Memory_WriteAddress( 0x7e83, 0x7e83, mario_palettebank_w ),
+		new Memory_WriteAddress( 0x7e84, 0x7e84, interrupt_enable_w ),
+		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_NOP ),	/* ??? */
+		new Memory_WriteAddress( 0x7f00, 0x7f00, masao_sh_irqtrigger_w ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( mario_writeport )
-		{ 0x00,   0x00,   IOWP_NOP },  /* unknown... is this a trigger? */
-	PORT_END
+	public static IO_WritePort mario_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00,   0x00,   IOWP_NOP ),  /* unknown... is this a trigger? */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x0fff, MRA_ROM },
-	MEMORY_END
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x0fff, MWA_ROM },
-	MEMORY_END
-	static PORT_READ_START( readport_sound )
-		{ 0x00,     0xff,     mario_sh_tune_r },
-		{ I8039_p1, I8039_p1, mario_sh_p1_r },
-		{ I8039_p2, I8039_p2, mario_sh_p2_r },
-		{ I8039_t0, I8039_t0, mario_sh_t0_r },
-		{ I8039_t1, I8039_t1, mario_sh_t1_r },
-	PORT_END
-	static PORT_WRITE_START( writeport_sound )
-		{ 0x00,     0xff,     mario_sh_sound_w },
-		{ I8039_p1, I8039_p1, mario_sh_p1_w },
-		{ I8039_p2, I8039_p2, mario_sh_p2_w },
-	PORT_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
+	public static IO_ReadPort readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00,     0xff,     mario_sh_tune_r ),
+		new IO_ReadPort( I8039_p1, I8039_p1, mario_sh_p1_r ),
+		new IO_ReadPort( I8039_p2, I8039_p2, mario_sh_p2_r ),
+		new IO_ReadPort( I8039_t0, I8039_t0, mario_sh_t0_r ),
+		new IO_ReadPort( I8039_t1, I8039_t1, mario_sh_t1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
+	public static IO_WritePort writeport_sound[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00,     0xff,     mario_sh_sound_w ),
+		new IO_WritePort( I8039_p1, I8039_p1, mario_sh_p1_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, mario_sh_p2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -386,18 +402,22 @@ public class mario
 		{ 0 }
 	};
 	
-	static MEMORY_READ_START( masao_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x2000, 0x23ff, MRA_RAM },
-		{ 0x4000, 0x4000, AY8910_read_port_0_r },
-	MEMORY_END
+	public static Memory_ReadAddress masao_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x2000, 0x23ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x4000, AY8910_read_port_0_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( masao_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x2000, 0x23ff, MWA_RAM },
-		{ 0x6000, 0x6000, AY8910_control_port_0_w },
-		{ 0x4000, 0x4000, AY8910_write_port_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress masao_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	static MACHINE_DRIVER_START( mario )

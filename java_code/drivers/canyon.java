@@ -153,30 +153,34 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x00ff, MRA_RAM },
-		{ 0x0100, 0x01ff, canyon_wram_r },
-		{ 0x0800, 0x0bff, MRA_RAM },
-		{ 0x1000, 0x17ff, canyon_switches_r },
-		{ 0x1800, 0x1fff, canyon_options_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0xe000, 0xffff, MRA_ROM }, /* mirror for 6502 vectors */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0100, 0x01ff, canyon_wram_r ),
+		new Memory_ReadAddress( 0x0800, 0x0bff, MRA_RAM ),
+		new Memory_ReadAddress( 0x1000, 0x17ff, canyon_switches_r ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, canyon_options_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_ROM ), /* mirror for 6502 vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x00ff, MWA_RAM },
-		{ 0x0100, 0x01ff, canyon_wram_w },
-		{ 0x0400, 0x0401, canyon_motor_w },
-		{ 0x0500, 0x0500, canyon_explode_w },
-		{ 0x0501, 0x0501, MWA_NOP }, /* watchdog, disabled in service mode */
-		{ 0x0600, 0x0603, canyon_whistle_w },
-		{ 0x0680, 0x0683, canyon_led_w },
-		{ 0x0700, 0x0703, canyon_attract_w },
-		{ 0x0800, 0x0bff, canyon_videoram_w, &canyon_videoram },
-		{ 0x1000, 0x17ff, MWA_NOP }, /* sloppy code writes here */
-		{ 0x2000, 0x3fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0100, 0x01ff, canyon_wram_w ),
+		new Memory_WriteAddress( 0x0400, 0x0401, canyon_motor_w ),
+		new Memory_WriteAddress( 0x0500, 0x0500, canyon_explode_w ),
+		new Memory_WriteAddress( 0x0501, 0x0501, MWA_NOP ), /* watchdog, disabled in service mode */
+		new Memory_WriteAddress( 0x0600, 0x0603, canyon_whistle_w ),
+		new Memory_WriteAddress( 0x0680, 0x0683, canyon_led_w ),
+		new Memory_WriteAddress( 0x0700, 0x0703, canyon_attract_w ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, canyon_videoram_w, &canyon_videoram ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, MWA_NOP ), /* sloppy code writes here */
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

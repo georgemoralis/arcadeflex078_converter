@@ -213,37 +213,45 @@ public class segasyse
 	
 	/*-- Memory --*/
 	
-	static MEMORY_READ_START( segae_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },				/* Fixed ROM */
-		{ 0x8000, 0xbfff, MRA_BANK1 },				/* Banked ROM */
-		{ 0xc000, 0xffff, MRA_RAM },				/* Main RAM */
-	MEMORY_END
+	public static Memory_ReadAddress segae_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),				/* Fixed ROM */
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),				/* Banked ROM */
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_RAM ),				/* Main RAM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( segae_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },				/* Fixed ROM */
-		{ 0x8000, 0xbfff, segae_mem_8000_w },		/* Banked VRAM */
-		{ 0xc000, 0xffff, MWA_RAM },				/* Main RAM */
-	MEMORY_END
+	public static Memory_WriteAddress segae_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),				/* Fixed ROM */
+		new Memory_WriteAddress( 0x8000, 0xbfff, segae_mem_8000_w ),		/* Banked VRAM */
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_RAM ),				/* Main RAM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*-- Ports --*/
 	
-	static PORT_READ_START( segae_readport )
-		{ 0x7e, 0x7f, segae_port_7e_7f_r },			/* Vertical / Horizontal Beam Position Read */
-		{ 0xba, 0xbb, segae_port_ba_bb_r },			/* Back Layer VDP */
-		{ 0xbe, 0xbf, segae_port_be_bf_r },			/* Front Layer VDP */
-		{ 0xe0, 0xe0, input_port_2_r }, /* Coins + Starts */
-		{ 0xe1, 0xe1, input_port_3_r }, /* Controls */
-		{ 0xf2, 0xf2, input_port_0_r }, /* DSW0 */
-		{ 0xf3, 0xf3, input_port_1_r }, /* DSW1 */
-	PORT_END
+	public static IO_ReadPort segae_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x7e, 0x7f, segae_port_7e_7f_r ),			/* Vertical / Horizontal Beam Position Read */
+		new IO_ReadPort( 0xba, 0xbb, segae_port_ba_bb_r ),			/* Back Layer VDP */
+		new IO_ReadPort( 0xbe, 0xbf, segae_port_be_bf_r ),			/* Front Layer VDP */
+		new IO_ReadPort( 0xe0, 0xe0, input_port_2_r ), /* Coins + Starts */
+		new IO_ReadPort( 0xe1, 0xe1, input_port_3_r ), /* Controls */
+		new IO_ReadPort( 0xf2, 0xf2, input_port_0_r ), /* DSW0 */
+		new IO_ReadPort( 0xf3, 0xf3, input_port_1_r ), /* DSW1 */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( segae_writeport )
-		{ 0x7b, 0x7b, SN76496_0_w }, /* Not sure which chip each is on */
-		{ 0x7f, 0x7f, SN76496_1_w }, /* Not sure which chip each is on */
-		{ 0xba, 0xbb, segae_port_ba_bb_w },			/* Back Layer VDP */
-		{ 0xbe, 0xbf, segae_port_be_bf_w },			/* Front Layer VDP */
-		{ 0xf7, 0xf7, segae_port_f7_w },			/* Banking Control */
-	PORT_END
+	public static IO_WritePort segae_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x7b, 0x7b, SN76496_0_w ), /* Not sure which chip each is on */
+		new IO_WritePort( 0x7f, 0x7f, SN76496_1_w ), /* Not sure which chip each is on */
+		new IO_WritePort( 0xba, 0xbb, segae_port_ba_bb_w ),			/* Back Layer VDP */
+		new IO_WritePort( 0xbe, 0xbf, segae_port_be_bf_w ),			/* Front Layer VDP */
+		new IO_WritePort( 0xf7, 0xf7, segae_port_f7_w ),			/* Banking Control */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/*******************************************************************************
 	 Read / Write Handlers

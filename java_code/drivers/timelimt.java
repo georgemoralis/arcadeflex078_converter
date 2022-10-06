@@ -55,60 +55,74 @@ public class timelimt
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },		/* rom */
-		{ 0x8000, 0x87ff, MRA_RAM },		/* ram */
-		{ 0x8800, 0x8bff, MRA_RAM },		/* video ram */
-		{ 0x9000, 0x97ff, MRA_RAM },		/* background ram */
-		{ 0x9800, 0x98ff, MRA_RAM },		/* sprite ram */
-		{ 0xa000, 0xa000, input_port_0_r }, /* input port */
-		{ 0xa800, 0xa800, input_port_1_r },	/* input port */
-		{ 0xb000, 0xb000, input_port_2_r },	/* DSW */
-		{ 0xb800, 0xb800, MRA_NOP },		/* NMI ack? */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),		/* rom */
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),		/* ram */
+		new Memory_ReadAddress( 0x8800, 0x8bff, MRA_RAM ),		/* video ram */
+		new Memory_ReadAddress( 0x9000, 0x97ff, MRA_RAM ),		/* background ram */
+		new Memory_ReadAddress( 0x9800, 0x98ff, MRA_RAM ),		/* sprite ram */
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_0_r ), /* input port */
+		new Memory_ReadAddress( 0xa800, 0xa800, input_port_1_r ),	/* input port */
+		new Memory_ReadAddress( 0xb000, 0xb000, input_port_2_r ),	/* DSW */
+		new Memory_ReadAddress( 0xb800, 0xb800, MRA_NOP ),		/* NMI ack? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },		/* rom */
-		{ 0x8000, 0x87ff, MWA_RAM },		/* ram */
-		{ 0x8800, 0x8bff, timelimt_videoram_w, &videoram, &videoram_size },	/* video ram */
-		{ 0x9000, 0x97ff, timelimt_bg_videoram_w, &timelimt_bg_videoram, &timelimt_bg_videoram_size },/* background ram */
-		{ 0x9800, 0x98ff, MWA_RAM, &spriteram, &spriteram_size },	/* sprite ram */
-		{ 0xb000, 0xb000, nmi_enable_w },	/* nmi enable */
-		{ 0xb003, 0xb003, sound_reset_w },	/* sound reset ? */
-		{ 0xb800, 0xb800, soundlatch_w }, 	/* sound write */
-		{ 0xc800, 0xc800, timelimt_scroll_x_lsb_w },
-		{ 0xc801, 0xc801, timelimt_scroll_x_msb_w },
-		{ 0xc802, 0xc802, timelimt_scroll_y_w },
-		{ 0xc803, 0xc803, MWA_NOP },		/* ???? bit 0 used only */
-		{ 0xc804, 0xc804, MWA_NOP },		/* ???? not used */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),		/* rom */
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),		/* ram */
+		new Memory_WriteAddress( 0x8800, 0x8bff, timelimt_videoram_w, &videoram, &videoram_size ),	/* video ram */
+		new Memory_WriteAddress( 0x9000, 0x97ff, timelimt_bg_videoram_w, &timelimt_bg_videoram, &timelimt_bg_videoram_size ),/* background ram */
+		new Memory_WriteAddress( 0x9800, 0x98ff, MWA_RAM, &spriteram, &spriteram_size ),	/* sprite ram */
+		new Memory_WriteAddress( 0xb000, 0xb000, nmi_enable_w ),	/* nmi enable */
+		new Memory_WriteAddress( 0xb003, 0xb003, sound_reset_w ),	/* sound reset ? */
+		new Memory_WriteAddress( 0xb800, 0xb800, soundlatch_w ), 	/* sound write */
+		new Memory_WriteAddress( 0xc800, 0xc800, timelimt_scroll_x_lsb_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, timelimt_scroll_x_msb_w ),
+		new Memory_WriteAddress( 0xc802, 0xc802, timelimt_scroll_y_w ),
+		new Memory_WriteAddress( 0xc803, 0xc803, MWA_NOP ),		/* ???? bit 0 used only */
+		new Memory_WriteAddress( 0xc804, 0xc804, MWA_NOP ),		/* ???? not used */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x00, 0x00, watchdog_reset_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, watchdog_reset_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x1fff, MRA_ROM },	/* rom */
-		{ 0x3800, 0x3bff, MRA_RAM },	/* ram */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x1fff, MRA_ROM ),	/* rom */
+		new Memory_ReadAddress( 0x3800, 0x3bff, MRA_RAM ),	/* ram */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x1fff, MWA_ROM },	/* rom */
-		{ 0x3800, 0x3bff, MWA_RAM },	/* ram */
-	MEMORY_END
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),	/* rom */
+		new Memory_WriteAddress( 0x3800, 0x3bff, MWA_RAM ),	/* ram */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_sound )
-		{ 0x8c, 0x8d, AY8910_read_port_0_r },
-		{ 0x8e, 0x8f, AY8910_read_port_1_r },
-	PORT_END
+	public static IO_ReadPort readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x8c, 0x8d, AY8910_read_port_0_r ),
+		new IO_ReadPort( 0x8e, 0x8f, AY8910_read_port_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_sound )
-		{ 0x00, 0x00, soundlatch_clear_w },
-		{ 0x8c, 0x8c, AY8910_control_port_0_w },
-		{ 0x8d, 0x8d, AY8910_write_port_0_w },
-		{ 0x8e, 0x8e, AY8910_control_port_1_w },
-		{ 0x8f, 0x8f, AY8910_write_port_1_w },
-	PORT_END
+	public static IO_WritePort writeport_sound[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, soundlatch_clear_w ),
+		new IO_WritePort( 0x8c, 0x8c, AY8910_control_port_0_w ),
+		new IO_WritePort( 0x8d, 0x8d, AY8910_write_port_0_w ),
+		new IO_WritePort( 0x8e, 0x8e, AY8910_control_port_1_w ),
+		new IO_WritePort( 0x8f, 0x8f, AY8910_write_port_1_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************/
 	

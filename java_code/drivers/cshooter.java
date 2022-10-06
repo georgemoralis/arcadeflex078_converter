@@ -162,63 +162,79 @@ public class cshooter
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },			// to be confirmed
-		{ 0xb000, 0xb0ff, MRA_RAM },			// sound related ?
-		{ 0xc000, 0xc1ff, MRA_RAM },
-		{ 0xc200, 0xc200, input_port_0_r },
-		{ 0xc201, 0xc201, input_port_1_r },
-		{ 0xc202, 0xc202, input_port_2_r },
-		{ 0xc203, 0xc203, input_port_3_r },
-		{ 0xc204, 0xc204, input_port_4_r },
-		{ 0xc205, 0xc205, cshooter_coin_r },	// hack until I understand
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),			// to be confirmed
+		new Memory_ReadAddress( 0xb000, 0xb0ff, MRA_RAM ),			// sound related ?
+		new Memory_ReadAddress( 0xc000, 0xc1ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc200, 0xc200, input_port_0_r ),
+		new Memory_ReadAddress( 0xc201, 0xc201, input_port_1_r ),
+		new Memory_ReadAddress( 0xc202, 0xc202, input_port_2_r ),
+		new Memory_ReadAddress( 0xc203, 0xc203, input_port_3_r ),
+		new Memory_ReadAddress( 0xc204, 0xc204, input_port_4_r ),
+		new Memory_ReadAddress( 0xc205, 0xc205, cshooter_coin_r ),	// hack until I understand
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },			// to be confirmed
-		{ 0xc000, 0xc1ff, paletteram_BBGGGRRR_w, &paletteram },	// guess, maybe not
-		{ 0xc500, 0xc500, cshooter_c500_w },
-		{ 0xc600, 0xc600, MWA_NOP },			// see notes
-		{ 0xc700, 0xc700, cshooter_c700_w },
-		{ 0xc801, 0xc801, MWA_NOP },			// see notes
-		{ 0xd000, 0xd7ff, cshooter_txram_w, &cshooter_txram },
-		{ 0xd800, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),			// to be confirmed
+		new Memory_WriteAddress( 0xc000, 0xc1ff, paletteram_BBGGGRRR_w, &paletteram ),	// guess, maybe not
+		new Memory_WriteAddress( 0xc500, 0xc500, cshooter_c500_w ),
+		new Memory_WriteAddress( 0xc600, 0xc600, MWA_NOP ),			// see notes
+		new Memory_WriteAddress( 0xc700, 0xc700, cshooter_c700_w ),
+		new Memory_WriteAddress( 0xc801, 0xc801, MWA_NOP ),			// see notes
+		new Memory_WriteAddress( 0xd000, 0xd7ff, cshooter_txram_w, &cshooter_txram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Sound CPU */
 	
-	static MEMORY_READ_START( s_readmem )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( s_writemem )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0xc000, 0xc000, MWA_NOP }, // YM2203_control_port_0_w ?
-		{ 0xc001, 0xc001, MWA_NOP }, // YM2203_write_port_0_w
-		{ 0xc800, 0xc800, MWA_NOP }, // YM2203_control_port_1_w ?
-		{ 0xc801, 0xc801, MWA_NOP }, // YM2203_write_port_1_w
-		{ 0xf800, 0xffff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_NOP ), // YM2203_control_port_0_w ?
+		new Memory_WriteAddress( 0xc001, 0xc001, MWA_NOP ), // YM2203_write_port_0_w
+		new Memory_WriteAddress( 0xc800, 0xc800, MWA_NOP ), // YM2203_control_port_1_w ?
+		new Memory_WriteAddress( 0xc801, 0xc801, MWA_NOP ), // YM2203_write_port_1_w
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( s_readport )
-	PORT_END
+	public static IO_ReadPort s_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( s_writeport )
-	PORT_END
+	public static IO_WritePort s_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( cshooter )

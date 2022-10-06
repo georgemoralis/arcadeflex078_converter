@@ -245,40 +245,44 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( alpha_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },			/* 0.5K Program Ram */
-		{ 0x0200, 0x07ff, MRA_BANK1 },			/* 3K Paged Program RAM	*/
-		{ 0x0800, 0x09ff, MRA_RAM },			/* 0.5K Program RAM */
-		{ 0x1000, 0x1000, mhavoc_gamma_r },		/* Gamma Read Port */
-		{ 0x1200, 0x1200, mhavoc_port_0_r },	/* Alpha Input Port 0 */
-		{ 0x1800, 0x1fff, MRA_RAM },			/* Shared Beta Ram */
-		{ 0x2000, 0x3fff, MRA_BANK2 },			/* Paged Program ROM (32K) */
-		{ 0x4000, 0x4fff, MRA_RAM }, 			/* Vector RAM (4K) */
-		{ 0x5000, 0x5fff, MRA_ROM },			/* Vector ROM (4K) */
-		{ 0x6000, 0x7fff, MRA_BANK3 },			/* Paged Vector ROM (32K) */
-		{ 0x8000, 0xffff, MRA_ROM },			/* Program ROM (32K) */
-	MEMORY_END
+	public static Memory_ReadAddress alpha_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),			/* 0.5K Program Ram */
+		new Memory_ReadAddress( 0x0200, 0x07ff, MRA_BANK1 ),			/* 3K Paged Program RAM	*/
+		new Memory_ReadAddress( 0x0800, 0x09ff, MRA_RAM ),			/* 0.5K Program RAM */
+		new Memory_ReadAddress( 0x1000, 0x1000, mhavoc_gamma_r ),		/* Gamma Read Port */
+		new Memory_ReadAddress( 0x1200, 0x1200, mhavoc_port_0_r ),	/* Alpha Input Port 0 */
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),			/* Shared Beta Ram */
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK2 ),			/* Paged Program ROM (32K) */
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_RAM ), 			/* Vector RAM (4K) */
+		new Memory_ReadAddress( 0x5000, 0x5fff, MRA_ROM ),			/* Vector ROM (4K) */
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK3 ),			/* Paged Vector ROM (32K) */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			/* Program ROM (32K) */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( alpha_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },			/* 0.5K Program Ram */
-		{ 0x0200, 0x07ff, MWA_BANK1 },			/* 3K Paged Program RAM */
-		{ 0x0800, 0x09ff, MWA_RAM },			/* 0.5K Program RAM */
-		{ 0x1200, 0x1200, MWA_NOP },			/* don't care */
-		{ 0x1400, 0x141f, mhavoc_colorram_w },	/* ColorRAM */
-		{ 0x1600, 0x1600, mhavoc_out_0_w },		/* Control Signals */
-		{ 0x1640, 0x1640, avgdvg_go_w },		/* Vector Generator GO */
-		{ 0x1680, 0x1680, watchdog_reset_w },	/* Watchdog Clear */
-		{ 0x16c0, 0x16c0, avgdvg_reset_w },		/* Vector Generator Reset */
-		{ 0x1700, 0x1700, mhavoc_alpha_irq_ack_w },/* IRQ ack */
-		{ 0x1740, 0x1740, mhavoc_rom_banksel_w },/* Program ROM Page Select */
-		{ 0x1780, 0x1780, mhavoc_ram_banksel_w },/* Program RAM Page Select */
-		{ 0x17c0, 0x17c0, mhavoc_gamma_w },		/* Gamma Communication Write Port */
-		{ 0x1800, 0x1fff, MWA_RAM },			/* Shared Beta Ram */
-		{ 0x2000, 0x3fff, MWA_ROM },			/* Major Havoc writes here.*/
-		{ 0x4000, 0x4fff, MWA_RAM, &vectorram, &vectorram_size },/* Vector Generator RAM	*/
-		{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress alpha_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),			/* 0.5K Program Ram */
+		new Memory_WriteAddress( 0x0200, 0x07ff, MWA_BANK1 ),			/* 3K Paged Program RAM */
+		new Memory_WriteAddress( 0x0800, 0x09ff, MWA_RAM ),			/* 0.5K Program RAM */
+		new Memory_WriteAddress( 0x1200, 0x1200, MWA_NOP ),			/* don't care */
+		new Memory_WriteAddress( 0x1400, 0x141f, mhavoc_colorram_w ),	/* ColorRAM */
+		new Memory_WriteAddress( 0x1600, 0x1600, mhavoc_out_0_w ),		/* Control Signals */
+		new Memory_WriteAddress( 0x1640, 0x1640, avgdvg_go_w ),		/* Vector Generator GO */
+		new Memory_WriteAddress( 0x1680, 0x1680, watchdog_reset_w ),	/* Watchdog Clear */
+		new Memory_WriteAddress( 0x16c0, 0x16c0, avgdvg_reset_w ),		/* Vector Generator Reset */
+		new Memory_WriteAddress( 0x1700, 0x1700, mhavoc_alpha_irq_ack_w ),/* IRQ ack */
+		new Memory_WriteAddress( 0x1740, 0x1740, mhavoc_rom_banksel_w ),/* Program ROM Page Select */
+		new Memory_WriteAddress( 0x1780, 0x1780, mhavoc_ram_banksel_w ),/* Program RAM Page Select */
+		new Memory_WriteAddress( 0x17c0, 0x17c0, mhavoc_gamma_w ),		/* Gamma Communication Write Port */
+		new Memory_WriteAddress( 0x1800, 0x1fff, MWA_RAM ),			/* Shared Beta Ram */
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),			/* Major Havoc writes here.*/
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_RAM, &vectorram, &vectorram_size ),/* Vector Generator RAM	*/
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -288,28 +292,32 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( gamma_readmem )
-		{ 0x0000, 0x07ff, MRA_RAM },			/* Program RAM (2K)	*/
-		{ 0x0800, 0x1fff, mhavoc_gammaram_r },	/* wraps to 0x000-0x7ff */
-		{ 0x2000, 0x203f, quad_pokey_r },		/* Quad Pokey read	*/
-		{ 0x2800, 0x2800, mhavoc_port_1_r },	/* Gamma Input Port	*/
-		{ 0x3000, 0x3000, mhavoc_alpha_r },		/* Alpha Comm. Read Port*/
-		{ 0x3800, 0x3803, input_port_2_r },		/* Roller Controller Input*/
-		{ 0x4000, 0x4000, input_port_4_r },		/* DSW at 8S */
-		{ 0x6000, 0x61ff, MRA_RAM },			/* EEROM		*/
-		{ 0x8000, 0xffff, MRA_ROM },			/* Program ROM (16K)	*/
-	MEMORY_END
+	public static Memory_ReadAddress gamma_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),			/* Program RAM (2K)	*/
+		new Memory_ReadAddress( 0x0800, 0x1fff, mhavoc_gammaram_r ),	/* wraps to 0x000-0x7ff */
+		new Memory_ReadAddress( 0x2000, 0x203f, quad_pokey_r ),		/* Quad Pokey read	*/
+		new Memory_ReadAddress( 0x2800, 0x2800, mhavoc_port_1_r ),	/* Gamma Input Port	*/
+		new Memory_ReadAddress( 0x3000, 0x3000, mhavoc_alpha_r ),		/* Alpha Comm. Read Port*/
+		new Memory_ReadAddress( 0x3800, 0x3803, input_port_2_r ),		/* Roller Controller Input*/
+		new Memory_ReadAddress( 0x4000, 0x4000, input_port_4_r ),		/* DSW at 8S */
+		new Memory_ReadAddress( 0x6000, 0x61ff, MRA_RAM ),			/* EEROM		*/
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			/* Program ROM (16K)	*/
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( gamma_writemem )
-		{ 0x0000, 0x07ff, MWA_RAM },			/* Program RAM (2K)	*/
-		{ 0x0800, 0x1fff, mhavoc_gammaram_w, &gammaram },	/* wraps to 0x000-0x7ff */
-		{ 0x2000, 0x203f, quad_pokey_w },		/* Quad Pokey write	*/
-		{ 0x4000, 0x4000, mhavoc_gamma_irq_ack_w },	/* IRQ Acknowledge	*/
-		{ 0x4800, 0x4800, mhavoc_out_1_w },		/* Coin Counters 	*/
-		{ 0x5000, 0x5000, mhavoc_alpha_w },		/* Alpha Comm. Write Port */
-		{ 0x6000, 0x61ff, MWA_RAM, &generic_nvram, &generic_nvram_size },	/* EEROM		*/
-	MEMORY_END
+	public static Memory_WriteAddress gamma_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),			/* Program RAM (2K)	*/
+		new Memory_WriteAddress( 0x0800, 0x1fff, mhavoc_gammaram_w, &gammaram ),	/* wraps to 0x000-0x7ff */
+		new Memory_WriteAddress( 0x2000, 0x203f, quad_pokey_w ),		/* Quad Pokey write	*/
+		new Memory_WriteAddress( 0x4000, 0x4000, mhavoc_gamma_irq_ack_w ),	/* IRQ Acknowledge	*/
+		new Memory_WriteAddress( 0x4800, 0x4800, mhavoc_out_1_w ),		/* Coin Counters 	*/
+		new Memory_WriteAddress( 0x5000, 0x5000, mhavoc_alpha_w ),		/* Alpha Comm. Write Port */
+		new Memory_WriteAddress( 0x6000, 0x61ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),	/* EEROM		*/
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -319,42 +327,46 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( alphaone_readmem )
-		{ 0x0000, 0x01ff, MRA_RAM },			/* 0.5K Program Ram */
-		{ 0x0200, 0x07ff, MRA_BANK1 },			/* 3K Paged Program RAM	*/
-		{ 0x0800, 0x09ff, MRA_RAM },			/* 0.5K Program RAM */
-		{ 0x1020, 0x103f, dual_pokey_r },
-		{ 0x1040, 0x1040, alphaone_port_0_r },	/* Alpha Input Port 0 */
-		{ 0x1060, 0x1060, input_port_1_r },		/* Gamma Input Port	*/
-		{ 0x1080, 0x1080, input_port_2_r },		/* Roller Controller Input*/
-		{ 0x1800, 0x18ff, MRA_RAM },			/* EEROM		*/
-		{ 0x2000, 0x3fff, MRA_BANK2 },			/* Paged Program ROM (32K) */
-		{ 0x4000, 0x4fff, MRA_RAM }, 			/* Vector RAM (4K) */
-		{ 0x5000, 0x5fff, MRA_ROM },			/* Vector ROM (4K) */
-		{ 0x6000, 0x7fff, MRA_BANK3 },			/* Paged Vector ROM (32K) */
-		{ 0x8000, 0xffff, MRA_ROM },			/* Program ROM (32K) */
-	MEMORY_END
+	public static Memory_ReadAddress alphaone_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM ),			/* 0.5K Program Ram */
+		new Memory_ReadAddress( 0x0200, 0x07ff, MRA_BANK1 ),			/* 3K Paged Program RAM	*/
+		new Memory_ReadAddress( 0x0800, 0x09ff, MRA_RAM ),			/* 0.5K Program RAM */
+		new Memory_ReadAddress( 0x1020, 0x103f, dual_pokey_r ),
+		new Memory_ReadAddress( 0x1040, 0x1040, alphaone_port_0_r ),	/* Alpha Input Port 0 */
+		new Memory_ReadAddress( 0x1060, 0x1060, input_port_1_r ),		/* Gamma Input Port	*/
+		new Memory_ReadAddress( 0x1080, 0x1080, input_port_2_r ),		/* Roller Controller Input*/
+		new Memory_ReadAddress( 0x1800, 0x18ff, MRA_RAM ),			/* EEROM		*/
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_BANK2 ),			/* Paged Program ROM (32K) */
+		new Memory_ReadAddress( 0x4000, 0x4fff, MRA_RAM ), 			/* Vector RAM (4K) */
+		new Memory_ReadAddress( 0x5000, 0x5fff, MRA_ROM ),			/* Vector ROM (4K) */
+		new Memory_ReadAddress( 0x6000, 0x7fff, MRA_BANK3 ),			/* Paged Vector ROM (32K) */
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),			/* Program ROM (32K) */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( alphaone_writemem )
-		{ 0x0000, 0x01ff, MWA_RAM },			/* 0.5K Program Ram */
-		{ 0x0200, 0x07ff, MWA_BANK1 },			/* 3K Paged Program RAM */
-		{ 0x0800, 0x09ff, MWA_RAM },			/* 0.5K Program RAM */
-		{ 0x1020, 0x103f, dual_pokey_w },
-		{ 0x1040, 0x1040, MWA_NOP },			/* Nothing here */
-		{ 0x10a0, 0x10a0, alphaone_out_0_w },	/* Control Signals */
-		{ 0x10a4, 0x10a4, avgdvg_go_w },		/* Vector Generator GO */
-		{ 0x10a8, 0x10a8, watchdog_reset_w },	/* Watchdog Clear */
-		{ 0x10ac, 0x10ac, avgdvg_reset_w },		/* Vector Generator Reset */
-		{ 0x10b0, 0x10b0, mhavoc_alpha_irq_ack_w },	/* IRQ ack */
-		{ 0x10b4, 0x10b4, mhavoc_rom_banksel_w },
-		{ 0x10b8, 0x10b8, mhavoc_ram_banksel_w },
-		{ 0x10e0, 0x10ff, mhavoc_colorram_w },	/* ColorRAM */
-		{ 0x1800, 0x18ff, MWA_RAM, &generic_nvram, &generic_nvram_size },	/* EEROM		*/
-		{ 0x2000, 0x3fff, MWA_ROM },			/* Major Havoc writes here.*/
-		{ 0x4000, 0x4fff, MWA_RAM, &vectorram, &vectorram_size },/* Vector Generator RAM	*/
-		{ 0x6000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress alphaone_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),			/* 0.5K Program Ram */
+		new Memory_WriteAddress( 0x0200, 0x07ff, MWA_BANK1 ),			/* 3K Paged Program RAM */
+		new Memory_WriteAddress( 0x0800, 0x09ff, MWA_RAM ),			/* 0.5K Program RAM */
+		new Memory_WriteAddress( 0x1020, 0x103f, dual_pokey_w ),
+		new Memory_WriteAddress( 0x1040, 0x1040, MWA_NOP ),			/* Nothing here */
+		new Memory_WriteAddress( 0x10a0, 0x10a0, alphaone_out_0_w ),	/* Control Signals */
+		new Memory_WriteAddress( 0x10a4, 0x10a4, avgdvg_go_w ),		/* Vector Generator GO */
+		new Memory_WriteAddress( 0x10a8, 0x10a8, watchdog_reset_w ),	/* Watchdog Clear */
+		new Memory_WriteAddress( 0x10ac, 0x10ac, avgdvg_reset_w ),		/* Vector Generator Reset */
+		new Memory_WriteAddress( 0x10b0, 0x10b0, mhavoc_alpha_irq_ack_w ),	/* IRQ ack */
+		new Memory_WriteAddress( 0x10b4, 0x10b4, mhavoc_rom_banksel_w ),
+		new Memory_WriteAddress( 0x10b8, 0x10b8, mhavoc_ram_banksel_w ),
+		new Memory_WriteAddress( 0x10e0, 0x10ff, mhavoc_colorram_w ),	/* ColorRAM */
+		new Memory_WriteAddress( 0x1800, 0x18ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),	/* EEROM		*/
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),			/* Major Havoc writes here.*/
+		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_RAM, &vectorram, &vectorram_size ),/* Vector Generator RAM	*/
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

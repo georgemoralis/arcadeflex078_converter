@@ -162,21 +162,25 @@ public class afega
 	
 	***************************************************************************/
 	
-	static MEMORY_READ_START( afega_sound_readmem )
-		{ 0x0000, 0xefff, MRA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MRA_RAM					},	// RAM
-		{ 0xf800, 0xf800, soundlatch_r				},	// From Main CPU
-		{ 0xf809, 0xf809, YM2151_status_port_0_r	},	// YM2151
-		{ 0xf80a, 0xf80a, OKIM6295_status_0_r		},	// M6295
-	MEMORY_END
+	public static Memory_ReadAddress afega_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xefff, MRA_ROM					),	// ROM
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM					),	// RAM
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r				),	// From Main CPU
+		new Memory_ReadAddress( 0xf809, 0xf809, YM2151_status_port_0_r	),	// YM2151
+		new Memory_ReadAddress( 0xf80a, 0xf80a, OKIM6295_status_0_r		),	// M6295
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( afega_sound_writemem )
-		{ 0x0000, 0xefff, MWA_ROM					},	// ROM
-		{ 0xf000, 0xf7ff, MWA_RAM					},	// RAM
-		{ 0xf808, 0xf808, YM2151_register_port_0_w	},	// YM2151
-		{ 0xf809, 0xf809, YM2151_data_port_0_w		},	//
-		{ 0xf80a, 0xf80a, OKIM6295_data_0_w			},	// M6295
-	MEMORY_END
+	public static Memory_WriteAddress afega_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xefff, MWA_ROM					),	// ROM
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM					),	// RAM
+		new Memory_WriteAddress( 0xf808, 0xf808, YM2151_register_port_0_w	),	// YM2151
+		new Memory_WriteAddress( 0xf809, 0xf809, YM2151_data_port_0_w		),	//
+		new Memory_WriteAddress( 0xf80a, 0xf80a, OKIM6295_data_0_w			),	// M6295
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

@@ -774,116 +774,146 @@ public class alpha68k
 		cpu_setbank(7,&RAM[bankaddress]);
 	}
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xc000, 0xffff, MRA_BANK7 },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK7 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	//AT
-	static MEMORY_READ_START( kyros_sound_readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xc7ff, MRA_RAM },
-		{ 0xe000, 0xe000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress kyros_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( kyros_sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xe002, 0xe002, soundlatch_clear_w },
-		{ 0xe004, 0xe004, DAC_0_signed_data_w },
-		{ 0xe006, 0xe00e, MWA_NOP }, // soundboard I/O's, ignored
+	public static Memory_WriteAddress kyros_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe002, 0xe002, soundlatch_clear_w ),
+		new Memory_WriteAddress( 0xe004, 0xe004, DAC_0_signed_data_w ),
+		new Memory_WriteAddress( 0xe006, 0xe00e, MWA_NOP ), // soundboard I/O's, ignored
 	/* reference only
-		{ 0xe006, 0xe006, MWA_NOP }, // NMI: diminishing saw-tooth
-		{ 0xe008, 0xe008, MWA_NOP }, // NMI: 00
-		{ 0xe00a, 0xe00a, MWA_NOP }, // RST38: 20
-		{ 0xe00c, 0xe00c, MWA_NOP }, // RST30: 00 on entry
-		{ 0xe00e, 0xe00e, MWA_NOP }, // RST30: 00,02,ff on exit(0x1d88)
+		new Memory_WriteAddress( 0xe006, 0xe006, MWA_NOP ), // NMI: diminishing saw-tooth
+		new Memory_WriteAddress( 0xe008, 0xe008, MWA_NOP ), // NMI: 00
+		new Memory_WriteAddress( 0xe00a, 0xe00a, MWA_NOP ), // RST38: 20
+		new Memory_WriteAddress( 0xe00c, 0xe00c, MWA_NOP ), // RST30: 00 on entry
+		new Memory_WriteAddress( 0xe00e, 0xe00e, MWA_NOP ), // RST30: 00,02,ff on exit(0x1d88)
 	*/
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( sstingry_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0xc100, 0xc100, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress sstingry_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc100, 0xc100, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sstingry_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0xc102, 0xc102, soundlatch_clear_w },
-		{ 0xc104, 0xc104, DAC_0_signed_data_w },
-		{ 0xc106, 0xc10e, MWA_NOP }, // soundboard I/O's, ignored
-	MEMORY_END
+	public static Memory_WriteAddress sstingry_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc102, 0xc102, soundlatch_clear_w ),
+		new Memory_WriteAddress( 0xc104, 0xc104, DAC_0_signed_data_w ),
+		new Memory_WriteAddress( 0xc106, 0xc10e, MWA_NOP ), // soundboard I/O's, ignored
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( alpha68k_I_s_readmem )
-		{ 0x0000, 0x9fff, MRA_ROM }, // sound program
-		{ 0xe000, 0xe000, soundlatch_r },
-		{ 0xe800, 0xe800, YM3812_status_port_0_r },
-		{ 0xf000, 0xf7ff, MRA_RAM }, // work RAM
-		{ 0xfc00, 0xfc00, MRA_RAM }, // unknown port
-	MEMORY_END
+	public static Memory_ReadAddress alpha68k_I_s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ), // sound program
+		new Memory_ReadAddress( 0xe000, 0xe000, soundlatch_r ),
+		new Memory_ReadAddress( 0xe800, 0xe800, YM3812_status_port_0_r ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ), // work RAM
+		new Memory_ReadAddress( 0xfc00, 0xfc00, MRA_RAM ), // unknown port
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( alpha68k_I_s_writemem )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xe000, 0xe000, soundlatch_clear_w },
-		{ 0xe800, 0xe800, YM3812_control_port_0_w },
-		{ 0xec00, 0xec00, YM3812_write_port_0_w },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xfc00, 0xfc00, MWA_RAM }, // unknown port
-	MEMORY_END
+	public static Memory_WriteAddress alpha68k_I_s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, soundlatch_clear_w ),
+		new Memory_WriteAddress( 0xe800, 0xe800, YM3812_control_port_0_w ),
+		new Memory_WriteAddress( 0xec00, 0xec00, YM3812_write_port_0_w ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xfc00, 0xfc00, MWA_RAM ), // unknown port
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	//ZT
 	
-	static MEMORY_READ_START( tnexspce_sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xf000, 0xf7ff, MRA_RAM },
-		{ 0xf800, 0xf800, soundlatch_r }, //AT
-	MEMORY_END
+	public static Memory_ReadAddress tnexspce_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, soundlatch_r ), //AT
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( tnexspce_sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xf000, 0xf7ff, MWA_RAM },
-		{ 0xf800, 0xf800, soundlatch_clear_w }, //AT
-	MEMORY_END
+	public static Memory_WriteAddress tnexspce_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf800, 0xf800, soundlatch_clear_w ), //AT
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x00, 0x00, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, soundlatch_clear_w },
-		{ 0x08, 0x08, DAC_0_signed_data_w },
-		{ 0x0a, 0x0a, YM2413_register_port_0_w },
-		{ 0x0b, 0x0b, YM2413_data_port_0_w },
-		{ 0x0c, 0x0c, YM2203_control_port_0_w },
-		{ 0x0d, 0x0d, YM2203_write_port_0_w },
-		{ 0x0e, 0x0e, sound_bank_w },
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, soundlatch_clear_w ),
+		new IO_WritePort( 0x08, 0x08, DAC_0_signed_data_w ),
+		new IO_WritePort( 0x0a, 0x0a, YM2413_register_port_0_w ),
+		new IO_WritePort( 0x0b, 0x0b, YM2413_data_port_0_w ),
+		new IO_WritePort( 0x0c, 0x0c, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x0d, 0x0d, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x0e, 0x0e, sound_bank_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( kyros_sound_writeport )
-		{ 0x10, 0x10, YM2203_control_port_0_w },
-		{ 0x11, 0x11, YM2203_write_port_0_w },
-		{ 0x80, 0x80, YM2203_write_port_1_w },
-		{ 0x81, 0x81, YM2203_control_port_1_w },
-		{ 0x90, 0x90, YM2203_write_port_2_w },
-		{ 0x91, 0x91, YM2203_control_port_2_w },
-	PORT_END
+	public static IO_WritePort kyros_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x10, 0x10, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x11, 0x11, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x80, 0x80, YM2203_write_port_1_w ),
+		new IO_WritePort( 0x81, 0x81, YM2203_control_port_1_w ),
+		new IO_WritePort( 0x90, 0x90, YM2203_write_port_2_w ),
+		new IO_WritePort( 0x91, 0x91, YM2203_control_port_2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( tnexspce_sound_readport ) //AT
-		{ 0x00, 0x00, YM3812_status_port_0_r },
-		{ 0x3b, 0x3b, MRA_NOP }, // unknown read port
-		{ 0x3d, 0x3d, MRA_NOP }, // unknown read port
-		{ 0x7b, 0x7b, MRA_NOP }, // unknown read port
-	PORT_END
+	public static IO_ReadPort tnexspce_sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),//AT
+		new IO_ReadPort( 0x00, 0x00, YM3812_status_port_0_r ),
+		new IO_ReadPort( 0x3b, 0x3b, MRA_NOP ), // unknown read port
+		new IO_ReadPort( 0x3d, 0x3d, MRA_NOP ), // unknown read port
+		new IO_ReadPort( 0x7b, 0x7b, MRA_NOP ), // unknown read port
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( tnexspce_sound_writeport )
-		{ 0x00, 0x00, YM3812_control_port_0_w },
-		{ 0x20, 0x20, YM3812_write_port_0_w },
-	PORT_END
+	public static IO_WritePort tnexspce_sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x20, 0x20, YM3812_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

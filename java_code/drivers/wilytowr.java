@@ -257,52 +257,64 @@ public class wilytowr
 	}
 	
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, MRA_RAM },
-		{ 0xf800, 0xf800, input_port_0_r },
-		{ 0xf801, 0xf801, input_port_1_r },
-		{ 0xf802, 0xf802, input_port_2_r },
-		{ 0xf806, 0xf806, input_port_3_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf800, 0xf800, input_port_0_r ),
+		new Memory_ReadAddress( 0xf801, 0xf801, input_port_1_r ),
+		new Memory_ReadAddress( 0xf802, 0xf802, input_port_2_r ),
+		new Memory_ReadAddress( 0xf806, 0xf806, input_port_3_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xd000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe1ff, MWA_RAM },
-		{ 0xe200, 0xe2ff, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xe300, 0xe3ff, MWA_RAM, &wilytowr_scrollram },
-		{ 0xe400, 0xe7ff, wilytowr_videoram2_w, &wilytowr_videoram2 },
-		{ 0xe800, 0xebff, wilytowr_videoram_w, &videoram },
-		{ 0xec00, 0xefff, wilytowr_colorram_w, &colorram },
-		{ 0xf000, 0xf000, interrupt_enable_w },	/* NMI enable */
-		{ 0xf002, 0xf002, wilytwr_flipscreen_w },
-		{ 0xf003, 0xf003, wilytwr_palbank_w },
-		{ 0xf006, 0xf007, coin_w },
-		{ 0xf800, 0xf800, soundlatch_w },
-		{ 0xf801, 0xf801, watchdog_reset_w },	/* unknown (cleared by NMI handler) */
-		{ 0xf803, 0xf803, snd_irq_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe1ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe200, 0xe2ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe300, 0xe3ff, MWA_RAM, &wilytowr_scrollram ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, wilytowr_videoram2_w, &wilytowr_videoram2 ),
+		new Memory_WriteAddress( 0xe800, 0xebff, wilytowr_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xec00, 0xefff, wilytowr_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xf000, 0xf000, interrupt_enable_w ),	/* NMI enable */
+		new Memory_WriteAddress( 0xf002, 0xf002, wilytwr_flipscreen_w ),
+		new Memory_WriteAddress( 0xf003, 0xf003, wilytwr_palbank_w ),
+		new Memory_WriteAddress( 0xf006, 0xf007, coin_w ),
+		new Memory_WriteAddress( 0xf800, 0xf800, soundlatch_w ),
+		new Memory_WriteAddress( 0xf801, 0xf801, watchdog_reset_w ),	/* unknown (cleared by NMI handler) */
+		new Memory_WriteAddress( 0xf803, 0xf803, snd_irq_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( i8039_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress i8039_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( i8039_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress i8039_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( i8039_readport )
-	//	{ 0x00, 0xff, },
-	//	{ I8039_t1, I8039_t1,  },
-	PORT_END
+	public static IO_ReadPort i8039_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	//	new IO_ReadPort( 0x00, 0xff, ),
+	//	new IO_ReadPort( I8039_t1, I8039_t1,  ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( i8039_writeport )
-		{ 0x00, 0xff, snddata_w },
-		{ I8039_p1, I8039_p1, p1_w },
-		{ I8039_p2, I8039_p2, p2_w },
-	PORT_END
+	public static IO_WritePort i8039_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0xff, snddata_w ),
+		new IO_WritePort( I8039_p1, I8039_p1, p1_w ),
+		new IO_WritePort( I8039_p2, I8039_p2, p2_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

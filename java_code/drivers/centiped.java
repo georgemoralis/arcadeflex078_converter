@@ -450,75 +450,83 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( centiped_readmem )
+	public static Memory_ReadAddress centiped_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(14)
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0400, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0800, input_port_4_r },	/* DSW1 */
-		{ 0x0801, 0x0801, input_port_5_r },	/* DSW2 */
-		{ 0x0c00, 0x0c00, centiped_IN0_r },	/* IN0 */
-		{ 0x0c01, 0x0c01, input_port_1_r },	/* IN1 */
-		{ 0x0c02, 0x0c02, centiped_IN2_r },	/* IN2 */
-		{ 0x0c03, 0x0c03, input_port_3_r },	/* IN3 */
-		{ 0x1000, 0x100f, pokey1_r },
-		{ 0x1700, 0x173f, atari_vg_earom_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, input_port_4_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x0801, 0x0801, input_port_5_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, centiped_IN0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x0c01, 0x0c01, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x0c02, 0x0c02, centiped_IN2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0x0c03, 0x0c03, input_port_3_r ),	/* IN3 */
+		new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),
+		new Memory_ReadAddress( 0x1700, 0x173f, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( centiped_writemem )
+	public static Memory_WriteAddress centiped_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(14)
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07bf, centiped_videoram_w, &videoram },
-		{ 0x07c0, 0x07ff, MWA_RAM, &spriteram },
-		{ 0x1000, 0x100f, pokey1_w },
-		{ 0x1400, 0x140f, centiped_paletteram_w, &paletteram },
-		{ 0x1600, 0x163f, atari_vg_earom_w },
-		{ 0x1680, 0x1680, atari_vg_earom_ctrl_w },
-		{ 0x1800, 0x1800, irq_ack_w },
-		{ 0x1c00, 0x1c02, coin_count_w },
-		{ 0x1c03, 0x1c04, led_w },
-		{ 0x1c07, 0x1c07, centiped_flip_screen_w },
-		{ 0x2000, 0x2000, watchdog_reset_w },
-		{ 0x2000, 0x3fff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07bf, centiped_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x1000, 0x100f, pokey1_w ),
+		new Memory_WriteAddress( 0x1400, 0x140f, centiped_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x1600, 0x163f, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x1680, 0x1680, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x1800, 0x1800, irq_ack_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c02, coin_count_w ),
+		new Memory_WriteAddress( 0x1c03, 0x1c04, led_w ),
+		new Memory_WriteAddress( 0x1c07, 0x1c07, centiped_flip_screen_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( centipb2_readmem )
+	public static Memory_ReadAddress centipb2_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0400, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0800, input_port_4_r },	/* DSW1 */
-		{ 0x0801, 0x0801, input_port_5_r },	/* DSW2 */
-		{ 0x0c00, 0x0c00, centiped_IN0_r },	/* IN0 */
-		{ 0x0c01, 0x0c01, input_port_1_r },	/* IN1 */
-		{ 0x0c02, 0x0c02, centiped_IN2_r },	/* IN2 */
-		{ 0x0c03, 0x0c03, input_port_3_r },	/* IN3 */
-		{ 0x1001, 0x1001, AY8910_read_port_0_r },
-		{ 0x1700, 0x173f, atari_vg_earom_r },
-		{ 0x2000, 0x3fff, MRA_ROM },
-		{ 0x6000, 0x67ff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0400, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, input_port_4_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x0801, 0x0801, input_port_5_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, centiped_IN0_r ),	/* IN0 */
+		new Memory_ReadAddress( 0x0c01, 0x0c01, input_port_1_r ),	/* IN1 */
+		new Memory_ReadAddress( 0x0c02, 0x0c02, centiped_IN2_r ),	/* IN2 */
+		new Memory_ReadAddress( 0x0c03, 0x0c03, input_port_3_r ),	/* IN3 */
+		new Memory_ReadAddress( 0x1001, 0x1001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0x1700, 0x173f, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x6000, 0x67ff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( centipb2_writemem )
+	public static Memory_WriteAddress centipb2_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07bf, centiped_videoram_w, &videoram },
-		{ 0x07c0, 0x07ff, MWA_RAM, &spriteram },
-		{ 0x1000, 0x1000, AY8910_write_port_0_w },
-		{ 0x1001, 0x1001, AY8910_control_port_0_w },
-		{ 0x1400, 0x140f, centiped_paletteram_w, &paletteram },
-		{ 0x1600, 0x163f, atari_vg_earom_w },
-		{ 0x1680, 0x1680, atari_vg_earom_ctrl_w },
-		{ 0x1800, 0x1800, irq_ack_w },
-		{ 0x1c00, 0x1c02, coin_count_w },
-		{ 0x1c03, 0x1c04, led_w },
-		{ 0x1c07, 0x1c07, centiped_flip_screen_w },
-		{ 0x2000, 0x2000, watchdog_reset_w },
-		{ 0x2000, 0x3fff, MWA_ROM },
-		{ 0x6000, 0x67ff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07bf, centiped_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x1000, 0x1000, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x1001, 0x1001, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x1400, 0x140f, centiped_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x1600, 0x163f, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x1680, 0x1680, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x1800, 0x1800, irq_ack_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c02, coin_count_w ),
+		new Memory_WriteAddress( 0x1c03, 0x1c04, led_w ),
+		new Memory_WriteAddress( 0x1c07, 0x1c07, centiped_flip_screen_w ),
+		new Memory_WriteAddress( 0x2000, 0x2000, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -528,39 +536,43 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( milliped_readmem )
+	public static Memory_ReadAddress milliped_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0400, 0x040f, pokey1_r },
-		{ 0x0800, 0x080f, pokey2_r },
-		{ 0x1000, 0x13ff, MRA_RAM },
-		{ 0x2000, 0x2000, centiped_IN0_r },
-		{ 0x2001, 0x2001, milliped_IN1_r },
-		{ 0x2010, 0x2010, input_port_2_r },
-		{ 0x2011, 0x2011, input_port_3_r },
-		{ 0x2030, 0x2030, atari_vg_earom_r },
-		{ 0x4000, 0x7fff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0400, 0x040f, pokey1_r ),
+		new Memory_ReadAddress( 0x0800, 0x080f, pokey2_r ),
+		new Memory_ReadAddress( 0x1000, 0x13ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x2000, centiped_IN0_r ),
+		new Memory_ReadAddress( 0x2001, 0x2001, milliped_IN1_r ),
+		new Memory_ReadAddress( 0x2010, 0x2010, input_port_2_r ),
+		new Memory_ReadAddress( 0x2011, 0x2011, input_port_3_r ),
+		new Memory_ReadAddress( 0x2030, 0x2030, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( milliped_writemem )
+	public static Memory_WriteAddress milliped_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x040f, pokey1_w },
-		{ 0x0800, 0x080f, pokey2_w },
-		{ 0x1000, 0x13ff, centiped_videoram_w, &videoram },
-		{ 0x13c0, 0x13ff, MWA_RAM, &spriteram },
-		{ 0x2480, 0x249f, milliped_paletteram_w, &paletteram },
-		{ 0x2500, 0x2502, coin_count_w },
-		{ 0x2503, 0x2504, led_w },
-		{ 0x2505, 0x2505, input_select_w },
-	//	{ 0x2506, 0x2507, MWA_NOP }, /* ? */
-		{ 0x2600, 0x2600, irq_ack_w },
-		{ 0x2680, 0x2680, watchdog_reset_w },
-		{ 0x2700, 0x2700, atari_vg_earom_ctrl_w },
-		{ 0x2780, 0x27bf, atari_vg_earom_w },
-		{ 0x4000, 0x7fff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x040f, pokey1_w ),
+		new Memory_WriteAddress( 0x0800, 0x080f, pokey2_w ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, centiped_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x13c0, 0x13ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x2480, 0x249f, milliped_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x2500, 0x2502, coin_count_w ),
+		new Memory_WriteAddress( 0x2503, 0x2504, led_w ),
+		new Memory_WriteAddress( 0x2505, 0x2505, input_select_w ),
+	//	new Memory_WriteAddress( 0x2506, 0x2507, MWA_NOP ), /* ? */
+		new Memory_WriteAddress( 0x2600, 0x2600, irq_ack_w ),
+		new Memory_WriteAddress( 0x2680, 0x2680, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x2700, 0x2700, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x2780, 0x27bf, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -570,29 +582,33 @@ public class centiped
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( warlords_readmem )
+	public static Memory_ReadAddress warlords_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x07ff, MRA_RAM },
-		{ 0x0800, 0x0800, input_port_2_r }, /* DSW1 */
-		{ 0x0801, 0x0801, input_port_3_r }, /* DSW2 */
-		{ 0x0c00, 0x0c00, input_port_0_r }, /* IN0 */
-		{ 0x0c01, 0x0c01, input_port_1_r }, /* IN1 */
-		{ 0x1000, 0x100f, pokey1_r },
-		{ 0x5000, 0x7fff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x0000, 0x07ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, input_port_2_r ), /* DSW1 */
+		new Memory_ReadAddress( 0x0801, 0x0801, input_port_3_r ), /* DSW2 */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_0_r ), /* IN0 */
+		new Memory_ReadAddress( 0x0c01, 0x0c01, input_port_1_r ), /* IN1 */
+		new Memory_ReadAddress( 0x1000, 0x100f, pokey1_r ),
+		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( warlords_writemem )
+	public static Memory_WriteAddress warlords_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		MEMORY_ADDRESS_BITS(15)
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x0400, 0x07bf, centiped_videoram_w, &videoram },
-		{ 0x07c0, 0x07ff, MWA_RAM, &spriteram },
-		{ 0x1000, 0x100f, pokey1_w },
-		{ 0x1800, 0x1800, irq_ack_w },
-		{ 0x1c00, 0x1c02, coin_count_w },
-		{ 0x1c03, 0x1c06, led_w },
-		{ 0x4000, 0x4000, watchdog_reset_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0400, 0x07bf, centiped_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x1000, 0x100f, pokey1_w ),
+		new Memory_WriteAddress( 0x1800, 0x1800, irq_ack_w ),
+		new Memory_WriteAddress( 0x1c00, 0x1c02, coin_count_w ),
+		new Memory_WriteAddress( 0x1c03, 0x1c06, led_w ),
+		new Memory_WriteAddress( 0x4000, 0x4000, watchdog_reset_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

@@ -96,71 +96,85 @@ public class jcross
 	static WRITE_HANDLER(jcross_vregs4_w){jcross_vregs[4]=data;}
 	
 	
-	static MEMORY_READ_START( readmem_sound )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x8000,0x87ff,MRA_RAM },
-		{ 0xa000, 0xa000, sound_command_r },
-		{ 0xc000, 0xc000, sound_nmi_ack_r },
-		MEMORY_END
+	public static Memory_ReadAddress readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000,0x87ff,MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, sound_command_r ),
+		new Memory_ReadAddress( 0xc000, 0xc000, sound_nmi_ack_r ),
+			new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_sound )
-		{ 0x0000, 0x3fff, MWA_ROM, &namco_wavedata },
-		{ 0x8000, 0x87ff,MWA_RAM },
-		{ 0xe000, 0xe000, AY8910_control_port_0_w },
-		{ 0xe001, 0xe001, AY8910_write_port_0_w },
-		{ 0xe002, 0xe007, snkwave_w },
-		{ 0xe008, 0xe008, AY8910_control_port_1_w },
-		{ 0xe009, 0xe009, AY8910_write_port_1_w },
+	public static Memory_WriteAddress writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM, &namco_wavedata ),
+		new Memory_WriteAddress( 0x8000, 0x87ff,MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0xe002, 0xe007, snkwave_w ),
+		new Memory_WriteAddress( 0xe008, 0xe008, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xe009, 0xe009, AY8910_write_port_1_w ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_CPUA )
-		{ 0x0000, 0x9fff, MRA_ROM },
-		{ 0xa000, 0xa000, jcross_port_0_r },
-		{ 0xa100, 0xa100, input_port_1_r },
-		{ 0xa200, 0xa200, input_port_2_r },
-		{ 0xa400, 0xa400, input_port_3_r },
-		{ 0xa500, 0xa500, input_port_4_r },
-		{ 0xa700, 0xa700, snk_cpuB_nmi_trigger_r  },
-		{ 0xd800, 0xdfff, sharedram_r },
-		{ 0xf000, 0xf3ff, jcross_text_ram_r },
-	  	{ 0xe000, 0xefff, jcross_background_ram_r },
-		{ 0xf400, 0xffff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress readmem_CPUA[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x9fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, jcross_port_0_r ),
+		new Memory_ReadAddress( 0xa100, 0xa100, input_port_1_r ),
+		new Memory_ReadAddress( 0xa200, 0xa200, input_port_2_r ),
+		new Memory_ReadAddress( 0xa400, 0xa400, input_port_3_r ),
+		new Memory_ReadAddress( 0xa500, 0xa500, input_port_4_r ),
+		new Memory_ReadAddress( 0xa700, 0xa700, snk_cpuB_nmi_trigger_r  ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, sharedram_r ),
+		new Memory_ReadAddress( 0xf000, 0xf3ff, jcross_text_ram_r ),
+	  	new Memory_ReadAddress( 0xe000, 0xefff, jcross_background_ram_r ),
+		new Memory_ReadAddress( 0xf400, 0xffff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_CPUA )
-		{ 0x0000, 0x9fff, MWA_ROM },
-		{ 0xa300, 0xa300, sound_command_w },
-		{ 0xa600, 0xa600, jcross_palettebank_w },
-		{ 0xa700, 0xa700, snk_cpuA_nmi_ack_w},
-		{ 0xd300, 0xd300, jcross_vregs0_w},
-		{ 0xd400, 0xd400, jcross_vregs1_w},
-		{ 0xd500, 0xd500, jcross_vregs2_w},
-		{ 0xd600, 0xd600, jcross_vregs3_w},
-		{ 0xd700, 0xd700, jcross_vregs4_w},
-	 	{ 0xd800, 0xdfff, sharedram_w, &jcr_sharedram },
-		{ 0xe000, 0xefff, jcross_background_ram_w, &videoram },
-		{ 0xf000, 0xf3ff, jcross_text_ram_w, &jcr_textram},
-		{ 0xf400, 0xffff, MWA_RAM },
+	public static Memory_WriteAddress writemem_CPUA[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa300, 0xa300, sound_command_w ),
+		new Memory_WriteAddress( 0xa600, 0xa600, jcross_palettebank_w ),
+		new Memory_WriteAddress( 0xa700, 0xa700, snk_cpuA_nmi_ack_w),
+		new Memory_WriteAddress( 0xd300, 0xd300, jcross_vregs0_w),
+		new Memory_WriteAddress( 0xd400, 0xd400, jcross_vregs1_w),
+		new Memory_WriteAddress( 0xd500, 0xd500, jcross_vregs2_w),
+		new Memory_WriteAddress( 0xd600, 0xd600, jcross_vregs3_w),
+		new Memory_WriteAddress( 0xd700, 0xd700, jcross_vregs4_w),
+	 	new Memory_WriteAddress( 0xd800, 0xdfff, sharedram_w, &jcr_sharedram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, jcross_background_ram_w, &videoram ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, jcross_text_ram_w, &jcr_textram),
+		new Memory_WriteAddress( 0xf400, 0xffff, MWA_RAM ),
 	
-	MEMORY_END
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( readmem_CPUB )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xa700, 0xa700, snk_cpuA_nmi_trigger_r },
-	  	{ 0xc000, 0xc7ff, sharedram_r },
-		{ 0xc800, 0xd7ff, jcross_background_ram_r }, /* unknown ??? */
-	MEMORY_END
+	public static Memory_ReadAddress readmem_CPUB[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xa700, 0xa700, snk_cpuA_nmi_trigger_r ),
+	  	new Memory_ReadAddress( 0xc000, 0xc7ff, sharedram_r ),
+		new Memory_ReadAddress( 0xc800, 0xd7ff, jcross_background_ram_r ), /* unknown ??? */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_CPUB )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xa700, 0xa700, snk_cpuB_nmi_ack_w  },
-	  	{ 0xc000, 0xc7ff, sharedram_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem_CPUB[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xa700, 0xa700, snk_cpuB_nmi_ack_w  ),
+	  	new Memory_WriteAddress( 0xc000, 0xc7ff, sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_sound )
-		{ 0x0000, 0x0000, MRA_NOP },
-	PORT_END
+	public static IO_ReadPort readport_sound[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x0000, MRA_NOP ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( jcross )

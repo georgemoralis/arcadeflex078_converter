@@ -302,21 +302,25 @@ public class airbustr
 	
 	/* Memory */
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, devram_r },
-		{ 0xf000, 0xffff, sharedram_r },
-	MEMORY_END
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },	// writing at 0 should cause a reset
-		{ 0xc000, 0xcfff, MWA_RAM, &spriteram },			// RAM 0/1
-		{ 0xd000, 0xdfff, MWA_RAM },						// RAM 2
-		{ 0xe000, 0xefff, devram_w, &devram },				// RAM 3
-		{ 0xf000, 0xffff, sharedram_w, &sharedram },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, devram_r ),
+		new Memory_ReadAddress( 0xf000, 0xffff, sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),	// writing at 0 should cause a reset
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM, &spriteram ),			// RAM 0/1
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM ),						// RAM 2
+		new Memory_WriteAddress( 0xe000, 0xefff, devram_w, &devram ),				// RAM 3
+		new Memory_WriteAddress( 0xf000, 0xffff, sharedram_w, &sharedram ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* Ports */
 	
@@ -325,11 +329,13 @@ public class airbustr
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	}
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x00, 0x00, bankswitch_w },
-	//	{ 0x01, 0x01, IOWP_NOP },	// ?? only 2 (see 378b)
-		{ 0x02, 0x02, cause_nmi_w },	// always 0. Cause a nmi to sub cpu
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, bankswitch_w ),
+	//	new IO_WritePort( 0x01, 0x01, IOWP_NOP ),	// ?? only 2 (see 378b)
+		new IO_WritePort( 0x02, 0x02, cause_nmi_w ),	// always 0. Cause a nmi to sub cpu
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -400,25 +406,29 @@ public class airbustr
 	
 	/* Memory */
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK2 },
-		{ 0xc000, 0xcfff, MRA_RAM },
-		{ 0xd000, 0xd5ff, paletteram_r },
-		{ 0xd600, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xefff, MRA_RAM },
-		{ 0xf000, 0xffff, sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK2 ),
+		new Memory_ReadAddress( 0xc000, 0xcfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd000, 0xd5ff, paletteram_r ),
+		new Memory_ReadAddress( 0xd600, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xefff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf000, 0xffff, sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xc7ff, airbustr_fgram_w, &airbustr_fgram },
-		{ 0xc800, 0xcfff, airbustr_bgram_w, &airbustr_bgram },
-		{ 0xd000, 0xd5ff, airbustr_paletteram_w, &paletteram },
-		{ 0xd600, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xefff, MWA_RAM },
-		{ 0xf000, 0xffff, sharedram_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, airbustr_fgram_w, &airbustr_fgram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, airbustr_bgram_w, &airbustr_bgram ),
+		new Memory_WriteAddress( 0xd000, 0xd5ff, airbustr_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xd600, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xffff, sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Ports */
@@ -464,21 +474,25 @@ public class airbustr
 	WRITE_HANDLER( port_38_w )	{	u4 = data; } // for debug
 	
 	
-	static PORT_READ_START( readport2 )
-		{ 0x02, 0x02, soundcommand2_r },		// from sound cpu
-		{ 0x0e, 0x0e, soundcommand_status_r },	// status of the latches ?
-		{ 0x20, 0x20, input_port_0_r },			// player 1
-		{ 0x22, 0x22, input_port_1_r },			// player 2
-		{ 0x24, 0x24, input_port_2_r },			// service
-	PORT_END
+	public static IO_ReadPort readport2[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, soundcommand2_r ),		// from sound cpu
+		new IO_ReadPort( 0x0e, 0x0e, soundcommand_status_r ),	// status of the latches ?
+		new IO_ReadPort( 0x20, 0x20, input_port_0_r ),			// player 1
+		new IO_ReadPort( 0x22, 0x22, input_port_1_r ),			// player 2
+		new IO_ReadPort( 0x24, 0x24, input_port_2_r ),			// service
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport2 )
-		{ 0x00, 0x00, bankswitch2_w },			// bits 2-0 bank, bit 4 (on if dsw1-1 active)?,  bit 5?
-		{ 0x02, 0x02, soundcommand_w },			// to sound cpu
-		{ 0x04, 0x0c, airbustr_scrollregs_w },	// Scroll values
-	//	{ 0x28, 0x28, port_38_w },				// ??
-	//	{ 0x38, 0x38, IOWP_NOP },				// ?? Followed by EI. Value isn't important
-	PORT_END
+	public static IO_WritePort writeport2[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, bankswitch2_w ),			// bits 2-0 bank, bit 4 (on if dsw1-1 active)?,  bit 5?
+		new IO_WritePort( 0x02, 0x02, soundcommand_w ),			// to sound cpu
+		new IO_WritePort( 0x04, 0x0c, airbustr_scrollregs_w ),	// Scroll values
+	//	new IO_WritePort( 0x28, 0x28, port_38_w ),				// ??
+	//	new IO_WritePort( 0x38, 0x38, IOWP_NOP ),				// ?? Followed by EI. Value isn't important
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -511,16 +525,20 @@ public class airbustr
 	
 	/* Memory */
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK3 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK3 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/* Ports */
@@ -539,20 +557,24 @@ public class airbustr
 	}
 	
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x02, 0x02, YM2203_status_port_0_r },
-		{ 0x03, 0x03, YM2203_read_port_0_r },
-		{ 0x04, 0x04, OKIM6295_status_0_r },
-		{ 0x06, 0x06, soundcommand_r },			// read command from sub cpu
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, YM2203_status_port_0_r ),
+		new IO_ReadPort( 0x03, 0x03, YM2203_read_port_0_r ),
+		new IO_ReadPort( 0x04, 0x04, OKIM6295_status_0_r ),
+		new IO_ReadPort( 0x06, 0x06, soundcommand_r ),			// read command from sub cpu
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x00, 0x00, sound_bankswitch_w },
-		{ 0x02, 0x02, YM2203_control_port_0_w },
-		{ 0x03, 0x03, YM2203_write_port_0_w },
-		{ 0x04, 0x04, OKIM6295_data_0_w },
-		{ 0x06, 0x06, soundcommand2_w },		// write command result to sub cpu
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, sound_bankswitch_w ),
+		new IO_WritePort( 0x02, 0x02, YM2203_control_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, YM2203_write_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, OKIM6295_data_0_w ),
+		new IO_WritePort( 0x06, 0x06, soundcommand2_w ),		// write command result to sub cpu
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

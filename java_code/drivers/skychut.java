@@ -57,52 +57,60 @@ public class skychut
 	}
 	
 	
-	static MEMORY_READ_START( skychut_readmem )
-		{ 0x0000, 0x02ff, MRA_RAM }, /* scratch ram */
-		{ 0x1000, 0x2fff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x4800, 0x4bff, MRA_RAM }, /* Foreground colour  */
-		{ 0x5000, 0x53ff, MRA_RAM }, /* BKgrnd colour ??? */
-		{ 0xa200, 0xa200, input_port_1_r },
-		{ 0xa300, 0xa300, input_port_0_r },
-	/*	{ 0xa700, 0xa700, input_port_3_r },*/
-		{ 0xfc00, 0xffff, MRA_ROM },	/* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress skychut_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x02ff, MRA_RAM ), /* scratch ram */
+		new Memory_ReadAddress( 0x1000, 0x2fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4800, 0x4bff, MRA_RAM ), /* Foreground colour  */
+		new Memory_ReadAddress( 0x5000, 0x53ff, MRA_RAM ), /* BKgrnd colour ??? */
+		new Memory_ReadAddress( 0xa200, 0xa200, input_port_1_r ),
+		new Memory_ReadAddress( 0xa300, 0xa300, input_port_0_r ),
+	/*	new Memory_ReadAddress( 0xa700, 0xa700, input_port_3_r ),*/
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_ROM ),	/* for the reset / interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( skychut_writemem )
-		{ 0x0000, 0x02ff, MWA_RAM, &memory },
-		{ 0x1000, 0x2fff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4800, 0x4bff, skychut_colorram_w, &colorram }, /* foreground colour  */
-		{ 0x5000, 0x53ff, MWA_RAM, &iremm15_chargen }, /* background ????? */
-	//	{ 0xa100, 0xa1ff, MWA_RAM }, /* Sound writes????? */
-		{ 0xa400, 0xa400, skychut_ctrl_w },	/* line at bottom of screen?, sound, flip screen */
-		{ 0xfc00, 0xffff, MWA_ROM },	/* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_WriteAddress skychut_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x02ff, MWA_RAM, &memory ),
+		new Memory_WriteAddress( 0x1000, 0x2fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, skychut_colorram_w, &colorram ), /* foreground colour  */
+		new Memory_WriteAddress( 0x5000, 0x53ff, MWA_RAM, &iremm15_chargen ), /* background ????? */
+	//	new Memory_WriteAddress( 0xa100, 0xa1ff, MWA_RAM ), /* Sound writes????? */
+		new Memory_WriteAddress( 0xa400, 0xa400, skychut_ctrl_w ),	/* line at bottom of screen?, sound, flip screen */
+		new Memory_WriteAddress( 0xfc00, 0xffff, MWA_ROM ),	/* for the reset / interrupt vectors */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( greenberet_readmem )
-		{ 0x0000, 0x02ff, MRA_RAM }, /* scratch ram */
-		{ 0x1000, 0x33ff, MRA_ROM },
-		{ 0x4000, 0x43ff, MRA_RAM },
-		{ 0x4800, 0x4bff, MRA_RAM }, /* Foreground colour  */
-		{ 0x5000, 0x57ff, MRA_RAM },
-		{ 0xa000, 0xa000, input_port_3_r },
-		{ 0xa200, 0xa200, input_port_1_r },
-		{ 0xa300, 0xa300, input_port_0_r },
-		{ 0xfc00, 0xffff, MRA_ROM },	/* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress greenberet_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x02ff, MRA_RAM ), /* scratch ram */
+		new Memory_ReadAddress( 0x1000, 0x33ff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x43ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4800, 0x4bff, MRA_RAM ), /* Foreground colour  */
+		new Memory_ReadAddress( 0x5000, 0x57ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa000, 0xa000, input_port_3_r ),
+		new Memory_ReadAddress( 0xa200, 0xa200, input_port_1_r ),
+		new Memory_ReadAddress( 0xa300, 0xa300, input_port_0_r ),
+		new Memory_ReadAddress( 0xfc00, 0xffff, MRA_ROM ),	/* for the reset / interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( greenberet_writemem )
-		{ 0x0000, 0x02ff, MWA_RAM, &memory },
-		{ 0x1000, 0x33ff, MWA_ROM },
-		{ 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size },
-		{ 0x4800, 0x4bff, skychut_colorram_w, &colorram }, /* foreground colour  */
-		{ 0x5000, 0x57ff, MWA_RAM, &iremm15_chargen },
-		{ 0xa100, 0xa1ff, MWA_RAM }, /* Sound writes????? */
-		{ 0xa400, 0xa400, MWA_NOP },	/* sound, flip screen */
-		{ 0xfc00, 0xffff, MWA_ROM },	/* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_WriteAddress greenberet_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x02ff, MWA_RAM, &memory ),
+		new Memory_WriteAddress( 0x1000, 0x33ff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, skychut_colorram_w, &colorram ), /* foreground colour  */
+		new Memory_WriteAddress( 0x5000, 0x57ff, MWA_RAM, &iremm15_chargen ),
+		new Memory_WriteAddress( 0xa100, 0xa1ff, MWA_RAM ), /* Sound writes????? */
+		new Memory_WriteAddress( 0xa400, 0xa400, MWA_NOP ),	/* sound, flip screen */
+		new Memory_WriteAddress( 0xfc00, 0xffff, MWA_ROM ),	/* for the reset / interrupt vectors */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INTERRUPT_GEN( skychut_interrupt )

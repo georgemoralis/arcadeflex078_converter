@@ -311,71 +311,79 @@ public class bzone
 	 *
 	 *************************************/
 	
-	static MEMORY_READ_START( bzone_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x0800, bzone_IN0_r },    /* IN0 */
-		{ 0x0a00, 0x0a00, input_port_1_r },	/* DSW1 */
-		{ 0x0c00, 0x0c00, input_port_2_r },	/* DSW2 */
-		{ 0x1800, 0x1800, mb_status_r },
-		{ 0x1810, 0x1810, mb_lo_r },
-		{ 0x1818, 0x1818, mb_hi_r },
-		{ 0x1820, 0x182f, pokey1_r },
-		{ 0x2000, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },        /* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress bzone_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, bzone_IN0_r ),    /* IN0 */
+		new Memory_ReadAddress( 0x0a00, 0x0a00, input_port_1_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_2_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x1800, 0x1800, mb_status_r ),
+		new Memory_ReadAddress( 0x1810, 0x1810, mb_lo_r ),
+		new Memory_ReadAddress( 0x1818, 0x1818, mb_hi_r ),
+		new Memory_ReadAddress( 0x1820, 0x182f, pokey1_r ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),        /* for the reset / interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( bzone_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x1000, 0x1000, bzone_coin_counter_w },
-		{ 0x1200, 0x1200, avgdvg_go_w },
-		{ 0x1400, 0x1400, watchdog_reset_w },
-		{ 0x1600, 0x1600, avgdvg_reset_w },
-		{ 0x1820, 0x182f, pokey1_w },
-		{ 0x1840, 0x1840, bzone_sounds_w },
-		{ 0x1860, 0x187f, mb_go_w },
-		{ 0x2000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size },
-		{ 0x3000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x7fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress bzone_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1000, bzone_coin_counter_w ),
+		new Memory_WriteAddress( 0x1200, 0x1200, avgdvg_go_w ),
+		new Memory_WriteAddress( 0x1400, 0x1400, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x1600, 0x1600, avgdvg_reset_w ),
+		new Memory_WriteAddress( 0x1820, 0x182f, pokey1_w ),
+		new Memory_WriteAddress( 0x1840, 0x1840, bzone_sounds_w ),
+		new Memory_WriteAddress( 0x1860, 0x187f, mb_go_w ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_READ_START( redbaron_readmem )
-		{ 0x0000, 0x03ff, MRA_RAM },
-		{ 0x0800, 0x0800, bzone_IN0_r },    /* IN0 */
-		{ 0x0a00, 0x0a00, input_port_1_r },	/* DSW1 */
-		{ 0x0c00, 0x0c00, input_port_2_r },	/* DSW2 */
-		{ 0x1800, 0x1800, mb_status_r },
-		{ 0x1802, 0x1802, input_port_4_r },	/* IN4 */
-		{ 0x1804, 0x1804, mb_lo_r },
-		{ 0x1806, 0x1806, mb_hi_r },
-		{ 0x1810, 0x181f, pokey1_r },
-		{ 0x1820, 0x185f, atari_vg_earom_r },
-		{ 0x2000, 0x2fff, MRA_RAM },
-		{ 0x3000, 0x3fff, MRA_ROM },
-		{ 0x5000, 0x7fff, MRA_ROM },
-		{ 0xf800, 0xffff, MRA_ROM },        /* for the reset / interrupt vectors */
-	MEMORY_END
+	public static Memory_ReadAddress redbaron_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x03ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0800, 0x0800, bzone_IN0_r ),    /* IN0 */
+		new Memory_ReadAddress( 0x0a00, 0x0a00, input_port_1_r ),	/* DSW1 */
+		new Memory_ReadAddress( 0x0c00, 0x0c00, input_port_2_r ),	/* DSW2 */
+		new Memory_ReadAddress( 0x1800, 0x1800, mb_status_r ),
+		new Memory_ReadAddress( 0x1802, 0x1802, input_port_4_r ),	/* IN4 */
+		new Memory_ReadAddress( 0x1804, 0x1804, mb_lo_r ),
+		new Memory_ReadAddress( 0x1806, 0x1806, mb_hi_r ),
+		new Memory_ReadAddress( 0x1810, 0x181f, pokey1_r ),
+		new Memory_ReadAddress( 0x1820, 0x185f, atari_vg_earom_r ),
+		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x5000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf800, 0xffff, MRA_ROM ),        /* for the reset / interrupt vectors */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
-	static MEMORY_WRITE_START( redbaron_writemem )
-		{ 0x0000, 0x03ff, MWA_RAM },
-		{ 0x1000, 0x1000, MWA_NOP },			/* coin out */
-		{ 0x1200, 0x1200, avgdvg_go_w },
-		{ 0x1400, 0x1400, watchdog_reset_w },
-		{ 0x1600, 0x1600, avgdvg_reset_w },
-		{ 0x1808, 0x1808, redbaron_sounds_w },	/* and select joystick pot also */
-		{ 0x180a, 0x180a, MWA_NOP },			/* sound reset, yet todo */
-		{ 0x180c, 0x180c, atari_vg_earom_ctrl_w },
-		{ 0x1810, 0x181f, pokey1_w },
-		{ 0x1820, 0x185f, atari_vg_earom_w },
-		{ 0x1860, 0x187f, mb_go_w },
-		{ 0x2000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size },
-		{ 0x3000, 0x3fff, MWA_ROM },
-		{ 0x5000, 0x7fff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress redbaron_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x1000, 0x1000, MWA_NOP ),			/* coin out */
+		new Memory_WriteAddress( 0x1200, 0x1200, avgdvg_go_w ),
+		new Memory_WriteAddress( 0x1400, 0x1400, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x1600, 0x1600, avgdvg_reset_w ),
+		new Memory_WriteAddress( 0x1808, 0x1808, redbaron_sounds_w ),	/* and select joystick pot also */
+		new Memory_WriteAddress( 0x180a, 0x180a, MWA_NOP ),			/* sound reset, yet todo */
+		new Memory_WriteAddress( 0x180c, 0x180c, atari_vg_earom_ctrl_w ),
+		new Memory_WriteAddress( 0x1810, 0x181f, pokey1_w ),
+		new Memory_WriteAddress( 0x1820, 0x185f, atari_vg_earom_w ),
+		new Memory_WriteAddress( 0x1860, 0x187f, mb_go_w ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM, &vectorram, &vectorram_size ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x5000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	

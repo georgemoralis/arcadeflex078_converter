@@ -112,33 +112,41 @@ public class powerins
 	   that calls the data writtent to $10001e "sound code".
 	   This is a bootleg, so the original may have a sound CPU */
 	
-	static MEMORY_READ_START( readmem_snd )
-		{ 0x0000, 0xbfff, MRA_ROM },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xe000, MRA_NOP }, // ?
-	MEMORY_END
+	public static Memory_ReadAddress readmem_snd[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xbfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, MRA_NOP ), // ?
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem_snd )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM },
-		{ 0xe000, 0xe000, MWA_NOP }, // ? written only once ?
-		{ 0xe001, 0xe001, MWA_NOP }, // ?
-	MEMORY_END
+	public static Memory_WriteAddress writemem_snd[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xe000, 0xe000, MWA_NOP ), // ? written only once ?
+		new Memory_WriteAddress( 0xe001, 0xe001, MWA_NOP ), // ?
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport_snd )
-		{ 0x00, 0x00, soundlatch_r },
-		{ 0x01, 0x01, MRA_NOP }, // ?
-		{ 0x80, 0x80, OKIM6295_status_0_r },
-		{ 0x88, 0x88, OKIM6295_status_1_r },
-	PORT_END
+	public static IO_ReadPort readport_snd[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, soundlatch_r ),
+		new IO_ReadPort( 0x01, 0x01, MRA_NOP ), // ?
+		new IO_ReadPort( 0x80, 0x80, OKIM6295_status_0_r ),
+		new IO_ReadPort( 0x88, 0x88, OKIM6295_status_1_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport_snd )
-		{ 0x00, 0x00, MWA_NOP }, // ?
-		{ 0x01, 0x01, MWA_NOP }, // ?
-		{ 0x80, 0x80, OKIM6295_data_0_w },
-		{ 0x88, 0x88, OKIM6295_data_1_w },
-		{ 0x90, 0x97, MWA_NOP }, // oki bank ?
-	PORT_END
+	public static IO_WritePort writeport_snd[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, MWA_NOP ), // ?
+		new IO_WritePort( 0x01, 0x01, MWA_NOP ), // ?
+		new IO_WritePort( 0x80, 0x80, OKIM6295_data_0_w ),
+		new IO_WritePort( 0x88, 0x88, OKIM6295_data_1_w ),
+		new IO_WritePort( 0x90, 0x97, MWA_NOP ), // oki bank ?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/***************************************************************************
 	

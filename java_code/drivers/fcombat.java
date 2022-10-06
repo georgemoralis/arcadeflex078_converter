@@ -142,66 +142,74 @@ public class fcombat
 	}
 	
 	
-	static MEMORY_READ_START( fcombat_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0xe000, 0xe000, fcombat_port01_r },
-		{ 0xe100, 0xe100, input_port_2_r },
-		{ 0xe200, 0xe200, fcombat_port3_r },
-		{ 0xe300, 0xe300, MRA_RAM }, // unknown - even checked in "demo mode" - affects 0xec00 and 0xed00
-		{ 0xe400, 0xe400, fcombat_protection_r }, // protection?
-		{ 0xc000, 0xc7ff, MRA_RAM }, // ram?
-		{ 0xd000, 0xd7ff, MRA_RAM }, // bgs?
-		{ 0xd800, 0xd87f, MRA_RAM }, // sprites?
-		{ 0xd880, 0xd8ff, MRA_RAM }, // something else ..
-	MEMORY_END
+	public static Memory_ReadAddress fcombat_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xe000, 0xe000, fcombat_port01_r ),
+		new Memory_ReadAddress( 0xe100, 0xe100, input_port_2_r ),
+		new Memory_ReadAddress( 0xe200, 0xe200, fcombat_port3_r ),
+		new Memory_ReadAddress( 0xe300, 0xe300, MRA_RAM ), // unknown - even checked in "demo mode" - affects 0xec00 and 0xed00
+		new Memory_ReadAddress( 0xe400, 0xe400, fcombat_protection_r ), // protection?
+		new Memory_ReadAddress( 0xc000, 0xc7ff, MRA_RAM ), // ram?
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ), // bgs?
+		new Memory_ReadAddress( 0xd800, 0xd87f, MRA_RAM ), // sprites?
+		new Memory_ReadAddress( 0xd880, 0xd8ff, MRA_RAM ), // something else ..
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fcombat_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0xc000, 0xc7ff, MWA_RAM },
-		{ 0xd000, 0xd7ff, videoram_w, &videoram, &videoram_size },
-		{ 0xd800, 0xd87f, MWA_RAM, &spriteram, &spriteram_size },
-		{ 0xd880, 0xd8ff, MWA_RAM },
+	public static Memory_WriteAddress fcombat_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xd800, 0xd87f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd880, 0xd8ff, MWA_RAM ),
 	
-		{ 0xe800, 0xe800, exerion_videoreg_w },	// at least bit 0 for flip screen and joystick input multiplexor
+		new Memory_WriteAddress( 0xe800, 0xe800, exerion_videoreg_w ),	// at least bit 0 for flip screen and joystick input multiplexor
 	
-		{ 0xe900, 0xe900, MWA_RAM },	// video ?
-		{ 0xea00, 0xea00, MWA_RAM },	// video ?
-		{ 0xeb00, 0xeb00, MWA_RAM },	// video ?
+		new Memory_WriteAddress( 0xe900, 0xe900, MWA_RAM ),	// video ?
+		new Memory_WriteAddress( 0xea00, 0xea00, MWA_RAM ),	// video ?
+		new Memory_WriteAddress( 0xeb00, 0xeb00, MWA_RAM ),	// video ?
 	
-		{ 0xec00, 0xec00, MWA_RAM },	// affected by read at 0xe300
-		{ 0xed00, 0xed00, MWA_RAM },	// affected by read at 0xe300
+		new Memory_WriteAddress( 0xec00, 0xec00, MWA_RAM ),	// affected by read at 0xe300
+		new Memory_WriteAddress( 0xed00, 0xed00, MWA_RAM ),	// affected by read at 0xe300
 	
-		{ 0xe300, 0xe300, MWA_RAM },	// for debug purpose
+		new Memory_WriteAddress( 0xe300, 0xe300, MWA_RAM ),	// for debug purpose
 	
-		{ 0xee00, 0xee00, MWA_RAM },	// related to protection ? - doesn't seem to have any effect
+		new Memory_WriteAddress( 0xee00, 0xee00, MWA_RAM ),	// related to protection ? - doesn't seem to have any effect
 	
 		/* erk ... */
 	
-		{ 0xd880, 0xd8ff, MWA_RAM },
-		{ 0xef00, 0xef00, soundlatch_w },
-	MEMORY_END
+		new Memory_WriteAddress( 0xd880, 0xd8ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xef00, 0xef00, soundlatch_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* sound cpu */
 	
-	static MEMORY_READ_START( fcombat_readmem2 )
-		{ 0x0000, 0x3fff, MRA_ROM },
-		{ 0x4000, 0x47ff, MRA_RAM },
-		{ 0x6000, 0x6000, soundlatch_r },
-		{ 0x8001, 0x8001, AY8910_read_port_0_r },
-		{ 0xa001, 0xa001, AY8910_read_port_1_r },
-		{ 0xc001, 0xc001, AY8910_read_port_2_r },
-	MEMORY_END
+	public static Memory_ReadAddress fcombat_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x3fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x4000, 0x47ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x6000, 0x6000, soundlatch_r ),
+		new Memory_ReadAddress( 0x8001, 0x8001, AY8910_read_port_0_r ),
+		new Memory_ReadAddress( 0xa001, 0xa001, AY8910_read_port_1_r ),
+		new Memory_ReadAddress( 0xc001, 0xc001, AY8910_read_port_2_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( fcombat_writemem2 )
-		{ 0x0000, 0x3fff, MWA_ROM },
-		{ 0x4000, 0x47ff, MWA_RAM },
-		{ 0x8002, 0x8002, AY8910_write_port_0_w },
-		{ 0x8003, 0x8003, AY8910_control_port_0_w },
-		{ 0xa002, 0xa002, AY8910_write_port_1_w },
-		{ 0xa003, 0xa003, AY8910_control_port_1_w },
-		{ 0xc002, 0xc002, AY8910_write_port_2_w },
-		{ 0xc003, 0xc003, AY8910_control_port_2_w },
-	MEMORY_END
+	public static Memory_WriteAddress fcombat_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x8002, 0x8002, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x8003, 0x8003, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xa003, 0xa003, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xc002, 0xc002, AY8910_write_port_2_w ),
+		new Memory_WriteAddress( 0xc003, 0xc003, AY8910_control_port_2_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*************************************
 	 *

@@ -116,59 +116,71 @@ public class speedspn
 	
 	/* main cpu */
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x8800, 0x8fff, MRA_RAM },
-		{ 0x9000, 0x9fff, speedspn_vidram_r }, /* banked? */
-		{ 0xa000, 0xa7ff, MRA_RAM },
-		{ 0xa800, 0xafff, MRA_RAM },
-		{ 0xb000, 0xbfff, MRA_RAM },
-		{ 0xc000, 0xffff, MRA_BANK1 }, /* banked ROM */
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x8800, 0x8fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9000, 0x9fff, speedspn_vidram_r ), /* banked? */
+		new Memory_ReadAddress( 0xa000, 0xa7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xa800, 0xafff, MRA_RAM ),
+		new Memory_ReadAddress( 0xb000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_BANK1 ), /* banked ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram },	/* RAM COLOUR */
-		{ 0x8800, 0x8fff, speedspn_attram_w, &speedspn_attram },
-		{ 0x9000, 0x9fff, speedspn_vidram_w },	/* RAM FIX / RAM OBJECTS (selected by bit 0 of port 17)*/
-		{ 0xa000, 0xa7ff, MWA_RAM },
-		{ 0xa800, 0xafff, MWA_RAM },
-		{ 0xb000, 0xbfff, MWA_RAM },	/* RAM PROGRAM */
-		{ 0xc000, 0xffff, MWA_ROM },	/* banked ROM */
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, paletteram_xxxxRRRRGGGGBBBB_w, &paletteram ),	/* RAM COLOUR */
+		new Memory_WriteAddress( 0x8800, 0x8fff, speedspn_attram_w, &speedspn_attram ),
+		new Memory_WriteAddress( 0x9000, 0x9fff, speedspn_vidram_w ),	/* RAM FIX / RAM OBJECTS (selected by bit 0 of port 17)*/
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xa800, 0xafff, MWA_RAM ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM ),	/* RAM PROGRAM */
+		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),	/* banked ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x07, 0x07, speedspn_global_display_w },
-		{ 0x12, 0x12, speedspn_banked_rom_change },
-		{ 0x13, 0x13, speedspn_sound_w },
-		{ 0x17, 0x17, speedspn_banked_vidram_change },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x07, 0x07, speedspn_global_display_w ),
+		new IO_WritePort( 0x12, 0x12, speedspn_banked_rom_change ),
+		new IO_WritePort( 0x13, 0x13, speedspn_sound_w ),
+		new IO_WritePort( 0x17, 0x17, speedspn_banked_vidram_change ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x10, 0x10, input_port_0_r }, // inputs
-		{ 0x11, 0x11, input_port_1_r }, // inputs
-		{ 0x12, 0x12, input_port_2_r }, // inputs
-		{ 0x13, 0x13, input_port_3_r },
-		{ 0x14, 0x14, input_port_4_r }, // inputs
-		{ 0x16, 0x16, speedspn_irq_ack_r }, // @@@ could be watchdog, value is discarded
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x10, 0x10, input_port_0_r ), // inputs
+		new IO_ReadPort( 0x11, 0x11, input_port_1_r ), // inputs
+		new IO_ReadPort( 0x12, 0x12, input_port_2_r ), // inputs
+		new IO_ReadPort( 0x13, 0x13, input_port_3_r ),
+		new IO_ReadPort( 0x14, 0x14, input_port_4_r ), // inputs
+		new IO_ReadPort( 0x16, 0x16, speedspn_irq_ack_r ), // @@@ could be watchdog, value is discarded
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	/* sound cpu */
 	
-	static MEMORY_READ_START( readmem2 )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-		{ 0x9800, 0x9800, OKIM6295_status_0_r },
-		{ 0xa000, 0xa000, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x9800, 0x9800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem2 )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-		{ 0x9000, 0x9000, MWA_NOP }, // ??
-		{ 0x9800, 0x9800, OKIM6295_data_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x9000, 0x9000, MWA_NOP ), // ??
+		new Memory_WriteAddress( 0x9800, 0x9800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/*** INPUT PORT **************************************************************/
 	

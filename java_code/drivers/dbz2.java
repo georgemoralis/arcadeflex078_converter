@@ -199,28 +199,36 @@ public class dbz2
 	/* dbz2 sound */
 	/* IRQ: from YM2151.  NMI: from 68000.  Port 0: write to ack NMI */
 	
-	static MEMORY_READ_START( dbz2sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_RAM },
-		{ 0xc000, 0xc001, YM2151_status_port_0_r },
-		{ 0xd000, 0xd002, OKIM6295_status_0_r },
-		{ 0xe000, 0xe001, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress dbz2sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xc000, 0xc001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0xd000, 0xd002, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0xe000, 0xe001, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dbz2sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0xbfff, MWA_RAM },
-		{ 0xc000, 0xc000, YM2151_register_port_0_w },
-		{ 0xc001, 0xc001, YM2151_data_port_0_w },
-		{ 0xd000, 0xd001, OKIM6295_data_0_w },
-	MEMORY_END
+	public static Memory_WriteAddress dbz2sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xc000, 0xc000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xc001, 0xc001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xd000, 0xd001, OKIM6295_data_0_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( dbz2sound_readport )
-	PORT_END
+	public static IO_ReadPort dbz2sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( dbz2sound_writeport )
-		{ 0x00, 0x00, IOWP_NOP },
-	PORT_END
+	public static IO_WritePort dbz2sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, IOWP_NOP ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/**********************************************************************************/
 	

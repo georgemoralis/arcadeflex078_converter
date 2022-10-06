@@ -55,48 +55,56 @@ public class paradise
 	}
 	
 	
-	static MEMORY_READ_START( paradise_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM		},	// ROM
-		{ 0x8000, 0xbfff, MRA_BANK1		},	// ROM (banked)
-		{ 0xc000, 0xffff, MRA_RAM		},	// RAM
-	MEMORY_END
+	public static Memory_ReadAddress paradise_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM		),	// ROM
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1		),	// ROM (banked)
+		new Memory_ReadAddress( 0xc000, 0xffff, MRA_RAM		),	// RAM
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( paradise_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM		},	// ROM
-		{ 0x8000, 0xbfff, MWA_ROM		},	// ROM (banked)
-		{ 0xc000, 0xc7ff, paradise_vram_2_w,&paradise_vram_2	},	// Background
-		{ 0xc800, 0xcfff, paradise_vram_1_w,&paradise_vram_1	},	// Midground
-		{ 0xd000, 0xd7ff, paradise_vram_0_w,&paradise_vram_0	},	// Foreground
-		{ 0xd800, 0xd8ff, MWA_RAM								},	// RAM
-		{ 0xd900, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size	},	// Sprites
-		{ 0xe100, 0xffff, MWA_RAM								},	// RAM
-	MEMORY_END
+	public static Memory_WriteAddress paradise_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM		),	// ROM
+		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM		),	// ROM (banked)
+		new Memory_WriteAddress( 0xc000, 0xc7ff, paradise_vram_2_w,&paradise_vram_2	),	// Background
+		new Memory_WriteAddress( 0xc800, 0xcfff, paradise_vram_1_w,&paradise_vram_1	),	// Midground
+		new Memory_WriteAddress( 0xd000, 0xd7ff, paradise_vram_0_w,&paradise_vram_0	),	// Foreground
+		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM								),	// RAM
+		new Memory_WriteAddress( 0xd900, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size	),	// Sprites
+		new Memory_WriteAddress( 0xe100, 0xffff, MWA_RAM								),	// RAM
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
-	static PORT_READ_START( paradise_readport )
-		{ 0x0000, 0x17ff, paletteram_r			},	// Palette
-		{ 0x2010, 0x2010, OKIM6295_status_0_r	},	// OKI 0
-		{ 0x2030, 0x2030, OKIM6295_status_1_r	},	// OKI 1
-		{ 0x2020, 0x2020, input_port_0_r		},	// DSW 1
-		{ 0x2021, 0x2021, input_port_1_r		},	// DSW 2
-		{ 0x2022, 0x2022, input_port_2_r		},	// P1
-		{ 0x2023, 0x2023, input_port_3_r		},	// P2
-		{ 0x2024, 0x2024, input_port_4_r		},	// Coins
-		{ 0x8000, 0xffff, videoram_r			},	// Pixmap
-	PORT_END
+	public static IO_ReadPort paradise_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x0000, 0x17ff, paletteram_r			),	// Palette
+		new IO_ReadPort( 0x2010, 0x2010, OKIM6295_status_0_r	),	// OKI 0
+		new IO_ReadPort( 0x2030, 0x2030, OKIM6295_status_1_r	),	// OKI 1
+		new IO_ReadPort( 0x2020, 0x2020, input_port_0_r		),	// DSW 1
+		new IO_ReadPort( 0x2021, 0x2021, input_port_1_r		),	// DSW 2
+		new IO_ReadPort( 0x2022, 0x2022, input_port_2_r		),	// P1
+		new IO_ReadPort( 0x2023, 0x2023, input_port_3_r		),	// P2
+		new IO_ReadPort( 0x2024, 0x2024, input_port_4_r		),	// Coins
+		new IO_ReadPort( 0x8000, 0xffff, videoram_r			),	// Pixmap
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( paradise_writeport )
-		{ 0x0000, 0x17ff, paradise_palette_w	},	// Palette
-		{ 0x1800, 0x1800, paradise_priority_w	},	// Layers priority
-		{ 0x2001, 0x2001, paradise_flipscreen_w	},	// Flip Screen
-		{ 0x2004, 0x2004, paradise_palbank_w	},	// Layers palette bank
-		{ 0x2006, 0x2006, paradise_rombank_w	},	// ROM bank
-		{ 0x2007, 0x2007, paradise_okibank_w	},	// OKI 1 samples bank
-		{ 0x2010, 0x2010, OKIM6295_data_0_w		},	// OKI 0
-		{ 0x2030, 0x2030, OKIM6295_data_1_w		},	// OKI 1
-		{ 0x8000, 0xffff, paradise_pixmap_w		},	// Pixmap
-	PORT_END
+	public static IO_WritePort paradise_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x0000, 0x17ff, paradise_palette_w	),	// Palette
+		new IO_WritePort( 0x1800, 0x1800, paradise_priority_w	),	// Layers priority
+		new IO_WritePort( 0x2001, 0x2001, paradise_flipscreen_w	),	// Flip Screen
+		new IO_WritePort( 0x2004, 0x2004, paradise_palbank_w	),	// Layers palette bank
+		new IO_WritePort( 0x2006, 0x2006, paradise_rombank_w	),	// ROM bank
+		new IO_WritePort( 0x2007, 0x2007, paradise_okibank_w	),	// OKI 1 samples bank
+		new IO_WritePort( 0x2010, 0x2010, OKIM6295_data_0_w		),	// OKI 0
+		new IO_WritePort( 0x2030, 0x2030, OKIM6295_data_1_w		),	// OKI 1
+		new IO_WritePort( 0x8000, 0xffff, paradise_pixmap_w		),	// Pixmap
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

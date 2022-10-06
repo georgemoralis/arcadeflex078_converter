@@ -57,40 +57,44 @@ public class labyrunr
 		coin_counter_w(1,data & 0x10);
 	}
 	
-	static MEMORY_READ_START( labyrunr_readmem )
-		{ 0x0020, 0x005f, MRA_RAM },	/* scroll registers */
-		{ 0x0801, 0x0801, YM2203_status_port_0_r },
-		{ 0x0800, 0x0800, YM2203_read_port_0_r },
-		{ 0x0901, 0x0901, YM2203_status_port_1_r },
-		{ 0x0900, 0x0900, YM2203_read_port_1_r },
-		{ 0x0a00, 0x0a00, input_port_5_r },
-		{ 0x0a01, 0x0a01, input_port_4_r },
-		{ 0x0b00, 0x0b00, input_port_3_r },
-		{ 0x0d00, 0x0d1f, K051733_r },			/* 051733 (protection) */
-		{ 0x1000, 0x10ff, paletteram_r },
-		{ 0x1800, 0x1fff, MRA_RAM },
-		{ 0x2000, 0x3fff, MRA_RAM },
-		{ 0x4000, 0x7fff, MRA_BANK1 },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress labyrunr_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0020, 0x005f, MRA_RAM ),	/* scroll registers */
+		new Memory_ReadAddress( 0x0801, 0x0801, YM2203_status_port_0_r ),
+		new Memory_ReadAddress( 0x0800, 0x0800, YM2203_read_port_0_r ),
+		new Memory_ReadAddress( 0x0901, 0x0901, YM2203_status_port_1_r ),
+		new Memory_ReadAddress( 0x0900, 0x0900, YM2203_read_port_1_r ),
+		new Memory_ReadAddress( 0x0a00, 0x0a00, input_port_5_r ),
+		new Memory_ReadAddress( 0x0a01, 0x0a01, input_port_4_r ),
+		new Memory_ReadAddress( 0x0b00, 0x0b00, input_port_3_r ),
+		new Memory_ReadAddress( 0x0d00, 0x0d1f, K051733_r ),			/* 051733 (protection) */
+		new Memory_ReadAddress( 0x1000, 0x10ff, paletteram_r ),
+		new Memory_ReadAddress( 0x1800, 0x1fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x4000, 0x7fff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( labyrunr_writemem )
-		{ 0x0000, 0x0007, K007121_ctrl_0_w },
-		{ 0x0020, 0x005f, MWA_RAM },	/* scroll registers */
-		{ 0x0801, 0x0801, YM2203_control_port_0_w },
-		{ 0x0800, 0x0800, YM2203_write_port_0_w },
-		{ 0x0901, 0x0901, YM2203_control_port_1_w },
-		{ 0x0900, 0x0900, YM2203_write_port_1_w },
-		{ 0x0c00, 0x0c00, labyrunr_bankswitch_w },
-		{ 0x0d00, 0x0d1f, K051733_w },				/* 051733 (protection) */
-		{ 0x0e00, 0x0e00, watchdog_reset_w },
-		{ 0x1000, 0x10ff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram },
-		{ 0x1800, 0x1fff, MWA_RAM },
-		{ 0x2000, 0x2fff, MWA_RAM, &spriteram },	/* Sprite RAM */
-		{ 0x3000, 0x37ff, labyrunr_vram1_w, &labyrunr_videoram1 },
-		{ 0x3800, 0x3fff, labyrunr_vram2_w, &labyrunr_videoram2 },
-		{ 0x4000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress labyrunr_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0007, K007121_ctrl_0_w ),
+		new Memory_WriteAddress( 0x0020, 0x005f, MWA_RAM ),	/* scroll registers */
+		new Memory_WriteAddress( 0x0801, 0x0801, YM2203_control_port_0_w ),
+		new Memory_WriteAddress( 0x0800, 0x0800, YM2203_write_port_0_w ),
+		new Memory_WriteAddress( 0x0901, 0x0901, YM2203_control_port_1_w ),
+		new Memory_WriteAddress( 0x0900, 0x0900, YM2203_write_port_1_w ),
+		new Memory_WriteAddress( 0x0c00, 0x0c00, labyrunr_bankswitch_w ),
+		new Memory_WriteAddress( 0x0d00, 0x0d1f, K051733_w ),				/* 051733 (protection) */
+		new Memory_WriteAddress( 0x0e00, 0x0e00, watchdog_reset_w ),
+		new Memory_WriteAddress( 0x1000, 0x10ff, paletteram_xBBBBBGGGGGRRRRR_swap_w, &paletteram ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, MWA_RAM ),
+		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_RAM, &spriteram ),	/* Sprite RAM */
+		new Memory_WriteAddress( 0x3000, 0x37ff, labyrunr_vram1_w, &labyrunr_videoram1 ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, labyrunr_vram2_w, &labyrunr_videoram2 ),
+		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	/***************************************************************************

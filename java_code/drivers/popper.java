@@ -164,53 +164,61 @@ public class popper
 		popper_sharedram[offset]=data;
 	}
 	
-	static MEMORY_READ_START( popper_readmem )
-		{ 0x0000, 0x5fff, MRA_ROM },
-		{ 0xc000, 0xd7ff, MRA_RAM },
-		{ 0xd800, 0xdfff, MRA_RAM },					//shared with sound cpu
-		{ 0xe000, 0xe007, popper_input_ports_r },
-		{ 0xe400, 0xe400, popper_soundcpu_nmi_r },
-		{ 0xf800, 0xf800, MRA_NOP },					//?? read once at startup
-		{ 0xfc00, 0xfc00, MRA_NOP },					//?? possibly watchdog
-		{ 0xffff, 0xffff, MRA_NOP },
-	MEMORY_END
+	public static Memory_ReadAddress popper_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x5fff, MRA_ROM ),
+		new Memory_ReadAddress( 0xc000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xd800, 0xdfff, MRA_RAM ),					//shared with sound cpu
+		new Memory_ReadAddress( 0xe000, 0xe007, popper_input_ports_r ),
+		new Memory_ReadAddress( 0xe400, 0xe400, popper_soundcpu_nmi_r ),
+		new Memory_ReadAddress( 0xf800, 0xf800, MRA_NOP ),					//?? read once at startup
+		new Memory_ReadAddress( 0xfc00, 0xfc00, MRA_NOP ),					//?? possibly watchdog
+		new Memory_ReadAddress( 0xffff, 0xffff, MRA_NOP ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( popper_writemem )
-		{ 0x0000, 0x5fff, MWA_ROM },
-		{ 0xc000, 0xc1bf, MWA_RAM },
-		{ 0xc1c0, 0xc1ff, popper_ol_videoram_w, &popper_ol_videoram },
-		{ 0xc200, 0xc61f, popper_videoram_w, &popper_videoram },
-		{ 0xc620, 0xc9bf, MWA_RAM },
-		{ 0xc9c0, 0xc9ff, popper_ol_attribram_w, &popper_ol_attribram },
-		{ 0xca00, 0xce1f, popper_attribram_w, &popper_attribram },
-		{ 0xce20, 0xcfff, MWA_RAM },
-		{ 0xd000, 0xd7ff, MWA_RAM, &popper_spriteram, &popper_spriteram_size },
-		{ 0xd800, 0xdfff, MWA_RAM, &popper_sharedram },	//shared with sound cpu
-		{ 0xe000, 0xe000, interrupt_enable_w },
-		{ 0xe001, 0xe001, popper_flipscreen_w },
-		{ 0xe002, 0xe002, popper_e002_w },				//?? seems to be graphic related
-		{ 0xe003, 0xe003, popper_gfx_bank_w },
-		{ 0xe004, 0xe007, MWA_NOP },					//?? range cleared once when the SP is set
-	MEMORY_END
+	public static Memory_WriteAddress popper_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xc1bf, MWA_RAM ),
+		new Memory_WriteAddress( 0xc1c0, 0xc1ff, popper_ol_videoram_w, &popper_ol_videoram ),
+		new Memory_WriteAddress( 0xc200, 0xc61f, popper_videoram_w, &popper_videoram ),
+		new Memory_WriteAddress( 0xc620, 0xc9bf, MWA_RAM ),
+		new Memory_WriteAddress( 0xc9c0, 0xc9ff, popper_ol_attribram_w, &popper_ol_attribram ),
+		new Memory_WriteAddress( 0xca00, 0xce1f, popper_attribram_w, &popper_attribram ),
+		new Memory_WriteAddress( 0xce20, 0xcfff, MWA_RAM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, &popper_spriteram, &popper_spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &popper_sharedram ),	//shared with sound cpu
+		new Memory_WriteAddress( 0xe000, 0xe000, interrupt_enable_w ),
+		new Memory_WriteAddress( 0xe001, 0xe001, popper_flipscreen_w ),
+		new Memory_WriteAddress( 0xe002, 0xe002, popper_e002_w ),				//?? seems to be graphic related
+		new Memory_WriteAddress( 0xe003, 0xe003, popper_gfx_bank_w ),
+		new Memory_WriteAddress( 0xe004, 0xe007, MWA_NOP ),					//?? range cleared once when the SP is set
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( popper_sound_readmem )
-		{ 0x0000, 0x0fff, MRA_ROM },
-		{ 0x8002, 0x8002, MRA_NOP },					//?? all read once at startup and the
-		{ 0x8003, 0x8003, MRA_NOP },					//?? result ignored, looks like part
-		{ 0xa002, 0xa002, MRA_NOP },					//?? of AY8910 initialisation
-		{ 0xd800, 0xdfff, popper_sharedram_r },
-	MEMORY_END
+	public static Memory_ReadAddress popper_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x0fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8002, 0x8002, MRA_NOP ),					//?? all read once at startup and the
+		new Memory_ReadAddress( 0x8003, 0x8003, MRA_NOP ),					//?? result ignored, looks like part
+		new Memory_ReadAddress( 0xa002, 0xa002, MRA_NOP ),					//?? of AY8910 initialisation
+		new Memory_ReadAddress( 0xd800, 0xdfff, popper_sharedram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( popper_sound_writemem )
-		{ 0x0000, 0x0fff, MWA_ROM },
-		{ 0x8000, 0x8000, AY8910_control_port_0_w },
-		{ 0x8001, 0x8001, AY8910_write_port_0_w },
-		{ 0x8002, 0x8002, MWA_NOP },					//?? same writes as 0x8000 (mostly)
-		{ 0xa000, 0xa000, AY8910_control_port_1_w },
-		{ 0xa001, 0xa001, AY8910_write_port_1_w },
-		{ 0xa002, 0xa002, MWA_NOP },					//?? same writes as 0xa000
-		{ 0xd800, 0xdfff, popper_sharedram_w },
-	MEMORY_END
+	public static Memory_WriteAddress popper_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_0_w ),
+		new Memory_WriteAddress( 0x8001, 0x8001, AY8910_write_port_0_w ),
+		new Memory_WriteAddress( 0x8002, 0x8002, MWA_NOP ),					//?? same writes as 0x8000 (mostly)
+		new Memory_WriteAddress( 0xa000, 0xa000, AY8910_control_port_1_w ),
+		new Memory_WriteAddress( 0xa001, 0xa001, AY8910_write_port_1_w ),
+		new Memory_WriteAddress( 0xa002, 0xa002, MWA_NOP ),					//?? same writes as 0xa000
+		new Memory_WriteAddress( 0xd800, 0xdfff, popper_sharedram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( popper )
 		PORT_START	/* IN0 */

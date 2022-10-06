@@ -74,32 +74,40 @@ public class mayumi
 	
 	/****************************************************************************/
 	
-	static MEMORY_READ_START( readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0xbfff, MRA_BANK1 },
-		{ 0xc000, 0xdfff, MRA_RAM },
-		{ 0xe000, 0xf7ff, mayumi_videoram_r },
-	MEMORY_END
+	public static Memory_ReadAddress readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0xbfff, MRA_BANK1 ),
+		new Memory_ReadAddress( 0xc000, 0xdfff, MRA_RAM ),
+		new Memory_ReadAddress( 0xe000, 0xf7ff, mayumi_videoram_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( writemem )
-		{ 0x0000, 0xbfff, MWA_ROM },
-		{ 0xc000, 0xdfff, MWA_RAM, &generic_nvram, &generic_nvram_size },
-		{ 0xe000, 0xf7ff, mayumi_videoram_w },
-	MEMORY_END
+	public static Memory_WriteAddress writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xe000, 0xf7ff, mayumi_videoram_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( readport )
-		{ 0x30, 0x30, input_port_12_r },
-		{ 0xc1, 0xc2, key_matrix_r },	// 0xc0-c3 8255ppi
-		{ 0xd1, 0xd1, YM2203_read_port_0_r },
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x30, 0x30, input_port_12_r ),
+		new IO_ReadPort( 0xc1, 0xc2, key_matrix_r ),	// 0xc0-c3 8255ppi
+		new IO_ReadPort( 0xd1, 0xd1, YM2203_read_port_0_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( writeport )
-		{ 0x30, 0x30, bank_sel_w },
-		{ 0xc0, 0xc0, input_sel_w },
-		{ 0xc3, 0xc3, IOWP_NOP },		// 0xc0-c3 8255ppi
-		{ 0xd0, 0xd0, YM2203_control_port_0_w },
-		{ 0xd1, 0xd1, YM2203_write_port_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x30, 0x30, bank_sel_w ),
+		new IO_WritePort( 0xc0, 0xc0, input_sel_w ),
+		new IO_WritePort( 0xc3, 0xc3, IOWP_NOP ),		// 0xc0-c3 8255ppi
+		new IO_WritePort( 0xd0, 0xd0, YM2203_control_port_0_w ),
+		new IO_WritePort( 0xd1, 0xd1, YM2203_write_port_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/****************************************************************************/
 	

@@ -141,26 +141,34 @@ public class snowbros
 		{ 0xa00000, 0xa00001, MWA16_NOP },	/* IRQ 2 acknowledge? */
 	MEMORY_END
 	
-	static MEMORY_READ_START( sound_readmem )
-		{ 0x0000, 0x7fff, MRA_ROM },
-		{ 0x8000, 0x87ff, MRA_RAM },
-	MEMORY_END
+	public static Memory_ReadAddress sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( sound_writemem )
-		{ 0x0000, 0x7fff, MWA_ROM },
-		{ 0x8000, 0x87ff, MWA_RAM },
-	MEMORY_END
+	public static Memory_WriteAddress sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_READ_START( sound_readport )
-		{ 0x02, 0x02, YM3812_status_port_0_r },
-		{ 0x04, 0x04, soundlatch_r },
-	PORT_END
+	public static IO_ReadPort sound_readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x02, 0x02, YM3812_status_port_0_r ),
+		new IO_ReadPort( 0x04, 0x04, soundlatch_r ),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START( sound_writeport )
-		{ 0x02, 0x02, YM3812_control_port_0_w },
-		{ 0x03, 0x03, YM3812_write_port_0_w },
-		{ 0x04, 0x04, soundlatch_w },	/* goes back to the main CPU, checked during boot */
-	PORT_END
+	public static IO_WritePort sound_writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x02, 0x02, YM3812_control_port_0_w ),
+		new IO_WritePort( 0x03, 0x03, YM3812_write_port_0_w ),
+		new IO_WritePort( 0x04, 0x04, soundlatch_w ),	/* goes back to the main CPU, checked during boot */
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/* SemiCom Memory Map
 	
@@ -194,21 +202,25 @@ public class snowbros
 		{ 0xa00000, 0xa00001, MWA16_NOP },	/* IRQ 2 acknowledge? */
 	MEMORY_END
 	
-	static MEMORY_READ_START( hyperpac_sound_readmem )
-		{ 0x0000, 0xcfff, MRA_ROM },
-		{ 0xd000, 0xd7ff, MRA_RAM },
-		{ 0xf001, 0xf001, YM2151_status_port_0_r },
-		{ 0xf008, 0xf008, soundlatch_r },
-	MEMORY_END
+	public static Memory_ReadAddress hyperpac_sound_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0xcfff, MRA_ROM ),
+		new Memory_ReadAddress( 0xd000, 0xd7ff, MRA_RAM ),
+		new Memory_ReadAddress( 0xf001, 0xf001, YM2151_status_port_0_r ),
+		new Memory_ReadAddress( 0xf008, 0xf008, soundlatch_r ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hyperpac_sound_writemem )
-		{ 0x0000, 0xcfff, MWA_ROM },
-		{ 0xd000, 0xd7ff, MWA_RAM },
-		{ 0xf000, 0xf000, YM2151_register_port_0_w },
-		{ 0xf001, 0xf001, YM2151_data_port_0_w },
-		{ 0xf002, 0xf002, OKIM6295_data_0_w },
-	//	{ 0xf006, 0xf006,  }, ???
-	MEMORY_END
+	public static Memory_WriteAddress hyperpac_sound_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0xcfff, MWA_ROM ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM ),
+		new Memory_WriteAddress( 0xf000, 0xf000, YM2151_register_port_0_w ),
+		new Memory_WriteAddress( 0xf001, 0xf001, YM2151_data_port_0_w ),
+		new Memory_WriteAddress( 0xf002, 0xf002, OKIM6295_data_0_w ),
+	//	new Memory_WriteAddress( 0xf006, 0xf006,  ), ???
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( snowbros )
 		PORT_START	/* 500001 */

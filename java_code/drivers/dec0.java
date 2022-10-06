@@ -164,37 +164,45 @@ public class dec0
 		{ 0xffc000, 0xffc7ff, MWA16_RAM, &spriteram16 },
 	MEMORY_END
 	
-	static MEMORY_READ_START( robocop_sub_readmem )
-		{ 0x000000, 0x00ffff, MRA_ROM },
-		{ 0x1f0000, 0x1f1fff, MRA_RAM }, /* Main ram */
-		{ 0x1f2000, 0x1f3fff, MRA_RAM }, /* Shared ram */
-	MEMORY_END
+	public static Memory_ReadAddress robocop_sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x00ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x1f0000, 0x1f1fff, MRA_RAM ), /* Main ram */
+		new Memory_ReadAddress( 0x1f2000, 0x1f3fff, MRA_RAM ), /* Shared ram */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( robocop_sub_writemem )
-		{ 0x000000, 0x00ffff, MWA_ROM },
-		{ 0x1f0000, 0x1f1fff, MWA_RAM }, /* Main ram */
-		{ 0x1f2000, 0x1f3fff, MWA_RAM, &robocop_shared_ram }, /* Shared ram */
-		{ 0x1ff402, 0x1ff403, H6280_irq_status_w },
-	MEMORY_END
+	public static Memory_WriteAddress robocop_sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x00ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x1f0000, 0x1f1fff, MWA_RAM ), /* Main ram */
+		new Memory_WriteAddress( 0x1f2000, 0x1f3fff, MWA_RAM, &robocop_shared_ram ), /* Shared ram */
+		new Memory_WriteAddress( 0x1ff402, 0x1ff403, H6280_irq_status_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( hippodrm_sub_readmem )
-		{ 0x000000, 0x00ffff, MRA_ROM },
-		{ 0x180000, 0x1800ff, hippodrm_shared_r },
-		{ 0x1a1000, 0x1a17ff, dec0_pf3_data_8bit_r },
-		{ 0x1d0000, 0x1d00ff, hippodrm_prot_r },
-		{ 0x1f0000, 0x1f1fff, MRA_BANK8 }, /* Main ram */
-		{ 0x1ff402, 0x1ff403, input_port_5_r }, /* VBL */
-	MEMORY_END
+	public static Memory_ReadAddress hippodrm_sub_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x00ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x180000, 0x1800ff, hippodrm_shared_r ),
+		new Memory_ReadAddress( 0x1a1000, 0x1a17ff, dec0_pf3_data_8bit_r ),
+		new Memory_ReadAddress( 0x1d0000, 0x1d00ff, hippodrm_prot_r ),
+		new Memory_ReadAddress( 0x1f0000, 0x1f1fff, MRA_BANK8 ), /* Main ram */
+		new Memory_ReadAddress( 0x1ff402, 0x1ff403, input_port_5_r ), /* VBL */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( hippodrm_sub_writemem )
-		{ 0x000000, 0x00ffff, MWA_ROM },
-		{ 0x180000, 0x1800ff, hippodrm_shared_w },
-		{ 0x1a0000, 0x1a001f, dec0_pf3_control_8bit_w },
-		{ 0x1a1000, 0x1a17ff, dec0_pf3_data_8bit_w },
-		{ 0x1d0000, 0x1d00ff, hippodrm_prot_w },
-		{ 0x1f0000, 0x1f1fff, MWA_BANK8 }, /* Main ram */
-		{ 0x1ff402, 0x1ff403, H6280_irq_status_w },
-	MEMORY_END
+	public static Memory_WriteAddress hippodrm_sub_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x00ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x180000, 0x1800ff, hippodrm_shared_w ),
+		new Memory_WriteAddress( 0x1a0000, 0x1a001f, dec0_pf3_control_8bit_w ),
+		new Memory_WriteAddress( 0x1a1000, 0x1a17ff, dec0_pf3_data_8bit_w ),
+		new Memory_WriteAddress( 0x1d0000, 0x1d00ff, hippodrm_prot_w ),
+		new Memory_WriteAddress( 0x1f0000, 0x1f1fff, MWA_BANK8 ), /* Main ram */
+		new Memory_WriteAddress( 0x1ff402, 0x1ff403, H6280_irq_status_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	static MEMORY_READ16_START( slyspy_readmem )
 		{ 0x000000, 0x05ffff, MRA16_ROM },
@@ -312,54 +320,66 @@ public class dec0
 		}
 	}
 	
-	static MEMORY_READ_START( dec0_s_readmem )
-		{ 0x0000, 0x05ff, MRA_RAM },
-		{ 0x3000, 0x3000, soundlatch_r },
-		{ 0x3800, 0x3800, OKIM6295_status_0_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress dec0_s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x05ff, MRA_RAM ),
+		new Memory_ReadAddress( 0x3000, 0x3000, soundlatch_r ),
+		new Memory_ReadAddress( 0x3800, 0x3800, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( dec0_s_writemem )
-		{ 0x0000, 0x05ff, MWA_RAM },
-		{ 0x0800, 0x0801, YM2203_w },
-		{ 0x1000, 0x1001, YM3812_w },
-		{ 0x3800, 0x3800, OKIM6295_data_0_w },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress dec0_s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x05ff, MWA_RAM ),
+		new Memory_WriteAddress( 0x0800, 0x0801, YM2203_w ),
+		new Memory_WriteAddress( 0x1000, 0x1001, YM3812_w ),
+		new Memory_WriteAddress( 0x3800, 0x3800, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/* Physical memory map (21 bits) */
-	static MEMORY_READ_START( slyspy_s_readmem )
-		{ 0x000000, 0x00ffff, MRA_ROM },
-		{ 0x0a0000, 0x0a0001, MRA_NOP }, /* Protection counter */
-		{ 0x0e0000, 0x0e0001, OKIM6295_status_0_r },
-		{ 0x0f0000, 0x0f0001, soundlatch_r },
-		{ 0x1f0000, 0x1f1fff, MRA_BANK8 },
-	MEMORY_END
+	public static Memory_ReadAddress slyspy_s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x00ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x0a0000, 0x0a0001, MRA_NOP ), /* Protection counter */
+		new Memory_ReadAddress( 0x0e0000, 0x0e0001, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x0f0000, 0x0f0001, soundlatch_r ),
+		new Memory_ReadAddress( 0x1f0000, 0x1f1fff, MRA_BANK8 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( slyspy_s_writemem )
-		{ 0x000000, 0x00ffff, MWA_ROM },
-		{ 0x090000, 0x090001, YM3812_w },
-		{ 0x0b0000, 0x0b0001, YM2203_w},
-		{ 0x0e0000, 0x0e0001, OKIM6295_data_0_w },
-		{ 0x1f0000, 0x1f1fff, MWA_BANK8 }, /* Main ram */
-		{ 0x1ff402, 0x1ff403, H6280_irq_status_w },
-	MEMORY_END
+	public static Memory_WriteAddress slyspy_s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x00ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x090000, 0x090001, YM3812_w ),
+		new Memory_WriteAddress( 0x0b0000, 0x0b0001, YM2203_w),
+		new Memory_WriteAddress( 0x0e0000, 0x0e0001, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x1f0000, 0x1f1fff, MWA_BANK8 ), /* Main ram */
+		new Memory_WriteAddress( 0x1ff402, 0x1ff403, H6280_irq_status_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( midres_s_readmem )
-		{ 0x000000, 0x00ffff, MRA_ROM },
-		{ 0x130000, 0x130001, OKIM6295_status_0_r },
-		{ 0x138000, 0x138001, soundlatch_r },
-		{ 0x1f0000, 0x1f1fff, MRA_BANK8 },
-	MEMORY_END
+	public static Memory_ReadAddress midres_s_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x00ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0x130000, 0x130001, OKIM6295_status_0_r ),
+		new Memory_ReadAddress( 0x138000, 0x138001, soundlatch_r ),
+		new Memory_ReadAddress( 0x1f0000, 0x1f1fff, MRA_BANK8 ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( midres_s_writemem )
-		{ 0x000000, 0x00ffff, MWA_ROM },
-		{ 0x108000, 0x108001, YM3812_w },
-		{ 0x118000, 0x118001, YM2203_w },
-		{ 0x130000, 0x130001, OKIM6295_data_0_w },
-		{ 0x1f0000, 0x1f1fff, MWA_BANK8 }, /* Main ram */
-		{ 0x1ff402, 0x1ff403, H6280_irq_status_w },
-	MEMORY_END
+	public static Memory_WriteAddress midres_s_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x00ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0x108000, 0x108001, YM3812_w ),
+		new Memory_WriteAddress( 0x118000, 0x118001, YM2203_w ),
+		new Memory_WriteAddress( 0x130000, 0x130001, OKIM6295_data_0_w ),
+		new Memory_WriteAddress( 0x1f0000, 0x1f1fff, MWA_BANK8 ), /* Main ram */
+		new Memory_WriteAddress( 0x1ff402, 0x1ff403, H6280_irq_status_w ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	/******************************************************************************/
 	

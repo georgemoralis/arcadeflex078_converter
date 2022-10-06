@@ -42,43 +42,51 @@ public class nss
 	
 	extern DRIVER_INIT( snes );
 	
-	static MEMORY_READ_START( snes_readmem )
-		{ 0x000000, 0x2fffff, snes_r_bank1 },	/* I/O and ROM (repeats for each bank) */
-		{ 0x300000, 0x3fffff, snes_r_bank2 },	/* I/O and ROM (repeats for each bank) */
-		{ 0x400000, 0x5fffff, snes_r_bank3 },	/* ROM (and reserved in Mode 20) */
-		{ 0x600000, 0x6fffff, MRA_NOP },		/* Reserved */
-		{ 0x700000, 0x77ffff, snes_r_sram },	/* 256KB Mode 20 save ram + reserved from 0x8000 - 0xffff */
-		{ 0x780000, 0x7dffff, MRA_NOP },		/* Reserved */
-		{ 0x7e0000, 0x7fffff, MRA_RAM },		/* 8KB Low RAM, 24KB High RAM, 96KB Expanded RAM */
-		{ 0x800000, 0xffffff, snes_r_bank4 },	/* Mirror and ROM */
-	MEMORY_END
+	public static Memory_ReadAddress snes_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x000000, 0x2fffff, snes_r_bank1 ),	/* I/O and ROM (repeats for each bank) */
+		new Memory_ReadAddress( 0x300000, 0x3fffff, snes_r_bank2 ),	/* I/O and ROM (repeats for each bank) */
+		new Memory_ReadAddress( 0x400000, 0x5fffff, snes_r_bank3 ),	/* ROM (and reserved in Mode 20) */
+		new Memory_ReadAddress( 0x600000, 0x6fffff, MRA_NOP ),		/* Reserved */
+		new Memory_ReadAddress( 0x700000, 0x77ffff, snes_r_sram ),	/* 256KB Mode 20 save ram + reserved from 0x8000 - 0xffff */
+		new Memory_ReadAddress( 0x780000, 0x7dffff, MRA_NOP ),		/* Reserved */
+		new Memory_ReadAddress( 0x7e0000, 0x7fffff, MRA_RAM ),		/* 8KB Low RAM, 24KB High RAM, 96KB Expanded RAM */
+		new Memory_ReadAddress( 0x800000, 0xffffff, snes_r_bank4 ),	/* Mirror and ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( snes_writemem )
-		{ 0x000000, 0x2fffff, snes_w_bank1 },	/* I/O and ROM (repeats for each bank) */
-		{ 0x300000, 0x3fffff, snes_w_bank2 },	/* I/O and ROM (repeats for each bank) */
-		{ 0x400000, 0x5fffff, MWA_ROM },		/* ROM (and reserved in Mode 20) */
-		{ 0x600000, 0x6fffff, MWA_NOP },		/* Reserved */
-		{ 0x700000, 0x77ffff, MWA_RAM },		/* 256KB Mode 20 save ram + reserved from 0x8000 - 0xffff */
-		{ 0x780000, 0x7dffff, MWA_NOP },		/* Reserved */
-		{ 0x7e0000, 0x7fffff, MWA_RAM },		/* 8KB Low RAM, 24KB High RAM, 96KB Expanded RAM */
-		{ 0x800000, 0xffffff, snes_w_bank4 },	/* Mirror and ROM */
-	MEMORY_END
+	public static Memory_WriteAddress snes_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x000000, 0x2fffff, snes_w_bank1 ),	/* I/O and ROM (repeats for each bank) */
+		new Memory_WriteAddress( 0x300000, 0x3fffff, snes_w_bank2 ),	/* I/O and ROM (repeats for each bank) */
+		new Memory_WriteAddress( 0x400000, 0x5fffff, MWA_ROM ),		/* ROM (and reserved in Mode 20) */
+		new Memory_WriteAddress( 0x600000, 0x6fffff, MWA_NOP ),		/* Reserved */
+		new Memory_WriteAddress( 0x700000, 0x77ffff, MWA_RAM ),		/* 256KB Mode 20 save ram + reserved from 0x8000 - 0xffff */
+		new Memory_WriteAddress( 0x780000, 0x7dffff, MWA_NOP ),		/* Reserved */
+		new Memory_WriteAddress( 0x7e0000, 0x7fffff, MWA_RAM ),		/* 8KB Low RAM, 24KB High RAM, 96KB Expanded RAM */
+		new Memory_WriteAddress( 0x800000, 0xffffff, snes_w_bank4 ),	/* Mirror and ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( spc_readmem )
-		{ 0x0000, 0x00ef, MRA_RAM },			/* lower 32k ram */
-		{ 0x00f0, 0x00ff, spc_io_r },			/* spc io */
-		{ 0x0100, 0x7fff, MRA_RAM },			/* lower 32k ram continued */
-		{ 0x8000, 0xffbf, MRA_RAM },			/* upper 32k ram */
-		{ 0xffc0, 0xffff, spc_bank_r },			/* upper 32k ram continued or Initial Program Loader ROM */
-	MEMORY_END
+	public static Memory_ReadAddress spc_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x00ef, MRA_RAM ),			/* lower 32k ram */
+		new Memory_ReadAddress( 0x00f0, 0x00ff, spc_io_r ),			/* spc io */
+		new Memory_ReadAddress( 0x0100, 0x7fff, MRA_RAM ),			/* lower 32k ram continued */
+		new Memory_ReadAddress( 0x8000, 0xffbf, MRA_RAM ),			/* upper 32k ram */
+		new Memory_ReadAddress( 0xffc0, 0xffff, spc_bank_r ),			/* upper 32k ram continued or Initial Program Loader ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( spc_writemem )
-		{ 0x0000, 0x00ef, MWA_RAM },			/* lower 32k ram */
-		{ 0x00f0, 0x00ff, spc_io_w },			/* spc io */
-		{ 0x0100, 0x7fff, MWA_RAM },			/* lower 32k ram continued */
-		{ 0x8000, 0xffbf, MWA_RAM },			/* upper 32k ram */
-		{ 0xffc0, 0xffff, spc_bank_w },			/* upper 32k ram continued or Initial Program Loader ROM */
-	MEMORY_END
+	public static Memory_WriteAddress spc_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x00ef, MWA_RAM ),			/* lower 32k ram */
+		new Memory_WriteAddress( 0x00f0, 0x00ff, spc_io_w ),			/* spc io */
+		new Memory_WriteAddress( 0x0100, 0x7fff, MWA_RAM ),			/* lower 32k ram continued */
+		new Memory_WriteAddress( 0x8000, 0xffbf, MWA_RAM ),			/* upper 32k ram */
+		new Memory_WriteAddress( 0xffc0, 0xffff, spc_bank_w ),			/* upper 32k ram continued or Initial Program Loader ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	INPUT_PORTS_START( snes )
 		PORT_START  /* IN 0 : Joypad 1 - L */

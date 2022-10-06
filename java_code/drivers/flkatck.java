@@ -94,46 +94,54 @@ public class flkatck
 		}
 	}
 	
-	static MEMORY_READ_START( flkatck_readmem )
-		{ 0x0400, 0x041f, flkatck_ls138_r },			/* inputs + DIPS */
-		{ 0x0800, 0x0bff, MRA_RAM },		/* palette */
-		{ 0x1000, 0x1fff, MRA_RAM },					/* RAM */
-		{ 0x2000, 0x3fff, MRA_RAM },		/* Video RAM (007121) */
-		{ 0x4000, 0x5fff, MRA_BANK1 },					/* banked ROM */
-		{ 0x6000, 0xffff, MRA_ROM },					/* ROM */
-	MEMORY_END
+	public static Memory_ReadAddress flkatck_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0400, 0x041f, flkatck_ls138_r ),			/* inputs + DIPS */
+		new Memory_ReadAddress( 0x0800, 0x0bff, MRA_RAM ),		/* palette */
+		new Memory_ReadAddress( 0x1000, 0x1fff, MRA_RAM ),					/* RAM */
+		new Memory_ReadAddress( 0x2000, 0x3fff, MRA_RAM ),		/* Video RAM (007121) */
+		new Memory_ReadAddress( 0x4000, 0x5fff, MRA_BANK1 ),					/* banked ROM */
+		new Memory_ReadAddress( 0x6000, 0xffff, MRA_ROM ),					/* ROM */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flkatck_writemem )
-		{ 0x0000, 0x0007, flkatck_k007121_regs_w }, 	/* 007121 registers */
-		{ 0x0400, 0x041f, flkatck_ls138_w },			/* bankswitch + counters + sound command */
-		{ 0x0800, 0x0bff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram },/* palette */
-		{ 0x1000, 0x1fff, MWA_RAM },					/* RAM */
-		{ 0x2000, 0x3fff, flkatck_k007121_w, &k007121_ram },			/* Video RAM (007121) */
-		{ 0x4000, 0x5fff, MWA_BANK1 },					/* banked ROM */
-		{ 0x6000, 0xffff, MWA_ROM },					/* ROM */
-	MEMORY_END
+	public static Memory_WriteAddress flkatck_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x0007, flkatck_k007121_regs_w ), 	/* 007121 registers */
+		new Memory_WriteAddress( 0x0400, 0x041f, flkatck_ls138_w ),			/* bankswitch + counters + sound command */
+		new Memory_WriteAddress( 0x0800, 0x0bff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),/* palette */
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM ),					/* RAM */
+		new Memory_WriteAddress( 0x2000, 0x3fff, flkatck_k007121_w, &k007121_ram ),			/* Video RAM (007121) */
+		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_BANK1 ),					/* banked ROM */
+		new Memory_WriteAddress( 0x6000, 0xffff, MWA_ROM ),					/* ROM */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_READ_START( flkatck_readmem_sound )
-		{ 0x0000, 0x7fff, MRA_ROM },				/* ROM */
-		{ 0x8000, 0x87ff, MRA_RAM },				/* RAM */
-		{ 0x9000, 0x9000, MRA_RAM },				/* ??? */
-		{ 0x9001, 0x9001, MRA_RAM },				/* ??? */
-		{ 0x9004, 0x9004, MRA_RAM },				/* ??? */
-		{ 0xa000, 0xa000, soundlatch_r },			/* soundlatch_r */
-		{ 0xb000, 0xb00d, K007232_read_port_0_r },	/* 007232 registers */
-		{ 0xc001, 0xc001, YM2151_status_port_0_r }, /* YM2151 */
-	MEMORY_END
+	public static Memory_ReadAddress flkatck_readmem_sound[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, MRA_ROM ),				/* ROM */
+		new Memory_ReadAddress( 0x8000, 0x87ff, MRA_RAM ),				/* RAM */
+		new Memory_ReadAddress( 0x9000, 0x9000, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0x9001, 0x9001, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0x9004, 0x9004, MRA_RAM ),				/* ??? */
+		new Memory_ReadAddress( 0xa000, 0xa000, soundlatch_r ),			/* soundlatch_r */
+		new Memory_ReadAddress( 0xb000, 0xb00d, K007232_read_port_0_r ),	/* 007232 registers */
+		new Memory_ReadAddress( 0xc001, 0xc001, YM2151_status_port_0_r ), /* YM2151 */
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START( flkatck_writemem_sound )
-		{ 0x0000, 0x7fff, MWA_ROM },					/* ROM */
-		{ 0x8000, 0x87ff, MWA_RAM },					/* RAM */
-		{ 0x9000, 0x9000, MWA_RAM },					/* ??? */
-		{ 0x9001, 0x9001, MWA_RAM },					/* ??? */
-		{ 0x9006, 0x9006, MWA_RAM },					/* ??? */
-		{ 0xb000, 0xb00d, K007232_write_port_0_w }, 	/* 007232 registers */
-		{ 0xc000, 0xc000, YM2151_register_port_0_w },	/* YM2151 */
-		{ 0xc001, 0xc001, YM2151_data_port_0_w },		/* YM2151 */
-	MEMORY_END
+	public static Memory_WriteAddress flkatck_writemem_sound[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),					/* ROM */
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),					/* RAM */
+		new Memory_WriteAddress( 0x9000, 0x9000, MWA_RAM ),					/* ??? */
+		new Memory_WriteAddress( 0x9001, 0x9001, MWA_RAM ),					/* ??? */
+		new Memory_WriteAddress( 0x9006, 0x9006, MWA_RAM ),					/* ??? */
+		new Memory_WriteAddress( 0xb000, 0xb00d, K007232_write_port_0_w ), 	/* 007232 registers */
+		new Memory_WriteAddress( 0xc000, 0xc000, YM2151_register_port_0_w ),	/* YM2151 */
+		new Memory_WriteAddress( 0xc001, 0xc001, YM2151_data_port_0_w ),		/* YM2151 */
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	INPUT_PORTS_START( flkatck )
