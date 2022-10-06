@@ -201,9 +201,6 @@ WRITE16_HANDLER( TC0360PRI_halfword_swap_w );
 /* I/O chips, all extremely similar. The TC0220IOC was sometimes addressed
    through a port, typically on earlier games. */
 
-READ_HANDLER ( TC0220IOC_r );
-READ_HANDLER ( TC0220IOC_port_r );
-READ_HANDLER ( TC0220IOC_portreg_r );
 
 READ16_HANDLER ( TC0220IOC_halfword_port_r );
 WRITE16_HANDLER( TC0220IOC_halfword_port_w );
@@ -218,14 +215,12 @@ WRITE16_HANDLER( TC0220IOC_halfword_w );
 READ16_HANDLER ( TC0220IOC_halfword_byteswap_r );
 WRITE16_HANDLER( TC0220IOC_halfword_byteswap_w );
 
-READ_HANDLER ( TC0510NIO_r );
 
 READ16_HANDLER ( TC0510NIO_halfword_r );
 WRITE16_HANDLER( TC0510NIO_halfword_w );
 READ16_HANDLER ( TC0510NIO_halfword_wordswap_r );
 WRITE16_HANDLER( TC0510NIO_halfword_wordswap_w );
 
-READ_HANDLER ( TC0640FIO_r );
 
 READ16_HANDLER ( TC0640FIO_halfword_r );
 WRITE16_HANDLER( TC0640FIO_halfword_w );

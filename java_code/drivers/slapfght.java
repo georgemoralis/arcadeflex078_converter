@@ -211,11 +211,6 @@ public class slapfght
 	
 	/* MCU */
 	
-	READ_HANDLER ( tigerh_68705_portA_r );
-	READ_HANDLER ( tigerh_68705_portB_r );
-	READ_HANDLER ( tigerh_68705_portC_r );
-	READ_HANDLER ( tigerh_mcu_r );
-	READ_HANDLER ( tigerh_mcu_status_r );
 	
 	INTERRUPT_GEN( getstar_interrupt );
 	

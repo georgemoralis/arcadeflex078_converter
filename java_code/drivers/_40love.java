@@ -232,9 +232,7 @@ public class _40love
 	extern VIDEO_UPDATE( fortyl );
 	extern PALETTE_INIT( fortyl );
 	
-	extern extern extern READ_HANDLER ( fortyl_bg_videoram_r );
-	extern READ_HANDLER ( fortyl_bg_colorram_r );
-	extern extern extern 
+	extern extern extern extern extern extern extern 
 	extern unsigned char *fortyl_video_ctrl;
 	extern int fortyl_pix_color[4];
 	

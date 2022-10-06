@@ -188,7 +188,7 @@ public class convertMame {
                 case 'R':
                 {
                     i = Convertor.inpos;
-                    if (sUtil.getToken("READ_HANDLER(")) {
+                    if (sUtil.getToken("READ_HANDLER(") || sUtil.getToken("READ_HANDLER (")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();

@@ -151,7 +151,6 @@ public class wardner
 	
 	
 	/******************** Video stuff **********************/
-	READ_HANDLER ( wardner_videoram_r );
 	
 	VIDEO_START( toaplan0 );
 	VIDEO_UPDATE( toaplan0 );

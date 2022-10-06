@@ -31,9 +31,6 @@ public class tankbust
 	
 	extern data8_t * txt_ram;
 	
-	READ_HANDLER ( tankbust_background_videoram_r );
-	READ_HANDLER ( tankbust_background_colorram_r );
-	READ_HANDLER ( tankbust_txtram_r );
 	
 	
 	

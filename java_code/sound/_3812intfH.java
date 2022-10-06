@@ -33,9 +33,7 @@ struct Y8950interface
 
 
 /* YM3812 */
-READ_HANDLER ( YM3812_status_port_0_r );
 
-READ_HANDLER ( YM3812_status_port_1_r );
 
 int YM3812_sh_start(const struct MachineSound *msound);
 void YM3812_sh_stop(void);
@@ -43,9 +41,7 @@ void YM3812_sh_reset(void);
 
 
 /* YM3526 */
-READ_HANDLER ( YM3526_status_port_0_r );
 
-READ_HANDLER ( YM3526_status_port_1_r );
 
 int YM3526_sh_start(const struct MachineSound *msound);
 void YM3526_sh_stop(void);
@@ -53,11 +49,7 @@ void YM3526_sh_reset(void);
 
 
 /* Y8950 */
-READ_HANDLER ( Y8950_status_port_0_r );
-READ_HANDLER ( Y8950_read_port_0_r );
 
-READ_HANDLER ( Y8950_status_port_1_r );
-READ_HANDLER ( Y8950_read_port_1_r );
 
 int Y8950_sh_start(const struct MachineSound *msound);
 void Y8950_sh_stop(void);

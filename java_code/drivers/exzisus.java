@@ -55,10 +55,6 @@ public class exzisus
 	extern size_t  exzisus_objectram_size0;
 	extern size_t  exzisus_objectram_size1;
 	
-	READ_HANDLER ( exzisus_videoram_0_r );
-	READ_HANDLER ( exzisus_videoram_1_r );
-	READ_HANDLER ( exzisus_objectram_0_r );
-	READ_HANDLER ( exzisus_objectram_1_r );
 	
 	VIDEO_UPDATE( exzisus );
 	

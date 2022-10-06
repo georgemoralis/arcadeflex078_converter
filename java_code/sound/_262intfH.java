@@ -26,10 +26,8 @@ struct YMF262interface
 
 
 /* YMF262 */
-READ_HANDLER ( YMF262_status_0_r );
 
 
-READ_HANDLER ( YMF262_status_1_r );
 
 int YMF262_sh_start(const struct MachineSound *msound);
 void YMF262_sh_stop(void);

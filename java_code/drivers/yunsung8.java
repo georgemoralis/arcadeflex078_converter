@@ -45,7 +45,6 @@ public class yunsung8
 	/* Functions defined in vidhrdw: */
 	
 	
-	READ_HANDLER ( yunsung8_videoram_r );
 	
 	
 	VIDEO_START( yunsung8 );
