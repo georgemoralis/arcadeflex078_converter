@@ -629,11 +629,11 @@ public class homedata
 	MEMORY_END
 	
 	MEMORY_WRITE_START( reikaids_writemem )
-		new IO_WritePort( 0x0000, 0x3fff, reikaids_videoram_w, &videoram ),
+		new IO_WritePort( 0x0000, 0x3fff, reikaids_videoram_w, videoram ),
 		new IO_WritePort( 0x4000, 0x5fff, MWA_RAM ),
 		new IO_WritePort( 0x6000, 0x6fff, MWA_RAM ),
 		new IO_WritePort( 0x7800, 0x7800, MWA_RAM ),	/* behaves as normal RAM */
-		new IO_WritePort( 0x7ff0, 0x7ffd, MWA_RAM, &homedata_vreg ),
+		new IO_WritePort( 0x7ff0, 0x7ffd, MWA_RAM, homedata_vreg ),
 		new IO_WritePort( 0x7ffe, 0x7ffe, reikaids_blitter_bank_w ),
 		new IO_WritePort( 0x7fff, 0x7fff, reikaids_blitter_start_w ),
 		new IO_WritePort( 0x8000, 0x8000, bankswitch_w ),

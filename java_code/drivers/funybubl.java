@@ -91,7 +91,7 @@ public class funybubl
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc400, 0xcfff, funybubl_paldatawrite, &funybubl_paletteram ), // palette?
+		new Memory_WriteAddress( 0xc400, 0xcfff, funybubl_paldatawrite, funybubl_paletteram ), // palette?
 		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_BANK1 ), // banked port 0?
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

@@ -78,7 +78,7 @@ public class tryout
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x17ff, tryout_videoram_w , &videoram ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, tryout_videoram_w , videoram ),
 		new Memory_WriteAddress( 0x4000, 0xcfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM ), // ?
 		new Memory_WriteAddress( 0xe301, 0xe301, MWA_RAM ),

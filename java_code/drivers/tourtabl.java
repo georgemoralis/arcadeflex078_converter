@@ -82,11 +82,11 @@ public class tourtabl
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x007F, tia_w ),
-		new Memory_WriteAddress( 0x0080, 0x00FF, r6532_0_ram_w, &r6532_0_ram ),
+		new Memory_WriteAddress( 0x0080, 0x00FF, r6532_0_ram_w, r6532_0_ram ),
 		new Memory_WriteAddress( 0x0100, 0x017F, tia_w ),
 		new Memory_WriteAddress( 0x0180, 0x01FF, r6532_0_ram_w ),
 		new Memory_WriteAddress( 0x0280, 0x029F, r6532_0_w ),
-		new Memory_WriteAddress( 0x0400, 0x047F, r6532_1_ram_w, &r6532_1_ram ),
+		new Memory_WriteAddress( 0x0400, 0x047F, r6532_1_ram_w, r6532_1_ram ),
 		new Memory_WriteAddress( 0x0500, 0x051F, r6532_1_w ),
 		new Memory_WriteAddress( 0x0800, 0x1FFF, MWA_ROM ),
 		new Memory_WriteAddress( 0xE800, 0xFFFF, MWA_ROM ),

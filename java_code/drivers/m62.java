@@ -248,10 +248,10 @@ public class m62
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa000, m62_hscroll_low_w ),
 		new Memory_WriteAddress( 0xb000, 0xb000, m62_hscroll_high_w ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
 		/* Kung Fu Master is the only game in this driver to have separated (but */
 		/* contiguous) videoram and colorram. They are interleaved in all the others. */
-		new Memory_WriteAddress( 0xd000, 0xdfff, kungfum_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, kungfum_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -285,9 +285,9 @@ public class m62
 	public static Memory_WriteAddress battroad_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, &m62_textram ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, m62_textram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -314,8 +314,8 @@ public class m62
 	public static Memory_WriteAddress ldrun_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -332,8 +332,8 @@ public class m62
 	public static Memory_WriteAddress ldrun2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -371,8 +371,8 @@ public class m62
 	public static Memory_WriteAddress ldrun3_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -398,9 +398,9 @@ public class m62
 	public static Memory_WriteAddress ldrun4_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xc800, 0xc800, ldrun4_bankswitch_w ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -426,9 +426,9 @@ public class m62
 	public static Memory_WriteAddress lotlot_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xafff, m62_textram_w, &m62_textram ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xa000, 0xafff, m62_textram_w, m62_textram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -446,9 +446,9 @@ public class m62
 	public static Memory_WriteAddress kidniki_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xafff, m62_tileram_w, &m62_tileram ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_textram_w, &m62_textram ),
+		new Memory_WriteAddress( 0xa000, 0xafff, m62_tileram_w, m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_textram_w, m62_textram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -480,9 +480,9 @@ public class m62
 	public static Memory_WriteAddress spelunkr_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xbfff, m62_tileram_w, &m62_tileram ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, &m62_textram ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, m62_tileram_w, m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, m62_textram ),
 		new Memory_WriteAddress( 0xd000, 0xd000, m62_vscroll_low_w ),
 		new Memory_WriteAddress( 0xd001, 0xd001, m62_vscroll_high_w ),
 		new Memory_WriteAddress( 0xd002, 0xd002, m62_hscroll_low_w ),
@@ -508,9 +508,9 @@ public class m62
 	public static Memory_WriteAddress spelunk2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xbfff, m62_tileram_w, &m62_tileram ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, &m62_textram ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, m62_tileram_w, m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, m62_textram ),
 		new Memory_WriteAddress( 0xd000, 0xd000, m62_vscroll_low_w ),
 		new Memory_WriteAddress( 0xd001, 0xd001, m62_hscroll_low_w ),
 		new Memory_WriteAddress( 0xd002, 0xd002, spelunk2_gfxport_w ),
@@ -533,9 +533,9 @@ public class m62
 	public static Memory_WriteAddress youjyudn_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, &m62_textram ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc0ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, m62_textram_w, m62_textram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -564,9 +564,9 @@ public class m62
 	public static Memory_WriteAddress horizon_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc1ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xc800, 0xc83f, horizon_scrollram_w, &horizon_scrollram ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, &m62_tileram ),
+		new Memory_WriteAddress( 0xc000, 0xc1ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xc800, 0xc83f, horizon_scrollram_w, horizon_scrollram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, m62_tileram_w, m62_tileram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

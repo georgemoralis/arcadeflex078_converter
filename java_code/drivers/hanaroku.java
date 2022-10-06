@@ -142,9 +142,9 @@ public class hanaroku
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM, &hanaroku_spriteram1 ),
-		new Memory_WriteAddress( 0x9000, 0x97ff, MWA_RAM, &hanaroku_spriteram2 ),
-		new Memory_WriteAddress( 0xa000, 0xa1ff, MWA_RAM, &hanaroku_spriteram3 ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM, hanaroku_spriteram1 ),
+		new Memory_WriteAddress( 0x9000, 0x97ff, MWA_RAM, hanaroku_spriteram2 ),
+		new Memory_WriteAddress( 0xa000, 0xa1ff, MWA_RAM, hanaroku_spriteram3 ),
 		new Memory_WriteAddress( 0xa200, 0xa2ff, MWA_NOP ),	// ??? written once during P.O.S.T.
 		new Memory_WriteAddress( 0xa300, 0xa304, MWA_NOP ),	// ???
 		new Memory_WriteAddress( 0xc000, 0xc3ff, MWA_RAM ),				// main ram

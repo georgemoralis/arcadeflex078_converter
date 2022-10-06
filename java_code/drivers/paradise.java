@@ -67,11 +67,11 @@ public class paradise
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM		),	// ROM
 		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM		),	// ROM (banked)
-		new Memory_WriteAddress( 0xc000, 0xc7ff, paradise_vram_2_w,&paradise_vram_2	),	// Background
-		new Memory_WriteAddress( 0xc800, 0xcfff, paradise_vram_1_w,&paradise_vram_1	),	// Midground
-		new Memory_WriteAddress( 0xd000, 0xd7ff, paradise_vram_0_w,&paradise_vram_0	),	// Foreground
+		new Memory_WriteAddress( 0xc000, 0xc7ff, paradise_vram_2_w,paradise_vram_2	),	// Background
+		new Memory_WriteAddress( 0xc800, 0xcfff, paradise_vram_1_w,paradise_vram_1	),	// Midground
+		new Memory_WriteAddress( 0xd000, 0xd7ff, paradise_vram_0_w,paradise_vram_0	),	// Foreground
 		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM								),	// RAM
-		new Memory_WriteAddress( 0xd900, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size	),	// Sprites
+		new Memory_WriteAddress( 0xd900, 0xe0ff, MWA_RAM, spriteram, spriteram_size	),	// Sprites
 		new Memory_WriteAddress( 0xe100, 0xffff, MWA_RAM								),	// RAM
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

@@ -165,7 +165,7 @@ public class marvins
 	
 	public static Memory_WriteAddress writemem_sound[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM, &namco_wavedata ),	/* silly hack - this shouldn't be here */
+		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM, namco_wavedata ),	/* silly hack - this shouldn't be here */
 		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_0_w ),
 		new Memory_WriteAddress( 0x8001, 0x8001, AY8910_write_port_0_w ),
 		new Memory_WriteAddress( 0x8002, 0x8007, snkwave_w ),
@@ -213,10 +213,10 @@ public class marvins
 		new Memory_WriteAddress( 0x8300, 0x8300, sound_command_w ),
 		new Memory_WriteAddress( 0x8600, 0x8600, MWA_RAM ),	// video attribute
 		new Memory_WriteAddress( 0x8700, 0x8700, snk_cpuA_nmi_ack_w ),
-		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, marvins_background_ram_w, &spriteram_3 ),
-		new Memory_WriteAddress( 0xe000, 0xefff, marvins_foreground_ram_w, &spriteram_2 ),
-		new Memory_WriteAddress( 0xf000, 0xffff, marvins_text_ram_w, &videoram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, marvins_background_ram_w, spriteram_3 ),
+		new Memory_WriteAddress( 0xe000, 0xefff, marvins_foreground_ram_w, spriteram_2 ),
+		new Memory_WriteAddress( 0xf000, 0xffff, marvins_text_ram_w, videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -264,10 +264,10 @@ public class marvins
 		new Memory_WriteAddress( 0x8700, 0x8700, snk_cpuA_nmi_ack_w ),
 	//	new Memory_WriteAddress( 0xc800, 0xc800, marvins_palette_bank_w ),	// palette bank switch (c8f1 for Vanguard)
 		new Memory_WriteAddress( 0xc800, 0xc8ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, marvins_background_ram_w, &spriteram_3 ),
-		new Memory_WriteAddress( 0xe000, 0xefff, marvins_foreground_ram_w, &spriteram_2 ),
-		new Memory_WriteAddress( 0xf000, 0xffff, marvins_text_ram_w, &videoram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, marvins_background_ram_w, spriteram_3 ),
+		new Memory_WriteAddress( 0xe000, 0xefff, marvins_foreground_ram_w, spriteram_2 ),
+		new Memory_WriteAddress( 0xf000, 0xffff, marvins_text_ram_w, videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

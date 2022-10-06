@@ -279,7 +279,7 @@ public class sprint2
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x03ff, sprint2_wram_w ),
-		new Memory_WriteAddress( 0x0400, 0x07ff, sprint2_video_ram_w, &sprint2_video_ram ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, sprint2_video_ram_w, sprint2_video_ram ),
 		new Memory_WriteAddress( 0x0c00, 0x0c0f, sprint2_attract_w ),
 		new Memory_WriteAddress( 0x0c10, 0x0c1f, sprint2_skid1_w ),
 		new Memory_WriteAddress( 0x0c20, 0x0c2f, sprint2_skid2_w ),

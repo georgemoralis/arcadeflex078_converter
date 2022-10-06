@@ -144,9 +144,9 @@ public class pitnrun
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x8800, 0x8fff, pitnrun_videoram_w, &videoram ,&videoram_size ),
-		new Memory_WriteAddress( 0x9000, 0x9fff, pitnrun_videoram2_w, &videoram2 ),
-		new Memory_WriteAddress( 0xa000, 0xa0ff, spriteram_w, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, pitnrun_videoram_w, videoram ,videoram_size ),
+		new Memory_WriteAddress( 0x9000, 0x9fff, pitnrun_videoram2_w, videoram2 ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, spriteram_w, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xa800, 0xa807, MWA_NOP ), /* Analog Sound */
 		new Memory_WriteAddress( 0xb000, 0xb000, nmi_enable_w ),
 		new Memory_WriteAddress( 0xb001, 0xb001, pitnrun_color_select_w ),

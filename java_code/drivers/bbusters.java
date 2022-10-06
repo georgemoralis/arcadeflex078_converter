@@ -634,21 +634,21 @@ public class bbusters
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout,     0, 16 },
-		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, &tilelayout,   768, 16 },
-		{ REGION_GFX5, 0, &tilelayout,  1024+256, 16 },
+		{ REGION_GFX1, 0, charlayout,     0, 16 },
+		{ REGION_GFX2, 0, spritelayout, 256, 16 },
+		{ REGION_GFX3, 0, spritelayout, 512, 16 },
+		{ REGION_GFX4, 0, tilelayout,   768, 16 },
+		{ REGION_GFX5, 0, tilelayout,  1024+256, 16 },
 		{ -1 } /* end of array */
 	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_mechatt[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout,     0, 16 },
-		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, &tilelayout,   512, 16 },
-		{ REGION_GFX5, 0, &tilelayout,   768, 16 },
+		{ REGION_GFX1, 0, charlayout,     0, 16 },
+		{ REGION_GFX2, 0, spritelayout, 256, 16 },
+		{ REGION_GFX3, 0, spritelayout, 512, 16 },
+		{ REGION_GFX4, 0, tilelayout,   512, 16 },
+		{ REGION_GFX5, 0, tilelayout,   768, 16 },
 		{ -1 } /* end of array */
 	);
 	

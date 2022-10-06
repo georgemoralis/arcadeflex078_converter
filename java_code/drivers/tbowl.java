@@ -124,12 +124,12 @@ public class tbowl
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_RAM ),
-		new Memory_WriteAddress( 0xa000, 0xbfff, tbowl_bg2videoram_w, &tbowl_bg2videoram ),
-		new Memory_WriteAddress( 0xc000, 0xdfff, tbowl_bgvideoram_w, &tbowl_bgvideoram ),
-		new Memory_WriteAddress( 0xe000, 0xefff, tbowl_txvideoram_w, &tbowl_txvideoram ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, tbowl_bg2videoram_w, tbowl_bg2videoram ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, tbowl_bgvideoram_w, tbowl_bgvideoram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, tbowl_txvideoram_w, tbowl_txvideoram ),
 	//	new Memory_WriteAddress( 0xf000, 0xf000, unknown_write ),* written during start-up, not again */
 		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_ROM ),
-		new Memory_WriteAddress( 0xf800, 0xfbff, shared_w, &shared_ram ), /* check */
+		new Memory_WriteAddress( 0xf800, 0xfbff, shared_w, shared_ram ), /* check */
 		new Memory_WriteAddress( 0xfc00, 0xfc00, tbowlb_bankswitch_w ),
 	//	new Memory_WriteAddress( 0xfc01, 0xfc01, unknown_write ), /* written during start-up, not again */
 	//	new Memory_WriteAddress( 0xfc02, 0xfc02, unknown_write ), /* written during start-up, not again */
@@ -169,8 +169,8 @@ public class tbowl
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xd7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &tbowl_spriteram ),
-		new Memory_WriteAddress( 0xe000, 0xefff, paletteram_xxxxBBBBRRRRGGGG_swap_w, &paletteram ), // 2x palettes, one for each monitor?
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, tbowl_spriteram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, paletteram_xxxxBBBBRRRRGGGG_swap_w, paletteram ), // 2x palettes, one for each monitor?
 		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_ROM ),
 		new Memory_WriteAddress( 0xf800, 0xfbff, shared_w ),
 		new Memory_WriteAddress( 0xfc00, 0xfc00, tbowlc_bankswitch_w ),

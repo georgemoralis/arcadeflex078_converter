@@ -1378,7 +1378,7 @@ public class cave
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM					),	// ROM
 		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM					),	// ROM (Banked)
-		new Memory_WriteAddress( 0xc000, 0xdfff, mirror_ram_w, &mirror_ram	),	// RAM
+		new Memory_WriteAddress( 0xc000, 0xdfff, mirror_ram_w, mirror_ram	),	// RAM
 		new Memory_WriteAddress( 0xe000, 0xffff, mirror_ram_w				),	// Mirrored RAM (agallet)
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

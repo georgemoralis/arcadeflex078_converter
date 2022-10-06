@@ -1408,7 +1408,7 @@ public class ddenlovr
 		new IO_ReadPort( 0x7c, 0x7c, OKIM6295_status_0_r	),	// Sound
 		new IO_ReadPort( 0x94, 0x94, input_port_2_r		),	// DSW 1
 		new IO_ReadPort( 0x98, 0x98, input_port_3_r		),	// DSW 2
-		new IO_ReadPort( 0x9c, 0x9c, input_port_4_r		),	// DSW 1&2 high bits
+		new IO_ReadPort( 0x9c, 0x9c, input_port_4_r		),	// DSW 12 high bits
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	

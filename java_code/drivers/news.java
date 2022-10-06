@@ -41,9 +41,9 @@ public class news
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),	/* 4000-7fff is written to during startup, probably leftover code */
-		new Memory_WriteAddress( 0x8000, 0x87ff, news_fgram_w, &news_fgram ),
-		new Memory_WriteAddress( 0x8800, 0x8fff, news_bgram_w, &news_bgram ),
-		new Memory_WriteAddress( 0x9000, 0x91ff, paletteram_xxxxRRRRGGGGBBBB_swap_w, &paletteram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, news_fgram_w, news_fgram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, news_bgram_w, news_bgram ),
+		new Memory_WriteAddress( 0x9000, 0x91ff, paletteram_xxxxRRRRGGGGBBBB_swap_w, paletteram ),
 		new Memory_WriteAddress( 0xc002, 0xc002, OKIM6295_data_0_w ), /* ?? */
 		new Memory_WriteAddress( 0xc003, 0xc003, news_bgpic_w ),
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),

@@ -218,7 +218,7 @@ public class videopin
 	public static Memory_WriteAddress videopin_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x0200, 0x07ff, videopin_video_ram_w, &videopin_video_ram ),
+		new Memory_WriteAddress( 0x0200, 0x07ff, videopin_video_ram_w, videopin_video_ram ),
 		new Memory_WriteAddress( 0x0800, 0x0800, videopin_note_dvsr_w ),
 		new Memory_WriteAddress( 0x0801, 0x0801, videopin_led_w ),
 		new Memory_WriteAddress( 0x0802, 0x0802, watchdog_reset_w ),

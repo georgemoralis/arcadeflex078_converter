@@ -86,7 +86,7 @@ public class mayumi
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0xe000, 0xf7ff, mayumi_videoram_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

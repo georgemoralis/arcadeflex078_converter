@@ -125,10 +125,10 @@ public class route16
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
 	 	/*new Memory_WriteAddress( 0x3001, 0x3001, MWA_NOP ),	 Route 16 protection device */
-		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, route16_sharedram ),
 		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
 		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
-		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, route16_videoram1, route16_videoram_size ),
 		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Stratvox has an off by one error
 	                                 // when clearing the screen
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -149,10 +149,10 @@ public class route16
 	public static Memory_WriteAddress routex_cpu1_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, route16_sharedram ),
 		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
 		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
-		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, route16_videoram1, route16_videoram_size ),
 		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Stratvox has an off by one error
 	                                 // when clearing the screen
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -173,12 +173,12 @@ public class route16
 	public static Memory_WriteAddress altcpu1_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, &route16_sharedram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w, route16_sharedram ),
 		new Memory_WriteAddress( 0x4800, 0x4800, route16_out0_w ),
 		new Memory_WriteAddress( 0x5000, 0x5000, route16_out1_w ),
 		new Memory_WriteAddress( 0x5800, 0x5800, speakres_out2_w ),
-		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, &route16_videoram1, &route16_videoram_size ),
-		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Speak & Rescue/Space Echo have same off by one error
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram1_w, route16_videoram1, route16_videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ), // Speak  Rescue/Space Echo have same off by one error
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -202,7 +202,7 @@ public class route16
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x2800, 0x2800, DAC_0_data_w ), // Not used by Route 16
 		new Memory_WriteAddress( 0x4000, 0x43ff, route16_sharedram_w ),
-		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram2_w, &route16_videoram2 ),
+		new Memory_WriteAddress( 0x8000, 0xbfff, route16_videoram2_w, route16_videoram2 ),
 		new Memory_WriteAddress( 0xc000, 0xc1ff, MWA_NOP ), // Route 16 sometimes writes outside of
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

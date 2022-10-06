@@ -79,8 +79,8 @@ public class carjmbre
 		new Memory_WriteAddress( 0x8807, 0x8807, carjmbre_flipscreen_w ),
 		new Memory_WriteAddress( 0x8fc1, 0x8fc1, MWA_NOP ),			//overrun during initial screen clear
 		new Memory_WriteAddress( 0x8fe1, 0x8fe1, MWA_NOP ),			//overrun during initial screen clear
-		new Memory_WriteAddress( 0x9000, 0x97ff, carjmbre_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x9800, 0x985f, spriteram_w, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x9000, 0x97ff, carjmbre_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x9800, 0x985f, spriteram_w, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x9880, 0x98df, MWA_RAM ),			//spriteram mirror
 		new Memory_WriteAddress( 0xb800, 0xb800, soundlatch_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

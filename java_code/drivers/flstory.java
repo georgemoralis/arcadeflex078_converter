@@ -125,7 +125,7 @@ public class flstory
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc7ff, flstory_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, flstory_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xd000, 0xd000, flstory_mcu_w ),
 		new Memory_WriteAddress( 0xd001, 0xd001, MWA_NOP ),	/* watchdog? */
@@ -133,8 +133,8 @@ public class flstory
 		new Memory_WriteAddress( 0xd400, 0xd400, sound_command_w ),
 		new Memory_WriteAddress( 0xd403, 0xd403, MWA_NOP ),	/* unknown */
 	//	new Memory_WriteAddress( 0xda00, 0xda00, MWA_RAM ),
-		new Memory_WriteAddress( 0xdc00, 0xdc9f, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xdca0, 0xdcbf, flstory_scrlram_w, &flstory_scrlram ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, flstory_scrlram_w, flstory_scrlram ),
 		new Memory_WriteAddress( 0xdcc0, 0xdcff, MWA_RAM ), /* unknown */
 		new Memory_WriteAddress( 0xdd00, 0xdeff, flstory_palette_w ),
 		new Memory_WriteAddress( 0xdf03, 0xdf03, flstory_gfxctrl_w ),
@@ -167,7 +167,7 @@ public class flstory
 	public static Memory_WriteAddress onna34ro_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc7ff, flstory_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, flstory_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xd000, 0xd000, onna34ro_mcu_w ),
 		new Memory_WriteAddress( 0xd001, 0xd001, MWA_NOP ),	/* watchdog? */
@@ -175,8 +175,8 @@ public class flstory
 		new Memory_WriteAddress( 0xd400, 0xd400, sound_command_w ),
 		new Memory_WriteAddress( 0xd403, 0xd403, MWA_NOP ),	/* unknown */
 	//	new Memory_WriteAddress( 0xda00, 0xda00, MWA_RAM ),
-		new Memory_WriteAddress( 0xdc00, 0xdc9f, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xdca0, 0xdcbf, flstory_scrlram_w, &flstory_scrlram ),
+		new Memory_WriteAddress( 0xdc00, 0xdc9f, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xdca0, 0xdcbf, flstory_scrlram_w, flstory_scrlram ),
 		new Memory_WriteAddress( 0xdcc0, 0xdcff, MWA_RAM ), /* unknown */
 		new Memory_WriteAddress( 0xdd00, 0xdeff, flstory_palette_w ),
 		new Memory_WriteAddress( 0xdf03, 0xdf03, flstory_gfxctrl_w ),

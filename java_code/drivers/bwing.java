@@ -195,11 +195,11 @@ public class bwing
 	
 	public static Memory_WriteAddress bwp1_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp1_sharedram1 ),
+		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, bwp1_sharedram1 ),
 		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x13ff, bwing_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x1800, 0x19ff, bwing_spriteram_w, &buffered_spriteram ),
-		new Memory_WriteAddress( 0x1a00, 0x1aff, bwing_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, bwing_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x1800, 0x19ff, bwing_spriteram_w, buffered_spriteram ),
+		new Memory_WriteAddress( 0x1a00, 0x1aff, bwing_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x1b00, 0x1b07, bwing_scrollreg_w ),
 		new Memory_WriteAddress( 0x1c00, 0x1c07, bwp1_ctrl_w ),
 		new Memory_WriteAddress( 0x2000, 0x3fff, bwing_scrollram_w ),
@@ -219,7 +219,7 @@ public class bwing
 	
 	public static Memory_WriteAddress bwp2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, &bwp2_sharedram1 ),
+		new Memory_WriteAddress( 0x0000, 0x07ff, bwp12_sharedram1_w, bwp2_sharedram1 ),
 		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1800, 0x1803, bwp2_ctrl_w ),
 		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
@@ -246,7 +246,7 @@ public class bwing
 		new Memory_WriteAddress( 0x6000, 0x6000, AY8910_write_port_1_w ),
 		new Memory_WriteAddress( 0x8000, 0x8000, AY8910_control_port_1_w ),
 		new Memory_WriteAddress( 0xd000, 0xd000, bwp3_nmimask_w ),
-		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM, &bwp3_rombase, &bwp3_romsize ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM, bwp3_rombase, bwp3_romsize ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

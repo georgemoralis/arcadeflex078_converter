@@ -161,8 +161,8 @@ public class fcombat
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0xd800, 0xd87f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0xd800, 0xd87f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xd880, 0xd8ff, MWA_RAM ),
 	
 		new Memory_WriteAddress( 0xe800, 0xe800, exerion_videoreg_w ),	// at least bit 0 for flip screen and joystick input multiplexor

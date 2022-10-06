@@ -115,11 +115,11 @@ public class mjkjidai
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, &nvram, &nvram_size ),	// cleared and initialized on startup if bit 6 if port 00 is 0
-		new Memory_WriteAddress( 0xe000, 0xe01f, MWA_RAM, &spriteram ),	// shared with tilemap ram
-		new Memory_WriteAddress( 0xe800, 0xe81f, MWA_RAM, &spriteram_2 ),	// shared with tilemap ram
-		new Memory_WriteAddress( 0xf000, 0xf01f, MWA_RAM, &spriteram_3 ),	// shared with tilemap ram
-		new Memory_WriteAddress( 0xe000, 0xf7ff, mjkjidai_videoram_w, &mjkjidai_videoram ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, nvram, nvram_size ),	// cleared and initialized on startup if bit 6 if port 00 is 0
+		new Memory_WriteAddress( 0xe000, 0xe01f, MWA_RAM, spriteram ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xe800, 0xe81f, MWA_RAM, spriteram_2 ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xf000, 0xf01f, MWA_RAM, spriteram_3 ),	// shared with tilemap ram
+		new Memory_WriteAddress( 0xe000, 0xf7ff, mjkjidai_videoram_w, mjkjidai_videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -291,8 +291,8 @@ public class mjkjidai
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout,   0, 32 },
-		{ REGION_GFX1, 0, &spritelayout, 0, 16 },
+		{ REGION_GFX1, 0, charlayout,   0, 32 },
+		{ REGION_GFX1, 0, spritelayout, 0, 16 },
 		{ -1 } /* end of array */
 	);
 	

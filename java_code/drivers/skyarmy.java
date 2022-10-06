@@ -179,10 +179,10 @@ public class skyarmy
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7FFF, MWA_ROM ),
 	        new Memory_WriteAddress( 0x8000, 0x87FF, MWA_RAM ),
-	        new Memory_WriteAddress( 0x8800, 0x8BFF, skyarmy_videoram_w, &skyarmy_videoram ), /* Video RAM */
-	        new Memory_WriteAddress( 0x9000, 0x93FF, skyarmy_colorram_w, &skyarmy_colorram ), /* Color RAM */
-	        new Memory_WriteAddress( 0x9800, 0x983F, spriteram_w, &spriteram, &spriteram_size ), /* Sprites */
-	        new Memory_WriteAddress( 0x9840, 0x985F, skyarmy_scrollram_w, &skyarmy_scrollram ), /* Sprites */
+	        new Memory_WriteAddress( 0x8800, 0x8BFF, skyarmy_videoram_w, skyarmy_videoram ), /* Video RAM */
+	        new Memory_WriteAddress( 0x9000, 0x93FF, skyarmy_colorram_w, skyarmy_colorram ), /* Color RAM */
+	        new Memory_WriteAddress( 0x9800, 0x983F, spriteram_w, spriteram, spriteram_size ), /* Sprites */
+	        new Memory_WriteAddress( 0x9840, 0x985F, skyarmy_scrollram_w, skyarmy_scrollram ), /* Sprites */
 	        new Memory_WriteAddress( 0xa004, 0xa004, nmi_enable_w ), // ???
 	        new Memory_WriteAddress( 0xa005, 0xa005, MWA_NOP ), 
 	        new Memory_WriteAddress( 0xa006, 0xa006, MWA_NOP ), 

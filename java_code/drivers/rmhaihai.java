@@ -208,8 +208,8 @@ public class rmhaihai
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xa800, 0xafff, rmhaihai_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xb000, 0xb7ff, rmhaihai_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xa800, 0xafff, rmhaihai_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xb000, 0xb7ff, rmhaihai_videoram_w, videoram ),
 		new Memory_WriteAddress( 0xb83c, 0xb83c, MWA_NOP ),	// ??
 		new Memory_WriteAddress( 0xbc00, 0xbc00, MWA_NOP ),	// ??
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_ROM ),
@@ -509,13 +509,13 @@ public class rmhaihai
 	
 	static struct GfxDecodeInfo gfxdecodeinfo1[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout, 0, 32 },
+		{ REGION_GFX1, 0, charlayout, 0, 32 },
 		{ -1 } /* end of array */
 	);
 	
 	static struct GfxDecodeInfo gfxdecodeinfo2[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout, 0, 64 },
+		{ REGION_GFX1, 0, charlayout, 0, 64 },
 		{ -1 } /* end of array */
 	);
 	

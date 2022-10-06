@@ -672,10 +672,10 @@ public class pacman
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, colorram ),
 		new Memory_WriteAddress( 0x4c00, 0x4fef, MWA_RAM ),
-		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
 		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
 		new Memory_WriteAddress( 0x5002, 0x5002, MWA_NOP ),
@@ -683,8 +683,8 @@ public class pacman
 	 	new Memory_WriteAddress( 0x5004, 0x5005, pacman_leds_w ),
 	// 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),	this breaks many games
 	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
-		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
-		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, pengo_soundregs ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, spriteram_2 ),
 		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),	/* Ms. Pac-Man / Ponpoko only */
 		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ), /* mirror address for video ram, */
@@ -724,10 +724,10 @@ public class pacman
 	public static Memory_WriteAddress mspacman_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_BANK1 ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, colorram ),
 		new Memory_WriteAddress( 0x4c00, 0x4fef, MWA_RAM ),
-		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
 		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
 		new Memory_WriteAddress( 0x5002, 0x5002, MWA_NOP ),
@@ -736,8 +736,8 @@ public class pacman
 		new Memory_WriteAddress( 0x5006, 0x5006, mspacman_activate_rom ),	/* Not actually, just handy */
 	// 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),	this breaks many games
 	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
-		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
-		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, pengo_soundregs ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, spriteram_2 ),
 		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_BANK1 ),	/* Ms. Pac-Man / Ponpoko only */
 		new Memory_WriteAddress( 0xc000, 0xc3ff, videoram_w ), /* mirror address for video ram, */
@@ -767,16 +767,16 @@ public class pacman
 	public static Memory_WriteAddress alibaba_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
-		new Memory_WriteAddress( 0x4ef0, 0x4eff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, colorram ),
+		new Memory_WriteAddress( 0x4ef0, 0x4eff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x4c00, 0x4fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x5000, 0x5000, watchdog_reset_w ),
 	 	new Memory_WriteAddress( 0x5004, 0x5005, pacman_leds_w ),
 	 	new Memory_WriteAddress( 0x5006, 0x5006, pacman_coin_lockout_global_w ),
 	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
-		new Memory_WriteAddress( 0x5040, 0x506f, alibaba_sound_w, &pengo_soundregs ),  /* the sound region is not contiguous */
-		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ), /* actually at 5050-505f, here to point to free RAM */
+		new Memory_WriteAddress( 0x5040, 0x506f, alibaba_sound_w, pengo_soundregs ),  /* the sound region is not contiguous */
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, spriteram_2 ), /* actually at 5050-505f, here to point to free RAM */
 		new Memory_WriteAddress( 0x50c0, 0x50c0, pengo_sound_enable_w ),
 		new Memory_WriteAddress( 0x50c1, 0x50c1, pengo_flipscreen_w ),
 		new Memory_WriteAddress( 0x50c2, 0x50c2, interrupt_enable_w ),
@@ -819,16 +819,16 @@ public class pacman
 	public static Memory_WriteAddress vanvan_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, colorram ),
 		new Memory_WriteAddress( 0x4800, 0x4fef, MWA_RAM ),
-		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x4ff0, 0x4fff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
 		new Memory_WriteAddress( 0x5001, 0x5001, vanvan_bgcolor_w ),
 		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
 		new Memory_WriteAddress( 0x5005, 0x5006, MWA_NOP ),	/* always written together with 5001 */
 	 	new Memory_WriteAddress( 0x5007, 0x5007, pacman_coin_counter_w ),
-		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x5060, 0x506f, MWA_RAM, spriteram_2 ),
 		new Memory_WriteAddress( 0x5080, 0x5080, MWA_NOP ),	/* ??? toggled before reading 5000 */
 		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x8000, 0x8fff, MWA_ROM ),
@@ -856,14 +856,14 @@ public class pacman
 	public static Memory_WriteAddress bigbucks_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, colorram_w, colorram ),
 		new Memory_WriteAddress( 0x4c00, 0x4fbf, MWA_RAM ),
 		new Memory_WriteAddress( 0x5000, 0x5000, interrupt_enable_w ),
 		new Memory_WriteAddress( 0x5001, 0x5001, pengo_sound_enable_w ),
 		new Memory_WriteAddress( 0x5003, 0x5003, pengo_flipscreen_w ),
 		new Memory_WriteAddress( 0x5007, 0x5007, MWA_NOP ), //?
-		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, &pengo_soundregs ),
+		new Memory_WriteAddress( 0x5040, 0x505f, pengo_sound_w, pengo_soundregs ),
 		new Memory_WriteAddress( 0x50c0, 0x50c0, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x5100, 0x5100, MWA_NOP ), //?
 		new Memory_WriteAddress( 0x6000, 0x6000, bigbucks_bank_w ),
@@ -894,22 +894,22 @@ public class pacman
 		new Memory_WriteAddress( 0x1000, 0x13ff, s2650games_colorram_w ),
 		new Memory_WriteAddress( 0x1400, 0x141f, s2650games_scroll_w ),
 		new Memory_WriteAddress( 0x1420, 0x148f, MWA_RAM ),
-		new Memory_WriteAddress( 0x1490, 0x149f, MWA_RAM, &sprite_bank ),
-		new Memory_WriteAddress( 0x14a0, 0x14bf, s2650games_tilesbank_w, &tiles_bankram ),
+		new Memory_WriteAddress( 0x1490, 0x149f, MWA_RAM, sprite_bank ),
+		new Memory_WriteAddress( 0x14a0, 0x14bf, s2650games_tilesbank_w, tiles_bankram ),
 		new Memory_WriteAddress( 0x14c0, 0x14ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1500, 0x1502, MWA_NOP ),
 		new Memory_WriteAddress( 0x1503, 0x1503, s2650games_flipscreen_w ),
 		new Memory_WriteAddress( 0x1504, 0x1506, MWA_NOP ),
 		new Memory_WriteAddress( 0x1507, 0x1507, pacman_coin_counter_w ),
 		new Memory_WriteAddress( 0x1508, 0x155f, MWA_RAM ),
-		new Memory_WriteAddress( 0x1560, 0x156f, MWA_RAM, &spriteram_2 ),
+		new Memory_WriteAddress( 0x1560, 0x156f, MWA_RAM, spriteram_2 ),
 		new Memory_WriteAddress( 0x1570, 0x157f, MWA_RAM ),
 		new Memory_WriteAddress( 0x1586, 0x1587, MWA_NOP ),
 		new Memory_WriteAddress( 0x15c0, 0x15c0, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x15c7, 0x15c7, MWA_RAM ),
-		new Memory_WriteAddress( 0x1800, 0x1bff, s2650games_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, s2650games_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x1c00, 0x1fef, MWA_RAM ),
-		new Memory_WriteAddress( 0x1ff0, 0x1fff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x1ff0, 0x1fff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x3000, 0x3fff, s2650_mirror_w ),
 		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),

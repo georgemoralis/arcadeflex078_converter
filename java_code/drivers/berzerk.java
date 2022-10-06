@@ -28,11 +28,11 @@ public class berzerk
 	public static Memory_WriteAddress berzerk_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x0800, 0x09ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x0800, 0x09ff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x1000, 0x37ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, berzerk_magicram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -49,9 +49,9 @@ public class berzerk
 	public static Memory_WriteAddress frenzy_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, &berzerk_magicram ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, berzerk_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x6000, 0x7fff, berzerk_magicram_w, berzerk_magicram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, berzerk_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xf800, 0xf9ff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

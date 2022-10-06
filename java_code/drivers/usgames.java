@@ -110,7 +110,7 @@ public class usgames
 	public static Memory_WriteAddress usg_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 	
 		new Memory_WriteAddress( 0x2020, 0x2020, lamps1_w ),
 		new Memory_WriteAddress( 0x2030, 0x2030, lamps2_w ),
@@ -123,8 +123,8 @@ public class usgames
 	
 		new Memory_WriteAddress( 0x2060, 0x2060, usg_rombank_w ),
 	
-		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, &usg_charram ),
-		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, &usg_videoram ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, usg_charram ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, usg_videoram ),
 		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -133,7 +133,7 @@ public class usgames
 	public static Memory_WriteAddress usg185_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 	
 		new Memory_WriteAddress( 0x2420, 0x2420, lamps1_w ),
 		new Memory_WriteAddress( 0x2430, 0x2430, lamps2_w ),
@@ -146,8 +146,8 @@ public class usgames
 	
 		new Memory_WriteAddress( 0x2460, 0x2460, usg_rombank_w ),
 	
-		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, &usg_charram ),
-		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, &usg_videoram ),
+		new Memory_WriteAddress( 0x2800, 0x2fff, usg_charram_w, usg_charram ),
+		new Memory_WriteAddress( 0x3000, 0x3fff, usg_videoram_w, usg_videoram ),
 		new Memory_WriteAddress( 0x4000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

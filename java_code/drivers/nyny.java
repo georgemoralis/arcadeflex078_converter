@@ -196,7 +196,7 @@ public class nyny
 		new Memory_WriteAddress( 0x4000, 0x5fff, nyny_videoram1_w ), // WE2
 		new Memory_WriteAddress( 0x6000, 0x7fff, nyny_colourram1_w ), // WE4
 		new Memory_WriteAddress( 0x8000, 0x9fff, MWA_RAM ), // WE1
-		new Memory_WriteAddress( 0xa000, 0xa007, MWA_RAM, &generic_nvram, &generic_nvram_size ), // SRAM (coin counter, shown when holding F2)
+		new Memory_WriteAddress( 0xa000, 0xa007, MWA_RAM, generic_nvram, generic_nvram_size ), // SRAM (coin counter, shown when holding F2)
 		new Memory_WriteAddress( 0xa204, 0xa207, pia_0_w ),
 		new Memory_WriteAddress( 0xa208, 0xa20b, pia_1_w ),
 		new Memory_WriteAddress( 0xa300, 0xa300, shared_w_irq ),

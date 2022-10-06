@@ -196,14 +196,14 @@ public class destroyr
 	
 	public static Memory_WriteAddress destroyr_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &destroyr_zero_page ),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, destroyr_zero_page ),
 		new Memory_WriteAddress( 0x0100, 0x0fff, destroyr_ram_w ),
 		new Memory_WriteAddress( 0x1000, 0x1fff, destroyr_output_w ),
-		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, &destroyr_alpha_num_ram ),
-		new Memory_WriteAddress( 0x4000, 0x401f, MWA_RAM, &destroyr_major_obj_ram ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, destroyr_alpha_num_ram ),
+		new Memory_WriteAddress( 0x4000, 0x401f, MWA_RAM, destroyr_major_obj_ram ),
 		new Memory_WriteAddress( 0x5000, 0x5000, destroyr_cursor_load_w ),
 		new Memory_WriteAddress( 0x5001, 0x5001, destroyr_interrupt_ack_w ),
-		new Memory_WriteAddress( 0x5002, 0x5007, MWA_RAM, &destroyr_minor_obj_ram ),
+		new Memory_WriteAddress( 0x5002, 0x5007, MWA_RAM, destroyr_minor_obj_ram ),
 		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_NOP ), /* missing translation ROMs */
 		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_ROM ), /* program */
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ), /* program mirror */

@@ -180,11 +180,11 @@ public class turbo
 	public static Memory_WriteAddress turbo_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xa000, 0xa0ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xa800, 0xa807, turbo_coin_and_lamp_w ),
-		new Memory_WriteAddress( 0xb000, 0xb1ff, MWA_RAM, &sega_sprite_position ),
+		new Memory_WriteAddress( 0xb000, 0xb1ff, MWA_RAM, sega_sprite_position ),
 		new Memory_WriteAddress( 0xb800, 0xb800, MWA_NOP ),	/* resets the analog wheel value */
-		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xe800, 0xe800, turbo_collision_clear_w ),
 		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
 		new Memory_WriteAddress( 0xf800, 0xf803, ppi8255_0_w ),
@@ -222,10 +222,10 @@ public class turbo
 	public static Memory_WriteAddress subroc3d_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM, &sega_sprite_position ),
-		new Memory_WriteAddress( 0xa400, 0xa7ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM, sega_sprite_position ),
+		new Memory_WriteAddress( 0xa400, 0xa7ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xb000, 0xb7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xe800, 0xe803, ppi8255_0_w ),
 		new Memory_WriteAddress( 0xf000, 0xf003, ppi8255_1_w ),
 		new Memory_WriteAddress( 0xf800, 0xf801, turbo_8279_w ),
@@ -259,12 +259,12 @@ public class turbo
 	public static Memory_WriteAddress buckrog_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xc800, 0xc803, ppi8255_0_w ),
 		new Memory_WriteAddress( 0xd000, 0xd003, ppi8255_1_w ),
 		new Memory_WriteAddress( 0xd800, 0xd801, turbo_8279_w ),
-		new Memory_WriteAddress( 0xe000, 0xe1ff, MWA_RAM, &sega_sprite_position ),
-		new Memory_WriteAddress( 0xe400, 0xe4ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe1ff, MWA_RAM, sega_sprite_position ),
+		new Memory_WriteAddress( 0xe400, 0xe4ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

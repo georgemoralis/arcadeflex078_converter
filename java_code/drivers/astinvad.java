@@ -65,7 +65,7 @@ public class astinvad
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1bff, MWA_ROM ),
 		new Memory_WriteAddress( 0x1c00, 0x1fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x2000, 0x3fff, astinvad_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, astinvad_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_NOP ), /* sloppy game code writes here */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -83,7 +83,7 @@ public class astinvad
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x2000, 0x23ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, spaceint_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, spaceint_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

@@ -227,11 +227,11 @@ public class angelkds
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe000, 0xe3ff, angelkds_bgtopvideoram_w, &angelkds_bgtopvideoram ), /* Top Half of Screen */
-		new Memory_WriteAddress( 0xe400, 0xe7ff, angelkds_bgbotvideoram_w, &angelkds_bgbotvideoram ), /* Bottom Half of Screen */
-		new Memory_WriteAddress( 0xe800, 0xebff, angelkds_txvideoram_w, &angelkds_txvideoram ),
-		new Memory_WriteAddress( 0xec00, 0xecff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0xed00, 0xeeff, angelkds_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, angelkds_bgtopvideoram_w, angelkds_bgtopvideoram ), /* Top Half of Screen */
+		new Memory_WriteAddress( 0xe400, 0xe7ff, angelkds_bgbotvideoram_w, angelkds_bgbotvideoram ), /* Bottom Half of Screen */
+		new Memory_WriteAddress( 0xe800, 0xebff, angelkds_txvideoram_w, angelkds_txvideoram ),
+		new Memory_WriteAddress( 0xec00, 0xecff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0xed00, 0xeeff, angelkds_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0xf000, 0xf000, angelkds_bgtopbank_write ),
 		new Memory_WriteAddress( 0xf001, 0xf001, angelkds_bgtopscroll_write ),
 		new Memory_WriteAddress( 0xf002, 0xf002, angelkds_bgbotbank_write ),

@@ -198,15 +198,15 @@ public class missb2
 	public static Memory_WriteAddress missb2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xdcff, MWA_RAM, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0xdd00, 0xdfff, MWA_RAM, &bublbobl_objectram, &bublbobl_objectram_size ),
-		new Memory_WriteAddress( 0xe000, 0xf7ff, bublbobl_sharedram1_w, &bublbobl_sharedram1 ),
-		new Memory_WriteAddress( 0xf800, 0xf9ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, &paletteram  ),
+		new Memory_WriteAddress( 0xc000, 0xdcff, MWA_RAM, videoram, videoram_size ),
+		new Memory_WriteAddress( 0xdd00, 0xdfff, MWA_RAM, bublbobl_objectram, bublbobl_objectram_size ),
+		new Memory_WriteAddress( 0xe000, 0xf7ff, bublbobl_sharedram1_w, bublbobl_sharedram1 ),
+		new Memory_WriteAddress( 0xf800, 0xf9ff, paletteram_RRRRGGGGBBBBxxxx_swap_w, paletteram  ),
 		new Memory_WriteAddress( 0xfa00, 0xfa00, bublbobl_sound_command_w ),
 		new Memory_WriteAddress( 0xfa80, 0xfa80, MWA_NOP ),
 		new Memory_WriteAddress( 0xfb00, 0xfb00, bublbobl_nmitrigger_w ),	/* not used by Bubble Bobble, only by Tokio */
 		new Memory_WriteAddress( 0xfb40, 0xfb40, bublbobl_bankswitch_w ),
-		new Memory_WriteAddress( 0xfc00, 0xfcff, bublbobl_sharedram2_w, &bublbobl_sharedram2 ),
+		new Memory_WriteAddress( 0xfc00, 0xfcff, bublbobl_sharedram2_w, bublbobl_sharedram2 ),
 		new Memory_WriteAddress( 0xfd00, 0xfdff, MWA_RAM ), /* ? */
 	
 		new Memory_WriteAddress( 0xfe00, 0xfe03, MWA_RAM ), // ?
@@ -236,12 +236,12 @@ public class missb2
 	public static Memory_WriteAddress missb2_writemem2[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc1ff, bg_paletteram_RRRRGGGGBBBBxxxx_swap_w,&bg_paletteram  ),
+		new Memory_WriteAddress( 0xc000, 0xc1ff, bg_paletteram_RRRRGGGGBBBBxxxx_swap_w,bg_paletteram  ),
 		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM ), /* main? */
 	
 		new Memory_WriteAddress( 0xd000, 0xd000, bg_bank_w ),
 		new Memory_WriteAddress( 0xd002, 0xd002, MWA_NOP ),
-		new Memory_WriteAddress( 0xd003, 0xd003, MWA_RAM,&bg_vram ),
+		new Memory_WriteAddress( 0xd003, 0xd003, MWA_RAM,bg_vram ),
 		new Memory_WriteAddress( 0xe000, 0xf7ff, bublbobl_sharedram1_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

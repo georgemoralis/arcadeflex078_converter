@@ -82,8 +82,8 @@ public class sbugger
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
 	
-		new Memory_WriteAddress( 0xc800, 0xcbff, sbugger_videoram_attr_w, &sbugger_videoram_attr ),
-		new Memory_WriteAddress( 0xcc00, 0xcfff, sbugger_videoram_w, &sbugger_videoram ),
+		new Memory_WriteAddress( 0xc800, 0xcbff, sbugger_videoram_attr_w, sbugger_videoram_attr ),
+		new Memory_WriteAddress( 0xcc00, 0xcfff, sbugger_videoram_w, sbugger_videoram ),
 	
 		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM ), /* sp is set to e0ff */
 	

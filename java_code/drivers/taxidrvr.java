@@ -140,20 +140,20 @@ public class taxidrvr
 		new Memory_WriteAddress( 0x9000, 0x9fff, MWA_RAM ),	/* ??? */
 		new Memory_WriteAddress( 0xa000, 0xafff, MWA_RAM ),	/* ??? */
 		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM ),	/* ??? */
-		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, &taxidrvr_vram4 ),	/* radar bitmap */
-		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, &taxidrvr_vram5 ),	/* "sprite1" bitmap */
-		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, &taxidrvr_vram6 ),	/* "sprite2" bitmap */
-		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &taxidrvr_vram7 ),	/* "sprite3" bitmap */
-		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM, &taxidrvr_vram1 ),	/* car tilemap */
-		new Memory_WriteAddress( 0xe400, 0xebff, MWA_RAM, &taxidrvr_vram2 ),	/* bg1 tilemap */
-		new Memory_WriteAddress( 0xec00, 0xefff, MWA_RAM, &taxidrvr_vram0 ),	/* fg tilemap */
-		new Memory_WriteAddress( 0xf000, 0xf3ff, MWA_RAM, &taxidrvr_vram3 ),	/* bg2 tilemap */
+		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM, taxidrvr_vram4 ),	/* radar bitmap */
+		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, taxidrvr_vram5 ),	/* "sprite1" bitmap */
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, taxidrvr_vram6 ),	/* "sprite2" bitmap */
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, taxidrvr_vram7 ),	/* "sprite3" bitmap */
+		new Memory_WriteAddress( 0xe000, 0xe3ff, MWA_RAM, taxidrvr_vram1 ),	/* car tilemap */
+		new Memory_WriteAddress( 0xe400, 0xebff, MWA_RAM, taxidrvr_vram2 ),	/* bg1 tilemap */
+		new Memory_WriteAddress( 0xec00, 0xefff, MWA_RAM, taxidrvr_vram0 ),	/* fg tilemap */
+		new Memory_WriteAddress( 0xf000, 0xf3ff, MWA_RAM, taxidrvr_vram3 ),	/* bg2 tilemap */
 		new Memory_WriteAddress( 0xf400, 0xf403, ppi8255_0_w ),
 		new Memory_WriteAddress( 0xf480, 0xf483, ppi8255_2_w ),	/* "sprite1" placement */
 		new Memory_WriteAddress( 0xf500, 0xf503, ppi8255_3_w ),	/* "sprite2" placement */
 		new Memory_WriteAddress( 0xf580, 0xf583, ppi8255_4_w ),	/* "sprite3" placement */
 	//	new Memory_WriteAddress( 0xf780, 0xf781, MWA_RAM ),		/* more scroll registers? */
-		new Memory_WriteAddress( 0xf782, 0xf787, MWA_RAM, &taxidrvr_scroll ),	/* bg scroll (three copies always identical) */
+		new Memory_WriteAddress( 0xf782, 0xf787, MWA_RAM, taxidrvr_scroll ),	/* bg scroll (three copies always identical) */
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

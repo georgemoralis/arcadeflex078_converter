@@ -559,9 +559,9 @@ public class firetrk
 	
 	public static Memory_WriteAddress firetrk_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, firetrk_alpha_num_ram ),
 		new Memory_WriteAddress( 0x0100, 0x07ff, firetrk_zeropage_w ),
-		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, firetrk_playfield_ram ),
 		new Memory_WriteAddress( 0x1000, 0x1000, firetrk_vert_w ),
 		new Memory_WriteAddress( 0x1020, 0x1020, firetrk_horz_w ),
 		new Memory_WriteAddress( 0x1040, 0x104f, firetrk_crash_reset_w ),
@@ -614,8 +614,8 @@ public class firetrk
 		new Memory_WriteAddress( 0x0280, 0x0280, firetrk_motor_snd_w ),
 		new Memory_WriteAddress( 0x02a0, 0x02a0, firetrk_crash_snd_w ),
 		new Memory_WriteAddress( 0x02c0, 0x02c0, firetrk_skid_snd_w ),
-		new Memory_WriteAddress( 0x0400, 0x041f, MWA_RAM, &firetrk_alpha_num_ram ),
-		new Memory_WriteAddress( 0x0500, 0x05ff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0400, 0x041f, MWA_RAM, firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0500, 0x05ff, firetrk_playfield_w, firetrk_playfield_ram ),
 		new Memory_WriteAddress( 0x0800, 0x1fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -638,9 +638,9 @@ public class firetrk
 	
 	public static Memory_WriteAddress montecar_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, &firetrk_alpha_num_ram ),
+		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM, firetrk_alpha_num_ram ),
 		new Memory_WriteAddress( 0x0100, 0x07ff, firetrk_zeropage_w ),
-		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, &firetrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, firetrk_playfield_w, firetrk_playfield_ram ),
 		new Memory_WriteAddress( 0x1000, 0x1000, firetrk_vert_w ),
 		new Memory_WriteAddress( 0x1020, 0x1020, firetrk_horz_w ),
 		new Memory_WriteAddress( 0x1040, 0x1040, firetrk_drone_reset_w ),

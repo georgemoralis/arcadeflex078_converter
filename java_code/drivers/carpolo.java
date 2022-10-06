@@ -54,8 +54,8 @@ public class carpolo
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x01ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, &carpolo_alpharam ),
-		new Memory_WriteAddress( 0x4000, 0x400f, MWA_RAM, &carpolo_spriteram ),
+		new Memory_WriteAddress( 0x3000, 0x30ff, MWA_RAM, carpolo_alpharam ),
+		new Memory_WriteAddress( 0x4000, 0x400f, MWA_RAM, carpolo_spriteram ),
 		new Memory_WriteAddress( 0x5400, 0x5403, pia_0_w ),
 		new Memory_WriteAddress( 0x5800, 0x5803, pia_1_w ),
 		new Memory_WriteAddress( 0xb000, 0xb000, carpolo_ball_screen_interrupt_clear_w ),

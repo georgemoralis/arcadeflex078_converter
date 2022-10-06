@@ -106,21 +106,21 @@ public class sidearms
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
-		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, paletteram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, paletteram_2 ),
 		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
 		new Memory_WriteAddress( 0xc801, 0xc801, sidearms_bankswitch_w ),
 		new Memory_WriteAddress( 0xc802, 0xc802, watchdog_reset_w ),
 		new Memory_WriteAddress( 0xc804, 0xc804, sidearms_c804_w ),
 		new Memory_WriteAddress( 0xc805, 0xc805, sidearms_star_scrollx_w ),
 		new Memory_WriteAddress( 0xc806, 0xc806, sidearms_star_scrolly_w ),
-		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx ),
-		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, sidearms_bg_scrolly ),
 		new Memory_WriteAddress( 0xc80c, 0xc80c, sidearms_gfxctrl_w ),	/* background and sprite enable */
-		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -139,20 +139,20 @@ public class sidearms
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xe000, 0xe3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
-		new Memory_WriteAddress( 0xe400, 0xe7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xd000, 0xdfff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, paletteram ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, paletteram_2 ),
 		new Memory_WriteAddress( 0xe800, 0xe800, soundlatch_w ),
 		new Memory_WriteAddress( 0xe801, 0xe801, sidearms_bankswitch_w ),
 		new Memory_WriteAddress( 0xe802, 0xe802, watchdog_reset_w ),
 		new Memory_WriteAddress( 0xe804, 0xe804, sidearms_c804_w ),
 		new Memory_WriteAddress( 0xe805, 0xe805, sidearms_star_scrollx_w ),
 		new Memory_WriteAddress( 0xe806, 0xe806, sidearms_star_scrolly_w ),
-		new Memory_WriteAddress( 0xe808, 0xe809, MWA_RAM, &sidearms_bg_scrollx ),
-		new Memory_WriteAddress( 0xe80a, 0xe80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xe808, 0xe809, MWA_RAM, sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xe80a, 0xe80b, MWA_RAM, sidearms_bg_scrolly ),
 		new Memory_WriteAddress( 0xe80c, 0xe80c, sidearms_gfxctrl_w ),	/* background and sprite enable */
-		new Memory_WriteAddress( 0xf000, 0xf7ff, sidearms_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xf800, 0xffff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, sidearms_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xf800, 0xffff, sidearms_colorram_w, colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -208,21 +208,21 @@ public class sidearms
 	public static Memory_WriteAddress whizz_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, &paletteram ),
-		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, &paletteram_2 ),
+		new Memory_WriteAddress( 0xc000, 0xc3ff, paletteram_xxxxBBBBRRRRGGGG_split1_w, paletteram ),
+		new Memory_WriteAddress( 0xc400, 0xc7ff, paletteram_xxxxBBBBRRRRGGGG_split2_w, paletteram_2 ),
 		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
 		new Memory_WriteAddress( 0xc801, 0xc801, whizz_bankswitch_w ),
 		new Memory_WriteAddress( 0xc802, 0xc802, watchdog_reset_w ),
 		new Memory_WriteAddress( 0xc804, 0xc804, sidearms_c804_w ),
 		new Memory_WriteAddress( 0xe805, 0xe805, sidearms_star_scrollx_w ),
 		new Memory_WriteAddress( 0xe806, 0xe806, sidearms_star_scrolly_w ),
-		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, &sidearms_bg_scrollx ),
-		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, &sidearms_bg_scrolly ),
+		new Memory_WriteAddress( 0xc808, 0xc809, MWA_RAM, sidearms_bg_scrollx ),
+		new Memory_WriteAddress( 0xc80a, 0xc80b, MWA_RAM, sidearms_bg_scrolly ),
 		new Memory_WriteAddress( 0xc80c, 0xc80c, sidearms_gfxctrl_w ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, sidearms_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, sidearms_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -605,9 +605,9 @@ public class sidearms
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout,   768, 64 }, /* colors 768-1023 */
-		{ REGION_GFX2, 0, &tilelayout,     0, 32 }, /* colors   0-511 */
-		{ REGION_GFX3, 0, &spritelayout, 512, 16 }, /* colors 512-767 */
+		{ REGION_GFX1, 0, charlayout,   768, 64 }, /* colors 768-1023 */
+		{ REGION_GFX2, 0, tilelayout,     0, 32 }, /* colors   0-511 */
+		{ REGION_GFX3, 0, spritelayout, 512, 16 }, /* colors 512-767 */
 		{ -1 } /* end of array */
 	);
 	
@@ -636,9 +636,9 @@ public class sidearms
 	
 	static struct GfxDecodeInfo turtship_gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout,          768, 64 },	/* colors 768-1023 */
-		{ REGION_GFX2, 0, &turtship_tilelayout,   0, 32 },	/* colors   0-511 */
-		{ REGION_GFX3, 0, &spritelayout,        512, 16 },	/* colors 512-767 */
+		{ REGION_GFX1, 0, charlayout,          768, 64 },	/* colors 768-1023 */
+		{ REGION_GFX2, 0, turtship_tilelayout,   0, 32 },	/* colors   0-511 */
+		{ REGION_GFX3, 0, spritelayout,        512, 16 },	/* colors 512-767 */
 		{ -1 } /* end of array */
 	);
 	

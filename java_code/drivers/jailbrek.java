@@ -93,15 +93,15 @@ public class jailbrek
 	
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x07ff, jailbrek_colorram_w, &colorram ),
-	    new Memory_WriteAddress( 0x0800, 0x0fff, jailbrek_videoram_w, &videoram ),
-	    new Memory_WriteAddress( 0x1000, 0x10bf, MWA_RAM, &spriteram, &spriteram_size ), /* sprites */
+		new Memory_WriteAddress( 0x0000, 0x07ff, jailbrek_colorram_w, colorram ),
+	    new Memory_WriteAddress( 0x0800, 0x0fff, jailbrek_videoram_w, videoram ),
+	    new Memory_WriteAddress( 0x1000, 0x10bf, MWA_RAM, spriteram, spriteram_size ), /* sprites */
 	    new Memory_WriteAddress( 0x10c0, 0x14ff, MWA_RAM ), /* ??? */
 		new Memory_WriteAddress( 0x1500, 0x1fff, MWA_RAM ), /* work ram */
-	    new Memory_WriteAddress( 0x2000, 0x203f, MWA_RAM, &jailbrek_scroll_x ), /* scroll registers */
+	    new Memory_WriteAddress( 0x2000, 0x203f, MWA_RAM, jailbrek_scroll_x ), /* scroll registers */
 	    new Memory_WriteAddress( 0x2040, 0x2040, MWA_NOP ), /* ??? */
 	    new Memory_WriteAddress( 0x2041, 0x2041, MWA_NOP ), /* ??? */
-	    new Memory_WriteAddress( 0x2042, 0x2042, MWA_RAM, &jailbrek_scroll_dir ), /* bit 2 = scroll direction */
+	    new Memory_WriteAddress( 0x2042, 0x2042, MWA_RAM, jailbrek_scroll_dir ), /* bit 2 = scroll direction */
 	    new Memory_WriteAddress( 0x2043, 0x2043, MWA_NOP ), /* ??? */
 	    new Memory_WriteAddress( 0x2044, 0x2044, ctrl_w ), /* irq, nmi enable, screen flip */
 	    new Memory_WriteAddress( 0x3000, 0x307f, MWA_RAM ), /* ??? */

@@ -192,8 +192,8 @@ public class dragrace
 		new Memory_WriteAddress( 0x0080, 0x00ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x0900, 0x091f, dragrace_misc_w ),
 		new Memory_WriteAddress( 0x0920, 0x093f, dragrace_misc_clear_w ),
-		new Memory_WriteAddress( 0x0a00, 0x0aff, MWA_RAM, &dragrace_playfield_ram ),
-		new Memory_WriteAddress( 0x0b00, 0x0bff, MWA_RAM, &dragrace_position_ram ),
+		new Memory_WriteAddress( 0x0a00, 0x0aff, MWA_RAM, dragrace_playfield_ram ),
+		new Memory_WriteAddress( 0x0b00, 0x0bff, MWA_RAM, dragrace_position_ram ),
 		new Memory_WriteAddress( 0x0e00, 0x0e00, MWA_NOP ), /* watchdog (disabled in service mode) */
 		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_ROM ), /* program */
 		new Memory_WriteAddress( 0xf800, 0xffff, MWA_ROM ), /* program mirror */

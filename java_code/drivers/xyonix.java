@@ -165,7 +165,7 @@ public class xyonix
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe000, 0xffff, xyonix_vidram_w, &xyonix_vidram ),
+		new Memory_WriteAddress( 0xe000, 0xffff, xyonix_vidram_w, xyonix_vidram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -245,7 +245,7 @@ public class xyonix
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &charlayout, 0, 16 },
+		{ REGION_GFX1, 0, charlayout, 0, 16 },
 		{ -1 }
 	);
 	

@@ -179,11 +179,11 @@ public class thedeep
 		new Memory_WriteAddress( 0xe004, 0xe004, thedeep_nmi_w			),	//
 		new Memory_WriteAddress( 0xe00c, 0xe00c, thedeep_sound_w		),	// To Sound CPU
 		new Memory_WriteAddress( 0xe100, 0xe100, thedeep_e100_w		),	// ?
-		new Memory_WriteAddress( 0xe210, 0xe213, MWA_RAM, &thedeep_scroll				),	// Scroll
-		new Memory_WriteAddress( 0xe400, 0xe7ff, MWA_RAM, &spriteram, &spriteram_size	),	// Sprites
-		new Memory_WriteAddress( 0xe800, 0xefff, thedeep_vram_1_w, &thedeep_vram_1		),	// Text Layer
-		new Memory_WriteAddress( 0xf000, 0xf7ff, thedeep_vram_0_w, &thedeep_vram_0		),	// Background Layer
-		new Memory_WriteAddress( 0xf800, 0xf83f, MWA_RAM, &thedeep_scroll2				),	// Column Scroll
+		new Memory_WriteAddress( 0xe210, 0xe213, MWA_RAM, thedeep_scroll				),	// Scroll
+		new Memory_WriteAddress( 0xe400, 0xe7ff, MWA_RAM, spriteram, spriteram_size	),	// Sprites
+		new Memory_WriteAddress( 0xe800, 0xefff, thedeep_vram_1_w, thedeep_vram_1		),	// Text Layer
+		new Memory_WriteAddress( 0xf000, 0xf7ff, thedeep_vram_0_w, thedeep_vram_0		),	// Background Layer
+		new Memory_WriteAddress( 0xf800, 0xf83f, MWA_RAM, thedeep_scroll2				),	// Column Scroll
 		new Memory_WriteAddress( 0xf840, 0xffff, MWA_RAM								),	//
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

@@ -93,7 +93,7 @@ public class _8080bw
 	public static Memory_WriteAddress c8080bw_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x4000, 0x63ff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -408,9 +408,9 @@ public class _8080bw
 	public static Memory_WriteAddress cosmo_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x4000, 0x57ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x5c00, 0x5fff, cosmo_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x5c00, 0x5fff, cosmo_colorram_w, colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -1135,9 +1135,9 @@ public class _8080bw
 	public static Memory_WriteAddress rollingc_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xa000, 0xbfff, schaser_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xa000, 0xbfff, schaser_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xe400, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -1223,7 +1223,7 @@ public class _8080bw
 	public static Memory_WriteAddress sheriff_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x27ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -1692,9 +1692,9 @@ public class _8080bw
 	public static Memory_WriteAddress schaser_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x4000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xdfff, schaser_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, schaser_colorram_w, colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -1852,13 +1852,13 @@ public class _8080bw
 	public static Memory_WriteAddress sflush_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress(0x0000, 0x1fff, MWA_RAM),
-		new Memory_WriteAddress(0x4000, 0x5fff, c8080bw_videoram_w, &videoram, &videoram_size),
+		new Memory_WriteAddress(0x4000, 0x5fff, c8080bw_videoram_w, videoram, videoram_size),
 		new Memory_WriteAddress(0x8018, 0x8018, c8080bw_shift_data_w ),
 		new Memory_WriteAddress(0x8019, 0x8019, c8080bw_shift_amount_w ),
 		new Memory_WriteAddress(0x801a, 0x801a, MWA_NOP ),
 		new Memory_WriteAddress(0x801c, 0x801c, MWA_NOP ),
 		new Memory_WriteAddress(0x801d, 0x801d, MWA_NOP ),
-		new Memory_WriteAddress(0xa000, 0xbfff, schaser_colorram_w, &colorram),
+		new Memory_WriteAddress(0xa000, 0xbfff, schaser_colorram_w, colorram),
 		new Memory_WriteAddress(0xd800, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -2188,9 +2188,9 @@ public class _8080bw
 	public static Memory_WriteAddress helifire_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x27ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0x6000, 0x7fff, MWA_RAM ),
-		new Memory_WriteAddress( 0xc000, 0xdfff, helifire_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0xc000, 0xdfff, helifire_colorram_w, colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

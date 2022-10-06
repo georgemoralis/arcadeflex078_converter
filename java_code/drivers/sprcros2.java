@@ -138,12 +138,12 @@ public class sprcros2
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_BANK1 ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, sprcros2_fgvideoram_w, &sprcros2_fgvideoram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, sprcros2_fgvideoram_w, sprcros2_fgvideoram ),
 		new Memory_WriteAddress( 0xe800, 0xe817, MWA_RAM ),						//always zero
-		new Memory_WriteAddress( 0xe818, 0xe83f, MWA_RAM, &sprcros2_spriteram, &sprcros2_spriteram_size ),
+		new Memory_WriteAddress( 0xe818, 0xe83f, MWA_RAM, sprcros2_spriteram, sprcros2_spriteram_size ),
 		new Memory_WriteAddress( 0xe840, 0xefff, MWA_RAM ),						//always zero
 		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM, &sprcros2_sharedram ),	//shared with slave cpu
+		new Memory_WriteAddress( 0xf800, 0xffff, MWA_RAM, sprcros2_sharedram ),	//shared with slave cpu
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -181,7 +181,7 @@ public class sprcros2
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_BANK2 ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, sprcros2_bgvideoram_w, &sprcros2_bgvideoram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, sprcros2_bgvideoram_w, sprcros2_bgvideoram ),
 		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM ),						//always zero
 		new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ),
 		new Memory_WriteAddress( 0xf800, 0xffff, sprcros2_sharedram_w ),

@@ -1711,16 +1711,16 @@ public class halleys
 	
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x0fff, blitter_w, &blitter_ram, &blitter_ramsize ),
+		new Memory_WriteAddress( 0x0000, 0x0fff, blitter_w, blitter_ram, blitter_ramsize ),
 		new Memory_WriteAddress( 0x1f00, 0x1fff, bgtile_w ),       // background tiles?(Ben Bero Beh only)
 		new Memory_WriteAddress( 0x1000, 0xefff, MWA_ROM ),
 		new Memory_WriteAddress( 0xf000, 0xfeff, MWA_RAM ),        // work ram
 	
 		new Memory_WriteAddress( 0xff8a, 0xff8a, soundcommand_w ),
 		new Memory_WriteAddress( 0xff9c, 0xff9c, firq_ack_w ),
-		new Memory_WriteAddress( 0xff00, 0xffbf, MWA_RAM, &io_ram, &io_ramsize ), // I/O write fall-through
+		new Memory_WriteAddress( 0xff00, 0xffbf, MWA_RAM, io_ram, io_ramsize ), // I/O write fall-through
 	
-		new Memory_WriteAddress( 0xffc0, 0xffdf, halleys_paletteram_IIRRGGBB_w, &paletteram ),
+		new Memory_WriteAddress( 0xffc0, 0xffdf, halleys_paletteram_IIRRGGBB_w, paletteram ),
 		new Memory_WriteAddress( 0xffe0, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

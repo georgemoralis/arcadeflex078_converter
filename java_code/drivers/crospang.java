@@ -249,8 +249,8 @@ public class crospang
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &layout_16x16x4a, 0x0000, 0x40 }, // [0] Sprites
-		{ REGION_GFX2, 0, &layout_16x16x4,  0x0000, 0x40 }, // [1] Tiles
+		{ REGION_GFX1, 0, layout_16x16x4a, 0x0000, 0x40 }, // [0] Sprites
+		{ REGION_GFX2, 0, layout_16x16x4,  0x0000, 0x40 }, // [1] Tiles
 		{ -1 }
 	);
 	
@@ -266,8 +266,8 @@ public class crospang
 	static void get_bg_tile_info(int tile_index)
 	new IO_WritePort(
 		int data  = bg_videoram[tile_index];
-		int tile  = data & 0xfff;
-		int color = (data >> 12) & 0x0f;
+		int tile  = data  0xfff;
+		int color = (data >> 12)  0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x20,0)
 	)
@@ -275,8 +275,8 @@ public class crospang
 	static void get_fg_tile_info(int tile_index)
 	new IO_WritePort(
 		int data  = fg_videoram[tile_index];
-		int tile  = data & 0xfff;
-		int color = (data >> 12) & 0x0f;
+		int tile  = data  0xfff;
+		int color = (data >> 12)  0x0f;
 	
 		SET_TILE_INFO(1,tile,color + 0x10,0)
 	)
@@ -320,7 +320,7 @@ public class crospang
 	
 			fy = 0;
 	
-			dy = ((y & 0x0600) >> 9);
+			dy = ((y  0x0600) >> 9);
 	
 			switch (dy)
 			{
@@ -337,20 +337,20 @@ public class crospang
 				dy = 8;
 				break;
 			}
-			color = (x & 0x1e00) >> 9;
-			fx = ((y & 0x8000) >> 15);
+			color = (x  0x1e00) >> 9;
+			fx = ((y  0x8000) >> 15);
 	
 	
-			x &= 0x1ff;
-			y &= 0x1ff;
+			x = 0x1ff;
+			y = 0x1ff;
 	
-			if (x & 0x100) x-= 0x200;
-			if (y & 0x100) y-= 0x200;
+			if (x  0x100) x-= 0x200;
+			if (y  0x100) y-= 0x200;
 	
 			x-=44;
 			y+=8;
 	
-			sprite &= 0x3fff;
+			sprite = 0x3fff;
 	
 	
 	

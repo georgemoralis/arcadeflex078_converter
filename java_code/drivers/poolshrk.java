@@ -112,9 +112,9 @@ public class poolshrk
 	public static Memory_WriteAddress poolshrk_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x00ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM, &poolshrk_playfield_ram ),
-		new Memory_WriteAddress( 0x0800, 0x0810, MWA_RAM, &poolshrk_hpos_ram ),
-		new Memory_WriteAddress( 0x0c00, 0x0c10, MWA_RAM, &poolshrk_vpos_ram ),
+		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM, poolshrk_playfield_ram ),
+		new Memory_WriteAddress( 0x0800, 0x0810, MWA_RAM, poolshrk_hpos_ram ),
+		new Memory_WriteAddress( 0x0c00, 0x0c10, MWA_RAM, poolshrk_vpos_ram ),
 		new Memory_WriteAddress( 0x1003, 0x1003, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x1400, 0x1401, poolshrk_scratch_sound_w ),
 		new Memory_WriteAddress( 0x1800, 0x1800, poolshrk_score_sound_w ),

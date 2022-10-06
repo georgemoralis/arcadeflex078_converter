@@ -233,7 +233,7 @@ public class qix
 	
 	public static Memory_WriteAddress writemem_data[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w, &qix_sharedram ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w, qix_sharedram ),
 		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_video_firq_w ),
 		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_data_firq_ack_w ),
@@ -264,7 +264,7 @@ public class qix
 	
 	public static Memory_WriteAddress zoo_writemem_data[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x03ff, qix_sharedram_w, &qix_sharedram ),
+		new Memory_WriteAddress( 0x0000, 0x03ff, qix_sharedram_w, qix_sharedram ),
 		new Memory_WriteAddress( 0x0400, 0x07ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x0c00, 0x0c00, qix_video_firq_w ),
 		new Memory_WriteAddress( 0x0c01, 0x0c01, qix_data_firq_ack_w ),
@@ -303,13 +303,13 @@ public class qix
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, qix_videoram_w ),
 		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w ),
-		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8800, 0x8800, qix_palettebank_w ),
 		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_data_firq_w ),
 		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_video_firq_ack_w ),
-		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x9400, 0x9400, qix_addresslatch_w ),
-		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, &qix_videoaddress ),
+		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, qix_videoaddress ),
 		new Memory_WriteAddress( 0x9c00, 0x9fff, MWA_RAM ), /* Video controller */
 		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -336,14 +336,14 @@ public class qix
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, qix_videoram_w ),
 		new Memory_WriteAddress( 0x8000, 0x83ff, qix_sharedram_w ),
-		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8800, 0x8800, qix_palettebank_w ),
 		new Memory_WriteAddress( 0x8801, 0x8801, zoo_bankswitch_w ),
 		new Memory_WriteAddress( 0x8c00, 0x8c00, qix_data_firq_w ),
 		new Memory_WriteAddress( 0x8c01, 0x8c01, qix_video_firq_ack_w ),
-		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, qix_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x9400, 0x9400, qix_addresslatch_w ),
-		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, &qix_videoaddress ),
+		new Memory_WriteAddress( 0x9402, 0x9403, MWA_RAM, qix_videoaddress ),
 		new Memory_WriteAddress( 0x9c00, 0x9fff, MWA_RAM ), /* Video controller */
 		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -397,10 +397,10 @@ public class qix
 	
 	public static Memory_WriteAddress mcu_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x0000, qix_68705_portA_w, &qix_68705_port_out ),
+		new Memory_WriteAddress( 0x0000, 0x0000, qix_68705_portA_w, qix_68705_port_out ),
 		new Memory_WriteAddress( 0x0001, 0x0001, qix_68705_portB_w ),
 		new Memory_WriteAddress( 0x0002, 0x0002, qix_68705_portC_w ),
-		new Memory_WriteAddress( 0x0004, 0x0007, MWA_RAM, &qix_68705_ddr ),
+		new Memory_WriteAddress( 0x0004, 0x0007, MWA_RAM, qix_68705_ddr ),
 		new Memory_WriteAddress( 0x0010, 0x007f, MWA_RAM ),
 		new Memory_WriteAddress( 0x0080, 0x07ff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

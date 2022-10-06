@@ -87,12 +87,12 @@ public class ssrj
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xc7ff, ssrj_vram1_w,&ssrj_vram1 ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, ssrj_vram2_w,&ssrj_vram2 ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM,&ssrj_vram3 ),
-		new Memory_WriteAddress( 0xd800, 0xdfff, ssrj_vram4_w,&ssrj_vram4 ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, ssrj_vram1_w,ssrj_vram1 ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, ssrj_vram2_w,ssrj_vram2 ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM,ssrj_vram3 ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, ssrj_vram4_w,ssrj_vram4 ),
 		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM,&ssrj_scrollram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM,ssrj_scrollram ),
 		new Memory_WriteAddress( 0xf003, 0xf003, MWA_NOP ), /* unknown */
 		new Memory_WriteAddress( 0xf401, 0xf401, AY8910_write_port_0_w  ),
 		new Memory_WriteAddress( 0xf400, 0xf400, AY8910_control_port_0_w ),

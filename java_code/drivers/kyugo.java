@@ -50,15 +50,15 @@ public class kyugo
 	public static Memory_WriteAddress main_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, kyugo_bgvideoram_w, &kyugo_bgvideoram ),
-		new Memory_WriteAddress( 0x8800, 0x8fff, kyugo_bgattribram_w, &kyugo_bgattribram ),
-		new Memory_WriteAddress( 0x9000, 0x97ff, kyugo_fgvideoram_w, &kyugo_fgvideoram ),
-		new Memory_WriteAddress( 0x9800, 0x9fff, MWA_RAM, &kyugo_spriteram_2 ),
-		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM, &kyugo_spriteram_1 ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, kyugo_bgvideoram_w, kyugo_bgvideoram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, kyugo_bgattribram_w, kyugo_bgattribram ),
+		new Memory_WriteAddress( 0x9000, 0x97ff, kyugo_fgvideoram_w, kyugo_fgvideoram ),
+		new Memory_WriteAddress( 0x9800, 0x9fff, MWA_RAM, kyugo_spriteram_2 ),
+		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM, kyugo_spriteram_1 ),
 		new Memory_WriteAddress( 0xa800, 0xa800, kyugo_scroll_x_lo_w ),
 		new Memory_WriteAddress( 0xb000, 0xb000, kyugo_gfxctrl_w ),
 		new Memory_WriteAddress( 0xb800, 0xb800, kyugo_scroll_y_w ),
-		new Memory_WriteAddress( 0xf000, 0xf7ff, kyugo_sharedram_w, &kyugo_sharedram ),
+		new Memory_WriteAddress( 0xf000, 0xf7ff, kyugo_sharedram_w, kyugo_sharedram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

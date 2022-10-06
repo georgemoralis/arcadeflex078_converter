@@ -181,7 +181,7 @@ public class toratora
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1000, 0x2fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x9fff, toratora_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, toratora_videoram_w, videoram ),
 		new Memory_WriteAddress( 0xf04a, 0xf04a, toratora_clear_tv_w ),
 		new Memory_WriteAddress( 0xf04b, 0xf04b, toratora_clear_timer_w ),
 		new Memory_WriteAddress( 0xf0a0, 0xf0a3, pia_0_w ),

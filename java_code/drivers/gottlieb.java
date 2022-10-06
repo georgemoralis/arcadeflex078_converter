@@ -429,11 +429,11 @@ public class gottlieb
 	public static Memory_WriteAddress reactor_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x00000, 0x01fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x02000, 0x020ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x03000, 0x033ff, gottlieb_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x02000, 0x020ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x03000, 0x033ff, gottlieb_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x03400, 0x037ff, gottlieb_videoram_w ),	/* mirror address, some games write to it */
-		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, &gottlieb_charram ),
-		new Memory_WriteAddress( 0x06000, 0x0601f, gottlieb_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, gottlieb_charram ),
+		new Memory_WriteAddress( 0x06000, 0x0601f, gottlieb_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x07000, 0x07000, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x07001, 0x07001, gottlieb_track_reset_w ),
 		new Memory_WriteAddress( 0x07002, 0x07002, gottlieb_sh_w ), /* sound/speech command */
@@ -471,14 +471,14 @@ public class gottlieb
 	
 	public static Memory_WriteAddress gottlieb_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x01000, 0x01fff, MWA_RAM ),	/* ROM in Krull */
 		new Memory_WriteAddress( 0x02000, 0x02fff, MWA_RAM ),	/* ROM in Krull and 3 Stooges */
-		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x03c00, 0x03fff, gottlieb_videoram_w ),	/* mirror address, some games write to it */
-		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, &gottlieb_charram ),
-		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, gottlieb_charram ),
+		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x05800, 0x05800, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x05801, 0x05801, gottlieb_track_reset_w ),
 		new Memory_WriteAddress( 0x05802, 0x05802, gottlieb_sh_w ), /* sound/speech command */
@@ -501,14 +501,14 @@ public class gottlieb
 	/* same as above, different video_outputs plus laser disc control outputs */
 	public static Memory_WriteAddress usvsthem_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x01000, 0x01fff, MWA_RAM ),	/* ROM in Krull */
 		new Memory_WriteAddress( 0x02000, 0x02fff, MWA_RAM ),	/* ROM in Krull and 3 Stooges */
-		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x03c00, 0x03fff, gottlieb_videoram_w ),	/* mirror address, some games write to it */
-		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, &gottlieb_charram ),
-		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, gottlieb_charram ),
+		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x05800, 0x05800, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x05801, 0x05801, gottlieb_track_reset_w ),
 		new Memory_WriteAddress( 0x05802, 0x05802, gottlieb_sh_w ), /* sound/speech command */
@@ -553,14 +553,14 @@ public class gottlieb
 	/* same as above, different video_outputs */
 	public static Memory_WriteAddress stooges_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x00000, 0x00fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x01000, 0x01fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x02000, 0x02fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x03000, 0x030ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x03800, 0x03bff, gottlieb_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x03c00, 0x03fff, gottlieb_videoram_w ),	/* mirror address, some games write to it */
-		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, &gottlieb_charram ),
-		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x04000, 0x04fff, gottlieb_charram_w, gottlieb_charram ),
+		new Memory_WriteAddress( 0x05000, 0x0501f, gottlieb_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x05800, 0x05800, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x05801, 0x05801, gottlieb_track_reset_w ),
 		new Memory_WriteAddress( 0x05802, 0x05802, gottlieb_sh_w ), /* sound/speech command */

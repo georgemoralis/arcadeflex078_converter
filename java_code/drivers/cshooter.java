@@ -184,12 +184,12 @@ public class cshooter
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),			// to be confirmed
-		new Memory_WriteAddress( 0xc000, 0xc1ff, paletteram_BBGGGRRR_w, &paletteram ),	// guess, maybe not
+		new Memory_WriteAddress( 0xc000, 0xc1ff, paletteram_BBGGGRRR_w, paletteram ),	// guess, maybe not
 		new Memory_WriteAddress( 0xc500, 0xc500, cshooter_c500_w ),
 		new Memory_WriteAddress( 0xc600, 0xc600, MWA_NOP ),			// see notes
 		new Memory_WriteAddress( 0xc700, 0xc700, cshooter_c700_w ),
 		new Memory_WriteAddress( 0xc801, 0xc801, MWA_NOP ),			// see notes
-		new Memory_WriteAddress( 0xd000, 0xd7ff, cshooter_txram_w, &cshooter_txram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, cshooter_txram_w, cshooter_txram ),
 		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

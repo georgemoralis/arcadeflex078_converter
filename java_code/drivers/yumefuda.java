@@ -164,10 +164,10 @@ public class yumefuda
 		new Memory_WriteAddress(   0x8000, 0x9fff, MWA_ROM ),
 		new Memory_WriteAddress(	0xa7fc, 0xa7fc, prot_lock_w ),
 		new Memory_WriteAddress(   0xa7ff, 0xa7ff, nvram_lock_w ),
-		new Memory_WriteAddress(	0xaf80, 0xafff, custom_ram_w ,&cus_ram ), //260d - 2626
-		new Memory_WriteAddress(	0xb000, 0xb0ff, paletteram_BBGGGRRR_w , &paletteram ),/*Wrong format?*/
-		new Memory_WriteAddress(	0xc000, 0xc3ff, yumefuda_vram_w	, &videoram ),
-		new Memory_WriteAddress(	0xd000, 0xd3ff, MWA_RAM,&colorram ),
+		new Memory_WriteAddress(	0xaf80, 0xafff, custom_ram_w ,cus_ram ), //260d - 2626
+		new Memory_WriteAddress(	0xb000, 0xb0ff, paletteram_BBGGGRRR_w , paletteram ),/*Wrong format?*/
+		new Memory_WriteAddress(	0xc000, 0xc3ff, yumefuda_vram_w	, videoram ),
+		new Memory_WriteAddress(	0xd000, 0xd3ff, MWA_RAM,colorram ),
 		new Memory_WriteAddress(   0xe000, 0xffff, MWA_RAM ),/*work ram*/
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

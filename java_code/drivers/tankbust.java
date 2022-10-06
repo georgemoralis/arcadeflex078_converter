@@ -236,10 +236,10 @@ public class tankbust
 		new Memory_WriteAddress( 0xe803, 0xe803, tankbust_soundlatch_w ),
 		new Memory_WriteAddress( 0xe804, 0xe804, MWA_NOP ),	/* watchdog ? ; written in long-lasting loops */
 	
-		new Memory_WriteAddress( 0xc000, 0xc7ff, tankbust_background_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, tankbust_background_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, tankbust_txtram_w, &txt_ram ),
-		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tankbust_background_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, tankbust_background_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, tankbust_txtram_w, txt_ram ),
+		new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

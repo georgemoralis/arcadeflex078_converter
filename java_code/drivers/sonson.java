@@ -95,9 +95,9 @@ public class sonson
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x13ff, sonson_videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x1400, 0x17ff, sonson_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0x2020, 0x207f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x1000, 0x13ff, sonson_videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x1400, 0x17ff, sonson_colorram_w, colorram ),
+		new Memory_WriteAddress( 0x2020, 0x207f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x3000, 0x3000, sonson_scroll_w ),
 		new Memory_WriteAddress( 0x3008, 0x3008, MWA_NOP ),
 		new Memory_WriteAddress( 0x3010, 0x3010, soundlatch_w ),

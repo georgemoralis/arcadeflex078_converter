@@ -124,7 +124,7 @@ public class embargo
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x1e00, 0x1fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x2000, 0x3dff, embargo_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x2000, 0x3dff, embargo_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

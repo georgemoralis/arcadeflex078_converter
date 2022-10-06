@@ -108,8 +108,8 @@ public class runaway
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x0400, 0x07bf, runaway_video_ram_w, &runaway_video_ram ),
-		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, &runaway_sprite_ram ),
+		new Memory_WriteAddress( 0x0400, 0x07bf, runaway_video_ram_w, runaway_video_ram ),
+		new Memory_WriteAddress( 0x07c0, 0x07ff, MWA_RAM, runaway_sprite_ram ),
 		new Memory_WriteAddress( 0x1000, 0x1000, runaway_irq_ack_w ),
 		new Memory_WriteAddress( 0x1400, 0x143F, atari_vg_earom_w ),
 		new Memory_WriteAddress( 0x1800, 0x1800, atari_vg_earom_ctrl_w ),

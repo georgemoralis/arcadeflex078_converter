@@ -370,7 +370,7 @@ public class dynax
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -386,7 +386,7 @@ public class dynax
 	public static Memory_WriteAddress hnoridur_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xffff, hnoridur_palette_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -404,7 +404,7 @@ public class dynax
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0x8fff, hnoridur_palette_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -422,7 +422,7 @@ public class dynax
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x0800, 0x0fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x1000, 0x1fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x2000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -441,7 +441,7 @@ public class dynax
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM					),	// ROM
 		new Memory_WriteAddress( 0x6000, 0x6fff, MWA_RAM					),	// RAM
-		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0x81ff, yarunara_palette_w		),	// Palette or RTC
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM					),	// ROM (Banked)
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

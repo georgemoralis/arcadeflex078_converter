@@ -203,9 +203,9 @@ public class ace
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x09ff, MWA_ROM ),
 	
-		new Memory_WriteAddress( 0x2000, 0x20ff, MWA_RAM, &ace_scoreram ),	/* 2x2101 */
-		new Memory_WriteAddress( 0x8300, 0x83ff, MWA_RAM, &ace_ram2 ),		/* 2x2101 */
-		new Memory_WriteAddress( 0x8000, 0x80ff, ace_characterram_w, &ace_characterram ),	/* 3x3101 (3bits: 0, 1, 2) */
+		new Memory_WriteAddress( 0x2000, 0x20ff, MWA_RAM, ace_scoreram ),	/* 2x2101 */
+		new Memory_WriteAddress( 0x8300, 0x83ff, MWA_RAM, ace_ram2 ),		/* 2x2101 */
+		new Memory_WriteAddress( 0x8000, 0x80ff, ace_characterram_w, ace_characterram ),	/* 3x3101 (3bits: 0, 1, 2) */
 	
 		new Memory_WriteAddress( 0xc000, 0xc005, ace_objpos_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

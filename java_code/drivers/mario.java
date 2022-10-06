@@ -158,8 +158,8 @@ public class mario
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7c00, 0x7c00, mario_sh1_w ), /* Mario run sample */
 		new Memory_WriteAddress( 0x7c80, 0x7c80, mario_sh2_w ), /* Luigi run sample */
 		new Memory_WriteAddress( 0x7d00, 0x7d00, mario_scroll_w ),
@@ -184,8 +184,8 @@ public class mario
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, mario_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7d00, 0x7d00, mario_scroll_w ),
 		new Memory_WriteAddress( 0x7e00, 0x7e00, soundlatch_w ),
 		new Memory_WriteAddress( 0x7e80, 0x7e80, mario_gfxbank_w ),

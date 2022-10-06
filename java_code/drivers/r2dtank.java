@@ -138,7 +138,7 @@ public class r2dtank
 		new Memory_WriteAddress( 0x8004, 0x8004, dipsw_bank_w ),
 		new Memory_WriteAddress( 0xb000, 0xb000, crtc6845_address_w ), 
 		new Memory_WriteAddress( 0xb001, 0xb001, crtc6845_register_w ),
-		new Memory_WriteAddress( 0xc000, 0xc007, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xc000, 0xc007, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0xc800, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

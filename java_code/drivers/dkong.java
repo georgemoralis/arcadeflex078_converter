@@ -308,10 +308,10 @@ public class dkong
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_RAM ),    /* ???? */
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7800, 0x7803, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7808, 0x7808, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7c00, 0x7c00, dkong_sh_tuneselect_w ),
@@ -334,10 +334,10 @@ public class dkong
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_RAM ),    /* ???? */
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7800, 0x7803, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7808, 0x7808, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7c00, 0x7c00, dkong_sh_tuneselect_w ),
@@ -385,8 +385,8 @@ public class dkong
 		new Memory_WriteAddress( 0x1584, 0x1584, MWA_RAM ),			/* Possibly still interupt enable */
 		new Memory_WriteAddress( 0x1585, 0x1585, MWA_RAM ),			/* written a lot - every int */
 		new Memory_WriteAddress( 0x1586, 0x1587, dkong_palettebank_w ),
-		new Memory_WriteAddress( 0x1600, 0x17ff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x1800, 0x1bff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x1600, 0x17ff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x1800, 0x1bff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x1C00, 0x1fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x2000, 0x2fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x3000, 0x3fff, hunchbks_mirror_w ),
@@ -413,11 +413,11 @@ public class dkong
 	public static Memory_WriteAddress strtheat_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x6000, 0x61ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6000, 0x61ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6200, 0x6a7f, MWA_RAM ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_RAM ),    /* ???? */
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram  ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram  ),
 		new Memory_WriteAddress( 0x7800, 0x7803, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7808, 0x7808, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7c00, 0x7c00, dkong_sh_tuneselect_w ),
@@ -597,9 +597,9 @@ public class dkong
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7800, 0x7803, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7808, 0x7808, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7c00, 0x7c00, dkongjr_sh_tuneselect_w ),
@@ -628,9 +628,9 @@ public class dkong
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7800, 0x7803, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7808, 0x7808, MWA_RAM ),	/* ???? */
 		new Memory_WriteAddress( 0x7c00, 0x7c00, dkongjr_sh_tuneselect_w ),
@@ -671,9 +671,9 @@ public class dkong
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x68ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0x6900, 0x6a7f, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0x6a80, 0x6fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x7400, 0x77ff, dkong_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x7c00, 0x7c00, soundlatch_w ),
 		new Memory_WriteAddress( 0x7c80, 0x7c80, soundlatch2_w ),
 		new Memory_WriteAddress( 0x7d00, 0x7d00, soundlatch3_w ),

@@ -194,11 +194,11 @@ public class tp84
 		new Memory_WriteAddress( 0x3a00, 0x3a00, soundlatch_w ),
 		new Memory_WriteAddress( 0x3c00, 0x3c00, tp84_scroll_x_w ),
 		new Memory_WriteAddress( 0x3e00, 0x3e00, tp84_scroll_y_w ),
-		new Memory_WriteAddress( 0x4000, 0x43ff, tp84_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x4400, 0x47ff, tp84_videoram2_w, &tp84_videoram2 ),
-		new Memory_WriteAddress( 0x4800, 0x4bff, tp84_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0x4c00, 0x4fff, tp84_colorram2_w, &tp84_colorram2 ),
-		new Memory_WriteAddress( 0x5000, 0x57ff, sharedram_w, &sharedram ),
+		new Memory_WriteAddress( 0x4000, 0x43ff, tp84_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x4400, 0x47ff, tp84_videoram2_w, tp84_videoram2 ),
+		new Memory_WriteAddress( 0x4800, 0x4bff, tp84_colorram_w, colorram ),
+		new Memory_WriteAddress( 0x4c00, 0x4fff, tp84_colorram2_w, tp84_colorram2 ),
+		new Memory_WriteAddress( 0x5000, 0x57ff, sharedram_w, sharedram ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -221,7 +221,7 @@ public class tp84
 	//	new Memory_WriteAddress( 0x0000, 0x0000, MWA_RAM ), /* Watch dog ?*/
 		new Memory_WriteAddress( 0x4000, 0x4000, interrupt_enable_w ), /* IRQ enable */
 		new Memory_WriteAddress( 0x6000, 0x679f, MWA_RAM ),
-		new Memory_WriteAddress( 0x67a0, 0x67ff, MWA_RAM, &spriteram, &spriteram_size ),	/* REAL (multiplexed) */
+		new Memory_WriteAddress( 0x67a0, 0x67ff, MWA_RAM, spriteram, spriteram_size ),	/* REAL (multiplexed) */
 		new Memory_WriteAddress( 0x8000, 0x87ff, sharedram_w ),
 		new Memory_WriteAddress( 0xe000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

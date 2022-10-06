@@ -215,13 +215,13 @@ public class olibochu
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x83ff, olibochu_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x8400, 0x87ff, olibochu_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x8000, 0x83ff, olibochu_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x8400, 0x87ff, olibochu_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xa800, 0xa801, sound_command_w ),
 		new Memory_WriteAddress( 0xa802, 0xa802, olibochu_flipscreen_w ),	/* bit 6 = enable sound? */
 		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf400, 0xf41f, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xf440, 0xf47f, MWA_RAM, &spriteram_2, &spriteram_2_size ),
+		new Memory_WriteAddress( 0xf400, 0xf41f, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xf440, 0xf47f, MWA_RAM, spriteram_2, spriteram_2_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

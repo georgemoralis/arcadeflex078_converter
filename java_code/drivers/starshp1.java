@@ -263,10 +263,10 @@ public class starshp1
 		new Memory_WriteAddress( 0x2c00, 0x3fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc300, 0xc3ff, starshp1_sspic_w ), /* spaceship picture */
 		new Memory_WriteAddress( 0xc400, 0xc4ff, starshp1_ssadd_w ), /* spaceship address */
-		new Memory_WriteAddress( 0xc800, 0xc9ff, starshp1_playfield_w, &starshp1_playfield_ram ),
-		new Memory_WriteAddress( 0xcc00, 0xcc0f, MWA_RAM, &starshp1_hpos_ram ),
-		new Memory_WriteAddress( 0xd000, 0xd00f, MWA_RAM, &starshp1_vpos_ram ),
-		new Memory_WriteAddress( 0xd400, 0xd40f, MWA_RAM, &starshp1_obj_ram ),
+		new Memory_WriteAddress( 0xc800, 0xc9ff, starshp1_playfield_w, starshp1_playfield_ram ),
+		new Memory_WriteAddress( 0xcc00, 0xcc0f, MWA_RAM, starshp1_hpos_ram ),
+		new Memory_WriteAddress( 0xd000, 0xd00f, MWA_RAM, starshp1_vpos_ram ),
+		new Memory_WriteAddress( 0xd400, 0xd40f, MWA_RAM, starshp1_obj_ram ),
 		new Memory_WriteAddress( 0xd800, 0xd80f, starshp1_collision_reset_w ),
 		new Memory_WriteAddress( 0xdc00, 0xdc0f, starshp1_misc_w ),
 		new Memory_WriteAddress( 0xdd00, 0xdd0f, starshp1_analog_in_w ),

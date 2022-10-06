@@ -174,8 +174,8 @@ public class speedatk
 		new Memory_WriteAddress( 0x8588, 0x858f, MWA_RAM ),
 		new Memory_WriteAddress( 0x8800, 0x8bff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8c00, 0x8fff, MWA_RAM ),
-		new Memory_WriteAddress( 0xa000, 0xa3ff, speedatk_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xb000, 0xb3ff, speedatk_colorram_w ,&colorram ),
+		new Memory_WriteAddress( 0xa000, 0xa3ff, speedatk_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xb000, 0xb3ff, speedatk_colorram_w ,colorram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

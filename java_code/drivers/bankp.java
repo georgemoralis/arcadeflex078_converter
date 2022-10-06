@@ -71,10 +71,10 @@ public class bankp
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf000, 0xf3ff, bankp_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xf400, 0xf7ff, bankp_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xf800, 0xfbff, bankp_videoram2_w, &bankp_videoram2 ),
-		new Memory_WriteAddress( 0xfc00, 0xffff, bankp_colorram2_w, &bankp_colorram2 ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, bankp_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, bankp_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, bankp_videoram2_w, bankp_videoram2 ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, bankp_colorram2_w, bankp_colorram2 ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

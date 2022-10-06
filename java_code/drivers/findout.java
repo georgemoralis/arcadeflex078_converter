@@ -178,7 +178,7 @@ public class findout
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x4800, 0x4803, ppi8255_0_w ),
 		new Memory_WriteAddress( 0x5000, 0x5003, ppi8255_1_w ),
 		/* banked ROMs are enabled by low 6 bits of the address */

@@ -101,7 +101,7 @@ public class enigma2
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x2000, 0x21ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x2200, 0x3fff, enigma2_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x2200, 0x3fff, enigma2_videoram_w, videoram ),
 		new Memory_WriteAddress( 0x4000, 0x4fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x5015, 0x53fb, MWA_RAM ), /* every 0x20 */
 		new Memory_WriteAddress( 0x5415, 0x541b, MWA_RAM ), /* always zero ? */

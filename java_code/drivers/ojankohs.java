@@ -248,7 +248,7 @@ public class ojankohs
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x8fff, ojankohs_videoram_w ),
 		new Memory_WriteAddress( 0x9000, 0x9fff, ojankohs_colorram_w ),
-		new Memory_WriteAddress( 0xa000, 0xb7ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xa000, 0xb7ff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0xb800, 0xbfff, ojankohs_palette_w ),
 		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -269,7 +269,7 @@ public class ojankohs
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x9fff, ojankohs_videoram_w ),
 		new Memory_WriteAddress( 0xa000, 0xafff, ojankohs_colorram_w ),
-		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -285,7 +285,7 @@ public class ojankohs
 	public static Memory_WriteAddress writemem_ojankoc[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xffff, ojankoc_videoram_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

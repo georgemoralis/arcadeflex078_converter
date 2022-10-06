@@ -312,11 +312,11 @@ public class bigevglf
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xcfff, MWA_RAM ),
 		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_ROM ),
-		new Memory_WriteAddress( 0xd800, 0xdbff, beg_sharedram_w, &beg_sharedram ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, beg_palette_w, &paletteram ),
-		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &beg_spriteram1 ), /* sprite 'templates' */
+		new Memory_WriteAddress( 0xd800, 0xdbff, beg_sharedram_w, beg_sharedram ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, beg_palette_w, paletteram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, beg_spriteram1 ), /* sprite 'templates' */
 		new Memory_WriteAddress( 0xf000, 0xf0ff, bigevglf_vidram_w ),
-		new Memory_WriteAddress( 0xf840, 0xf8ff, MWA_RAM,&beg_spriteram2 ),  /* spriteram (x,y,offset in spriteram1,palette) */
+		new Memory_WriteAddress( 0xf840, 0xf8ff, MWA_RAM,beg_spriteram2 ),  /* spriteram (x,y,offset in spriteram1,palette) */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

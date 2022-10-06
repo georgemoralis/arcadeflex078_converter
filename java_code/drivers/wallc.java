@@ -203,7 +203,7 @@ public class wallc
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 	
-		new Memory_WriteAddress( 0x8000, 0x83ff, wallc_videoram_w, &videoram ),	/* 2114, 2114 */
+		new Memory_WriteAddress( 0x8000, 0x83ff, wallc_videoram_w, videoram ),	/* 2114, 2114 */
 		new Memory_WriteAddress( 0x8400, 0x87ff, wallc_videoram_w ),	/* mirror */
 		new Memory_WriteAddress( 0x8800, 0x8bff, wallc_videoram_w ),	/* mirror */
 		new Memory_WriteAddress( 0x8c00, 0x8fff, wallc_videoram_w ),	/* mirror */

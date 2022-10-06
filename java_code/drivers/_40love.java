@@ -706,11 +706,11 @@ public class _40love
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),	/* M5517P on main board */
 		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM ),
 	
-		new Memory_WriteAddress( 0x9000, 0x97ff, fortyl_bg_videoram_w, &videoram ),		/* #1 M5517P on video board */
-		new Memory_WriteAddress( 0x9800, 0x983f, MWA_RAM, &fortyl_video_ctrl ),			/* video control area */
-		new Memory_WriteAddress( 0x9840, 0x987f, MWA_RAM, &spriteram,  &spriteram_size ),	/* sprites part 1 */
-		new Memory_WriteAddress( 0x9880, 0x98bf, fortyl_bg_colorram_w, &colorram ),		/* background attributes (2 bytes per line) */
-		new Memory_WriteAddress( 0x98c0, 0x98ff, MWA_RAM, &spriteram_2,&spriteram_2_size ),/* sprites part 2 */
+		new Memory_WriteAddress( 0x9000, 0x97ff, fortyl_bg_videoram_w, videoram ),		/* #1 M5517P on video board */
+		new Memory_WriteAddress( 0x9800, 0x983f, MWA_RAM, fortyl_video_ctrl ),			/* video control area */
+		new Memory_WriteAddress( 0x9840, 0x987f, MWA_RAM, spriteram,  spriteram_size ),	/* sprites part 1 */
+		new Memory_WriteAddress( 0x9880, 0x98bf, fortyl_bg_colorram_w, colorram ),		/* background attributes (2 bytes per line) */
+		new Memory_WriteAddress( 0x98c0, 0x98ff, MWA_RAM, spriteram_2,spriteram_2_size ),/* sprites part 2 */
 	
 		new Memory_WriteAddress( 0xc000, 0xffff, fortyl_pixram_w ), /* banked pixel layer */
 	
@@ -778,11 +778,11 @@ public class _40love
 		new Memory_WriteAddress( 0xa80c, 0xa80c, fortyl_pixram_sel_w ), /* pixram bank select */
 		new Memory_WriteAddress( 0xa80d, 0xa80d, MWA_NOP ), /* unknown */
 	
-		new Memory_WriteAddress( 0xb000, 0xb7ff, fortyl_bg_videoram_w, &videoram ),		/* #1 M5517P on video board */
-		new Memory_WriteAddress( 0xb800, 0xb83f, MWA_RAM, &fortyl_video_ctrl ),			/* video control area */
-		new Memory_WriteAddress( 0xb840, 0xb87f, MWA_RAM, &spriteram,  &spriteram_size ),	/* sprites part 1 */
-		new Memory_WriteAddress( 0xb880, 0xb8bf, fortyl_bg_colorram_w, &colorram ),		/* background attributes (2 bytes per line) */
-		new Memory_WriteAddress( 0xb8e0, 0xb8ff, MWA_RAM, &spriteram_2,&spriteram_2_size ),/* sprites part 2 */
+		new Memory_WriteAddress( 0xb000, 0xb7ff, fortyl_bg_videoram_w, videoram ),		/* #1 M5517P on video board */
+		new Memory_WriteAddress( 0xb800, 0xb83f, MWA_RAM, fortyl_video_ctrl ),			/* video control area */
+		new Memory_WriteAddress( 0xb840, 0xb87f, MWA_RAM, spriteram,  spriteram_size ),	/* sprites part 1 */
+		new Memory_WriteAddress( 0xb880, 0xb8bf, fortyl_bg_colorram_w, colorram ),		/* background attributes (2 bytes per line) */
+		new Memory_WriteAddress( 0xb8e0, 0xb8ff, MWA_RAM, spriteram_2,spriteram_2_size ),/* sprites part 2 */
 	
 		new Memory_WriteAddress( 0xc000, 0xffff, fortyl_pixram_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

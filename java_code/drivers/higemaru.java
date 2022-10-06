@@ -55,9 +55,9 @@ public class higemaru
 		new Memory_WriteAddress( 0xc802, 0xc802, AY8910_write_port_0_w ),
 		new Memory_WriteAddress( 0xc803, 0xc803, AY8910_control_port_1_w ),
 		new Memory_WriteAddress( 0xc804, 0xc804, AY8910_write_port_1_w ),
-		new Memory_WriteAddress( 0xd000, 0xd3ff, higemaru_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xd400, 0xd7ff, higemaru_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xd880, 0xd9ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, higemaru_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, higemaru_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xd880, 0xd9ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

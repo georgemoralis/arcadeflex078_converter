@@ -91,7 +91,7 @@ public class epos
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x8000, 0xffff, epos_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, epos_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -107,7 +107,7 @@ public class epos
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x6fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x8000, 0xffff, epos_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, epos_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

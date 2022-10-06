@@ -209,16 +209,16 @@ public class raiden2
 	
 		new Memory_WriteAddress( 0x0b000, 0x0bfff, MWA_RAM ), // protection?
 	
-		new Memory_WriteAddress( 0x0c000, 0x0cfff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x0d000, 0x0d7ff, raiden2_background_w, &back_data ),
-		new Memory_WriteAddress( 0x0d800, 0x0dfff, raiden2_midground_w, &mid_data ),
-		new Memory_WriteAddress( 0x0e000, 0x0e7ff, raiden2_foreground_w, &fore_data ),
-		new Memory_WriteAddress( 0x0e800, 0x0f7ff, raiden2_text_w, &videoram ),
+		new Memory_WriteAddress( 0x0c000, 0x0cfff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x0d000, 0x0d7ff, raiden2_background_w, back_data ),
+		new Memory_WriteAddress( 0x0d800, 0x0dfff, raiden2_midground_w, mid_data ),
+		new Memory_WriteAddress( 0x0e000, 0x0e7ff, raiden2_foreground_w, fore_data ),
+		new Memory_WriteAddress( 0x0e800, 0x0f7ff, raiden2_text_w, videoram ),
 		new Memory_WriteAddress( 0x0f800, 0x0ffff, MWA_RAM ), /* Stack area */
 	
 		new Memory_WriteAddress( 0x10000, 0x1efff, MWA_RAM ),
 	
-		new Memory_WriteAddress( 0x1f000, 0x1ffff, paletteram_xBBBBBGGGGGRRRRR_w, &paletteram ),
+		new Memory_WriteAddress( 0x1f000, 0x1ffff, paletteram_xBBBBBGGGGGRRRRR_w, paletteram ),
 	
 		new Memory_WriteAddress( 0x20000, 0xfffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

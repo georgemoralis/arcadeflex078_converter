@@ -188,8 +188,8 @@ public class polyplay
 		new Memory_WriteAddress( 0x0c00, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1000, 0x8fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xe800, 0xebff, MWA_ROM ),
-		new Memory_WriteAddress( 0xec00, 0xf7ff, polyplay_characterram_w, &polyplay_characterram ),
-		new Memory_WriteAddress( 0xf800, 0xffff, videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xec00, 0xf7ff, polyplay_characterram_w, polyplay_characterram ),
+		new Memory_WriteAddress( 0xf800, 0xffff, videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

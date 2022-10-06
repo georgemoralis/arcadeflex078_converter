@@ -195,9 +195,9 @@ public class compgolf
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x1000, 0x17ff, compgolf_video_w ,&videoram ),
-		new Memory_WriteAddress( 0x1800, 0x1fff, compgolf_back_w ,&compgolf_bg_ram ),
-		new Memory_WriteAddress( 0x2000, 0x2061, MWA_RAM ,&spriteram ),
+		new Memory_WriteAddress( 0x1000, 0x17ff, compgolf_video_w ,videoram ),
+		new Memory_WriteAddress( 0x1800, 0x1fff, compgolf_back_w ,compgolf_bg_ram ),
+		new Memory_WriteAddress( 0x2000, 0x2061, MWA_RAM ,spriteram ),
 		new Memory_WriteAddress( 0x3001, 0x3001, compgolf_ctrl_w ),
 		new Memory_WriteAddress( 0x3800, 0x3800, YM2203_control_port_0_w ),
 		new Memory_WriteAddress( 0x3801, 0x3801, YM2203_write_port_0_w ),

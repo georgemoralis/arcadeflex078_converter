@@ -53,7 +53,7 @@ public class rotaryf
 		new Memory_WriteAddress( 0x0000, 0x03ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x4000, 0x57ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x7000, 0x73ff, MWA_RAM ), // clears to 1ff ?
-		new Memory_WriteAddress( 0x8000, 0x9fff, c8080bw_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0x9fff, c8080bw_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xa000, 0xa1ff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

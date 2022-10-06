@@ -179,9 +179,9 @@ public class balsente
 	
 	public static Memory_WriteAddress writemem_cpu1[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0x0800, 0x7fff, balsente_videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x8000, 0x8fff, balsente_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x0000, 0x07ff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0x0800, 0x7fff, balsente_videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, balsente_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x9000, 0x9007, balsente_adc_select_w ),
 		new Memory_WriteAddress( 0x9800, 0x987f, balsente_misc_output_w ),
 		new Memory_WriteAddress( 0x9880, 0x989f, balsente_random_reset_w ),
@@ -190,7 +190,7 @@ public class balsente
 		new Memory_WriteAddress( 0x98e0, 0x98ff, watchdog_reset_w ),
 		new Memory_WriteAddress( 0x9903, 0x9903, MWA_NOP ),
 		new Memory_WriteAddress( 0x9a04, 0x9a05, balsente_m6850_w ),
-		new Memory_WriteAddress( 0x9b00, 0x9cff, MWA_RAM, &generic_nvram, &generic_nvram_size ),		/* system NOVRAM + cart NOVRAM */
+		new Memory_WriteAddress( 0x9b00, 0x9cff, MWA_RAM, generic_nvram, generic_nvram_size ),		/* system NOVRAM + cart NOVRAM */
 		new Memory_WriteAddress( 0xa000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

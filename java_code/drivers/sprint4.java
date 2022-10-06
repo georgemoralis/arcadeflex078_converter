@@ -232,7 +232,7 @@ public class sprint4
 		new Memory_WriteAddress( 0x0068, 0x006f, sprint4_skid_w ),
 		new Memory_WriteAddress( 0x0080, 0x00ff, sprint4_wram_w ),
 		new Memory_WriteAddress( 0x0180, 0x01ff, sprint4_wram_w ),
-		new Memory_WriteAddress( 0x0800, 0x0bff, sprint4_video_ram_w, &sprint4_video_ram ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, sprint4_video_ram_w, sprint4_video_ram ),
 		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x4000, 0x4000, MWA_NOP ), /* diagnostic ROM location */
 		new Memory_WriteAddress( 0xe800, 0xffff, MWA_ROM ),

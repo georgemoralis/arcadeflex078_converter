@@ -96,11 +96,11 @@ public class liberate
 	
 	public static Memory_WriteAddress prosport_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0200, 0x021f, prosport_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0x0200, 0x021f, prosport_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1200, 0x1fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x3000, 0x37ff, liberate_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x3800, 0x3fff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x3000, 0x37ff, liberate_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, MWA_RAM, spriteram ),
 		new Memory_WriteAddress( 0x8000, 0x800f, deco16_io_w ),
 		new Memory_WriteAddress( 0x4000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -121,9 +121,9 @@ public class liberate
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1000, 0x3fff, MWA_ROM ), /* Mirror of main rom */
-		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, &scratchram ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, scratchram ),
 		new Memory_WriteAddress( 0x8000, 0x800f, deco16_io_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -156,9 +156,9 @@ public class liberate
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x0fff, MWA_RAM ),
 		new Memory_WriteAddress( 0x1000, 0x3fff, MWA_ROM ), /* Mirror of main rom */
-		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, &spriteram ),
-		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, &scratchram ),
+		new Memory_WriteAddress( 0x4000, 0x47ff, liberate_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x4800, 0x4fff, MWA_RAM, spriteram ),
+		new Memory_WriteAddress( 0x6200, 0x67ff, MWA_RAM, scratchram ),
 	//	new Memory_WriteAddress( 0xf000, 0xf00f, deco16_io_w ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

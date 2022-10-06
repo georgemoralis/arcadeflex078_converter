@@ -518,7 +518,7 @@ public class mazerbla
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xc7ff, sharedram_CFB_ZPU_w ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM, videoram, videoram_size ),
 		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -1090,9 +1090,9 @@ public class mazerbla
 	public static Memory_WriteAddress writemem_cpu3[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x37ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x3800, 0x3fff, sharedram_CFB_ZPU_w, &cfb_zpu_sharedram ),
+		new Memory_WriteAddress( 0x3800, 0x3fff, sharedram_CFB_ZPU_w, cfb_zpu_sharedram ),
 		new Memory_WriteAddress( 0x4000, 0x4003, VCU_video_reg_w ),
-		new Memory_WriteAddress( 0x6000, 0x67ff, cfb_ram_w, &cfb_ram ),
+		new Memory_WriteAddress( 0x6000, 0x67ff, cfb_ram_w, cfb_ram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

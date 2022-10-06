@@ -76,8 +76,8 @@ public class battlex
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x8fff, battlex_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0x8000, 0x8fff, battlex_videoram_w, videoram ),
+		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, spriteram ),
 		new Memory_WriteAddress( 0xa000, 0xa3ff, MWA_RAM ), /* main */
 		new Memory_WriteAddress( 0xe000, 0xe03f, battlex_palette_w ), /* probably palette */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -209,8 +209,8 @@ public class battlex
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
 	new IO_WritePort(
-		{ REGION_GFX1, 0, &battlex_charlayout,      0, 8 },
-		{ REGION_GFX2, 0, &battlex_spritelayout, 16*8, 8 },
+		{ REGION_GFX1, 0, battlex_charlayout,      0, 8 },
+		{ REGION_GFX2, 0, battlex_spritelayout, 16*8, 8 },
 		{ -1 } /* end of array */
 	);
 	
@@ -303,12 +303,12 @@ public class battlex
 				for (bitcount = 0;bitcount < 8 ; bitcount ++)
 				{
 					int bit, col;
-					bit = (mskd[outcount*8+linecount] & bitmask) >> bitcount;
+					bit = (mskd[outcount*8+linecount]  bitmask) >> bitcount;
 	
-					if (bit) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
-					else col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0xf0);
+					if (bit) col = (cold[outcount*8+(linecount~1)+(bitcount/4)]  0x0f) << 4;
+					else col = (cold[outcount*8+(linecount~1)+(bitcount/4)]  0xf0);
 	
-					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount & 1)));
+					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount  1)));
 					bitmask = bitmask << 1;
 				}
 			}

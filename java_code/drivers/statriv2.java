@@ -272,8 +272,8 @@ public class statriv2
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x2fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x4800, 0x48ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),    // backup ram?
-		new Memory_WriteAddress( 0xc800, 0xcfff, statriv2_videoram_w, &statriv2_videoram ),
+		new Memory_WriteAddress( 0x4800, 0x48ff, MWA_RAM, generic_nvram, generic_nvram_size ),    // backup ram?
+		new Memory_WriteAddress( 0xc800, 0xcfff, statriv2_videoram_w, statriv2_videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -290,8 +290,8 @@ public class statriv2
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x4000, 0x43ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x4800, 0x48ff, MWA_RAM, &generic_nvram, &generic_nvram_size ),    // backup ram?
-		new Memory_WriteAddress( 0xc800, 0xcfff, statriv2_videoram_w, &statriv2_videoram ),
+		new Memory_WriteAddress( 0x4800, 0x48ff, MWA_RAM, generic_nvram, generic_nvram_size ),    // backup ram?
+		new Memory_WriteAddress( 0xc800, 0xcfff, statriv2_videoram_w, statriv2_videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

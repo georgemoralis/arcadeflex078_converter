@@ -155,9 +155,9 @@ public class portrait
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, portrait_bgvideo_write, &portrait_bgvideoram ),
-		new Memory_WriteAddress( 0x8800, 0x8fff, portrait_fgvideo_write, &portrait_fgvideoram ),
-		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, &portrait_spriteram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, portrait_bgvideo_write, portrait_bgvideoram ),
+		new Memory_WriteAddress( 0x8800, 0x8fff, portrait_fgvideo_write, portrait_fgvideoram ),
+		new Memory_WriteAddress( 0x9000, 0x91ff, MWA_RAM, portrait_spriteram ),
 		new Memory_WriteAddress( 0x9200, 0x97ff, MWA_RAM ),
 		new Memory_WriteAddress( 0xa000, 0xafff, a000_w ),
 		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM ), /* unknown */

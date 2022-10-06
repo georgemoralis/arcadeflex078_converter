@@ -80,8 +80,8 @@ public class supdrapo
 		new Memory_WriteAddress( 0x5800, 0x5837, MWA_RAM ), //every 2, starts 5801
 		new Memory_WriteAddress( 0x583b, 0x583b, MWA_RAM ),
 		new Memory_WriteAddress( 0x6000, 0x67ff, MWA_RAM ),
-		new Memory_WriteAddress( 0x6800, 0x6bff, supdrapo_videoram_w , &videoram ),
-		new Memory_WriteAddress( 0x6c00, 0x6fff, MWA_RAM, &char_bank ),
+		new Memory_WriteAddress( 0x6800, 0x6bff, supdrapo_videoram_w , videoram ),
+		new Memory_WriteAddress( 0x6c00, 0x6fff, MWA_RAM, char_bank ),
 		new Memory_WriteAddress( 0x7000, 0x77ff, MWA_RAM ),
 		new Memory_WriteAddress( 0x7800, 0x7c00, MWA_RAM ),
 		new Memory_WriteAddress( 0x8000, 0x8000, MWA_RAM ),

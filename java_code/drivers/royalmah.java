@@ -347,8 +347,8 @@ public class royalmah
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x6fff, royalmah_rom_w ),
-		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
-		new Memory_WriteAddress( 0x8000, 0xffff, royalmah_videoram_w, &videoram, &videoram_size ),
+		new Memory_WriteAddress( 0x7000, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
+		new Memory_WriteAddress( 0x8000, 0xffff, royalmah_videoram_w, videoram, videoram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

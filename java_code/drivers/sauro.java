@@ -140,11 +140,11 @@ public class sauro
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram ),
-		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram ),
-		new Memory_WriteAddress( 0xf800, 0xfbff, tecfri_videoram2_w, &tecfri_videoram2 ),
-		new Memory_WriteAddress( 0xfc00, 0xffff, tecfri_colorram2_w, &tecfri_colorram2 ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, tecfri_videoram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, tecfri_colorram ),
+		new Memory_WriteAddress( 0xf800, 0xfbff, tecfri_videoram2_w, tecfri_videoram2 ),
+		new Memory_WriteAddress( 0xfc00, 0xffff, tecfri_colorram2_w, tecfri_colorram2 ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -207,10 +207,10 @@ public class sauro
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xdfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xe000, 0xe7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xec00, 0xefff, trckydoc_spriteram_mirror_w ), // it clears sprites from the screen by writing here to set some of the attributes
-		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, &tecfri_videoram ),
-		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, &tecfri_colorram ),
+		new Memory_WriteAddress( 0xf000, 0xf3ff, tecfri_videoram_w, tecfri_videoram ),
+		new Memory_WriteAddress( 0xf400, 0xf7ff, tecfri_colorram_w, tecfri_colorram ),
 		new Memory_WriteAddress( 0xf820, 0xf820, YM3812_control_port_0_w ),
 		new Memory_WriteAddress( 0xf821, 0xf821, YM3812_write_port_0_w ),
 		new Memory_WriteAddress( 0xf830, 0xf830, tecfri_scroll_bg_w ),

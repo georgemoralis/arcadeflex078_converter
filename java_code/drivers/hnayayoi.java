@@ -117,7 +117,7 @@ public class hnayayoi
 	public static Memory_WriteAddress hnayayoi_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -169,7 +169,7 @@ public class hnayayoi
 	public static Memory_WriteAddress hnfubuki_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xfeff, MWA_ROM ),
 		new Memory_WriteAddress( 0xff00, 0xff00, YM2203_control_port_0_w ),
 		new Memory_WriteAddress( 0xff01, 0xff01, YM2203_write_port_0_w ),
@@ -209,7 +209,7 @@ public class hnayayoi
 	public static Memory_WriteAddress untoucha_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x77ff, MWA_ROM ),
-		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, &generic_nvram, &generic_nvram_size ),
+		new Memory_WriteAddress( 0x7800, 0x7fff, MWA_RAM, generic_nvram, generic_nvram_size ),
 		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

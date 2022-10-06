@@ -94,8 +94,8 @@ public class kingobox
 	    new Memory_ReadAddress( 0xfc01, 0xfc01, input_port_1_r ), /* DSW 1 */
 	    new Memory_ReadAddress( 0xfc02, 0xfc02, input_port_2_r ), /* Player 1 controls */
 	    new Memory_ReadAddress( 0xfc03, 0xfc03, input_port_3_r ), /* Player 2 controls */
-	    new Memory_ReadAddress( 0xfc04, 0xfc04, input_port_4_r ), /* Coin & Start */
-	    new Memory_ReadAddress( 0xfc05, 0xfc05, input_port_5_r ), /* Player 1 & 2 button 3 */
+	    new Memory_ReadAddress( 0xfc04, 0xfc04, input_port_4_r ), /* Coin  Start */
+	    new Memory_ReadAddress( 0xfc05, 0xfc05, input_port_5_r ), /* Player 1  2 button 3 */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -108,7 +108,7 @@ public class kingobox
 	    new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ), /* ???? */
 	    new Memory_WriteAddress( 0xf800, 0xf800, kingofb_f800_w ),	/* NMI enable, palette bank */
 	    new Memory_WriteAddress( 0xf801, 0xf801, MWA_NOP ), /* ???? */
-	    new Memory_WriteAddress( 0xf802, 0xf802, MWA_RAM, &kingofb_scroll_y ),
+	    new Memory_WriteAddress( 0xf802, 0xf802, MWA_RAM, kingofb_scroll_y ),
 	    new Memory_WriteAddress( 0xf803, 0xf803, scroll_interrupt_w  ),
 	    new Memory_WriteAddress( 0xf804, 0xf804, video_interrupt_w ),
 	    new Memory_WriteAddress( 0xf807, 0xf807, sound_command_w ), /* sound latch */
@@ -131,11 +131,11 @@ public class kingobox
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 	    new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
 	    new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), /* work ram */
-	    new Memory_WriteAddress( 0xa000, 0xa7ff, video_shared_w, &video_shared ), /* shared with main */
-	    new Memory_WriteAddress( 0xc000, 0xc0ff, kingofb_videoram_w, &videoram ), /* background vram */
-	    new Memory_WriteAddress( 0xc400, 0xc4ff, kingofb_colorram_w, &colorram ), /* background colorram */
-	    new Memory_WriteAddress( 0xc800, 0xcbff, kingofb_videoram2_w, &kingofb_videoram2 ), /* foreground vram */
-	    new Memory_WriteAddress( 0xcc00, 0xcfff, kingofb_colorram2_w, &kingofb_colorram2 ), /* foreground colorram */
+	    new Memory_WriteAddress( 0xa000, 0xa7ff, video_shared_w, video_shared ), /* shared with main */
+	    new Memory_WriteAddress( 0xc000, 0xc0ff, kingofb_videoram_w, videoram ), /* background vram */
+	    new Memory_WriteAddress( 0xc400, 0xc4ff, kingofb_colorram_w, colorram ), /* background colorram */
+	    new Memory_WriteAddress( 0xc800, 0xcbff, kingofb_videoram2_w, kingofb_videoram2 ), /* foreground vram */
+	    new Memory_WriteAddress( 0xcc00, 0xcfff, kingofb_colorram2_w, kingofb_colorram2 ), /* foreground colorram */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -153,8 +153,8 @@ public class kingobox
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 	    new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
 	    new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), /* work ram */
-	    new Memory_WriteAddress( 0xa000, 0xa7ff, sprite_shared_w, &sprite_shared ), /* shared with main */
-	    new Memory_WriteAddress( 0xc000, 0xc3ff, spriteram_w, &spriteram, &spriteram_size ), /* sprite ram */
+	    new Memory_WriteAddress( 0xa000, 0xa7ff, sprite_shared_w, sprite_shared ), /* shared with main */
+	    new Memory_WriteAddress( 0xc000, 0xc3ff, spriteram_w, spriteram, spriteram_size ), /* sprite ram */
 	    new Memory_WriteAddress( 0xc400, 0xc43f, MWA_RAM ),  /* something related to scroll? */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -199,8 +199,8 @@ public class kingobox
 	    new Memory_ReadAddress( 0xe001, 0xe001, input_port_1_r ), /* DSW 1 */
 	    new Memory_ReadAddress( 0xe002, 0xe002, input_port_2_r ), /* Player 1 controls */
 	    new Memory_ReadAddress( 0xe003, 0xe003, input_port_3_r ), /* Player 2 controls */
-	    new Memory_ReadAddress( 0xe004, 0xe004, input_port_4_r ), /* Coin & Start */
-	    new Memory_ReadAddress( 0xe005, 0xe005, input_port_5_r ), /* Player 1 & 2 button 3 */
+	    new Memory_ReadAddress( 0xe004, 0xe004, input_port_4_r ), /* Coin  Start */
+	    new Memory_ReadAddress( 0xe005, 0xe005, input_port_5_r ), /* Player 1  2 button 3 */
 	    new Memory_ReadAddress( 0xf000, 0xf7ff, MRA_RAM ), /* ???? */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
@@ -215,7 +215,7 @@ public class kingobox
 	    new Memory_WriteAddress( 0xd801, 0xd801, sprite_interrupt_w ),
 	    new Memory_WriteAddress( 0xd802, 0xd802, video_interrupt_w ),
 	    new Memory_WriteAddress( 0xd803, 0xd803, sound_command_w ),
-	    new Memory_WriteAddress( 0xe800, 0xe800, MWA_RAM, &kingofb_scroll_y ),
+	    new Memory_WriteAddress( 0xe800, 0xe800, MWA_RAM, kingofb_scroll_y ),
 	    new Memory_WriteAddress( 0xf000, 0xf7ff, MWA_RAM ), /* ???? */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -236,11 +236,11 @@ public class kingobox
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 	    new Memory_WriteAddress( 0x0000, 0x3fff, MWA_ROM ),
 	    new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), /* work ram */
-	    new Memory_WriteAddress( 0xc000, 0xc7ff, video_shared_w, &video_shared ), /* shared with main */
-	    new Memory_WriteAddress( 0xa800, 0xa8ff, kingofb_videoram_w, &videoram ), /* background vram */
-	    new Memory_WriteAddress( 0xac00, 0xacff, kingofb_colorram_w, &colorram ), /* background colorram */
-	    new Memory_WriteAddress( 0xa000, 0xa3ff, kingofb_videoram2_w, &kingofb_videoram2 ), /* foreground vram */
-	    new Memory_WriteAddress( 0xa400, 0xa7ff, kingofb_colorram2_w, &kingofb_colorram2 ), /* foreground colorram */
+	    new Memory_WriteAddress( 0xc000, 0xc7ff, video_shared_w, video_shared ), /* shared with main */
+	    new Memory_WriteAddress( 0xa800, 0xa8ff, kingofb_videoram_w, videoram ), /* background vram */
+	    new Memory_WriteAddress( 0xac00, 0xacff, kingofb_colorram_w, colorram ), /* background colorram */
+	    new Memory_WriteAddress( 0xa000, 0xa3ff, kingofb_videoram2_w, kingofb_videoram2 ), /* foreground vram */
+	    new Memory_WriteAddress( 0xa400, 0xa7ff, kingofb_colorram2_w, kingofb_colorram2 ), /* foreground colorram */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -258,8 +258,8 @@ public class kingobox
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 	    new Memory_WriteAddress( 0x0000, 0x1fff, MWA_ROM ),
 	    new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ), /* work ram */
-	    new Memory_WriteAddress( 0xc800, 0xcfff, sprite_shared_w, &sprite_shared ), /* shared with main */
-	    new Memory_WriteAddress( 0xa000, 0xa3ff, spriteram_w, &spriteram, &spriteram_size ), /* sprite ram */
+	    new Memory_WriteAddress( 0xc800, 0xcfff, sprite_shared_w, sprite_shared ), /* shared with main */
+	    new Memory_WriteAddress( 0xa000, 0xa3ff, spriteram_w, spriteram, spriteram_size ), /* sprite ram */
 	    new Memory_WriteAddress( 0xa400, 0xa43f, MWA_RAM ),  /* something related to scroll? */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

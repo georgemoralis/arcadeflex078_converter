@@ -142,8 +142,8 @@ public class mogura
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe000, 0xefff, mogura_gfxram_w, &mogura_gfxram ),
-		new Memory_WriteAddress( 0xf000, 0xffff, mogura_tileram_w, &mogura_tileram ),
+		new Memory_WriteAddress( 0xe000, 0xefff, mogura_gfxram_w, mogura_gfxram ),
+		new Memory_WriteAddress( 0xf000, 0xffff, mogura_tileram_w, mogura_tileram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

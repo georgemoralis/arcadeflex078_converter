@@ -114,9 +114,9 @@ public class mosaic
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x00000, 0x0ffff, MWA_ROM ),
 		new Memory_WriteAddress( 0x20000, 0x21fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram ),
-		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram ),
-		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, mosaic_bgvideoram ),
+		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, mosaic_fgvideoram ),
+		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, paletteram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -133,9 +133,9 @@ public class mosaic
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x00000, 0x0ffff, MWA_ROM ),
 		new Memory_WriteAddress( 0x10000, 0x17fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, &mosaic_bgvideoram ),
-		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, &mosaic_fgvideoram ),
-		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, &paletteram ),
+		new Memory_WriteAddress( 0x22000, 0x22fff, mosaic_bgvideoram_w, mosaic_bgvideoram ),
+		new Memory_WriteAddress( 0x23000, 0x23fff, mosaic_fgvideoram_w, mosaic_fgvideoram ),
+		new Memory_WriteAddress( 0x24000, 0x241ff, paletteram_xRRRRRGGGGGBBBBB_w, paletteram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

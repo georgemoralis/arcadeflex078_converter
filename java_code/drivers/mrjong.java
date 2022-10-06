@@ -76,9 +76,9 @@ public class mrjong
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM ),
 		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe000, 0xe3ff, mrjong_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xe400, 0xe7ff, mrjong_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xe000, 0xe03f, MWA_RAM, &spriteram, &spriteram_size),	/* here to initialize the pointer */
+		new Memory_WriteAddress( 0xe000, 0xe3ff, mrjong_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xe400, 0xe7ff, mrjong_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xe000, 0xe03f, MWA_RAM, spriteram, spriteram_size),	/* here to initialize the pointer */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

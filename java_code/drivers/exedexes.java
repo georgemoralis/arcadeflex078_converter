@@ -65,14 +65,14 @@ public class exedexes
 		new Memory_WriteAddress( 0xc800, 0xc800, soundlatch_w ),
 		new Memory_WriteAddress( 0xc804, 0xc804, exedexes_c804_w ),	/* coin counters + text layer enable */
 		new Memory_WriteAddress( 0xc806, 0xc806, MWA_NOP ), /* Watchdog ?? */
-		new Memory_WriteAddress( 0xd000, 0xd3ff, exedexes_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xd400, 0xd7ff, exedexes_colorram_w, &colorram ),
-		new Memory_WriteAddress( 0xd800, 0xd801, MWA_RAM, &exedexes_nbg_yscroll ),
-		new Memory_WriteAddress( 0xd802, 0xd803, MWA_RAM, &exedexes_nbg_xscroll ),
-		new Memory_WriteAddress( 0xd804, 0xd805, MWA_RAM, &exedexes_bg_scroll ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, exedexes_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xd400, 0xd7ff, exedexes_colorram_w, colorram ),
+		new Memory_WriteAddress( 0xd800, 0xd801, MWA_RAM, exedexes_nbg_yscroll ),
+		new Memory_WriteAddress( 0xd802, 0xd803, MWA_RAM, exedexes_nbg_xscroll ),
+		new Memory_WriteAddress( 0xd804, 0xd805, MWA_RAM, exedexes_bg_scroll ),
 		new Memory_WriteAddress( 0xd807, 0xd807, exedexes_gfxctrl_w ),	/* layer enables */
 		new Memory_WriteAddress( 0xe000, 0xefff, MWA_RAM ),
-		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

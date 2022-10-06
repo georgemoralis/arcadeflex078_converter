@@ -212,9 +212,9 @@ public class pbillian
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe000, 0xe0ff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xe100, 0xe7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xe800, 0xefff, pb_videoram_w,&pb_videoram ),
+		new Memory_WriteAddress( 0xe800, 0xefff, pb_videoram_w,pb_videoram ),
 		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

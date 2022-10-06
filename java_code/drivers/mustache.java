@@ -112,12 +112,12 @@ public class mustache
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xcfff, mustache_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, mustache_videoram_w, videoram ),
 		new Memory_WriteAddress( 0xd000, 0xd003, MWA_RAM ), /* T5182 ? */
 		new Memory_WriteAddress( 0xd400, 0xd4ff, MWA_RAM ), /* shared with T5182 ?*/
 		new Memory_WriteAddress( 0xd806, 0xd806, mustache_scroll_w ),
 		new Memory_WriteAddress( 0xd807, 0xd807, mustache_video_control_w ),
-		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &spriteram, &spriteram_size ),
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, spriteram, spriteram_size ),
 		new Memory_WriteAddress( 0xf000, 0xffff, MWA_RAM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

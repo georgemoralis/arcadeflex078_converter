@@ -73,8 +73,8 @@ public class markham
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 	
 		new Memory_WriteAddress( 0xc000, 0xc7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, markham_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0xc800, 0xcfff, MWA_RAM, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0xd000, 0xd7ff, markham_videoram_w, videoram ),
 		new Memory_WriteAddress( 0xd800, 0xdfff, markham_sharedram_w ),
 	
 		new Memory_WriteAddress( 0xe008, 0xe008, MWA_NOP ), /* coin counter? */
@@ -96,7 +96,7 @@ public class markham
 	public static Memory_WriteAddress writemem2[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
-		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM, &markham_sharedram ),
+		new Memory_WriteAddress( 0x8000, 0x87ff, MWA_RAM, markham_sharedram ),
 	
 		new Memory_WriteAddress( 0xc000, 0xc000, SN76496_0_w ),
 		new Memory_WriteAddress( 0xc001, 0xc001, SN76496_1_w ),

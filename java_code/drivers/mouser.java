@@ -77,9 +77,9 @@ public class mouser
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0x6000, 0x6bff, MWA_RAM ),
 		new Memory_WriteAddress( 0x8800, 0x88ff, MWA_NOP ), /* unknown */
-		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, &videoram, &videoram_size ),
-		new Memory_WriteAddress( 0x9800, 0x9cff, mouser_spriteram_w, &spriteram, &spriteram_size ),
-		new Memory_WriteAddress( 0x9c00, 0x9fff, mouser_colorram_w, &colorram ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, videoram_w, videoram, videoram_size ),
+		new Memory_WriteAddress( 0x9800, 0x9cff, mouser_spriteram_w, spriteram, spriteram_size ),
+		new Memory_WriteAddress( 0x9c00, 0x9fff, mouser_colorram_w, colorram ),
 		new Memory_WriteAddress( 0xa000, 0xa000, mouser_nmi_enable_w ), /* bit 0 = NMI Enable */
 		new Memory_WriteAddress( 0xa001, 0xa001, mouser_flip_screen_x_w ),
 		new Memory_WriteAddress( 0xa002, 0xa002, mouser_flip_screen_y_w ),

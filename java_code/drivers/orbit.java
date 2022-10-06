@@ -147,8 +147,8 @@ public class orbit
 	public static Memory_WriteAddress orbit_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x07ff, orbit_zeropage_w ),
-		new Memory_WriteAddress( 0x3000, 0x33bf, orbit_playfield_w, &orbit_playfield_ram ),
-		new Memory_WriteAddress( 0x33c0, 0x33ff, orbit_sprite_w, &orbit_sprite_ram ),
+		new Memory_WriteAddress( 0x3000, 0x33bf, orbit_playfield_w, orbit_playfield_ram ),
+		new Memory_WriteAddress( 0x33c0, 0x33ff, orbit_sprite_w, orbit_sprite_ram ),
 		new Memory_WriteAddress( 0x3400, 0x37bf, orbit_playfield_w ),
 		new Memory_WriteAddress( 0x37c0, 0x37ff, orbit_sprite_w ),
 		new Memory_WriteAddress( 0x3800, 0x3800, orbit_note_w ),

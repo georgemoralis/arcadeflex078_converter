@@ -377,9 +377,9 @@ public class djboy
 	public static Memory_WriteAddress cpu1_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
-		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM, &spriteram ),
+		new Memory_WriteAddress( 0xb000, 0xbfff, MWA_RAM, spriteram ),
 		new Memory_WriteAddress( 0xc000, 0xdfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM, &sharedram ),
+		new Memory_WriteAddress( 0xe000, 0xffff, MWA_RAM, sharedram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -406,8 +406,8 @@ public class djboy
 	public static Memory_WriteAddress cpu2_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0xbfff, MWA_ROM ),
-		new Memory_WriteAddress( 0xc000, 0xcfff, djboy_videoram_w, &videoram ),
-		new Memory_WriteAddress( 0xd000, 0xd3ff, djboy_paletteram_w, &paletteram ),
+		new Memory_WriteAddress( 0xc000, 0xcfff, djboy_videoram_w, videoram ),
+		new Memory_WriteAddress( 0xd000, 0xd3ff, djboy_paletteram_w, paletteram ),
 		new Memory_WriteAddress( 0xd400, 0xd7ff, MWA_RAM ), /* workram */
 		/* new Memory_WriteAddress( 0xd800, 0xd8ff, MWA_RAM ), */ /* protection? */
 		new Memory_WriteAddress( 0xe000, 0xffff, sharedram_w ),

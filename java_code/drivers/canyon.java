@@ -176,7 +176,7 @@ public class canyon
 		new Memory_WriteAddress( 0x0600, 0x0603, canyon_whistle_w ),
 		new Memory_WriteAddress( 0x0680, 0x0683, canyon_led_w ),
 		new Memory_WriteAddress( 0x0700, 0x0703, canyon_attract_w ),
-		new Memory_WriteAddress( 0x0800, 0x0bff, canyon_videoram_w, &canyon_videoram ),
+		new Memory_WriteAddress( 0x0800, 0x0bff, canyon_videoram_w, canyon_videoram ),
 		new Memory_WriteAddress( 0x1000, 0x17ff, MWA_NOP ), /* sloppy code writes here */
 		new Memory_WriteAddress( 0x2000, 0x3fff, MWA_ROM ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

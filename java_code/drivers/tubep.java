@@ -195,7 +195,7 @@ public class tubep
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),
-		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram ),	/* RAM on GFX PCB @B13 */
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, tubep_textram ),	/* RAM on GFX PCB @B13 */
 		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w ),
 		new Memory_WriteAddress( 0xe800, 0xebff, tubep_backgroundram_w ),				/* row of 8 x 2147 RAMs on main PCB */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -254,8 +254,8 @@ public class tubep
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa000, tubep_background_a000_w ),
 		new Memory_WriteAddress( 0xc000, 0xc000, tubep_background_c000_w ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram ),	/* 6116 #1 */
-		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, &tubep_backgroundram ),		/* row of 8 x 2147 RAMs on main PCB */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, cpu_sharedram ),	/* 6116 #1 */
+		new Memory_WriteAddress( 0xe800, 0xebff, MWA_RAM, tubep_backgroundram ),		/* row of 8 x 2147 RAMs on main PCB */
 		new Memory_WriteAddress( 0xf000, 0xf3ff, tubep_sprite_colorsharedram_w ),		/* sprites color lookup table */
 		new Memory_WriteAddress( 0xf800, 0xffff, tubep_sprite_sharedram_w ),			/* program copies here part of shared ram ?? */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
@@ -403,7 +403,7 @@ public class tubep
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x9fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),						/* MB8416 SRAM on daughterboard on main PCB (there are two SRAMs, this is the one on the left) */
-		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, &tubep_textram ),/* RAM on GFX PCB @B13 */
+		new Memory_WriteAddress( 0xc000, 0xc7ff, tubep_textram_w, tubep_textram ),/* RAM on GFX PCB @B13 */
 		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w ),				/* MB8416 SRAM on daughterboard (the one on the right) */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -431,8 +431,8 @@ public class tubep
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xa000, 0xa7ff, MWA_RAM ),						/* M5M5117P @21G */
-		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, &cpu_sharedram ),/* MB8416 on daughterboard (the one on the right) */
-		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, &rjammer_backgroundram ),/* M5M5117P @19B (background) */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, cpu_sharedram_w, cpu_sharedram ),/* MB8416 on daughterboard (the one on the right) */
+		new Memory_WriteAddress( 0xe800, 0xefff, MWA_RAM, rjammer_backgroundram ),/* M5M5117P @19B (background) */
 		new Memory_WriteAddress( 0xf800, 0xffff, tubep_sprite_sharedram_w ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
@@ -449,8 +449,8 @@ public class tubep
 	
 	public static Memory_WriteAddress nsc_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
-		new Memory_WriteAddress( 0x0000, 0x03ff, tubep_sprite_colorsharedram_w, &tubep_sprite_colorsharedram ),
-		new Memory_WriteAddress( 0x0800, 0x0fff, tubep_sprite_sharedram_w, &tubep_sprite_sharedram ),
+		new Memory_WriteAddress( 0x0000, 0x03ff, tubep_sprite_colorsharedram_w, tubep_sprite_colorsharedram ),
+		new Memory_WriteAddress( 0x0800, 0x0fff, tubep_sprite_sharedram_w, tubep_sprite_sharedram ),
 		new Memory_WriteAddress( 0x2000, 0x2009, tubep_sprite_control_w ),
 		new Memory_WriteAddress( 0x200a, 0x200b, MWA_NOP ), /* not used by the games - perhaps designed for debugging */
 		new Memory_WriteAddress( 0xc000, 0xffff, MWA_ROM ),

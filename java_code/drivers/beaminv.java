@@ -56,7 +56,7 @@ public class beaminv
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x17ff, MWA_ROM ),
 		new Memory_WriteAddress( 0x1800, 0x1fff, MWA_RAM ),
-		new Memory_WriteAddress( 0x4000, 0x5fff, beaminv_videoram_w, &videoram ),
+		new Memory_WriteAddress( 0x4000, 0x5fff, beaminv_videoram_w, videoram ),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

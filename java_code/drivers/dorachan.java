@@ -64,7 +64,7 @@ public class dorachan
 		new Memory_WriteAddress(0x0000, 0x17ff, MWA_ROM),
 		new Memory_WriteAddress(0x1800, 0x1fff, MWA_RAM ),
 		new Memory_WriteAddress(0x2000, 0x23ff, MWA_ROM),
-		new Memory_WriteAddress(0x4000, 0x5fff, dorachan_videoram_w,&videoram),
+		new Memory_WriteAddress(0x4000, 0x5fff, dorachan_videoram_w,videoram),
 		new Memory_WriteAddress(0x6000, 0x77ff, MWA_ROM),
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};

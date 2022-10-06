@@ -107,9 +107,9 @@ public class chaknpop
 		new Memory_WriteAddress( 0x8807, 0x8807, AY8910_write_port_1_w ),
 		new Memory_WriteAddress( 0x880c, 0x880c, chaknpop_gfxmode_w ),
 		new Memory_WriteAddress( 0x880D, 0x880D, coinlock_w ),			// coin lock out
-		new Memory_WriteAddress( 0x9000, 0x93ff, chaknpop_txram_w, &chaknpop_txram ),
-		new Memory_WriteAddress( 0x9800, 0x983f, chaknpop_attrram_w, &chaknpop_attrram ),
-		new Memory_WriteAddress( 0x9840, 0x98ff, MWA_RAM, &chaknpop_sprram, &chaknpop_sprram_size ),
+		new Memory_WriteAddress( 0x9000, 0x93ff, chaknpop_txram_w, chaknpop_txram ),
+		new Memory_WriteAddress( 0x9800, 0x983f, chaknpop_attrram_w, chaknpop_attrram ),
+		new Memory_WriteAddress( 0x9840, 0x98ff, MWA_RAM, chaknpop_sprram, chaknpop_sprram_size ),
 		new Memory_WriteAddress( 0xa000, 0xbfff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xffff, MWA_BANK1 ),			// bitmap plane 1-4
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)

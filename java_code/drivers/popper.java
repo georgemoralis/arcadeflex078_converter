@@ -181,14 +181,14 @@ public class popper
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_WriteAddress( 0x0000, 0x5fff, MWA_ROM ),
 		new Memory_WriteAddress( 0xc000, 0xc1bf, MWA_RAM ),
-		new Memory_WriteAddress( 0xc1c0, 0xc1ff, popper_ol_videoram_w, &popper_ol_videoram ),
-		new Memory_WriteAddress( 0xc200, 0xc61f, popper_videoram_w, &popper_videoram ),
+		new Memory_WriteAddress( 0xc1c0, 0xc1ff, popper_ol_videoram_w, popper_ol_videoram ),
+		new Memory_WriteAddress( 0xc200, 0xc61f, popper_videoram_w, popper_videoram ),
 		new Memory_WriteAddress( 0xc620, 0xc9bf, MWA_RAM ),
-		new Memory_WriteAddress( 0xc9c0, 0xc9ff, popper_ol_attribram_w, &popper_ol_attribram ),
-		new Memory_WriteAddress( 0xca00, 0xce1f, popper_attribram_w, &popper_attribram ),
+		new Memory_WriteAddress( 0xc9c0, 0xc9ff, popper_ol_attribram_w, popper_ol_attribram ),
+		new Memory_WriteAddress( 0xca00, 0xce1f, popper_attribram_w, popper_attribram ),
 		new Memory_WriteAddress( 0xce20, 0xcfff, MWA_RAM ),
-		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, &popper_spriteram, &popper_spriteram_size ),
-		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, &popper_sharedram ),	//shared with sound cpu
+		new Memory_WriteAddress( 0xd000, 0xd7ff, MWA_RAM, popper_spriteram, popper_spriteram_size ),
+		new Memory_WriteAddress( 0xd800, 0xdfff, MWA_RAM, popper_sharedram ),	//shared with sound cpu
 		new Memory_WriteAddress( 0xe000, 0xe000, interrupt_enable_w ),
 		new Memory_WriteAddress( 0xe001, 0xe001, popper_flipscreen_w ),
 		new Memory_WriteAddress( 0xe002, 0xe002, popper_e002_w ),				//?? seems to be graphic related
