@@ -172,7 +172,7 @@ public class convertMame {
                 case 'W':
                 {
                     i = Convertor.inpos;
-                    if (sUtil.getToken("WRITE_HANDLER(")) {
+                    if (sUtil.getToken("WRITE_HANDLER(") || sUtil.getToken("WRITE_HANDLER (")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();

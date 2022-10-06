@@ -86,7 +86,6 @@ public class galaga
 	INTERRUPT_GEN( galaga_interrupt_2 );
 	INTERRUPT_GEN( galaga_interrupt_3 );
 	MACHINE_INIT( galaga );
-	WRITE_HANDLER ( gatsbee_bank_w );
 	
 	
 	extern unsigned char *galaga_starcontrol;

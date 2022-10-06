@@ -88,7 +88,6 @@ public class route16
 	PALETTE_INIT( route16 );
 	VIDEO_START( route16 );
 	VIDEO_UPDATE( route16 );
-	WRITE_HANDLER ( speakres_out2_w );
 	
 	READ_HANDLER( routex_prot_read )
 	{
