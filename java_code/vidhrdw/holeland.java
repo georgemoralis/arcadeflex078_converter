@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class holeland
+{
+	
 static int palette_offset;
 static struct tilemap *bg_tilemap;
 
@@ -205,4 +211,5 @@ VIDEO_UPDATE( crzrally )
 {
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	crzrally_draw_sprites(bitmap,cliprect);
+}
 }

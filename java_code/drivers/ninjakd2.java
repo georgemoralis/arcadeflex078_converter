@@ -221,9 +221,15 @@ The first sprite data is located at fa0b,then fa1b and so on.
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ninjakd2
+{
+	
 WRITE_HANDLER( ninjakd2_bgvideoram_w );
 WRITE_HANDLER( ninjakd2_fgvideoram_w );
 WRITE_HANDLER( ninjakd2_sprite_overdraw_w );
@@ -763,3 +769,4 @@ GAMEX(1987, ninjakd2, 0,        ninjakd2, ninjakd2, 0,        ROT0, "UPL", "Ninj
 GAME( 1987, ninjak2a, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL", "Ninja-Kid II (set 2)" )
 GAME( 1987, ninjak2b, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL", "Ninja-Kid II (set 3)" )
 GAME( 1987, rdaction, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL (World Games license)", "Rad Action" )
+}

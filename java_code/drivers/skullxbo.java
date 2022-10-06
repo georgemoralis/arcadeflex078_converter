@@ -17,11 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "skullxbo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class skullxbo
+{
+	
 
 
 /*************************************
@@ -634,3 +638,4 @@ GAME( 1989, skullxb4, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games
 GAME( 1989, skullxb3, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 3)" )
 GAME( 1989, skullxb2, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 2)" )
 GAME( 1989, skullxb1, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 1)" )
+}

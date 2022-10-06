@@ -22,10 +22,15 @@
 #ifndef _M6509_H
 #define _M6509_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
-#include "m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
+public class m6509H
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -80,3 +85,4 @@ extern unsigned int Dasm6509( char *dst, unsigned pc );
 #endif /* _M6509_H */
 
 
+}

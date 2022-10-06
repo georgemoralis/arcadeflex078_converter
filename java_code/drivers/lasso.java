@@ -20,10 +20,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "lasso.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lasso
+{
+	
 
 /* IRQ = VBlank, NMI = Coin Insertion */
 
@@ -1002,3 +1007,4 @@ GAME( 1983, chameleo, 0,     chameleo, chameleo, 0, ROT0,  "Jaleco", "Chameleon"
 GAME( 1984, wwjgtin,  0,     wwjgtin,  wwjgtin,  0, ROT0,  "Jaleco / Casio", "Wai Wai Jockey Gate-In!" )
 GAME( 1984, pinbo,    0,     pinbo,    pinbo,    0, ROT90, "Jaleco", "Pinbo" )
 GAME( 1984, pinbos,   pinbo, pinbo,    pinbos,   0, ROT90, "bootleg?", "Pinbo (Strike)" )
+}

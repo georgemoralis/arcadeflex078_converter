@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class mario
+{
+	
 
 
 WRITE_HANDLER( mario_sh_w )
@@ -60,4 +66,5 @@ WRITE_HANDLER( mario_sh3_w )
 				break;
 		}
 	}
+}
 }

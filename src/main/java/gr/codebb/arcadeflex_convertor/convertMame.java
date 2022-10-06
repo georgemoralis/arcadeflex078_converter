@@ -19,6 +19,8 @@ public class convertMame {
 
     }
 
+    static final int MEMORY_READ8 = 1;
+
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
         Convertor.outpos = 0;
@@ -45,6 +47,32 @@ public class convertMame {
                 }
 
                 line_change_flag = false;
+            }
+            switch (c) {
+                case 35: // '#'
+                {
+                    if (!sUtil.getToken("#include"))//an den einai #include min to trexeis
+                    {
+                        break;
+                    }
+                    sUtil.skipLine();
+                    if (!only_once_flag)//trekse auto to komati mono otan bris to proto include
+                    {
+                        only_once_flag = true;
+                        sUtil.putString("/*\r\n");
+                        sUtil.putString(" * ported to v" + Convertor.mameversion + "\r\n");
+                        sUtil.putString(" * using automatic conversion tool v" + Convertor.convertorversion + "\r\n");
+                        /*sUtil.putString(" * converted at : " + Convertor.timenow() + "\r\n");*/
+                        sUtil.putString(" */ \r\n");
+                        sUtil.putString("package " + Convertor.packageName + ";\r\n");
+                        sUtil.putString("\r\n");
+                        sUtil.putString((new StringBuilder()).append("public class ").append(Convertor.className).append("\r\n").toString());
+                        sUtil.putString("{\r\n");
+                        kapa = 1;
+                        line_change_flag = true;
+                    }
+                    continue;
+                }
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

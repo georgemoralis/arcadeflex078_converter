@@ -4,16 +4,15 @@
 
 ****************************************************************************/
 
-#include "machine/atarigen.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms34010/34010ops.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/dsp32/dsp32.h"
-#include "machine/asic65.h"
-#include "sndhrdw/atarijsa.h"
-#include "harddriv.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class harddriv
+{
+	
 
 /*************************************
  *
@@ -1946,4 +1945,5 @@ READ16_HANDLER( hdds3_speedup_r )
 	}
 
 	return data;
+}
 }

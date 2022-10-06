@@ -375,14 +375,16 @@ is selected
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "ui_text.h"
-#include "artwork.h"
-#include "machine/eeprom.h"
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cheat
+{
+	
 #ifdef MESS
-#include "cheatms.h"
 #endif
 
 
@@ -10420,3 +10422,4 @@ static void BuildCPUInfoList(void)
 	}
 }
 
+}

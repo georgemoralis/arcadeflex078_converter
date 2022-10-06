@@ -11,9 +11,15 @@
 #ifndef _TMS32031_H
 #define _TMS32031_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32031;
 
+public class tms32031H
+{
+	
 
 /*###################################################################################################
 **	TYPE DEFINITIONS
@@ -89,3 +95,4 @@ extern const char *tms32031_info(void *context, int regnum);
 extern unsigned tms32031_dasm(char *buffer, unsigned pc);
 
 #endif /* _TMS32031_H */
+}

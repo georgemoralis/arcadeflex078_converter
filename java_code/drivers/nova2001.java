@@ -31,9 +31,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nova2001
+{
+	
 /* From vidhrdw/nova2001.c */
 extern UINT8 *nova2001_videoram2, *nova2001_colorram2;
 
@@ -268,3 +274,4 @@ ROM_END
 
 GAME( 1983, nova2001, 0,        nova2001, nova2001, 0, ROT0, "UPL", "Nova 2001 (Japan)" )
 GAME( 1983, nov2001u, nova2001, nova2001, nova2001, 0, ROT0, "UPL (Universal license)", "Nova 2001 (US)" )
+}

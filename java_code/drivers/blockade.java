@@ -30,9 +30,15 @@ Notes:  Support is complete with the exception of the square wave generator
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class blockade
+{
+	
 /* #define BLOCKADE_LOG 1 */
 
 extern WRITE_HANDLER( blockade_videoram_w );
@@ -590,3 +596,4 @@ GAMEX( 1976, comotion, 0, comotion, comotion, comotion, ROT0, "Gremlin", "Comoti
 GAMEX( 1978, blasto,   0, blasto,   blasto,   comotion, ROT0, "Gremlin", "Blasto", GAME_IMPERFECT_SOUND )
 GAMEX( 1977, hustle,   0, hustle,   hustle,   comotion, ROT0, "Gremlin", "Hustle", GAME_IMPERFECT_SOUND )
 GAMEX( 1977, mineswpr, 0, blasto,   blockade, blockade, ROT0, "Amutech", "Minesweeper", GAME_IMPERFECT_SOUND )
+}

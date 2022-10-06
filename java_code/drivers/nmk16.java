@@ -134,10 +134,15 @@ If someone could fix the protection it'd be fully playable with sound and music.
 
 ********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nmk16
+{
+	
 extern data16_t *nmk_bgvideoram,*nmk_fgvideoram,*nmk_txvideoram;
 extern data16_t *gunnail_scrollram;
 
@@ -4409,3 +4414,4 @@ GAMEX( 1994, raphero,  0,       raphero,  tdragon2, 0,        ROT270, "Media Tra
 GAMEX( 1992, sabotenb, 0,       bjtwin,   sabotenb, nmk,      ROT0,   "NMK / Tecmo",					"Saboten Bombers", GAME_NO_COCKTAIL )
 GAMEX( 1993, bjtwin,   0,       bjtwin,   bjtwin,   bjtwin,   ROT270, "NMK",							"Bombjack Twin", GAME_NO_COCKTAIL )
 GAMEX( 1995, nouryoku, 0,       bjtwin,   nouryoku, nmk,      ROT0,   "Tecmo",							"Nouryoku Koujou Iinkai", GAME_NO_COCKTAIL )
+}

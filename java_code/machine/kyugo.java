@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "kyugo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class kyugo
+{
+	
 
 data8_t *kyugo_sharedram;
 
@@ -46,4 +52,5 @@ WRITE_HANDLER( kyugo_sharedram_w )
 READ_HANDLER( kyugo_sharedram_r )
 {
 	return kyugo_sharedram[offset];
+}
 }

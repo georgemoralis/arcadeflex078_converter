@@ -31,11 +31,15 @@ a000-a3ff	R/W X/Y scroll position of each character (can be scrolled up
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8085/i8085.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class spcforce
+{
+	
 
 extern unsigned char *spcforce_scrollram;
 
@@ -368,3 +372,4 @@ ROM_END
 GAMEX( 1980, spcforce, 0,        spcforce, spcforce, 0, ROT270, "Venture Line", "Space Force", GAME_IMPERFECT_COLORS )
 GAMEX( 19??, spcforc2, spcforce, spcforce, spcforc2, 0, ROT270, "Elcon (bootleg?)", "Space Force (set 2)", GAME_IMPERFECT_COLORS )
 GAMEX( 1981, meteor,   spcforce, spcforce, spcforc2, 0, ROT270, "Venture Line", "Meteoroids", GAME_IMPERFECT_COLORS )
+}

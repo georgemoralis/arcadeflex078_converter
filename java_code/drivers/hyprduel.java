@@ -20,9 +20,15 @@ sub68k is performing not only processing of sound but assistance of main68k.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hyprduel
+{
+	
 #define RASTER_LINES 262
 #define FIRST_VISIBLE_LINE 0
 #define LAST_VISIBLE_LINE 223
@@ -756,3 +762,4 @@ ROM_END
 GAMEX( 1993, hyprduel, 0,        hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )
 GAME ( 1993, hyprdelj, hyprduel, hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (Japan)" )
 
+}

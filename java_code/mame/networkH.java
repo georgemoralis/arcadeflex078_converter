@@ -8,8 +8,15 @@
 #ifndef __NETWORK_H__
 #define __NETWORK_H__
 
-#include "osdepend.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class networkH
+{
+	
 #define NET_ERROR         (-1)
 
 #define NET_SPECTATOR      -1
@@ -202,3 +209,4 @@ References
 #endif /* __NETWORK_H__ */
 
 #endif /* MAME_NET */
+}

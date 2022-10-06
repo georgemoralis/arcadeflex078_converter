@@ -4,12 +4,15 @@
 
 ***************************************************************************/
 
-#include "chd.h"
-#include "md5.h"
-#include "sha1.h"
-#include "zlib.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class chd
+{
+	
 
 
 /*************************************
@@ -2110,4 +2113,5 @@ static UINT32 multi_write(struct chd_interface_file *file, UINT64 offset, UINT32
 static UINT64 multi_length(struct chd_interface_file *file)
 {
 	return (*interface.length)(file);
+}
 }

@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class starwars
+{
+	
 /* Sound commands from the main CPU are stored in a single byte */
 /* register.  The main CPU then interrupts the Sound CPU.       */
 
@@ -239,3 +245,4 @@ WRITE_HANDLER( starwars_soundrst_w )
 	cpu_set_reset_line(1, PULSE_LINE);
 }
 
+}

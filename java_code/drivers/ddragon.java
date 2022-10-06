@@ -40,12 +40,15 @@ conversion kit which could be applied to a bootleg double dragon :-p?
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ddragon
+{
+	
 /* from vidhrdw */
 extern unsigned char *ddragon_bgvideoram,*ddragon_fgvideoram;
 extern int ddragon_scrollx_hi, ddragon_scrolly_hi;
@@ -1530,3 +1533,4 @@ GAMEX( 19??, tstrike,   0,        darktowr,  darktowr,  0, ROT0, "Game Room", "T
 /* these run on their own board, but are basically the same game. Toffy even has 'dangerous dungeons' text in it */
 GAME( 1993, toffy,  0, toffy, toffy, toffy, ROT0, "Midas",                 "Toffy" )
 GAME( 1994, stoffy, 0, toffy, toffy, toffy, ROT0, "Midas (Unico license)", "Super Toffy" )
+}

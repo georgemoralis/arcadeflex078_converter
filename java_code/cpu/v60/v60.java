@@ -3,18 +3,17 @@
 // Main hacking and coding by Farfetch'd
 // Portability fixes by Richter Belmont
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
-#include "mamedbg.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.v60;
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include "v60.h"
+public class v60
+{
+	
 
 // memory accessors
-#include "v60mem.c"
 
 
 // macros stolen from MAME for flags calc
@@ -278,16 +277,8 @@ static UINT32 f2u(float f)
 
 
 // Addressing mode decoding functions
-#include "am.c"
 
 // Opcode functions
-#include "op12.c"
-#include "op2.c"
-#include "op3.c"
-#include "op4.c"
-#include "op5.c"
-#include "op6.c"
-#include "op7a.c"
 
 UINT32 opUNHANDLED(void)
 {
@@ -296,7 +287,6 @@ UINT32 opUNHANDLED(void)
 }
 
 // Opcode jump table
-#include "optable.c"
 
 static int v60_default_irq_cb(int irqline)
 {
@@ -603,3 +593,4 @@ unsigned v70_dasm(char *buffer,  unsigned pc)
 }
 #endif
 
+}

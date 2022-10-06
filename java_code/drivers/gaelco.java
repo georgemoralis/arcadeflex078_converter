@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gaelco
+{
+	
 extern data16_t *gaelco_vregs;
 extern data16_t *gaelco_videoram;
 extern data16_t *gaelco_spriteram;
@@ -568,3 +572,4 @@ ROM_END
 GAME( 1991, bigkarnk, 0,        bigkarnk, bigkarnk, 0, ROT0, "Gaelco", "Big Karnak" )
 GAME( 1995, biomtoy,  0,        maniacsq, biomtoy,  0, ROT0, "Gaelco", "Biomechanical Toy (unprotected)" )
 GAME( 1996, maniacsp, maniacsq, maniacsq, maniacsq, 0, ROT0, "Gaelco", "Maniac Square (prototype)" )
+}

@@ -146,9 +146,15 @@ VBlank duration: 1/VSYNC * (16/256) = 1017.6 us
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gottlieb
+{
+	
 extern UINT8 *gottlieb_charram;
 
 extern WRITE_HANDLER( gottlieb_videoram_w );
@@ -1956,3 +1962,4 @@ GAME( 1983, screwloo, 0,     gottlieb2,screwloo, gottlieb, ROT0,   "Mylstar", "S
 GAME( 1984, curvebal, 0,     gottlieb, curvebal, 0,        ROT270, "Mylstar", "Curve Ball" )
 GAMEX(1984, usvsthem, 0,     usvsthem, usvsthem, gottlieb, ROT0,   "Mylstar", "Us vs. Them", GAME_NOT_WORKING )
 GAMEX(1984, 3stooges, 0,     stooges,  3stooges, gottlieb, ROT0,   "Mylstar", "The Three Stooges In Brides Is Brides", GAME_IMPERFECT_SOUND )
+}

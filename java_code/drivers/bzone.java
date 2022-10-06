@@ -195,15 +195,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/vector.h"
-#include "vidhrdw/avgdvg.h"
-#include "machine/mathbox.h"
-#include "machine/atari_vg.h"
-#include "artwork.h"
-#include "bzone.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bzone
+{
+	
 #define IN0_3KHZ (1<<7)
 #define IN0_VG_HALT (1<<6)
 
@@ -913,3 +913,4 @@ GAME( 1980, bzone2,   bzone, bzone,    bzone,    bzone,    ROT0, "Atari", "Battl
 GAMEX(1980, bzonec,   bzone, bzone,    bzone,    bzone,    ROT0, "Atari", "Battle Zone (cocktail)", GAME_NO_COCKTAIL )
 GAME( 1980, bradley,  0,     bradley,  bradley,  bradley,  ROT0, "Atari", "Bradley Trainer" )
 GAME( 1980, redbaron, 0,     redbaron, redbaron, redbaron, ROT0, "Atari", "Red Baron" )
+}

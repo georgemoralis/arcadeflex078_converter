@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/atarigen.h"
-#include "foodf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class foodf
+{
+	
 
 static UINT8 playfield_flip;
 
@@ -136,4 +140,5 @@ VIDEO_UPDATE( foodf )
 		drawgfx(bitmap, Machine->gfx[1], pict, color, hflip, vflip,
 				xpos - 256, ypos, cliprect, TRANSPARENCY_PEN, 0);
 	}
+}
 }

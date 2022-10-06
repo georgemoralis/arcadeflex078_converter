@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/tmp68301.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class tmp68301
+{
+	
 data16_t *tmp68301_regs;
 
 static UINT8 tmp68301_IE[3];		// 3 External Interrupt Lines
@@ -178,3 +184,4 @@ void tmp68301_external_interrupt_0()	{ tmp68301_IE[0] = 1;	update_irq_state(); }
 void tmp68301_external_interrupt_1()	{ tmp68301_IE[1] = 1;	update_irq_state(); }
 void tmp68301_external_interrupt_2()	{ tmp68301_IE[2] = 1;	update_irq_state(); }
 
+}

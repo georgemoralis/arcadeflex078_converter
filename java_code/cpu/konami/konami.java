@@ -34,13 +34,15 @@
 
 *****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "konami.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.konami;
 
+public class konami
+{
+	
 #define VERBOSE 0
 
 #if VERBOSE
@@ -663,10 +665,8 @@ unsigned konami_dasm(char *buffer, unsigned pc)
 }
 
 /* includes the static function prototypes and the master opcode table */
-#include "konamtbl.c"
 
 /* includes the actual opcode implementations */
-#include "konamops.c"
 
 /* execute instructions on this CPU until icount expires */
 int konami_execute(int cycles)
@@ -702,3 +702,4 @@ int konami_execute(int cycles)
 	return cycles - konami_ICount;
 }
 
+}

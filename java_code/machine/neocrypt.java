@@ -56,9 +56,15 @@ analyzed, quickly leading to the algorithm.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "neogeo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class neocrypt
+{
+	
 
 const unsigned char *type0_t03;
 const unsigned char *type0_t12;
@@ -573,4 +579,5 @@ void kof2000_neogeo_gfx_decrypt(int extra_xor)
 	neogeo_gfx_decrypt(extra_xor);
 
 	/* here I should also decrypt the sound ROM */
+}
 }

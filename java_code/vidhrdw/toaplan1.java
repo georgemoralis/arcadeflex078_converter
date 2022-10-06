@@ -124,14 +124,15 @@ Abnormalities:
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "state.h"
-#include "toaplan1.h"
-#include "tilemap.h"
-#include "palette.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class toaplan1
+{
+	
 
 #define TOAPLAN1_TILEVRAM_SIZE       0x4000	/* 4 tile layers each this RAM size */
 #define TOAPLAN1_SPRITERAM_SIZE      0x800	/* sprite ram */
@@ -1262,4 +1263,5 @@ VIDEO_EOF( samesame )
 	buffer_spriteram16_w(0, 0, 0);
 	memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 	cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);	/* Frame done */
+}
 }

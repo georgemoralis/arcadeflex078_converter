@@ -14,9 +14,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class segasyse
+{
+	
 /*-- Variables --*/
 
 #define CHIPS 2							/* There are 2 VDP Chips */
@@ -611,4 +617,5 @@ static void segae_draw8pixsprite(UINT8 *dest, UINT8 chip, UINT16 tile, UINT8 lin
 	pix = ((pix8 >> 1) & 0x01) | ((pix8 >> 8) & 0x02) | ((pix8 >> 15) & 0x04) | ((pix8 >> 22) & 0x08) ; if (pix) dest[6] = pix+16+32*chip;
 	pix = ((pix8 >> 0) & 0x01) | ((pix8 >> 7) & 0x02) | ((pix8 >> 14) & 0x04) | ((pix8 >> 21) & 0x08) ; if (pix) dest[7] = pix+16+32*chip;
 
+}
 }

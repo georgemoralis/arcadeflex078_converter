@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "missile.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class missile
+{
+	
 unsigned char *missile_videoram;
 
 
@@ -162,4 +167,5 @@ VIDEO_UPDATE( missile )
 			missile_blit_w (offs);
 	}
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

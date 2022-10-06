@@ -37,14 +37,15 @@
  *
  */
 
-#include "driver.h"
-#include "state.h"
-#include "artwork.h"
-#include "cpu/m68000/m68000.h"
-#include "machine/idectrl.h"
-#include "sound/k054539.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class djmain
+{
+	
 
 extern data32_t *djmain_obj_ram;
 
@@ -1345,3 +1346,4 @@ GAME( 1999, bm4thmix, 0,        djmain,   bm4thmix,  bm4thmix,  ROT0, "Konami", 
 GAME( 2000, hmcompm2, 0,        djmain,   hmcompm2,  hmcompm2,  ROT0, "Konami", "hiphopmania complete MIX 2 (ver UA-A)" )
 GAME( 2000, bmdct,    0,        djmain,   bmdct,     bmdct,     ROT0, "Konami", "beatmania f. Dreams Come True (ver JA-A)" )
 GAME( 2000, bmcorerm, 0,        djmain,   beatmania, bmcorerm,  ROT0, "Konami", "beatmania CORE REMIX (ver JA-A)" )
+}

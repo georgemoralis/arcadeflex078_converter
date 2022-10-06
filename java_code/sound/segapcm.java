@@ -2,8 +2,15 @@
 /*    SEGA 16ch 8bit PCM                                 */
 /*********************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class segapcm
+{
+	
 struct segapcm
 {
 	UINT8  *ram;
@@ -117,4 +124,5 @@ WRITE_HANDLER( SegaPCM_w )
 READ_HANDLER( SegaPCM_r )
 {
 	return spcm.ram[offset & 0x07ff];
+}
 }

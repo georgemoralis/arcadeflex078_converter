@@ -2,11 +2,15 @@
 	Interface routine for 68kem <-> Mame
 */
 
-#include "driver.h"
-#include "mamedbg.h"
-#include "m68000.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class asmintf
+{
+	
 struct m68k_memory_interface a68k_memory_intf;
 
 // If we are only using assembler cores, we need to define these
@@ -1225,3 +1229,4 @@ unsigned m68ec020_dasm(char *buffer, unsigned pc)
 #endif
 
 #endif // A68K2
+}

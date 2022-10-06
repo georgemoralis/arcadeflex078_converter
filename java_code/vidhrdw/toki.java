@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class toki
+{
+	
 static struct tilemap *background_layer,*foreground_layer,*text_layer;
 
 data16_t *toki_background1_videoram16;
@@ -356,4 +362,5 @@ VIDEO_UPDATE( tokib )
 
 	tokib_draw_sprites (bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,text_layer,0,0);
+}
 }

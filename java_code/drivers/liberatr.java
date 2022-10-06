@@ -133,10 +133,15 @@
 
 ******************************************************************************************/
 
-#include "driver.h"
-#include "machine/atari_vg.h"
-#include "liberatr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class liberatr
+{
+	
 
 static UINT8 *liberatr_ctrld;
 
@@ -509,3 +514,4 @@ ROM_END
 GAMEX( 1982, liberatr, 0,        liberatr, liberatr, 0, ROT0, "Atari", "Liberator (set 1)", GAME_NO_COCKTAIL )
 GAMEX( 1982, liberat2, liberatr, liberat2, liberatr, 0, ROT0, "Atari", "Liberator (set 2)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 
+}

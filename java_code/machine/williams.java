@@ -7,15 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/williams.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
-#include "6821pia.h"
-#include "machine/ticket.h"
-#include "williams.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class williams
+{
+	
 
 /* banking addresses set by the drivers */
 UINT8 *williams_bank_base;
@@ -954,4 +954,5 @@ static WRITE_HANDLER( joust2_snd_cmd_w )
 	joust2_current_sound_data = (joust2_current_sound_data & ~0xff) | (data & 0xff);
 	williams_cvsd_data_w(joust2_current_sound_data);
 	timer_set(TIME_NOW, joust2_current_sound_data, joust2_deferred_snd_cmd_w);
+}
 }

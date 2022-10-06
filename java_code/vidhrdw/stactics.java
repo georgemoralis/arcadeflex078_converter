@@ -58,9 +58,15 @@ bottom line of the screen
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stactics
+{
+	
 /* These are defined in machine/stactics.c */
 extern int stactics_vert_pos;
 extern int stactics_horiz_pos;
@@ -890,4 +896,5 @@ VIDEO_UPDATE( stactics )
         dirty_chardata_f[i] &= 0x01;
     }
 
+}
 }

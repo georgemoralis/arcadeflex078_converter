@@ -60,11 +60,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/segacrpt.h"
-#include "pengo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pengo
+{
+	
 
 
 /*************************************
@@ -560,3 +564,4 @@ GAME( 1982, pengo2u, pengo, pengo, pengo, 0,     ROT90, "Sega", "Pengo (set 2 no
 GAME( 1982, pengo3u, pengo, pengo, pengo, 0,     ROT90, "Sega", "Pengo (set 3 not encrypted)" )
 GAME( 1982, pengob,  pengo, pengo, pengo, penta, ROT90, "bootleg", "Pengo (bootleg)" )
 GAME( 1982, penta,   pengo, pengo, pengo, penta, ROT90, "bootleg", "Penta" )
+}

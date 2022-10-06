@@ -25,11 +25,15 @@
 /* ================================ INCLUDES ============================== */
 /* ======================================================================== */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "m68k.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68kdasm
+{
+	
 #ifndef DECL_SPEC
 #define DECL_SPEC
 #endif
@@ -3467,3 +3471,4 @@ unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cp
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */
+}

@@ -683,14 +683,15 @@ wrong.)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "machine/eeprom.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taito_z
+{
+	
 VIDEO_START( taitoz );
 VIDEO_START( spacegun );
 
@@ -4161,3 +4162,4 @@ GAMEX( 1990, aquajckj, aquajack, aquajack, aquajckj, taitoz,   ROT0,            
 GAME ( 1990, spacegun, 0,        spacegun, spacegun, bshark,   ORIENTATION_FLIP_X, "Taito Corporation Japan", "Space Gun (World)" )
 GAMEX( 1991, dblaxle,  0,        dblaxle,  dblaxle,  taitoz,   ROT0,               "Taito America Corporation", "Double Axle (US)", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1991, pwheelsj, dblaxle,  dblaxle,  pwheelsj, taitoz,   ROT0,               "Taito Corporation", "Power Wheels (Japan)", GAME_IMPERFECT_GRAPHICS )
+}

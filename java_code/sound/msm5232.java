@@ -1,12 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "state.h"
+public class msm5232
+{
+	
 
-#include "msm5232.h"
 
 /*
 	OKI MSM5232RS
@@ -794,4 +795,5 @@ WRITE_HANDLER ( MSM5232_1_w )
 {
 	stream_update (stream[1], 0);
 	msm5232_write(1, offset, data);
+}
 }

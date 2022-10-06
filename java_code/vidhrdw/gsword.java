@@ -5,9 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gsword
+{
+	
 size_t gsword_spritexy_size;
 
 UINT8 *gsword_scrolly_ram;
@@ -234,4 +240,5 @@ VIDEO_UPDATE( gsword )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	gsword_draw_sprites(bitmap);
+}
 }

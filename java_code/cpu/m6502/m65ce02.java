@@ -37,15 +37,15 @@
 
 */
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m65ce02.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
-#include "ops02.h"
-#include "opsc02.h"
-#include "opsce02.h"
+public class m65ce02
+{
+	
 
 #define VERBOSE 0
 
@@ -113,7 +113,6 @@ static m65ce02_Regs m65ce02;
  * include the opcode macros, functions and tables
  ***************************************************************/
 
-#include "t65ce02.c"
 
 void m65ce02_reset (void *param)
 {
@@ -421,3 +420,4 @@ unsigned int m65ce02_dasm(char *buffer, unsigned pc)
 
 
 
+}

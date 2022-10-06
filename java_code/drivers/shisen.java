@@ -5,10 +5,15 @@ Shisen
 driver by Nicola Salmoria
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/m72.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shisen
+{
+	
 extern WRITE_HANDLER( sichuan2_videoram_w );
 extern WRITE_HANDLER( sichuan2_bankswitch_w );
 extern WRITE_HANDLER( sichuan2_paletteram_w );
@@ -417,3 +422,4 @@ GAME( 1989, sichuan2, 0,        shisen, shisen, 0, ROT0, "Tamtex", "Sichuan II (
 GAME( 1989, sichuana, sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Sichuan II (hack?) (set 2)" )
 GAME( 1989, shisen,   sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Shisensho - Joshiryo-Hen (Japan)" )
 GAME( 1989, matchit,  sichuan2, shisen, shisen, 0, ROT0, "Tamtex", "Match It" )
+}

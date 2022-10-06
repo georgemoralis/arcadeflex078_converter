@@ -45,9 +45,15 @@ Credits:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "appoooh.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class appoooh
+{
+	
 static unsigned char *adpcmptr = 0;
 static int appoooh_adpcm_data;
 
@@ -301,3 +307,4 @@ ROM_END
 
 
 GAME( 1984, appoooh, 0, appoooh, appoooh, 0, ROT0, "[Sanritsu] Sega", "Appoooh" )
+}

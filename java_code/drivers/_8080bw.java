@@ -63,11 +63,15 @@
 /*                Stranger, board has Stranger 2 written on it              */
 /****************************************************************************/
 
-#include "driver.h"
-#include "8080bw.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class _8080bw
+{
+	
 extern struct Samplesinterface circus_samples_interface;
 
 
@@ -4349,3 +4353,4 @@ ROM_END
 	  GAME( 1979, solfight, ozmawars, invaders, ozmawars, 8080bw,   ROT270, "bootleg", "Solar Fight" )
 	  GAME( 1979, spaceph,  ozmawars, invaders, spaceph,  8080bw,   ROT270, "Zilec Games", "Space Phantoms" )
 	  GAMEX(1979, yosakdon, 0,        yosakdon, lrescue,  8080bw,   ROT270, "bootleg", "Yosaku To Donbee (bootleg)", GAME_NO_SOUND )
+}

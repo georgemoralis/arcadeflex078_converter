@@ -6,28 +6,24 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class wind3dfx
+{
+	
 #ifdef __GNUC__
  #define NONAMELESSUNION
 #endif
-#include <ddraw.h>
-#include <d3d.h>
 
 // standard C headers
-#include <math.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "video.h"
-#include "blit.h"
-#include "rc.h"
-#include "wind3d.h"
-#include "wind3dfx.h"
 
 // RGB effects pattern data
-#include "pattern.h"
 
 
 
@@ -954,4 +950,5 @@ static void win_ddrawsurf_plot_pixel(const LPDDSURFACEDESC2 surface_desc, int x,
 			break;
 		}
 	}
+}
 }

@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/ticket.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class capbowl
+{
+	
 static int currentaddress = 0;
 static int GRHighByte = 0;
 static int GRMidByte  = 0;
@@ -101,4 +107,5 @@ READ_HANDLER( bowlrama_turbo_r )
 	}
 
 	return ret;
+}
 }

@@ -116,10 +116,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "atarisy1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atarisy1
+{
+	
 
 
 /*************************************
@@ -2237,3 +2242,4 @@ GAME( 1987, roadbls1, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games
 GAME( 1987, roadblsc, roadblst, atarisy1, roadblst, roadb110, ROT0, "Atari Games", "Road Blasters (cockpit, rev 2)" )
 GAMEX(1987, roadblcg, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (cockpit, German, rev 1)", GAME_IMPERFECT_GRAPHICS )
 GAMEX(1987, roadblc1, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (cockpit, rev 1)", GAME_IMPERFECT_GRAPHICS )
+}

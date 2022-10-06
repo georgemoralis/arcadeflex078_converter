@@ -7,11 +7,15 @@ Preliminary driver by:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gbusters
+{
+	
 /* prototypes */
 static MACHINE_INIT( gbusters );
 static void gbusters_banking( int lines );
@@ -430,3 +434,4 @@ static DRIVER_INIT( gbusters )
 
 GAME( 1988, gbusters, 0,        gbusters, gbusters, gbusters, ROT90, "Konami", "Gang Busters" )
 GAME( 1988, crazycop, gbusters, gbusters, gbusters, gbusters, ROT90, "Konami", "Crazy Cop (Japan)" )
+}

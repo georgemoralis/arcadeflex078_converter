@@ -68,10 +68,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mario
+{
+	
 static int p[8] = { 0,0xf0,0,0,0,0,0,0 };
 static int t[2] = { 0,0 };
 
@@ -550,3 +555,4 @@ ROM_END
 GAME( 1983, mario,   0,     mario, mario,   0, ROT180, "Nintendo of America", "Mario Bros. (US)" )
 GAME( 1983, mariojp, mario, mario, mariojp, 0, ROT180, "Nintendo", "Mario Bros. (Japan)" )
 GAME( 1983, masao,   mario, masao, mario,   0, ROT180, "bootleg", "Masao" )
+}

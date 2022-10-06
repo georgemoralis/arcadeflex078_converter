@@ -1,7 +1,14 @@
 /* Flower Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class flower
+{
+	
 static struct tilemap *flower_bg0_tilemap, *flower_bg1_tilemap;
 extern data8_t *flower_sharedram;
 
@@ -155,4 +162,5 @@ WRITE_HANDLER( flower_sharedram_w )
 	{
 		tilemap_mark_tile_dirty(flower_bg1_tilemap,offset&0x1ff);
 	}
+}
 }

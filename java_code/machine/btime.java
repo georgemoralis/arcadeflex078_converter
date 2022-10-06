@@ -1,6 +1,13 @@
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class btime
+{
+	
 
 #define BASE  0xb000
 
@@ -90,4 +97,5 @@ WRITE_HANDLER( mmonkey_protection_w )
 	else if (offset >= 0x0f00)                      RAM[BASE+offset] = data;   /* decrypt table */
 	else if (offset >= 0x0d00 && offset <= 0x0d05)  RAM[BASE+offset] = data;   /* source table */
 	else logerror("Unknown protection write=%02X.  PC=%04X  Offset=%04X\n", data, activecpu_get_pc(), offset);
+}
 }

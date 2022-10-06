@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class aeroboto
+{
+	
 
 // how the starfield ROM is interpreted: 0=256x256x1 linear bitmap, 1=8x8x1x1024 tilemap
 #define STARS_LAYOUT 1
@@ -215,4 +221,5 @@ VIDEO_UPDATE( aeroboto )
 	// the status display behaves more closely to a 40-line splitscreen than an overlay
 	tilemap_set_scrolly(bg_tilemap,0,0);
 	tilemap_draw(bitmap,&splitrect1,bg_tilemap,0,0);
+}
 }

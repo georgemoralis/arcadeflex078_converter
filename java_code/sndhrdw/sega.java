@@ -4,9 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "sega.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class sega
+{
+	
 /* History:
 
 
@@ -590,3 +596,4 @@ WRITE_HANDLER( spacfury2_sh_w )
 
 }
 
+}

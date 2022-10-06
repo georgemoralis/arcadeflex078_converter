@@ -33,10 +33,15 @@ Registers per channel:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "gaelco.h"
-#include "wavwrite.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class gaelco
+{
+	
 
 //#define LOG_SOUND 1
 //#define LOG_READ_WRITES 1
@@ -308,4 +313,5 @@ void gaelcosnd_sh_stop(void)
 #ifdef LOG_WAVE
 	wav_close(wavraw);
 #endif
+}
 }

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class circusc
+{
+	
 
 
 unsigned char *circusc_videoram,*circusc_colorram;
@@ -207,4 +213,5 @@ VIDEO_UPDATE( circusc )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,1,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
+}
 }

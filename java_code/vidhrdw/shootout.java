@@ -3,9 +3,15 @@
 	prom GB09.K6 may be related to background tile-sprite priority
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shootout
+{
+	
 static struct tilemap *background, *foreground;
 extern unsigned char *shootout_textram;
 
@@ -179,4 +185,5 @@ VIDEO_UPDATE( shootouj )
 	tilemap_draw(bitmap,cliprect,background,0,0);
 	tilemap_draw(bitmap,cliprect,foreground,0,1);
 	draw_sprites(bitmap,cliprect,2/*bank bits*/);
+}
 }

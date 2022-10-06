@@ -28,15 +28,16 @@
  *																			*
  \**************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32025;
 
+public class _32025dsm
+{
+	
 #ifdef MAME_DEBUG					/* Compile interface to MAME */
-#include "memory.h"
-#include "tms32025.h"
-#include "mamedbg.h"
 extern offs_t TMS32025_DATA_BANK[0x10];
 extern offs_t TMS32025_PRGM_BANK[0x10];
 //#define READOP16(A)  (cpu_readop16((A)     | (TMS32025_PGM_OFFSET << 1)))
@@ -517,4 +518,5 @@ unsigned Dasm32025(char *str, unsigned pc)
 		}
 	}
 	return cnt;
+}
 }

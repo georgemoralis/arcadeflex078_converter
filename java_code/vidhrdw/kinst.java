@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "kinst.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kinst
+{
+	
 
 static UINT16 *vram_buffer;
 
@@ -97,4 +103,5 @@ VIDEO_UPDATE( kinst )
 	/* loop over rows and copy to the destination */
 	for (y = cliprect->min_y; y <= cliprect->max_y; y++)
 		memcpy(bitmap->line[y], &vram_buffer[y * 320], 320 * sizeof(UINT16));
+}
 }

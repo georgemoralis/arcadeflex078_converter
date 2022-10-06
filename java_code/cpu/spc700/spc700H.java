@@ -132,10 +132,15 @@ void spc700_branching(unsigned int new_pc);
 /* ================================= MAME ================================= */
 /* ======================================================================== */
 
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.spc700;
 
+public class spc700H
+{
+	
 #define spc700_read_8(addr) cpu_readmem16(addr)
 #define spc700_write_8(addr,data) cpu_writemem16(addr,data)
 
@@ -154,3 +159,4 @@ void spc700_branching(unsigned int new_pc);
 
 #endif /* SPC700__HEADER */
 
+}

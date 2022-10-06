@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "fm.h"
-#include "ym2151.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2151intf
+{
+	
 
 /* for stream system */
 static int stream[MAX_2151];
@@ -391,3 +396,4 @@ WRITE16_HANDLER( YM2151_data_port_2_lsb_w )
 }
 
 
+}

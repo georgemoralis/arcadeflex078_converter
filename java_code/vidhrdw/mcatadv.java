@@ -11,9 +11,15 @@ There is an area of vid ram for linescroll, nost tests it but doesn't appear to 
 ToDo: Fix Sprites for Cocktail
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mcatadv
+{
+	
 /* Defined in driver */
 extern data16_t *mcatadv_videoram1, *mcatadv_videoram2;
 extern data16_t *mcatadv_scroll, *mcatadv_scroll2;
@@ -250,4 +256,5 @@ VIDEO_EOF( mcatadv )
 {
 	memcpy(spriteram_old,spriteram16,spriteram_size);
 	memcpy(vidregs_old,mcatadv_vidregs,0xf);
+}
 }

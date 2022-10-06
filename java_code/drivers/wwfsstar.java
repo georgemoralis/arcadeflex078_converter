@@ -58,11 +58,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wwfsstar
+{
+	
 WRITE16_HANDLER ( wwfsstar_scrollwrite );
 
 /* in (vidhrdw/wwfsstar.c) */
@@ -454,3 +458,4 @@ ROM_END
 
 
 GAME( 1989, wwfsstar, 0, wwfsstar, wwfsstar,  0, ROT0, "Technos Japan", "WWF Superstars (US)" )
+}

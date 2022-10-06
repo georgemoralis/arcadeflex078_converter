@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bladestl
+{
+	
 static int layer_colorbase[2];
 extern int bladestl_spritebank;
 
@@ -77,4 +82,5 @@ VIDEO_UPDATE( bladestl )
 	K007342_tilemap_draw( bitmap, cliprect, 1, 1 | TILEMAP_IGNORE_TRANSPARENCY ,0);
 	K007342_tilemap_draw( bitmap, cliprect, 0, 0 ,0);
 	K007342_tilemap_draw( bitmap, cliprect, 0, 1 ,0);
+}
 }

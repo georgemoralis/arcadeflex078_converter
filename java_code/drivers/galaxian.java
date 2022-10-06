@@ -116,11 +116,15 @@ TO DO :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "cpu/s2650/s2650.h"
-#include "galaxian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class galaxian
+{
+	
 
 DRIVER_INIT( cclimbrj );
 
@@ -5319,3 +5323,4 @@ GAME( 1983, ozon1,    0,		ozon1,    ozon1,	0,		  ROT90,  "Proma", "Ozon I" )
 GAME( 1983, ladybugg, ladybug,  batman2,  ladybugg, ladybugg, ROT270, "bootleg", "Ladybug (bootleg on Galaxian hardware)" )
 GAME( 1980, vpool,    hustler,  mooncrst, vpool,    0,        ROT90,  "bootleg", "Video Pool (bootleg on Moon Cresta hardware)" )
 GAMEX(1984, drivfrcg, drivfrcp, drivfrcg, drivfrcg, 0,		  ROT90,  "Shinkai Inc. (Magic Eletronics USA licence)", "Driving Force (Galaxian conversion)", GAME_WRONG_COLORS )
+}

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class zodiack
+{
+	
 UINT8 *zodiack_videoram2;
 UINT8 *zodiack_attributesram;
 UINT8 *zodiack_bulletsram;
@@ -231,4 +237,5 @@ VIDEO_UPDATE( zodiack )
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
 	zodiack_draw_bullets(bitmap);
 	zodiack_draw_sprites(bitmap);
+}
 }

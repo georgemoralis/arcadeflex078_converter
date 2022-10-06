@@ -33,8 +33,15 @@ added together (=873b), subtracted [f840] (=87d9)
 1400	error text written ($34 words)
 
 ***************************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class spdbuggy
+{
+	
 #if 0
 static data8_t *sharedram;
 #endif
@@ -524,7 +531,6 @@ GAMEX( 1986, spdbuggy, 0, spdbuggy, spdbuggy, 0, ROT0, "Tatsumi", "Speed Buggy",
 				    driver by Luca Elia (eliavit@unina.it)
 
 **************************************************************************/
-#include "vidhrdw/generic.h"
 
 /* Variables only used here: */
 static struct tilemap *bg_tilemap, *fg_tilemap;
@@ -710,4 +716,5 @@ VIDEO_UPDATE( spdbuggy )
 
 	/* Draw the foreground (text) */
 	if (layers_ctrl & 4)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
+}
 }

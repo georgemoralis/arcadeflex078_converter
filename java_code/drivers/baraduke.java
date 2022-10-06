@@ -11,10 +11,15 @@ TO DO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6800/m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class baraduke
+{
+	
 static unsigned char *sharedram;
 extern unsigned char *baraduke_textram, *spriteram, *baraduke_videoram;
 
@@ -620,3 +625,4 @@ GAME( 1985, baraduke, 0,        baraduke, baraduke, 0,        ROT0, "Namco", "Ba
 GAME( 1985, baraduka, baraduke, baraduke, baraduke, 0,        ROT0, "Namco", "Baraduke (set 2)" )
 GAME( 1985, metrocrs, 0,        metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 1)" )
 GAME( 1985, metrocra, metrocrs, metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 2)" )
+}

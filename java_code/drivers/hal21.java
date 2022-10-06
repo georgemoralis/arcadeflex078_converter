@@ -52,11 +52,15 @@ AT08XX03:
  - verify color effects in both games
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hal21
+{
+	
 static UINT8 *shared_ram, *shared_auxram;
 static UINT8 *hal21_vreg, *hal21_sndfifo;
 
@@ -958,3 +962,4 @@ ROM_END
 GAMEX( 1985, aso,    0,     aso,   aso,   aso,   ROT270, "SNK", "ASO - Armored Scrum Object", GAME_NO_COCKTAIL )
 GAMEX( 1985, hal21,  0,     hal21, hal21, hal21, ROT270, "SNK", "HAL21", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
 GAMEX( 1985, hal21j, hal21, hal21, hal21, hal21, ROT270, "SNK", "HAL21 (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+}

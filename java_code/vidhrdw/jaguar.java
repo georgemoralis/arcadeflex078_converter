@@ -134,14 +134,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "machine/atarigen.h"
-#include "cpu/mips/r3000.h"
-#include "cpu/m68000/m68000.h"
-#include "includes/jaguar.h"
-#include "jagblit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jaguar
+{
+	
 
 #define LOG_BLITS			0
 #define LOG_BAD_BLITS		0
@@ -805,7 +806,6 @@ VIDEO_UPDATE( cojag )
  *************************************/
 
 #define INCLUDE_OBJECT_PROCESSOR
-#include "jagobj.c"
 
 
 
@@ -820,7 +820,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		command
 #define A1FIXED		a1flags
 #define A2FIXED		a2flags
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -831,7 +830,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x09800001
 #define A1FIXED		0x010020
 #define A2FIXED		0x010020
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -841,7 +839,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x09800009
 #define A1FIXED		0x000020
 #define A2FIXED		0x000020
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -851,7 +848,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x01800009
 #define A1FIXED		0x000028
 #define A2FIXED		0x000028
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -861,7 +857,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x01800001
 #define A1FIXED		0x000018
 #define A2FIXED		0x000018
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -871,7 +866,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x01c00001
 #define A1FIXED		0x000018
 #define A2FIXED		0x000018
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -883,7 +877,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x00010000
 #define A1FIXED		a1flags
 #define A2FIXED		a2flags
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -893,7 +886,6 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		0x01800001
 #define A1FIXED		a1flags
 #define A2FIXED		a2flags
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
@@ -903,10 +895,10 @@ VIDEO_UPDATE( cojag )
 #define COMMAND		((command & 0xf0000f00) | 0x01800001)
 #define A1FIXED		a1flags
 #define A2FIXED		a2flags
-#include "jagblit.c"
 #undef A2FIXED
 #undef A1FIXED
 #undef COMMAND
 #undef FUNCNAME
 
 #endif /* MESS */
+}

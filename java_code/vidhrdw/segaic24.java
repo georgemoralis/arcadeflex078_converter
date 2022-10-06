@@ -22,14 +22,15 @@ System 24      68000x2  315-5292   315-5293  315-5294  315-5242        ym2151 da
    just made a copy & renamed them for now to avoid any conflicts
 */
 
-#include "driver.h"
-#include "state.h"
-#include "generic.h"
-#include "drawgfx.h"
-#include "osdepend.h"
-#include "segaic24.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
-#include <math.h>
+public class segaic24
+{
+	
 
 static void set_color(int color, unsigned char r, unsigned char g, unsigned char b, int highlight)
 {
@@ -906,3 +907,4 @@ int sys24_mixer_get_reg(int reg)
 	return sys24_mixer_reg[reg];
 }
 
+}

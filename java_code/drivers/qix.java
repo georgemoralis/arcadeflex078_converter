@@ -191,11 +191,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "qix.h"
-#include "machine/6821pia.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class qix
+{
+	
 
 /* Constants */
 #define MAIN_CLOCK_OSC		20000000	/* 20 MHz */
@@ -1195,3 +1199,4 @@ GAME( 1982, zookeep3, zookeep,  zookeep, zookeep,  zookeep,  ROT0,   "Taito Amer
 GAME( 1982, slither,  0,        slither, slither,  slither,  ROT270, "Century II",                "Slither (set 1)" )
 GAME( 1982, slithera, slither,  slither, slither,  slither,  ROT270, "Century II",                "Slither (set 2)" )
 GAME( 1984, complexx, 0,        qix,     complexx, 0,        ROT270, "Taito America Corporation", "Complex X" )
+}

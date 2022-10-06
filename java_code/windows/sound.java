@@ -6,21 +6,21 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <mmsystem.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class sound
+{
+	
 // undef WINNT for dsound.h to prevent duplicate definition
 #undef WINNT
 #define LPCWAVEFORMATEX _LPCWAVEFORMATEX
-#include <dsound.h>
 #undef LPWAVEFORMATEX
 
 // MAME headers
-#include "driver.h"
-#include "osdepend.h"
-#include "window.h"
-#include "video.h"
-#include "rc.h"
 
 
 
@@ -646,4 +646,5 @@ static void dsound_destroy_buffers(void)
 	if (stream_buffer)
 		IDirectSoundBuffer_Release(stream_buffer);
 	stream_buffer = NULL;
+}
 }

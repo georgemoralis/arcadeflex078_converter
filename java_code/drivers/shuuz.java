@@ -17,10 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "shuuz.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shuuz
+{
+	
 
 
 /*************************************
@@ -397,3 +402,4 @@ static DRIVER_INIT( shuuz )
 
 GAME( 1990, shuuz,  0,     shuuz, shuuz,  shuuz, ROT0, "Atari Games", "Shuuz (version 8.0)" )
 GAME( 1990, shuuz2, shuuz, shuuz, shuuz2, shuuz, ROT0, "Atari Games", "Shuuz (version 7.1)" )
+}

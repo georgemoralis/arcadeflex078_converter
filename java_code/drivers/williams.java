@@ -474,12 +474,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/6821pia.h"
-#include "sndhrdw/williams.h"
-#include "vidhrdw/generic.h"
-#include "williams.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class williams
+{
+	
 
 /**** configuration macros ****/
 
@@ -2560,3 +2563,4 @@ GAMEX(1984, inferno,  0,        williams2,inferno,  inferno,  ROT0,   "Williams"
 GAME( 1986, joust2,   0,        joust2,   joust2,   joust2,   ROT270, "Williams", "Joust 2 - Survival of the Fittest (set 1)" )
 
 GAME( 1987, lottofun, 0,        williams, lottofun, lottofun, ROT0,   "H.A.R. Management", "Lotto Fun" )
+}

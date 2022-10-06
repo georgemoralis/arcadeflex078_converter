@@ -60,10 +60,15 @@ sign is intact, however Credit is spelt incorrectly.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class exprraid
+{
+	
 
 extern WRITE_HANDLER( exprraid_videoram_w );
 extern WRITE_HANDLER( exprraid_colorram_w );
@@ -591,3 +596,4 @@ GAME( 1986, exprraid, 0,        exprraid, exprraid, exprraid, ROT0, "Data East U
 GAME( 1986, wexpress, exprraid, exprraid, exprraid, wexpress, ROT0, "Data East Corporation", "Western Express (World?)" )
 GAME( 1986, wexpresb, exprraid, exprraid, exprraid, wexpresb, ROT0, "bootleg", "Western Express (bootleg set 1)" )
 GAME( 1986, wexpresc, exprraid, exprraid, exprraid, wexpresc, ROT0, "bootleg", "Western Express (bootleg set 2)" )
+}

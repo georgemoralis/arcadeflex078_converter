@@ -13,8 +13,15 @@
 
 *******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mouser
+{
+	
 PALETTE_INIT( mouser )
 {
 	int i;
@@ -186,4 +193,5 @@ VIDEO_UPDATE( mouser )
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 
+}
 }

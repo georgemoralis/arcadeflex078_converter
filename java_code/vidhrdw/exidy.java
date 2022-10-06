@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "exidy.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exidy
+{
+	
 UINT8 *exidy_characterram;
 UINT8 *exidy_color_latch;
 UINT8 *exidy_sprite_no;
@@ -487,4 +492,5 @@ VIDEO_UPDATE( exidy )
 
 	/* indicate that we already updated the background */
 	update_complete = 1;
+}
 }

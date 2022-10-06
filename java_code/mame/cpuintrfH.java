@@ -9,10 +9,15 @@
 #ifndef CPUINTRF_H
 #define CPUINTRF_H
 
-#include "osd_cpu.h"
-#include "memory.h"
-#include "timer.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuintrfH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -829,3 +834,4 @@ INLINE int cpu_gettotalcpu(void)
 
 #endif	/* CPUINTRF_H */
 
+}

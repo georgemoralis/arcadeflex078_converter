@@ -8,11 +8,15 @@ driver by Nicola Salmoria
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class surpratk
+{
+	
 /* prototypes */
 static MACHINE_INIT( surpratk );
 static void surpratk_banking( int lines );
@@ -317,3 +321,4 @@ static DRIVER_INIT( surpratk )
 
 
 GAME( 1990, surpratk, 0, surpratk, surpratk, surpratk, ROT0, "Konami", "Surprise Attack (Japan ver. M)" )
+}

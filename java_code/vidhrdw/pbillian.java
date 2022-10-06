@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pbillian
+{
+	
 struct tilemap *pb_tilemap;
 extern data8_t *pb_videoram;
 extern int is_pbillian;
@@ -85,4 +91,5 @@ VIDEO_UPDATE(pbillian)
 	tilemap_draw(bitmap,cliprect,pb_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	if(is_pbillian)usrintf_showmessage	("Power %d%%", ((input_port_3_r(0)&0x3f)*100)/0x3f);
+}
 }

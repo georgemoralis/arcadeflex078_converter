@@ -14,8 +14,15 @@
 #define INLINE static inline
 #endif
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8039;
 
+public class i8039H
+{
+	
 
 /**************************************************************************
 	Internal Clock divisor
@@ -178,7 +185,6 @@ extern const char *n7751_info(void *context, int regnum);
 extern unsigned n7751_dasm(char *buffer, unsigned pc);
 #endif
 
-#include "memory.h"
 
 /*
  *	 Input a UINT8 from given I/O port
@@ -224,3 +230,4 @@ int 	Dasm8039(char *dst, unsigned pc);
 #endif
 
 #endif  /* _I8039_H */
+}

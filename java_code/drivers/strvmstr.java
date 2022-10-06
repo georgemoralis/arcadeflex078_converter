@@ -18,9 +18,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class strvmstr
+{
+	
 static int strvmstr_control = 0;
 static UINT8 *bg_videoram, *fg_videoram;
 static struct tilemap *bg_tilemap, *fg_tilemap;
@@ -320,3 +326,4 @@ ROM_START( strvmstr )
 ROM_END
 
 GAMEX( 1986, strvmstr, 0, strvmstr, strvmstr, 0, ROT90, "Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+}

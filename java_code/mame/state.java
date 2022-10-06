@@ -1,12 +1,13 @@
 /* State save/load functions */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdarg.h>
-#include "driver.h"
-#include "zlib.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class state
+{
+	
 /* Save state file format:
  *
  *	0.. 7  'MAMESAVE"
@@ -619,3 +620,4 @@ void state_save_dump_registry(void)
 #endif
 }
 
+}

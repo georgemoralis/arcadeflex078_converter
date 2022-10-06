@@ -10,12 +10,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bishi
+{
+	
 VIDEO_START(bishi);
 VIDEO_UPDATE(bishi);
 
@@ -282,3 +285,4 @@ static DRIVER_INIT( bishi )
 }
 
 GAMEX( 1996, bishi,     0,       bishi,     bishi,     bishi,      ROT0, "Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
+}

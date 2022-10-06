@@ -21,13 +21,15 @@
  **********************************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "state.h"
-#include "adpcm.h"
+public class adpcm
+{
+	
 
 #define MAX_SAMPLE_CHUNK	10000
 
@@ -991,4 +993,5 @@ WRITE16_HANDLER( OKIM6295_data_2_msb_w )
 {
 	if (ACCESSING_MSB)
 		OKIM6295_data_w(2, data >> 8);
+}
 }

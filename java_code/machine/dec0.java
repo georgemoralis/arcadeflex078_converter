@@ -6,10 +6,15 @@ Data East machine functions - Bryan McPhail, mish@tendril.co.uk
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "dec0.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class dec0
+{
+	
 static int GAME,i8751_return,slyspy_state;
 
 /******************************************************************************/
@@ -600,4 +605,5 @@ rom[0xb3e/2] = 0x8008;
 DRIVER_INIT( birdtry )
 {
 	GAME=3;
+}
 }

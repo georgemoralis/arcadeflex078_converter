@@ -6,13 +6,16 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class winalloc
+{
+	
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "video.h"
-#include "blit.h"
 
 
 
@@ -207,3 +210,4 @@ size_t CLIB_DECL _msize(void *memory)
 }
 
 
+}

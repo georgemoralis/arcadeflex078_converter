@@ -149,8 +149,15 @@ there are 9 PALS on the pcb (not dumped)
 
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jchan
+{
+	
 /* vidhrdw */
 
 
@@ -460,3 +467,4 @@ WRITE16_HANDLER( jchan_videoram_w )
 
 
 */
+}

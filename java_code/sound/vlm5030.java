@@ -73,10 +73,15 @@ chirp 12-..: vokume   0   : silent
   [DAC output value(signed 6bit)] = A9 ? A0..8 : -(A0..8)
 
 */
-#include "driver.h"
-#include "state.h"
-#include "vlm5030.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class vlm5030
+{
+	
 /* interpolator per frame   */
 #define FR_SIZE 4
 /* samples per interpolator */
@@ -687,4 +692,5 @@ void VLM5030_sh_update( void )
 /* stop VLM5030 */
 void VLM5030_sh_stop( void )
 {
+}
 }

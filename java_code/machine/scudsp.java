@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "machine/scudsp.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class scudsp
+{
+	
 /*SCU DSP functions */
 /*V0.03*/
 
@@ -1213,3 +1219,4 @@ void dsp_dasm_opcode( UINT32 op, char *buffer )
 	}
 };
 
+}

@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "kaneko16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galpani2
+{
+	
 /*
 304000:0040 0000 0100 0000-0000 0000 0000 0000		(Sprites regs)
 304010:16C0 0200 16C0 0200-16C0 0200 16C0 0200
@@ -215,4 +220,5 @@ if (keyboard_pressed(KEYCODE_Z))
 	}
 
 	if (layers_ctrl & 0x8)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
+}
 }

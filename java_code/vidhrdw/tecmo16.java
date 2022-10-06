@@ -7,8 +7,15 @@
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tecmo16
+{
+	
 
 data16_t *tecmo16_videoram;
 data16_t *tecmo16_colorram;
@@ -259,4 +266,5 @@ VIDEO_UPDATE( tecmo16 )
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

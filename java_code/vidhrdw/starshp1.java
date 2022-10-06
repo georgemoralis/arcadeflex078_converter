@@ -4,9 +4,15 @@ Atari Starship 1 video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
-#include <math.h>
+public class starshp1
+{
+	
 
 extern int starshp1_attract;
 
@@ -450,4 +456,5 @@ VIDEO_EOF( starshp1 )
 	{
 		starshp1_collision_latch |= 8;
 	}
+}
 }

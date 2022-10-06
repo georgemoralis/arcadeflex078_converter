@@ -14,17 +14,16 @@
  *
  ****************************************************************************/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class mamedbg
+{
+	
 #ifdef MAME_DEBUG
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "mamedbg.h"
-#include "window.h"
 
 
 #ifndef INVALID
@@ -521,7 +520,6 @@ rgb_t debugger_palette[] = {
 };
 
 
-#include "dbgfonts/m0813fnt.c"
 
 
 struct GfxElement *build_debugger_font(void)
@@ -5481,3 +5479,4 @@ void MAME_Debug(void)
 
 #endif
 
+}

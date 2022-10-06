@@ -4,8 +4,15 @@
 to be honest i think some of these cause more problems than they're worth ...
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class stvhacks
+{
+	
 extern data32_t *stv_workram_h;
 DRIVER_INIT ( stv );
 
@@ -378,4 +385,5 @@ DRIVER_INIT(bakubaku)
    	install_mem_read32_handler(0, 0x6033660, 0x6033663, bakubaku_hangskip_r ); // it waits for a ram address to chamge what should change it?
 
 	init_ic13();
+}
 }

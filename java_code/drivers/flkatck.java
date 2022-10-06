@@ -10,11 +10,15 @@ TO DO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class flkatck
+{
+	
 /* from vidhrdw/flkatck.c */
 VIDEO_START( flkatck );
 VIDEO_UPDATE( flkatck );
@@ -346,3 +350,4 @@ ROM_END
 GAME( 1987, mx5000,  0, 	 flkatck, flkatck, 0, ROT90, "Konami", "MX5000" )
 GAME( 1987, flkatck, mx5000, flkatck, flkatck, 0, ROT90, "Konami", "Flak Attack (Japan)" )
 
+}

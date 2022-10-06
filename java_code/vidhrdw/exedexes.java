@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exedexes
+{
+	
 UINT8 *exedexes_bg_scroll;
 
 UINT8 *exedexes_nbg_yscroll;
@@ -268,4 +274,5 @@ VIDEO_UPDATE( exedexes )
 VIDEO_EOF( exedexes )
 {
 	buffer_spriteram_w(0,0);
+}
 }

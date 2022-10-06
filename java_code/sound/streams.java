@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class streams
+{
+	
 
 #define BUFFER_LEN 16384
 
@@ -289,4 +295,5 @@ void stream_update(int channel,int min_interval)
 			stream_buffer_pos[channel] += buflen;
 		}
 	}
+}
 }

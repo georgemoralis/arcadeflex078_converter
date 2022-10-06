@@ -7,10 +7,15 @@
 
 ***********************************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "segac2.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class segac2
+{
+	
 /* in vidhrdw/segasyse.c */
 int start_megatech_video_normal(void);
 void update_megatech_video_normal(struct mame_bitmap *bitmap, const struct rectangle *cliprect );
@@ -1665,3 +1670,4 @@ XP = X Position of Sprite
 
 */
 
+}

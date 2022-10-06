@@ -11,14 +11,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "asap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.asap;
 
+public class asap
+{
+	
 
 /*###################################################################################################
 **	CONSTANTS
@@ -1908,3 +1909,4 @@ static void trapf(void)
 }
 
 
+}

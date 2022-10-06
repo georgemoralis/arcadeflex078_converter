@@ -1,8 +1,13 @@
 
-#include "driver.h"
-//#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
-#include "machine/8254pit.h"
+public class _8254pit
+{
+	//
 
 
 
@@ -162,4 +167,5 @@ READ_HANDLER( pit8254_1_counter3_r )
 READ_HANDLER( pit8254_1_control_r )
 {
 	return pit8254_r(1, 3);
+}
 }

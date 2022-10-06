@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galaxian
+{
+	
 static struct rectangle _spritevisiblearea =
 {
 	2*8+1, 32*8-1,
@@ -1929,4 +1936,5 @@ VIDEO_UPDATE( galaxian )
 	{
 		draw_sprites(bitmap, galaxian_spriteram2, galaxian_spriteram2_size);
 	}
+}
 }

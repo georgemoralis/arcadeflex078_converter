@@ -30,9 +30,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class clshroad
+{
+	
 /* Variables only used here: */
 
 static struct tilemap *tilemap_0a, *tilemap_0b, *tilemap_1;
@@ -374,4 +380,5 @@ VIDEO_UPDATE( clshroad )
 	tilemap_draw(bitmap,cliprect,tilemap_0b,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+}
 }

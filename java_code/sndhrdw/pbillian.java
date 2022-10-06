@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class pbillian
+{
+	
 static int channel;
 static signed char *samplebuf;
 
@@ -46,3 +53,4 @@ WRITE_HANDLER(data_41a_w)
 		default: logerror("[41a] W %x at %x\n",data,activecpu_get_previouspc());
 	}
 }	
+}

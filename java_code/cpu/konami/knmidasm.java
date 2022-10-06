@@ -1,12 +1,14 @@
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.konami;
 
+public class knmidasm
+{
+	
 #ifdef MAME_DEBUG
 
-#include <string.h>
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "konami.h"
 
 #ifndef TRUE
 #define TRUE	-1
@@ -1876,3 +1878,4 @@ unsigned Dasmknmi( char *buffer, unsigned pc ) {
 }
 
 #endif
+}

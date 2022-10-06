@@ -24,10 +24,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tagteam
+{
+	
 extern WRITE_HANDLER( tagteam_videoram_w );
 extern WRITE_HANDLER( tagteam_colorram_w );
 extern READ_HANDLER( tagteam_mirrorvideoram_r );
@@ -399,3 +404,4 @@ ROM_END
 
 GAME( 1983, bigprowr, 0,        tagteam, bigprowr, 0, ROT270, "Technos", "The Big Pro Wrestling!" )
 GAME( 1983, tagteam,  bigprowr, tagteam, tagteam,  0, ROT270, "Technos (Data East license)", "Tag Team Wrestling" )
+}

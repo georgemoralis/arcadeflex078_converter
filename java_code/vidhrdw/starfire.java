@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class starfire
+{
+	
 
 /* from the main driver */
 extern UINT8 *starfire_videoram;
@@ -290,3 +296,4 @@ VIDEO_UPDATE( starfire )
 }
 
 
+}

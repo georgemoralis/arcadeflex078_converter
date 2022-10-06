@@ -8,15 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#define exp _exp
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "tms32031.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32031;
+
+public class tms32031
+{
+	#define exp _exp
 
 
 #define LOG_OPCODE_USAGE	(0)
@@ -422,7 +422,6 @@ void tms32031_exit(void)
 **	CORE OPCODES
 **#################################################################################################*/
 
-#include "32031ops.c"
 
 
 
@@ -804,4 +803,5 @@ static UINT32 boot_loader(UINT32 boot_rom_addr)
 
 	/* keep the compiler happy */
 	return 0;
+}
 }

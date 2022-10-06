@@ -12,11 +12,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/8255ppi.h"
-#include "clayshoo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class clayshoo
+{
+	
 
 
 /*************************************
@@ -174,3 +178,4 @@ ROM_END
  *************************************/
 
 GAMEX( 1979, clayshoo, 0, clayshoo, clayshoo, 0, ROT0, "Allied Leisure", "Clay Shoot", GAME_NO_SOUND )
+}

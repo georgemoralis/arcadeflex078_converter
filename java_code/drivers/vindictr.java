@@ -17,11 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "vindictr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vindictr
+{
+	
 
 
 /*************************************
@@ -598,3 +602,4 @@ GAME( 1988, vindict4, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games
 GAME( 1988, vindice3, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 3)" )
 GAME( 1988, vindict2, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 2)" )
 GAME( 1988, vindict1, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 1)" )
+}

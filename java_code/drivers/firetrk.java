@@ -4,9 +4,15 @@ Atari Fire Truck + Super Bug + Monte Carlo driver
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "firetrk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class firetrk
+{
+	
 int firetrk_game;
 
 static int steer_dir[2];
@@ -1791,3 +1797,4 @@ ROM_END
 GAME( 1977, superbug, 0, superbug, superbug, superbug, ROT270, "Atari", "Super Bug" )
 GAME( 1978, firetrk,  0, firetrk,  firetrk,  firetrk,  ROT270, "Atari", "Fire Truck" )
 GAME( 1979, montecar, 0, montecar, montecar, montecar, ROT270, "Atari", "Monte Carlo" )
+}

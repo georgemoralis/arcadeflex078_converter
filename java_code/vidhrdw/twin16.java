@@ -15,9 +15,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class twin16
+{
+	
 extern UINT16 twin16_custom_vidhrdw;
 extern UINT16 *twin16_gfx_rom;
 extern UINT16 *twin16_videoram2;
@@ -539,4 +545,5 @@ VIDEO_UPDATE( twin16 )
 	draw_layer( bitmap,0 );
 	draw_sprites( bitmap );
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
+}
 }

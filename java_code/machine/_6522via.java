@@ -22,9 +22,15 @@
    timer init, reset, read changed
  */
 
-#include "driver.h"
-#include "6522via.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _6522via
+{
+	
 //#define TRACE_VIA
 
 /******************* internal VIA data structure *******************/
@@ -1117,3 +1123,4 @@ READ_HANDLER( via_7_cb2_r) { return via[7].in_cb2; }
 
 
 #undef TRACE_VIA
+}

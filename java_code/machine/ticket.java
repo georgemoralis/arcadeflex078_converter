@@ -11,9 +11,15 @@
 		Add sound, graphical output?
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/ticket.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class ticket
+{
+	
 /*#define DEBUG_TICKET*/
 
 #define MAX_DISPENSERS	2
@@ -186,4 +192,5 @@ static void ticket_dispenser_toggle(int which)
 	{
 		set_led_status(2,0);
 	}
+}
 }

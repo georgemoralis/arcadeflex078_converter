@@ -144,11 +144,15 @@
 #define KEEPHIGHPC		/* Keep or Ignore bits 24-31 */
 #define QUICKZERO		/* selects XOR r,r or MOV r,0 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class make68k
+{
+	
 /* New Disassembler */
 
 char *	codebuf;
@@ -159,7 +163,6 @@ int		DisOp;
 
 #define MEMORY_H	/* so memory.h will not be included... */
 /*
-#include "d68k.c"
 */
 #undef MEMORY_H
 
@@ -8194,4 +8197,5 @@ int main(int argc, char **argv)
 	fclose(fp);
 
 	exit(0);
+}
 }

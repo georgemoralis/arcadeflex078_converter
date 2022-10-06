@@ -11,11 +11,15 @@
 
 */
 
-#include <stdio.h>
-#include "arm.h"
-#include "state.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.arm;
 
+public class arm
+{
+	
 #define READ8(addr)			cpu_read8(addr)
 #define WRITE8(addr,data)	cpu_write8(addr,data)
 #define READ32(addr)		cpu_read32(addr)
@@ -1371,3 +1375,4 @@ static data32_t decodeShift( data32_t insn, data32_t *pCarry)
 	logerror("%08x: Decodeshift error\n",R15);
 	return 0;
 } /* decodeShift */
+}

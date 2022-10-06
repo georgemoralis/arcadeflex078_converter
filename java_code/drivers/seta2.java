@@ -165,11 +165,15 @@ Notes:	pzlbowl PCB with extra parts:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/tmp68301.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class seta2
+{
+	
 /***************************************************************************
 
 
@@ -1617,3 +1621,4 @@ GAMEX( 1997, myangel2, 0, myangel2, myangel2, 0,        ROT0, "Namco",          
 GAMEX( 1999, pzlbowl,  0, pzlbowl,  pzlbowl,  0,		ROT0, "Nihon System / Moss", "Puzzle De Bowling (Japan)",                    GAME_NO_COCKTAIL )
 GAMEX( 2000, penbros,  0, penbros,  penbros,  0,  		ROT0, "Subsino",             "Penguin Brothers (Japan)",                     GAME_NO_COCKTAIL )
 
+}

@@ -26,10 +26,15 @@ Credits:
 
 ******************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class thief
+{
+	
 static UINT8 thief_input_select;
 
 READ_HANDLER( thief_context_ram_r );
@@ -650,3 +655,4 @@ GAME( 1980, sharkatt, 0,       sharkatt, sharkatt, 0,     ROT0, "Pacific Novelty
 GAME( 1981, thief,    0,       thief,    thief,    thief, ROT0, "Pacific Novelty", "Thief" )
 GAME( 1982, natodef,  0,       natodef,  natodef,  thief, ROT0, "Pacific Novelty", "NATO Defense"  )
 GAME( 1982, natodefa, natodef, natodef,  natodef,  thief, ROT0, "Pacific Novelty", "NATO Defense (alternate mazes)"  )
+}

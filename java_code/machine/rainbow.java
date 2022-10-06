@@ -47,9 +47,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class rainbow
+{
+	
 static UINT8* CRAM[8];
 
 static int extra_version;
@@ -823,4 +829,5 @@ void rainbow_cchip_init(int version)
 	state_save_register_int("cchip", 0, "current_bank", &current_bank);
 
 	timer_pulse(TIME_IN_HZ(60), 0, cchip_timer);
+}
 }

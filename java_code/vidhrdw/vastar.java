@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vastar
+{
+	
 
 
 data8_t *vastar_bg1videoram,*vastar_bg2videoram,*vastar_fgvideoram;
@@ -231,4 +237,5 @@ VIDEO_UPDATE( vastar )
 		logerror("Unimplemented priority %X\n", *vastar_sprite_priority);
 		break;
 	}
+}
 }

@@ -101,16 +101,15 @@ from Dragon Gun.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/arm/arm.h"
-#include "cpu/h6280/h6280.h"
-#include "cpu/m6809/m6809.h"
-#include "decocrpt.h"
-#include "decoprot.h"
-#include "machine/eeprom.h"
-#include "deco32.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class deco32
+{
+	
 static data32_t *deco32_ram;
 static int raster_enable,raster_offset;
 static void *raster_irq_timer;
@@ -2682,3 +2681,4 @@ GAMEX(1994, lockload, 0,        lockload, lockload, lockload, ROT0, "Data East C
 GAMEX(1994, tattass,  0,        tattass,  tattass,  tattass,  ROT0, "Data East Pinball",     "Tattoo Assassins (US Prototype)", GAME_IMPERFECT_GRAPHICS )
 GAMEX(1994, tattassa, tattass,  tattass,  tattass,  tattass,  ROT0, "Data East Pinball",     "Tattoo Assassins (Asia Prototype)", GAME_IMPERFECT_GRAPHICS )
 GAMEX(1994, nslasher, 0,        tattass,  tattass,  nslasher, ROT0, "Data East Corporation", "Night Slashers", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)
+}

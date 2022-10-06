@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "arabian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class arabian
+{
+	
 
 /* Constants */
 #define BITMAP_WIDTH		256
@@ -398,4 +403,5 @@ VIDEO_UPDATE( arabian )
 			draw_scanline8(bitmap, 0, BITMAP_HEIGHT - 1 - y, BITMAP_WIDTH, scanline, colortable, -1);
 		}
 	}
+}
 }

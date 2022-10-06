@@ -4,8 +4,15 @@ Atari Wolf Pack (prototype) driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wolfpack
+{
+	
 extern int wolfpack_collision;
 
 extern UINT8* wolfpack_alpha_num_ram;
@@ -407,3 +414,4 @@ ROM_END
 
 
 GAMEX( 1978, wolfpack, 0, wolfpack, wolfpack, 0, ORIENTATION_FLIP_Y, "Atari", "Wolf Pack (prototype)", GAME_NO_SOUND )
+}

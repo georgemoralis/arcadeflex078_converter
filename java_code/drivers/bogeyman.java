@@ -8,10 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bogeyman
+{
+	
 extern UINT8 *bogeyman_videoram2, *bogeyman_colorram2;
 
 extern WRITE_HANDLER( bogeyman_videoram_w );
@@ -308,3 +313,4 @@ ROM_END
 /******************************************************************************/
 
 GAMEX( 1985?, bogeyman, 0, bogeyman, bogeyman, 0, ROT0, "Technos Japan", "Bogey Manor", GAME_IMPERFECT_COLORS )
+}

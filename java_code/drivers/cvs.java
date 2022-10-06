@@ -82,11 +82,15 @@ Hardware Info
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/s2650/s2650.h"
-#include "sound/tms5110.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cvs
+{
+	
 INTERRUPT_GEN( cvs_interrupt );
 PALETTE_INIT( cvs );
 VIDEO_UPDATE( cvs );
@@ -1369,3 +1373,4 @@ GAMEX( 1983, hunchbak,    cvs,      cvs,      cvs,    0,          ROT90, "Centur
 GAMEX( 1983, superbik,    cvs,      cvs,      cvs,    superbik,   ROT90, "Century Electronics", "Superbike", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 GAMEX( 1983, hero,        cvs,      cvs,      cvs,    hero,       ROT90, "Seatongrove Ltd", "Hero", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 GAMEX( 1984, huncholy,    cvs,      cvs,      cvs,    huncholy,   ROT90, "Seatongrove Ltd", "Hunchback Olympic", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+}

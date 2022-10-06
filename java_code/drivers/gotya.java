@@ -27,9 +27,15 @@ TODO: Emulated sound
  its more likely just a prototype / alternate version, its hard to tell
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gotya
+{
+	
 
 extern UINT8 *gotya_scroll;
 extern UINT8 *gotya_videoram2;
@@ -282,3 +288,4 @@ ROM_END
 
 GAME( 1981, thehand, 0,       gotya, gotya, 0, ROT270, "T.I.C."     , "The Hand" )
 GAME( 1981, gotya,   thehand, gotya, gotya, 0, ROT270, "Game-A-Tron", "Got-Ya (12/24/1981, prototype?)" )
+}

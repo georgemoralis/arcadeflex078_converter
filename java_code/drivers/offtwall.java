@@ -17,11 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "offtwall.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class offtwall
+{
+	
 
 
 /*************************************
@@ -527,3 +531,4 @@ static DRIVER_INIT( offtwalc )
 
 GAME( 1991, offtwall, 0,        offtwall, offtwall, offtwall, ROT0, "Atari Games", "Off the Wall (2/3-player upright)" )
 GAME( 1991, offtwalc, offtwall, offtwall, offtwall, offtwalc, ROT0, "Atari Games", "Off the Wall (2-player cocktail)" )
+}

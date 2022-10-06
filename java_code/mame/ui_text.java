@@ -7,9 +7,15 @@
 
 *********************************************************************/
 
-#include "driver.h"
-#include "ui_text.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class ui_text
+{
+	
 #ifdef MESS
 extern const char *mess_default_text[];
 #endif /* MESS */
@@ -348,4 +354,5 @@ int uistring_init (mame_file *langfile)
 const char * ui_getstring (int string_num)
 {
 		return trans_text[string_num];
+}
 }

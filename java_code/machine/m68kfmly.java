@@ -10,11 +10,15 @@ Memo:
 
 ******************************************************************************/
 
-#include <stdio.h>
-#include "driver.h"
-#include "m68kfmly.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class m68kfmly
+{
+	
 
 #define	TMP68301_DEBUG	0
 
@@ -234,4 +238,5 @@ WRITE16_HANDLER( tmp68301_timer_w )
 #endif
 
 	tmp68301_timer[offset] = data;
+}
 }

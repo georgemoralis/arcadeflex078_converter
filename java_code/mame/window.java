@@ -12,15 +12,17 @@
  *	so expect 'assertions' for every non common case (ie. window too
  *	big, hanging out of the screen etc.)
  ****************************************************************************/
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class window
+{
+	
 #ifdef MAME_DEBUG
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <assert.h>
-#include "window.h"
 
 /*
  * These standard definition functions are macro'd so they can easily be
@@ -1893,3 +1895,4 @@ void win_invalidate_video(void)
 }
 
 #endif
+}

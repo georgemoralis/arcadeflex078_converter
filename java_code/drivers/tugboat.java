@@ -21,9 +21,15 @@ always false - counter was reloaded and incremented before interrupt occurs
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/6821pia.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tugboat
+{
+	
 
 data8_t *tugboat_ram,*tugboat_score;
 
@@ -372,3 +378,4 @@ ROM_END
 
 
 GAMEX( 1982, tugboat, 0, tugboat, tugboat, 0, ROT90, "ETM", "Tugboat", GAME_IMPERFECT_GRAPHICS )
+}

@@ -5,10 +5,15 @@
   Functions to emulate the video hardware of the machine.
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "ctype.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tnzs
+{
+	
 
 
 extern unsigned char *tnzs_objram;
@@ -199,4 +204,5 @@ VIDEO_UPDATE( tnzs )
 							tnzs_vdcram + 0x0000, /*	  y : f000 */
 							tnzs_objram + 0x1000, /*   ctrl : d000 */
 							tnzs_objram + 0x1200); /* color : d200 */
+}
 }

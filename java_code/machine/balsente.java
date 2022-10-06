@@ -6,12 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/generic.h"
-#include "balsente.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class balsente
+{
+	
 
 #define LOG_CEM_WRITES		0
 
@@ -1212,4 +1215,5 @@ WRITE_HANDLER( shrike_shared_6809_w )
 if (offset != 0x0a || data != 0x55)
 logerror("6809 wrote %02x = %02x\n", offset, data);
 	shrike_shared[offset] = (shrike_shared[offset] & ~0xff) | data;
+}
 }

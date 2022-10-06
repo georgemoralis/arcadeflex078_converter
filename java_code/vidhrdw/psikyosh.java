@@ -89,10 +89,15 @@ sol divide doesn't seem to make much use of tilemaps at all, it uses them to fad
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "psikyosh.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class psikyosh
+{
+	
 /* Needed for psikyosh_drawgfxzoom */
 struct mame_bitmap *zoom_bitmap, *z_bitmap;
 
@@ -1168,3 +1173,4 @@ VIDEO_EOF( psikyosh )
 	psikyosh_vidregs[2], psikyosh_vidregs[3],
 	psikyosh_vidregs[4], psikyosh_vidregs[5],
 	psikyosh_vidregs[6], psikyosh_vidregs[7]);*/
+}

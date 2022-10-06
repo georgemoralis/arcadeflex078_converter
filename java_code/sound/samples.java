@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class samples
+{
+	
 
 
 static int firstchannel,numchannels;
@@ -117,4 +124,5 @@ int samples_sh_start(const struct MachineSound *msound)
 		mixer_set_name(firstchannel + i,buf);
 	}
 	return 0;
+}
 }

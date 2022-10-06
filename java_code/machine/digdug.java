@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class digdug
+{
+	
 
 unsigned char *digdug_sharedram;
 static unsigned char interrupt_enable_1,interrupt_enable_2,interrupt_enable_3;
@@ -312,4 +317,5 @@ INTERRUPT_GEN( digdug_interrupt_3 )
 {
 	if (interrupt_enable_3)
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
+}
 }

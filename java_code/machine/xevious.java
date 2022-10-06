@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class xevious
+{
+	
 unsigned char *xevious_sharedram;
 static unsigned char interrupt_enable_1,interrupt_enable_2,interrupt_enable_3;
 
@@ -617,3 +622,4 @@ INTERRUPT_GEN( battles_interrupt_4 )
 	cpu_set_irq_line(3, 0, HOLD_LINE);
 }
 
+}

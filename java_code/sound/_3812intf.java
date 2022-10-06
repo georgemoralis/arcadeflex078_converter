@@ -16,11 +16,15 @@
 * NOTES
 *
 ******************************************************************************/
-#include "driver.h"
-#include "3812intf.h"
-#include "fm.h"
-#include "sound/fmopl.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _3812intf
+{
+	
 
 #if (HAS_YM3812)
 
@@ -396,3 +400,4 @@ READ_HANDLER( Y8950_read_port_1_r ) {
 }
 
 #endif
+}

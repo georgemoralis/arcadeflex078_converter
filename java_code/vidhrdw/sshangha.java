@@ -5,9 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sshangha
+{
+	
 data16_t *sshangha_pf2_data,*sshangha_pf1_data;
 data16_t *sshangha_pf1_rowscroll,*sshangha_pf2_rowscroll;
 static data16_t sshangha_control_0[8];
@@ -265,4 +271,5 @@ VIDEO_UPDATE( sshangha )
 	
 	sshangha_drawsprites(bitmap,spriteram16_2,0x0000,0x0000);
 	sshangha_drawsprites(bitmap,spriteram16,0x4000,0x0000);
+}
 }

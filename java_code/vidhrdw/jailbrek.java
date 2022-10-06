@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jailbrek
+{
+	
 UINT8 *jailbrek_scroll_x;
 UINT8 *jailbrek_scroll_dir;
 
@@ -144,4 +150,5 @@ VIDEO_UPDATE( jailbrek )
 
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	jailbrek_draw_sprites(bitmap, cliprect);
+}
 }

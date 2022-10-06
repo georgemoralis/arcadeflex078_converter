@@ -116,13 +116,15 @@ Sound: Analog Devices ADSP-2181
 
 #define PROTECTION_HACK ( 1 )
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/mips/psx.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/taitosnd.h"
-#include "includes/psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class zn
+{
+	
 #if PROTECTION_HACK
 
 /* decodebp.c */
@@ -1974,3 +1976,4 @@ GAMEX( 1997, psarc95,  0,        zn,       zn, zn,   ROT0, "Sony/Eighting/Raizin
 GAMEX( 1997, beastrzr, psarc95,  zn,       zn, zn,   ROT0, "Eighting/Raizing", "Beastorizer", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEX( 1997, beastrzb, taitofx1, zn,       zn, zn,   ROT0, "Eighting/Raizing", "Beastorizer (bootleg)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEX( 2000, brvblade, psarc95,  zn,       zn, zn,   ROT0, "Eighting/Raizing", "Brave Blade (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+}

@@ -5,9 +5,15 @@
 #ifndef __m68000defs__
 #define __m68000defs__
 
-#include <stdlib.h>
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class cpudefsH
+{
+	
 #ifndef INLINE
 #define INLINE static inline
 #endif
@@ -122,3 +128,4 @@ typedef struct
 
 #endif
 
+}

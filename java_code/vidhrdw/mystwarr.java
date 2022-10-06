@@ -5,12 +5,15 @@
  *
  */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/konamigx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mystwarr
+{
+	
 static int layer_colorbase[6];
 static int oinprion, cbparam;
 static int sprite_colorbase, sub1_colorbase, last_psac_colorbase, gametype;
@@ -555,4 +558,5 @@ VIDEO_UPDATE(dadandrn) /* and gaiapols */
 	}
 
 	konamigx_mixer(bitmap, cliprect, (roz_enable) ? ult_936_tilemap : 0, rozmode, 0, 0, blendmode);
+}
 }

@@ -9,8 +9,15 @@ The blitter reads compressed data from ROM and copies it to the bitmap RAM.
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hnayayoi
+{
+	
 
 static UINT8 *pixmap[8];
 static int palbank;
@@ -272,4 +279,5 @@ VIDEO_UPDATE( hnayayoi )
 		draw_layer_interleaved(bitmap,cliprect,3,2,col1,1);
 		draw_layer_interleaved(bitmap,cliprect,1,0,col0,1);
 	}
+}
 }

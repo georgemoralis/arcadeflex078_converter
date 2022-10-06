@@ -312,8 +312,15 @@ TODO:
 
 #define WELLTRIS_4P_HACK 0
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class welltris
+{
+	
 data16_t *welltris_spriteram;
 size_t welltris_spriteram_size;
 data16_t *welltris_pixelram;
@@ -852,3 +859,4 @@ ROM_END
 
 GAMEX( 1991, welltris, 0,        welltris, welltris, welltris, ROT0,   "Video System Co.", "Welltris (Japan, 2 players)", GAME_NO_COCKTAIL )
 GAMEX( 1992, quiz18k,  0,        quiz18k,  quiz18k,  quiz18k,  ROT0,   "EIM", "Miyasu Nonki no Quiz 18-Kin", GAME_NO_COCKTAIL )
+}

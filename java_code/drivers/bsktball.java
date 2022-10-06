@@ -21,9 +21,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bsktball
+{
+	
 extern UINT8 *bsktball_motion;
 
 extern WRITE_HANDLER( bsktball_videoram_w );
@@ -435,3 +441,4 @@ ROM_END
  *************************************/
 
 GAME( 1979, bsktball, 0, bsktball, bsktball, 0, ROT0, "Atari", "Basketball" )
+}

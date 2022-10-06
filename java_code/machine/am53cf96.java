@@ -13,11 +13,15 @@
  * 43 = READ TOC
  */
 
-#include "driver.h"
-#include "state.h"
-#include "harddisk.h"
-#include "am53cf96.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class am53cf96
+{
+	
 data8_t scsi_regs[32], fifo[16], fptr = 0, last_cmd, xfer_state;
 int lba, blocks;
 struct hard_disk_file *disk;
@@ -268,4 +272,5 @@ void am53cf96_read_data(int bytes, data8_t *pData)
 			break;
 
 	}
+}
 }

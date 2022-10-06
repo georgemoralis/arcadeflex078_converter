@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class trackfld
+{
+	
 
 #define TIMER_RATE (4096/4)
 
@@ -154,4 +161,5 @@ WRITE_HANDLER( hyprolyb_ADPCM_data_w )
     end = RAM[cmd + 3] + 256 * RAM[cmd + 2];
     if (end > start)
         ADPCM_play(0,start,(end - start)*2);
+}
 }

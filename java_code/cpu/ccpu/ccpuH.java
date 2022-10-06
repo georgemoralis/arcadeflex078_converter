@@ -25,9 +25,15 @@
  *============================================================================================*/
 
 /* added these includes */
-#include "osd_cpu.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.ccpu;
 
+public class ccpuH
+{
+	
 enum {
 	CCPU_PC=1, CCPU_ACC, CCPU_CMP, CCPU_PA0, CCPU_CFLAG,
 	CCPU_A, CCPU_B, CCPU_I, CCPU_J, CCPU_P, CCPU_CSTATE };
@@ -144,3 +150,4 @@ extern CINELONG cGetContextSize(void);
 extern int bNewFrame;
 
 #endif
+}

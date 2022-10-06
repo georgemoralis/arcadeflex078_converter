@@ -12,10 +12,15 @@
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/s2636.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class malzak
+{
+	
 unsigned char* s2636_1_ram;
 unsigned char* s2636_2_ram;
 
@@ -229,4 +234,5 @@ WRITE_HANDLER( playfield_w )
 //	field[tile].y = temp_y;
 	field[tile].code = (data & 0x1f);
 
+}
 }

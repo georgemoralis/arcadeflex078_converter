@@ -28,10 +28,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sbrkout
+{
+	
 extern WRITE_HANDLER( sbrkout_serve_led_w );
 extern WRITE_HANDLER( sbrkout_start_1_led_w );
 extern WRITE_HANDLER( sbrkout_start_2_led_w );
@@ -353,3 +358,4 @@ static DRIVER_INIT( sbrkout )
  *************************************/
 
 GAME( 1978, sbrkout, 0, sbrkout, sbrkout, sbrkout, ROT270, "Atari", "Super Breakout" )
+}

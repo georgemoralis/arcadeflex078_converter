@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class palette
+{
+	
 #define VERBOSE 0
 
 
@@ -1952,4 +1957,5 @@ PALETTE_INIT( RRRR_GGGG_BBBB )
 
 		palette_set_color(i,r,g,b);
 	}
+}
 }

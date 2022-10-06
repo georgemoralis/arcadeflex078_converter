@@ -124,18 +124,15 @@
  *
  */
 
-#include <stddef.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
-#include <zlib.h>
-#include "hash.h"
-#include "md5.h"
-#include "sha1.h"
-#include "osd_cpu.h"
-#include "mame.h"
-#include "common.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class hash
+{
+	
 #define ASSERT(x)
 
 #ifndef TRUE
@@ -698,4 +695,5 @@ static void h_md5_buffer(const void* mem, unsigned long len)
 static void h_md5_end(UINT8* bin_chksum)
 {
 	MD5Final(bin_chksum, &md5_ctx);
+}
 }

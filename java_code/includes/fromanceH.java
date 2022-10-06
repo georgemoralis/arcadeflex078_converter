@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class fromanceH
+{
+	
 
 /*----------- defined in vidhrdw/fromance.c -----------*/
 
@@ -29,3 +36,4 @@ WRITE_HANDLER( fromance_paletteram_w );
 
 READ_HANDLER( fromance_videoram_r );
 WRITE_HANDLER( fromance_videoram_w );
+}

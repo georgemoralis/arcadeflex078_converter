@@ -19,10 +19,15 @@
 #define _TMS32025_H
 
 
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32025;
 
+public class tms32025H
+{
+	
 
 
 
@@ -238,3 +243,4 @@ extern unsigned Dasm32025(char *buffer, unsigned pc);
 #endif
 
 #endif	/* _TMS32025_H */
+}

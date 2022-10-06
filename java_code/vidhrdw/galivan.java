@@ -29,9 +29,15 @@ background:	0x4000 bytes of ROM:	76543210	tile code low bits
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galivan
+{
+	
 static unsigned char scrollx[2], scrolly[2];
 
 /* Layers has only bits 5-6 active.
@@ -433,4 +439,5 @@ VIDEO_UPDATE( ninjemak )
 	draw_sprites(bitmap,cliprect);
 
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

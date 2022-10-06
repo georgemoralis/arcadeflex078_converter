@@ -3,8 +3,15 @@ Super Cross II (JPN Ver.)
 (c)1986 GM Shoji
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sprcros2
+{
+	
 static struct tilemap *sprcros2_bgtilemap, *sprcros2_fgtilemap;
 data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 size_t sprcros2_spriteram_size;
@@ -176,4 +183,5 @@ VIDEO_UPDATE( sprcros2 )
 	tilemap_draw( bitmap,cliprect,sprcros2_bgtilemap,0,0 );
 	sprcros2_draw_sprites(bitmap,cliprect);
 	tilemap_draw( bitmap,cliprect,sprcros2_fgtilemap,0,0 );
+}
 }

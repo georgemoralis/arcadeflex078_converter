@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class labyrunr
+{
+	
 unsigned char *labyrunr_videoram1,*labyrunr_videoram2;
 static struct tilemap *layer0, *layer1;
 static struct rectangle clip0, clip1;
@@ -158,4 +163,5 @@ VIDEO_UPDATE( labyrunr )
 	tilemap_draw(bitmap,&finalclip0,layer0,0,0);
 	K007121_sprites_draw(0,bitmap,cliprect,spriteram,(K007121_ctrlram[0][6]&0x30)*2,40,0,-1);
 	tilemap_draw(bitmap,&finalclip1,layer1,0,0);
+}
 }

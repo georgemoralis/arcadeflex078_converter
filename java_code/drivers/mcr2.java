@@ -78,12 +78,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include "sndhrdw/mcr.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mcr2
+{
+	
 
 static UINT8 wacko_mux_select;
 
@@ -1042,3 +1045,4 @@ GAME( 1982, wacko,    0,        mcr2,     wacko,    wacko,    ROT0,  "Bally Midw
 GAME( 1984, twotiger, 0,        mcr2,     twotiger, mcr2,     ROT0,  "Bally Midway", "Two Tigers" )
 GAME( 1984, twotigra, twotiger, twotigra, twotigra, twotigra, ROT0,  "Bally Midway", "Two Tigers (dedicated)" )
 GAMEX(1983, journey,  0,        journey,  journey,   mcr2,     ROT90, "Bally Midway", "Journey", GAME_IMPERFECT_SOUND )
+}

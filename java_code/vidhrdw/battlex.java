@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class battlex
+{
+	
 static int battlex_scroll_lsb;
 static int battlex_scroll_msb;
 
@@ -129,4 +135,5 @@ VIDEO_UPDATE(battlex)
 	tilemap_set_scrollx(bg_tilemap, 0, battlex_scroll_lsb | (battlex_scroll_msb << 8));
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	battlex_drawsprites(bitmap, &Machine->visible_area);
+}
 }

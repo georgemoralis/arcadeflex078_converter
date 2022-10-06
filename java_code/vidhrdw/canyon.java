@@ -4,8 +4,15 @@ Atari Canyon Bomber video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class canyon
+{
+	
 static struct tilemap *tilemap;
 
 UINT8* canyon_videoram;
@@ -94,4 +101,5 @@ VIDEO_UPDATE( canyon )
 	canyon_draw_sprites(bitmap, cliprect);
 
 	canyon_draw_bombs(bitmap, cliprect);
+}
 }

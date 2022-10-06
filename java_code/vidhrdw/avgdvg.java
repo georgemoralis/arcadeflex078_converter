@@ -36,10 +36,15 @@
 
 ************************************************************************/
 
-#include "driver.h"
-#include "avgdvg.h"
-#include "vector.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class avgdvg
+{
+	
 
 //#define VG_DEBUG
 #ifdef VG_DEBUG
@@ -1155,4 +1160,5 @@ WRITE16_HANDLER( quantum_colorram_w )
 static rgb_t sparkle_callback(void)
 {
 	return colorram[16 + ((rand() >> 8) & 15)];
+}
 }

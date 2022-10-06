@@ -51,10 +51,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class metro
+{
+	
 /* Variables that driver has access to: */
 
 data16_t *metro_videoregs;
@@ -946,4 +951,5 @@ if (keyboard_pressed(KEYCODE_Z))
 			for (i = 0; i < 0x20; i++)
 				metro_draw_sprites(bitmap,cliprect, i);
 	}
+}
 }

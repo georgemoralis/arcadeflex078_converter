@@ -5,10 +5,15 @@
   MAME interface for YMF262 (OPL3) emulator
 
 ***************************************************************************/
-#include "driver.h"
-#include "262intf.h"
-#include "ymf262.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _262intf
+{
+	
 
 
 
@@ -140,3 +145,4 @@ WRITE_HANDLER( YMF262_data_B_1_w ) {
 
 #endif
 
+}

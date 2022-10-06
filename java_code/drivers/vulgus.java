@@ -39,9 +39,15 @@ c001      YM2203 #2 write
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vulgus
+{
+	
 
 extern unsigned char *vulgus_fgvideoram;
 extern unsigned char *vulgus_bgvideoram;
@@ -415,3 +421,4 @@ ROM_END
 GAME( 1984, vulgus,  0,      vulgus, vulgus, 0, ROT90,  "Capcom", "Vulgus (set 1)" )
 GAME( 1984, vulgus2, vulgus, vulgus, vulgus, 0, ROT270, "Capcom", "Vulgus (set 2)" )
 GAME( 1984, vulgusj, vulgus, vulgus, vulgus, 0, ROT270, "Capcom", "Vulgus (Japan?)" )
+}

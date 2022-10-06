@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ninjakd2
+{
+	
 #define COLORTABLE_START(gfxn,color)	Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + \
 					color * Machine->gfx[gfxn]->color_granularity
 #define GFX_COLOR_CODES(gfxn) 		Machine->gfx[gfxn]->total_colors
@@ -207,4 +213,5 @@ VIDEO_UPDATE( ninjakd2 )
 		ninjakd2_draw_foreground(bitmap);
 	}
 
+}
 }

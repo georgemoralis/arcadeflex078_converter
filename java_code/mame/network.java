@@ -5,23 +5,23 @@
  ***************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class network
+{
+	
 #ifdef MAME_NET
 
-#include "network.h"
-#include "osdepend.h"
-#include "mame.h"
-#include "common.h"   /* Machine struct       */
-#include "driver.h"   /* GameDriver struct    */
 
 
 /* Uncomment to turn on printf code */
 /* #define NET_DEBUG */
 
 #ifdef NET_DEBUG
-#include <ctype.h>
 
 #define dprintf(x) printf x;
 #else
@@ -745,3 +745,4 @@ int net_chat_recv(int player, unsigned char *msg, int *size )
 }
 
 #endif /* MAME_NET */
+}

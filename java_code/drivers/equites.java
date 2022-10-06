@@ -130,9 +130,15 @@ SNK/Eastern  1985 (ACT) Gekisoh          Œƒ‘–
 *******************************************************************************/
 // Directives
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class equites
+{
+	
 #define HVOLTAGE_HACK	0
 #define EASY_TEST_MODE	1
 
@@ -1295,3 +1301,4 @@ GAMEX( 1985, splndrbt, 0,        splndrbt, splndrbt, splndrbt, ROT0,  "Alpha Den
 GAMEX( 1985, hvoltage, 0,        splndrbt, hvoltage, hvoltage, ROT0,  "Alpha Denshi Co.", "High Voltage", GAME_UNEMULATED_PROTECTION )
 
 /******************************************************************************/
+}

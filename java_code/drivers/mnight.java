@@ -8,9 +8,15 @@ TODO:
 - must do palette marking, it is overflowing at the moment
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mnight
+{
+	
 WRITE_HANDLER( mnight_bgvideoram_w );
 WRITE_HANDLER( mnight_fgvideoram_w );
 WRITE_HANDLER( mnight_sprite_overdraw_w );
@@ -481,3 +487,4 @@ ROM_END
 
 GAME( 1987, mnight,  0, mnight, mnight,  0, ROT0, "UPL (Kawakus license)", "Mutant Night" )
 GAME( 1988?,arkarea, 0, mnight, arkarea, 0, ROT0, "UPL", "Ark Area" )
+}

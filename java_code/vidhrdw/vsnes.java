@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/ppu2c03b.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vsnes
+{
+	
 /* from machine */
 extern int vsnes_gun_controller;
 
@@ -81,4 +87,5 @@ VIDEO_UPDATE( vsdual )
 	/* render the ppu's */
 	ppu2c03b_render( 0, bitmap, 0, 0, 0, 0 );
 	ppu2c03b_render( 1, bitmap, 0, 0, 32*8, 0 );
+}
 }

@@ -1,9 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "namcos2.h"	/* for game-specific hacks */
-#include "namcoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcoic
+{
+	
 static data16_t mSpritePos[4];
 
 WRITE16_HANDLER( namco_spritepos16_w )
@@ -1002,3 +1005,4 @@ namco_road_draw( struct mame_bitmap *bitmap, const struct rectangle *cliprect, i
 		}
 	}
 } /* namco_road_draw */
+}

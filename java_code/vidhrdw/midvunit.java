@@ -4,13 +4,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "sndhrdw/williams.h"
-#include "vidhrdw/poly.h"
-#include "midvunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class midvunit
+{
+	
 
 #define WATCH_RENDER		(0)
 #define KEEP_STATISTICS		(0)
@@ -1215,4 +1217,5 @@ VIDEO_UPDATE( midvunit )
 			*dest++ = midvunit_videoram[offset + x] & 0x7fff;
 		offset += 512;
 	}
+}
 }

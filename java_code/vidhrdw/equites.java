@@ -11,9 +11,15 @@ drivers by Acho A. Tang
 *******************************************************************************/
 // Directives
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class equites
+{
+	
 #define BMPAD 8
 #define BMW_l2 9
 #define FP_PRECISION 20
@@ -705,3 +711,4 @@ WRITE16_HANDLER(splndrbt_bgcolor_w)
 }
 
 /******************************************************************************/
+}

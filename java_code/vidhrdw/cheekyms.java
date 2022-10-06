@@ -8,9 +8,15 @@
 Functions to emulate the video hardware of the machine.
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cheekyms
+{
+	
 
 static int redraw_man = 0;
 static int man_scroll = -1;
@@ -220,4 +226,5 @@ VIDEO_UPDATE( cheekyms )
 
 	/* copy the temporary bitmap to the screen over the sprites */
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN,Machine->pens[4*char_palette]);
+}
 }

@@ -10,18 +10,18 @@
 
 #if 1
 /* Include the internal copy of the libexpat library */
-#include "xmlrole.c"
-#include "xmltok.c"
-#include "xmlparse.c"
-#else
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package xml2info;
+
+public class xml2info
+{
+	#else
 /* Use the system libexpat library */
-#include <expat.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
 
 /****************************************************************************/
 /* Output format */
@@ -824,3 +824,4 @@ int main(int argc, char* argv[])
 }
 
 
+}

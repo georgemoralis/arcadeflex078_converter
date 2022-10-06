@@ -216,10 +216,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "vidhrdw/avgdvg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class omegrace
+{
+	
 
 
 /*************************************
@@ -612,3 +617,4 @@ static DRIVER_INIT( omegrace )
 
 GAMEX( 1981, omegrace, 0,        omegrace, omegrace, omegrace, ROT0, "Midway",         "Omega Race", GAME_NO_COCKTAIL )
 GAMEX( 1981, deltrace, omegrace, omegrace, omegrace, omegrace, ROT0, "Allied Leisure", "Delta Race", GAME_NO_COCKTAIL )
+}

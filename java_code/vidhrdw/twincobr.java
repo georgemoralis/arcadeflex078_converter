@@ -12,11 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/crtc6845.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class twincobr
+{
+	
 
 static void twincobr_restore_screen(void);
 
@@ -442,4 +446,5 @@ VIDEO_EOF( toaplan0 )
 		There are no CPU output registers that control this so we
 		assume it happens automatically every frame, at the end of vblank */
 	buffer_spriteram16_w(0,0,0);
+}
 }

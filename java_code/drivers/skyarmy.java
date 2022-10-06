@@ -20,9 +20,15 @@
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class skyarmy
+{
+	
 data8_t *skyarmy_videoram;
 data8_t *skyarmy_colorram;
 data8_t *skyarmy_scrollram;
@@ -317,3 +323,4 @@ ROM_START( skyarmy )
 ROM_END
 
 GAMEX( 1982, skyarmy, 0, skyarmy, skyarmy, 0, ROT90, "Shoei", "Sky Army", GAME_WRONG_COLORS )
+}

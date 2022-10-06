@@ -8,9 +8,15 @@
   driver written by Martin Buchholz (buchholz@mail.uni-greifswald.de)
 
 ***************************************************************************/
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class polyplay
+{
+	
 #define LFO_VOLUME 25
 #define SAMPLE_LENGTH 32
 #define SAMPLE_AMPLITUDE 0x4000
@@ -86,4 +92,5 @@ void play_channel2(int data)
 	else {
 		polyplay_sh_stop();
 	}
+}
 }

@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gcpinbal
+{
+	
 
 static struct tilemap *gcpinbal_tilemap[3];
 
@@ -367,3 +372,4 @@ VIDEO_UPDATE( gcpinbal )
 
 }
 
+}

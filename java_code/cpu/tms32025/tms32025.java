@@ -118,15 +118,15 @@ Table 3-2.  TMS32025/26 Memory Blocks
 
 
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "driver.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "state.h"
-#include "tms32025.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32025;
 
+public class tms32025
+{
+	
 
 #define CLK 4	/* 1 cycle equals 4 clock ticks */		/* PE/DI */
 
@@ -2201,4 +2201,5 @@ unsigned tms32025_dasm(char *buffer, unsigned pc)
 	sprintf( buffer, "$%04X", TMS32025_RDOP(pc) );
 	return 2;
 #endif
+}
 }

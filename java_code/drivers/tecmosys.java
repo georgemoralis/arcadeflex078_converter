@@ -92,8 +92,15 @@ ae500w07.ad1 - M6295 Samples (23c4001)
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tecmosys
+{
+	
 
 static data16_t* protram;
 
@@ -536,3 +543,4 @@ static DRIVER_INIT( deroon )
 GAMEX( 1996, deroon,      0, deroon, deroon, deroon,     ROT0, "Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
 GAMEX( 1996, tkdensho,    0, deroon, deroon, 0,          ROT0, "Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )
 
+}

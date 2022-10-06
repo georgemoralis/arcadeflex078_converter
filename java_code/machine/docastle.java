@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class docastle
+{
+	
 
 
 static unsigned char buffer0[9],buffer1[9];
@@ -71,4 +77,5 @@ WRITE_HANDLER( docastle_shared1_w )
 WRITE_HANDLER( docastle_nmitrigger_w )
 {
 	cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+}
 }

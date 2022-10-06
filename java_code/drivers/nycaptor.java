@@ -144,11 +144,15 @@ Stephh's additional notes (based on the game Z80 code and some tests) :
 //#define USE_MCU
 
 
-#include <math.h>
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nycaptor
+{
+	
 VIDEO_START( nycaptor );
 VIDEO_UPDATE( nycaptor );
 
@@ -839,3 +843,4 @@ ROM_END
 
 GAMEX(1985, nycaptor, 0,       nycaptor,  nycaptor, 0, ROT0,  "Taito", "N.Y. Captor", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 GAMEX(1986, cyclshtg, 0,       cyclshtg,  cyclshtg, 0, ROT90, "Taito", "Cycle Shooting", GAME_NOT_WORKING)
+}

@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "relief.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class relief
+{
+	
 
 
 /*************************************
@@ -176,4 +181,5 @@ VIDEO_UPDATE( relief )
 					mo[x] = 0;
 				}
 		}
+}
 }

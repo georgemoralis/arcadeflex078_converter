@@ -4,8 +4,15 @@ Atari Triple Hunt video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class triplhnt
+{
+	
 extern void triplhnt_hit_callback(int);
 
 UINT8* triplhnt_playfield_ram;
@@ -154,4 +161,5 @@ VIDEO_UPDATE( triplhnt )
 	triplhnt_draw_sprites(bitmap, cliprect);
 
 	draw_crosshair(bitmap, cross_x, cross_y, cliprect);
+}
 }

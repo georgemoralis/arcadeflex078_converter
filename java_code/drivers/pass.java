@@ -99,8 +99,15 @@
 
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pass
+{
+	
 data16_t *pass_bg_videoram;
 data16_t *pass_fg_videoram;
 
@@ -343,3 +350,4 @@ ROM_END
 
 
 GAME( 1992, pass, 0, pass, pass, 0, ROT0, "Oksan", "Pass")
+}

@@ -121,10 +121,15 @@ RAM			RW		0f0000-0f3fff		0e0000-0effff?		<
 
 #define SOUND_HACK 1
 
-#include "driver.h"
-#include "megasys1.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class megasys1
+{
+	
 
 /* Variables only used here: */
 
@@ -3564,3 +3569,4 @@ GAME( 1992, bigstrik, 0,        system_C,          bigstrik, bigstrik, ROT0,   "
 GAME( 1993, chimerab, 0,        system_C,          chimerab, chimerab, ROT0,   "Jaleco", "Chimera Beast (prototype)" )
 GAME( 1993, cybattlr, 0,        system_C,          cybattlr, cybattlr, ROT90,  "Jaleco", "Cybattler" )
 GAME( 1993, peekaboo, 0,        system_D,          peekaboo, peekaboo, ROT0,   "Jaleco", "Peek-a-Boo!" )
+}

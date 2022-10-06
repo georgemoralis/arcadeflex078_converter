@@ -8,9 +8,15 @@ XX Mission (c) 1986 UPL
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class xxmissio
+{
+	
 VIDEO_UPDATE( xxmissio );
 
 extern UINT8 *xxmissio_fgram;
@@ -387,3 +393,4 @@ ROM_START( xxmissio )
 ROM_END
 
 GAME( 1986, xxmissio, 0, xxmissio, xxmissio, 0, ROT90, "UPL", "XX Mission" )
+}

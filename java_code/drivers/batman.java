@@ -17,11 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "batman.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class batman
+{
+	
 
 
 /*************************************
@@ -343,3 +347,4 @@ static DRIVER_INIT( batman )
  *************************************/
 
 GAME( 1991, batman, 0, batman, batman, batman, ROT0, "Atari Games", "Batman" )
+}

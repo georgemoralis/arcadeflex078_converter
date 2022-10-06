@@ -25,10 +25,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mitchell
+{
+	
 /* in machine/kabuki.c */
 void mgakuen2_decode(void);
 void pang_decode(void);
@@ -1678,3 +1683,4 @@ GAME( 1991, block,    0,        pang,    blockj,   block,    ROT270, "Capcom", "
 GAME( 1991, blocka,   block,    pang,    block,    block,    ROT270, "Capcom", "Block Block (World 910910)" )
 GAME( 1991, blockj,   block,    pang,    block,    block,    ROT270, "Capcom", "Block Block (Japan 910910)" )
 GAME( 1991, blockbl,  block,    pang,    block,    blockbl,  ROT270, "bootleg", "Block Block (bootleg)" )
+}

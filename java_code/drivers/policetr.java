@@ -60,11 +60,15 @@ Note #3: Bt481A 256-Word Color Palette 15, 16 & 24-bit Color Power-Down RAMDAC
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/mips/r3000.h"
-#include "machine/eeprom.h"
-#include "policetr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class policetr
+{
+	
 
 /* constants */
 #define MASTER_CLOCK	48000000
@@ -607,3 +611,4 @@ GAME( 1996, policetr, 0,        policetr, policetr, policetr, ROT0, "P&P Marketi
 GAME( 1996, policeto, policetr, policetr, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.1)" )
 GAME( 1996, plctr13b, policetr, sshooter, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.3B)" )
 GAME( 1998, sshooter, 0,        sshooter, policetr, sshooter, ROT0, "P&P Marketing", "Sharpshooter (Rev 1.7)" )
+}

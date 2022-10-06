@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/ppu2c03b.h"
-#include "machine/rp5h01.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class playch10
+{
+	
 /* Globals */
 int pc10_sdcs;			/* ShareD Chip Select */
 int pc10_dispmask;		/* Display Mask */
@@ -870,4 +875,5 @@ DRIVER_INIT( pckboard )
 
 	/* common init */
 	init_playch10();
+}
 }

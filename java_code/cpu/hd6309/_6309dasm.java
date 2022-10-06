@@ -19,15 +19,17 @@
 /* Please send all bug reports, update ideas and data files to: */
 /* tlindner@ix.netcom.com */
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.hd6309;
 
+public class _6309dasm
+{
+	
 #ifdef MAME_DEBUG
 
-#include <string.h>
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "hd6309.h"
 
 #ifndef TRUE
 #define TRUE	-1
@@ -1095,3 +1097,4 @@ unsigned Dasm6309 (char *buffer, unsigned pc)
 
 #endif
 
+}

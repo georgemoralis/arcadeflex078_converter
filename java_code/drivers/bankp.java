@@ -33,9 +33,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bankp
+{
+	
 
 extern UINT8 *bankp_videoram2;
 extern UINT8 *bankp_colorram2;
@@ -242,3 +248,4 @@ ROM_END
 
 
 GAME( 1984, bankp, 0, bankp, bankp, 0, ROT0, "[Sanritsu] Sega", "Bank Panic" )
+}

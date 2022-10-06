@@ -6,14 +6,15 @@
 
 ***************************************************************************/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
-#include "driver.h"
-#include "sndhrdw/mcr.h"
-#include "sndhrdw/williams.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
-#include "mcr.h"
+public class mcr
+{
+	
 
 
 
@@ -687,3 +688,4 @@ MACHINE_DRIVER_START(squawk_n_talk)
 	
 	MDRV_SOUND_ADD_TAG("snt", TMS5220, squawkntalk_tms5220_interface)
 MACHINE_DRIVER_END
+}

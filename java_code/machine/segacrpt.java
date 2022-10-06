@@ -177,8 +177,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class segacrpt
+{
+	
 
 #ifdef MAME_DEBUG
 static void lfkp(int mask)
@@ -1531,4 +1538,5 @@ void gardiab_decode(void)
 	/* copy the opcodes from the not encrypted part of the ROMs */
 	for (A = 0x8000;A < diff;A++)
 		rom[A + diff] = rom[A];
+}
 }

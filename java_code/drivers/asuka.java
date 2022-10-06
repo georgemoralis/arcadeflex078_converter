@@ -102,11 +102,15 @@ the prog rom. Doesn't seem to cause problems though.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class asuka
+{
+	
 WRITE16_HANDLER( asuka_spritectrl_w );
 
 INTERRUPT_GEN( rastan_s_interrupt );
@@ -1470,3 +1474,4 @@ GAME( 1989, cadashf,  cadash,   cadash,   cadash,   0, ROT0,   "Taito Corporatio
 GAME( 1992, galmedes, 0,        galmedes, galmedes, 0, ROT270, "Visco", "Galmedes (Japan)" )
 GAME( 1993, earthjkr, 0,        galmedes, earthjkr, 0, ROT270, "Visco", "U.N. Defense Force: Earth Joker (Japan)" )
 GAME( 1994, eto,      0,        eto,      eto,      0, ROT0,   "Visco", "Kokontouzai Eto Monogatari (Japan)" )
+}

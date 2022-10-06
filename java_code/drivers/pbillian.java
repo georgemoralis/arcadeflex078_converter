@@ -99,9 +99,15 @@ DSW2 stored @ $f237
 ------10 code @ $03be, stored @ $f291/92 (8,8/0,12/16,6/24,4 -> difficulty ? )
 
 ******************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-WRITE_HANDLER( pb_videoram_w );
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
+
+public class pbillian
+{
+	WRITE_HANDLER( pb_videoram_w );
 WRITE_HANDLER(data_41a_w);
 
 int pbillian_sh_start(const struct MachineSound*);
@@ -435,3 +441,4 @@ static DRIVER_INIT( hotsmash ){	is_pbillian=0;}
 
 GAMEX( 1986, pbillian, 0, pbillian, pbillian, pbillian, ROT0, "Taito", "Prebillian",GAME_IMPERFECT_SOUND)
 GAMEX( 1987, hotsmash, 0, pbillian, hotsmash, hotsmash, ROT90, "Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+}

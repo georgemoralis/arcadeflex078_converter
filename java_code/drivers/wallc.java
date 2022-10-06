@@ -47,10 +47,15 @@ Thanks to HIGHWAYMAN for providing info on how to get to these epoxies
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/res_net.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wallc
+{
+	
 static struct tilemap *bg_tilemap;
 
 /***************************************************************************
@@ -361,3 +366,4 @@ ROM_START( wallc )
 ROM_END
 
 GAME( 1984, wallc, 0,      wallc,  wallc, wallc, ROT0, "Midcoin", "Wall Crash" )
+}

@@ -9,10 +9,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "inptport.h"
-#include "fileio.h"
-#include "sound/mixer.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class configH
+{
+	
 
 
 /***************************************************************************
@@ -80,3 +85,4 @@ int config_write_coin_and_ticket_counters(config_file *file, const unsigned int 
 int config_write_mixer_config(config_file *file, const struct mixer_config *mixercfg);
 
 #endif /* CONFIG_H */
+}

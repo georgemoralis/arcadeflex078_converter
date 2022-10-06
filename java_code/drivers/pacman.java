@@ -176,12 +176,15 @@ Dave Widel
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "pacman.h"
-#include "pengo.h"
-#include "cpu/s2650/s2650.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pacman
+{
+	
 
 static UINT8 speedcheat = 0;	/* a well known hack allows to make Pac Man run at four times */
 								/* his usual speed. When we start the emulation, we check if the */
@@ -4380,3 +4383,4 @@ GAME( 1986, bigbucks, 0,		bigbucks, bigbucks, 0,        ROT90,  "Dynasoft Inc.",
 GAME( 1984, drivfrcp, 0,        drivfrcp, drivfrcp, 0,        ROT90,  "Shinkai Inc. (Magic Eletronics Inc. licence)", "Driving Force (Pac-Man conversion)" )
 GAMEX(1985, 8bpm,	  8ballact,	8bpm,	  8bpm,		8bpm,     ROT90,  "Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (Pac-Man conversion)", GAME_WRONG_COLORS )
 GAMEX(1985, porky,	  0,        porky,	  porky,	porky,    ROT90,  "Shinkai Inc. (Magic Eletronics Inc. licence)", "Porky", GAME_NO_SOUND )
+}

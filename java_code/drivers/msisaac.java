@@ -6,11 +6,15 @@
 
 ****************************************************************************/
 
-#include <math.h>
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class msisaac
+{
+	
 /*
 TO DO:
   - sprites are probably banked differently (no way to be sure until MCU dump is available)
@@ -608,3 +612,4 @@ ROM_START( msisaac )
 ROM_END
 
 GAMEX( 1985, msisaac, 0,        msisaac, msisaac, 0, ROT270, "Taito Corporation", "Metal Soldier Isaac II", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL)
+}

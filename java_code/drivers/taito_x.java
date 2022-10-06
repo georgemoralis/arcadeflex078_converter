@@ -223,12 +223,15 @@ its place. The East Technology games on this hardware follow Daisenpu.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/taitosnd.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taito_x
+{
+	
 MACHINE_INIT( cchip1 );
 READ16_HANDLER ( cchip1_word_r );
 WRITE16_HANDLER( cchip1_word_w );
@@ -1361,3 +1364,4 @@ GAME( 1989, daisenpu, twinhawk, daisenpu, daisenpu, taitox,   ROT270, "Taito Cor
 GAME( 1989, gigandes, 0,        gigandes, gigandes, taitox,   ROT0,   "East Technology", "Gigandes" )
 GAME( 1989, kyustrkr, 0,        ballbros, kyustrkr, kyustrkr, ROT180, "East Technology", "Last Striker / Kyuukyoku no Striker" )
 GAME( 1992, ballbros, 0,        ballbros, ballbros, taitox,   ROT0,   "East Technology", "Balloon Brothers" )
+}

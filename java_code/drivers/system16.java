@@ -114,12 +114,15 @@
 		Turbo Outrun (Set 2)
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class system16
+{
+	
 /***************************************************************************/
 
 // 7751 emulation
@@ -6799,3 +6802,4 @@ GAME( 1988, wb3,      0,        wb3,      wb3,      wb3,      ROT0,   "Sega / We
 GAMEX(1988, wb3a,     wb3,      wb3,      wb3,      wb3,      ROT0,   "Sega / Westone", "Wonder Boy III - Monster Lair (set 2)", GAME_NOT_WORKING )
 GAME( 1988, wb3bl,    wb3,      wb3bl,    wb3,      wb3bl,    ROT0,   "bootleg", "Wonder Boy III - Monster Lair (bootleg)" )
 GAME( 1989, wrestwar, 0,        wrestwar, wrestwar, wrestwar, ROT270, "Sega",    "Wrestle War" )
+}

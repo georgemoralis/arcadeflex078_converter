@@ -12,10 +12,15 @@ todo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gomoku
+{
+	
 
 PALETTE_INIT(gomoku);
 VIDEO_START(gomoku);
@@ -223,3 +228,4 @@ ROM_END
 
 //     YEAR,     NAME,   PARENT,  MACHINE,    INPUT,     INIT,    MONITOR, COMPANY, FULLNAME, FLAGS
 GAMEX( 1981,   gomoku,        0,   gomoku,   gomoku,        0,      ROT90, "Nichibutsu", "Gomoku Narabe Renju", GAME_IMPERFECT_SOUND )
+}

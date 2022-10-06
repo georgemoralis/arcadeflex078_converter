@@ -9,10 +9,15 @@
 #ifndef WILLIAMS_BLITTERS
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "williams.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class williams
+{
+	
 
 #define VIDEORAM_WIDTH		304
 #define VIDEORAM_HEIGHT		256
@@ -701,8 +706,7 @@ WRITE_HANDLER( williams_blitter_w )
 #define REMAP_FUNC(r)					blaster_remap[(r) & 0xff]
 #define NOREMAP_FUNC(r)					(r)
 
-/* define this so that we get the blitter code when we #include ourself */
-#define WILLIAMS_BLITTERS				1
+/* define this so that we get the blitter code when we #define WILLIAMS_BLITTERS				1
 
 
 /**************** original williams blitters ****************/
@@ -712,25 +716,21 @@ WRITE_HANDLER( williams_blitter_w )
 
 #define BLITTER_OP 						BLIT_TRANSPARENT
 #define BLITTER_NAME					williams_blit_transparent
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_TRANSPARENT_SOLID
 #define BLITTER_NAME					williams_blit_transparent_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE
 #define BLITTER_NAME					williams_blit_opaque
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE_SOLID
 #define BLITTER_NAME					williams_blit_opaque_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
@@ -746,25 +746,21 @@ WRITE_HANDLER( williams_blitter_w )
 
 #define BLITTER_OP 						BLIT_TRANSPARENT
 #define BLITTER_NAME					sinistar_blit_transparent
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_TRANSPARENT_SOLID
 #define BLITTER_NAME					sinistar_blit_transparent_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE
 #define BLITTER_NAME					sinistar_blit_opaque
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE_SOLID
 #define BLITTER_NAME					sinistar_blit_opaque_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
@@ -780,25 +776,21 @@ WRITE_HANDLER( williams_blitter_w )
 
 #define BLITTER_OP 						BLIT_TRANSPARENT
 #define BLITTER_NAME					blaster_blit_transparent
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_TRANSPARENT_SOLID
 #define BLITTER_NAME					blaster_blit_transparent_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE
 #define BLITTER_NAME					blaster_blit_opaque
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE_SOLID
 #define BLITTER_NAME					blaster_blit_opaque_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
@@ -814,25 +806,21 @@ WRITE_HANDLER( williams_blitter_w )
 
 #define BLITTER_OP 						BLIT_TRANSPARENT
 #define BLITTER_NAME					williams2_blit_transparent
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_TRANSPARENT_SOLID
 #define BLITTER_NAME					williams2_blit_transparent_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE
 #define BLITTER_NAME					williams2_blit_opaque
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
 #define BLITTER_OP 						BLIT_OPAQUE_SOLID
 #define BLITTER_NAME					williams2_blit_opaque_solid
-#include "williams.c"
 #undef BLITTER_NAME
 #undef BLITTER_OP
 
@@ -955,3 +943,4 @@ static void BLITTER_NAME(int sstart, int dstart, int w, int h, int data)
 
 #endif
 
+}

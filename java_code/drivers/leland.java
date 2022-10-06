@@ -38,12 +38,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "cpu/z80/z80.h"
-#include "leland.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class leland
+{
+	
 
 /*************************************
  *
@@ -2548,3 +2551,4 @@ GAME( 1989, offroad,  0,       lelandi, offroad,  offroad,  ROT0,   "Leland Corp
 GAME( 1989, offroadt, 0,       lelandi, offroad,  offroadt, ROT0,   "Leland Corp.", "Ironman Stewart's Super Off-Road Track Pack" )
 GAME( 1990, pigout,   0,       lelandi, pigout,   pigout,   ROT0,   "Leland Corp.", "Pigout" )
 GAME( 1990, pigouta,  pigout,  lelandi, pigout,   pigout,   ROT0,   "Leland Corp.", "Pigout (alternate)" )
+}

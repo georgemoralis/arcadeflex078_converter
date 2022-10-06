@@ -9,8 +9,15 @@
 #ifndef __PPU_2C03B_H__
 #define __PPU_2C03B_H__
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ppu2c03bH
+{
+	
 /* increment to use more chips */
 #define MAX_PPU 2
 
@@ -98,3 +105,4 @@ WRITE_HANDLER( ppu2c03b_0_w );
 WRITE_HANDLER( ppu2c03b_1_w );
 
 #endif /* __PPU_2C03B_H__ */
+}

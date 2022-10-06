@@ -57,15 +57,17 @@ Any comments/updates/bug reports to:
 */
 
 
-#include "driver.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.nec;
 
+public class necdasm
+{
+	
 #ifdef MAME_DEBUG
-//#include "nechost.h"
-
+//
 /* Little endian uint read */
 #define	le_uint8(ptr) (*(UINT8*)ptr)
 INLINE UINT16 le_uint16(const void* ptr) {
@@ -890,3 +892,4 @@ unsigned Dasmnec(char* buffer, unsigned pc)
 
 #endif	/* MAME_DEBUG */
 
+}

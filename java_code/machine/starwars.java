@@ -7,11 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpuintrf.h"
-#include "starwars.h"
-#include "vidhrdw/avgdvg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class starwars
+{
+	
 
 /* Control select values for ADC_R */
 #define kPitch		0
@@ -397,4 +401,5 @@ WRITE_HANDLER( swmathbx_w )
 		default:
 			break;
 	}
+}
 }

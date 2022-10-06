@@ -8,16 +8,18 @@
 
 ***********************************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "tms5110.h"
+public class tms5110
+{
+	
 
 
 /* Pull in the ROM tables */
-#include "tms5110r.c"
 
 
 /* these contain data that describes the 64 bits FIFO */
@@ -654,3 +656,4 @@ static unsigned int example_word_TEN[619]={
 };
 #endif
 
+}

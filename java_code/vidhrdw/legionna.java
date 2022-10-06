@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class legionna
+{
+	
 data16_t *legionna_back_data,*legionna_fore_data,*legionna_mid_data,*legionna_scrollram16,*legionna_textram;
 
 static struct tilemap *background_layer,*foreground_layer,*midground_layer,*text_layer;
@@ -372,3 +378,4 @@ VIDEO_UPDATE( sdgndmrb )
 	tilemap_draw(bitmap,cliprect,text_layer,0,0);
 }
 
+}

@@ -12,9 +12,15 @@ End sequence uses rowscroll '98 c0' on pf1 (jmp to 1d61a)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class supbtime
+{
+	
 data16_t *supbtime_pf2_data,*supbtime_pf1_data,*supbtime_pf1_row;
 static data16_t supbtime_control_0[8];
 static struct tilemap *pf1_tilemap,*pf2_tilemap;
@@ -204,4 +210,5 @@ VIDEO_UPDATE( chinatwn )
 	tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 	supbtime_drawsprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
+}
 }

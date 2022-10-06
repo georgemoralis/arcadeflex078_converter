@@ -10,9 +10,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class videopin
+{
+	
 extern UINT8* videopin_video_ram;
 
 extern WRITE_HANDLER( videopin_video_ram_w );
@@ -407,3 +413,4 @@ ROM_END
  *************************************/
 
 GAMEX( 1979, videopin, 0, videopin, videopin, 0, ROT270, "Atari", "Video Pinball", GAME_NO_SOUND )
+}

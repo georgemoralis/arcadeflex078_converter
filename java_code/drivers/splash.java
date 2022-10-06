@@ -6,11 +6,15 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class splash
+{
+	
 
 extern data16_t *splash_vregs;
 extern data16_t *splash_videoram;
@@ -283,3 +287,4 @@ ROM_END
 
 
 GAME( 1992, splash, 0, splash, splash, 0, ROT0, "Gaelco", "Splash! (Ver. 1.2 World)" )
+}

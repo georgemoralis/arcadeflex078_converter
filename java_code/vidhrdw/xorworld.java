@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "tilemap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xorworld
+{
+	
 data16_t *xorworld_videoram;
 data16_t *xorworld_spriteram;
 
@@ -155,4 +160,5 @@ VIDEO_UPDATE( xorworld )
 	tilemap_draw(bitmap, cliprect, screen, 0, 0);
 
 	xorworld_draw_sprites(bitmap);
+}
 }

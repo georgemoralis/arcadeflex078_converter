@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "meadows.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class meadows
+{
+	
 /* some constants to make life easier */
 #define SPR_ADJUST_X    -18
 #define SPR_ADJUST_Y    -14
@@ -113,4 +118,5 @@ VIDEO_UPDATE( meadows )
 	/* draw the sprites */
 	if (Machine->gfx[1])
 		draw_sprites(bitmap, cliprect);
+}
 }

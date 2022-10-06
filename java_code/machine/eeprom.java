@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "eeprom.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class eeprom
+{
+	
 #define VERBOSE 0
 
 #define SERIAL_BUFFER_LENGTH 40
@@ -353,4 +358,5 @@ UINT8 * EEPROM_get_data_pointer(int * length)
 		*length = MEMORY_SIZE;
 
 	return eeprom_data;
+}
 }

@@ -61,14 +61,15 @@ Unresolved Issues:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
-#include "sound/k054539.h"
+public class xexex
+{
+	
 
 VIDEO_START( xexex );
 VIDEO_UPDATE( xexex );
@@ -615,3 +616,4 @@ static DRIVER_INIT( xexex )
 
 GAME( 1991, xexex,  0,     xexex, xexex, xexex, ROT0, "Konami", "Xexex (World)" )
 GAME( 1991, xexexj, xexex, xexex, xexex, xexex, ROT0, "Konami", "Xexex (Japan)" )
+}

@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/6532riot.h"
-#include "cpu/m6502/m6502.h"
-#include "sound/tiaintf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tourtabl
+{
+	
 
 extern PALETTE_INIT( tia_NTSC );
 extern PALETTE_INIT( tia_PAL );
@@ -242,3 +246,4 @@ ROM_END
 
 GAME( 1978, tourtabl, 0,        tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 1)" )
 GAME( 1978, tourtab2, tourtabl, tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 2)" )
+}

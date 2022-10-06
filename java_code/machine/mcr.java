@@ -4,15 +4,15 @@
 
 ***************************************************************************/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include "sndhrdw/mcr.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/z80/z80.h"
-#include "mcr.h"
+public class mcr
+{
+	
 
 
 #define LOG(x)
@@ -788,4 +788,5 @@ READ16_HANDLER( mcr68_6840_upper_r )
 READ16_HANDLER( mcr68_6840_lower_r )
 {
 	return mcr68_6840_r_common(offset,0) | 0xff00;
+}
 }

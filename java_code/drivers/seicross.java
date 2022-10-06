@@ -42,9 +42,15 @@ This info came from http://www.ne.jp/asahi/cc-sakura/akkun/old/fryski.html
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class seicross
+{
+	
 extern UINT8 *seicross_row_scroll;
 
 extern WRITE_HANDLER( seicross_videoram_w );
@@ -638,3 +644,4 @@ GAMEX( 1981, friskyta, friskyt,  nvram,    friskyt,  friskyt, ROT0,  "Nichibutsu
 GAMEX( 1982, radrad,   0,        no_nvram, radrad,   friskyt, ROT0,  "Nichibutsu USA", "Radical Radial", GAME_NO_COCKTAIL )
 GAMEX( 1984, seicross, 0,        no_nvram, seicross, friskyt, ROT90, "Nichibutsu + Alice", "Seicross", GAME_NO_COCKTAIL )
 GAMEX( 1984, sectrzon, seicross, no_nvram, seicross, friskyt, ROT90, "Nichibutsu + Alice", "Sector Zone", GAME_NO_COCKTAIL )
+}

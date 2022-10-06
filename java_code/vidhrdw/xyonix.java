@@ -1,6 +1,13 @@
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xyonix
+{
+	
 extern data8_t *xyonix_vidram;
 
 static struct tilemap *xyonix_tilemap;
@@ -61,4 +68,5 @@ VIDEO_START(xyonix)
 VIDEO_UPDATE(xyonix)
 {
 	tilemap_draw(bitmap,cliprect,xyonix_tilemap,0,0);
+}
 }

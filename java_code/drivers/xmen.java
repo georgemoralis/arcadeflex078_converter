@@ -5,12 +5,15 @@ X-Men
 driver by Nicola Salmoria
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/eeprom.h"
-#include "cpu/z80/z80.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class xmen
+{
+	
 VIDEO_START( xmen );
 VIDEO_UPDATE( xmen );
 
@@ -490,3 +493,4 @@ GAME ( 1992, xmen,    0,    xmen, xmen,   xmen,   ROT0, "Konami", "X-Men (US 4 P
 GAME ( 1992, xmen2p,  xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (World 2 Players)" )
 GAME ( 1992, xmen2pj, xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (Japan 2 Players)" )
 GAMEX( 1992, xmen6p,  xmen, xmen, xmen,   xmen6p, ROT0, "Konami", "X-Men (US 6 Players)", GAME_NOT_WORKING )
+}

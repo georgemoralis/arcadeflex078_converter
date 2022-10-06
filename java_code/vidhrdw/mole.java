@@ -6,9 +6,15 @@
   and uses a control location (0x8400) to select the character sets
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mole
+{
+	
 static int tile_bank;
 static UINT16 *tile_data;
 static struct tilemap *bg_tilemap;
@@ -77,4 +83,5 @@ WRITE_HANDLER( moleattack_flipscreen_w )
 VIDEO_UPDATE( moleattack )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+}
 }

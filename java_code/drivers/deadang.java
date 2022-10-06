@@ -14,10 +14,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class deadang
+{
+	
 
 static UINT8 *deadang_shared_ram;
 extern UINT8 *deadang_video_data, *deadang_scroll_ram;
@@ -457,3 +462,4 @@ static DRIVER_INIT( ghunter )
 
 GAME( 1988, deadang, 0,       deadang, deadang, deadang, ROT0, "Seibu Kaihatsu", "Dead Angle" )
 GAME( 1988, ghunter, deadang, deadang, ghunter, ghunter, ROT0, "Seibu Kaihatsu (Segasa/Sonic license)", "Gang Hunter (Spain)" )
+}

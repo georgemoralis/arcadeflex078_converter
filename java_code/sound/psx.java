@@ -8,10 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "includes/psx.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class psx
+{
+	
 #define VERBOSE_LEVEL ( 0 )
 
 INLINE void verboselog( int n_level, const char *s_fmt, ... )
@@ -472,4 +477,5 @@ WRITE32_HANDLER( psx_spu_w )
 			break;
 		}
 	}
+}
 }

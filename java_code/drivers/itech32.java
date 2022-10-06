@@ -31,14 +31,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m68000/m68000.h"
-#include "machine/ticket.h"
-#include "vidhrdw/generic.h"
-#include "itech32.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class itech32
+{
+	
 
 #define FULL_LOGGING	0
 
@@ -2403,3 +2404,4 @@ GAME( 1995, sftm110,  sftm,     sftm,     sftm,     sftm110,  ROT0, "Capcom/Incr
 GAME( 1995, sftmj,    sftm,     sftm,     sftm,     sftm,     ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12N, Japan)" )	/* PIC 16C54 labeled as ITSF-1 */
 GAME( 1997, shufshot, 0,        sftm,     shufshot, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.39)" ) /* PIC 16C54 labeled as ITSHF-1 */
 GAME( 1997, sshot137, shufshot, sftm,     shufbowl, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.37)" ) /* PIC 16C54 labeled as ITSHF-1 */
+}

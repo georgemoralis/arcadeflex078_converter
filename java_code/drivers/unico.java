@@ -22,11 +22,15 @@ Year + Game			PCB				Notes
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "unico.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class unico
+{
+	
 /* Variables needed by vidhrdw: */
 
 int unico_has_lightgun;
@@ -1147,3 +1151,4 @@ GAME( 1998, zeropnt,  0,       zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point
 GAME( 1998, zeropnta, zeropnt, zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point (set 2)" )
 GAME( 1999, zeropnt2, 0,       zeropnt2, zeropnt2, 0, ROT0, "Unico", "Zero Point 2" )
 
+}

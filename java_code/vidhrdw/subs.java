@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "subs.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class subs
+{
+	
 WRITE_HANDLER( subs_invert1_w )
 {
 	if ((offset & 0x01) == 1)
@@ -163,4 +168,5 @@ VIDEO_UPDATE( subs )
 	/* Update sound */
 	discrete_sound_w(2, spriteram[5] & 0x0f);		// Launch data
 	discrete_sound_w(3, (spriteram[5] >> 4) & 0x0f);	// Crash/explode data
+}
 }

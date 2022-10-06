@@ -145,16 +145,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "machine/6821pia.h"
-#include "machine/ticket.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/tms34061.h"
-#include "vidhrdw/tlc34076.h"
-#include "itech8.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class itech8
+{
+	
 
 #define FULL_LOGGING	0
 
@@ -2225,3 +2224,4 @@ GAME ( 1992, gtg2,     0,        gtg2,      gtg2,     viasound, ROT0,   "Strata/
 GAME ( 1989, gtg2t,    gtg2,     tmshi2203, gtg2t,    0,        ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V1.1)" )
 GAME ( 1991, gtg2j,    gtg2,     tmslo2203, gtg,      0,        ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf II (Joystick, V1.0)" )
 GAME ( 1992, neckneck, 0,        neckneck,  neckneck, 0,        ROT0,   "Bundra Games/Incredible Technologies", "Neck-n-Neck (v1.2)" )
+}

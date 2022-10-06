@@ -50,35 +50,22 @@
 
 ***************************************************************************/
 
-#include "osd_cpu.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "osdepend.h"
-#include "mame.h"
-#include "common.h"
-#include "drawgfx.h"
-#include "palette.h"
-#include "cpuintrf.h"
-#include "cpuexec.h"
-#include "cpuint.h"
-#include "sndintrf.h"
-#include "input.h"
-#include "inptport.h"
-#include "usrintrf.h"
-#include "cheat.h"
-#include "tilemap.h"
-#include "profiler.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class driverH
+{
+	
 #ifdef MESS
-#include "messdrv.h"
 #endif
 
 #ifdef MAME_NET
-#include "network.h"
 #endif /* MAME_NET */
 
 #ifdef MMSND
-#include "mmsnd/mmsnd.h"
 #endif
 
 
@@ -552,3 +539,4 @@ extern const struct GameDriver *drivers[];
 extern const struct GameDriver *test_drivers[];
 
 #endif
+}

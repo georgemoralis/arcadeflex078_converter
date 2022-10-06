@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "tilemap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class baraduke
+{
+	
 unsigned char *baraduke_textram, *baraduke_videoram;
 
 static struct tilemap *tilemap[2];	/* backgrounds */
@@ -338,4 +343,5 @@ VIDEO_UPDATE( metrocrs )
 				flipscreen,flipscreen,sx*8,sy*8,
 				cliprect,TRANSPARENCY_PEN,3);
 	}
+}
 }

@@ -4,17 +4,15 @@
 ****************************************************************************/
 /* 26.March 2000 PeT changed set_irq_line */
 
-#include <stdio.h>
-#include <string.h>
-#include "host.h"
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "mame.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86.h"
-#include "i86intf.h"
+public class i86
+{
+	
 
 
 /* All pre-i286 CPUs have a 1MB address space */
@@ -67,7 +65,6 @@ typedef struct
 i86_Regs;
 
 
-#include "i86time.c"
 
 /***************************************************************************/
 /* cpu state                                                               */
@@ -90,12 +87,7 @@ static struct i86_timing cycles;
 #define PREFIX86(name) i86##name
 
 #define I86
-#include "instr86.h"
-#include "ea.h"
-#include "modrm.h"
-#include "table86.h"
 
-#include "instr86.c"
 #undef I86
 
 /***************************************************************************/
@@ -438,18 +430,13 @@ const char *i88_info(void *context, int regnum)
 
 #if (HAS_I186 || HAS_I188)
 
-#include "i186intf.h"
 
 #undef PREFIX
 #define PREFIX(name) i186##name
 #define PREFIX186(name) i186##name
 
 #define I186
-#include "instr186.h"
-#include "table186.h"
 
-#include "instr86.c"
-#include "instr186.c"
 #undef I186
 
 int i186_execute(int num_cycles)
@@ -528,8 +515,6 @@ unsigned i186_dasm(char *buffer, unsigned pc)
 
 #if defined(INCLUDE_V20) && (HAS_V20 || HAS_V30 || HAS_V33)
 
-#include "v30.h"
-#include "v30intf.h"
 
 /* compile the opcode emulating instruction new with v20 timing value */
 /* MF flag -> opcode must be compiled new */
@@ -554,10 +539,6 @@ static UINT16 bytes[] =
 #undef IncWordReg
 #undef DecWordReg
 #define V20
-#include "instr86.h"
-#include "instr186.h"
-#include "instrv30.h"
-#include "tablev30.h"
 
 static void v30_interrupt(unsigned int_num, BOOLEAN md_flag)
 {
@@ -597,9 +578,6 @@ void v30_trap(void)
 }
 
 
-#include "instr86.c"
-#include "instr186.c"
-#include "instrv30.c"
 #undef V20
 
 void v30_reset(void *param)
@@ -716,3 +694,4 @@ unsigned v30_dasm(char *buffer, unsigned pc)
 }
 
 #endif
+}

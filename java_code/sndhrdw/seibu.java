@@ -32,9 +32,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class seibu
+{
+	
 
 
 /*
@@ -500,3 +506,4 @@ MEMORY_WRITE_START( seibu3_adpcm_sound_writemem )
 	{ 0x8000, 0xffff, MWA_ROM },
 MEMORY_END
 
+}

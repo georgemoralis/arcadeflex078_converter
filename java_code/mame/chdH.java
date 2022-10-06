@@ -7,8 +7,15 @@
 #ifndef CHD_H
 #define CHD_H
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class chdH
+{
+	
 
 /***************************************************************************
 
@@ -201,3 +208,4 @@ int chd_compress(struct chd_file *chd, const char *rawfile, UINT32 offset, void 
 int chd_verify(struct chd_file *chd, void (*progress)(const char *, ...), UINT8 actualmd5[CHD_MD5_BYTES], UINT8 actualsha1[CHD_SHA1_BYTES]);
 
 #endif /* CHD_H */
+}

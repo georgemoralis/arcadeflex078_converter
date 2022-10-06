@@ -12,10 +12,15 @@
  *
  ****************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class geebee
+{
+	
 /* from machine/geebee.c */
 extern int geebee_ball_h;
 extern int geebee_ball_v;
@@ -189,4 +194,5 @@ VIDEO_UPDATE( geebee )
 			for( x = 0; x < 4; x++ )
 				geebee_plot(bitmap,cliprect,geebee_ball_h+x+5,geebee_ball_v+y-2);
 	}
+}
 }

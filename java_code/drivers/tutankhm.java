@@ -177,11 +177,15 @@ Sound board: uses the same board as Pooyan.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "sndhrdw/timeplt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tutankhm
+{
+	
 
 
 extern unsigned char *tutankhm_scrollx;
@@ -422,3 +426,4 @@ ROM_END
 
 GAME( 1982, tutankhm, 0,        tutankhm, tutankhm, 0, ROT90, "Konami", "Tutankham" )
 GAME( 1982, tutankst, tutankhm, tutankhm, tutankhm, 0, ROT90, "[Konami] (Stern license)", "Tutankham (Stern)" )
+}

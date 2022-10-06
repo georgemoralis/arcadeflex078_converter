@@ -1,5 +1,12 @@
-#include <stdio.h>
-/* ======================================================================== */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
+
+public class m68kcpuH
+{
+	/* ======================================================================== */
 /* ========================= LICENSING & COPYRIGHT ======================== */
 /* ======================================================================== */
 /*
@@ -26,11 +33,8 @@
 #ifndef M68KCPU__HEADER
 #define M68KCPU__HEADER
 
-#include "m68k.h"
-#include <limits.h>
 
 #if M68K_EMULATE_ADDRESS_ERROR
-#include <setjmp.h>
 #endif /* M68K_EMULATE_ADDRESS_ERROR */
 
 /* ======================================================================== */
@@ -503,8 +507,7 @@
 
 /* Address error */
 #if M68K_EMULATE_ADDRESS_ERROR
-	#include <setjmp.h>
-	extern jmp_buf m68ki_aerr_trap;
+		extern jmp_buf m68ki_aerr_trap;
 
 	#define m68ki_set_address_error_trap() \
 		if(setjmp(m68ki_aerr_trap) != 0) \
@@ -533,8 +536,7 @@
 
 /* Logging */
 #if M68K_LOG_ENABLE
-	#include <stdio.h>
-	extern FILE* M68K_LOG_FILEHANDLE
+		extern FILE* M68K_LOG_FILEHANDLE
 	extern char* m68ki_cpu_names[];
 
 	#define M68K_DO_LOG(A) if(M68K_LOG_FILEHANDLE) fprintf A
@@ -1966,3 +1968,4 @@ INLINE void m68ki_check_interrupts(void)
 /* ======================================================================== */
 
 #endif /* M68KCPU__HEADER */
+}

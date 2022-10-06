@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class deniam
+{
+	
 
 data16_t *deniam_videoram,*deniam_textram;
 static int display_enable;
@@ -414,4 +420,5 @@ VIDEO_UPDATE( deniam )
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

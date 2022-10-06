@@ -17,11 +17,15 @@ Revisions:
   calculation(still very inaccurate)
 
 *********************************************************/
-#include <math.h>
-#include "driver.h"
-#include "iremga20.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class iremga20
+{
+	
 //AT
 #define MAX_VOL 256
 #define NUM_STEPS 8
@@ -265,4 +269,5 @@ int IremGA20_sh_start(const struct MachineSound *msound)
 
 void IremGA20_sh_stop( void )
 {
+}
 }

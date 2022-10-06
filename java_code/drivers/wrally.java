@@ -76,10 +76,15 @@ Palette related:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wrally
+{
+	
 /* from vidhrdw/wrally.c */
 extern data16_t *wrally_vregs;
 extern data16_t *wrally_videoram;
@@ -306,3 +311,4 @@ ROM_END
 
 GAMEX( 1993, wrally,  0, 	  wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 1)", GAME_NOT_WORKING )
 GAMEX( 1993, wrallya, wrally, wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 2)", GAME_NOT_WORKING )
+}

@@ -41,14 +41,15 @@ Bucky:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class moo
+{
+	
 VIDEO_START(moo);
 VIDEO_UPDATE(moo);
 void moo_set_alpha(int on);
@@ -928,3 +929,4 @@ GAME( 1992, mooua,   moo,     moo,     moo,     moo,      ROT0, "Konami", "Wild 
 GAMEX( 1992, moobl,   moo,     moobl,   moo,     moo,      ROT0, "<unknown>", "Wild West C.O.W.-Boys of Moo Mesa (bootleg version AA)", GAME_NOT_WORKING)
 GAME( 1992, bucky,   0,       bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (World version EA)")
 GAME( 1992, buckyua, bucky,   bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (US version UA)")
+}

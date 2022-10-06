@@ -2,10 +2,15 @@
 #ifndef __I186INTR_H_
 #define __I186INTR_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intf.h"
+public class i186intfH
+{
+	
 
 /* Public variables */
 #define i186_ICount i86_ICount
@@ -29,3 +34,4 @@ extern unsigned DasmI186(char* buffer, unsigned pc);
 #endif
 
 #endif
+}

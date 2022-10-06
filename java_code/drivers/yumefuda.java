@@ -25,9 +25,15 @@ a6: Check for the Color RAM.Print "Video RAM N/G!!!" otherwise.
 2344: Moves the contents from CusRAM to WorkRam.
 ********************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class yumefuda
+{
+	
 static struct tilemap *bg_tilemap;
 
 static void y_get_bg_tile_info(int tile_index)
@@ -346,3 +352,4 @@ DRIVER_INIT( yumefuda )
 
 
 GAMEX( 199?, yumefuda, 0, 		yumefuda, yumefuda, yumefuda,	ROT0, "Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

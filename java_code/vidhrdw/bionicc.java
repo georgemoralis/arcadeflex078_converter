@@ -23,9 +23,15 @@ The output selects the active layer, it can be:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bionicc
+{
+	
 data16_t *bionicc_fgvideoram;
 data16_t *bionicc_bgvideoram;
 data16_t *bionicc_txvideoram;
@@ -238,4 +244,5 @@ VIDEO_UPDATE( bionicc )
 VIDEO_EOF( bionicc )
 {
 	buffer_spriteram16_w(0,0,0);
+}
 }

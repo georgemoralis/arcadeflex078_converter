@@ -91,13 +91,15 @@ Preliminary Memory map:
 
 */
 
-#include "driver.h"
-#include "machine/eeprom.h"
-#include "cpu/sh2/sh2.h"
-#include "machine/stvcd.h"
-#include "machine/scudsp.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class stv
+{
+	
 extern data32_t* stv_vdp2_regs;
 extern data32_t* stv_vdp2_vram;
 extern data32_t* stv_vdp2_cram;
@@ -4620,3 +4622,4 @@ GAMEBX( 1997, znpwfv,    stvbios, stvbios, stv, stv,  ic13,      ROT0, "Sega", 	
 
 GAMEBX( 1995, sfish2,    0,       stvbios, stv, stv,  sfish2,    ROT0, "Sega",	     "Sport Fishing 2", GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEBX( 1995, sfish2j,   sfish2,  stvbios, stv, stv,  sfish2j,   ROT0, "Sega",	     "Sport Fishing 2 (Japan)", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

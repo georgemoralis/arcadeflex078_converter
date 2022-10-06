@@ -8,9 +8,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gomoku
+{
+	
 
 static int gomoku_flipscreen;
 static int gomoku_bg_dispsw;
@@ -317,3 +323,4 @@ if (keyboard_pressed(KEYCODE_F))
 #endif
 }
 
+}

@@ -10,8 +10,15 @@
 #ifndef _TMS34010_H
 #define _TMS34010_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
 
+public class tms34010H
+{
+	
 
 /* the TMS34010 input clock is divided by 8; the 34020 by 4 */
 #define TMS34010_CLOCK_DIVIDER		8
@@ -142,3 +149,4 @@ unsigned Dasm34020(char *buff, unsigned _pc);
 #endif
 
 #endif /* _TMS34010_H */
+}

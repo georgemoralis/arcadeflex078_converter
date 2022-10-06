@@ -132,11 +132,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "sndhrdw/segasnd.h"
-#include "sega.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sega
+{
+	
 
 
 /*************************************
@@ -1233,3 +1237,4 @@ GAME( 1981, elim2a,   elim2,    elim2,    elim2,    elim2,    ROT0,   "Gremlin",
 GAME( 1981, elim4,	  elim2,    elim2,    elim4,    elim4,    ROT0,   "Gremlin", "Eliminator (4 Players)" )
 GAME( 1982, startrek, 0,        startrek, startrek, startrek, ROT0,   "Sega", "Star Trek" )
 
+}

@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nitedrvr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class nitedrvr
+{
+	
 unsigned char *nitedrvr_ram;
 
 int nitedrvr_gear = 1;
@@ -287,4 +292,5 @@ void nitedrvr_crash_toggle(int dummy)
 		}
 	}
 		
+}
 }

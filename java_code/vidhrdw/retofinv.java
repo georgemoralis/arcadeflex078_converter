@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class retofinv
+{
+	
 size_t retofinv_videoram_size;
 unsigned char *retofinv_sprite_ram1;
 unsigned char *retofinv_sprite_ram2;
@@ -405,4 +412,5 @@ VIDEO_UPDATE( retofinv )
 	retofinv_draw_background(bitmap);
 	retofinv_render_sprites(bitmap);
 	retofinv_draw_foreground(bitmap);
+}
 }

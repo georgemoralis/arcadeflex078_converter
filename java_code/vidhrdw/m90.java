@@ -24,10 +24,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m90
+{
+	
 static unsigned char *m90_spriteram;
 unsigned char *m90_video_data;
 static struct tilemap *pf1_layer,*pf2_layer,*pf1_wide_layer,*pf2_wide_layer;
@@ -264,4 +269,5 @@ VIDEO_UPDATE( m90 )
 	}
 
 	m90_drawsprites(bitmap,cliprect);
+}
 }

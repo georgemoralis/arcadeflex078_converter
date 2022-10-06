@@ -31,10 +31,15 @@
 	- the metadata contains several mystery tables
 */
 
-#include <math.h>
-#include "driver.h"
-#include "namcona1.h" /* for namcona1_gametype; used for game-specific hacks */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class namcona
+{
+	
 #define kTwelfthRootTwo 1.059463094
 #define FIXED_POINT_SHIFT (10) /* for mixing */
 #define MAX_VOICE 16
@@ -781,3 +786,4 @@ NAMCONA_sh_stop( void )
 	#endif
 } /* NAMCONA_sh_stop */
 
+}

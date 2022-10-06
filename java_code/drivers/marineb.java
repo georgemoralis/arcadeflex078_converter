@@ -35,9 +35,15 @@ write
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class marineb
+{
+	
 
 
 extern unsigned char *marineb_column_scroll;
@@ -904,3 +910,4 @@ GAME( 1983, hoccer2,  hoccer,  hoccer,   hoccer,  0, ROT90,  "Eastern Micro Elec
 GAME( 1983, bcruzm12, 0,       bcruzm12, bcruzm12,0, ROT90,  "Sigma Enterprises Inc.", "Battle Cruiser M-12" )
 GAME( 1983, hopprobo, 0,       hopprobo, marineb, 0, ROT90,  "Sega", "Hopper Robo" )
 GAME( 1984, wanted,   0,       wanted,   wanted,  0, ROT90,  "Sigma Enterprises Inc.", "Wanted" )
+}

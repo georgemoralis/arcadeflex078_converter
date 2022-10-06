@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mcr3
+{
+	
 
 
 /*************************************
@@ -295,4 +299,5 @@ PALETTE_INIT( spyhunt )
 	palette_set_color(4*16+1,0x00,0xff,0x00);
 	palette_set_color(4*16+2,0x00,0x00,0xff);
 	palette_set_color(4*16+3,0xff,0xff,0xff);
+}
 }

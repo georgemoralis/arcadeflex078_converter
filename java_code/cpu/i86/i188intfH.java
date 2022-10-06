@@ -1,10 +1,15 @@
 #ifndef __I188INTR_H_
 #define __I188INTR_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i186intf.h"
+public class i188intfH
+{
+	
 
 /* Public variables */
 #define i188_ICount i86_ICount
@@ -24,3 +29,4 @@ extern const char *i188_info(void *context, int regnum);
 #define i188_dasm i186_dasm
 
 #endif
+}

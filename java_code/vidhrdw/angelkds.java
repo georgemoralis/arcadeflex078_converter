@@ -6,9 +6,15 @@ enable / disable tilemap bits might be wrong
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class angelkds
+{
+	
 
 static struct tilemap *tx_tilemap,*bgbot_tilemap ,*bgtop_tilemap;
 
@@ -317,4 +323,5 @@ VIDEO_UPDATE( angelkds )
 	if ((angelkds_layer_ctrl & 0x40) == 0x00) tilemap_draw(bitmap,&clip,bgbot_tilemap,0,0);
 	draw_sprites(bitmap,&clip, 0x40);
 	if ((angelkds_layer_ctrl & 0x20) == 0x00) tilemap_draw(bitmap,&clip,tx_tilemap,0,0);
+}
 }

@@ -18,8 +18,15 @@ plaintext version of the roms produces things like 30 second long coinup sounds.
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class strtheat
+{
+	
 /*void machine_init_pacman(void);*/
 
 static int counter=0;
@@ -234,3 +241,4 @@ WRITE_HANDLER( strtheat_writeport)
 logerror("Port Write: pc = %4x ############## \n",activecpu_get_pc());
 }
 */
+}

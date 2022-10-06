@@ -33,9 +33,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class esd16
+{
+	
 /* Variables needed by drivers: */
 
 data16_t *esd16_vram_0, *esd16_scroll_0;
@@ -361,4 +367,5 @@ if ( keyboard_pressed(KEYCODE_Z) )
 
 
 //	usrintf_showmessage("%04x %04x %04x %04x %04x",head_unknown1[0],head_layersize[0],head_unknown3[0],head_unknown4[0],head_unknown5[0]);
+}
 }

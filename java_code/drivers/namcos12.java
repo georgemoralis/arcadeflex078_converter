@@ -37,11 +37,15 @@ X101: M53.693 KDS 745 (near CXD8654Q)
 
 */
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/mips/psx.h"
-#include "includes/psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos12
+{
+	
 #define VERBOSE_LEVEL ( 0 )
 
 INLINE void verboselog( int n_level, const char *s_fmt, ... )
@@ -664,3 +668,4 @@ GAMEX( 1999, tekkentt,  0,        coh700, namcos12, namcos12, ROT0, "Namco",    
 GAMEX( 1999, mrdrillr,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Mr Driller (DRI1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 GAMEX( 1999, aquarush,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Aqua Rush (AQ1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 GAMEX( 1999, golgo13,   0,        coh700, namcos12, namcos12, ROT0, "Raizing/Namco", "Golgo 13 (GLG1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

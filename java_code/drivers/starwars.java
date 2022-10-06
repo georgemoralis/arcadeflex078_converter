@@ -20,15 +20,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-//#include "machine/atari_vg.h"
-//#include "vidhrdw/generic.h"
-#include "vidhrdw/vector.h"
-#include "vidhrdw/avgdvg.h"
-#include "starwars.h"
-#include "slapstic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class starwars
+{
+	////
 
 /* Local variables */
 static UINT8 *slapstic_source;
@@ -595,3 +595,4 @@ static DRIVER_INIT( esb )
 GAME( 1983, starwars, 0,        starwars, starwars, starwars, ROT0, "Atari", "Star Wars (rev 2)" )
 GAME( 1983, starwar1, starwars, starwars, starwars, starwars, ROT0, "Atari", "Star Wars (rev 1)" )
 GAME( 1985, esb,      0,        starwars, esb,      esb,      ROT0, "Atari Games", "The Empire Strikes Back" )
+}

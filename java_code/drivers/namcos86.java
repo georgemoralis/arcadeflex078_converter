@@ -20,10 +20,15 @@ a 0xff mark.
 
 *******************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6800/m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos86
+{
+	
 extern unsigned char *rthunder_videoram1, *rthunder_videoram2, *spriteram, *dirtybuffer;
 
 /*******************************************************************/
@@ -1774,3 +1779,4 @@ GAME( 1986, genpeitd, 0,        genpeitd, genpeitd, namco86,  ROT0,   "Namco", "
 GAME( 1986, rthunder, 0,        rthunder, rthunder, namco86,  ROT0,   "Namco", "Rolling Thunder (new version)" )
 GAME( 1986, rthundro, rthunder, rthunder, rthundro, namco86,  ROT0,   "Namco", "Rolling Thunder (old version)" )
 GAME( 1987, wndrmomo, 0,        wndrmomo, wndrmomo, namco86,  ROT0,   "Namco", "Wonder Momo" )
+}

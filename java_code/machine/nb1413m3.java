@@ -10,9 +10,15 @@ Memo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class nb1413m3
+{
+	
 
 #define NB1413M3_DEBUG	0
 
@@ -494,4 +500,5 @@ void nb1413m3_vcrctrl_w(int data)
 	{
 		set_led_status(2, 0);
 	}
+}
 }

@@ -19,11 +19,15 @@ Change Log:
 9 Jun - Fixed BG scroll handling, Fixed CPU clock.
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ninjakid
+{
+	
 extern WRITE_HANDLER( ninjakid_bg_videoram_w );
 extern WRITE_HANDLER( ninjakid_fg_videoram_w );
 extern READ_HANDLER( ninjakid_bg_videoram_r );
@@ -335,3 +339,4 @@ static DRIVER_INIT( ninjakid )
 *******************************************************************************/
 
 GAME( 1984, ninjakun, 0, ninjakid, ninjakid, ninjakid, ROT0, "[UPL] (Taito license)", "Ninjakun Majou no Bouken" )
+}

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class route16
+{
+	
 unsigned char *route16_sharedram;
 unsigned char *route16_videoram1;
 unsigned char *route16_videoram2;
@@ -330,4 +336,5 @@ static void modify_pen(int pen, int colorindex)
 	b = ((color & 4) ? 0xff : 0x00);
 
 	palette_set_color(pen,r,g,b);
+}
 }

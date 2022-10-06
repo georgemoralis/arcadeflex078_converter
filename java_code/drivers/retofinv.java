@@ -8,8 +8,15 @@ the game was developed by UPL for Taito.
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class retofinv
+{
+	
 /* in machine */
 READ_HANDLER( retofinv_68705_portA_r );
 WRITE_HANDLER( retofinv_68705_portA_w );
@@ -565,3 +572,4 @@ ROM_END
 GAME( 1985, retofinv, 0,        retofinv, retofinv, 0, ROT270, "Taito Corporation", "Return of the Invaders" )
 GAME( 1985, retofin1, retofinv, retofinb, retofinv, 0, ROT270, "bootleg", "Return of the Invaders (bootleg set 1)" )
 GAME( 1985, retofin2, retofinv, retofinb, retofinv, 0, ROT270, "bootleg", "Return of the Invaders (bootleg set 2)" )
+}

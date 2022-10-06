@@ -139,9 +139,15 @@ Rowscroll style:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class deco16ic
+{
+	
 data16_t *deco16_pf1_data,*deco16_pf2_data;
 data16_t *deco16_pf3_data,*deco16_pf4_data;
 data16_t *deco16_pf1_rowscroll,*deco16_pf2_rowscroll;
@@ -910,4 +916,5 @@ void deco16_tilemap_3_draw(struct mame_bitmap *bitmap, const struct rectangle *c
 void deco16_tilemap_4_draw(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int flags, UINT32 priority)
 {
 	if (pf4_tilemap_16x16) tilemap_draw(bitmap,cliprect,pf4_tilemap_16x16,flags,priority);
+}
 }

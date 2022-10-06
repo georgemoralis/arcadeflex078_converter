@@ -1,8 +1,15 @@
 #ifndef _MAMEDBG_H
 #define _MAMEDBG_H
 
-#include "mame.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class mamedbgH
+{
+	
 #define DEBUGGER_TOTAL_COLORS 16
 
 /* If this flag is set, a CPU core should call MAME_Debug from it's execution loop */
@@ -144,3 +151,4 @@ void dbg_put_screen_char (int ch, int attr, int x, int y);
 #endif  /* !MAME_DEBUG */
 
 #endif
+}

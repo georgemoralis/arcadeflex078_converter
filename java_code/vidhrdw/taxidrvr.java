@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "taxidrvr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taxidrvr
+{
+	
 
 data8_t *taxidrvr_vram0,*taxidrvr_vram1,*taxidrvr_vram2,*taxidrvr_vram3;
 data8_t *taxidrvr_vram4,*taxidrvr_vram5,*taxidrvr_vram6,*taxidrvr_vram7;
@@ -153,4 +159,5 @@ VIDEO_UPDATE( taxidrvr )
 				sx*8,sy*8,
 				cliprect,TRANSPARENCY_PEN,0);
 	}
+}
 }

@@ -118,11 +118,15 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dassault
+{
+	
 VIDEO_START( dassault );
 VIDEO_UPDATE( dassault );
 
@@ -876,3 +880,4 @@ static void init_thndzone(void)
 GAME(1991, thndzone, 0,        dassault, thndzone, thndzone, ROT0, "Data East Corporation", "Thunder Zone (World)" )
 GAME(1991, dassault, thndzone, dassault, dassault, dassault, ROT0, "Data East Corporation", "Desert Assault (US)" )
 GAME(1991, dassaul4, thndzone, dassault, dassaul4, dassault, ROT0, "Data East Corporation", "Desert Assault (US 4 Players)" )
+}

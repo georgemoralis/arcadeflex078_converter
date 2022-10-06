@@ -1,10 +1,15 @@
 #ifndef __I88INTR_H_
 #define __I88INTR_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intf.h"
+public class i88intfH
+{
+	
 
 /* Public variables */
 #define i88_ICount i86_ICount
@@ -24,3 +29,4 @@ extern const char *i88_info(void *context, int regnum);
 #define i88_dasm i86_dasm
 
 #endif
+}

@@ -41,10 +41,15 @@ TODO:
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tsamurai
+{
+	
 WRITE_HANDLER( vsgongf_color_w );
 
 WRITE_HANDLER( tsamurai_bgcolor_w );
@@ -1404,3 +1409,4 @@ GAME( 1986, m660,     0,        m660,     m660,     0, ROT90, "[Woodplace Inc.] 
 GAME( 1986, m660j,    m660,     m660,     m660,     0, ROT90, "[Woodplace Inc.] Taito Corporation", "Mission 660 (Japan)" )
 GAME( 1986, m660b,    m660,     m660,     m660,     0, ROT90, "bootleg", "Mission 660 (bootleg)" )
 GAME( 1986, alphaxz,  m660,     m660,     m660,     0, ROT90, "Ed / Woodplace Inc.", "The Alphax Z (Japan)" )
+}

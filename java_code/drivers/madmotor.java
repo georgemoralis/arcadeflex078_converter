@@ -12,10 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class madmotor
+{
+	
 VIDEO_START( madmotor );
 VIDEO_UPDATE( madmotor );
 
@@ -393,3 +398,4 @@ static DRIVER_INIT( madmotor )
 
  /* The title screen is undated, but it's (c) 1989 Data East at 0xefa0 */
 GAME( 1989, madmotor, 0, madmotor, madmotor, madmotor, ROT0, "Mitchell", "Mad Motor" )
+}

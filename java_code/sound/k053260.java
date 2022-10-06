@@ -4,9 +4,15 @@
 
 *********************************************************/
 
-#include "driver.h"
-#include "k053260.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class k053260
+{
+	
 #define LOG 0
 
 #define BASE_SHIFT	16
@@ -476,4 +482,5 @@ WRITE16_HANDLER( K053260_1_lsb_w )
 READ16_HANDLER( K053260_1_lsb_r )
 {
 	return K053260_1_r(offset);
+}
 }

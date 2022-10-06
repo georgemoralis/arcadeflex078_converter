@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gotya
+{
+	
 UINT8 *gotya_scroll;
 UINT8 *gotya_videoram2;
 
@@ -192,4 +198,5 @@ VIDEO_UPDATE( gotya )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	gotya_draw_sprites(bitmap);
 	gotya_draw_status(bitmap);
+}
 }

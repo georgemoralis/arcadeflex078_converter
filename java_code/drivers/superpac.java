@@ -35,9 +35,15 @@ CPU #2 uses no interrupts
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class superpac
+{
+	
 
 extern unsigned char *superpac_sharedram;
 extern unsigned char *superpac_customio_1,*superpac_customio_2;
@@ -545,3 +551,4 @@ GAME( 1982, superpcm, superpac, superpac, superpac, 0, ROT90, "[Namco] (Bally Mi
 GAME( 1983, pacnpal,  0,        superpac, pacnpal,  0, ROT90, "Namco", "Pac & Pal" )
 GAME( 1983, pacnpal2, pacnpal,  superpac, pacnpal,  0, ROT90, "Namco", "Pac & Pal (older)" )
 GAMEX(1983, pacnchmp, pacnpal,  superpac, pacnpal,  0, ROT90, "Namco", "Pac-Man & Chomp Chomp", GAME_IMPERFECT_COLORS )
+}

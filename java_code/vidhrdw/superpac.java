@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class superpac
+{
+	
 
 static UINT8 color15_mask[64];
 
@@ -292,4 +298,5 @@ VIDEO_UPDATE( superpac )
 
 	/* Color 31 still has priority over that (ghost eyes in Pac 'n Pal) */
 	draw_sprites(bitmap, &Machine->visible_area, TRANSPARENCY_PENS);
+}
 }

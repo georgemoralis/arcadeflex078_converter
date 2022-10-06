@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xain
+{
+	
 unsigned char *xain_charram, *xain_bgram0, *xain_bgram1;
 
 static struct tilemap *char_tilemap, *bgram0_tilemap, *bgram1_tilemap;
@@ -214,4 +220,5 @@ VIDEO_UPDATE( xain )
 	tilemap_draw(bitmap,cliprect,bgram1_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,char_tilemap,0,0);
+}
 }

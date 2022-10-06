@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wc90
+{
+	
 
 data8_t *wc90_fgvideoram,*wc90_bgvideoram,*wc90_txvideoram;
 
@@ -402,4 +408,5 @@ VIDEO_UPDATE( wc90 )
 	draw_sprites( bitmap,cliprect, 1 );
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	draw_sprites( bitmap,cliprect, 0 );
+}
 }

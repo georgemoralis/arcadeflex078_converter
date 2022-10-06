@@ -17,9 +17,15 @@ Notes
 RAM Location 9240: Controls what level you are on: 0-3 (for each scene)
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class portrait
+{
+	
 extern data8_t *portrait_bgvideoram,*portrait_fgvideoram,*portrait_spriteram;
 
 int portrait_scrollx_hi, portrait_scrollx_lo;
@@ -297,3 +303,4 @@ ROM_END
 
 GAMEX( 1983, portrait,  0,    portrait, portrait,  0, ROT270, "Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
 
+}

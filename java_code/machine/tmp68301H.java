@@ -1,8 +1,15 @@
 #ifndef TMP68301_H
 #define TMP68301_H
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class tmp68301H
+{
+	
 // Machine init
 MACHINE_INIT( tmp68301 );
 
@@ -16,3 +23,4 @@ void tmp68301_external_interrupt_1(void);
 void tmp68301_external_interrupt_2(void);
 
 #endif
+}

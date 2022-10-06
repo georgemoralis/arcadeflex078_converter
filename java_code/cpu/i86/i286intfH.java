@@ -2,10 +2,15 @@
 #ifndef __I286INTR_H_
 #define __I286INTR_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intf.h"
+public class i286intfH
+{
+	
 
 enum {
         I286_IP=1, I286_AX, I286_CX, I286_DX, I286_BX, I286_SP, I286_BP, I286_SI, I286_DI,
@@ -40,3 +45,4 @@ extern unsigned DasmI286(char* buffer, unsigned pc);
 #endif
 
 #endif
+}

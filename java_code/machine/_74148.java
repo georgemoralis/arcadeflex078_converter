@@ -38,9 +38,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "machine/74148.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _74148
+{
+	
 
 #define MAX_TTL74148 4
 
@@ -190,4 +196,5 @@ void TTL74148_config(int which, const struct TTL74148_interface *intf)
 	chips[which].last_output = -1;
 	chips[which].last_output_valid = -1;
 	chips[which].last_enable_output = -1;
+}
 }

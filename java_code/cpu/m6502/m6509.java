@@ -37,16 +37,15 @@ addresses take place.
 
 */
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6509.h"
-#include "m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
-#include "ops02.h"
-#include "ill02.h"
-#include "ops09.h"
+public class m6509
+{
+	
 
 #define CORE_M6509
 
@@ -124,7 +123,6 @@ static m6509_Regs m6509;
  * include the opcode macros, functions and tables
  ***************************************************************/
 
-#include "t6509.c"
 
 READ_HANDLER( m6509_read_00000 )
 {
@@ -434,3 +432,4 @@ unsigned m6509_dasm(char *buffer, unsigned pc)
 
 void m6509_init(void){ return; }
 
+}

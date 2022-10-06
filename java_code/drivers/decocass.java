@@ -52,11 +52,15 @@
 
  ***********************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "vidhrdw/generic.h"
-#include "machine/decocass.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class decocass
+{
+	
 /***************************************************************************
  *
  *	write decrypted opcodes
@@ -1123,3 +1127,4 @@ GAME ( 1985, cbdash,   decocass, cbdash,   decocass, decocass, ROT270, "DECO", "
 GAMEX( 1985, chwy,     decocass, decocass,   decocass, decocass, ROT270, "DECO", "Cassette: Highway Chase?", GAME_NOT_WORKING )
 GAMEX( 1985, cflyball, decocass, decocass,   decocass, decocass, ROT270, "DECO", "Cassette: Flying Ball?", GAME_NOT_WORKING )
 GAMEX( 1985, czeroize, decocass, decocass,   decocass, decocass, ROT270, "DECO", "Cassette: Zeroize?", GAME_NOT_WORKING )
+}

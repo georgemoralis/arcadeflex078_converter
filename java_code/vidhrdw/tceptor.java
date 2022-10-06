@@ -3,10 +3,15 @@
  *	emulate video hardware
  */
 
-#include "driver.h"
-#include "state.h"
-#include "namcoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tceptor
+{
+	
 #ifdef MAME_DEBUG
 extern int debug_key_pressed;
 #endif
@@ -636,4 +641,5 @@ VIDEO_UPDATE( tceptor )
 	}
 
 	tilemap_draw(bitmap, cliprect, tx_tilemap, 0, 0);
+}
 }

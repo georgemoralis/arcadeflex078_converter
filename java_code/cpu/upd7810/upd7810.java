@@ -366,12 +366,15 @@ STOP            01001000  10111011          12  stop
 */
 
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "upd7810.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.upd7810;
 
+public class upd7810
+{
+	
 #ifdef RUNTIME_LOADER
 #define upd7810_ICount upd7810_icount
 struct cpu_interface upd7810_interface=
@@ -1566,8 +1569,6 @@ void upd7810_init(void)
 	state_save_register_UINT8 ("upd7810", cpu, "edges",&upd7810.edges,1);
 }
 
-#include "7810tbl.c"
-#include "7810ops.c"
 
 void upd7810_reset (void *param)
 {
@@ -1994,4 +1995,5 @@ unsigned upd7807_dasm(char *buffer, unsigned pc)
 	sprintf( buffer, "$%02X", op );
 	return 1;
 #endif
+}
 }

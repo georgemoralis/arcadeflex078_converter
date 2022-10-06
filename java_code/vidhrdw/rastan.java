@@ -8,11 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rastan
+{
+	
 
 static UINT16 sprite_ctrl = 0;
 static UINT16 sprites_flipscreen = 0;
@@ -252,3 +256,4 @@ VIDEO_UPDATE( jumping )
 #endif
 }
 
+}

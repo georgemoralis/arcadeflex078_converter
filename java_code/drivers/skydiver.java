@@ -82,9 +82,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "skydiver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class skydiver
+{
+	
 static int skydiver_nmion;
 
 
@@ -393,3 +399,4 @@ ROM_END
  *************************************/
 
 GAMEX( 1978, skydiver, 0, skydiver, skydiver, 0, ROT0, "Atari", "Sky Diver", GAME_NO_SOUND )
+}

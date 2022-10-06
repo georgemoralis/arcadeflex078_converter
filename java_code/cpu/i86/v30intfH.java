@@ -1,10 +1,15 @@
 #ifndef __V30INTRF_H_
 #define __V30INTRF_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intf.h"
+public class v30intfH
+{
+	
 
 /* Public variables */
 #define v30_ICount i86_ICount
@@ -28,3 +33,4 @@ extern unsigned DasmV30(char* buffer, unsigned pc);
 #endif
 
 #endif
+}

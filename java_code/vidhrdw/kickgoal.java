@@ -1,8 +1,14 @@
 /* Kick Goal - Vidhrdw */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kickgoal
+{
+	
 extern data16_t *kickgoal_fgram, *kickgoal_bgram, *kickgoal_bg2ram, *kickgoal_scrram;
 struct tilemap *kickgoal_fgtm, *kickgoal_bgtm, *kickgoal_bg2tm;
 
@@ -153,4 +159,5 @@ VIDEO_UPDATE( kickgoal )
 	kickgoal_scrram[6],
 	kickgoal_scrram[7]);
 	*/
+}
 }

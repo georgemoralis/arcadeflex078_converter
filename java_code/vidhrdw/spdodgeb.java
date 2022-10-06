@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class spdodgeb
+{
+	
 
 unsigned char *spdodgeb_videoram;
 
@@ -236,4 +241,5 @@ VIDEO_UPDATE( spdodgeb )
 
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

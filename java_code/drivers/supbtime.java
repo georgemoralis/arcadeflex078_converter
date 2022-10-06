@@ -22,10 +22,15 @@ down hardware (it doesn't write any good sound data btw, mostly zeros).
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class supbtime
+{
+	
 VIDEO_START( supbtime );
 VIDEO_UPDATE( supbtime );
 VIDEO_UPDATE( chinatwn );
@@ -518,3 +523,4 @@ ROM_END
 GAME( 1990, supbtime, 0,        supbtime, supbtime, 0, ROT0, "Data East Corporation", "Super Burger Time (World)" )
 GAME( 1990, supbtimj, supbtime, supbtime, supbtime, 0, ROT0, "Data East Corporation", "Super Burger Time (Japan)" )
 GAME( 1991, chinatwn, 0,        chinatwn, chinatwn, 0, ROT0, "Data East Corporation", "China Town (Japan)" )
+}

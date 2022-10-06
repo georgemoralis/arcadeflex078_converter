@@ -4,12 +4,15 @@
 
  ***********************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/i8x41/i8x41.h"
-#include "machine/decocass.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class decocass
+{
+	
 /* tape direction, speed and timing (used also in vidhrdw/decocass.c) */
 int tape_dir;
 int tape_speed;
@@ -1942,3 +1945,4 @@ READ_HANDLER( i8041_p2_r )
 }
 
 
+}

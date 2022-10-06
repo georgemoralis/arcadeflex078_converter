@@ -6,11 +6,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "vidhrdw/tlc34076.h"
-#include "btoads.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class btoads
+{
+	
 
 
 /*************************************
@@ -465,3 +469,4 @@ static DRIVER_INIT( btoads )
  *************************************/
 
 GAME( 1994, btoads,   0,         btoads, btoads, btoads, ROT0, "Rare",   "Battle Toads" )
+}

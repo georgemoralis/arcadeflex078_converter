@@ -74,11 +74,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "irobot.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class irobot
+{
+	
 
 
 /*************************************
@@ -393,3 +397,4 @@ ROM_END
  *************************************/
 
 GAME( 1983, irobot, 0, irobot, irobot, irobot, ROT0, "Atari", "I, Robot" )
+}

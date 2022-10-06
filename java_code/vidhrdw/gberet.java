@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gberet
+{
+	
 
 
 unsigned char *gberet_videoram,*gberet_colorram;
@@ -290,4 +296,5 @@ VIDEO_UPDATE( gberetb )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
 	draw_sprites_bootleg(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
+}
 }

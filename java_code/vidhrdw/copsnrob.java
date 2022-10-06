@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "copsnrob.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class copsnrob
+{
+	
 
 unsigned char *copsnrob_bulletsram;
 unsigned char *copsnrob_carimage;
@@ -165,4 +169,5 @@ VIDEO_UPDATE( copsnrob )
             mask2 <<= 1;
         }
     }
+}
 }

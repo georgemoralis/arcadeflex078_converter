@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-extern int portrait_scrollx_hi, portrait_scrollx_lo;
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
+
+public class portrait
+{
+	extern int portrait_scrollx_hi, portrait_scrollx_lo;
 data8_t *portrait_bgvideoram, *portrait_fgvideoram, *portrait_spriteram;
 static struct tilemap *foreground, *background;
 
@@ -118,4 +125,5 @@ VIDEO_UPDATE( portrait )
 	tilemap_draw( bitmap, cliprect, background, 0, 0 );
 	draw_sprites(bitmap);
 	tilemap_draw( bitmap, cliprect, foreground, 0, 0 );
+}
 }

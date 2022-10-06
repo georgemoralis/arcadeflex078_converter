@@ -4,10 +4,15 @@ Cinematronics Embargo driver
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/s2650/s2650.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class embargo
+{
+	
 static int dial_enable_1;
 static int dial_enable_2;
 
@@ -207,3 +212,4 @@ ROM_END
 
 
 GAMEX( 1977, embargo, 0, embargo, embargo, 0, ROT0, "Cinematronics", "Embargo", GAME_NO_SOUND )
+}

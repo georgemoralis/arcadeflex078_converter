@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mexico86
+{
+	
 unsigned char *mexico86_videoram,*mexico86_objectram;
 size_t mexico86_objectram_size;
 static int charbank;
@@ -244,3 +251,4 @@ VIDEO_UPDATE( kikikai )
 	}
 }
 //ZT
+}

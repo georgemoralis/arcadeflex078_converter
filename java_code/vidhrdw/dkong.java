@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dkong
+{
+	
 
 static int gfx_bank, palette_bank;
 static int grid_on;
@@ -373,4 +379,5 @@ VIDEO_UPDATE( spclforc )
 
 	/* it uses spriteram[offs + 2] & 0x10 for sprite bank */
 	draw_sprites(bitmap, 0x10, 3);
+}
 }

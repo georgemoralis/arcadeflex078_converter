@@ -58,9 +58,15 @@ Word | Bit(s)           | Use
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shangha3
+{
+	
 
 data16_t *shangha3_ram;
 size_t shangha3_ram_size;
@@ -267,4 +273,5 @@ else
 VIDEO_UPDATE( shangha3 )
 {
 	copybitmap(bitmap,rawbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

@@ -37,10 +37,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shootout
+{
+	
 UINT8 *shootout_textram;
 
 extern WRITE_HANDLER( shootout_videoram_w );
@@ -457,3 +462,4 @@ static DRIVER_INIT( shootout )
 GAME( 1985, shootout, 0,		shootout, shootout, shootout, ROT0, "Data East USA", "Shoot Out (US)")
 GAME( 1985, shootouj, shootout, shootouj, shootout, 0,		  ROT0, "Data East USA", "Shoot Out (Japan)" )
 GAME( 1985, shootoub, shootout, shootouj, shootout, shootout, ROT0, "bootleg", "Shoot Out (Korean Bootleg)" )
+}

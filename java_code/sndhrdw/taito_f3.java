@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class taito_f3
+{
+	
 static int counter,vector_reg,imr_status;
 static data16_t es5510_dsp_ram[0x200];
 static data32_t	es5510_gpr[0xc0];
@@ -229,4 +236,5 @@ WRITE16_HANDLER(es5510_dsp_w)
 	//		logerror("ES5510:  Write GPR/INSTR %06x %06x\n",data,es5510_gpr_latch);
 			break;
 	}
+}
 }

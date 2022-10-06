@@ -6,9 +6,15 @@
  *									  *
  ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class speedbal
+{
+	
 #define SPRITE_X		0
 #define SPRITE_NUMBER	   1
 #define SPRITE_PALETTE	  2
@@ -275,4 +281,5 @@ VIDEO_UPDATE( speedbal )
 
 	// thirth sprites
 	speedbal_draw_sprites (bitmap);
+}
 }

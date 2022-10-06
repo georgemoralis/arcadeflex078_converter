@@ -12,9 +12,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class snk68
+{
+	
 static int sprite_flip, pow_charbase=0; //*
 static struct tilemap *fix_tilemap;
 
@@ -315,3 +321,4 @@ VIDEO_UPDATE( searchar )
 	tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 }
 
+}

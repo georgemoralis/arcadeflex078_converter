@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "osinline.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class profiler
+{
+	
 
 /* in usrintf.c */
 extern int uirotcharwidth, uirotcharheight;
@@ -201,4 +207,5 @@ void profiler_show(struct mame_bitmap *bitmap)
 		profile.count[memory][i] = 0;
 
 	profiler_mark(PROFILER_END);
+}
 }

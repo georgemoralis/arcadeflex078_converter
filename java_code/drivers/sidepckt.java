@@ -13,11 +13,15 @@ i8751 protection simluation and other fixes by Bryan McPhail, 15/10/00.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sidepckt
+{
+	
 /* from vidhrdw */
 PALETTE_INIT( sidepckt );
 VIDEO_START( sidepckt );
@@ -443,3 +447,4 @@ ROM_END
 GAME( 1986, sidepckt, 0,        sidepckt, sidepckt, 0, ROT0, "Data East Corporation", "Side Pocket (World)" )
 GAME( 1986, sidepctj, sidepckt, sidepctj, sidepckt, 0, ROT0, "Data East Corporation", "Side Pocket (Japan)" )
 GAME( 1986, sidepctb, sidepckt, sidepckt, sidepckt, 0, ROT0, "bootleg", "Side Pocket (bootleg)" )
+}

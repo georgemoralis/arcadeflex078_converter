@@ -5,9 +5,15 @@ Mr. F. Lea
 
 ******************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mrflea
+{
+	
 static int mrflea_gfx_bank;
 
 WRITE_HANDLER( mrflea_gfx_bank_w ){
@@ -93,4 +99,5 @@ VIDEO_UPDATE( mrflea )
 {
 	draw_background( bitmap );
 	draw_sprites( bitmap );
+}
 }

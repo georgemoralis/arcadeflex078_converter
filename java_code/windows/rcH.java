@@ -20,9 +20,15 @@
 #ifndef __RC_H
 #define __RC_H
 
-#include <stdio.h>
-#include "fileio.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class rcH
+{
+	
 struct rc_struct;
 struct rc_option;
 
@@ -125,3 +131,4 @@ int rc_check_and_create_dir(const char *name);
 char *rc_get_home_dir(void);
 
 #endif /* ifndef __RC_H */
+}

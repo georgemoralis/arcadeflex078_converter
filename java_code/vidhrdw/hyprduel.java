@@ -54,9 +54,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hyprduel
+{
+	
 #define RASTER_LINES 262
 #define FIRST_VISIBLE_LINE 0
 #define LAST_VISIBLE_LINE 223
@@ -668,4 +674,5 @@ VIDEO_UPDATE( hyprduel )
 			for (i = 0; i < 0x20; i++)
 				hypr_draw_sprites(bitmap,cliprect, i);
 	}
+}
 }

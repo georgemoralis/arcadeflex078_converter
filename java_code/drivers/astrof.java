@@ -35,9 +35,15 @@ Also....
         I have played one that stoped between waves to show the next enemy
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class astrof
+{
+	
 extern unsigned char *astrof_color;
 extern unsigned char *tomahawk_protection;
 
@@ -342,3 +348,4 @@ GAME( 1979, astrof2,  astrof,   astrof,   astrof,   0, ROT90, "Data East", "Astr
 GAME( 1979, astrof3,  astrof,   astrof,   astrof,   0, ROT90, "Data East", "Astro Fighter (set 3)" )
 GAMEX(1980, tomahawk, 0,        tomahawk, tomahawk, 0, ROT90, "Data East", "Tomahawk 777 (Revision 1)", GAME_NO_SOUND )
 GAMEX(1980, tomahaw5, tomahawk, tomahawk, tomahawk, 0, ROT90, "Data East", "Tomahawk 777 (Revision 5)", GAME_NO_SOUND )
+}

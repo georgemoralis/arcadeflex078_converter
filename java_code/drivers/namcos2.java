@@ -444,13 +444,15 @@ $a00000 checks have been seen on the Final Lap boards.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namcos2.h"
-#include "cpu/m6809/m6809.h"
-#include "namcoic.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos2
+{
+	
 
 /*************************************************************/
 /* 68000/6809/63705 Shared memory area - DUAL PORT Memory	 */
@@ -4448,3 +4450,4 @@ GAME( 1992, sws92,    0,        default,  default,  sws92,    ROT0,   "Namco", "
 GAME( 1992, sws92g,   sws92,    default,  default,  sws92g,   ROT0,   "Namco", "Super World Stadium '92 Gekitouban (Japan)" )
 GAMEX(1993, suzuk8h2, 0,        luckywld, suzuka,   suzuk8h2, ROT0,   "Namco", "Suzuka 8 Hours 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
 GAME( 1993, sws93,    0,        default,  default,  sws93,    ROT0,   "Namco", "Super World Stadium '93 (Japan)" )
+}

@@ -11,8 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class namco
+{
+	
 
 /* 8 voices max */
 #define MAX_VOICES 8
@@ -744,4 +751,5 @@ WRITE_HANDLER( snkwave_w )
 			voice->frequency = (data<<16)/freq0;
 		}
 	}
+}
 }

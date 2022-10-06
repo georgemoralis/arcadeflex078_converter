@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class skychut
+{
+	
 
 
 UINT8 *iremm15_chargen;
@@ -165,3 +171,4 @@ VIDEO_UPDATE( iremm15 )
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 }
 
+}

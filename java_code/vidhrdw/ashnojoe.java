@@ -5,9 +5,15 @@
 
 *********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ashnojoe
+{
+	
 data16_t *ashnojoetileram16, *ashnojoetileram16_2, *ashnojoetileram16_3, *ashnojoetileram16_4, *ashnojoetileram16_5, *ashnojoetileram16_6, *ashnojoetileram16_7;
 static struct tilemap *joetilemap, *joetilemap2, *joetilemap3, *joetilemap4, *joetilemap5, *joetilemap6, *joetilemap7;
 
@@ -224,4 +230,5 @@ VIDEO_UPDATE( ashnojoe )
 	tilemap_draw(bitmap,cliprect,joetilemap3,0,0);
 	tilemap_draw(bitmap,cliprect,joetilemap, 0,0);
 
+}
 }

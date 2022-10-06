@@ -7,10 +7,15 @@ TODO:
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class yamato
+{
+	
 
 
 extern unsigned char *cclimber_bsvideoram;
@@ -441,3 +446,4 @@ static DRIVER_INIT( yamato )
 
 GAME( 1983, yamato,  0,      yamato, yamato, yamato, ROT90, "Sega", "Yamato (US)" )
 GAME( 1983, yamato2, yamato, yamato, yamato, yamato, ROT90, "Sega", "Yamato (World?)" )
+}

@@ -11,9 +11,15 @@ J Clegg
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class travrusa
+{
+	
 extern unsigned char *spriteram;
 extern size_t spriteram_size;
 
@@ -337,4 +343,5 @@ VIDEO_UPDATE( travrusa )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
+}
 }

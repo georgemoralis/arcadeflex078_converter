@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mappy
+{
+	
 
 unsigned char *mappy_sharedram;
 unsigned char *mappy_customio_1,*mappy_customio_2;
@@ -582,4 +588,5 @@ INTERRUPT_GEN( mappy_interrupt_2 )
 WRITE_HANDLER( mappy_cpu_enable_w )
 {
 	cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
+}
 }

@@ -28,11 +28,15 @@ secondary crystal, numbers unknown for the TMS9928
 
 ******************************************************/
 
-#include "driver.h"
-#include "sound/sn76496.h"
-#include "vidhrdw/tms9928a.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sg1000a
+{
+	
 static MEMORY_READ_START( readmem )
     { 0x0000, 0xbFFF, MRA_ROM },
     { 0xc000, 0xc3ff, MRA_RAM },
@@ -192,3 +196,4 @@ DRIVER_INIT(chwrestl)
 GAME( 1984, chboxing, 0, sg1000a, chboxing, 0, ROT0, "Sega", "Champion Boxing")
 GAME( 1985, chwrestl, 0, sg1000a, chwrestl, chwrestl, ROT0, "Sega", "Champion Pro Wrestling")
 
+}

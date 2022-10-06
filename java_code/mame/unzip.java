@@ -1,11 +1,12 @@
-#include "unzip.h"
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <assert.h>
-#include <zlib.h>
+public class unzip
+{
+	
 
 /* public globals */
 int	gUnzipQuiet = 0;		/* flag controls error messages */
@@ -848,4 +849,5 @@ int /* error */ checksum_zipped_file (int pathtype, int pathindex, const char *z
 
 	cache_suspendzip(zip);
 	return -1;
+}
 }

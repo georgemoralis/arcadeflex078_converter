@@ -36,11 +36,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/tmp68301.h"
-#include "realbrk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class realbrk
+{
+	
 static data16_t *realbrk_dsw_select;
 
 /* Read 4 ten bit dip switches */
@@ -403,3 +407,4 @@ ROM_END
 
 GAMEX( 1998, realbrk, 0, realbrk, realbrk, 0, ROT0, "Nakanihon", "Billiard Academy Real Break (Japan)", GAME_IMPERFECT_GRAPHICS )
 
+}

@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ninjaw
+{
+	
 #define TC0100SCN_GFX_NUM 1
 
 struct tempsprite
@@ -178,4 +183,5 @@ VIDEO_UPDATE( ninjaw )
 	TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[2],0,0);
 	TC0100SCN_tilemap_draw(bitmap,cliprect,1,layer[2],0,0);
 	TC0100SCN_tilemap_draw(bitmap,cliprect,2,layer[2],0,0);
+}
 }

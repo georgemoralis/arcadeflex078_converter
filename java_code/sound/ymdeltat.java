@@ -62,10 +62,15 @@
 **
 */
 
-#include "driver.h"
-#include "state.h"
-#include "ymdeltat.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class ymdeltat
+{
+	
 #define YM_DELTAT_DELTA_MAX (24576)
 #define YM_DELTAT_DELTA_MIN (127)
 #define YM_DELTAT_DELTA_DEF (127)
@@ -636,3 +641,4 @@ value:   START, REC, MEMDAT, REPEAT, SPOFF, x,x,RESET   meaning:
 	return;
 }
 
+}

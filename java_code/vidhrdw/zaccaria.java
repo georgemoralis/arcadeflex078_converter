@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class zaccaria
+{
+	
 
 
 data8_t *zaccaria_videoram,*zaccaria_attributesram;
@@ -298,4 +304,5 @@ VIDEO_UPDATE( zaccaria )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

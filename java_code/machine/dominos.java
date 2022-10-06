@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "dominos.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class dominos
+{
+	
 static int dominos_attract = 0;
 static int ac_line = 0x00;
 
@@ -138,3 +143,4 @@ WRITE_HANDLER( dominos_tumble_w )
 }
 
 
+}

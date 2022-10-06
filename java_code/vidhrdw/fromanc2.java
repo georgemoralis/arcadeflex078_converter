@@ -6,9 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fromanc2
+{
+	
 
 static int fromanc2_dispvram, fromanc2_dispvram_old;
 static int fromanc2_scrollx[2][4], fromanc2_scrolly[2][4];
@@ -626,4 +632,5 @@ VIDEO_UPDATE( fromanc2 )
 		tilemap_set_scrolly(fromanc2_tilemap[fromanc2_dispvram][3], 0, -fromanc2_scrolly[fromanc2_dispvram][3]);
 	 	tilemap_draw(bitmap,cliprect, fromanc2_tilemap[fromanc2_dispvram][3], 0, 0);
 	}
+}
 }

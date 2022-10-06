@@ -8,10 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32031;
 
-#include "driver.h"
-#include "tms32031.h"
+public class dis32031
+{
+	
 
 
 /*###################################################################################################
@@ -732,4 +737,5 @@ unsigned dasm_tms32031(char *buffer, unsigned pc)
 	}
 
 	return 1;
+}
 }

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bankp
+{
+	
 UINT8 *bankp_videoram2;
 UINT8 *bankp_colorram2;
 
@@ -220,4 +226,5 @@ VIDEO_UPDATE( bankp )
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0); // just a guess
 		break;
 	}
+}
 }

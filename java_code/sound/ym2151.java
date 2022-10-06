@@ -4,14 +4,15 @@
 *
 ******************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "state.h"
-#include "ym2151.h"
+public class ym2151
+{
+	
 
 
 /* undef this to not use MAME timer system */
@@ -2470,3 +2471,4 @@ void YM2151SetPortWriteHandler(int n, mem_write_handler handler)
 	YMPSG[n].porthandler = handler;
 }
 
+}

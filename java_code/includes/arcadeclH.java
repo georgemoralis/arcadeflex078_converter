@@ -4,10 +4,18 @@
 
 *************************************************************************/
 
-#include "rampart.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class arcadeclH
+{
+	
 
 /*----------- defined in vidhrdw/arcadecl.c -----------*/
 
 VIDEO_START( arcadecl );
 VIDEO_UPDATE( arcadecl );
+}

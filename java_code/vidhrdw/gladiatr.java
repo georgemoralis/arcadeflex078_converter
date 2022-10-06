@@ -4,9 +4,15 @@
 	Video Hardware description for Taito Gladiator
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gladiatr
+{
+	
 static int video_attributes;
 static int base_scroll;
 static int background_scroll;
@@ -264,4 +270,5 @@ VIDEO_UPDATE( gladiatr )
 		render_sprites( bitmap );
 		render_text( bitmap );
 	}
+}
 }

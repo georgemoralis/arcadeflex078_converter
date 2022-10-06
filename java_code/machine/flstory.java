@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class flstory
+{
+	
 
 static unsigned char from_main,from_mcu;
 static int mcu_sent = 0,main_sent = 0;
@@ -175,4 +182,5 @@ READ_HANDLER( onna34ro_mcu_status_r )
 	int res = 3;
 
 	return res;
+}
 }

@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "avalnche.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class avalnche
+{
+	
 /***************************************************************************
   avalnche_input_r
 ***************************************************************************/
@@ -80,4 +85,5 @@ WRITE_HANDLER( avalnche_noise_amplitude_w )
 INTERRUPT_GEN( avalnche_interrupt )
 {
 		cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+}
 }

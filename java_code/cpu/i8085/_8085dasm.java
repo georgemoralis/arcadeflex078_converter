@@ -20,10 +20,15 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
-#include "osd_cpu.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8085;
 
+public class _8085dasm
+{
+	
 /* 8080/8085A mnemonics were more irritation than information
    What would you guess "CP $3456" to mean? It's not compare,
    but call if plus ... therefore: */
@@ -558,3 +563,4 @@ unsigned Dasm8085(char *buff, unsigned pc)
 	return pc - PC;
 }
 
+}

@@ -30,10 +30,15 @@ If you have any questions about how this driver works, don't hesitate to
 ask.  - Mike Balfour (mab22@po.cwru.edu)
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/i8085/i8085.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class redalert
+{
+	
 static int AY8910_A_input_data = 0;
 static int c030_data = 0;
 static int sound_register_IC1 = 0;
@@ -118,3 +123,4 @@ WRITE_HANDLER( redalert_AY8910_B_w )
 	/* D6 = Explosion #3? */
 }
 
+}

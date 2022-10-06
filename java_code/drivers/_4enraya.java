@@ -48,11 +48,15 @@ Sound :
 
 ***************************************************************************/
 
-#include <math.h>
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class _4enraya
+{
+	
 VIDEO_START( 4enraya );
 VIDEO_UPDATE( 4enraya );
 
@@ -224,3 +228,4 @@ ROM_START( 4enraya )
 ROM_END
 
 GAME( 1990, 4enraya,  0,       4enraya,  4enraya,  0, ROT0, "IDSA", "4 En Raya" )
+}

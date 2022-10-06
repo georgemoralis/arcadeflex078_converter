@@ -9,10 +9,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class liberate
+{
+	
 static int background_color,background_disable;
 static struct tilemap *background_tilemap, *fix_tilemap;
 static data8_t deco16_io_ram[16];
@@ -434,4 +439,5 @@ VIDEO_UPDATE( liberate )
 
 	liberate_drawsprites(bitmap);
 	tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
+}
 }

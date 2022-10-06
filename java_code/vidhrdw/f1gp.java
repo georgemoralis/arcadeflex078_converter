@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "f1gp.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class f1gp
+{
+	
 
 data16_t *f1gp_spr1vram,*f1gp_spr2vram,*f1gp_spr1cgram,*f1gp_spr2cgram;
 data16_t *f1gp_fgvideoram,*f1gp_rozvideoram;
@@ -430,4 +435,5 @@ VIDEO_UPDATE( f1gp2 )
 #endif
 		}
 	}
+}
 }

@@ -87,11 +87,15 @@ VBlank = 58Hz
 
   *********************************************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vball
+{
+	
 /* from vidhrdw */
 extern unsigned char *vb_attribram;
 extern unsigned char *vb_spriteram;
@@ -539,3 +543,4 @@ ROM_END
 
 GAME( 1988, vball,    0,     vball,    vball,    0, ROT0, "Technos", "U.S. Championship V'ball (set 1)" )
 GAME( 1988, vball2pj, vball, vball2pj, vball2pj, 0, ROT0, "Technos", "U.S. Championship V'ball (Japan)" )
+}

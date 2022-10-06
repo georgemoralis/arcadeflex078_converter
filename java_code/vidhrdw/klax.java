@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "klax.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class klax
+{
+	
 
 
 /*************************************
@@ -133,4 +138,5 @@ VIDEO_UPDATE( klax )
 					mo[x] = 0;
 				}
 		}
+}
 }

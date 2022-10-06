@@ -9,14 +9,15 @@
 #ifndef MACHINE_H
 #define MACHINE_H
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include "fileio.h"
-#include "osdepend.h"
-#include "drawgfx.h"
-#include "palette.h"
+public class mameH
+{
+	
 
 extern char build_version[];
 extern int gbPriorityBitmapIsDirty;
@@ -375,7 +376,7 @@ const struct performance_info *mame_get_performance_info(void);
 int mame_find_cpu_index(const char *tag);
 
 #ifdef MESS
-#include "mess.h"
 #endif /* MESS */
 
 #endif
+}

@@ -19,12 +19,15 @@ a symmetrical visible area).
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gradius3
+{
+	
 
 extern data16_t *gradius3_gfxram;
 extern int gradius3_priority;
@@ -568,3 +571,4 @@ static DRIVER_INIT( gradius3 )
 GAME( 1989, gradius3, 0,        gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (Japan)" )
 GAME( 1989, grdius3a, gradius3, gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (Asia)" )
 GAME( 1989, grdius3e, gradius3, gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (World ?)" )
+}

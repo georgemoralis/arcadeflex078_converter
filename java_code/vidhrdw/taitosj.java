@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taitosj
+{
+	
 #ifndef MIN
 #define MIN(x,y) (x)<(y)?(x):(y)
 #endif
@@ -884,4 +890,5 @@ VIDEO_UPDATE( taitosj )
 	check_sprite_plane_collision();
 
 	/*check_plane_plane_collision();*/	/*not implemented !!!*/
+}
 }

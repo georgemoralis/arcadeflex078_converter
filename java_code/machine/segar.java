@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "segar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class segar
+{
+	
 void (*sega_decrypt)(int,unsigned int *);
 
 UINT8 *segar_mem;
@@ -422,3 +427,4 @@ void sega_security(int chip)
 }
 
 
+}

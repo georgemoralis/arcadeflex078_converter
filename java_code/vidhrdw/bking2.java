@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bking2
+{
+	
 extern UINT8* bking2_playfield_ram;
 
 
@@ -382,4 +389,5 @@ VIDEO_EOF( bking2 )
 			}
 		}
 	}
+}
 }

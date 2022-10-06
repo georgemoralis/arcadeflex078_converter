@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rockola
+{
+	
 UINT8 *rockola_videoram2;
 UINT8 *rockola_charram;
 
@@ -341,4 +347,5 @@ VIDEO_START( satansat )
 	tilemap_set_transparent_pen(fg_tilemap, 0);
 
 	return 0;
+}
 }

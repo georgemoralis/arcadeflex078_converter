@@ -23,13 +23,15 @@ Memo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "machine/m68kfmly.h"
-#include "cpu/z80/z80.h"
-#include "machine/z80fmly.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class niyanpai
+{
+	
 
 #define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 
@@ -566,3 +568,4 @@ ROM_END
 
 
 GAME( 1996, niyanpai, 0, niyanpai, niyanpai, niyanpai, ROT0, "Nichibutsu", "Niyanpai (Japan)" )
+}

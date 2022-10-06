@@ -54,13 +54,15 @@ Notes:
 
 */
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
+public class dbz2
+{
+	
 
 /* BG LAYER */
 
@@ -601,3 +603,4 @@ static DRIVER_INIT(dbz)
 
 GAMEX( 1993, dbz,  0, dbz,  dbz, dbz, ROT0, "Banpresto", "Dragonball Z" , GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1994, dbz2, 0, dbz2, dbz2, dbz2, ROT0, "Banpresto", "Dragonball Z 2 Super Battle" , GAME_IMPERFECT_GRAPHICS )
+}

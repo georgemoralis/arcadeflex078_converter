@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class phozon
+{
+	
 extern unsigned char *phozon_spriteram;
 
 /***************************************************************************
@@ -250,4 +256,5 @@ usrintf_showmessage("%02x",spriteram_3[offs] & 0x3c);
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 	}
+}
 }

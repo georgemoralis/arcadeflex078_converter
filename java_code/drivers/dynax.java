@@ -68,10 +68,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "includes/dynax.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dynax
+{
+	
 
 /***************************************************************************
 
@@ -2973,3 +2978,4 @@ GAME ( 1994, maya,     0,        sprtmtch, sprtmtch, maya, ROT0,   "Promat",    
 // should move these to splash.c, its a protected bootleg of splash, not dynax stuff */
 GAMEX(1993, roldfrog, 0,        roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog", GAME_NOT_WORKING )
 GAMEX(1993, roldfrga, roldfrog, roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog (set 2)", GAME_NOT_WORKING )
+}

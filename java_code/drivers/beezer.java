@@ -6,11 +6,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/6522via.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class beezer
+{
+	
 /* from vidhrdw/beezer.c */
 extern UINT8 *videoram;
 INTERRUPT_GEN( beezer_interrupt );
@@ -173,3 +177,4 @@ ROM_END
 
 GAMEX( 1982, beezer,  0,       beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 1)", GAME_IMPERFECT_SOUND )
 GAMEX( 1982, beezer1,  beezer, beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 2)", GAME_IMPERFECT_SOUND )
+}

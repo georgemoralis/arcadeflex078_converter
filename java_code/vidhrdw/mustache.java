@@ -6,9 +6,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mustache
+{
+	
 static struct tilemap *bg_tilemap;
 static int control_byte;
 
@@ -143,4 +149,5 @@ VIDEO_UPDATE( mustache )
 {
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	mustache_draw_sprites(bitmap, cliprect);
+}
 }

@@ -64,10 +64,15 @@ BS-002  4464 4464     BS-100          6264
 BS07    4464 4464     BS-64           BS-200
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class djboy
+{
+	
 /* public functions from vidhrdw/djboy.h */
 extern void djboy_set_videoreg( data8_t data );
 extern WRITE_HANDLER( djboy_scrollx_w );
@@ -651,3 +656,4 @@ INPUT_PORTS_END
 
 /*     YEAR, NAME,  PARENT, MACHINE, INPUT, INIT, MNTR,  COMPANY, FULLNAME, FLAGS */
 GAMEX( 1989, djboy, 0,      djboy,   djboy, 0,    ROT0, "Kaneko", "DJ Boy", GAME_NOT_WORKING )
+}

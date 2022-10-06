@@ -46,10 +46,15 @@ can take. Should the game reset????
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class btime
+{
+	
 extern unsigned char *lnc_charbank;
 extern unsigned char *bnj_backgroundram;
 extern size_t bnj_backgroundram_size;
@@ -1883,3 +1888,4 @@ GAME( 1982, zoar,     0,       zoar,     zoar,     zoar,    ROT270, "Data East U
 GAME( 1982, disco,    0,       disco,    disco,    btime,   ROT270, "Data East", "Disco No.1" )
 GAME( 1982, discof,   disco,   disco,    disco,    btime,   ROT270, "Data East", "Disco No.1 (Rev.F)" )
 GAME( 1983, sdtennis, 0,       bnj,      sdtennis, sdtennis,ROT270, "Data East Corporation", "Super Doubles Tennis" )
+}

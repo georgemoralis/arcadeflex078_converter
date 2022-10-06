@@ -26,10 +26,15 @@ Head Panic
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class esd16
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data16_t *esd16_vram_0, *esd16_scroll_0;
@@ -670,3 +675,4 @@ ROM_END
 
 GAME( 1998, multchmp, 0, multchmp, multchmp, 0, ROT0, "ESD", "Multi Champ (Korea)" )
 GAME( 2000, hedpanic, 0, hedpanic, hedpanic, 0, ROT0, "ESD / Fuuki", "Head Panic (Korea?)" )
+}

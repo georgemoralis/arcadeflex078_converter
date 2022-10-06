@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class thunderx
+{
+	
 
 int scontra_priority;
 static int layer_colorbase[3],sprite_colorbase;
@@ -91,4 +97,5 @@ VIDEO_UPDATE( scontra )
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,4);
 
 	K051960_sprites_draw(bitmap,cliprect,-1,-1);
+}
 }

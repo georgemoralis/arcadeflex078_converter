@@ -11,9 +11,15 @@
 #ifndef _DSP32_H
 #define _DSP32_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.dsp32;
 
+public class dsp32H
+{
+	
 
 
 /*###################################################################################################
@@ -105,3 +111,4 @@ extern void dsp32c_pio_w(int cpunum, int reg, int data);
 extern int dsp32c_pio_r(int cpunum, int reg);
 
 #endif /* _DSP32_H */
+}

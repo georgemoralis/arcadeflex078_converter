@@ -1,5 +1,12 @@
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class timelimt
+{
+	
 /* globals */
 data8_t *timelimt_bg_videoram;
 size_t timelimt_bg_videoram_size;
@@ -173,4 +180,5 @@ VIDEO_UPDATE( timelimt )
 	drawsprites( bitmap );
 
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

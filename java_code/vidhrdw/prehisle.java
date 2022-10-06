@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class prehisle
+{
+	
 
 UINT16 *prehisle_bg_videoram16;
 
@@ -160,4 +166,5 @@ VIDEO_UPDATE( prehisle )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	prehisle_draw_sprites(bitmap, cliprect);
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
+}
 }

@@ -5,17 +5,20 @@
  *
  */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
 
+public class _34010dsm
+{
+	
 #ifdef STANDALONE
 #define PC __pc + (offset << 3)
 #define PARAM_WORD(v) { v = filebuf[_pc>>3]; _pc += 8; v = v | (filebuf[_pc>>3] << 8); _pc += 8;}
 #define PARAM_LONG(v) { int v1, v2; PARAM_WORD(v1); PARAM_WORD(v2); v = v1 | (v2 << 16); }
 #else
-#include "memory.h"
 #define PC __pc
 #define PARAM_WORD(v) { v = cpu_readmem29lew_word(_pc>>3); _pc += 16; }
 #define PARAM_LONG(v) { v = (cpu_readmem29lew_word((_pc>>3)+2)<<16)|cpu_readmem29lew_word(_pc>>3); _pc += 32; }
@@ -1732,3 +1735,4 @@ unsigned Dasm34020(char *buff, UINT32 pc)
 	return Dasm340x0(buff, pc, 1);
 }
 
+}

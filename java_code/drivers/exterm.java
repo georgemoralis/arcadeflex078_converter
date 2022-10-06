@@ -56,9 +56,15 @@ driver by Zsolt Vasvari and Alex Pasadyn
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class exterm
+{
+	
 static size_t code_rom_size;
 static data16_t *exterm_code_rom;
 static data16_t *exterm_master_speedup, *exterm_slave_speedup;
@@ -576,3 +582,4 @@ DRIVER_INIT( exterm )
  *************************************/
 
 GAME( 1989, exterm, 0, exterm, exterm, exterm, ROT0, "Gottlieb / Premier Technology", "Exterminator" )
+}

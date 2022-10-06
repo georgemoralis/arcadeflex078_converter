@@ -20,9 +20,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class yunsun16
+{
+	
 /* Variables that driver has access to: */
 
 data16_t *yunsun16_vram_0,   *yunsun16_vram_1;
@@ -239,4 +245,5 @@ VIDEO_UPDATE( yunsun16 )
 		sect_rect(&clip,cliprect);
 		fillbitmap(bitmap,Machine->pens[0],&clip);
 	}
+}
 }

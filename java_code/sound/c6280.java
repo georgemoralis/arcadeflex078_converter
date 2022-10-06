@@ -53,13 +53,15 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "state.h"
-#include "c6280.h"
+public class c6280
+{
+	
 
 /* Local function prototypes */
 void c6280_init(int which, double clk, double rate, double volume);
@@ -330,3 +332,4 @@ void c6280_sh_stop(void)
 WRITE_HANDLER( C6280_0_w ) {  c6280_write(0,offset,data); }
 WRITE_HANDLER( C6280_1_w ) {  c6280_write(1,offset,data); }
 
+}

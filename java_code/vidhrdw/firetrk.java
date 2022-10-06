@@ -4,9 +4,15 @@ Atari Fire Truck + Super Bug + Monte Carlo video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "firetrk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class firetrk
+{
+	
 UINT8* firetrk_alpha_num_ram;
 UINT8* firetrk_playfield_ram;
 
@@ -486,4 +492,5 @@ VIDEO_EOF( firetrk )
 	{
 		firetrk_set_blink(0);
 	}
+}
 }

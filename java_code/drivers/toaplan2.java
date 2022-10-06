@@ -218,12 +218,15 @@ To Do / Unknowns:
 *****************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class toaplan2
+{
+	
 
 /**************** Machine stuff ******************/
 #define HD64x180 0		/* Define if CPU support is available */
@@ -4980,3 +4983,4 @@ GAME ( 1998, batridra, batrider, batrider, batrider, battleg,  ROT270, "Raizing 
 GAME ( 1998, batridrk, batrider, batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Korea, version B)" )
 GAME ( 1999, bbakraid, 0,        bbakraid, bbakraid, bbakraid, ROT270, "Eighting", "Battle Bakraid (Japan) (Wed Apr 7 1999)")
 GAME ( 1999, bbakradu, bbakraid, bbakraid, bbakraid, bbakrada, ROT270, "Eighting", "Battle Bakraid - Unlimited version (Japan) (Tue Jun 8 1999)")
+}

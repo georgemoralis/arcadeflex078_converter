@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/crtc6845.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class spiders
+{
+	
 extern int spiders_video_flip;
 
 static int bitflip[256];
@@ -128,4 +133,5 @@ VIDEO_UPDATE( spiders )
 
 	/* Now copy the temp bitmap to the screen */
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class system16
+{
+	
 //int sys16_sh_shadowpal;
 //int sys16_MaxShadowColors;
 
@@ -2231,3 +2237,4 @@ struct YM2612interface sys18_ym3438_interface =
 			YM3012_VOL(40,MIXER_PAN_CENTER,40,MIXER_PAN_CENTER) },	/* Volume */
 	{ 0 },	{ 0 },	{ 0 },	{ 0 }
 };
+}

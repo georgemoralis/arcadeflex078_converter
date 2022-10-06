@@ -6,8 +6,15 @@
  * Juergen Buchmueller <pullmoll@t-online.de>
  *
  ****************************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class pleiads
+{
+	
 #define VMIN	0
 #define VMAX	32767
 
@@ -666,3 +673,4 @@ void pleiads_sh_update(void)
 }
 
 
+}

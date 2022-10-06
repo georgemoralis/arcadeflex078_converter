@@ -56,8 +56,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 
 **************************************************************************/
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ginganin
+{
+	
 /* Variables only used here */
 static struct tilemap *bg_tilemap, *fg_tilemap, *tx_tilemap;
 static int layers_ctrl, flipscreen;
@@ -295,3 +302,4 @@ if (keyboard_pressed(KEYCODE_Z))
 
 }
 
+}

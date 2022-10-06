@@ -6,12 +6,15 @@
  **********************************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "adpcm.h"
+public class es5506
+{
+	
 
 
 
@@ -27,7 +30,6 @@
 #define MAKE_WAVS				0
 
 #if MAKE_WAVS
-#include "wavwrite.h"
 #endif
 
 
@@ -2228,4 +2230,5 @@ void ES5506_voice_bank_1_w(int voice, int bank)
 	es5506[1].voice[voice].control = CONTROL_STOPMASK;
 #endif
 	es5506[1].voice[voice].exbank=bank;
+}
 }

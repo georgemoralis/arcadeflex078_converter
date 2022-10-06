@@ -1,10 +1,12 @@
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include "driver.h"
-#include "sound/samples.h"
-#include "info.h"
-#include "hash.h"
-#include "datafile.h"
+public class info
+{
+	
 
 /* Format */
 #define SELECT(a,b) (OUTPUT_XML ? (b) : (a))
@@ -1091,4 +1093,5 @@ void print_mame_xml(FILE* out, const struct GameDriver* games[])
 void print_mame_info(FILE* out, const struct GameDriver* games[])
 {
 	print_mame_data(0, out, games);
+}
 }

@@ -271,12 +271,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/atari_vg.h"
-#include "centiped.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class centiped
+{
+	
 
 static int oldpos[4];
 static UINT8 sign[4];
@@ -1500,3 +1503,4 @@ GAME( 1980, magworm,  centiped, magworm,  magworm,  magworm,  ROT270, "bootleg",
 GAME( 1982, milliped, 0,        milliped, milliped, 0,        ROT270, "Atari", "Millipede" )
 
 GAME( 1980, warlords, 0,        warlords, warlords, 0,        ROT0,   "Atari", "Warlords" )
+}

@@ -7,11 +7,15 @@
    Driver by R. Belmont
 */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rungun
+{
+	
 static int ttl_gfx_index;
 static struct tilemap *ttl_tilemap, *rng_936_tilemap;
 static data16_t ttl_vram[0x1000];
@@ -145,4 +149,5 @@ VIDEO_UPDATE(rng)
 
 	tilemap_mark_all_tiles_dirty(ttl_tilemap);
 	tilemap_draw(bitmap, cliprect, ttl_tilemap, 0, 0);
+}
 }

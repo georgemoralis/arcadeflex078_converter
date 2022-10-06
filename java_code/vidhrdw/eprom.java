@@ -4,12 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vidhrdw/generic.h"
-#include "eprom.h"
-#include "thunderj.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class eprom
+{
+	
 
 
 /*************************************
@@ -274,4 +277,5 @@ VIDEO_UPDATE( eprom )
 					mo[x] = 0;
 				}
 		}
+}
 }

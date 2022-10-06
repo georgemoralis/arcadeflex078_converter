@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lkage
+{
+	
 unsigned char *lkage_scroll, *lkage_vreg;
 static unsigned char bg_tile_bank, fg_tile_bank;
 
@@ -220,4 +226,5 @@ VIDEO_UPDATE( lkage )
 	{
 		tilemap_draw( bitmap,cliprect,tx_tilemap,TILEMAP_IGNORE_TRANSPARENCY ,0);
 	}
+}
 }

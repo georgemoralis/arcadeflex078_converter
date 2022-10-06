@@ -9,8 +9,15 @@ Video hardware
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class quizdna
+{
+	
 static data8_t *quizdna_bg_ram;
 static data8_t *quizdna_fg_ram;
 
@@ -207,4 +214,5 @@ VIDEO_UPDATE( quizdna )
 	}
 	else
 		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+}
 }

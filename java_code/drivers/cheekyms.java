@@ -6,9 +6,15 @@
  Not to be distributed as part of any commerical work.
 **************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cheekyms
+{
+	
 
 
 
@@ -198,3 +204,4 @@ ROM_END
 
 
 GAMEX( 1980?, cheekyms, 0, cheekyms, cheekyms, 0, ROT270, "Universal", "Cheeky Mouse", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+}

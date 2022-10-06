@@ -6,14 +6,15 @@
  *	Driver by BUT
  */
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m68000/m68000.h"
-#include "namcoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tceptor
+{
+	
 #ifdef TINY_COMPILE
 // to avoid link error
 int namcos2_gametype;
@@ -724,3 +725,4 @@ ROM_END
 /*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR   COMPANY FULLNAME ) */
 GAME( 1986, tceptor,  0,        tceptor,  tceptor,  tceptor,  ROT0,     "Namco",  "Thunder Ceptor")
 GAME( 1986, tceptor2, tceptor,  tceptor,  tceptor2, tceptor,  ROT0,     "Namco",  "Thunder Ceptor II")
+}

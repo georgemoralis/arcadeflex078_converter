@@ -1,7 +1,13 @@
 // system 16 - 7751 emulation, based on monster bash code.
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class system16
+{
+	
 static unsigned int port_8255_c03 = 0;
 static unsigned int port_8255_c47 = 0;
 static unsigned int port_7751_p27 = 0;
@@ -110,3 +116,4 @@ WRITE_HANDLER( sys16_7751_sh_rom_select_w )
 
 }
 
+}

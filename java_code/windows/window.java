@@ -6,9 +6,15 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <windowsx.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class window
+{
+	
 // missing stuff from the mingw headers
 #ifndef ENUM_CURRENT_SETTINGS
 #define ENUM_CURRENT_SETTINGS       ((DWORD)-1)
@@ -26,18 +32,8 @@
 #endif
 
 // standard C headers
-#include <math.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "winddraw.h"
-#include "wind3d.h"
-#include "video.h"
-#include "blit.h"
-#include "mamedbg.h"
-#include "input.h"
-#include "../window.h"
 
 
 
@@ -1908,4 +1904,5 @@ void win_set_debugger_focus(int focus)
 		// make video frontmost
 		SetForegroundWindow(win_video_window);
 	}
+}
 }

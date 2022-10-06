@@ -10,9 +10,15 @@
  *
  ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class geebee
+{
+	
 /* from sndhrdw/geebee.c */
 WRITE_HANDLER( geebee_sound_w );
 
@@ -119,3 +125,4 @@ WRITE_HANDLER( geebee_out7_w )
 }
 
 
+}

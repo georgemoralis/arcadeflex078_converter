@@ -33,13 +33,15 @@ fedcba98
 
 ****/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/6821pia.h"
-#include "vidhrdw/crtc6845.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nyny
+{
+	
 PALETTE_INIT( nyny );
 VIDEO_UPDATE( nyny );
 VIDEO_START( nyny );
@@ -449,3 +451,4 @@ ROM_END
 GAMEX( 1980, nyny,    0,    nyny, nyny, 0, ROT270, "Sigma Enterprises Inc.", "New York New York", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 GAMEX( 1980, nynyg,   nyny, nyny, nyny, 0, ROT270, "Sigma Enterprises Inc. (Gottlieb license)", "New York New York (Gottlieb)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 GAMEX( 1980, arcadia, nyny, nyny, nyny, 0, ROT270, "Sigma Enterprises Inc.", "Waga Seishun no Arcadia", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+}

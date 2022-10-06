@@ -2,11 +2,15 @@
    See the file COPYING for copying permission.
 */
 
-#include "intconfig.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package xml2info;
 
-#include "internal.h"
-#include "xmlrole.h"
-#include "ascii.h"
+public class xmlrole
+{
+	
 
 /* Doesn't check:
 
@@ -1313,3 +1317,4 @@ XmlPrologStateInitExternalEntity(PROLOG_STATE *state)
 }
 
 #endif /* XML_DTD */
+}

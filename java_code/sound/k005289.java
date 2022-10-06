@@ -25,8 +25,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class k005289
+{
+	
 #define FREQBASEBITS	16
 
 /* this structure defines the parameters for a channel */
@@ -238,4 +245,5 @@ WRITE_HANDLER( k005289_keylatch_B_w )
 {
 	k005289_B_frequency = k005289_B_latch;
 	k005289_recompute();
+}
 }

@@ -80,8 +80,15 @@ TODO general:
 /* ================================= DATA ================================= */
 /* ======================================================================== */
 
-#include "g65816cm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.g65816;
 
+public class g65816
+{
+	
 /* Our CPU structure */
 g65816i_cpu_struct g65816i_cpu = {0};
 
@@ -389,7 +396,6 @@ const char *g65816_info(void *context, int regnum)
 
 /* Disassemble an instruction */
 #ifdef MAME_DEBUG
-#include "g65816ds.h"
 #endif
 unsigned g65816_dasm(char *buffer, unsigned pc)
 {
@@ -408,3 +414,4 @@ void g65816_init(void){ return; }
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */
+}

@@ -1,11 +1,14 @@
 /* vidhrdw/namconb1.c */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namconb1.h"
-#include "namcoic.h"
-#include "namcos2.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namconb1
+{
+	
 
 /* tilemap_palette_bank is used to cache tilemap color, so that we can
  * mark whole tilemaps dirty only when necessary.
@@ -388,3 +391,4 @@ VIDEO_START( namconb2 )
 
 	return 0;
 } /* namconb2_vh_start */
+}

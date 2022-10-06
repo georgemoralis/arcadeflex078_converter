@@ -32,9 +32,15 @@ static const char* copyright_notice =
 /* ================================ INCLUDES ============================== */
 /* ======================================================================== */
 
-#include "m68kops.h"
-#include "m68kcpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68kcpu
+{
+	
 /* ======================================================================== */
 /* ================================= DATA ================================= */
 /* ======================================================================== */
@@ -405,8 +411,7 @@ static void default_instr_hook_callback(void)
 
 
 #if M68K_EMULATE_ADDRESS_ERROR
-	#include <setjmp.h>
-	jmp_buf m68ki_aerr_trap;
+		jmp_buf m68ki_aerr_trap;
 #endif /* M68K_EMULATE_ADDRESS_ERROR */
 
 
@@ -556,7 +561,6 @@ void m68k_set_instr_hook_callback(void  (*callback)(void))
 	CALLBACK_INSTR_HOOK = callback ? callback : default_instr_hook_callback;
 }
 
-#include <stdio.h>
 /* Set the CPU type. */
 void m68k_set_cpu_type(unsigned int cpu_type)
 {
@@ -818,7 +822,6 @@ void m68k_set_context(void* src)
 
 #if M68K_COMPILE_FOR_MAME == OPT_ON
 
-#include "state.h"
 
 static struct {
 	UINT16 sr;
@@ -873,3 +876,4 @@ void m68k_state_register(const char *type)
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */
+}

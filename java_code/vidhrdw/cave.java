@@ -44,9 +44,15 @@ Note:	if MAME_DEBUG is defined, pressing:
 
 **************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "cave.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cave
+{
+	
 /* Variables that driver has access to: */
 
 int cave_spritetype;
@@ -1557,4 +1563,5 @@ void cave_get_sprite_info(void)
 			(*get_sprite_info)();
 		}
 	}
+}
 }

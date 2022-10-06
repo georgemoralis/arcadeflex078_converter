@@ -17,9 +17,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gotcha
+{
+	
 
 VIDEO_START( gotcha );
 VIDEO_UPDATE( gotcha );
@@ -320,3 +326,4 @@ ROM_END
 
 
 GAME( 1997, gotcha, 0, gotcha, gotcha, 0, ROT0, "Dongsung", "Got-cha" )
+}

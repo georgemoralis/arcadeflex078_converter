@@ -38,9 +38,15 @@ TODO:
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class safarir
+{
+	
 
 UINT8 *safarir_ram1, *safarir_ram2;
 size_t safarir_ram_size;
@@ -301,3 +307,4 @@ DRIVER_INIT( safarir )
 
 
 GAMEX( 1979, safarir, 0, safarir, safarir, safarir, ROT90, "SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+}

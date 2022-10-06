@@ -8,16 +8,18 @@
 
 ***********************************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "tms5220.h"
+public class tms5220
+{
+	
 
 
 /* Pull in the ROM tables */
-#include "tms5220r.c"
 
 /*
   Changes by R. Nabet
@@ -978,4 +980,5 @@ static void set_interrupt_state(int state)
     if (irq_func && state != irq_pin)
     	irq_func(state);
     irq_pin = state;
+}
 }

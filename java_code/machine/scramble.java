@@ -7,11 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/7474.h"
-#include "machine/8255ppi.h"
-#include "galaxian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class scramble
+{
+	
 
 void cclimber_decode(const unsigned char xortable[8][16]);
 
@@ -1463,4 +1467,5 @@ INTERRUPT_GEN( gmgalax_vh_interrupt )
 
 		cpu_set_reset_line(0, ASSERT_LINE);
 	}
+}
 }

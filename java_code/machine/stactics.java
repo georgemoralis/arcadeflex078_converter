@@ -1,6 +1,13 @@
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class stactics
+{
+	
 /* needed in vidhrdw/stactics.c */
 int stactics_vert_pos;
 int stactics_horiz_pos;
@@ -90,3 +97,4 @@ WRITE_HANDLER( stactics_coin_lockout_w )
 	coin_lockout_w(offset, ~data & 0x01);
 }
 
+}

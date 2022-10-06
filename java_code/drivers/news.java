@@ -17,9 +17,15 @@ Notes:
   the numbers of the pictures to use).
 */
 
-#include "driver.h"
-#include "news.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class news
+{
+	
 
 static MEMORY_READ_START( readmem )
 	{ 0x0000, 0x7fff, MRA_ROM },
@@ -147,3 +153,4 @@ ROM_END
 
 
 GAME( 1993, news, 0, news, news, 0, ROT0, "Poby / Virus", "News" )
+}

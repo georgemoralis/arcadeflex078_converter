@@ -31,10 +31,15 @@ inputs + notes by stephh
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "exerion.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class fcombat
+{
+	
 INPUT_PORTS_START( fcombat )
 	PORT_START      /* player 1 inputs (muxed on 0xe000) */
 	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
@@ -406,3 +411,4 @@ ROM_START( fcombat )
 ROM_END
 
 GAMEX( 1985, fcombat,  0,       fcombat, fcombat, fcombat,  ROT90, "Jaleco", "Field Combat", GAME_NOT_WORKING )
+}

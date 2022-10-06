@@ -1,6 +1,12 @@
-#include "matrix3d.h"
-#include <string.h> /* for memcpy */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class matrix3d
+{
+	
 void
 matrix3d_Multiply( double A[4][4], double B[4][4] )
 {
@@ -80,3 +86,4 @@ matrix3d_RotZ( double M[4][4], double thz_sin, double thz_cos )
 	m[3][0] = 0.0;			m[3][1] = 0.0;			m[3][2] = 0.0;			m[3][3] = 1.0;
 	matrix3d_Multiply( M, m );
 } /* matrix3d_RotZ */
+}

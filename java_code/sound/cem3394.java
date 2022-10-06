@@ -11,9 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class cem3394
+{
+	
 
 
 /* waveform generation parameters */
@@ -567,4 +573,5 @@ double cem3394_get_parameter(int chipnum, int input)
 			return chip->filter_zero_freq * pow(2.0, -voltage * (1.0 / 0.375));
 	}
 	return 0.0;
+}
 }

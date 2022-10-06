@@ -4,8 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class videopin
+{
+	
 UINT8* videopin_video_ram;
 
 static int ball_x;
@@ -122,4 +129,5 @@ WRITE_HANDLER( videopin_video_ram_w )
 	}
 
 	videopin_video_ram[offset] = data;
+}
 }

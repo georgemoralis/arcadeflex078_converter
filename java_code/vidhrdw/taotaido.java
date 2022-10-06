@@ -8,8 +8,15 @@ zooming might be wrong (only used on title logo?)
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taotaido
+{
+	
 static data16_t taotaido_sprite_character_bank_select[8];
 static data16_t taotaido_video_bank_select[8];
 static struct tilemap *bg_tilemap;
@@ -244,4 +251,5 @@ VIDEO_EOF( taotaido )
 
 	memcpy(taotaido_spriteram_older,taotaido_spriteram_old,0x2000);
 	memcpy(taotaido_spriteram_old,taotaido_spriteram,0x2000);
+}
 }

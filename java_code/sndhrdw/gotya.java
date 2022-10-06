@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gotya
+{
+	
 struct gotya_sample
 {
 	int sound_command;
@@ -75,4 +82,5 @@ WRITE_HANDLER( gotya_soundlatch_w )
 			return;
 		}
 	}
+}
 }

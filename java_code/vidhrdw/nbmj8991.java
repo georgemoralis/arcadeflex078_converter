@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nbmj8991
+{
+	
 
 static int pstadium_scrollx, pstadium_scrollx1, pstadium_scrollx2;
 static int pstadium_scrolly, pstadium_scrolly1, pstadium_scrolly2;
@@ -433,4 +438,5 @@ VIDEO_UPDATE( galkoku )
 	{
 		fillbitmap(bitmap, Machine->pens[0x00], 0);
 	}
+}
 }

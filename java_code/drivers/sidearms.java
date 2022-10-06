@@ -35,9 +35,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sidearms
+{
+	
 extern UINT8 *sidearms_bg_scrollx;
 extern UINT8 *sidearms_bg_scrolly;
 
@@ -1008,3 +1014,4 @@ GAME( 1989, dyger,    0,        turtship, dyger,    dyger,    ROT270, "Philko", 
 GAME( 1989, dygera,   dyger,    turtship, dyger,    dyger,    ROT270, "Philko", "Dyger (Korea set 2)" )
 GAMEX(1989, whizz,    0,        whizz, 	  whizz,    whizz,    ROT0,   "Philko", "Whizz", GAME_NOT_WORKING )
 
+}

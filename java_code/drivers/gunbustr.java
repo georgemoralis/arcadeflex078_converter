@@ -44,13 +44,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gunbustr
+{
+	
 VIDEO_START( gunbustr );
 VIDEO_UPDATE( gunbustr );
 
@@ -515,3 +517,4 @@ static DRIVER_INIT( gunbustr )
 }
 
 GAME( 1992, gunbustr, 0,      gunbustr, gunbustr, gunbustr, ORIENTATION_FLIP_X, "Taito Corporation", "Gunbuster (Japan)" )
+}

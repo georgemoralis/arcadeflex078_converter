@@ -30,10 +30,15 @@
 
 ***************************************************************************/
 
-#include "cpuintrf.h"
-#include "driver.h"
-#include "timer.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class timer
+{
+	
 
 #define MAX_TIMERS 256
 
@@ -592,4 +597,5 @@ double timer_starttime(mame_timer *which)
 double timer_firetime(mame_timer *which)
 {
 	return global_offset + which->expire;
+}
 }

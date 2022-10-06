@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "sndhrdw/m72.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m72
+{
+	
 
 
 unsigned char *m72_videoram1,*m72_videoram2,*majtitle_rowscrollram;
@@ -727,4 +731,5 @@ VIDEO_EOF( m72 )
 		scrollx2[i] = scrollx2[255];
 		scrolly2[i] = scrolly2[255];
 	}
+}
 }

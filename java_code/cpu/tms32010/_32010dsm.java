@@ -24,15 +24,16 @@
  *																			*
  \**************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32010;
 
+public class _32010dsm
+{
+	
 #ifdef MAME_DEBUG					/* Compile interface to MAME */
-#include "memory.h"
-#include "tms32010.h"
-#include "mamedbg.h"
 #define READOP16(A)  (cpu_readop16((A)     | TMS32010_PGM_OFFSET))
 #define READARG16(A) (cpu_readop_arg16((A) | TMS32010_PGM_OFFSET))
 #else								/* Compile interface for standalone */
@@ -344,4 +345,5 @@ unsigned Dasm32010(char *str, unsigned pc)
 		}
 	}
 	return cnt;
+}
 }

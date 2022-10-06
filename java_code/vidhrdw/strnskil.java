@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class strnskil
+{
+	
 static UINT8 strnskil_scrl_ctrl;
 static UINT8 strnskil_xscroll[2];
 
@@ -152,4 +159,5 @@ VIDEO_UPDATE( strnskil )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	strnskil_draw_sprites(bitmap);
+}
 }

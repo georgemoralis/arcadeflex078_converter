@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class _1942
+{
+	
 
 unsigned char *c1942_fgvideoram;
 unsigned char *c1942_bgvideoram;
@@ -248,4 +254,5 @@ VIDEO_UPDATE( 1942 )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

@@ -1,6 +1,13 @@
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hitme
+{
+	
 extern data8_t *hitme_vidram;
 
 
@@ -77,4 +84,5 @@ VIDEO_START (brickyrd)
 VIDEO_UPDATE (hitme)
 {
 	tilemap_draw(bitmap,cliprect,hitme_tilemap,0,0);
+}
 }

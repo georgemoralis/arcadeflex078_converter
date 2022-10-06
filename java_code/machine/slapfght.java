@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class slapfght
+{
+	
 
 unsigned char *slapfight_dpram;
 size_t slapfight_dpram_size;
@@ -247,3 +254,4 @@ READ_HANDLER( tigerh_mcu_status_r )
 	return res;
 }
 
+}

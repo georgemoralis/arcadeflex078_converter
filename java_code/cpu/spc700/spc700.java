@@ -63,10 +63,15 @@ spctodo says sleep and standby modes cannot be used.
 /* ================================ INCLUDES ============================== */
 /* ======================================================================== */
 
-#include <limits.h>
-#include <stdio.h>
-#include "spc700.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.spc700;
 
+public class spc700
+{
+	
 
 /* ======================================================================== */
 /* ==================== ARCHITECTURE-DEPENDANT DEFINES ==================== */
@@ -1573,7 +1578,6 @@ const char *spc700_info(void *context, int regnum)
 
 
 #ifdef MAME_DEBUG
-#include "spc700ds.h"
 #endif
 /* Disassemble an instruction */
 unsigned spc700_dasm(char *buffer, unsigned pc)
@@ -1865,3 +1869,4 @@ int spc700_execute(int clocks)
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */
+}

@@ -51,12 +51,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/mips/r3000.h"
-#include "cpu/jaguar/jaguar.h"
-#include "machine/idectrl.h"
-#include "jaguar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cojag
+{
+	
 
 
 /*************************************
@@ -1084,3 +1087,4 @@ GAME( 1996, maxf_102, maxforce, r3knarrow, area51,   maxforce, ROT0, "Atari Game
 GAME( 1998, area51mx, 0,        cojag68k,  area51,   area51mx, ROT0, "Atari Games", "Area 51 / Maximum Force Duo v2.0" )
 GAME( 1998, a51mxr3k, area51mx, r3knarrow, area51,   a51mxr3k, ROT0, "Atari Games", "Area 51 / Maximum Force Duo (R3000)" )
 GAME( 1996, vcircle,  0,        cojagr3k,  vcircle,  vcircle,  ROT0, "Atari Games", "Vicious Circle (prototype)" )
+}

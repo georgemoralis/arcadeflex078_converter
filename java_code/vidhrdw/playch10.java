@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/ppu2c03b.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class playch10
+{
+	
 /* from machine */
 extern int pc10_sdcs;			/* ShareD Chip Select */
 extern int pc10_dispmask;		/* Display Mask */
@@ -148,4 +153,5 @@ VIDEO_UPDATE( playch10 )
 	{
 		tilemap_draw(bitmap, &top_monitor, bg_tilemap, 0, 0);
 	}
+}
 }

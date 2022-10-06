@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class rastan
+{
+	
 /* Game writes here to set ADPCM ROM address */
 WRITE_HANDLER( rastan_adpcm_trigger_w )
 {
@@ -29,4 +36,5 @@ WRITE_HANDLER( rastan_d000_w )
 	if (data==0)
 		mixer_stop_sample(channel);
 #endif
+}
 }

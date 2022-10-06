@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class topspeed
+{
+	
 data16_t *topspeed_spritemap;
 data16_t *topspeed_raster_ctrl;
 
@@ -200,3 +205,4 @@ VIDEO_UPDATE( topspeed )
 }
 
 
+}

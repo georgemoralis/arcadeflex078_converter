@@ -1,10 +1,14 @@
 /* video hardware for Namco System II */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namcos2.h"
-#include "namcoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcos2
+{
+	
 data16_t *namcos2_sprite_ram;
 size_t namcos2_68k_vram_size;
 data16_t *namcos2_68k_palette_ram;
@@ -801,4 +805,5 @@ VIDEO_UPDATE( metlhawk )
 		namco_roz_draw( bitmap, cliprect, pri );
 		DrawSpritesMetalHawk( bitmap,cliprect,pri );
 	}
+}
 }

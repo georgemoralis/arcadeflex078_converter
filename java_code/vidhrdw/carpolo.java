@@ -6,9 +6,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "carpolo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class carpolo
+{
+	
 
 data8_t *carpolo_alpharam;
 data8_t *carpolo_spriteram;
@@ -827,4 +833,5 @@ VIDEO_EOF( carpolo )
 		}
 	}
 	}
+}
 }

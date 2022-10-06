@@ -1,9 +1,15 @@
 #ifndef INPTPORT_H
 #define INPTPORT_H
 
-#include "memory.h"
-#include "input.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class inptportH
+{
+	
 /* input ports handling */
 
 /* Don't confuse this with the I/O ports in memory.h. This is used to handle game */
@@ -489,3 +495,4 @@ void seq_set_string(InputSeq* a, const char *buf);
 
 
 #endif
+}

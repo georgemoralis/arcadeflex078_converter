@@ -28,10 +28,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "thedeep.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class thedeep
+{
+	
 /* Variables only used here: */
 
 static struct tilemap *tilemap_0,*tilemap_1;
@@ -249,4 +254,5 @@ VIDEO_UPDATE( thedeep )
 	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+}
 }

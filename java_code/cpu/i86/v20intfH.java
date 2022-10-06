@@ -2,11 +2,15 @@
 #ifndef __V20INTRF_H_
 #define __V20INTRF_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intrf.h"
-#include "v30intrf.h"
+public class v20intfH
+{
+	
 
 /* Public variables */
 #define v20_ICount i86_ICount
@@ -26,3 +30,4 @@ extern const char *v20_info(void *context, int regnum);
 #define v20_dasm v30_dasm
 
 #endif
+}

@@ -91,11 +91,15 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 **************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bloodbro
+{
+	
 extern VIDEO_UPDATE( bloodbro );
 extern VIDEO_UPDATE( weststry );
 extern VIDEO_UPDATE( skysmash );
@@ -776,3 +780,4 @@ static DRIVER_INIT( weststry )
 GAMEX(1990, bloodbro, 0,        bloodbro, bloodbro, 0,        ROT0,   "Tad", "Blood Bros.", GAME_NO_COCKTAIL )
 GAMEX(1990, weststry, bloodbro, weststry, weststry, weststry, ROT0,   "bootleg", "West Story", GAME_NO_COCKTAIL | GAME_NO_SOUND )
 GAME( 1990, skysmash, 0,        skysmash, skysmash, 0,        ROT270, "Nihon System", "Sky Smasher" )
+}

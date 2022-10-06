@@ -4,8 +4,15 @@ Atari Drag Race Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dragrace
+{
+	
 extern VIDEO_START( dragrace );
 extern VIDEO_UPDATE( dragrace );
 
@@ -564,3 +571,4 @@ ROM_END
 
 
 GAME( 1977, dragrace, 0, dragrace, dragrace, 0, 0, "Atari", "Drag Race" )
+}

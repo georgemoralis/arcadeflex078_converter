@@ -11,9 +11,15 @@
    3 = Tone generator
 */
 
-#include "driver.h"
-#include "exidy.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class targ
+{
+	
 static int tone_channel;
 
 unsigned char targ_spec_flag;
@@ -167,3 +173,4 @@ WRITE_HANDLER( targ_sh_w )
     }
 }
 
+}

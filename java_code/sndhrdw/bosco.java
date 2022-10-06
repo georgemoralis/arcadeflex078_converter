@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class bosco
+{
+	
 /* macro to convert 4-bit unsigned samples to 8-bit signed samples */
 #define SAMPLE_CONV4(a) (0x11*((a&0x0f))-0x80)
 
@@ -46,4 +53,5 @@ void bosco_sample_play(int offset, int length)
 		return;
 
 	mixer_play_sample(channel,speech + offset,length,4000,0);
+}
 }

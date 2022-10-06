@@ -98,11 +98,15 @@ A0-BF  - Audio mixer control ?
 E0     - Comunication port to 6809
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/tait8741.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gladiatr
+{
+	
 /*Video functions*/
 extern unsigned char *gladiator_text;
 WRITE_HANDLER( gladiatr_video_registers_w );
@@ -657,3 +661,4 @@ ROM_END
 
 GAMEX( 1986, gladiatr, 0,        gladiatr, gladiatr, 0, ROT0, "Taito America Corporation", "Gladiator (US)", GAME_NO_COCKTAIL )
 GAMEX( 1986, ogonsiro, gladiatr, gladiatr, gladiatr, 0, ROT0, "Taito Corporation", "Ohgon no Siro (Japan)", GAME_NO_COCKTAIL )
+}

@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ikki
+{
+	
 static UINT8 ikki_flipscreen, ikki_scroll[2];
 
 PALETTE_INIT( ikki )
@@ -203,4 +210,5 @@ VIDEO_UPDATE( ikki )
 		}
 	}
 
+}
 }

@@ -1,8 +1,15 @@
 /*** Video *******************************************************************/
 /* see drivers/pgm.c for notes on where improvements can be made */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pgm
+{
+	
 extern data16_t *pgm_mainram, *pgm_bg_videoram, *pgm_tx_videoram, *pgm_videoregs, *pgm_rowscrollram;
 static struct tilemap *pgm_tx_tilemap, *pgm_bg_tilemap;
 static UINT16 *sprite_bitmap;
@@ -329,4 +336,5 @@ VIDEO_EOF( pgm )
 {
 	/* first 0xa00 of main ram = sprites, seems to be buffered, DMA? */
 	memcpy(pgm_spritebufferram,pgm_mainram,0xa00);
+}
 }

@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/segaic24.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class system24
+{
+	
 VIDEO_START(system24)
 {
 	if(sys24_tile_vh_start(0xfff))
@@ -58,4 +62,5 @@ VIDEO_UPDATE(system24)
 		}
 
 	sys24_sprite_draw(bitmap, cliprect, spri);
+}
 }

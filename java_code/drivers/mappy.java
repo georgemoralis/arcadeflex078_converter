@@ -42,9 +42,15 @@ Aug 1999   Proper cocktail emulation implemented by Chad Hendrickson
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mappy
+{
+	
 
 
 /* machine driver data & functions */
@@ -918,3 +924,4 @@ GAME( 1985, digdug2o, digdug2,  digdug2,  digdug2,  0, ROT90, "Namco", "Dig Dug 
 GAME( 1985, motos,    0,        motos,    motos,    0, ROT90, "Namco", "Motos" )
 GAME( 1984, todruaga, 0,        todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (New Ver.)" )
 GAME( 1984, todruago, todruaga, todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (Old Ver.)" )
+}

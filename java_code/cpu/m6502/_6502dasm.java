@@ -25,19 +25,20 @@
 /* 4. February 2000 PeT fixed relative word operand */
 /* 9. May 2000 PeT added m4510 */
 
-#include <stdio.h>
-#ifdef MAME_DEBUG
-#include "driver.h"
-#include "mamedbg.h"
-#include "m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
+
+public class _6502dasm
+{
+	#ifdef MAME_DEBUG
 #if (HAS_M65CE02)
-#include "m65ce02.h"
 #endif
 #if (HAS_M6509)
-#include "m6509.h"
 #endif
 #if (HAS_M4510)
-#include "m4510.h"
 #endif
 
 #define OPCODE(A)  cpu_readop(A)
@@ -1133,3 +1134,4 @@ unsigned int Dasm4510(char *buffer, unsigned pc)
 #endif	/* MAME_DEBUG */
 
 
+}

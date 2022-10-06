@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class digdug
+{
+	
 
 unsigned char *digdug_vlatches;
 static int playfield, alphacolor, playenable, playcolor;
@@ -315,4 +321,5 @@ VIDEO_UPDATE( digdug )
 			}
 		}
 	}
+}
 }

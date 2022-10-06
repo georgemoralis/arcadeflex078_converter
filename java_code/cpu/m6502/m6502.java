@@ -24,14 +24,15 @@
 /* 10.March   2000 PeT added 6502 set overflow input line */
 /* 13.September 2000 PeT N2A03 jmp indirect */
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6502.h"
-#include "ops02.h"
-#include "ill02.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
+public class m6502
+{
+	
 
 #define M6502_NMI_VEC	0xfffa
 #define M6502_RST_VEC	0xfffc
@@ -51,9 +52,6 @@
 
 #ifdef RUNTIME_LOADER
 // currently debugger has symbols of 65ce02, 6509, 4510 so all in 1 library
-#include "m6509.h"
-#include "m65ce02.h"
-#include "m4510.h"
 
 struct cpu_interface
 m6502_interface=
@@ -136,30 +134,22 @@ static m6502_Regs m6502;
 /***************************************************************
  * include the opcode macros, functions and tables
  ***************************************************************/
-#include "t6502.c"
 
 #if (HAS_M6510)
-#include "t6510.c"
 #endif
 
-#include "opsn2a03.h"
 
 #if (HAS_N2A03)
-#include "tn2a03.c"
 #endif
 
-#include "opsc02.h"
 
 #if (HAS_M65C02)
-#include "t65c02.c"
 #endif
 
 #if (HAS_M65SC02)
-#include "t65sc02.c"
 #endif
 
 #if (HAS_DECO16)
-#include "tdeco16.c"
 #endif
 
 /*****************************************************************************
@@ -1033,3 +1023,4 @@ unsigned deco16_dasm(char *buffer, unsigned pc)
 
 #endif
 
+}

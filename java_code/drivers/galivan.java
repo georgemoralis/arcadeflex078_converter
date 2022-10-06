@@ -28,9 +28,15 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/12/17 -
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class galivan
+{
+	
 WRITE_HANDLER( galivan_scrollx_w );
 WRITE_HANDLER( galivan_scrolly_w );
 WRITE_HANDLER( galivan_videoram_w );
@@ -905,3 +911,4 @@ GAME( 1986, dangarb,  dangar,   galivan,  dangarb,  0, ROT270, "bootleg", "Danga
 GAME( 1986, ninjemak, 0,        ninjemak, ninjemak, 0, ROT270, "Nichibutsu", "Ninja Emaki (US)" )
 GAME( 1986, youma,    ninjemak, ninjemak, ninjemak, 0, ROT270, "Nichibutsu", "Youma Ninpou Chou (Japan)" )
 
+}

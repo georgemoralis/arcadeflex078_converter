@@ -34,8 +34,15 @@ DSW1          6116
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gumbo
+{
+	
 data16_t *gumbo_bg_videoram;
 data16_t *gumbo_fg_videoram;
 
@@ -186,3 +193,4 @@ ROM_START( gumbo )
 ROM_END
 
 GAME( 1994, gumbo, 0, gumbo, gumbo, 0, ROT0, "Min Corp.", "Gumbo" )
+}

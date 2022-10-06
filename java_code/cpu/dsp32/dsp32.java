@@ -31,15 +31,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "dsp32.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.dsp32;
 
+public class dsp32
+{
+	
 
 
 /*###################################################################################################
@@ -412,7 +412,6 @@ void dsp32c_exit(void)
 **	CORE INCLUDE
 **#################################################################################################*/
 
-#include "dsp32ops.c"
 
 
 
@@ -1013,4 +1012,5 @@ int dsp32c_pio_r(int cpunum, int reg)
 
 	cpuintrf_pop_context();
 	return (result >> shift) & ~mask;
+}
 }

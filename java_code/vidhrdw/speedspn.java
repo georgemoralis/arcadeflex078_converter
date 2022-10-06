@@ -1,7 +1,14 @@
 /* Speed Spin Vidhrdw, see driver file for notes */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class speedspn
+{
+	
 data8_t *speedspn_attram;
 
 static struct tilemap *speedspn_tilemap;
@@ -110,4 +117,5 @@ VIDEO_UPDATE(speedspn)
 	tilemap_set_scrollx(speedspn_tilemap,0, 0x100); // verify
 	tilemap_draw(bitmap,cliprect,speedspn_tilemap,0,0);
 	speedspn_drawsprites(bitmap,cliprect);
+}
 }

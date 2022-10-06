@@ -8,12 +8,15 @@ K052591 emulation by Eddie Edwards
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "vidhrdw/konamiic.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class thunderx
+{
+	
 static MACHINE_INIT( scontra );
 static MACHINE_INIT( thunderx );
 static void thunderx_banking(int lines);
@@ -986,3 +989,4 @@ GAME( 1988, scontra,  0,        scontra,  scontra,  scontra, ROT90, "Konami", "S
 GAME( 1988, scontraj, scontra,  scontra,  scontra,  scontra, ROT90, "Konami", "Super Contra (Japan)" )
 GAME( 1988, thunderx, 0,        thunderx, thunderx, scontra, ROT0, "Konami", "Thunder Cross" )
 GAME( 1988, thnderxj, thunderx, thunderx, thunderx, scontra, ROT0, "Konami", "Thunder Cross (Japan)" )
+}

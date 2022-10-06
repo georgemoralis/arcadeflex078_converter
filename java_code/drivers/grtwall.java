@@ -2,8 +2,15 @@
 
 /* hardware is probably very similar to China Dragon / Dragon World */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class grtwall
+{
+	
 VIDEO_START(grtwall)
 {
 	return 0;
@@ -130,3 +137,4 @@ ROM_START( grtwall )
 ROM_END
 
 GAMEX( 1994, grtwall, 0, grtwall, grtwall, grtwall, ROT0, "IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

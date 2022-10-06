@@ -144,13 +144,15 @@ rumbling on a subwoofer in the cabinet.)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ninjaw
+{
+	
 MACHINE_INIT( ninjaw );
 
 VIDEO_START( ninjaw );
@@ -943,3 +945,4 @@ GAME( 1987, ninjaw,   0,      ninjaw,  ninjaw,   ninjaw,  ROT0, "Taito Corporati
 GAME( 1987, ninjawj,  ninjaw, ninjaw,  ninjawj,  ninjaw,  ROT0, "Taito Corporation", "The Ninja Warriors (Japan)" )
 GAME( 1989, darius2,  0,      darius2, darius2,  ninjaw,  ROT0, "Taito Corporation", "Darius II (Japan)" )
 
+}

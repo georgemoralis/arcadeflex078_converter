@@ -12,11 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dcon
+{
+	
 WRITE16_HANDLER( dcon_gfxbank_w );
 WRITE16_HANDLER( dcon_background_w );
 WRITE16_HANDLER( dcon_foreground_w );
@@ -420,3 +424,4 @@ static DRIVER_INIT( sdgndmps )
 
 GAMEX( 1991, sdgndmps, 0, sdgndmps, sdgndmps, sdgndmps, ROT0, "Banpresto / Bandai", "SD Gundam Psycho Salamander no Kyoui", GAME_NO_COCKTAIL )
 GAMEX( 1992, dcon,     0, dcon,     dcon,     0, ROT0, "Success",            "D-Con", GAME_NO_COCKTAIL )
+}

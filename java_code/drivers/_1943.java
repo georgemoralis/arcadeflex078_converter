@@ -4,10 +4,15 @@ TODO: 1943 is almost identical to GunSmoke (one more scrolling playfield). We
       should merge the two drivers.
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class _1943
+{
+	
 
 
 extern unsigned char *c1943_scrollx;
@@ -458,3 +463,4 @@ ROM_END
 GAME( 1987, 1943,    0,    1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (US)" )
 GAME( 1987, 1943j,   1943, 1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (Japan)" )
 GAME( 1987, 1943kai, 0,    1943, 1943, 0, ROT270, "Capcom", "1943 Kai - Midway Kaisen" )
+}

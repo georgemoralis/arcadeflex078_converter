@@ -116,9 +116,15 @@ not currently hooked up
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class docastle
+{
+	
 
 
 extern READ_HANDLER( docastle_shared0_r );
@@ -1187,3 +1193,4 @@ GAME( 1984, dowild,   0,        dorunrun, dowild,   0, ROT0,   "Universal", "Mr.
 GAME( 1984, jjack,    0,        dorunrun, jjack,    0, ROT270, "Universal", "Jumping Jack" )
 GAME( 1984, kickridr, 0,        dorunrun, kickridr, 0, ROT0,   "Universal", "Kick Rider" )
 GAMEX(1985, idsoccer, 0,        idsoccer, idsoccer, 0, ROT0,   "Universal", "Indoor Soccer", GAME_IMPERFECT_SOUND )
+}

@@ -37,8 +37,15 @@ A1                   2101            2101
 
 ****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ace
+{
+	
 
 static unsigned char *ace_scoreram;
 static unsigned char *ace_ram2;
@@ -361,3 +368,4 @@ ROM_START( ace )
 ROM_END
 
 GAMEX( 1976, ace, 0, ace, ace, 0, ROT0, "Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+}

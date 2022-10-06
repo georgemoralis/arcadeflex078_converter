@@ -8,10 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.asap;
 
-#include "driver.h"
-#include "asap.h"
+public class asapdasm
+{
+	
 
 
 static const char *reg[32] =
@@ -133,4 +138,5 @@ unsigned dasmasap(char *buffer, unsigned pc)
 		case 0x1f:	sprintf(buffer, "trap   $1f");															break;
 	}
 	return 4;
+}
 }

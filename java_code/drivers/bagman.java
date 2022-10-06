@@ -56,10 +56,15 @@ I/O C  ;AY-3-8910 Data Read Reg.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sound/tms5110.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bagman
+{
+	
 
 extern READ_HANDLER( bagman_pal16r6_r );
 extern MACHINE_INIT( bagman );
@@ -796,3 +801,4 @@ GAME(1984, sbagman,  0, 	  bagman, sbagman, 0, ROT270, "Valadon Automation", "Su
 GAME(1984, sbagmans, sbagman, bagman, sbagman, 0, ROT270, "Valadon Automation (Stern license)", "Super Bagman (Stern)" )
 GAME(1983, pickin,	 0, 	  pickin, pickin,  0, ROT270, "Valadon Automation", "Pickin'" )
 
+}

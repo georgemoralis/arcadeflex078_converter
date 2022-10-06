@@ -22,9 +22,15 @@ based on wich Coin input was connected.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class exctsccr
+{
+	
 /* from vidhrdw */
 extern WRITE_HANDLER( exctsccr_videoram_w );
 extern WRITE_HANDLER( exctsccr_colorram_w );
@@ -524,3 +530,4 @@ GAME( 1983, exctsccr, 0,        exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co."
 GAME( 1983, exctscca, exctsccr, exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co.", "Exciting Soccer (alternate music)" )
 GAME( 1983, exctsccb, exctsccr, exctsccb, exctsccr, 0, ROT90, "bootleg", "Exciting Soccer (bootleg)" )
 GAMEX(1984, exctscc2, exctsccr, exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co.", "Exciting Soccer II", GAME_NOT_WORKING )
+}

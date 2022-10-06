@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class qixH
+{
+	
 
 /*----------- defined in machine/qix.c -----------*/
 
@@ -70,3 +77,4 @@ READ_HANDLER( qix_data_io_r );
 READ_HANDLER( qix_sound_io_r );
 WRITE_HANDLER( qix_data_io_w );
 WRITE_HANDLER( qix_sound_io_w );
+}

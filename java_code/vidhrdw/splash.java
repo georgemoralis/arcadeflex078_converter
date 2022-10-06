@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class splash
+{
+	
 data16_t *splash_vregs;
 data16_t *splash_videoram;
 data16_t *splash_spriteram;
@@ -204,4 +209,5 @@ VIDEO_UPDATE( splash )
 	tilemap_draw(bitmap,cliprect,screen[1],0,0);
 	splash_draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,screen[0],0,0);
+}
 }

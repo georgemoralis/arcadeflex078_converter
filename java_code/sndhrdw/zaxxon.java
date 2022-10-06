@@ -66,8 +66,15 @@ FF3F Should be written an 0x80 for Mode 0
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class zaxxon
+{
+	
 #define TOTAL_SOUNDS 22
 int soundplaying[TOTAL_SOUNDS];
 
@@ -183,4 +190,5 @@ WRITE_HANDLER( zaxxon_sound_w )
 		// control byte
 		break;
 	}
+}
 }

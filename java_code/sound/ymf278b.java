@@ -26,10 +26,15 @@
  		    not being addressed properly, causing pitch fluctuation.
 */
 
-#include <math.h>
-#include "driver.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class ymf278b
+{
+	
 #undef VERBOSE
 
 typedef struct
@@ -765,4 +770,5 @@ WRITE_HANDLER( YMF278B_control_port_1_C_w )
 WRITE_HANDLER( YMF278B_data_port_1_C_w )
 {
 	ymf278b_data_port_C_w(1, data);
+}
 }

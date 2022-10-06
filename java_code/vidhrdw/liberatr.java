@@ -13,10 +13,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "liberatr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class liberatr
+{
+	
 
 UINT8 *liberatr_bitmapram;
 
@@ -406,4 +411,5 @@ VIDEO_UPDATE( liberatr )
 
 	/* draw the planet */
 	liberatr_draw_planet(bitmap);
+}
 }

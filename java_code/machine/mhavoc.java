@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/avgdvg.h"
-#include "cpu/m6502/m6502.h"
-#include "mhavoc.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mhavoc
+{
+	
 static UINT8 alpha_data;
 static UINT8 alpha_rcvd;
 static UINT8 alpha_xmtd;
@@ -331,4 +335,5 @@ WRITE_HANDLER( mhavoc_out_1_w )
 
 	/* Bit 0 = right coin counter */
 	coin_counter_w(1, data & 0x01);
+}
 }

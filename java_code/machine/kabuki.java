@@ -92,8 +92,15 @@ Slam Masters                             54321076  65432107    3131     19
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class kabuki
+{
+	
 
 
 static int bitswap1(int src,int key,int select)
@@ -199,3 +206,4 @@ void wof_decode(void)      { cps1_decode(0x01234567,0x54163072,0x5151,0x51); }
 void dino_decode(void)     { cps1_decode(0x76543210,0x24601357,0x4343,0x43); }
 void punisher_decode(void) { cps1_decode(0x67452103,0x75316024,0x2222,0x22); }
 void slammast_decode(void) { cps1_decode(0x54321076,0x65432107,0x3131,0x19); }
+}

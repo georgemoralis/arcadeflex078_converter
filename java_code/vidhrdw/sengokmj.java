@@ -4,9 +4,15 @@ Sengoku Mahjong Video Hardware section
 
 *******************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sengokmj
+{
+	
 static struct tilemap *bg_tilemap,*md_tilemap,*tx_tilemap,*fg_tilemap;
 data8_t *bg_vram,*md_vram,*tx_vram,*fg_vram;
 
@@ -180,4 +186,5 @@ VIDEO_UPDATE( sengokmj )
 	draw_sprites(bitmap,cliprect, 0);
 	draw_sprites(bitmap,cliprect, 3);
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

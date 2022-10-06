@@ -6,10 +6,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "balsente.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class balsente
+{
+	
 
 /*************************************
  *
@@ -303,4 +308,5 @@ VIDEO_UPDATE( balsente )
 
 		draw_crosshair(bitmap,beamx,beamy,cliprect);
 	}
+}
 }

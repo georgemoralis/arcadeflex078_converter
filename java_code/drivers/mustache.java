@@ -69,10 +69,15 @@
 Based on sketch made by Tormod
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mustache
+{
+	
 WRITE_HANDLER( mustache_videoram_w );
 WRITE_HANDLER( mustache_scroll_w );
 WRITE_HANDLER ( mustache_video_control_w);
@@ -323,3 +328,4 @@ static DRIVER_INIT( mustache )
 
 
 GAMEX( 1987, mustache, 0, mustache, mustache, mustache, ROT90, "[Seibu Kaihatsu] (March license)", "Mustache Boy", GAME_NO_SOUND )
+}

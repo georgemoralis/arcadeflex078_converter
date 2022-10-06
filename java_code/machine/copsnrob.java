@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "copsnrob.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class copsnrob
+{
+	
 static int gun_mask[] = {0x7e, 0x7d, 0x7b, 0x77, 0x6f, 0x5f, 0x3f};
 
 // The gun control is a 7 position switch. I'm doing the following to
@@ -56,4 +62,5 @@ READ_HANDLER( copsnrob_gun_position_r )
     if ((keys & 0x02) && (current_gun_pos != 0))  current_gun_pos--;
 
     return (keys & 0x80) | gun_mask[current_gun_pos];
+}
 }

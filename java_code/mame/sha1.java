@@ -23,12 +23,15 @@
  * MA 02111-1307, USA.
  */
 
-#include "sha1.h"
-//#include "macros.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
+public class sha1
+{
+	//
 
 unsigned int READ_UINT32(const uint8_t* data)
 {
@@ -384,4 +387,5 @@ sha1_digest(const struct sha1_ctx *ctx,
 	  digest[--j] = (word >> 24) & 0xff;
 	}
     }
+}
 }

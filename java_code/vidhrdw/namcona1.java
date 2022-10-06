@@ -1,8 +1,14 @@
 /*	Namco System NA1/2 Video Hardware */
 
-#include "vidhrdw/generic.h"
-#include "namcona1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcona1
+{
+	
 #define NAMCONA1_NUM_TILEMAPS 4
 
 /* public variables */
@@ -700,3 +706,4 @@ VIDEO_UPDATE( namcona1 )
 		draw_sprites( bitmap );
 	} /* gfx enabled */
 } /* namcona1_vh_screenrefresh */
+}

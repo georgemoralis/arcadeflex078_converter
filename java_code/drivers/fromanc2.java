@@ -21,12 +21,15 @@ Memo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class fromanc2
+{
+	
 
 VIDEO_UPDATE( fromanc2 );
 VIDEO_START( fromanc2 );
@@ -957,3 +960,4 @@ ROM_END
 GAME( 1995, fromanc2, 0, fromanc2, fromanc2, fromanc2, ROT0, "Video System Co.", "Taisen Idol-Mahjong Final Romance 2 (Japan)" )
 GAME( 1995, fromancr, 0, fromancr, fromanc2, fromancr, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance R (Japan)" )
 GAME( 1998, fromanc4, 0, fromanc4, fromanc4, fromanc4, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance 4 (Japan)" )
+}

@@ -7,9 +7,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nbmj9195
+{
+	
 
 #define	VRAM_MAX	2
 
@@ -874,4 +880,5 @@ VIDEO_UPDATE( mscoutm )
 			copyscrollbitmap(bitmap, sailorws_tmpbitmap1, 1, &sailorws_scrollx[1], 1, &sailorws_scrolly[1], &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0x1ff]);
 		}
 	}
+}
 }

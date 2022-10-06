@@ -33,10 +33,15 @@ Dumped 01/11/2000
 
 ****************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class compgolf
+{
+	
 data8_t *compgolf_bg_ram;
 static struct tilemap *text_tilemap, *background_tilemap;
 
@@ -404,3 +409,4 @@ DRIVER_INIT( compgolf )
 }
 
 GAMEX( 1985, compgolf, 0, compgolf, compgolf, compgolf, ROT0, "Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
+}

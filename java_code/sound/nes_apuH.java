@@ -24,8 +24,15 @@
 #ifndef NES_APU_H
 #define NES_APU_H
 
-#include "driver.h"
-#define MAX_NESPSG 2
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
+
+public class nes_apuH
+{
+	#define MAX_NESPSG 2
 
 /* AN EXPLANATION
  *
@@ -51,3 +58,4 @@ extern void NESPSG_sh_stop(void);
 extern void NESPSG_sh_update(void);
 
 #endif
+}

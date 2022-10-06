@@ -7,9 +7,15 @@ Video hardware
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class drmicro
+{
+	
 static int flipscreen;
 
 static data8_t *drmicro_videoram;
@@ -169,3 +175,4 @@ VIDEO_UPDATE( drmicro )
 	}
 }
 
+}

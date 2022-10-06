@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dassault
+{
+	
 /******************************************************************************/
 
 static void dassault_drawsprites(struct mame_bitmap *bitmap, int pf_priority)
@@ -196,4 +201,5 @@ VIDEO_UPDATE( dassault )
 	/* Draw sprites - two sprite generators, with selectable priority */
 	dassault_drawsprites(bitmap,deco16_priority);
 	deco16_tilemap_1_draw(bitmap,cliprect,0,0);
+}
 }

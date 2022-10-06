@@ -10,11 +10,15 @@
 ***************************************************************************/
 #define __MACHINE_SNES_C
 
-#include "driver.h"
-#include "includes/snes.h"
-#include "cpu/g65816/g65816.h"
-#ifdef MESS
-#include "image.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
+
+public class snes
+{
+	#ifdef MESS
 #endif
 
 /* -- Globals -- */
@@ -1784,4 +1788,5 @@ void snes_gdma( UINT8 channels )
 		dma += 0x10;
 		mask <<= 1;
 	}
+}
 }

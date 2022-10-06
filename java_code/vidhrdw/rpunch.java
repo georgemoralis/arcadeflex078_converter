@@ -6,9 +6,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rpunch
+{
+	
 
 #define BITMAP_WIDTH	304
 #define BITMAP_HEIGHT	224
@@ -337,4 +343,5 @@ VIDEO_UPDATE( rpunch )
 	draw_sprites(bitmap,cliprect, effbins, gins);
 	if (rpunch_bitmapram)
 		draw_bitmap(bitmap,cliprect);
+}
 }

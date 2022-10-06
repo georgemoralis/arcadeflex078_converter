@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "subs.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class subs
+{
+	
 static int subs_steering_buf1;
 static int subs_steering_buf2;
 static int subs_steering_val1;
@@ -215,3 +221,4 @@ WRITE_HANDLER( subs_noise_reset_w )
 	discrete_sound_w(6, 0);
 }
 
+}

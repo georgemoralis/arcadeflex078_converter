@@ -48,9 +48,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tunhunt
+{
+	
 
 extern WRITE_HANDLER( tunhunt_videoram_w );
 extern WRITE_HANDLER( tunhunt_mott_w );
@@ -434,3 +440,4 @@ ROM_END
 /*         rom   parent  machine    inp       	init */
 GAME( 1979,tunhunt,  0,       tunhunt,   tunhunt,	0,  ORIENTATION_SWAP_XY, "Atari", "Tunnel Hunt" )
 GAME( 1981,tunhuntc, tunhunt, tunhunt,   tunhunt,	0,  ORIENTATION_SWAP_XY, "Atari (Centuri license)", "Tunnel Hunt (Centuri)" )
+}

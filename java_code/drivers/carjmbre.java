@@ -40,8 +40,15 @@ Notes:
 - background colour calculation is a guess
 */
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class carjmbre
+{
+	
 WRITE_HANDLER( carjmbre_flipscreen_w );
 WRITE_HANDLER( carjmbre_bgcolor_w );
 WRITE_HANDLER( carjmbre_videoram_w );
@@ -253,3 +260,4 @@ ROM_START( carjmbre )
 ROM_END
 
 GAMEX(1983, carjmbre, 0, carjmbre, carjmbre, 0, ROT90, "Omori Electric Co., Ltd.", "Car Jamboree", GAME_IMPERFECT_COLORS )
+}

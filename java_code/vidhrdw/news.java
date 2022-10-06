@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "news.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class news
+{
+	
 
 data8_t *news_fgram;
 data8_t *news_bgram;
@@ -101,4 +107,5 @@ VIDEO_UPDATE( news )
 {
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

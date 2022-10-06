@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "machine/eeprom.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tmnt
+{
+	
 
 static int layer_colorbase[3],sprite_colorbase,bg_colorbase;
 static int priorityflag;
@@ -854,4 +858,5 @@ VIDEO_UPDATE( thndrx2 )
 VIDEO_EOF( detatwin )
 {
 	K053245_clear_buffer();
+}
 }

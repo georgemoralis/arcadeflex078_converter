@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shaolins
+{
+	
 extern UINT8 shaolins_nmi_enable;
 
 static int palettebank;
@@ -203,4 +209,5 @@ VIDEO_UPDATE( shaolins )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	shaolins_draw_sprites(bitmap);
+}
 }

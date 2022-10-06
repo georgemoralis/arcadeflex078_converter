@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class playmark
+{
+	
 
 
 data16_t *bigtwin_bgvideoram;
@@ -276,4 +282,5 @@ VIDEO_UPDATE( wbeachvl )
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect,0);
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

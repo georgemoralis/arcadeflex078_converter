@@ -9,10 +9,15 @@
 #ifndef CPUEXEC_H
 #define CPUEXEC_H
 
-#include "osd_cpu.h"
-#include "memory.h"
-#include "timer.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuexecH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -358,3 +363,4 @@ typedef struct
 #endif
 
 #endif	/* CPUEXEC_H */
+}

@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class gaplus
+{
+	
 unsigned char *gaplus_snd_sharedram;
 unsigned char *gaplus_sharedram;
 unsigned char *gaplus_customio_1,*gaplus_customio_2,*gaplus_customio_3;
@@ -673,3 +678,4 @@ READ_HANDLER( gaplusa_customio_3_r )
     }
 }
 
+}

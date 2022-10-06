@@ -14,10 +14,15 @@
    Sound quite reasonably already though.
 */
 
-#include <math.h>
-#include "driver.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class sp0250
+{
+	
 enum { MAIN_CLOCK = 10000 };
 
 static struct {
@@ -189,4 +194,5 @@ WRITE_HANDLER( sp0250_w )
 		if(sp0250.fifo_pos == 15)
 			sp0250.drq(CLEAR_LINE);
 	}
+}
 }

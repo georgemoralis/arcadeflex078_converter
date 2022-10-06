@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class arkanoid
+{
+	
 static int gfxbank, palettebank;
 extern int arkanoid_paddle_select;
 
@@ -127,4 +133,5 @@ VIDEO_UPDATE( arkanoid )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	arkanoid_draw_sprites(bitmap);
+}
 }

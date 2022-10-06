@@ -173,13 +173,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/mathbox.h"
-#include "vidhrdw/avgdvg.h"
-#include "vidhrdw/vector.h"
-#include "machine/atari_vg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tempest
+{
+	
 
 
 /*************************************
@@ -567,3 +569,4 @@ GAME( 1980, tempest1, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (r
 GAME( 1980, tempest2, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (rev 2)" )
 GAME( 1980, tempest3, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (rev ?)" )
 GAME( 1980, temptube, tempest, tempest, tempest, 0, ROT270, "hack", "Tempest Tubes" )
+}

@@ -106,18 +106,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include <ctype.h>
-#include <stdarg.h>
-#include "ui_text.h"
-#include "mamedbg.h"
-#include "artwork.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/vector.h"
-#include "palette.h"
-#include "harddisk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class mame
+{
+	
 
 /***************************************************************************
 
@@ -231,7 +228,6 @@ static void scale_vectorgames(int gfx_width, int gfx_height, int *width, int *he
 static int init_buffered_spriteram(void);
 
 #ifdef MESS
-#include "mesintrf.h"
 #define handle_user_interface	handle_mess_user_interface
 #endif
 
@@ -2183,3 +2179,4 @@ static int validitychecks(void)
 
 
 
+}

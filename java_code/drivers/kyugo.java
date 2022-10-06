@@ -21,9 +21,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "kyugo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kyugo
+{
+	
 
 /*************************************
  *
@@ -1120,3 +1126,4 @@ GAME( 1986?,legend,   0,        legend,   legend,   srdmissn, ROT0,  "Sega / Cor
 GAME( 1987, airwolf,  0,        srdmissn, airwolf,  srdmissn, ROT0,  "Kyugo", "Airwolf" )
 GAME( 1987, skywolf,  airwolf,  srdmissn, skywolf,  srdmissn, ROT0,  "bootleg", "Sky Wolf (set 1)" )
 GAME( 1987, skywolf2, airwolf,  srdmissn, airwolf,  srdmissn, ROT0,  "bootleg", "Sky Wolf (set 2)" )
+}

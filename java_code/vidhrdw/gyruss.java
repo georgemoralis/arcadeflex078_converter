@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gyruss
+{
+	
 
 static int flipscreen;
 
@@ -241,4 +247,5 @@ INTERRUPT_GEN( gyruss_6809_interrupt )
 
 	if (scanline == 255)
 		irq0_line_hold();
+}
 }

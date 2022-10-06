@@ -52,14 +52,15 @@ TODO:
 *****************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6800;
 
+public class m6800
+{
+	
 
 #define VERBOSE 0
 
@@ -542,10 +543,8 @@ static void check_timer_event(void)
 }
 
 /* include the opcode prototypes and function pointer tables */
-#include "6800tbl.c"
 
 /* include the opcode functions */
-#include "6800ops.c"
 
 /****************************************************************************
  * Reset registers to their initial values
@@ -2559,3 +2558,4 @@ WRITE_HANDLER( m6803_internal_registers_w )
 }
 #endif
 
+}

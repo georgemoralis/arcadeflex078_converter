@@ -61,8 +61,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class theglobp
+{
+	
 void machine_init_pacman(void);
 
 static int counter=0;
@@ -258,4 +265,5 @@ MACHINE_INIT( theglobp )
 	cpu_setbank (1, &RAM[0x18000]);
 
 	machine_init_pacman();
+}
 }

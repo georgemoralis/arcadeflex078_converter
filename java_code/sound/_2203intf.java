@@ -1,8 +1,12 @@
-#include <math.h>
-#include "driver.h"
-#include "ay8910.h"
-#include "fm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2203intf
+{
+	
 
 static int stream[MAX_2203];
 
@@ -179,4 +183,5 @@ WRITE_HANDLER( YM2203_word_1_w )
 		YM2203_write_port_1_w(0,data);
 	else
 		YM2203_control_port_1_w(0,data);
+}
 }

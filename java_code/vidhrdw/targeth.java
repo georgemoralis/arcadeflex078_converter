@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class targeth
+{
+	
 data16_t *targeth_spriteram;
 data16_t *targeth_vregs;
 data16_t *targeth_videoram;
@@ -168,4 +173,5 @@ VIDEO_UPDATE( targeth )
 		posy = readinputport(3) & 0x0ff;
 		draw_crosshair(bitmap, posx - 0x17, posy + 1, cliprect);
 	}
+}
 }

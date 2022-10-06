@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class overdriv
+{
+	
 
 static int zoom_colorbase[2],road_colorbase[2],sprite_colorbase;
 
@@ -91,4 +97,5 @@ VIDEO_UPDATE( overdriv )
 	K051316_zoom_draw_1(bitmap,cliprect,0,1);
 
 	K053247_sprites_draw(bitmap,cliprect);
+}
 }

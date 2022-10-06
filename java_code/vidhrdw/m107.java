@@ -34,9 +34,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m107
+{
+	
 static struct tilemap *pf4_layer,*pf3_layer,*pf2_layer,*pf1_layer;
 static int m107_control[0x20];
 static unsigned char *m107_spriteram;
@@ -464,4 +470,5 @@ WRITE_HANDLER( m107_spritebuffer_w )
 //		logerror("%04x: buffered spriteram\n",activecpu_get_pc());
 		memcpy(m107_spriteram,spriteram,0x1000);
 	}
+}
 }

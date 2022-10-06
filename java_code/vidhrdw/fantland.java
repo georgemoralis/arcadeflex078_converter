@@ -40,8 +40,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fantland
+{
+	
 static void fantland_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 {
 	data8_t	*ram	=	spriteram,		// spriteram start
@@ -91,3 +98,4 @@ VIDEO_UPDATE( fantland )
 	fantland_draw_sprites(bitmap,cliprect);
 }
 
+}

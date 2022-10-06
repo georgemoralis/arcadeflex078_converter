@@ -68,10 +68,15 @@ I/O read/write
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/z80fmly.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class senjyo
+{
+	
 
 
 extern UINT8 *senjyo_fgscroll;
@@ -801,3 +806,4 @@ GAME( 1984, starforc, 0,        senjyo, starforc, starforc, ROT90, "Tehkan", "St
 GAME( 1984, starfore, starforc, senjyo, starforc, starfore, ROT90, "Tehkan", "Star Force (encrypted)" )
 GAME( 1985, megaforc, starforc, senjyo, starforc, starforc, ROT90, "Tehkan (Video Ware license)", "Mega Force" )
 GAMEX(1986, baluba,   0,        senjyo, baluba,   starforc, ROT90, "Able Corp, Ltd.", "Baluba-louk no Densetsu", GAME_IMPERFECT_COLORS )
+}

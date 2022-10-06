@@ -6,15 +6,16 @@
 
 ***************************************************************************/
 
-#include <math.h>
-#include "driver.h"
-#include "timer.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "hiscore.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuexec
+{
+	
 #if (HAS_M68000 || HAS_M68010 || HAS_M68020 || HAS_M68EC020)
-#include "cpu/m68000/m68000.h"
 #endif
 
 
@@ -1907,3 +1908,4 @@ static void cpu_inittimers(void)
 	timer_set(first_time, 0, cpu_firstvblankcallback);
 }
 
+}

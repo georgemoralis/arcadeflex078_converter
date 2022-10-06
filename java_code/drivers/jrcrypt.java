@@ -13,14 +13,15 @@
 
 ***************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include "mame.h"
-#include "driver.h"
-#include "osdepend.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jrcrypt
+{
+	
 static int interrupt_enable;
 
 typedef unsigned short word;
@@ -461,7 +462,6 @@ the top of this file. It is included here for completeness.
 //
 // Comments, questions to: david@indigita.com
 
-#include <stdio.h>
 
 typedef unsigned char byte;
 
@@ -532,3 +532,4 @@ first:
 			"};\n");
 }
 #endif
+}

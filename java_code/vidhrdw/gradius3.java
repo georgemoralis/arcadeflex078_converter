@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gradius3
+{
+	
 
 #define TOTAL_CHARS 0x1000
 #define TOTAL_SPRITES 0x4000
@@ -194,4 +200,5 @@ VIDEO_UPDATE( gradius3 )
 	}
 
 	K051960_sprites_draw(bitmap,cliprect,-1,-1);
+}
 }

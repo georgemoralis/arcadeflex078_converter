@@ -56,18 +56,18 @@ Any comments/updates/bug reports to:
 */
 
 
-#include "driver.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
+public class i86dasm
+{
+	
 #ifdef MAME_DEBUG
-#include "host.h"
 
-#include "i86intf.h"
 #if (HAS_I286)
-#include "i286intf.h"
 #endif
 
 /* Little endian uint read */
@@ -1627,3 +1627,4 @@ unsigned DasmI386(char* buffer, unsigned pc)
 
 #endif	/* MAME_DEBUG */
 
+}

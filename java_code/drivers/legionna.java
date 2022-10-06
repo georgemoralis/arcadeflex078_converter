@@ -60,11 +60,15 @@ Preliminary COP MCU memory map
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class legionna
+{
+	
 extern WRITE16_HANDLER( legionna_background_w );
 extern WRITE16_HANDLER( legionna_foreground_w );
 extern WRITE16_HANDLER( legionna_midground_w );
@@ -2092,3 +2096,4 @@ GAMEX( 1993, sdgndmrb, 0,		 sdgndmrb, sdgndmrb, 0,		   ROT0, "Banpresto", "SD Gu
 GAMEX( 1992, cupsoc,   0,		 cupsoc,  cupsoc,	 0,        ROT0, "Seibu", "Seibu Cup Soccer", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 GAMEX( 1992, cupsoc2,  cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Seibu Cup Soccer (set 2)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 GAMEX( 1992, olysoc92, cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Olympic Soccer '92", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+}

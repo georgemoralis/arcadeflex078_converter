@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "crgolf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class crgolf
+{
+	
 
 /* globals */
 data8_t *crgolf_color_select;
@@ -231,4 +237,5 @@ VIDEO_UPDATE( crgolf )
 	/* apply the color select bit */
 	if (*crgolf_color_select)
 		copybitmap(bitmap, highbit, 0, 0, 0, 0, cliprect, TRANSPARENCY_BLEND, 0);
+}
 }

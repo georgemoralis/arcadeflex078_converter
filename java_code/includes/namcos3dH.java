@@ -1,5 +1,12 @@
-#include "driver.h" /* for mame_bitmap */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class namcos3dH
+{
+	
 #define NAMCOS22_SCREEN_WIDTH  640
 #define NAMCOS22_SCREEN_HEIGHT 480
 
@@ -46,3 +53,4 @@ void /*namcos21_*/BlitTriFlat(
 	struct mame_bitmap *pBitmap,
 	const struct VerTex v[3],
 	unsigned color );
+}

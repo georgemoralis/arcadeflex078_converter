@@ -4,9 +4,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class karnov
+{
+	
 static unsigned char *dirty_f;
 static struct mame_bitmap *bitmap_f;
 data16_t karnov_scroll[2], *karnov_pf_data;
@@ -271,3 +277,4 @@ VIDEO_START( wndrplnt )
 }
 
 /******************************************************************************/
+}

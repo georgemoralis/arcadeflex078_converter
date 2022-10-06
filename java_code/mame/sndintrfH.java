@@ -10,185 +10,133 @@ struct MachineSound
 };
 
 
-#include "sound/mixer.h"
-#include "sound/streams.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class sndintrfH
+{
+	
 #if (HAS_SAMPLES)
-#include "sound/samples.h"
 #endif
 #if (HAS_DAC)
-#include "sound/dac.h"
 #endif
 #if (HAS_DISCRETE)
-#include "sound/discrete.h"
 #endif
 #if (HAS_AY8910)
-#include "sound/ay8910.h"
 #endif
 #if (HAS_YM2203)
-#include "sound/2203intf.h"
 #endif
 #if (HAS_YM2608)
-#include "sound/2608intf.h"
 #endif
 #if (HAS_YM2612 || HAS_YM3438)
-#include "sound/2612intf.h"
 #endif
 #if (HAS_YM2151 || HAS_YM2151_ALT)
-#include "sound/2151intf.h"
 #endif
 #if (HAS_YM2608)
-#include "sound/2608intf.h"
 #endif
 #if (HAS_YM2610 || HAS_YM2610B)
-#include "sound/2610intf.h"
 #endif
 #if (HAS_YM3812 || HAS_YM3526 || HAS_Y8950)
-#include "sound/3812intf.h"
 #endif
 #if (HAS_YM2413)
-#include "sound/2413intf.h"
 #endif
 #if (HAS_YMZ280B)
-#include "sound/ymz280b.h"
 #endif
 #if (HAS_SN76477)
-#include "sound/sn76477.h"
 #endif
 #if (HAS_SN76496)
-#include "sound/sn76496.h"
 #endif
 #if (HAS_POKEY)
-#include "sound/pokey.h"
 #endif
 #if (HAS_NES)
  #ifndef MESS
-#include "sound/nes_apu.h"
  #else
-#include "sound/nesintf.h"
  #endif
 #endif
 #if (HAS_ASTROCADE)
-#include "sound/astrocde.h"
 #endif
 #if (HAS_NAMCO)
-#include "sound/namco.h"
 #endif
 #if (HAS_NAMCONA)
-#include "sound/namcona.h"
 #endif
 #if (HAS_TMS36XX)
-#include "sound/tms36xx.h"
 #endif
 #if (HAS_TMS5110)
-#include "sound/5110intf.h"
 #endif
 #if (HAS_TMS5220)
-#include "sound/5220intf.h"
 #endif
 #if (HAS_VLM5030)
-#include "sound/vlm5030.h"
 #endif
 #if (HAS_ADPCM || HAS_OKIM6295)
-#include "sound/adpcm.h"
 #endif
 #if (HAS_MSM5205)
-#include "sound/msm5205.h"
 #endif
 #if (HAS_MSM5232)
-#include "sound/msm5232.h"
 #endif
 #if (HAS_UPD7759)
-#include "sound/upd7759.h"
 #endif
 #if (HAS_HC55516)
-#include "sound/hc55516.h"
 #endif
 #if (HAS_K005289)
-#include "sound/k005289.h"
 #endif
 #if (HAS_K007232)
-#include "sound/k007232.h"
 #endif
 #if (HAS_K051649)
-#include "sound/k051649.h"
 #endif
 #if (HAS_K053260)
-#include "sound/k053260.h"
 #endif
 #if (HAS_K054539)
-#include "sound/k054539.h"
 #endif
 #if (HAS_SEGAPCM)
-#include "sound/segapcm.h"
 #endif
 #if (HAS_RF5C68)
-#include "sound/rf5c68.h"
 #endif
 #if (HAS_CEM3394)
-#include "sound/cem3394.h"
 #endif
 #if (HAS_C140)
-#include "sound/c140.h"
 #endif
 #if (HAS_QSOUND)
-#include "sound/qsound.h"
 #endif
 #if (HAS_SAA1099)
-#include "sound/saa1099.h"
 #endif
 #if (HAS_IREMGA20)
-#include "sound/iremga20.h"
 #endif
 #if (HAS_ES5505 || HAS_ES5506)
-#include "sound/es5506.h"
 #endif
 #if (HAS_BSMT2000)
-#include "sound/bsmt2000.h"
 #endif
 #if (HAS_YMF262)
-#include "sound/262intf.h"
 #endif
 #if (HAS_YMF278B)
-#include "sound/ymf278b.h"
 #endif
 #if (HAS_GAELCO_CG1V || HAS_GAELCO_GAE1)
-#include "sound/gaelco.h"
 #endif
 #if (HAS_X1_010)
-#include "sound/x1_010.h"
 #endif
 #if (HAS_MULTIPCM)
-#include "sound/multipcm.h"
 #endif
 #if (HAS_C6280)
-#include "sound/c6280.h"
 #endif
 #if (HAS_TIA)
-#include "sound/tiaintf.h"
 #endif
 #if (HAS_SP0250)
-#include "sound/sp0250.h"
 #endif
 #if (HAS_SCSP)
-#include "sound/scsp.h"
 #endif
 #if (HAS_PSXSPU)
-#include "sound/psx.h"
 #endif
 #if (HAS_YMF271)
-#include "sound/ymf271.h"
 #endif
 
 #ifdef MESS
 #if (HAS_BEEP)
-#include "sound/beep.h"
 #endif
 #if (HAS_SPEAKER)
-#include "sound/speaker.h"
 #endif
 #if (HAS_WAVE)
-#include "sound/wave.h"
 #endif
 #endif
 
@@ -457,3 +405,4 @@ void soundlatch_setclearedvalue(int value);
 
 
 #endif
+}

@@ -32,13 +32,15 @@
 /* GLmame and FXmame provide their own vector implementations */
 #if !(defined xgl)
 
-#include <math.h>
-#include "osinline.h"
-#include "driver.h"
-#include "osdepend.h"
-#include "vector.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vector
+{
+	
 #define MAX_DIRTY_PIXELS (2*MAX_PIXELS)
 
 unsigned char *vectorram;
@@ -785,3 +787,4 @@ VIDEO_UPDATE( vector )
 }
 
 #endif /* if !(defined xgl) */
+}

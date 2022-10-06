@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "8080bw.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _8080bw
+{
+	
 
 static int shift_data1,shift_data2,shift_amount;
 
@@ -148,4 +154,5 @@ READ_HANDLER( desertgu_port_1_r )
 WRITE_HANDLER( desertgu_controller_select_w )
 {
 	desertgu_controller_select = data & 0x08;
+}
 }

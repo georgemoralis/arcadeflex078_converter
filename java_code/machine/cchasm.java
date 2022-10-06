@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "machine/z80fmly.h"
-#include "cchasm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class cchasm
+{
+	
 #define M6840_CYCLE 1250  /* 800 kHz */
 
 static int m6840_cr_select=2;
@@ -228,3 +232,4 @@ WRITE16_HANDLER( cchasm_led_w )
 	/*logerror("LED write %x to %x\n", data, offset);*/
 }
 
+}

@@ -12,8 +12,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class driver
+{
+	
 
 #ifndef DRIVER_RECURSIVE
 
@@ -60,7 +67,6 @@ const struct GameDriver *test_drivers[] =
 /* step 1: declare all external references */
 #define DRIVER(NAME) extern struct GameDriver driver_##NAME;
 #define TESTDRIVER(NAME) extern struct GameDriver driver_##NAME;
-#include "driver.c"
 
 /* step 2: define the drivers[] array */
 #undef DRIVER
@@ -69,7 +75,6 @@ const struct GameDriver *test_drivers[] =
 #define TESTDRIVER(NAME)
 const struct GameDriver *drivers[] =
 {
-#include "driver.c"
 	0	/* end of array */
 };
 
@@ -81,7 +86,6 @@ const struct GameDriver *drivers[] =
 
 const struct GameDriver *test_drivers[] =
 {
-#include "driver.c"
 	0	/* end of array */
 };
 
@@ -5569,3 +5573,4 @@ Other Sun games
 #endif	/* DRIVER_RECURSIVE */
 
 #endif	/* TINY_COMPILE */
+}

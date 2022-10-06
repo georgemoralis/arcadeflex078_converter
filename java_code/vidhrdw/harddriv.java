@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms34010/34010ops.h"
-#include "harddriv.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class harddriv
+{
+	
 
 
 /*************************************
@@ -550,4 +554,5 @@ if (cliprect->min_y < 30)
 	ui_text(bitmap, temp, 0, 20);
 }
 #endif
+}
 }

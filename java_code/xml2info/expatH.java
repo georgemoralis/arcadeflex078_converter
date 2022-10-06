@@ -14,8 +14,15 @@
 #define XML_SetExternalEntityRefHandlerArg  XML_SetExternalEntRefHandlerArg
 #endif
 
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package xml2info;
 
+public class expatH
+{
+	
 #ifndef XMLPARSEAPI
 #if defined(_MSC_EXTENSIONS) && !defined(__BEOS__) && !defined(__CYGWIN__)
 #ifdef XML_STATIC
@@ -924,3 +931,4 @@ XML_GetFeatureList(void);
 #endif
 
 #endif /* not XmlParse_INCLUDED */
+}

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kopunch
+{
+	
 extern UINT8 *kopunch_videoram2;
 
 extern WRITE_HANDLER( kopunch_videoram_w );
@@ -255,3 +261,4 @@ static DRIVER_INIT( kopunch )
 
 
 GAMEX( 1981, kopunch, 0, kopunch, kopunch, kopunch, ROT270, "Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)
+}

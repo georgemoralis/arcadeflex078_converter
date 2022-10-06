@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _6532riotH
+{
+	
 
 struct R6532interface
 {
@@ -24,3 +31,4 @@ extern READ_HANDLER( r6532_1_r );
 
 extern WRITE_HANDLER( r6532_0_w );
 extern WRITE_HANDLER( r6532_1_w );
+}

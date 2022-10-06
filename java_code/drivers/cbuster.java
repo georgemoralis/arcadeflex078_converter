@@ -13,10 +13,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cbuster
+{
+	
 VIDEO_START( twocrude );
 VIDEO_UPDATE( twocrude );
 
@@ -618,3 +623,4 @@ GAME( 1990, cbuster,  0,       twocrude, twocrude, twocrude, ROT0, "Data East Co
 GAME( 1990, cbusterw, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East Corporation", "Crude Buster (World FU version)" )
 GAME( 1990, cbusterj, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East Corporation", "Crude Buster (Japan)" )
 GAME( 1990, twocrude, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East USA", "Two Crude (US)" )
+}

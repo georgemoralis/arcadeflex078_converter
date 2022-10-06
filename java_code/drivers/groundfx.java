@@ -62,12 +62,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class groundfx
+{
+	
 VIDEO_START( groundfx );
 VIDEO_UPDATE( groundfx );
 
@@ -577,3 +580,4 @@ DRIVER_INIT( groundfx )
 
 
 GAME( 1992, groundfx, 0, groundfx, groundfx, groundfx, ROT0, "Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )
+}

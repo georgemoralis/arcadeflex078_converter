@@ -45,9 +45,15 @@ Stephh's notes (based on the game M68000 code and some tests) :
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class aquarium
+{
+	
 #define AQUARIUS_HACK	0
 
 data16_t *aquarium_scroll, *aquarium_priority;
@@ -409,3 +415,4 @@ GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System"
 #else
 GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System", "Aquarium", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 #endif
+}

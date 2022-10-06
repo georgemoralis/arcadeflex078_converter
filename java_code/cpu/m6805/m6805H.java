@@ -3,9 +3,15 @@
 #ifndef _M6805_H
 #define _M6805_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6805;
 
+public class m6805H
+{
+	
 enum { M6805_PC=1, M6805_S, M6805_CC, M6805_A, M6805_X, M6805_IRQ_STATE };
 
 #define M6805_IRQ_LINE		0
@@ -133,3 +139,4 @@ extern unsigned Dasm6805(char *buf, unsigned pc);
 #endif
 
 #endif /* _M6805_H */
+}

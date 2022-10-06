@@ -17,8 +17,15 @@
       completely wrong since apparently there's RAM at 0x00000000.
 
 *********************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vamphalf
+{
+	
 static MEMORY_READ32_START( readmem )
 	{ 0x00000000, 0x0007ffff, MRA32_RAM },
 	{ 0xfff80000, 0xffffffff, MRA32_BANK1 },
@@ -364,3 +371,4 @@ GAMEX( 19??, hidnctch, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "
 GAMEX( 19??, landbrk,  0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Land Breaker", GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEX( 19??, racoon,   0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Racoon World", GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEX( 19??, xfiles,   0,        xfiles,   vamphalf, vamphalf, ROT0, "dfPIX Entertainment Inc.", "X-Files", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

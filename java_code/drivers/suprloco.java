@@ -11,11 +11,15 @@ TODO:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/system1.h"
-#include "cpu/z80/z80.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class suprloco
+{
+	
 extern unsigned char *suprloco_videoram;
 
 PALETTE_INIT( suprloco );
@@ -296,3 +300,4 @@ DRIVER_INIT( suprloco )
 
 
 GAME( 1982, suprloco, 0, suprloco, suprloco, suprloco, ROT0, "Sega", "Super Locomotive" )
+}

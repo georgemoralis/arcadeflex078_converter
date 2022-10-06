@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "crshrace.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class crshrace
+{
+	
 
 data16_t *crshrace_videoram1,*crshrace_videoram2;
 data16_t *crshrace_roz_ctrl1,*crshrace_roz_ctrl2;
@@ -226,4 +230,5 @@ VIDEO_EOF( crshrace )
 {
 	buffer_spriteram16_w(0,0,0);
 	buffer_spriteram16_2_w(0,0,0);
+}
 }

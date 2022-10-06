@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class snk
+{
+	
 /*******************************************************************************
  Shadow Handling Notes
 ********************************************************************************
@@ -650,4 +655,5 @@ VIDEO_UPDATE( gwar )
 		unsigned char text_attribute = ram[gwar_sp_baseaddr+0x8c0];
 		tdfever_draw_tx( bitmap, text_attribute, 0, 0, gwar_tx_baseaddr );
 	}
+}
 }

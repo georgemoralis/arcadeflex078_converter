@@ -33,9 +33,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nitedrvr
+{
+	
 extern UINT8 *nitedrvr_ram;
 
 extern int nitedrvr_gear;
@@ -426,3 +432,4 @@ ROM_END
  *************************************/
 
 GAMEX( 1976, nitedrvr, 0, nitedrvr, nitedrvr, 0, ROT0, "Atari", "Night Driver", GAME_IMPERFECT_SOUND )
+}

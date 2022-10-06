@@ -166,10 +166,15 @@ note: CLUT and color remap PROMs missing
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class alpha68k
+{
+	
 #define SBASEBAL_HACK	0
 
 VIDEO_START( alpha68k );
@@ -3074,3 +3079,4 @@ GAME( 1989, sbasebal, 0,        alpha68k_V_sb, sbasebal, sbasebal, ROT0,  "Alpha
 #endif
 GAMEX(1989, tnexspce, 0,        tnexspce,      tnexspce, tnexspce, ROT90, "SNK",                "The Next Space", GAME_NO_COCKTAIL )
 
+}

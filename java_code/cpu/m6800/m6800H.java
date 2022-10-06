@@ -3,10 +3,15 @@
 #ifndef _M6800_H
 #define _M6800_H
 
-#include "osd_cpu.h"
-#include "memory.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6800;
 
+public class m6800H
+{
+	
 enum {
 	M6800_PC=1, M6800_S, M6800_A, M6800_B, M6800_X, M6800_CC,
 	M6800_WAI_STATE, M6800_NMI_STATE, M6800_IRQ_STATE };
@@ -297,3 +302,4 @@ unsigned Dasm680x(int subtype, char *buf, unsigned pc);
 #endif
 
 #endif /* _M6800_H */
+}

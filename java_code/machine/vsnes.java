@@ -7,9 +7,15 @@ Nintendo VS UniSystem and DualSystem - (c) 1984 Nintendo of America
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/ppu2c03b.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class vsnes
+{
+	
 /* Globals */
 int vsnes_gun_controller;
 int vsnes_do_vrom_bank;
@@ -1349,4 +1355,5 @@ DRIVER_INIT( vstetris )
 	init_vsnes();
 	init_vsnormal();
 	remapped_colortable = rp2c04003_colortable;
+}
 }

@@ -10,8 +10,15 @@
 #ifndef UI_TEXT_H
 #define UI_TEXT_H
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class ui_textH
+{
+	
 /* Important: this must match the default_text list in ui_text.c! */
 enum
 {
@@ -174,7 +181,6 @@ enum
 };
 
 #ifdef MESS
-#include "mui_text.h"
 #endif
 
 struct lang_struct
@@ -196,3 +202,4 @@ const char * ui_getstring (int string_num);
 
 #endif /* UI_TEXT_H */
 
+}

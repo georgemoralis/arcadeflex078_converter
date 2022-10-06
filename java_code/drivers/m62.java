@@ -52,11 +52,15 @@ JP4: /
 
 **************************************************************************/
 
-#include "driver.h"
-#include "sndhrdw/irem.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class m62
+{
+	
 
 PALETTE_INIT( irem );
 PALETTE_INIT( battroad );
@@ -2493,3 +2497,4 @@ GAME( 1985, spelnkrj, spelunkr, spelunkr, spelunkr, m62,      ROT0,   "Irem (lic
 GAME( 1986, spelunk2, 0,        spelunk2, spelunk2, spelunk2, ROT0,   "Irem (licensed from Broderbund)", "Spelunker II" )
 GAME( 1986, youjyudn, 0,        youjyudn, youjyudn, m62,      ROT270, "Irem", "Youjyuden (Japan)" )
 GAMEX(1985, horizon,  0,        horizon,  horizon,  m62,      ROT0,   "Irem", "Horizon", GAME_IMPERFECT_SOUND )
+}

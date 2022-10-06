@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wrally
+{
+	
 data16_t *wrally_spriteram;
 data16_t *wrally_vregs;
 data16_t *wrally_videoram;
@@ -175,4 +180,5 @@ VIDEO_UPDATE( wrally )
 	tilemap_draw(bitmap,cliprect,pant[1],0,0);
 	tilemap_draw(bitmap,cliprect,pant[0],0,0);
 	gaelco_draw_sprites(bitmap,cliprect);
+}
 }

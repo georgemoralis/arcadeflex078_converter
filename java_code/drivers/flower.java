@@ -37,8 +37,15 @@ CHIP #  POSITION   TYPE
 14       19E         "       "
 */
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class flower
+{
+	
 data8_t *flower_sharedram;
 
 READ_HANDLER( flower_sharedram_r );
@@ -321,3 +328,4 @@ ROM_END
 
 
 GAMEX( 1986, flower, 0, flower, flower, 0, ROT0, "Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+}

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rallyx
+{
+	
 
 
 unsigned char *rallyx_videoram2,*rallyx_colorram2;
@@ -795,4 +801,5 @@ if (flip_screen) sx += 32;
 				x,y,
 				&Machine->visible_area,TRANSPARENCY_PEN,3);
 	}
+}
 }

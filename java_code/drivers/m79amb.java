@@ -1,8 +1,14 @@
 /* Ramtek M79 Ambush */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
 /*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
+
+public class m79amb
+{
+	/*
  * in
  * 8000 DIP SW
  * 8002 D0=VBlank
@@ -182,3 +188,4 @@ ROM_END
 
 
 GAMEX( 1977, m79amb, 0, m79amb, m79amb, m79amb, ROT0, "RamTek", "M79 Ambush", GAME_NO_SOUND )
+}

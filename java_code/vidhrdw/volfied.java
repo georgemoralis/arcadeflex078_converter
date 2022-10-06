@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class volfied
+{
+	
 static struct mame_bitmap* pixel_layer = 0;
 
 static UINT16* video_ram = NULL;
@@ -167,4 +171,5 @@ VIDEO_UPDATE( volfied )
 	copybitmap(bitmap, pixel_layer, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 
 	PC090OJ_draw_sprites(bitmap, cliprect, 0);
+}
 }

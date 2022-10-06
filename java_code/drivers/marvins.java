@@ -24,11 +24,15 @@ AT08XX03:
  - tuned music tempo and wavegen frequency
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class marvins
+{
+	
 #define CREDITS "Phil Stroffolino\nTim Lindquist\nCarlos A. Lozano"
 
 
@@ -804,3 +808,4 @@ static DRIVER_INIT( vangrd2 )
 GAMEX(1983, marvins,  0, marvins,  marvins,  marvins,  ROT270, "SNK", "Marvin's Maze", GAME_NO_COCKTAIL )
 GAMEX(1984, madcrash, 0, madcrash, madcrash, madcrash, ROT0,   "SNK", "Mad Crasher", GAME_IMPERFECT_GRAPHICS )
 GAMEX(1984, vangrd2,  0, vangrd2,  vangrd2,  vangrd2,  ROT270, "SNK", "Vanguard II", GAME_NO_COCKTAIL )
+}

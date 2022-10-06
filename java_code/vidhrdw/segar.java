@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "segar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class segar
+{
+	
 
 UINT8 *segar_characterram;
 UINT8 *segar_characterram2;
@@ -803,3 +808,4 @@ VIDEO_UPDATE( sindbadm )
 
 }
 
+}

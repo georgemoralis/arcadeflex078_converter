@@ -69,11 +69,15 @@ kengo       0x18   --------------
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/irem_cpu.h"
-#include "sndhrdw/m72.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class m72
+{
+	
 
 /* in vidhrdw/m72.c */
 extern unsigned char *m72_videoram1,*m72_videoram2,*majtitle_rowscrollram;
@@ -3234,3 +3238,4 @@ GAME( 1990, airduel,  0,        m72,      airduel,  airduel,  ROT270, "Irem", "A
 GAMEX( 1991, cosmccop, 0,        kengo,    gallop,   0,        ROT0,   "Irem", "Cosmic Cop (World)", GAME_NO_COCKTAIL )
 GAMEX( 1991, gallop,   cosmccop, m72,      gallop,   gallop,   ROT0,   "Irem", "Gallop - Armed police Unit (Japan)", GAME_NO_COCKTAIL )
 GAMEX( 1991, kengo,    0,        kengo,    kengo,    kengo,    ROT0,   "Irem", "Ken-Go", GAME_NO_COCKTAIL )
+}

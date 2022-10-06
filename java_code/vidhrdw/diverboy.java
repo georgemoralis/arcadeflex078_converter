@@ -1,7 +1,14 @@
 /* Diver Boy - Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class diverboy
+{
+	
 data16_t *diverboy_spriteram;
 size_t diverboy_spriteram_size;
 
@@ -50,4 +57,5 @@ VIDEO_UPDATE(diverboy)
 {
 //	fillbitmap(bitmap,get_black_pen(),cliprect);
 	diverboy_drawsprites(bitmap,cliprect);
+}
 }

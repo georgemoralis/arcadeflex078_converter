@@ -26,11 +26,15 @@ Take the following observations with a grain of salt (might not be true):
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/m6805/m6805.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lkage
+{
+	
 
 extern unsigned char *lkage_scroll, *lkage_vreg;
 WRITE_HANDLER( lkage_videoram_w );
@@ -562,3 +566,4 @@ GAME( 1984, lkage,   0,     lkage,  lkage, 0,       ROT0, "Taito Corporation", "
 GAME( 1984, lkageb,  lkage, lkageb, lkage, lkageb,  ROT0, "bootleg", "The Legend of Kage (bootleg set 1)" )
 GAME( 1984, lkageb2, lkage, lkageb, lkage, 0,       ROT0, "bootleg", "The Legend of Kage (bootleg set 2)" )
 GAME( 1984, lkageb3, lkage, lkageb, lkage, 0,       ROT0, "bootleg", "The Legend of Kage (bootleg set 3)" )
+}

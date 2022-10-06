@@ -1,8 +1,14 @@
 /* Free Kick Video Hardware */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class freekick
+{
+	
 struct tilemap *freek_tilemap;
 data8_t *freek_videoram;
 
@@ -153,4 +159,5 @@ VIDEO_UPDATE(freekick)
 {
 	tilemap_draw(bitmap,cliprect,freek_tilemap,0,0);
 	freekick_draw_sprites(bitmap,cliprect);
+}
 }

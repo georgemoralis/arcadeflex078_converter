@@ -6,19 +6,19 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <conio.h>
-#include <winioctl.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class input
+{
+	
 // undef WINNT for dinput.h to prevent duplicate definition
 #undef WINNT
-#include <dinput.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "rc.h"
-#include "input.h"
 
 
 
@@ -2228,4 +2228,5 @@ void stop_led(void)
 	}
 
 	return;
+}
 }

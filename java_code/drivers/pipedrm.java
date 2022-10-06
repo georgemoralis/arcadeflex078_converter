@@ -103,12 +103,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
-#include "fromance.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pipedrm
+{
+	
 
 static UINT8 pending_command;
 static UINT8 sound_command;
@@ -788,3 +791,4 @@ static DRIVER_INIT( hatris )
 GAME( 1990, pipedrm,  0,       pipedrm, pipedrm, pipedrm, ROT0, "Video System Co.", "Pipe Dream (US)" )
 GAME( 1990, pipedrmj, pipedrm, pipedrm, pipedrm, pipedrm, ROT0, "Video System Co.", "Pipe Dream (Japan)" )
 GAME( 1990, hatris,   0,       hatris,  hatris,  hatris,  ROT0, "Video System Co.", "Hatris (Japan)" )
+}

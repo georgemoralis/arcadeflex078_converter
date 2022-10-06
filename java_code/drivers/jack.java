@@ -36,10 +36,15 @@ The 2 ay-8910 read ports are responsible for reading the sound commands.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jack
+{
+	
 
 extern WRITE_HANDLER( jack_videoram_w );
 extern WRITE_HANDLER( jack_colorram_w );
@@ -1042,3 +1047,4 @@ GAME( 1984, freeze,   0,        jack, freeze,   jack,     ROT90, "Cinematronics"
 GAME( 1984, sucasino, 0,        jack, sucasino, jack,     ROT90, "Data Amusement", "Super Casino" )
 GAME( 1981, tripool,  0,        tripool, tripool,  jack,     ROT90, "Noma (Casino Tech license)", "Tri-Pool (Casino Tech)" )
 GAME( 1981, tripoola, tripool,  tripool, tripool,  jack,     ROT90, "Noma (Costal Games license)", "Tri-Pool (Costal Games)" )
+}

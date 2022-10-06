@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class kangarooH
+{
+	
 
 /*----------- defined in vidhrdw/kangaroo.c -----------*/
 
@@ -25,3 +32,4 @@ WRITE_HANDLER( kangaroo_videoram_w );
 WRITE_HANDLER( kangaroo_video_control_w );
 WRITE_HANDLER( kangaroo_bank_select_w );
 WRITE_HANDLER( kangaroo_color_mask_w );
+}

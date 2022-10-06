@@ -6,12 +6,15 @@ driver by Nicola Salmoria
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rollerg
+{
+	
 /* prototypes */
 static MACHINE_INIT( rollerg );
 static void rollerg_banking( int lines );
@@ -365,3 +368,4 @@ static DRIVER_INIT( rollerg )
 
 GAME( 1991, rollerg,  0,       rollerg, rollerg, rollerg, ROT0, "Konami", "Rollergames (US)" )
 GAME( 1991, rollergj, rollerg, rollerg, rollerg, rollerg, ROT0, "Konami", "Rollergames (Japan)" )
+}

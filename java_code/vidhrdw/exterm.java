@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/tms34010/tms34010.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exterm
+{
+	
 
 data16_t *exterm_master_videoram, *exterm_slave_videoram;
 
@@ -149,4 +154,5 @@ VIDEO_UPDATE( exterm )
 		/* draw the scanline */
 		draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x, &scanline[cliprect->min_x], Machine->pens, -1);
 	}
+}
 }

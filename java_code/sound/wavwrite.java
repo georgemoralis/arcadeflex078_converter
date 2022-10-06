@@ -1,7 +1,12 @@
-#include "driver.h"
-#include <stdio.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class wavwrite
+{
+	
 struct wav_data
 {
 	FILE *file;
@@ -200,4 +205,5 @@ void wav_add_data_32lr(void *wavptr, INT32 *left, INT32 *right, int samples, int
 
 	/* free memory */
 	free(temp);
+}
 }

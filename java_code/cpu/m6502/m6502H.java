@@ -25,9 +25,15 @@
 #ifndef _M6502_H
 #define _M6502_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
+public class m6502H
+{
+	
 #ifdef RUNTIME_LOADER
 # ifdef __cplusplus
 	extern "C" void m6502_runtime_loader_init(void);
@@ -366,3 +372,4 @@ extern unsigned Dasm6502( char *dst, unsigned pc );
 
 #endif /* _M6502_H */
 
+}

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class galaxian
+{
+	
 #define VERBOSE 0
 
 #define NEW_LFO 0
@@ -658,3 +664,4 @@ struct CustomSound_interface galaxian_custom_interface =
 	galaxian_sh_stop,
 	galaxian_sh_update
 };
+}

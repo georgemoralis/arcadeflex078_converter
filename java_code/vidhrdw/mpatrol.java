@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mpatrol
+{
+	
 
 
 #define BGHEIGHT (64)
@@ -495,4 +501,5 @@ VIDEO_UPDATE( mpatrol )
 				sx,sy,
 				&Machine->visible_area,TRANSPARENCY_COLOR,128+32);
 	}
+}
 }

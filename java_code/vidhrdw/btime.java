@@ -8,9 +8,15 @@ This file is also used by scregg.c
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class btime
+{
+	
 
 unsigned char *lnc_charbank;
 unsigned char *bnj_backgroundram;
@@ -738,4 +744,5 @@ VIDEO_UPDATE( disco )
     copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 
     drawsprites(bitmap, btime_palette, 0, 0, spriteram, 1);
+}
 }

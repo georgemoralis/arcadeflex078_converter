@@ -161,12 +161,15 @@ Changes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8039/i8039.h"
-#include "cpu/s2650/s2650.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dkong
+{
+	
 static int page = 0,mcustatus;
 static int p[8] = { 255,255,255,255,255,255,255,255 };
 static int t[2] = { 1,1 };
@@ -239,7 +242,6 @@ READ_HANDLER( strtheat_decrypt_rom );
 //WRITE_HANDLER( strtheat_writeport );
 
 
-#include <math.h>
 
 static double envelope,tt;
 static int decay;
@@ -2652,3 +2654,4 @@ GAMEX(1985, spcfrcii, 0,		spclforc, spclforc, 0,        ROT90, "Senko Industries
 
 GAMEX(198?, drakton,  0,        dkong,    dkong,    0,        ROT90, "Epos Corporation", "Drakton", GAME_NOT_WORKING )
 GAMEX(1985, strtheat, 0,        strtheat, strtheat, 0,        ROT90, "Epos Corporation", "Street Heat - Cardinal Amusements", GAME_NO_SOUND)
+}

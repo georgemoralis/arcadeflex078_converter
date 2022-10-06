@@ -16,9 +16,15 @@ Flipped screen looks wrong, but it is correct.
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class momoko
+{
+	
 extern data8_t *momoko_bg_scrollx;
 extern data8_t *momoko_bg_scrolly;
 
@@ -328,3 +334,4 @@ ROM_START( momoko )
 ROM_END
 
 GAME( 1986, momoko, 0, momoko, momoko, 0, ROT0, "Jaleco", "Momoko 120%" )
+}

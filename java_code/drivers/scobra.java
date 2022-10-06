@@ -45,10 +45,15 @@ Notes/Tidbits:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/8255ppi.h"
-#include "galaxian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class scobra
+{
+	
 
 
 
@@ -1898,3 +1903,4 @@ GAME( 1981, billiard, hustler,  hustler,  hustler,  billiard,     ROT90,  "bootl
 GAME( 1981, hustlerb, hustler,  hustlerb, hustler,  scramble_ppi, ROT90,  "bootleg", "Video Hustler (bootleg)" )
 GAME( 198?, mimonkey, 0,		mimonkey, mimonkey,	mimonkey,	  ROT90,  "Universal Video Games", "Mighty Monkey" )
 GAME( 198?, mimonsco, mimonkey, mimonkey, mimonsco, mimonsco,     ROT90,  "bootleg", "Mighty Monkey (bootleg on Super Cobra hardware)" )
+}

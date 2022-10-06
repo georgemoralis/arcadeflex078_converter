@@ -1,9 +1,15 @@
 #ifndef M68000__HEADER
 #define M68000__HEADER
 
-#include "osd_cpu.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68000H
+{
+	
 enum
 {
 	/* NOTE: M68K_SP fetches the current SP, be it USP, ISP, or MSP */
@@ -164,6 +170,6 @@ extern unsigned m68020_dasm(char *buffer, unsigned pc);
 #endif
 
 // C Core header
-#include "m68kmame.h"
 
 #endif /* M68000__HEADER */
+}

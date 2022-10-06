@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class namcos22H
+{
+	
 extern enum namcos22_gametype
 {
 	NAMCOS22_AIR_COMBAT22,
@@ -45,3 +51,4 @@ VIDEO_UPDATE( namcos22 );
 
 VIDEO_START( namcos22s );
 VIDEO_UPDATE( namcos22s );
+}

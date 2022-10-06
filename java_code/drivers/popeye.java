@@ -16,10 +16,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class popeye
+{
+	
 
 extern UINT8 *popeye_background_pos;
 extern UINT8 *popeye_palettebank;
@@ -705,3 +710,4 @@ GAME( 1982, popeye,   0,      popeye,   popeye,   popeye,   ROT0, "Nintendo", "P
 GAME( 1982, popeyeu,  popeye, popeye,   popeye,   popeye,   ROT0, "Nintendo", "Popeye (revision D not protected)" )
 GAME( 1982, popeyef,  popeye, popeye,   popeyef,  popeye,   ROT0, "Nintendo", "Popeye (revision F)" )
 GAME( 1982, popeyebl, popeye, popeyebl, popeye,   0,        ROT0, "bootleg",  "Popeye (bootleg)" )
+}

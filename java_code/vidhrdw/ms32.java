@@ -12,8 +12,15 @@ priority should be given to
 */
 
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ms32
+{
+	
 data32_t *ms32_fce00000;
 data32_t *ms32_roz_ctrl;
 data32_t *ms32_tx_scroll;
@@ -510,4 +517,5 @@ if (!keyboard_pressed(KEYCODE_E))
 if (!keyboard_pressed(KEYCODE_R))
 #endif
 	ms32_draw_sprites(bitmap,cliprect, ms32_spram, 0x40000);
+}
 }

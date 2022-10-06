@@ -16,9 +16,15 @@ author (Karl Stenerud) at karl@higashiyama-unet.ocn.ne.jp.
 */
 
 
-#include "g65816ds.h"
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.g65816;
 
+public class g65816ds
+{
+	
 #ifdef SEC
 #undef SEC
 #endif
@@ -322,4 +328,5 @@ int g65816_disassemble(char* buff, unsigned int pc, unsigned int pb, int m_flag,
 	}
 
 	return length;
+}
 }

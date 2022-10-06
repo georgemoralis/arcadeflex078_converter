@@ -1,8 +1,12 @@
-#include "filter.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include <assert.h>
-#include <math.h>
-#include <stdlib.h>
+public class filter
+{
+	
 
 static filter* filter_alloc(void) {
 	filter* f = malloc(sizeof(filter));
@@ -134,3 +138,4 @@ filter* filter_lp_fir_alloc(double freq, int order) {
 }
 
 
+}

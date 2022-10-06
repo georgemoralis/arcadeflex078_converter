@@ -1,6 +1,13 @@
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class astrof
+{
+	
 /* Make sure that the sample name definitions in drivers/astrof.c matches these */
 
 #define SAMPLE_FIRE		 0
@@ -174,3 +181,4 @@ WRITE_HANDLER( astrof_sample2_w )
 	last = data;
 }
 
+}

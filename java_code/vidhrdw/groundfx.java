@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class groundfx
+{
+	
 #define TC0100SCN_GFX_NUM 2
 #define TC0480SCP_GFX_NUM 1
 
@@ -287,4 +292,5 @@ VIDEO_UPDATE( groundfx )
 	}
 
 	TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,0);	/* TC0480SCP text layer */
+}
 }

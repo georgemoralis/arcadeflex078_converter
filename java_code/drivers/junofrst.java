@@ -77,12 +77,15 @@ Blitter source graphics
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/i8039/i8039.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class junofrst
+{
+	
 
 void konami1_decode(void);
 
@@ -451,3 +454,4 @@ static DRIVER_INIT( junofrst )
 
 GAME( 1983, junofrst, 0,        junofrst, junofrst, junofrst, ROT90, "Konami", "Juno First" )
 GAME( 1983, junofstg, junofrst, junofrst, junofrst, junofrst, ROT90, "Konami (Gottlieb license)", "Juno First (Gottlieb)" )
+}

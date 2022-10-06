@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class othldrby
+{
+	
 
 
 #define VIDEORAM_SIZE 0x1c00
@@ -226,4 +232,5 @@ VIDEO_EOF( othldrby )
 	/* sprites need to be delayed two frames */
     memcpy(buf_spriteram,buf_spriteram2,SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
     memcpy(buf_spriteram2,&vram[SPRITERAM_START],SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
+}
 }

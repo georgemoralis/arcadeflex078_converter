@@ -4,11 +4,15 @@
 /*                                                           */
 /*************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/lazercmd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lazercmd
+{
+	
 extern int marker_x, marker_y;
 
 static int video_inverted = 0;
@@ -131,4 +135,5 @@ VIDEO_UPDATE( lazercmd )
 	x = marker_x - 1;             /* normal video lags marker by 1 pixel */
 	y = vert_scale(marker_y) - VERT_CHR; /* first line used as scratch pad */
 	plot_pattern(bitmap,x,y);
+}
 }

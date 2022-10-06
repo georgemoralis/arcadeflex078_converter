@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pushman
+{
+	
 static struct tilemap *bg_tilemap,*tx_tilemap;
 static data16_t control[2];
 
@@ -124,4 +130,5 @@ VIDEO_UPDATE( pushman )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

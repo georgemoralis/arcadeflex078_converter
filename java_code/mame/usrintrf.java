@@ -6,19 +6,17 @@
 
 *********************************************************************/
 
-#include "driver.h"
-#include "info.h"
-#include "vidhrdw/vector.h"
-#include "datafile.h"
-#include <stdarg.h>
-#include <math.h>
-#include "ui_text.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class usrintrf
+{
+	
 #ifdef MESS
-  #include "mess.h"
-#include "mesintrf.h"
-#endif
+  #endif
 
 
 
@@ -4089,7 +4087,6 @@ int handle_user_interface(struct mame_bitmap *bitmap)
 		watchdog_reset_w(0,0);
 		if (keyboard_pressed_memory(KEYCODE_LCONTROL))
 		{
-#include "cpu/z80/z80.h"
 			soundlatch_w(0,jukebox_selected);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		}
@@ -4323,3 +4320,4 @@ int is_game_paused(void)
 }
 
 #endif
+}

@@ -36,10 +36,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "unico.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class unico
+{
+	
 /* Variables defined in drivers: */
 
 extern int unico_has_lightgun;
@@ -445,3 +450,4 @@ if ( keyboard_pressed(KEYCODE_Z) || keyboard_pressed(KEYCODE_X) )
 	}
 }
 
+}

@@ -4,11 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "atarifb.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class atarifb
+{
+	
 
 static int CTRLD;
 static int sign_x_1, sign_y_1;
@@ -304,3 +308,4 @@ READ_HANDLER( atarifb4_in2_r )
 }
 
 
+}

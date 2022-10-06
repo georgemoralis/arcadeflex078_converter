@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "machine/z80fmly.h"
-#include "cchasm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class cchasm
+{
+	
 static int sound_flags;
 
 READ_HANDLER( cchasm_snd_io_r )
@@ -198,3 +202,4 @@ void cchasm_sh_update(void)
 }
 
 
+}

@@ -9,9 +9,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class exedexes
+{
+	
 
 extern UINT8 *exedexes_bg_scroll;
 extern UINT8 *exedexes_nbg_yscroll;
@@ -363,3 +369,4 @@ ROM_END
 
 GAME( 1985, exedexes, 0,        exedexes, exedexes, 0, ROT270, "Capcom", "Exed Exes" )
 GAME( 1985, savgbees, exedexes, exedexes, exedexes, 0, ROT270, "Capcom (Memetron license)", "Savage Bees" )
+}

@@ -216,11 +216,15 @@ Notes - Has jumper setting for 122HZ or 61HZ)
 
 */
 
-#include <math.h>
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class _40love
+{
+	
 /* in machine/buggychl.c */
 READ_HANDLER( buggychl_68705_portA_r );
 WRITE_HANDLER( buggychl_68705_portA_w );
@@ -1372,3 +1376,4 @@ ROM_END
 GAMEX( 1984, 40love,   0,        40love,   40love,   40love,   ROT0, "Taito Corporation", "Forty-Love", GAME_IMPERFECT_GRAPHICS )
 GAME ( 1984, fieldday, 0,        undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "Field Day" )
 GAME ( 1984, undoukai, fieldday, undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "The Undoukai (Japan)" )
+}

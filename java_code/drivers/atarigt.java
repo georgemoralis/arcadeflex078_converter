@@ -18,13 +18,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vidhrdw/atarirle.h"
-#include "cpu/m68000/m68000.h"
-#include "sndhrdw/cage.h"
-#include "atarigt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atarigt
+{
+	
 
 #define LOG_PROTECTION		(0)
 #define HACK_TMEK_CONTROLS	(0)
@@ -1180,3 +1182,4 @@ GAMEX( 1994, tmek,     0,        atarigt,  tmek,     tmek,     ROT0, "Atari Game
 GAME ( 1994, tmekprot, tmek,     atarigt,  tmek,     tmek,     ROT0, "Atari Games", "T-MEK (prototype)" )
 GAMEX( 1994, primrage, 0,        atarigt,  primrage, primrage, ROT0, "Atari Games", "Primal Rage (version 2.3)", GAME_UNEMULATED_PROTECTION )
 GAMEX( 1994, primraga, primrage, atarigt,  primrage, primraga, ROT0, "Atari Games", "Primal Rage (version 2.0)", GAME_UNEMULATED_PROTECTION )
+}

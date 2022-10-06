@@ -80,10 +80,15 @@ AT-2
  22MHz
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class terracre
+{
+	
 static const data16_t *mpProtData;
 static data8_t mAmazonProtCmd;
 static data8_t mAmazonProtReg[6];
@@ -965,3 +970,4 @@ GAME( 1986, amazon,   0,        amazon,  amazon,   amazon,   ROT270,  "Nichibuts
 GAME( 1986, amatelas, amazon,   amazon,  amazon,   amatelas, ROT270,  "Nichibutsu", "Sei Senshi Amatelass" )
 GAME( 1987, horekid,  0,        amazon,  horekid,  horekid,  ROT270,  "Nichibutsu", "Kid no Hore Hore Daisakusen" )
 GAME( 1987, horekidb, horekid,  amazon,  horekid,  horekid,  ROT270,  "bootleg", "Kid no Hore Hore Daisakusen (bootleg)" )
+}

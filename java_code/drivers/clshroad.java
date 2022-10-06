@@ -17,9 +17,15 @@ XTAL        :	18.432 MHz
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class clshroad
+{
+	
 data8_t *clshroad_sharedram;
 
 /* Variables & functions defined in vidhrdw: */
@@ -490,3 +496,4 @@ die once, it would be nice to avoid the hack however
 
 GAMEX( 1984, firebatl, 0, firebatl, firebatl, firebatl, ROT90, "Taito", "Fire Battle", GAME_IMPERFECT_GRAPHICS )
 GAME ( 1986, clshroad, 0, clshroad, clshroad, 0, ROT0,  "Woodplace Inc.", "Clash-Road" )
+}

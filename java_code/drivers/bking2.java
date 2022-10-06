@@ -17,8 +17,15 @@ ROM DM03 is missing from all known ROM sets.  This is a color palette.
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bking2
+{
+	
 PALETTE_INIT( bking2 );
 
 VIDEO_START( bking2 );
@@ -698,3 +705,4 @@ ROM_END
 GAME( 1982, bking,  0, bking2, bking,  0, ROT270, "Taito Corporation", "Birdie King" )
 GAME( 1983, bking2, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 2" )
 GAME( 1984, bking3, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 3" )
+}

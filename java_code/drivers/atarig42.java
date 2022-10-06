@@ -18,13 +18,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "machine/asic65.h"
-#include "sndhrdw/atarijsa.h"
-#include "vidhrdw/atarirle.h"
-#include "atarig42.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atarig42
+{
+	
 
 /*************************************
  *
@@ -755,3 +757,4 @@ static DRIVER_INIT( guardian )
 
 GAMEX( 1991, roadriot, 0,        atarig42, roadriot, roadriot, ROT0, "Atari Games", "Road Riot 4WD", GAME_UNEMULATED_PROTECTION )
 GAME ( 1992, guardian, 0,        atarig42, guardian, guardian, ROT0, "Atari Games", "Guardians of the Hood" )
+}

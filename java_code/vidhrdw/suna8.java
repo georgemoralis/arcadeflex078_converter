@@ -60,9 +60,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class suna8
+{
+	
 int suna8_text_dim; /* specifies format of text layer */
 
 data8_t suna8_rombank, suna8_spritebank, suna8_palettebank;
@@ -459,4 +465,5 @@ VIDEO_UPDATE( suna8 )
 		suna8_draw_normal_sprites(bitmap,cliprect);
 		suna8_draw_text_sprites(bitmap,cliprect);
 	}
+}
 }

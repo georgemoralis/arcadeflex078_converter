@@ -309,9 +309,15 @@ The first sprite data is located at f20b,then f21b and so on.
         C= Color palette selector
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class psychic5
+{
+	
 
 extern WRITE_HANDLER( psychic5_paged_ram_w );
 extern WRITE_HANDLER( psychic5_vram_page_select_w );
@@ -615,3 +621,4 @@ ROM_END
 
 
 GAME( 1987, psychic5, 0, psychic5, psychic5, 0, ROT270, "Jaleco", "Psychic 5" )
+}

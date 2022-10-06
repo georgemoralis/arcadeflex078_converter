@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pandoras
+{
+	
 static int flipscreen;
 static struct tilemap *layer0;
 extern unsigned char *pandoras_sharedram;
@@ -175,4 +181,5 @@ VIDEO_UPDATE( pandoras )
 	tilemap_draw( bitmap,cliprect, layer0, 1 ,0);
 	draw_sprites( bitmap,cliprect, &pandoras_sharedram[0x800] );
 	tilemap_draw( bitmap,cliprect, layer0, 0 ,0);
+}
 }

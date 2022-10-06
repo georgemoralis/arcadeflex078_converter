@@ -6,8 +6,15 @@
  */
 
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class dismips
+{
+	
 struct 
 {
 	UINT8 id[ 8 ];
@@ -39,7 +46,6 @@ static UINT32 offset;
 static UINT8 order[] = { 3, 2, 1, 0 };
 
 #define STANDALONE
-#include "mipsdasm.c"
 
 static char *Options[]=
 {
@@ -259,4 +265,5 @@ int main( int argc, char *argv[] )
 	}
 	free (filebuf);
 	return 0;
+}
 }

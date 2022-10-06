@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "ccastles.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ccastles
+{
+	
 
 static struct mame_bitmap *sprite_bm;
 static struct mame_bitmap *maskbitmap;
@@ -344,4 +349,5 @@ VIDEO_UPDATE( ccastles )
 					cliprect,TRANSPARENCY_PEN,7);
 		}
 	}
+}
 }

@@ -4,8 +4,15 @@ Taito Super Speed Race video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sspeedr
+{
+	
 static int toggle;
 
 static unsigned driver_horz;
@@ -272,4 +279,5 @@ VIDEO_UPDATE( sspeedr )
 VIDEO_EOF( sspeedr )
 {
 	toggle ^= 1;
+}
 }

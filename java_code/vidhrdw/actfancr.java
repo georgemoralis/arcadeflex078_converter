@@ -4,10 +4,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class actfancr
+{
+	
 
 static UINT8 actfancr_control_1[0x20],actfancr_control_2[0x20];
 unsigned char *actfancr_pf1_data,*actfancr_pf2_data,*actfancr_pf1_rowscroll_data;
@@ -318,4 +323,5 @@ VIDEO_UPDATE( triothep )
 	}
 
 	tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
+}
 }

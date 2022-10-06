@@ -9,9 +9,15 @@ Todo:
 - dips (if any) - bits 5,6,7 of input port 0 ?
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-extern int dorachan_ctrl;
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
+
+public class dorachan
+{
+	extern int dorachan_ctrl;
 
 WRITE_HANDLER( dorachan_videoram_w );
 
@@ -134,3 +140,4 @@ ROM_END
 
 GAMEX( 1980, dorachan, 0, dorachan, dorachan, 0, ROT90, "Craul Denshi", "Dorachan",GAME_NO_SOUND)
 
+}

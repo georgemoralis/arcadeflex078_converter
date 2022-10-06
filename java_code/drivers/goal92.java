@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class goal92
+{
+	
 extern WRITE16_HANDLER( goal92_background_w );
 extern WRITE16_HANDLER( goal92_foreground_w );
 extern WRITE16_HANDLER( goal92_text_w );
@@ -479,3 +485,4 @@ ROM_END
 
 GAME(  1992, goal92,   cupsoc, goal92,   goal92, 0, ROT0, "bootleg", "Goal '92" )
 GAMEX( 1992, cupsocbl, cupsoc, cupsocbl, goal92, 0, ROT0, "bootleg", "Seibu Cup Soccer (bootleg)", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

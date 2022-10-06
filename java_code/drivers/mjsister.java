@@ -6,8 +6,15 @@ Mahjong Sisters (c) 1986 Toa Plan
 
 *****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mjsister
+{
+	
 #define MCLK 12000000
 
 extern int mjsister_flip_screen;
@@ -361,3 +368,4 @@ ROM_START( mjsister )
 ROM_END
 
 GAME( 1986, mjsister, 0, mjsister, mjsister, 0, ROT0, "Toaplan", "Mahjong Sisters (Japan)" )
+}

@@ -1,11 +1,17 @@
 #ifndef __2612INTF_H__
 #define __2612INTF_H__
 
-#include "fm.h"
-#ifdef BUILD_YM2612
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
+
+public class _2612intfH
+{
+	#ifdef BUILD_YM2612
   void YM2612UpdateRequest(int chip);
 #endif
-#include "ay8910.h"
 
 #define   MAX_2612    (2)
 
@@ -43,3 +49,4 @@ WRITE_HANDLER( YM2612_data_port_1_B_w );
 
 #endif
 /**************** end of file ****************/
+}

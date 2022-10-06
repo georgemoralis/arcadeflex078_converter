@@ -80,9 +80,15 @@ EB26IC73.BIN	27C240		/  Main Program
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class suprslam
+{
+	
 
 extern data16_t *suprslam_screen_videoram, *suprslam_bg_videoram,*suprslam_sp_videoram, *suprslam_spriteram;
 
@@ -394,3 +400,4 @@ ROM_END
 
 GAMEX( 1995, suprslam, 0, suprslam, suprslam, 0, ROT0, "Banpresto / Toei Animation", "Super Slams", GAME_IMPERFECT_GRAPHICS )
 
+}

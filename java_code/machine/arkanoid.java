@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class arkanoid
+{
+	
 
 
 int arkanoid_paddle_select;
@@ -124,3 +131,4 @@ READ_HANDLER( arkanoid_input_2_r )
 	}
 }
 
+}

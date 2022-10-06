@@ -1,8 +1,15 @@
 #ifndef I8085_H
 #define I8085_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8085;
 
+public class i8085H
+{
+	
 enum {
 	I8085_PC=1, I8085_SP, I8085_AF ,I8085_BC, I8085_DE, I8085_HL,
 	I8085_HALT, I8085_IM, I8085_IREQ, I8085_ISRV, I8085_VECTOR,
@@ -76,3 +83,4 @@ extern unsigned Dasm8085(char *buffer, unsigned pc);
 #endif
 
 #endif
+}

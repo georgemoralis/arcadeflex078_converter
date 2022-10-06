@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vendetta
+{
+	
 
 static int layer_colorbase[3],bg_colorbase,sprite_colorbase;
 static int layerpri[3];
@@ -126,4 +132,5 @@ VIDEO_UPDATE( vendetta )
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[layer[2]],0,4);
 
 	K053247_sprites_draw(bitmap,cliprect);
+}
 }

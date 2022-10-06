@@ -4,9 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tunhunt
+{
+	
 extern UINT8 tunhunt_control;
 
 /****************************************************************************************/
@@ -428,4 +434,5 @@ VIDEO_UPDATE( tunhunt )
 		tunhunt_control&0x10 ); /* hstretch */
 
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
+}
 }

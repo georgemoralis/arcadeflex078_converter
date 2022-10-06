@@ -3,8 +3,15 @@
 
  ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ttmahjng
+{
+	
 extern unsigned char *ttmahjng_sharedram;
 extern unsigned char *ttmahjng_videoram1;
 extern unsigned char *ttmahjng_videoram2;
@@ -236,3 +243,4 @@ ROM_END
 
 
 GAME( 1981, ttmahjng, 0, ttmahjng, ttmahjng, 0, ROT0, "Taito", "Mahjong" )
+}

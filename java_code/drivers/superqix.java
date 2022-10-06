@@ -14,9 +14,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class superqix
+{
+	
 
 extern WRITE_HANDLER( superqix_videoram_w );
 extern WRITE_HANDLER( superqix_colorram_w );
@@ -364,3 +370,4 @@ static DRIVER_INIT(perestro)
 GAMEX(1987, superqix, 0,        superqix, superqix, 0,        ROT90, "Taito", "Super Qix", GAME_NOT_WORKING )
 GAME( 1987, sqixbl,   superqix, superqix, superqix, 0,        ROT90, "bootleg", "Super Qix (bootleg)" )
 GAME( 1993, perestro, 0,        superqix, superqix, perestro, ROT90, "Promat / Fuuki", "Perestroika Girls" )
+}

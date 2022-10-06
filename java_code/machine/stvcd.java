@@ -11,10 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/stvcd.h"
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class stvcd
+{
+	
 UINT8 	CD_cr_first;
 UINT8 	CD_cr_writing;
 UINT16	CR1;
@@ -1064,4 +1069,5 @@ void CD_com_update(UINT32 count){
 		CR1 |= CDB_STAT_PERI << 8; // periodic response
 	}
 	logerror("CD block update\n");
+}
 }

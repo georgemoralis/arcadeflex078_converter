@@ -149,9 +149,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "megasys1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cischeat
+{
+	
 /* Variables only used here: */
 
 static data16_t *rom_1, *rom_2, *rom_3;
@@ -2494,3 +2500,4 @@ GAMEX( 1991, f1gpstar, 0, f1gpstar, f1gpstar, f1gpstar, ROT0,   "Jaleco", "Grand
 GAMEX( 1993, f1gpstr2, 0, f1gpstr2, f1gpstar, f1gpstar, ROT0,   "Jaleco", "F-1 Grand Prix Star II",        GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
 GAMEX( 1994, scudhamm, 0, scudhamm, scudhamm, 0,        ROT270, "Jaleco", "Scud Hammer",                   GAME_IMPERFECT_GRAPHICS )
 
+}

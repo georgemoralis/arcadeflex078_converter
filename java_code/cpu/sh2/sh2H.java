@@ -28,9 +28,15 @@
 #ifndef _SH2_H
 #define _SH2_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.sh2;
 
+public class sh2H
+{
+	
 #define SH2_INT_NONE	-1
 #define SH2_INT_VBLIN	0
 #define SH2_INT_VBLOUT	1
@@ -88,3 +94,4 @@ extern unsigned DasmSH2( char *dst, unsigned pc );
 
 #endif /* _SH2_H */
 
+}

@@ -20,11 +20,15 @@ MAIN BOARD:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class matmania
+{
+	
 extern unsigned char *matmania_videoram2,*matmania_colorram2;
 extern size_t matmania_videoram2_size;
 extern unsigned char *matmania_videoram3,*matmania_colorram3;
@@ -658,3 +662,4 @@ GAME( 1985, matmania, 0,        matmania, matmania, 0, ROT270, "Technos (Taito A
 GAME( 1985, excthour, matmania, matmania, matmania, 0, ROT270, "Technos (Taito license)", "Exciting Hour" )
 GAME( 1986, maniach,  0,        maniach,  matmania, 0, ROT270, "Technos (Taito America license)", "Mania Challenge (set 1)" )
 GAME( 1986, maniach2, maniach,  maniach,  matmania, 0, ROT270, "Technos (Taito America license)", "Mania Challenge (set 2)" )	/* earlier version? */
+}

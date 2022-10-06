@@ -6,8 +6,15 @@
    just made a copy & renamed them for now to avoid any conflicts
 */
 
-//#include "vmixer.h"
+///*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class segaic24H
+{
+	
 WRITE16_HANDLER (system24temp_sys16_paletteram1_w);
 
 // Tilemaps
@@ -38,3 +45,4 @@ WRITE16_HANDLER (sys24_mixer_w);
 READ16_HANDLER (sys24_mixer_r);
 
 #endif
+}

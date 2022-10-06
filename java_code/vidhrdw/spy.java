@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class spy
+{
+	
 
 int spy_video_enable;
 
@@ -84,4 +90,5 @@ VIDEO_UPDATE( spy )
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[2],0,2);
 	K051960_sprites_draw(bitmap,cliprect,-1,-1);
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
+}
 }

@@ -4,8 +4,15 @@
 /*                                                                          */
 /****************************************************************************/
 
-#include "i86.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
+public class i286H
+{
+	
 void i286_set_address_mask(offs_t mask);
 
 #undef GetMemB
@@ -34,3 +41,4 @@ void i286_set_address_mask(offs_t mask);
 
 #undef CHANGE_PC
 #define CHANGE_PC(addr) change_pc24(addr)
+}

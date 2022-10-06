@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lsasquad
+{
+	
 unsigned char *lsasquad_scrollram;
 
 
@@ -99,4 +105,5 @@ VIDEO_UPDATE( lsasquad )
 	draw_layer(bitmap,lsasquad_scrollram + 0x080);
 	draw_sprites(bitmap);
 	draw_layer(bitmap,lsasquad_scrollram + 0x100);
+}
 }

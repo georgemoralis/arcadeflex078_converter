@@ -22,16 +22,15 @@
   * - get rid of #ifdef MESS's by providing appropriate hooks
  */
 
-#include <stdarg.h>
-#include <ctype.h>
-#include <time.h>
-#include <windows.h>
-#include "driver.h"
-#include "rc.h"
-#include "misc.h"
-#include "video.h"
-#include "fileio.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class config
+{
+	
 extern struct rc_option frontend_opts[];
 extern struct rc_option fileio_opts[];
 extern struct rc_option input_opts[];
@@ -39,7 +38,6 @@ extern struct rc_option sound_opts[];
 extern struct rc_option video_opts[];
 
 #ifdef MESS
-#include "configms.h"
 #endif
 
 extern int frontend_help(char *gamename);
@@ -953,4 +951,5 @@ static char *win_strip_extension(char *filename)
 	}
 
 	return newname;
+}
 }

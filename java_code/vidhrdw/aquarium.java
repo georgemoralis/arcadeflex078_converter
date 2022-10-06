@@ -1,8 +1,14 @@
 /* Aquarium */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class aquarium
+{
+	
 extern data16_t *aquarium_scroll, *aquarium_priority;
 
 static struct tilemap *aquarium_txt_tilemap;
@@ -186,4 +192,5 @@ VIDEO_UPDATE(aquarium)
 	tilemap_draw(bitmap,cliprect,aquarium_mid_tilemap,0,4);
 	tilemap_draw(bitmap,cliprect,aquarium_txt_tilemap,0,1);
 	aquarium_draw_sprites(bitmap,cliprect,16);
+}
 }

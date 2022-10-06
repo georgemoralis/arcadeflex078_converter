@@ -8,8 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dday
+{
+	
 
 unsigned char *dday_bgvideoram;
 unsigned char *dday_fgvideoram;
@@ -383,4 +390,5 @@ VIDEO_UPDATE( dday )
 	{
 		copybitmap(bitmap,main_bitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	}
+}
 }

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sbasketb
+{
+	
 UINT8 *sbasketb_scroll;
 UINT8 *sbasketb_palettebank;
 UINT8 *sbasketb_spriteram_select;
@@ -181,4 +187,5 @@ VIDEO_UPDATE( sbasketb )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	sbasketb_draw_sprites(bitmap);
+}
 }

@@ -9,10 +9,15 @@ palazzol@home.com
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8085/i8085.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class starcrus
+{
+	
 /* included from vidhrdw/starcrus.c */
 WRITE_HANDLER( starcrus_s1_x_w );
 WRITE_HANDLER( starcrus_s1_y_w );
@@ -238,3 +243,4 @@ ROM_END
 
 
 GAME( 1977, starcrus, 0, starcrus, starcrus, 0, ROT0, "RamTek", "Star Cruiser" )
+}

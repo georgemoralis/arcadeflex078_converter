@@ -2,9 +2,15 @@
 *	Video Driver for Tank Busters
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tankbust
+{
+	
 /*
 *	variables
 */
@@ -264,4 +270,5 @@ VIDEO_UPDATE( tankbust )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 1, 0);
 
 	tilemap_draw(bitmap, cliprect, txt_tilemap, 0,0);
+}
 }

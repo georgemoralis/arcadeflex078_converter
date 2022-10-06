@@ -8,14 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "r3000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class r3000
+{
+	
 
 #define ENABLE_OVERFLOWS	0
 
@@ -1401,4 +1402,5 @@ static void swr_le(UINT32 op)
 		int shift = 8 * (offs & 3);
 		WLONG(offs & ~3, (temp & (0xffffff00 << shift)) | (RTVAL >> (24 - shift)));
 	}
+}
 }

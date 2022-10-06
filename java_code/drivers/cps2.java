@@ -92,11 +92,15 @@
 // at the start of Giga Wing's attract mode. This could be the same bug in the
 // ASM core that causes the NeoGeo game view point to stop working.
 
-#include "driver.h"
-#include "machine/eeprom.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "cps1.h"       /* External CPS1 definitions */
+public class cps2
+{
+	
 
 /*
 Export this function so that the vidhrdw routine can drive the
@@ -6260,3 +6264,4 @@ GAME( 2000, dimahoo,  0,       cps2, sgemf,   cps2, ROT270, "Eighting/Raizing, d
 GAME( 2000, gmahou,   dimahoo, cps2, sgemf,   cps2, ROT270, "Eighting/Raizing, distributed by Capcom", "Great Mahou Daisakusen (Japan 000121)" )
 GAME( 2000, 1944,     0,       cps2, 19xx,    cps2, ROT0,   "Capcom, supported by Eighting/Raizing", "1944: The Loop Master (US 000620)" )
 GAMEX(2000, 1944j,    1944,    cps2, 19xx,    cps2, ROT0,   "Capcom, supported by Eighting/Raizing", "1944: The Loop Master (Japan 000620)", GAME_NOT_WORKING )
+}

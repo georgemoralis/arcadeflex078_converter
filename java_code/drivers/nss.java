@@ -31,10 +31,15 @@
   controlling timer etc.? which still needs emulating there are dipswitches too
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "includes/snes.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nss
+{
+	
 extern DRIVER_INIT( snes );
 
 static MEMORY_READ_START( snes_readmem )
@@ -416,3 +421,4 @@ GAMEX( 1992, nss_ssoc,  nss,	  snes,	     snes,    snes,		ROT0, "Human Inc.",			
 GAMEX( 199?, nss_smw,   nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: Super Mario World", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
 GAMEX( 199?, nss_fzer,  nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: F-Zero", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
 GAMEX( 199?, nss_sten,  nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: Super Tennis", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
+}

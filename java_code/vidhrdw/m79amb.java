@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m79amb
+{
+	
 
 
 /* palette colors (see drivers/8080bw.c) */
@@ -43,4 +49,5 @@ WRITE_HANDLER( ramtek_videoram_w )
 			data <<= 1;
 		}
 	}
+}
 }

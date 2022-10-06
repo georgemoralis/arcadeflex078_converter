@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "idectrl.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class idectrl
+{
+	
 
 /*************************************
  *
@@ -1675,4 +1681,5 @@ WRITE16_HANDLER( ide_controller16_0_w )
 	size = convert_to_offset_and_size16(&offset, mem_mask);
 
 	ide_controller_write(&idestate[0], offset, size, data >> ((offset & 1) * 8));
+}
 }

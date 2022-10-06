@@ -549,8 +549,15 @@ CUSTOM: 304 (x4, 120 PIN PQFP)
 	e000ae.l SWING VR
 */
 
-#include "namcos22.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos22
+{
+	
 enum namcos22_gametype namcos22_gametype; /* used for game-specific hacks */
 
 /* memory region pointers */
@@ -2531,3 +2538,4 @@ GAMEX( 1996, propcycl, 0,        namcos22s, propcycl, propcycl, ROT0, "Namco", "
 //GAMEX( 1996, aquajetx, "Aqua Jet")
 //GAMEX( 1997, armdilox, "Armidillo Racing")
 //GAMEX( 199?, downhbkx, "Downhill Bikers")
+}

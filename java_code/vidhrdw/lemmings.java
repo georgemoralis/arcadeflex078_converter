@@ -12,9 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lemmings
+{
+	
 data16_t *lemmings_pixel_0_data,*lemmings_pixel_1_data,*lemmings_vram_data,*lemmings_control_data;
 static data16_t *sprite_triple_buffer_0,*sprite_triple_buffer_1;
 static data8_t *vram_buffer, *vram_dirty;
@@ -214,4 +220,5 @@ VIDEO_UPDATE( lemmings )
 	lemmings_drawsprites(bitmap,sprite_triple_buffer_1,1,0x2000);
 	tilemap_draw(bitmap,cliprect,vram_tilemap,0,0);
 	lemmings_drawsprites(bitmap,sprite_triple_buffer_0,0,0x2000);
+}
 }

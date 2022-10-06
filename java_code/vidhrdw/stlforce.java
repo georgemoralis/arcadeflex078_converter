@@ -1,7 +1,14 @@
 /* vidhrdw/stlforce.c - see main driver for other notes */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stlforce
+{
+	
 static struct tilemap *stlforce_bg_tilemap, *stlforce_mlow_tilemap, *stlforce_mhigh_tilemap, *stlforce_tx_tilemap;
 
 extern data16_t *stlforce_bg_videoram, *stlforce_mlow_videoram, *stlforce_mhigh_videoram, *stlforce_tx_videoram;
@@ -171,4 +178,5 @@ VIDEO_START( stlforce )
 	tilemap_set_transparent_pen(stlforce_tx_tilemap,0);
 
 	return 0;
+}
 }

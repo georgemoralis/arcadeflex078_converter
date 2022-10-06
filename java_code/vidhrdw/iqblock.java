@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "iqblock.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class iqblock
+{
+	
 
 data8_t *iqblock_bgvideoram;
 data8_t *iqblock_fgscroll;
@@ -105,3 +111,4 @@ VIDEO_UPDATE( iqblock )
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 }
 
+}

@@ -1,11 +1,15 @@
 #ifndef __V33INTRF_H_
 #define __V33INTRF_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
-#include "i86intrf.h"
-#include "v30intrf.h"
+public class v33intfH
+{
+	
 
 /* Public variables */
 #define v33_ICount i86_ICount
@@ -25,3 +29,4 @@ extern const char *v33_info(void *context, int regnum);
 #define v33_dasm v30_dasm
 
 #endif
+}

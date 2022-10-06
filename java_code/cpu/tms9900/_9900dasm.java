@@ -19,10 +19,15 @@
  *****************************************************************************/
 
 
-#include <stdio.h>
-#include <string.h>
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms9900;
 
+public class _9900dasm
+{
+	
 #define RDOP(A) (cpu_readop(A) << 8) + (cpu_readop((A+1) & 0xffff))
 #define RDWORD(A) (cpu_readop_arg(A) << 8) + (cpu_readop_arg((A+1) & 0xffff))
 
@@ -241,3 +246,4 @@ int Dasm9900 (char *buffer, int pc)
 
 
 
+}

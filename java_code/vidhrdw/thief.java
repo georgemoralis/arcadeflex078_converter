@@ -2,9 +2,15 @@
 **	Thief/Nato Defense
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class thief
+{
+	
 struct mame_bitmap *thief_page0;
 struct mame_bitmap *thief_page1;
 
@@ -322,4 +328,5 @@ WRITE_HANDLER( thief_coprocessor_w ){
 		thief_coprocessor.param[offset] = data;
 		break;
 	}
+}
 }

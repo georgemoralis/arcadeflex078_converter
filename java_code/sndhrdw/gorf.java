@@ -21,9 +21,15 @@ the variable GorfBaseFrequency, this is defaulted to 8000
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gorf
+{
+	
 
 
 int	GorfBaseFrequency;		/* Some games (Qbert) change this */
@@ -213,4 +219,5 @@ READ_HANDLER( gorf_port_2_r )
 
 void gorf_sh_update(void)
 {
+}
 }

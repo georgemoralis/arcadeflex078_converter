@@ -5,9 +5,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class volfied
+{
+	
 static int current_bank = 0;
 static int current_data = 0;
 static int current_flag = 0;
@@ -143,4 +149,5 @@ void volfied_cchip_init(void)
 	state_save_register_int  ("volfied", 0, "cc_data", &current_data);
 	state_save_register_int  ("volfied", 0, "cc_flag", &current_flag);
 	state_save_register_UINT8("volfied", 0, "cc_port", &cc_port, 1);
+}
 }

@@ -161,12 +161,15 @@ const char *g65816_info(void *context, int regnum);
 unsigned g65816_dasm(char *buffer, unsigned pc);
 
 
-#include "cpuintrf.h"
-#include "memory.h"
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.g65816;
 
+public class g65816H
+{
+	
 #undef G65816_CALL_DEBUGGER
 #define G65816_CALL_DEBUGGER CALL_MAME_DEBUG
 
@@ -183,3 +186,4 @@ unsigned g65816_dasm(char *buffer, unsigned pc);
 /* ======================================================================== */
 
 #endif /* HEADER__G65816 */
+}

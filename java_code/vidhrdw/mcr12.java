@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mcr12
+{
+	
 
 INT8 mcr12_sprite_xoffs;
 INT8 mcr12_sprite_xoffs_flip;
@@ -460,4 +465,5 @@ VIDEO_UPDATE( journey )
 
 	/* draw the sprites */
 	mcr3_update_sprites(bitmap, cliprect, 0x03, 0, 0, 0);
+}
 }

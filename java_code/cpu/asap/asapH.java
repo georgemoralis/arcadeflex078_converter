@@ -11,9 +11,15 @@
 #ifndef _ASAP_H
 #define _ASAP_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.asap;
 
+public class asapH
+{
+	
 
 /*###################################################################################################
 **	REGISTER ENUMERATION
@@ -63,3 +69,4 @@ extern unsigned asap_dasm(char *buffer, unsigned pc);
 extern void asap_set_cpi(int cpi);
 
 #endif /* _ASAP_H */
+}

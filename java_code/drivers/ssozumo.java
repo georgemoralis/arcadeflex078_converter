@@ -7,11 +7,15 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/10/04
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ssozumo
+{
+	
 extern UINT8 *ssozumo_videoram2;
 extern UINT8 *ssozumo_colorram2;
 
@@ -341,3 +345,4 @@ ROM_END
 
 
 GAME( 1984, ssozumo, 0, ssozumo, ssozumo, 0, ROT270, "Technos", "Syusse Oozumou (Japan)" )
+}

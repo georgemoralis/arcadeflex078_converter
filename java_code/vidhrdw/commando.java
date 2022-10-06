@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class commando
+{
+	
 
 
 unsigned char *commando_fgvideoram,*commando_bgvideoram;
@@ -172,4 +178,5 @@ VIDEO_UPDATE( commando )
 VIDEO_EOF( commando )
 {
 	buffer_spriteram_w(0,0);
+}
 }

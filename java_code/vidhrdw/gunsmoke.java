@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gunsmoke
+{
+	
 
 
 unsigned char *gunsmoke_bg_scrolly;
@@ -296,4 +302,5 @@ VIDEO_UPDATE( gunsmoke )
 					&Machine->visible_area,TRANSPARENCY_COLOR,79);
 		}
 	}
+}
 }

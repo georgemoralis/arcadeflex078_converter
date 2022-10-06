@@ -11,9 +11,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pengo
+{
+	
 
 
 static int gfx_bank;
@@ -499,4 +505,5 @@ VIDEO_UPDATE( s2650games )
 				sx,sy + xoffsethack,
 				cliprect,TRANSPARENCY_COLOR,0);
 	}
+}
 }

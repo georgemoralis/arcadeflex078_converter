@@ -19,11 +19,15 @@ AT08XX03:
    can outrun a horse.
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sgladiat
+{
+	
 static unsigned char *shared_ram, *shared_ram2;
 
 static struct AY8910interface ay8910_interface = {
@@ -345,3 +349,4 @@ static DRIVER_INIT( sgladiat )
 }
 
 GAMEX( 1984, sgladiat, 0, sgladiat, sgladiat, sgladiat, 0, "SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
+}

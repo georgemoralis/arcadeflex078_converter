@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class polepos
+{
+	
 data16_t *polepos_view16_memory;
 data16_t *polepos_road16_memory;
 data16_t *polepos_sprite16_memory;
@@ -477,4 +484,5 @@ VIDEO_UPDATE( polepos )
 	draw_road(bitmap);
 	draw_sprites(bitmap);
 	draw_alpha(bitmap);
+}
 }

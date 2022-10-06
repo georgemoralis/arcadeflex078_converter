@@ -4,9 +4,15 @@
 #ifndef MEMDBG_H
 #define MEMDBG_H
 
-#include <stdio.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class memdbgH
+{
+	
 /* protypes for MALLOC, FREE macros.
  *
  * code using memdbg.c for tracing should always use MALLOC, FREE instead of direct calls
@@ -37,3 +43,4 @@ extern void memdbg_Debug( void );
 #endif /* defined(MEMDBG) */
 
 #endif /* MEMDBG_H */
+}

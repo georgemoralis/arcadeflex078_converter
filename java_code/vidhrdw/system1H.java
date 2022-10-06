@@ -1,9 +1,15 @@
 #ifndef _system1_H_
 #define _system1_H_
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class system1H
+{
+	
 #define SPR_Y_TOP		0
 #define SPR_Y_BOTTOM	1
 #define SPR_X_LO		2
@@ -50,3 +56,4 @@ VIDEO_UPDATE( wbml );
 VIDEO_UPDATE( blockgal );
 
 #endif
+}

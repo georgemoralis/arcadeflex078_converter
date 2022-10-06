@@ -4,9 +4,15 @@
 /*                                                           */
 /*************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class zac2650
+{
+	
 UINT8 *s2636ram;
 struct mame_bitmap *spritebitmap;
 
@@ -250,4 +256,5 @@ VIDEO_UPDATE( tinvader )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	tinvader_draw_sprites(bitmap);
+}
 }

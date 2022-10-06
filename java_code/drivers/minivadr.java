@@ -10,10 +10,15 @@ Japan). It has no sound.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class minivadr
+{
+	
 
 WRITE_HANDLER( minivadr_videoram_w );
 VIDEO_UPDATE( minivadr );
@@ -83,3 +88,4 @@ ROM_END
 
 
 GAME( 1990, minivadr, 0, minivadr, minivadr, 0, ROT0, "Taito Corporation", "Minivader" )
+}

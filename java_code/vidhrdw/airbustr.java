@@ -30,8 +30,15 @@
 
 
 **************************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class airbustr
+{
+	
 static struct tilemap *bg_tilemap,*fg_tilemap;
 
 /* Variables that drivers has access to */
@@ -234,4 +241,5 @@ VIDEO_UPDATE( airbustr )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

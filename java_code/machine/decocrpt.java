@@ -41,9 +41,15 @@ Sotsugyo Shousho		1995
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "decocrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class decocrpt
+{
+	
 static const UINT16 xor_masks[16] =
 {
 	0xd556,0x73cb,0x2963,0x4b9a,0xb3bc,0xbc73,0xcbc9,0xaeb5,
@@ -661,4 +667,5 @@ void deco56_decrypt(int region)
 void deco74_decrypt(int region)
 {
 	deco_decrypt(region,deco74_xor_table,deco74_address_table,deco74_swap_table);
+}
 }

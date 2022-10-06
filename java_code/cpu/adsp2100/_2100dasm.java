@@ -1,7 +1,12 @@
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.adsp2100;
 
-#include "driver.h"
-#include "adsp2100.h"
+public class _2100dasm
+{
+	
 
 static const char *flag_change[] = { "", "TOGGLE %s ", "RESET %s ", "SET %s " };
 static const char *mode_change[] = { "", "", "DIS %s ", "ENA %s " };
@@ -450,4 +455,5 @@ unsigned dasm2100(char *buffer, unsigned pc)
 	}
 
 	return 1;
+}
 }

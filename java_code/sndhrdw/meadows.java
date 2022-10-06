@@ -6,10 +6,15 @@
 	J. Buchmueller, June '98
 ****************************************************************************/
 
-#include "driver.h"
-#include "cpu/s2650/s2650.h"
-#include "meadows.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class meadows
+{
+	
 
 unsigned char meadows_0c00 = 0;
 unsigned char meadows_0c01 = 0;
@@ -131,3 +136,4 @@ void meadows_sh_dac_w(int data)
 }
 
 
+}

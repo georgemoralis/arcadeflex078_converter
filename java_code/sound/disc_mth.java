@@ -27,8 +27,15 @@
 /*                                                                      */
 /************************************************************************/
 
-#include <float.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class disc_mth
+{
+	
 struct dss_ramp_context
 {
         double step;
@@ -833,4 +840,5 @@ int dst_logic_nxor_step(struct node_description *node)
 		node->output=0.0;
 	}
 	return 0;
+}
 }

@@ -99,11 +99,15 @@ $8000 - $ffff	ROM
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class renegade
+{
+	
 extern VIDEO_UPDATE( renegade );
 extern VIDEO_START( renegade );
 WRITE_HANDLER( renegade_scroll0_w );
@@ -824,3 +828,4 @@ ROM_END
 GAME( 1986, renegade, 0,		 renegade, renegade, renegade, ROT0, "Technos (Taito America license)", "Renegade (US)" )
 GAME( 1986, kuniokun, renegade, renegade, renegade, kuniokun, ROT0, "Technos", "Nekketsu Kouha Kunio-kun (Japan)" )
 GAME( 1986, kuniokub, renegade, renegade, renegade, 0, 	   ROT0, "bootleg", "Nekketsu Kouha Kunio-kun (Japan bootleg)" )
+}

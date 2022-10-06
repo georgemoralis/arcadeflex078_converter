@@ -157,9 +157,15 @@ Stephh's notes (based on the games Z80 code and some tests) :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wiz
+{
+	
 extern unsigned char *wiz_videoram2;
 extern unsigned char *wiz_colorram2;
 extern unsigned char *wiz_attributesram;
@@ -1108,3 +1114,4 @@ GAMEX(1984, scionc,   scion,   scion,   scion,    0,       ROT0,   "Seibu Denshi
 GAME( 1984, kungfut,  0,       kungfut, kungfut,  0,       ROT0,   "Seibu Kaihatsu Inc.", "Kung-Fu Taikun" )
 GAME( 1985, wiz,      0,       wiz,     wiz,      wiz,     ROT270, "Seibu Kaihatsu Inc.", "Wiz" )
 GAME( 1985, wizt,     wiz,     wiz,     wiz,      wiz,     ROT270, "[Seibu] (Taito license)", "Wiz (Taito)" )
+}

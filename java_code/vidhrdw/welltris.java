@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class welltris
+{
+	
 
 
 extern data16_t *welltris_spriteram;
@@ -250,4 +256,5 @@ VIDEO_UPDATE( welltris )
 	welltris_drawbackground(bitmap, cliprect);
 	tilemap_draw(bitmap, cliprect, char_tilemap, 0, 0);
 	welltris_draw_sprites(bitmap, cliprect);
+}
 }

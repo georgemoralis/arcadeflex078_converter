@@ -2,9 +2,15 @@
 
 // layer priority register not fully understood
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class drgnmst
+{
+	
 extern data16_t *drgnmst_vidregs;
 
 extern data16_t *drgnmst_fg_videoram;
@@ -206,4 +212,5 @@ VIDEO_UPDATE(drgnmst)
 //	usrintf_showmessage	("x %04x x %04x x %04x x %04x x %04x", drgnmst_vidregs2[0], drgnmst_vidregs[12], drgnmst_vidregs[13], drgnmst_vidregs[14], drgnmst_vidregs[15]);
 //	usrintf_showmessage	("x %04x x %04x y %04x y %04x z %04x z %04x",drgnmst_vidregs[0],drgnmst_vidregs[1],drgnmst_vidregs[2],drgnmst_vidregs[3],drgnmst_vidregs[4],drgnmst_vidregs[5]);
 
+}
 }

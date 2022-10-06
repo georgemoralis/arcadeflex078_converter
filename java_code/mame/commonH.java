@@ -9,8 +9,15 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include "hash.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class commonH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -528,3 +535,4 @@ void printromlist(const struct RomModule *romp,const char *name);
 #endif
 
 #endif
+}

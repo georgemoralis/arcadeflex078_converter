@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nbmj8891
+{
+	
 
 static int gionbana_scrolly1, gionbana_scrolly2;
 static int gionbana_drawx, gionbana_drawy;
@@ -468,4 +473,5 @@ VIDEO_UPDATE( gionbana )
 	{
 		fillbitmap(bitmap, Machine->pens[0xff], 0);
 	}
+}
 }

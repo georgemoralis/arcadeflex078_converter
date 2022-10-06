@@ -180,13 +180,15 @@ Maybe the second area for each layer contains colscroll ?
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class topspeed
+{
+	
 WRITE16_HANDLER( rainbow_spritectrl_w );
 WRITE16_HANDLER( rastan_spriteflip_w );
 
@@ -966,3 +968,4 @@ GAME( 1987, topspeed, 0,        topspeed, topspeed, topspeed, ROT0, "Taito Corpo
 GAME( 1987, topspedu, topspeed, topspeed, topspedu, topspeed, ROT0, "Taito America Corporation (Romstar license)", "Top Speed (US)" )
 GAME( 1987, fullthrl, topspeed, topspeed, fullthrl, topspeed, ROT0, "Taito Corporation", "Full Throttle (Japan)" )
 
+}

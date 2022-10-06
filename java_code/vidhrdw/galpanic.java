@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galpanic
+{
+	
 
 
 data16_t *galpanic_bgvideoram,*galpanic_fgvideoram;
@@ -173,4 +179,5 @@ VIDEO_UPDATE( comad )
 	draw_fgbitmap(bitmap);
 
 	comad_draw_sprites(bitmap);
+}
 }

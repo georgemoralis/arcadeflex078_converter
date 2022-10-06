@@ -117,13 +117,15 @@ need to reproduce the $18141a calculations.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class undrfire
+{
+	
 VIDEO_START( undrfire );
 VIDEO_UPDATE( undrfire );
 
@@ -792,3 +794,4 @@ DRIVER_INIT( undrfire )
 GAME( 1993, undrfire, 0,        undrfire, undrfire, undrfire, ROT0, "Taito Corporation Japan", "Under Fire (World)" )
 GAME( 1993, undrfiru, undrfire, undrfire, undrfire, undrfire, ROT0, "Taito America Corporation", "Under Fire (US)" )
 GAME( 1993, undrfirj, undrfire, undrfire, undrfire, undrfire, ROT0, "Taito Corporation", "Under Fire (Japan)" )
+}

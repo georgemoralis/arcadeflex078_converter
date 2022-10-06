@@ -45,11 +45,15 @@
 ** - Colours are incorrect. [fixed by R Nabet ?]
 */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "tms9928a.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tms9928a
+{
+	
 
 /*
 	New palette (R. Nabet).
@@ -951,4 +955,5 @@ void mdrv_tms9928a(struct InternalMachineDriver *machine, const TMS9928a_interfa
 
 	MDRV_VIDEO_START(TMS9928A_hack)
 	MDRV_VIDEO_UPDATE(tms9928a)
+}
 }

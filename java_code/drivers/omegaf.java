@@ -42,9 +42,15 @@ NOTE :
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class omegaf
+{
+	
 
 /**************************************************************************
   Variables
@@ -835,3 +841,4 @@ GAMEX( 1988, robokid,  0,       robokid, robokid, 0,        ROT0,   "UPL",  "Ato
 GAMEX( 1988, robokidj, robokid, robokid, robokidj,0,        ROT0,   "UPL",  "Atomic Robo-kid (Japan)", GAME_NO_COCKTAIL )
 GAMEX( 1989, omegaf,   0,       omegaf,  omegaf,  omegaf,   ROT270, "UPL",  "Omega Fighter",          GAME_NO_COCKTAIL )
 GAMEX( 1989, omegafs,  omegaf,  omegaf,  omegaf,  omegaf,   ROT270, "UPL",  "Omega Fighter Special",  GAME_NO_COCKTAIL )
+}

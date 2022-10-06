@@ -174,11 +174,15 @@ Line ram memory map:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "taito_f3.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taito_f3
+{
+	
 #define DARIUSG_KLUDGE
 #define DEBUG_F3 0
 
@@ -3505,4 +3509,5 @@ if (!deb_enable || !keyboard_pressed(KEYCODE_M))
 		}
 	}
 #endif	//DEBUG_F3
+}
 }

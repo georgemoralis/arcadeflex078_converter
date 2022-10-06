@@ -3,11 +3,15 @@
  *	emulate video hardware
  */
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class chaknpop
+{
+	
 #define GFX_FLIP_X	0x01
 #define GFX_FLIP_Y	0x02
 #define GFX_VRAM_BANK	0x04
@@ -299,4 +303,5 @@ VIDEO_UPDATE( chaknpop )
 	tilemap_draw(bitmap, cliprect, tx_tilemap, 0, 0);
 	chaknpop_draw_sprites(bitmap);
 	chaknpop_draw_bitmap(bitmap);
+}
 }

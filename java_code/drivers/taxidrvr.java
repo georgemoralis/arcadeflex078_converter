@@ -4,11 +4,15 @@ Taxi Driver  (c) 1984 Graphic Techno
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/8255ppi.h"
-#include "taxidrvr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taxidrvr
+{
+	
 
 
 WRITE_HANDLER( p2a_w ) { taxidrvr_spritectrl_w(0,data); }
@@ -434,3 +438,4 @@ ROM_END
 
 
 GAMEX( 1984, taxidrvr, 0, taxidrvr, taxidrvr, 0, ROT90, "Graphic Techno", "Taxi Driver", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+}

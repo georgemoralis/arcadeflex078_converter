@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/tms34061.h"
-#include "cpu/m6809/m6809.h"
-#include "capbowl.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class capbowl
+{
+	
 unsigned char *capbowl_rowaddress;
 
 
@@ -145,4 +149,5 @@ VIDEO_UPDATE( capbowl )
 		draw_scanline8(bitmap, cliprect->min_x, y, halfwidth * 2, scanline, &Machine->pens[16 * y], -1);
 		state.dirty[y] = 0;
 	}
+}
 }

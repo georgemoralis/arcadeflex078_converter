@@ -4,8 +4,15 @@ Atari Flyball Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class flyball
+{
+	
 extern VIDEO_START( flyball );
 extern VIDEO_UPDATE( flyball );
 
@@ -330,3 +337,4 @@ ROM_END
 
 
 GAMEX( 1976, flyball, 0, flyball, flyball, 0, 0, "Atari", "Flyball", GAME_NO_SOUND )
+}

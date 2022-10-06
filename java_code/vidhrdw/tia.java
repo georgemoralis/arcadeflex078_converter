@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tia
+{
+	
 extern WRITE_HANDLER( tia_sound_w );
 
 static UINT32 frame_cycles;
@@ -1067,4 +1073,5 @@ void tia_init(void)
 	prev_y = 0;
 
 	frame_cycles = 0;
+}
 }

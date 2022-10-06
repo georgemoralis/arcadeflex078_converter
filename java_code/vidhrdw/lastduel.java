@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lastduel
+{
+	
 data16_t *lastduel_vram,*lastduel_scroll2,*lastduel_scroll1;
 
 static struct tilemap *bg_tilemap,*fg_tilemap,*tx_tilemap;
@@ -268,4 +274,5 @@ VIDEO_EOF( lastduel )
 		a register to control this so I assume it happens automatically
 		every frame at the end of vblank */
 	buffer_spriteram16_w(0,0,0);
+}
 }

@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class silkroad
+{
+	
 /* The Legend of Silk Road - Unico 1999 */
 
 /* Preliminary Driver by David Haywood */
@@ -480,3 +487,4 @@ ROM_END
 
 
 GAME( 1999, silkroad, 0, silkroad, silkroad, silkroad, ROT0, "Unico", "The Legend of Silkroad" )
+}

@@ -7,10 +7,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class battlera
+{
+	
 static int HuC6270_registers[20];
 static int VDC_register,vram_ptr;
 static unsigned char *HuC6270_vram,*tile_dirty,*sprite_dirty,*vram_dirty;
@@ -460,4 +465,5 @@ INTERRUPT_GEN( battlera_interrupt )
 		bldwolf_vblank=0;
 		last_line=0;
 	}
+}
 }

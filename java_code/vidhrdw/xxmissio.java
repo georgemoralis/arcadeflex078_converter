@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 *******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xxmissio
+{
+	
 UINT8 *xxmissio_fgram;
 size_t xxmissio_fgram_size;
 
@@ -210,4 +217,5 @@ VIDEO_UPDATE( xxmissio )
 		}
 	}
 
+}
 }

@@ -1,7 +1,14 @@
 /* Super Slam - Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sslam
+{
+	
 static struct tilemap *sslam_bg_tilemap, *sslam_tx_tilemap, *sslam_md_tilemap;
 
 extern data16_t *sslam_bg_tileram, *sslam_tx_tileram, *sslam_md_tileram;
@@ -170,3 +177,4 @@ VIDEO_UPDATE(sslam)
 }
 
 
+}

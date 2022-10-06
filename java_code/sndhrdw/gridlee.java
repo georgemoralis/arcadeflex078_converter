@@ -4,9 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "gridlee.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gridlee
+{
+	
 
 
 /*************************************
@@ -166,4 +172,5 @@ fprintf(f, "[%02x=%02x] %02x %02x %02x %02x %02x %02x %02x %02x - %02x %02x %02x
 fclose(f);
 }
 #endif
+}
 }

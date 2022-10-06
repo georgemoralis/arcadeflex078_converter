@@ -66,10 +66,15 @@
  *
  ****************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class geebee
+{
+	
 /* from machine/geebee.c */
 READ_HANDLER( geebee_in_r );
 READ_HANDLER( navalone_in_r );
@@ -637,3 +642,4 @@ GAME ( 1980, kaitei,   0,        kaitei,   kaitei,   0,      ROT90, "K.K. Tokki"
 GAME ( 1980, kaitein,  kaitei,	 kaitei,   kaitein,  0,      ROT90, "Namco", "Kaitei Takara Sagashi (Namco)" )
 GAMEX( 1980, sos,	   0,        sos,      sos,      0,      ROT90, "Namco", "SOS", GAME_IMPERFECT_SOUND )
 
+}

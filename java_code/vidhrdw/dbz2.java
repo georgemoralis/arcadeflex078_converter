@@ -8,11 +8,15 @@
 */
 
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dbz2
+{
+	
 static struct tilemap *dbz2_bg_tilemap, *dbz2_bg2_tilemap;
 extern data16_t *dbz2_bg_videoram, *dbz2_bg2_videoram;
 
@@ -182,3 +186,4 @@ VIDEO_UPDATE(dbz)
 	K053247_sprites_draw(bitmap, cliprect);
 }
 
+}

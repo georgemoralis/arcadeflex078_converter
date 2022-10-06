@@ -32,8 +32,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class canyon
+{
+	
 extern WRITE_HANDLER( canyon_videoram_w );
 
 extern VIDEO_START( canyon );
@@ -546,3 +553,4 @@ ROM_END
 
 GAME( 1977, canyon,  0,      canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber" )
 GAME( 1977, canyonp, canyon, canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber (prototype)" )
+}

@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "avalnche.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class avalnche
+{
+	
 
 WRITE_HANDLER( avalnche_videoram_w )
 {
@@ -39,4 +43,5 @@ VIDEO_UPDATE( avalnche )
 
 	/* copy the character mapped graphics */
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

@@ -7,9 +7,15 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/12/19 -
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class minivadr
+{
+	
 
 
 /*******************************************************************
@@ -69,4 +75,5 @@ VIDEO_UPDATE( minivadr )
 			minivadr_videoram_w(offs,videoram[offs]);
 	}
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

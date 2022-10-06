@@ -2,8 +2,15 @@
 	polepos.c
 	Sound handler
 ****************************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class polepos
+{
+	
 static int sample_msb = 0;
 static int sample_lsb = 0;
 static int sample_enable = 0;
@@ -175,4 +182,5 @@ void polepos_sample_play(int sample)
 		return;
 
 	mixer_play_sample(channel, speech + start * 16, len * 16, 4000*8, 0);
+}
 }

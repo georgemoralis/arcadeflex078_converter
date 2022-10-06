@@ -10,9 +10,15 @@
 /*  Stuff that work only in MS DOS (Color cycling)
  */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tutankhm
+{
+	
 
 unsigned char *tutankhm_scrollx;
 
@@ -199,4 +205,5 @@ WRITE_HANDLER( junofrst_blitter_w )
 			}
 		}
 	}
+}
 }

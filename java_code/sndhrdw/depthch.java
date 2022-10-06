@@ -2,8 +2,15 @@
  *	Depth Charge sound routines
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class depthch
+{
+	
 
 /* output port 0x01 definitions - sound effect drive outputs */
 #define OUT_PORT_1_LONGEXPL     0x01
@@ -76,4 +83,5 @@ WRITE_HANDLER( depthch_sh_port1_w )
 	{
 		STOP( SND_SONAR );
 	}
+}
 }

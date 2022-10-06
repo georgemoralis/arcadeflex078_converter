@@ -47,10 +47,15 @@ and 2764 eprom (swapped D3/D4 and D5/D6 data lines)
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/irem.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class travrusa
+{
+	
 extern unsigned char *travrusa_videoram;
 
 PALETTE_INIT( travrusa );
@@ -569,3 +574,4 @@ static DRIVER_INIT( shtrider )
 GAME( 1983, travrusa, 0,        travrusa, travrusa, 0,        ROT270, "Irem", "Traverse USA / Zippy Race" )
 GAME( 1983, motorace, travrusa, travrusa, motorace, motorace, ROT270, "Irem (Williams license)", "MotoRace USA" )
 GAMEX(1984, shtrider, 0,        shtrider, shtrider, shtrider, ROT270|ORIENTATION_FLIP_X, "Seibu Kaihatsu (Sigma license)", "Shot Rider", GAME_NO_COCKTAIL )
+}

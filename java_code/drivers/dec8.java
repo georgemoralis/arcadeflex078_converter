@@ -36,11 +36,15 @@ To do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dec8
+{
+	
 PALETTE_INIT( ghostb );
 VIDEO_UPDATE( cobracom );
 VIDEO_UPDATE( ghostb );
@@ -3104,3 +3108,4 @@ GAME(1986, shackled, 0,        shackled, shackled, 0,       ROT0,   "Data East U
 GAME(1986, breywood, shackled, shackled, shackled, 0,       ROT0,   "Data East Corporation", "Breywood (Japan revision 2)" )
 GAME(1987, csilver,  0,        csilver,  csilver,  0,       ROT0,   "Data East Corporation", "Captain Silver (Japan)" )
 GAME(1987, garyoret, 0,        garyoret, garyoret, 0,       ROT0,   "Data East Corporation", "Garyo Retsuden (Japan)" )
+}

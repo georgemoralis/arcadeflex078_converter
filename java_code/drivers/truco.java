@@ -17,9 +17,15 @@
   	game options are truncated. Title is also truncated.
 */
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class truco
+{
+	
 /* from vidhrdw */
 VIDEO_UPDATE( truco );
 PALETTE_INIT( truco );
@@ -180,3 +186,4 @@ ROM_START( truco )
 ROM_END
 
 GAMEX( 198?, truco,  0, truco, truco, 0, ROT0, "Playtronic SRL", "Truco-Tron", GAME_NO_SOUND )
+}

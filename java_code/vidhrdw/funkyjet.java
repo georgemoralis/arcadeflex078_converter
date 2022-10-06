@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class funkyjet
+{
+	
 /******************************************************************************/
 
 VIDEO_START( funkyjet )
@@ -91,4 +96,5 @@ VIDEO_UPDATE( funkyjet )
 	deco16_tilemap_2_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 	deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	funkyjet_drawsprites(bitmap,cliprect);
+}
 }

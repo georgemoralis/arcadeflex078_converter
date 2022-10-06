@@ -1,9 +1,14 @@
 
 
-#include "driver.h"
-#ifdef	MAME_DEBUG
-#include "mamedbg.h"
-#include "sh2.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.sh2;
+
+public class sh2dasm
+{
+	#ifdef	MAME_DEBUG
 
 #define SIGNX8(x)	(((INT32)(x) << 24) >> 24)
 #define SIGNX12(x)	(((INT32)(x) << 20) >> 20)
@@ -695,3 +700,4 @@ unsigned DasmSH2(char *buffer, unsigned pc)
 
 #endif
 
+}

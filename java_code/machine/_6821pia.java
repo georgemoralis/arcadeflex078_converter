@@ -7,12 +7,15 @@
 
 **********************************************************************/
 
-#include <string.h>
-#include <stdio.h>
-#include "driver.h"
-#include "6821pia.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _6821pia
+{
+	
 #define VERBOSE 0
 
 #if VERBOSE
@@ -961,3 +964,4 @@ READ_HANDLER( pia_4_cb2_r ) { return pia[4].in_cb2; }
 READ_HANDLER( pia_5_cb2_r ) { return pia[5].in_cb2; }
 READ_HANDLER( pia_6_cb2_r ) { return pia[6].in_cb2; }
 READ_HANDLER( pia_7_cb2_r ) { return pia[7].in_cb2; }
+}

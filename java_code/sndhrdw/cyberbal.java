@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
-#include <math.h>
+public class cyberbal
+{
+	
 
 
 static UINT8 *bank_base;
@@ -162,4 +167,5 @@ WRITE16_HANDLER( cyberbal_sound_68k_dac_w )
 		fast_68k_int = 0;
 		update_sound_68k_interrupts();
 	}
+}
 }

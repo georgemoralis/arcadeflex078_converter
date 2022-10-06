@@ -22,11 +22,15 @@ Known issues:
 *****************************************************************************/
 // Directives
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bwing
+{
+	
 #define BW_DEBUG 0
 #define BW_CHEAT 0
 
@@ -639,3 +643,4 @@ GAMEX( 1984, batwings, bwing, bwing, bwing, bwing, ROT90, "Data East Corporation
 
 GAME ( 1984, zaviga,       0, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga" )
 GAME ( 1984, zavigaj, zaviga, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga (Japan)" )
+}

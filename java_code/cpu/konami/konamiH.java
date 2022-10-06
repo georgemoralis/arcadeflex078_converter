@@ -3,9 +3,15 @@
 #ifndef _KONAMI_H
 #define _KONAMI_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.konami;
 
+public class konamiH
+{
+	
 enum {
 	KONAMI_PC=1, KONAMI_S, KONAMI_CC ,KONAMI_A, KONAMI_B, KONAMI_U, KONAMI_X, KONAMI_Y,
 	KONAMI_DP, KONAMI_NMI_STATE, KONAMI_IRQ_STATE, KONAMI_FIRQ_STATE };
@@ -67,3 +73,4 @@ extern unsigned Dasmknmi (char *buffer, unsigned pc);
 #endif
 
 #endif /* _KONAMI_H */
+}

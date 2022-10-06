@@ -126,11 +126,15 @@ Dumped by Chackn
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class angelkds
+{
+	
 static READ_HANDLER( angelkds_sound_r );
 static WRITE_HANDLER( angelkds_sound_w );
 
@@ -629,3 +633,4 @@ static DRIVER_INIT( spcpostn )	{ spcpostn_decode(); }
 
 GAME( 1988, angelkds, 0, angelkds, angelkds,        0,  ROT90,  "Sega / Nasco?", "Angel Kids (Japan)" ) /* Nasco not displayed but 'Exa Planning' is */
 GAMEX(1986, spcpostn, 0, angelkds, angelkds, spcpostn,  ROT90,  "Sega / Nasco", "Space Position (Japan)", GAME_NOT_WORKING ) /* encrypted */
+}

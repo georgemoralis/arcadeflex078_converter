@@ -45,15 +45,15 @@
         Vsync: 60Hz
 */
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/mips/psx.h"
-#include "includes/psx.h"
-#include "machine/konamigx.h"
-#include "machine/eeprom.h"
-#include "machine/am53cf96.h"
-#include "harddisk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class konamigq
+{
+	
 /* Sound */
 
 static data8_t sndto000[ 16 ];
@@ -593,3 +593,4 @@ ROM_START( cryptklr )
 ROM_END
 
 GAMEX( 1995, cryptklr, 0, konamigq, konamigq, konamigq, ROT0, "Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
+}

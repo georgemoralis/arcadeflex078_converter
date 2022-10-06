@@ -17,8 +17,15 @@ sound banking (we have 2 oki roms ..)
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class funybubl
+{
+	
 data8_t* banked_videoram;
 
 
@@ -422,3 +429,4 @@ ROM_END
 
 
 GAMEX( 1999, funybubl, 0, funybubl, funybubl, funybubl, ROT0, "Comad", "Funny Bubble", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+}

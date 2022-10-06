@@ -12,8 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class sn76496
+{
+	
 
 #define MAX_OUTPUT 0x7fff
 
@@ -334,4 +341,5 @@ int SN76496_sh_start(const struct MachineSound *msound)
 		SN76496_set_gain(chip,(intf->volume[chip] >> 8) & 0xff);
 	}
 	return 0;
+}
 }

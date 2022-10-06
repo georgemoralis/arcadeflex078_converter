@@ -12,8 +12,15 @@ etc.
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ltcasino
+{
+	
 data8_t *ltcasino_tile_num_ram, *ltcasino_tile_atr_ram;
 
 struct tilemap *ltcasino_tilemap;
@@ -564,3 +571,4 @@ ROM_END
 
 GAMEX( 1982, ltcasino, 0, ltcasino, ltcasino, 0, ROT0, "Digital Controls Inc.", "Little Casino", GAME_NOT_WORKING )
 GAMEX( 1984, ltcasin2, 0, ltcasino, ltcasin2, 0, ROT0, "Digital Controls Inc.", "Little Casino 2", GAME_NOT_WORKING )
+}

@@ -17,8 +17,15 @@ Atari Orbit Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class orbit
+{
+	
 extern VIDEO_START( orbit );
 extern VIDEO_UPDATE( orbit );
 
@@ -471,3 +478,4 @@ ROM_END
 
 
 GAME( 1978, orbit, 0, orbit, orbit, 0, 0, "Atari", "Orbit" )
+}

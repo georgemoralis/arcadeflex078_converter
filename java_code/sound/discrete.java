@@ -1,8 +1,12 @@
-#include "driver.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class discrete
+{
+	
 /************************************************************************/
 /*                                                                      */
 /*  MAME - Discrete sound system emulation library                      */
@@ -79,7 +83,6 @@ static int discrete_stereo=0;
 //#define DISCRETE_DEBUGLOG
 
 #ifdef DISCRETE_WAVELOG
-#include "wavwrite.h"
 static void *wav_file;
 #endif
 
@@ -107,12 +110,6 @@ void CLIB_DECL discrete_log(const char *text, ...)
 #endif
 
 /* Include simulation objects */
-#include "disc_wav.c"		/* Wave sources   - SINE/SQUARE/NOISE/etc */
-#include "disc_mth.c"		/* Math Devices   - ADD/GAIN/etc */
-#include "disc_inp.c"		/* Input Devices  - INPUT/CONST/etc */
-#include "disc_flt.c"		/* Filter Devices - RCF/HPF/LPF */
-#include "disc_dev.c"		/* Popular Devices - NE555/etc */
-#include "disc_out.c"		/* Output devices */
 
 int dss_default_kill(struct node_description *node)
 {
@@ -533,4 +530,5 @@ void discrete_sh_update(void)
 
 	/* Bring stream upto the present time */
 	stream_update(discrete_stream, 0);
+}
 }

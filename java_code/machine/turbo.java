@@ -4,11 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "machine/8255ppi.h"
-#include "turbo.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class turbo
+{
+	
 /* globals */
 UINT8 turbo_opa, turbo_opb, turbo_opc;
 UINT8 turbo_ipa, turbo_ipb, turbo_ipc;
@@ -734,4 +738,5 @@ READ_HANDLER( buckrog_port_3_r )
 			(((inp1 >> 5) & 1) << 2) |
 			(((inp1 >> 2) & 1) << 1) |
 			(((inp1 >> 1) & 1) << 0);
+}
 }

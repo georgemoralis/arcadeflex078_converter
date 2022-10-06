@@ -64,14 +64,15 @@ Updates:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/eeprom.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "math.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tmnt
+{
+	
 WRITE16_HANDLER( tmnt_paletteram_word_w );
 WRITE16_HANDLER( tmnt_0a0000_w );
 WRITE16_HANDLER( punkshot_0a0020_w );
@@ -4101,3 +4102,4 @@ GAME( 1991, thndrx2a, thndrx2,  thndrx2,  thndrx2,  gfx,      ROT0,  "Konami", "
 
 GAME( 1993, prmrsocr, 0,        prmrsocr, prmrsocr, glfgreat, ROT0,  "Konami", "Premier Soccer (Europe ver. EAB)" )
 GAME( 1993, prmrsocj, prmrsocr, prmrsocr, prmrsocr, glfgreat, ROT0,  "Konami", "Premier Soccer (Japan ver. JAB)" )
+}

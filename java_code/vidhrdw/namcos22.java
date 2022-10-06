@@ -41,12 +41,15 @@
  * - depth cueing (fog)
  * - translucency effects for text layer, sprites
  */
-#include <assert.h>
-#include "namcos22.h"
-#include "namcos3d.h"
-#include "matrix3d.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcos22
+{
+	
 //#define MAME_DEBUG
 
 static int mbDumpScene; /* used for debugging */
@@ -1468,4 +1471,5 @@ VIDEO_UPDATE( namcos22 )
 	namcos3d_Start( bitmap );
 	DrawPolygons( bitmap );
 	DrawTextLayer( bitmap, cliprect );
+}
 }

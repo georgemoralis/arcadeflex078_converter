@@ -6,12 +6,15 @@
  *      Modifications and higher-level functions by John Butler
  ****************************************************************************/
 
-#include <assert.h>
-#include <ctype.h>
-#include "osd_cpu.h"
-#include "driver.h"
-#include "datafile.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class datafile
+{
+	
 /****************************************************************************
  *      token parsing constants
  ****************************************************************************/
@@ -678,4 +681,5 @@ int load_driver_history (const struct GameDriver *drv, char *buffer, int bufsize
         }
 
         return (history == 0 && mameinfo == 0);
+}
 }

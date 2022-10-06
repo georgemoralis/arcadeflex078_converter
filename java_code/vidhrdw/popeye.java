@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class popeye
+{
+	
 UINT8 *popeye_background_pos;
 UINT8 *popeye_palettebank;
 static UINT8 *popeye_bitmapram;
@@ -405,4 +411,5 @@ VIDEO_UPDATE( popeye )
 	popeye_draw_background(bitmap);
 	popeye_draw_sprites(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

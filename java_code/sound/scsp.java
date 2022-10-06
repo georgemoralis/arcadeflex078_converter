@@ -18,11 +18,15 @@
 	* December 02, 2003 (ES) Added DISDL register support, improves mix.
 */
 
-#include <math.h>
-#include <string.h>
-#include "driver.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class scsp
+{
+	
 #define ICLIP16(x) (x<-32768)?-32768:((x>32767)?32767:x)
 
 static signed short *bufferl;
@@ -66,7 +70,6 @@ static void dma_scsp(void); 		/*SCSP DMA transfer function*/
 #define EG_SHIFT	8
 
 // include the LFO handling code
-#include "scsplfo.c"
 
 /*
 	SCSP features 32 programmable slots
@@ -1082,3 +1085,4 @@ READ16_HANDLER( SCSP_MidiOutR )
 	return val;
 }
 
+}

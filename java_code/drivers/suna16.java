@@ -19,9 +19,15 @@ Year + Game					By		Hardware
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class suna16
+{
+	
 /* Variables and functions defined in vidhrdw: */
 
 WRITE16_HANDLER( suna16_flipscreen_w );
@@ -814,3 +820,4 @@ DRIVER_INIT( uballoon )
 
 GAME( 1996, bssoccer, 0, bssoccer, bssoccer, 0,        ROT0, "SunA", "Back Street Soccer" )
 GAME( 1996, uballoon, 0, uballoon, uballoon, uballoon, ROT0, "SunA", "Ultra Balloon" )
+}

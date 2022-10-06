@@ -293,12 +293,15 @@ Notes & Todo:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/ppu2c03b.h"
-#include "cpu/z80/z80.h"
-#include "machine/rp5h01.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class playch10
+{
+	
 /* clock frequency */
 #define N2A03_DEFAULTCLOCK (21477272.724 / 12)
 
@@ -1760,3 +1763,4 @@ GAME( 1990, pc_sjetm,playch10, playch10, playch10, pciboard, ROT0, "Rare", "Play
 
 /* K-Board Games */
 GAME( 1991, pc_moglf,playch10, playch10, playch10, pckboard, ROT0, "Nintendo", "PlayChoice-10: Mario's Open Golf" )
+}

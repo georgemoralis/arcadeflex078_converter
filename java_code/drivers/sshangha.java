@@ -51,9 +51,15 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sshangha
+{
+	
 #define SSHANGHA_HACK	0
 
 VIDEO_START( sshangha );
@@ -452,3 +458,4 @@ static DRIVER_INIT( sshangha )
 
 GAMEX( 1992, sshangha, 0,        sshangha, sshangha, sshangha, ROT0, "Hot-B.",   "Super Shanghai Dragon's Eye (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND )
 GAMEX( 1992, sshanghb, sshangha, sshangha, sshangha, sshangha, ROT0, "bootleg", "Super Shanghai Dragon's Eye (World, bootleg)", GAME_NO_SOUND )
+}

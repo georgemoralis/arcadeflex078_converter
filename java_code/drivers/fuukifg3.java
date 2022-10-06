@@ -89,9 +89,15 @@ FG-3J ROM-J 507KA0301P04       Rev:1.3
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class fuukifg3
+{
+	
 static int fuuki32_raster_enable = 1; /* Enabled by default */
 
 // Described in src/vidhrdw/fuuki32.c
@@ -592,3 +598,4 @@ ROM_END
 ***************************************************************************/
 
 GAMEX( 1998, asurabld,	0, fuuki32, asurabld, 0, ROT0, "Fuuki", "Asura Blade - Sword of Dynasty (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+}

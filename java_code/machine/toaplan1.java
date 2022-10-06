@@ -3,11 +3,15 @@
 				------------------------------------
  ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/tms32010/tms32010.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class toaplan1
+{
+	
 #define CLEAR 0
 #define ASSERT 1
 
@@ -310,4 +314,5 @@ WRITE16_HANDLER( samesame_coin_w )
 	{
 		logerror("PC:%04x  Writing unknown MSB data (%04x) to coin count/lockout port\n",activecpu_get_previouspc(),data);
 	}
+}
 }

@@ -6,9 +6,15 @@ driver by Allard Van Der Bas
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shaolins
+{
+	
 
 UINT8 shaolins_nmi_enable;
 
@@ -306,3 +312,4 @@ ROM_END
 
 GAME( 1985, kicker,   0,      shaolins, shaolins, 0, ROT90, "Konami", "Kicker" )
 GAME( 1985, shaolins, kicker, shaolins, shaolins, 0, ROT90, "Konami", "Shao-Lin's Road" )
+}

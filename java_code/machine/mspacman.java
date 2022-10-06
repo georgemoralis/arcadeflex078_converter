@@ -1,7 +1,13 @@
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mspacman
+{
+	
 
 /*
   It turns out the bootleg is the decrypted version with the checksum check
@@ -198,3 +204,4 @@ WRITE_HANDLER( mspacman_activate_rom )
 }
 
 
+}

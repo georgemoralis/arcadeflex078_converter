@@ -23,9 +23,15 @@ added external port callback, and functions to set the volume of the channels
 */
 
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class k007232
+{
+	
 
 #define  KDAC_A_PCM_MAX    (2)		/* Channels per chip */
 
@@ -486,3 +492,4 @@ void K007232_set_bank( int chip, int chABank, int chBBank )
 }
 
 /*****************************************************************************/
+}

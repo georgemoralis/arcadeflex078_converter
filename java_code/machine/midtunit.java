@@ -8,13 +8,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/m6809/m6809.h"
-#include "sndhrdw/williams.h"
-#include "sndhrdw/dcs.h"
-#include "midtunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class midtunit
+{
+	
 
 /* compile-time constants */
 #define ENABLE_ALL_JDREDD_LEVELS	0
@@ -697,4 +699,5 @@ WRITE16_HANDLER( midtunit_sound_w )
 				fake_sound_state = 128;
 				break;
 		}
+}
 }

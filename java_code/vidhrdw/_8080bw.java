@@ -6,12 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "8080bw.h"
-#include "math.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class _8080bw
+{
+	
 static int screen_red;
 static int screen_red_enabled;		/* 1 for games that can turn the screen red */
 static int color_map_select;
@@ -1070,4 +1073,5 @@ static WRITE_HANDLER( sstrngr2_videoram_w )
 	}
 
 	plot_byte(x, y, data, col, 0);
+}
 }

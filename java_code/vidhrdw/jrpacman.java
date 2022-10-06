@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "jrpacman.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jrpacman
+{
+	
 
 
 unsigned char *jrpacman_scroll,*jrpacman_bgpriority;
@@ -306,4 +311,5 @@ VIDEO_UPDATE( jrpacman )
 
 	if (*jrpacman_bgpriority & 1)
 		copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine->visible_area,TRANSPARENCY_COLOR,0);
+}
 }

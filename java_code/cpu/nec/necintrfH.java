@@ -2,9 +2,15 @@
 #ifndef __NEC_H_
 #define __NEC_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.nec;
 
+public class necintrfH
+{
+	
 enum {
 	NEC_IP=1, NEC_AW, NEC_CW, NEC_DW, NEC_BW, NEC_SP, NEC_BP, NEC_IX, NEC_IY,
 	NEC_FLAGS, NEC_ES, NEC_CS, NEC_SS, NEC_DS,
@@ -62,3 +68,4 @@ extern unsigned Dasmnec(char* buffer, unsigned pc);
 #endif
 
 #endif
+}

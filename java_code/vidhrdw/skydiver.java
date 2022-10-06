@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "skydiver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class skydiver
+{
+	
 
 data8_t *skydiver_videoram;
 
@@ -203,3 +208,4 @@ VIDEO_UPDATE( skydiver )
 	draw_sprites(bitmap, cliprect);
 }
 
+}

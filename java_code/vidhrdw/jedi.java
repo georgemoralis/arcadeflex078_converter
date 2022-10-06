@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "jedi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jedi
+{
+	
 
 /* globals */
 UINT8 *jedi_backgroundram;
@@ -389,4 +394,5 @@ VIDEO_UPDATE( jedi )
 		bounds.max_y = y + (tall ? 31 : 15);
 		fillbitmap(mobitmap, 0, &bounds);
     }
+}
 }

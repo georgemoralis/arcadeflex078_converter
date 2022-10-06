@@ -22,10 +22,15 @@
 #ifndef _M65CE02_H
 #define _M65CE02_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
-#include "m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
+public class m65ce02H
+{
+	
 #ifdef RUNTIME_LOADER
 # ifdef __cplusplus
 	extern "C" void m65ce02_runtime_loader_init(void);
@@ -65,3 +70,4 @@ extern unsigned int Dasm65ce02( char *dst, unsigned pc );
 #endif /* _M65CE02_H */
 
 
+}

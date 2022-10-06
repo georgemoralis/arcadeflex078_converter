@@ -18,11 +18,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "eprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class eprom
+{
+	
 
 
 /*************************************
@@ -589,3 +593,4 @@ GAME( 1989, eprom,  0,     eprom, eprom, eprom, ROT0, "Atari Games", "Escape fro
 GAME( 1989, eprom2, eprom, eprom, eprom, eprom, ROT0, "Atari Games", "Escape from the Planet of the Robot Monsters (set 2)" )
 GAME( 1989, klaxp1, klax,  klaxp, klaxp, klaxp, ROT0, "Atari Games", "Klax (prototype set 1)" )
 GAME( 1989, klaxp2, klax,  klaxp, klaxp, klaxp, ROT0, "Atari Games", "Klax (prototype set 2)" )
+}

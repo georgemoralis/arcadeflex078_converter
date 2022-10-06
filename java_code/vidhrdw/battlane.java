@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class battlane
+{
+	
 UINT8 *battlane_spriteram;
 UINT8 *battlane_tileram;
 
@@ -258,4 +264,5 @@ VIDEO_UPDATE( battlane )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	battlane_draw_sprites(bitmap);
 	battlane_draw_fg_bitmap(bitmap);
+}
 }

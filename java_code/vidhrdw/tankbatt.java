@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tankbatt
+{
+	
 UINT8 *tankbatt_bulletsram;
 size_t tankbatt_bulletsram_size;
 
@@ -117,4 +123,5 @@ VIDEO_UPDATE( tankbatt )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	tankbatt_draw_bullets(bitmap);
+}
 }

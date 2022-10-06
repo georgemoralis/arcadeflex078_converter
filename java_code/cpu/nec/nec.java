@@ -40,22 +40,20 @@
 
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.nec;
 
+public class nec
+{
+	
 typedef UINT8 BOOLEAN;
 typedef UINT8 BYTE;
 typedef UINT16 WORD;
 typedef UINT32 DWORD;
 
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "nec.h"
-#include "necintrf.h"
-#include "driver.h"
-#include "state.h"
 
 static UINT8 nec_reg_layout[] = {
 	NEC_IP,NEC_SP,NEC_FLAGS,NEC_AW,NEC_CW,NEC_DW,NEC_BW,NEC_BP,NEC_IX,NEC_IY, -1,
@@ -114,9 +112,6 @@ char seg_prefix;		/* prefix segment indicator */
 #define INT_IRQ 0x01
 #define NMI_IRQ 0x02
 
-#include "necinstr.h"
-#include "necea.h"
-#include "necmodrm.h"
 
 static int no_interrupt;
 
@@ -1267,3 +1262,4 @@ const char *v33_info(void *context, int regnum)
     return v20_info(context,regnum);
 }
 unsigned v33_dasm(char *buffer, unsigned pc) { return nec_dasm(buffer,pc); }
+}

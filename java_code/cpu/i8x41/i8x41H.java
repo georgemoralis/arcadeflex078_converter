@@ -26,9 +26,15 @@
 #ifndef _I8X41_H
 #define _I8X41_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8x41;
 
+public class i8x41H
+{
+	
 
 /* The i8x41/i8x42 input clock is divided by 15. Use it with your CPU speed */
 #define I8X41_CLOCK_DIVIDER		15
@@ -100,3 +106,4 @@ extern unsigned Dasm8x41( char *dst, unsigned pc );
 #endif
 
 #endif /* _I8X41_H */
+}

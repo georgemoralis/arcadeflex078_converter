@@ -16,9 +16,15 @@
  *
  */
 
-#include "driver.h"
-#include "includes/berzerk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class berzerk
+{
+	
 
 static const char *sample_names[] =
 {
@@ -322,3 +328,4 @@ struct CustomSound_interface berzerk_custom_interface =
 	0,
 	berzerk_sh_update
 };
+}

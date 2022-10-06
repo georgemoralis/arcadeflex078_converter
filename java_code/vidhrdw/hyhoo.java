@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hyhoo
+{
+	
 
 static int hyhoo_scrolly;
 static int hyhoo_drawx, hyhoo_drawy;
@@ -391,4 +396,5 @@ VIDEO_UPDATE( hyhoo )
 	{
 		fillbitmap(bitmap, Machine->pens[0x0000], 0);
 	}
+}
 }

@@ -55,10 +55,15 @@ Known issues:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tankbatt
+{
+	
 extern UINT8 *tankbatt_bulletsram;
 extern size_t tankbatt_bulletsram_size;
 
@@ -330,3 +335,4 @@ ROM_END
 
 
 GAME( 1980, tankbatt, 0, tankbatt, tankbatt, 0, ROT90, "Namco", "Tank Battalion" )
+}

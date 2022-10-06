@@ -37,10 +37,15 @@
 /*                                                                           */
 /*****************************************************************************/
 
-#include "driver.h"
-#include "tiaintf.h"
-#include "tiasound.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class tiasound
+{
+	
 /* number of bits to shift left AUDV0/AUDV1 registers for 16 bit volume */
 #define AUDV_SHIFT  10
 
@@ -531,3 +536,4 @@ void tia_sound_init(int clock, int sample_rate, int gain)
     }
 }
 
+}

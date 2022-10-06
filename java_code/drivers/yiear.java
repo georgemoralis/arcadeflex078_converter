@@ -47,10 +47,15 @@ The 6809 NMI is used for sound timing.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class yiear
+{
+	
 extern int nmi_enable;
 
 extern WRITE_HANDLER( yiear_videoram_w );
@@ -349,3 +354,4 @@ ROM_END
 
 GAME( 1985, yiear,  0,     yiear, yiear, 0, ROT0, "Konami", "Yie Ar Kung-Fu (set 1)" )
 GAME( 1985, yiear2, yiear, yiear, yiear, 0, ROT0, "Konami", "Yie Ar Kung-Fu (set 2)" )
+}

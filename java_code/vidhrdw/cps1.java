@@ -176,10 +176,15 @@ The games seem to use them to mark platforms, kill zones and no-go areas.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cps1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cps1
+{
+	
 #define VERBOSE 0
 
 #define CPS1_DUMP_VIDEO 0
@@ -1959,4 +1964,5 @@ void cps2_objram_latch(void)
 {
 	cps2_set_sprite_priorities();
 	memcpy(cps2_buffered_obj, cps2_objbase(), cps2_obj_size);
+}
 }

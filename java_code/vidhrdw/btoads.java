@@ -6,11 +6,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "vidhrdw/tlc34076.h"
-#include "btoads.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class btoads
+{
+	
 
 #define BT_DEBUG 0
 
@@ -491,4 +495,5 @@ VIDEO_UPDATE( btoads )
 
 	logerror("---VBLANK---\n");
 #endif
+}
 }

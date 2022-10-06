@@ -11,10 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "sound/fm.h"
-#include "sound/2612intf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2612intf
+{
+	
 
 #ifdef BUILD_YM2612
 
@@ -238,3 +243,4 @@ WRITE_HANDLER( YM2612_data_port_1_B_w ){
 /**************** end of file ****************/
 
 #endif
+}

@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nitedrvr
+{
+	
 UINT8 *nitedrvr_hvc;
 
 static struct tilemap *bg_tilemap;
@@ -112,4 +118,5 @@ VIDEO_UPDATE( nitedrvr )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	nitedrvr_draw_road(bitmap);
 	//nitedrvr_draw_hacks(bitmap);
+}
 }

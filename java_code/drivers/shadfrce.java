@@ -76,9 +76,15 @@ lev 6 : 0x78 : 0000 11d0 - just rte
 lev 7 : 0x7c : 0000 11d0 - just rte
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shadfrce
+{
+	
 data16_t *shadfrce_fgvideoram, *shadfrce_bg0videoram,  *shadfrce_bg1videoram,   *shadfrce_spvideoram;
 /* data16_t *shadfrce_videoregs; */
 
@@ -94,7 +100,6 @@ WRITE16_HANDLER( shadfrce_fgvideoram_w );
 WRITE16_HANDLER( shadfrce_bg0videoram_w );
 WRITE16_HANDLER( shadfrce_bg1videoram_w );
 
-#include "vidhrdw/generic.h"
 
 WRITE16_HANDLER( shadfrce_flip_screen )
 {
@@ -624,3 +629,4 @@ ROM_END
 
 
 GAMEX( 1993, shadfrce, 0, shadfrce, shadfrce, 0, ROT0, "Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )
+}

@@ -13,15 +13,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "driver.h"
-#include "mamedbg.h"
-#include "mips3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class mips3
+{
+	
 
 #define ENABLE_OVERFLOWS	0
 
@@ -2244,4 +2244,5 @@ static void sdr_le(UINT32 op)
 		int shift = 8 * (offs & 7);
 		WDOUBLE(offs & ~7, (temp & (mask >> (56 - shift))) | (RTVAL64 << shift));
 	}
+}
 }

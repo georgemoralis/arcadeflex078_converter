@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class phozon
+{
+	
 unsigned char *phozon_snd_sharedram;
 unsigned char *phozon_spriteram;
 unsigned char *phozon_customio_1, *phozon_customio_2;
@@ -242,4 +248,5 @@ READ_HANDLER( phozon_customio_2_r )
 	else
 		val = phozon_customio_2[offset];
 	return val;
+}
 }

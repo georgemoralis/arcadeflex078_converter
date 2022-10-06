@@ -38,9 +38,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tetrisp2
+{
+	
 
 extern UINT16 tetrisp2_systemregs[0x10];
 
@@ -567,4 +573,5 @@ VIDEO_UPDATE( rockntread )
 		tilemap_draw(bitmap,cliprect, tilemap_fg,  0, 1 << 2);
 
 	tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
+}
 }

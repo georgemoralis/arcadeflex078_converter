@@ -17,11 +17,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "includes/psx.h"
-#include "usrintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class psx
+{
+	
 #define STOP_ON_ERROR ( 0 )
 
 #define VERBOSE_LEVEL ( 1 )
@@ -3467,4 +3471,5 @@ INTERRUPT_GEN( psx_vblank )
 void psx_gpu_reset( void )
 {
 	psx_gpu_w( 1, 0, 0 );
+}
 }

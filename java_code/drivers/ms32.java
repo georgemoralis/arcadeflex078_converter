@@ -164,8 +164,15 @@ Games marked * need dumping / redumping
 
 /********** BITS & PIECES **********/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ms32
+{
+	
 extern data32_t *ms32_fce00000;
 extern data32_t *ms32_roz_ctrl;
 extern data32_t *ms32_tx_scroll;
@@ -2323,3 +2330,4 @@ GAMEX( 1997, tp2m32,   tetrisp2, ms32, tp2m32,   tp2m32,     ROT0,   "Jaleco", "
 
 /* these boot and show something */
 GAMEX( 1994, f1superb, 0,        ms32, f1superb, f1superb, ROT0,   "Jaleco", "F1 Super Battle", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

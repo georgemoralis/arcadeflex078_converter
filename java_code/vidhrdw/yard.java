@@ -11,9 +11,15 @@ J Clegg
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class yard
+{
+	
 
 unsigned char *yard_scroll_x_low;
 unsigned char *yard_scroll_x_high;
@@ -364,4 +370,5 @@ VIDEO_UPDATE( yard )
 		           xpos,0,
 				   flip_screen ? &panelvisibleareaflip : &panelvisiblearea,TRANSPARENCY_NONE,0);
 	}
+}
 }

@@ -76,10 +76,15 @@ Multi monitor notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gaelco2
+{
+	
 data16_t *gaelco2_vregs;
 static data16_t *gaelco2_videoram;
 
@@ -619,4 +624,5 @@ VIDEO_EOF( gaelco2 )
 {
 	/* sprites are one frame ahead */
 	buffer_spriteram16_w(0, 0, 0);
+}
 }

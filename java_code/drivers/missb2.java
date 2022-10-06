@@ -7,9 +7,15 @@ redesigned (8bpp!) graphics and different sound hardware... Crazy
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class missb2
+{
+	
 data8_t *bg_paletteram,*bg_vram;
 
 /* vidhrdw/bublbobl.c */
@@ -514,3 +520,4 @@ static DRIVER_INIT( missb2 )
 }
 
 GAMEX( 1996, missb2, bublbobl, missb2, missb2, missb2, ROT0,  "Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+}

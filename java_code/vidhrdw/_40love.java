@@ -2,9 +2,15 @@
 *	Video Driver for Forty-Love
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class _40love
+{
+	
 /*
 *	variables
 */
@@ -355,4 +361,5 @@ VIDEO_UPDATE( fortyl )
 	tilemap_draw(bitmap,cliprect,background,0,0);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

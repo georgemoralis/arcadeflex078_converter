@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class redclash
+{
+	
 static int star_speed;
 static int gfxbank;
 
@@ -248,4 +254,5 @@ VIDEO_UPDATE( redclash )
 	redclash_draw_sprites(bitmap);
 	redclash_draw_bullets(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

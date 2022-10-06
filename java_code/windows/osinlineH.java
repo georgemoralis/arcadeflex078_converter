@@ -7,8 +7,15 @@
 #ifndef __OSINLINE__
 #define __OSINLINE__
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class osinlineH
+{
+	
 //============================================================
 //	MACROS
 //============================================================
@@ -70,3 +77,4 @@ INLINE int _vec_mult(int x, int y)
 #endif /* _MSC_VER */
 
 #endif /* __OSINLINE__ */
+}

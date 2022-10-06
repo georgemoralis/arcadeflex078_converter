@@ -6,15 +6,16 @@
 
 ***************************************************************************/
 
-#include <signal.h>
-#include "driver.h"
-#include "timer.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "hiscore.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuint
+{
+	
 #if (HAS_M68000 || HAS_M68010 || HAS_M68020 || HAS_M68EC020)
-#include "cpu/m68000/m68000.h"
 #endif
 
 
@@ -517,4 +518,5 @@ WRITE_HANDLER( interrupt_vector_w )
 		/* make sure there are no queued interrupts */
 		timer_set(TIME_NOW, activecpu, cpu_clearintcallback);
 	}
+}
 }

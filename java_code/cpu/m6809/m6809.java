@@ -70,13 +70,15 @@
 
 *****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6809;
 
+public class m6809
+{
+	
 /* Enable big switch statement for the main opcodes */
 #ifndef BIG_SWITCH
 #define BIG_SWITCH  1
@@ -668,10 +670,8 @@ unsigned m6809_dasm(char *buffer, unsigned pc)
 }
 
 /* includes the static function prototypes and the master opcode table */
-#include "6809tbl.c"
 
 /* includes the actual opcode implementations */
-#include "6809ops.c"
 
 /* execute instructions on this CPU until icount expires */
 int m6809_execute(int cycles)	/* NS 970908 */
@@ -1246,4 +1246,5 @@ INLINE void fetch_effective_address( void )
 	case 0xfe: EA=0;																   break; /*ILLEGAL*/
 	case 0xff: IMMWORD(ea); 						EAD=RM16(EAD);	m6809_ICount-=5;   break;
 	}
+}
 }

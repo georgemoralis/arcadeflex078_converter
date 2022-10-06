@@ -16,9 +16,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class blmbycar
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data16_t *blmbycar_vram_0, *blmbycar_scroll_0;
@@ -387,3 +393,4 @@ DRIVER_INIT( blmbycar )
 
 GAME( 1994, blmbycar, 0,        blmbycar, blmbycar, blmbycar, ROT0, "ABM & Gecas", "Blomby Car" )
 GAME( 1994, blmbycau, blmbycar, blmbycar, blmbycar, 0,        ROT0, "ABM & Gecas", "Blomby Car (not encrypted)" )
+}

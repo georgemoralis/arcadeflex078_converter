@@ -6,22 +6,20 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class video
+{
+	
 // standard C headers
-#include <math.h>
 
 // MAME headers
-#include "driver.h"
-#include "mamedbg.h"
-#include "vidhrdw/vector.h"
-#include "blit.h"
-#include "video.h"
-#include "window.h"
-#include "rc.h"
 
 #ifdef MESS
-#include "menu.h"
 #endif
 
 
@@ -1019,4 +1017,5 @@ void osd_pause(int paused)
 
 	// tell the input system
 	win_pause_input(paused);
+}
 }

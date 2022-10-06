@@ -94,10 +94,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class punchout
+{
+	
 
 extern unsigned char *punchout_videoram2;
 extern size_t punchout_videoram2_size;
@@ -1104,3 +1109,4 @@ GAME( 1984, punchout, 0,        punchout, punchout, punchout, ROT0, "Nintendo", 
 GAME( 1984, spnchout, 0,        punchout, spnchout, spnchout, ROT0, "Nintendo", "Super Punch-Out!!" )
 GAME( 1984, spnchotj, spnchout, punchout, spnchout, spnchotj, ROT0, "Nintendo", "Super Punch-Out!! (Japan)" )
 GAME( 1985, armwrest, 0,        armwrest, armwrest, armwrest, ROT0, "Nintendo", "Arm Wrestling" )
+}

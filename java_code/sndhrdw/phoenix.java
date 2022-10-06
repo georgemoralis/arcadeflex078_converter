@@ -8,9 +8,15 @@
  ****************************************************************************/
 
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class phoenix
+{
+	
 /****************************************************************************
  * 4006
  * Dual 4-bit and dual 5-bit serial-in serial-out shift registers.
@@ -627,3 +633,4 @@ void phoenix_sh_update(void)
 }
 
 
+}

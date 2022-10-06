@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class tms36xx
+{
+	
 #define VERBOSE 1
 
 #if VERBOSE
@@ -563,3 +570,4 @@ void tms36xx_sh_update(void)
 		stream_update(i,0);
 }
 
+}

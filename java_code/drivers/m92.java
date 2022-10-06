@@ -98,12 +98,15 @@ Gunforce 2                    1994  Rev 3.53 M92
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "m92.h"
-#include "machine/irem_cpu.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class m92
+{
+	
 static int irqvector;
 static int sound_status;
 static int bankaddress;
@@ -2435,3 +2438,4 @@ GAMEX(1993, psoldier, ssoldier, psoldier,  psoldier, psoldier, ROT0,   "Irem",  
 GAME( 1994, dsccr94j, dsoccr94, psoldier,  dsccr94j, dsccr94j, ROT0,   "Irem",         "Dream Soccer '94 (Japan)" )
 GAME( 1994, gunforc2, 0,        raster,    gunforc2, gunforc2, ROT0,   "Irem",         "Gunforce 2 (US)" )
 GAME( 1994, geostorm, gunforc2, raster,    gunforc2, gunforc2, ROT0,   "Irem",         "Geostorm (Japan)" )
+}

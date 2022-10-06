@@ -7,10 +7,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ojankohs
+{
+	
 
 static data8_t *ojankohs_videoram;
 static data8_t *ojankohs_colorram;
@@ -355,4 +360,5 @@ VIDEO_UPDATE( ojankoc )
 	}
 
 	copybitmap(bitmap, ojankoc_tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
+}
 }

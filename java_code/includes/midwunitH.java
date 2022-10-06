@@ -4,8 +4,15 @@
 
 **************************************************************************/
 
-#include "midtunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class midwunitH
+{
+	
 /*----------- defined in machine/midwolfu.c -----------*/
 
 extern UINT8 *midwunit_decode_memory;
@@ -50,3 +57,4 @@ WRITE16_HANDLER( midxunit_security_clock_w );
 
 READ16_HANDLER( midwunit_sound_r );
 WRITE16_HANDLER( midwunit_sound_w );
+}

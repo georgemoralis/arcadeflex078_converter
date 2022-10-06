@@ -15,10 +15,15 @@
 #define _TMS32010_H
 
 
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32010;
 
+public class tms32010H
+{
+	
 
 /****************************************************************************
  * Use this in the I/O port address fields of your driver for the BIO pin
@@ -161,3 +166,4 @@ extern unsigned Dasm32010(char *buffer, unsigned pc);
 #endif
 
 #endif	/* _TMS32010_H */
+}

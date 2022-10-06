@@ -2,9 +2,15 @@
 
 /* see drivers/tbowl.c for more info */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tbowl
+{
+	
 static struct tilemap *tx_tilemap, *bg_tilemap, *bg2_tilemap;
 data8_t *tbowl_txvideoram, *tbowl_bgvideoram, *tbowl_bg2videoram;
 data8_t *tbowl_spriteram;
@@ -241,4 +247,5 @@ VIDEO_UPDATE( tbowl )
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,bg2_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

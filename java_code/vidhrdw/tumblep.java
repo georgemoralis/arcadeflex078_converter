@@ -13,9 +13,15 @@ to switch between 8*8 tiles and 16*16 tiles.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tumblep
+{
+	
 static data16_t tumblep_control_0[8];
 data16_t *tumblep_pf1_data,*tumblep_pf2_data;
 static struct tilemap *pf1_tilemap,*pf1_alt_tilemap,*pf2_tilemap;
@@ -442,4 +448,5 @@ VIDEO_UPDATE( fncywld )
 	else
 		tilemap_draw(bitmap,cliprect,pf1_alt_tilemap,0,0);
 	fncywld_drawsprites(bitmap,cliprect);
+}
 }

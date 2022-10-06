@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mainsnk
+{
+	
 static unsigned char bg_color,  old_bg_color;
 #define mainsnk_offset 8
 static struct tilemap *me_fg_tilemap;
@@ -198,3 +205,4 @@ VIDEO_UPDATE(mainsnk)
 	update_palette(1);
 }
 
+}

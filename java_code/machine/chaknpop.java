@@ -3,10 +3,15 @@
  *	simulate 68705 MCU
  */
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class chaknpop
+{
+	
 #define MCU_INITIAL_SEED	0x81
 
 static data8_t mcu_seed;
@@ -167,4 +172,5 @@ MACHINE_INIT( chaknpop )
 {
 	mcu_seed = MCU_INITIAL_SEED;
 	mcu_wait = 0;
+}
 }

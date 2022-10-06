@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cninja
+{
+	
 /******************************************************************************/
 
 static int cninja_bank_callback(const int bank)
@@ -534,4 +539,5 @@ VIDEO_UPDATE( mutantf )
 		mutantf_drawsprites(bitmap,cliprect,buffered_spriteram16,3);
 	}
 	deco16_tilemap_1_draw(bitmap,cliprect,0,0);
+}
 }

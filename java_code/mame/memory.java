@@ -16,11 +16,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "osd_cpu.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include <stdarg.h>
+public class memory
+{
+	
 
 
 //#define MEM_DUMP
@@ -3061,3 +3065,4 @@ static void verify_masks(void)
 	printf("Busted entries that are static = %d\n", static_count);
 }
 #endif
+}

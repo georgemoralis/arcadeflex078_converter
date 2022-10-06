@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class glass
+{
+	
 data16_t *glass_spriteram;
 data16_t *glass_vregs;
 data16_t *glass_videoram;
@@ -217,4 +222,5 @@ VIDEO_UPDATE( glass )
 	tilemap_draw(bitmap,cliprect,pant[1],0,0);
 	tilemap_draw(bitmap,cliprect,pant[0],0,0);
 	glass_draw_sprites(bitmap,cliprect);
+}
 }

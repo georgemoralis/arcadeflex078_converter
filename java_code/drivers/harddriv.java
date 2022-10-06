@@ -167,17 +167,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "sound/adpcm.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms32010/tms32010.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "cpu/dsp32/dsp32.h"
-#include "machine/atarigen.h"
-#include "machine/asic65.h"
-#include "sndhrdw/atarijsa.h"
-#include "harddriv.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class harddriv
+{
+	
 /* from slapstic.c */
 void slapstic_init(int chip);
 
@@ -4056,3 +4054,4 @@ GAMEX( 1991, steeltap, steeltal, steeltal, steeltal, steeltap, ROT0, "Atari Game
 
 GAMEX( 1993, hdrivair, 0,        hdrivair, hdrivair, hdrivair, ROT0, "Atari Games", "Hard Drivin's Airborne (prototype)", GAME_NO_SOUND )
 GAMEX( 1993, hdrivaip, hdrivair, hdrivair, hdrivair, hdrivaip, ROT0, "Atari Games", "Hard Drivin's Airborne (prototype, early rev)", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

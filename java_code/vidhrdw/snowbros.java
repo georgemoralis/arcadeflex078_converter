@@ -5,9 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class snowbros
+{
+	
 
 WRITE16_HANDLER( snowbros_flipscreen_w )
 {
@@ -134,4 +140,5 @@ VIDEO_UPDATE( wintbob )
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
+}
 }

@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pirates
+{
+	
 
 data16_t *pirates_tx_tileram, *pirates_spriteram;
 data16_t *pirates_fg_tileram,  *pirates_bg_tileram;
@@ -118,4 +125,5 @@ VIDEO_UPDATE(pirates)
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

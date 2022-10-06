@@ -20,11 +20,15 @@
 
 *********************************************************************/
 
-#include <math.h>
-#include <zlib.h>
-#include "driver.h"
-#include "png.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class png
+{
+	
 
 /* convert_uint is here so we don't have to deal with byte-ordering issues */
 static UINT32 convert_from_network_order (UINT8 *v)
@@ -957,3 +961,4 @@ int mng_capture_status(void)
 	return mng_status;
 }
 
+}

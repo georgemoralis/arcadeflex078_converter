@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tecmo
+{
+	
 unsigned char *tecmo_txvideoram,*tecmo_fgvideoram,*tecmo_bgvideoram;
 
 int tecmo_video_type = 0;
@@ -263,4 +269,5 @@ VIDEO_UPDATE( tecmo )
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

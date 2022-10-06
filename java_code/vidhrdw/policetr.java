@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/mips/r3000.h"
-#include "policetr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class policetr
+{
+	
 
 /* constants */
 #define SRCBITMAP_WIDTH		4096
@@ -374,4 +379,5 @@ VIDEO_UPDATE( policetr )
 	beamx = ((readinputport(5) & 0xff) * Machine->drv->screen_width) >> 8;
 	beamy = ((readinputport(6) & 0xff) * Machine->drv->screen_height) >> 8;
 	draw_crosshair(bitmap, beamx, beamy, cliprect);
+}
 }

@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ultraman
+{
+	
 #define SPRITEROM_MEM_REGION REGION_GFX1
 #define ZOOMROM0_MEM_REGION REGION_GFX2
 #define ZOOMROM1_MEM_REGION REGION_GFX3
@@ -142,4 +146,5 @@ VIDEO_UPDATE( ultraman )
 	K051960_sprites_draw(bitmap,cliprect,0,0);
 	K051316_zoom_draw_0(bitmap,cliprect,0,0);
 	K051960_sprites_draw(bitmap,cliprect,1,1);
+}
 }

@@ -16,11 +16,15 @@ TODO: - background is misplaced in wbmlju
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/system1.h"
-#include "cpu/z80/z80.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class system1
+{
+	
 
 
 static MACHINE_INIT( system1 )
@@ -4054,3 +4058,4 @@ GAMEX(1987, wbmljb,   wbml,     wbml,     wbml,     bootleg,  ROT0,   "bootleg",
 GAMEX(1987, wbmlb,    wbml,     wbml,     wbml,     bootleg,  ROT0,   "bootleg", 		 	   "Wonder Boy in Monster Land", GAME_NO_COCKTAIL )
 GAMEX(1987, dakkochn, 0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "DakkoChan Jansoh", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 GAMEX(1988, ufosensi, 0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "Ufo Senshi Yohko Chan", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+}

@@ -1,5 +1,12 @@
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z8000;
 
+public class makedab
+{
+	
 #define CF	0x100
 #define HF	0x200
 #define DF	0x400
@@ -84,4 +91,5 @@ int main(int ac, char **av)
 	printf("};\n");
 
     return 0;
+}
 }

@@ -1,8 +1,15 @@
 #ifndef __2608INTF_H__
 #define __2608INTF_H__
 
-#include "fm.h"
-#ifdef BUILD_YM2608
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
+
+public class _2608intfH
+{
+	#ifdef BUILD_YM2608
   void YM2608UpdateRequest(int chip);
 #endif
 
@@ -52,3 +59,4 @@ WRITE_HANDLER( YM2608_data_port_1_A_w );
 WRITE_HANDLER( YM2608_data_port_1_B_w );
 
 #endif /* __2608INTF_H__ */
+}

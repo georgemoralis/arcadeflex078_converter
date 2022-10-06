@@ -19,12 +19,15 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#ifdef	MAME_DEBUG
-#include "driver.h"
-#include "mamedbg.h"
-#include "z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z80;
+
+public class z80dasm
+{
+	#ifdef	MAME_DEBUG
 
 enum e_mnemonics {
 	zADC  ,zADD  ,zAND	,zBIT  ,zCALL ,zCCF  ,zCP	,zCPD  ,
@@ -595,3 +598,4 @@ unsigned DasmZ80( char *buffer, unsigned pc )
 
 #endif
 
+}

@@ -4,9 +4,15 @@
  *
  *************************************/
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class asic65
+{
+	
 
 #define LOG_ASIC		0
 
@@ -605,3 +611,4 @@ READ16_HANDLER( asic65_io_r )
 		Command $2a: C76RRRRRRRRR
 
 ***********************************************************************/
+}

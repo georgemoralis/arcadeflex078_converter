@@ -97,13 +97,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/asap/asap.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "vidhrdw/generic.h"
-#include "beathead.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class beathead
+{
+	
 
 
 /*************************************
@@ -563,3 +565,4 @@ static DRIVER_INIT( beathead )
  *************************************/
 
 GAME( 1993, beathead, 0, beathead, beathead, beathead, ROT0, "Atari Games", "BeatHead (prototype)" )
+}

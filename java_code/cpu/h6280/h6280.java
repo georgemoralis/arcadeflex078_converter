@@ -58,13 +58,15 @@
 
 ******************************************************************************/
 
-#include "memory.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.h6280;
 
-#include <stdio.h>
-#include <string.h>
+public class h6280
+{
+	
 
 extern FILE * errorlog;
 
@@ -128,10 +130,8 @@ UINT8	H6280_debug_mmr[8];
 #endif
 
 /* include the macros */
-#include "h6280ops.h"
 
 /* include the opcode macros, functions and function pointer tables */
-#include "tblh6280.c"
 
 /*****************************************************************************/
 void h6280_init(void)
@@ -496,3 +496,4 @@ WRITE_HANDLER( H6280_timer_w )
 }
 
 /*****************************************************************************/
+}

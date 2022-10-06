@@ -6,8 +6,15 @@ Atari Triple Hunt Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class triplhnt
+{
+	
 extern VIDEO_START( triplhnt );
 extern VIDEO_UPDATE( triplhnt );
 
@@ -360,3 +367,4 @@ ROM_END
 
 
 GAMEX( 1977, triplhnt, 0, triplhnt, triplhnt, triplhnt, 0, "Atari", "Triple Hunt", GAME_NO_SOUND )
+}

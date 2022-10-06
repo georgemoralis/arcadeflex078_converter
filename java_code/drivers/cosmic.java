@@ -11,10 +11,15 @@ Devil Zone      - 8022
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cosmic
+{
+	
 
 PALETTE_INIT( panic );
 PALETTE_INIT( cosmica );
@@ -1520,3 +1525,4 @@ GAMEX(1980, devzone,  0,       devzone,  devzone,  devzone, ROT270, "Universal",
 GAMEX(1980, devzone2, devzone, devzone,  devzone2, devzone, ROT270, "Universal", "Devil Zone (easier)", GAME_IMPERFECT_SOUND )
 GAMEX(1980, nomnlnd,  0,       nomnlnd,  nomnlnd,  nomnlnd, ROT270, "Universal", "No Man's Land", GAME_IMPERFECT_SOUND )
 GAMEX(1980, nomnlndg, nomnlnd, nomnlnd,  nomnlndg, nomnlnd, ROT270, "Universal (Gottlieb license)", "No Man's Land (Gottlieb)", GAME_IMPERFECT_SOUND )
+}

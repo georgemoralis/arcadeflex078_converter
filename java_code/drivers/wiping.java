@@ -33,10 +33,15 @@ dip: 6.7 7.7
        1   1		5 lives
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wiping
+{
+	
 
 WRITE_HANDLER( wiping_flipscreen_w );
 PALETTE_INIT( wiping );
@@ -410,3 +415,4 @@ ROM_END
 
 GAME( 1982, wiping,  0,      wiping, wiping,  0, ROT90, "Nichibutsu", "Wiping" )
 GAME( 1983, rugrats, wiping, wiping, rugrats, 0, ROT90, "Nichibutsu", "Rug Rats" )
+}

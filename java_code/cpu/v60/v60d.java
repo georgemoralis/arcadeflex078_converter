@@ -1,11 +1,13 @@
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
-#include "osdepend.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.v60;
 
-#include <stdio.h>
-#include "v60.h"
+public class v60d
+{
+	
 
 static UINT8 (*readop)(offs_t adr);
 
@@ -1231,3 +1233,4 @@ unsigned v70_dasm(char *buffer, unsigned pc)
 	return dasm_optable[readop(pc)](pc, pc+1, buffer);
 }
 #endif
+}

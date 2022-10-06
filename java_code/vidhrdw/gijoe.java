@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gijoe
+{
+	
 
 static int AVAC_bits[4], AVAC_occupancy[4];
 static int layer_colorbase[4], layer_pri[4];
@@ -156,4 +161,5 @@ VIDEO_UPDATE( gijoe )
 	K056832_tilemap_draw(bitmap,cliprect, layer[3], 0, 8);
 
 	K053247_sprites_draw(bitmap, cliprect);
+}
 }

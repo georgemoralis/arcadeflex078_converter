@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "harddisk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class idectrlH
+{
+	
 
 #define MAX_IDE_CONTROLLERS			1
 
@@ -31,3 +38,4 @@ READ16_HANDLER( ide_controller16_0_r );
 WRITE16_HANDLER( ide_controller16_0_w );
 READ16_HANDLER( ide_bus_master16_0_r );
 WRITE16_HANDLER( ide_bus_master16_0_w );
+}

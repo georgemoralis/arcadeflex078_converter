@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vulgus
+{
+	
 unsigned char *vulgus_fgvideoram,*vulgus_bgvideoram;
 unsigned char *vulgus_scroll_low,*vulgus_scroll_high;
 
@@ -233,4 +239,5 @@ VIDEO_UPDATE( vulgus )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

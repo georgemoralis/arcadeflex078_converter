@@ -5,8 +5,15 @@
  * driver by BUT
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class chaknpop
+{
+	
 /* machine/chaknpop.c */
 DRIVER_INIT( chaknpop );
 MACHINE_INIT( chaknpop );
@@ -343,3 +350,4 @@ ROM_END
 
 /*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY              FULLNAME ) */
 GAME( 1983, chaknpop, 0,        chaknpop, chaknpop, chaknpop, ROT0,    "Taito Corporation", "Chack'n Pop")
+}

@@ -1,5 +1,12 @@
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class deadang
+{
+	
 static struct tilemap *pf3_layer,*pf2_layer,*pf1_layer,*text_layer;
 static int deadangle_tilebank, deadangle_oldtilebank;
 data8_t *deadang_video_data,*deadang_scroll_ram;
@@ -157,4 +164,5 @@ VIDEO_UPDATE( deadang )
 	tilemap_draw(bitmap,cliprect,pf2_layer,0,4);
 	if (!(deadang_scroll_ram[0x68]&0x10)) draw_sprites(bitmap);
 	tilemap_draw(bitmap,cliprect,text_layer,0,0);
+}
 }

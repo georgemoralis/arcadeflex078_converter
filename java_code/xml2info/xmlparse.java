@@ -2,10 +2,15 @@
    See the file COPYING for copying permission.
 */
 
-#include <stddef.h>
-#include <string.h>                     /* memset(), memcpy() */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package xml2info;
 
-#include "intconfig.h"
+public class xmlparse
+{
+	
 
 #ifdef XML_UNICODE
 #define XML_ENCODE_MAX XML_UTF16_ENCODE_MAX
@@ -65,9 +70,6 @@ typedef char ICHAR;
 #endif /* HAVE_BCOPY */
 #endif /* HAVE_MEMMOVE */
 
-#include "internal.h"
-#include "xmltok.h"
-#include "xmlrole.h"
 
 typedef const XML_Char *KEY;
 
@@ -5674,4 +5676,5 @@ getElementType(XML_Parser parser,
       return NULL;
   }
   return ret;
+}
 }

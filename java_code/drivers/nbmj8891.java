@@ -96,11 +96,15 @@ TODO:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nbmj8891
+{
+	
 
 #define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 
@@ -3075,3 +3079,4 @@ GAME( 1990, maiko,     0,        maiko,    maiko,    maiko,    ROT0,   "Nichibut
 GAME( 1990, club90s,   0,        mjnanpas, club90s,  club90s,  ROT0,   "Nichibutsu", "Mahjong CLUB 90's (set 1) (Japan 900919)" )
 GAME( 1990, club90sa,  club90s,  mjnanpas, club90s,  club90s,  ROT0,   "Nichibutsu", "Mahjong CLUB 90's (set 2) (Japan 900919)" )
 GAME( 1991, hanaoji,   0,        hanaoji,  hanaoji,  hanaoji,  ROT0,   "Nichibutsu", "Hana to Ojisan [BET] (Japan 911209)" )
+}

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gotcha
+{
+	
 
 data16_t *gotcha_fgvideoram,*gotcha_bgvideoram;
 
@@ -141,4 +147,5 @@ VIDEO_UPDATE( gotcha )
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 
 	draw_sprites(bitmap,cliprect);
+}
 }

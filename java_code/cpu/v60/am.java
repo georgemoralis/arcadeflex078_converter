@@ -26,10 +26,15 @@ UINT32 modWriteValW;
 UINT8 modDim;
 
 // Addressing mode functions and tables
-#include "am1.c" // ReadAM
-#include "am2.c" // ReadAMAddress
-#include "am3.c" // WriteAM
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.v60;
 
+public class am
+{
+	
 /*
   Input:
   modAdd
@@ -100,3 +105,4 @@ UINT32 WriteAM(void)
 }
 
 
+}

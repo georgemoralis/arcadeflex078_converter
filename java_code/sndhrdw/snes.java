@@ -10,9 +10,15 @@
   Just a shell for the moment.
 
 ***************************************************************************/
-#include "driver.h"
-#include "includes/snes.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class snes
+{
+	
 #define IPLROM_SIZE 64
 
 static struct
@@ -586,4 +592,5 @@ READ_HANDLER( fakespc_port_r )
 	}
 
 	return fakeapu_port[offset];
+}
 }

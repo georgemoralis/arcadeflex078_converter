@@ -6,9 +6,15 @@ Driver by Zsolt Vasvari
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mermaid
+{
+	
 
 extern unsigned char* mermaid_background_videoram;
 extern unsigned char* mermaid_foreground_videoram;
@@ -322,3 +328,4 @@ ROM_END
 
 GAMEX( 1982, mermaid, 0, mermaid, mermaid, 0, ROT0, "[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
 GAMEX( 1982, rougien, 0, mermaid, mermaid, 0, ROT0, "Sanritsu", "Rougien", GAME_NOT_WORKING )
+}

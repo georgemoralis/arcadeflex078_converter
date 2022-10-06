@@ -1,8 +1,15 @@
 #ifndef __GSTRIKER_H
 #define __GSTRIKER_H
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class gstrikerH
+{
+	
 
 /*** VS920A **********************************************/
 
@@ -71,3 +78,4 @@ extern tCG10103 CG10103[MAX_CG10103];
 #define CG10103_1_vram	(CG10103[1].vram)
 
 #endif
+}

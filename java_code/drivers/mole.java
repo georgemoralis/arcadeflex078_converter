@@ -41,9 +41,15 @@
 // 0x3E5					round point/passing point control?
 // 0x3E7					round point/passing point control?
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mole
+{
+	
 extern PALETTE_INIT( moleattack );
 extern VIDEO_START( moleattack );
 extern VIDEO_UPDATE( moleattack );
@@ -249,3 +255,4 @@ INPUT_PORTS_END
 
 
 GAME(1982, mole, 0, mole, mole, 0, ROT0, "Yachiyo Electronics, Ltd.", "Mole Attack" )
+}

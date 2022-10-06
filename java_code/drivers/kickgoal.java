@@ -23,10 +23,15 @@ lev 7 : 0x7c : 0000 0000 - x
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kickgoal
+{
+	
 
 
 data16_t *kickgoal_fgram, *kickgoal_bgram, *kickgoal_bg2ram, *kickgoal_scrram;
@@ -270,3 +275,4 @@ DRIVER_INIT( kickgoal )
 
 
 GAMEX( 1995, kickgoal,0, kickgoal, kickgoal, kickgoal, ROT0, "TCH", "Kick Goal", GAME_NO_SOUND )
+}

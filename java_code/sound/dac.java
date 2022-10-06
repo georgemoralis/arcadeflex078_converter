@@ -1,6 +1,12 @@
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class dac
+{
+	
 
 static int channel[MAX_DAC];
 static int output[MAX_DAC];
@@ -128,4 +134,5 @@ WRITE_HANDLER( DAC_0_signed_data_w )
 WRITE_HANDLER( DAC_1_signed_data_w )
 {
 	DAC_signed_data_w(1,data);
+}
 }

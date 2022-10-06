@@ -16,9 +16,15 @@
 
 ****************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tryout
+{
+	
 static struct tilemap *fg_tilemap;
 
 static void get_tile_info(int tile_index)
@@ -281,3 +287,4 @@ DRIVER_INIT( tryout )
 }
 
 GAMEX( 1985, tryout, 0, tryout, tryout, tryout, ROT90, "Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+}

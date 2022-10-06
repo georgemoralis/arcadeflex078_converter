@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 *******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class momoko
+{
+	
 data8_t *momoko_bg_scrollx;
 data8_t *momoko_bg_scrolly;
 data8_t momoko_fg_scrollx;
@@ -320,4 +327,5 @@ VIDEO_UPDATE( momoko )
 			}
 		}
 	}
+}
 }

@@ -9,10 +9,15 @@
  *																			*
  \**************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.pic16c5x;
 
-#include "16c5xdsm.c"
+public class dis16c5x
+{
+	
 
 
 unsigned char *Buffer;
@@ -131,4 +136,5 @@ int main(int argc,char *argv[])
 	free(Buffer);
 	fclose(F);
 	return(0);
+}
 }

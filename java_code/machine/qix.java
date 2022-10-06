@@ -6,13 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "qix.h"
-#include "6821pia.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6805/m6805.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class qix
+{
+	
 
 /* Globals */
 UINT8 *qix_sharedram;
@@ -653,4 +655,5 @@ static READ_HANDLER( slither_trak_lr_r )
 static READ_HANDLER( slither_trak_ud_r )
 {
 	return readinputport(qix_cocktail_flip ? 5 : 3);
+}
 }

@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class darius
+{
+	
 
 static struct tilemap *fg_tilemap;
 data16_t *darius_fg_ram;
@@ -168,4 +172,5 @@ VIDEO_UPDATE( darius )
 	tilemap_set_scrollx(fg_tilemap,0,0);
 	tilemap_set_scrolly(fg_tilemap,0,-8);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

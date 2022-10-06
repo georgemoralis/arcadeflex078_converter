@@ -7,12 +7,15 @@
 **	Space Harrier
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sharrier
+{
+	
 /***************************************************************************/
 
 static void generate_gr_screen(
@@ -1338,3 +1341,4 @@ GAME( 1985, sharrier, 0,        sharrier, sharrier, sharrier, ROT0, "Sega",    "
 GAMEX(1986, enduror,  0,        enduror,  enduror,  enduror,  ROT0, "Sega",    "Enduro Racer", GAME_NOT_WORKING )
 GAME( 1986, endurobl, enduror,  enduror,  enduror,  endurobl, ROT0, "bootleg", "Enduro Racer (bootleg set 1)" )
 GAME( 1986, endurob2, enduror,  endurob2, enduror,  endurob2, ROT0, "bootleg", "Enduro Racer (bootleg set 2)" )
+}

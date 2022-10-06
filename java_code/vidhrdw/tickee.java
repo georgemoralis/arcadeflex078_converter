@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "tickee.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tickee
+{
+	
 
 data16_t *tickee_vram;
 
@@ -146,3 +151,4 @@ VIDEO_UPDATE( tickee )
 	draw_crosshair(bitmap, beamx, beamy, cliprect);
 }
 
+}

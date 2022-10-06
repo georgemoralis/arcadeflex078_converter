@@ -13,14 +13,15 @@
  *
  */
 
-#include <stdio.h>
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "psx.h"
-#include "state.h"
-#include "usrintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class psx
+{
+	
 #define EXC_INT ( 0 )
 #define EXC_ADEL ( 4 )
 #define EXC_ADES ( 5 )
@@ -2967,4 +2968,5 @@ static void docop2( int gteop )
 	usrintf_showmessage_secs( 1, "unknown GTE op %08x", gteop );
 	logerror( "%08x: unknown GTE op %08x\n", mipscpu.pc, gteop );
 	mips_stop();
+}
 }

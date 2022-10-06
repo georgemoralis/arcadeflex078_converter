@@ -10,9 +10,15 @@
 
 
 
-#include "driver.h"
-#include "machine/8255ppi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _8255ppi
+{
+	
 
 static int num;
 
@@ -351,3 +357,4 @@ WRITE_HANDLER( ppi8255_4_w ) { ppi8255_w( 4, offset, data ); }
 WRITE_HANDLER( ppi8255_5_w ) { ppi8255_w( 5, offset, data ); }
 WRITE_HANDLER( ppi8255_6_w ) { ppi8255_w( 6, offset, data ); }
 WRITE_HANDLER( ppi8255_7_w ) { ppi8255_w( 7, offset, data ); }
+}

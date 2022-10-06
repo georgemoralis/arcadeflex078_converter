@@ -5,10 +5,15 @@ Solomon's Key
 driver by Mirko Buffoni
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class solomon
+{
+	
 extern UINT8 *solomon_videoram2;
 extern UINT8 *solomon_colorram2;
 
@@ -268,3 +273,4 @@ ROM_END
 
 
 GAME( 1986, solomon, 0, solomon, solomon, 0, ROT0, "Tecmo", "Solomon's Key (Japan)" )
+}

@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sbrkout
+{
+	
 UINT8 *sbrkout_horiz_ram;
 UINT8 *sbrkout_vert_ram;
 
@@ -63,4 +68,5 @@ VIDEO_UPDATE( sbrkout )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	sbrkout_draw_balls(bitmap);
+}
 }

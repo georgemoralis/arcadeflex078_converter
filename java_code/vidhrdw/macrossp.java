@@ -1,9 +1,15 @@
 /* Macross Plus - Vidhrdw
   see DRIVER file for notes */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class macrossp
+{
+	
 
 data32_t *macrossp_scra_videoram, *macrossp_scra_videoregs;
 data32_t *macrossp_scrb_videoram, *macrossp_scrb_videoregs;
@@ -419,4 +425,5 @@ VIDEO_EOF( macrossp )
 	/* looks like sprites are *two* frames ahead, like nmk16 */
 	memcpy(spriteram_old2,spriteram_old,spriteram_size);
 	memcpy(spriteram_old,macrossp_spriteram,spriteram_size);
+}
 }

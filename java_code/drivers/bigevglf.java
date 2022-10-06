@@ -55,9 +55,15 @@ J1100072A
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bigevglf
+{
+	
 VIDEO_START( bigevglf );
 VIDEO_UPDATE( bigevglf );
 
@@ -550,3 +556,4 @@ ROM_START( bigevglf )
 ROM_END
 
 GAME( 1986, bigevglf,  0,        bigevglf,  bigevglf,  0, ROT270, "Taito America Corporation", "Big Event Golf")
+}

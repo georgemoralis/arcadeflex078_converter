@@ -6,10 +6,15 @@
 
 ##########################################################################*/
 
-#include "driver.h"
-#include "atarimo.h"
-#include "tilemap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarimo
+{
+	
 
 /*##########################################################################
 	TYPES & STRUCTURES
@@ -1063,4 +1068,5 @@ WRITE16_HANDLER( atarimo_0_slipram_w )
 WRITE16_HANDLER( atarimo_1_slipram_w )
 {
 	COMBINE_DATA(&atarimo_1_slipram[offset]);
+}
 }

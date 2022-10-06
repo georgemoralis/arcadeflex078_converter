@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rocnrope
+{
+	
 static struct tilemap *bg_tilemap;
 
 /***************************************************************************
@@ -138,4 +144,5 @@ VIDEO_UPDATE( rocnrope )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	rocnrope_draw_sprites(bitmap);
+}
 }

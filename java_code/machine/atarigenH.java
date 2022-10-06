@@ -6,10 +6,15 @@
 
 ##########################################################################*/
 
-#include "driver.h"
-#include "vidhrdw/atarimo.h"
-#include "vidhrdw/atarirle.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class atarigenH
+{
+	
 #ifndef __MACHINE_ATARIGEN__
 #define __MACHINE_ATARIGEN__
 
@@ -286,3 +291,4 @@ void atarigen_blend_gfx(int gfx0, int gfx1, int mask0, int mask1);
 
 
 #endif
+}

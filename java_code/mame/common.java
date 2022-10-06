@@ -6,13 +6,15 @@
 
 *********************************************************************/
 
-#include "driver.h"
-#include "png.h"
-#include "harddisk.h"
-#include "artwork.h"
-#include <stdarg.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class common
+{
+	
 
 //#define LOG_LOAD
 
@@ -1943,4 +1945,5 @@ void printromlist(const struct RomModule *romp,const char *basename)
 			printf("\n");
 		}
 	}
+}
 }

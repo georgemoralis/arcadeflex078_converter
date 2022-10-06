@@ -7,12 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/z80/z80.h"
-#include "cpu/konami/konami.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class ajax
+{
+	
 unsigned char *ajax_sharedram;
 extern unsigned char ajax_priority;
 static int firq_enable;
@@ -219,4 +222,5 @@ INTERRUPT_GEN( ajax_interrupt )
 {
 	if (K051960_is_IRQ_enabled())
 		cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
+}
 }

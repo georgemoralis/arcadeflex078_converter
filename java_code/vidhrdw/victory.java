@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class victory
+{
+	
 
 /* globally-accessible storage */
 UINT8 *victory_charram;
@@ -1257,4 +1263,5 @@ VIDEO_UPDATE( victory )
 
 	/* indicate that we already did collision detection */
 	update_complete = 1;
+}
 }

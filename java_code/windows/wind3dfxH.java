@@ -7,8 +7,15 @@
 #ifndef __WIN32_D3D_FX__
 #define __WIN32_D3D_FX__
 
-#include "window.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class wind3dfxH
+{
+	
 
 //============================================================
 //	CONSTANTS
@@ -34,3 +41,4 @@ int win_d3d_effects_init_surfaces(void);
 #endif
 
 
+}

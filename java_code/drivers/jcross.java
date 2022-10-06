@@ -16,11 +16,15 @@ Could be bad dump ('final' romset is made of two sets marked as 'bad' )
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jcross
+{
+	
 data8_t *jcr_textram;
 
 WRITE_HANDLER( snkwave_w );
@@ -366,3 +370,4 @@ ROM_END
 GAMEX(1984, jcross, 0, jcross, jcross, 0, ROT270,   "SNK", "Jumping Cross",GAME_NO_COCKTAIL|GAME_IMPERFECT_GRAPHICS)
 
 
+}

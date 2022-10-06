@@ -18,8 +18,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class metlclsh
+{
+	
 /* Local variables: */
 
 static struct tilemap *bg_tilemap,*fg_tilemap;
@@ -264,3 +271,4 @@ VIDEO_UPDATE( metlclsh )
 //	usrintf_showmessage("%02X",metlclsh_scrollx[0]);
 }
 
+}

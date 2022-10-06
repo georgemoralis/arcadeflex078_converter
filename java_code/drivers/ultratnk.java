@@ -16,9 +16,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ultratnk
+{
+	
 static int ultratnk_controls;
 static UINT8 *mirror_ram;
 
@@ -697,3 +703,4 @@ ROM_END
  *************************************/
 
 GAME( 1978, ultratnk, 0, ultratnk, ultratnk, 0, 0, "Atari", "Ultra Tank" )
+}

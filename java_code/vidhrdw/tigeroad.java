@@ -1,5 +1,12 @@
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tigeroad
+{
+	
 static int bgcharbank;
 static struct tilemap *bg_tilemap, *fg_tilemap;
 
@@ -176,4 +183,5 @@ VIDEO_UPDATE( tigeroad )
 VIDEO_EOF( tigeroad )
 {
 	buffer_spriteram16_w(0,0,0);
+}
 }

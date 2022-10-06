@@ -4,8 +4,15 @@ Atari Poolshark Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class poolshrk
+{
+	
 extern VIDEO_START( poolshrk );
 extern VIDEO_UPDATE( poolshrk );
 
@@ -257,3 +264,4 @@ ROM_END
 
 
 GAMEX( 1977, poolshrk, 0, poolshrk, poolshrk, poolshrk, 0, "Atari", "Poolshark", GAME_NO_SOUND )
+}

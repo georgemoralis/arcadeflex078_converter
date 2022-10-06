@@ -184,12 +184,15 @@ CPU68 PCB:
   JP3
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namcos2.h"
-#include "cpu/m6809/m6809.h"
-#include "namcoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos21
+{
+	
 /* globals (shared by videohrdw/namcos21.c) */
 
 data16_t *namcos21_dspram16;
@@ -1058,3 +1061,4 @@ GAMEX( 1991, starblad, 0, 	    poly_c140_typeA,  default,  	starblad, ROT0, 	  "
 /* 1988, Winning Run */
 /* 1989, Winning Run Suzuka Grand Prix */
 GAMEX( 1991, winrun91, 0, 	    poly_c140_typeB,  default,	    winrun,	  ROT0, 	  "Namco", "Winning Run 91", 	GAME_NOT_WORKING ) /* not working */
+}

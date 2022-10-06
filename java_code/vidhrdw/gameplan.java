@@ -10,9 +10,15 @@
 #define VERBOSE_VIDEO
 #define SHOW_CHARS
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gameplan
+{
+	
 static int gameplan_this_is_kaos;
 static int gameplan_this_is_megatack;
 static int clear_to_colour = 0;
@@ -342,4 +348,5 @@ void gameplan_clear_screen(void)
 	fillbitmap(tmpbitmap, Machine->pens[clear_to_colour], 0);
 
 	fix_clear_to_colour = -1;
+}
 }

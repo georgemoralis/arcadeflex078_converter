@@ -6,12 +6,15 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rockrage
+{
+	
 extern int rockrage_irq_enable;
 
 /* from vidhrdw */
@@ -357,3 +360,4 @@ ROM_END
 
 GAME( 1986, rockrage, 0,        rockrage, rockrage, 0, ROT0, "Konami", "Rock 'n Rage (World?)" )
 GAME( 1986, rockragj, rockrage, rockrage, rockrage, 0, ROT0, "Konami", "Koi no Hotrock (Japan)" )
+}

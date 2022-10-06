@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class bagman
+{
+	
 
 /*Creation date: 98-02-18 */
 /*  A few words of comment:
@@ -239,4 +246,5 @@ READ_HANDLER( bagman_pal16r6_r )
 ** This is the PAL 16R6 shown almost in the middle of the schematics.
 ** The /RD4 line goes low (active) whenever CPU reads from memory address a000.
 */
+}
 }

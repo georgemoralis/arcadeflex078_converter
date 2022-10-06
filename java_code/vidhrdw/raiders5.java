@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 *******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class raiders5
+{
+	
 UINT8 *raiders5_fgram;
 size_t raiders5_fgram_size;
 
@@ -208,4 +215,5 @@ VIDEO_UPDATE( raiders5 )
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
+}
 }

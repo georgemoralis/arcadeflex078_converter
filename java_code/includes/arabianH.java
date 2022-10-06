@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class arabianH
+{
+	
 
 /*----------- defined in vidhrdw/arabian.c -----------*/
 
@@ -20,3 +27,4 @@ VIDEO_UPDATE( arabian );
 
 WRITE_HANDLER( arabian_blitter_w );
 WRITE_HANDLER( arabian_videoram_w );
+}

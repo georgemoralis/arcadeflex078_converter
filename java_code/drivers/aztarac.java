@@ -13,10 +13,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "aztarac.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class aztarac
+{
+	
 
 
 /*************************************
@@ -249,3 +254,4 @@ ROM_END
  *************************************/
 
 GAME( 1983, aztarac, 0, aztarac, aztarac, 0, ROT0, "Centuri", "Aztarac" )
+}

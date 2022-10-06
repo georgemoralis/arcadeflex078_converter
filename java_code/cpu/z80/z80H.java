@@ -1,9 +1,15 @@
 #ifndef Z80_H
 #define Z80_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z80;
 
+public class z80H
+{
+	
 enum {
 	Z80_PC=1, Z80_SP, Z80_AF, Z80_BC, Z80_DE, Z80_HL,
 	Z80_IX, Z80_IY,	Z80_AF2, Z80_BC2, Z80_DE2, Z80_HL2,
@@ -44,3 +50,4 @@ extern unsigned DasmZ80(char *buffer, unsigned pc);
 
 #endif
 
+}

@@ -215,11 +215,15 @@ Credits (in alphabetical order)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class snk
+{
+	
 /*********************************************************************/
 // Variables and Interrupt Handlers Common to All SNK Triple Z80 Games
 
@@ -4013,3 +4017,4 @@ GAMEX( 1987, tdfever,  0,        tdfever,  tdfever,  tdfever,  ROT270, "SNK", "T
 GAMEX( 1987, tdfeverj, tdfever,  tdfever,  tdfever,  tdfever,  ROT270, "SNK", "TouchDown Fever (Japan)", GAME_NO_COCKTAIL )
 GAMEX( 1988, tdfever2, tdfever,  tdfever2, tdfever,  tdfever2, ROT270, "SNK", "TouchDown Fever 2", GAME_NO_COCKTAIL ) /* upgrade kit for Touchdown Fever */
 GAMEX( 1988, ftsoccer, 0,        ftsoccer, ftsoccer, ftsoccer, ROT0,   "SNK", "Fighting Soccer", GAME_NO_COCKTAIL )
+}

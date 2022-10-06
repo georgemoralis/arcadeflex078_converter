@@ -4,8 +4,15 @@ Atari Wolf Pack (prototype) video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wolfpack
+{
+	
 int wolfpack_collision;
 
 UINT8* wolfpack_alpha_num_ram;
@@ -334,4 +341,5 @@ VIDEO_EOF( wolfpack )
 	}
 
 	current_index += 0x300 * 262;
+}
 }

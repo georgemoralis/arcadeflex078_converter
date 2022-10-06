@@ -4,13 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "midwayic.h"
-#include "machine/idectrl.h"
-#include "sndhrdw/cage.h"
-#include "sndhrdw/dcs.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class midwayic
+{
+	
 
 #define LOG_NVRAM			(0)
 
@@ -930,4 +932,5 @@ WRITE32_HANDLER( midway_ide_asic_w )
 	/* everything else is byte-sized */
 	else
 		ide_controller32_0_w(ideoffs, data << shift, ~(0xff << shift));;
+}
 }

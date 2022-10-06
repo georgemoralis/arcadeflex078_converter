@@ -22,12 +22,15 @@
 
  ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "machine/6522via.h"
-#include "vidhrdw/generic.h"
-#include "leprechn.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class leprechn
+{
+	
 
 
 static MEMORY_READ_START( readmem )
@@ -233,3 +236,4 @@ ROM_END
 
 GAME( 1982, leprechn, 0,        leprechn, leprechn, leprechn, ROT0, "Tong Electronic", "Leprechaun" )
 GAME( 1982, potogold, leprechn, leprechn, leprechn, leprechn, ROT0, "GamePlan", "Pot of Gold" )
+}

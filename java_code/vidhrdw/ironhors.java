@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ironhors
+{
+	
 UINT8 *ironhors_scroll;
 static int palettebank, charbank, spriterambank;
 
@@ -270,4 +276,5 @@ VIDEO_UPDATE( ironhors )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	ironhors_draw_sprites(bitmap);
+}
 }

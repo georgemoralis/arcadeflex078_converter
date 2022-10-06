@@ -31,9 +31,15 @@
 
 ***************************************************************************/
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class qsound
+{
+	
 /*
 Two Q sound drivers:
 DRIVER1 Based on the Amuse source
@@ -505,3 +511,4 @@ void qsound_update(int num,void **buffer,int length)
 
 
 /**************** end of file ****************/
+}

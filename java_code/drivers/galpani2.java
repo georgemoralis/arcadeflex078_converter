@@ -21,11 +21,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "kaneko16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class galpani2
+{
+	
 /***************************************************************************
 
 
@@ -654,3 +658,4 @@ CPU #0 PC 02F918 : OKI 0 (380)000000-000000
 */
 
 GAMEX( 1993, galpani2, 0, galpani2, galpani2, 0, ROT90, "Kaneko", "Gals Panic II (Japan?)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+}

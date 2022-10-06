@@ -19,10 +19,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "realbrk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class realbrk
+{
+	
 data16_t *realbrk_vram_0, *realbrk_vram_1, *realbrk_vram_2, *realbrk_vregs;
 
 static int disable_video;
@@ -368,4 +373,5 @@ if ( keyboard_pressed(KEYCODE_Z) )
 	if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,0);
 
 //	usrintf_showmessage("%04x",realbrk_vregs[0x8/2]);
+}
 }

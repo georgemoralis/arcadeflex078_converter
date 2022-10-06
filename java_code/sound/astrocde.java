@@ -14,12 +14,15 @@
 
 ***********************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+public class astrocde
+{
+	
 
 
 static const struct astrocade_interface *intf;
@@ -325,4 +328,5 @@ void astrocade_sh_update(void)
 		/* play sound */
 		mixer_play_streamed_sample_16(channel+num,astrocade_buffer[num],2*buffer_len,emulation_rate);
 	}
+}
 }

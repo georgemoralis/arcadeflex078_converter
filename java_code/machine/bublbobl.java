@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class bublbobl
+{
+	
 
 
 unsigned char *bublbobl_sharedram1,*bublbobl_sharedram2;
@@ -252,4 +257,5 @@ logerror("%04x: 68705 unknown port B bit %02x\n",activecpu_get_pc(),data);
 WRITE_HANDLER( bublbobl_68705_ddrB_w )
 {
 	ddrB = data;
+}
 }

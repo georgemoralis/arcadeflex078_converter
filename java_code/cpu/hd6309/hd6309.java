@@ -83,13 +83,15 @@
 
 *****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "hd6309.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.hd6309;
 
+public class hd6309
+{
+	
 #define VERBOSE 0
 
 #if VERBOSE
@@ -332,7 +334,6 @@ static UINT8 *index_cycle;
 #define EXTLONG(lng) {EXTENDED;lng.w.h=RM16(EAD);lng.w.l=RM16(EAD+2);}
 
 /* includes the static function prototypes and other tables */
-#include "6309tbl.c"
 
 /* macros for branch instructions */
 #define BRANCH(f) { 					\
@@ -773,7 +774,6 @@ unsigned hd6309_dasm(char *buffer, unsigned pc)
 }
 
 /* includes the actual opcode implementations */
-#include "6309ops.c"
 
 /* execute instructions on this CPU until icount expires */
 int hd6309_execute(int cycles)	/* NS 970908 */
@@ -1354,3 +1354,4 @@ INLINE void fetch_effective_address( void )
 	hd6309_ICount -= index_cycle[postbyte];
 }
 
+}

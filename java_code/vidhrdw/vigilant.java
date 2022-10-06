@@ -14,9 +14,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vigilant
+{
+	
 
 static struct rectangle bottomvisiblearea =
 {
@@ -351,4 +357,5 @@ VIDEO_UPDATE( kikcubic )
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 
 	draw_sprites(bitmap,&Machine->visible_area);
+}
 }

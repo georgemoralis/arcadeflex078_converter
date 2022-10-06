@@ -11,10 +11,15 @@ a 68000 to create the background image.
 
 ****************************************/
 
-#include "driver.h"
-#include "sound/namco.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class toypop
+{
+	
 // machine\toypop.c
 MACHINE_INIT( toypop );
 INTERRUPT_GEN( toypop_main_interrupt );
@@ -513,3 +518,4 @@ static DRIVER_INIT( toypop )
 
 GAME( 1983, liblrabl, 0, toypop,   liblrabl, liblrabl, ROT0, "Namco", "Libble Rabble" )
 GAME( 1986, toypop,   0, toypop,   toypop,   toypop,   ROT0, "Namco", "Toypop" )
+}

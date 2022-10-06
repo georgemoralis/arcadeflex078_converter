@@ -11,13 +11,15 @@
 
 *****************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "t11.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.t11;
 
+public class t11
+{
+	
 
 
 /*************************************
@@ -272,10 +274,8 @@ static void t11_check_irqs(void)
  *************************************/
 
 /* includes the static function prototypes and the master opcode table */
-#include "t11table.c"
 
 /* includes the actual opcode implementations */
-#include "t11ops.c"
 
 
 
@@ -601,4 +601,5 @@ unsigned t11_dasm(char *buffer, unsigned pc)
 	sprintf( buffer, "$%04X", cpu_readmem16lew_word(pc) );
 	return 2;
 #endif
+}
 }

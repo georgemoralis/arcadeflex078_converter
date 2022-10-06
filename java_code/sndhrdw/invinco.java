@@ -2,8 +2,15 @@
  *	Invinco sound routines
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class invinco
+{
+	
 
 /* output port 0x02 definitions - sound effect drive outputs */
 #define OUT_PORT_2_SAUCER		0x04
@@ -94,4 +101,5 @@ WRITE_HANDLER( invinco_sh_port2_w )
 #if 0
 	logerror("Went LO: %02X  %04X\n", bitsGoneLow, activecpu_get_pc());
 #endif
+}
 }

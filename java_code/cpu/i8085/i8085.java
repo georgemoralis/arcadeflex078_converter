@@ -89,17 +89,16 @@
 
 #define VERBOSE 0
 
-#include "driver.h"
-#include "state.h"
-#include "osd_cpu.h"
-#include "mamedbg.h"
-#include "i8085.h"
-#include "i8085cpu.h"
-#include "i8085daa.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8085;
 
+public class i8085
+{
+	
 #if VERBOSE
-#include <stdio.h>
-#include "driver.h"
 #define LOG(x) logerror x
 #else
 #define LOG(x)
@@ -1775,3 +1774,4 @@ unsigned i8080_dasm(char *buffer, unsigned pc)
 }
 #endif
 
+}

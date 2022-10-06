@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class srumbler
+{
+	
 
 unsigned char *srumbler_backgroundram,*srumbler_foregroundram;
 static struct tilemap *bg_tilemap,*fg_tilemap;
@@ -181,4 +187,5 @@ VIDEO_UPDATE( srumbler )
 VIDEO_EOF( srumbler )
 {
 	buffer_spriteram_w(0,0);
+}
 }

@@ -545,10 +545,15 @@ Newer version of the I/O chip ?
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taitoic
+{
+	
 #define TOPSPEED_ROAD_COLORS
 
 
@@ -5847,3 +5852,4 @@ logerror("CPU #0 PC %06x: warning - write to LSB of TC0640FIO address %02x\n",ac
 }
 
 
+}

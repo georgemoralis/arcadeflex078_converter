@@ -86,12 +86,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vendetta
+{
+	
 /* prototypes */
 static MACHINE_INIT( vendetta );
 static void vendetta_banking( int lines );
@@ -810,3 +813,4 @@ GAME( 1991, vendetas, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "V
 GAME( 1991, vendtaso, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (Asia 2 Players ver. D)" )
 GAME( 1991, vendettj, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Crime Fighters 2 (Japan 2 Players ver. P)" )
 GAME( 1991, esckids,  0,        esckids,  esckids,  vendetta, ROT0, "Konami", "Escape Kids (Japan 2 Players)" )
+}

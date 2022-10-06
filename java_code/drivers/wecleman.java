@@ -269,11 +269,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wecleman
+{
+	
 /* Variables only used here: */
 static data16_t *sharedram, *blitter_regs;
 static int multiply_reg[2];
@@ -1493,3 +1497,4 @@ DRIVER_INIT( hotchase )
 
 GAME( 1986, wecleman, 0, wecleman, wecleman, wecleman, ROT0, "Konami", "WEC Le Mans 24" )
 GAME( 1988, hotchase, 0, hotchase, hotchase, hotchase, ROT0, "Konami", "Hot Chase" )
+}

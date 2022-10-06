@@ -62,8 +62,15 @@ Change POLEPOS_TOGGLE to 0 if you are using the original gearshift
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class polepos
+{
+	
 #define POLEPOS_TOGGLE	IPF_TOGGLE
 
 
@@ -1055,3 +1062,4 @@ GAME( 1983, poleps2a, polepos2, polepos, polepos2, polepos2, ROT0, "Namco (Atari
 GAME( 1983, poleps2b, polepos2, polepos, polepos2, 0,		 ROT0, "Namco (Atari license)", "Pole Position II (Atari bootleg 1)" )
 GAME( 1983, poleps2c, polepos2, polepos, polepos2, 0,		 ROT0, "Namco (Atari license)", "Pole Position II (Atari bootleg 2)" )
 
+}

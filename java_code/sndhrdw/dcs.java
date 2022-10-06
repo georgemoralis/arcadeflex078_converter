@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "dcs.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
-#include <math.h>
+public class dcs
+{
+	
 
 
 #define LOG_DCS_TRANSFERS			(0)
@@ -1142,4 +1146,5 @@ static READ16_HANDLER( dcs_polling_r )
 {
 	activecpu_eat_cycles(100);
 	return *dcs_polling_base;
+}
 }

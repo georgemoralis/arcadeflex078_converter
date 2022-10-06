@@ -8,11 +8,15 @@ Driver by Nicola Salmoria
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class labyrunr
+{
+	
 
 
 /* from vidhrdw/labyrunr.c */
@@ -322,3 +326,4 @@ ROM_END
 GAME( 1987, tricktrp, 0,        labyrunr, labyrunr, 0, ROT90, "Konami", "Trick Trap (World?)" )
 GAME( 1987, labyrunr, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (Japan)" )
 GAME( 1987, labyrunk, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (World Ver. K)" )
+}

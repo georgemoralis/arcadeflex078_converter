@@ -19,11 +19,15 @@ found it.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class blockhl
+{
+	
 /* prototypes */
 static MACHINE_INIT( blockhl );
 static void blockhl_banking( int lines );
@@ -362,3 +366,4 @@ static DRIVER_INIT( blockhl )
 
 GAME( 1989, blockhl, 0,       blockhl, blockhl, blockhl, ROT0, "Konami", "Block Hole" )
 GAME( 1989, quarth,  blockhl, blockhl, blockhl, blockhl, ROT0, "Konami", "Quarth (Japan)" )
+}

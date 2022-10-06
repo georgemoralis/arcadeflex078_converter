@@ -37,9 +37,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "machine/7474.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _7474
+{
+	
 
 #define MAX_TTL7474  12
 
@@ -158,4 +164,5 @@ void TTL7474_config(int which, const struct TTL7474_interface *intf)
     chips[which].last_clock = 1;
     chips[which].last_output = -1;
     chips[which].last_output_comp = -1;
+}
 }

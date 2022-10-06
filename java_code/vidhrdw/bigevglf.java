@@ -5,8 +5,15 @@
   Functions to emulate the video hardware of the machine.
 
 ***************************************************************************/
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bigevglf
+{
+	
 
 UINT8 *beg_spriteram1;
 UINT8 *beg_spriteram2;
@@ -92,4 +99,5 @@ VIDEO_UPDATE( bigevglf )
 {
 	copybitmap(bitmap,tmp_bitmap[ plane_visible ],0,0,0,0,cliprect,TRANSPARENCY_NONE, 0);
 	beg_draw_sprites(bitmap,cliprect);
+}
 }

@@ -20,10 +20,15 @@ SOUND : (none)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dotrikun
+{
+	
 
 WRITE_HANDLER( dotrikun_videoram_w );
 VIDEO_UPDATE( dotrikun );
@@ -107,3 +112,4 @@ ROM_END
 
 GAMEX( 1990, dotrikun, 0,        dotrikun, dotrikun, 0, ROT0, "Sega", "Dottori Kun (new version)", GAME_NO_SOUND )
 GAMEX( 1990, dotriku2, dotrikun, dotrikun, dotrikun, 0, ROT0, "Sega", "Dottori Kun (old version)", GAME_NO_SOUND )
+}

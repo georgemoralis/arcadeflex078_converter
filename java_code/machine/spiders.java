@@ -7,11 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/6821pia.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class spiders
+{
+	
 
 
 /* Declare inividual irq handlers, may be able to combine later */
@@ -192,3 +196,4 @@ READ_HANDLER( spiders_vrom_r )
 	return retval;
 }
 
+}

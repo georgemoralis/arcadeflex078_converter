@@ -13,9 +13,15 @@
 
 #define CRTC6845_C
 
-#include "driver.h"
-#include "crtc6845.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class crtc6845
+{
+	
 
 READ_HANDLER( crtc6845_register_r )
 {
@@ -161,4 +167,5 @@ logerror("CRT #0 PC %04x: WRITE reg 0x%02x data 0x%02x\n",activecpu_get_pc(),crt
 		default:
 			break;
 	}
+}
 }

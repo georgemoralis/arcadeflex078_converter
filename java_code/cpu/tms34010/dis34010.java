@@ -1,11 +1,17 @@
 /* This program is based on DIS68k by Aaron Giles */
 
-#include "osd_cpu.h"
-static UINT8 *filebuf;
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
+
+public class dis34010
+{
+	static UINT8 *filebuf;
 static UINT32 offset;
 
 #define STANDALONE
-#include "34010dsm.c"
 
 
 static char *Options[]=
@@ -109,4 +115,5 @@ int main (int argc,char *argv[])
 	}
 	free (filebuf);
 	return 0;
+}
 }

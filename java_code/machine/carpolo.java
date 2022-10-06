@@ -6,13 +6,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "machine/6821pia.h"
-#include "machine/7474.h"
-#include "machine/74148.h"
-#include "machine/74153.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class carpolo
+{
+	
 
 /*************************************
  *
@@ -579,4 +581,5 @@ MACHINE_INIT( carpolo )
 	/* set up the PIA's */
 	pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 	pia_config(1, PIA_STANDARD_ORDERING, &pia_1_intf);
+}
 }

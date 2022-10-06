@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wgp
+{
+	
 #define TC0100SCN_GFX_NUM 1
 
 static struct tilemap *wgp_piv_tilemap[3];
@@ -815,3 +819,4 @@ VIDEO_UPDATE( wgp )
 #endif
 }
 
+}

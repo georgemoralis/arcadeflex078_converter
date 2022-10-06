@@ -123,8 +123,15 @@ M68KMAKE_TABLE_HEADER
 /* ========================= OPCODE TABLE BUILDER ========================= */
 /* ======================================================================== */
 
-#include "m68kops.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68k_in
+{
+	
 #define NUM_CPU_TYPES 3
 
 void  (*m68ki_instruction_jump_table[0x10000])(void); /* opcode handler jump table */
@@ -260,7 +267,6 @@ void m68ki_build_opcode_table(void)
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 M68KMAKE_OPCODE_HANDLER_HEADER
 
-#include "m68kcpu.h"
 
 /* ======================================================================== */
 /* ========================= INSTRUCTION HANDLERS ========================= */
@@ -10375,3 +10381,4 @@ M68KMAKE_OP(unpk, 16, mm, .)
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 M68KMAKE_END
+}

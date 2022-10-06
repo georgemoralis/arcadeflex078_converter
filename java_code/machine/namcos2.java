@@ -9,13 +9,15 @@ Namco System II
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6805/m6805.h"
-#include "namcos2.h"
-#include "vidhrdw/generic.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class namcos2
+{
+	
 data16_t *namcos2_68k_master_ram;
 data16_t *namcos2_68k_slave_ram;
 
@@ -809,4 +811,5 @@ READ_HANDLER( namcos2_input_port_12_r )
 				}
 	}
 	return data;
+}
 }

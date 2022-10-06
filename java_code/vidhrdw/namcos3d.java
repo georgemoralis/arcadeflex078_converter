@@ -1,9 +1,12 @@
-#include "namcos3d.h"
-#include "matrix3d.h"
-#include "vidhrdw/poly.h"
-#include "includes/namcos22.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcos3d
+{
+	
 /*
 Renderer:
 	each pixel->(BN,TX,TY,BRI,FLAGS,CZ,PAL)
@@ -668,3 +671,4 @@ BlitTriFlat( struct mame_bitmap *pBitmap, const struct VerTex v[3], unsigned col
 		BlitFlatSpan(pDest, pZBuf, curscan, scans->dp, color);
 	}
 } /* BlitTri */
+}

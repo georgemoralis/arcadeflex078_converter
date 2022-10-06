@@ -167,14 +167,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "machine/eeprom.h"
-#include "machine/mb87078.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taito_b
+{
+	
 extern data16_t *taitob_scroll;
 extern data16_t *TC0180VCU_ram;
 extern data16_t *taitob_spriteram;
@@ -3768,3 +3769,4 @@ GAME( 1994, spacedxo, spacedx, spacedxo, spacedxo, 0, ROT0,   "Taito Corporation
  	the enemy.
 */
 GAME(  1990, sbm,      0,       sbm,      sbm,      0, ROT0,   "Taito Corporation", "Sonic Blast Man (Japan)" )
+}

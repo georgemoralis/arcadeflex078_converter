@@ -21,11 +21,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/m6805/m6805.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pushman
+{
+	
 VIDEO_UPDATE( pushman );
 WRITE16_HANDLER( pushman_scroll_w );
 WRITE16_HANDLER( pushman_videoram_w );
@@ -582,3 +586,4 @@ ROM_END
 
 GAME( 1990, pushman, 0, pushman, pushman, 0, ROT0, "Comad (American Sammy license)", "Pushman" )
 GAME( 1991, bballs,  0, bballs,  bballs,  0, ROT0, "Comad", "Bouncing Balls" )
+}

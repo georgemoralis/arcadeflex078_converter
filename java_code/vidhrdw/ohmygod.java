@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ohmygod
+{
+	
 
 data16_t *ohmygod_videoram;
 
@@ -118,4 +124,5 @@ VIDEO_UPDATE( ohmygod )
 {
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

@@ -6,19 +6,19 @@
  *
  *************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "s2650.h"
-#include "s2650cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.s2650;
 
+public class s2650
+{
+	
 /* define this to have some interrupt information logged */
 #define VERBOSE 0
 
 #if VERBOSE
-#include <stdio.h>
 #define LOG(x) logerror x
 #else
 #define LOG(x)
@@ -1540,3 +1540,4 @@ unsigned s2650_dasm(char *buffer, unsigned pc)
 #endif
 }
 
+}

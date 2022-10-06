@@ -11,9 +11,15 @@
 #ifndef _ADSP2100_H
 #define _ADSP2100_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.adsp2100;
 
+public class adsp2100H
+{
+	
 
 /*###################################################################################################
 **	GLOBAL CONSTANTS
@@ -263,3 +269,4 @@ extern void adsp2115_load_boot_data(data8_t *srcdata, data32_t *dstdata);
 #endif
 
 #endif /* _ADSP2100_H */
+}

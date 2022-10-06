@@ -173,11 +173,15 @@ NEP-16
 
 */
 
-#include "driver.h"
-#include "machine/random.h"
-#include "vidhrdw/generic.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class suprnova
+{
+	
 #define BIOS_SKIP 1 // Skip Bios as it takes too long and doesn't complete atm.
 
 // Defined in vidhrdw
@@ -1686,3 +1690,4 @@ GAMEX( 1997, sengekij, sengekis,skns, skns,     sengekij, ROT90, "Kaneko / Waras
 GAMEX( 1997, vblokbrk, skns,    skns, skns,     sarukani, ROT0,  "Kaneko / Mediaworks", "VS Block Breaker (Asia)", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1997, sarukani, vblokbrk,skns, skns,     sarukani, ROT0,  "Kaneko / Mediaworks", "Saru-Kani-Hamu-Zou (Japan)", GAME_IMPERFECT_GRAPHICS )
 
+}

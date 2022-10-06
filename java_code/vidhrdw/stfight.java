@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stfight
+{
+	
 // Real stuff
 unsigned char *stfight_text_char_ram;
 unsigned char *stfight_text_attr_ram;
@@ -308,4 +314,5 @@ VIDEO_UPDATE( stfight )
 		draw_sprites(bitmap,cliprect);
 
 	tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
+}
 }

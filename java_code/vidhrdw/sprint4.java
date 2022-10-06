@@ -4,8 +4,15 @@ Atari Sprint 4 video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sprint4
+{
+	
 UINT8* sprint4_video_ram;
 
 int sprint4_collision[4];
@@ -151,4 +158,5 @@ VIDEO_EOF( sprint4 )
 			}
 		}
 	}
+}
 }

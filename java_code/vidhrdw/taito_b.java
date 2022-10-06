@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taito_b
+{
+	
 data16_t *taitob_scroll;
 data16_t *TC0180VCU_ram;
 data16_t *taitob_spriteram;
@@ -680,3 +686,4 @@ VIDEO_EOF( taitob )
   taitob_draw_sprites(framebuffer[framebuffer_page],&Machine->visible_area);
 }
 
+}

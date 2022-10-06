@@ -7,10 +7,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "fromance.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fromance
+{
+	
 
 static UINT8 selected_videoram;
 static data8_t *local_videoram[2];
@@ -426,4 +431,5 @@ VIDEO_UPDATE( pipedrm )
 
 	draw_sprites(bitmap,cliprect, 0);
 	draw_sprites(bitmap,cliprect, 1);
+}
 }

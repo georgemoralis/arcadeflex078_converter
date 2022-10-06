@@ -47,12 +47,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "vidhrdw/generic.h"
-#include "slapstic.h"
-#include "atetris.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atetris
+{
+	
 
 #define ATARI_CLOCK_14MHz	14318180
 
@@ -436,3 +439,4 @@ GAME( 1988, atetrisa, atetris, atetris, atetris,  atetris, ROT0,   "Atari Games"
 GAME( 1988, atetrisb, atetris, atetris, atetris,  atetris, ROT0,   "bootleg",     "Tetris (bootleg)" )
 GAME( 1989, atetcktl, atetris, atetris, atetcktl, atetris, ROT270, "Atari Games", "Tetris (Cocktail set 1)" )
 GAME( 1989, atetckt2, atetris, atetris, atetcktl, atetris, ROT270, "Atari Games", "Tetris (Cocktail set 2)" )
+}

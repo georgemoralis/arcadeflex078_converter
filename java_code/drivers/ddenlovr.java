@@ -76,9 +76,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ddenlovr
+{
+	
 
 static UINT8 *pixmap[8];
 static struct mame_bitmap *framebuffer;
@@ -877,7 +883,6 @@ static WRITE16_HANDLER( quiz365_oki_bank2_w )
 
 
 
-#include <time.h>
 
 static READ_HANDLER( rtc_r )
 {
@@ -2483,3 +2488,4 @@ GAMEX(1995, nettoqc,  0,       nettoqc,  nettoqc,  0,        ROT0, "Nakanihon", 
 GAMEX(1996, ddenlovr, 0,       ddenlovr, ddenlovr, 0,        ROT0, "Dynax",                                       "Don Den Lover Vol. 1 (Hong Kong)",           GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
 
 GAMEX(1996, hanakanz, 0,       rongrong, rongrong, 0,        ROT0, "Dynax",     "Hanakanzashi (Japan)", GAME_NOT_WORKING )
+}

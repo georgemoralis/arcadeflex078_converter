@@ -35,11 +35,15 @@ c0        background control?
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "sndhrdw/irem.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mpatrol
+{
+	
 
 
 WRITE_HANDLER( mpatrol_scroll_w );
@@ -468,3 +472,4 @@ ROM_END
 
 GAME( 1982, mpatrol,  0,       mpatrol, mpatrol,  0, ROT0, "Irem", "Moon Patrol" )
 GAME( 1982, mpatrolw, mpatrol, mpatrol, mpatrolw, 0, ROT0, "Irem (Williams license)", "Moon Patrol (Williams)" )
+}

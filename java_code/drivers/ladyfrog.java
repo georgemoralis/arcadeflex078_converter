@@ -46,9 +46,15 @@ Notes:
 /* set to 1 for real screen size - two more tile columns on right side = black(title)/garbage(game) */
 #define ladyfrog_scr_size 0
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ladyfrog
+{
+	
 VIDEO_START( ladyfrog );
 VIDEO_UPDATE( ladyfrog );
 
@@ -335,3 +341,4 @@ ROM_START( ladyfrog )
 ROM_END
 
 GAME(1990, ladyfrog, 0,       ladyfrog,  ladyfrog, 0, ORIENTATION_SWAP_XY, "Mondial Games", "Lady Frog")
+}

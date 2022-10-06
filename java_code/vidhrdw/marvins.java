@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "snk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class marvins
+{
+	
 static int flipscreen, sprite_flip_adjust;
 static struct tilemap *fg_tilemap, *bg_tilemap, *tx_tilemap;
 static unsigned char bg_color, fg_color, old_bg_color, old_fg_color;
@@ -446,4 +450,5 @@ VIDEO_UPDATE( madcrash )
 	draw_sprites( bitmap,cliprect, sprite_scrollx+29, sprite_scrolly+17, 1, sprite_partition );
 	tilemap_draw( bitmap,&finalclip,tx_tilemap,0 ,0);
 	draw_status( bitmap,cliprect );
+}
 }

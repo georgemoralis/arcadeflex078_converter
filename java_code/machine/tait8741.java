@@ -8,9 +8,15 @@ program types
 
 */
 
-#include "driver.h"
-#include "tait8741.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class tait8741
+{
+	
 #define __log__ 0
 
 #define CMD_IDLE 0
@@ -357,4 +363,5 @@ READ_HANDLER( TAITO8741_3_r )
 {
 	if(offset&1) return I8741_status_r(3);
 	return I8741_data_r(3);
+}
 }

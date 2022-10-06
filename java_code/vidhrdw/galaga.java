@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galaga
+{
+	
 
 
 #define MAX_STARS 250
@@ -369,4 +375,5 @@ void galaga_vh_interrupt(void)
 	s2 = galaga_starcontrol[2] & 1;
 
 	stars_scroll -= speeds[s0 + s1*2 + s2*4];
+}
 }

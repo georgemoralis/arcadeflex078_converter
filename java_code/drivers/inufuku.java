@@ -67,11 +67,15 @@ TODO:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class inufuku
+{
+	
 
 VIDEO_UPDATE( inufuku );
 VIDEO_START( inufuku );
@@ -474,3 +478,4 @@ ROM_END
 ******************************************************************************/
 
 GAMEX( 1998, inufuku, 0, inufuku, inufuku, inufuku, ROT0, "Video System Co.", "Quiz & Variety Sukusuku Inufuku (Japan)", GAME_NO_COCKTAIL )
+}

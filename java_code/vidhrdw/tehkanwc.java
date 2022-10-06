@@ -11,9 +11,15 @@ robbiex@rocketmail.com
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tehkanwc
+{
+	
 UINT8 *tehkanwc_videoram2;
 static UINT8 scroll_x[2];
 static UINT8 led0,led1;
@@ -214,4 +220,5 @@ VIDEO_UPDATE( tehkanwc )
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 1, 0);
 	gridiron_drawled(bitmap, led0, 0);
 	gridiron_drawled(bitmap, led1, 1);
+}
 }

@@ -69,10 +69,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vicdual
+{
+	
 
 
 #define	PSG_CLOCK_CARNIVAL	( 3579545 / 3 )	/* Hz */
@@ -1987,3 +1992,4 @@ GAMEX(1980, digger,   0,        3ports,   digger,   nosamples, ROT270, "Sega", "
 GAME( 1981, pulsar,   0,        pulsar,   pulsar,   pulsar,    ROT270, "Sega", "Pulsar" )
 GAMEX(1979, heiankyo, 0,        4ports,   heiankyo, nosamples, ROT270, "Denki Onkyo", "Heiankyo Alien", GAME_NO_SOUND )
 GAMEX(19??, alphaho,  0,        invinco4, alphaho,  invho2,    ROT270, "Data East Corporation", "Alpha Fighter / Head On", GAME_WRONG_COLORS )
+}

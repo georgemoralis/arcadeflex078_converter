@@ -34,8 +34,15 @@
 /*                                                                           */
 /*****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class carnival
+{
+	
 
 #define CPU_MUSIC_ID            1       /* music CPU id number */
 
@@ -272,4 +279,5 @@ WRITE_HANDLER( carnival_music_port_2_w )
 			break;
 		}
 	}
+}
 }

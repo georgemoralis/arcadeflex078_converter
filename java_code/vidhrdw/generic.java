@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class generic
+{
+	
 
 data8_t *videoram;
 data16_t *videoram16;
@@ -354,4 +359,5 @@ int get_vh_global_attribute_changed(void)
 	int result = global_attribute_changed;
 	global_attribute_changed = 0;
 	return result;
+}
 }

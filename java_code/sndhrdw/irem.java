@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "irem.h"
-#include "cpu/m6800/m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class irem
+{
+	
 
 
 WRITE_HANDLER( irem_sound_cmd_w )
@@ -157,3 +162,4 @@ MACHINE_DRIVER_START( irem_audio )
 	MDRV_SOUND_ADD(AY8910, irem_ay8910_interface)
 	MDRV_SOUND_ADD(MSM5205, irem_msm5205_interface)
 MACHINE_DRIVER_END
+}

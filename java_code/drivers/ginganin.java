@@ -48,9 +48,15 @@ f5d6	print 7 digit BCD number: d0.l to (a1)+ color $3000
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ginganin
+{
+	
 /* Variables only used here */
 
 /* Variables defined in vidhrdw */
@@ -459,3 +465,4 @@ DRIVER_INIT( ginganin )
 
 GAME( 1987, ginganin, 0, ginganin, ginganin, ginganin, ROT0, "Jaleco", "Ginga NinkyouDen" )
 
+}

@@ -28,12 +28,15 @@
  * bit 3=Fleet movement 4     7.raw
  * bit 4=UFO 2                8.raw
  */
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
-#include "machine/74123.h"
-#include "vidhrdw/generic.h"
-#include "8080bw.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class _8080bw
+{
+	
 static WRITE_HANDLER( invad2ct_sh_port1_w );
 static WRITE_HANDLER( invaders_sh_port3_w );
 static WRITE_HANDLER( invaders_sh_port5_w );
@@ -1393,4 +1396,5 @@ MACHINE_INIT( clowns )
 	 * a bonus is made. */
 
 	install_port_write_handler (0, 0x07, 0x07, clowns_sh_port7_w);
+}
 }

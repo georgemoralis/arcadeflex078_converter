@@ -111,9 +111,15 @@ CPU #3 NMI (@120Hz)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class digdug
+{
+	
 extern unsigned char *digdug_sharedram;
 READ_HANDLER( digdug_hiscore_print_r );
 READ_HANDLER( digdug_sharedram_r );
@@ -579,3 +585,4 @@ GAME( 1982, digdugb,  digdug, digdug, digdug, 0, ROT90, "Namco", "Dig Dug (set 2
 GAME( 1982, digdugat, digdug, digdug, digdug, 0, ROT90, "[Namco] (Atari license)", "Dig Dug (Atari, rev 2)" )
 GAME( 1982, digduga1, digdug, digdug, digdug, 0, ROT90, "[Namco] (Atari license)", "Dig Dug (Atari, rev 1)" )
 GAME( 1982, dzigzag,  digdug, digdug, digdug, 0, ROT90, "bootleg", "Zig Zag (Dig Dug hardware)" )
+}

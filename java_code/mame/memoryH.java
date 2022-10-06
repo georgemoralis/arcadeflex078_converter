@@ -9,9 +9,15 @@
 #ifndef _MEMORY_H
 #define _MEMORY_H
 
-#include "osd_cpu.h"
-#include <stddef.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class memoryH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -956,3 +962,4 @@ do {																					\
 
 #endif	/* !_MEMORY_H */
 
+}

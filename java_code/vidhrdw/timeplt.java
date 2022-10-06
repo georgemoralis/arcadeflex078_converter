@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class timeplt
+{
+	
 extern unsigned char *spriteram,*spriteram_2;
 extern size_t spriteram_size;
 
@@ -235,4 +241,5 @@ INTERRUPT_GEN( timeplt_interrupt )
 
 	if (scanline == 255)
 		nmi_line_pulse();
+}
 }

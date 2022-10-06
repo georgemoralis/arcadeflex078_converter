@@ -63,8 +63,15 @@ zooming might be wrong
 
 
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taotaido
+{
+	
 #define TAOTAIDO_SHOW_ALL_INPUTS	0
 
 data16_t *taotaido_spriteram;
@@ -458,3 +465,4 @@ ROM_END
 
 GAMEX( 1993, taotaido, 0,        taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 1)", GAME_NO_COCKTAIL )
 GAMEX( 1993, taotaida, taotaido, taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 2)", GAME_NO_COCKTAIL )
+}

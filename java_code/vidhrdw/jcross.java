@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jcross
+{
+	
 static int flipscreen;
 static struct tilemap *bg_tilemap,  *tx_tilemap;
 static unsigned char fg_color, old_fg_color;
@@ -216,4 +221,5 @@ VIDEO_UPDATE( jcross )
 	draw_sprites( bitmap,cliprect, sprite_scrollx+23, sprite_scrolly+1 );
 	tilemap_draw( bitmap,cliprect,tx_tilemap,0 ,0);
 	draw_status( bitmap,cliprect );
+}
 }

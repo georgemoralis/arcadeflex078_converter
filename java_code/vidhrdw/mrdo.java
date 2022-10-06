@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mrdo
+{
+	
 
 unsigned char *mrdo_bgvideoram,*mrdo_fgvideoram;
 static struct tilemap *bg_tilemap,*fg_tilemap;
@@ -248,4 +254,5 @@ VIDEO_UPDATE( mrdo )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

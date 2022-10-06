@@ -23,11 +23,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/s2636.h"
-#include "cpu/s2650/s2650.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class malzak
+{
+	
 #define SAA5050_VBLANK 2500
 
 
@@ -424,3 +428,4 @@ ROM_START( malzak )
 ROM_END
 
 GAMEX( 19??, malzak,   0,       malzak, malzak, 0,        ROT0, "Kitronix", "Malzak", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

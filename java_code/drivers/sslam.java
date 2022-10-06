@@ -34,8 +34,15 @@ a small kid and even with a dog! And remember, Winners don't use Drugs ;)
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sslam
+{
+	
 data16_t *sslam_bg_tileram, *sslam_tx_tileram, *sslam_md_tileram;
 data16_t *sslam_spriteram, *sslam_regs;
 
@@ -288,3 +295,4 @@ ROM_START( sslam )
 ROM_END
 
 GAMEX(1993, sslam, 0, sslam, sslam, 0, ROT0, "Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+}

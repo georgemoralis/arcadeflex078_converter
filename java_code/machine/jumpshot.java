@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class jumpshot
+{
+	
 
 static unsigned char decrypt(int addr, unsigned char e)
 {
@@ -54,3 +60,4 @@ void jumpshot_decode(void)
 }
 
 
+}

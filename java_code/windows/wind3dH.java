@@ -7,8 +7,15 @@
 #ifndef __WIN32_D3D__
 #define __WIN32_D3D__
 
-#include "window.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class wind3dH
+{
+	
 
 //============================================================
 //	GLOBAL VARIABLES
@@ -35,3 +42,4 @@ void win_d3d_wait_vsync(void);
 
 
 #endif
+}

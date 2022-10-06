@@ -23,9 +23,15 @@ A3-1J
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class supdrapo
+{
+	
 static struct tilemap *fg_tilemap;
 static unsigned char *char_bank;
 
@@ -326,3 +332,4 @@ ROM_END
 
 
 GAMEX( 1983, supdrapo, 0, supdrapo, supdrapo, 0, ROT90, "Stern", "Super Draw Poker", GAME_NOT_WORKING )
+}

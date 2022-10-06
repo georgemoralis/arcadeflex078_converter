@@ -49,9 +49,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class crbaloon
+{
+	
 
 extern WRITE_HANDLER( crbaloon_videoram_w );
 extern WRITE_HANDLER( crbaloon_colorram_w );
@@ -425,3 +431,4 @@ ROM_END
 
 GAMEX( 1980, crbaloon, 0,		crbaloon, crbaloon, 0, ROT90, "Taito Corporation", "Crazy Balloon (set 1)", GAME_IMPERFECT_SOUND )
 GAMEX( 1980, crbalon2, crbaloon, crbaloon, crbaloon, 0, ROT90, "Taito Corporation", "Crazy Balloon (set 2)", GAME_IMPERFECT_SOUND )
+}

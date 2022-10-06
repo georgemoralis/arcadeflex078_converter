@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sauro
+{
+	
 UINT8 *tecfri_videoram;
 UINT8 *tecfri_colorram;
 UINT8 *tecfri_videoram2;
@@ -243,4 +249,5 @@ VIDEO_UPDATE( trckydoc )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	trckydoc_draw_sprites(bitmap);
+}
 }

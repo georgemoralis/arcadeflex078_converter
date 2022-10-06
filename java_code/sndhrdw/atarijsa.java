@@ -30,10 +30,15 @@ Static Program ROM (48K bytes)            4000-FFFF   R    D0-D7
 
 ****************************************************************************/
 
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class atarijsa
+{
+	
 static UINT8 *bank_base;
 static UINT8 *bank_source_data;
 
@@ -929,3 +934,4 @@ MACHINE_DRIVER_START( jsa_iiis_stereo )
 	MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	MDRV_SOUND_REPLACE("adpcm", OKIM6295, okim6295s_interface)
 MACHINE_DRIVER_END
+}

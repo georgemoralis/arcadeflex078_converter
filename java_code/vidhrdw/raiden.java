@@ -1,7 +1,13 @@
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class raiden
+{
+	
 static struct tilemap *bg_layer,*fg_layer,*tx_layer;
 unsigned char *raiden_back_data,*raiden_fore_data,*raiden_scroll_ram;
 
@@ -189,4 +195,5 @@ VIDEO_UPDATE( raiden )
 
 	/* Text layer */
 	tilemap_draw(bitmap,cliprect,tx_layer,0,0);
+}
 }

@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wecleman
+{
+	
 #define BMP_PAD		8
 #define BLEND_STEPS	16
 #define BLEND_MIN	0
@@ -1392,4 +1397,5 @@ VIDEO_UPDATE( hotchase )
 
 	/* Draw the foreground (text) */
 	if (video_on) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
+}
 }

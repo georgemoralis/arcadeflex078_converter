@@ -31,15 +31,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "cpu/mips/mips3.h"
-#include "sndhrdw/dcs.h"
-#include "sndhrdw/cage.h"
-#include "machine/idectrl.h"
-#include "machine/midwayic.h"
-#include "vidhrdw/voodoo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class seattle
+{
+	
 
 #define TIMER_CLOCK			TIME_IN_HZ(50000000)
 #define DMA_SECS_PER_BYTE	TIME_IN_HZ(50000000)
@@ -2281,3 +2281,4 @@ GAME ( 1997, blitz,    0,        seattle150, blitz,    blitz,    ROT0, "Midway G
 GAME ( 1998, blitz99,  0,        seattle150, blitz99,  blitz99,  ROT0, "Midway Games", "NFL Blitz '99" )
 GAME ( 1999, blitz2k,  0,        seattle150, blitz99,  blitz2k,  ROT0, "Midway Games", "NFL Blitz 2000" )
 GAME ( 1998, carnevil, 0,        carnevil,   carnevil, carnevil, ROT0, "Midway Games", "CarnEvil" )
+}

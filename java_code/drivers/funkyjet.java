@@ -40,13 +40,15 @@ Stephh's notes :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "decocrpt.h"
-#include "decoprot.h"
-#include "deco16ic.h"
+public class funkyjet
+{
+	
 
 VIDEO_START( funkyjet );
 VIDEO_UPDATE( funkyjet );
@@ -398,3 +400,4 @@ static DRIVER_INIT( funkyjet )
 
 GAME( 1992, funkyjet, 0, funkyjet, funkyjet, funkyjet, ROT0, "[Data East] (Mitchell license)", "Funky Jet" )
 GAME( 1995, sotsugyo, 0, funkyjet, sotsugyo, funkyjet, ROT0, "Mitchell (Atlus license)", "Sotsugyo Shousho" )
+}

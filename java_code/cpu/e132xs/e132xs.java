@@ -130,8 +130,15 @@
 Add in cpuintrf.c
 
 #if (HAS_E132XS)
-#include "cpu/e132xs/e132xs.h"
-#endif
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.e132xs;
+
+public class e132xs
+{
+	#endif
 
 //TODO: check -> nirq,dirq,mem,shift,bits,align
 #if (HAS_E132XS)
@@ -163,11 +170,6 @@ CPUS+=E132XS@
 
 */
 
-#include "driver.h"
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "e132xs.h"
 
 #define VERBOSE_LEVEL ( 0 )
 
@@ -4776,3 +4778,4 @@ void e132xs_trap(void)
 	}
 }
 
+}

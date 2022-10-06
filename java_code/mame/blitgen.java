@@ -2,8 +2,15 @@
  * This module emits a full set of blitters, as "mameblit.c"
  */
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class blitgen
+{
+	
 enum
 {
 	TRANSPARENCY_NONE,
@@ -425,4 +432,5 @@ fprintf( f, "_%s_%s_%s_%s,\n",
 fprintf( f, "};\n" );
 	}
 	fclose( f );
+}
 }

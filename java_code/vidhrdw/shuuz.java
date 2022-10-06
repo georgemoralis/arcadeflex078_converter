@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vidhrdw/generic.h"
-#include "shuuz.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shuuz
+{
+	
 
 
 /*************************************
@@ -141,4 +145,5 @@ VIDEO_UPDATE( shuuz )
 					mo[x] = 0;
 				}
 		}
+}
 }

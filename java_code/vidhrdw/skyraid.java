@@ -4,8 +4,15 @@ Atari Sky Raider video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class skyraid
+{
+	
 int skyraid_scroll;
 
 UINT8* skyraid_alpha_num_ram;
@@ -158,4 +165,5 @@ VIDEO_UPDATE( skyraid )
 	draw_missiles(helper, cliprect);
 	draw_trapezoid(bitmap, helper);
 	draw_text(bitmap, cliprect);
+}
 }

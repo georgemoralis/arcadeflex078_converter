@@ -20,11 +20,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mainevt
+{
+	
 
 VIDEO_UPDATE( mainevt );
 VIDEO_UPDATE( dv );
@@ -1023,3 +1027,4 @@ GAME( 1988, devstors, 0,        devstors, devstors, mainevt, ROT90, "Konami", "D
 GAME( 1988, devstor2, devstors, devstors, devstor2, mainevt, ROT90, "Konami", "Devastators (ver. X)" )
 GAME( 1988, devstor3, devstors, devstors, devstors, mainevt, ROT90, "Konami", "Devastators (ver. V)" )
 GAME( 1988, garuka,   devstors, devstors, devstor2, mainevt, ROT90, "Konami", "Garuka (Japan ver. W)" )
+}

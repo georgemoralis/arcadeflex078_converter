@@ -32,16 +32,20 @@
 
  *****************************************************************************/
 
-#include "driver.h"
-#include "nes_apu.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class nes_apu
+{
+	
 /* UNCOMMENT THIS LINE TO ACTIVATE THE EVENT QUEUE. */
 /* IT SPEEDS UP THE EMULATION BUT COSTS SOME EXTRA MEMORY. */
 /* IT IS CURRENTLY DISABLED BECAUSE THE DPOCM DOESN'T WORK RIGHT WITH IT. */
 //#define USE_QUEUE
 
-#include "nes_defs.h"
 
 /* GLOBAL CONSTANTS */
 #define  SYNCS_MAX1     0x20
@@ -796,4 +800,5 @@ void NESPSG_sh_update(void)
 #endif
     mixer_play_streamed_sample_16(channel+i,APU[i].buffer,buffer_size,real_rate);
   }
+}
 }

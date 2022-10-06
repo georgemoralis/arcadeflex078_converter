@@ -4,9 +4,15 @@
 
 ****************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "beathead.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class beathead
+{
+	
 
 
 /*************************************
@@ -231,4 +237,5 @@ VIDEO_UPDATE( beathead )
 		/* then draw it */
 		draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], &Machine->pens[scanline_palette[y] * 256], -1);
 	}
+}
 }

@@ -4,8 +4,15 @@ Atari Destroyer Driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class destroyr
+{
+	
 extern VIDEO_UPDATE( destroyr );
 
 extern int destroyr_wavemod;
@@ -401,3 +408,4 @@ ROM_END
 
 
 GAMEX( 1977, destroyr, 0, destroyr, destroyr, 0, ORIENTATION_FLIP_X, "Atari", "Destroyer", GAME_NO_SOUND )
+}

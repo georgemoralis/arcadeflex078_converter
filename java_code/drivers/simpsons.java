@@ -8,12 +8,15 @@ someone@secureshell.com
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "cpu/z80/z80.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class simpsons
+{
+	
 /* from vidhrdw */
 VIDEO_START( simpsons );
 WRITE_HANDLER( simpsons_priority_w );
@@ -474,3 +477,4 @@ GAME( 1991, simpsons, 0,        simpsons, simpsons, simpsons, ROT0, "Konami", "T
 GAME( 1991, simpsn2p, simpsons, simpsons, simpsn2p, simpsons, ROT0, "Konami", "The Simpsons (2 Players)" )
 GAME( 1991, simps2pa, simpsons, simpsons, simpsons, simpsons, ROT0, "Konami", "The Simpsons (2 Players alt)" )
 GAME( 1991, simps2pj, simpsons, simpsons, simpsn2p, simpsons, ROT0, "Konami", "The Simpsons (2 Players Japan)" )
+}

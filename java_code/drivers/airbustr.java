@@ -185,9 +185,15 @@ c760	rom bank
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class airbustr
+{
+	
 unsigned char *devram, *sharedram;
 int soundlatch_status, soundlatch2_status;
 
@@ -932,3 +938,4 @@ DRIVER_INIT( airbustj )
 
 GAME( 1990, airbustr, 0,        airbustr, airbustr, airbustr, ROT0, "Kaneko (Namco license)", "Air Buster" )	// 891220
 GAME( 1990, airbustj, airbustr, airbustr, airbustj, airbustj, ROT0, "Kaneko (Namco license)", "Air Buster (Japan)" )	// 891229
+}

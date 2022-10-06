@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class atari_vg
+{
+	
 #define EAROM_SIZE	0x40
 
 static int earom_offset;
@@ -58,4 +65,5 @@ NVRAM_HANDLER( atari_vg )
 		mame_fread(file,earom,EAROM_SIZE);
 	else
 		memset(earom,0,EAROM_SIZE);
+}
 }

@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "leland.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class leland
+{
+	
 
 /* constants */
 #define VRAM_SIZE	0x10000
@@ -577,4 +582,5 @@ VIDEO_UPDATE( ataxx )
 
 	/* Merge the two bitmaps together */
 	copybitmap(bitmap, fgbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_BLEND, 6);
+}
 }

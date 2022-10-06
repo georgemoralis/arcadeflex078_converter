@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vidhrdw/generic.h"
-#include "cyberbal.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cyberbal
+{
+	
 
 #define SCREEN_WIDTH		(42*16)
 
@@ -452,4 +456,5 @@ VIDEO_UPDATE( cyberbal )
 #else
 	update_one_screen(current_screen, bitmap, cliprect);
 #endif
+}
 }

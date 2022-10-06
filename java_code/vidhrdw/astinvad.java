@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class astinvad
+{
+	
 static int spaceint_color;
 static int astinvad_adjust;
 static int astinvad_flash;
@@ -161,4 +167,5 @@ VIDEO_UPDATE( astinvad )
 
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 	}
+}
 }

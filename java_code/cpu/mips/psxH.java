@@ -1,8 +1,15 @@
 #ifndef _MIPS_H
 #define _MIPS_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class psxH
+{
+	
 enum
 {
 	MIPS_PC = 1,
@@ -244,3 +251,4 @@ extern unsigned DasmMIPS(char *buff, unsigned _pc);
 #endif
 
 #endif
+}

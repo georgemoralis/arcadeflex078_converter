@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class othunder
+{
+	
 #define TC0100SCN_GFX_NUM 1
 
 data16_t *othunder_ram;
@@ -357,3 +361,4 @@ VIDEO_UPDATE( othunder )
 	}
 }
 
+}

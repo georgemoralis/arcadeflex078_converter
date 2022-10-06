@@ -92,10 +92,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "badlands.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class badlands
+{
+	
 
 
 /*************************************
@@ -559,3 +564,4 @@ static DRIVER_INIT( badlands )
  *************************************/
 
 GAME( 1989, badlands, 0, badlands, badlands, badlands, ROT0, "Atari Games", "Bad Lands" )
+}

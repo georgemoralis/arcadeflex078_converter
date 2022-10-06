@@ -4,13 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "machine/6821pia.h"
-#include "sound/hc55516.h"
-#include "sound/tms5220.h"
-#include "exidy.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class exidy
+{
+	
 
 
 /*************************************
@@ -785,4 +787,5 @@ READ_HANDLER( mtrap_voiceio_r )
     	return (clock_pulse & 1) << 7;
 	}
 	return 0;
+}
 }

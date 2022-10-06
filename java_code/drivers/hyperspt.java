@@ -4,10 +4,15 @@ Based on drivers from Juno First emulator by Chris Hardy (chrish@kcbbs.gen.nz)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hyperspt
+{
+	
 
 extern void konami1_decode(void);
 
@@ -657,3 +662,4 @@ GAME( 1984, hyperspt, 0,		hyperspt, hyperspt, hyperspt, ROT0,  "Konami (Centuri 
 GAME( 1984, hpolym84, hyperspt, hyperspt, hyperspt, hyperspt, ROT0,  "Konami", "Hyper Olympic '84" )
 GAME( 1984, roadf,	  0,		roadf,	  roadf,	hyperspt, ROT90, "Konami", "Road Fighter (set 1)" )
 GAME( 1984, roadf2,   roadf,	roadf,	  roadf,	hyperspt, ROT90, "Konami", "Road Fighter (set 2)" )
+}

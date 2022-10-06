@@ -22,11 +22,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/s2650/s2650.h"
-#include "machine/8255ppi.h"
-#include "galaxian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class scramble
+{
+	
 
 
 static MEMORY_READ_START( scramble_readmem )
@@ -2172,3 +2176,4 @@ GAME( 1983, hunchbks, hunchbak, hunchbks, hunchbks, scramble_ppi, ROT90, "Centur
 GAME( 1983, cavelon,  0,        cavelon,  cavelon,  cavelon,      ROT90, "Jetsoft", "Cavelon" )
 GAME( 1983, sfx,      0,        sfx,      sfx,      sfx,          ORIENTATION_FLIP_X, "Nichibutsu", "SF-X" )
 GAME( 198?, mimonscr, mimonkey, mimonscr, mimonscr, mimonscr,     ROT90, "bootleg", "Mighty Monkey (bootleg on Scramble hardware)" )
+}

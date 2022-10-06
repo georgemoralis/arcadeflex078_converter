@@ -14,9 +14,15 @@
  *
  */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class astinvad
+{
+	
 extern void astinvad_set_flash(int flag);
 
 
@@ -138,4 +144,5 @@ WRITE_HANDLER( spaceint_sound2_w )
 	flip_screen_set(readinputport(3) & data & 0x80);
 
 	state = data;
+}
 }

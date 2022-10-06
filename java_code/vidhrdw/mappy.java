@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mappy
+{
+	
 
 
 unsigned char mappy_scroll;
@@ -394,4 +400,5 @@ VIDEO_UPDATE( mappy )
 						0,TRANSPARENCY_COLOR,31);
 		}
 	}
+}
 }

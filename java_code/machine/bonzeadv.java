@@ -12,8 +12,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class bonzeadv
+{
+	
 static int current_round = 0;
 static int current_bank = 0;
 
@@ -337,4 +344,5 @@ READ16_HANDLER( bonzeadv_c_chip_r )
 	}
 
 	return 0;
+}
 }

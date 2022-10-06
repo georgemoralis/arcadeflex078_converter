@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vball
+{
+	
 int vb_scrollx_hi=0;
 int vb_scrollx_lo=0;
 int vb_scrolly_hi=0;
@@ -196,4 +200,5 @@ INTERRUPT_GEN( vball_interrupt )
 		cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	//save the scroll x register value
 	if(line<32) scrollx[31-line] = (vb_scrollx_hi + vb_scrollx_lo+4);
+}
 }

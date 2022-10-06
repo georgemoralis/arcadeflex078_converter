@@ -66,10 +66,15 @@ Atomic Robokid  256x192(H)  512x512
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "tilemap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class omegaf
+{
+	
 
 
 /**************************************************************************
@@ -610,4 +615,5 @@ VIDEO_UPDATE( omegaf )
 	else										/* normal sprite mode */
 		draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
+}
 }

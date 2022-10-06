@@ -5,11 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
-#include "itech32.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class itech32
+{
+	
 
 /*************************************
  *
@@ -1135,4 +1139,5 @@ VIDEO_UPDATE( itech32 )
 		else
 			draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &src1[cliprect->min_x], Machine->pens, -1);
 	}
+}
 }

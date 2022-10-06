@@ -4,10 +4,15 @@
 	
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "aztarac.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class aztarac
+{
+	
 static int sound_status;
 
 READ16_HANDLER( aztarac_sound_r )
@@ -56,3 +61,4 @@ INTERRUPT_GEN( aztarac_snd_timed_irq )
 }
 
 
+}

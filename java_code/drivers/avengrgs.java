@@ -56,10 +56,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class avengrgs
+{
+	
 VIDEO_START( avengrgs );
 VIDEO_UPDATE( avengrgs );
 VIDEO_STOP(avengrgs);
@@ -352,3 +357,4 @@ static DRIVER_INIT( avengrgs )
 /***************************************************************************/
 
 GAMEX( 1995, avengrgs, 0, avengrgs, avengrgs, avengrgs, ROT0, "Data East Corporation", "Avengers In Galactic Storm (Japan)", GAME_NOT_WORKING )
+}

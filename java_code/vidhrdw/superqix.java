@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class superqix
+{
+	
 static int gfxbank;
 static UINT8 *superqix_bitmapram,*superqix_bitmapram2,*superqix_bitmapram_dirty,*superqix_bitmapram2_dirty;
 static struct mame_bitmap *tmpbitmap2;
@@ -263,4 +269,5 @@ VIDEO_UPDATE( superqix )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 1, 0);
 
 	sqix_minx=1000;sqix_maxx=-1;sqix_miny=1000;sqix_maxy=-1;
+}
 }

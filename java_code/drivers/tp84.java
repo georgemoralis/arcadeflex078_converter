@@ -81,9 +81,15 @@ C004      76489 #4 trigger
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tp84
+{
+	
 
 extern UINT8 *tp84_videoram2, *tp84_colorram2;
 
@@ -567,3 +573,4 @@ ROM_END
 
 GAME( 1984, tp84,  0,    tp84, tp84, 0, ROT90, "Konami", "Time Pilot '84 (set 1)" )
 GAME( 1984, tp84a, tp84, tp84, tp84a,0, ROT90, "Konami", "Time Pilot '84 (set 2)" )
+}

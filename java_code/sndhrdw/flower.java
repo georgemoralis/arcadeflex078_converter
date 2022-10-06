@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class flower
+{
+	
 
 /* 8 voices max */
 #define MAX_VOICES 8
@@ -288,4 +295,5 @@ usrintf_showmessage("%02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%02x %02x%
 		voice->oneshot = 0;
 		voice->oneshotplaying = 0;
 	}
+}
 }

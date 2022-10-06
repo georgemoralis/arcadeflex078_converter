@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class munchmo
+{
+	
 
 UINT8 *mnchmobl_vreg;
 UINT8 *mnchmobl_status_vram;
@@ -201,4 +207,5 @@ VIDEO_UPDATE( mnchmobl )
 	draw_background( bitmap );
 	draw_sprites( bitmap );
 	draw_status( bitmap );
+}
 }

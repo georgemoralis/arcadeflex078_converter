@@ -1,10 +1,15 @@
 #ifndef __UNZIP_H
 #define __UNZIP_H
 
-#include "osd_cpu.h"
-#include "osdepend.h"
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class unzipH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -138,3 +143,4 @@ extern int	gUnzipQuiet;	/* flag controls error messages */
 #endif
 
 #endif
+}

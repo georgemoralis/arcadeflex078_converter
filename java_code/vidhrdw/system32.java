@@ -17,8 +17,15 @@ any remaining glitches
 
 */
 
-#include "driver.h"
-#define MAX_COLOURS (16384)
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
+
+public class system32
+{
+	#define MAX_COLOURS (16384)
 
 // Debugging flags and kludges
 extern int system32_temp_kludge;
@@ -1570,3 +1577,4 @@ VIDEO_UPDATE( system32 ) {
 }
 
 
+}

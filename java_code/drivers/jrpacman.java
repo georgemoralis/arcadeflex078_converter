@@ -98,10 +98,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "jrpacman.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jrpacman
+{
+	
 
 static UINT8 speedcheat = 0;	/* a well known hack allows to make JrPac Man run at four times */
 				/* his usual speed. When we start the emulation, we check if the */
@@ -464,3 +469,4 @@ static DRIVER_INIT( jrpacman )
  *************************************/
 
 GAME( 1983, jrpacman, 0, jrpacman, jrpacman, jrpacman, ROT90, "Bally Midway", "Jr. Pac-Man" )
+}

@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "cchasm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cchasm
+{
+	
 #define HALT   0
 #define JUMP   1
 #define COLOR  2
@@ -133,4 +138,5 @@ VIDEO_START( cchasm )
 	ycenter=((ymax+ymin)/2) << 16;
 
 	return video_start_vector();
+}
 }

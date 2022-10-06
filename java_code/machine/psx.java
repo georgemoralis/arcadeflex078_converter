@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "includes/psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class psx
+{
+	
 #define VERBOSE_LEVEL ( 1 )
 
 INLINE void verboselog( int n_level, const char *s_fmt, ... )
@@ -1092,4 +1097,5 @@ void psx_driver_init( void )
 	state_save_register_INT32( "psx", 0, "m_p_n_mdec_cos", m_p_n_mdec_cos, DCTSIZE2 );
 
 	state_save_register_func_postload( psx_postload );
+}
 }

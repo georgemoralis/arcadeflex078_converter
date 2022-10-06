@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "turbo.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class turbo
+{
+	
 
 /* constants */
 #define VIEW_WIDTH					(32*8)
@@ -1009,4 +1014,5 @@ VIDEO_UPDATE( buckrog )
 WRITE_HANDLER( buckrog_bitmap_w )
 {
 	buckrog_bitmap_ram[offset] = data & 1;
+}
 }

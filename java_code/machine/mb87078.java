@@ -6,8 +6,15 @@
 
  *****************************************************************************/
 
-#include "machine/mb87078.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mb87078
+{
+	
 struct MB87078 {
 	const struct MB87078interface *intf;
 	int gain[4];		/* gain index 0-63,64,65 */
@@ -166,3 +173,4 @@ int MB87078_gain_percent_r(int which, int channel)
 	return MB87078_gain_percent[ chip[which].gain[channel] ];
 }
 
+}

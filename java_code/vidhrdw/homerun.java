@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class homerun
+{
+	
 static int homerun_gfx_ctrl;
 static int homerun_gc_up,homerun_gc_down;
 int homerun_xpa,homerun_xpb,homerun_xpc;
@@ -114,3 +120,4 @@ VIDEO_UPDATE(homerun)
 }
 
 
+}

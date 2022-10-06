@@ -21,15 +21,16 @@
  *																			*
  \**************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.pic16c5x;
 
+public class _16c5xdsm
+{
+	
 #ifdef MAME_DEBUG					/* Compile interface to MAME */
-#include "memory.h"
-#include "pic16c5x.h"
-#include "mamedbg.h"
 #define READOP16(A)  (cpu_readop16((A)     | PIC16C5X_PGM_OFFSET))
 #define READARG16(A) (cpu_readop_arg16((A) | PIC16C5X_PGM_OFFSET))
 #else                               /* Compile interface for standalone */
@@ -256,4 +257,5 @@ unsigned Dasm16C5x(char *str, unsigned pc)
 		}
 	}
 	return cnt;
+}
 }

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class blktiger
+{
+	
 unsigned char *blktiger_txvideoram;
 
 #define BGRAM_BANK_SIZE 0x1000
@@ -248,4 +254,5 @@ VIDEO_UPDATE( blktiger )
 VIDEO_EOF( blktiger )
 {
 	buffer_spriteram_w(0,0);
+}
 }

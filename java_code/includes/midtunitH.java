@@ -4,8 +4,15 @@
 
 **************************************************************************/
 
-#include "midyunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class midtunitH
+{
+	
 /*----------- defined in machine/midtunit.c -----------*/
 
 WRITE16_HANDLER( midtunit_cmos_enable_w );
@@ -65,3 +72,4 @@ READ16_HANDLER( midtunit_dma_r );
 WRITE16_HANDLER( midtunit_dma_w );
 
 VIDEO_UPDATE( midtunit );
+}

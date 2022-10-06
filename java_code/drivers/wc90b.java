@@ -70,10 +70,15 @@ the sprites corrupted. The game seems to be exactly the same as the
 World Cup 90 bootleg.
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wc90b
+{
+	
 
 #define TEST_DIPS false /* enable to test unmapped dip switches */
 
@@ -444,3 +449,4 @@ DRIVER_INIT( wc90b )
 
 
 GAMEX( 1989, wc90b, wc90, wc90b, wc90b, wc90b, ROT0, "bootleg", "Euro League", GAME_NO_COCKTAIL )
+}

@@ -14,12 +14,15 @@
  *	separate MSM5205 emulator form adpcm.c and some fix
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "msm5205.h"
+public class msm5205
+{
+	
 
 /*
  * ADPCM lockup tabe
@@ -315,4 +318,5 @@ void MSM5205_set_volume(int num,int volume)
 	struct MSM5205Voice *voice = &msm5205[num];
 
 	mixer_set_volume(voice->stream,volume);
+}
 }

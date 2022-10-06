@@ -85,9 +85,15 @@ Sprites - Data East custom chip 52
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class darkseal
+{
+	
 data16_t *darkseal_pf12_row,*darkseal_pf34_row;
 data16_t *darkseal_pf1_data,*darkseal_pf2_data,*darkseal_pf3_data;
 
@@ -320,3 +326,4 @@ VIDEO_UPDATE( darkseal )
 }
 
 /******************************************************************************/
+}

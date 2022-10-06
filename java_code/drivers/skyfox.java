@@ -13,9 +13,15 @@ Other:	2 HM6116LP-3 (one on each board)
 To Do:	The background rendering is entirely guesswork
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class skyfox
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern int skyfox_bg_pos, skyfox_bg_ctrl;
@@ -441,3 +447,4 @@ DRIVER_INIT( skyfox )
 
 GAME( 1987, skyfox,   0,      skyfox, skyfox, skyfox, ROT90, "Jaleco (Nichibutsu USA license)", "Sky Fox"  )
 GAME( 1987, exerizrb, skyfox, skyfox, skyfox, skyfox, ROT90, "Jaleco", "Exerizer (Japan) (bootleg)" )
+}

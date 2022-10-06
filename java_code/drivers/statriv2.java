@@ -42,9 +42,15 @@
 \****************************************************************/
 
 
-#include "driver.h"
-#include "cpu/i8085/i8085.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class statriv2
+{
+	
 /* Default NVram, we seem to need one or statriv2 crashes during attract
    attempting to display an unterminated message */
 
@@ -565,3 +571,4 @@ ROM_END
 GAMEX( 1984, trivquiz, 0, trivquiz, statriv2, 0, ROT0, "Status Games", "Triv Quiz", GAME_WRONG_COLORS )
 GAMEX( 1984, statriv2, 0, statriv2, statriv2, 0, ROT0, "Status Games", "(Status) Triv Two", GAME_WRONG_COLORS )
 GAMEX( 1986, supertr2, 0, supertr2, supertr2, 0, ROT0, "Status Games", "Super Triv II", GAME_WRONG_COLORS )
+}

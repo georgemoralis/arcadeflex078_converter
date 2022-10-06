@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cosmic
+{
+	
 
 static pen_t (*map_color)(UINT8 x, UINT8 y);
 
@@ -671,4 +677,5 @@ VIDEO_UPDATE( nomnlnd )
     {
     	nomnlnd_draw_background(bitmap);
 	}
+}
 }

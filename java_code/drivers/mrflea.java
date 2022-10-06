@@ -39,10 +39,15 @@ Video Board
 
 ******************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mrflea
+{
+	
 static int mrflea_io;
 static int mrflea_main;
 
@@ -416,3 +421,4 @@ INPUT_PORTS_END
 
 
 GAME(1982, mrflea,   0,        mrflea,   mrflea,   0,        ROT270, "Pacific Novelty", "The Amazing Adventures of Mr. F. Lea"  )
+}

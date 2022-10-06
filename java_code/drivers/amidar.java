@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "galaxian.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class amidar
+{
+	
 
 
 static MEMORY_READ_START( readmem )
@@ -555,3 +561,4 @@ GAME( 1982, amigo,   amidar,  amidar, amidaru, amidar,       ROT90, "bootleg", "
 GAME( 1981, turtles, 0,       amidar, turtles, scramble_ppi, ROT90, "[Konami] (Stern license)", "Turtles" )
 GAME( 1981, turpin,  turtles, amidar, turpin,  scramble_ppi, ROT90, "[Konami] (Sega license)", "Turpin" )
 GAME( 1981, 600,     turtles, amidar, turtles, scramble_ppi, ROT90, "Konami", "600" )
+}

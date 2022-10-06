@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "unzip.h"
-#include "osdepend.h"	/* for CLIB_DECL */
-#include "fileio.h"
-#include <stdarg.h>
-#ifdef macintosh
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
+
+public class romcmp
+{
+	#ifdef macintosh
 #	include "macromcmp.h"
 #else
 #ifndef _WIN32
@@ -18,7 +19,6 @@
 #else
 #	include "dirent.h"
 #endif
-#include <sys/stat.h>
 #endif
 
 
@@ -789,3 +789,4 @@ int CLIB_DECL main(int argc,char **argv)
 	return 0;
 }
 
+}

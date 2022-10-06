@@ -33,10 +33,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class suna8
+{
+	
 extern int suna8_text_dim; /* specifies format of text layer */
 
 extern data8_t suna8_rombank, suna8_spritebank, suna8_palettebank;
@@ -2754,3 +2759,4 @@ GAMEX( 1991, hardhea2, 0,       hardhea2, hardhea2, hardhea2, ROT0,  "SunA",    
 GAMEX( 1992, brickzn,  0,       brickzn,  brickzn,  brickzn3, ROT90, "SunA",    "Brick Zone (v5.0)",             GAME_NOT_WORKING )
 GAMEX( 1992, brickzn3, brickzn, brickzn,  brickzn,  brickzn3, ROT90, "SunA",    "Brick Zone (v3.0)",             GAME_NOT_WORKING )
 
+}

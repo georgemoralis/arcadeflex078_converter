@@ -68,14 +68,15 @@ Input is unique but has a few similarities to DD2 (the coin inputs)
 
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "sound/2151intf.h"
-#include "sound/2203intf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class chinagat
+{
+	
 /**************** Video stuff ******************/
 
 WRITE_HANDLER( ddragon_bgvideoram_w );
@@ -870,3 +871,4 @@ GAME ( 1988, chinagat, 0,        chinagat, chinagat, 0     , ROT0, "[Technos] (T
 GAME ( 1988, saiyugou, chinagat, chinagat, chinagat, 0     , ROT0, "Technos", "Sai Yu Gou Ma Roku (Japan)" )
 GAMEX( 1988, saiyugb1, chinagat, saiyugb1, chinagat, 0     , ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 1)", GAME_IMPERFECT_SOUND )
 GAME ( 1988, saiyugb2, chinagat, saiyugb2, chinagat, 0     , ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 2)" )
+}

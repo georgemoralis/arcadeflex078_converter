@@ -30,9 +30,15 @@
 
  */
 
-#include "driver.h"
-#include "machine/pd4990a.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class pd4990a
+{
+	
 
 /* Set the data in the chip to Monday 09/09/73 00:00:00 	*/
 /* If you ever read this Leejanne, you know what I mean :-) */
@@ -324,3 +330,4 @@ WRITE16_HANDLER( pd4990a_control_16_w )
 	pd4990a_serial_control(data&0x7);
 }
 
+}

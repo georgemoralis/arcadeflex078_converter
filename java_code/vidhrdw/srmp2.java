@@ -7,9 +7,15 @@ Functions to emulate the video hardware of the machine.
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class srmp2
+{
+	
 
 
 
@@ -474,4 +480,5 @@ VIDEO_UPDATE( mjyuugi )
 {
 	fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 	mjyuugi_draw_sprites(bitmap);
+}
 }

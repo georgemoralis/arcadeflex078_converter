@@ -4,8 +4,15 @@
 
 **************************************************************************/
 
-#include "midwunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class midvunitH
+{
+	
 
 /*----------- defined in vidhrdw/midvunit.c -----------*/
 
@@ -32,3 +39,4 @@ READ32_HANDLER( midvunit_textureram_r );
 
 VIDEO_START( midvunit );
 VIDEO_UPDATE( midvunit );
+}

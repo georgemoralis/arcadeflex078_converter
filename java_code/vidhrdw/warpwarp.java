@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class warpwarp
+{
+	
 
 
 unsigned char *warpwarp_bulletsram;
@@ -165,3 +171,4 @@ WRITE_HANDLER( warpwarp_flip_screen_w )
 	flip_screen_set(data & 1);
 }
 
+}

@@ -1,8 +1,15 @@
 #ifndef __2610INTF_H__
 #define __2610INTF_H__
 
-#include "fm.h"
-#ifdef BUILD_YM2610
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
+
+public class _2610intfH
+{
+	#ifdef BUILD_YM2610
   void YM2610UpdateRequest(int chip);
 #endif
 
@@ -79,3 +86,4 @@ WRITE16_HANDLER( YM2610_data_port_1_B_lsb_w );
 
 #endif
 /**************** end of file ****************/
+}

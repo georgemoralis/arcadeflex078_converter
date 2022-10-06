@@ -27,11 +27,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "avalnche.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class avalnche
+{
+	
 
 
 /*************************************
@@ -308,3 +312,4 @@ static DRIVER_INIT( avalnche )
  *************************************/
 
 GAME( 1978, avalnche, 0, avalnche, avalnche, avalnche, ROT0, "Atari", "Avalanche" )
+}

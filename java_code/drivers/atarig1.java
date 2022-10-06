@@ -18,12 +18,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "vidhrdw/atarirle.h"
-#include "atarig1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atarig1
+{
+	
 
 
 /*************************************
@@ -879,3 +882,4 @@ GAME( 1990, pitfight, 0,        atarig1, pitfight, pitfight, ROT0, "Atari Games"
 GAME( 1990, pitfigh3, pitfight, atarig1, pitfight, pitfight, ROT0, "Atari Games", "Pit Fighter (rev 3)" )
 GAME( 1990, pitfighj, pitfight, atarig1, pitfighj, pitfighj, ROT0, "Atari Games", "Pit Fighter (Japan, 2 players)" )
 GAME( 1990, pitfighb, pitfight, atarig1, pitfight, pitfighb, ROT0, "Atari Games", "Pit Fighter (bootleg)" )
+}

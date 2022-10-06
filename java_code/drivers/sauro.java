@@ -73,10 +73,15 @@ Addition by Reip
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sauro
+{
+	
 extern UINT8 *tecfri_videoram;
 extern UINT8 *tecfri_colorram;
 extern UINT8 *tecfri_videoram2;
@@ -458,3 +463,4 @@ static DRIVER_INIT( tecfri )
 
 GAMEX( 1987, sauro,    0, sauro,    tecfri, tecfri, ROT0, "Tecfri", "Sauro", GAME_IMPERFECT_SOUND )
 GAME ( 1987, trckydoc, 0, trckydoc, tecfri, tecfri, ROT0, "Tecfri", "Tricky Doc" )
+}

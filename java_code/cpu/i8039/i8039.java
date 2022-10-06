@@ -34,14 +34,15 @@
  ****************************************************************************/
 
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8039;
 
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "i8039.h"
+public class i8039
+{
+	
 
 
 /*** Cycle times for the jump on condition instructions, are unusual.
@@ -1149,3 +1150,4 @@ unsigned n7751_dasm(char *buffer, unsigned pc)
 }
 #endif
 
+}

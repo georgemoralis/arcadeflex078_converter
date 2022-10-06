@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "qix.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class qix
+{
+	
 
 /* Constants */
 #define SCANLINE_INCREMENT	4
@@ -242,4 +247,5 @@ VIDEO_UPDATE( qix )
 	/* draw the bitmap */
 	for (y = cliprect->min_y; y <= cliprect->max_y; y++)
 		draw_scanline8(bitmap, 0, y, 256, &videoram[y * 256], pens, -1);
+}
 }

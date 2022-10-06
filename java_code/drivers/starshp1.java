@@ -7,8 +7,15 @@ Atari Starship 1 driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class starshp1
+{
+	
 int starshp1_attract;
 
 extern unsigned char *starshp1_playfield_ram;
@@ -474,3 +481,4 @@ ROM_END
 
 GAMEX( 1977, starshp1, 0,        starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1",              GAME_NO_SOUND )
 GAMEX( 1977, starshpp, starshp1, starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1 (prototype?)", GAME_NO_SOUND )
+}

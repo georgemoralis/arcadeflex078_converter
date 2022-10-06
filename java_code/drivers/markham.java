@@ -8,9 +8,15 @@ Markham (c) 1983 Sun Electronics
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class markham
+{
+	
 extern WRITE_HANDLER( markham_videoram_w );
 extern WRITE_HANDLER( markham_scroll_x_w );
 extern WRITE_HANDLER( markham_flipscreen_w );
@@ -288,3 +294,4 @@ ROM_END
 
 
 GAME( 1983, markham, 0, markham, markham, 0, ROT0, "Sun Electronics", "Markham" )
+}

@@ -4,11 +4,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms34010/34010ops.h"
-#include "midyunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class midyunit
+{
+	
 
 /* compile-time options */
 #define FAST_DMA			1		/* DMAs complete immediately; reduces number of CPU switches */
@@ -451,7 +455,6 @@ static dma_draw_func prefix[32] =																				\
 
 /* allow for custom blitters */
 #ifdef MIDYUNIT_CUSTOM_BLITTERS
-#include "midyblit.c"
 #endif
 
 /*** blitter family declarations ***/
@@ -836,4 +839,5 @@ VIDEO_UPDATE( midyunit )
 		erase.max_x = leftscroll - 1;
 		fillbitmap(bitmap, get_black_pen(), &erase);
 	}
+}
 }

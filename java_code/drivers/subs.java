@@ -17,10 +17,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "subs.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class subs
+{
+	
 
 
 /*************************************
@@ -393,3 +398,4 @@ static DRIVER_INIT( subs )
  *************************************/
 
 GAMEX( 1977, subs, 0, subs, subs, subs, ROT0, "Atari", "Subs", GAME_IMPERFECT_SOUND )
+}

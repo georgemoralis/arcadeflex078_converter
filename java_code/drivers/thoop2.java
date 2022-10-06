@@ -9,10 +9,15 @@ The DS5002FP has up to 128 KB undumped gameplay code
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class thoop2
+{
+	
 extern data16_t *thoop2_vregs;
 extern data16_t *thoop2_videoram;
 extern data16_t *thoop2_spriteram;
@@ -244,3 +249,4 @@ ROM_START( thoop2 )
 ROM_END
 
 GAMEX( 1994, thoop2,  0, thoop2, thoop2,  0, ROT0, "Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
+}

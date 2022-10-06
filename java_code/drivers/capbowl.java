@@ -87,12 +87,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/ticket.h"
-#include "cpu/m6809/m6809.h"
-#include "capbowl.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class capbowl
+{
+	
 
 
 /*************************************
@@ -438,3 +441,4 @@ GAME( 1988, capbowl,  0,       capbowl,  capbowl, 0, ROT270, "Incredible Technol
 GAME( 1988, capbowl2, capbowl, capbowl,  capbowl, 0, ROT270, "Incredible Technologies", "Capcom Bowling (set 2)" )
 GAME( 1989, clbowl,   capbowl, capbowl,  capbowl, 0, ROT270, "Incredible Technologies", "Coors Light Bowling" )
 GAME( 1991, bowlrama, 0,       bowlrama, capbowl, 0, ROT270, "P&P Marketing", "Bowl-O-Rama" )
+}

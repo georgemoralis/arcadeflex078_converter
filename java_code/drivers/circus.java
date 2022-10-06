@@ -27,10 +27,15 @@ D000      Paddle Position and Interrupt Reset
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class circus
+{
+	
 extern WRITE_HANDLER( circus_clown_x_w );
 extern WRITE_HANDLER( circus_clown_y_w );
 extern WRITE_HANDLER( circus_clown_z_w );
@@ -490,3 +495,4 @@ GAME( 1977, circus,   0, circus,   circus,   circus, ROT0, "Exidy", "Circus" )
 GAMEX( 1977, robotbwl, 0, robotbwl, robotbwl, 0,      ROT0, "Exidy", "Robot Bowl", GAME_NO_SOUND )
 GAMEX( 1979, crash,    0, crash,    crash,    0,      ROT0, "Exidy", "Crash", GAME_IMPERFECT_SOUND )
 GAMEX( 1979, ripcord,  0, ripcord,  ripcord,  0,      ROT0, "Exidy", "Rip Cord", GAME_IMPERFECT_SOUND )
+}

@@ -4,9 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xybots
+{
+	
 
 
 /*************************************
@@ -168,4 +174,5 @@ VIDEO_UPDATE( xybots )
 
 	/* add the alpha on top */
 	tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
+}
 }

@@ -21,12 +21,15 @@ Special thanks to:
 - Dave (www.finalburn.com) for sharing his understanding of the Afterburner Math Coprocessor
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class aburner
+{
+	
 /*****************************************************************************/
 /* After Burner I (Japanese Version)
 (c) 1987 SEGA
@@ -911,3 +914,4 @@ GAME( 1987, aburner2, 0,        aburner,  aburner2, aburner2, ROT0, "Sega", "Aft
 GAMEX(19??, loffire,  0,        aburner,  aburner,  aburner,  ROT0, "Sega", "Line of Fire", GAME_NOT_WORKING )
 GAMEX(19??, thndrbld, 0,        aburner,  thndrbld, aburner,  ROT0, "Sega", "Thunder Blade", GAME_NOT_WORKING )
 GAMEX(19??, thndrbdj, thndrbld, aburner,  thndrbld, thndrbdj, ROT0, "Sega", "Thunder Blade (Japan)", GAME_NOT_WORKING )
+}

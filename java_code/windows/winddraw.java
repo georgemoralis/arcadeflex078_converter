@@ -6,21 +6,22 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class winddraw
+{
+	
 #ifdef __GNUC__
  #define NONAMELESSUNION
 #endif
-#include <ddraw.h>
 
 // standard C headers
-#include <math.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "video.h"
-#include "blit.h"
 
 
 
@@ -1454,4 +1455,5 @@ surface_lost:
 
 	// otherwise, return failure
 	return 0;
+}
 }

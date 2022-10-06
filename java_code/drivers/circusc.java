@@ -6,10 +6,15 @@ To enter service mode, keep 1&2 pressed on reset
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class circusc
+{
+	
 
 void konami1_decode(void);
 
@@ -418,3 +423,4 @@ GAME( 1984, circusc,  0,       circusc, circusc, circusc, ROT90, "Konami", "Circ
 GAME( 1984, circusc2, circusc, circusc, circusc, circusc, ROT90, "Konami", "Circus Charlie (no level select)" )
 GAME( 1984, circuscc, circusc, circusc, circusc, circusc, ROT90, "Konami (Centuri license)", "Circus Charlie (Centuri)" )
 GAME( 1984, circusce, circusc, circusc, circusc, circusc, ROT90, "Konami (Centuri license)", "Circus Charlie (Centuri, earlier)" )
+}

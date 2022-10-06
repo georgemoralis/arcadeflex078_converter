@@ -53,8 +53,15 @@ for this...
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stvvdp2
+{
+	
 data32_t* stv_vdp2_regs;
 data32_t* stv_vdp2_vram;
 /* this won't be used in the end .. */
@@ -3125,3 +3132,4 @@ static void stv_dump_ram()
 
 
 #endif
+}

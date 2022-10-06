@@ -8,10 +8,15 @@ unico used for zero point etc.
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/pic16c5x/pic16c5x.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class drgnmst
+{
+	
 
 static data16_t drgnmst_snd_command;
 static data16_t drgnmst_snd_flag;
@@ -549,3 +554,4 @@ static DRIVER_INIT( drgnmst )
 
 
 GAME( 1994, drgnmst, 0, drgnmst,  drgnmst, drgnmst, ROT0, "Unico", "Dragon Master" )
+}

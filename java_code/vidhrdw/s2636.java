@@ -73,8 +73,15 @@
 
  *************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class s2636
+{
+	
 static int SpriteOffset[4] = {0,0x10,0x20,0x40};
 
 /* To adjust sprites against bitmap */
@@ -284,4 +291,5 @@ void Update_Bitmap(struct mame_bitmap *bitmap,unsigned char *workram,unsigned ch
     if(SpriteCheck(2,3,workram,Graphics_Bank,collision_bitmap)) CollisionSprite |= 0x01;
 
     workram[0xCB] = CollisionSprite;
+}
 }

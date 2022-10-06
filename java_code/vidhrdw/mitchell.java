@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "palette.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mitchell
+{
+	
 
 /* Globals */
 size_t pang_videoram_size;
@@ -256,4 +262,5 @@ VIDEO_UPDATE( pang )
 	fillbitmap(bitmap,Machine->pens[0],cliprect);
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

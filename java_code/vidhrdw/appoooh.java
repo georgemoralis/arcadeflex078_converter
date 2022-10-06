@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "appoooh.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class appoooh
+{
+	
 unsigned char *appoooh_fg_videoram,*appoooh_fg_colorram;
 unsigned char *appoooh_bg_videoram,*appoooh_bg_colorram;
 
@@ -259,4 +264,5 @@ VIDEO_UPDATE( appoooh )
 
 	if (priority != 0)	/* fg in front of sprites */
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

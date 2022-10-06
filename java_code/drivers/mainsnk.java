@@ -11,8 +11,15 @@
     		
 */
 
-#include "driver.h"
-WRITE_HANDLER( snkwave_w );
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
+
+public class mainsnk
+{
+	WRITE_HANDLER( snkwave_w );
 
 extern data8_t *me_fgram;
 extern data8_t *me_bgram;
@@ -289,3 +296,4 @@ ROM_END
 
 GAME( 1984, mainsnk,      0,          mainsnk, mainsnk, 0,          ROT0, "SNK", "Main Event (1984)")
 
+}

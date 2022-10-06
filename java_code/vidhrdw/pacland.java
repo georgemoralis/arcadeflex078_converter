@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pacland
+{
+	
 UINT8 *pacland_videoram2;
 
 static int palette_bank;
@@ -311,4 +317,5 @@ VIDEO_UPDATE( pacland )
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 1, 0);
 	pacland_draw_sprites(bitmap, 2);
 	pacland_draw_sprites(bitmap, 1);
+}
 }

@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "res_net.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class naughtyb
+{
+	
 /* from sndhrdw/pleiads.c */
 WRITE_HANDLER( pleiads_sound_control_c_w );
 
@@ -317,4 +322,5 @@ VIDEO_UPDATE( naughtyb )
 		scrollx = -*naughtyb_scrollreg + 16;
 		copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,0,0,&scrollvisiblearea,TRANSPARENCY_NONE,0);
 	}
+}
 }

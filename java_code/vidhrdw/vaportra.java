@@ -9,9 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vaportra
+{
+	
 data16_t *vaportra_pf1_data,*vaportra_pf2_data,*vaportra_pf3_data,*vaportra_pf4_data;
 
 static data16_t vaportra_control_0[8];
@@ -276,4 +282,5 @@ VIDEO_UPDATE( vaportra )
 
 	vaportra_drawsprites(bitmap,cliprect,1);
 	tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
+}
 }

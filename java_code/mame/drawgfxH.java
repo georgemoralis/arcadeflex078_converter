@@ -13,8 +13,15 @@
 extern "C" {
 #endif
 
-#include "palette.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class drawgfxH
+{
+	
 #define MAX_GFX_PLANES 8
 #define MAX_GFX_SIZE 256
 
@@ -287,3 +294,4 @@ INLINE void sect_rect(struct rectangle *dst, const struct rectangle *src)
 #endif
 
 #endif
+}

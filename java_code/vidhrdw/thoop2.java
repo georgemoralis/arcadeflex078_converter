@@ -9,10 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class thoop2
+{
+	
 data16_t *thoop2_vregs;
 data16_t *thoop2_videoram;
 data16_t *thoop2_spriteram;
@@ -251,4 +256,5 @@ VIDEO_UPDATE( thoop2 )
 	tilemap_draw(bitmap,cliprect,pant[0],TILEMAP_FRONT | 0,0);
 
 	gaelco_draw_sprites(bitmap,cliprect,4);
+}
 }

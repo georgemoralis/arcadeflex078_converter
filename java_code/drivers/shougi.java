@@ -90,17 +90,20 @@ PROM  : Type MB7051
 
 
 
-#include <math.h>
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shougi
+{
+	
 //VIDEO_START( shougi )
 //{
 //	generic_vh_start();
 //}
 
-#include "vidhrdw/res_net.h"
 /***************************************************************************
 
   Convert the color PROMs into a more useable format.
@@ -445,3 +448,4 @@ ROM_END
 
 GAMEX( 198?, shougi,  0,        shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 GAMEX( 198?, shougi2, shougi,   shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+}

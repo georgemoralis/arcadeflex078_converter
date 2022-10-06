@@ -8,10 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
-#include "driver.h"
-#include "r3000.h"
+public class r3kdasm
+{
+	
 
 
 static const char *reg[32] =
@@ -303,4 +308,5 @@ unsigned dasmr3k(char *buffer, unsigned pc)
 		default:	sprintf(buffer, "dc.l   $%08x [invalid]", op);									break;
 	}
 	return 4;
+}
 }

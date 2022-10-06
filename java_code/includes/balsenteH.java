@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class balsenteH
+{
+	
 
 /*----------- defined in machine/balsente.c -----------*/
 
@@ -68,3 +75,4 @@ VIDEO_UPDATE( balsente );
 WRITE_HANDLER( balsente_videoram_w );
 WRITE_HANDLER( balsente_paletteram_w );
 WRITE_HANDLER( balsente_palette_select_w );
+}

@@ -27,14 +27,15 @@
  *
  */
 
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-#include "driver.h"
-#include "cpuintrf.h"
-#include "multipcm.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class multipcm
+{
+	
 #define MULTIPCM_CLOCKDIV    	(360.0)
 #define MULTIPCM_ONE		(18)
 
@@ -580,3 +581,4 @@ WRITE_HANDLER( MultiPCM_bank_1_w )
 	}
 }
 
+}

@@ -7,10 +7,15 @@
 #ifndef TMS9900_H
 #define TMS9900_H
 
-#include <stdio.h>
-#include "driver.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms9900;
 
+public class tms9900H
+{
+	
 #define TMS9900_ID      0 /* original processor, 1976 (huh... it had some multi-chip ancestors, */
                           /* the 9x0 series)*/
 #define TMS9940_ID      1 /* embedded version, 1979 */
@@ -204,3 +209,4 @@ extern unsigned Dasm9900 (char *buffer, unsigned pc);
 #endif
 
 
+}

@@ -6,17 +6,18 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <ctype.h>
-#include <tchar.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class fileio
+{
+	
 // MAME headers
-#include "driver.h"
-#include "unzip.h"
-#include "rc.h"
 
 #ifdef MESS
-#include "image.h"
 #endif
 
 /* Quick fix to allow compilation with win32api 2.4 */
@@ -754,3 +755,4 @@ void set_pathlist(int file_type, const char *new_rawpath)
 
 }
 #endif
+}

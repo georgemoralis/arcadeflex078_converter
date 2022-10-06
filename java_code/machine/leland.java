@@ -6,12 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "cpu/z80/z80.h"
-#include "leland.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class leland
+{
+	
 
 /*************************************
  *
@@ -1478,4 +1481,5 @@ void leland_rotate_memory(int cpunum)
 		memmove(&ram[startaddr + 0x6000], temp, 0x2000);
 		startaddr += 0x8000;
 	}
+}
 }

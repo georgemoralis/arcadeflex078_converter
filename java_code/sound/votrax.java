@@ -16,8 +16,15 @@ the variable VotraxBaseFrequency, this is defaulted to 8000
 
 **************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class votrax
+{
+	
 int		VotraxBaseFrequency;		/* Some games (Qbert) change this */
 int 	VotraxBaseVolume;
 int 	VotraxChannel;
@@ -81,3 +88,4 @@ int votrax_status_r(void)
     return mixer_is_sample_playing(VotraxChannel);
 }
 
+}

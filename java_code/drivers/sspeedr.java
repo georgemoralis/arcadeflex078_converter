@@ -4,9 +4,15 @@ Taito Super Speed Race driver
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sspeedr
+{
+	
 extern WRITE_HANDLER( sspeedr_driver_horz_w );
 extern WRITE_HANDLER( sspeedr_driver_horz_2_w );
 extern WRITE_HANDLER( sspeedr_driver_vert_w );
@@ -271,3 +277,4 @@ ROM_END
 
 
 GAMEX( 1979, sspeedr, 0, sspeedr, sspeedr, 0, ROT270, "Midway", "Super Speed Race", GAME_NO_SOUND )
+}

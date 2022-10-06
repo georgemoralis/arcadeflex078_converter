@@ -17,11 +17,15 @@ Volfied (c) 1989 Taito Corporation
 
 ********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class volfied
+{
+	
 WRITE16_HANDLER( volfied_sprite_ctrl_w );
 WRITE16_HANDLER( volfied_video_ram_w );
 WRITE16_HANDLER( volfied_video_ctrl_w );
@@ -435,3 +439,4 @@ ROM_END
 GAMEX( 1989, volfied,  0,       volfied, volfied,  volfied, ROT270, "Taito Corporation Japan", "Volfied (World)", GAME_UNEMULATED_PROTECTION )
 GAMEX( 1989, volfiedu, volfied, volfied, volfiedu, volfied, ROT270, "Taito America Corporation", "Volfied (US)", GAME_UNEMULATED_PROTECTION )
 GAMEX( 1989, volfiedj, volfied, volfied, volfiedj, volfied, ROT270, "Taito Corporation", "Volfied (Japan)", GAME_UNEMULATED_PROTECTION )
+}

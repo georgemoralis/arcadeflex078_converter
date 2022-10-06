@@ -30,11 +30,15 @@ Stephh's notes (based on the game M68000 code and some tests) :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "gcpinbal.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gcpinbal
+{
+	
 /* M6585 */
 
 static int start, end, bank;
@@ -449,3 +453,4 @@ ROM_END
 
 
 GAMEX( 1994, gcpinbal, 0, gcpinbal, gcpinbal, 0, ROT270, "Excellent System", "Grand Cross", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+}

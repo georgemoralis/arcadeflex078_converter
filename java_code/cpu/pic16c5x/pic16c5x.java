@@ -53,15 +53,15 @@
 
 
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "driver.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "state.h"
-#include "pic16c5x.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.pic16c5x;
 
+public class pic16c5x
+{
+	
 
 #define CLK 1	/* 1 cycle equals 4 Q-clock ticks */
 
@@ -1350,3 +1350,4 @@ unsigned pic16C58_dasm(char *buffer, unsigned pc)
 }
 
 #endif
+}

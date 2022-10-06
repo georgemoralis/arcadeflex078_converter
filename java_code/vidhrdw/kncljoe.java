@@ -4,9 +4,15 @@ Knuckle Joe - (c) 1985 Taito Corporation
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kncljoe
+{
+	
 static struct tilemap *bg_tilemap;
 static int tile_bank,sprite_bank;
 static int flipscreen;
@@ -266,4 +272,5 @@ VIDEO_UPDATE( kncljoe )
 {
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

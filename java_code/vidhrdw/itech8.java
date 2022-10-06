@@ -6,12 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/tms34061.h"
-#include "vidhrdw/tlc34076.h"
-#include "cpu/m6809/m6809.h"
-#include "itech8.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class itech8
+{
+	
 
 /*************************************
  *
@@ -806,4 +809,5 @@ VIDEO_UPDATE( itech8 )
 	/* extra rendering for slikshot */
 	if (slikshot)
 		slikshot_extra_draw(bitmap, cliprect);
+}
 }

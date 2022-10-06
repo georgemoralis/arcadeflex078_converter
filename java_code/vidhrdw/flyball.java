@@ -4,8 +4,15 @@ Atari Flyball video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class flyball
+{
+	
 static struct tilemap* flyball_tilemap;
 
 UINT8 flyball_pitcher_vert;
@@ -93,4 +100,5 @@ VIDEO_UPDATE( flyball )
 			}
 		}
 	}
+}
 }

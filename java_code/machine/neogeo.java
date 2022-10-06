@@ -1,10 +1,12 @@
-#include "driver.h"
-#include "machine/pd4990a.h"
-#include "neogeo.h"
-#include "inptport.h"
-#include "state.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class neogeo
+{
+	
 
 static int sram_locked;
 static offs_t sram_protection_hack;
@@ -885,4 +887,5 @@ static void neogeo_register_sub_savestate(void)
 	state_save_register_int   ("neogeo", 0, "memcard_number",          &memcard_number);
 	state_save_register_int   ("neogeo", 0, "memcard_manager",         &memcard_manager);
 	state_save_register_int   ("neogeo", 0, "prot_data",               &prot_data);
+}
 }

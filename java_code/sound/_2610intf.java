@@ -11,10 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "ay8910.h"
-#include "fm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2610intf
+{
+	
 #if BUILD_YM2610
 
 #define YM2610_NUMBUF 2
@@ -385,3 +390,4 @@ WRITE16_HANDLER( YM2610_data_port_1_B_lsb_w ){
 /**************** end of file ****************/
 
 #endif
+}

@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class asterix
+{
+	
 
 static int sprite_colorbase;
 static int layer_colorbase[4], layerpri[3];
@@ -111,4 +116,5 @@ VIDEO_UPDATE( asterix )
 	K053245_sprites_draw(bitmap, cliprect);
 
 	K054157_tilemap_draw(bitmap, cliprect, 2, 0, 0);
+}
 }

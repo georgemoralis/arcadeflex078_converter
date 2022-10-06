@@ -18,9 +18,15 @@ TODO:
  	- Why does it write into ROM area?
 *********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class enigma2
+{
+	
 static int cmap;
 
 WRITE_HANDLER( enigma2_videoram_w )
@@ -295,3 +301,4 @@ static DRIVER_INIT(enigma2a){	cmap=0;}
 
 GAMEX( 1981, enigma2,  0,		enigma2, enigma2,  enigma2, ROT90, "GamePlan (Zilec Electronics license)", "Enigma 2", GAME_NO_SOUND | GAME_WRONG_COLORS )
 GAMEX( 1984, enigma2a, enigma2, enigma2a, enigma2a, enigma2a, ROT90, "Zilec Electronics", "Enigma 2 (Space Invaders Hardware)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+}

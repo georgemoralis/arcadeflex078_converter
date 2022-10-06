@@ -19,10 +19,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "atarigt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarigt
+{
+	
 
 
 /*************************************
@@ -684,4 +689,5 @@ VIDEO_UPDATE( atarigt )
 			}
 		}
 	}
+}
 }

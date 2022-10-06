@@ -14,8 +14,15 @@ Ernesto Corvi - 10/30/98
 
 *************************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class exctsccr
+{
+	
 
 #define MCU_KEY_TABLE_SIZE 16
 
@@ -184,4 +191,5 @@ WRITE_HANDLER( exctsccr_mcu_w ) {
 		mcu_code_latch = data;
 
 	exctsccr_mcu_ram[offset] = data;
+}
 }

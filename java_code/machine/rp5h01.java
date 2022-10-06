@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "machine/rp5h01.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class rp5h01
+{
+	
 /****************************************************************************/
 
 /* local copy of the interface pointer */
@@ -204,4 +210,5 @@ READ_HANDLER( RP5H01_0_counter_r ) {
 
 READ_HANDLER( RP5H01_0_data_r ) {
 	return RP5H01_data_r( 0 );
+}
 }

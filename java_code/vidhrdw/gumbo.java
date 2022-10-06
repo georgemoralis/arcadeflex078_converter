@@ -1,7 +1,14 @@
 /* Gumbo Vidhrdw */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gumbo
+{
+	
 extern data16_t *gumbo_bg_videoram;
 extern data16_t *gumbo_fg_videoram;
 
@@ -55,4 +62,5 @@ VIDEO_UPDATE( gumbo )
 {
 	tilemap_draw(bitmap,cliprect,gumbo_bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,gumbo_fg_tilemap,0,0);
+}
 }

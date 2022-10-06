@@ -8,13 +8,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/m6809/m6809.h"
-#include "6821pia.h"
-#include "sndhrdw/williams.h"
-#include "midyunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class midyunit
+{
+	
 
 /* constant definitions */
 #define SOUND_NARC					1
@@ -1162,4 +1164,5 @@ WRITE16_HANDLER( midyunit_sound_w )
 				williams_adpcm_data_w(data);
 				break;
 		}
+}
 }

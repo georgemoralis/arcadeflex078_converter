@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "atarifb.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarifb
+{
+	
 /* local */
 size_t atarifb_alphap1_vram_size;
 size_t atarifb_alphap2_vram_size;
@@ -360,5 +365,6 @@ if (atarifb_game != 4)
 
 	for (x = 0;x < 20;x++)
 			drawgfx(bitmap,Machine->uifont,buf2[x],UI_COLOR_NORMAL,0,0,6*x,0,0,TRANSPARENCY_NONE,0);
+}
 }
 }

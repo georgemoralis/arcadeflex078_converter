@@ -78,10 +78,15 @@ emulated now. ;)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class polyplay
+{
+	
 /* video hardware access */
 extern unsigned char *polyplay_characterram;
 PALETTE_INIT( polyplay );
@@ -382,3 +387,4 @@ static void timer_callback(int param)
 
 /* game driver */
 GAME( 1985, polyplay, 0, polyplay, polyplay, 0, ROT0, "VEB Polytechnik Karl-Marx-Stadt", "Poly-Play" )
+}

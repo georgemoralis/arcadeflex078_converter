@@ -6,11 +6,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "voodoo.h"
-#include "cpu/mips/mips3.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class voodoo
+{
+	
 
 /* math trickery */
 #ifndef _WIN32
@@ -18,7 +22,6 @@
 #define RESTORE_FPU()
 #define TRUNC_TO_INT(f) (float) (floor(f))
 #else
-#include <float.h>
 #define SETUP_FPU() { int oldfpu = _controlfp(_RC_CHOP/*_RC_DOWN*/ | _PC_24, _MCW_RC | _MCW_PC)
 #define RESTORE_FPU() _controlfp(oldfpu, _MCW_RC | _MCW_PC); }
 #define TRUNC_TO_INT(f) ((int)(f))
@@ -3320,25 +3323,21 @@ static void (*update_texel_lookup[16])(int which) =
 
 #define RENDERFUNC			render_0c000035_00045119_000b4779_0824101f
 #define TEXTUREMODE0		0x0824101f
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
 #define RENDERFUNC			render_0c000035_00045119_000b4779_0824109f
 #define TEXTUREMODE0		0x0824109f
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
 #define RENDERFUNC			render_0c000035_00045119_000b4779_082410df
 #define TEXTUREMODE0		0x082410df
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
 #define RENDERFUNC			render_0c000035_00045119_000b4779_082418df
 #define TEXTUREMODE0		0x082418df
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
@@ -3373,19 +3372,16 @@ static void (*update_texel_lookup[16])(int which) =
 
 #define RENDERFUNC			render_0c600c09_00045119_000b4779_0824100f
 #define TEXTUREMODE0		0x0824100f
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
 #define RENDERFUNC			render_0c600c09_00045119_000b4779_0824180f
 #define TEXTUREMODE0		0x0824180f
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
 #define RENDERFUNC			render_0c600c09_00045119_000b4779_082418cf
 #define TEXTUREMODE0		0x082418cf
-#include "voodblit.c"
 #undef TEXTUREMODE0
 #undef RENDERFUNC
 
@@ -3396,13 +3392,11 @@ static void (*update_texel_lookup[16])(int which) =
 
 #define FBZMODE				0x000b4779
 #define RENDERFUNC			render_0c480035_00045119_000b4779_082418df
-#include "voodblit.c"
 #undef FBZMODE
 #undef RENDERFUNC
 
 #define FBZMODE				0x000b4379
 #define RENDERFUNC			render_0c480035_00045119_000b4379_082418df
-#include "voodblit.c"
 #undef FBZMODE
 #undef RENDERFUNC
 
@@ -3448,7 +3442,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4739
 #define TEXTUREMODE0		0x0c26180f
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3462,7 +3455,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4739
 #define TEXTUREMODE0		0x0c26180f
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3476,7 +3468,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4739
 #define TEXTUREMODE0		0x0c26180f
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3490,7 +3481,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4799
 #define TEXTUREMODE0		0x0c26180f
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3504,7 +3494,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4739
 #define TEXTUREMODE0		0x0c2618cf
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3518,7 +3507,6 @@ static void (*update_texel_lookup[16])(int which) =
 #define FBZMODE				0x000b4739
 #define TEXTUREMODE0		0x0c26180f
 #define TEXTUREMODE1		0x00000000
-#include "voodblit.c"
 #undef TEXTUREMODE1
 #undef TEXTUREMODE0
 #undef FBZMODE
@@ -3654,14 +3642,12 @@ Carnevil:
 #define RENDERFUNC			generic_render_1tmu
 #define NUM_TMUS			1
 
-#include "voodblit.c"
 
 #undef NUM_TMUS
 #undef RENDERFUNC
 #define RENDERFUNC			generic_render_2tmu
 #define NUM_TMUS			2
 
-#include "voodblit.c"
 
 #undef NUM_TMUS
 #undef RENDERFUNC
@@ -3677,3 +3663,4 @@ Carnevil:
 #undef FBZCOLORPATH
 #undef FBZCOLORPATH_MASK
 
+}

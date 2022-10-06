@@ -6,11 +6,15 @@
  **********************************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
+public class bsmt2000
+{
+	
 
 
 
@@ -25,7 +29,6 @@
 #define MAKE_WAVS				0
 
 #if MAKE_WAVS
-#include "wavwrite.h"
 #endif
 
 
@@ -554,4 +557,5 @@ static void bsmt2000_reg_write(struct BSMT2000Chip *chip, offs_t offset, data16_
 WRITE16_HANDLER( BSMT2000_data_0_w )
 {
 	bsmt2000_reg_write(&bsmt2000[0], offset, data, mem_mask);
+}
 }

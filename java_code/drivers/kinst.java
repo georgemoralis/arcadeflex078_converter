@@ -13,14 +13,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/mips/mips3.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "machine/idectrl.h"
-#include "machine/midwayic.h"
-#include "sndhrdw/dcs.h"
-#include "kinst.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kinst
+{
+	
 
 /* constants */
 #define MASTER_CLOCK	50000000
@@ -538,3 +539,4 @@ static DRIVER_INIT( kinst2 )
 
 GAME( 1994, kinst,	0,		kinst, kinst,  kinst,	ROT0, "Rare", "Killer Instinct (v1.0)" )
 GAME( 1994, kinst2, 0,		kinst, kinst,  kinst2,	ROT0, "Rare", "Killer Instinct 2 (v2.1)" )
+}

@@ -154,10 +154,15 @@ NMI causes a ROM/RAM test.
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/segacrpt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class zaxxon
+{
+	
 extern int zaxxon_vid_type;
 extern UINT8 *zaxxon_char_color_bank;
 extern UINT8 *zaxxon_background_position;
@@ -1679,3 +1684,4 @@ GAMEX(1983, ixion,    0,      ixion,    ixion,    ixion,    ROT270, "Sega",    "
 GAME( 1983, congo,    0,	  congo,    congo,    0,        ROT90,  "Sega",    "Congo Bongo" )
 GAME( 1983, tiptop,   congo,  congo,    tiptop,   0,        ROT90,  "Sega",    "Tip Top" )
 GAME( 1984, futspy,   0,      futspy,   futspy,   futspy,   ROT270, "Sega",    "Future Spy" )
+}

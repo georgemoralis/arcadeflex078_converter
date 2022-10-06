@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pastelgl
+{
+	
 
 static int pastelgl_drawx, pastelgl_drawy;
 static int pastelgl_sizex, pastelgl_sizey;
@@ -323,4 +328,5 @@ VIDEO_UPDATE( pastelgl )
 	{
 		fillbitmap(bitmap, Machine->pens[0x00], 0);
 	}
+}
 }

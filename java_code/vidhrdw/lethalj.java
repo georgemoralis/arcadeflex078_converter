@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "lethalj.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lethalj
+{
+	
 
 #define BLITTER_SOURCE_WIDTH		1024
 #define BLITTER_DEST_WIDTH			512
@@ -223,4 +228,5 @@ VIDEO_UPDATE( lethalj )
 
 	if (cliprect->max_y == Machine->visible_area.max_y)
 		blank_palette = 0;
+}
 }

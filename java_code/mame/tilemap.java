@@ -16,11 +16,15 @@
 
 #if !defined(DECLARE) && !defined(TRANSP)
 
-#include "driver.h"
-#include "osinline.h"
-#include "tilemap.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class tilemap
+{
+	
 #define SWAP(X,Y) { UINT32 temp=X; X=Y; Y=temp; }
 #define MAX_TILESIZE 64
 
@@ -688,22 +692,18 @@ static void npbt32( UINT32 *dest, const UINT16 *source, const UINT8 *pMask, int 
 #define DEPTH 16
 #define DATA_TYPE UINT16
 #define DECLARE(function,args,body) static void function##16BPP args body
-#include "tilemap.c"
 
 #define DEPTH 32
 #define DATA_TYPE UINT32
 #define DECLARE(function,args,body) static void function##32BPP args body
-#include "tilemap.c"
 
 #define PAL_INIT const pen_t *pPalData = tile_info.pal_data
 #define PAL_GET(pen) pPalData[pen]
 #define TRANSP(f) f ## _ind
-#include "tilemap.c"
 
 #define PAL_INIT int palBase = tile_info.pal_data - Machine->remapped_colortable
 #define PAL_GET(pen) (palBase + (pen))
 #define TRANSP(f) f ## _raw
-#include "tilemap.c"
 
 /*********************************************************************************/
 
@@ -2676,3 +2676,4 @@ static UINT8 TRANSP(HandleTransparencyNone)(struct tilemap *tilemap, UINT32 x0, 
 #undef PAL_GET
 #endif // TRANSP
 
+}

@@ -4,11 +4,15 @@
 
  ***********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/decocass.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class decocass
+{
+	
 static int watchdog_count;
 static int watchdog_flip;
 static int color_missiles;
@@ -752,3 +756,4 @@ VIDEO_UPDATE( decocass )
 	draw_missiles(bitmap,cliprect, 1, 0, decocass_colorram, 0x20);
 }
 
+}

@@ -178,11 +178,15 @@
 
 *************************************************************************/
 
-#include <stdio.h>
-#include "driver.h"
-#include "slapstic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class slapstic
+{
+	
 
 /*************************************
  *
@@ -1162,3 +1166,4 @@ static void slapstic_log(offs_t offset)
 	}
 }
 #endif
+}

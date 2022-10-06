@@ -7,12 +7,16 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.upd7810;
 
+public class _7810dasm
+{
+	
 #ifdef MAME_DEBUG
-#include "driver.h"
-#include "mamedbg.h"
-#include "upd7810.h"
 
 struct dasm_s {
 	UINT8	token;
@@ -4065,3 +4069,4 @@ unsigned Dasm7807( char *buffer, unsigned pc )
 
 #endif	/* MAME_DEBUG */
 
+}

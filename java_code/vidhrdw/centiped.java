@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "centiped.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class centiped
+{
+	
 
 static struct tilemap *tilemap;
 UINT8 centiped_flipscreen;
@@ -378,4 +383,5 @@ VIDEO_UPDATE( warlords )
 		drawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 				cliprect, TRANSPARENCY_PEN, 0);
 	}
+}
 }

@@ -27,8 +27,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fuukifg3
+{
+	
 /* Variables that driver has access to: */
 
 data32_t *fuuki32_vram_0, *fuuki32_vram_1;
@@ -378,4 +385,5 @@ VIDEO_EOF( fuuki32 )
 	spr_buffered_tilebank[0] = fuuki32_tilebank[0];
 	memcpy(buffered_spriteram32_2,buffered_spriteram32,spriteram_size);
 	memcpy(buffered_spriteram32,spriteram32,spriteram_size);
+}
 }

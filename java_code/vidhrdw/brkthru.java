@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class brkthru
+{
+	
 
 unsigned char *brkthru_scroll;
 unsigned char *brkthru_videoram;
@@ -307,4 +313,5 @@ VIDEO_UPDATE( brkthru )
 
 /*	show_register(bitmap,8,8,(unsigned long)flipscreen); */
 
+}
 }

@@ -257,14 +257,15 @@ Sound
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
-#include "taito_f2.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taito_f2
+{
+	
 
 static int banknum = 0;
 static int mjnquest_input;
@@ -6700,3 +6701,4 @@ GAME( 1993, qcrayon,  0,        qcrayon,  qcrayon,  f2,       ROT0,   "Taito Cor
 GAME( 1993, qcrayon2, 0,        qcrayon2, qcrayon2, f2,       ROT0,   "Taito Corporation", "Crayon Shinchan Orato Asobo (Japan)" )
 GAME( 1991, driftout, 0,        driftout, driftout, f2,       ROT270, "Visco", "Drift Out (Japan)" )
 GAME( 1991, driveout, driftout, driveout, driftout, driveout, ROT270, "bootleg", "Drive Out" )
+}

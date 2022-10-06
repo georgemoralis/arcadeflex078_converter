@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class _4enraya
+{
+	
 static struct tilemap *tilemap;
 
 WRITE_HANDLER( fenraya_videoram_w )
@@ -37,4 +43,5 @@ VIDEO_START( 4enraya )
 VIDEO_UPDATE( 4enraya)
 {
 	tilemap_draw(bitmap,cliprect,tilemap, 0,0);
+}
 }

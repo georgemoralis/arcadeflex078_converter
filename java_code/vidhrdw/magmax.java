@@ -7,9 +7,15 @@ Additional tweaking by Jarek Burczynski
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class magmax
+{
+	
 data16_t *magmax_scroll_x;
 data16_t *magmax_scroll_y;
 unsigned short magmax_vreg;
@@ -531,4 +537,5 @@ VIDEO_UPDATE( magmax )
 					&Machine->visible_area, TRANSPARENCY_PEN, 15);
 		}
 	}
+}
 }

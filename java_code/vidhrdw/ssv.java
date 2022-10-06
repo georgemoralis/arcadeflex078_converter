@@ -129,10 +129,15 @@ Note: press Z to show some info on each sprite (debug builds only)
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ssv
+{
+	
 VIDEO_START( ssv )
 {
 	Machine->gfx[0]->color_granularity = 64; /* 256 colour sprites with palette selectable on 64 colour boundaries */
@@ -784,4 +789,5 @@ VIDEO_UPDATE( ssv )
 
 	ssv_draw_layer(bitmap);		// "background layer"
 	ssv_draw_sprites(bitmap);	// sprites list
+}
 }

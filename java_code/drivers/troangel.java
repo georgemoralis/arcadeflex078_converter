@@ -5,10 +5,15 @@ Tropical Angel
 driver by Phil Stroffolino
 
 ****************************************************************************/
-#include "driver.h"
-#include "sndhrdw/irem.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class troangel
+{
+	
 extern unsigned char *troangel_scroll;
 WRITE_HANDLER( troangel_flipscreen_w );
 PALETTE_INIT( troangel );
@@ -231,3 +236,4 @@ ROM_END
 
 
 GAME( 1983, troangel, 0, troangel, troangel, 0, ROT0, "Irem", "Tropical Angel" )
+}

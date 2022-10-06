@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class grobda
+{
+	
 
 /***************************************************************************
 
@@ -180,4 +186,5 @@ VIDEO_UPDATE( grobda )
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 
 	grobda_draw_sprites(bitmap);
+}
 }

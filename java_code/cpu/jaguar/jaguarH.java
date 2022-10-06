@@ -11,9 +11,15 @@
 #ifndef _JAGUAR_H
 #define _JAGUAR_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.jaguar;
 
+public class jaguarH
+{
+	
 
 /*###################################################################################################
 **	COMPILE-TIME DEFINITIONS
@@ -144,3 +150,4 @@ extern data32_t jaguardsp_ctrl_r(int cpunum, offs_t offset);
 
 
 #endif /* _JAGUAR_H */
+}

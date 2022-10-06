@@ -4,11 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "sbrkout.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class sbrkout
+{
+	
 #define SBRKOUT_PROGRESSIVE 0x00
 #define SBRKOUT_DOUBLE      0x01
 #define SBRKOUT_CAVITY      0x02
@@ -107,3 +111,4 @@ WRITE_HANDLER( sbrkout_serve_led_w )
 	set_led_status(2,~offset & 1);
 }
 
+}

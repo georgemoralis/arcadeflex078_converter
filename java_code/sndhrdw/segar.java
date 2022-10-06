@@ -23,10 +23,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
-#include "segar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class segar
+{
+	
 #define TOTAL_SOUNDS 16
 
 struct sa
@@ -413,3 +418,4 @@ WRITE_HANDLER( monsterb_sh_rom_select_w )
 		rom_offset |= 0x1000;
 }
 
+}

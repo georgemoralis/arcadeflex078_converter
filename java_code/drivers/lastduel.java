@@ -16,9 +16,15 @@ TODO:
 
 **************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lastduel
+{
+	
 WRITE16_HANDLER( lastduel_vram_w );
 WRITE16_HANDLER( lastduel_flip_w );
 WRITE16_HANDLER( lastduel_scroll1_w );
@@ -801,3 +807,4 @@ GAME( 1988, lstduelb, lastduel, lastduel, lastduel, 0, ROT270, "bootleg", "Last 
 GAME( 1989, madgear,  0,        madgear,  madgear,  0, ROT270, "Capcom", "Mad Gear (US)" )
 GAME( 1989, madgearj, madgear,  madgear,  madgear,  0, ROT270, "Capcom", "Mad Gear (Japan)" )
 GAME( 1988, ledstorm, madgear,  madgear,  madgear,  0, ROT270, "Capcom", "Led Storm (US)" )
+}

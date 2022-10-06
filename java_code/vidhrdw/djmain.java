@@ -3,10 +3,15 @@
  *	emulate video hardware
  */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class djmain
+{
+	
 #define NUM_SPRITES	(0x800 / 16)
 #define NUM_LAYERS	2
 
@@ -195,4 +200,5 @@ VIDEO_UPDATE( djmain )
 				K056832_tilemap_draw_dj(bitmap, cliprect, layer, 0, 1 << i);
 		}
 	}
+}
 }

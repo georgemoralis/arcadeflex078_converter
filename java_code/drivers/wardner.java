@@ -124,11 +124,15 @@ out:
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/crtc6845.h"
-#include "cpu/tms32010/tms32010.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class wardner
+{
+	
 
 
 /******************** Machine stuff **********************/
@@ -798,3 +802,4 @@ static DRIVER_INIT( wardner )
 GAME( 1987, wardner,  0,       wardner, wardner,  wardner, ROT0, "[Toaplan] Taito Corporation Japan", "Wardner (World)" )
 GAME( 1987, pyros,    wardner, wardner, pyros,    wardner, ROT0, "[Toaplan] Taito America Corporation", "Pyros (US)" )
 GAME( 1987, wardnerj, wardner, wardner, wardnerj, wardner, ROT0, "[Toaplan] Taito Corporation", "Wardner no Mori (Japan)" )
+}

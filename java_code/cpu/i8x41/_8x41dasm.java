@@ -1,9 +1,13 @@
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8x41;
 
+public class _8x41dasm
+{
+	
 #ifdef MAME_DEBUG
-#include "driver.h"
-#include "mamedbg.h"
-#include "i8x41.h"
 
 unsigned Dasm8x41(char *dst, unsigned pc)
 {
@@ -566,3 +570,4 @@ unsigned Dasm8x41(char *dst, unsigned pc)
 }
 
 #endif
+}

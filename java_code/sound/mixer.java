@@ -6,12 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "filter.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include <math.h>
-#include <limits.h>
-#include <assert.h>
+public class mixer
+{
+	
 
 /***************************************************************************/
 /* Options */
@@ -1319,3 +1322,4 @@ void mixer_sound_enable_global_w(int enable)
 	mixer_sound_enabled = enable;
 }
 
+}

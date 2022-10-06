@@ -100,17 +100,15 @@ z:      xxxx address bits a19 .. a16 for memory accesses with a15 1 ?
       1      map 8000-9fff
  */
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6502.h"
-#include "m4510.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
-#include "ops02.h"
-#include "opsc02.h"
-#include "opsce02.h"
-#include "ops4510.h"
+public class m4510
+{
+	
 
 #define M6502_NMI_VEC	0xfffa
 #define M6502_RST_VEC	0xfffc
@@ -201,7 +199,6 @@ INLINE int m4510_cpu_readop_arg(void)
 }
 
 #define M4510
-#include "t65ce02.c"
 
 void m4510_reset (void *param)
 {
@@ -499,3 +496,4 @@ unsigned m4510_dasm(char *buffer, unsigned pc)
 extern void m4510_init(void){ return; }
 
 
+}

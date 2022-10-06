@@ -13,10 +13,15 @@
 #define _PIC16C5X_H
 
 
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.pic16c5x;
 
+public class pic16c5xH
+{
+	
 
 /****************************************************************************
  *	Use these in the memory and/or IO port address fields of your driver
@@ -334,3 +339,4 @@ extern unsigned Dasm16C5x(char *buffer, unsigned pc);
 #endif
 
 #endif	/* _PIC16C5X_H */
+}

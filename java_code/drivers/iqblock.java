@@ -45,10 +45,15 @@ Stephh's notes :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/8255ppi.h"
-#include "iqblock.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class iqblock
+{
+	
 
 static WRITE_HANDLER( iqblock_prot_w )
 {
@@ -479,3 +484,4 @@ GAME( 1993, iqblock, 0, iqblock, iqblock, iqblock, ROT0, "IGS", "IQ-Block" )
 GAME( 1993, grndtour, 0, iqblock, iqblock, grndtour, ROT0, "IGS", "Grand Tour" )
 
 GAMEX( 19??, cabaret, 0, cabaret, iqblock, cabaret, ROT0, "IGS", "Cabaret", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

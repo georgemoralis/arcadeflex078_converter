@@ -35,8 +35,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class irem_cpu
+{
+	
 // CAVEATS:
 // 0x80 and 0x82 pre- opcodes can easily be confused. They perform exactly the same
 // function when operating on memory, but when working with registers one affects
@@ -667,4 +674,5 @@ void irem_cpu_decrypt(int cpu,const unsigned char *decryption_table)
         if (t[A]>1) logerror("DUPLICATE: %02x\n",A);
 #endif
     }
+}
 }

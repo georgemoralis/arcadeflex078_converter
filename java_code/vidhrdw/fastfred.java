@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "fastfred.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fastfred
+{
+	
 
 data8_t *fastfred_videoram;
 data8_t *fastfred_spriteram;
@@ -398,4 +404,5 @@ VIDEO_UPDATE( imago )
 	draw_sprites(bitmap, cliprect);
 	
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

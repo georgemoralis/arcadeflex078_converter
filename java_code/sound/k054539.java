@@ -20,11 +20,15 @@ CHANNEL_DEBUG enables the following keys:
 
 *********************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "k054539.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class k054539
+{
+	
 /* Registers:
    00..ff: 20 bytes/channel, 8 channels
      00..02: pitch (lsb, mid, msb)
@@ -738,4 +742,5 @@ WRITE_HANDLER( K054539_1_w )
 READ_HANDLER( K054539_1_r )
 {
 	return K054539_r(1, offset);
+}
 }

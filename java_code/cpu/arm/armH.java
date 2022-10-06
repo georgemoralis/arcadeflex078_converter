@@ -1,8 +1,15 @@
 #ifndef ARM_H
 #define ARM_H
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.arm;
 
+public class armH
+{
+	
 /****************************************************************************************************
  *	INTERRUPT CONSTANTS
  ***************************************************************************************************/
@@ -52,3 +59,4 @@ enum
 };
 
 #endif /* ARM_H */
+}

@@ -14,9 +14,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class othldrby
+{
+	
 
 WRITE16_HANDLER( othldrby_videoram_addr_w );
 READ16_HANDLER( othldrby_videoram_r );
@@ -298,3 +304,4 @@ ROM_END
 
 
 GAME( 1995, othldrby, 0, othldrby, othldrby, 0, ROT0, "Sunwise", "Othello Derby (Japan)" )
+}

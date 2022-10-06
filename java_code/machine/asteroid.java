@@ -7,11 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/atari_vg.h"
-#include "vidhrdw/avgdvg.h"
-#include "asteroid.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class asteroid
+{
+	
 
 INTERRUPT_GEN( asteroid_interrupt )
 {
@@ -203,4 +207,5 @@ READ_HANDLER( llander_IN0_r )
 		res |= 0x40;
 
 	return res;
+}
 }

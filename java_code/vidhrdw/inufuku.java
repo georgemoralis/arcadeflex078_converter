@@ -11,9 +11,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class inufuku
+{
+	
 
 extern data16_t *inufuku_spriteram1;
 extern data16_t *inufuku_spriteram2;
@@ -268,4 +274,5 @@ VIDEO_UPDATE( inufuku )
 	tilemap_draw(bitmap, cliprect, inufuku_text_tilemap, 0, 4);
 
 	inufuku_draw_sprites(bitmap, cliprect);
+}
 }

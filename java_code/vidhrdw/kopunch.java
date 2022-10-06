@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kopunch
+{
+	
 UINT8 *kopunch_videoram2;
 
 static INT8 scroll[2]; // REMOVE
@@ -135,4 +141,5 @@ VIDEO_UPDATE( kopunch )
 				8*(sx+8)+scroll[0],8*(8+(gfxflip ? 15-sy : sy))+scroll[1],
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
+}
 }

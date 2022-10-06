@@ -8,15 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include "driver.h"
-#include "mamedbg.h"
-#include "state.h"
-#include "jaguar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.jaguar;
 
+public class jaguar
+{
+	
 #define LOG_GPU_IO		0
 #define LOG_DSP_IO		0
 
@@ -1842,4 +1842,5 @@ void jaguardsp_ctrl_w(int cpunum, offs_t offset, data32_t data, data32_t mem_mas
 
 	/* restore old context */
 	cpuintrf_pop_context();
+}
 }

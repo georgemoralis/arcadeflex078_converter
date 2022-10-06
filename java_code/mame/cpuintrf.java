@@ -10,11 +10,15 @@
 
 ***************************************************************************/
 
-#include <signal.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuintrf
+{
+	
 
 
 /*************************************
@@ -24,172 +28,117 @@
  *************************************/
 
 #if (HAS_Z80)
-#include "cpu/z80/z80.h"
 #endif
 #if (HAS_Z180)
-#include "cpu/z180/z180.h"
 #endif
 #if (HAS_8080 || HAS_8085A)
-#include "cpu/i8085/i8085.h"
 #endif
 #if (HAS_M6502 || HAS_M65C02 || HAS_M65SC02 || HAS_M6510 || HAS_M6510T || HAS_M7501 || HAS_M8502 || HAS_N2A03 || HAS_DECO16)
-#include "cpu/m6502/m6502.h"
 #endif
 #if (HAS_M4510)
-#include "cpu/m6502/m4510.h"
 #endif
 #if (HAS_M65CE02)
-#include "cpu/m6502/m65ce02.h"
 #endif
 #if (HAS_M6509)
-#include "cpu/m6502/m6509.h"
 #endif
 #if (HAS_H6280)
-#include "cpu/h6280/h6280.h"
 #endif
 #if (HAS_I86)
-#include "cpu/i86/i86intf.h"
 #endif
 #if (HAS_I88)
-#include "cpu/i86/i88intf.h"
 #endif
 #if (HAS_I186)
-#include "cpu/i86/i186intf.h"
 #endif
 #if (HAS_I188)
-#include "cpu/i86/i188intf.h"
 #endif
 #if (HAS_I286)
-#include "cpu/i86/i286intf.h"
 #endif
 #if (HAS_V20 || HAS_V30 || HAS_V33)
-#include "cpu/nec/necintrf.h"
 #endif
 #if (HAS_V60 || HAS_V70)
-#include "cpu/v60/v60.h"
 #endif
 #if (HAS_I8035 || HAS_I8039 || HAS_I8048 || HAS_N7751)
-#include "cpu/i8039/i8039.h"
 #endif
 #if (HAS_I8X41)
-#include "cpu/i8x41/i8x41.h"
 #endif
 #if (HAS_M6800 || HAS_M6801 || HAS_M6802 || HAS_M6803 || HAS_M6808 || HAS_HD63701)
-#include "cpu/m6800/m6800.h"
 #endif
 #if (HAS_M6805 || HAS_M68705 || HAS_HD63705)
-#include "cpu/m6805/m6805.h"
 #endif
 #if (HAS_M6809)
-#include "cpu/m6809/m6809.h"
 #endif
 #if (HAS_HD6309)
-#include "cpu/hd6309/hd6309.h"
 #endif
 #if (HAS_KONAMI)
-#include "cpu/konami/konami.h"
 #endif
 #if (HAS_M68000 || HAS_M68010 || HAS_M68020 || HAS_M68EC020)
-#include "cpu/m68000/m68000.h"
 #endif
 #if (HAS_T11)
-#include "cpu/t11/t11.h"
 #endif
 #if (HAS_S2650)
-#include "cpu/s2650/s2650.h"
 #endif
 #if (HAS_TMS34010 || HAS_TMS34020)
-#include "cpu/tms34010/tms34010.h"
 #endif
 #if (HAS_TMS9900 || HAS_TMS9940 || HAS_TMS9980 || HAS_TMS9985 || HAS_TMS9989 || HAS_TMS9995 || HAS_TMS99105A || HAS_TMS99110A)
-#include "cpu/tms9900/tms9900.h"
 #endif
 #if (HAS_Z8000)
-#include "cpu/z8000/z8000.h"
 #endif
 #if (HAS_TMS32010)
-#include "cpu/tms32010/tms32010.h"
 #endif
 #if (HAS_TMS32025)
-#include "cpu/tms32025/tms32025.h"
 #endif
 #if (HAS_TMS32031)
-#include "cpu/tms32031/tms32031.h"
 #endif
 #if (HAS_CCPU)
-#include "cpu/ccpu/ccpu.h"
 #endif
 #if (HAS_ADSP2100 || HAS_ADSP2101 || HAS_ADSP2104 || HAS_ADSP2105 || HAS_ADSP2115)
-#include "cpu/adsp2100/adsp2100.h"
 #endif
 #if (HAS_PSXCPU)
-#include "cpu/mips/psx.h"
 #endif
 #if (HAS_ASAP)
-#include "cpu/asap/asap.h"
 #endif
 #if (HAS_UPD7810 || HAS_UPD7807)
-#include "cpu/upd7810/upd7810.h"
 #endif
 #if (HAS_JAGUAR)
-#include "cpu/jaguar/jaguar.h"
 #endif
 #if (HAS_R3000)
-#include "cpu/mips/r3000.h"
 #endif
 #if (HAS_R4600 || HAS_R5000)
-#include "cpu/mips/mips3.h"
 #endif
 #if (HAS_ARM)
-#include "cpu/arm/arm.h"
 #endif
 #if (HAS_SH2)
-#include "cpu/sh2/sh2.h"
 #endif
 #if (HAS_DSP32C)
-#include "cpu/dsp32/dsp32.h"
 #endif
 #if (HAS_PIC16C54 || HAS_PIC16C55 || HAS_PIC16C56 || HAS_PIC16C57 || HAS_PIC16C58)
-#include "cpu/pic16c5x/pic16c5x.h"
 #endif
 #if (HAS_G65816)
-#include "cpu/g65816/g65816.h"
 #endif
 #if (HAS_SPC700)
-#include "cpu/spc700/spc700.h"
 #endif
 #if (HAS_E132XS)
-#include "cpu/e132xs/e132xs.h"
 #endif
 
 #ifdef MESS
 
 #if (HAS_APEXC)
-#include "cpu/apexc/apexc.h"
 #endif
 #if (HAS_CDP1802)
-#include "cpu/cdp1802/cdp1802.h"
 #endif
 #if (HAS_CP1600)
-#include "cpu/cp1600/cp1600.h"
 #endif
 #if (HAS_F8)
-#include "cpu/f8/f8.h"
 #endif
 #if (HAS_LH5801)
-#include "cpu/lh5801/lh5801.h"
 #endif
 #if (HAS_PDP1)
-#include "cpu/pdp1/pdp1.h"
 #endif
 #if (HAS_SATURN)
-#include "cpu/saturn/saturn.h"
 #endif
 #if (HAS_SC61860)
-#include "cpu/sc61860/sc61860.h"
 #endif
 #if (HAS_Z80GB)
-#include "cpu/z80gb/z80gb.h"
 #endif
 
 #endif
@@ -1567,3 +1516,4 @@ void cpu_set_m68k_reset(int cpunum, void (*resetfn)(void))
 	cpuintrf_pop_context();
 }
 #endif
+}

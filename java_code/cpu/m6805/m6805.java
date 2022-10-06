@@ -31,14 +31,15 @@
 *****************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "driver.h"
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "m6805.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6805;
 
+public class m6805
+{
+	
 #define IRQ_LEVEL_DETECT 0
 
 static UINT8 m6805_reg_layout[] = {
@@ -528,7 +529,6 @@ void m6805_set_irq_callback(int (*callback)(int irqline))
 	m6805.irq_callback = callback;
 }
 
-#include "6805ops.c"
 
 
 /* execute instructions on this CPU until icount expires */
@@ -1046,3 +1046,4 @@ unsigned hd63705_dasm(char *buffer, unsigned pc)
 #endif
 }
 #endif
+}

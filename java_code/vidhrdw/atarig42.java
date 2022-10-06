@@ -19,10 +19,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "atarig42.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarig42
+{
+	
 
 
 /*************************************
@@ -268,4 +273,5 @@ VIDEO_UPDATE( atarig42 )
 	
 	/* add the alpha on top */
 	tilemap_draw(bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
+}
 }

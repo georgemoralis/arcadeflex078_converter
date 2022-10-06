@@ -21,11 +21,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dynduke
+{
+	
 READ_HANDLER( dynduke_background_r );
 READ_HANDLER( dynduke_foreground_r );
 WRITE_HANDLER( dynduke_background_w );
@@ -399,3 +403,4 @@ static DRIVER_INIT( dynduke )
 
 GAME( 1989, dynduke, 0,       dynduke, dynduke, dynduke, ROT0, "Seibu Kaihatsu (Fabtek license)", "Dynamite Duke" )
 GAME( 1989, dbldyn,  dynduke, dynduke, dynduke, dynduke, ROT0, "Seibu Kaihatsu (Fabtek license)", "The Double Dynamites" )
+}

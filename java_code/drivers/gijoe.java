@@ -36,13 +36,15 @@ Known Issues
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gijoe
+{
+	
 
 VIDEO_START( gijoe );
 VIDEO_UPDATE( gijoe );
@@ -465,3 +467,4 @@ static DRIVER_INIT( gijoe )
 GAME( 1992, gijoe,  0,     gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (World)")
 GAME( 1992, gijoeu, gijoe, gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (US)")
 GAME( 1992, gijoej, gijoe, gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (Japan)")
+}

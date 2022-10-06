@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "asteroid.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class llander
+{
+	
 /************************************************************************/
 /* Lunar Lander Sound System Analog emulation by K.Wilkins Nov 2000     */
 /* Questions/Suggestions to mame@dysfunction.demon.co.uk                */
@@ -90,3 +96,4 @@ WRITE_HANDLER( llander_sounds_w )
 	discrete_sound_w(3,data&0x08);		/* Explosion */
 }
 
+}

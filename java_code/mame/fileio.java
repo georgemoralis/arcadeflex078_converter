@@ -4,14 +4,17 @@
 
 ***************************************************************************/
 
-#include <zlib.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include <assert.h>
-#include "driver.h"
-#include "unzip.h"
+public class fileio
+{
+	
 
 #ifdef MESS
-#include "image.h"
 #endif
 
 
@@ -1244,3 +1247,4 @@ int CLIB_DECL mame_fprintf(mame_file *f, const char *fmt, ...)
 	return rc;
 }
 
+}

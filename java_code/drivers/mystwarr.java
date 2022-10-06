@@ -22,16 +22,15 @@
  * - Metamorphic Force's intro needs alpha blended sprites.
  */
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/konamigx.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
-#include "sound/k054539.h"
+public class mystwarr
+{
+	
 
 VIDEO_START(gaiapols);
 VIDEO_START(dadandrn);
@@ -1958,3 +1957,4 @@ GAMEX( 1993, metamrpj, metamrph, metamrph, metamrph, metamrph, ROT0,  "Konami", 
 GAMEX( 1993, mtlchamp, 0,        martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1993, mtlchmpj, mtlchamp, martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1993, gaiapols, 0,        gaiapols, dadandrn, gaiapols, ROT90, "Konami", "Gaiapolis (Japan ver JAF)", GAME_IMPERFECT_GRAPHICS )
+}

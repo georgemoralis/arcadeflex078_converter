@@ -18,15 +18,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms32031/tms32031.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "sndhrdw/dcs.h"
-#include "machine/idectrl.h"
-#include "machine/midwayic.h"
-#include "midvunit.h"
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class midvunit
+{
+	
 
 static data32_t *ram_base;
 static data32_t *fastram_base;
@@ -1460,3 +1460,4 @@ GAME( 1996, crusnw13, crusnwld, midvunit, crusnwld, crusnwld, ROT0, "Midway", "C
 GAMEX( 1997, offroadc, 0,        midvunit, offroadc, offroadc, ROT0, "Midway", "Off Road Challenge", GAME_NOT_WORKING )
 
 GAME( 1995, wargods,  0,        midvplus, wargods,  wargods,  ROT0, "Midway", "War Gods" )
+}

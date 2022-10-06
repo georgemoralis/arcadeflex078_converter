@@ -25,9 +25,15 @@ WHO AM I?      (In place of "ARIES ELECA")
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "crgolf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class crgolf
+{
+	
 
 /* constants */
 #define MASTER_CLOCK		18432000
@@ -466,3 +472,4 @@ GAME( 1984, crgolf,  0,      crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Crowns G
 GAME( 1984, crgolfa, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Crowns Golf (set 2)" )
 GAME( 1984, crgolfc, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Champion Golf" )
 GAME( 1984, crgolfb, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Champion Golf (bootleg Set 1)" )
+}

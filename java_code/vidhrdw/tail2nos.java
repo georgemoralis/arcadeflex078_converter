@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tail2nos
+{
+	
 
 data16_t *tail2nos_bgvideoram;
 
@@ -220,4 +225,5 @@ VIDEO_UPDATE( tail2nos )
 	}
 	else
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
+}
 }

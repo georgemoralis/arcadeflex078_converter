@@ -108,11 +108,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "vidhrdw/generic.h"
-#include "jedi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class jedi
+{
+	
 
 /* constants */
 #define MAIN_CPU_OSC		10000000
@@ -630,3 +634,4 @@ ROM_END
  *************************************/
 
 GAME( 1984, jedi, 0, jedi, jedi, 0, ROT0, "Atari", "Return of the Jedi" )
+}

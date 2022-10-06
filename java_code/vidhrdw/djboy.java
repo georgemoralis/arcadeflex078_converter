@@ -3,9 +3,15 @@
  *
  * video hardware for DJ Boy
  */
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class djboy
+{
+	
 static data8_t djboy_videoreg, djboy_scrollx, djboy_scrolly;
 static struct tilemap *background;
 
@@ -135,4 +141,5 @@ VIDEO_UPDATE( djboy )
 
 	tilemap_draw( bitmap, cliprect,background,0,0 );
 	draw_sprites( bitmap, cliprect );
+}
 }

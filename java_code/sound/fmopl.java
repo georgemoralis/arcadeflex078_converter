@@ -67,15 +67,17 @@ Revision History:
 		verify volume of the FM part on the Y8950
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"		/* use M.A.M.E. */
+public class fmopl
+{
+	
 
-#include "ymdeltat.h"
 
-#include "fmopl.h"
 
 #ifndef PI
 #define PI 3.14159265358979323846
@@ -2517,3 +2519,4 @@ void Y8950SetKeyboardHandler(int which,OPL_PORTHANDLER_W KeyboardHandler_w,OPL_P
 
 #endif
 
+}

@@ -3,12 +3,15 @@
  *	Communications and memory functions between shared CPU memory spaces	*
  ****************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/tms32010/tms32010.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class twincobr
+{
+	
 #define LOG_DSP_CALLS 0
 #define CLEAR  0
 #define ASSERT 1
@@ -349,4 +352,5 @@ WRITE_HANDLER( twincobr_coin_w )
 WRITE_HANDLER( wardner_coin_dsp_w )
 {
 	toaplan0_coin_dsp_w(offset, data);
+}
 }

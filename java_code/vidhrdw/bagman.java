@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "res_net.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bagman
+{
+	
 
 UINT8 *bagman_video_enable;
 
@@ -167,4 +172,5 @@ VIDEO_UPDATE( bagman )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	bagman_draw_sprites(bitmap);
+}
 }

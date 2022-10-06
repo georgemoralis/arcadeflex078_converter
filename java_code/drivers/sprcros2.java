@@ -54,9 +54,15 @@ Notes:
   vertical position only, assume this is original behaviour
 */
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sprcros2
+{
+	
 extern data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 extern size_t sprcros2_spriteram_size;
 
@@ -372,3 +378,4 @@ ROM_START( sprcros2 )
 ROM_END
 
 GAME( 1986, sprcros2, 0, sprcros2, sprcros2, sprcros2, ROT0, "GM Shoji", "Super Cross 2 (Japan)" )
+}

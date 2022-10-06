@@ -61,10 +61,15 @@ Same as VS version but with a DAC instead of a MSM5205. Also some minor
 IO ports and memory map changes. Dip switches differ too.
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kchamp
+{
+	
 
 /* from vidhrdw */
 extern WRITE_HANDLER( kchamp_videoram_w );
@@ -735,3 +740,4 @@ GAME( 1984, kchamp,   0,      kchamp,   kchamp,   0,        ROT90, "Data East US
 GAME( 1984, karatedo, kchamp, kchamp,   kchamp,   0,        ROT90, "Data East Corporation", "Karate Dou (Japan)" )
 GAME( 1984, kchampvs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East USA", "Karate Champ (US VS version)" )
 GAME( 1984, karatevs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East Corporation", "Taisen Karate Dou (Japan VS version)" )
+}

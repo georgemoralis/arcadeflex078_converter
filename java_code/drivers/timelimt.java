@@ -10,9 +10,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class timelimt
+{
+	
 /* from vidhrdw */
 extern VIDEO_START( timelimt );
 extern PALETTE_INIT( timelimt );
@@ -371,3 +377,4 @@ ROM_END
 
 GAMEX( 1983, timelimt, 0, timelimt, timelimt, 0, ROT90, "Chuo Co. Ltd", "Time Limit", GAME_IMPERFECT_COLORS )
 GAME ( 1984, progress, 0, progress, progress, 0, ROT90, "Chuo Co. Ltd", "Progress" )
+}

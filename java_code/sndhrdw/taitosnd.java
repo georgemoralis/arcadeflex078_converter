@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class taitosnd
+{
+	
 
 /**********************************************************************************************
 
@@ -292,3 +298,4 @@ READ16_HANDLER( taitosound_comm16_msb_r )
 	return taitosound_comm_r(0) << 8;
 }
 
+}

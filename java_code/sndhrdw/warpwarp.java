@@ -7,9 +7,15 @@
  *
  ****************************************************************************/
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class warpwarp
+{
+	
 #define CLOCK_16H	(18432000/3/2/16)
 #define CLOCK_1V    (18432000/3/2/384)
 
@@ -224,3 +230,4 @@ void warpwarp_sh_update(void)
 	stream_update(channel,0);
 }
 
+}

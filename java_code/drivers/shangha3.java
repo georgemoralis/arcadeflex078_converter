@@ -19,9 +19,15 @@ blocken:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shangha3
+{
+	
 
 extern data16_t *shangha3_ram;
 extern size_t shangha3_ram_size;
@@ -671,3 +677,4 @@ static DRIVER_INIT( heberpop )
 GAME( 1993, shangha3, 0, shangha3, shangha3, shangha3, ROT0, "Sunsoft", "Shanghai III (Japan)" )
 GAME( 1994, heberpop, 0, heberpop, heberpop, heberpop, ROT0, "Sunsoft / Atlus", "Hebereke no Popoon (Japan)" )
 GAME( 1994, blocken,  0, blocken,  blocken,  heberpop, ROT0, "KID / Visco", "Blocken (Japan)" )
+}

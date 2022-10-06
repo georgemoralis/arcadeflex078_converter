@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "artwork.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
-#include <math.h> /* for sin() and cos() */
+public class astrocde
+{
+	
 
 
 #define SCREEN_WIDTH 320
@@ -829,4 +833,5 @@ VIDEO_UPDATE( seawolf2 )
 			draw_crosshair(bitmap,centre,33,&Machine->visible_area);
 		}
 	}
+}
 }

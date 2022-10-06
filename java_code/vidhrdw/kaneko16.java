@@ -40,9 +40,15 @@ Note:	if MAME_DEBUG is defined, pressing:
 
 **************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "kaneko16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kaneko16
+{
+	
 struct tilemap *kaneko16_tmap_0, *kaneko16_tmap_1;
 struct tilemap *kaneko16_tmap_2, *kaneko16_tmap_3;
 data16_t *kaneko16_vram_0,    *kaneko16_vram_1,    *kaneko16_layers_0_regs;
@@ -956,4 +962,5 @@ if ( keyboard_pressed(KEYCODE_Z) ||
 
 	if (layers_ctrl & (0xf<<16))
 		kaneko16_draw_sprites(bitmap,cliprect, (layers_ctrl >> 16) & 0xf);
+}
 }

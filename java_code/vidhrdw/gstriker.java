@@ -1,7 +1,13 @@
 
-#include "driver.h"
-#include "gstriker.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gstriker
+{
+	
 /* imports from driver file */
 extern data16_t *gs_videoram3;
 extern data16_t *gs_mixer_regs;
@@ -519,4 +525,5 @@ VIDEO_START(gstriker)
 	CG10103_set_pal_base(0, 0x10);
 
 	return 0;
+}
 }

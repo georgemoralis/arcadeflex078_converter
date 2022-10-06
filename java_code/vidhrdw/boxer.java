@@ -4,8 +4,15 @@ Atari Boxer (prototype) video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class boxer
+{
+	
 UINT8* boxer_tile_ram;
 UINT8* boxer_sprite_ram;
 
@@ -85,4 +92,5 @@ VIDEO_UPDATE( boxer )
 	}
 
 	draw_boxer(bitmap, cliprect);
+}
 }

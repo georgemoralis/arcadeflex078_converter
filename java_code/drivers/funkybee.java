@@ -43,9 +43,15 @@ Known issues:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class funkybee
+{
+	
 
 extern WRITE_HANDLER( funkybee_videoram_w );
 extern WRITE_HANDLER( funkybee_colorram_w );
@@ -321,3 +327,4 @@ ROM_END
 
 GAME( 1982, funkybee, 0, funkybee, funkybee, 0, ROT90, "Orca", "Funky Bee" )
 GAME( 1983, skylancr, 0, funkybee, skylancr, 0, ROT90, "Orca (Esco Trading Co license)", "Sky Lancer" )
+}

@@ -18,11 +18,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/eeprom.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class overdriv
+{
+	
 
 VIDEO_START( overdriv );
 VIDEO_UPDATE( overdriv );
@@ -500,3 +504,4 @@ static DRIVER_INIT( overdriv )
 
 
 GAMEX( 1990, overdriv, 0, overdriv, overdriv, overdriv, ROT90, "Konami", "Over Drive", GAME_IMPERFECT_GRAPHICS )
+}

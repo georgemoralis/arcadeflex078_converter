@@ -14,10 +14,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include "cinemat.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class cinemat
+{
+	
 
 static UINT32 current_shift = 0;
 static UINT32 last_shift = 0;
@@ -854,3 +859,4 @@ MACHINE_DRIVER_START( demon_sound )
 	/* sound hardware */
 	MDRV_SOUND_ADD(AY8910, demon_ay8910_interface)
 MACHINE_DRIVER_END
+}

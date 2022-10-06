@@ -39,9 +39,15 @@
 
  *****************************************************************************/
 
-#include "driver.h"
-#include "machine/74123.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _74123
+{
+	
 struct TTL74123 {
 	const struct TTL74123_interface *intf;
 	int trigger;			/* pin 2/10 */
@@ -159,4 +165,5 @@ int TTL74123_output_r(int which)
 int TTL74123_output_comp_r(int which)
 {
 	return !chip[which].output;
+}
 }

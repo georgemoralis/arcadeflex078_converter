@@ -8,9 +8,15 @@ drivers by Acho A. Tang
 *****************************************************************************/
 // Directives
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bwing
+{
+	
 #define BW_DEBUG 0
 
 #define BW_NTILES_L2 7
@@ -305,3 +311,4 @@ VIDEO_UPDATE( bwing )
 }
 
 //****************************************************************************
+}

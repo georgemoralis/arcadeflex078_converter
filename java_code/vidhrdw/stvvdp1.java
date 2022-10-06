@@ -11,8 +11,15 @@ the vdp1 draws to the FRAMEBUFFER which is mapped in memory
 */
 
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stvvdp1
+{
+	
 data32_t *stv_vdp1_vram;
 data32_t *stv_vdp1_regs;
 extern data32_t *stv_scu;
@@ -58,7 +65,6 @@ X1 register         |Y1 register               |
 #define SET_CEF_FROM_0_TO_1     if(!(STV_VDP1_CEF))	 stv_vdp1_regs[0x010/4]^=0x00020000
 /**/
 
-#include "machine/random.h"
 
 READ32_HANDLER( stv_vdp1_regs_r )
 {
@@ -1118,4 +1124,5 @@ void video_update_vdp1(struct mame_bitmap *bitmap, const struct rectangle *clipr
 //		}
 //	}
 	stv_vdp1_process_list(bitmap,cliprect);
+}
 }

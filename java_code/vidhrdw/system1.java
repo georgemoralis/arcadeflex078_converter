@@ -7,8 +7,15 @@
 
 *************************************************************************/
 
-#include "system1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class system1
+{
+	
 unsigned char *system1_scroll_y;
 unsigned char *system1_scroll_x;
 unsigned char *system1_videoram;
@@ -815,4 +822,5 @@ VIDEO_UPDATE( blockgal )
 		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 
 	blockgal_kludgeoffset = 0;
+}
 }

@@ -6,9 +6,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/8255ppi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class clayshoo
+{
+	
 
 static data8_t input_port_select;
 static data8_t analog_port_val;
@@ -121,4 +127,5 @@ WRITE_HANDLER( clayshoo_analog_reset_w )
 READ_HANDLER( clayshoo_analog_r )
 {
 	return analog_port_val;
+}
 }

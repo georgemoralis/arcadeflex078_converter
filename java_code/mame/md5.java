@@ -20,9 +20,15 @@
  * Still in the public domain.
  */
 
-#include <string.h>		/* for memcpy() */
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include "md5.h"
+public class md5
+{
+	
 
 #ifndef LSB_FIRST
 void
@@ -237,3 +243,4 @@ MD5Transform(UWORD32 buf[4], UWORD32 const in[16])
 
 #endif
 
+}

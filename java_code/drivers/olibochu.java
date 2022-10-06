@@ -10,9 +10,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class olibochu
+{
+	
 static struct tilemap *bg_tilemap;
 
 PALETTE_INIT( olibochu )
@@ -471,3 +477,4 @@ ROM_END
 
 
 GAMEX( 1981, olibochu, 0, olibochu, olibochu, 0, ROT270, "Irem + GDI", "Oli-Boo-Chu", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+}

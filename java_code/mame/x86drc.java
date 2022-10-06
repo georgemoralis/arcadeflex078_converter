@@ -8,9 +8,15 @@
 **
 **#################################################################################################*/
 
-#include "driver.h"
-#include "x86drc.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class x86drc
+{
+	
 #define LOG_DISPATCHES		0
 
 
@@ -596,3 +602,4 @@ static void log_dispatch(struct drccore *drc)
 		logerror("Disp:%08X\n", *drc->pcptr);
 }
 #endif
+}

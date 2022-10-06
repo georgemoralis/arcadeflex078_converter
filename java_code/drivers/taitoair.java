@@ -177,13 +177,15 @@ cpu #2 (PC=0000060E): unmapped memory word read from 0000683A & FFFF
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/taitosnd.h"
-#include "vidhrdw/taitoic.h"
-#include "cpu/tms32025/tms32025.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taitoair
+{
+	
 static int dsp_HOLD_signal;
 
 static data16_t *taitoh_68000_mainram;
@@ -778,3 +780,4 @@ static DRIVER_INIT( taitoair )
 /*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY  FULLNAME */
 GAMEX( 1988, topland,  0,        airsys,   topland,  taitoair, ROT0,    "Taito Corporation Japan", "Top Landing (World)", GAME_NOT_WORKING )
 GAMEX( 1990, ainferno, 0,        airsys,   ainferno, taitoair, ROT0,    "Taito America Corporation", "Air Inferno (US)", GAME_NOT_WORKING )
+}

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kingobox
+{
+	
 UINT8 *kingofb_videoram2;
 UINT8 *kingofb_colorram2;
 UINT8 *kingofb_scroll_y;
@@ -337,4 +343,5 @@ VIDEO_UPDATE( ringking )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	ringking_draw_sprites(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

@@ -6,9 +6,15 @@
  see (drivers/wwfwfest.c) for more notes
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wwfwfest
+{
+	
 static struct tilemap *fg0_tilemap, *bg0_tilemap, *bg1_tilemap;
 int wwfwfest_pri;
 int wwfwfest_bg0_scrollx, wwfwfest_bg0_scrolly, wwfwfest_bg1_scrollx, wwfwfest_bg1_scrolly;
@@ -279,4 +285,5 @@ VIDEO_UPDATE( wwfwfest )
 		wwfwfest_drawsprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg0_tilemap,0,0);
 	}
+}
 }

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class hc55516
+{
+	
 
 #define	INTEGRATOR_LEAK_TC		0.001
 #define	FILTER_DECAY_TC			0.004
@@ -197,3 +203,4 @@ WRITE_HANDLER( hc55516_1_clock_w ) { hc55516_clock_w(1,data); }
 WRITE_HANDLER( hc55516_1_clock_clear_w ) { hc55516_clock_clear_w(1,data); }
 WRITE_HANDLER( hc55516_1_clock_set_w )  { hc55516_clock_set_w(1,data); }
 WRITE_HANDLER( hc55516_1_digit_clock_clear_w ) { hc55516_digit_clock_clear_w(1,data); }
+}

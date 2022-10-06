@@ -8,10 +8,15 @@ Additional tweaking by Jarek Burczynski
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class magmax
+{
+	
 PALETTE_INIT( magmax );
 VIDEO_UPDATE( magmax );
 VIDEO_START( magmax );
@@ -430,3 +435,4 @@ ROM_END
 
 
 GAME( 1985, magmax, 0, magmax, magmax, 0, ROT0, "Nichibutsu", "Mag Max" )
+}

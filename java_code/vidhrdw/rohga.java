@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rohga
+{
+	
 /******************************************************************************/
 
 static int wizdfire_bank_callback(const int bank)
@@ -496,4 +501,5 @@ VIDEO_UPDATE( nitrobal )
 	nitrobal_drawsprites(bitmap,cliprect,buffered_spriteram16_2,4);
 
 	deco16_tilemap_1_draw(bitmap,cliprect,0,0);
+}
 }

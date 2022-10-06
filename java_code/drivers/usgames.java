@@ -23,9 +23,15 @@ Sound: AY-3-8912
 
 */
 
-#include "driver.h"
-#include "vidhrdw/crtc6845.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class usgames
+{
+	
 /* vidhrdw */
 WRITE_HANDLER( usg_videoram_w );
 WRITE_HANDLER( usg_charram_w );
@@ -384,3 +390,4 @@ GAME( 1988, usg83x, usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.3X"
 GAME( 1988, usg82,  usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.2" )	// "Feb.08,1988"
 GAME( 1991, usg185, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V18.7C" )
 GAME( 1992, usg252, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V25.4X" )
+}

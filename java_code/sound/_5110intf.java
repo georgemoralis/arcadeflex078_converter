@@ -10,12 +10,15 @@
 
 ******************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "tms5110.h"
+public class _5110intf
+{
+	
 
 
 #define MAX_SAMPLE_CHUNK	10000
@@ -246,4 +249,5 @@ void tms5110_set_frequency(int frequency)
 	if (stream != -1)
 		stream_update(stream, 0);
 	source_step = (UINT32)((double)(frequency / 80) * (double)FRAC_ONE / (double)Machine->sample_rate);
+}
 }

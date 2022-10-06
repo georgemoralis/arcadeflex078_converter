@@ -6,9 +6,15 @@ driver by Mirko Buffoni
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class higemaru
+{
+	
 
 extern WRITE_HANDLER( higemaru_videoram_w );
 extern WRITE_HANDLER( higemaru_colorram_w );
@@ -238,3 +244,4 @@ ROM_END
 
 
 GAME( 1984, higemaru, 0, higemaru, higemaru, 0, ROT0, "Capcom", "Pirate Ship Higemaru" )
+}

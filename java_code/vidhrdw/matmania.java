@@ -12,9 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class matmania
+{
+	
 
 
 unsigned char *matmania_videoram2,*matmania_colorram2;
@@ -363,4 +369,5 @@ VIDEO_UPDATE( maniach )
 				8*sx,8*sy,
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
+}
 }

@@ -5,10 +5,15 @@ architecture.  Really, it's not so bad!
 
 **********************************************************/
 
-#include "driver.h"
-#include "mamedbg.h"
-#include "ccpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.ccpu;
 
+public class ccpu
+{
+	
 static UINT8 ccpu_reg_layout[] = {
 	CCPU_PC, CCPU_CFLAG, CCPU_CSTATE, CCPU_A, CCPU_B, CCPU_I, -1,
 	CCPU_P, CCPU_J, CCPU_ACC, CCPU_CMP, CCPU_PA0, 0,
@@ -421,8 +426,6 @@ void ccpu_SetInputs(int inputs, int switches)
  * 7) Various OUT functions correct?
  */
 
-#include <stdio.h>
-#include <string.h>
 
 /*
  * Use 0xF000 so as to keep the current page, since it may well
@@ -505,7 +508,6 @@ extern int sdwYOffset;
 
 /* functions */
 
-#include "ccputabl.c"
 
 /*
  * cineExec() is what performs all the "processors" work; it will
@@ -2368,4 +2370,5 @@ void cGetContext(CONTEXTCCPU *c)
 	c -> eRegJ = register_J;
 	c -> eRegP = register_P;
 	c -> eCState = state;
+}
 }

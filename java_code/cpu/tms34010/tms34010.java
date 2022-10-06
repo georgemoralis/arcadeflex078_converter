@@ -7,16 +7,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "driver.h"
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "tms34010.h"
-#include "34010ops.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
 
+public class tms34010
+{
+	
 #ifdef MAME_DEBUG
 extern int debug_key_pressed;
 #endif
@@ -730,11 +729,8 @@ static INT32 raster_op_21(INT32 newpix, INT32 oldpix) { return (oldpix > newpix)
 **#################################################################################################*/
 
 /* includes the static function prototypes and the master opcode table */
-#include "34010tbl.c"
 
 /* includes the actual opcode implementations */
-#include "34010ops.c"
-#include "34010gfx.c"
 
 
 
@@ -2268,4 +2264,5 @@ int tms34010_host_r(int cpunum, int reg)
 	activecpu_reset_banking();
 
 	return result;
+}
 }

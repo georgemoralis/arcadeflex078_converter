@@ -55,9 +55,15 @@ Port I/O Write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class thepit
+{
+	
 extern unsigned char *thepit_attributesram;
 extern unsigned char *intrepid_sprite_bank_select;
 WRITE_HANDLER( thepit_attributes_w );
@@ -911,3 +917,4 @@ GAME( 1982, machomou, 0,        suprmous, suprmous, 0, ROT90, "Techstar", "Macho
 GAME( 1983, intrepid, 0,        intrepid, intrepid, 0, ROT90, "Nova Games Ltd.", "Intrepid (set 1)" )
 GAME( 1983, intrepi2, intrepid, intrepid, intrepid, 0, ROT90, "Nova Games Ltd.", "Intrepid (set 2)" )
 GAMEX(1984, zaryavos, 0,        intrepid, intrepid, 0, ROT90, "Nova Games of Canada", "Zarya Vostoka", GAME_NOT_WORKING )
+}

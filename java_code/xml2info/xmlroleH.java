@@ -11,8 +11,15 @@
 #define XmlPrologStateInitExternalEntity    XmlPrologStateInitExternalEnt
 #endif
 
-#include "xmltok.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package xml2info;
 
+public class xmlroleH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -112,3 +119,4 @@ void XmlPrologStateInitExternalEntity(PROLOG_STATE *);
 #endif
 
 #endif /* not XmlRole_INCLUDED */
+}

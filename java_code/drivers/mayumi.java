@@ -6,9 +6,15 @@ Kikiippatsu Mayumi-chan (c) 1988 Victory L.L.C.
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mayumi
+{
+	
 #define MCLK 10000000
 
 VIDEO_START( mayumi );
@@ -322,3 +328,4 @@ ROM_START( mayumi )
 ROM_END
 
 GAME ( 1988, mayumi, 0, mayumi, mayumi, 0, ROT0, "[Sanritsu] Victory L.L.C.",  "Kikiippatsu Mayumi-chan (Japan)" )
+}

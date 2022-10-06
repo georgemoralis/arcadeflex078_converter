@@ -5,11 +5,15 @@
 /* ============================== MAME STUFF ============================== */
 /* ======================================================================== */
 
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68kmameH
+{
+	
 /* Configuration switches (see m68kconf.h for explanation) */
 #define M68K_SEPARATE_READS         OPT_ON
 
@@ -166,3 +170,4 @@ INLINE void m68kx_write_memory_32_pd(unsigned int address, unsigned int value)
 /* ======================================================================== */
 
 #endif /* M68KMAME__HEADER */
+}

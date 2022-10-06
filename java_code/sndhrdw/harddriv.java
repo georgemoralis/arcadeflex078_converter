@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "cpu/tms32010/tms32010.h"
-#include "machine/atarigen.h"
-#include "harddriv.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class harddriv
+{
+	
 
 #define BIO_FREQUENCY		(1000000 / 50)
 #define CYCLES_PER_BIO		(20000000 / BIO_FREQUENCY)
@@ -393,4 +398,5 @@ READ16_HANDLER( hdsnddsp_compare_r )
 {
 	logerror("%06X:hdsnddsp_compare_r(%04X)\n", activecpu_get_previouspc(), offset);
 	return 0;
+}
 }

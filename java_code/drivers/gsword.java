@@ -134,11 +134,15 @@ reg: 0->1 (main->2nd) /     : (1->0) 2nd->main :
 
 ******************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "machine/tait8741.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gsword
+{
+	
 
 extern WRITE_HANDLER( gsword_charbank_w );
 extern WRITE_HANDLER( gsword_videoctrl_w );
@@ -744,3 +748,4 @@ static DRIVER_INIT( gsword )
 
 GAMEX( 1983, josvolly, 0, josvolly, gsword, 0,      ROT90, "Taito Corporation", "Joshi Volleyball", GAME_NOT_WORKING )
 GAMEX( 1984, gsword,   0, gsword,   gsword, gsword, ROT0,  "Taito Corporation", "Great Swordsman", GAME_IMPERFECT_COLORS )
+}

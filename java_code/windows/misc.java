@@ -29,16 +29,18 @@ Version 0.2, May 2000
 /* Todo ?
 -rename uclock to sysdep_clock (Hans de Goede)
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class misc
+{
+	
 #ifndef _MSC_VER
-#include <sys/time.h>
 #endif
 
-#include "misc.h"
 
 
 #ifdef HAVE_GETTIMEOFDAY
@@ -143,4 +145,5 @@ void fprint_colums(FILE *f, const char *text1, const char *text2)
       }
       fprintf(f, "\n");
    }
+}
 }

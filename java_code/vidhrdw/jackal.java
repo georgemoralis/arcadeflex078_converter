@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jackal
+{
+	
 unsigned char *jackal_scrollram,*jackal_videoctrl;
 
 
@@ -270,4 +276,5 @@ VIDEO_UPDATE( jackal )
 	/* Draw the sprites. */
 	jackal_draw_sprites(bitmap,ss,0x0f5,3);
 	jackal_draw_sprites(bitmap,sr,0x500,1);
+}
 }

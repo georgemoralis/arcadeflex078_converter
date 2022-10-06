@@ -4,8 +4,15 @@
 
 /*
 
-To use, #include "memdbg.h"
-Always call MALLOC and FREE instead of malloc,free.
+To use, /*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
+
+public class memdbg
+{
+	Always call MALLOC and FREE instead of malloc,free.
 If the symbol USE_MEMDBG is defined, MALLOC and FREE are rerouted to
 special tracking routines, that also check for corruption, bogus frees,
 etc.
@@ -18,9 +25,6 @@ Phil
 
 */
 
-#include <string.h>
-#include <assert.h>
-#include "memdbg.h"
 
 /* MEM_UNINITIALIZED_VALUE gets copied to memory regions when they are alloc'd or free'd */
 #define MEM_UNINITIALIZED_VALUE	0x0A
@@ -181,3 +185,4 @@ memdbg_Free( void *pData )
 
 	EndCriticalSection();
 } /* memdbg_Free */
+}

@@ -15,10 +15,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "lemmings.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lemmings
+{
+	
 /******************************************************************************/
 
 static WRITE16_HANDLER( lemmings_control_w )
@@ -348,3 +353,4 @@ ROM_END
 /******************************************************************************/
 
 GAME( 1991, lemmings, 0, lemmings, lemmings, 0, ROT0, "Data East USA", "Lemmings (US Prototype)" )
+}

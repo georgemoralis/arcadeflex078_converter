@@ -7,12 +7,15 @@ Preliminary driver by:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class battlnts
+{
+	
 /* from vidhrdw */
 WRITE_HANDLER( battlnts_spritebank_w );
 VIDEO_START( battlnts );
@@ -490,3 +493,4 @@ GAMEX(1987, thehustl, 0,		battlnts, thehustj, 0,		  ROT90, "Konami", "The Hustle
 GAMEX(1987, thehustj, thehustl, battlnts, thehustj, 0,		  ROT90, "Konami", "The Hustler (Japan version J)", GAME_NO_COCKTAIL )
 GAMEX(1987, rackemup, thehustl, battlnts, thehustj, rackemup, ROT90, "Konami", "Rack 'em Up", GAME_NO_COCKTAIL )
 
+}

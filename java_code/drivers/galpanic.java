@@ -92,10 +92,15 @@ Stephh's additional notes :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/random.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class galpanic
+{
+	
 
 
 extern data16_t *galpanic_bgvideoram,*galpanic_fgvideoram;
@@ -1151,3 +1156,4 @@ GAMEX( 1995, fantsy95, 0,        comad,    fantasia, 0, ROT90, "Hi-max Technolog
 GAMEX( 1996, missw96,  0,        comad,    missw96,  0, ROT0,  "Comad", "Miss World '96 Nude", GAME_NO_COCKTAIL )
 GAMEX( 1997, fantsia2, 0,        fantsia2, missw96,  0, ROT0,  "Comad", "Fantasia II", GAME_NO_COCKTAIL )
 GAME(  1997, galhustl, 0,        galhustl, galhustl, 0, ROT0,  "ACE International", "Gals Hustler" )
+}

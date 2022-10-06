@@ -25,11 +25,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/8255ppi.h"
-#include "vidhrdw/generic.h"
-#include "dribling.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dribling
+{
+	
 
 
 /*************************************
@@ -373,3 +377,4 @@ ROM_END
 
 GAMEX( 1983, dribling, 0,        dribling, dribling, 0, ROT0, "Model Racing", "Dribbling", GAME_NO_SOUND )
 GAMEX( 1983, driblino, dribling, dribling, dribling, 0, ROT0, "Model Racing (Olympia license)", "Dribbling (Olympia)", GAME_NO_SOUND )
+}

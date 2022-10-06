@@ -19,12 +19,15 @@
  *
  *****************************************************************************/
 
-#include "driver.h"
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "z180.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z180;
 
+public class z180
+{
+	
 #define VERBOSE 0
 
 #if VERBOSE
@@ -735,7 +738,6 @@ static UINT8 SZHV_inc[256]; /* zero, sign, half carry and overflow flags INC r8 
 static UINT8 SZHV_dec[256]; /* zero, sign, half carry and overflow flags DEC r8 */
 
 #if BIG_FLAGS_ARRAY
-#include <signal.h>
 static UINT8 *SZHVC_add = 0;
 static UINT8 *SZHVC_sub = 0;
 #endif
@@ -758,16 +760,7 @@ static void z180_writecontrol(offs_t port, data8_t data);
 static void z180_dma0(void);
 static void z180_dma1(void);
 
-#include "z180daa.h"
-#include "z180ops.h"
-#include "z180tbl.h"
 
-#include "z180cb.c"
-#include "z180xy.c"
-#include "z180dd.c"
-#include "z180fd.c"
-#include "z180ed.c"
-#include "z180op.c"
 
 static data8_t z180_readcontrol(offs_t port)
 {
@@ -2528,3 +2521,4 @@ unsigned z180_dasm( char *buffer, unsigned pc )
 #endif
 }
 
+}

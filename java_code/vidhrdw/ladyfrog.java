@@ -5,9 +5,15 @@
   Functions to emulate the video hardware of the machine.
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-static int tilebank=0;
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
+
+public class ladyfrog
+{
+	static int tilebank=0;
 
 static struct tilemap *tilemap;
 static int palette_bank,gfxctrl;
@@ -152,3 +158,4 @@ VIDEO_UPDATE( ladyfrog )
     ladyfrog_draw_sprites(bitmap,cliprect);
 }
 
+}

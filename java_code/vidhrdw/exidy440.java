@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "exidy440.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exidy440
+{
+	
 #define SPRITE_COUNT		40
 #define SPRITERAM_SIZE		(SPRITE_COUNT * 4)
 #define MAX_SCANLINE		240
@@ -537,4 +542,5 @@ VIDEO_EOF( exidy440 )
 		for (i = 0; i <= 12; i++, time += increment)
 			timer_set(time, beamx, beam_firq_callback);
 	}
+}
 }

@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class wrally
+{
+	
 data16_t *wrally_encr_table[2];
 
 /***************************************************************************
@@ -151,4 +158,5 @@ DRIVER_INIT( wrally )
 		wrally_encr_table[0][i] = wrally_decode_vram(i);
 		wrally_encr_table[1][i] = wrally_decode_vram(i);
 	}
+}
 }

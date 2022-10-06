@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class senjyo
+{
+	
 
 /* z80 pio */
 static void pio_interrupt(int state)
@@ -100,4 +105,5 @@ void senjyo_sh_update(void)
 	else single_rate = 0;
 
 	mixer_set_sample_frequency(channel,single_rate);
+}
 }

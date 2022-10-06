@@ -7,13 +7,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include "driver.h"
-#include "osd_cpu.h"
-#include "mamedbg.h"
-#include "tms34010.h"
-#include "34010ops.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
 
+public class _34010fld
+{
+	
 
 /*###################################################################################################
 **	FIELD WRITE FUNCTIONS
@@ -659,3 +661,4 @@ data32_t rfield_s_31(offs_t offset)
 }
 
 
+}

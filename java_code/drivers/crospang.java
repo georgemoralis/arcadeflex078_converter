@@ -11,9 +11,15 @@ some bits by David Haywood
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class crospang
+{
+	
 static struct tilemap *bg_layer,*fg_layer;
 data16_t *bg_videoram,*fg_videoram;
 
@@ -468,3 +474,4 @@ ROM_START( crospang )
 ROM_END
 
 GAMEX( 199?, crospang, 0, crospang, crospang, 0, ROT0, "Oksan?", "Cross Pang", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND)
+}

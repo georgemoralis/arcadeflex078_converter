@@ -70,10 +70,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class seta2
+{
+	
 data16_t *seta2_vregs;
 
 static int yoffset;
@@ -389,4 +394,5 @@ VIDEO_EOF( seta2 )
 {
 	/* Buffer sprites by 1 frame */
 	memcpy(buffered_spriteram16,spriteram16,spriteram_size);
+}
 }

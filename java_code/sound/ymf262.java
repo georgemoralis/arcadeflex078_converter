@@ -39,12 +39,15 @@ differences between OPL2 and OPL3 shown in datasheets:
 
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"		/* use M.A.M.E. */
-#include "ymf262.h"
+public class ymf262
+{
+	
 
 #ifndef PI
 #define PI 3.14159265358979323846
@@ -2768,3 +2771,4 @@ void YMF262UpdateOne(int which, INT16 **buffers, int length)
 
 }
 #endif /* BUILD_YMF262 */
+}

@@ -10,8 +10,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class timeplt
+{
+	
 static READ_HANDLER( timeplt_portB_r );
 static WRITE_HANDLER( timeplt_filter_w );
 
@@ -121,3 +128,4 @@ WRITE_HANDLER( timeplt_sh_irqtrigger_w )
 	last = data;
 }
 
+}

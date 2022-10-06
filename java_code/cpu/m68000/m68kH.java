@@ -27,8 +27,15 @@
 /* ======================================================================== */
 
 /* Import the configuration for this build */
-#include "m68kconf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68kH
+{
+	
 
 /* ======================================================================== */
 /* ============================ GENERAL DEFINES =========================== */
@@ -338,7 +345,6 @@ unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_
 /* ======================================================================== */
 
 #if M68K_COMPILE_FOR_MAME == OPT_ON
-#include "m68kmame.h"
 #endif /* M68K_COMPILE_FOR_MAME */
 
 
@@ -347,3 +353,4 @@ unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_
 /* ======================================================================== */
 
 #endif /* M68K__HEADER */
+}

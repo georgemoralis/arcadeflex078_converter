@@ -6,27 +6,24 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class wind3d
+{
+	
 #ifdef __GNUC__
  #define NONAMELESSUNION
 #endif
-#include <ddraw.h>
-#include <d3d.h>
 
 // additional definitions for d3d
-#include "d3d_extra.h"
 
 // standard C headers
-#include <math.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "video.h"
-#include "blit.h"
-#include "wind3dfx.h"
-#include "winddraw.h"
 
 
 
@@ -2660,4 +2657,5 @@ static void init_vertices_preprocess(LPRECT src)
 	preprocess_vertex[1].sx = -0.5f + rect.right; preprocess_vertex[1].sy = -0.5f + rect.top;
 	preprocess_vertex[2].sx = -0.5f + rect.left;  preprocess_vertex[2].sy = -0.5f + rect.bottom;
 	preprocess_vertex[3].sx = -0.5f + rect.right; preprocess_vertex[3].sy = -0.5f + rect.bottom;
+}
 }

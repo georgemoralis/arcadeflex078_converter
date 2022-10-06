@@ -75,12 +75,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include "sndhrdw/mcr.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mcr1
+{
+	
 
 static const UINT8 *nvram_init;
 
@@ -516,3 +519,4 @@ static DRIVER_INIT( kick )
 GAME( 1981, solarfox, 0,    mcr1, solarfox, solarfox, ROT90 ^ ORIENTATION_FLIP_Y, "Bally Midway", "Solar Fox" )
 GAME( 1981, kick,     0,    mcr1, kick,     kick,     ORIENTATION_SWAP_XY,        "Midway", "Kick (upright)" )
 GAME( 1981, kicka,    kick, mcr1, kicka,    kick,     ROT90,                      "Midway", "Kick (cocktail)" )
+}

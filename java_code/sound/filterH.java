@@ -1,8 +1,15 @@
 #ifndef __FILTER_H
 #define __FILTER_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class filterH
+{
+	
 /* Max filter order */
 #define FILTER_ORDER_MAX 51
 
@@ -54,3 +61,4 @@ INLINE void filter_insert(filter* f, filter_state* s, filter_real x) {
 filter_real filter_compute(filter* f, filter_state* s);
 
 #endif
+}

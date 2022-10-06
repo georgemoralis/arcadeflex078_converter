@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "vidhrdw/s2636.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cvs
+{
+	
 #define MAX_STARS        250
 #define STARS_COLOR_BASE 16
 
@@ -718,4 +724,5 @@ VIDEO_UPDATE( cvs )
 		}
 
     }
+}
 }

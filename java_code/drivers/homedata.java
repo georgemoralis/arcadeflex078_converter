@@ -216,12 +216,15 @@ Custom: GX61A01
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/upd7810/upd7810.h"
-#include "homedata.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class homedata
+{
+	
 
 
 /********************************************************************************/
@@ -1870,3 +1873,4 @@ GAMEX(1991?,mjikaga,  0, lemnangl, mjikaga,  mjikaga,    ROT0, "Mitchell",  "Mah
 
 
 
+}

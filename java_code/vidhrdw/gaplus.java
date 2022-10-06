@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gaplus
+{
+	
 /***************************************************************************
 
   Convert the color PROMs into a more useable format.
@@ -398,4 +404,5 @@ VIDEO_UPDATE( gaplus )
 	}
 
 	gaplus_draw_sprites(bitmap);
+}
 }

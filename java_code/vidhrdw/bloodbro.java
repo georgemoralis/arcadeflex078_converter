@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bloodbro
+{
+	
 data16_t *bloodbro_txvideoram;
 data16_t *bloodbro_bgvideoram,*bloodbro_fgvideoram;
 data16_t *bloodbro_scroll;
@@ -284,3 +291,4 @@ VIDEO_UPDATE( skysmash )
 }
 
 
+}

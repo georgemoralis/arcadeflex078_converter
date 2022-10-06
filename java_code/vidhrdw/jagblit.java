@@ -10,8 +10,15 @@
 	#define COMMAND  -- blitter command bits for blitter
 	#define A1FIXED  -- fixed A1 flag bits for blitter
 	#define A2FIXED  -- fixed A2 flag bits for blitter
-	#include "jagblit.c"
+	/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class jagblit
+{
+	
 ****************************************************************************/
 
 
@@ -477,4 +484,5 @@ static void FUNCNAME(UINT32 command, UINT32 a1flags, UINT32 a2flags)
 	blitter_regs[A1_PIXEL] = (a1_y & 0xffff0000) | ((a1_x >> 16) & 0xffff);
 	blitter_regs[A1_FPIXEL] = (a1_y << 16) | (a1_x & 0xffff);
 	blitter_regs[A2_PIXEL] = (a2_y & 0xffff0000) | ((a2_x >> 16) & 0xffff);
+}
 }

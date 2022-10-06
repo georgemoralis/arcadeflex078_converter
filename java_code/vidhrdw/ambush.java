@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ambush
+{
+	
 
 unsigned char *ambush_scrollram;
 unsigned char *ambush_colorbank;
@@ -178,4 +184,5 @@ VIDEO_UPDATE( ambush )
 
 	/* Draw the foreground priority characters */
 	draw_chars(bitmap, 0x10);
+}
 }

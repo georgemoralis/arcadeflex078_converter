@@ -4,8 +4,15 @@ Atari Orbit video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class orbit
+{
+	
 UINT8* orbit_playfield_ram;
 UINT8* orbit_sprite_ram;
 
@@ -116,4 +123,5 @@ VIDEO_UPDATE( orbit )
 	tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 
 	orbit_draw_sprites(bitmap, cliprect);
+}
 }

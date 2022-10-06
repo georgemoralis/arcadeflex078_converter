@@ -11,10 +11,15 @@
  *
  */
 
-#include "driver.h"
-#include "sega.h"
-#include "segar.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class sega
+{
+	
 UINT8 *sega_mem;
 
 static UINT8 mult1;
@@ -181,3 +186,4 @@ READ_HANDLER( elim4_IN4_r )
 	return (0);
 }
 
+}

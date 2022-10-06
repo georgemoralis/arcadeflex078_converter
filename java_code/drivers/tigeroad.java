@@ -19,10 +19,15 @@ Memory Overview:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tigeroad
+{
+	
 
 extern WRITE16_HANDLER( tigeroad_videoram_w );
 extern WRITE16_HANDLER( tigeroad_videoctrl_w );
@@ -765,3 +770,4 @@ GAME ( 1987, toramich, tigeroad, toramich, toramich, tigeroad, ROT0, "Capcom", "
 /* F1 Dream has an Intel 8751 microcontroller for protection */
 GAME ( 1988, f1dream,  0,        tigeroad, f1dream,  f1dream,  ROT0, "Capcom (Romstar license)", "F-1 Dream" )
 GAME ( 1988, f1dreamb, f1dream,  tigeroad, f1dream,  tigeroad, ROT0, "bootleg", "F-1 Dream (bootleg)" )
+}

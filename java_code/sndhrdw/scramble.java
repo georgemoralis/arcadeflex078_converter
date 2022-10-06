@@ -12,10 +12,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "machine/7474.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class scramble
+{
+	
 
 
 /* The timer clock in Scramble which feeds the upper 4 bits of    		*/
@@ -267,3 +272,4 @@ WRITE_HANDLER( zigzag_8910_control_trigger_w )
 	AY8910_control_port_0_w(0,latch);
 }
 
+}

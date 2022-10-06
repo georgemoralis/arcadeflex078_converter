@@ -1,8 +1,15 @@
 #ifndef S2650_H
 #define S2650_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.s2650;
 
+public class s2650H
+{
+	
 enum {
 	S2650_PC=1, S2650_PS, S2650_R0, S2650_R1, S2650_R2, S2650_R3,
 	S2650_R1A, S2650_R2A, S2650_R3A,
@@ -48,3 +55,4 @@ extern int Dasm2650(char *buff, int PC);
 #endif
 
 #endif
+}

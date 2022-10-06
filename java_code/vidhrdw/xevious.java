@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xevious
+{
+	
 
 unsigned char *xevious_fg_videoram,*xevious_fg_colorram;
 unsigned char *xevious_bg_videoram,*xevious_bg_colorram;
@@ -450,4 +456,5 @@ VIDEO_UPDATE( xevious )
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

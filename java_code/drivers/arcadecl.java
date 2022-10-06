@@ -66,10 +66,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "arcadecl.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class arcadecl
+{
+	
 
 
 /*************************************
@@ -456,3 +461,4 @@ static DRIVER_INIT( sparkz )
 
 GAME( 1992, arcadecl, 0, arcadecl, arcadecl, arcadecl, ROT0, "Atari Games", "Arcade Classics (prototype)" )
 GAME( 1992, sparkz,   0, arcadecl, sparkz,   sparkz,   ROT0, "Atari Games", "Sparkz (prototype)" )
+}

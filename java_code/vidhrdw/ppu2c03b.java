@@ -7,9 +7,15 @@
 
 ******************************************************************************/
 
-#include <math.h>
-#include "vidhrdw/ppu2c03b.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ppu2c03b
+{
+	
 /* constant definitions */
 #define BOTTOM_VISIBLE_SCANLINE	239		/* The bottommost visible scanline */
 #define NMI_SCANLINE     		244		/* 244 times Bayou Billy perfectly */
@@ -1348,4 +1354,5 @@ WRITE_HANDLER( ppu2c03b_0_w )
 WRITE_HANDLER( ppu2c03b_1_w )
 {
 	ppu2c03b_w( 1, offset, data );
+}
 }

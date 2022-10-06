@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class polepos
+{
+	
 
 #define VERBOSE 0
 
@@ -451,3 +458,4 @@ WRITE_HANDLER( polepos_start_w )
 	last_start = data;
 }
 
+}

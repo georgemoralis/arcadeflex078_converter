@@ -718,36 +718,39 @@ static void (*fill_op_table[])(int) =
 	/* 1bpp cases */
 	#define BITS_PER_PIXEL					1
 	#define FUNCTION_NAME(base)				base##_1_op0
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+	/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms34010;
+
+public class _34010gfx
+{
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 2bpp cases */
 	#define BITS_PER_PIXEL					2
 	#define FUNCTION_NAME(base)				base##_2_op0
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 4bpp cases */
 	#define BITS_PER_PIXEL					4
 	#define FUNCTION_NAME(base)				base##_4_op0
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 8bpp cases */
 	#define BITS_PER_PIXEL					8
 	#define FUNCTION_NAME(base)				base##_8_op0
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 16bpp cases */
 	#define BITS_PER_PIXEL					16
 	#define FUNCTION_NAME(base)				base##_16_op0
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 #undef TRANSPARENCY
@@ -764,36 +767,31 @@ static void (*fill_op_table[])(int) =
 	/* 1bpp cases */
 	#define BITS_PER_PIXEL					1
 	#define FUNCTION_NAME(base)				base##_1_opx
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 2bpp cases */
 	#define BITS_PER_PIXEL					2
 	#define FUNCTION_NAME(base)				base##_2_opx
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 4bpp cases */
 	#define BITS_PER_PIXEL					4
 	#define FUNCTION_NAME(base)				base##_4_opx
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 8bpp cases */
 	#define BITS_PER_PIXEL					8
 	#define FUNCTION_NAME(base)				base##_8_opx
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 16bpp cases */
 	#define BITS_PER_PIXEL					16
 	#define FUNCTION_NAME(base)				base##_16_opx
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 #undef TRANSPARENCY
@@ -811,36 +809,31 @@ static void (*fill_op_table[])(int) =
 	/* 1bpp cases */
 	#define BITS_PER_PIXEL					1
 	#define FUNCTION_NAME(base)				base##_1_op0_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 2bpp cases */
 	#define BITS_PER_PIXEL					2
 	#define FUNCTION_NAME(base)				base##_2_op0_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 4bpp cases */
 	#define BITS_PER_PIXEL					4
 	#define FUNCTION_NAME(base)				base##_4_op0_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 8bpp cases */
 	#define BITS_PER_PIXEL					8
 	#define FUNCTION_NAME(base)				base##_8_op0_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 16bpp cases */
 	#define BITS_PER_PIXEL					16
 	#define FUNCTION_NAME(base)				base##_16_op0_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 #undef TRANSPARENCY
@@ -857,36 +850,31 @@ static void (*fill_op_table[])(int) =
 	/* 1bpp cases */
 	#define BITS_PER_PIXEL					1
 	#define FUNCTION_NAME(base)				base##_1_opx_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 2bpp cases */
 	#define BITS_PER_PIXEL					2
 	#define FUNCTION_NAME(base)				base##_2_opx_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 4bpp cases */
 	#define BITS_PER_PIXEL					4
 	#define FUNCTION_NAME(base)				base##_4_opx_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 8bpp cases */
 	#define BITS_PER_PIXEL					8
 	#define FUNCTION_NAME(base)				base##_8_opx_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 	/* 16bpp cases */
 	#define BITS_PER_PIXEL					16
 	#define FUNCTION_NAME(base)				base##_16_opx_trans
-	#include "34010gfx.c"
-	#undef FUNCTION_NAME
+		#undef FUNCTION_NAME
 	#undef BITS_PER_PIXEL
 
 #undef TRANSPARENCY
@@ -1933,3 +1921,4 @@ bailout:
 
 #endif
 
+}

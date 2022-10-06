@@ -118,15 +118,16 @@ TAKO-8
 
 ----------------------------------------------------------------*/
 
-#include "driver.h"
-#include "state.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "vidhrdw/generic.h"
-#include "cpu/sh2/sh2.h"
-#include "machine/eeprom.h"
+public class psikyosh
+{
+	
 
-#include "psikyosh.h"
 
 #define ROMTEST 0 /* Does necessary stuff to perform rom test, uses RAM as it doesn't dispose of GFX after decoding */
 
@@ -954,3 +955,4 @@ GAMEX( 1999, s1945iii, 0,        psikyo5,   s1945iii, s1945iii, ROT270, "Psikyo"
 
 /* ps5v2 */
 GAMEX( 2000, dragnblz, 0,        psikyo5,   dragnblz, dragnblz, ROT270, "Psikyo", "Dragon Blaze", GAME_IMPERFECT_GRAPHICS )
+}

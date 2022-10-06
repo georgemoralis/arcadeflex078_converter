@@ -33,13 +33,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class superchs
+{
+	
 VIDEO_START( superchs );
 VIDEO_UPDATE( superchs );
 
@@ -563,3 +565,4 @@ static DRIVER_INIT( superchs )
 }
 
 GAME( 1992, superchs, 0, superchs, superchs, superchs, ROT0, "Taito America Corporation", "Super Chase - Criminal Termination (US)" )
+}

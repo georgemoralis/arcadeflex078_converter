@@ -6,8 +6,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class astrocde
+{
+	
 
 READ_HANDLER( gorf_timer_r )
 {
@@ -82,4 +89,5 @@ READ_HANDLER( ebases_trackball_r )
 	int ret = readinputport(3 + ebases_trackball_select);
 	logerror("Port %d = %d\n", ebases_trackball_select, ret);
 	return ret;
+}
 }

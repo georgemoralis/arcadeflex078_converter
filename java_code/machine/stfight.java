@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class stfight
+{
+	
 // this prototype will move to the driver
 WRITE_HANDLER( stfight_bank_w );
 
@@ -243,4 +248,5 @@ READ_HANDLER( stfight_fm_r )
     fm_data &= 0x7f;
 
     return( data );
+}
 }

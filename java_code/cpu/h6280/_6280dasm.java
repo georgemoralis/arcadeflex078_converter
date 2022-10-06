@@ -16,10 +16,15 @@
 
 ******************************************************************************/
 
-#include <stdio.h>
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.h6280;
 
+public class _6280dasm
+{
+	
 #ifdef MAME_DEBUG
 
 extern UINT8 H6280_debug_mmr[8];
@@ -249,3 +254,4 @@ int Dasm6280(char *buffer, int pc)
 }
 
 #endif
+}

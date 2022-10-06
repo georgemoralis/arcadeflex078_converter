@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class madmotor
+{
+	
 data16_t *madmotor_pf1_rowscroll;
 data16_t *madmotor_pf1_data,*madmotor_pf2_data,*madmotor_pf3_data;
 
@@ -306,4 +312,5 @@ VIDEO_UPDATE( madmotor )
 	tilemap_draw(bitmap,cliprect,madmotor_pf2_tilemap,0,0);
 	madmotor_drawsprites(bitmap,cliprect,0x00,0x00);
 	tilemap_draw(bitmap,cliprect,madmotor_pf1_tilemap,0,0);
+}
 }

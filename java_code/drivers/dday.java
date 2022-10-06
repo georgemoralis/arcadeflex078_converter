@@ -49,8 +49,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dday
+{
+	
 extern unsigned char *dday_bgvideoram;
 extern unsigned char *dday_fgvideoram;
 extern unsigned char *dday_textvideoram;
@@ -415,3 +422,4 @@ ROM_END
 
 GAMEX( 1982, dday,  0,    dday, dday,  0, ROT0, "Olympia", "D-Day", GAME_IMPERFECT_COLORS )
 GAMEX( 1982, ddayc, dday, dday, ddayc, 0, ROT0, "Olympia (Centuri license)", "D-Day (Centuri)", GAME_IMPERFECT_COLORS )
+}

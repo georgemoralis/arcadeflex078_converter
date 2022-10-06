@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gbusters
+{
+	
 
 
 int gbusters_priority;
@@ -77,4 +83,5 @@ VIDEO_UPDATE( gbusters )
 		K051960_sprites_draw(bitmap,cliprect,0,0);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
 	}
+}
 }

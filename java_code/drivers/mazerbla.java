@@ -35,9 +35,15 @@ TO DO:
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mazerbla
+{
+	
 static data8_t *cfb_ram;
 
 static UINT32 VCU_gfx_addr = 0;
@@ -61,7 +67,6 @@ static UINT8 lookup_RAM[0x100*4];
 
 
 
-#include "vidhrdw/res_net.h"
 /***************************************************************************
 
   Convert the color PROMs into a more useable format.
@@ -1634,3 +1639,4 @@ ROM_END
 
 GAMEX( 1983, mazerbla, 0, mazerbla,  mazerbla, 0, ROT0, "Stern", "Mazer Blazer", GAME_IMPERFECT_GRAPHICS |GAME_NO_SOUND | GAME_NOT_WORKING )
 GAMEX( 1983, greatgun, 0, greatgun,  greatgun, 0, ROT0, "Stern", "Great Guns", GAME_IMPERFECT_GRAPHICS )
+}

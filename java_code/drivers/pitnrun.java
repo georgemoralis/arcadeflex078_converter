@@ -63,9 +63,15 @@ K1000233A
      PR3
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pitnrun
+{
+	
 WRITE_HANDLER (pitnrun_68705_portA_w);
 WRITE_HANDLER (pitnrun_68705_portB_w);
 
@@ -359,3 +365,4 @@ ROM_END
 
 GAMEX( 1984, pitnrun, 0, pitnrun, pitnrun, 0, ROT90, "Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
 
+}

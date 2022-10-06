@@ -141,11 +141,15 @@ GP-13  COH-110  S-XMB 1-660-276-11
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "cpu/mips/psx.h"
-#include "includes/psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos11
+{
+	
 #define VERBOSE_LEVEL ( 0 )
 
 INLINE void verboselog( int n_level, const char *s_fmt, ... )
@@ -1362,3 +1366,4 @@ GAMEX( 1996, primglex,  0,        coh110, tekken,   namcos11, ROT0, "Namco", "Pr
 GAMEX( 1996, danceyes,  0,        coh110, namcos11, namcos11, ROT0, "Namco", "Dancing Eyes (DC1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 GAMEX( 1997, starswep,  0,        coh110, namcos11, namcos11, ROT0, "Axela/Namco", "Star Sweep (STP1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 GAMEX( 1998, myangel3,  0,        coh110, myangel3, namcos11, ROT0, "Namco", "Kosodate Quiz My Angel 3 (KQT1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+}

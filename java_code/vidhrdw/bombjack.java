@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bombjack
+{
+	
 static int background_image;
 
 static struct tilemap *fg_tilemap, *bg_tilemap;
@@ -149,4 +155,5 @@ VIDEO_UPDATE( bombjack )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
 	bombjack_draw_sprites(bitmap);
+}
 }

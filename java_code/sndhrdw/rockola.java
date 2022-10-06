@@ -1,6 +1,13 @@
 /* from Andrew Scott (ascott@utkux.utcc.utk.edu) */
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class rockola
+{
+	
 WRITE_HANDLER( rockola_flipscreen_w );
 
 #define TONE_VOLUME 25
@@ -313,4 +320,5 @@ WRITE_HANDLER( fantasy_sound2_w )
 	Sound2Base = 0x1000 + ((data & 0x70) << 4);
 //	Sound2Base = 0x1000 + ((data & 0x10) << 5) + ((data & 0x20) << 5) + ((data & 0x40) << 2);
 	Sound2Mask = 0xff;
+}
 }

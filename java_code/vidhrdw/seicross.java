@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class seicross
+{
+	
 UINT8 *seicross_row_scroll;
 
 static struct tilemap *bg_tilemap;
@@ -157,4 +163,5 @@ VIDEO_UPDATE( seicross )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	seicross_draw_sprites(bitmap);
+}
 }

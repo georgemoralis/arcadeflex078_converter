@@ -12,12 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "machine/ticket.h"
-#include "vidhrdw/tlc34076.h"
-#include "tickee.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tickee
+{
+	
 
 data16_t *tickee_control;
 
@@ -297,3 +300,4 @@ static DRIVER_INIT( tickee )
  *************************************/
 
 GAME( 1994, tickee, 0, tickee, tickee, tickee, ROT0, "Raster Elite", "Tickee Tickats" )
+}

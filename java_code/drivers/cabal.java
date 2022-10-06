@@ -40,11 +40,15 @@ COLORRAM (Colors)
 
 ******************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cabal
+{
+	
 extern VIDEO_START( cabal );
 extern VIDEO_UPDATE( cabal );
 WRITE16_HANDLER( cabal_flipscreen_w );
@@ -716,3 +720,4 @@ static DRIVER_INIT( cabal )
 GAME( 1988, cabal,   0,     cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 1)" )
 GAME( 1988, cabal2,  cabal, cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 2)" )
 GAMEX( 1988, cabalbl, cabal, cabalbl, cabalbl, 0,     ROT0, "bootleg", "Cabal (bootleg)", GAME_IMPERFECT_SOUND )
+}

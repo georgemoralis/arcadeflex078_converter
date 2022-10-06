@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class astrof
+{
+	
 
 unsigned char *astrof_color;
 unsigned char *tomahawk_protection;
@@ -246,4 +252,5 @@ VIDEO_UPDATE( astrof )
 	}
 	
 	copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+}
 }

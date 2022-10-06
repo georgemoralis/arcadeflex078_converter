@@ -9,9 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class stadhero
+{
+	
 data16_t *stadhero_pf1_data,*stadhero_pf2_data;
 static struct tilemap *pf1_tilemap,*pf2_tilemap;
 static int flipscreen;
@@ -176,3 +182,4 @@ VIDEO_START( stadhero )
 }
 
 /******************************************************************************/
+}

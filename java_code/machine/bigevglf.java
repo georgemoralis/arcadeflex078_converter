@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class bigevglf
+{
+	
 
 static unsigned char from_mcu;
 static int mcu_sent = 0,main_sent = 0;
@@ -105,3 +112,4 @@ READ_HANDLER( bigevglf_mcu_status_r )
 	return res;
 }
 
+}

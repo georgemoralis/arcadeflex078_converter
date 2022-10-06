@@ -5,10 +5,15 @@
   Functions to emulate the video hardware of the machine.
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "ctype.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bublbobl
+{
+	
 
 
 unsigned char *bublbobl_objectram;
@@ -102,4 +107,5 @@ VIDEO_UPDATE( bublbobl )
 
 		sx += 16;
 	}
+}
 }

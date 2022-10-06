@@ -3,9 +3,15 @@
  Speed Attack video hardware emulation
 
 *****************************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class speedatk
+{
+	
 static struct tilemap *tilemap;
 
 /*
@@ -115,4 +121,5 @@ VIDEO_START( speedatk )
 VIDEO_UPDATE( speedatk )
 {
 	tilemap_draw(bitmap,cliprect,tilemap,0,0);
+}
 }

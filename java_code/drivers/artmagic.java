@@ -15,12 +15,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "vidhrdw/tlc34076.h"
-#include "artmagic.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class artmagic
+{
+	
 
 static data16_t *control;
 static data16_t *ram_base;
@@ -1029,3 +1032,4 @@ GAME( 1993, ultennis, 0,        artmagic, ultennis, ultennis, ROT0, "Art & Magic
 GAME( 1994, cheesech, 0,        artmagic, cheesech, cheesech, ROT0, "Art & Magic", "Cheese Chase" )
 GAME( 1994, stonebal, 0,        stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (4 Players)" )
 GAME( 1994, stoneba2, stonebal, stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (2 Players)" )
+}

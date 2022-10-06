@@ -10,12 +10,16 @@
 #define LOG_WAVE			(0)
 
 
-#include "driver.h"
-#include "cpu/tms32031/tms32031.h"
-#include "cage.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class cage
+{
+	
 #if (LOG_WAVE)
-#include "sound/wavwrite.h"
 #endif
 
 
@@ -758,3 +762,4 @@ MACHINE_DRIVER_START( cage_seattle )
 	MDRV_CPU_MODIFY("cage")
 	MDRV_CPU_MEMORY(readmem_cage_seattle,writemem_cage_seattle)
 MACHINE_DRIVER_END
+}

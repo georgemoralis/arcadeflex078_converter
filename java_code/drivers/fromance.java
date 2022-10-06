@@ -39,11 +39,15 @@ Memo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
-#include "fromance.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class fromance
+{
+	
 
 /* Local variables */
 static UINT8 fromance_directionflag;
@@ -1397,3 +1401,4 @@ GAME( 1989, mfunclub,        0, fromance, mfunclub, 0, ROT0, "Video System Co.",
 GAME( 1990, daiyogen,        0, fromance, daiyogen, 0, ROT0, "Video System Co.", "Mahjong Daiyogen (Japan)" )
 GAME( 1991, nmsengen,        0, fromance, nmsengen, 0, ROT0, "Video System Co.", "Nekketsu Mahjong Sengen! AFTER 5 (Japan)" )
 GAME( 1991, fromance,        0, fromance, fromance, 0, ROT0, "Video System Co.", "Idol-Mahjong Final Romance (Japan)" )
+}

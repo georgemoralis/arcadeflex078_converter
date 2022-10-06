@@ -4,8 +4,15 @@ Rolling Thunder Video Hardware
 
 *******************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcos86
+{
+	
 
 #define GFX_TILES1	0
 #define GFX_TILES2	1
@@ -392,4 +399,5 @@ int b=keyboard_pressed(KEYCODE_Y)?8:0;
 	usrintf_showmessage(buf);
 }
 #endif
+}
 }

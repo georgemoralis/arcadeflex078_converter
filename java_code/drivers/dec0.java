@@ -35,12 +35,15 @@ Boulderdash use the same graphics chips but are different pcbs.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
-#include "cpu/h6280/h6280.h"
-#include "dec0.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dec0
+{
+	
 data16_t *dec0_ram;
 data8_t *robocop_shared_ram;
 
@@ -2118,3 +2121,4 @@ GAME( 1989, midresu,  midres,   midres,   midres,   0,        ROT0,   "Data East
 GAME( 1989, midresj,  midres,   midres,   midres,   0,        ROT0,   "Data East Corporation", "Midnight Resistance (Japan)" )
 GAME( 1990, bouldash, 0,        slyspy,   bouldash, slyspy,   ROT0,   "Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (World)" )
 GAME( 1990, bouldshj, bouldash, slyspy,   bouldash, slyspy,   ROT0,   "Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (Japan)" )
+}

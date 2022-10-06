@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "common.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gottlieb
+{
+	
 UINT8 *gottlieb_charram;
 
 static int background_priority = 0;
@@ -213,4 +218,5 @@ VIDEO_UPDATE( gottlieb )
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	}
+}
 }

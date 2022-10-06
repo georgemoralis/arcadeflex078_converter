@@ -10,11 +10,15 @@ driver by Barry Rodewald
 
 */
 
-#include "driver.h"
-#include "8080bw.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8085/i8085.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rotaryf
+{
+	
 
 static PALETTE_INIT( rotaryf )
 {
@@ -159,3 +163,4 @@ ROM_START( rotaryf )
 ROM_END
 
 GAMEX(19??, rotaryf, 0,        rotaryf, rotaryf, 8080bw,	ROT270,   "<unknown>", "Rotary Fighter", GAME_NO_SOUND )
+}

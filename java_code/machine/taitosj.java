@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6805/m6805.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class taitosj
+{
+	
 
 #define DEBUG_MCU	1
 
@@ -305,4 +311,5 @@ WRITE_HANDLER( alpinea_bankswitch_w )
 READ_HANDLER( alpine_port_2_r )
 {
 	return input_port_2_r(offset) | protection_value;
+}
 }

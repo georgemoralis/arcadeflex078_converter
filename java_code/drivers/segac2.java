@@ -134,13 +134,15 @@
 ***********************************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
-#include "state.h"
-#include "segac2.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class segac2
+{
+	
 #define LOG_PROTECTION		0
 #define LOG_PALETTE			0
 #define LOG_IOCHIP			0
@@ -4513,3 +4515,4 @@ static DRIVER_INIT (megaplay)
 GAMEBX( 1993, megaplay, 0,        megaplay, megaplay, megaplay, megaplay, ROT0, "Sega",                  "MegaPlay: Bios", NOT_A_DRIVER )
 GAMEBX( 1993, mp_sonic, megaplay, megaplay, megaplay, mp_sonic, megaplay, ROT0, "Sega",                  "MegaPlay: Sonic The Hedgehog", GAME_NOT_WORKING  )
 GAMEBX( 1993, mp_gaxe2, megaplay, megaplay, megaplay, mp_gaxe2, megaplay, ROT0, "Sega",                  "MegaPlay: Golden Axe 2", GAME_NOT_WORKING  )
+}

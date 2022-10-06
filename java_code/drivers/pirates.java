@@ -87,9 +87,15 @@ Notes:
 
 ---*/
 
-#include "driver.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pirates
+{
+	
 extern data16_t *pirates_tx_tileram, *pirates_spriteram;
 extern data16_t *pirates_fg_tileram,  *pirates_bg_tileram;
 extern data16_t *pirates_scroll;
@@ -507,3 +513,4 @@ static DRIVER_INIT( genix )
 
 GAME( 1994, pirates, 0, pirates, pirates, pirates, 0, "NIX", "Pirates" )
 GAME( 1994, genix,   0, pirates, pirates, genix,   0, "NIX", "Genix Family" )
+}

@@ -22,8 +22,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class k051649
+{
+	
 #define FREQBASEBITS	16
 
 /* this structure defines the parameters for a channel */
@@ -198,4 +205,5 @@ WRITE_HANDLER( K051649_keyonoff_w )
 	channel_list[2].key=data&4;
 	channel_list[3].key=data&8;
 	channel_list[4].key=data&16;
+}
 }

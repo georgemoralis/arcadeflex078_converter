@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "common.h"
-#include "usrintrf.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pkunwar
+{
+	
 
 static int flipscreen[2];
 
@@ -116,4 +120,5 @@ VIDEO_UPDATE( pkunwar )
 					&Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
+}
 }

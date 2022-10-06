@@ -17,9 +17,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class goindol
+{
+	
 VIDEO_START( goindol );
 WRITE_HANDLER( goindol_fg_videoram_w );
 WRITE_HANDLER( goindol_bg_videoram_w );
@@ -500,3 +506,4 @@ GAMEX(1987, goindol,  0,       goindol, goindol, goindol, ROT90, "Sun a Electron
 GAMEX(1987, goindolu, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (US)",    GAME_UNEMULATED_PROTECTION )
 GAMEX(1987, goindolj, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (Japan)", GAME_UNEMULATED_PROTECTION )
 GAME( 1987, homo,     goindol, goindol, homo,    0,       ROT90, "bootleg", "Homo" )
+}

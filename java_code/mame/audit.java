@@ -1,9 +1,12 @@
-#include "driver.h"
-#include <stdarg.h>
-#include <string.h>
-#include "audit.h"
-#include "harddisk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class audit
+{
+	
 static tAuditRecord *gAudits = NULL;
 
 static const struct GameDriver *chd_gamedrv;
@@ -582,4 +585,5 @@ int VerifySampleSet (int game, verify_printf_proc verify_printf)
 	}
 
 	return INCORRECT;
+}
 }

@@ -1,9 +1,15 @@
 #ifndef _STATE_H
 #define _STATE_H
 
-#include "osd_cpu.h"
-#include "fileio.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class stateH
+{
+	
 /* Initializes the save state registrations */
 void state_save_reset(void);
 
@@ -47,3 +53,4 @@ void state_save_load_finish(void);
 void state_save_dump_registry(void);
 
 #endif
+}

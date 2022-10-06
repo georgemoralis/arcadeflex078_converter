@@ -8,8 +8,15 @@
 
 #ifndef RECURSIVE_INCLUDE
 
-#include "poly.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class poly
+{
+	
 /***************************************************************************
 
 	Global variables
@@ -28,43 +35,36 @@ static struct poly_scanline_data scanlines;
 
 #define FUNC_NAME	setup_triangle_0
 #define NUM_PARAMS	0
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_1
 #define NUM_PARAMS	1
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_2
 #define NUM_PARAMS	2
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_3
 #define NUM_PARAMS	3
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_4
 #define NUM_PARAMS	4
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_5
 #define NUM_PARAMS	5
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
 #define FUNC_NAME	setup_triangle_6
 #define NUM_PARAMS	6
-#include "poly.c"
 #undef NUM_PARAMS
 #undef FUNC_NAME
 
@@ -410,3 +410,4 @@ const struct poly_scanline_data *FUNC_NAME(const struct poly_vertex *v1, const s
 }
 
 #endif
+}

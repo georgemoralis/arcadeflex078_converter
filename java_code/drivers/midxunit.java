@@ -13,12 +13,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "sndhrdw/dcs.h"
-#include "midwunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class midxunit
+{
+	
 
 
 /*************************************
@@ -312,3 +315,4 @@ ROM_END
  *************************************/
 
 GAME( 1994, revx,   0,         midxunit, revx, revx, ROT0, "Midway",   "Revolution X (Rev. 1.0 6/16/94)" )
+}

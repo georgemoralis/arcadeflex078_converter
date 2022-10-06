@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "nb1413m3.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nbmj8688
+{
+	
 
 static int mjsikaku_scrolly;
 static int blitter_destx, blitter_desty;
@@ -747,4 +752,5 @@ VIDEO_UPDATE( mbmj8688_LCD )
 				plot_pixel(bitmap,16 + (8*x+b),16+y,(data & (1<<b)) ? 0x0000 : 0x18ff);
 		}
 	}
+}
 }

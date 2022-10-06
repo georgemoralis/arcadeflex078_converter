@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class lsasquad
+{
+	
 
 /* coin inputs are inverted in storming */
 int lsasquad_invertcoin;
@@ -173,4 +179,5 @@ READ_HANDLER( lsasquad_mcu_status_r )
 	if (!mcu_sent) res |= 0x02;
 
 	return res ^ lsasquad_invertcoin;
+}
 }

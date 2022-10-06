@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "harddisk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class harddisk
+{
+	
 
 
 /*************************************
@@ -202,4 +209,5 @@ UINT32 hard_disk_write(struct hard_disk_file *file, UINT32 lbasector, UINT32 num
 	if (chd_write(file->chd, hunknum, 1, file->cache))
 		return 1;
 	return 0;
+}
 }

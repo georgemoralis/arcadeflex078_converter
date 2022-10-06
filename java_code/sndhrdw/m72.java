@@ -41,9 +41,15 @@ Shisensho II                            1993  Rev 3.34 M81  Yes
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class m72
+{
+	
 
 /*
 
@@ -198,4 +204,5 @@ WRITE_HANDLER( m72_sample_w )
 {
 	DAC_signed_data_w(0,data);
 	sample_addr = (sample_addr + 1) & (memory_region_length(REGION_SOUND1) - 1);
+}
 }

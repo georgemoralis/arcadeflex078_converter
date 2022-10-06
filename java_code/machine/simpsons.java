@@ -1,9 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/konami/konami.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class simpsons
+{
+	
 /* from vidhrdw */
 extern void simpsons_video_banking( int select );
 extern unsigned char *simpsons_xtraram;
@@ -221,4 +224,5 @@ MACHINE_INIT( simpsons )
 	cpu_setbank( 2, &RAM[0x10000] );
 
 	simpsons_video_banking( 0 );
+}
 }

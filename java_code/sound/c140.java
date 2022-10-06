@@ -20,9 +20,15 @@ Unmapped registers:
 */
 
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class c140
+{
+	
 #define MAX_VOICE 24
 
 struct voice_registers
@@ -413,4 +419,5 @@ int C140_sh_start( const struct MachineSound *msound )
 void C140_sh_stop( void )
 {
 	free( mixer_buffer_left );
+}
 }

@@ -54,13 +54,17 @@
  *
  **************************************************************/
 
-/* #include "config.h" */
-#define HAVE_STDARG_H
+/* /*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
+
+public class snprintf
+{
+	#define HAVE_STDARG_H
 
 /* moved above the #ifdef to avoid warning about empty c-files */
-#include <string.h>
-#include <ctype.h>
-#include <sys/types.h>
 
 #if !defined(HAVE_SNPRINTF) || !defined(HAVE_VSNPRINTF)
 
@@ -822,3 +826,4 @@ int main (void)
 #endif /* SNPRINTF_TEST */
 
 #endif /* !HAVE_SNPRINTF */
+}

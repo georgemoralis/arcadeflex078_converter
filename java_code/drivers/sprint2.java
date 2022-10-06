@@ -17,8 +17,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sprint2
+{
+	
 extern READ_HANDLER( sprint2_collision1_r );
 extern READ_HANDLER( sprint2_collision2_r );
 
@@ -997,3 +1004,4 @@ GAME( 1978, sprint1,  0,       sprint1, sprint1, sprint1, ROT0, "Atari", "Sprint
 GAME( 1976, sprint2,  sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 1)" )
 GAME( 1976, sprint2a, sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 2)" )
 GAME( 1977, dominos,  0,       dominos, dominos, dominos, ROT0, "Atari", "Dominos" )
+}

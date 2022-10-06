@@ -9,8 +9,15 @@
 
 ***************************************************************************/
 
-#include "machine/6821pia.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mcrH
+{
+	
 
 extern INT16 spyhunt_scrollx, spyhunt_scrolly;
 extern double mcr68_timing_factor;
@@ -44,3 +51,4 @@ READ16_HANDLER( mcr68_6840_lower_r );
 
 extern struct GfxLayout mcr_bg_layout;
 extern struct GfxLayout mcr_sprite_layout;
+}

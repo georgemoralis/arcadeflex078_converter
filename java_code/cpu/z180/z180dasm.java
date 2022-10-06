@@ -19,12 +19,15 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#ifdef	MAME_DEBUG
-#include "driver.h"
-#include "mamedbg.h"
-#include "z180.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z180;
+
+public class z180dasm
+{
+	#ifdef	MAME_DEBUG
 
 enum e_mnemonics {
 	zADC  ,
@@ -735,3 +738,4 @@ unsigned DasmZ180( char *buffer, unsigned pc )
 
 #endif
 
+}

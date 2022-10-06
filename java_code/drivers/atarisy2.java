@@ -123,12 +123,15 @@
 ****************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/t11/t11.h"
-#include "machine/atarigen.h"
-#include "slapstic.h"
-#include "atarisy2.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class atarisy2
+{
+	
 
 
 /*************************************
@@ -3287,3 +3290,4 @@ GAME( 1987, apb2,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Gam
 GAME( 1987, apb1,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 1)" )
 GAME( 1987, apbg,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (German)" )
 GAME( 1987, apbf,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (French)" )
+}

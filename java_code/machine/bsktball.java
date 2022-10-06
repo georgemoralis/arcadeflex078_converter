@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "bsktball.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class bsktball
+{
+	
 static int LD1=0;
 static int LD2=0;
 static unsigned int NMION = 0;
@@ -187,4 +192,5 @@ WRITE_HANDLER( bsktball_note_w )
 WRITE_HANDLER( bsktball_noise_reset_w )
 {
 	discrete_sound_w(3,(~offset) & 0x01);
+}
 }

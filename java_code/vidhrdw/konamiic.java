@@ -1150,10 +1150,15 @@ Registers (word-wise):
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class konamiic
+{
+	
 /*
 	This recursive function doesn't use additional memory
 	(it could be easily converted into an iterative one).
@@ -8391,3 +8396,4 @@ READ32_HANDLER( K055555_long_r )
 }
 
 READ16_HANDLER( K053244_reg_word_r ) { return(K053244_regs[offset*2]<<8|K053244_regs[offset*2+1]); }
+}

@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "kyugo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kyugo
+{
+	
 
 data8_t *kyugo_fgvideoram;
 data8_t *kyugo_bgvideoram;
@@ -242,4 +248,5 @@ VIDEO_UPDATE( kyugo )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	draw_sprites(bitmap, cliprect);
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
+}
 }

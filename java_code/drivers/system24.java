@@ -88,14 +88,15 @@ Notes:
    just made a copy & renamed them for now to avoid any conflicts
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68k.h"
-#include "system24.h"
-#include "system16.h"
-#include "vidhrdw/segaic24.h"
-#include "sound/ym2151.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class system24
+{
+	
 VIDEO_START(system24);
 VIDEO_UPDATE(system24);
 
@@ -1550,3 +1551,4 @@ Scramble Spirits - Disk Based, Encrypted and Non-Encrypted versions Exist
 + a bunch of other Japanese Quiz Games
 
 */
+}

@@ -36,10 +36,15 @@ TODO:
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/8255ppi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class freekick
+{
+	
 
 extern data8_t *freek_videoram;
 
@@ -1094,3 +1099,4 @@ GAMEX(1987, freekick, 0,        freekckb, freekckb, 0,     ROT270, "Nihon System
 GAME( 1987, freekckb, freekick, freekckb, freekckb, 0,     ROT270, "bootleg", "Free Kick (bootleg)" )
 GAMEX(198?, countrun, 0,        freekckb, freekckb, 0,     ROT0,   "Nihon System (Sega license)", "Counter Run", GAME_NOT_WORKING )
 GAMEX(198?, countrnb, countrun, freekckb, freekckb, 0,     ROT0,   "bootleg", "Counter Run (bootleg)", GAME_NOT_WORKING )
+}

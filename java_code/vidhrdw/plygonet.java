@@ -7,11 +7,15 @@
 	Needs: PSAC2 roz plane, polygons
 */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class plygonet
+{
+	
 /* TTL text plane stuff */
 
 static int ttl_gfx_index;
@@ -109,3 +113,4 @@ VIDEO_UPDATE(polygonet_vh_screenrefresh)
 	tilemap_draw(bitmap, cliprect, ttl_tilemap, 0, 1<<0);
 }
 
+}

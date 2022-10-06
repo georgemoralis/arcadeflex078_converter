@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rockrage
+{
+	
 static int layer_colorbase[2];
 static int rockrage_vreg;
 
@@ -97,4 +102,5 @@ VIDEO_UPDATE( rockrage )
 	K007342_tilemap_draw( bitmap,cliprect, 0, 1 | TILEMAP_IGNORE_TRANSPARENCY ,0);
 	K007342_tilemap_draw( bitmap,cliprect, 1, 0 ,0);
 	K007342_tilemap_draw( bitmap,cliprect, 1, 1 ,0);
+}
 }

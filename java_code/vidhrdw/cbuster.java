@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cbuster
+{
+	
 data16_t *twocrude_pf1_data,*twocrude_pf2_data,*twocrude_pf3_data,*twocrude_pf4_data;
 
 static struct tilemap *pf1_tilemap,*pf2_tilemap,*pf3_tilemap,*pf4_tilemap;
@@ -397,4 +403,5 @@ VIDEO_UPDATE( twocrude )
 
 	twocrude_drawsprites(bitmap,cliprect,1);
 	tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
+}
 }

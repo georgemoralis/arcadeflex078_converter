@@ -1,8 +1,14 @@
 /*	video hardware for Taito Grand Champion */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class grchamp
+{
+	
 UINT8 grchamp_videoreg0;
 UINT8 grchamp_player_xpos;
 UINT8 grchamp_player_ypos;
@@ -429,4 +435,5 @@ VIDEO_UPDATE( grchamp ){
 	draw_text( bitmap,cliprect );
 	if( grchamp_videoreg0&0x80 ) draw_radar( bitmap,cliprect );
 	draw_tachometer( bitmap,cliprect );
+}
 }

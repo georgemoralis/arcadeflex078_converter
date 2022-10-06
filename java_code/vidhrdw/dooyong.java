@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dooyong
+{
+	
 
 
 unsigned char *lastday_txvideoram;
@@ -465,4 +471,5 @@ VIDEO_EOF( dooyong )
 VIDEO_EOF( rshark )
 {
 	buffer_spriteram16_w(0,0,0);
+}
 }

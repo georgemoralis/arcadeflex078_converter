@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "exidy440.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class exidy440
+{
+	
 
 #define MAKE_WAVES		0
 #define	SOUND_LOG		0
@@ -995,3 +1000,4 @@ static void finish_wav_file(void)
 }
 
 #endif
+}

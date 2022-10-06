@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tlc34076.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tlc34076
+{
+	
 static UINT8 local_paletteram[0x300];
 static UINT8 regs[0x10];
 static UINT8 palettedata[3];
@@ -260,3 +266,4 @@ WRITE16_HANDLER( tlc34076_msb_w )
 		tlc34076_w(offset, data >> 8);
 }
 
+}

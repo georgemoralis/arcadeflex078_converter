@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mexico86
+{
+	
 
 unsigned char *mexico86_protection_ram;
 
@@ -171,4 +178,5 @@ logerror("%04x: 68705 unknown port B bit %02x\n",activecpu_get_pc(),data);
 WRITE_HANDLER( mexico86_68705_ddrB_w )
 {
 	ddrB = data;
+}
 }

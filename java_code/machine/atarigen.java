@@ -7,11 +7,15 @@
 ##########################################################################*/
 
 
-#include "driver.h"
-#include "atarigen.h"
-#include "slapstic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class atarigen
+{
+	
 
 
 /*##########################################################################
@@ -1546,3 +1550,4 @@ void atarigen_blend_gfx(int gfx0, int gfx1, int mask0, int mask1)
 }
 
 
+}

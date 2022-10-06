@@ -16,9 +16,15 @@
 In debug build press 'w' for spotlight and 'e' for lightning
   							
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pitnrun
+{
+	
 static int pitnrun_h_heed;
 static int pitnrun_v_heed;
 static int pitnrun_ha;
@@ -289,3 +295,4 @@ VIDEO_UPDATE( pitnrun )
 
 
 
+}

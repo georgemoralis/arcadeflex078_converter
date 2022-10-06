@@ -300,13 +300,15 @@
 *********************************************************************/
 
 
-#include "driver.h"
-#include "png.h"
-#include "artwork.h"
-#include "vidhrdw/vector.h"
-#include <ctype.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class artwork
+{
+	
 
 /***************************************************************************
 
@@ -3243,4 +3245,5 @@ intersect:
 			hintend = endx;
 		hintbase[closestindex] = (hintstart << 16) | hintend;
 	}
+}
 }

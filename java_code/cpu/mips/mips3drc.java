@@ -17,16 +17,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "driver.h"
-#include "mamedbg.h"
-#include "mips3.h"
-#include "x86drc.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class mips3drc
+{
+	
 /*
 
 	Future optimizations:
@@ -5827,3 +5826,4 @@ unsigned mips3_dasm(char *buffer, unsigned pc)
 #endif
 }
 
+}

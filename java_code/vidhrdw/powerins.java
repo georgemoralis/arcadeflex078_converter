@@ -36,8 +36,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 
 **************************************************************************/
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class powerins
+{
+	
 /* Variables that driver has access to: */
 data16_t *powerins_vram_0, *powerins_vctrl_0;
 data16_t *powerins_vram_1, *powerins_vctrl_1;
@@ -379,4 +386,5 @@ if (keyboard_pressed(KEYCODE_Z))
 	else					fillbitmap(bitmap,Machine->pens[0],cliprect);
 	if (layers_ctrl&8)		powerins_draw_sprites(bitmap,cliprect);
 	if (layers_ctrl&2)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
+}
 }

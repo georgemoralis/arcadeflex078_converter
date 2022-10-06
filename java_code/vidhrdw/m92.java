@@ -39,10 +39,15 @@
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m92
+{
+	
 static struct tilemap *pf3_wide_layer,*pf3_layer,*pf2_layer,*pf1_wide_layer,*pf1_layer,*pf1_hlayer;
 static int pf1_control[8],pf2_control[8],pf3_control[8],pf4_control[8];
 static int pf1_vram_ptr,pf2_vram_ptr,pf3_vram_ptr;
@@ -732,4 +737,5 @@ void m92_vh_raster_partial_refresh(struct mame_bitmap *bitmap,int start_line,int
 		m92_update_scroll_positions();
 		m92_screenrefresh(bitmap,&clip);
 	}
+}
 }

@@ -1,7 +1,14 @@
 /* China Dragon / Dragon World */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class chindrag
+{
+	
 VIDEO_START(chindrag)
 {
 	return 0;
@@ -165,3 +172,4 @@ ROM_START( chindrag )
 ROM_END
 
 GAMEX( 1994, chindrag, 0, chindrag, chindrag, chindrag, ROT0, "IGS", "China Dragon / Dragon World", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

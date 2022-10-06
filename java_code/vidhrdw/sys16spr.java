@@ -25,9 +25,15 @@
 **	thus which is the 'last sprite' with which we need to start.
 */
 
-#include "driver.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sys16spr
+{
+	
 int sys16_sprite_shinobi( struct sys16_sprite_attributes *sprite, const UINT16 *source, int bJustGetColor ){
 /* standard sprite hardware (Shinobi, Altered Beast, Golden Axe
 	0	YYYYYYYY	YYYYYYYY	top, bottom (screen coordinates)
@@ -461,4 +467,5 @@ int sys16_sprite_aburner( struct sys16_sprite_attributes *sprite, const UINT16 *
 		sprite->gfx = gfx;
 	}
 	return 0;
+}
 }

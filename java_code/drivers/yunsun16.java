@@ -30,9 +30,15 @@ Year + Game         Board#
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class yunsun16
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data16_t *yunsun16_vram_0,   *yunsun16_vram_1;
@@ -589,3 +595,4 @@ ROM_END
 
 GAMEX( 19??, magicbub, 0, magicbub, magicbub, magicbub, ROT0, "Yun Sung", "Magic Bubble", GAME_NO_COCKTAIL )
 GAMEX( 1997, shocking, 0, shocking, shocking, 0,        ROT0, "Yun Sung", "Shocking",     GAME_NO_COCKTAIL )
+}

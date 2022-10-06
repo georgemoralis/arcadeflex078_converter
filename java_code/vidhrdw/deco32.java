@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
-#include "deco16ic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class deco32
+{
+	
 data32_t *deco32_pf1_data,*deco32_pf2_data,*deco32_pf3_data,*deco32_pf4_data;
 data32_t *deco32_pf12_control,*deco32_pf34_control;
 data32_t *deco32_pf1_rowscroll,*deco32_pf2_rowscroll,*deco32_pf3_rowscroll,*deco32_pf4_rowscroll;
@@ -1306,4 +1310,5 @@ if (!keyboard_pressed(KEYCODE_E))	tattass_drawsprites(bitmap,buffered_spriteram3
 if (!keyboard_pressed(KEYCODE_R))	tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
 
 //	print_debug_info();
+}
 }

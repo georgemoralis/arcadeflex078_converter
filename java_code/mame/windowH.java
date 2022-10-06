@@ -1,9 +1,15 @@
 #ifndef _WINDOW_H_
 #define	_WINDOW_H_
 
-#include "osd_cpu.h"
-#include "mamedbg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class windowH
+{
+	
 #ifdef  GNU
 #define ARGFMT  __attribute__((format(printf,2,3)))
 #else
@@ -175,3 +181,4 @@ extern void win_move(UINT32 idx, UINT32 dwX, UINT32 dwY);
 extern void win_invalidate_video(void);
 
 #endif
+}

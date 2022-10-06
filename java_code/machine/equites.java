@@ -11,10 +11,15 @@ drivers by Acho A. Tang
 *******************************************************************************/
 // Directives
 
-#include "driver.h"
-#include "cpu/i8085/i8085.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class equites
+{
+	
 #define MCU_RTNMSB 0x80
 
 #if 0 // ** cut-and-pasted to driver module **
@@ -443,3 +448,4 @@ struct DACinterface equites_dacintf =
 };
 
 /******************************************************************************/
+}

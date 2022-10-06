@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mainevt
+{
+	
 
 static int layer_colorbase[3],sprite_colorbase;
 
@@ -121,4 +126,5 @@ VIDEO_UPDATE( dv )
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[2],0,0);
 	K051960_sprites_draw(bitmap,cliprect,0,0);
 	tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
+}
 }

@@ -26,12 +26,15 @@ to do:
 
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"		/* use M.A.M.E. */
-#include "ym2413.h"
+public class ym2413
+{
+	
 
 #ifndef PI
 #define PI 3.14159265358979323846
@@ -2157,4 +2160,5 @@ void YM2413UpdateOne(int which, INT16 **buffers, int length)
 		advance(chip);
 	}
 
+}
 }

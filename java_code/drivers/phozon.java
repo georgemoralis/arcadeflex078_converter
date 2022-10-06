@@ -39,9 +39,15 @@ TODO: cocktail mode
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class phozon
+{
+	
 extern unsigned char *phozon_snd_sharedram;
 extern unsigned char *phozon_spriteram;
 extern unsigned char *phozon_customio_1, *phozon_customio_2;
@@ -327,3 +333,4 @@ ROM_END
 
 
 GAMEX( 1983, phozon, 0, phozon, phozon, 0, ROT90, "Namco", "Phozon (Japan)", GAME_NO_COCKTAIL )
+}

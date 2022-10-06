@@ -4,9 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class alpha68k
+{
+	
 static struct tilemap *fix_tilemap;
 static int bank_base,flipscreen;
 
@@ -661,4 +667,5 @@ VIDEO_UPDATE( sstingry )
 	sstingry_draw_sprites(bitmap,cliprect,2,0x0800);
 	sstingry_draw_sprites(bitmap,cliprect,3,0x0c00);
 	sstingry_draw_sprites(bitmap,cliprect,1,0x0400);
+}
 }

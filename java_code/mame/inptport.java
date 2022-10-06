@@ -10,17 +10,20 @@ TODO:	remove the 1 analog device per port limitation
 
 ***************************************************************************/
 
-#include <math.h>
-#include "driver.h"
-#include "config.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class inptport
+{
+	
 #ifdef MESS
-#include "inputx.h"
 #endif
 
 /* MAMEnet support */
 #if defined MAME_NET || defined XMAME_NET
-#include "network.h"
 
 static unsigned short input_port_defaults[MAX_INPUT_PORTS];
 static int default_player;
@@ -3106,4 +3109,5 @@ void init_analog_seq()
 	}
 
 	return;
+}
 }

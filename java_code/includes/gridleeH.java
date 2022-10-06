@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package includes;
 
+public class gridleeH
+{
+	
 
 /*----------- defined in sndhrdw/gridlee.c -----------*/
 
@@ -27,3 +34,4 @@ VIDEO_UPDATE( gridlee );
 WRITE_HANDLER( gridlee_cocktail_flip_w );
 WRITE_HANDLER( gridlee_videoram_w );
 WRITE_HANDLER( gridlee_palette_select_w );
+}

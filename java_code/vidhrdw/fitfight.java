@@ -1,7 +1,14 @@
 /* Fit of Fighting Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fitfight
+{
+	
 extern data16_t *fitfight_spriteram;
 extern data16_t *fof_100000, *fof_600000, *fof_700000, *fof_800000, *fof_900000, *fof_a00000;
 
@@ -150,4 +157,5 @@ VIDEO_UPDATE(fitfight)
 			fof_800000[0], fof_900000[0],
 			fof_a00000[0] );
 */
+}
 }

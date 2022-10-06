@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hcastle
+{
+	
 data8_t *hcastle_pf1_videoram,*hcastle_pf2_videoram;
 static int gfx_bank;
 
@@ -239,4 +244,5 @@ VIDEO_UPDATE( hcastle )
 		draw_sprites( bitmap,cliprect, buffered_spriteram, 0 );
 		draw_sprites( bitmap,cliprect, buffered_spriteram_2, 1 );
 	}
+}
 }

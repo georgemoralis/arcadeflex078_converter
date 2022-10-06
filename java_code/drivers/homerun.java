@@ -14,10 +14,15 @@ Todo :
 
 */
 
-#include "driver.h"
-#include "machine/8255ppi.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class homerun
+{
+	
 extern int homerun_gc_up;
 extern int homerun_gc_down;
 extern int homerun_xpa,homerun_xpb,homerun_xpc;
@@ -208,3 +213,4 @@ ROM_END
 
 GAMEX( 1988, homerun, 0, homerun, homerun, 0, ROT0, "Jaleco", "Moero Pro Yakyuu Homerun",GAME_IMPERFECT_GRAPHICS)
 
+}

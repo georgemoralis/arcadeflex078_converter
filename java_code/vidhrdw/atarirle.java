@@ -18,9 +18,15 @@
 
 ##########################################################################*/
 
-#include "driver.h"
-#include "atarirle.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarirle
+{
+	
 
 /*##########################################################################
 	TYPES & STRUCTURES
@@ -1783,3 +1789,4 @@ void draw_rle_zoom_hflip(struct mame_bitmap *bitmap, const struct atarirle_info 
 	18C: 00 E1 78 -> 070 1 7 8 JUMP 178
 
 ***************************************************************************/
+}

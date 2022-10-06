@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dcon
+{
+	
 data16_t *dcon_back_data,*dcon_fore_data,*dcon_mid_data,*dcon_scroll_ram,*dcon_textram;
 
 static struct tilemap *background_layer,*foreground_layer,*midground_layer,*text_layer;
@@ -254,4 +260,5 @@ VIDEO_UPDATE( sdgndmps )
 	draw_sprites(bitmap,cliprect,0);
 	draw_sprites(bitmap,cliprect,3);
 	tilemap_draw(bitmap,cliprect,text_layer,0,0);
+}
 }

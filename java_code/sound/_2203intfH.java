@@ -1,8 +1,15 @@
 #ifndef YM2203INTF_H
 #define YM2203INTF_H
 
-#include "ay8910.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2203intfH
+{
+	
 #define MAX_2203 4
 
 #define YM2203interface AY8910interface
@@ -44,3 +51,4 @@ void YM2203_sh_reset(void);
 void YM2203UpdateRequest(int chip);
 
 #endif
+}

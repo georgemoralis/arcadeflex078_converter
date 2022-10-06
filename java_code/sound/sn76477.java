@@ -25,8 +25,15 @@
 
  *****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class sn76477
+{
+	
 #define VERBOSE 1
 
 #if VERBOSE >= 0
@@ -1022,3 +1029,4 @@ void SN76477_sh_update(void)
 		stream_update(i,0);
 }
 
+}

@@ -7,8 +7,15 @@
 #ifndef __WIN_WINDOW__
 #define __WIN_WINDOW__
 
-#include "blit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class windowH
+{
+	
 
 //============================================================
 //	PARAMETERS
@@ -228,3 +235,4 @@ INLINE BOOL win_has_menu(void)
 
 
 #endif
+}

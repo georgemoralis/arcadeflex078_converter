@@ -21,9 +21,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bbusters
+{
+	
 static struct tilemap *fix_tilemap,*pf1_tilemap,*pf2_tilemap;
 static const data8_t *scale_table_ptr;
 static data8_t scale_line_count;
@@ -312,4 +318,5 @@ VIDEO_UPDATE( mechatt )
 
 	draw_crosshair(bitmap,readinputport(2),readinputport(3),cliprect);
 	draw_crosshair(bitmap,readinputport(4),readinputport(5),cliprect);
+}
 }

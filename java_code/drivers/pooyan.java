@@ -62,10 +62,15 @@ standard NMI at 0x66
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/timeplt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pooyan
+{
+	
 
 extern WRITE_HANDLER( pooyan_videoram_w );
 extern WRITE_HANDLER( pooyan_colorram_w );
@@ -348,3 +353,4 @@ ROM_END
 GAME( 1982, pooyan,  0,      pooyan, pooyan, 0, ROT270, "Konami", "Pooyan" )
 GAME( 1982, pooyans, pooyan, pooyan, pooyan, 0, ROT270, "[Konami] (Stern license)", "Pooyan (Stern)" )
 GAME( 1982, pootan,  pooyan, pooyan, pooyan, 0, ROT270, "bootleg", "Pootan" )
+}

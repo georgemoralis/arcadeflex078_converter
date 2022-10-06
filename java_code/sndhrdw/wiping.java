@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class wiping
+{
+	
 
 /* 8 voices max */
 #define MAX_VOICES 8
@@ -251,4 +258,5 @@ WRITE_HANDLER( wiping_sound_w )
 			voice->oneshotplaying = 1;
 		}
 	}
+}
 }

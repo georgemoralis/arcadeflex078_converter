@@ -54,8 +54,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 **************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class psikyo
+{
+	
 
 /* Variables that driver has access to: */
 
@@ -571,4 +578,5 @@ VIDEO_EOF( psikyo )
 {
 	memcpy(spritebuf2, spritebuf1, 0x2000);
 	memcpy(spritebuf1, spriteram32, 0x2000);
+}
 }

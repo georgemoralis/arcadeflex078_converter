@@ -63,10 +63,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "saa1099.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class saa1099
+{
+	
 
 #define LEFT	0x00
 #define RIGHT	0x01
@@ -507,3 +512,4 @@ WRITE16_HANDLER( saa1099_write_port_1_lsb_w )
 		saa1099_write_port_w(1, offset, data & 0xff);
 }
 
+}

@@ -24,8 +24,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class fuukifg2
+{
+	
 /* Variables that driver has access to: */
 
 data16_t *fuuki16_vram_0, *fuuki16_vram_1;
@@ -356,4 +363,5 @@ VIDEO_UPDATE( fuuki16 )
 	// don't do the rasters on the sprites . its very slow and the hw might not anyway.
 	if (cliprect->max_y == Machine->visible_area.max_y)
 		fuuki16_draw_sprites(bitmap,&Machine->visible_area);
+}
 }

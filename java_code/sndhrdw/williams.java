@@ -22,11 +22,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/6821pia.h"
-#include "cpu/m6809/m6809.h"
-#include "williams.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class williams
+{
+	
 
 
 /***************************************************************************
@@ -690,4 +694,5 @@ static WRITE_HANDLER( narc_command2_w )
 {
 	soundlatch2_w(0, data & 0xff);
 	cpu_set_irq_line(soundalt_cpunum, M6809_FIRQ_LINE, ASSERT_LINE);
+}
 }

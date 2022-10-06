@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wiz
+{
+	
 
 static struct rectangle spritevisiblearea =
 {
@@ -306,4 +311,5 @@ VIDEO_UPDATE( stinger )
 	draw_foreground(bitmap, 1);
 	draw_sprites(bitmap, spriteram_2, 4, &Machine->visible_area);
 	draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
+}
 }

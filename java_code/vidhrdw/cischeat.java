@@ -53,10 +53,15 @@ Note:	if MAME_DEBUG is defined, pressing Z or X with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "megasys1.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cischeat
+{
+	
 /* Variables only used here: */
 
 static int cischeat_ip_select;
@@ -1355,3 +1360,4 @@ if ( keyboard_pressed(KEYCODE_Z) || keyboard_pressed(KEYCODE_X) )
 	megasys1_active_layers = megasys1_active_layers1;
 }
 
+}

@@ -31,9 +31,15 @@ NOTES:
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hexa
+{
+	
 
 
 VIDEO_START( hexa );
@@ -201,3 +207,4 @@ static DRIVER_INIT( hexa )
 
 
 GAME( 1986?, hexa, 0, hexa, hexa, hexa, ROT0, "D. R. Korea", "Hexa" )
+}

@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class redalert
+{
+	
 unsigned char *redalert_backram;
 unsigned char *redalert_spriteram1;
 unsigned char *redalert_spriteram2;
@@ -308,4 +314,5 @@ VIDEO_UPDATE( redalert )
 	/* copy the character mapped graphics */
 	copybitmap(bitmap,tmpbitmap,flip,flip,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 
+}
 }

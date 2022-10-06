@@ -49,13 +49,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "common.h"
-#include "usrintrf.h"
-#include "vidhrdw/generic.h"
-#include "neogeo.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class neogeo
+{
+	
 static data16_t *neogeo_vidram16;
 static data16_t *neogeo_paletteram16;	/* pointer to 1 of the 2 palette banks */
 static data16_t *neogeo_palettebank[2]; /* 0x100*16 2 byte palette entries */
@@ -650,4 +652,5 @@ profiler_mark(PROFILER_VIDEO);
 	}
 
 profiler_mark(PROFILER_END);
+}
 }

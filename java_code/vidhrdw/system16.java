@@ -90,9 +90,15 @@ type1		type0			function
 			0x7e0..0x7ff	sys18_splittab_bg_x
 
 ***************************************************************************/
-#include "driver.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class system16
+{
+	
 /*
 static void debug_draw( struct mame_bitmap *bitmap, int x, int y, unsigned int data ){
 	int digit;
@@ -1907,4 +1913,5 @@ VIDEO_UPDATE( aburner ){
 	draw_sprites( bitmap,cliprect, 2 );
 
 //	debug_draw( bitmap,cliprect, 8,8,sys16_roadram[0x1000] );
+}
 }

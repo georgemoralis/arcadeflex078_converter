@@ -1,8 +1,15 @@
 #ifndef __VECTOR__
 #define __VECTOR__
 
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vectorH
+{
+	
 #define VECTOR_TEAM \
 	"-* Vector Heads *-\n" \
 	"Brad Oliver\n" \
@@ -79,3 +86,4 @@ float vector_get_gamma(void);
 
 #endif
 
+}

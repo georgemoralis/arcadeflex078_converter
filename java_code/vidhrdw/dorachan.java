@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dorachan
+{
+	
 const static int fakecols[]= /* fake color map , based on screenshots */
 {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -56,4 +62,5 @@ WRITE_HANDLER( dorachan_videoram_w )
 			data >>= 1;
 		}
 	}
+}
 }

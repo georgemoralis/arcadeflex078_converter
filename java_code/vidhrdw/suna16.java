@@ -57,8 +57,15 @@
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class suna16
+{
+	
 static int color_bank;
 
 WRITE16_HANDLER( suna16_flipscreen_w )
@@ -218,4 +225,5 @@ VIDEO_UPDATE( suna16 )
 	/* I believe background is black */
 	fillbitmap(bitmap,get_black_pen(),&Machine->visible_area);
 	suna16_draw_sprites(bitmap);
+}
 }

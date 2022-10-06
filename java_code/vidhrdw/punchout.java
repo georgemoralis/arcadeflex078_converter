@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class punchout
+{
+	
 
 #define TOP_MONITOR_ROWS 28
 #define BOTTOM_MONITOR_ROWS 28
@@ -711,4 +717,5 @@ VIDEO_UPDATE( armwrest )
 				8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 				&backgroundvisiblearea,TRANSPARENCY_PEN,7);
 	}
+}
 }

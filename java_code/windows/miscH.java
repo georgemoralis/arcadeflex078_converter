@@ -19,8 +19,15 @@
 */
 #ifndef __MISC_H
 #define __MISC_H
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class miscH
+{
+	
 /* clock stuff */
 typedef long uclock_t;
 uclock_t uclock(void);
@@ -35,3 +42,4 @@ int snprintf(char *s, size_t maxlen, const char *fmt, ...);
 
 
 #endif /* ifndef __MISC_H */
+}

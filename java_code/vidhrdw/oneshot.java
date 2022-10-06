@@ -1,7 +1,14 @@
 /* One Shot One Kill Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class oneshot
+{
+	
 extern data16_t *oneshot_sprites;
 extern data16_t *oneshot_bg_videoram;
 extern data16_t *oneshot_mid_videoram;
@@ -210,4 +217,5 @@ VIDEO_UPDATE( maddonna )
 //	oneshot_drawcrosshairs(bitmap,cliprect); // not a gun game
 
 //	usrintf_showmessage	("%04x %04x %04x %04x %04x %04x %04x %04x", oneshot_scroll[0],oneshot_scroll[1],oneshot_scroll[2],oneshot_scroll[3],oneshot_scroll[4],oneshot_scroll[5],oneshot_scroll[6],oneshot_scroll[7]);
+}
 }

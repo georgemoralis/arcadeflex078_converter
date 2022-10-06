@@ -29,8 +29,15 @@ HW info :
 
 ************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ssrj
+{
+	
 extern unsigned char *ssrj_vram1,*ssrj_vram2,*ssrj_vram3,*ssrj_vram4,*ssrj_scrollram;
 
 WRITE_HANDLER(ssrj_vram1_w);
@@ -224,3 +231,4 @@ ROM_START( ssrj )
 ROM_END
 
 GAMEX( 1985, ssrj,  0,       ssrj,  ssrj,  0, ORIENTATION_FLIP_X, "Taito Corporation", "Super Speed Race Junior (Japan)",GAME_WRONG_COLORS|GAME_IMPERFECT_GRAPHICS )
+}

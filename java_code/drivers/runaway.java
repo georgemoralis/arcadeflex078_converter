@@ -10,9 +10,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atari_vg.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class runaway
+{
+	
 extern VIDEO_START( runaway );
 extern VIDEO_START( qwak );
 extern VIDEO_UPDATE( runaway );
@@ -433,3 +439,4 @@ ROM_END
 
 GAME( 1982, qwak,    0, qwak,    qwak,    0, ROT270, "Atari", "Qwak (prototype)" )
 GAME( 1982, runaway, 0, runaway, runaway, 0, ROT0,   "Atari", "Runaway (prototype)" )
+}

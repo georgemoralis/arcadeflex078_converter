@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "includes/berzerk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class berzerk
+{
+	
 
 data8_t *berzerk_magicram;
 
@@ -166,4 +171,5 @@ WRITE_HANDLER( berzerk_magicram_control_w )
 READ_HANDLER( berzerk_port_4e_r )
 {
 	return input_port_3_r(0) | collision;
+}
 }

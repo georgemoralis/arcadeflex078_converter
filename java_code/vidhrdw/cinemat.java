@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vector.h"
-#include "cpu/ccpu/ccpu.h"
-#include "cinemat.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cinemat
+{
+	
 #define RED   0x04
 #define GREEN 0x02
 #define BLUE  0x01
@@ -86,3 +90,4 @@ VIDEO_UPDATE( spacewar )
 	artwork_show("pressed0", (~sw_option >> 11) & 1);
 }
 
+}

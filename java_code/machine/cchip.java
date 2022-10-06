@@ -37,9 +37,15 @@ original board.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class cchip
+{
+	
 static int current_bank = 0;
 
 static UINT8 cc_port = 0;
@@ -162,3 +168,4 @@ READ16_HANDLER( cchip2_word_r )
 	return cchip_ram[offset];
 }
 
+}

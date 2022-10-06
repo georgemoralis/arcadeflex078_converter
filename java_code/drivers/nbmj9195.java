@@ -93,11 +93,15 @@ Memo:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "machine/z80fmly.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class nbmj9195
+{
+	
 
 #define	SIGNED_DAC	0		// 0:unsigned DAC, 1:signed DAC
 
@@ -4598,3 +4602,4 @@ GAME( 1992, mjkoiura, 0,        mjkoiura, mjkoiura, mjkoiura, ROT0, "Nichibutsu"
 GAME( 1994, mscoutm,  0,        mscoutm,  mscoutm,  mscoutm,  ROT0, "SPHINX/AV JAPAN", "Mahjong Scout Man (Japan)" )
 GAME( 1994, imekura,  0,        imekura,  imekura,  imekura,  ROT0, "SPHINX/AV JAPAN", "Imekura Mahjong (Japan)" )
 GAME( 1994, mjegolf,  0,        mjegolf,  mjegolf,  mjegolf,  ROT0, "FUJIC/AV JAPAN", "Mahjong Erotica Golf (Japan)" )
+}

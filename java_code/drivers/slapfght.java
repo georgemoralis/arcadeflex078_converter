@@ -184,9 +184,15 @@ $8609 - $860f    High score characters to display to screen for highest score
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class slapfght
+{
+	
 /* VIDHRDW */
 extern unsigned char *slapfight_videoram;
 extern unsigned char *slapfight_colorram;
@@ -1427,3 +1433,4 @@ GAMEX( 1986, alcon,    slapfigh, slapfigh, slapfigh, 0,      ROT270, "<unknown>"
 GAMEX( 1986, getstar,  0,        slapfigh, getstar,  0,      ROT0,   "Taito",  "Guardian", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 GAMEX( 1986, getstarj, getstar,  slapfigh, getstar,  0,      ROT0,   "Taito",  "Get Star (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 GAMEX( 1986, getstarb, getstar,  slapfigh, getstar,  0,      ROT0,   "bootleg","Get Star (bootleg)", GAME_NO_COCKTAIL )
+}

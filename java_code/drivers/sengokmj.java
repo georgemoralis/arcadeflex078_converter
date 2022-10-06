@@ -70,10 +70,15 @@ Dumped by Uki
 
 *******************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sengokmj
+{
+	
 extern data8_t *bg_vram,*md_vram,*tx_vram,*fg_vram;
 static UINT8 sengokumj_mux_data;
 
@@ -385,3 +390,4 @@ ROM_START( sengokmj )
 ROM_END
 
 GAMEX( 1991, sengokmj, 0, sengokmj, sengokmj, 0,	ROT0, "Sigma", "Sengoku Mahjong (Japan)" ,GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+}

@@ -40,16 +40,15 @@ Notes:
 
 */
 
-#include "driver.h"
-#include "state.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "sound/k054539.h"
-#include "machine/eeprom.h"
+public class plygonet
+{
+	
 
 VIDEO_START(polygonet_vh_start);
 VIDEO_UPDATE(polygonet_vh_screenrefresh);
@@ -505,3 +504,4 @@ ROM_END
 
 /*          ROM        parent   machine    inp        init */
 GAMEX( 1993, plygonet, 0,       plygonet, polygonet, polygonet, ROT90, "Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )
+}

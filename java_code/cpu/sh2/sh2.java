@@ -94,14 +94,15 @@
 
  *****************************************************************************/
 
-#include <stdio.h>
-#include <signal.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "sh2.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.sh2;
 
+public class sh2
+{
+	
 /* speed up delay loops, bail out of tight loops */
 #define BUSY_LOOP_HACKS 	1
 
@@ -3122,3 +3123,4 @@ void sh2_init(void)
 	return;
 }
 
+}

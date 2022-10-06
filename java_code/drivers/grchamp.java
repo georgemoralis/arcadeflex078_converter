@@ -41,10 +41,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class grchamp
+{
+	
 /* from vidhrdw */
 extern PALETTE_INIT( grchamp );
 extern VIDEO_START( grchamp );
@@ -535,3 +540,4 @@ ROM_END
 /***************************************************************************/
 
 GAMEX( 1981, grchamp, 0, grchamp, grchamp, grchamp, ROT90, "Taito", "Grand Champion", GAME_IMPERFECT_SOUND )
+}

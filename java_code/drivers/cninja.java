@@ -33,14 +33,15 @@ Caveman Ninja Issues:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cninja.h"
-#include "vidhrdw/generic.h"
-#include "cpu/h6280/h6280.h"
-#include "deco16ic.h"
-#include "decocrpt.h"
-#include "decoprot.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cninja
+{
+	
 static int cninja_scanline, cninja_irq_mask;
 static void *raster_irq_timer;
 static data16_t *cninja_ram;
@@ -1747,3 +1748,4 @@ GAME( 1991, robocp2j, robocop2,robocop2, robocop2,0,        ROT0, "Data East Cor
 GAME( 1992, mutantf,  0,       mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Mutant Fighter (World Rev 4, EM-5)" )
 GAME( 1992, mutantfa, mutantf, mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Mutant Fighter (World Rev 3, EM-4)" )
 GAME( 1992, deathbrd, mutantf, mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Death Brade (Japan Rev 2, JM-3)" )
+}

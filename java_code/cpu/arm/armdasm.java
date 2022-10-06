@@ -4,9 +4,15 @@
 	(c) 2002 Bryan McPhail (bmcphail@tendril.co.uk) and Phil Stroffolino
 */
 
-#include <stdio.h>
-#include "arm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.arm;
 
+public class armdasm
+{
+	
 static char *WriteImmediateOperand( char *pBuf, data32_t opcode )
 {
 	/* rrrrbbbbbbbb */
@@ -347,4 +353,5 @@ void arm_disasm( char *pBuf, data32_t pc, data32_t opcode )
 	{
 		pBuf += sprintf( pBuf, "Undefined" );
 	}
+}
 }

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bottom9
+{
+	
 
 
 int bottom9_video_enable;
@@ -100,4 +106,5 @@ VIDEO_UPDATE( bottom9 )
 		K051960_sprites_draw(bitmap,cliprect,2,3);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,0);
 	}
+}
 }

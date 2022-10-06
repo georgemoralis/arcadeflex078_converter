@@ -1,9 +1,14 @@
 /* vidhrdw/shangkid */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shangkid
+{
+	
 static struct tilemap *background;
 UINT8 *shangkid_videoreg;
 int shangkid_gfx_type;
@@ -304,4 +309,5 @@ VIDEO_UPDATE( dynamski )
 	dynamski_draw_background( bitmap,cliprect, 0 );
 	dynamski_draw_sprites( bitmap,cliprect );
 	dynamski_draw_background( bitmap,cliprect, 1 );
+}
 }

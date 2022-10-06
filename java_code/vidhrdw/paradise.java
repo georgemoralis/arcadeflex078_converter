@@ -25,9 +25,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "paradise.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class paradise
+{
+	
 /* Variables that driver has access to: */
 
 data8_t *paradise_vram_0,*paradise_vram_1,*paradise_vram_2;
@@ -268,4 +274,5 @@ if (keyboard_pressed(KEYCODE_Z))
 		if (!(paradise_priority & 1))
 			if (layers_ctrl&16)	draw_sprites(bitmap,cliprect);
 	}
+}
 }

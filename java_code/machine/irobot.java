@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpuintrf.h"
-#include "cpu/m6809/m6809.h"
-#include "irobot.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class irobot
+{
+	
 /* Note:
  * There's probably something wrong with the way the Mathbox gets started.
  * Try compiling with IR_TIMING=1, run with logging on and take a look at
@@ -1022,3 +1026,4 @@ void disassemble_instruction(irmb_ops *op)
 	}
 }
 #endif
+}

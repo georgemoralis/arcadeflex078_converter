@@ -3,8 +3,15 @@
 /* is the rom mapping ok, are the roms good? it jumps to the 0x800 region and I don't have a rom for there,
 the only remaining rom has fixed bits, then the game crashes .. */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sbugger
+{
+	
 /* readme info
 
 Space Bugger
@@ -234,3 +241,4 @@ ROM_END
 
 GAMEX( 1981, sbugger, 0, sbugger, sbugger, 0, ROT270, "Game-A-Tron", "Space Bugger", GAME_NO_SOUND | GAME_NOT_WORKING )
 
+}

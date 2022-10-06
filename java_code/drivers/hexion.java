@@ -78,9 +78,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hexion
+{
+	
 
 VIDEO_START( hexion );
 VIDEO_UPDATE( hexion );
@@ -349,3 +355,4 @@ ROM_END
 
 
 GAME( 1992, hexion, 0, hexion, hexion, 0, ROT0, "Konami", "Hexion (Japan)" )
+}

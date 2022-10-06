@@ -47,10 +47,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sonson
+{
+	
 extern WRITE_HANDLER( sonson_videoram_w );
 extern WRITE_HANDLER( sonson_colorram_w );
 extern WRITE_HANDLER( sonson_scroll_w );
@@ -348,3 +353,4 @@ ROM_END
 
 GAME( 1984, sonson,  0,      sonson, sonson, 0, ROT0, "Capcom", "Son Son" )
 GAME( 1984, sonsonj, sonson, sonson, sonson, 0, ROT0, "Capcom", "Son Son (Japan)" )
+}

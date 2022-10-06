@@ -9,13 +9,15 @@
  *
  */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/konamigx.h"
-#include "machine/random.h"
-#include "math.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class konamigx
+{
+	
 
 static struct
 {
@@ -2280,4 +2282,5 @@ if((data1=obj[0])&0x80000000)\
 
 #undef EXTRACT_ODD
 #undef EXTRACT_EVEN
+}
 }

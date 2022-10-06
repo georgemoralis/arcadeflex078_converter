@@ -8,14 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "adsp2100.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.adsp2100;
 
+public class adsp2100
+{
+	
 
 /*###################################################################################################
 **	CONSTANTS
@@ -278,7 +279,6 @@ INLINE void set_core_2115(void)
 **	IMPORT CORE UTILITIES
 **#################################################################################################*/
 
-#include "2100ops.c"
 
 
 
@@ -2210,3 +2210,4 @@ void adsp2115_load_boot_data(data8_t *srcdata, data32_t *dstdata)
 }
 
 #endif
+}

@@ -67,10 +67,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "itech8.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class slikshot
+{
+	
 static UINT8 z80_ctrl;
 static UINT8 z80_port_val;
 static UINT8 z80_clear_to_send;
@@ -684,3 +689,4 @@ int main(int argc, char *argv[])
 }
 
 #endif
+}

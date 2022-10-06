@@ -98,9 +98,15 @@ Priority word (Midres):
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dec0
+{
+	
 static struct tilemap *pf1_tilemap_0,*pf1_tilemap_1,*pf1_tilemap_2;
 static struct tilemap *pf2_tilemap_0,*pf2_tilemap_1,*pf2_tilemap_2;
 static struct tilemap *pf3_tilemap_0,*pf3_tilemap_1,*pf3_tilemap_2;
@@ -930,3 +936,4 @@ VIDEO_START( dec0 )
 }
 
 /******************************************************************************/
+}

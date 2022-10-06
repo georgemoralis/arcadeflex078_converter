@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class avengrgs
+{
+	
 data32_t *avengrgs_vram, *avengrgs_ram1, *avengrgs_ram2;
 
 /******************************************************************************/
@@ -175,4 +181,5 @@ VIDEO_STOP(avengrgs)
 	fwrite(avengrgs_ram2,0x4000,1,fp);
 	fclose(fp);
 #endif
+}
 }

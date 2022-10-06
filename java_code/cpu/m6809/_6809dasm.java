@@ -13,15 +13,17 @@
 
 /* Please send all bug reports, update ideas and data files to: */
 /* sriddle@ionet.net */
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6809;
 
+public class _6809dasm
+{
+	
 #ifdef MAME_DEBUG
 
-#include <string.h>
-#include "osd_cpu.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "m6809.h"
 
 #ifndef TRUE
 #define TRUE	-1
@@ -722,3 +724,4 @@ unsigned Dasm6809 (char *buffer, unsigned pc)
 }
 
 #endif
+}

@@ -9,10 +9,15 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include <stdarg.h>
-#include "osdepend.h"
-#include "hash.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class fileioH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -97,3 +102,4 @@ int CLIB_DECL mame_fprintf(mame_file *f, const char *fmt, ...);
 #endif
 
 #endif
+}

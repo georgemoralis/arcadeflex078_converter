@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class kchamp
+{
+	
 static struct tilemap *bg_tilemap;
 
 PALETTE_INIT( kchamp )
@@ -149,4 +155,5 @@ VIDEO_UPDATE( kchampvs )
 {
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	kchampvs_draw_sprites(bitmap);
+}
 }

@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "atarisy1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class atarisy1
+{
+	
 
 
 /*************************************
@@ -671,4 +676,5 @@ static int get_bank(UINT8 prom1, UINT8 prom2, int bpp)
 
 	/* set the entry and return it */
 	return bank_gfx[bpp - 4][bank_index] = gfx_index;
+}
 }

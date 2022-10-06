@@ -4,8 +4,15 @@ Atari Sprint 8 driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sprint8
+{
+	
 extern VIDEO_EOF( sprint8 );
 extern VIDEO_START( sprint8 );
 extern VIDEO_UPDATE( sprint8 );
@@ -601,3 +608,4 @@ ROM_END
 
 GAMEX( 1977, sprint8,  0,       sprint8, sprint8,  0, ROT0, "Atari", "Sprint 8",             GAME_NO_SOUND )
 GAMEX( 1977, sprint8a, sprint8, sprint8, sprint8p, 0, ROT0, "Atari", "Sprint 8 (play tag & chase)", GAME_NO_SOUND )
+}

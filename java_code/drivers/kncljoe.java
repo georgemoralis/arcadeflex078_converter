@@ -22,11 +22,15 @@ Updates:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "sndhrdw/irem.h"
-#include "cpu/m6800/m6800.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kncljoe
+{
+	
 
 /* from vidhrdw */
 extern VIDEO_START( kncljoe );
@@ -309,3 +313,4 @@ ROM_END
 GAME( 1985, kncljoe,  0,       kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 1)" )
 GAME( 1985, kncljoea, kncljoe, kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 2)" )
 GAME( 1985, bcrusher, kncljoe, kncljoe, kncljoe, 0, ROT0, "bootleg",                          "Bone Crusher" )
+}

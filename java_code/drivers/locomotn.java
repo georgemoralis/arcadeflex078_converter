@@ -48,10 +48,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "sndhrdw/timeplt.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class locomotn
+{
+	
 
 extern unsigned char *rallyx_videoram2,*rallyx_colorram2;
 extern unsigned char *rallyx_radarx,*rallyx_radary,*rallyx_radarattr;
@@ -786,3 +791,4 @@ GAME( 1982, locomotn, 0,        locomotn, locomotn, 0, ROT90, "Konami (Centuri l
 GAME( 1982, gutangtn, locomotn, locomotn, locomotn, 0, ROT90, "Konami (Sega license)", "Guttang Gottong" )
 GAME( 1982, cottong,  locomotn, locomotn, locomotn, 0, ROT90, "bootleg", "Cotocoto Cottong" )
 GAME( 1983, commsega, 0,        commsega, commsega, 0, ROT90, "Sega", "Commando (Sega)" )
+}

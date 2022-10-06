@@ -4,11 +4,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms34010/34010ops.h"
-#include "midtunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class midtunit
+{
+	
 
 /* compile-time options */
 #define FAST_DMA			0		/* DMAs complete immediately; reduces number of CPU switches */
@@ -605,7 +609,6 @@ static dma_draw_func prefix[32] =																			\
 
 /* allow for custom blitters */
 #ifdef midtunit_CUSTOM_BLITTERS
-#include "midtblit.c"
 #endif
 
 
@@ -908,4 +911,5 @@ VIDEO_UPDATE( midtunit )
 		draw_scanline16(bitmap, xoffs, v, width, &local_videoram[offset], pen_map, -1);
 		offset = (offset + 512) & 0x3ffff;
 	}
+}
 }

@@ -25,9 +25,15 @@ The Sen Jin protection supplies some 68k code seen in the 2760-29cf range
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class afega
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data16_t *afega_vram_0, *afega_scroll_0;
@@ -889,3 +895,4 @@ GAMEX( 1998, stagger1, 0,        stagger1, stagger1, 0,        ROT270, "Afega", 
 GAMEX( 1997, redhawk,  stagger1, redhawk,  stagger1, redhawk,  ROT270, "Afega", "Red Hawk (US)", GAME_NOT_WORKING )
 GAMEX( 1998, grdnstrm, 0,        grdnstrm, grdnstrm, grdnstrm, ROT270, "Afega", "Sen Jin - Guardian Storm (Korea)", GAME_NOT_WORKING )
 GAMEX( 1998, bubl2000, 0,        bubl2000, bubl2000, bubl2000, ROT0,   "Tuning", "Bubble 2000", GAME_IMPERFECT_GRAPHICS )
+}

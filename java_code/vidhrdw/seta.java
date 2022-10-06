@@ -135,9 +135,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "vidhrdw/generic.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class seta
+{
+	
 /* Variables only used here */
 
 static struct tilemap *tilemap_0, *tilemap_1;	// Layer 0
@@ -945,4 +951,5 @@ if (keyboard_pressed(KEYCODE_Z))
 	{
 		zombraid_drawcrosshairs(bitmap,cliprect);
 	}
+}
 }

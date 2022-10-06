@@ -74,10 +74,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "includes/snes.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class snes
+{
+	
 #define MAINSCREEN      0
 #define SUBSCREEN       1
 #define SNES_BLEND_NONE 0
@@ -2215,3 +2220,4 @@ static UINT8 snes_dbg_vidhrdw( UINT16 curline )
 	}
 
 #endif /* SNES_DBG_VIDHRDW */
+}

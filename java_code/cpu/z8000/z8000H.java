@@ -1,7 +1,14 @@
 #ifndef Z8K_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z8000;
 
+public class z8000H
+{
+	
 enum {
 	Z8000_PC=1, Z8000_NSP, Z8000_FCW, Z8000_PSAP, Z8000_REFRESH,
 	Z8000_IRQ_REQ, Z8000_IRQ_SRV, Z8000_IRQ_VEC,
@@ -42,3 +49,4 @@ extern int DasmZ8000(char *buff, int pc);
 #endif
 
 #endif /* Z8K_H */
+}

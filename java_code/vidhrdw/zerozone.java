@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class zerozone
+{
+	
 data16_t *zerozone_videoram;
 static data16_t zerozone_tilebank;
 
@@ -52,4 +58,5 @@ VIDEO_START( zerozone )
 VIDEO_UPDATE( zerozone )
 {
 	tilemap_draw(bitmap,cliprect,zerozone_tilemap,0,0);
+}
 }

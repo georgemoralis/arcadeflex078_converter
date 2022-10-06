@@ -6,10 +6,15 @@ driver by Nicola Salmoria
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/8255ppi.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class findout
+{
+	
 
 
 VIDEO_UPDATE( findout )
@@ -298,3 +303,4 @@ ROM_END
 
 
 GAMEX( 1987, findout, 0, findout, findout, 0, ROT0, "Elettronolo", "Find Out", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+}

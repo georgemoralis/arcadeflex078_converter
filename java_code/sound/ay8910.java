@@ -10,9 +10,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "ay8910.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class ay8910
+{
+	
 #define MAX_OUTPUT 0x7fff
 
 #define STEP 0x8000
@@ -800,3 +806,4 @@ void AY8910_sh_stop_ym(void)
 	ym_num = 0;
 }
 
+}

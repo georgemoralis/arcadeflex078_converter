@@ -66,9 +66,15 @@ Revision:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mexico86
+{
+	
 /* in machine/mexico86.c */
 extern unsigned char *mexico86_protection_ram;
 INTERRUPT_GEN( mexico86_m68705_interrupt );
@@ -555,3 +561,4 @@ ROM_END
 GAME( 1986, kikikai,  0,        kikikai,  kikikai,  0, ROT90, "Taito Corporation", "KiKi KaiKai" )
 GAME( 1986, kicknrun, 0,        mexico86, mexico86, 0, ROT0, "Taito Corporation", "Kick and Run" )
 GAME( 1986, mexico86, kicknrun, mexico86, mexico86, 0, ROT0, "bootleg", "Mexico 86" )
+}

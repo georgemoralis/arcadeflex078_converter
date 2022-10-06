@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class polyH
+{
+	
 
 /* up to 6 params (Z,U,V,R,G,B), plus it makes the vertex struct a nice size */
 #define MAX_VERTEX_PARAMS		6
@@ -40,3 +47,4 @@ const struct poly_scanline_data *setup_triangle_3(const struct poly_vertex *v1, 
 const struct poly_scanline_data *setup_triangle_4(const struct poly_vertex *v1, const struct poly_vertex *v2, const struct poly_vertex *v3, const struct rectangle *cliprect);
 const struct poly_scanline_data *setup_triangle_5(const struct poly_vertex *v1, const struct poly_vertex *v2, const struct poly_vertex *v3, const struct rectangle *cliprect);
 const struct poly_scanline_data *setup_triangle_6(const struct poly_vertex *v1, const struct poly_vertex *v2, const struct poly_vertex *v3, const struct rectangle *cliprect);
+}

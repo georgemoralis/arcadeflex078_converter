@@ -7,8 +7,15 @@ Video hardware
 
 *****************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mjsister
+{
+	
 int mjsister_screen_redraw;
 int mjsister_flip_screen;
 int mjsister_video_enable;
@@ -113,4 +120,5 @@ VIDEO_UPDATE( mjsister )
 	}
 	else
 		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+}
 }

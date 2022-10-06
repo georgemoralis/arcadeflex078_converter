@@ -10,9 +10,15 @@
  *																			*
  ****************************************************************************/
 
-#include "driver.h"
-#include "tms34061.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tms34061
+{
+	
 
 
 /*************************************
@@ -562,4 +568,5 @@ void tms34061_get_display_state(struct tms34061_display *state)
 
 	/* mask to actual VRAM size */
 	state->dispstart &= tms34061.vrammask;
+}
 }

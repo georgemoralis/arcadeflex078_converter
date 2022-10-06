@@ -42,9 +42,15 @@ Verify Bar graph displays
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class stactics
+{
+	
 /* Defined in machine/stactics.c */
 READ_HANDLER( stactics_port_0_r );
 READ_HANDLER( stactics_port_2_r );
@@ -313,3 +319,4 @@ ROM_END
 
 GAMEX( 1981, stactics, 0, stactics, stactics, 0, ROT0, "Sega", "Space Tactics", GAME_NO_SOUND )
 
+}

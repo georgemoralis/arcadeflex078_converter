@@ -16,9 +16,15 @@ author (Karl Stenerud) at karl@higashiyama-unet.ocn.ne.jp.
 */
 
 
-#include "spc700ds.h"
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.spc700;
 
+public class spc700ds
+{
+	
 
 #ifndef INLINE
 #define INLINE static
@@ -426,4 +432,5 @@ int spc700_disassemble(char* buff, unsigned int pc)
 		ptr += strlen(ptr);
 	}
 	return g_pc - pc;
+}
 }

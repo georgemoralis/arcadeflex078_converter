@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/segacrpt.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class senjyo
+{
+	
 
 
 extern unsigned char *spriteram;
@@ -449,4 +454,5 @@ VIDEO_UPDATE( senjyo )
 	ui_text(baf,0,30);
 }
 #endif
+}
 }

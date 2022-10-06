@@ -53,8 +53,15 @@ Custom:	Imagetek 15000 (2ch video & 2ch sound)
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rabbit
+{
+	
 READ32_HANDLER( rabbit_unk_r1 )
 {
 	return 0xffffffff;
@@ -179,3 +186,4 @@ ROM_END
 
 GAMEX( 1997, rabbit, 0, rabbit, rabbit, 0, ROT0, "Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )
 GAMEX( 1997, tmmjprd, 0, rabbit, rabbit, 0, ROT0, "Media / Sonnet", "Tokimeki Mahjong Paradise - Dear My Love", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

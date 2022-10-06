@@ -1,9 +1,15 @@
 #ifndef Z180_H
 #define Z180_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z180;
 
+public class z180H
+{
+	
 enum {
 	Z180_PC=1,
 	Z180_SP,
@@ -150,3 +156,4 @@ extern unsigned DasmZ180(char *buffer, unsigned pc);
 
 #endif
 
+}

@@ -16,11 +16,15 @@ pending:
 
 ***************************************************************************/
 
-#include <stdio.h>
-#include "driver.h"
-#include "z80fmly.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class z80fmly
+{
+	
 typedef struct
 {
 	int vector;                 /* interrupt vector */
@@ -824,4 +828,5 @@ void	z80pio_astb_w(int which, int state)
 void	z80pio_bstb_w(int which, int state)
 {
 	z80pio_update_strobe(which, 1, state);
+}
 }

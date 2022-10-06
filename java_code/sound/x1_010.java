@@ -50,9 +50,15 @@ Hardcoded Values:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "seta.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class x1_010
+{
+	
 
 
 #define LOG_SOUND 0
@@ -291,4 +297,5 @@ WRITE16_HANDLER( seta_sound_word_w )
 #if	LOG_REGISTER_WRITE
 	logerror( "Write X1-010 PC:%06X Offset:%04X Data:%04X\n", activecpu_get_pc(), offset, data );
 #endif
+}
 }

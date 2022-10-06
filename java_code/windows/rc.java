@@ -29,17 +29,15 @@ Version 0.3, Februari 2000
 -Reworked and cleaned up the interface, broke backward compatibility (Hans
  de Goede)
 */
-#include <stdlib.h>
-#include <string.h>
-//#include <pwd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include "rc.h"
-#include "misc.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
-#include "rc.h"
-#include "osdepend.h"
+public class rc
+{
+	//
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
@@ -914,3 +912,4 @@ int rc_check_and_create_dir(const char *name)
    return 0;
 }
 #endif
+}

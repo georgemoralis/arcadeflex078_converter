@@ -43,9 +43,15 @@ out:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class speedbal
+{
+	
 
 unsigned char *speedbal_foreground_videoram;
 unsigned char *speedbal_background_videoram;
@@ -326,3 +332,4 @@ static DRIVER_INIT( speedbal )
 
 
 GAME( 1987, speedbal, 0, speedbal, speedbal, speedbal, ROT270, "Tecfri", "Speed Ball" )
+}

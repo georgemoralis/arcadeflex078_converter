@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "irobot.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class irobot
+{
+	
 #define BITMAP_WIDTH	256
 static UINT8 *polybitmap1,*polybitmap2;
 static UINT8 *polybitmap;
@@ -399,4 +404,5 @@ VIDEO_UPDATE( irobot )
 						8*x,8*y,
 						&Machine->visible_area,TRANSPARENCY_COLOR,transp);
 			}
+}
 }

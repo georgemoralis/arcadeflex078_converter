@@ -11,11 +11,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "ay8910.h"
-#include "2608intf.h"
-#include "fm.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2608intf
+{
+	
 #ifdef BUILD_YM2608
 
 #define YM2608_NUMBUF 2
@@ -236,3 +240,4 @@ WRITE_HANDLER( YM2608_data_port_1_B_w ){
 /**************** end of file ****************/
 
 #endif
+}

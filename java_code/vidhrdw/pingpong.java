@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pingpong
+{
+	
 static struct tilemap *bg_tilemap;
 
 
@@ -164,4 +170,5 @@ VIDEO_UPDATE( pingpong )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	pingpong_draw_sprites(bitmap);
+}
 }

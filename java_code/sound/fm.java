@@ -100,22 +100,19 @@
 /*    YM2610B : PSG:3ch FM:6ch ADPCM(18.5KHz):6ch DeltaT ADPCM:1ch      */
 /************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class fm
+{
+	
 #ifndef __RAINE__
-#include "driver.h"		/* use M.A.M.E. */
-#include "state.h"
 #else
-#include "deftypes.h"		/* use RAINE */
-#include "support.h"		/* use RAINE */
 #endif
 
-#include "ay8910.h"
-#include "fm.h"
 
 
 #ifndef PI
@@ -125,8 +122,7 @@
 
 /* include external DELTA-T unit (when needed) */
 #if (BUILD_YM2608||BUILD_YM2610||BUILD_YM2610B)
-	#include "ymdeltat.h"
-#endif
+	#endif
 
 /* shared function building option */
 #define BUILD_OPN (BUILD_YM2203||BUILD_YM2608||BUILD_YM2610||BUILD_YM2610B||BUILD_YM2612)
@@ -5520,3 +5516,4 @@ int YM2151TimerOver(int n,int c)
 }
 
 #endif /* BUILD_YM2151 */
+}

@@ -8,14 +8,17 @@
  *
  */
 
-#include <string.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6805;
 
+public class _6805dasm
+{
+	
 #ifdef MAME_DEBUG
 
-#include <stdio.h>
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "m6805.h"
 
 enum addr_mode {
 	_imp=0, 	/* implicit */
@@ -245,3 +248,4 @@ unsigned Dasm6805 (char *buf, unsigned pc)
 }
 
 #endif
+}

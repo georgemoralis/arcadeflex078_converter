@@ -12,9 +12,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/i8x41/i8x41.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class tnzs
+{
+	
 extern unsigned char *tnzs_workram;
 
 static int mcu_type;
@@ -759,4 +765,5 @@ WRITE_HANDLER( tnzs_bankswitch1_w )
 
 	/* bits 0-1 select ROM bank */
 	cpu_setbank (2, &RAM[0x10000 + 0x2000 * (data & 3)]);
+}
 }

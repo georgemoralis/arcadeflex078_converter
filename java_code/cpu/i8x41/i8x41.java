@@ -57,12 +57,15 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
-#include "driver.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "i8x41.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8x41;
 
+public class i8x41
+{
+	
 typedef struct {
 	UINT16	ppc;
 	UINT16	pc;
@@ -2279,4 +2282,5 @@ unsigned i8x41_dasm(char *buffer, unsigned pc)
 	sprintf( buffer, "$%02X", cpu_readop(pc) );
 	return 1;
 #endif
+}
 }

@@ -18,12 +18,15 @@
  *
  ***************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i8039;
 
-#include "memory.h"
+public class _8039dasm
+{
+	
 
 typedef unsigned char byte;
 
@@ -286,4 +289,5 @@ int Dasm8039(char *buffer, unsigned pc)
 	}
 
 	return cnt;
+}
 }

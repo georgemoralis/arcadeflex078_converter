@@ -9,10 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class jackal
+{
+	
 extern unsigned char jackal_interrupt_enable;
 
 unsigned char *jackal_rambank = 0;
@@ -101,4 +106,5 @@ WRITE_HANDLER( jackal_voram_w )
 WRITE_HANDLER( jackal_spriteram_w )
 {
 	jackal_spritebank[0x3000+offset] = data;
+}
 }

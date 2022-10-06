@@ -42,9 +42,15 @@ Note : there is an ingame typo bug that doesn't display the bonus life values
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class commando
+{
+	
 
 extern unsigned char *commando_fgvideoram;
 extern unsigned char *commando_bgvideoram;
@@ -595,3 +601,4 @@ GAME( 1985, commandu, commando, commando, commandu, commando, ROT90, "Capcom (Da
 GAME( 1985, commandj, commando, commando, commando, commando, ROT90, "Capcom", "Senjou no Ookami" )
 GAME( 1985, sinvasn,  commando, commando, commando, commando, ROT90, "Capcom", "Space Invasion (Europe)" )
 GAME( 1985, sinvasnb, commando, commando, commando, spaceinv, ROT90, "bootleg", "Space Invasion (bootleg)" )
+}

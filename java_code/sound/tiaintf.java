@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "tiaintf.h"
-#include "tiasound.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class tiaintf
+{
+	
 static int channel = -1;
 static const struct TIAinterface *intf;
 
@@ -33,3 +38,4 @@ void tia_sh_update(void)
 }
 
 
+}

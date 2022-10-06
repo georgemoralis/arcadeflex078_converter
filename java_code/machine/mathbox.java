@@ -5,9 +5,15 @@
  *
  */
 
-#include "driver.h"
-#include "mathbox.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class mathbox
+{
+	
 /* math box scratch registers */
 s16 mb_reg [16];
 
@@ -273,4 +279,5 @@ READ_HANDLER( mb_lo_r )
 READ_HANDLER( mb_hi_r )
 {
 	return (mb_result >> 8) & 0xff;
+}
 }

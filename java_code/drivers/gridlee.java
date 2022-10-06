@@ -77,12 +77,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/generic.h"
-#include "gridlee.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gridlee
+{
+	
 
 /* constants */
 #define FIRQ_SCANLINE 92
@@ -497,3 +500,4 @@ ROM_END
  *************************************/
 
 GAMEX( 1983, gridlee, 0,        gridlee, gridlee, 0,     ROT0, "Videa", "Gridlee", GAME_IMPERFECT_SOUND )
+}

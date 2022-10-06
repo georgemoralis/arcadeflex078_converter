@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "machine/6821pia.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class mcrH
+{
+	
 
 
 /************ Generic MCR routines ***************/
@@ -59,3 +66,4 @@ MACHINE_DRIVER_EXTERN( sounds_good );
 MACHINE_DRIVER_EXTERN( turbo_chip_squeak );
 MACHINE_DRIVER_EXTERN( turbo_chip_squeak_plus_sounds_good );
 MACHINE_DRIVER_EXTERN( squawk_n_talk );
+}

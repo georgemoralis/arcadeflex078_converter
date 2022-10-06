@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class grchamp
+{
+	
 extern UINT8 grchamp_videoreg0;
 extern UINT8 grchamp_vreg1[0x10];
 int grchamp_cpu_irq_enable[2];
@@ -127,4 +134,5 @@ WRITE_HANDLER( grchamp_port_1_w ) {
 		/* OUTF - unused */
 		break;
 	}
+}
 }

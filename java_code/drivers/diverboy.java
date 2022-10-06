@@ -49,8 +49,15 @@
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class diverboy
+{
+	
 extern data16_t *diverboy_spriteram;
 extern size_t diverboy_spriteram_size;
 
@@ -261,3 +268,4 @@ ROM_END
 
 
 GAMEX(1992, diverboy, 0, diverboy, diverboy, 0, ORIENTATION_FLIP_X, "Electronic Devices Italy", "Diver Boy", GAME_IMPERFECT_SOUND )
+}

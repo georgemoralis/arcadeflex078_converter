@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "machine/6522via.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class beezer
+{
+	
 WRITE_HANDLER( beezer_map_w );
 READ_HANDLER( beezer_line_r );
 
@@ -139,3 +144,4 @@ WRITE_HANDLER( beezer_bankswitch_w )
 }
 
 
+}

@@ -37,11 +37,15 @@ PROMs : NEC B406 (1kx4) x2
 
 ***********************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/i8039/i8039.h"
-#include "vidhrdw/res_net.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class sbowling
+{
+	
 
 static int bgmap = 0;
 
@@ -394,3 +398,4 @@ ROM_END
 
 GAMEX( 1982, sbowling, 0, sbowling, sbowling, 0, ROT90, "Taito Corporation", "Strike Bowling",GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS)
 
+}

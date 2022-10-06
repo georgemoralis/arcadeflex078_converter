@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class namcos1
+{
+	
 #define NEW_TIMER 0 /* CPU slice optimize with new timer system */
 
 #define NAMCOS1_MAX_BANK 0x400
@@ -1489,4 +1494,5 @@ DRIVER_INIT( tankfrce )
 	key[0x2b] = 0xb9;
 	key[0x50] = 0xb9;
 	namcos1_game_id = 0x0185;
+}
 }

@@ -12,10 +12,15 @@
 	You may read the LGPL at http://www.gnu.org/licenses/lgpl.html
 */
 
-#include <math.h>
-#include "driver.h"
-#include "cpuintrf.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class ymf271
+{
+	
 #define VERBOSE		(1)
 
 #define CLOCK (44100 * 384)	// = 16.9344 MHz
@@ -562,3 +567,4 @@ WRITE_HANDLER( YMF271_1_w )
 	ymf271_w(1, offset, data);
 }
 
+}

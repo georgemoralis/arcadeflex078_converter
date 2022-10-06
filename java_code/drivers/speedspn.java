@@ -20,8 +20,15 @@ TODO:
 
 ******************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class speedspn
+{
+	
 /*** README INFO **************************************************************
 
 ROMSET: speedspn
@@ -358,3 +365,4 @@ ROM_END
 /*** GAME DRIVERS ************************************************************/
 
 GAMEX( 1994, speedspn, 0, speedspn, speedspn, 0, ROT180, "TCH", "Speed Spin", GAME_IMPERFECT_GRAPHICS )
+}

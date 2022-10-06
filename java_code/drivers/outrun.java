@@ -8,12 +8,15 @@
 **	Turbo Out Run
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class outrun
+{
+	
 static void set_fg_page( int data ){
 	sys16_fg_page[0] = data>>12;
 	sys16_fg_page[1] = (data>>8)&0xf;
@@ -1348,3 +1351,4 @@ GAME( 1986, outruna,  outrun,   outruna,  outrun,   outrun,   ROT0,         "Seg
 GAME( 1986, outrunb,  outrun,   outruna,  outrun,   outrunb,  ROT0,         "Sega",    "Out Run (set 3)" )
 GAMEX(19??, toutrun,  0,        outrun,   outrun,   outrun,   ROT0,         "Sega", "Turbo Outrun (set 1)", GAME_NOT_WORKING )
 GAMEX(19??, toutruna, toutrun,  outrun,   outrun,   outrun,   ROT0,         "Sega", "Turbo Outrun (set 2)", GAME_NOT_WORKING )
+}

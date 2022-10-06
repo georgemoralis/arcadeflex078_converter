@@ -29,8 +29,15 @@ TO DO :
 
 */
 
-#include "driver.h"
-data16_t *oneshot_sprites;
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
+
+public class oneshot
+{
+	data16_t *oneshot_sprites;
 data16_t *oneshot_bg_videoram;
 data16_t *oneshot_mid_videoram;
 data16_t *oneshot_fg_videoram;
@@ -501,3 +508,4 @@ ROM_END
 GAMEX(199?, oneshot,  0,        oneshot,  oneshot , 0, ROT0, "<unknown>", "One Shot One Kill", GAME_IMPERFECT_GRAPHICS )
 GAME (1995, maddonna, 0,        maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 1)" )
 GAMEX(1995, maddonnb, maddonna, maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 2)", GAME_NOT_WORKING )
+}

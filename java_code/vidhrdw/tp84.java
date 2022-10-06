@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tp84
+{
+	
 UINT8 *tp84_videoram2, *tp84_colorram2;
 
 int col0;
@@ -320,4 +326,5 @@ INTERRUPT_GEN( tp84_6809_interrupt )
 
 	if (scanline == 255)
 		irq0_line_hold();
+}
 }

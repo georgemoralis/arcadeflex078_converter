@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class genericH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -75,3 +82,4 @@ int get_vh_global_attribute_changed(void);
 #ifdef __cplusplus
 }
 #endif
+}

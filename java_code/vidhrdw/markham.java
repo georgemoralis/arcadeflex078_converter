@@ -8,8 +8,15 @@ Video hardware driver by Uki
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class markham
+{
+	
 static UINT8 markham_xscroll[2];
 
 static struct tilemap *bg_tilemap;
@@ -143,4 +150,5 @@ VIDEO_UPDATE( markham )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	markham_draw_sprites(bitmap);
+}
 }

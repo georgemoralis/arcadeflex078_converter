@@ -17,11 +17,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "sndhrdw/atarijsa.h"
-#include "blstroid.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class blstroid
+{
+	
 
 
 /*************************************
@@ -445,3 +449,4 @@ GAME( 1987, blstroi3, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games
 GAME( 1987, blstroi2, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 2)" )
 GAME( 1987, blstroig, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (German, rev 2)" )
 GAME( 1987, blsthead, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (with heads)" )
+}

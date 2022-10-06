@@ -2,9 +2,15 @@
 *	Video Driver for Metal Soldier Isaac II (1985)
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class msisaac
+{
+	
 /*
 *	variables
 */
@@ -260,3 +266,4 @@ VIDEO_UPDATE( msisaac )
 	tilemap_draw(bitmap,cliprect,foreground, 0,0);
 }
 
+}

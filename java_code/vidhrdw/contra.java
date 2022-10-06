@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class contra
+{
+	
 //static int spriteram_offset;
 static unsigned char *private_spriteram_2,*private_spriteram;
 
@@ -300,4 +305,5 @@ VIDEO_UPDATE( contra )
 	draw_sprites( bitmap,cliprect, 0 );
 	draw_sprites( bitmap,cliprect, 1 );
 	tilemap_draw( bitmap,&tx_finalclip, tx_tilemap, 0 ,0);
+}
 }

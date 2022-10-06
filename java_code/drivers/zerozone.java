@@ -26,9 +26,15 @@ TODO:
 
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class zerozone
+{
+	
 VIDEO_START( zerozone );
 VIDEO_UPDATE( zerozone );
 WRITE16_HANDLER( zerozone_tilemap_w );
@@ -282,3 +288,4 @@ ROM_END
 
 GAME( 1993, zerozone, 0, zerozone, zerozone, 0, ROT0, "Comad", "Zero Zone" )
 GAME( 1994, lvgirl94, 0, zerozone, zerozone, 0, ROT0, "Comad", "Las Vegas Girl (Girl '94)" )
+}

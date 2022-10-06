@@ -47,8 +47,15 @@
  *
  *****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class pokey
+{
+	
 /*
  * Defining this produces much more (about twice as much)
  * but also more efficient code. Ideally this should be set
@@ -1508,3 +1515,4 @@ void pokey4_kbcode_w(int kbcode, int make)
 	pokey_kbcode_w(3, kbcode, make);
 }
 
+}

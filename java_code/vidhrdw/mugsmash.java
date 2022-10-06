@@ -1,7 +1,14 @@
 /* vidhrdw/mugsmash.c - see drivers/mugsmash.c for more info */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mugsmash
+{
+	
 static struct tilemap *mugsmash_tilemap1,  *mugsmash_tilemap2;
 
 extern data16_t *mugsmash_videoram1, *mugsmash_videoram2, *mugs_spriteram;
@@ -160,4 +167,5 @@ VIDEO_UPDATE( mugsmash )
 	tilemap_draw(bitmap,cliprect,mugsmash_tilemap2,0,0);
 	tilemap_draw(bitmap,cliprect,mugsmash_tilemap1,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

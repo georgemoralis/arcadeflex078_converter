@@ -4,17 +4,16 @@
 
 ***************************************************************************/
 
-#include "harddisk.h"
-#include "md5.h"
-#include "sha1.h"
-#include <stdarg.h>
-#include <stdio.h>
-#include <time.h>
-#include <ctype.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class chdman
+{
+	
 #ifdef _WIN32
-#include <windows.h>
-#include <winioctl.h>
 
 /* Older versions of Platform SDK don't define these */
 #ifndef INVALID_FILE_ATTRIBUTES
@@ -1538,4 +1537,5 @@ int main(int argc, char **argv)
 		error();
 
 	return 0;
+}
 }

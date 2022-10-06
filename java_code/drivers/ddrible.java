@@ -6,10 +6,15 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ddrible
+{
+	
 int ddrible_int_enable_0;
 int ddrible_int_enable_1;
 
@@ -404,3 +409,4 @@ ROM_END
 
 
 GAME( 1986, ddribble, 0, ddribble, ddribble, 0, ROT0, "Konami", "Double Dribble")
+}

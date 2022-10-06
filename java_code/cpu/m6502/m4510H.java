@@ -22,10 +22,15 @@
 #ifndef _M4510_H
 #define _M4510_H
 
-#include "cpuintrf.h"
-#include "osd_cpu.h"
-#include "m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6502;
 
+public class m4510H
+{
+	
 #ifdef RUNTIME_LOADER
 # ifdef __cplusplus
 	extern "C" void m4510_runtime_loader_init(void);
@@ -70,3 +75,4 @@ extern unsigned Dasm4510( char *dst, unsigned pc );
 #endif
 
 
+}

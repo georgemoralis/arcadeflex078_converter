@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class marineb
+{
+	
 
 unsigned char *marineb_column_scroll;
 int marineb_active_low_flipscreen;
@@ -438,4 +444,5 @@ VIDEO_UPDATE( hopprobo )
 				sx,sy,
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
+}
 }

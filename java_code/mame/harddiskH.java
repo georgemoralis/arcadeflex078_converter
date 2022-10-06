@@ -7,9 +7,15 @@
 #ifndef HARDDISK_H
 #define HARDDISK_H
 
-#include "driver.h"
-#include "chd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class harddiskH
+{
+	
 
 struct hard_disk_file;
 
@@ -39,3 +45,4 @@ UINT32 hard_disk_read(struct hard_disk_file *file, UINT32 lbasector, UINT32 nums
 UINT32 hard_disk_write(struct hard_disk_file *file, UINT32 lbasector, UINT32 numsectors, const void *buffer);
 
 #endif /* HARDDISK_H */
+}

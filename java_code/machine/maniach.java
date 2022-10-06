@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class maniach
+{
+	
 
 static unsigned char from_main,from_mcu;
 static int mcu_sent = 0,main_sent = 0;
@@ -133,4 +140,5 @@ READ_HANDLER( maniach_mcu_status_r )
 	if (!main_sent) res |= 0x02;
 
 	return res;
+}
 }

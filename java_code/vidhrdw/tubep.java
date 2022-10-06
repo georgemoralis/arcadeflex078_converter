@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tubep
+{
+	
 
 data8_t *tubep_textram;
 data8_t *rjammer_backgroundram;
@@ -19,7 +25,6 @@ static data8_t *spritemap;
 static data8_t *dirtybuff;
 static data8_t prom2[32];
 
-#include "res_net.h"
 
 /***************************************************************************
 
@@ -929,3 +934,4 @@ VIDEO_UPDATE( rjammer )
 
 }
 
+}

@@ -8,10 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class moo
+{
+	
 static int sprite_colorbase;
 static int layer_colorbase[4], layerpri[3];
 static int alpha_enabled;
@@ -166,4 +171,5 @@ VIDEO_UPDATE(moo)
 	K053247_sprites_draw(bitmap,cliprect);
 
 	K056832_tilemap_draw(bitmap, cliprect, 0, 0, 0);
+}
 }

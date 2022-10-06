@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class terracre
+{
+	
 static data16_t xscroll;
 static data16_t yscroll;
 static struct tilemap *background, *foreground;
@@ -223,4 +229,5 @@ VIDEO_UPDATE( amazon )
 	}
 	draw_sprites( bitmap,cliprect );
 	tilemap_draw( bitmap,cliprect, foreground, 0, 0 );
+}
 }

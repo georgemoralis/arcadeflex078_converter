@@ -15,8 +15,15 @@ settings, but music runs too fast.
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class shanghai
+{
+	
 /* the on-chip FIFO is 16 bytes long, but we use a larger one to simplify */
 /* decoding of long commands. Commands can be up to 64KB long... but Shanghai */
 /* doesn't reach that length. */
@@ -1079,3 +1086,4 @@ ROM_END
 
 GAMEX(1988, shanghai, 0, shanghai, shanghai, 0, ROT0, "Sunsoft", "Shanghai (Japan)", GAME_IMPERFECT_GRAPHICS )
 GAME( 1989, shangha2, 0, shangha2, shangha2, 0, ROT0, "Sunsoft", "Shanghai II (Japan)" )
+}

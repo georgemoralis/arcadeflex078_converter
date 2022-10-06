@@ -16,10 +16,15 @@ MAIN BOARD:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mikie
+{
+	
 extern WRITE_HANDLER( mikie_videoram_w );
 extern WRITE_HANDLER( mikie_colorram_w );
 extern WRITE_HANDLER( mikie_palettebank_w );
@@ -378,3 +383,4 @@ ROM_END
 GAME( 1984, mikie,   0,     mikie, mikie, 0, ROT270, "Konami", "Mikie" )
 GAME( 1984, mikiej,  mikie, mikie, mikie, 0, ROT270, "Konami", "Shinnyuushain Tooru-kun" )
 GAME( 1984, mikiehs, mikie, mikie, mikie, 0, ROT270, "Konami", "Mikie (High School Graffiti)" )
+}

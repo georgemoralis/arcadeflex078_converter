@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class toypop
+{
+	
 extern unsigned char *m68000_sharedram;
 
 data16_t *toypop_bg_image;
@@ -235,4 +241,5 @@ VIDEO_UPDATE( toypop )
 			}
 		}
 	}
+}
 }

@@ -17,10 +17,15 @@ MAIN BOARD:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class trackfld
+{
+	
 
 extern void konami1_decode(void);
 
@@ -801,3 +806,4 @@ GAME( 1983, hyprolym, trackfld, trackfld, trackfld, trackfld, ROT0, "Konami", "H
 GAME( 1983, hyprolyb, trackfld, hyprolyb, trackfld, trackfld, ROT0, "bootleg", "Hyper Olympic (bootleg)" )
 GAMEX(1985, whizquiz, 0,        trackfld, trackfld, mastkin,  ROT0, "Zilec-Zenitone", "Whiz Quiz", GAME_NOT_WORKING )
 GAMEX(1988, mastkin,  0,        mastkin,  mastkin,  mastkin,  ROT0, "Du Tech", "The Masters of Kin", GAME_WRONG_COLORS )
+}

@@ -11,11 +11,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class fastlane
+{
+	
 /* from vidhrdw/fastlane.c */
 extern unsigned char *fastlane_k007121_regs,*fastlane_videoram1,*fastlane_videoram2;
 WRITE_HANDLER( fastlane_vram1_w );
@@ -328,3 +332,4 @@ ROM_END
 
 
 GAMEX( 1987, fastlane, 0, fastlane, fastlane, 0, ROT90, "Konami", "Fast Lane", GAME_IMPERFECT_COLORS )
+}

@@ -9,9 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class polyplay
+{
+	
 unsigned char *polyplay_characterram;
 static unsigned char dirtycharacter[256];
 
@@ -122,4 +128,5 @@ VIDEO_UPDATE( polyplay )
 	{
 		if (dirtycharacter[offs] == 2) dirtycharacter[offs] = 0;
 	}
+}
 }

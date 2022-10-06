@@ -62,9 +62,15 @@ OUT:
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class astrocde
+{
+	
 extern unsigned char *wow_videoram;
 
 extern const char *wow_sample_names[];
@@ -945,3 +951,4 @@ GAME( 1981, gorf,     0,    gorf,     gorf,     gorf,     ROT270, "Midway", "Gor
 GAME( 1981, gorfpgm1, gorf, gorf,     gorf,     gorf,     ROT270, "Midway", "Gorf (Program 1)" )
 GAME( 1981, robby,    0,    robby,    robby,    0,        ROT0,   "Bally Midway", "Robby Roto" )
 GAMEX( 1983,profpac,  0,    profpac,  gorf,     0,        ROT0,   "Bally Midway", "Professor PacMan", GAME_NOT_WORKING )
+}

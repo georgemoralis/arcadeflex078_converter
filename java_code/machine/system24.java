@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "system16.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class system24
+{
+	
 /* system24temp_ functions / variables are from shared rewrite files,
    once the rest of the rewrite is complete they can be removed, I
    just made a copy & renamed them for now to avoid any conflicts
@@ -105,4 +111,5 @@ WRITE16_HANDLER( system24temp_sys16_io_w )
 	}
 	if(offset >= 0x20 && system24temp_sys16_io_iod_w)
 		system24temp_sys16_io_iod_w(offset & 0x1f, data, mem_mask);
+}
 }

@@ -7,10 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "includes/berzerk.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class berzerk
+{
+	
 
 static int irq_enabled;
 static int nmi_enabled;
@@ -82,3 +87,4 @@ INTERRUPT_GEN( berzerk_interrupt )
 	}
 }
 
+}

@@ -11,10 +11,15 @@
  *																			*
  \**************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32010;
 
-#include "32010dsm.c"
+public class dis32010
+{
+	
 
 
 unsigned char *Buffer;
@@ -133,4 +138,5 @@ int main(int argc,char *argv[])
 	free(Buffer);
 	fclose(F);
 	return(0);
+}
 }

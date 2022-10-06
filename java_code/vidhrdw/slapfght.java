@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class slapfght
+{
+	
 unsigned char *slapfight_videoram;
 unsigned char *slapfight_colorram;
 size_t slapfight_videoram_size;
@@ -265,4 +271,5 @@ VIDEO_UPDATE( slapfight )
 #ifdef MAME_DEBUG
 	slapfght_log_vram();
 #endif
+}
 }

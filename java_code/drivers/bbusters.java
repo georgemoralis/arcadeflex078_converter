@@ -164,9 +164,15 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bbusters
+{
+	
 #define BBUSTERS_HACK	0
 #define MECHATT_HACK	0
 
@@ -902,3 +908,4 @@ GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized
 #else
 GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized Attack" )
 #endif
+}

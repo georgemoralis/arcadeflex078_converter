@@ -19,9 +19,15 @@ TODO:
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class xyonix
+{
+	
 data8_t *xyonix_vidram;
 
 /* in vidhrdw/xyonix.c */
@@ -291,3 +297,4 @@ ROM_END
 /* GAME drivers **************************************************************/
 
 GAME( 1989, xyonix, 0, xyonix, xyonix, 0, ROT0, "Philko", "Xyonix" )
+}

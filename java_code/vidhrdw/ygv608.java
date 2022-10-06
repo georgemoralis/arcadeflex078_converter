@@ -29,12 +29,15 @@
  *    Everything else! :)
  */
 
-#include <ctype.h>
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namcond1.h"   // only while debugging
-#include "vidhrdw/ygv608.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ygv608
+{
+	
 #define _ENABLE_SPRITES
 #define _ENABLE_SCROLLX
 #define _ENABLE_SCROLLY
@@ -1751,3 +1754,4 @@ void ShowYGV608Registers( void )
 }
 
 #endif  // MAME_DEBUG
+}

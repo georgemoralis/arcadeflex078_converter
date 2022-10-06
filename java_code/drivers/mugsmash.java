@@ -39,8 +39,15 @@ behavior we use .
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mugsmash
+{
+	
 data16_t *mugsmash_videoram1, *mugsmash_videoram2, *mugs_spriteram;
 data16_t *mugsmash_regs1, *mugsmash_regs2;
 
@@ -492,3 +499,4 @@ ROM_START( mugsmash )
 ROM_END
 
 GAME( 1990?, mugsmash, 0, mugsmash, mugsmash, 0, ROT0, "Electronic Devices Italy / 3D Games England", "Mug Smashers" )
+}

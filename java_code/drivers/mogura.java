@@ -1,7 +1,14 @@
 /* Mogura Desse */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mogura
+{
+	
 data8_t *mogura_tileram;
 data8_t* mogura_gfxram;
 static struct tilemap *mogura_tilemap;
@@ -253,3 +260,4 @@ ROM_START( mogura )
 ROM_END
 
 GAME( 1991, mogura, 0, mogura, mogura, 0, ROT0, "Konami", "Mogura Desse" )
+}

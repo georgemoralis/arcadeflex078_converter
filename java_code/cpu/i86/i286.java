@@ -3,15 +3,15 @@
 *				(initial work based on David Hedley's pcemu)                *
 ****************************************************************************/
 
-#include <stdio.h>
-#include <string.h>
-#include "host.h"
-#include "cpuintrf.h"
-#include "memory.h"
-#include "mamedbg.h"
-#include "mame.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
+public class i286
+{
+	
 
 /* All post-i286 CPUs have a 16MB address space */
 #define AMASK	I.amask
@@ -19,8 +19,6 @@
 
 #define i86_ICount i286_ICount
 
-#include "i286.h"
-#include "i286intf.h"
 
 
 static UINT8 i286_reg_layout[] = {
@@ -73,7 +71,6 @@ static UINT8 i286_win_layout[] = {
 };
 
 
-#include "i86time.c"
 
 /***************************************************************************/
 /* cpu state                                                               */
@@ -138,15 +135,6 @@ static struct i86_timing cycles;
 #define PREFIX186(fname) i286##fname
 #define PREFIX286(fname) i286##fname
 
-#include "ea.h"
-#include "modrm.h"
-#include "instr86.h"
-#include "instr186.h"
-#include "instr286.h"
-#include "table286.h"
-#include "instr86.c"
-#include "instr186.c"
-#include "instr286.c"
 
 static void i286_urinit(void)
 {
@@ -561,3 +549,4 @@ void i286_init(void)
 }
 
 
+}

@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class docastle
+{
+	
 static struct tilemap *bg_tilemap, *fg_tilemap;
 
 /***************************************************************************
@@ -317,4 +323,5 @@ VIDEO_UPDATE( docastle )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	docastle_draw_sprites(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

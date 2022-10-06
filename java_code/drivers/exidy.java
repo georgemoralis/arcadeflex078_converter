@@ -124,11 +124,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/6821pia.h"
-#include "exidy.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class exidy
+{
+	
 
 /*************************************
  *
@@ -1504,3 +1508,4 @@ GAME( 1981, venture4, venture, venture, venture,  venture,  ROT0, "Exidy", "Vent
 GAME( 1982, pepper2,  0,       pepper2, pepper2,  pepper2,  ROT0, "Exidy", "Pepper II" )
 GAME( 1982, hardhat,  0,       pepper2, pepper2,  pepper2,  ROT0, "Exidy", "Hard Hat" )
 GAME( 1983, fax,      0,       fax,     fax,      fax,      ROT0, "Exidy", "Fax" )
+}

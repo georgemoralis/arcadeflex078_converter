@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vindictr.h"
-#include "thunderj.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class vindictr
+{
+	
 
 
 /*************************************
@@ -306,4 +310,5 @@ VIDEO_UPDATE( vindictr )
 					mo[x] = 0;
 				}
 		}
+}
 }

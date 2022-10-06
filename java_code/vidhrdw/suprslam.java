@@ -1,8 +1,14 @@
 /* Super Slams - vidhrdw, see notes in driver file */
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class suprslam
+{
+	
 
 data16_t *suprslam_screen_videoram, *suprslam_bg_videoram,*suprslam_sp_videoram, *suprslam_spriteram;
 UINT16 screen_bank, bg_bank;
@@ -179,4 +185,5 @@ WRITE16_HANDLER (suprslam_bank_w)
 
 	if (screen_bank != old_screen_bank) tilemap_mark_all_tiles_dirty (suprslam_screen_tilemap);
 	if (bg_bank != old_bg_bank) tilemap_mark_all_tiles_dirty (suprslam_bg_tilemap);
+}
 }

@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "vidhrdw/generic.h"
-#include "rampart.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rampart
+{
+	
 
 
 /*************************************
@@ -217,4 +221,5 @@ void rampart_bitmap_render(struct mame_bitmap *bitmap, const struct rectangle *c
 
 	/* copy the cached bitmap */
 	copybitmap(bitmap, pfbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
+}
 }

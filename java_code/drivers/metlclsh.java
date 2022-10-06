@@ -31,10 +31,15 @@ metlclsh:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class metlclsh
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data8_t *metlclsh_bgram, *metlclsh_fgram, *metlclsh_scrollx;
@@ -463,3 +468,4 @@ ROM_END
 
 GAME( 1985, metlclsh, 0, metlclsh, metlclsh, 0, ROT0, "Data East", "Metal Clash (Japan)" )
 
+}

@@ -25,12 +25,15 @@ Notes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/hd6309/hd6309.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bladestl
+{
+	
 /* from vidhrdw */
 int bladestl_spritebank;
 VIDEO_START( bladestl );
@@ -520,3 +523,4 @@ ROM_END
 
 GAME( 1987, bladestl, 0,        bladestl, bladestl, 0, ROT90, "Konami", "Blades of Steel (version T)" )
 GAME( 1987, bladstle, bladestl, bladestl, bladstle, 0, ROT90, "Konami", "Blades of Steel (version E)" )
+}

@@ -8,9 +8,15 @@ Ikki (c) 1985 Sun Electronics
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ikki
+{
+	
 PALETTE_INIT( ikki );
 VIDEO_UPDATE( ikki );
 
@@ -286,3 +292,4 @@ ROM_START( ikki )
 ROM_END
 
 GAME( 1985, ikki, 0, ikki, ikki, 0, ROT0, "Sun Electronics", "Ikki (Japan)" )
+}

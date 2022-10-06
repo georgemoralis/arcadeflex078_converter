@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exprraid
+{
+	
 static int bg_index[4];
 
 static struct tilemap *bg_tilemap, *fg_tilemap;
@@ -154,4 +160,5 @@ VIDEO_UPDATE( exprraid )
 	exprraid_draw_sprites(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 1, 0);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

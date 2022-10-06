@@ -8,11 +8,15 @@
  * mike@the-coates.com
  */
 
-#include "driver.h"
-#include "artwork.h"
-#include "vidhrdw/generic.h"
-#include "cpu/s2650/s2650.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class zac2650
+{
+	
 extern UINT8 *s2636ram;
 
 extern WRITE_HANDLER( tinvader_videoram_w );
@@ -406,3 +410,4 @@ static DRIVER_INIT( tinvader )
 GAMEX( 1978, sia2650,  0,       tinvader, sinvader, 0,        ROT270, "Zaccaria/Zelco", "Super Invader Attack", GAME_NO_SOUND )
 GAMEX( 1978, tinv2650, sia2650, tinvader, tinvader, tinvader, ROT270, "Zaccaria/Zelco", "The Invaders",			GAME_NO_SOUND )
 GAMEX( 1979, dodgem,   0,       tinvader, dodgem,   0,        ROT0,   "Zaccaria",		"Dodgem",				GAME_NO_SOUND )
+}

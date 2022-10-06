@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class silkroad
+{
+	
 /* Sprites probably need to be delayed */
 /* Some scroll layers may need to be offset slightly? */
 /* Check Sprite Colours after redump */
@@ -188,4 +195,5 @@ VIDEO_UPDATE(silkroad)
 	silkroad_regs[5]
 	);
 */
+}
 }

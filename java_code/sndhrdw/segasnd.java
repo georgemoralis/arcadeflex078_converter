@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "sega.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class segasnd
+{
+	
 /* SP0250-based speechboard */
 
 static UINT8 sega_speechboard_latch, sega_speechboard_t0, sega_speechboard_p2, sega_speechboard_drq;
@@ -84,3 +89,4 @@ struct sp0250_interface sega_sp0250_interface =
 	100,
 	speechboard_drq_w
 };
+}

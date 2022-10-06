@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class buggychl
+{
+	
 
 
 unsigned char *buggychl_scrollv,*buggychl_scrollh;
@@ -276,4 +282,5 @@ VIDEO_UPDATE( buggychl )
 
 	for (code = 0;code < 256;code++)
 		dirtychar[code] = 0;
+}
 }

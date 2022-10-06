@@ -66,10 +66,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "arabian.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class arabian
+{
+	
 
 /* constants */
 #define MAIN_OSC		12000000
@@ -444,3 +449,4 @@ static DRIVER_INIT( arabian )
 
 GAME( 1983, arabian,  0,       arabian, arabian, arabian, ROT270, "Sun Electronics", "Arabian" )
 GAME( 1983, arabiana, arabian, arabian, arabian, arabian, ROT270, "[Sun Electronics] (Atari license)", "Arabian (Atari)" )
+}

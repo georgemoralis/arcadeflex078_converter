@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nemesis
+{
+	
 data16_t *nemesis_videoram1b;
 data16_t *nemesis_videoram2b;
 data16_t *nemesis_videoram1f;
@@ -668,4 +673,5 @@ VIDEO_UPDATE( salamand )
 	}
 
 	draw_sprites(bitmap,cliprect);
+}
 }

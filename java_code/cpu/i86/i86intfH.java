@@ -2,9 +2,15 @@
 #ifndef __I86INTRF_H_
 #define __I86INTRF_H_
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.i86;
 
+public class i86intfH
+{
+	
 enum {
 	I86_IP=1, I86_AX, I86_CX, I86_DX, I86_BX, I86_SP, I86_BP, I86_SI, I86_DI,
 	I86_FLAGS, I86_ES, I86_CS, I86_SS, I86_DS,
@@ -34,3 +40,4 @@ extern unsigned DasmI86(char* buffer, unsigned pc);
 #endif
 
 #endif
+}

@@ -8,10 +8,15 @@ The DS5002FP has 32KB undumped gameplay code making the game unplayable :_(
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class targeth
+{
+	
 extern data16_t *targeth_vregs;
 extern data16_t *targeth_videoram;
 extern data16_t *targeth_spriteram;
@@ -238,3 +243,4 @@ ROM_START( targeth )
 ROM_END
 
 GAMEX( 1994, targeth, 0, targeth,targeth, 0, ROT0, "Gaelco", "Target Hits", GAME_UNEMULATED_PROTECTION )
+}

@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class pgmprot
+{
+	
 extern data16_t *pgm_mainram;
 
 /*** ASIC 3 (oriental legends protection) ****************************************/
@@ -371,3 +378,4 @@ READ16_HANDLER (dw2_d80000_r )
 	}
 }
 
+}

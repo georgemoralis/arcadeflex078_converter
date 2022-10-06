@@ -1,7 +1,14 @@
 #ifndef DECLARE
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class drawgfx
+{
+	
 
 #ifdef LSB_FIRST
 #define SHIFT0 0
@@ -552,7 +559,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) { if (((1 << (pridata[dest] & 0x1f)) & pmask) == 0) { if (pridata[dest] & 0x80) { dstdata[dest] = palette_shadow_table[n];} else { dstdata[dest] = (n);} } pridata[dest] = (pridata[dest] & 0x7f) | afterdrawmask; }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw_pri8 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -562,7 +568,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) { if (((1 << (pridata[dest] & 0x1f)) & pmask) == 0) { if (pridata[dest] & 0x80) { dstdata[dest] = palette_shadow_table[n];} else { dstdata[dest] = (n);} } pridata[dest] = (pridata[dest] & 0x7f) | afterdrawmask; }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_pri8 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -574,7 +579,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw8 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -584,7 +588,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##8 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -611,7 +614,6 @@ int pdrawgfx_shadow_lowpri = 0;
 	blockmove_##function##_pri##8 args
 #define BLOCKMOVERAWPRI(function,args) \
 	blockmove_##function##_raw_pri##8 args
-#include "drawgfx.c"
 #undef DECLARE
 #undef DECLARE_SWAP_RAW_PRI
 #undef DECLAREG
@@ -645,7 +647,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) { if (((1 << (pridata[dest] & 0x1f)) & pmask) == 0) { if (pridata[dest] & 0x80) { dstdata[dest] = palette_shadow_table[n];} else { dstdata[dest] = (n);} } pridata[dest] = (pridata[dest] & 0x7f) | afterdrawmask; }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw_pri16 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -655,7 +656,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) { if (((1 << (pridata[dest] & 0x1f)) & pmask) == 0) { if (pridata[dest] & 0x80) { dstdata[dest] = palette_shadow_table[n];} else { dstdata[dest] = (n);} } pridata[dest] = (pridata[dest] & 0x7f) | afterdrawmask; }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_pri16 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -667,7 +667,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw16 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -677,7 +676,6 @@ int pdrawgfx_shadow_lowpri = 0;
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##16 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -704,7 +702,6 @@ int pdrawgfx_shadow_lowpri = 0;
 	blockmove_##function##_pri##16 args
 #define BLOCKMOVERAWPRI(function,args) \
 	blockmove_##function##_raw_pri##16 args
-#include "drawgfx.c"
 #undef DECLARE
 #undef DECLARE_SWAP_RAW_PRI
 #undef DECLAREG
@@ -745,7 +742,6 @@ INLINE UINT32 SHADOW32(UINT32 c) {
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if(afterdrawmask){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw_pri32 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -755,7 +751,6 @@ INLINE UINT32 SHADOW32(UINT32 c) {
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) { UINT8 r8=pridata[dest]; if(!(1<<(r8&0x1f)&pmask)){ if(afterdrawmask){ r8&=0x7f; r8|=0x1f; dstdata[dest]=(n); pridata[dest]=r8; } else if(!(r8&0x80)){ dstdata[dest]=SHADOW32(n); pridata[dest]|=0x80; } } }
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_pri32 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -767,7 +762,6 @@ INLINE UINT32 SHADOW32(UINT32 c) {
 #define LOOKUP(n) (colorbase + (n))
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##_raw32 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -777,7 +771,6 @@ INLINE UINT32 SHADOW32(UINT32 c) {
 #define LOOKUP(n) (paldata[n])
 #define SETPIXELCOLOR(dest,n) {dstdata[dest] = (n);}
 #define DECLARE_SWAP_RAW_PRI(function,args,body) void function##32 args body
-#include "drawgfx.c"
 #undef DECLARE_SWAP_RAW_PRI
 #undef COLOR_ARG
 #undef LOOKUP
@@ -804,7 +797,6 @@ INLINE UINT32 SHADOW32(UINT32 c) {
 	blockmove_##function##_pri##32 args
 #define BLOCKMOVERAWPRI(function,args) \
 	blockmove_##function##_raw_pri##32 args
-#include "drawgfx.c"
 #undef DECLARE
 #undef DECLARE_SWAP_RAW_PRI
 #undef DECLAREG
@@ -6043,3 +6035,4 @@ DECLAREG(extract_scanline, (
 })
 
 #endif /* DECLARE */
+}

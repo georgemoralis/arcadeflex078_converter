@@ -61,9 +61,15 @@ write:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vastar
+{
+	
 
 
 extern data8_t *vastar_bg1videoram,*vastar_bg2videoram,*vastar_fgvideoram;
@@ -441,3 +447,4 @@ ROM_END
 
 GAME( 1983, vastar,  0,      vastar, vastar, 0, ROT90, "Sesame Japan", "Vastar (set 1)" )
 GAME( 1983, vastar2, vastar, vastar, vastar, 0, ROT90, "Sesame Japan", "Vastar (set 2)" )
+}

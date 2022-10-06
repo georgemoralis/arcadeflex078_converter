@@ -52,11 +52,15 @@ Known Issues:
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class twin16
+{
+	
 extern WRITE16_HANDLER( twin16_videoram2_w );
 extern WRITE16_HANDLER( twin16_paletteram_word_w );
 extern WRITE16_HANDLER( fround_gfx_bank_w );
@@ -1509,3 +1513,4 @@ GAME( 1988, froundl,  fround, fround,    fround,   fround,   ROT0, "Konami", "Th
 GAME( 1988, hpuncher, fround, hpuncher,  fround,   hpuncher, ROT0, "Konami", "Hard Puncher (Japan)" )
 GAME( 1989, miaj,     mia,    mia,       miaj,     hpuncher, ROT0, "Konami", "M.I.A. - Missing in Action (Japan)" )
 GAME( 1989, cuebrick, 0,      cuebrick,  cuebrick, cuebrick, ROT0, "Konami", "Cue Brick (Japan)" )
+}

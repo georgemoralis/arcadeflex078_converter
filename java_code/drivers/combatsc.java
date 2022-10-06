@@ -117,9 +117,15 @@ e000-e001	YM2203
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class combatsc
+{
+	
 extern unsigned char* banked_area;
 
 /* from vidhrdw/combasc.c */
@@ -931,3 +937,4 @@ GAME( 1987, combasct, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Co
 GAME( 1987, combascj, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Combat School (Japan trackball)" )
 GAME( 1987, bootcamp, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Boot Camp" )
 GAMEX(1988, combascb, combasc, combascb, combascb, combascb, ROT0, "bootleg", "Combat School (bootleg)", GAME_IMPERFECT_COLORS )
+}

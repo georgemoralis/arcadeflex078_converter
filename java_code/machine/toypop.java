@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class toypop
+{
+	
 unsigned char *toypop_sound_sharedram, *toypop_m68000_sharedram, *toypop_customio;
 static unsigned char interrupt_enable_mainCPU, interrupt_enable_sound, interrupt_enable_68k;
 // variables used by the coinage of Libble Rabble
@@ -247,4 +253,5 @@ WRITE_HANDLER( toypop_m68000_clear_w )
 WRITE_HANDLER( toypop_m68000_assert_w )
 {
 	cpu_set_reset_line(2, ASSERT_LINE);
+}
 }

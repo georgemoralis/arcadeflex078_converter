@@ -114,10 +114,15 @@ BG0 palette intensity ( $C47F, $C4FF )
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class argus
+{
+	
 
 #define BUTASAN_TEXT_RAMSIZE		0x0800
 #define BUTASAN_BG0_RAMSIZE			0x0800
@@ -1369,4 +1374,5 @@ VIDEO_UPDATE( butasan )
 #ifdef MAME_DEBUG
 	butasan_log_vram();
 #endif
+}
 }

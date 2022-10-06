@@ -6,13 +6,15 @@
  **********************************************************************************************/
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "adpcm.h"
-#include "state.h"
+public class ymz280b
+{
+	
 
 
 #define MAX_SAMPLE_CHUNK	10000
@@ -23,7 +25,6 @@
 #define FRAC_MASK			(FRAC_ONE - 1)
 
 #if MAKE_WAVS
-#include "wavwrite.h"
 #endif
 
 
@@ -985,3 +986,4 @@ WRITE16_HANDLER( YMZ280B_data_1_msb_w )
 	if (ACCESSING_MSB)	write_to_register(&ymz280b[1], (data >> 8) & 0xff);
 }
 
+}

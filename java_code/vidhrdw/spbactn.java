@@ -1,8 +1,15 @@
 /* vidhrdw/spbactn.c - see drivers/spbactn.c for more info */
 /* rather similar to galspnbl.c */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class spbactn
+{
+	
 extern data16_t *spbactn_bgvideoram, *spbactn_fgvideoram, *spbactn_spvideoram;
 static struct mame_bitmap *tile_bitmap_bg, *tile_bitmap_fg;
 
@@ -282,4 +289,5 @@ VIDEO_UPDATE( spbactn )
 
 	/* mix & blend the tilemaps and sprites into a 32-bit bitmap */
 	blendbitmaps(bitmap, tile_bitmap_bg, tile_bitmap_fg, 0, 0, cliprect);
+}
 }

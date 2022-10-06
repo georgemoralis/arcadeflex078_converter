@@ -36,13 +36,15 @@ Should be very similar to Sigma's Spiders hardware.
 ----------------------------------------------------
 ********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/6821pia.h"
-#include "vidhrdw/crtc6845.h"
-#include "cpu/m6800/m6800.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class r2dtank
+{
+	
 static int dipsw_bank;
 static WRITE_HANDLER( dipsw_bank_w )
 {
@@ -375,3 +377,4 @@ ROM_START( r2dtank )
 ROM_END
 
 GAMEX( 1980, r2dtank, 0, r2dtank, r2dtank, 0, ROT270, "Sigma Enterprises Inc.", "R2D Tank", GAME_NO_SOUND )
+}

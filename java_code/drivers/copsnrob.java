@@ -52,11 +52,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "copsnrob.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class copsnrob
+{
+	
 
 
 /*************************************
@@ -333,3 +337,4 @@ static DRIVER_INIT( copsnrob )
  *************************************/
 
 GAMEX( 1976, copsnrob, 0, copsnrob, copsnrob, copsnrob, ROT0, "Atari", "Cops'n Robbers", GAME_NO_SOUND )
+}

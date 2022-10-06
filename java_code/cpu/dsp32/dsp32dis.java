@@ -8,10 +8,15 @@
 **
 **#################################################################################################*/
 
-#include <stdio.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.dsp32;
 
-#include "driver.h"
-#include "dsp32.h"
+public class dsp32dis
+{
+	
 
 
 /*###################################################################################################
@@ -669,4 +674,5 @@ unsigned dasm_dsp32(char *buffer, unsigned pc)
 	}
 
 	return 4;
+}
 }

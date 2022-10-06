@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gottlieb
+{
+	
 
 
 WRITE_HANDLER( gottlieb_sh_w )
@@ -346,3 +352,4 @@ WRITE16_HANDLER( gottlieb_sh_word_w )
 		gottlieb_sh_w(offset, data);
 }
 
+}

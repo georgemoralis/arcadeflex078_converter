@@ -4,10 +4,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/vector.h"
-#include "aztarac.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class aztarac
+{
+	
 #define AVECTOR(x, y, color, intensity) \
 vector_add_point (xcenter + ((x) << 16), ycenter - ((y) << 16), color, intensity)
 
@@ -92,4 +97,5 @@ VIDEO_START( aztarac )
 	ycenter=((ymax + ymin) / 2) << 16;
 
 	return video_start_vector();
+}
 }

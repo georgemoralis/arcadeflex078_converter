@@ -34,9 +34,15 @@
 
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class skyfox
+{
+	
 /* Variables only used here: */
 
 static unsigned char vreg[8];
@@ -290,4 +296,5 @@ VIDEO_UPDATE( skyfox )
 	fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);	// the bg is black
 	skyfox_draw_background(bitmap);
 	skyfox_draw_sprites(bitmap);
+}
 }

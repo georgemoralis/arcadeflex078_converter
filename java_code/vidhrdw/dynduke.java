@@ -1,7 +1,13 @@
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dynduke
+{
+	
 static struct tilemap *bg_layer,*fg_layer,*tx_layer;
 unsigned char *dynduke_back_data,*dynduke_fore_data,*dynduke_scroll_ram,*dynduke_control_ram;
 
@@ -215,4 +221,5 @@ VIDEO_UPDATE( dynduke )
 	tilemap_draw(bitmap,cliprect,fg_layer,0,0);
 	draw_sprites(bitmap,cliprect,3);
 	tilemap_draw(bitmap,cliprect,tx_layer,0,0);
+}
 }

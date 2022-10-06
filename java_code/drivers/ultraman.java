@@ -6,12 +6,15 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "cpu/m68000/m68000.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ultraman
+{
+	
 
 /* from vidhrdw/ultraman.c */
 WRITE16_HANDLER( ultraman_gfxctrl_w );
@@ -355,3 +358,4 @@ static DRIVER_INIT( ultraman )
 
 
 GAME( 1991, ultraman, 0, ultraman, ultraman, ultraman, ROT0, "Banpresto/Bandai", "Ultraman (Japan)" )
+}

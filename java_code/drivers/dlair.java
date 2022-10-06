@@ -1,9 +1,14 @@
 /* the way I hooked up the CTC is most likely completely wrong */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/z80fmly.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class dlair
+{
+	
 
 
 /*
@@ -265,3 +270,4 @@ ROM_END
 
 GAMEX( 1983, dlair, 0, dlair, dlair, 0, ROT0, "Cinematronics", "Dragon's Lair", GAME_NOT_WORKING | GAME_NO_SOUND )
 
+}

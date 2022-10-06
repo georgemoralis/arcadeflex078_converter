@@ -12,10 +12,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class cbasebal
+{
+	
 
 /* in machine/kabuki.c */
 void pang_decode(void);
@@ -344,3 +349,4 @@ DRIVER_INIT( cbasebal )
 
 
 GAME( 1989, cbasebal, 0, cbasebal, cbasebal, cbasebal, ROT0, "Capcom", "Capcom Baseball (Japan)" )
+}

@@ -102,13 +102,15 @@
  *************************************************************/
 //* : debug-note tags(AT)
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
-#include "driver.h"
-#include "upd7759.h"
-#include "streams.h"
+public class upd7759
+{
+	
 
 #define MAX_UPD7759 2
 #define DRQ_FREQUENCY 40000
@@ -593,4 +595,5 @@ WRITE_HANDLER(UPD7759_0_port_w)
 READ_HANDLER(UPD7759_0_busy_r)
 {
 	return UPD7759_busy_r(0);
+}
 }

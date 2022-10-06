@@ -7,8 +7,15 @@
 #ifndef __WIN32_DDRAW__
 #define __WIN32_DDRAW__
 
-#include "window.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class winddrawH
+{
+	
 
 //============================================================
 //	PROTOTYPES
@@ -23,3 +30,4 @@ void win_ddraw_fullscreen_margins(DWORD desc_width, DWORD desc_height, RECT *mar
 
 
 #endif
+}

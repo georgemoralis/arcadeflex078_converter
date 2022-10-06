@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class finalizr
+{
+	
 
 
 unsigned char *finalizr_scroll;
@@ -274,4 +280,5 @@ VIDEO_UPDATE( finalizr )
 					&Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
+}
 }

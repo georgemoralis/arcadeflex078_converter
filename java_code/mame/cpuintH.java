@@ -9,10 +9,15 @@
 #ifndef CPUINT_H
 #define CPUINT_H
 
-#include "osd_cpu.h"
-#include "memory.h"
-#include "timer.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class cpuintH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -142,3 +147,4 @@ READ_HANDLER( interrupt_enable_r );
 #endif
 
 #endif	/* CPUEXEC_H */
+}

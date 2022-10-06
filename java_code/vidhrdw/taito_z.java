@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taito_z
+{
+	
 #define TC0100SCN_GFX_NUM 1
 #define TC0480SCP_GFX_NUM 1
 
@@ -1120,3 +1124,4 @@ VIDEO_UPDATE( dblaxle )
 }
 
 
+}

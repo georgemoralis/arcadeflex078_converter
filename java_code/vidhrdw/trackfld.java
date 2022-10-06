@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class trackfld
+{
+	
 UINT8 *trackfld_scroll;
 UINT8 *trackfld_scroll2;
 
@@ -181,4 +187,5 @@ VIDEO_UPDATE( trackfld )
 
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	trackfld_draw_sprites(bitmap);
+}
 }

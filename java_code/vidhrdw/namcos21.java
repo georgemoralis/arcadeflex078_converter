@@ -74,14 +74,15 @@ quad count (1 word) - the number of quads to draw
 quad primitives (n x 5 words) - indices of four verticies plus color code
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "namcos2.h"
-#include "namcoic.h"
-#include <assert.h>
-#include "namcos3d.h"
-#include "matrix3d.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class namcos21
+{
+	
 #define MAX_SURFACE 64
 #define MAX_VERTEX	64
 
@@ -513,3 +514,4 @@ VIDEO_UPDATE( namcos21_default )
 		}
 	}
 } /* namcos21_default */
+}

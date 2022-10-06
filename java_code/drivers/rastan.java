@@ -6,12 +6,15 @@ driver by Jarek Burczynski
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rastan
+{
+	
 data16_t *rastan_ram;	/* speedup hack */
 
 WRITE16_HANDLER( rastan_spritectrl_w );
@@ -469,3 +472,4 @@ GAME( 1987, rastan,   0,      rastan, rastan,   0, ROT0, "Taito Corporation Japa
 GAME( 1987, rastanu,  rastan, rastan, rastsaga, 0, ROT0, "Taito America Corporation", "Rastan (US set 1)")
 GAME( 1987, rastanu2, rastan, rastan, rastsaga, 0, ROT0, "Taito America Corporation", "Rastan (US set 2)")
 GAME( 1987, rastsaga, rastan, rastan, rastsaga, 0, ROT0, "Taito Corporation", "Rastan Saga (Japan)")
+}

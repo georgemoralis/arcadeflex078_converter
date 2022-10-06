@@ -4,8 +4,15 @@ Atari Poolshark video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class poolshrk
+{
+	
 UINT8* poolshrk_playfield_ram;
 UINT8* poolshrk_hpos_ram;
 UINT8* poolshrk_vpos_ram;
@@ -61,4 +68,5 @@ VIDEO_UPDATE( poolshrk )
 	/* draw playfield */
 
 	tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
+}
 }

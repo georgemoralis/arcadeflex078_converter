@@ -6,20 +6,18 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <winnt.h>
-#include <mmsystem.h>
-#include <shellapi.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class winmain
+{
+	
 // standard includes
-#include <time.h>
-#include <ctype.h>
 
 // MAME headers
-#include "driver.h"
-#include "window.h"
-#include "input.h"
-#include "config.h"
 
 
 #define ENABLE_PROFILER		0
@@ -660,3 +658,4 @@ static void stop_profiler(void)
 	WaitForSingleObject(profiler_thread, 2000);
 }
 #endif
+}

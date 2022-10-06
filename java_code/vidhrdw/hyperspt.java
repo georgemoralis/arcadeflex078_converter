@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hyperspt
+{
+	
 UINT8 *hyperspt_scroll;
 
 static struct tilemap *bg_tilemap;
@@ -202,4 +208,5 @@ VIDEO_START( roadf )
 	tilemap_set_scroll_rows(bg_tilemap, 32);
 
 	return 0;
+}
 }

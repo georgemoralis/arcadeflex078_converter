@@ -46,8 +46,15 @@ Runs in interrupt mode 0, the interrupt vectors are 0xcf (RST 08h) and
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gundealr
+{
+	
 
 extern unsigned char *gundealr_bg_videoram,*gundealr_fg_videoram;
 
@@ -594,3 +601,4 @@ GAME( 19??, gundeala, gundealr, gundealr, gundealr, gundealr, ROT270, "Dooyong",
 GAME( 1990, gundealt, gundealr, gundealr, gundealt, gundealr, ROT270, "Tecmo", "Gun Dealer (Tecmo)" )
 GAME( 1990, yamyam,   0,        gundealr, yamyam,   yamyam,   ROT0,   "Dooyong", "Yam! Yam!?" )
 GAME( 1990, wiseguy,  yamyam,   gundealr, yamyam,   yamyam,   ROT0,   "Dooyong", "Wise Guy" )
+}

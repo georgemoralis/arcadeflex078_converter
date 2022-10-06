@@ -24,13 +24,15 @@ Notes:
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "m92.h"
-#include "machine/irem_cpu.h"
-#include "sndhrdw/m72.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class m90
+{
+	
 static int bankaddress;
 
 extern unsigned char *m90_video_data;
@@ -950,3 +952,4 @@ GAMEX(1992, quizf1,   0,        quizf1,   quizf1,   quizf1,   ROT0, "Irem", "Qui
 GAMEX(1993, riskchal, 0,        m90,      m97,      riskchal, ROT0, "Irem", "Risky Challenge", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 GAMEX(1993, gussun,   riskchal, m90,      m97,      riskchal, ROT0, "Irem", "Gussun Oyoyo (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 GAMEX(1993, shisen2,  0,        m90,      m97,      shisen2,  ROT0, "Tamtex", "Shisensho II", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+}

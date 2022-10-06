@@ -14,9 +14,15 @@ Add global sprite flip
 Tilemap flip flags were reversed
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class suprnova
+{
+	
 extern data32_t *skns_tilemapA_ram, *skns_tilemapB_ram, *skns_v3slc_ram;
 extern data32_t *skns_palette_ram, *skns_v3t_ram, *skns_main_ram, *skns_cache_ram;
 extern data32_t *skns_pal_regs, *skns_v3_regs, *skns_spc_regs;
@@ -789,4 +795,5 @@ VIDEO_UPDATE(skns)
 VIDEO_EOF(skns)
 {
 	buffer_spriteram32_w(0,0,0);
+}
 }

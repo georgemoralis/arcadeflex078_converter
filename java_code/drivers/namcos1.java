@@ -198,11 +198,15 @@ C - uses sub board with support for player 3 and 4 controls
 
 ***********************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/m6800/m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos1
+{
+	
 /* from vidhrdw */
 extern VIDEO_START( namcos1 );
 extern VIDEO_UPDATE( namcos1 );
@@ -2707,3 +2711,4 @@ GAME( 1990, puzlclub, 0,        ns1,     puzlclub,puzlclub, ROT270, "Namco", "Pu
 GAME( 1991, tankfrce, 0,        ns1,     splatter,tankfrce, ROT180, "Namco", "Tank Force (US)" )
 GAME( 1991, tankfrcj, tankfrce, ns1,     splatter,tankfrce, ROT180, "Namco", "Tank Force (Japan)" )
 
+}

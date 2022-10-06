@@ -6,11 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class chqflag
+{
+	
 #define SPRITEROM_MEM_REGION REGION_GFX1
 #define ZOOMROM0_MEM_REGION REGION_GFX2
 #define ZOOMROM1_MEM_REGION REGION_GFX3
@@ -91,4 +95,5 @@ VIDEO_UPDATE( chqflag )
 	K051316_zoom_draw_1(bitmap,cliprect,TILEMAP_FRONT,0);
 	K051960_sprites_draw(bitmap,cliprect,1,1);
 	K051316_zoom_draw_0(bitmap,cliprect,0,0);
+}
 }

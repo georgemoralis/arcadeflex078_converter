@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "exerion.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class exerion
+{
+	
 //#define DEBUG_SPRITES
 
 #define BACKGROUND_X_START		32
@@ -20,7 +25,6 @@
 
 
 #ifdef DEBUG_SPRITES
-#include <stdio.h>
 FILE	*sprite_log;
 #endif
 
@@ -456,4 +460,5 @@ VIDEO_UPDATE( exerion )
 				exerion_cocktail_flip, exerion_cocktail_flip, x, y,
 				cliprect, TRANSPARENCY_PEN, 0);
 		}
+}
 }

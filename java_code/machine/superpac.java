@@ -7,8 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class superpac
+{
+	
 
 unsigned char *superpac_sharedram;
 unsigned char *superpac_customio_1,*superpac_customio_2;
@@ -264,4 +271,5 @@ WRITE_HANDLER( superpac_interrupt_enable_w )
 WRITE_HANDLER( superpac_cpu_enable_w )
 {
 	cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
+}
 }

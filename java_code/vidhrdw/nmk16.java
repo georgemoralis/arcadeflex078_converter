@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nmk16
+{
+	
 data16_t *nmk_bgvideoram,*nmk_fgvideoram,*nmk_txvideoram;
 data16_t *gunnail_scrollram;
 static data16_t gunnail_scrolly;
@@ -630,4 +636,5 @@ VIDEO_EOF( nmk )
 	/* looks like sprites are *two* frames ahead */
 	memcpy(spriteram_old2,spriteram_old,spriteram_size);
 	memcpy(spriteram_old,spriteram16,spriteram_size);
+}
 }

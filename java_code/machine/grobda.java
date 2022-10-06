@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class grobda
+{
+	
 unsigned char *grobda_snd_sharedram;
 unsigned char *grobda_customio_1,*grobda_customio_2;
 static int int_enable_1, int_enable_2;
@@ -255,4 +261,5 @@ READ_HANDLER( grobda_customio_2_r )
     }
 	else
 		return grobda_customio_2[offset];
+}
 }

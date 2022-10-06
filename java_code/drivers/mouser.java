@@ -12,9 +12,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mouser
+{
+	
 unsigned char mouser_sound_byte;
 unsigned char mouser_nmi_enable;
 
@@ -308,3 +314,4 @@ DRIVER_INIT( mouser )
 
 GAME( 1983, mouser,   0,      mouser, mouser, mouser, ROT90, "UPL", "Mouser" )
 GAME( 1983, mouserc,  mouser, mouser, mouser, mouser, ROT90, "[UPL] (Cosmos license)", "Mouser (Cosmos)" )
+}

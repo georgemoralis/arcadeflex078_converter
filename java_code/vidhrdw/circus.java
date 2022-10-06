@@ -10,10 +10,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class circus
+{
+	
 static int clown_x=0,clown_y=0,clown_z=0;
 
 static struct tilemap *bg_tilemap;
@@ -352,4 +357,5 @@ VIDEO_UPDATE( ripcord )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	ripcord_draw_skydiver(bitmap);
+}
 }

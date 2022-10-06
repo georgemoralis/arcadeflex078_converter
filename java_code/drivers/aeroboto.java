@@ -21,9 +21,15 @@ Revisions:
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class aeroboto
+{
+	
 
 extern data8_t *aeroboto_videoram;
 extern data8_t *aeroboto_hscroll, *aeroboto_vscroll, *aeroboto_tilecolor;
@@ -352,3 +358,4 @@ ROM_END
 
 GAMEX( 1984, formatz,  0,       formatz, formatz, 0, ROT0, "Jaleco", "Formation Z", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1984, aeroboto, formatz, formatz, formatz, 0, ROT0, "[Jaleco] (Williams license)", "Aeroboto", GAME_IMPERFECT_GRAPHICS )
+}

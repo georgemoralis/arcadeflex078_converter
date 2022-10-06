@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class hexion
+{
+	
 
 static data8_t *vram[2],*unkram;
 static int bankctrl,rambank,pmcbank,gfxrom_select;
@@ -172,4 +179,5 @@ VIDEO_UPDATE( hexion )
 {
 	tilemap_draw(bitmap,cliprect,tilemap[1],0,0);
 	tilemap_draw(bitmap,cliprect,tilemap[0],0,0);
+}
 }

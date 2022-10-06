@@ -4,13 +4,18 @@
 
 ****************************************************************/
 
-#include "driver.h"
-#include "ym2413.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class _2413intf
+{
+	
 //#define YM2413ISA
 #ifdef YM2413ISA
-	#include <pc.h>
-#endif
+	#endif
 
 
 /* for stream system */
@@ -162,3 +167,4 @@ WRITE16_HANDLER( YM2413_data_port_1_lsb_w ) { if (ACCESSING_LSB) YM2413_data_por
 WRITE16_HANDLER( YM2413_data_port_2_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_2_w(offset,data & 0xff); }
 WRITE16_HANDLER( YM2413_data_port_3_lsb_w ) { if (ACCESSING_LSB) YM2413_data_port_3_w(offset,data & 0xff); }
 
+}

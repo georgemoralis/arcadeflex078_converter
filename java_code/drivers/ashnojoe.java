@@ -69,8 +69,15 @@ Coin B is not used
 
 *************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ashnojoe
+{
+	
 extern data16_t *ashnojoetileram16, *ashnojoetileram16_2, *ashnojoetileram16_3, *ashnojoetileram16_4, *ashnojoetileram16_5, *ashnojoetileram16_6, *ashnojoetileram16_7;
 extern data16_t *ashnojoe_tilemap_reg;
 
@@ -416,3 +423,4 @@ ROM_START( ashnojoe )
 ROM_END
 
 GAMEX( 1990, ashnojoe, 0, ashnojoe, ashnojoe, ashnojoe, ROT0, "WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
+}

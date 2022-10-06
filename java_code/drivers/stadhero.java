@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class stadhero
+{
+	
 /* Video emulation definitions */
 VIDEO_START( stadhero );
 VIDEO_UPDATE( stadhero );
@@ -364,3 +369,4 @@ ROM_END
 /******************************************************************************/
 
 GAME( 1988, stadhero, 0, stadhero, stadhero, 0, ROT0, "Data East Corporation", "Stadium Hero (Japan)" )
+}

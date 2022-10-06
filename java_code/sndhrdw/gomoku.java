@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gomoku
+{
+	
 
 /* 4 voices max */
 #define MAX_VOICES 8
@@ -249,4 +256,5 @@ WRITE_HANDLER( gomoku_sound_w )
 			voice->oneshotplaying = 1;
 		}
 	}
+}
 }

@@ -48,12 +48,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "sndhrdw/mcr.h"
-#include "sndhrdw/williams.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mcr68
+{
+	
 
 
 /*************************************
@@ -1428,3 +1431,4 @@ GAME( 1989, archrivl, 0,        archrivl, archrivl, archrivl, ROT0,   "Bally Mid
 GAME( 1989, archriv2, archrivl, archrivl, archrivl, archrivl, ROT0,   "Bally Midway", "Arch Rivals (rev 2.0)" )
 GAME( 1989, trisport, 0,        trisport, trisport, trisport, ROT270, "Bally Midway", "Tri-Sports" )
 GAME( 1990, pigskin,  0,        pigskin,  pigskin,  pigskin,  ROT0,   "Midway", "Pigskin 621AD" )
+}

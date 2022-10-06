@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class espial
+{
+	
 
 data8_t *espial_videoram;
 data8_t *espial_colorram;
@@ -257,4 +264,5 @@ VIDEO_UPDATE( espial )
 	tilemap_draw(bitmap,cliprect,tilemap,0,0);
 
 	draw_sprites(bitmap, cliprect);
+}
 }

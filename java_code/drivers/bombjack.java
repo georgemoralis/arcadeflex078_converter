@@ -66,10 +66,15 @@ NMI interrupts for music timing
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bombjack
+{
+	
 
 extern WRITE_HANDLER( bombjack_videoram_w );
 extern WRITE_HANDLER( bombjack_colorram_w );
@@ -416,3 +421,4 @@ static DRIVER_INIT( bombjack )
 
 GAME( 1984, bombjack, 0,        bombjack, bombjack, bombjack, ROT90, "Tehkan", "Bomb Jack (set 1)" )
 GAME( 1984, bombjac2, bombjack, bombjack, bombjack, bombjack, ROT90, "Tehkan", "Bomb Jack (set 2)" )
+}

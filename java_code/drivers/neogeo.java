@@ -261,13 +261,15 @@ removal of hacks to change region / get info memory card manager
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/pd4990a.h"
-#include "cpu/z80/z80.h"
-#include "neogeo.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class neogeo
+{
+	
 
 /* values probed by Razoola from the real board */
 #define RASTER_LINES 264
@@ -6290,3 +6292,4 @@ GAMEB( 2000, bangbead, neogeo,   neogeo, raster, neogeo,  bangbead, ROT0, "Visco
 #if 0
 GAMEB( 2000, bangbedp, bangbead, neogeo, raster, neogeo,  neogeo,   ROT0, "Visco", "Bang Bead (prototype)" )
 #endif
+}

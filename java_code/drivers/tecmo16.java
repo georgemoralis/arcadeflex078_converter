@@ -16,11 +16,15 @@ buttons 1 and 2 during P.O.S.T.
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/z80/z80.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tecmo16
+{
+	
 
 extern data16_t *tecmo16_videoram;
 extern data16_t *tecmo16_colorram;
@@ -469,3 +473,4 @@ ROM_END
 
 GAMEX( 1992, fstarfrc, 0, fstarfrc, fstarfrc, 0, ROT90, "Tecmo", "Final Star Force (US)", GAME_NO_COCKTAIL )
 GAMEX( 1995, ginkun,   0, ginkun,   ginkun,   0, ROT0,  "Tecmo", "Ganbare Ginkun", GAME_NO_COCKTAIL )
+}

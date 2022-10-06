@@ -3,9 +3,15 @@
 #ifndef _T11_H
 #define _T11_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.t11;
 
+public class t11H
+{
+	
 enum {
 	T11_R0=1, T11_R1, T11_R2, T11_R3, T11_R4, T11_R5, T11_SP, T11_PC, T11_PSW,
 	T11_IRQ0_STATE, T11_IRQ1_STATE, T11_IRQ2_STATE, T11_IRQ3_STATE,
@@ -68,3 +74,4 @@ extern unsigned DasmT11(char *buffer, unsigned pc);
 #endif
 
 #endif /* _T11_H */
+}

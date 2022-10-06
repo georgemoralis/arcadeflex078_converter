@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class troangel
+{
+	
 
 unsigned char *troangel_scroll;
 
@@ -235,4 +241,5 @@ VIDEO_UPDATE( troangel )
 {
 	draw_background(bitmap);
 	draw_sprites(bitmap);
+}
 }

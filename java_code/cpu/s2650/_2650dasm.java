@@ -7,9 +7,15 @@
  *
  **************************************************************************/
 
-#include <stdio.h>
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.s2650;
 
+public class _2650dasm
+{
+	
 /* Set this to 1 to disassemble using Z80 style mnemonics */
 #define HJB     0
 
@@ -827,4 +833,5 @@ int Dasm2650(char * buff, int PC)
 			break;
 	}
 	return pc - PC;
+}
 }

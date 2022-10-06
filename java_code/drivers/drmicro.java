@@ -8,9 +8,15 @@ Quite similar to Appoooh
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class drmicro
+{
+	
 #define MCLK 18432000
 
 PALETTE_INIT( drmicro );
@@ -296,3 +302,4 @@ ROM_START( drmicro )
 ROM_END
 
 GAME( 1983, drmicro, 0, drmicro, drmicro, 0, ROT270, "Sanritsu", "Dr. Micro" )
+}

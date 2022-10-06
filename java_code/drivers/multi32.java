@@ -15,11 +15,15 @@
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class multi32
+{
+	
 #define OSC_A	(32215900)	// System 32 master crystal is 32215900 Hz
 #define Z80_CLOCK (OSC_A/4)
 #define MAX_COLOURS (16384)
@@ -1220,3 +1224,4 @@ GAMEX( 1992, scross,       0,        scross,  scross,   orunners, ROT0, "Sega", 
 
 // doesn't boot (needs v60 fixing, modeler has a hack in the cpu core)
 GAMEX( 199?, titlef,       0, multi32, titlef,   titlef,   ROT0, "Sega", "Title Fight", GAME_NOT_WORKING )
+}

@@ -8,10 +8,15 @@ The DS5002FP has up to 128KB undumped gameplay code making the game unplayable :
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class glass
+{
+	
 extern data16_t *glass_vregs;
 extern data16_t *glass_videoram;
 extern data16_t *glass_spriteram;
@@ -300,3 +305,4 @@ static DRIVER_INIT( glass )
 }
 
 GAMEX( 1993, glass, 0, glass,glass, glass, ROT0, "Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
+}

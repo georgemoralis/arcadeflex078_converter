@@ -38,10 +38,15 @@ Note 2: Lethal Justice uses a TMS34010FNL-50 instead of the TMS34010FNL-40
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "lethalj.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lethalj
+{
+	
 
 static data16_t *code_rom;
 
@@ -446,3 +451,4 @@ static DRIVER_INIT( lethalj )
 GAME( 1996, lethalj,  0,        lethalj,  lethalj,  lethalj, ROT0, "The Game Room", "Lethal Justice" )
 GAME( 1997, eggventr, 0,        eggventr, eggventr, lethalj, ROT0, "The Game Room", "Egg Venture" )
 GAME( 1997, eggvntdx, eggventr, eggventr, eggventdx, lethalj, ROT0, "The Game Room", "Egg Venture Deluxe" )
+}

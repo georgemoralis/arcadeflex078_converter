@@ -28,9 +28,15 @@ To Do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class yunsung8
+{
+	
 /* Variables defined in vidhrdw: */
 
 extern data8_t *yunsung8_videoram_0, *yunsung8_videoram_1;
@@ -575,3 +581,4 @@ ROM_END
 
 GAMEX( 1995, cannball, 0, yunsung8, cannball, 0, ROT0, "Yun Sung / Soft Vision", "Cannon Ball",  GAME_IMPERFECT_SOUND )
 GAMEX( 1995, magix,    0, yunsung8, magix,    0, ROT0, "Yun Sung",               "Magix / Rock", GAME_IMPERFECT_SOUND ) // Title: DSW
+}

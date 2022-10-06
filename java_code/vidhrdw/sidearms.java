@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sidearms
+{
+	
 extern int sidearms_gameid;
 
 UINT8 *sidearms_bg_scrollx;
@@ -397,4 +403,5 @@ VIDEO_UPDATE( sidearms )
 VIDEO_EOF( sidearms )
 {
 	buffer_spriteram_w(0, 0);
+}
 }

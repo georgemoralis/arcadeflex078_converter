@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class rollerg
+{
+	
 
 static int bg_colorbase,sprite_colorbase,zoom_colorbase;
 
@@ -76,4 +81,5 @@ VIDEO_UPDATE( rollerg )
 	fillbitmap(bitmap,Machine->pens[16 * bg_colorbase],cliprect);
 	K051316_zoom_draw_0(bitmap,cliprect,0,1);
 	K053245_sprites_draw(bitmap,cliprect);
+}
 }

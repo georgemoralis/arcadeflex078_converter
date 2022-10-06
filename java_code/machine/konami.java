@@ -5,8 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class konami
+{
+	
 
 
 unsigned char decodebyte( unsigned char opcode, unsigned short address )
@@ -63,4 +70,5 @@ void konami1_decode(void)
 void konami1_decode_cpu2(void)
 {
 	decode(1);
+}
 }

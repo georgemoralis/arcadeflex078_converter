@@ -12,8 +12,15 @@
 
 */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bigstrkb
+{
+	
 /*
 
 68k interrupts
@@ -292,3 +299,4 @@ ROM_END
 /* GAME drivers */
 
 GAMEX( 1992, bigstrkb, bigstrik, bigstrkb, bigstrkb, 0, ROT0, "bootleg", "Big Striker (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+}

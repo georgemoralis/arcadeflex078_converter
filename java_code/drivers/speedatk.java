@@ -74,9 +74,15 @@ SW 8   : TEST MODE H:TEST
 PS / PD :  key matrix
 *****************************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class speedatk
+{
+	
 static UINT8 mux_data;
 
 extern WRITE_HANDLER( speedatk_videoram_w );
@@ -325,3 +331,4 @@ ROM_START( speedatk )
 ROM_END
 
 GAME( 1984, speedatk, 0, speedatk, speedatk, 0, ROT0, "Seta Kikaku Corp.", "Speed Attack!" )
+}

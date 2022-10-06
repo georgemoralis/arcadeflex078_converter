@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6805/m6805.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class pitnrun
+{
+	
 
 static unsigned char fromz80,toz80;
 static int zaccept,zready;
@@ -156,3 +162,4 @@ READ_HANDLER( pitnrun_68705_portC_r )
 
 
 
+}

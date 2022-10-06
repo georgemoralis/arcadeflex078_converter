@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class usgames
+{
+	
 data8_t *usg_videoram,*usg_charram;
 
 
@@ -75,4 +82,5 @@ WRITE_HANDLER( usg_charram_w )
 VIDEO_UPDATE(usg)
 {
 	tilemap_draw(bitmap,cliprect,usg_tilemap,0,0);
+}
 }

@@ -23,9 +23,15 @@ Notes:
 
 *****************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class raiders5
+{
+	
 VIDEO_UPDATE( raiders5 );
 
 extern UINT8 *raiders5_fgram;
@@ -317,3 +323,4 @@ ROM_END
 
 GAME( 1985, raiders5, 0,        raiders5, raiders5, 0, ROT0, "UPL", "Raiders5" )
 GAME( 1985, raidrs5t, raiders5, raiders5, raiders5, 0, ROT0, "UPL (Taito license)", "Raiders5 (Japan)" )
+}

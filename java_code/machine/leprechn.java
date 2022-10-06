@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "cpu/m6502/m6502.h"
-#include "machine/6522via.h"
-#include "includes/leprechn.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class leprechn
+{
+	
 
 static data8_t input_port_select;
 
@@ -85,4 +89,5 @@ DRIVER_INIT( leprechn )
 READ_HANDLER( leprechn_sh_0805_r )
 {
     return 0xc0;
+}
 }

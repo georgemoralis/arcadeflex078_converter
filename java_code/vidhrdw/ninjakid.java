@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ninjakid
+{
+	
 static struct tilemap *bg_tilemap, *fg_tilemap;
 static int flipscreen;
 static UINT8 ninjakun_xscroll,ninjakun_yscroll;
@@ -301,4 +306,5 @@ VIDEO_UPDATE( ninjakid )
 	}
 
 
+}
 }

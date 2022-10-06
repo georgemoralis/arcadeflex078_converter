@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mcr68
+{
+	
 
 #define LOW_BYTE(x) ((x) & 0xff)
 
@@ -371,4 +376,5 @@ VIDEO_UPDATE( zwackery )
 
 	/* draw the high-priority sprites */
 	zwackery_update_sprites(bitmap, cliprect, 1);
+}
 }

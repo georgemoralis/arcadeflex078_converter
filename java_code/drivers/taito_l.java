@@ -47,10 +47,15 @@ TODO:
 */
 
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/taitosnd.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taito_l
+{
+	
 VIDEO_EOF( taitol );
 VIDEO_START( taitol );
 VIDEO_UPDATE( taitol );
@@ -2823,3 +2828,4 @@ GAME( 1992, plgirls,  0,        cachat,   plgirls,  0,        ROT270, "Hot-B.", 
 GAME( 1993, plgirls2, 0,        cachat,   plgirls2, 0,        ROT270, "Hot-B.", "Play Girls 2" )
 
 GAME( 1990, evilston, 0,        evilston, evilston, evilston, ROT270, "Spacy Industrial, Ltd.", "Evil Stone" )
+}

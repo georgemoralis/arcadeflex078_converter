@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "lwings.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lwings
+{
+	
 unsigned char *lwings_fgvideoram;
 unsigned char *lwings_bg1videoram;
 
@@ -299,4 +304,5 @@ VIDEO_UPDATE( trojan )
 VIDEO_EOF( lwings )
 {
 	buffer_spriteram_w(0,0);
+}
 }

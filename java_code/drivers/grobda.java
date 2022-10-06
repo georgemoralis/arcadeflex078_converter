@@ -6,9 +6,15 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class grobda
+{
+	
 extern unsigned char *grobda_snd_sharedram;
 extern unsigned char *grobda_customio_1, *grobda_customio_2;
 extern unsigned char *mappy_soundregs;
@@ -324,3 +330,4 @@ ROM_END
 GAME( 1984, grobda,  0,      grobda, grobda, 0, ROT90, "Namco", "Grobda (New version)" )
 GAME( 1984, grobda2, grobda, grobda, grobda, 0, ROT90, "Namco", "Grobda (Old version set 1)" )
 GAME( 1984, grobda3, grobda, grobda, grobda, 0, ROT90, "Namco", "Grobda (Old version set 2)" )
+}

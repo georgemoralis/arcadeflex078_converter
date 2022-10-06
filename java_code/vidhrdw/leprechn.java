@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/6522via.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class leprechn
+{
+	
 
 static data8_t x,y,color;
 static data8_t graphics_command;
@@ -138,4 +143,5 @@ WRITE_HANDLER( leprechn_videoram_w )
 READ_HANDLER( leprechn_videoram_r )
 {
     return videoram[y * Machine->drv->screen_width + x];
+}
 }

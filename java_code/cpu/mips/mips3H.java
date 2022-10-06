@@ -11,9 +11,15 @@
 #ifndef _MIPS3_H
 #define _MIPS3_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class mips3H
+{
+	
 
 /*###################################################################################################
 **	REGISTER ENUMERATION
@@ -186,3 +192,4 @@ void mips3drc_set_options(UINT8 cpunum, UINT32 opts);
 
 
 #endif /* _MIPS3_H */
+}

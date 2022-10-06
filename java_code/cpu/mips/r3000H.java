@@ -11,9 +11,15 @@
 #ifndef _R3000_H
 #define _R3000_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class r3000H
+{
+	
 
 /*###################################################################################################
 **	COMPILE-TIME DEFINITIONS
@@ -110,3 +116,4 @@ extern unsigned r3000_dasm(char *buffer, unsigned pc);
 
 
 #endif /* _JAGUAR_H */
+}

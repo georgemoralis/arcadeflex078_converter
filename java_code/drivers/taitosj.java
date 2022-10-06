@@ -122,10 +122,15 @@ Kickstart Wheelie King :
 	 - two buttons for gear change, auto acceleration
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class taitosj
+{
+	
 
 
 MACHINE_INIT( taitosj );
@@ -2755,3 +2760,4 @@ GAME( 1983, bioatack, 0,        nomcu,    bioatack,   0,       ROT270, "Taito Co
 GAME( 1984, sfposeid, 0,        mcu,      sfposeid,   0,       ROT0,   "Taito Corporation", "Sea Fighter Poseidon" )
 GAME( 1983, hwrace,   0,        nomcu,    hwrace,     0,       ROT270, "Taito Corporation", "High Way Race" )
 GAME( 1984, kikstart, 0,        kikstart, kikstart,   kikstart,ROT0,   "Taito Corporation", "Kick Start Wheelie King" )
+}

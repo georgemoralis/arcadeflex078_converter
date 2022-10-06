@@ -9,10 +9,15 @@
 
 */
 
-#include "driver.h"
-#include "cpu/mips/psx.h"
-#include "includes/psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class namcos10
+{
+	
 static INTERRUPT_GEN( namcos10_vblank )
 {
 }
@@ -180,3 +185,4 @@ ROM_START( mrdrilr2 )
 ROM_END
 
 GAMEX( 2000, mrdrilr2,  0,        namcos10, namcos10, namcos10, ROT0, "Namco", "Mr Driller 2", GAME_NOT_WORKING | GAME_NO_SOUND )
+}

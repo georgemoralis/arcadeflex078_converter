@@ -42,9 +42,15 @@ ROMs 6A, 7A, 8A, 9A: 2764
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mrjong
+{
+	
 
 extern WRITE_HANDLER( mrjong_videoram_w );
 extern WRITE_HANDLER( mrjong_colorram_w );
@@ -269,3 +275,4 @@ ROM_END
 GAME( 1983, mrjong,   0,      mrjong, mrjong, 0, ROT90, "Kiwako", "Mr. Jong (Japan)" )
 GAME( 1983, crazyblk, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "Crazy Blocks" )
 GAME( 1983, blkbustr, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "BlockBuster" )
+}

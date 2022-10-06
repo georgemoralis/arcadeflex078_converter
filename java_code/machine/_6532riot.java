@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/6532riot.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class _6532riot
+{
+	
 
 struct R6532
 {
@@ -235,4 +241,5 @@ void r6532_init(int n, const struct R6532interface* intf)
 	r6532[n]->cleared = 0;
 
 	r6532[n]->target = 0;
+}
 }

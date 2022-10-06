@@ -349,11 +349,15 @@ Stephh's notes (based on some tests) :
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "machine/eeprom.h"
-#include "machine/random.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class system32
+{
+	
 #define OSC_A	(32215900)	// System 32 master crystal is 32215900 Hz
 #define MAX_COLOURS (16384)
 enum { EEPROM_SYS32_0=0, EEPROM_ALIEN3, EEPROM_RADM, EEPROM_RADR };
@@ -3054,3 +3058,4 @@ GAMEX(1994, dbzvrvs,  0,        sys32_hi, system32,	s32,      ROT0, "Sega / Banp
 GAMEX(1995, slipstrm, 0,        sys32_hi, system32,	f1en,     ROT0, "Capcom", "Slipstream", GAME_NOT_WORKING ) /* unhandled v60 opcodes .... */
 /* Air Rescue */
 /* Loony Toons (maybe) */
+}

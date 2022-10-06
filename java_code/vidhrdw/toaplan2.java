@@ -144,10 +144,15 @@ Pipi & Bibis	 | Fix Eight		| V-Five		   | Snow Bros. 2	  |
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class toaplan2
+{
+	
 
 
 #define TOAPLAN2_BG_VRAM_SIZE   0x1000	/* Background RAM size */
@@ -1648,4 +1653,5 @@ VIDEO_EOF( toaplan2_1 )
 VIDEO_EOF( batrider_0 )
 {
 	cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);  /* Frame done */
+}
 }

@@ -8,11 +8,15 @@ driver by Nicola Salmoria
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class bottom9
+{
+	
 
 extern int bottom9_video_enable;
 
@@ -614,3 +618,4 @@ static DRIVER_INIT( bottom9 )
 GAME( 1989, bottom9,  0,       bottom9, bottom9,  bottom9, ROT0, "Konami", "Bottom of the Ninth (version T)" )
 GAME( 1989, bottom9n, bottom9, bottom9, bottom9,  bottom9, ROT0, "Konami", "Bottom of the Ninth (version N)" )
 GAME( 1989, mstadium, bottom9, bottom9, mstadium, bottom9, ROT0, "Konami", "Main Stadium (Japan)" )
+}

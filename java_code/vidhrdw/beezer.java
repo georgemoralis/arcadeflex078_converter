@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "machine/6522via.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class beezer
+{
+	
 static int scanline=0;
 
 INTERRUPT_GEN( beezer_interrupt )
@@ -85,3 +89,4 @@ READ_HANDLER( beezer_line_r )
 	return (scanline & 0xfe) << 1;
 }
 
+}

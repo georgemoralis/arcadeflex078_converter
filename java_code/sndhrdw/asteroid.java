@@ -5,9 +5,15 @@
  *
  *****************************************************************************/
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class asteroid
+{
+	
 /************************************************************************/
 /* Asteroids Sound System Analog emulation by K.Wilkins Nov 2000        */
 /* Questions/Suggestions to mame@dysfunction.demon.co.uk                */
@@ -311,4 +317,5 @@ WRITE_HANDLER( astdelux_sounds_w )
 WRITE_HANDLER( asteroid_noise_reset_w )
 {
 	discrete_sound_w(6, 0);
+}
 }

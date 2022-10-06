@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class spcforce
+{
+	
 
 unsigned char *spcforce_scrollram;
 
@@ -58,4 +64,5 @@ VIDEO_UPDATE( spcforce )
 				sx, sy,
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
+}
 }

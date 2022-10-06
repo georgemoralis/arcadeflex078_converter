@@ -19,12 +19,15 @@
  *
  */
 
-#include <string.h>
-#include <stdio.h>
-#include "driver.h"
-#include "mamedbg.h"
-#include "m6800.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m6800;
 
+public class _6800dasm
+{
+	
 #ifdef MAME_DEBUG
 
 enum addr_mode {
@@ -274,3 +277,4 @@ unsigned Dasm680x (int subtype, char *buf, unsigned pc)
 }
 
 #endif
+}

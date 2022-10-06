@@ -7,11 +7,15 @@ Preliminary driver by:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/konami/konami.h" /* for the callback and the firq irq definition */
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class aliens
+{
+	
 /* prototypes */
 static MACHINE_INIT( aliens );
 static void aliens_banking( int lines );
@@ -470,3 +474,4 @@ GAME( 1990, aliens,  0,      aliens, aliens, aliens, ROT0, "Konami", "Aliens (Wo
 GAME( 1990, aliens2, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (World set 2)" )
 GAME( 1990, aliensu, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (US)" )
 GAME( 1990, aliensj, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (Japan)" )
+}

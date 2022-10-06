@@ -20,10 +20,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class galspnbl
+{
+	
 
 extern data16_t *galspnbl_bgvideoram,*galspnbl_videoram,*galspnbl_colorram;
 
@@ -422,3 +427,4 @@ ROM_END
 
 GAMEX( 1995, hotpinbl, 0, hotpinbl, hotpinbl, 0, ROT90, "Comad & New Japan System", "Hot Pinball", GAME_NO_COCKTAIL )
 GAMEX( 1996, galspnbl, 0, hotpinbl, galspnbl, 0, ROT90, "Comad", "Gals Pinball", GAME_NO_COCKTAIL )
+}

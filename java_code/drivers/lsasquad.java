@@ -24,9 +24,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class lsasquad
+{
+	
 /* in vidhrdw/lsasquad.c */
 extern unsigned char *lsasquad_scrollram;
 VIDEO_UPDATE( lsasquad );
@@ -461,3 +467,4 @@ static DRIVER_INIT( storming ) { lsasquad_invertcoin = 0x0c; init_common(); }
 
 GAMEX( 1986, lsasquad, 0,        lsasquad, lsasquad, lsasquad, ROT270, "Taito", "Land Sea Air Squad / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
 GAMEX( 1986, storming, lsasquad, lsasquad, lsasquad, storming, ROT270, "Taito", "Storming Party / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
+}

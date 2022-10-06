@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gunbustr
+{
+	
 #define TC0480SCP_GFX_NUM 1
 
 struct tempsprite
@@ -256,4 +261,5 @@ VIDEO_UPDATE( gunbustr )
 	TC0480SCP_tilemap_draw(bitmap,cliprect,layer[4],0,8);	/* text layer */
 	gunbustr_draw_sprites_16x16(bitmap,cliprect,primasks,48,-116);
 #endif
+}
 }

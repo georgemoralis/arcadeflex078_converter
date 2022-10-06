@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class _1943
+{
+	
 
 
 unsigned char *c1943_scrollx;
@@ -380,4 +386,5 @@ VIDEO_UPDATE( 1943 )
 					cliprect,TRANSPARENCY_COLOR,79);
 		}
 	}
+}
 }

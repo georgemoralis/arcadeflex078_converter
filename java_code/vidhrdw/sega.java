@@ -15,11 +15,15 @@
  * TODO: use floating point math instead of fixed point.
  */
 
-#include "driver.h"
-#include "avgdvg.h"
-#include "vector.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sega
+{
+	
 static int width, height, cent_x, cent_y, min_x, min_y, max_x, max_y;
 static long *sinTable, *cosTable;
 static int intensity;
@@ -176,4 +180,5 @@ VIDEO_UPDATE( sega )
 {
 	sega_generate_vector_list();
 	video_update_vector(bitmap,0);
+}
 }

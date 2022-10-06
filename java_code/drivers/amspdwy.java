@@ -13,9 +13,15 @@ Sound:	YM2151
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class amspdwy
+{
+	
 /* Variables & functions defined in vidhrdw: */
 
 WRITE_HANDLER( amspdwy_videoram_w );
@@ -382,3 +388,4 @@ ROM_END
 
 GAME( 1987, amspdwy,  0,       amspdwy, amspdwy, 0, ROT0, "Enerdyne Technologies, Inc.", "American Speedway (set 1)" )
 GAME( 1987, amspdwya, amspdwy, amspdwy, amspdwy, 0, ROT0, "Enerdyne Technologies, Inc.", "American Speedway (set 2)" )
+}

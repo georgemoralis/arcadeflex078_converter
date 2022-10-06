@@ -32,9 +32,15 @@ Merge with other Video System games ?
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "gstriker.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class gstriker
+{
+	
 /*** README INFO **************************************************************
 
 *** ROMSET: gstriker
@@ -580,3 +586,4 @@ GAMEX(1993, gstriker, 0,        gstriker, gstriker, 0,        ROT0, "Human", "Gr
 GAMEX(199?, vgoalsoc, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer", GAME_NOT_WORKING )
 GAMEX(199?, vgoalsca, vgoalsoc, gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer (alt)", GAME_NOT_WORKING )
 GAMEX(199?, worldc94, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "World Cup '94", GAME_NOT_WORKING )
+}

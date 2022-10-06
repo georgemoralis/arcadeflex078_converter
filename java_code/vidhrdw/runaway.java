@@ -4,8 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class runaway
+{
+	
 
 static struct tilemap *tilemap;
 
@@ -162,4 +169,5 @@ VIDEO_UPDATE( qwak )
 			x - 256, 240 - y,
 			cliprect, TRANSPARENCY_PEN, 0);
 	}
+}
 }

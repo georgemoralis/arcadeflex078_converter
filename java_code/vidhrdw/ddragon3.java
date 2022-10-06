@@ -4,9 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class ddragon3
+{
+	
 UINT16 *ddragon3_bg_videoram16;
 UINT16 *ddragon3_fg_videoram16;
 UINT16 ddragon3_vreg;
@@ -217,4 +223,5 @@ VIDEO_UPDATE( ctribe )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 	ddragon3_draw_sprites(bitmap, cliprect);
+}
 }

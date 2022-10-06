@@ -2,9 +2,15 @@
 **	Video Driver for Taito Samurai (1985)
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class tsamurai
+{
+	
 
 /*
 ** variables
@@ -286,4 +292,5 @@ VIDEO_UPDATE( vsgongf )
 
 	tilemap_draw(bitmap,cliprect,foreground,0,0);
 	draw_sprites(bitmap,cliprect);
+}
 }

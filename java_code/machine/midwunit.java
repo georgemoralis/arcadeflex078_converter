@@ -8,13 +8,15 @@
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/m6809/m6809.h"
-#include "sndhrdw/dcs.h"
-#include "midwunit.h"
-#include "midwayic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class midwunit
+{
+	
 
 /* speedup installation macros */
 #define INSTALL_SPEEDUP_1_16BIT(addr, pc, spin1, offs1, offs2) \
@@ -704,4 +706,5 @@ WRITE16_HANDLER( midwunit_sound_w )
 		logerror("%08X:Sound write = %04X\n", activecpu_get_pc(), data);
 		dcs_data_w(data & 0xff);
 	}
+}
 }

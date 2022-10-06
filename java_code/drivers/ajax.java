@@ -10,9 +10,15 @@ TO DO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class ajax
+{
+	
 extern unsigned char *ajax_sharedram;
 
 static WRITE_HANDLER( k007232_extvol_w );
@@ -426,3 +432,4 @@ static DRIVER_INIT( ajax )
 GAME( 1987, ajax,    0,    ajax, ajax, ajax, ROT90, "Konami", "Ajax" )
 GAME( 1987, typhoon, ajax, ajax, ajax, ajax, ROT90, "Konami", "Typhoon" )
 GAME( 1987, ajaxj,   ajax, ajax, ajax, ajax, ROT90, "Konami", "Ajax (Japan)" )
+}

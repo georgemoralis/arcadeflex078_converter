@@ -191,10 +191,15 @@ actual code sent to the hardware.
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "megasys1.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class megasys1
+{
+	
 /* Variables defined here, that have to be shared: */
 struct tilemap *megasys1_tmap[3];
 
@@ -1045,4 +1050,5 @@ VIDEO_UPDATE( megasys1 )
 
 	if (active_layers & 0x08)
 		draw_sprites(bitmap,cliprect);
+}
 }

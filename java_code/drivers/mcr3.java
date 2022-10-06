@@ -86,13 +86,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/z80fmly.h"
-#include "sndhrdw/mcr.h"
-#include "vidhrdw/generic.h"
-#include "artwork.h"
-#include "mcr.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class mcr3
+{
+	
 
 
 /*************************************
@@ -2115,3 +2117,4 @@ GAME( 1987, stargrds, 0,        mono_sg,  stargrds, stargrds, ROT0,  "Bally Midw
 GAME( 1983, spyhunt,  0,        spyhunt,  spyhunt,  spyhunt,  ROT90, "Bally Midway", "Spy Hunter" )
 GAME( 1984, crater,   0,        crater,   crater,   crater,   ORIENTATION_FLIP_X, "Bally Midway", "Crater Raider" )
 GAMEX(1985, turbotag, 0,        turbotag, turbotag, turbotag, ROT90, "Bally Midway", "Turbo Tag (prototype)", GAME_NO_SOUND )
+}

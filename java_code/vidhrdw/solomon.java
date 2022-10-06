@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class solomon
+{
+	
 UINT8 *solomon_videoram2;
 UINT8 *solomon_colorram2;
 
@@ -124,4 +130,5 @@ VIDEO_UPDATE( solomon )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
 	solomon_draw_sprites(bitmap);
+}
 }

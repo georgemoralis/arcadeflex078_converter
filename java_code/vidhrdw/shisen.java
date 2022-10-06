@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class shisen
+{
+	
 static int gfxbank;
 
 static struct tilemap *bg_tilemap;
@@ -79,4 +85,5 @@ VIDEO_START( sichuan2 )
 VIDEO_UPDATE( sichuan2 )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+}
 }

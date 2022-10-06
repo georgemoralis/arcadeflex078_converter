@@ -1,9 +1,15 @@
 
 /* Ramtek - Star Cruiser */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class starcrus
+{
+	
 static struct mame_bitmap *ship1_vid;
 static struct mame_bitmap *ship2_vid;
 static struct mame_bitmap *proj1_vid;
@@ -574,4 +580,5 @@ VIDEO_UPDATE( starcrus )
 READ_HANDLER( starcrus_coll_det_r )
 {
     return collision_reg ^ 0xff;
+}
 }

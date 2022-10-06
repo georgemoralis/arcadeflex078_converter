@@ -7,11 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/konamigx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bishi
+{
+	
 static int layer_colorbase[4], layerpri[4];
 
 static void bishi_tile_callback(int layer, int *code, int *color)
@@ -94,4 +98,5 @@ VIDEO_UPDATE(bishi)
 			K056832_tilemap_draw(bitmap, cliprect, layers[i], 0, 1<<i);
 		}
 	}
+}
 }

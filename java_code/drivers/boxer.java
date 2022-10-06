@@ -8,8 +8,15 @@ Atari Boxer (prototype) driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class boxer
+{
+	
 extern UINT8* boxer_tile_ram;
 extern UINT8* boxer_sprite_ram;
 
@@ -377,3 +384,4 @@ ROM_END
 
 
 GAMEX( 1978, boxer, 0, boxer, boxer, 0, 0, "Atari", "Boxer (prototype)", GAME_NO_SOUND )
+}

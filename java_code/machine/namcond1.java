@@ -9,10 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "namcond1.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class namcond1
+{
+	
 /* Perform basic machine initialisation */
 
 static UINT8 namcond1_h8_irq5_enabled;
@@ -204,3 +209,4 @@ NVRAM_HANDLER( namcond1 )
   }
 }
 
+}

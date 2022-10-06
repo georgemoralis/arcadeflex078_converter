@@ -17,8 +17,15 @@
 #ifndef _POKEYSOUND_H
 #define _POKEYSOUND_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class pokeyH
+{
+	
 /* CONSTANT DEFINITIONS */
 
 /* POKEY WRITE LOGICALS */
@@ -132,3 +139,4 @@ void pokey4_kbcode_w (int kbcode, int make);
 #endif
 
 #endif	/* POKEYSOUND_H */
+}

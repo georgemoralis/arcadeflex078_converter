@@ -1,7 +1,12 @@
-#include <stdio.h>
-#include <string.h>
-#include "ccpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.ccpu;
 
+public class ccpudasm
+{
+	
 #define CCPU_FETCH(A)	cpu_readop(CCPU_PGM_OFFSET+A)
 
 /*
@@ -490,4 +495,5 @@ unsigned DasmCCPU(char *buffer, unsigned pc)
 		opcodes [ opcode_table [ opcode ].ot_opcode ].od_name, ambuffer);
 
 	return opsize;
+}
 }

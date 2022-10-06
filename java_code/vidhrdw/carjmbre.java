@@ -3,9 +3,15 @@ Car Jamboree
 Omori Electric CAD (OEC) 1981
 */
 
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class carjmbre
+{
+	
 static struct tilemap *carjmbre_tilemap;
 
 static int carjmbre_flipscreen, carjmbre_bgcolor;
@@ -146,4 +152,5 @@ VIDEO_UPDATE( carjmbre )
 			}
 		}
 	}
+}
 }

@@ -4,8 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class sprint2
+{
+	
 UINT8* sprint2_video_ram;
 
 static struct tilemap* tilemap;
@@ -207,4 +214,5 @@ VIDEO_EOF( sprint2 )
 
 		collision[i] |= collision_check(&rect);
 	}
+}
 }

@@ -21,9 +21,15 @@ the variable wowBaseFrequency, this is defaulted to 8000
 
 **************************************************************************/
 
-#include "driver.h"
-#include "cpu/z80/z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class astrocde
+{
+	
 
 
 int	wowBaseFrequency;		/* Some games (Qbert) change this */
@@ -210,4 +216,5 @@ READ_HANDLER( wow_port_2_r )
 
 void wow_sh_update(void)
 {
+}
 }

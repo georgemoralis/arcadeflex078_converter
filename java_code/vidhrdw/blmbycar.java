@@ -28,9 +28,15 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class blmbycar
+{
+	
 /* Variables needed by driver: */
 
 data16_t *blmbycar_vram_0, *blmbycar_scroll_0;
@@ -269,4 +275,5 @@ if (keyboard_pressed(KEYCODE_Z))
 
 	if (layers_ctrl&8)
 		blmbycar_draw_sprites(bitmap, cliprect);
+}
 }

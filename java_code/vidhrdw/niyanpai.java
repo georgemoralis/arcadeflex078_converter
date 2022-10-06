@@ -6,9 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class niyanpai
+{
+	
 
 #define	VRAM_MAX	3
 
@@ -528,4 +534,5 @@ VIDEO_UPDATE( niyanpai )
 	{
 		copyscrollbitmap(bitmap, niyanpai_tmpbitmap2, 1, &niyanpai_scrollx[2], 1, &niyanpai_scrolly[2], &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0x02ff]);
 	}
+}
 }

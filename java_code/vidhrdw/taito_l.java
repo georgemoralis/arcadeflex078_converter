@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taito_l
+{
+	
 
 extern unsigned char *taitol_rambanks;
 
@@ -353,4 +360,5 @@ VIDEO_EOF( taitol )
 	unsigned char *spriteram = taitol_rambanks + 0x7000;
 
 	memcpy(buffered_spriteram,spriteram,SPRITERAM_SIZE);
+}
 }

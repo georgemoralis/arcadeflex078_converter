@@ -1,9 +1,15 @@
 #ifndef OSDEPEND_H
 #define OSDEPEND_H
 
-#include "osd_cpu.h"
-#include "inptport.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class osdependH
+{
+	
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -391,7 +397,6 @@ int osd_net_game_exit(void);
 
 #ifdef MESS
 /* this is here to follow the current mame file hierarchy style */
-#include "osd_mess.h"
 #endif
 
 #ifdef __GNUC__
@@ -406,3 +411,4 @@ void CLIB_DECL logerror(const char *text,...);
 #endif
 
 #endif
+}

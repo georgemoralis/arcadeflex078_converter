@@ -77,11 +77,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/i86/i186intf.h"
-#include "cpu/z80/z80.h"
-#include "leland.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class leland
+{
+	
 
 /*************************************
  *
@@ -2259,3 +2263,4 @@ Memory configurations:
 		FFD9D:80186 middle P chip select = C0BC
 
 ************************************************************************/
+}

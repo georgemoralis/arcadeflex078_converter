@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class aerofgt
+{
+	
 
 data16_t *aerofgt_rasterram;
 data16_t *aerofgt_bg1videoram,*aerofgt_bg2videoram;
@@ -540,4 +547,5 @@ VIDEO_UPDATE( aerofgt )
 
 	aerofgt_drawsprites(bitmap,cliprect,2);
 	aerofgt_drawsprites(bitmap,cliprect,3);
+}
 }

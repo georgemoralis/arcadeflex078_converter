@@ -13,10 +13,15 @@ Tile/sprite priority system (for the Kung Fu Master M62 board):
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class m62
+{
+	
 data8_t *m62_tileram;
 data8_t *m62_textram;
 data8_t *horizon_scrollram;
@@ -838,4 +843,5 @@ VIDEO_UPDATE( horizon )
 VIDEO_START( horizon )
 {
 	return m62_start( get_horizon_bg_tile_info, 32, 0, 8, 8, 64, 32 );
+}
 }

@@ -5,9 +5,15 @@
   Functions to emulate the video hardware of the machine.
 
 ***************************************************************************/
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nycaptor
+{
+	
 #define nycaptor_spot (nycaptor_sharedram[0x299]?nycaptor_sharedram[0x298]:0)
 /*
  298 (e298) - spot (0-3) , 299 (e299) - lives
@@ -298,3 +304,4 @@ VIDEO_UPDATE( nycaptor )
  	draw_crosshair(bitmap,readinputport(5),readinputport(6),cliprect);
 }
 
+}

@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class gyruss
+{
+	
 
 
 /* The timer clock which feeds the upper 4 bits of    					*/
@@ -83,4 +89,5 @@ WRITE_HANDLER( gyruss_sh_irqtrigger_w )
 WRITE_HANDLER( gyruss_i8039_irq_w )
 {
 	cpu_set_irq_line(3, 0, PULSE_LINE);
+}
 }

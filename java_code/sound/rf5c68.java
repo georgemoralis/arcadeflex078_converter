@@ -2,9 +2,15 @@
 /*    ricoh RF5C68(or clone) PCM controller              */
 /*********************************************************/
 
-#include "driver.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sound;
 
+public class rf5c68
+{
+	
 
 struct rf5c58 {
 	UINT8 regs[8][7];
@@ -119,4 +125,5 @@ READ_HANDLER( RF5C68_r )
 WRITE_HANDLER( RF5C68_w )
 {
 	rpcm.ram[(RF5C68_pcm_bank() + offset) & 0xffff] = data;
+}
 }

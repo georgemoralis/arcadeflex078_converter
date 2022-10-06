@@ -68,11 +68,15 @@ Tons of thanks to the guy who posted these, whoever he is...
 #endif
 
 
-#include "memory.h"
-#include "mamedbg.h"
-#include "tms9900.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms9900;
 
+public class _99xxcoreH
+{
+	
 
 #if (TMS99XX_MODEL == TMS9900_ID)
 
@@ -666,7 +670,6 @@ static void set_flag1(int val);
 /************************************************************************
  * Status register functions
  ************************************************************************/
-#include "99xxstat.h"
 
 /**************************************************************************/
 
@@ -3492,4 +3495,5 @@ INLINE void execute(UINT16 opcode)
 	(* jumptable[opcode >> 6])(opcode);
 
 #endif
+}
 }

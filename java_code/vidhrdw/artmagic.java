@@ -4,11 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/tms34010/34010ops.h"
-#include "artmagic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class artmagic
+{
+	
 
 #define INSTANT_BLIT		1
 
@@ -375,4 +379,5 @@ VIDEO_UPDATE( artmagic )
 			dest[x] = vram[(offset + x) & TOWORD(0x1fffff)] & 0xff;
 		offset += TOWORD(0x2000);
 	}
+}
 }

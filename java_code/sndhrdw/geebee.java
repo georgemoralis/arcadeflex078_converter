@@ -7,9 +7,15 @@
  *
  ****************************************************************************/
 
-#include <math.h>
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class geebee
+{
+	
 static void *volume_timer = NULL;
 static UINT16 *decay = NULL;
 static int channel;
@@ -134,4 +140,5 @@ void geebee_sh_stop(void)
 void geebee_sh_update(void)
 {
 	stream_update(channel,0);
+}
 }

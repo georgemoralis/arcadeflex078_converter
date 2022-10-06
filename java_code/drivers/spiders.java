@@ -161,11 +161,15 @@ $F987 - Addresses table at $f98d containing four structs:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/crtc6845.h"
-#include "machine/6821pia.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class spiders
+{
+	
 
 /* VIDHRDW */
 
@@ -376,3 +380,4 @@ ROM_END
 /* this is a newer version with just one bug fix */
 GAMEX( 1981, spiders,  0,       spiders, spiders, 0, ROT270, "Sigma Enterprises Inc.", "Spiders (set 1)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
 GAMEX( 1981, spiders2, spiders, spiders, spiders, 0, ROT270, "Sigma Enterprises Inc.", "Spiders (set 2)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
+}

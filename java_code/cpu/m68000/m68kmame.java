@@ -1,9 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "m68k.h"
-#include "m68000.h"
-#include "state.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.m68000;
 
+public class m68kmame
+{
+	
 /* global access */
 
 struct m68k_memory_interface m68k_memory_intf;
@@ -1244,3 +1247,4 @@ unsigned m68020_dasm(char *buffer, unsigned pc)
 #endif /* HAS_M68020 */
 
 #endif // A68K2
+}

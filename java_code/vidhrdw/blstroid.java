@@ -4,10 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "blstroid.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class blstroid
+{
+	
 
 
 /*************************************
@@ -174,4 +179,5 @@ VIDEO_UPDATE( blstroid )
 					mo[x] = 0;
 				}
 		}
+}
 }

@@ -32,8 +32,15 @@
 
 *******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class nova2001
+{
+	
 UINT8 *nova2001_videoram2, *nova2001_colorram2;
 
 static struct tilemap *bg_tilemap, *fg_tilemap;
@@ -210,4 +217,5 @@ VIDEO_UPDATE( nova2001 )
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	nova2001_draw_sprites(bitmap);
 	tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+}
 }

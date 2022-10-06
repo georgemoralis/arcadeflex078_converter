@@ -22,10 +22,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "includes/dynax.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class dynax
+{
+	
 // Log Blitter
 #define VERBOSE 0
 
@@ -913,4 +918,5 @@ VIDEO_UPDATE( mjdialq2 )
 
 	if (layers_ctrl & 1)	mjdialq2_copylayer( bitmap, cliprect, 0 );
 	if (layers_ctrl & 2)	mjdialq2_copylayer( bitmap, cliprect, 1 );
+}
 }

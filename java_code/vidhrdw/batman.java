@@ -4,11 +4,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/atarigen.h"
-#include "batman.h"
-#include "thunderj.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class batman
+{
+	
 
 
 /*************************************
@@ -316,4 +320,5 @@ VIDEO_UPDATE( batman )
 					mo[x] = 0;
 				}
 		}
+}
 }

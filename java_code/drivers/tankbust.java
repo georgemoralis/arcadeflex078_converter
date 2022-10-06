@@ -16,9 +16,15 @@ To do:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class tankbust
+{
+	
 
 VIDEO_START( tankbust );
 VIDEO_UPDATE( tankbust );
@@ -454,3 +460,4 @@ ROM_END
 
 
 GAME(1985, tankbust,	 0, 	  tankbust, tankbust,  0, ROT90, "Valadon Automation", "Tank Busters" )
+}

@@ -27,9 +27,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "lasso.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class lasso
+{
+	
 
 data8_t *lasso_videoram;
 data8_t *lasso_colorram;
@@ -406,4 +412,5 @@ VIDEO_UPDATE( wwjgtin )
 
 	draw_sprites(bitmap, cliprect, 1);	// reverse order
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
+}
 }

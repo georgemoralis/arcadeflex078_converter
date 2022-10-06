@@ -20,12 +20,15 @@
 **************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/tms34010/tms34010.h"
-#include "cpu/adsp2100/adsp2100.h"
-#include "sndhrdw/dcs.h"
-#include "midwunit.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class midwunit
+{
+	
 
 
 /*************************************
@@ -1076,3 +1079,4 @@ GAME( 1996, nbahangt,0,         wunit, nbahangt,nbahangt,ROT0, "Midway", "NBA Ha
 GAME( 1996, nbamaxht,nbahangt,  wunit, nbahangt,nbahangt,ROT0, "Midway", "NBA Maximum Hangtime (rev 1.0 11/8/96)" )
 GAME( 1997, rmpgwt,  0,         wunit, rmpgwt,  rmpgwt,  ROT0, "Midway", "Rampage: World Tour (rev 1.3)" )
 GAME( 1997, rmpgwt11,rmpgwt,    wunit, rmpgwt,  rmpgwt,  ROT0, "Midway", "Rampage: World Tour (rev 1.1)" )
+}

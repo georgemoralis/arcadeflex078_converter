@@ -13,8 +13,15 @@
 #ifndef _H6280_H
 #define _H6280_H
 
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.h6280;
 
+public class h6280H
+{
+	
 enum {
 	H6280_PC=1, H6280_S, H6280_P, H6280_A, H6280_X, H6280_Y,
 	H6280_IRQ_MASK, H6280_TIMER_STATE,
@@ -60,3 +67,4 @@ extern int Dasm6280(char *buffer, int pc);
 #endif
 
 #endif /* _H6280_H */
+}

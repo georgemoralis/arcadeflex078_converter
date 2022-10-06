@@ -4,8 +4,15 @@ Atari Sky Raider driver
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class skyraid
+{
+	
 extern UINT8* skyraid_alpha_num_ram;
 extern UINT8* skyraid_pos_ram;
 extern UINT8* skyraid_obj_ram;
@@ -331,3 +338,4 @@ ROM_END
 
 
 GAMEX( 1978, skyraid, 0, skyraid, skyraid, 0, ORIENTATION_FLIP_Y, "Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+}

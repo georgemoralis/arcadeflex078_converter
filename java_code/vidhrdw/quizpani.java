@@ -4,8 +4,15 @@
 
 ************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class quizpani
+{
+	
 data16_t *quizpani_bg_videoram, *quizpani_txt_videoram;
 data16_t *quizpani_scrollreg;
 
@@ -92,4 +99,5 @@ VIDEO_UPDATE( quizpani )
 
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,txt_tilemap,0,0);
+}
 }

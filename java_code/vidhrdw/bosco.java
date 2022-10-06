@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bosco
+{
+	
 
 #define MAX_STARS 250
 #define STARS_COLOR_BASE 32
@@ -421,4 +427,5 @@ void bosco_vh_interrupt(void)
 
 	stars_scrollx += speedsx[bosco_starcontrol & 7];
 	stars_scrolly += speedsy[(bosco_starcontrol & 56) >> 3];
+}
 }

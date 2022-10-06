@@ -16,10 +16,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "machine/6821pia.h"
-#include "carpolo.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class carpolo
+{
+	
 
 
 /*************************************
@@ -323,3 +328,4 @@ static DRIVER_INIT( carpolo )
 }
 
 GAMEX(1977, carpolo, 0, carpolo, carpolo, carpolo, ROT0, "Exidy", "Car Polo", GAME_NO_SOUND)
+}

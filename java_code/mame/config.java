@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "config.h"
-#include "mame.h"
-#include "common.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class config
+{
+	
 
 
 /***************************************************************************
@@ -146,7 +151,6 @@ static void writeword(mame_file *f,UINT16 num)
 ***************************************************************************/
 
 #ifndef NOLEGACY
-#include "legacy.h"
 #endif
 
 
@@ -649,3 +653,4 @@ int config_write_mixer_config(config_file *cfg, const struct mixer_config *mixer
 	return CONFIG_ERROR_SUCCESS;
 }
 
+}

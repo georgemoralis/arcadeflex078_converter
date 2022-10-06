@@ -6,14 +6,16 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class blit
+{
+	
 // MAME headers
-#include "driver.h"
-#include "blit.h"
-#include "video.h"
-#include "window.h"
-#include "vidhrdw/vector.h"
 
 
 
@@ -1577,4 +1579,5 @@ static void generate_blitter(const struct win_blit_params *blit)
 		fclose(out);
 	}
 #endif
+}
 }

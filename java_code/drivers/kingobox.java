@@ -15,9 +15,15 @@ Main CPU:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class kingobox
+{
+	
 /* from vidhrdw */
 extern UINT8 *kingofb_videoram2;
 extern UINT8 *kingofb_colorram2;
@@ -826,3 +832,4 @@ GAME( 1985, kingofb,  0,       kingofb,  kingofb,  0,        ROT90, "Woodplace",
 GAME( 1985, ringking, kingofb, ringking, ringking, 0,        ROT90, "Data East USA", "Ring King (US set 1)" )
 GAME( 1985, ringkin2, kingofb, ringking, ringking, 0,        ROT90, "Data East USA", "Ring King (US set 2)" )
 GAME( 1985, ringkin3, kingofb, kingofb,  kingofb,  ringkin3, ROT90, "Data East USA", "Ring King (US set 3)" )
+}

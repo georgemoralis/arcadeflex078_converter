@@ -40,9 +40,15 @@ XTAL: 10.0 MHz
 */
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class battlex
+{
+	
 
 extern WRITE_HANDLER( battlex_palette_w );
 extern WRITE_HANDLER( battlex_videoram_w );
@@ -306,3 +312,4 @@ static DRIVER_INIT( battlex )
 /*** GAME DRIVERS ************************************************************/
 
 GAMEX( 1982, battlex, 0, battlex, battlex, battlex, ROT180, "Omori Electric", "Battle Cross", GAME_IMPERFECT_GRAPHICS )
+}

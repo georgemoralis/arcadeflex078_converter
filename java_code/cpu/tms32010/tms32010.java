@@ -47,15 +47,15 @@
 
 
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "driver.h"
-#include "cpuintrf.h"
-#include "mamedbg.h"
-#include "state.h"
-#include "tms32010.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.tms32010;
 
+public class tms32010
+{
+	
 
 #define CLK 4	/* 1 cycle equals 4 clock ticks */
 
@@ -978,4 +978,5 @@ unsigned tms32010_dasm(char *buffer, unsigned pc)
 	sprintf( buffer, "$%04X", TMS32010_RDOP(pc) );
 	return 2;
 #endif
+}
 }

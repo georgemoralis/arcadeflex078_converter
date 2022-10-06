@@ -3,9 +3,15 @@
 #ifndef _HD6309_H
 #define _HD6309_H
 
-#include "memory.h"
-#include "osd_cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.hd6309;
 
+public class hd6309H
+{
+	
 enum {
 	HD6309_PC=1, HD6309_S, HD6309_CC ,HD6309_A, HD6309_B, HD6309_U, HD6309_X, HD6309_Y, HD6309_DP, HD6309_NMI_STATE,
 	HD6309_IRQ_STATE, HD6309_FIRQ_STATE, HD6309_E, HD6309_F, HD6309_V, HD6309_MD };
@@ -69,3 +75,4 @@ extern unsigned Dasm6309 (char *buffer, unsigned pc);
 
 #endif /* _HD6309_H */
 
+}

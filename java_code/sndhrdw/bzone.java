@@ -17,10 +17,15 @@ D0	explosion enable		gates a noise generator
 
 */
 
-#include <math.h>
-#include "driver.h"
-#include "bzone.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class bzone
+{
+	
 
 /* Statics */
 static INT16 *discharge = NULL;
@@ -294,3 +299,4 @@ void bzone_sh_update(void)
 }
 
 
+}

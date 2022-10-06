@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
-#include "homedata.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class homedata
+{
+	
 
 data8_t *homedata_vreg;	/* pointer to RAM associated with 0x7ffx */
 data8_t reikaids_which;
@@ -918,4 +922,5 @@ VIDEO_UPDATE( pteacher )
 VIDEO_EOF( homedata )
 {
 	homedata_visible_page ^= 1;
+}
 }

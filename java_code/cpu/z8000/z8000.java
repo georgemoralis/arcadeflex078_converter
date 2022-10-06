@@ -21,11 +21,15 @@
  *
  *****************************************************************************/
 
-#include "driver.h"
-#include "mamedbg.h"
-#include "z8000.h"
-#include "z8000cpu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z8000;
 
+public class z8000
+{
+	
 #define VERBOSE 0
 
 
@@ -86,7 +90,6 @@ static z8000_Regs Z;
 static UINT8 z8000_zsp[256];
 
 /* conversion table for Z8000 DAB opcode */
-#include "z8000dab.h"
 
 /**************************************************************************
  * This is the register file layout:
@@ -308,8 +311,6 @@ INLINE void WRPORT_L(int mode, UINT16 addr, UINT32 value)
 	}
 }
 
-#include "z8000ops.c"
-#include "z8000tbl.c"
 
 INLINE void set_irq(int type)
 {
@@ -750,3 +751,4 @@ unsigned z8000_dasm(char *buffer, unsigned pc)
 #endif
 }
 
+}

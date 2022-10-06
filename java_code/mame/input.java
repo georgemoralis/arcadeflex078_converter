@@ -6,10 +6,15 @@
 
 ******************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
-#include <time.h>
-#include <assert.h>
+public class input
+{
+	
 
 /***************************************************************************/
 /* Codes */
@@ -906,4 +911,5 @@ int return_os_joycode(InputCode code)
 		}
 	}
 	return 0;
+}
 }

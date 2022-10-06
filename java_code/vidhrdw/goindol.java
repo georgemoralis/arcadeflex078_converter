@@ -5,9 +5,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class goindol
+{
+	
 UINT8 *goindol_bg_videoram;
 UINT8 *goindol_fg_videoram;
 UINT8 *goindol_fg_scrollx;
@@ -151,4 +157,5 @@ VIDEO_UPDATE( goindol )
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	draw_sprites(bitmap,cliprect,1,spriteram);
 	draw_sprites(bitmap,cliprect,0,spriteram_2);
+}
 }

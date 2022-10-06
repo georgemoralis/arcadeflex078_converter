@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mjkjidai
+{
+	
 
 data8_t *mjkjidai_videoram;
 
@@ -145,4 +151,5 @@ VIDEO_UPDATE( mjkjidai )
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 	}
+}
 }

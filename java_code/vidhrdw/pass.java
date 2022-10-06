@@ -1,7 +1,14 @@
 /* vidhrdw/pass.c - see drivers/pass.c for more info */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class pass
+{
+	
 static struct tilemap *pass_bg_tilemap;
 static struct tilemap *pass_fg_tilemap;
 
@@ -74,4 +81,5 @@ VIDEO_START( pass )
 	tilemap_set_transparent_pen(pass_fg_tilemap,255);
 
 	return 0;
+}
 }

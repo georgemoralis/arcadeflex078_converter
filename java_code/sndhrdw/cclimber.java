@@ -1,5 +1,12 @@
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class cclimber
+{
+	
 
 /* macro to convert 4-bit unsigned samples to 8-bit signed samples */
 #define SAMPLE_CONV4(a) (0x11*((a&0x0f))-0x80)
@@ -111,3 +118,4 @@ struct CustomSound_interface cclimber_custom_interface =
 	0,
 	0
 };
+}

@@ -21,11 +21,15 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
-#include "z8000.h"
-#include "z8000cpu.h"
-#include "memory.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z8000;
 
+public class _8000dasm
+{
+	
 static int n[12];	/* opcode nibbles */
 static int b[6];	/* opcode bytes */
 static int w[3];	/* opcode words */
@@ -292,3 +296,4 @@ int DasmZ8000(char *buff, int pc)
 	return new_pc - pc;
 }
 
+}

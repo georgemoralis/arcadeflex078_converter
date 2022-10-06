@@ -4,8 +4,15 @@ Atari Destroyer video emulation
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class destroyr
+{
+	
 int destroyr_wavemod;
 int destroyr_cursor;
 
@@ -86,4 +93,5 @@ VIDEO_UPDATE( destroyr )
 		if (i & 4)
 			plot_pixel(bitmap, i, destroyr_cursor ^ 0xff, Machine->pens[7]);
 	}
+}
 }

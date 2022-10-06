@@ -13,12 +13,15 @@ TODO:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "cpu/z80/z80.h"
-#include "cpu/i8039/i8039.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class pandoras
+{
+	
 static int irq_enable_a, irq_enable_b;
 static int firq_old_data_a, firq_old_data_b;
 static int i8039_status;
@@ -490,3 +493,4 @@ ROM_END
 
 
 GAME( 1984, pandoras, 0, pandoras, pandoras, 0, ROT90, "Konami/Interlogic", "Pandora's Palace" )
+}

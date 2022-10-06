@@ -6,11 +6,16 @@
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <mmsystem.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package windows;
 
+public class ticker
+{
+	
 // MAME headers
-#include "driver.h"
 
 
 
@@ -312,3 +317,4 @@ void win_timer_enable(int enabled)
 	}
 }
 
+}

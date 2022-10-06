@@ -45,11 +45,15 @@ sprite RAM
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "tilemap.h"
-#include "vidhrdw/generic.h"
-#include "taitoic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class taito_h
+{
+	
 
 extern data16_t	*TC0080VCO_chain_ram_0;
 extern data16_t	*TC0080VCO_chain_ram_1;
@@ -508,3 +512,4 @@ VIDEO_UPDATE( dleague )
 	TC0080VCO_tilemap_draw(bitmap,cliprect,2,0,0);
 }
 
+}

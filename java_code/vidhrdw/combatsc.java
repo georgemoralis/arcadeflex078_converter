@@ -6,10 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/konamiic.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class combatsc
+{
+	
 static struct tilemap *tilemap[2];
 static struct tilemap *textlayer;
 static unsigned char *private_spriteram[2];
@@ -671,4 +676,5 @@ VIDEO_UPDATE( combascb )
 	}
 
 	tilemap_draw( bitmap,cliprect,textlayer,0,0);
+}
 }

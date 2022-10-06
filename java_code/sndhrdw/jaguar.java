@@ -142,11 +142,15 @@
 
 ****************************************************************************/
 
-#include "driver.h"
-#include "includes/jaguar.h"
-#include "cpu/jaguar/jaguar.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class jaguar
+{
+	
 
 /* Jerry registers */
 enum
@@ -472,3 +476,4 @@ WRITE32_HANDLER( jaguar_serial_w )
 }
 
 
+}

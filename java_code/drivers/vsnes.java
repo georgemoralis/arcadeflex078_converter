@@ -125,11 +125,15 @@ Changes:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/ppu2c03b.h"
-#include "machine/rp5h01.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class vsnes
+{
+	
 /* clock frequency */
 #define N2A03_DEFAULTCLOCK ( 21477272.724 / 12 )
 
@@ -2822,3 +2826,4 @@ GAME( 1986, vsgshoe,  0,        vsnes,   vsgshoe,  vsgshoe,  ROT0, "Nintendo",  
 /* Not Working */
 GAMEX(1985, smgolfb,  smgolf,   vsnes,   golf,     machridr, ROT0, "Nintendo",	"Vs. Stroke and Match Golf (Men set 2)", GAME_NOT_WORKING )
 GAMEX(1984, vsbbaljb, vsbball,  vsdual,  vsbballj, vsbball,  ROT0, "Nintendo of America",  "Vs. BaseBall (Japan set 3)", GAME_NOT_WORKING )
+}

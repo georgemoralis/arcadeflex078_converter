@@ -54,9 +54,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class decoprot
+{
+	
 #define DECO_PORT(p) (deco16_prot_ram[p/2])
 
 data16_t *deco16_prot_ram;
@@ -1452,4 +1458,5 @@ CONTROL PC 07819e: warning - write protection memory address 01c0 0061
 
 	logerror("Protection PC %06x: warning - read unmapped memory address %04x\n",activecpu_get_pc(),offset<<1);
 	return 0;
+}
 }

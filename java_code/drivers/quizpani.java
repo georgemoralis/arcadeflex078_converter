@@ -32,8 +32,15 @@
 
 *************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class quizpani
+{
+	
 extern data16_t *quizpani_bg_videoram, *quizpani_txt_videoram;
 extern data16_t *quizpani_scrollreg;
 
@@ -315,3 +322,4 @@ ROM_START( quizpani )
 ROM_END
 
 GAME( 1993, quizpani, 0, quizpani, quizpani, 0, ROT0, "NMK", "Quiz Panicuru Fantasy" )
+}

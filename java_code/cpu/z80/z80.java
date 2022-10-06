@@ -78,12 +78,15 @@
  *		http://www.msxnet.org/tech/z80-documented.pdf
  *****************************************************************************/
 
-#include "driver.h"
-#include "cpuintrf.h"
-#include "state.h"
-#include "mamedbg.h"
-#include "z80.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.z80;
 
+public class z80
+{
+	
 #define VERBOSE 0
 
 #if VERBOSE
@@ -4476,3 +4479,4 @@ unsigned z80_dasm( char *buffer, unsigned pc )
 #endif
 }
 
+}

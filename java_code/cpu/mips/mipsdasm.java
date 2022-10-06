@@ -3,13 +3,16 @@
  *
  */
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include "psx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package cpu.mips;
 
+public class mipsdasm
+{
+	
 #ifndef STANDALONE
-#include "memory.h"
 #endif
 
 static char *make_signed_hex_str_16( UINT32 value )
@@ -610,4 +613,5 @@ unsigned DasmMIPS( char *buffer, UINT32 oldpc )
 		break;
 	}
 	return pc - oldpc;
+}
 }

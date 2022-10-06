@@ -7,9 +7,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/eeprom.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class gaelco2
+{
+	
 /***************************************************************************
 
 	Split even/odd bytes from ROMs in 16 bit mode to different memory areas
@@ -242,4 +248,5 @@ WRITE16_HANDLER( snowboar_protection_w )
 	COMBINE_DATA(&snowboar_protection[offset]);
 	logerror("%06x: protection write %04x to %04x\n", activecpu_get_pc(), data, offset*2);
 
+}
 }

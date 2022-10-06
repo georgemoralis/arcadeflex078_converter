@@ -26,9 +26,15 @@ HotGmck:  86010000 1f201918 a0000000 Large Screen
 HgKairak: 86010000 1f201918 a0000000 Large Screen
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class psikyo4
+{
+	
 #define DUAL_SCREEN 1 /* Display both screens simultaneously if 1, change in driver too */
 
 static UINT32 screen; /* for PS4 games when DUAL_SCREEN=0 */
@@ -183,4 +189,5 @@ VIDEO_START( psikyo4 )
 	Machine->gfx[0]->color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
 	screen = 0;
 	return 0;
+}
 }

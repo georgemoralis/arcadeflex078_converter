@@ -6,9 +6,15 @@
  see (drivers/wwfsstar.c) for more notes
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class wwfsstar
+{
+	
 data16_t *wwfsstar_fg0_videoram, *wwfsstar_bg0_videoram;
 extern int wwfsstar_scrollx, wwfsstar_scrolly;
 static struct tilemap *fg0_tilemap, *bg0_tilemap;
@@ -228,4 +234,5 @@ VIDEO_UPDATE( wwfsstar )
 	tilemap_draw(bitmap,cliprect,bg0_tilemap,0,0);
 	wwfsstar_drawsprites( bitmap,cliprect );
 	tilemap_draw(bitmap,cliprect,fg0_tilemap,0,0);
+}
 }

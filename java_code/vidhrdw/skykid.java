@@ -1,7 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "tilemap.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class skykid
+{
+	
 unsigned char *skykid_textram, *skykid_videoram;
 
 static struct tilemap *background;
@@ -259,4 +264,5 @@ VIDEO_UPDATE( skykid )
 	}
 	if ((priority & 0xf0) == 0x50)
 		skykid_draw_sprites(bitmap,cliprect);
+}
 }

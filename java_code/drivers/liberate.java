@@ -14,10 +14,15 @@
 
 *******************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6502/m6502.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class liberate
+{
+	
 PALETTE_INIT( liberate );
 VIDEO_UPDATE( prosoccr );
 VIDEO_UPDATE( prosport );
@@ -918,3 +923,4 @@ GAME( 1983, boomrang, 0,        boomrang,  boomrang, prosport, ROT270, "Data Eas
 GAME( 1984, kamikcab, 0,        boomrang,  kamikcab, prosport, ROT270, "Data East Corporation", "Kamikaze Cabbie" )
 GAME( 1984, liberate, 0,        liberate,  liberate, liberate, ROT270, "Data East Corporation", "Liberation" )
 GAMEX(1984, liberatb, liberate, liberatb,  liberate, prosport, ROT270, "bootleg",               "Liberation (bootleg)", GAME_NOT_WORKING )
+}

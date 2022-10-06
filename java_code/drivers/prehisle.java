@@ -8,9 +8,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class prehisle
+{
+	
 extern WRITE16_HANDLER( prehisle_bg_videoram16_w );
 extern WRITE16_HANDLER( prehisle_fg_videoram16_w );
 extern WRITE16_HANDLER( prehisle_control16_w );
@@ -411,3 +417,4 @@ static DRIVER_INIT( gensitou )
 GAME( 1989, prehisle, 0,		prehisle, prehisle, prehisle, ROT0, "SNK", "Prehistoric Isle in 1930 (World)" )
 GAME( 1989, prehislu, prehisle, prehisle, prehisle, prehislu, ROT0, "SNK of America", "Prehistoric Isle in 1930 (US)" )
 GAME( 1989, gensitou, prehisle, prehisle, prehisle, gensitou, ROT0, "SNK", "Genshi-Tou 1930's" )
+}

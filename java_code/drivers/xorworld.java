@@ -30,11 +30,15 @@ EEPROM chip: 93C46
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "machine/eeprom.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m68000/m68000.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class xorworld
+{
+	
 extern data16_t *xorworld_videoram;
 extern data16_t *xorworld_spriteram;
 
@@ -283,3 +287,4 @@ ROM_END
 
 
 GAME( 1990, xorworld, 0, xorworld, xorworld, xorworld, ROT0, "Gaelco", "Xor World (prototype)" )
+}

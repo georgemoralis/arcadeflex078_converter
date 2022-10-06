@@ -1,8 +1,12 @@
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class xexex
+{
+	
 static int sprite_colorbase;
 static int layer_colorbase[4], layerpri[4];
 static int cur_alpha;
@@ -143,4 +147,5 @@ VIDEO_UPDATE( xexex )
 	}
 
 	K056832_tilemap_draw(bitmap, cliprect, 0, 0, 0);
+}
 }

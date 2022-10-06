@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class galspnbl
+{
+	
 
 data16_t *galspnbl_bgvideoram,*galspnbl_videoram,*galspnbl_colorram;
 static int screenscroll;
@@ -152,4 +158,5 @@ VIDEO_UPDATE( galspnbl )
 	}
 
 	draw_sprites(bitmap,1);
+}
 }

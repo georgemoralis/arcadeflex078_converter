@@ -5,12 +5,15 @@
  *
  */
 
-#include "driver.h"
-#include "state.h"
-#include "vidhrdw/generic.h"
-#include "vidhrdw/konamiic.h"
-#include "machine/konamigx.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class konamigx
+{
+	
 static int layer_colorbase[4];
 static int gx_tilebanks[8], gx_oldbanks[8];
 static int gx_invertlayersBC;
@@ -606,3 +609,4 @@ WRITE32_HANDLER( konamigx_t4_psacmap_w )
 	tilemap_mark_tile_dirty(gx_psac_tilemap, offset);
 }
 
+}

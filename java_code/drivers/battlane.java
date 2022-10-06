@@ -9,10 +9,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/m6809/m6809.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class battlane
+{
+	
 extern UINT8 *battlane_spriteram;
 extern UINT8 *battlane_tileram;
 
@@ -402,3 +407,4 @@ ROM_END
 GAME( 1986, battlane, 0,        battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 1)" )
 GAME( 1986, battlan2, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 2)" )
 GAME( 1986, battlan3, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 3)" )
+}

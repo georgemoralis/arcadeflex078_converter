@@ -6,9 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class crbaloon
+{
+	
 static int spritectrl[3];
 
 int crbaloon_collision;
@@ -172,4 +178,5 @@ VIDEO_UPDATE( crbaloon )
 {
 	tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	crbaloon_draw_sprites(bitmap);
+}
 }

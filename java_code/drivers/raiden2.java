@@ -19,11 +19,15 @@ it will crash shortly afterwards tho
 
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cpu/z80/z80.h"
-#include "sndhrdw/seibu.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class raiden2
+{
+	
 static struct tilemap *background_layer,*midground_layer,*foreground_layer,*text_layer;
 static unsigned char *back_data,*fore_data,*mid_data;
 
@@ -394,3 +398,4 @@ static DRIVER_INIT (raiden2)
 /* GAME DRIVERS */
 
 GAMEX( 1993, raiden2,  0,      raiden2,  raiden2, raiden2,  ROT270, "Seibu Kaihatsu", "Raiden 2", GAME_NO_SOUND | GAME_NOT_WORKING )
+}

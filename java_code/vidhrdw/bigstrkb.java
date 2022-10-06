@@ -1,7 +1,14 @@
 /* Big Striker (bootleg) Video Hardware */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class bigstrkb
+{
+	
 static struct tilemap *bsb_tilemap, *bsb_tilemap2, *bsb_tilemap3;
 
 extern data16_t *bsb_videoram, *bsb_videoram2, *bsb_videoram3;
@@ -155,4 +162,5 @@ VIDEO_UPDATE(bigstrkb)
 	tilemap_draw(bitmap,cliprect,bsb_tilemap,0,0);
 
 //	usrintf_showmessage	("Regs %08x %08x %08x %08x",bsb_vidreg2[0],bsb_vidreg2[1],bsb_vidreg2[2],bsb_vidreg2[3]);
+}
 }

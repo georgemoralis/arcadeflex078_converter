@@ -6,8 +6,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class gundealr
+{
+	
 
 
 unsigned char *gundealr_bg_videoram,*gundealr_fg_videoram;
@@ -154,4 +161,5 @@ VIDEO_UPDATE( gundealr )
 {
 	tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+}
 }

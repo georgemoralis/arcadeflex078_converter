@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "missile.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package machine;
 
+public class missile
+{
+	
 
 static int ctrld;
 static int h_pos, v_pos;
@@ -143,4 +148,5 @@ READ_HANDLER( missile_r )
 
 	logerror("possible unmapped read, offset: %04x\n", offset);
 	return 0;
+}
 }

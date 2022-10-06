@@ -7,8 +7,15 @@ Video hardware
 
 ******************************************************************************/
 
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class mayumi
+{
+	
 static data8_t *mayumi_videoram;
 static struct tilemap *mayumi_tilemap;
 
@@ -49,3 +56,4 @@ VIDEO_UPDATE( mayumi )
 	tilemap_draw(bitmap, cliprect, mayumi_tilemap, 0, 0);
 }
 
+}

@@ -104,11 +104,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "cpu/m6809/m6809.h"
-#include "vidhrdw/generic.h"
-#include <math.h>
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class rpunch
+{
+	
 
 
 #define MASTER_CLOCK		16000000
@@ -886,3 +890,4 @@ GAME( 1987, rpunch,   rabiolep, rpunch,   rpunch,   rabiolep, ROT0, "V-System Co
 GAME( 1989, svolley,  0,        rpunch,   svolley,  svolley,  ROT0, "V-System Co.", "Super Volleyball (Japan)" )
 GAME( 1989, svolleyk, svolley,  rpunch,   svolley,  svolley,  ROT0, "V-System Co.", "Super Volleyball (Korea)" )
 GAME( 1989, svolleyu, svolley,  rpunch,   svolley,  svolley,  ROT0, "V-System Co. (Data East license)", "Super Volleyball (US)" )
+}

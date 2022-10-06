@@ -95,9 +95,15 @@ CRU lines:
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class supertnk
+{
+	
 static int supertnk_rom_bank;
 static int supertnk_video_bitplane;
 
@@ -438,3 +444,4 @@ DRIVER_INIT( supertnk ){
 /*          rom       parent     machine   inp       init */
 GAME( 1981, supertnk,  0,        supertnk, supertnk, supertnk, ROT90, "Video Games GmbH", "Super Tank" )
 
+}

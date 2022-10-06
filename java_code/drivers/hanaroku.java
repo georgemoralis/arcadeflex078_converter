@@ -10,9 +10,15 @@ TODO:
   switch bank, and probably some NVRAM because there's a battery.
 */
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class hanaroku
+{
+	
 /* vidhrdw */
 
 UINT8 *hanaroku_spriteram1;
@@ -283,3 +289,4 @@ ROM_END
 
 
 GAMEX( 1988, hanaroku, 0,        hanaroku, hanaroku, 0, ROT0, "Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+}

@@ -95,10 +95,15 @@
 ***************************************************************************/
 
 
-#include "driver.h"
-#include "machine/6821pia.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class victory
+{
+	
 
 #define LOG_SOUND		0
 
@@ -477,3 +482,4 @@ ROM_END
 
 GAME( 1982, victory,  0,        victory, victory, 0,     ROT0, "Exidy", "Victory" )
 GAME( 1982, victorba, victory,  victory, victory, 0,     ROT0, "Exidy", "Victor Banana" )
+}

@@ -19,10 +19,15 @@ I'm not sure it's working correctly:
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "paradise.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package drivers;
 
+public class paradise
+{
+	
 /***************************************************************************
 
 								Memory Maps
@@ -374,3 +379,4 @@ ROM_END
 GAME( 1994+, paradise, 0, paradise, paradise, 0, ROT90, "Yun Sung", "Paradise" )
 GAMEX(199?,  tgtball,  0, paradise, paradise, tgtball, ROT0,  "Yun Sung", "Target Ball", GAME_NOT_WORKING )
 
+}

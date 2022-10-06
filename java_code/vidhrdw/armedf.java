@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "vidhrdw/generic.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class armedf
+{
+	
 
 data16_t armedf_vreg;
 
@@ -319,4 +325,5 @@ VIDEO_UPDATE( armedf )
 VIDEO_EOF( armedf )
 {
 	buffer_spriteram16_w(0,0,0);
+}
 }

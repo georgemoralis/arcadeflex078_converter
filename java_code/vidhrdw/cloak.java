@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cloak.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cloak
+{
+	
 static struct mame_bitmap *tmpbitmap2;
 static UINT8 x,y,bmap;
 static UINT8 *tmpvideoram,*tmpvideoram2;
@@ -237,4 +242,5 @@ VIDEO_UPDATE( cloak )
 	tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	copybitmap(bitmap, (bmap ? tmpbitmap2 : tmpbitmap),flip_screen,flip_screen,0,0,cliprect,TRANSPARENCY_COLOR,16);
 	cloak_draw_sprites(bitmap, cliprect);
+}
 }

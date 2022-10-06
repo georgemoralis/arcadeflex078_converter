@@ -1,6 +1,12 @@
-#include "driver.h"
-#include "cpu/i8039/i8039.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class dkong
+{
+	
 static int walk = 0; /* used to determine if dkongjr is walking or climbing? */
 
 WRITE_HANDLER( dkong_sh_w )
@@ -122,4 +128,5 @@ WRITE_HANDLER( dkongjr_sh_walk_w )
 	{
 		walk = data;
 	}
+}
 }

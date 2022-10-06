@@ -5,8 +5,15 @@
  *
  */
 
-#include "driver.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package sndhrdw;
 
+public class pulsar
+{
+	
 
 /* output port 0x01 definitions - sound effect drive outputs */
 #define OUT_PORT_1_CLANG		0x01
@@ -169,4 +176,5 @@ WRITE_HANDLER( pulsar_sh_port2_w )
 	{
 		STOP( SND_MOVMAZE );
 	}
+}
 }

@@ -2,9 +2,15 @@
 **	generalized high score save/restore support
 */
 
-#include "driver.h"
-#include "hiscore.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package mame;
 
+public class hiscore
+{
+	
 #define MAX_CONFIG_LINE_SIZE 48
 
 #define VERBOSE 0
@@ -327,4 +333,5 @@ void hs_close (void)
 {
 	if (state.hiscores_have_been_loaded) hs_save();
 	hs_free();
+}
 }

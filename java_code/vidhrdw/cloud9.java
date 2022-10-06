@@ -4,10 +4,15 @@
 
 ***************************************************************************/
 
-#include "driver.h"
-#include "vidhrdw/generic.h"
-#include "cloud9.h"
+/*
+ * ported to v0.78
+ * using automatic conversion tool v0.01
+ */ 
+package vidhrdw;
 
+public class cloud9
+{
+	
 
 unsigned char *cloud9_vram2;
 unsigned char *cloud9_bitmap_regs;
@@ -293,3 +298,4 @@ VIDEO_START( cloud9 )
 	return 0;
 }
 
+}
