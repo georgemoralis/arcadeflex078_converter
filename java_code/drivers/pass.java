@@ -176,76 +176,76 @@ public class pass
 	
 	
 	/* todo : work out function of unknown but used dsw */
-	INPUT_PORTS_START( pass )
-		PORT_START	/* DSW */
-		PORT_DIPNAME( 0x0001, 0x0001, "Unknown SW 0-0" )	// USED ! Check code at 0x0046ea
-		PORT_DIPSETTING(      0x0001, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0002, 0x0002, "Unused SW 0-1" )		// Unused ?
-		PORT_DIPSETTING(      0x0002, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0004, 0x0004, "Unused SW 0-2" )		// Unused ?
-		PORT_DIPSETTING(      0x0004, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0008, 0x0008, "Unused SW 0-3" )		// Unused ?
-		PORT_DIPSETTING(      0x0008, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0010, 0x0010, "Unused SW 0-4" )		// Unused ?
-		PORT_DIPSETTING(      0x0010, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0020, 0x0020, "Unused SW 0-5" )		// Unused ?
-		PORT_DIPSETTING(      0x0020, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0040, 0x0040, "Unused SW 0-6" )		// Unused ?
-		PORT_DIPSETTING(      0x0040, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0080, 0x0080, "Unused SW 0-7" )		// Unused ?
-		PORT_DIPSETTING(      0x0080, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Lives ) )
-		PORT_DIPSETTING(      0x0000, "2" )
-		PORT_DIPSETTING(      0x0300, "3" )
-		PORT_DIPSETTING(      0x0100, "4" )
-		PORT_DIPSETTING(      0x0200, "5" )
-		PORT_DIPNAME( 0x0400, 0x0400, "Unused SW 0-10" )	// Unused ?
-		PORT_DIPSETTING(      0x0400, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x1800, 0x0000, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING(      0x0000, "Easy" )			// Time = 99
-		PORT_DIPSETTING(      0x1800, "Normal" )			// Time = 88
-		PORT_DIPSETTING(      0x0800, "Hard" )			// Time = 77
-		PORT_DIPSETTING(      0x1000, "Hardest" )			// Time = 66
-		PORT_DIPNAME( 0xe000, 0xe000, DEF_STR( Coinage ) )
-	//	PORT_DIPSETTING(      0x0000, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(      0x8000, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(      0x4000, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(      0xc000, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(      0xe000, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(      0x6000, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(      0xa000, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(      0x2000, DEF_STR( 1C_4C ) )
+	static InputPortPtr input_ports_pass = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* DSW */
+		PORT_DIPNAME( 0x0001, 0x0001, "Unknown SW 0-0" );// USED ! Check code at 0x0046ea
+		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0002, 0x0002, "Unused SW 0-1" );	// Unused ?
+		PORT_DIPSETTING(      0x0002, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0004, 0x0004, "Unused SW 0-2" );	// Unused ?
+		PORT_DIPSETTING(      0x0004, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0008, 0x0008, "Unused SW 0-3" );	// Unused ?
+		PORT_DIPSETTING(      0x0008, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0010, 0x0010, "Unused SW 0-4" );	// Unused ?
+		PORT_DIPSETTING(      0x0010, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0020, 0x0020, "Unused SW 0-5" );	// Unused ?
+		PORT_DIPSETTING(      0x0020, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0040, 0x0040, "Unused SW 0-6" );	// Unused ?
+		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0080, 0x0080, "Unused SW 0-7" );	// Unused ?
+		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( "Lives") );
+		PORT_DIPSETTING(      0x0000, "2" );
+		PORT_DIPSETTING(      0x0300, "3" );
+		PORT_DIPSETTING(      0x0100, "4" );
+		PORT_DIPSETTING(      0x0200, "5" );
+		PORT_DIPNAME( 0x0400, 0x0400, "Unused SW 0-10" );// Unused ?
+		PORT_DIPSETTING(      0x0400, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x1800, 0x0000, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(      0x0000, "Easy" );		// Time = 99
+		PORT_DIPSETTING(      0x1800, "Normal" );		// Time = 88
+		PORT_DIPSETTING(      0x0800, "Hard" );		// Time = 77
+		PORT_DIPSETTING(      0x1000, "Hardest" );		// Time = 66
+		PORT_DIPNAME( 0xe000, 0xe000, DEF_STR( "Coinage") );
+	//	PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(      0x8000, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(      0x4000, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(      0xc000, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(      0xe000, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(      0x6000, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(      0xa000, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(      0x2000, DEF_STR( "1C_4C") );
 	
-		PORT_START
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_BUTTON2 )
-		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL )
-		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_BUTTON2 );
+		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL );
+		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout tiles8x8_layout =
-	new IO_WritePort(
+	{
 		8,8,
 		RGN_FRAC(1,1),
 		8,
@@ -253,11 +253,11 @@ public class pass
 		{ 0, 8, 16, 24, 32, 40, 48, 56 },
 		{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64 },
 		64*8
-	);
+	};
 	
 	/* for something so simple this took a while to see */
 	static struct GfxLayout tiles4x4_fg_layout =
-	new IO_WritePort(
+	{
 		4,4,
 		RGN_FRAC(1,1),
 		8,
@@ -265,21 +265,21 @@ public class pass
 		{ 0, 8, 16, 24 },
 		{ 0*32, 1*32, 2*32, 3*32 },
 		4*32
-	);
+	};
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	new IO_WritePort(
-		{ REGION_GFX1, 0, tiles4x4_fg_layout, 256, 2 },
-		{ REGION_GFX2, 0, tiles8x8_layout, 0, 2 },
+	{
+		{ REGION_GFX1, 0, &tiles4x4_fg_layout, 256, 2 },
+		{ REGION_GFX2, 0, &tiles8x8_layout, 0, 2 },
 		{ -1 }
-	);
+	};
 	
 	/* todo : is this correct? */
 	
 	
 	
 	static struct YM2203interface ym2203_interface =
-	new IO_WritePort(
+	{
 		1,
 		14318180/4, /* guess */
 		{ YM2203_VOL(60,60) },
@@ -287,15 +287,15 @@ public class pass
 		{ 0 },
 		{ 0 },
 		{ 0 },
-	);
+	};
 	
 	static struct OKIM6295interface okim6295_interface =
-	new IO_WritePort(
+	{
 		1,
 		{ 6000 },	/* ? guess */
 		{ REGION_SOUND1 },
 		{ 60 }
-	);
+	};
 	
 	static MACHINE_DRIVER_START( pass )
 		/* basic machine hardware */

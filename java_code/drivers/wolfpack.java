@@ -211,43 +211,43 @@ public class wolfpack
 	};
 	
 	
-	INPUT_PORTS_START( wolfpack )
+	static InputPortPtr input_ports_wolfpack = new InputPortPtr(){ public void handler() { 
 	
-		PORT_START
-		PORT_BIT ( 0x03, IP_ACTIVE_HIGH, IPT_UNUSED ) /* dial connects here */
-		PORT_BIT ( 0x04, IP_ACTIVE_LOW, IPT_TILT )
-		PORT_BIT ( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_SERVICE( 0x10, IP_ACTIVE_HIGH )
-		PORT_BIT ( 0x20, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT ( 0x40, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT ( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
+		PORT_START(); 
+		PORT_BIT ( 0x03, IP_ACTIVE_HIGH, IPT_UNUSED );/* dial connects here */
+		PORT_BIT ( 0x04, IP_ACTIVE_LOW, IPT_TILT );
+		PORT_BIT ( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_SERVICE( 0x10, IP_ACTIVE_HIGH );
+		PORT_BIT ( 0x20, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT ( 0x40, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT ( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
 	
-		PORT_START
-		PORT_DIPNAME( 0x03, 0x01, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x04, 0x00, "Extended Play" )
-		PORT_DIPSETTING(    0x04, DEF_STR( No ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Yes ) )
-		PORT_DIPNAME( 0x18, 0x08, "Play Time" )
-		PORT_DIPSETTING(    0x00, "65 seconds" )
-		PORT_DIPSETTING(    0x08, "97 seconds" )
-		PORT_DIPSETTING(    0x10, "130 seconds" )
-		PORT_DIPSETTING(    0x18, "160 seconds" )
-		PORT_DIPNAME( 0x20, 0x00, DEF_STR( Unknown ) ) /* demo sound? */
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0xc0, 0x80, "Score for Extended Play" )
-		PORT_DIPSETTING(    0x00, "8000" )
-		PORT_DIPSETTING(    0x40, "12000" )
-		PORT_DIPSETTING(    0x80, "16000" )
-		PORT_DIPSETTING(    0xc0, "20000" )
+		PORT_START(); 
+		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x04, 0x00, "Extended Play" );
+		PORT_DIPSETTING(    0x04, DEF_STR( "No") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
+		PORT_DIPNAME( 0x18, 0x08, "Play Time" );
+		PORT_DIPSETTING(    0x00, "65 seconds" );
+		PORT_DIPSETTING(    0x08, "97 seconds" );
+		PORT_DIPSETTING(    0x10, "130 seconds" );
+		PORT_DIPSETTING(    0x18, "160 seconds" );
+		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unknown") ); /* demo sound? */
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0xc0, 0x80, "Score for Extended Play" );
+		PORT_DIPSETTING(    0x00, "8000" );
+		PORT_DIPSETTING(    0x40, "12000" );
+		PORT_DIPSETTING(    0x80, "16000" );
+		PORT_DIPSETTING(    0xc0, "20000" );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_DIAL, 30, 5, 0, 255)
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_DIAL, 30, 5, 0, 255);
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout tile_layout =

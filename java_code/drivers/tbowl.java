@@ -255,225 +255,225 @@ public class tbowl
 	
 	
 	#define TBOWL_PLAYER_INPUT(_n_) \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER##_n_ ) \
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE##_n_ ) \
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START##_n_ )
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER##_n_ );\
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE##_n_ );\
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START##_n_ );
 	
 	
-	INPUT_PORTS_START( tbowl )
-		PORT_START	/* player 1 inputs (0xfc00) */
+	static InputPortPtr input_ports_tbowl = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* player 1 inputs (0xfc00) */
 		TBOWL_PLAYER_INPUT(1)
 	
-		PORT_START	/* player 2 inputs (0xfc01) */
+		PORT_START(); 	/* player 2 inputs (0xfc01) */
 		TBOWL_PLAYER_INPUT(2)
 	
-		PORT_START	/* player 3 inputs (0xfc02) */
+		PORT_START(); 	/* player 3 inputs (0xfc02) */
 		TBOWL_PLAYER_INPUT(3)
 	
-		PORT_START	/* player 4 inputs (0xfc03) */
+		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START	/* system inputs (0xfc07 -> 0x80f9) */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 )
-		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General)", KEYCODE_F1, IP_JOY_NONE )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 );
+		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General);, KEYCODE_F1, IP_JOY_NONE )
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START	/* DSW1 (0xfc08 -> 0xffb4) */
-		PORT_DIPNAME( 0x07, 0x07, DEF_STR( Coinage ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 8C_1C ) )
-		PORT_DIPSETTING (   0x01, DEF_STR( 7C_1C ) )
-		PORT_DIPSETTING (   0x02, DEF_STR( 6C_1C ) )
-		PORT_DIPSETTING (   0x03, DEF_STR( 5C_1C ) )
-		PORT_DIPSETTING (   0x04, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING (   0x05, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING (   0x06, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x07, DEF_STR( 1C_1C ) )
-		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players)" )
-		PORT_DIPSETTING (   0x00, "7:00" )
-		PORT_DIPSETTING (   0x08, "6:00" )
-		PORT_DIPSETTING (   0x10, "5:00" )
-		PORT_DIPSETTING (   0x18, "4:30" )
-		PORT_DIPSETTING (   0x20, "3:40" )
-		PORT_DIPSETTING (   0x28, "3:20" )
-		PORT_DIPSETTING (   0x30, "3:00" )
-		PORT_DIPSETTING (   0x38, "2:50" )
-		PORT_DIPSETTING (   0x40, "2:40" )
-		PORT_DIPSETTING (   0x48, "2:30" )
-		PORT_DIPSETTING (   0x50, "2:20" )
-		PORT_DIPSETTING (   0x58, "2:10" )
-		PORT_DIPSETTING (   0x60, "2:00" )
-		PORT_DIPSETTING (   0x68, "1:55" )
-		PORT_DIPSETTING (   0x70, "1:50" )
-		PORT_DIPSETTING (   0x78, "1:45" )
-		PORT_DIPSETTING (   0x80, "1:40" )
-		PORT_DIPSETTING (   0x88, "1:35" )
-		PORT_DIPSETTING (   0x90, "1:25" )
-		PORT_DIPSETTING (   0x98, "1:20" )
-		PORT_DIPSETTING (   0xa0, "1:15" )
-		PORT_DIPSETTING (   0xa8, "1:10" )
-		PORT_DIPSETTING (   0xb0, "1:05" )
-		PORT_DIPSETTING (   0xb8, "1:00" )
-		PORT_DIPSETTING (   0xc0, "0:55" )
-		PORT_DIPSETTING (   0xc8, "0:50" )
-		PORT_DIPSETTING (   0xd0, "0:45" )
-		PORT_DIPSETTING (   0xd8, "0:40" )
-		PORT_DIPSETTING (   0xe0, "0:35" )
-		PORT_DIPSETTING (   0xe8, "0:30" )
-		PORT_DIPSETTING (   0xf0, "0:25" )
-	//	PORT_DIPSETTING (   0xf8, "1:00" )
+		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
+		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
+		PORT_DIPSETTING (   0x02, DEF_STR( "6C_1C") );
+		PORT_DIPSETTING (   0x03, DEF_STR( "5C_1C") );
+		PORT_DIPSETTING (   0x04, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING (   0x05, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING (   0x06, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x07, DEF_STR( "1C_1C") );
+		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players); )
+		PORT_DIPSETTING (   0x00, "7:00" );
+		PORT_DIPSETTING (   0x08, "6:00" );
+		PORT_DIPSETTING (   0x10, "5:00" );
+		PORT_DIPSETTING (   0x18, "4:30" );
+		PORT_DIPSETTING (   0x20, "3:40" );
+		PORT_DIPSETTING (   0x28, "3:20" );
+		PORT_DIPSETTING (   0x30, "3:00" );
+		PORT_DIPSETTING (   0x38, "2:50" );
+		PORT_DIPSETTING (   0x40, "2:40" );
+		PORT_DIPSETTING (   0x48, "2:30" );
+		PORT_DIPSETTING (   0x50, "2:20" );
+		PORT_DIPSETTING (   0x58, "2:10" );
+		PORT_DIPSETTING (   0x60, "2:00" );
+		PORT_DIPSETTING (   0x68, "1:55" );
+		PORT_DIPSETTING (   0x70, "1:50" );
+		PORT_DIPSETTING (   0x78, "1:45" );
+		PORT_DIPSETTING (   0x80, "1:40" );
+		PORT_DIPSETTING (   0x88, "1:35" );
+		PORT_DIPSETTING (   0x90, "1:25" );
+		PORT_DIPSETTING (   0x98, "1:20" );
+		PORT_DIPSETTING (   0xa0, "1:15" );
+		PORT_DIPSETTING (   0xa8, "1:10" );
+		PORT_DIPSETTING (   0xb0, "1:05" );
+		PORT_DIPSETTING (   0xb8, "1:00" );
+		PORT_DIPSETTING (   0xc0, "0:55" );
+		PORT_DIPSETTING (   0xc8, "0:50" );
+		PORT_DIPSETTING (   0xd0, "0:45" );
+		PORT_DIPSETTING (   0xd8, "0:40" );
+		PORT_DIPSETTING (   0xe0, "0:35" );
+		PORT_DIPSETTING (   0xe8, "0:30" );
+		PORT_DIPSETTING (   0xf0, "0:25" );
+	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START	/* DSW2 (0xfc09 -> 0xffb5) */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?)" )	// To be checked again
-		PORT_DIPSETTING (   0x00, "0x00" )
-		PORT_DIPSETTING (   0x01, "0x01" )
-		PORT_DIPSETTING (   0x02, "0x02" )
-		PORT_DIPSETTING (   0x03, "0x03" )
-		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players)" )	// For multiple "credits"
-		PORT_DIPSETTING (   0x00, "0:30" )
-		PORT_DIPSETTING (   0x04, "0:20" )
-		PORT_DIPSETTING (   0x08, "0:10" )
-		PORT_DIPSETTING (   0x0c, "None" )
-		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" )
-		PORT_DIPSETTING (   0x00, "56/60" )
-		PORT_DIPSETTING (   0x10, "51/60" )
-		PORT_DIPSETTING (   0x30, "47/60" )
-		PORT_DIPSETTING (   0x20, "42/60" )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Demo_Sounds ) )	// Check code at 0x0393
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x40, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, "Hi-Score Reset" )		// Only if P1 buttons 1 and 2 are pressed during P.O.S.T. !
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x80, DEF_STR( On ) )
+		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?); )	// To be checked again
+		PORT_DIPSETTING (   0x00, "0x00" );
+		PORT_DIPSETTING (   0x01, "0x01" );
+		PORT_DIPSETTING (   0x02, "0x02" );
+		PORT_DIPSETTING (   0x03, "0x03" );
+		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players); )	// For multiple "credits"
+		PORT_DIPSETTING (   0x00, "0:30" );
+		PORT_DIPSETTING (   0x04, "0:20" );
+		PORT_DIPSETTING (   0x08, "0:10" );
+		PORT_DIPSETTING (   0x0c, "None" );
+		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" );
+		PORT_DIPSETTING (   0x00, "56/60" );
+		PORT_DIPSETTING (   0x10, "51/60" );
+		PORT_DIPSETTING (   0x30, "47/60" );
+		PORT_DIPSETTING (   0x20, "42/60" );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Demo_Sounds") );	// Check code at 0x0393
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x40, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, "Hi-Score Reset" );	// Only if P1 buttons 1 and 2 are pressed during P.O.S.T. !
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START	/* DSW3 (0xfc0a -> 0xffb6) */
-		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter)" )
-		PORT_DIPSETTING (   0x00, "8:00" )
-		PORT_DIPSETTING (   0x01, "5:00" )
-		PORT_DIPSETTING (   0x03, "4:00" )
-		PORT_DIPSETTING (   0x02, "3:00" )
-		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w)" )	// Check code at 0x6e16
-		PORT_DIPSETTING (   0x00, "0x00 = 0x54f3" )
-		PORT_DIPSETTING (   0x04, "0x04 = 0x54e1" )
-		PORT_DIPSETTING (   0x08, "0x08 = 0x54cf" )
-		PORT_DIPSETTING (   0x0c, "0x0c = 0x54bd" )
-		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
+		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter); )
+		PORT_DIPSETTING (   0x00, "8:00" );
+		PORT_DIPSETTING (   0x01, "5:00" );
+		PORT_DIPSETTING (   0x03, "4:00" );
+		PORT_DIPSETTING (   0x02, "3:00" );
+		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w); )	// Check code at 0x6e16
+		PORT_DIPSETTING (   0x00, "0x00 = 0x54f3" );
+		PORT_DIPSETTING (   0x04, "0x04 = 0x54e1" );
+		PORT_DIPSETTING (   0x08, "0x08 = 0x54cf" );
+		PORT_DIPSETTING (   0x0c, "0x0c = 0x54bd" );
+		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	/* same as 'tbowl', but different "Quarter Time" Dip Switch
 	   ("3:00" and "4:00" are inverted) */
-	INPUT_PORTS_START( tbowlj )
-		PORT_START	/* player 1 inputs (0xfc00) */
+	static InputPortPtr input_ports_tbowlj = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* player 1 inputs (0xfc00) */
 		TBOWL_PLAYER_INPUT(1)
 	
-		PORT_START	/* player 2 inputs (0xfc01) */
+		PORT_START(); 	/* player 2 inputs (0xfc01) */
 		TBOWL_PLAYER_INPUT(2)
 	
-		PORT_START	/* player 3 inputs (0xfc02) */
+		PORT_START(); 	/* player 3 inputs (0xfc02) */
 		TBOWL_PLAYER_INPUT(3)
 	
-		PORT_START	/* player 4 inputs (0xfc03) */
+		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START	/* system inputs (0xfc07 -> 0x80f9) */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 )
-		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General)", KEYCODE_F1, IP_JOY_NONE )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 );
+		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General);, KEYCODE_F1, IP_JOY_NONE )
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START	/* DSW1 (0xfc08 -> 0xffb4) */
-		PORT_DIPNAME( 0x07, 0x07, DEF_STR( Coinage ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 8C_1C ) )
-		PORT_DIPSETTING (   0x01, DEF_STR( 7C_1C ) )
-		PORT_DIPSETTING (   0x02, DEF_STR( 6C_1C ) )
-		PORT_DIPSETTING (   0x03, DEF_STR( 5C_1C ) )
-		PORT_DIPSETTING (   0x04, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING (   0x05, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING (   0x06, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x07, DEF_STR( 1C_1C ) )
-		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players)" )
-		PORT_DIPSETTING (   0x00, "7:00" )
-		PORT_DIPSETTING (   0x08, "6:00" )
-		PORT_DIPSETTING (   0x10, "5:00" )
-		PORT_DIPSETTING (   0x18, "4:30" )
-		PORT_DIPSETTING (   0x20, "3:40" )
-		PORT_DIPSETTING (   0x28, "3:20" )
-		PORT_DIPSETTING (   0x30, "3:00" )
-		PORT_DIPSETTING (   0x38, "2:50" )
-		PORT_DIPSETTING (   0x40, "2:40" )
-		PORT_DIPSETTING (   0x48, "2:30" )
-		PORT_DIPSETTING (   0x50, "2:20" )
-		PORT_DIPSETTING (   0x58, "2:10" )
-		PORT_DIPSETTING (   0x60, "2:00" )
-		PORT_DIPSETTING (   0x68, "1:55" )
-		PORT_DIPSETTING (   0x70, "1:50" )
-		PORT_DIPSETTING (   0x78, "1:45" )
-		PORT_DIPSETTING (   0x80, "1:40" )
-		PORT_DIPSETTING (   0x88, "1:35" )
-		PORT_DIPSETTING (   0x90, "1:25" )
-		PORT_DIPSETTING (   0x98, "1:20" )
-		PORT_DIPSETTING (   0xa0, "1:15" )
-		PORT_DIPSETTING (   0xa8, "1:10" )
-		PORT_DIPSETTING (   0xb0, "1:05" )
-		PORT_DIPSETTING (   0xb8, "1:00" )
-		PORT_DIPSETTING (   0xc0, "0:55" )
-		PORT_DIPSETTING (   0xc8, "0:50" )
-		PORT_DIPSETTING (   0xd0, "0:45" )
-		PORT_DIPSETTING (   0xd8, "0:40" )
-		PORT_DIPSETTING (   0xe0, "0:35" )
-		PORT_DIPSETTING (   0xe8, "0:30" )
-		PORT_DIPSETTING (   0xf0, "0:25" )
-	//	PORT_DIPSETTING (   0xf8, "1:00" )
+		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
+		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
+		PORT_DIPSETTING (   0x02, DEF_STR( "6C_1C") );
+		PORT_DIPSETTING (   0x03, DEF_STR( "5C_1C") );
+		PORT_DIPSETTING (   0x04, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING (   0x05, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING (   0x06, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x07, DEF_STR( "1C_1C") );
+		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players); )
+		PORT_DIPSETTING (   0x00, "7:00" );
+		PORT_DIPSETTING (   0x08, "6:00" );
+		PORT_DIPSETTING (   0x10, "5:00" );
+		PORT_DIPSETTING (   0x18, "4:30" );
+		PORT_DIPSETTING (   0x20, "3:40" );
+		PORT_DIPSETTING (   0x28, "3:20" );
+		PORT_DIPSETTING (   0x30, "3:00" );
+		PORT_DIPSETTING (   0x38, "2:50" );
+		PORT_DIPSETTING (   0x40, "2:40" );
+		PORT_DIPSETTING (   0x48, "2:30" );
+		PORT_DIPSETTING (   0x50, "2:20" );
+		PORT_DIPSETTING (   0x58, "2:10" );
+		PORT_DIPSETTING (   0x60, "2:00" );
+		PORT_DIPSETTING (   0x68, "1:55" );
+		PORT_DIPSETTING (   0x70, "1:50" );
+		PORT_DIPSETTING (   0x78, "1:45" );
+		PORT_DIPSETTING (   0x80, "1:40" );
+		PORT_DIPSETTING (   0x88, "1:35" );
+		PORT_DIPSETTING (   0x90, "1:25" );
+		PORT_DIPSETTING (   0x98, "1:20" );
+		PORT_DIPSETTING (   0xa0, "1:15" );
+		PORT_DIPSETTING (   0xa8, "1:10" );
+		PORT_DIPSETTING (   0xb0, "1:05" );
+		PORT_DIPSETTING (   0xb8, "1:00" );
+		PORT_DIPSETTING (   0xc0, "0:55" );
+		PORT_DIPSETTING (   0xc8, "0:50" );
+		PORT_DIPSETTING (   0xd0, "0:45" );
+		PORT_DIPSETTING (   0xd8, "0:40" );
+		PORT_DIPSETTING (   0xe0, "0:35" );
+		PORT_DIPSETTING (   0xe8, "0:30" );
+		PORT_DIPSETTING (   0xf0, "0:25" );
+	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START	/* DSW2 (0xfc09 -> 0xffb5) */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?)" )	// To be checked again
-		PORT_DIPSETTING (   0x00, "0x00" )
-		PORT_DIPSETTING (   0x01, "0x01" )
-		PORT_DIPSETTING (   0x02, "0x02" )
-		PORT_DIPSETTING (   0x03, "0x03" )
-		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players)" )	// For multiple "credits"
-		PORT_DIPSETTING (   0x00, "0:30" )
-		PORT_DIPSETTING (   0x04, "0:20" )
-		PORT_DIPSETTING (   0x08, "0:10" )
-		PORT_DIPSETTING (   0x0c, "None" )
-		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" )
-		PORT_DIPSETTING (   0x00, "56/60" )
-		PORT_DIPSETTING (   0x10, "51/60" )
-		PORT_DIPSETTING (   0x30, "47/60" )
-		PORT_DIPSETTING (   0x20, "42/60" )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Demo_Sounds ) )	// Check code at 0x0393
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x40, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, "Hi-Score Reset" )		// Only if P1 buttons 1 and 2 are pressed during P.O.S.T. !
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x80, DEF_STR( On ) )
+		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?); )	// To be checked again
+		PORT_DIPSETTING (   0x00, "0x00" );
+		PORT_DIPSETTING (   0x01, "0x01" );
+		PORT_DIPSETTING (   0x02, "0x02" );
+		PORT_DIPSETTING (   0x03, "0x03" );
+		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players); )	// For multiple "credits"
+		PORT_DIPSETTING (   0x00, "0:30" );
+		PORT_DIPSETTING (   0x04, "0:20" );
+		PORT_DIPSETTING (   0x08, "0:10" );
+		PORT_DIPSETTING (   0x0c, "None" );
+		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" );
+		PORT_DIPSETTING (   0x00, "56/60" );
+		PORT_DIPSETTING (   0x10, "51/60" );
+		PORT_DIPSETTING (   0x30, "47/60" );
+		PORT_DIPSETTING (   0x20, "42/60" );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Demo_Sounds") );	// Check code at 0x0393
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x40, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, "Hi-Score Reset" );	// Only if P1 buttons 1 and 2 are pressed during P.O.S.T. !
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START	/* DSW3 (0xfc0a -> 0xffb6) */
-		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter)" )
-		PORT_DIPSETTING (   0x00, "8:00" )
-		PORT_DIPSETTING (   0x01, "5:00" )
-		PORT_DIPSETTING (   0x02, "4:00" )
-		PORT_DIPSETTING (   0x03, "3:00" )
-		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w)" )	// Check code at 0x6e37
-		PORT_DIPSETTING (   0x00, "0x00 = 0x5414" )
-		PORT_DIPSETTING (   0x04, "0x04 = 0x5402" )
-		PORT_DIPSETTING (   0x08, "0x08 = 0x54f0" )
-		PORT_DIPSETTING (   0x0c, "0x0c = 0x54de" )
-		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
+		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter); )
+		PORT_DIPSETTING (   0x00, "8:00" );
+		PORT_DIPSETTING (   0x01, "5:00" );
+		PORT_DIPSETTING (   0x02, "4:00" );
+		PORT_DIPSETTING (   0x03, "3:00" );
+		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w); )	// Check code at 0x6e37
+		PORT_DIPSETTING (   0x00, "0x00 = 0x5414" );
+		PORT_DIPSETTING (   0x04, "0x04 = 0x5402" );
+		PORT_DIPSETTING (   0x08, "0x08 = 0x54f0" );
+		PORT_DIPSETTING (   0x0c, "0x0c = 0x54de" );
+		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	/*** Graphic Decodes

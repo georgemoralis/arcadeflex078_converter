@@ -97,60 +97,60 @@ public class ssrj
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	INPUT_PORTS_START( ssrj )
+	static InputPortPtr input_ports_ssrj = new InputPortPtr(){ public void handler() { 
 	
-	PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_TILT )
-		PORT_ANALOG( 0xe0, 0x00, IPT_PEDAL, 50, 0x20, 0, 0xe0 )
+	PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_TILT );
+		PORT_ANALOG( 0xe0, 0x00, IPT_PEDAL, 50, 0x20, 0, 0xe0 );
 	
-	 PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_DIAL | IPF_REVERSE , 50, 4, 0x00, 0xff)
-	
-	
-	 PORT_START
-	
-	 PORT_BIT( 0xf, IP_ACTIVE_LOW, IPT_BUTTON2  )  /* code @ $eef  , tested when controls = type4 */
-	
-	 PORT_DIPNAME(0x30, 0x00, DEF_STR( Difficulty ) ) /* ??? code @ $62c */
-	 PORT_DIPSETTING(   0x10, "Easy" )
-	 PORT_DIPSETTING(   0x00, "Normal" )
-	 PORT_DIPSETTING(   0x20, "Difficult" )
-	 PORT_DIPSETTING(   0x30, "Very Difficult" )
-	
-	 PORT_DIPNAME( 0x40, 0x40, DEF_STR( Free_Play ) )
-	 PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-	 PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	
-	 PORT_DIPNAME( 0x80, 0x80, "No Hit" )
-	 PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-	 PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	
-	 PORT_START
-	
-		PORT_DIPNAME( 0x07, 0x00, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(    0x07, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 1C_4C ) )
-		PORT_DIPNAME( 0x08, 0x08, "Freeze" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	
-		PORT_DIPNAME( 0x030, 0x000, "Controls" ) /* 'press button to start' message, and wait for button2 */
-		PORT_DIPSETTING(    0x00, "Type 1" )
-		PORT_DIPSETTING(    0x10, "Type 2" )
-		PORT_DIPSETTING(    0x20, "Type 3" )
-		PORT_DIPSETTING(    0x30, "Type 4" )
-	
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* sometimes hangs after game over ($69b) */
+	 PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_DIAL | IPF_REVERSE , 50, 4, 0x00, 0xff);
 	
 	
-	INPUT_PORTS_END
+	 PORT_START(); 
+	
+	 PORT_BIT( 0xf, IP_ACTIVE_LOW, IPT_BUTTON2  ); /* code @ $eef  , tested when controls = type4 */
+	
+	 PORT_DIPNAME(0x30, 0x00, DEF_STR( "Difficulty") ); /* ??? code @ $62c */
+	 PORT_DIPSETTING(   0x10, "Easy" );
+	 PORT_DIPSETTING(   0x00, "Normal" );
+	 PORT_DIPSETTING(   0x20, "Difficult" );
+	 PORT_DIPSETTING(   0x30, "Very Difficult" );
+	
+	 PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Free_Play") );
+	 PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+	 PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+	
+	 PORT_DIPNAME( 0x80, 0x80, "No Hit" );
+	 PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+	 PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+	
+	 PORT_START(); 
+	
+		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(    0x07, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "1C_4C") );
+		PORT_DIPNAME( 0x08, 0x08, "Freeze" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+	
+		PORT_DIPNAME( 0x030, 0x000, "Controls" );/* 'press button to start' message, and wait for button2 */
+		PORT_DIPSETTING(    0x00, "Type 1" );
+		PORT_DIPSETTING(    0x10, "Type 2" );
+		PORT_DIPSETTING(    0x20, "Type 3" );
+		PORT_DIPSETTING(    0x30, "Type 4" );
+	
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );/* sometimes hangs after game over ($69b) */
+	
+	
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout charlayout =
 	{

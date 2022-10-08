@@ -598,294 +598,294 @@ public class djmain
 	 *************************************/
 	
 	#define BEATMANIA_INPUT \
-		PORT_START      /* IN 0 */ \
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 ) \
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 ) \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER1 ) \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 ) \
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 ) \
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 ) \
+		PORT_START();       /* IN 0 */ \
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );\
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );\
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER1 );\
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 );\
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );\
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );\
 	 \
-		PORT_START      /* IN 1 */ \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 ) \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 ) \
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START1 ) \
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_START2 ) \
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START3 )	/* EFFECT */ \
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN1 ) \
+		PORT_START();       /* IN 1 */ \
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 );\
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );\
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START1 );\
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_START2 );\
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START3 );/* EFFECT */ \
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN1 );\
 	 \
-		PORT_START      /* IN 2 */ \
-		PORT_BITX(0x01, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE )	/* TEST SW */ \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 )	/* SERVICE */ \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE2 )	/* RESET SW */ \
-		PORT_BIT( 0xf8, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START();       /* IN 2 */ \
+		PORT_BITX(0x01, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )	/* TEST SW */ \
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 );/* SERVICE */ \
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE2 );/* RESET SW */ \
+		PORT_BIT( 0xf8, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
 	#define BEATMANIA_SCRATCH \
-		PORT_START      /* IN 6: fake port for scratch */ \
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 )	/* +R */ \
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER2 )	/* +R */ \
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON7 | IPF_PLAYER1 )	/* -L */ \
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON7 | IPF_PLAYER2 )	/* -L */
+		PORT_START();       /* IN 6: fake port for scratch */ \
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 );/* +R */ \
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER2 );/* +R */ \
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON7 | IPF_PLAYER1 );/* -L */ \
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON7 | IPF_PLAYER2 );/* -L */
 	
 	#define BEATMANIA_DSW1(base,mask) \
-		PORT_START      /* IN 3 */ \
-		PORT_DIPNAME( 0xff, (0xff & mask) | base, DEF_STR( Coinage ) ) \
-		PORT_DIPSETTING(    (0xe0 & mask) | base, "1P 8C / 2P 16C / Continue 8C" ) \
-		PORT_DIPSETTING(    (0xe1 & mask) | base, "1P 8C / 2P 16C / Continue 7C" ) \
-		PORT_DIPSETTING(    (0xe2 & mask) | base, "1P 8C / 2P 16C / Continue 6C" ) \
-		PORT_DIPSETTING(    (0xe3 & mask) | base, "1P 7C / 2P 14C / Continue 7C" ) \
-		PORT_DIPSETTING(    (0xe4 & mask) | base, "1P 7C / 2P 14C / Continue 6C" ) \
-		PORT_DIPSETTING(    (0xe5 & mask) | base, "1P 7C / 2P 14C / Continue 5C" ) \
-		PORT_DIPSETTING(    (0xe6 & mask) | base, "1P 6C / 2P 12C / Continue 6C" ) \
-		PORT_DIPSETTING(    (0xe7 & mask) | base, "1P 6C / 2P 12C / Continue 5C" ) \
-		PORT_DIPSETTING(    (0xe8 & mask) | base, "1P 6C / 2P 12C / Continue 4C" ) \
-		PORT_DIPSETTING(    (0xe9 & mask) | base, "1P 5C / 2P 10C / Continue 5C" ) \
-		PORT_DIPSETTING(    (0xeb & mask) | base, "1P 5C / 2P 10C / Continue 3C" ) \
-		PORT_DIPSETTING(    (0xea & mask) | base, "1P 5C / 2P 10C / Continue 4C" ) \
-		PORT_DIPSETTING(    (0xec & mask) | base, "1P 4C / 2P 8C / Continue 4C" ) \
-		PORT_DIPSETTING(    (0xed & mask) | base, "1P 4C / 2P 8C / Continue 3C" ) \
-		PORT_DIPSETTING(    (0xee & mask) | base, "1P 4C / 2P 8C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xef & mask) | base, "1P 3C / 2P 6C / Continue 3C" ) \
-		PORT_DIPSETTING(    (0xf0 & mask) | base, "1P 3C / 2P 6C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xf1 & mask) | base, "1P 3C / 2P 6C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xf2 & mask) | base, "1P 3C / 2P 4C / Continue 3C" ) \
-		PORT_DIPSETTING(    (0xf3 & mask) | base, "1P 3C / 2P 4C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xf4 & mask) | base, "1P 3C / 2P 4C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xf5 & mask) | base, "1P 3C / 2P 3C / Continue 3C" ) \
-		PORT_DIPSETTING(    (0xf6 & mask) | base, "1P 3C / 2P 3C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xf7 & mask) | base, "1P 3C / 2P 3C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xfa & mask) | base, "1P 2C / 2P 3C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xfb & mask) | base, "1P 2C / 2P 3C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xf8 & mask) | base, "1P 2C / 2P 4C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xff & mask) | base, "1P 2C / 2P 4C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xfc & mask) | base, "1P 2C / 2P 2C / Continue 2C" ) \
-		PORT_DIPSETTING(    (0xfd & mask) | base, "1P 2C / 2P 2C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xfe & mask) | base, "1P 1C / 2P 2C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0xf9 & mask) | base, "1P 1C / 2P 1C / Continue 1C" ) \
-		PORT_DIPSETTING(    (0x00 & mask) | base, DEF_STR( Free_Play ) )
+		PORT_START();       /* IN 3 */ \
+		PORT_DIPNAME( 0xff, (0xff & mask);| base, DEF_STR( Coinage ) ) \
+		PORT_DIPSETTING(    (0xe0 & mask);| base, "1P 8C / 2P 16C / Continue 8C" ) \
+		PORT_DIPSETTING(    (0xe1 & mask);| base, "1P 8C / 2P 16C / Continue 7C" ) \
+		PORT_DIPSETTING(    (0xe2 & mask);| base, "1P 8C / 2P 16C / Continue 6C" ) \
+		PORT_DIPSETTING(    (0xe3 & mask);| base, "1P 7C / 2P 14C / Continue 7C" ) \
+		PORT_DIPSETTING(    (0xe4 & mask);| base, "1P 7C / 2P 14C / Continue 6C" ) \
+		PORT_DIPSETTING(    (0xe5 & mask);| base, "1P 7C / 2P 14C / Continue 5C" ) \
+		PORT_DIPSETTING(    (0xe6 & mask);| base, "1P 6C / 2P 12C / Continue 6C" ) \
+		PORT_DIPSETTING(    (0xe7 & mask);| base, "1P 6C / 2P 12C / Continue 5C" ) \
+		PORT_DIPSETTING(    (0xe8 & mask);| base, "1P 6C / 2P 12C / Continue 4C" ) \
+		PORT_DIPSETTING(    (0xe9 & mask);| base, "1P 5C / 2P 10C / Continue 5C" ) \
+		PORT_DIPSETTING(    (0xeb & mask);| base, "1P 5C / 2P 10C / Continue 3C" ) \
+		PORT_DIPSETTING(    (0xea & mask);| base, "1P 5C / 2P 10C / Continue 4C" ) \
+		PORT_DIPSETTING(    (0xec & mask);| base, "1P 4C / 2P 8C / Continue 4C" ) \
+		PORT_DIPSETTING(    (0xed & mask);| base, "1P 4C / 2P 8C / Continue 3C" ) \
+		PORT_DIPSETTING(    (0xee & mask);| base, "1P 4C / 2P 8C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xef & mask);| base, "1P 3C / 2P 6C / Continue 3C" ) \
+		PORT_DIPSETTING(    (0xf0 & mask);| base, "1P 3C / 2P 6C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xf1 & mask);| base, "1P 3C / 2P 6C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xf2 & mask);| base, "1P 3C / 2P 4C / Continue 3C" ) \
+		PORT_DIPSETTING(    (0xf3 & mask);| base, "1P 3C / 2P 4C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xf4 & mask);| base, "1P 3C / 2P 4C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xf5 & mask);| base, "1P 3C / 2P 3C / Continue 3C" ) \
+		PORT_DIPSETTING(    (0xf6 & mask);| base, "1P 3C / 2P 3C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xf7 & mask);| base, "1P 3C / 2P 3C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xfa & mask);| base, "1P 2C / 2P 3C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xfb & mask);| base, "1P 2C / 2P 3C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xf8 & mask);| base, "1P 2C / 2P 4C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xff & mask);| base, "1P 2C / 2P 4C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xfc & mask);| base, "1P 2C / 2P 2C / Continue 2C" ) \
+		PORT_DIPSETTING(    (0xfd & mask);| base, "1P 2C / 2P 2C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xfe & mask);| base, "1P 1C / 2P 2C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0xf9 & mask);| base, "1P 1C / 2P 1C / Continue 1C" ) \
+		PORT_DIPSETTING(    (0x00 & mask);| base, DEF_STR( Free_Play ) )
 	
 	#define BEATMANIA_DSW2 \
-		PORT_START      /* IN 4 */ \
-		PORT_DIPNAME( 0x80, 0x80, "Score Display" ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x60, 0x60, DEF_STR( Demo_Sounds ) ) \
-		PORT_DIPSETTING(    0x60, "Loud" ) \
-		PORT_DIPSETTING(    0x20, "Medium" ) \
-		PORT_DIPSETTING(    0x40, "Low" ) \
-		PORT_DIPSETTING(    0x00, "Silent" ) \
-		PORT_DIPNAME( 0x10, 0x10, "Level Display" ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x10, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x0c, 0x0c, "Normal Difficulty" ) \
-		PORT_DIPSETTING(    0x08, "Level 0" ) \
-		PORT_DIPSETTING(    0x0c, "Level 1" ) \
-		PORT_DIPSETTING(    0x04, "Level 2" ) \
-		PORT_DIPSETTING(    0x00, "Level 3" ) \
-		PORT_DIPNAME( 0x03, 0x03, "Expert Difficulty" ) \
-		PORT_DIPSETTING(    0x02, "Level 0" ) \
-		PORT_DIPSETTING(    0x03, "Level 1" ) \
-		PORT_DIPSETTING(    0x01, "Level 2" ) \
-		PORT_DIPSETTING(    0x00, "Level 3" )
+		PORT_START();       /* IN 4 */ \
+		PORT_DIPNAME( 0x80, 0x80, "Score Display" );\
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x60, 0x60, DEF_STR( "Demo_Sounds") ); \
+		PORT_DIPSETTING(    0x60, "Loud" );\
+		PORT_DIPSETTING(    0x20, "Medium" );\
+		PORT_DIPSETTING(    0x40, "Low" );\
+		PORT_DIPSETTING(    0x00, "Silent" );\
+		PORT_DIPNAME( 0x10, 0x10, "Level Display" );\
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x10, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x0c, 0x0c, "Normal Difficulty" );\
+		PORT_DIPSETTING(    0x08, "Level 0" );\
+		PORT_DIPSETTING(    0x0c, "Level 1" );\
+		PORT_DIPSETTING(    0x04, "Level 2" );\
+		PORT_DIPSETTING(    0x00, "Level 3" );\
+		PORT_DIPNAME( 0x03, 0x03, "Expert Difficulty" );\
+		PORT_DIPSETTING(    0x02, "Level 0" );\
+		PORT_DIPSETTING(    0x03, "Level 1" );\
+		PORT_DIPSETTING(    0x01, "Level 2" );\
+		PORT_DIPSETTING(    0x00, "Level 3" );
 	
 	#define BEATMANIA_DSW2_OLD_LEVEL \
-		PORT_START      /* IN 4 */ \
-		PORT_DIPNAME( 0x80, 0x80, "Score Display" ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x60, 0x60, DEF_STR( Demo_Sounds ) ) \
-		PORT_DIPSETTING(    0x60, "Loud" ) \
-		PORT_DIPSETTING(    0x20, "Medium" ) \
-		PORT_DIPSETTING(    0x40, "Low" ) \
-		PORT_DIPSETTING(    0x00, "Silent" ) \
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 2-4 */ \
-		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( Difficulty ) ) \
-		PORT_DIPSETTING(    0x0a, "Level 0" ) \
-		PORT_DIPSETTING(    0x0e, "Level 1" ) \
-		PORT_DIPSETTING(    0x0d, "Level 2" ) \
-		PORT_DIPSETTING(    0x0c, "Level 3" ) \
-		PORT_DIPSETTING(    0x0b, "Level 4" ) \
-		PORT_DIPSETTING(    0x0f, "Level 5" ) \
-		PORT_DIPSETTING(    0x09, "Level 6" ) \
-		PORT_DIPSETTING(    0x08, "Level 7" ) \
-		PORT_DIPSETTING(    0x07, "Level 8" ) \
-		PORT_DIPSETTING(    0x06, "Level 9" ) \
-		PORT_DIPSETTING(    0x05, "Level 10" ) \
-		PORT_DIPSETTING(    0x04, "Level 11" ) \
-		PORT_DIPSETTING(    0x03, "Level 12" ) \
-		PORT_DIPSETTING(    0x02, "Level 13" ) \
-		PORT_DIPSETTING(    0x01, "Level 14" ) \
-		PORT_DIPSETTING(    0x00, "Level 15" )
+		PORT_START();       /* IN 4 */ \
+		PORT_DIPNAME( 0x80, 0x80, "Score Display" );\
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x60, 0x60, DEF_STR( "Demo_Sounds") ); \
+		PORT_DIPSETTING(    0x60, "Loud" );\
+		PORT_DIPSETTING(    0x20, "Medium" );\
+		PORT_DIPSETTING(    0x40, "Low" );\
+		PORT_DIPSETTING(    0x00, "Silent" );\
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 2-4 */ \
+		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Difficulty") ); \
+		PORT_DIPSETTING(    0x0a, "Level 0" );\
+		PORT_DIPSETTING(    0x0e, "Level 1" );\
+		PORT_DIPSETTING(    0x0d, "Level 2" );\
+		PORT_DIPSETTING(    0x0c, "Level 3" );\
+		PORT_DIPSETTING(    0x0b, "Level 4" );\
+		PORT_DIPSETTING(    0x0f, "Level 5" );\
+		PORT_DIPSETTING(    0x09, "Level 6" );\
+		PORT_DIPSETTING(    0x08, "Level 7" );\
+		PORT_DIPSETTING(    0x07, "Level 8" );\
+		PORT_DIPSETTING(    0x06, "Level 9" );\
+		PORT_DIPSETTING(    0x05, "Level 10" );\
+		PORT_DIPSETTING(    0x04, "Level 11" );\
+		PORT_DIPSETTING(    0x03, "Level 12" );\
+		PORT_DIPSETTING(    0x02, "Level 13" );\
+		PORT_DIPSETTING(    0x01, "Level 14" );\
+		PORT_DIPSETTING(    0x00, "Level 15" );
 	
 	#define BMCOMPMX_DSW2 \
-		PORT_START      /* IN 4 */ \
-		PORT_DIPNAME( 0x80, 0x80, "Score Display" ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x60, 0x60, DEF_STR( Demo_Sounds ) ) \
-		PORT_DIPSETTING(    0x60, "Loud" ) \
-		PORT_DIPSETTING(    0x20, "Medium" ) \
-		PORT_DIPSETTING(    0x40, "Low" ) \
-		PORT_DIPSETTING(    0x00, "Silent" ) \
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN )		/* DSW 2-4 */ \
-		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( Difficulty ) ) \
-		PORT_DIPSETTING(    0x0a, "Level 0" ) \
-		PORT_DIPSETTING(    0x0e, "Level 1" ) \
-		PORT_DIPSETTING(    0x0d, "Level 2" ) \
-		PORT_DIPSETTING(    0x0c, "Level 3" ) \
-		PORT_DIPSETTING(    0x0b, "Level 4" ) \
-		PORT_DIPSETTING(    0x0f, "Level 5" ) \
-		PORT_DIPSETTING(    0x09, "Level 6" ) \
-		PORT_DIPSETTING(    0x08, "Level 7" ) \
-		PORT_DIPSETTING(    0x07, "Level 8" ) \
-		PORT_DIPSETTING(    0x06, "Level 9" ) \
-		PORT_DIPSETTING(    0x05, "Level 10" ) \
-		PORT_DIPSETTING(    0x04, "Level 11" ) \
-		PORT_DIPSETTING(    0x03, "Level 12" ) \
-		PORT_DIPSETTING(    0x02, "Level 13" ) \
-		PORT_DIPSETTING(    0x01, "Level 14" ) \
-		PORT_DIPSETTING(    0x00, "Level 15" )
+		PORT_START();       /* IN 4 */ \
+		PORT_DIPNAME( 0x80, 0x80, "Score Display" );\
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x60, 0x60, DEF_STR( "Demo_Sounds") ); \
+		PORT_DIPSETTING(    0x60, "Loud" );\
+		PORT_DIPSETTING(    0x20, "Medium" );\
+		PORT_DIPSETTING(    0x40, "Low" );\
+		PORT_DIPSETTING(    0x00, "Silent" );\
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );	/* DSW 2-4 */ \
+		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Difficulty") ); \
+		PORT_DIPSETTING(    0x0a, "Level 0" );\
+		PORT_DIPSETTING(    0x0e, "Level 1" );\
+		PORT_DIPSETTING(    0x0d, "Level 2" );\
+		PORT_DIPSETTING(    0x0c, "Level 3" );\
+		PORT_DIPSETTING(    0x0b, "Level 4" );\
+		PORT_DIPSETTING(    0x0f, "Level 5" );\
+		PORT_DIPSETTING(    0x09, "Level 6" );\
+		PORT_DIPSETTING(    0x08, "Level 7" );\
+		PORT_DIPSETTING(    0x07, "Level 8" );\
+		PORT_DIPSETTING(    0x06, "Level 9" );\
+		PORT_DIPSETTING(    0x05, "Level 10" );\
+		PORT_DIPSETTING(    0x04, "Level 11" );\
+		PORT_DIPSETTING(    0x03, "Level 12" );\
+		PORT_DIPSETTING(    0x02, "Level 13" );\
+		PORT_DIPSETTING(    0x01, "Level 14" );\
+		PORT_DIPSETTING(    0x00, "Level 15" );
 	
 	#define BEATMANIA_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" ) \
-		PORT_DIPSETTING(    0x10, "3" ) \
-		PORT_DIPSETTING(    0x1c, "4" ) \
-		PORT_DIPSETTING(    0x08, "5" ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-5 */ \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-6 */
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" );\
+		PORT_DIPSETTING(    0x10, "3" );\
+		PORT_DIPSETTING(    0x1c, "4" );\
+		PORT_DIPSETTING(    0x08, "5" );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-5 */ \
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-6 */
 	
 	#define BM1STMIX_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x14, "Normal Mode Stages" ) \
-		PORT_DIPSETTING(    0x10, "3" ) \
-		PORT_DIPSETTING(    0x14, "4" ) \
-		PORT_DIPSETTING(    0x00, "5" ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-5 */ \
-		PORT_DIPNAME( 0x01, 0x01, "Free Hidden Songs" )		/* DSW 3-6 */ \
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x14, "Normal Mode Stages" );\
+		PORT_DIPSETTING(    0x10, "3" );\
+		PORT_DIPSETTING(    0x14, "4" );\
+		PORT_DIPSETTING(    0x00, "5" );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-5 */ \
+		PORT_DIPNAME( 0x01, 0x01, "Free Hidden Songs" );	/* DSW 3-6 */ \
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
 	#define BMCOMPMX_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" ) \
-		PORT_DIPSETTING(    0x10, "3" ) \
-		PORT_DIPSETTING(    0x1c, "4" ) \
-		PORT_DIPSETTING(    0x08, "5" ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-5 */ \
-		PORT_DIPNAME( 0x01, 0x01, "Secret Expert Course" )	/* DSW 3-6 */ \
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" );\
+		PORT_DIPSETTING(    0x10, "3" );\
+		PORT_DIPSETTING(    0x1c, "4" );\
+		PORT_DIPSETTING(    0x08, "5" );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-5 */ \
+		PORT_DIPNAME( 0x01, 0x01, "Secret Expert Course" );/* DSW 3-6 */ \
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
 	#define BM4THMIX_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" ) \
-		PORT_DIPSETTING(    0x10, "3" ) \
-		PORT_DIPSETTING(    0x1c, "4" ) \
-		PORT_DIPSETTING(    0x08, "5" ) \
-		PORT_DIPNAME( 0x02, 0x02, "Secret Expert Course" )	/* DSW 3-5 */ \
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-6 */
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" );\
+		PORT_DIPSETTING(    0x10, "3" );\
+		PORT_DIPSETTING(    0x1c, "4" );\
+		PORT_DIPSETTING(    0x08, "5" );\
+		PORT_DIPNAME( 0x02, 0x02, "Secret Expert Course" );/* DSW 3-5 */ \
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-6 */
 	
 	#define HMCOMPM2_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" ) \
-		PORT_DIPSETTING(    0x10, "3" ) \
-		PORT_DIPSETTING(    0x1c, "4" ) \
-		PORT_DIPSETTING(    0x08, "5" ) \
-		PORT_DIPNAME( 0x02, 0x02, "Game Over Mode" ) \
-		PORT_DIPSETTING(    0x02, "On Stage Middle" ) \
-		PORT_DIPSETTING(    0x00, "On Stage Last" ) \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-6 */
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x1c, "Normal Mode Stages" );\
+		PORT_DIPSETTING(    0x10, "3" );\
+		PORT_DIPSETTING(    0x1c, "4" );\
+		PORT_DIPSETTING(    0x08, "5" );\
+		PORT_DIPNAME( 0x02, 0x02, "Game Over Mode" );\
+		PORT_DIPSETTING(    0x02, "On Stage Middle" );\
+		PORT_DIPSETTING(    0x00, "On Stage Last" );\
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-6 */
 	
 	#define BMDCT_DSW3 \
-		PORT_START      /* IN 5 */ \
-		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_DIPNAME( 0x20, 0x20, "Event Mode" ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_DIPNAME( 0x1c, 0x1c, "Normal / Event Mode Stages" ) \
-		PORT_DIPSETTING(    0x0c, "3 / 1" ) \
-		PORT_DIPSETTING(    0x14, "3 / 2" ) \
-		PORT_DIPSETTING(    0x10, "4 / 3" ) \
-		PORT_DIPSETTING(    0x1c, "3 / 4" ) \
-		PORT_DIPSETTING(    0x08, "3 / 5" ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-5 */ \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* DSW 3-6 */
+		PORT_START();       /* IN 5 */ \
+		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_DIPNAME( 0x20, 0x20, "Event Mode" );\
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_DIPNAME( 0x1c, 0x1c, "Normal / Event Mode Stages" );\
+		PORT_DIPSETTING(    0x0c, "3 / 1" );\
+		PORT_DIPSETTING(    0x14, "3 / 2" );\
+		PORT_DIPSETTING(    0x10, "4 / 3" );\
+		PORT_DIPSETTING(    0x1c, "3 / 4" );\
+		PORT_DIPSETTING(    0x08, "3 / 5" );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-5 */ \
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-6 */
 	
 	
-	INPUT_PORTS_START( beatmania )
+	static InputPortPtr input_ports_beatmania = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
 		BEATMANIA_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( bm1stmix )
+	static InputPortPtr input_ports_bm1stmix = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2_OLD_LEVEL	/* IN 4 */
 		BM1STMIX_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( bmcompmx )
+	static InputPortPtr input_ports_bmcompmx = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x80, 0x3f)	/* IN 3 */
 		BMCOMPMX_DSW2			/* IN 4 */
 		BMCOMPMX_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( bm4thmix )
+	static InputPortPtr input_ports_bm4thmix = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x40, 0x3f)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
 		BM4THMIX_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( hmcompm2 )
+	static InputPortPtr input_ports_hmcompm2 = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
 		HMCOMPM2_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( bmdct )
+	static InputPortPtr input_ports_bmdct = new InputPortPtr(){ public void handler() { 
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
 		BMDCT_DSW3			/* IN 5 */
 		BEATMANIA_SCRATCH		/* IN 6 */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

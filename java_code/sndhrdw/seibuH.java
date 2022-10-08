@@ -41,9 +41,9 @@ void seibu_adpcm_decrypt(int region);
 /**************************************************************************/
 
 #define SEIBU_COIN_INPUTS											\
-	PORT_START														\
-	PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_HIGH, IPT_COIN1, 4 )			\
-	PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 4 )
+	PORT_START(); 														\
+	PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_HIGH, IPT_COIN1, 4 );		\
+	PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 4 );
 
 #define SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(freq1,freq2,region)		\
 																	\

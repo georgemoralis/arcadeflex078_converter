@@ -1,13 +1,5 @@
 package gr.codebb.arcadeflex_convertor;
 
-import static gr.codebb.arcadeflex_convertor.Convertor.inpos;
-import static gr.codebb.arcadeflex_convertor.Convertor.token;
-import static gr.codebb.arcadeflex_convertor.sUtil.getToken;
-import static gr.codebb.arcadeflex_convertor.sUtil.parseChar;
-import static gr.codebb.arcadeflex_convertor.sUtil.parseToken;
-import static gr.codebb.arcadeflex_convertor.sUtil.skipLine;
-import static gr.codebb.arcadeflex_convertor.sUtil.skipSpace;
-
 public class convertMame {
 
     public static void ConvertMame() {
@@ -25,6 +17,7 @@ public class convertMame {
     static final int PORT_WRITE8 = 4;
     static final int READ_HANDLER8 = 5;
     static final int WRITE_HANDLER8 = 6;
+    static final int INPUTPORTS = 7;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -333,9 +326,43 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (sUtil.getToken("PORT_START")) {
+                        sUtil.putString((new StringBuilder()).append("PORT_START(); ").toString());
+                        continue;
+                    }
+                    if (sUtil.getToken("PORT_DIPNAME") || sUtil.getToken("PORT_BIT") || sUtil.getToken("PORT_DIPSETTING") || sUtil.getToken("PORT_BITX") || sUtil.getToken("PORT_SERVICE") || sUtil.getToken("PORT_BIT_IMPULSE") || sUtil.getToken("PORT_ANALOG") || sUtil.getToken("PORT_ANALOGX")) {
+                        i8++;
+                        type2 = INPUTPORTS;
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() == '(') {
+                            Convertor.inpos = i;
+                        }
+                    }
                     Convertor.inpos = i;
                     break;
                 }
+                case 'I':
+                    int j = Convertor.inpos;
+                    if (sUtil.getToken("INPUT_PORTS_START")) {
+                        if (sUtil.parseChar() != '(') {
+                            Convertor.inpos = j;
+                            break;
+                        }
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ')') {
+                            Convertor.inpos = j;
+                            break;
+                        }
+                        sUtil.putString((new StringBuilder()).append("static InputPortPtr input_ports_").append(Convertor.token[0]).append(" = new InputPortPtr(){ public void handler() { ").toString());
+                    }
+                    if (sUtil.getToken("INPUT_PORTS_END")) {
+                        sUtil.putString((new StringBuilder()).append("INPUT_PORTS_END(); }}; ").toString());
+                        continue;
+                    }
+
+                    break;
                 case '&': {
                     if (type == MEMORY_READ8 || type == MEMORY_WRITE8 || type == PORT_READ8 || type == PORT_WRITE8) {
                         Convertor.inpos += 1;
@@ -343,6 +370,33 @@ public class convertMame {
                     }
                     break;
                 }
+                case ')': {
+                    if (type2 == INPUTPORTS) {
+                        i8--;
+                        Convertor.outbuf[(Convertor.outpos++)] = ')';
+                        Convertor.outbuf[(Convertor.outpos++)] = ';';
+                        Convertor.inpos += 2;
+                        if (sUtil.getChar() == ')') {
+                            Convertor.inpos += 1;
+                        }
+                        type2 = -1;
+                        continue;
+                    }
+                }
+                break;
+                case 'D':
+                    if (type2 == INPUTPORTS) {
+                        if (sUtil.getToken("DEF_STR(")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.putString((new StringBuilder()).append("DEF_STR( \"").append(Convertor.token[0]).append("\")").toString());
+                            i3 = -1;
+
+                            continue;
+                        }
+
+                    }
+                    break;
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

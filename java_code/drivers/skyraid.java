@@ -148,68 +148,68 @@ public class skyraid
 	};
 	
 	
-	INPUT_PORTS_START( skyraid )
-		PORT_START
-		PORT_DIPNAME( 0x30, 0x00, "Language" )
-		PORT_DIPSETTING(    0x00, "English" )
-		PORT_DIPSETTING(    0x10, "French" )
-		PORT_DIPSETTING(    0x20, "German" )
-		PORT_DIPSETTING(    0x30, "Spanish" )
-		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_UNUSED) /* POT1 */
-		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNUSED) /* POT0 */
+	static InputPortPtr input_ports_skyraid = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_DIPNAME( 0x30, 0x00, "Language" );
+		PORT_DIPSETTING(    0x00, "English" );
+		PORT_DIPSETTING(    0x10, "French" );
+		PORT_DIPSETTING(    0x20, "German" );
+		PORT_DIPSETTING(    0x30, "Spanish" );
+		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_UNUSED);/* POT1 */
+		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNUSED);/* POT0 */
 	
-		PORT_START
-		PORT_DIPNAME( 0x30, 0x10, "Play Time" )
-		PORT_DIPSETTING(    0x00, "60 Seconds" )
-		PORT_DIPSETTING(    0x10, "80 Seconds" )
-		PORT_DIPSETTING(    0x20, "100 Seconds" )
-		PORT_DIPSETTING(    0x30, "120 Seconds" )
-		PORT_DIPNAME( 0x40, 0x40, "DIP #5" )	/* must be OFF */
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ))
-		PORT_DIPSETTING(    0x00, DEF_STR( On ))
-		PORT_DIPNAME( 0x80, 0x00, "Extended Play" )
-		PORT_DIPSETTING(    0x80, DEF_STR( No ))
-		PORT_DIPSETTING(    0x00, DEF_STR( Yes ))
+		PORT_START(); 
+		PORT_DIPNAME( 0x30, 0x10, "Play Time" );
+		PORT_DIPSETTING(    0x00, "60 Seconds" );
+		PORT_DIPSETTING(    0x10, "80 Seconds" );
+		PORT_DIPSETTING(    0x20, "100 Seconds" );
+		PORT_DIPSETTING(    0x30, "120 Seconds" );
+		PORT_DIPNAME( 0x40, 0x40, "DIP #5" );/* must be OFF */
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x00, "Extended Play" );
+		PORT_DIPSETTING(    0x80, DEF_STR( "No") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	
 		/* coinage settings are insane, refer to the manual */
 	
-		PORT_START
-		PORT_DIPNAME( 0x0F, 0x01, DEF_STR( Coinage )) /* dial */
-		PORT_DIPSETTING(    0x00, "Mode 0" )
-		PORT_DIPSETTING(    0x01, "Mode 1" )
-		PORT_DIPSETTING(    0x02, "Mode 2" )
-		PORT_DIPSETTING(    0x03, "Mode 3" )
-		PORT_DIPSETTING(    0x04, "Mode 4" )
-		PORT_DIPSETTING(    0x05, "Mode 5" )
-		PORT_DIPSETTING(    0x06, "Mode 6" )
-		PORT_DIPSETTING(    0x07, "Mode 7" )
-		PORT_DIPSETTING(    0x08, "Mode 8" )
-		PORT_DIPSETTING(    0x09, "Mode 9" )
-		PORT_DIPSETTING(    0x0A, "Mode A" )
-		PORT_DIPSETTING(    0x0B, "Mode B" )
-		PORT_DIPSETTING(    0x0C, "Mode C" )
-		PORT_DIPSETTING(    0x0D, "Mode D" )
-		PORT_DIPSETTING(    0x0E, "Mode E" )
-		PORT_DIPSETTING(    0x0F, "Mode F" )
-		PORT_DIPNAME( 0x10, 0x10, "Score for Extended Play" )
-		PORT_DIPSETTING(    0x00, "Low" )
-		PORT_DIPSETTING(    0x10, "High" )
-		PORT_BIT (0x20, IP_ACTIVE_LOW, IPT_BUTTON1)
-		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_COIN1)
-		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_COIN2)
+		PORT_START(); 
+		PORT_DIPNAME( 0x0F, 0x01, DEF_STR( "Coinage") ); /* dial */
+		PORT_DIPSETTING(    0x00, "Mode 0" );
+		PORT_DIPSETTING(    0x01, "Mode 1" );
+		PORT_DIPSETTING(    0x02, "Mode 2" );
+		PORT_DIPSETTING(    0x03, "Mode 3" );
+		PORT_DIPSETTING(    0x04, "Mode 4" );
+		PORT_DIPSETTING(    0x05, "Mode 5" );
+		PORT_DIPSETTING(    0x06, "Mode 6" );
+		PORT_DIPSETTING(    0x07, "Mode 7" );
+		PORT_DIPSETTING(    0x08, "Mode 8" );
+		PORT_DIPSETTING(    0x09, "Mode 9" );
+		PORT_DIPSETTING(    0x0A, "Mode A" );
+		PORT_DIPSETTING(    0x0B, "Mode B" );
+		PORT_DIPSETTING(    0x0C, "Mode C" );
+		PORT_DIPSETTING(    0x0D, "Mode D" );
+		PORT_DIPSETTING(    0x0E, "Mode E" );
+		PORT_DIPSETTING(    0x0F, "Mode F" );
+		PORT_DIPNAME( 0x10, 0x10, "Score for Extended Play" );
+		PORT_DIPSETTING(    0x00, "Low" );
+		PORT_DIPSETTING(    0x10, "High" );
+		PORT_BIT (0x20, IP_ACTIVE_LOW, IPT_BUTTON1);
+		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_COIN1);
+		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_COIN2);
 	
-		PORT_START
-		PORT_BIT (0x10, IP_ACTIVE_LOW, IPT_TILT)
-		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_BUTTON7, "Hiscore Reset", KEYCODE_H, IP_JOY_DEFAULT)
-		PORT_BIT (0x40, IP_ACTIVE_LOW, IPT_START1)
-		PORT_SERVICE(0x80, IP_ACTIVE_LOW)
+		PORT_START(); 
+		PORT_BIT (0x10, IP_ACTIVE_LOW, IPT_TILT);
+		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_BUTTON7, "Hiscore Reset", KEYCODE_H, IP_JOY_DEFAULT);
+		PORT_BIT (0x40, IP_ACTIVE_LOW, IPT_START1);
+		PORT_SERVICE(0x80, IP_ACTIVE_LOW);
 	
-		PORT_START
-		PORT_ANALOG( 0x3f, 0x20, IPT_AD_STICK_Y | IPF_REVERSE, 10, 10, 0, 63 )
+		PORT_START(); 
+		PORT_ANALOG( 0x3f, 0x20, IPT_AD_STICK_Y | IPF_REVERSE, 10, 10, 0, 63 );
 	
-		PORT_START
-		PORT_ANALOG( 0x3f, 0x20, IPT_AD_STICK_X, 10, 10, 0, 63 )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_ANALOG( 0x3f, 0x20, IPT_AD_STICK_X, 10, 10, 0, 63 );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout skyraid_text_layout =

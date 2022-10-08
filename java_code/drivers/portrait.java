@@ -158,89 +158,89 @@ public class portrait
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	INPUT_PORTS_START( portrait )
-		PORT_START		/* IN 0 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_TILT )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START2 )
+	static InputPortPtr input_ports_portrait = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* IN 0 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_TILT );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START2 );
 	
-		PORT_START      /* IN 1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON2 )	/*camera status ready flag?*/
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START();       /* IN 1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON2 );/*camera status ready flag?*/
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START       /* DSW 1 */				//Most (but not all) verified and correct!
-		PORT_DIPNAME( 0x0f, 0x07, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x07, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x01, "1 Coin / 10 Credits" )
-		PORT_DIPSETTING(    0x00, "1 Coin / 12 Credits" )
-		PORT_DIPSETTING(    0x0f, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x0b, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x0a, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x09, DEF_STR( 2C_5C ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( 2C_7C ) )
-		PORT_DIPSETTING(    0x0e, "3 Coins / 5 Credits" )
-		PORT_DIPSETTING(    0x0d, "3 Coins / 7 Credits" )
-		PORT_DIPSETTING(    0x0c, "3 Coins / 10 Credits" )
-		PORT_DIPNAME( 0x70, 0x20, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0x30, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x00, "1 Coin / 10 Credits" )
-		PORT_DIPSETTING(    0x70, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x60, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x50, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_5C ) )
-		PORT_DIPNAME( 0x80, 0x80, "Collision during photo" )
-		PORT_DIPSETTING(    0x80, "Easy" )
-		PORT_DIPSETTING(    0x00, "Difficult" )
+		PORT_START();        /* DSW 1 */				//Most (but not all) verified and correct!
+		PORT_DIPNAME( 0x0f, 0x07, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x07, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x01, "1 Coin / 10 Credits" );
+		PORT_DIPSETTING(    0x00, "1 Coin / 12 Credits" );
+		PORT_DIPSETTING(    0x0f, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x0b, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x0a, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x09, DEF_STR( "2C_5C") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "2C_7C") );
+		PORT_DIPSETTING(    0x0e, "3 Coins / 5 Credits" );
+		PORT_DIPSETTING(    0x0d, "3 Coins / 7 Credits" );
+		PORT_DIPSETTING(    0x0c, "3 Coins / 10 Credits" );
+		PORT_DIPNAME( 0x70, 0x20, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0x30, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x00, "1 Coin / 10 Credits" );
+		PORT_DIPSETTING(    0x70, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x60, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x50, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_5C") );
+		PORT_DIPNAME( 0x80, 0x80, "Collision during photo" );
+		PORT_DIPSETTING(    0x80, "Easy" );
+		PORT_DIPSETTING(    0x00, "Difficult" );
 	
-		PORT_START      /* DSW 2 */						//Verified to be correct (from attract mode at least)
-		PORT_DIPNAME( 0x01, 0x01, "Game Play" )
-		PORT_DIPSETTING(    0x01, "Normal Play" )
-		PORT_DIPSETTING(    0x00, "Freeplay (255 Cameras)" )
-		PORT_DIPNAME( 0x02, 0x00, "High Score" )
-		PORT_DIPSETTING(    0x02, "11.350 Points" )
-		PORT_DIPSETTING(    0x00, "1.350 Points" )
-		PORT_DIPNAME( 0x0c, 0x00, "Mistakes Allowed" )
-		PORT_DIPSETTING(    0x0c, "2" )
-		PORT_DIPSETTING(    0x08, "3" )
-		PORT_DIPSETTING(    0x04, "4" )
-		PORT_DIPSETTING(    0x00, "5" )
-		PORT_DIPNAME( 0x30, 0x00, "Extra Camera" )
-		PORT_DIPSETTING(    0x30, "No Action" )
-		PORT_DIPSETTING(    0x20, "10.000 Points" )
-		PORT_DIPSETTING(    0x10, "20.000 Points" )
-		PORT_DIPSETTING(    0x00, "30.000 Points" )
-		PORT_DIPNAME( 0x40, 0x40, "Slow Ostrich" )
-		PORT_DIPSETTING(    0x40, "Easy Game" )
-		PORT_DIPSETTING(    0x00, "Difficult" )
-		PORT_DIPNAME( 0x80, 0x80, "Obstacles" )
-		PORT_DIPSETTING(    0x00, "Easy Game" )
-		PORT_DIPSETTING(    0x80, "Difficult" )
+		PORT_START();       /* DSW 2 */						//Verified to be correct (from attract mode at least)
+		PORT_DIPNAME( 0x01, 0x01, "Game Play" );
+		PORT_DIPSETTING(    0x01, "Normal Play" );
+		PORT_DIPSETTING(    0x00, "Freeplay (255 Cameras); )
+		PORT_DIPNAME( 0x02, 0x00, "High Score" );
+		PORT_DIPSETTING(    0x02, "11.350 Points" );
+		PORT_DIPSETTING(    0x00, "1.350 Points" );
+		PORT_DIPNAME( 0x0c, 0x00, "Mistakes Allowed" );
+		PORT_DIPSETTING(    0x0c, "2" );
+		PORT_DIPSETTING(    0x08, "3" );
+		PORT_DIPSETTING(    0x04, "4" );
+		PORT_DIPSETTING(    0x00, "5" );
+		PORT_DIPNAME( 0x30, 0x00, "Extra Camera" );
+		PORT_DIPSETTING(    0x30, "No Action" );
+		PORT_DIPSETTING(    0x20, "10.000 Points" );
+		PORT_DIPSETTING(    0x10, "20.000 Points" );
+		PORT_DIPSETTING(    0x00, "30.000 Points" );
+		PORT_DIPNAME( 0x40, 0x40, "Slow Ostrich" );
+		PORT_DIPSETTING(    0x40, "Easy Game" );
+		PORT_DIPSETTING(    0x00, "Difficult" );
+		PORT_DIPNAME( 0x80, 0x80, "Obstacles" );
+		PORT_DIPSETTING(    0x00, "Easy Game" );
+		PORT_DIPSETTING(    0x80, "Difficult" );
 	
 		/*Make the cabinet service switches fake dips*/
-		PORT_START      /* DSW 3 */
-		PORT_DIPNAME( 0x01, 0x00, "Service Switch 1" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x00, "Service Switch 2" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( On ) )
-	INPUT_PORTS_END
+		PORT_START();       /* DSW 3 */
+		PORT_DIPNAME( 0x01, 0x00, "Service Switch 1" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x00, "Service Switch 2" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct DACinterface dac_interface =
 	{

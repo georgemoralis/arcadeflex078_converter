@@ -445,299 +445,299 @@ public class tehkanwc
 	
 	
 	
-	INPUT_PORTS_START( tehkanwc )
-		PORT_START /* DSW1 - Active LOW */
-		PORT_DIPNAME( 0x07, 0x07, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING (   0x01, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x07, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING (   0x06, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING (   0x05, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING (   0x04, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING (   0x03, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING (   0x02, DEF_STR( 1C_6C ) )
-		PORT_DIPNAME( 0x38, 0x38, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING (   0x08, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x38, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING (   0x30, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING (   0x28, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING (   0x20, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING (   0x18, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING (   0x10, DEF_STR( 1C_6C ) )
-		PORT_DIPNAME( 0xc0, 0xc0, "Start Credits (P1&P2)/Extra" )
-		PORT_DIPSETTING (   0x80, "1&1/200%" )
-		PORT_DIPSETTING (   0xc0, "1&2/100%" )
-		PORT_DIPSETTING (   0x40, "2&2/100%" )
-		PORT_DIPSETTING (   0x00, "2&3/67%" )
+	static InputPortPtr input_ports_tehkanwc = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW1 - Active LOW */
+		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING (   0x01, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x07, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING (   0x06, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING (   0x05, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING (   0x04, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING (   0x03, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING (   0x02, DEF_STR( "1C_6C") );
+		PORT_DIPNAME( 0x38, 0x38, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING (   0x08, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x38, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING (   0x30, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING (   0x28, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING (   0x20, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING (   0x18, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING (   0x10, DEF_STR( "1C_6C") );
+		PORT_DIPNAME( 0xc0, 0xc0, "Start Credits (P1&P2);Extra" )
+		PORT_DIPSETTING (   0x80, "1&1/200%" );
+		PORT_DIPSETTING (   0xc0, "1&2/100%" );
+		PORT_DIPSETTING (   0x40, "2&2/100%" );
+		PORT_DIPSETTING (   0x00, "2&3/67%" );
 	
-		PORT_START /* DSW2 - Active LOW */
-		PORT_DIPNAME( 0x03, 0x03, "1P Game Time" )
-		PORT_DIPSETTING (   0x00, "2:30" )
-		PORT_DIPSETTING (   0x01, "2:00" )
-		PORT_DIPSETTING (   0x03, "1:30" )
-		PORT_DIPSETTING (   0x02, "1:00" )
-		PORT_DIPNAME( 0x7c, 0x7c, "2P Game Time" )
-		PORT_DIPSETTING (   0x00, "5:00/3:00 Extra" )
-		PORT_DIPSETTING (   0x60, "5:00/2:45 Extra" )
-		PORT_DIPSETTING (   0x20, "5:00/2:35 Extra" )
-		PORT_DIPSETTING (   0x40, "5:00/2:30 Extra" )
-		PORT_DIPSETTING (   0x04, "4:00/2:30 Extra" )
-		PORT_DIPSETTING (   0x64, "4:00/2:15 Extra" )
-		PORT_DIPSETTING (   0x24, "4:00/2:05 Extra" )
-		PORT_DIPSETTING (   0x44, "4:00/2:00 Extra" )
-		PORT_DIPSETTING (   0x1c, "3:30/2:15 Extra" )
-		PORT_DIPSETTING (   0x7c, "3:30/2:00 Extra" )
-		PORT_DIPSETTING (   0x3c, "3:30/1:50 Extra" )
-		PORT_DIPSETTING (   0x5c, "3:30/1:45 Extra" )
-		PORT_DIPSETTING (   0x08, "3:00/2:00 Extra" )
-		PORT_DIPSETTING (   0x68, "3:00/1:45 Extra" )
-		PORT_DIPSETTING (   0x28, "3:00/1:35 Extra" )
-		PORT_DIPSETTING (   0x48, "3:00/1:30 Extra" )
-		PORT_DIPSETTING (   0x0c, "2:30/1:45 Extra" )
-		PORT_DIPSETTING (   0x6c, "2:30/1:30 Extra" )
-		PORT_DIPSETTING (   0x2c, "2:30/1:20 Extra" )
-		PORT_DIPSETTING (   0x4c, "2:30/1:15 Extra" )
-		PORT_DIPSETTING (   0x10, "2:00/1:30 Extra" )
-		PORT_DIPSETTING (   0x70, "2:00/1:15 Extra" )
-		PORT_DIPSETTING (   0x30, "2:00/1:05 Extra" )
-		PORT_DIPSETTING (   0x50, "2:00/1:00 Extra" )
-		PORT_DIPSETTING (   0x14, "1:30/1:15 Extra" )
-		PORT_DIPSETTING (   0x74, "1:30/1:00 Extra" )
-		PORT_DIPSETTING (   0x34, "1:30/0:50 Extra" )
-		PORT_DIPSETTING (   0x54, "1:30/0:45 Extra" )
-		PORT_DIPSETTING (   0x18, "1:00/1:00 Extra" )
-		PORT_DIPSETTING (   0x78, "1:00/0:45 Extra" )
-		PORT_DIPSETTING (   0x38, "1:00/0:35 Extra" )
-		PORT_DIPSETTING (   0x58, "1:00/0:30 Extra" )
-		PORT_DIPNAME( 0x80, 0x80, "Game Type" )
-		PORT_DIPSETTING (   0x80, "Timer In" )
-		PORT_DIPSETTING (   0x00, "Credit In" )
+		PORT_START();  /* DSW2 - Active LOW */
+		PORT_DIPNAME( 0x03, 0x03, "1P Game Time" );
+		PORT_DIPSETTING (   0x00, "2:30" );
+		PORT_DIPSETTING (   0x01, "2:00" );
+		PORT_DIPSETTING (   0x03, "1:30" );
+		PORT_DIPSETTING (   0x02, "1:00" );
+		PORT_DIPNAME( 0x7c, 0x7c, "2P Game Time" );
+		PORT_DIPSETTING (   0x00, "5:00/3:00 Extra" );
+		PORT_DIPSETTING (   0x60, "5:00/2:45 Extra" );
+		PORT_DIPSETTING (   0x20, "5:00/2:35 Extra" );
+		PORT_DIPSETTING (   0x40, "5:00/2:30 Extra" );
+		PORT_DIPSETTING (   0x04, "4:00/2:30 Extra" );
+		PORT_DIPSETTING (   0x64, "4:00/2:15 Extra" );
+		PORT_DIPSETTING (   0x24, "4:00/2:05 Extra" );
+		PORT_DIPSETTING (   0x44, "4:00/2:00 Extra" );
+		PORT_DIPSETTING (   0x1c, "3:30/2:15 Extra" );
+		PORT_DIPSETTING (   0x7c, "3:30/2:00 Extra" );
+		PORT_DIPSETTING (   0x3c, "3:30/1:50 Extra" );
+		PORT_DIPSETTING (   0x5c, "3:30/1:45 Extra" );
+		PORT_DIPSETTING (   0x08, "3:00/2:00 Extra" );
+		PORT_DIPSETTING (   0x68, "3:00/1:45 Extra" );
+		PORT_DIPSETTING (   0x28, "3:00/1:35 Extra" );
+		PORT_DIPSETTING (   0x48, "3:00/1:30 Extra" );
+		PORT_DIPSETTING (   0x0c, "2:30/1:45 Extra" );
+		PORT_DIPSETTING (   0x6c, "2:30/1:30 Extra" );
+		PORT_DIPSETTING (   0x2c, "2:30/1:20 Extra" );
+		PORT_DIPSETTING (   0x4c, "2:30/1:15 Extra" );
+		PORT_DIPSETTING (   0x10, "2:00/1:30 Extra" );
+		PORT_DIPSETTING (   0x70, "2:00/1:15 Extra" );
+		PORT_DIPSETTING (   0x30, "2:00/1:05 Extra" );
+		PORT_DIPSETTING (   0x50, "2:00/1:00 Extra" );
+		PORT_DIPSETTING (   0x14, "1:30/1:15 Extra" );
+		PORT_DIPSETTING (   0x74, "1:30/1:00 Extra" );
+		PORT_DIPSETTING (   0x34, "1:30/0:50 Extra" );
+		PORT_DIPSETTING (   0x54, "1:30/0:45 Extra" );
+		PORT_DIPSETTING (   0x18, "1:00/1:00 Extra" );
+		PORT_DIPSETTING (   0x78, "1:00/0:45 Extra" );
+		PORT_DIPSETTING (   0x38, "1:00/0:35 Extra" );
+		PORT_DIPSETTING (   0x58, "1:00/0:30 Extra" );
+		PORT_DIPNAME( 0x80, 0x80, "Game Type" );
+		PORT_DIPSETTING (   0x80, "Timer In" );
+		PORT_DIPSETTING (   0x00, "Credit In" );
 	
-		PORT_START /* DSW3 - Active LOW */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING (   0x02, "Easy" )
-		PORT_DIPSETTING (   0x03, "Normal" )
-		PORT_DIPSETTING (   0x01, "Hard" )
-		PORT_DIPSETTING (   0x00, "Very Hard" )
-		PORT_DIPNAME( 0x04, 0x04, "Timer Speed" )
-		PORT_DIPSETTING (   0x04, "60/60" )
-		PORT_DIPSETTING (   0x00, "55/60" )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x08, DEF_STR( On ) )
+		PORT_START();  /* DSW3 - Active LOW */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING (   0x02, "Easy" );
+		PORT_DIPSETTING (   0x03, "Normal" );
+		PORT_DIPSETTING (   0x01, "Hard" );
+		PORT_DIPSETTING (   0x00, "Very Hard" );
+		PORT_DIPNAME( 0x04, 0x04, "Timer Speed" );
+		PORT_DIPSETTING (   0x04, "60/60" );
+		PORT_DIPSETTING (   0x00, "55/60" );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x08, DEF_STR( "On") );
 	
-		PORT_START /* IN0 - X AXIS */
-		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE )
+		PORT_START();  /* IN0 - X AXIS */
+		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE );
 	
-		PORT_START /* IN0 - Y AXIS */
-		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE )
+		PORT_START();  /* IN0 - Y AXIS */
+		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE );
 	
-		PORT_START /* IN0 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
+		PORT_START();  /* IN0 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 	
-		PORT_START /* IN1 - X AXIS */
-		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE )
+		PORT_START();  /* IN1 - X AXIS */
+		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE );
 	
-		PORT_START /* IN1 - Y AXIS */
-		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE )
+		PORT_START();  /* IN1 - Y AXIS */
+		PORT_ANALOGX( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 0, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE );
 	
-		PORT_START /* IN1 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
+		PORT_START();  /* IN1 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	
-		PORT_START /* IN2 - Active LOW */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
+		PORT_START();  /* IN2 - Active LOW */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
 	
-		PORT_START	/* fake port to emulate trackballs with keyboard */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 )
-	INPUT_PORTS_END
+		PORT_START(); 	/* fake port to emulate trackballs with keyboard */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( gridiron )
-		PORT_START /* DSW1 - Active LOW */
-		PORT_DIPNAME( 0x03, 0x03, "Start Credits (P1&P2)/Extra" )
-		PORT_DIPSETTING (   0x01, "1&1/200%" )
-		PORT_DIPSETTING (   0x03, "1&2/100%" )
-	//	PORT_DIPSETTING (   0x00, "2&1/200%" )				// Is this setting possible ?
-		PORT_DIPSETTING (   0x02, "2&2/100%" )
+	static InputPortPtr input_ports_gridiron = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW1 - Active LOW */
+		PORT_DIPNAME( 0x03, 0x03, "Start Credits (P1&P2);Extra" )
+		PORT_DIPSETTING (   0x01, "1&1/200%" );
+		PORT_DIPSETTING (   0x03, "1&2/100%" );
+	//	PORT_DIPSETTING (   0x00, "2&1/200%" );			// Is this setting possible ?
+		PORT_DIPSETTING (   0x02, "2&2/100%" );
 		/* This Dip Switch only has an effect in a 2 players game.
 		   If offense player selects his formation before defense player,
 		   defense formation time will be set to 3, 5 or 7 seconds.
 		   Check code at 0x3ed9 and table at 0x3f89. */
-		PORT_DIPNAME( 0x0c, 0x0c, "Formation Time (Defense)" )
-		PORT_DIPSETTING (   0x0c, "Same as Offense" )
-		PORT_DIPSETTING (   0x00, "7" )
-		PORT_DIPSETTING (   0x08, "5" )
-		PORT_DIPSETTING (   0x04, "3" )
-		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" )
-		PORT_DIPSETTING (   0x30, "60/60" )
-		PORT_DIPSETTING (   0x00, "57/60" )
-		PORT_DIPSETTING (   0x10, "54/60" )
-		PORT_DIPSETTING (   0x20, "50/60" )
-		PORT_DIPNAME( 0xc0, 0xc0, "Formation Time (Offense)" )
-		PORT_DIPSETTING (   0x00, "25" )
-		PORT_DIPSETTING (   0x40, "20" )
-		PORT_DIPSETTING (   0xc0, "15" )
-		PORT_DIPSETTING (   0x80, "10" )
+		PORT_DIPNAME( 0x0c, 0x0c, "Formation Time (Defense); )
+		PORT_DIPSETTING (   0x0c, "Same as Offense" );
+		PORT_DIPSETTING (   0x00, "7" );
+		PORT_DIPSETTING (   0x08, "5" );
+		PORT_DIPSETTING (   0x04, "3" );
+		PORT_DIPNAME( 0x30, 0x30, "Timer Speed" );
+		PORT_DIPSETTING (   0x30, "60/60" );
+		PORT_DIPSETTING (   0x00, "57/60" );
+		PORT_DIPSETTING (   0x10, "54/60" );
+		PORT_DIPSETTING (   0x20, "50/60" );
+		PORT_DIPNAME( 0xc0, 0xc0, "Formation Time (Offense); )
+		PORT_DIPSETTING (   0x00, "25" );
+		PORT_DIPSETTING (   0x40, "20" );
+		PORT_DIPSETTING (   0xc0, "15" );
+		PORT_DIPSETTING (   0x80, "10" );
 	
-		PORT_START /* DSW2 - Active LOW */
-		PORT_DIPNAME( 0x03, 0x03, "1P Game Time" )
-		PORT_DIPSETTING (   0x00, "2:30" )
-		PORT_DIPSETTING (   0x01, "2:00" )
-		PORT_DIPSETTING (   0x03, "1:30" )
-		PORT_DIPSETTING (   0x02, "1:00" )
-		PORT_DIPNAME( 0x7c, 0x7c, "2P Game Time" )
-		PORT_DIPSETTING (   0x60, "5:00/3:00 Extra" )
-		PORT_DIPSETTING (   0x00, "5:00/2:45 Extra" )
-		PORT_DIPSETTING (   0x20, "5:00/2:35 Extra" )
-		PORT_DIPSETTING (   0x40, "5:00/2:30 Extra" )
-		PORT_DIPSETTING (   0x64, "4:00/2:30 Extra" )
-		PORT_DIPSETTING (   0x04, "4:00/2:15 Extra" )
-		PORT_DIPSETTING (   0x24, "4:00/2:05 Extra" )
-		PORT_DIPSETTING (   0x44, "4:00/2:00 Extra" )
-		PORT_DIPSETTING (   0x68, "3:30/2:15 Extra" )
-		PORT_DIPSETTING (   0x08, "3:30/2:00 Extra" )
-		PORT_DIPSETTING (   0x28, "3:30/1:50 Extra" )
-		PORT_DIPSETTING (   0x48, "3:30/1:45 Extra" )
-		PORT_DIPSETTING (   0x6c, "3:00/2:00 Extra" )
-		PORT_DIPSETTING (   0x0c, "3:00/1:45 Extra" )
-		PORT_DIPSETTING (   0x2c, "3:00/1:35 Extra" )
-		PORT_DIPSETTING (   0x4c, "3:00/1:30 Extra" )
-		PORT_DIPSETTING (   0x7c, "2:30/1:45 Extra" )
-		PORT_DIPSETTING (   0x1c, "2:30/1:30 Extra" )
-		PORT_DIPSETTING (   0x3c, "2:30/1:20 Extra" )
-		PORT_DIPSETTING (   0x5c, "2:30/1:15 Extra" )
-		PORT_DIPSETTING (   0x70, "2:00/1:30 Extra" )
-		PORT_DIPSETTING (   0x10, "2:00/1:15 Extra" )
-		PORT_DIPSETTING (   0x30, "2:00/1:05 Extra" )
-		PORT_DIPSETTING (   0x50, "2:00/1:00 Extra" )
-		PORT_DIPSETTING (   0x74, "1:30/1:15 Extra" )
-		PORT_DIPSETTING (   0x14, "1:30/1:00 Extra" )
-		PORT_DIPSETTING (   0x34, "1:30/0:50 Extra" )
-		PORT_DIPSETTING (   0x54, "1:30/0:45 Extra" )
-		PORT_DIPSETTING (   0x78, "1:00/1:00 Extra" )
-		PORT_DIPSETTING (   0x18, "1:00/0:45 Extra" )
-		PORT_DIPSETTING (   0x38, "1:00/0:35 Extra" )
-		PORT_DIPSETTING (   0x58, "1:00/0:30 Extra" )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Demo_Sounds ) )		// Check code at 0x14b4
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x80, DEF_STR( On ) )
+		PORT_START();  /* DSW2 - Active LOW */
+		PORT_DIPNAME( 0x03, 0x03, "1P Game Time" );
+		PORT_DIPSETTING (   0x00, "2:30" );
+		PORT_DIPSETTING (   0x01, "2:00" );
+		PORT_DIPSETTING (   0x03, "1:30" );
+		PORT_DIPSETTING (   0x02, "1:00" );
+		PORT_DIPNAME( 0x7c, 0x7c, "2P Game Time" );
+		PORT_DIPSETTING (   0x60, "5:00/3:00 Extra" );
+		PORT_DIPSETTING (   0x00, "5:00/2:45 Extra" );
+		PORT_DIPSETTING (   0x20, "5:00/2:35 Extra" );
+		PORT_DIPSETTING (   0x40, "5:00/2:30 Extra" );
+		PORT_DIPSETTING (   0x64, "4:00/2:30 Extra" );
+		PORT_DIPSETTING (   0x04, "4:00/2:15 Extra" );
+		PORT_DIPSETTING (   0x24, "4:00/2:05 Extra" );
+		PORT_DIPSETTING (   0x44, "4:00/2:00 Extra" );
+		PORT_DIPSETTING (   0x68, "3:30/2:15 Extra" );
+		PORT_DIPSETTING (   0x08, "3:30/2:00 Extra" );
+		PORT_DIPSETTING (   0x28, "3:30/1:50 Extra" );
+		PORT_DIPSETTING (   0x48, "3:30/1:45 Extra" );
+		PORT_DIPSETTING (   0x6c, "3:00/2:00 Extra" );
+		PORT_DIPSETTING (   0x0c, "3:00/1:45 Extra" );
+		PORT_DIPSETTING (   0x2c, "3:00/1:35 Extra" );
+		PORT_DIPSETTING (   0x4c, "3:00/1:30 Extra" );
+		PORT_DIPSETTING (   0x7c, "2:30/1:45 Extra" );
+		PORT_DIPSETTING (   0x1c, "2:30/1:30 Extra" );
+		PORT_DIPSETTING (   0x3c, "2:30/1:20 Extra" );
+		PORT_DIPSETTING (   0x5c, "2:30/1:15 Extra" );
+		PORT_DIPSETTING (   0x70, "2:00/1:30 Extra" );
+		PORT_DIPSETTING (   0x10, "2:00/1:15 Extra" );
+		PORT_DIPSETTING (   0x30, "2:00/1:05 Extra" );
+		PORT_DIPSETTING (   0x50, "2:00/1:00 Extra" );
+		PORT_DIPSETTING (   0x74, "1:30/1:15 Extra" );
+		PORT_DIPSETTING (   0x14, "1:30/1:00 Extra" );
+		PORT_DIPSETTING (   0x34, "1:30/0:50 Extra" );
+		PORT_DIPSETTING (   0x54, "1:30/0:45 Extra" );
+		PORT_DIPSETTING (   0x78, "1:00/1:00 Extra" );
+		PORT_DIPSETTING (   0x18, "1:00/0:45 Extra" );
+		PORT_DIPSETTING (   0x38, "1:00/0:35 Extra" );
+		PORT_DIPSETTING (   0x58, "1:00/0:30 Extra" );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Demo_Sounds") );		// Check code at 0x14b4
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START /* no DSW3 */
-		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED )
+		PORT_START();  /* no DSW3 */
+		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START /* IN0 - X AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 63, 0, 0 )
+		PORT_START();  /* IN0 - X AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 63, 0, 0 );
 	
-		PORT_START /* IN0 - Y AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 63, 0, 0 )
+		PORT_START();  /* IN0 - Y AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 63, 0, 0 );
 	
-		PORT_START /* IN0 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
+		PORT_START();  /* IN0 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 	
-		PORT_START /* IN1 - X AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 63, 0, 0 )
+		PORT_START();  /* IN1 - X AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 63, 0, 0 );
 	
-		PORT_START /* IN1 - Y AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 63, 0, 0 )
+		PORT_START();  /* IN1 - Y AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 63, 0, 0 );
 	
-		PORT_START /* IN1 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
+		PORT_START();  /* IN1 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	
-		PORT_START /* IN2 - Active LOW */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
+		PORT_START();  /* IN2 - Active LOW */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
 	
-		PORT_START	/* no fake port here */
-		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 	/* no fake port here */
+		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( teedoff )
-		PORT_START /* DSW1 - Active LOW */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING (   0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x03, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING (   0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 1C_3C ) )
-		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING (   0x08, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING (   0x0c, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING (   0x04, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING (   0x00, DEF_STR( 1C_3C ) )
-		PORT_DIPNAME( 0x30, 0x30, "Balls" )
-		PORT_DIPSETTING (   0x30, "5" )
-		PORT_DIPSETTING (   0x20, "6" )
-		PORT_DIPSETTING (   0x10, "7" )
-		PORT_DIPSETTING (   0x00, "8" )
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Cabinet ) )			// Check code at 0x0c5c
-		PORT_DIPSETTING (   0x00, DEF_STR( Upright ) )
-		PORT_DIPSETTING (   0x40, DEF_STR( Cocktail ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Demo_Sounds ) )		// Check code at 0x5dd0
-		PORT_DIPSETTING (   0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING (   0x80, DEF_STR( On ) )
+	static InputPortPtr input_ports_teedoff = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW1 - Active LOW */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING (   0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x03, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING (   0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "1C_3C") );
+		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING (   0x08, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING (   0x0c, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING (   0x04, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING (   0x00, DEF_STR( "1C_3C") );
+		PORT_DIPNAME( 0x30, 0x30, "Balls" );
+		PORT_DIPSETTING (   0x30, "5" );
+		PORT_DIPSETTING (   0x20, "6" );
+		PORT_DIPSETTING (   0x10, "7" );
+		PORT_DIPSETTING (   0x00, "8" );
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Cabinet") );			// Check code at 0x0c5c
+		PORT_DIPSETTING (   0x00, DEF_STR( "Upright") );
+		PORT_DIPSETTING (   0x40, DEF_STR( "Cocktail") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Demo_Sounds") );		// Check code at 0x5dd0
+		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START /* DSW2 - Active LOW */
-		PORT_BIT( 0x07, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_DIPNAME( 0x18, 0x18, "Penalty (Over Par)" )		// Check table at 0x2d67
-		PORT_DIPSETTING (   0x10, "1/1/2/3/4" )				// +1 / +2 / +3 / +4 / +5 or +6
-		PORT_DIPSETTING (   0x18, "1/2/3/3/4" )
-		PORT_DIPSETTING (   0x08, "1/2/3/4/4" )
-		PORT_DIPSETTING (   0x00, "2/3/3/4/4" )
-		PORT_DIPNAME( 0x20, 0x20, "Bonus Balls (Multiple coins)" )
-		PORT_DIPSETTING (   0x20, "None" )
-		PORT_DIPSETTING (   0x00, "+1" )
-		PORT_DIPNAME( 0xc0, 0xc0, "Difficulty?" )				// Check table at 0x5df9
-		PORT_DIPSETTING (   0x80, "Easy" )
-		PORT_DIPSETTING (   0xc0, "Normal" )
-		PORT_DIPSETTING (   0x40, "Hard" )
-		PORT_DIPSETTING (   0x00, "Hardest" )
+		PORT_START();  /* DSW2 - Active LOW */
+		PORT_BIT( 0x07, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_DIPNAME( 0x18, 0x18, "Penalty (Over Par); )		// Check table at 0x2d67
+		PORT_DIPSETTING (   0x10, "1/1/2/3/4" );			// +1 / +2 / +3 / +4 / +5 or +6
+		PORT_DIPSETTING (   0x18, "1/2/3/3/4" );
+		PORT_DIPSETTING (   0x08, "1/2/3/4/4" );
+		PORT_DIPSETTING (   0x00, "2/3/3/4/4" );
+		PORT_DIPNAME( 0x20, 0x20, "Bonus Balls (Multiple coins); )
+		PORT_DIPSETTING (   0x20, "None" );
+		PORT_DIPSETTING (   0x00, "+1" );
+		PORT_DIPNAME( 0xc0, 0xc0, "Difficulty?" );			// Check table at 0x5df9
+		PORT_DIPSETTING (   0x80, "Easy" );
+		PORT_DIPSETTING (   0xc0, "Normal" );
+		PORT_DIPSETTING (   0x40, "Hard" );
+		PORT_DIPSETTING (   0x00, "Hardest" );
 	
-		PORT_START /* no DSW3 */
-		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED )
+		PORT_START();  /* no DSW3 */
+		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START /* IN0 - X AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 63, 0, 0 )
+		PORT_START();  /* IN0 - X AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER1, 100, 63, 0, 0 );
 	
-		PORT_START /* IN0 - Y AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 63, 0, 0 )
+		PORT_START();  /* IN0 - Y AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER1, 100, 63, 0, 0 );
 	
-		PORT_START /* IN0 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
+		PORT_START();  /* IN0 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 	
-		PORT_START /* IN1 - X AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 63, 0, 0 )
+		PORT_START();  /* IN1 - X AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 63, 0, 0 );
 	
-		PORT_START /* IN1 - Y AXIS */
-		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 63, 0, 0 )
+		PORT_START();  /* IN1 - Y AXIS */
+		PORT_ANALOG( 0xff, 0x80, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 63, 0, 0 );
 	
-		PORT_START /* IN1 - BUTTON */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
+		PORT_START();  /* IN1 - BUTTON */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	
-		PORT_START /* IN2 - Active LOW */
+		PORT_START();  /* IN2 - Active LOW */
 		/* "Coin"  buttons are read from address 0xf802 */
 		/* "Start" buttons are read from address 0xf806 */
 		/* coin input must be active between 2 and 15 frames to be consistently recognized */
-		PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_LOW, IPT_COIN1, 2 )
-		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_LOW, IPT_COIN2, 2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
+		PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_LOW, IPT_COIN1, 2 );
+		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_LOW, IPT_COIN2, 2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
 	
-		PORT_START	/* no fake port here */
-		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 	/* no fake port here */
+		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

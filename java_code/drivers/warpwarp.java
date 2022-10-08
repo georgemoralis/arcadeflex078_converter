@@ -184,217 +184,217 @@ public class warpwarp
 	
 	
 	
-	INPUT_PORTS_START( bombbee )
-		PORT_START	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SPECIAL )	// mux BUTTON1 - see Fake Input Port
-		PORT_SERVICE( 0x20, IP_ACTIVE_LOW )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )	// acts as COINn, but doesn't affect coin counter
+	static InputPortPtr input_ports_bombbee = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SPECIAL );// mux BUTTON1 - see Fake Input Port
+		PORT_SERVICE( 0x20, IP_ACTIVE_LOW );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Upright") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Cocktail") );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 );// acts as COINn, but doesn't affect coin counter
 	
-		PORT_START	/* DSW1 */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x03, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x00, "3" )
-		PORT_DIPSETTING(	0x04, "4" )
-	//	PORT_DIPSETTING(	0x08, "4" )				// duplicated setting
-		PORT_DIPSETTING(	0x0c, "5" )
-		PORT_DIPNAME( 0x10, 0x00, DEF_STR( Unused ) )
-		PORT_DIPSETTING(	0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0xe0, 0x00, "Replay" )		// awards 1 credit
-		PORT_DIPSETTING(	0x00, "50000" )
-		PORT_DIPSETTING(	0x20, "60000" )
-		PORT_DIPSETTING(	0x40, "70000" )
-		PORT_DIPSETTING(	0x60, "80000" )
-		PORT_DIPSETTING(	0x80, "100000" )
-		PORT_DIPSETTING(	0xa0, "120000" )
-		PORT_DIPSETTING(	0xc0, "150000" )
-		PORT_DIPSETTING(	0xe0, "None" )
+		PORT_START(); 	/* DSW1 */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x03, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x00, "3" );
+		PORT_DIPSETTING(	0x04, "4" );
+	//	PORT_DIPSETTING(	0x08, "4" );			// duplicated setting
+		PORT_DIPSETTING(	0x0c, "5" );
+		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Unused") );
+		PORT_DIPSETTING(	0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0xe0, 0x00, "Replay" );	// awards 1 credit
+		PORT_DIPSETTING(	0x00, "50000" );
+		PORT_DIPSETTING(	0x20, "60000" );
+		PORT_DIPSETTING(	0x40, "70000" );
+		PORT_DIPSETTING(	0x60, "80000" );
+		PORT_DIPSETTING(	0x80, "100000" );
+		PORT_DIPSETTING(	0xa0, "120000" );
+		PORT_DIPSETTING(	0xc0, "150000" );
+		PORT_DIPSETTING(	0xe0, "None" );
 	
-		PORT_START	/* Mux input - player 1 controller - handled by bombbee_mux_r */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 30, 10, 0x14, 0xac )
+		PORT_START(); 	/* Mux input - player 1 controller - handled by bombbee_mux_r */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 30, 10, 0x14, 0xac );
 	
-		PORT_START	/* Mux input - player 2 controller - handled by bombbee_mux_r */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE | IPF_COCKTAIL , 30, 10, 0x14, 0xac )
+		PORT_START(); 	/* Mux input - player 2 controller - handled by bombbee_mux_r */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE | IPF_COCKTAIL , 30, 10, 0x14, 0xac );
 	
-		PORT_START	/* Fake input port to support mux buttons - handled by bombbee_sys_r */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-	INPUT_PORTS_END
+		PORT_START(); 	/* Fake input port to support mux buttons - handled by bombbee_sys_r */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( cutieq )
-		PORT_START	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SPECIAL )	// mux BUTTON1 - see Fake Input Port
-		PORT_SERVICE( 0x20, IP_ACTIVE_LOW )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )	// acts as COINn, but doesn't affect coin counter
+	static InputPortPtr input_ports_cutieq = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SPECIAL );// mux BUTTON1 - see Fake Input Port
+		PORT_SERVICE( 0x20, IP_ACTIVE_LOW );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Upright") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Cocktail") );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 );// acts as COINn, but doesn't affect coin counter
 	
-		PORT_START	/* DSW1 */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x03, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x00, "3" )
-		PORT_DIPSETTING(	0x04, "4" )
-	//	PORT_DIPSETTING(	0x08, "4" )				// duplicated setting
-		PORT_DIPSETTING(	0x0c, "5" )
-		PORT_DIPNAME( 0x10, 0x00, DEF_STR( Unused ) )
-		PORT_DIPSETTING(	0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0xe0, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x00, "50000" )
-		PORT_DIPSETTING(	0x20, "60000" )
-		PORT_DIPSETTING(	0x40, "80000" )
-		PORT_DIPSETTING(	0x60, "100000" )
-		PORT_DIPSETTING(	0x80, "120000" )
-		PORT_DIPSETTING(	0xa0, "150000" )
-		PORT_DIPSETTING(	0xc0, "200000" )
-		PORT_DIPSETTING(	0xe0, "None" )
+		PORT_START(); 	/* DSW1 */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x03, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x00, "3" );
+		PORT_DIPSETTING(	0x04, "4" );
+	//	PORT_DIPSETTING(	0x08, "4" );			// duplicated setting
+		PORT_DIPSETTING(	0x0c, "5" );
+		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Unused") );
+		PORT_DIPSETTING(	0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0xe0, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x00, "50000" );
+		PORT_DIPSETTING(	0x20, "60000" );
+		PORT_DIPSETTING(	0x40, "80000" );
+		PORT_DIPSETTING(	0x60, "100000" );
+		PORT_DIPSETTING(	0x80, "120000" );
+		PORT_DIPSETTING(	0xa0, "150000" );
+		PORT_DIPSETTING(	0xc0, "200000" );
+		PORT_DIPSETTING(	0xe0, "None" );
 	
-		PORT_START	/* Mux input - player 1 controller - handled by bombbee_mux_r */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 30, 10, 0x14, 0xac )
+		PORT_START(); 	/* Mux input - player 1 controller - handled by bombbee_mux_r */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 30, 10, 0x14, 0xac );
 	
-		PORT_START	/* Mux input - player 2 controller - handled by bombbee_mux_r */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE | IPF_COCKTAIL , 30, 10, 0x14, 0xac )
+		PORT_START(); 	/* Mux input - player 2 controller - handled by bombbee_mux_r */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE | IPF_COCKTAIL , 30, 10, 0x14, 0xac );
 	
-		PORT_START	/* Fake input port to support mux buttons - handled by bombbee_sys_r */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-	INPUT_PORTS_END
+		PORT_START(); 	/* Fake input port to support mux buttons - handled by bombbee_sys_r */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( warpwarp )
-		PORT_START	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_SERVICE( 0x20, IP_ACTIVE_LOW )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
+	static InputPortPtr input_ports_warpwarp = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_SERVICE( 0x20, IP_ACTIVE_LOW );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Upright") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Cocktail") );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
 	
-		PORT_START	/* DSW1 */
-		PORT_DIPNAME( 0x03, 0x01, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(	0x03, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x01, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x00, "2" )
-		PORT_DIPSETTING(	0x04, "3" )
-		PORT_DIPSETTING(	0x08, "4" )
-		PORT_DIPSETTING(	0x0c, "5" )
+		PORT_START(); 	/* DSW1 */
+		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(	0x03, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x01, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x00, "2" );
+		PORT_DIPSETTING(	0x04, "3" );
+		PORT_DIPSETTING(	0x08, "4" );
+		PORT_DIPSETTING(	0x0c, "5" );
 		/* Bonus Lives when "Lives" Dip Switch is set to "2", "3" or "4" */
-		PORT_DIPNAME( 0x30, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x00, "8000 30000" )
-		PORT_DIPSETTING(	0x10, "10000 40000" )
-		PORT_DIPSETTING(	0x20, "15000 60000" )
-		PORT_DIPSETTING(	0x30, "None" )
+		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x00, "8000 30000" );
+		PORT_DIPSETTING(	0x10, "10000 40000" );
+		PORT_DIPSETTING(	0x20, "15000 60000" );
+		PORT_DIPSETTING(	0x30, "None" );
 		/* Bonus Lives when "Lives" Dip Switch is set to "5"
-		PORT_DIPNAME( 0x30, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x00, "30000" )
-		PORT_DIPSETTING(	0x10, "40000" )
-		PORT_DIPSETTING(	0x20, "60000" )
-		PORT_DIPSETTING(	0x30, "None" )
+		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x00, "30000" );
+		PORT_DIPSETTING(	0x10, "40000" );
+		PORT_DIPSETTING(	0x20, "60000" );
+		PORT_DIPSETTING(	0x30, "None" );
 		*/
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		/* when level selection is On, press 1 to increase level */
-		PORT_BITX(	  0x80, 0x80, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Level Selection", IP_KEY_NONE, IP_JOY_NONE )
-		PORT_DIPSETTING(	0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
+		PORT_BITX(	  0x80, 0x80, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Level Selection", IP_KEY_NONE, IP_JOY_NONE );
+		PORT_DIPSETTING(	0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	
-		PORT_START	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY )
+		PORT_START(); 	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 	
-		PORT_START	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL )
-	INPUT_PORTS_END
+		PORT_START(); 	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
+	INPUT_PORTS_END(); }}; 
 	
 	/* has High Score Initials dip switch instead of rack test */
-	INPUT_PORTS_START( warpwarr )
-		PORT_START		/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_SERVICE( 0x20, IP_ACTIVE_LOW )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
+	static InputPortPtr input_ports_warpwarr = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_SERVICE( 0x20, IP_ACTIVE_LOW );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Upright") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Cocktail") );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
 	
-		PORT_START		/* DSW1 */
-		PORT_DIPNAME( 0x03, 0x01, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(	0x03, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x01, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x00, "2" )
-		PORT_DIPSETTING(	0x04, "3" )
-		PORT_DIPSETTING(	0x08, "4" )
-		PORT_DIPSETTING(	0x0c, "5" )
+		PORT_START(); 		/* DSW1 */
+		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(	0x03, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x01, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x00, "2" );
+		PORT_DIPSETTING(	0x04, "3" );
+		PORT_DIPSETTING(	0x08, "4" );
+		PORT_DIPSETTING(	0x0c, "5" );
 		/* Bonus Lives when "Lives" Dip Switch is set to "2", "3" or "4" */
-		PORT_DIPNAME( 0x30, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x00, "8000 30000" )
-		PORT_DIPSETTING(	0x10, "10000 40000" )
-		PORT_DIPSETTING(	0x20, "15000 60000" )
-		PORT_DIPSETTING(	0x30, "None" )
+		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x00, "8000 30000" );
+		PORT_DIPSETTING(	0x10, "10000 40000" );
+		PORT_DIPSETTING(	0x20, "15000 60000" );
+		PORT_DIPSETTING(	0x30, "None" );
 		/* Bonus Lives when "Lives" Dip Switch is set to "5"
-		PORT_DIPNAME( 0x30, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x00, "30000" )
-		PORT_DIPSETTING(	0x10, "40000" )
-		PORT_DIPSETTING(	0x20, "60000" )
-		PORT_DIPSETTING(	0x30, "None" )
+		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x00, "30000" );
+		PORT_DIPSETTING(	0x10, "40000" );
+		PORT_DIPSETTING(	0x20, "60000" );
+		PORT_DIPSETTING(	0x30, "None" );
 		*/
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x00, "High Score Initials" )
-		PORT_DIPSETTING(	0x80, DEF_STR( No ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Yes ) )
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x00, "High Score Initials" );
+		PORT_DIPSETTING(	0x80, DEF_STR( "No") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Yes") );
 	
-		PORT_START	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY )
+		PORT_START(); 	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 	
-		PORT_START	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL )
-	INPUT_PORTS_END
+		PORT_START(); 	/* FAKE - input port to simulate an analog stick - handled by warpwarp_mux_r */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

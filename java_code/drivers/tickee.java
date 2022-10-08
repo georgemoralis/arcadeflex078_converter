@@ -131,61 +131,61 @@ public class tickee
 	 *
 	 *************************************/
 	
-	INPUT_PORTS_START( tickee )
-		PORT_START
-		PORT_DIPNAME( 0x03, 0x01, "Game Time/Diff" )
-		PORT_DIPSETTING(    0x03, "Very Fast/Very Easy" )
-		PORT_DIPSETTING(    0x02, "Fast/Easy" )
-		PORT_DIPSETTING(    0x01, "Average/Hard" )
-		PORT_DIPSETTING(    0x00, "Slow/Very Hard" )
-		PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ))
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ))
-		PORT_DIPSETTING(    0x00, DEF_STR( On ))
-		PORT_DIPNAME( 0x08, 0x00, "Last Box Tickets" )
-		PORT_DIPSETTING(    0x00, "1" )
-		PORT_DIPSETTING(    0x08, "25" )
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( Unknown ))
-		PORT_DIPSETTING(    0x30, "0" )
-		PORT_DIPSETTING(    0x20, "1" )
-		PORT_DIPSETTING(    0x10, "2" )
-		PORT_DIPSETTING(    0x00, "3" )
-		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Coinage ))
-		PORT_DIPSETTING(    0x80, DEF_STR( 3C_1C ))
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_1C ))
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ))
-		PORT_DIPSETTING(    0xc0, DEF_STR( 1C_2C ))
+	static InputPortPtr input_ports_tickee = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_DIPNAME( 0x03, 0x01, "Game Time/Diff" );
+		PORT_DIPSETTING(    0x03, "Very Fast/Very Easy" );
+		PORT_DIPSETTING(    0x02, "Fast/Easy" );
+		PORT_DIPSETTING(    0x01, "Average/Hard" );
+		PORT_DIPSETTING(    0x00, "Slow/Very Hard" );
+		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x00, "Last Box Tickets" );
+		PORT_DIPSETTING(    0x00, "1" );
+		PORT_DIPSETTING(    0x08, "25" );
+		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x30, "0" );
+		PORT_DIPSETTING(    0x20, "1" );
+		PORT_DIPSETTING(    0x10, "2" );
+		PORT_DIPSETTING(    0x00, "3" );
+		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_2C") );
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* right ticket status */
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* left ticket status */
-		PORT_BIT( 0xf8, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );/* right ticket status */
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SPECIAL );/* left ticket status */
+		PORT_BIT( 0xf8, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW )
-		PORT_BIT( 0xfffe, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
+		PORT_BIT( 0xfffe, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 )
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 )
-	INPUT_PORTS_END
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

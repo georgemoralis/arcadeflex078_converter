@@ -220,62 +220,62 @@ public class wallc
 	};
 	
 	
-	INPUT_PORTS_START( wallc )
-		PORT_START	/* DSW - read from b000 */
-		PORT_DIPNAME( 0x03, 0x01, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x03, "5" )
-		PORT_DIPSETTING(	0x02, "4" )
-		PORT_DIPSETTING(	0x01, "3" )
-		PORT_DIPSETTING(	0x00, "2" )
-		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( Bonus_Life) )
-		PORT_DIPSETTING(	0x0c, "100K/200K/400K/800K" )
-		PORT_DIPSETTING(	0x08, "80K/160K/320K/640K" )
-		PORT_DIPSETTING(	0x04, "60K/120K/240K/480K" )
-		PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-		PORT_DIPNAME( 0x10, 0x00, "Curve Effect" )
-		PORT_DIPSETTING(	0x10, "Normal" )
-		PORT_DIPSETTING(	0x00, "More" )
-		PORT_DIPNAME( 0x60, 0x60, "Timer Speed" )
-		PORT_DIPSETTING(	0x60, "Slow" )
-		PORT_DIPSETTING(	0x40, "Normal" )
-		PORT_DIPSETTING(	0x20, "Fast" )
-		PORT_DIPSETTING(	0x00, "Super Fast" )
-		PORT_DIPNAME( 0x80, 0x00, "Service" )
-		PORT_DIPSETTING(	0x80, "Free Play With Level Select" )
-		PORT_DIPSETTING(	0x00, "Normal" )
+	static InputPortPtr input_ports_wallc = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* DSW - read from b000 */
+		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x03, "5" );
+		PORT_DIPSETTING(	0x02, "4" );
+		PORT_DIPSETTING(	0x01, "3" );
+		PORT_DIPSETTING(	0x00, "2" );
+		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( "Bonus_Life"));
+		PORT_DIPSETTING(	0x0c, "100K/200K/400K/800K" );
+		PORT_DIPSETTING(	0x08, "80K/160K/320K/640K" );
+		PORT_DIPSETTING(	0x04, "60K/120K/240K/480K" );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
+		PORT_DIPNAME( 0x10, 0x00, "Curve Effect" );
+		PORT_DIPSETTING(	0x10, "Normal" );
+		PORT_DIPSETTING(	0x00, "More" );
+		PORT_DIPNAME( 0x60, 0x60, "Timer Speed" );
+		PORT_DIPSETTING(	0x60, "Slow" );
+		PORT_DIPSETTING(	0x40, "Normal" );
+		PORT_DIPSETTING(	0x20, "Fast" );
+		PORT_DIPSETTING(	0x00, "Super Fast" );
+		PORT_DIPNAME( 0x80, 0x00, "Service" );
+		PORT_DIPSETTING(	0x80, "Free Play With Level Select" );
+		PORT_DIPSETTING(	0x00, "Normal" );
 	
-		PORT_START	/* b200 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 )	//Right curve button; select current playfield in test mode
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN )	//not used ?
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 )	//service?? plays loud,high-pitched sound
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 )	//Left curve button; browse playfields in test mode
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN1 )	//ok
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN2 )	//ok
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN3 )	//ok
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 )	//ok
+		PORT_START(); 	/* b200 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );//Right curve button; select current playfield in test mode
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );//not used ?
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 );//service?? plays loud,high-pitched sound
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 );//Left curve button; browse playfields in test mode
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_COIN1 );//ok
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN2 );//ok
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_COIN3 );//ok
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );//ok
 	
-		PORT_START	/* b400 - player position 8 bit analog input - value read is used as position of the player directly - what type of input is that ? DIAL ?*/
-		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER1 | IPF_REVERSE, 50, 3, 0, 0 )
+		PORT_START(); 	/* b400 - player position 8 bit analog input - value read is used as position of the player directly - what type of input is that ? DIAL ?*/
+		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER1 | IPF_REVERSE, 50, 3, 0, 0 );
 	
-		PORT_START	/* b600 - bits 0-5: coinage */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_5C ) )
-		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0x0c, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( 1C_5C ) )
-		PORT_DIPNAME( 0x30, 0x00, "Coin C" )
-		PORT_DIPSETTING(    0x30, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 1C_5C ) )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 	/* b600 - bits 0-5: coinage */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_5C") );
+		PORT_DIPNAME( 0x0c, 0x00, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0x0c, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "1C_5C") );
+		PORT_DIPNAME( 0x30, 0x00, "Coin C" );
+		PORT_DIPSETTING(    0x30, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "1C_5C") );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

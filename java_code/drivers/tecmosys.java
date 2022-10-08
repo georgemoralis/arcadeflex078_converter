@@ -252,8 +252,8 @@ public class tecmosys
 		{ 0xe80000, 0xe80001, reg_e80000_w },
 	MEMORY_END
 	
-	INPUT_PORTS_START( deroon )
-	INPUT_PORTS_END
+	static InputPortPtr input_ports_deroon = new InputPortPtr(){ public void handler() { 
+	INPUT_PORTS_END(); }}; 
 	
 	/*
 	static struct GfxLayout tecmosys_charlayout =

@@ -625,358 +625,358 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	INPUT_PORTS_START( harddriv )
-		PORT_START		/* 600000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )	/* diagnostic switch */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED )	/* option switches */
+	static InputPortPtr input_ports_harddriv = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 600000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED );/* option switches */
 	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 )	/* abort */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 )	/* key */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 )	/* aux coin */
-		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 );/* abort */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );/* key */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 );/* aux coin */
+		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 0 - gas pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 - gas pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 1 - clutch pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 - clutch pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 2 - seat */
-		PORT_BIT( 0xff, 0x80, IPT_SPECIAL )
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 - seat */
+		PORT_BIT( 0xff, 0x80, IPT_SPECIAL );
 	
-		PORT_START		/* b00000 - 8 bit ADC 3 - shifter lever Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 25, 128, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 - shifter lever Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 25, 128, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 4 - shifter lever X*/
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 128, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 - shifter lever X*/
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 128, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 5 - wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 )
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 - wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 );
 	
-		PORT_START		/* b00000 - 8 bit ADC 6 - line volts */
-		PORT_BIT( 0xff, 0x80, IPT_SPECIAL )
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 - line volts */
+		PORT_BIT( 0xff, 0x80, IPT_SPECIAL );
 	
-		PORT_START		/* b00000 - 8 bit ADC 7 - shift force */
-		PORT_BIT( 0xff, 0x80, IPT_SPECIAL )
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 - shift force */
+		PORT_BIT( 0xff, 0x80, IPT_SPECIAL );
 	
-		PORT_START		/* b80000 - 12 bit ADC 0 - steering wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 )
+		PORT_START(); 		/* b80000 - 12 bit ADC 0 - steering wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 );
 	
-		PORT_START		/* b80000 - 12 bit ADC 1 - force brake */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff )
+		PORT_START(); 		/* b80000 - 12 bit ADC 1 - force brake */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff );
 	
-		PORT_START		/* b80000 - 12 bit ADC 2 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b80000 - 12 bit ADC 2 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
-	
-	
-	INPUT_PORTS_START( racedriv )
-		PORT_START		/* 600000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )	/* diagnostic switch */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED )	/* option switches */
-	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 )	/* abort */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 )	/* key */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 )	/* aux coin */
-		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED )
-	
-		PORT_START		/* b00000 - 8 bit ADC 0 - gas pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff )
-	
-		PORT_START		/* b00000 - 8 bit ADC 1 - clutch pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff )
-	
-		PORT_START		/* b00000 - 8 bit ADC 2 - seat */
-		PORT_BIT( 0xff, 0x80, IPT_SPECIAL )
-	
-		PORT_START		/* b00000 - 8 bit ADC 3 - shifter lever Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 25, 128, 0x00, 0xff )
-	
-		PORT_START		/* b00000 - 8 bit ADC 4 - shifter lever X*/
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 128, 0x00, 0xff )
-	
-		PORT_START		/* b00000 - 8 bit ADC 5 - wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 )
-	
-		PORT_START		/* b00000 - 8 bit ADC 6 - line volts */
-		PORT_BIT( 0xff, 0x80, IPT_SPECIAL )
-	
-		PORT_START		/* b00000 - 8 bit ADC 7 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	
-		PORT_START		/* b80000 - 12 bit ADC 0 - steering wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 )
-	
-		PORT_START		/* b80000 - 12 bit ADC 1 - force brake */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff )
-	
-		PORT_START		/* b80000 - 12 bit ADC 2 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	
-		PORT_START		/* b80000 - 12 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 		/* b80000 - 12 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( racedrvc )
-		PORT_START		/* 60c000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )	/* diagnostic switch */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED )	/* option switches */
+	static InputPortPtr input_ports_racedriv = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 600000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED );/* option switches */
 	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 )	/* abort */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 )	/* key */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 )	/* aux coin */
-		PORT_BIT( 0x00f8, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON2 )	/* 1st gear */
-		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON3 )	/* 2nd gear */
-		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON4 )	/* 3rd gear */
-		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON5 )	/* 4th gear */
-		PORT_BIT( 0x3000, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_SPECIAL )	/* center edge on steering wheel */
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 );/* abort */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );/* key */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 );/* aux coin */
+		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 0 - gas pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 - gas pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 1 - clutch pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 - clutch pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 2 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 - seat */
+		PORT_BIT( 0xff, 0x80, IPT_SPECIAL );
 	
-		PORT_START		/* b00000 - 8 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 - shifter lever Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 25, 128, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 4 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 - shifter lever X*/
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 128, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 5 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 - wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 );
 	
-		PORT_START		/* b00000 - 8 bit ADC 6 - force brake */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 - line volts */
+		PORT_BIT( 0xff, 0x80, IPT_SPECIAL );
 	
-		PORT_START		/* b00000 - 8 bit ADC 7 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* 400000 - steering wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 )
+		PORT_START(); 		/* b80000 - 12 bit ADC 0 - steering wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 );
+	
+		PORT_START(); 		/* b80000 - 12 bit ADC 1 - force brake */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff );
+	
+		PORT_START(); 		/* b80000 - 12 bit ADC 2 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b80000 - 12 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
+	
+	
+	static InputPortPtr input_ports_racedrvc = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 60c000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED );/* option switches */
+	
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 );/* abort */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );/* key */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 );/* aux coin */
+		PORT_BIT( 0x00f8, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON2 );/* 1st gear */
+		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON3 );/* 2nd gear */
+		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON4 );/* 3rd gear */
+		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON5 );/* 4th gear */
+		PORT_BIT( 0x3000, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_SPECIAL );/* center edge on steering wheel */
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 - gas pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 - clutch pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER3, 25, 100, 0x00, 0xff );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 - force brake */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff );
+	
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 		/* 400000 - steering wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE, 25, 5, 0x10, 0xf0 );
 	
 		/* dummy ADC ports to end up with the same number as the full version */
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( stunrun )
-		PORT_START		/* 60c000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED )	/* Option switches */
+	static InputPortPtr input_ports_stunrun = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 60c000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_UNUSED );/* Option switches */
 	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0xfff8, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 0 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X, 25, 10, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X, 25, 10, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 1 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 2 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y, 25, 10, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y, 25, 10, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 4 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 5 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 6 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 7 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 0 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b80000 - 12 bit ADC 0 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 1 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b80000 - 12 bit ADC 1 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 2 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b80000 - 12 bit ADC 2 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b80000 - 12 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 		JSA_II_PORT		/* audio port */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( steeltal )
-		PORT_START		/* 60c000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_steeltal = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 60c000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 )	/* trigger */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 )	/* thumb */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON3 )	/* zoom */
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_BUTTON4 )	/* real helicopter flight */
-		PORT_BIT( 0xfff0, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 );/* trigger */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 );/* thumb */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON3 );/* zoom */
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_BUTTON4 );/* real helicopter flight */
+		PORT_BIT( 0xfff0, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 0 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 1 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )		/* volume control */
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );	/* volume control */
 	
-		PORT_START		/* b00000 - 8 bit ADC 2 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 3 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 4 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 5 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 6 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 7 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b80000 - 12 bit ADC 0 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X, 25, 10, 0x00, 0xff )	/* left/right */
+		PORT_START(); 		/* b80000 - 12 bit ADC 0 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X, 25, 10, 0x00, 0xff );/* left/right */
 	
-		PORT_START		/* b80000 - 12 bit ADC 1 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y, 25, 10, 0x00, 0xff )	/* up/down */
+		PORT_START(); 		/* b80000 - 12 bit ADC 1 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y, 25, 10, 0x00, 0xff );/* up/down */
 	
-		PORT_START		/* b80000 - 12 bit ADC 2 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2 | IPF_REVERSE, 25, 10, 0x00, 0xff )	/* collective */
+		PORT_START(); 		/* b80000 - 12 bit ADC 2 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2 | IPF_REVERSE, 25, 10, 0x00, 0xff );/* collective */
 	
-		PORT_START		/* b80000 - 12 bit ADC 3 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 10, 0x00, 0xff )	/* rudder */
+		PORT_START(); 		/* b80000 - 12 bit ADC 3 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 25, 10, 0x00, 0xff );/* rudder */
 	
 		JSA_III_PORT	/* audio port */
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( hdrivair )
-		PORT_START		/* 60c000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL )	/* HBLANK */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK )
-		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 12-bit EOC */
-		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL )	/* 8-bit EOC */
-		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_hdrivair = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* 60c000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_VBLANK );
+		PORT_BIT( 0x0008, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 12-bit EOC */
+		PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL );/* 8-bit EOC */
+		PORT_SERVICE( 0x0020, IP_ACTIVE_LOW );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* a80000 */
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 )	/* abort */
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 )	/* start */
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 )	/* aux coin */
-		PORT_BIT( 0x00f8, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON5 )	/* ??? */
-		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_TOGGLE )	/* reverse */
-		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON6 )	/* ??? */
-		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON2 )	/* wings */
-		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_BUTTON3 )	/* wings */
-		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_SPECIAL )	/* center edge on steering wheel */
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* a80000 */
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 );/* abort */
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );/* start */
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN3 );/* aux coin */
+		PORT_BIT( 0x00f8, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON5 );/* ??? */
+		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_TOGGLE );/* reverse */
+		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON6 );/* ??? */
+		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_BUTTON2 );/* wings */
+		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_BUTTON3 );/* wings */
+		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_SPECIAL );/* center edge on steering wheel */
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 0 - gas pedal */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 0 - gas pedal */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 25, 20, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 1 */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 1 */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 2 - voice mic */
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 2 - voice mic */
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 3 - volume */
-		PORT_BIT( 0xff, 0X80, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 3 - volume */
+		PORT_BIT( 0xff, 0X80, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 4 - elevator */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_REVERSE, 25, 10, 0x00, 0xff )	/* up/down */
+		PORT_START(); 		/* b00000 - 8 bit ADC 4 - elevator */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_REVERSE, 25, 10, 0x00, 0xff );/* up/down */
 	
-		PORT_START		/* b00000 - 8 bit ADC 5 - canopy */
-		PORT_BIT( 0xff, 0X80, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 5 - canopy */
+		PORT_BIT( 0xff, 0X80, IPT_UNUSED );
 	
-		PORT_START		/* b00000 - 8 bit ADC 6 - brake */
-		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff )
+		PORT_START(); 		/* b00000 - 8 bit ADC 6 - brake */
+		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER2 | IPF_REVERSE, 25, 40, 0x00, 0xff );
 	
-		PORT_START		/* b00000 - 8 bit ADC 7 - seat adjust */
-		PORT_BIT( 0xff, 0X80, IPT_UNUSED )
+		PORT_START(); 		/* b00000 - 8 bit ADC 7 - seat adjust */
+		PORT_BIT( 0xff, 0X80, IPT_UNUSED );
 	
-		PORT_START		/* 400000 - steering wheel */
-		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 25, 5, 0x10, 0xf0 )
+		PORT_START(); 		/* 400000 - steering wheel */
+		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_REVERSE, 25, 5, 0x10, 0xf0 );
 	
 		/* dummy ADC ports to end up with the same number as the full version */
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

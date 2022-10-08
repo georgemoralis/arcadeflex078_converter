@@ -1193,294 +1193,294 @@ public class mazerbla
 	
 	
 	
-	INPUT_PORTS_START( mazerbla )
-		PORT_START	/* Strobe 0: ZPU Switches */
-		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, "ZPU Switch 2" )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_mazerbla = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* Strobe 0: ZPU Switches */
+		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, "ZPU Switch 2" );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 1: Dip Switches 28-35*/
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x03, "6" )
-		PORT_DIPSETTING(	0x02, "5" )
-		PORT_DIPSETTING(	0x01, "4" )
-		PORT_DIPSETTING(	0x00, "3" )
-		PORT_DIPNAME( 0x0c, 0x00, "Freeze Time" )
-		PORT_DIPSETTING(	0x0c, "1.5 seconds" )
-		PORT_DIPSETTING(	0x08, "2.0 seconds" )
-		PORT_DIPSETTING(	0x04, "2.5 seconds" )
-		PORT_DIPSETTING(	0x00, "3.0 seconds" )
-		PORT_DIPNAME( 0x30, 0x00, "Number of points for extra frezze & first life" )
-		PORT_DIPSETTING(	0x30, "20000" )
-		PORT_DIPSETTING(	0x20, "25000" )
-		PORT_DIPSETTING(	0x10, "30000" )
-		PORT_DIPSETTING(	0x00, "35000" )
-		PORT_DIPNAME( 0xc0, 0x00, "Number of points for extra life other than first" )
-		PORT_DIPSETTING(	0xc0, "40000" )
-		PORT_DIPSETTING(	0x80, "50000" )
-		PORT_DIPSETTING(	0x40, "60000" )
-		PORT_DIPSETTING(	0x00, "70000" )
+		PORT_START(); 	/* Strobe 1: Dip Switches 28-35*/
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x03, "6" );
+		PORT_DIPSETTING(	0x02, "5" );
+		PORT_DIPSETTING(	0x01, "4" );
+		PORT_DIPSETTING(	0x00, "3" );
+		PORT_DIPNAME( 0x0c, 0x00, "Freeze Time" );
+		PORT_DIPSETTING(	0x0c, "1.5 seconds" );
+		PORT_DIPSETTING(	0x08, "2.0 seconds" );
+		PORT_DIPSETTING(	0x04, "2.5 seconds" );
+		PORT_DIPSETTING(	0x00, "3.0 seconds" );
+		PORT_DIPNAME( 0x30, 0x00, "Number of points for extra frezze & first life" );
+		PORT_DIPSETTING(	0x30, "20000" );
+		PORT_DIPSETTING(	0x20, "25000" );
+		PORT_DIPSETTING(	0x10, "30000" );
+		PORT_DIPSETTING(	0x00, "35000" );
+		PORT_DIPNAME( 0xc0, 0x00, "Number of points for extra life other than first" );
+		PORT_DIPSETTING(	0xc0, "40000" );
+		PORT_DIPSETTING(	0x80, "50000" );
+		PORT_DIPSETTING(	0x40, "60000" );
+		PORT_DIPSETTING(	0x00, "70000" );
 	
-		PORT_START	/* Strobe 2: Dip Switches 20-27*/
-		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 4C_3C ) )
-		PORT_DIPSETTING(    0x0f, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 4C_5C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_7C ) )
-		PORT_DIPSETTING(    0x0e, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 2C_5C ) )
-		PORT_DIPSETTING(    0x0d, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 2C_7C ) )
-		PORT_DIPSETTING(    0x0c, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x0b, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x0a, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x09, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x08, "1 Coin/10 Credits" )
-		PORT_DIPSETTING(    0x07, "1 Coin/14 Credits" )
+		PORT_START(); 	/* Strobe 2: Dip Switches 20-27*/
+		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "4C_3C") );
+		PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "4C_5C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_7C") );
+		PORT_DIPSETTING(    0x0e, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "2C_5C") );
+		PORT_DIPSETTING(    0x0d, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "2C_7C") );
+		PORT_DIPSETTING(    0x0c, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x0b, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x0a, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x09, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x08, "1 Coin/10 Credits" );
+		PORT_DIPSETTING(    0x07, "1 Coin/14 Credits" );
 	
-		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0x60, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 4C_3C ) )
-		PORT_DIPSETTING(    0xf0, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 4C_5C ) )
-		PORT_DIPSETTING(    0x50, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_7C ) )
-		PORT_DIPSETTING(    0xe0, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_5C ) )
-		PORT_DIPSETTING(    0xd0, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x30, DEF_STR( 2C_7C ) )
-		PORT_DIPSETTING(    0xc0, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0xb0, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0xa0, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x90, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x80, "1 Coin/10 Credits" )
-		PORT_DIPSETTING(    0x70, "1 Coin/14 Credits" )
+		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0x60, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "4C_3C") );
+		PORT_DIPSETTING(    0xf0, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "4C_5C") );
+		PORT_DIPSETTING(    0x50, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_7C") );
+		PORT_DIPSETTING(    0xe0, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_5C") );
+		PORT_DIPSETTING(    0xd0, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x30, DEF_STR( "2C_7C") );
+		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0xb0, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0xa0, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x90, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x80, "1 Coin/10 Credits" );
+		PORT_DIPSETTING(    0x70, "1 Coin/14 Credits" );
 	
-		PORT_START	/* Strobe 3: Dip Switches 12-19*/
-		PORT_DIPNAME( 0x01, 0x01, "Service Index" )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x02, "Switch Test" )
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x04, 0x04, DEF_STR( Free_Play ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, "Player Immortality" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, "Super Shot" )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x00, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START(); 	/* Strobe 3: Dip Switches 12-19*/
+		PORT_DIPNAME( 0x01, 0x01, "Service Index" );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x02, "Switch Test" );
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Free_Play") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, "Player Immortality" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, "Super Shot" );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 4: Dip Switches 4-11 */
-		PORT_DIPNAME( 0x03, 0x02, "Number of Freezes" )
-		PORT_DIPSETTING(	0x03, "4" )
-		PORT_DIPSETTING(	0x02, "3" )
-		PORT_DIPSETTING(	0x01, "2" )
-		PORT_DIPSETTING(	0x00, "1" )
-		PORT_DIPNAME( 0x04, 0x04, "Gun Knocker" )
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START(); 	/* Strobe 4: Dip Switches 4-11 */
+		PORT_DIPNAME( 0x03, 0x02, "Number of Freezes" );
+		PORT_DIPSETTING(	0x03, "4" );
+		PORT_DIPSETTING(	0x02, "3" );
+		PORT_DIPSETTING(	0x01, "2" );
+		PORT_DIPSETTING(	0x00, "1" );
+		PORT_DIPNAME( 0x04, 0x04, "Gun Knocker" );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		//dips 7-11 - not listed in manual
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 5: coin1&2, start1&2, fire */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 	/* Strobe 5: coin1&2, start1&2, fire */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START	/* Strobe 6: horizontal movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1 | IPF_REVERSE, 25, 7, 0, 255)
-		PORT_START	/* Strobe 7: vertical movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 7, 0, 255)
+		PORT_START(); 	/* Strobe 6: horizontal movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1 | IPF_REVERSE, 25, 7, 0, 255);
+		PORT_START(); 	/* Strobe 7: vertical movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 7, 0, 255);
 	
 	/* Mazer Blazer cabinet has only one gun, really */
-		PORT_START	/* Strobe 8: horizontal movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2 | IPF_REVERSE, 25, 7, 0, 255)
-		PORT_START	/* Strobe 9: vertical movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 7, 0, 255)
-	INPUT_PORTS_END
+		PORT_START(); 	/* Strobe 8: horizontal movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2 | IPF_REVERSE, 25, 7, 0, 255);
+		PORT_START(); 	/* Strobe 9: vertical movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 7, 0, 255);
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( greatgun )
-		PORT_START	/* Strobe 0: ZPU Switches */
-		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, "ZPU Switch 2" )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_greatgun = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* Strobe 0: ZPU Switches */
+		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, "ZPU Switch 2" );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 1: Dip Switches 28-35*/
-		PORT_DIPNAME( 0x03, 0x00, "Starting Number of Bullets/Credit" )
-		PORT_DIPSETTING(	0x03, "60" )
-		PORT_DIPSETTING(	0x02, "70" )
-		PORT_DIPSETTING(	0x01, "80" )
-		PORT_DIPSETTING(	0x00, "90" )
-		PORT_DIPNAME( 0x0c, 0x00, "Target Size" )
-		PORT_DIPSETTING(	0x0c, "7 x 7" )
-		PORT_DIPSETTING(	0x08, "9 x 9" )
-		PORT_DIPSETTING(	0x04, "11x11" )
-		PORT_DIPSETTING(	0x00, "7 x 7" )
-		PORT_DIPNAME( 0x70, 0x00, "Number of points for extra bullet" )
-		PORT_DIPSETTING(	0x70, "1000" )
-		PORT_DIPSETTING(	0x60, "2000" )
-		PORT_DIPSETTING(	0x50, "3000" )
-		PORT_DIPSETTING(	0x40, "4000" )
-		PORT_DIPSETTING(	0x30, "5000" )
-		PORT_DIPSETTING(	0x20, "6000" )
-		PORT_DIPSETTING(	0x10, "7000" )
-		PORT_DIPSETTING(	0x00, "8000" )
+		PORT_START(); 	/* Strobe 1: Dip Switches 28-35*/
+		PORT_DIPNAME( 0x03, 0x00, "Starting Number of Bullets/Credit" );
+		PORT_DIPSETTING(	0x03, "60" );
+		PORT_DIPSETTING(	0x02, "70" );
+		PORT_DIPSETTING(	0x01, "80" );
+		PORT_DIPSETTING(	0x00, "90" );
+		PORT_DIPNAME( 0x0c, 0x00, "Target Size" );
+		PORT_DIPSETTING(	0x0c, "7 x 7" );
+		PORT_DIPSETTING(	0x08, "9 x 9" );
+		PORT_DIPSETTING(	0x04, "11x11" );
+		PORT_DIPSETTING(	0x00, "7 x 7" );
+		PORT_DIPNAME( 0x70, 0x00, "Number of points for extra bullet" );
+		PORT_DIPSETTING(	0x70, "1000" );
+		PORT_DIPSETTING(	0x60, "2000" );
+		PORT_DIPSETTING(	0x50, "3000" );
+		PORT_DIPSETTING(	0x40, "4000" );
+		PORT_DIPSETTING(	0x30, "5000" );
+		PORT_DIPSETTING(	0x20, "6000" );
+		PORT_DIPSETTING(	0x10, "7000" );
+		PORT_DIPSETTING(	0x00, "8000" );
 		/* from manual:
 			"This switch is used when an optional coin return or ticket dispenser is used"
 		*/
-		PORT_DIPNAME( 0x80, 0x00, "Number of coins or tickets returned" )
-		PORT_DIPSETTING(	0x80, "1" )
-		PORT_DIPSETTING(	0x00, "2" )
+		PORT_DIPNAME( 0x80, 0x00, "Number of coins or tickets returned" );
+		PORT_DIPSETTING(	0x80, "1" );
+		PORT_DIPSETTING(	0x00, "2" );
 	
-		PORT_START	/* Strobe 2: Dip Switches 20-27*/
-		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 4C_3C ) )
-		PORT_DIPSETTING(    0x0f, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 4C_5C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_7C ) )
-		PORT_DIPSETTING(    0x0e, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 2C_5C ) )
-		PORT_DIPSETTING(    0x0d, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 2C_7C ) )
-		PORT_DIPSETTING(    0x0c, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x0b, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x0a, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x09, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x08, "1 Coin/10 Credits" )
-		PORT_DIPSETTING(    0x07, "1 Coin/14 Credits" )
+		PORT_START(); 	/* Strobe 2: Dip Switches 20-27*/
+		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "4C_3C") );
+		PORT_DIPSETTING(    0x0f, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "4C_5C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_7C") );
+		PORT_DIPSETTING(    0x0e, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "2C_5C") );
+		PORT_DIPSETTING(    0x0d, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "2C_7C") );
+		PORT_DIPSETTING(    0x0c, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x0b, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x0a, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x09, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x08, "1 Coin/10 Credits" );
+		PORT_DIPSETTING(    0x07, "1 Coin/14 Credits" );
 	
-		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0x60, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 4C_3C ) )
-		PORT_DIPSETTING(    0xf0, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 4C_5C ) )
-		PORT_DIPSETTING(    0x50, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_7C ) )
-		PORT_DIPSETTING(    0xe0, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_5C ) )
-		PORT_DIPSETTING(    0xd0, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x30, DEF_STR( 2C_7C ) )
-		PORT_DIPSETTING(    0xc0, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0xb0, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0xa0, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x90, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x80, "1 Coin/10 Credits" )
-		PORT_DIPSETTING(    0x70, "1 Coin/14 Credits" )
+		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0x60, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "4C_3C") );
+		PORT_DIPSETTING(    0xf0, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "4C_5C") );
+		PORT_DIPSETTING(    0x50, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_7C") );
+		PORT_DIPSETTING(    0xe0, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_5C") );
+		PORT_DIPSETTING(    0xd0, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x30, DEF_STR( "2C_7C") );
+		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0xb0, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0xa0, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x90, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x80, "1 Coin/10 Credits" );
+		PORT_DIPSETTING(    0x70, "1 Coin/14 Credits" );
 	
-		PORT_START	/* Strobe 3: Dip Switches 12-19*/
-		PORT_DIPNAME( 0x01, 0x01, "Service Index" )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x02, "Switch Test" )
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x04, 0x04, DEF_STR( Free_Play ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, "Player Immortality" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, "Rack Advance" )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x00, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )	//probably unused
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START(); 	/* Strobe 3: Dip Switches 12-19*/
+		PORT_DIPNAME( 0x01, 0x01, "Service Index" );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x02, "Switch Test" );
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Free_Play") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, "Player Immortality" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, "Rack Advance" );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );	//probably unused
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 4: Dip Switches 4-11 */
-		PORT_DIPNAME( 0x01, 0x01, "Free game/coin return" )
-		PORT_DIPSETTING(	0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
+		PORT_START(); 	/* Strobe 4: Dip Switches 4-11 */
+		PORT_DIPNAME( 0x01, 0x01, "Free game/coin return" );
+		PORT_DIPSETTING(	0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		//dips 5-11 - not listed in manual
-		PORT_DIPNAME( 0x02, 0x02, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START	/* Strobe 5: coin1&2, start1&2, fire */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 )
+		PORT_START(); 	/* Strobe 5: coin1&2, start1&2, fire */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 );
 	
-		PORT_START	/* Strobe 6: horizontal movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 7, 0, 255)
-		PORT_START	/* Strobe 7: vertical movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 7, 0, 255)
+		PORT_START(); 	/* Strobe 6: horizontal movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 7, 0, 255);
+		PORT_START(); 	/* Strobe 7: vertical movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 7, 0, 255);
 	
-		PORT_START	/* Strobe 8: horizontal movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 7, 0, 255)
-		PORT_START	/* Strobe 9: vertical movement of gun */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 7, 0, 255)
-	INPUT_PORTS_END
+		PORT_START(); 	/* Strobe 8: horizontal movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 7, 0, 255);
+		PORT_START(); 	/* Strobe 9: vertical movement of gun */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 7, 0, 255);
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

@@ -83,8 +83,8 @@ public class jalmah
 	
 	}
 	
-	INPUT_PORTS_START( jalmah )
-	INPUT_PORTS_END
+	static InputPortPtr input_ports_jalmah = new InputPortPtr(){ public void handler() { 
+	INPUT_PORTS_END(); }}; 
 	
 	static MEMORY_READ16_START( readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },

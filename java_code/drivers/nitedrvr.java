@@ -129,57 +129,57 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	INPUT_PORTS_START( nitedrvr )
-		PORT_START		/* fake port, gets mapped to Night Driver ports */
-		PORT_DIPNAME( 0x30, 0x10, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(	0x30, DEF_STR( 2C_1C ) )
-		//PORT_DIPSETTING(	0x20, DEF_STR( 1C_1C ) ) /* not a typo */
-		PORT_DIPSETTING(	0x10, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( 1C_2C ) )
-		PORT_DIPNAME( 0xC0, 0x80, "Playing Time" )
-		PORT_DIPSETTING(	0x00, "50" )
-		PORT_DIPSETTING(	0x40, "75" )
-		PORT_DIPSETTING(	0x80, "100" )
-		PORT_DIPSETTING(	0xC0, "125" )
+	static InputPortPtr input_ports_nitedrvr = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
+		PORT_DIPNAME( 0x30, 0x10, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(	0x30, DEF_STR( "2C_1C") );
+		//PORT_DIPSETTING(	0x20, DEF_STR( "1C_1C") ); /* not a typo */
+		PORT_DIPSETTING(	0x10, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "1C_2C") );
+		PORT_DIPNAME( 0xC0, 0x80, "Playing Time" );
+		PORT_DIPSETTING(	0x00, "50" );
+		PORT_DIPSETTING(	0x40, "75" );
+		PORT_DIPSETTING(	0x80, "100" );
+		PORT_DIPSETTING(	0xC0, "125" );
 	
-		PORT_START		/* fake port, gets mapped to Night Driver ports */
-		PORT_DIPNAME( 0x10, 0x00, "Track Set" )
-		PORT_DIPSETTING(	0x00, "Normal" )
-		PORT_DIPSETTING(	0x10, "Reverse" )
-		PORT_DIPNAME( 0x20, 0x20, "Bonus Time" )
-		PORT_DIPSETTING(	0x00, DEF_STR ( No ) )
-		PORT_DIPSETTING(	0x20, "Score = 350" )
-		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_VBLANK )
-		PORT_BITX(0x80, IP_ACTIVE_LOW, IPT_SERVICE | IPF_TOGGLE, "Self Test", KEYCODE_F2, IP_JOY_NONE )
+		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
+		PORT_DIPNAME( 0x10, 0x00, "Track Set" );
+		PORT_DIPSETTING(	0x00, "Normal" );
+		PORT_DIPSETTING(	0x10, "Reverse" );
+		PORT_DIPNAME( 0x20, 0x20, "Bonus Time" );
+		PORT_DIPSETTING(	0x00, DEF_STR ( No );
+		PORT_DIPSETTING(	0x20, "Score = 350" );
+		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_VBLANK );
+		PORT_BITX(0x80, IP_ACTIVE_LOW, IPT_SERVICE | IPF_TOGGLE, "Self Test", KEYCODE_F2, IP_JOY_NONE );
 	
-		PORT_START		/* fake port, gets mapped to Night Driver ports */
-		PORT_BITX(0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_PLAYER2, "1st gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_PLAYER2, "2nd gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_PLAYER2, "3rd gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER2, "4th gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
+		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
+		PORT_BITX(0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_PLAYER2, "1st gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_PLAYER2, "2nd gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_PLAYER2, "3rd gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER2, "4th gear", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
 	
-		PORT_START		/* fake port, gets mapped to Night Driver ports */
-		PORT_BIT (0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN )	/* Spare */
-		PORT_DIPNAME( 0x20, 0x00, "Difficult Bonus" )
-		PORT_DIPSETTING(	0x00, "Normal" )
-		PORT_DIPSETTING(	0x20, "Difficult" )
-		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
+		PORT_BIT (0x10, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Spare */
+		PORT_DIPNAME( 0x20, 0x00, "Difficult Bonus" );
+		PORT_DIPSETTING(	0x00, "Normal" );
+		PORT_DIPSETTING(	0x20, "Difficult" );
+		PORT_BIT (0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START		/* fake port, gets mapped to Night Driver ports */
-		PORT_BIT (0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT (0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT (0x04, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BITX(0x08, IP_ACTIVE_LOW, IPT_BUTTON1, "Gas", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x10, IP_ACTIVE_HIGH, IPT_BUTTON2, "Novice Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x20, IP_ACTIVE_HIGH, IPT_BUTTON3, "Expert Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x40, IP_ACTIVE_HIGH, IPT_BUTTON4, "Pro Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )	/* Alternating signal? */
+		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
+		PORT_BIT (0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT (0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT (0x04, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BITX(0x08, IP_ACTIVE_LOW, IPT_BUTTON1, "Gas", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x10, IP_ACTIVE_HIGH, IPT_BUTTON2, "Novice Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x20, IP_ACTIVE_HIGH, IPT_BUTTON3, "Expert Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x40, IP_ACTIVE_HIGH, IPT_BUTTON4, "Pro Track", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Alternating signal? */
 	
-		PORT_START		/* fake port used for steering */
-		PORT_ANALOG( 0xff, 0x00, IPT_DIAL, 100, 10, 0, 0 )
+		PORT_START(); 		/* fake port used for steering */
+		PORT_ANALOG( 0xff, 0x00, IPT_DIAL, 100, 10, 0, 0 );
 	
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
 	

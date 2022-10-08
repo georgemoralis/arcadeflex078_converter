@@ -98,8 +98,8 @@ public class chindrag
 	};
 	
 	
-	INPUT_PORTS_START( chindrag )
-	INPUT_PORTS_END
+	static InputPortPtr input_ports_chindrag = new InputPortPtr(){ public void handler() { 
+	INPUT_PORTS_END(); }}; 
 	
 	static MACHINE_DRIVER_START( chindrag )
 		MDRV_CPU_ADD(M68000, 12000000)

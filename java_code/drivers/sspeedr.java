@@ -162,40 +162,40 @@ public class sspeedr
 	};
 	
 	
-	INPUT_PORTS_START( sspeedr )
+	static InputPortPtr input_ports_sspeedr = new InputPortPtr(){ public void handler() { 
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_DIAL, 25, 10, 0x00, 0xff )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_DIAL, 25, 10, 0x00, 0xff );
 	
-		PORT_START
-		PORT_ANALOG( 0x1f, 0x00, IPT_PEDAL | IPF_REVERSE, 25, 20, 0x00, 0x1f )
+		PORT_START(); 
+		PORT_ANALOG( 0x1f, 0x00, IPT_PEDAL | IPF_REVERSE, 25, 20, 0x00, 0x1f );
 	
-		PORT_START
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_2C ) )
-		PORT_DIPNAME( 0x0C, 0x08, "Play Time" )
-		PORT_DIPSETTING(    0x00, "60 seconds")
-		PORT_DIPSETTING(    0x04, "70 seconds")
-		PORT_DIPSETTING(    0x08, "80 seconds")
-		PORT_DIPSETTING(    0x0C, "90 seconds")
-		PORT_DIPNAME( 0x10, 0x00, "Extended Play" )
-		PORT_DIPSETTING(    0x00, "20 seconds" )
-		PORT_DIPSETTING(    0x10, "30 seconds" )
-		PORT_DIPNAME( 0xE0, 0x20, DEF_STR( Service_Mode ) )
-		PORT_DIPSETTING(    0x20, "Play Mode" )
-		PORT_DIPSETTING(    0xA0, "RAM/ROM Test" )
-		PORT_DIPSETTING(    0xE0, "Accelerator Adjustment" )
+		PORT_START(); 
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_2C") );
+		PORT_DIPNAME( 0x0C, 0x08, "Play Time" );
+		PORT_DIPSETTING(    0x00, "60 seconds");
+		PORT_DIPSETTING(    0x04, "70 seconds");
+		PORT_DIPSETTING(    0x08, "80 seconds");
+		PORT_DIPSETTING(    0x0C, "90 seconds");
+		PORT_DIPNAME( 0x10, 0x00, "Extended Play" );
+		PORT_DIPSETTING(    0x00, "20 seconds" );
+		PORT_DIPSETTING(    0x10, "30 seconds" );
+		PORT_DIPNAME( 0xE0, 0x20, DEF_STR( "Service_Mode") );
+		PORT_DIPSETTING(    0x20, "Play Mode" );
+		PORT_DIPSETTING(    0xA0, "RAM/ROM Test" );
+		PORT_DIPSETTING(    0xE0, "Accelerator Adjustment" );
 	
-		PORT_START
-		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT ( 0x04, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_TOGGLE ) /* gear shift lever */
-		PORT_BIT ( 0x08, IP_ACTIVE_LOW, IPT_COIN1 )
+		PORT_START(); 
+		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT ( 0x04, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_TOGGLE );/* gear shift lever */
+		PORT_BIT ( 0x08, IP_ACTIVE_LOW, IPT_COIN1 );
 	
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout car_layout =

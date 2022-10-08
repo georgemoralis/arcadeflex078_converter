@@ -225,98 +225,98 @@ public class decocass
 		new IO_WritePort( 0x02, 0x02, i8041_p2_w ),
 	MEMORY_END
 	
-	INPUT_PORTS_START( decocass )
-		PORT_START		/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_JOYSTICK_RIGHT )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_JOYSTICK_LEFT )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_JOYSTICK_UP )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH,IPT_JOYSTICK_DOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH,IPT_BUTTON1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_BUTTON2 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH,IPT_UNUSED )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH,IPT_UNUSED )
+	static InputPortPtr input_ports_decocass = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 		/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_JOYSTICK_RIGHT );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_JOYSTICK_LEFT );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_JOYSTICK_UP );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH,IPT_JOYSTICK_DOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH,IPT_BUTTON1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_BUTTON2 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH,IPT_UNUSED );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH,IPT_UNUSED );
 	
-		PORT_START		/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_JOYSTICK_RIGHT | IPF_COCKTAIL )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_JOYSTICK_LEFT | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_JOYSTICK_UP | IPF_COCKTAIL )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH,IPT_JOYSTICK_DOWN | IPF_COCKTAIL )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH,IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_BUTTON2 | IPF_COCKTAIL )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH,IPT_UNUSED )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH,IPT_UNUSED )
+		PORT_START(); 		/* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_JOYSTICK_RIGHT | IPF_COCKTAIL );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_JOYSTICK_LEFT | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_JOYSTICK_UP | IPF_COCKTAIL );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH,IPT_JOYSTICK_DOWN | IPF_COCKTAIL );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH,IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_BUTTON2 | IPF_COCKTAIL );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH,IPT_UNUSED );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH,IPT_UNUSED );
 	
-		PORT_START		/* IN2 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_UNKNOWN )
-		PORT_BIT_IMPULSE( 0x08, IP_ACTIVE_HIGH,IPT_START1, 1 )
-		PORT_BIT_IMPULSE( 0x10, IP_ACTIVE_HIGH,IPT_START2, 1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_UNKNOWN )
-		PORT_BIT_IMPULSE( 0x40, IP_ACTIVE_LOW, IPT_COIN2, 1 )
-		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 )
+		PORT_START(); 		/* IN2 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH,IPT_UNKNOWN );
+		PORT_BIT_IMPULSE( 0x08, IP_ACTIVE_HIGH,IPT_START1, 1 );
+		PORT_BIT_IMPULSE( 0x10, IP_ACTIVE_HIGH,IPT_START2, 1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH,IPT_UNKNOWN );
+		PORT_BIT_IMPULSE( 0x40, IP_ACTIVE_LOW, IPT_COIN2, 1 );
+		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 	
-		PORT_START		/* IN3 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER1, 100, 10, 0x10, 0xf0 )
+		PORT_START(); 		/* IN3 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER1, 100, 10, 0x10, 0xf0 );
 	
-		PORT_START		/* IN4 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER1, 100, 10, 0x10, 0xf0 )
+		PORT_START(); 		/* IN4 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER1, 100, 10, 0x10, 0xf0 );
 	
-		PORT_START		/* IN5 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 100, 10, 0x10, 0xf0 )
+		PORT_START(); 		/* IN5 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_PLAYER2, 100, 10, 0x10, 0xf0 );
 	
-		PORT_START		/* IN6 */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 100, 10, 0x10, 0xf0 )
+		PORT_START(); 		/* IN6 */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER2, 100, 10, 0x10, 0xf0 );
 	
-		PORT_START		/* DSW1 */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x03, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x02, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x01, DEF_STR( 1C_3C ) )
-		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(	0x0c, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(	0x08, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(	0x04, DEF_STR( 1C_3C ) )
-		PORT_DIPNAME( 0x30, 0x30, "Board type" )    /* used by the "bios" */
-		PORT_DIPSETTING(	0x00, "old" )
-		PORT_DIPSETTING(	0x10, "invalid?" )
-		PORT_DIPSETTING(	0x20, "invalid?" )
-		PORT_DIPSETTING(	0x30, "new" )
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Upright ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( Cocktail ) )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK	)
+		PORT_START(); 		/* DSW1 */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x03, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x02, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x01, DEF_STR( "1C_3C") );
+		PORT_DIPNAME( 0x0c, 0x0c, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(	0x0c, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(	0x08, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(	0x04, DEF_STR( "1C_3C") );
+		PORT_DIPNAME( 0x30, 0x30, "Board type" );   /* used by the "bios" */
+		PORT_DIPSETTING(	0x00, "old" );
+		PORT_DIPSETTING(	0x10, "invalid?" );
+		PORT_DIPSETTING(	0x20, "invalid?" );
+		PORT_DIPSETTING(	0x30, "new" );
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Upright") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "Cocktail") );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK	);
 	
-		PORT_START		/* DSW2 */
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Lives ) )
-		PORT_DIPSETTING(	0x01, "3" )
-		PORT_DIPSETTING(	0x00, "5" )
-		PORT_DIPNAME( 0x06, 0x06, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(	0x06, "20000" )
-		PORT_DIPSETTING(	0x04, "30000" )
-		PORT_DIPSETTING(	0x02, "40000"  )
-		PORT_DIPSETTING(	0x00, "50000"  )
-		PORT_DIPNAME( 0x08, 0x08, "Enemies" )
-		PORT_DIPSETTING(	0x08, "4" )
-		PORT_DIPSETTING(	0x00, "6" )
-		PORT_DIPNAME( 0x10, 0x10, "End of Level Pepper" )
-		PORT_DIPSETTING(	0x10, DEF_STR( No ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Yes ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x20, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x40, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(	0x80, DEF_STR( On ) )
-	INPUT_PORTS_END
+		PORT_START(); 		/* DSW2 */
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Lives") );
+		PORT_DIPSETTING(	0x01, "3" );
+		PORT_DIPSETTING(	0x00, "5" );
+		PORT_DIPNAME( 0x06, 0x06, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(	0x06, "20000" );
+		PORT_DIPSETTING(	0x04, "30000" );
+		PORT_DIPSETTING(	0x02, "40000"  );
+		PORT_DIPSETTING(	0x00, "50000"  );
+		PORT_DIPNAME( 0x08, 0x08, "Enemies" );
+		PORT_DIPSETTING(	0x08, "4" );
+		PORT_DIPSETTING(	0x00, "6" );
+		PORT_DIPNAME( 0x10, 0x10, "End of Level Pepper" );
+		PORT_DIPSETTING(	0x10, DEF_STR( "No") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Yes") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x20, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x40, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout charlayout =
-	new IO_WritePort(
+	{
 		8,8,	/* 8*8 characters */
 		1024,	/* 1024 characters */
 		3,		/* 3 bits per pixel */
@@ -324,10 +324,10 @@ public class decocass
 		{ 0, 1, 2, 3, 4, 5, 6, 7 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8 	/* every char takes 8 consecutive bytes */
-	);
+	};
 	
 	static struct GfxLayout spritelayout =
-	new IO_WritePort(
+	{
 		16,16,	/* 16*16 sprites */
 		256,	/* 256 sprites */
 		3,		/* 3 bits per pixel */
@@ -337,10 +337,10 @@ public class decocass
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		  8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
 		32*8	/* every sprite takes 32 consecutive bytes */
-	);
+	};
 	
 	static struct GfxLayout tilelayout =
-	new IO_WritePort(
+	{
 		16,16,	/* 16*16 characters */
 		16+1,	/* 16 tiles (+1 empty tile used in the half-width bg tilemaps) */
 		3,	/* 3 bits per pixel */
@@ -352,10 +352,10 @@ public class decocass
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 		  8*8, 9*8,10*8,11*8,12*8,13*8,14*8,15*8 },
 		2*16*16 /* every tile takes 64 consecutive bytes */
-	);
+	};
 	
 	static struct GfxLayout objlayout =
-	new IO_WritePort(
+	{
 		64,64,	/* 64x64 object */
 		2,		/* 2 objects */
 		1,		/* 1 bits per pixel */
@@ -381,10 +381,10 @@ public class decocass
 			 7*2*64, 6*2*64, 5*2*64, 4*2*64, 3*2*64, 2*2*64, 1*2*64, 0*2*64
 		},
 		8*8 /* object takes 8 consecutive bytes */
-	);
+	};
 	
 	static struct GfxLayout missilelayout =
-	new IO_WritePort(
+	{
 		4,1,	/* 4x1 object ?? */
 		1,		/* 1 object */
 		1,		/* 1 bits per pixel */
@@ -392,20 +392,20 @@ public class decocass
 		{ 0, 0, 0, 0, 0, 0, 0, 0 },
 		{ 0, 0, 0, 0, 0, 0, 0, 0 },
 		8	/* object takes a 1 bit from somewhere */
-	);
+	};
 	
 	static struct GfxDecodeInfo decocass_gfxdecodeinfo[] =
-	new IO_WritePort(
-		{ 0, 0x6000, charlayout,		 0, 4 },  /* char set #1 */
-		{ 0, 0x6000, spritelayout, 	 0, 4 },  /* sprites */
-		{ 0, 0xd000, tilelayout,		32, 2 },  /* background tiles */
-		{ 0, 0xd800, objlayout,		48, 4 },  /* object */
-		{ 0, 0xffff, missilelayout,	 0, 8 },
+	{
+		{ 0, 0x6000, &charlayout,		 0, 4 },  /* char set #1 */
+		{ 0, 0x6000, &spritelayout, 	 0, 4 },  /* sprites */
+		{ 0, 0xd000, &tilelayout,		32, 2 },  /* background tiles */
+		{ 0, 0xd800, &objlayout,		48, 4 },  /* object */
+		{ 0, 0xffff, &missilelayout,	 0, 8 },
 		{ -1 } /* end of array */
-	);
+	};
 	
 	static struct AY8910interface ay8910_interface =
-	new IO_WritePort(
+	{
 		2,		/* 2 chips */
 		1500000,		/* 1.5 MHz ? (hand tuned) */
 		{ 40, 40 },
@@ -413,10 +413,10 @@ public class decocass
 		{ 0 },
 		{ 0 },
 		{ 0 }
-	);
+	};
 	
 	static PALETTE_INIT( decocass )
-	new IO_WritePort(
+	{
 		int i;
 		/* set up 32 colors 1:1 pens */
 		for (i = 0; i < 32; i++)
@@ -426,7 +426,7 @@ public class decocass
 		for (i = 0; i < 8; i++)
 		{
 			colortable[32+i] = 3*8+i;
-			colortable[40+i] = 3*8+((i << 1)  0x04) + ((i >> 1)  0x02) + (i  0x01);
+			colortable[40+i] = 3*8+((i << 1) & 0x04) + ((i >> 1) & 0x02) + (i & 0x01);
 		}
 	
 		/* setup 4 colors for 1bpp object */
@@ -438,7 +438,7 @@ public class decocass
 		colortable[48+2*2+1] = 26;	/* testtape green from 4th palette section? */
 		colortable[48+3*2+0] = 0;
 		colortable[48+3*2+1] = 23;	/* ???? */
-	)
+	}
 	
 	
 	static MACHINE_DRIVER_START( decocass )
@@ -1089,17 +1089,17 @@ public class decocass
 	
 	
 	static DRIVER_INIT( decocass )
-	new IO_WritePort(
+	{
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
 		memory_set_opcode_base(0,rom+diff);
 	
-		/* Swap bits 5  6 for opcodes */
+		/* Swap bits 5 & 6 for opcodes */
 		for (A = 0;A < diff;A++)
 			rom[A+diff] = swap_bits_5_6(rom[A]);
-	)
+	}
 	
 	GAMEX( 1981, decocass, 0,		 decocass, decocass, decocass, ROT270, "DECO", "Cassette System", NOT_A_DRIVER )
 	GAME ( 1981, ctsttape, decocass, ctsttape, decocass, decocass, ROT270, "DECO", "Cassette: Test Tape" )

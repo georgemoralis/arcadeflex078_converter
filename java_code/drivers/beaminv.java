@@ -79,46 +79,46 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	INPUT_PORTS_START( beaminv )
-		PORT_START      /* IN0 */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Lives ) )
-		PORT_DIPSETTING(    0x00, "3" )
-		PORT_DIPSETTING(    0x01, "4" )
-		PORT_DIPSETTING(    0x02, "5" )
-		PORT_DIPSETTING(    0x03, "6" )
-		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(    0x00, "1000" )
-		PORT_DIPSETTING(    0x04, "2000" )
-		PORT_DIPSETTING(    0x08, "3000" )
-		PORT_DIPSETTING(    0x0c, "4000" )
-		PORT_DIPNAME( 0x10, 0x00, DEF_STR( Unknown ) )		/* probably unused */
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x60, 0x40, "Faster Bombs At" )
-		PORT_DIPSETTING(    0x00, "49 Enemies" )
-		PORT_DIPSETTING(    0x20, "39 Enemies" )
-		PORT_DIPSETTING(    0x40, "29 Enemies" )
-		PORT_DIPSETTING(    0x60, "Never" )
-		PORT_DIPNAME( 0x80, 0x00, DEF_STR( Unknown ) )		/* probably unused */
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_beaminv = new InputPortPtr(){ public void handler() { 
+		PORT_START();       /* IN0 */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
+		PORT_DIPSETTING(    0x00, "3" );
+		PORT_DIPSETTING(    0x01, "4" );
+		PORT_DIPSETTING(    0x02, "5" );
+		PORT_DIPSETTING(    0x03, "6" );
+		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(    0x00, "1000" );
+		PORT_DIPSETTING(    0x04, "2000" );
+		PORT_DIPSETTING(    0x08, "3000" );
+		PORT_DIPSETTING(    0x0c, "4000" );
+		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Unknown") );		/* probably unused */
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x60, 0x40, "Faster Bombs At" );
+		PORT_DIPSETTING(    0x00, "49 Enemies" );
+		PORT_DIPSETTING(    0x20, "39 Enemies" );
+		PORT_DIPSETTING(    0x40, "29 Enemies" );
+		PORT_DIPSETTING(    0x60, "Never" );
+		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Unknown") );		/* probably unused */
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START      /* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0xe0, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START();       /* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0xe0, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START      /* IN2 */
-		PORT_ANALOG( 0xff, 0x00, IPT_PADDLE, 20, 10, 0x00, 0xff)
+		PORT_START();       /* IN2 */
+		PORT_ANALOG( 0xff, 0x00, IPT_PADDLE, 20, 10, 0x00, 0xff);
 	
-		PORT_START      /* IN3 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_SPECIAL )  /* should be V128, using VBLANK slows game down */
-		PORT_BIT( 0xfe, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START();       /* IN3 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_SPECIAL ); /* should be V128, using VBLANK slows game down */
+		PORT_BIT( 0xfe, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
 	/*************************************

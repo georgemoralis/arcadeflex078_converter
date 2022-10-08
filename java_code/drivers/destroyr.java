@@ -205,52 +205,52 @@ public class destroyr
 	};
 	
 	
-	INPUT_PORTS_START( destroyr )
-		PORT_START /* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNUSED ) /* call 7400 */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_UNUSED )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNUSED ) /* potsense1 */
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNUSED ) /* potsense2 */
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_START1 )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_START2 )
-		PORT_DIPNAME( 0xc0, 0x80, "Extended Play" )
-		PORT_DIPSETTING( 0x40, "1500 points" )
-		PORT_DIPSETTING( 0x80, "2500 points" )
-		PORT_DIPSETTING( 0xc0, "3500 points" )
-		PORT_DIPSETTING( 0x00, "never" )
+	static InputPortPtr input_ports_destroyr = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNUSED );/* call 7400 */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_UNUSED );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNUSED );/* potsense1 */
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNUSED );/* potsense2 */
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_START1 );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_START2 );
+		PORT_DIPNAME( 0xc0, 0x80, "Extended Play" );
+		PORT_DIPSETTING( 0x40, "1500 points" );
+		PORT_DIPSETTING( 0x80, "2500 points" );
+		PORT_DIPSETTING( 0xc0, "3500 points" );
+		PORT_DIPSETTING( 0x00, "never" );
 	
-		PORT_START /* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_TILT )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 ) /* actually a lever */
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON1 )
-		PORT_SERVICE( 0x08, IP_ACTIVE_LOW )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNUSED )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK )
+		PORT_START();  /* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_TILT );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 );/* actually a lever */
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON1 );
+		PORT_SERVICE( 0x08, IP_ACTIVE_LOW );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNUSED );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
-		PORT_START /* IN2 */
-		PORT_DIPNAME( 0x03, 0x02, DEF_STR( Coinage ) )
-		PORT_DIPSETTING( 0x03, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING( 0x02, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING( 0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING( 0x00, DEF_STR( Free_Play ) )
-		PORT_DIPNAME( 0x0c, 0x08, "Play Time" )
-		PORT_DIPSETTING( 0x00, "50 seconds" )
-		PORT_DIPSETTING( 0x04, "75 seconds" )
-		PORT_DIPSETTING( 0x08, "100 seconds" )
-		PORT_DIPSETTING( 0x0c, "125 seconds" )
-		PORT_DIPNAME( 0x30, 0x00, "Language" ) /* requires translation ROMs */
-		PORT_DIPSETTING( 0x30, "German" )
-		PORT_DIPSETTING( 0x20, "French" )
-		PORT_DIPSETTING( 0x10, "Spanish" )
-		PORT_DIPSETTING( 0x00, "English" )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START();  /* IN2 */
+		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Coinage") );
+		PORT_DIPSETTING( 0x03, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING( 0x02, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING( 0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING( 0x00, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0c, 0x08, "Play Time" );
+		PORT_DIPSETTING( 0x00, "50 seconds" );
+		PORT_DIPSETTING( 0x04, "75 seconds" );
+		PORT_DIPSETTING( 0x08, "100 seconds" );
+		PORT_DIPSETTING( 0x0c, "125 seconds" );
+		PORT_DIPNAME( 0x30, 0x00, "Language" );/* requires translation ROMs */
+		PORT_DIPSETTING( 0x30, "German" );
+		PORT_DIPSETTING( 0x20, "French" );
+		PORT_DIPSETTING( 0x10, "Spanish" );
+		PORT_DIPSETTING( 0x00, "English" );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START /* IN3 */
-		PORT_ANALOG( 0xff, 0x00, IPT_PADDLE_V | IPF_REVERSE, 30, 10, 0, 160)
-	INPUT_PORTS_END
+		PORT_START();  /* IN3 */
+		PORT_ANALOG( 0xff, 0x00, IPT_PADDLE_V | IPF_REVERSE, 30, 10, 0, 160);
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout destroyr_alpha_num_layout =

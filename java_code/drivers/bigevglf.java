@@ -207,69 +207,69 @@ public class bigevglf
 		beg_sharedram[offset] = data;
 	} };
 	
-	INPUT_PORTS_START( bigevglf )
+	static InputPortPtr input_ports_bigevglf = new InputPortPtr(){ public void handler() { 
 	
-		PORT_START	/* port 00 on sub cpu */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN4 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 )
+		PORT_START(); 	/* port 00 on sub cpu */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN4 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE1 );
 	
-		PORT_START	/* port 04 on sub cpu - bit 0 and bit 1 are coin inputs */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 )
+		PORT_START(); 	/* port 04 on sub cpu - bit 0 and bit 1 are coin inputs */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START	/* port 05 on sub cpu */
-		PORT_DIPNAME( 0x01, 0x00, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Upright ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Cocktail ) )
-		PORT_DIPNAME( 0x02, 0x02, DEF_STR( Flip_Screen ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ))
-		PORT_DIPSETTING(    0x00, DEF_STR( On ))
-		PORT_SERVICE( 0x04, IP_ACTIVE_LOW )
-	 	PORT_DIPNAME( 0x08, 0x08, DEF_STR( Demo_Sounds ) )
-	 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x50, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0xf0, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0xa0, DEF_STR( 1C_2C ) )
+		PORT_START(); 	/* port 05 on sub cpu */
+		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
+		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Flip_Screen") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );
+	 	PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );
+	 	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
+		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x50, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0xf0, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0xa0, DEF_STR( "1C_2C") );
 	
-		PORT_START	/* port 06 on sub cpu */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING(    0x01, "Easy" )
-		PORT_DIPSETTING(    0x03, "Normal" )
-		PORT_DIPSETTING(    0x02, "Hard" )
-		PORT_DIPSETTING(    0x00, "Difficult" )
-		PORT_DIPNAME( 0x0c, 0x0c, "Holes" )
-		PORT_DIPSETTING(    0x0c, "3" )
-	 	PORT_DIPSETTING(    0x08, "2" )
-	 	PORT_DIPSETTING(    0x04, "1" )
-	 	PORT_DIPSETTING(    0x00, "4" )
-		PORT_DIPNAME( 0x10, 0x00, "Title" )
-		PORT_DIPSETTING(    0x00, "English" )
-	 	PORT_DIPSETTING(    0x10, "Japanese" )
-	 	PORT_DIPNAME( 0xe0, 0xa0, "Full game price (credits)" )
-		PORT_DIPSETTING(    0xe0, "3" )
-		PORT_DIPSETTING(    0xc0, "4" )
-		PORT_DIPSETTING(    0xa0, "5" )
-		PORT_DIPSETTING(    0x80, "6" )
-		PORT_DIPSETTING(    0x60, "7" )
-		PORT_DIPSETTING(    0x40, "8" )
-		PORT_DIPSETTING(    0x20, "9" )
-		PORT_DIPSETTING(    0x00, "10" )
+		PORT_START(); 	/* port 06 on sub cpu */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(    0x01, "Easy" );
+		PORT_DIPSETTING(    0x03, "Normal" );
+		PORT_DIPSETTING(    0x02, "Hard" );
+		PORT_DIPSETTING(    0x00, "Difficult" );
+		PORT_DIPNAME( 0x0c, 0x0c, "Holes" );
+		PORT_DIPSETTING(    0x0c, "3" );
+	 	PORT_DIPSETTING(    0x08, "2" );
+	 	PORT_DIPSETTING(    0x04, "1" );
+	 	PORT_DIPSETTING(    0x00, "4" );
+		PORT_DIPNAME( 0x10, 0x00, "Title" );
+		PORT_DIPSETTING(    0x00, "English" );
+	 	PORT_DIPSETTING(    0x10, "Japanese" );
+	 	PORT_DIPNAME( 0xe0, 0xa0, "Full game price (credits); )
+		PORT_DIPSETTING(    0xe0, "3" );
+		PORT_DIPSETTING(    0xc0, "4" );
+		PORT_DIPSETTING(    0xa0, "5" );
+		PORT_DIPSETTING(    0x80, "6" );
+		PORT_DIPSETTING(    0x60, "7" );
+		PORT_DIPSETTING(    0x40, "8" );
+		PORT_DIPSETTING(    0x20, "9" );
+		PORT_DIPSETTING(    0x00, "10" );
 	
-		PORT_START  /* TRACKBALL X - port 02 on sub cpu */
-		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X , 30, 10, 0, 0 )
+		PORT_START();   /* TRACKBALL X - port 02 on sub cpu */
+		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X , 30, 10, 0, 0 );
 	
-		PORT_START  /* TRACKBALL Y - port 03 on sub cpu */
-		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y | IPF_REVERSE, 30, 10, 0, 0 )
-	INPUT_PORTS_END
+		PORT_START();   /* TRACKBALL Y - port 03 on sub cpu */
+		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y | IPF_REVERSE, 30, 10, 0, 0 );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	/*****************************************************************************/

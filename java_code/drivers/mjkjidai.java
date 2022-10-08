@@ -138,130 +138,130 @@ public class mjkjidai
 	
 	
 	
-	INPUT_PORTS_START( mjkjidai )
-		PORT_START
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x02, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_SERVICE( 0x04, IP_ACTIVE_LOW )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Flip_Screen ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_mjkjidai = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Flip_Screen") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x02, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x04, 0x04, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_START(); 
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE )	// service mode
-		PORT_DIPNAME( 0x20, 0x20, "Statistics" )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START3 )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 )
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE );// service mode
+		PORT_DIPNAME( 0x20, 0x20, "Statistics" );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START3 );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	
-		PORT_START
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT )	// reinitialize NVRAM and reset the game
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN1 )
+		PORT_START(); 
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT );// reinitialize NVRAM and reset the game
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN1 );
 	
 		/* player 2 inputs (same as player 1) */
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_START
-		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_START(); 
+		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x3e, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x3e, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "Kan",   KEYCODE_LCONTROL, IP_JOY_NONE )
-		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "Reach", KEYCODE_LSHIFT,   IP_JOY_NONE )
-		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "Ron",   KEYCODE_Z,        IP_JOY_NONE )
-		PORT_BIT( 0x38, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "Kan",   KEYCODE_LCONTROL, IP_JOY_NONE );
+		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "Reach", KEYCODE_LSHIFT,   IP_JOY_NONE );
+		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "Ron",   KEYCODE_Z,        IP_JOY_NONE );
+		PORT_BIT( 0x38, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "M",   KEYCODE_M,        IP_JOY_NONE )
-		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "N",   KEYCODE_N,        IP_JOY_NONE )
-		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "Chi", KEYCODE_SPACE,    IP_JOY_NONE )
-		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "Pon", KEYCODE_LALT,     IP_JOY_NONE )
-		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "M",   KEYCODE_M,        IP_JOY_NONE );
+		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "N",   KEYCODE_N,        IP_JOY_NONE );
+		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "Chi", KEYCODE_SPACE,    IP_JOY_NONE );
+		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "Pon", KEYCODE_LALT,     IP_JOY_NONE );
+		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "I",     KEYCODE_I,        IP_JOY_NONE )
-		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "J",     KEYCODE_J,        IP_JOY_NONE )
-		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "K",     KEYCODE_K,        IP_JOY_NONE )
-		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "L",     KEYCODE_L,        IP_JOY_NONE )
-		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "I",     KEYCODE_I,        IP_JOY_NONE );
+		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "J",     KEYCODE_J,        IP_JOY_NONE );
+		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "K",     KEYCODE_K,        IP_JOY_NONE );
+		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "L",     KEYCODE_L,        IP_JOY_NONE );
+		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "E",     KEYCODE_E,        IP_JOY_NONE )
-		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "F",     KEYCODE_F,        IP_JOY_NONE )
-		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "G",     KEYCODE_G,        IP_JOY_NONE )
-		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "H",     KEYCODE_H,        IP_JOY_NONE )
-		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED )
+		PORT_START(); 
+		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "E",     KEYCODE_E,        IP_JOY_NONE );
+		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "F",     KEYCODE_F,        IP_JOY_NONE );
+		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "G",     KEYCODE_G,        IP_JOY_NONE );
+		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "H",     KEYCODE_H,        IP_JOY_NONE );
+		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "A",     KEYCODE_A,        IP_JOY_NONE )
-		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "B",     KEYCODE_B,        IP_JOY_NONE )
-		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "C",     KEYCODE_C,        IP_JOY_NONE )
-		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "D",     KEYCODE_D,        IP_JOY_NONE )
-		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "A",     KEYCODE_A,        IP_JOY_NONE );
+		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "B",     KEYCODE_B,        IP_JOY_NONE );
+		PORT_BITX(0x04, IP_ACTIVE_LOW, 0, "C",     KEYCODE_C,        IP_JOY_NONE );
+		PORT_BITX(0x08, IP_ACTIVE_LOW, 0, "D",     KEYCODE_D,        IP_JOY_NONE );
+		PORT_BIT( 0x30, IP_ACTIVE_LOW, IPT_UNUSED );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	
 	static struct GfxLayout charlayout =
-	new IO_WritePort(
+	{
 		8,8,
 		RGN_FRAC(1,3),
 		3,
@@ -269,10 +269,10 @@ public class mjkjidai
 		{ 0, 1, 2, 3, 4, 5, 6, 7 },
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
 		8*8
-	);
+	};
 	
 	static struct GfxLayout spritelayout =
-	new IO_WritePort(
+	{
 		16,16,
 		RGN_FRAC(1,3),
 		3,
@@ -282,31 +282,31 @@ public class mjkjidai
 		{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 			16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 },
 		32*8
-	);
+	};
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	new IO_WritePort(
-		{ REGION_GFX1, 0, charlayout,   0, 32 },
-		{ REGION_GFX1, 0, spritelayout, 0, 16 },
+	{
+		{ REGION_GFX1, 0, &charlayout,   0, 32 },
+		{ REGION_GFX1, 0, &spritelayout, 0, 16 },
 		{ -1 } /* end of array */
-	);
+	};
 	
 	
 	
 	static struct SN76496interface sn76496_interface =
-	new IO_WritePort(
+	{
 		2,	/* 2 chips */
 		{ 10000000/4, 10000000/4, 10000000/4 },	/* 2.5 MHz ??? */
 		{ 50, 50 }
-	);
+	};
 	
 	static struct ADPCMinterface adpcm_interface =
-	new IO_WritePort(
+	{
 		1,          	/* 1 channel */
 		6000,       	/* 6000Hz playback */
 		REGION_SOUND1,	/* memory region */
 		{ 100 }
-	);
+	};
 	
 	
 	

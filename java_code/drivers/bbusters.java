@@ -400,191 +400,191 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	INPUT_PORTS_START( bbusters )
-		PORT_START	/* Player controls */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )		// "Fire"
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 )		// "Grenade"
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )		// "Fire"
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )		// "Grenade"
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_bbusters = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* Player controls */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );	// "Fire"
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );	// "Grenade"
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );	// "Fire"
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );	// "Grenade"
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START	/* Player controls */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START3 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 )		// "Fire"
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 )		// "Grenade"
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 	/* Player controls */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START3 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 );	// "Fire"
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 );	// "Grenade"
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 )
-		PORT_BITX(0x10, IP_ACTIVE_LOW, IPT_SERVICE2, "Coin 5", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE3, "Coin 6", IP_KEY_DEFAULT, IP_JOY_DEFAULT )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 )		// See notes
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 );
+		PORT_BITX(0x10, IP_ACTIVE_LOW, IPT_SERVICE2, "Coin 5", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE3, "Coin 6", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 );	// See notes
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START	/* Dip switch bank 1 */
-		PORT_DIPNAME( 0x01, 0x01, "Allow Continue" )
-		PORT_DIPSETTING(    0x00, DEF_STR( No ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Yes ) )
-		PORT_DIPNAME( 0x06, 0x06, "Magazine / Grenade" )
-		PORT_DIPSETTING(    0x04, "5 / 2" )
-		PORT_DIPSETTING(    0x06, "7 / 3" )
-		PORT_DIPSETTING(    0x02, "9 / 4" )
-		PORT_DIPSETTING(    0x00, "12 / 5" )
-		PORT_DIPNAME( 0x18, 0x18, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x18, DEF_STR( 1C_1C ) )
-		PORT_DIPNAME( 0x60, 0x60, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0x60, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_6C ) )
-		PORT_DIPNAME( 0x80, 0x80, "Coin Slots" )			// See notes
-		PORT_DIPSETTING(    0x80, "Common" )
-		PORT_DIPSETTING(    0x00, "Individual" )
+		PORT_START(); 	/* Dip switch bank 1 */
+		PORT_DIPNAME( 0x01, 0x01, "Allow Continue" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Yes") );
+		PORT_DIPNAME( 0x06, 0x06, "Magazine / Grenade" );
+		PORT_DIPSETTING(    0x04, "5 / 2" );
+		PORT_DIPSETTING(    0x06, "7 / 3" );
+		PORT_DIPSETTING(    0x02, "9 / 4" );
+		PORT_DIPSETTING(    0x00, "12 / 5" );
+		PORT_DIPNAME( 0x18, 0x18, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x18, DEF_STR( "1C_1C") );
+		PORT_DIPNAME( 0x60, 0x60, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0x60, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_6C") );
+		PORT_DIPNAME( 0x80, 0x80, "Coin Slots" );		// See notes
+		PORT_DIPSETTING(    0x80, "Common" );
+		PORT_DIPSETTING(    0x00, "Individual" );
 	
-		PORT_START	/* Dip switch bank 2 */
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING(    0x02, "Easy" )
-		PORT_DIPSETTING(    0x03, "Normal" )
-		PORT_DIPSETTING(    0x01, "Hard" )
-		PORT_DIPSETTING(    0x00, "Hardest" )
-		PORT_BITX( 0,       0x04, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Infinite Energy", IP_KEY_NONE, IP_JOY_NONE )
-		PORT_DIPNAME( 0x0c, 0x0c, "Game Mode" )
-		PORT_DIPSETTING(    0x08, "Demo Sounds Off" )
-		PORT_DIPSETTING(    0x0c, "Demo Sounds On" )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unused ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unused ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unused ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	 	PORT_SERVICE( 0x80, IP_ACTIVE_LOW )
+		PORT_START(); 	/* Dip switch bank 2 */
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(    0x02, "Easy" );
+		PORT_DIPSETTING(    0x03, "Normal" );
+		PORT_DIPSETTING(    0x01, "Hard" );
+		PORT_DIPSETTING(    0x00, "Hardest" );
+		PORT_BITX( 0,       0x04, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Infinite Energy", IP_KEY_NONE, IP_JOY_NONE );
+		PORT_DIPNAME( 0x0c, 0x0c, "Game Mode" );
+		PORT_DIPSETTING(    0x08, "Demo Sounds Off" );
+		PORT_DIPSETTING(    0x0c, "Demo Sounds On" );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unused") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unused") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unused") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+	 	PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 10, 0, 255 )
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 10, 0, 255 )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 10, 0, 255 );
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 10, 0, 255 );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 10, 0, 255 )
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 10, 0, 255 )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 10, 0, 255 );
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 10, 0, 255 );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER3, 25, 10, 0, 255 )
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER3, 25, 10, 0, 255 )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER3, 25, 10, 0, 255 );
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER3, 25, 10, 0, 255 );
 	
 	#if BBUSTERS_HACK
-		PORT_START
-		PORT_DIPNAME( 0x03, 0x02, "Country/Version" )
-		PORT_DIPSETTING(    0x00, "Japan?" )
-		PORT_DIPSETTING(    0x01, "US?" )
-		PORT_DIPSETTING(    0x02, "World?" )
-	//	PORT_DIPSETTING(    0x03, "World?" )			// Same as "0008" - impossible choice ?
+		PORT_START(); 
+		PORT_DIPNAME( 0x03, 0x02, "Country/Version" );
+		PORT_DIPSETTING(    0x00, "Japan?" );
+		PORT_DIPSETTING(    0x01, "US?" );
+		PORT_DIPSETTING(    0x02, "World?" );
+	//	PORT_DIPSETTING(    0x03, "World?" );		// Same as "0008" - impossible choice ?
 	#endif
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( mechatt )
-		PORT_START
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_SERVICE1 )		// See notes
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_COIN3 )
-		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_COIN4 )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )	// "Fire"
-		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 )	// "Grenade"
-		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_START2 )
-		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )	// "Fire"
-		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 )	// "Grenade"
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_mechatt = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_SERVICE1 );	// See notes
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_COIN3 );
+		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_COIN4 );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );// "Fire"
+		PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );// "Grenade"
+		PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_START2 );
+		PORT_BIT( 0x2000, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );// "Fire"
+		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );// "Grenade"
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START	/* Dip switch bank 1 */
-		PORT_DIPNAME( 0x0001, 0x0001, "Coin Slots" )		// See notes
-		PORT_DIPSETTING(      0x0001, "Common" )
-		PORT_DIPSETTING(      0x0000, "Individual" )
-		PORT_DIPNAME( 0x0002, 0x0002, "Allow Continue" )
-		PORT_DIPSETTING(      0x0000, DEF_STR( No ) )
-		PORT_DIPSETTING(      0x0002, DEF_STR( Yes ) )
-		PORT_DIPNAME( 0x000c, 0x000c, "Magazine / Grenade" )
-		PORT_DIPSETTING(      0x0008, "5 / 2" )
-		PORT_DIPSETTING(      0x000c, "6 / 3" )
-		PORT_DIPSETTING(      0x0004, "7 / 4" )
-		PORT_DIPSETTING(      0x0000, "8 / 5" )
-		PORT_DIPNAME( 0x0030, 0x0030, DEF_STR( Coin_A ) )	// See notes
-		PORT_DIPSETTING(      0x0000, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(      0x0010, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(      0x0020, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(      0x0030, DEF_STR( 1C_1C ) )
-		PORT_DIPNAME( 0x00c0, 0x00c0, DEF_STR( Coin_B ) )	// See notes
-		PORT_DIPSETTING(      0x00c0, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(      0x0080, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(      0x0040, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( 1C_4C ) )
-		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING(      0x0200, "Easy" )
-		PORT_DIPSETTING(      0x0300, "Normal" )
-		PORT_DIPSETTING(      0x0100, "Hard" )
-		PORT_DIPSETTING(      0x0000, "Hardest" )
-		PORT_BITX( 0,         0x0400, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Infinite Energy", IP_KEY_NONE, IP_JOY_NONE )
-		PORT_DIPNAME( 0x0c00, 0x0c00, "Game Mode" )
-		PORT_DIPSETTING(      0x0800, "Demo Sounds Off" )
-		PORT_DIPSETTING(      0x0c00, "Demo Sounds On" )
-		PORT_DIPNAME( 0x1000, 0x1000, DEF_STR( Unused ) )
-		PORT_DIPSETTING(      0x1000, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( Unused ) )
-		PORT_DIPSETTING(      0x2000, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-		PORT_DIPNAME( 0x4000, 0x4000, DEF_STR( Unused ) )
-		PORT_DIPSETTING(      0x4000, DEF_STR( Off ) )
-		PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-	 	PORT_SERVICE( 0x8000, IP_ACTIVE_LOW )
+		PORT_START(); 	/* Dip switch bank 1 */
+		PORT_DIPNAME( 0x0001, 0x0001, "Coin Slots" );	// See notes
+		PORT_DIPSETTING(      0x0001, "Common" );
+		PORT_DIPSETTING(      0x0000, "Individual" );
+		PORT_DIPNAME( 0x0002, 0x0002, "Allow Continue" );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "No") );
+		PORT_DIPSETTING(      0x0002, DEF_STR( "Yes") );
+		PORT_DIPNAME( 0x000c, 0x000c, "Magazine / Grenade" );
+		PORT_DIPSETTING(      0x0008, "5 / 2" );
+		PORT_DIPSETTING(      0x000c, "6 / 3" );
+		PORT_DIPSETTING(      0x0004, "7 / 4" );
+		PORT_DIPSETTING(      0x0000, "8 / 5" );
+		PORT_DIPNAME( 0x0030, 0x0030, DEF_STR( "Coin_A") );	// See notes
+		PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(      0x0010, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(      0x0020, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(      0x0030, DEF_STR( "1C_1C") );
+		PORT_DIPNAME( 0x00c0, 0x00c0, DEF_STR( "Coin_B") );	// See notes
+		PORT_DIPSETTING(      0x00c0, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(      0x0080, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(      0x0040, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "1C_4C") );
+		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(      0x0200, "Easy" );
+		PORT_DIPSETTING(      0x0300, "Normal" );
+		PORT_DIPSETTING(      0x0100, "Hard" );
+		PORT_DIPSETTING(      0x0000, "Hardest" );
+		PORT_BITX( 0,         0x0400, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Infinite Energy", IP_KEY_NONE, IP_JOY_NONE );
+		PORT_DIPNAME( 0x0c00, 0x0c00, "Game Mode" );
+		PORT_DIPSETTING(      0x0800, "Demo Sounds Off" );
+		PORT_DIPSETTING(      0x0c00, "Demo Sounds On" );
+		PORT_DIPNAME( 0x1000, 0x1000, DEF_STR( "Unused") );
+		PORT_DIPSETTING(      0x1000, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Unused") );
+		PORT_DIPSETTING(      0x2000, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+		PORT_DIPNAME( 0x4000, 0x4000, DEF_STR( "Unused") );
+		PORT_DIPSETTING(      0x4000, DEF_STR( "Off") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
+	 	PORT_SERVICE( 0x8000, IP_ACTIVE_LOW );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 10, 0, 255 )
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 10, 0, 255 )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 25, 10, 0, 255 );
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 25, 10, 0, 255 );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 10, 0, 255 )
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 10, 0, 255 )
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 25, 10, 0, 255 );
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 10, 0, 255 );
 	
 	#if MECHATT_HACK
-		PORT_START
-		PORT_DIPNAME( 0x03, 0x01, "Country" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "World" )
-		PORT_DIPSETTING(    0x02, "US" )
-		PORT_DIPSETTING(    0x03, "Asia?" )
+		PORT_START(); 
+		PORT_DIPNAME( 0x03, 0x01, "Country" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "World" );
+		PORT_DIPSETTING(    0x02, "US" );
+		PORT_DIPSETTING(    0x03, "Asia?" );
 	#endif
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	/******************************************************************************/
 	
 	static struct GfxLayout charlayout =
-	new IO_WritePort(
+	{
 		8,8,
 		RGN_FRAC(1,1),
 		4,
@@ -592,10 +592,10 @@ public class bbusters
 		{ 0,4,8,12,16,20,24,28 },
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32 },
 		32*8
-	);
+	};
 	
 	static struct GfxLayout spritelayout =
-	new IO_WritePort(
+	{
 		16,16,
 		RGN_FRAC(1,1),
 		4,
@@ -610,10 +610,10 @@ public class bbusters
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 				16*32, 17*32, 18*32, 19*32, 20*32, 21*32, 22*32, 23*32 },
 		128*8
-	);
+	};
 	
 	static struct GfxLayout tilelayout =
-	new IO_WritePort(
+	{
 		16,16,	/* 16*16 sprites */
 		RGN_FRAC(1,1),
 		4,	/* 4 bits per pixel */
@@ -625,37 +625,37 @@ public class bbusters
 		{ 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 			8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 },
 		128*8
-	);
+	};
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	new IO_WritePort(
-		{ REGION_GFX1, 0, charlayout,     0, 16 },
-		{ REGION_GFX2, 0, spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, tilelayout,   768, 16 },
-		{ REGION_GFX5, 0, tilelayout,  1024+256, 16 },
+	{
+		{ REGION_GFX1, 0, &charlayout,     0, 16 },
+		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
+		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
+		{ REGION_GFX4, 0, &tilelayout,   768, 16 },
+		{ REGION_GFX5, 0, &tilelayout,  1024+256, 16 },
 		{ -1 } /* end of array */
-	);
+	};
 	
 	static struct GfxDecodeInfo gfxdecodeinfo_mechatt[] =
-	new IO_WritePort(
-		{ REGION_GFX1, 0, charlayout,     0, 16 },
-		{ REGION_GFX2, 0, spritelayout, 256, 16 },
-		{ REGION_GFX3, 0, spritelayout, 512, 16 },
-		{ REGION_GFX4, 0, tilelayout,   512, 16 },
-		{ REGION_GFX5, 0, tilelayout,   768, 16 },
+	{
+		{ REGION_GFX1, 0, &charlayout,     0, 16 },
+		{ REGION_GFX2, 0, &spritelayout, 256, 16 },
+		{ REGION_GFX3, 0, &spritelayout, 512, 16 },
+		{ REGION_GFX4, 0, &tilelayout,   512, 16 },
+		{ REGION_GFX5, 0, &tilelayout,   768, 16 },
 		{ -1 } /* end of array */
-	);
+	};
 	
 	/******************************************************************************/
 	
 	static void sound_irq( int irq )
-	new IO_WritePort(
+	{
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
-	)
+	}
 	
 	static struct YM2608interface ym2608_interface =
-	new IO_WritePort(
+	{
 		1,
 		8000000,	/* 8 MHz */
 		{ 50 },
@@ -666,10 +666,10 @@ public class bbusters
 		{ sound_irq },
 		{ REGION_SOUND1 },
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
-	);
+	};
 	
 	struct YM2610interface ym2610_interface =
-	new IO_WritePort(
+	{
 		1,
 		8000000,
 		{ MIXERG(15,MIXER_GAIN_4x,MIXER_PAN_CENTER) },
@@ -681,12 +681,12 @@ public class bbusters
 		{ REGION_SOUND2 },
 		{ REGION_SOUND1 },
 		{ YM3012_VOL(20,MIXER_PAN_LEFT,20,MIXER_PAN_RIGHT) }
-	);
+	};
 	
 	/******************************************************************************/
 	
 	static NVRAM_HANDLER( bbusters )
-	new IO_WritePort(
+	{
 		if( read_or_write ) {
 			mame_fwrite (file, eprom_data, 0x80);
 		}
@@ -696,26 +696,26 @@ public class bbusters
 			else
 				memset (eprom_data, 0xff, 0x80);
 		}
-	)
+	}
 	
 	static INTERRUPT_GEN( bbuster )
-	new IO_WritePort(
+	{
 		if (cpu_getiloops()==0)
 			cpu_set_irq_line(0, 6, HOLD_LINE); /* VBL */
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
-	)
+	}
 	
 	static VIDEO_EOF( bbuster )
-	new IO_WritePort(
+	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
-	)
+	}
 	
 	static VIDEO_EOF( mechatt )
-	new IO_WritePort(
+	{
 		buffer_spriteram16_w(0,0,0);
-	)
+	}
 	
 	static MACHINE_DRIVER_START( bbusters )
 	
@@ -871,7 +871,7 @@ public class bbusters
 	
 	#if 0
 	static void bbusters_patch_code(UINT16 offset)
-	new IO_WritePort(
+	{
 		/* To avoid checksum error */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		RAM[(offset +  0)/2] = 0x4e71;
@@ -882,22 +882,22 @@ public class bbusters
 		RAM[(offset + 22)/2] = 0x4e71;
 		RAM[(offset + 30)/2] = 0x4e71;
 		RAM[(offset + 32)/2] = 0x4e71;
-	)
+	}
 	#endif
 	
 	DRIVER_INIT( bbusters )
-	new IO_WritePort(
+	{
 		#if BBUSTERS_HACK
 		bbusters_patch_code(0x00234c);
 		#endif
-	)
+	}
 	
 	DRIVER_INIT( mechatt )
-	new IO_WritePort(
+	{
 		#if MECHATT_HACK
 		bbusters_patch_code(0x003306);
 		#endif
-	)
+	}
 	
 	/******************************************************************************/
 	

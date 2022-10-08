@@ -36,143 +36,143 @@ public class hitme
 	VIDEO_START (brickyrd);
 	VIDEO_UPDATE (hitme);
 	
-	INPUT_PORTS_START( hitme )
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 ) /* Start button */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Random bit generator Based on Hblank */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 ) /* P1 Stand button */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 ) /* P1 Hit button */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 ) /* P1 Bet button */
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+	static InputPortPtr input_ports_hitme = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );/* Start button */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Random bit generator Based on Hblank */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );/* P1 Stand button */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 );/* P1 Hit button */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 );/* P1 Bet button */
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Aux 2 dipswitch - Unused */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 ) /* P2 Stand button */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 ) /* P2 Hit button */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 ) /* P2 Bet button */
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Aux 2 dipswitch - Unused */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );/* P2 Stand button */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );/* P2 Hit button */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 );/* P2 Bet button */
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-		PORT_DIPNAME( 0x01, 0x00, "Extra Hand On Natural" ) /* Aux 1 dipswitch */
-		PORT_DIPSETTING(    0x00, DEF_STR ( Off ) )
-		PORT_DIPSETTING(    0x01, DEF_STR ( On )  )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Random bit generator Based on Hblank */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 ) /* P3 Stand button */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 ) /* P3 Hit button */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER3 ) /* P3 Bet button */
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+		PORT_DIPNAME( 0x01, 0x00, "Extra Hand On Natural" );/* Aux 1 dipswitch */
+		PORT_DIPSETTING(    0x00, DEF_STR ( Off );
+		PORT_DIPSETTING(    0x01, DEF_STR ( On ); )
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Random bit generator Based on Hblank */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 );/* P3 Stand button */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 );/* P3 Hit button */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER3 );/* P3 Bet button */
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (TOC1) */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Aux 2 dipswitch - Unused*/
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER4 ) /* P4 Stand button */
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER4 ) /* P4 Hit button */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER4 ) /* P4 Bet button */
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (TOC1) */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Aux 2 dipswitch - Unused*/
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER4 );/* P4 Stand button */
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER4 );/* P4 Hit button */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER4 );/* P4 Bet button */
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-		PORT_DIPNAME( 0x07, 0x07, "Number of Chips" )
-		PORT_DIPSETTING(    0x00, "5 Chips" )
-		PORT_DIPSETTING(    0x01, "10 Chips" )
-		PORT_DIPSETTING(    0x02, "15 Chips" )
-		PORT_DIPSETTING(    0x03, "20 Chips" )
-		PORT_DIPSETTING(    0x04, "25 Chips" )
-		PORT_DIPSETTING(    0x05, "30 Chips" )
-		PORT_DIPSETTING(    0x06, "35 Chips" )
-		PORT_DIPSETTING(    0x07, "40 Chips" )
+		PORT_START(); 
+		PORT_DIPNAME( 0x07, 0x07, "Number of Chips" );
+		PORT_DIPSETTING(    0x00, "5 Chips" );
+		PORT_DIPSETTING(    0x01, "10 Chips" );
+		PORT_DIPSETTING(    0x02, "15 Chips" );
+		PORT_DIPSETTING(    0x03, "20 Chips" );
+		PORT_DIPSETTING(    0x04, "25 Chips" );
+		PORT_DIPSETTING(    0x05, "30 Chips" );
+		PORT_DIPSETTING(    0x06, "35 Chips" );
+		PORT_DIPSETTING(    0x07, "40 Chips" );
 	
-		PORT_START
-		PORT_DIPNAME( 0x07, 0x00, "Number of Hands" )
-		PORT_DIPSETTING(    0x00, "5 Hands" )
-		PORT_DIPSETTING(    0x01, "10 Hands" )
-		PORT_DIPSETTING(    0x02, "15 Hands" )
-		PORT_DIPSETTING(    0x03, "20 Hands" )
-		PORT_DIPSETTING(    0x04, "25 Hands" )
-		PORT_DIPSETTING(    0x05, "30 Hands" )
-		PORT_DIPSETTING(    0x06, "35 Hands" )
-		PORT_DIPSETTING(    0x07, "40 Hands" )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_DIPNAME( 0x07, 0x00, "Number of Hands" );
+		PORT_DIPSETTING(    0x00, "5 Hands" );
+		PORT_DIPSETTING(    0x01, "10 Hands" );
+		PORT_DIPSETTING(    0x02, "15 Hands" );
+		PORT_DIPSETTING(    0x03, "20 Hands" );
+		PORT_DIPSETTING(    0x04, "25 Hands" );
+		PORT_DIPSETTING(    0x05, "30 Hands" );
+		PORT_DIPSETTING(    0x06, "35 Hands" );
+		PORT_DIPSETTING(    0x07, "40 Hands" );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( brickyrd )
-		PORT_START
-	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 ) /* Start button */
-	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Random bit generator Based on Hblank */
-	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN )
-	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT )
-	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT )
-	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP )
-	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+	static InputPortPtr input_ports_brickyrd = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );/* Start button */
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Random bit generator Based on Hblank */
+	    PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
+	    PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
+	    PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
+	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 )
-	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Aux 2 dipswitch - Unused */
-	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER3  )
-	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER3  )
-	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER3  )
-	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER3  )
-	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Aux 2 dipswitch - Unused */
+	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER3  );
+	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER3  );
+	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER3  );
+	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER3  );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* ??? */
-	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Random bit generator Based on Hblank */
-	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER4  )
-	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER4  )
-	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER4  )
-	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER4  )
-	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* ??? */
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Random bit generator Based on Hblank */
+	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER4  );
+	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER4  );
+	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER4  );
+	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER4  );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
-		PORT_START
-	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (TOC1) */
-	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Always high */
-	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Aux 2 dipswitch - Unused*/
-	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER2  )
-	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER2  )
-	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER2  )
-	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER2  )
-	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* Time out counter (*TO) */
+		PORT_START(); 
+	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (TOC1) */
+	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
+	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Aux 2 dipswitch - Unused*/
+	   PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER2  );
+	   PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER2  );
+	   PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER2  );
+	   PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER2  );
+	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Time out counter (*TO) */
 	
 	   /* On the flyer it says that barricade has both user adjustable points per
 			game, and speed. From experimenting it looks like points per game is the
 			same dipswitch as hitme's chips, and speed is hitme's hands. The flyer
 	      says 1-7 points per games, but it really can go to 8. */
 	
-		PORT_START
-		PORT_DIPNAME( 0x07, 0x07, "Points Per Game" )
-		PORT_DIPSETTING(    0x00, "1 Point" )
-		PORT_DIPSETTING(    0x01, "2 Points" )
-		PORT_DIPSETTING(    0x02, "3 Points" )
-		PORT_DIPSETTING(    0x03, "4 Points" )
-		PORT_DIPSETTING(    0x04, "5 Points" )
-		PORT_DIPSETTING(    0x05, "6 Points" )
-		PORT_DIPSETTING(    0x06, "7 Points" )
-		PORT_DIPSETTING(    0x07, "8 Points" )
+		PORT_START(); 
+		PORT_DIPNAME( 0x07, 0x07, "Points Per Game" );
+		PORT_DIPSETTING(    0x00, "1 Point" );
+		PORT_DIPSETTING(    0x01, "2 Points" );
+		PORT_DIPSETTING(    0x02, "3 Points" );
+		PORT_DIPSETTING(    0x03, "4 Points" );
+		PORT_DIPSETTING(    0x04, "5 Points" );
+		PORT_DIPSETTING(    0x05, "6 Points" );
+		PORT_DIPSETTING(    0x06, "7 Points" );
+		PORT_DIPSETTING(    0x07, "8 Points" );
 	
 		/* These are like lives, you lose a point if you crash. The last person with
 			points wins the game. */
 	
-		PORT_START
-		PORT_DIPNAME( 0x07, 0x00, "Game Speed" )
-		PORT_DIPSETTING(    0x00, "Fast Fast" )
-		PORT_DIPSETTING(    0x01, "7" )
-		PORT_DIPSETTING(    0x02, "6" )
-		PORT_DIPSETTING(    0x03, "5" )
-		PORT_DIPSETTING(    0x04, "4" )
-		PORT_DIPSETTING(    0x05, "3" )
-		PORT_DIPSETTING(    0x06, "2" )
-		PORT_DIPSETTING(    0x07, "Slow Slow" )
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_DIPNAME( 0x07, 0x00, "Game Speed" );
+		PORT_DIPSETTING(    0x00, "Fast Fast" );
+		PORT_DIPSETTING(    0x01, "7" );
+		PORT_DIPSETTING(    0x02, "6" );
+		PORT_DIPSETTING(    0x03, "5" );
+		PORT_DIPSETTING(    0x04, "4" );
+		PORT_DIPSETTING(    0x05, "3" );
+		PORT_DIPSETTING(    0x06, "2" );
+		PORT_DIPSETTING(    0x07, "Slow Slow" );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout charlayout =
 	{

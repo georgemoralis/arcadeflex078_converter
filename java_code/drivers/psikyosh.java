@@ -474,136 +474,136 @@ public class psikyosh
 	MACHINE_DRIVER_END
 	
 	#define UNUSED_PORT \
-		PORT_START	/* not read? */ \
-		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x04, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN ) \
-		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START(); 	/* not read? */ \
+		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x04, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );\
+		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
 	#define PORT_COIN( debug ) \
-		PORT_START /* IN3 system inputs */ \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1    ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2    ) \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN  ) \
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN  ) \
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE1 ) \
-		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE ) \
-		PORT_DIPNAME( 0x40, debug ? 0x00 : 0x40, "Debug" ) /* Must be high for dragnblz, low for others (Resets EEPROM?). Debug stuff */ \
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN  )
+		PORT_START();  /* IN3 system inputs */ \
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1    );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2    );\
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_UNKNOWN  );\
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN  );\
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE1 );\
+		PORT_BITX(0x20, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) \
+		PORT_DIPNAME( 0x40, debug ? 0x00 : 0x40, "Debug" );/* Must be high for dragnblz, low for others (Resets EEPROM?). Debug stuff */ \
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN  );
 	
 	#define PORT_PLAYER( player, start, buttons ) \
-		PORT_START \
-		PORT_BIT(  0x01, IP_ACTIVE_LOW, start ) \
-		PORT_BIT(  0x02, IP_ACTIVE_LOW, (buttons>=3)?(IPT_BUTTON3 | player):IPT_UNKNOWN ) \
-		PORT_BIT(  0x04, IP_ACTIVE_LOW, (buttons>=2)?(IPT_BUTTON2 | player):IPT_UNKNOWN ) \
-		PORT_BIT(  0x08, IP_ACTIVE_LOW, (buttons>=1)?(IPT_BUTTON1 | player):IPT_UNKNOWN ) \
-		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | player ) \
-		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | player ) \
-		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | player ) \
-		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | player )
+		PORT_START();  \
+		PORT_BIT(  0x01, IP_ACTIVE_LOW, start );\
+		PORT_BIT(  0x02, IP_ACTIVE_LOW, (buttons>=3);(IPT_BUTTON3 | player):IPT_UNKNOWN ) \
+		PORT_BIT(  0x04, IP_ACTIVE_LOW, (buttons>=2);(IPT_BUTTON2 | player):IPT_UNKNOWN ) \
+		PORT_BIT(  0x08, IP_ACTIVE_LOW, (buttons>=1);(IPT_BUTTON1 | player):IPT_UNKNOWN ) \
+		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | player );\
+		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | player );\
+		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | player );\
+		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | player );
 	
-	INPUT_PORTS_START( s1945ii )
+	static InputPortPtr input_ports_s1945ii = new InputPortPtr(){ public void handler() { 
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 2 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 2 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 0 )
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x01, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "World" )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x01, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "World" );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( soldivid )
+	static InputPortPtr input_ports_soldivid = new InputPortPtr(){ public void handler() { 
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 3 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 3 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 0 )
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x01, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "World" )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x01, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "World" );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( daraku )
+	static InputPortPtr input_ports_daraku = new InputPortPtr(){ public void handler() { 
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 2 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 2 )
 	
-		PORT_START  /* IN2 more controls */
-		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN                      )
-		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_UNKNOWN                      )
-		PORT_BIT(  0x04, IP_ACTIVE_LOW, IPT_BUTTON4        | IPF_PLAYER2 )
-		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_BUTTON3        | IPF_PLAYER2 )
-		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN                      )
-		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN                      )
-		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_BUTTON4        | IPF_PLAYER1 )
-		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_BUTTON3        | IPF_PLAYER1 )
+		PORT_START();   /* IN2 more controls */
+		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN                      );
+		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_UNKNOWN                      );
+		PORT_BIT(  0x04, IP_ACTIVE_LOW, IPT_BUTTON4        | IPF_PLAYER2 );
+		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_BUTTON3        | IPF_PLAYER2 );
+		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN                      );
+		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN                      );
+		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_BUTTON4        | IPF_PLAYER1 );
+		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_BUTTON3        | IPF_PLAYER1 );
 	
 		PORT_COIN( 0 )
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x01, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "World" ) /* Title screen is different, English is default now */
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x01, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "World" );/* Title screen is different, English is default now */
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( sbomberb )
+	static InputPortPtr input_ports_sbomberb = new InputPortPtr(){ public void handler() { 
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 2 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 2 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 0 ) /* If HIGH then you can perform rom test, but EEPROM resets? */
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x01, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "World" )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x01, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "World" );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( gunbird2 ) /* Different Region */
+	static InputPortPtr input_ports_gunbird2 = new InputPortPtr(){ public void handler() {  /* Different Region */
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 3 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 3 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 0 ) /* If HIGH then you can perform rom test, but EEPROM resets */
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x03, 0x02, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x01, "International Ver A." )
-		PORT_DIPSETTING(    0x02, "International Ver B." )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x03, 0x02, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x01, "International Ver A." );
+		PORT_DIPSETTING(    0x02, "International Ver B." );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( s1945iii ) /* Different Region again */
+	static InputPortPtr input_ports_s1945iii = new InputPortPtr(){ public void handler() {  /* Different Region again */
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 3 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 3 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 0 ) /* If HIGH then you can perform rom test, EEPROM doesn't reset */
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x03, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x02, "International Ver A." )
-		PORT_DIPSETTING(    0x01, "International Ver B." )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x03, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x02, "International Ver A." );
+		PORT_DIPSETTING(    0x01, "International Ver B." );
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( dragnblz ) /* Security requires bit high */
+	static InputPortPtr input_ports_dragnblz = new InputPortPtr(){ public void handler() {  /* Security requires bit high */
 		PORT_PLAYER( IPF_PLAYER1, IPT_START1, 3 )
 		PORT_PLAYER( IPF_PLAYER2, IPT_START2, 3 )
 		UNUSED_PORT /* IN2 unused? */
 		PORT_COIN( 1 ) /* Must be HIGH (Or Security Error), so can perform test */
 	
-		PORT_START /* IN4 jumper pads on the PCB */
-		PORT_DIPNAME( 0x03, 0x01, "Region" )
-		PORT_DIPSETTING(    0x00, "Japan" )
-		PORT_DIPSETTING(    0x02, "International Ver A." )
-		PORT_DIPSETTING(    0x01, "International Ver B." )
-	INPUT_PORTS_END
+		PORT_START();  /* IN4 jumper pads on the PCB */
+		PORT_DIPNAME( 0x03, 0x01, "Region" );
+		PORT_DIPSETTING(    0x00, "Japan" );
+		PORT_DIPSETTING(    0x02, "International Ver A." );
+		PORT_DIPSETTING(    0x01, "International Ver B." );
+	INPUT_PORTS_END(); }}; 
 	
 	#if ROMTEST
 	#define ROMTEST_GFX 0

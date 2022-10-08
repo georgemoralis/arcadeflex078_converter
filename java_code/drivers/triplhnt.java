@@ -167,56 +167,56 @@ public class triplhnt
 	};
 	
 	
-	INPUT_PORTS_START( triplhnt )
-		PORT_START /* 0C00 */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 )
+	static InputPortPtr input_ports_triplhnt = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* 0C00 */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
 	
-		PORT_START /* 0C08 */
-		PORT_DIPNAME( 0xc0, 0x00, "Play Time" )
-		PORT_DIPSETTING( 0x00, "32 seconds / 16 raccoons" )
-		PORT_DIPSETTING( 0x40, "64 seconds / 32 raccoons" )
-		PORT_DIPSETTING( 0x80, "96 seconds / 48 raccoons" )
-		PORT_DIPSETTING( 0xc0, "128 seconds / 64 raccoons" )
+		PORT_START();  /* 0C08 */
+		PORT_DIPNAME( 0xc0, 0x00, "Play Time" );
+		PORT_DIPSETTING( 0x00, "32 seconds / 16 raccoons" );
+		PORT_DIPSETTING( 0x40, "64 seconds / 32 raccoons" );
+		PORT_DIPSETTING( 0x80, "96 seconds / 48 raccoons" );
+		PORT_DIPSETTING( 0xc0, "128 seconds / 64 raccoons" );
 	
-		PORT_START /* 0C09 */
-		PORT_DIPNAME( 0xc0, 0x40, "Game Select" )
-		PORT_DIPSETTING( 0x00, "Hit the Bear" )
-		PORT_DIPSETTING( 0x40, "Witch Hunt" )
-		PORT_DIPSETTING( 0xc0, "Raccoon Hunt" )
+		PORT_START();  /* 0C09 */
+		PORT_DIPNAME( 0xc0, 0x40, "Game Select" );
+		PORT_DIPSETTING( 0x00, "Hit the Bear" );
+		PORT_DIPSETTING( 0x40, "Witch Hunt" );
+		PORT_DIPSETTING( 0xc0, "Raccoon Hunt" );
 	
-		PORT_START /* 0C0A */
-		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Coinage ))
-		PORT_DIPSETTING( 0x40, DEF_STR( 2C_1C ))
-		PORT_DIPSETTING( 0x00, DEF_STR( 1C_1C ))
-		PORT_DIPSETTING( 0x80, DEF_STR( 1C_2C ))
+		PORT_START();  /* 0C0A */
+		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Coinage") );
+		PORT_DIPSETTING( 0x40, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING( 0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING( 0x80, DEF_STR( "1C_2C") );
 	
-		PORT_START /* 0C0B */
-		PORT_DIPNAME( 0x80, 0x00, "Extended Play" )
-		PORT_DIPSETTING( 0x80, DEF_STR( Off ))
-		PORT_DIPSETTING( 0x00, DEF_STR( On ))
+		PORT_START();  /* 0C0B */
+		PORT_DIPNAME( 0x80, 0x00, "Extended Play" );
+		PORT_DIPSETTING( 0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING( 0x00, DEF_STR( "On") );
 	
-		PORT_START /* 0C40 */
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN2 )
+		PORT_START();  /* 0C40 */
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_TILT );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START /* 0C48 */
+		PORT_START();  /* 0C48 */
 	// default to service enabled to make users calibrate gun
-	//	PORT_SERVICE( 0x40, IP_ACTIVE_LOW )
-		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 )
+	//	PORT_SERVICE( 0x40, IP_ACTIVE_LOW );
+		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 );
 	
-		PORT_START
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK )
+		PORT_START(); 
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 25, 15, 0x00, 0xff)
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 25, 15, 0x00, 0xff);
 	
-		PORT_START
-		PORT_ANALOG( 0xff, 0x78, IPT_LIGHTGUN_Y, 25, 15, 0x00, 0xef)
-	INPUT_PORTS_END
+		PORT_START(); 
+		PORT_ANALOG( 0xff, 0x78, IPT_LIGHTGUN_Y, 25, 15, 0x00, 0xef);
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout triplhnt_small_sprite_layout =

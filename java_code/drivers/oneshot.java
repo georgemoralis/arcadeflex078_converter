@@ -164,174 +164,174 @@ public class oneshot
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	INPUT_PORTS_START( oneshot )
-		PORT_START	/* DSW 1	(0x19c020.l -> 0x08006c.l) */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coinage ) )		// 0x080084.l : credits (00-09)
-		PORT_DIPSETTING(    0x03, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPNAME( 0x0c, 0x00, "Gun X Shift Left" )		// 0x0824ec.l (not in "test mode")
-		PORT_DIPSETTING(    0x04, "30" )
-		PORT_DIPSETTING(    0x00, "35" )
-		PORT_DIPSETTING(    0x08, "40" )
-		PORT_DIPSETTING(    0x0c, "50" )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Demo_Sounds ) )	// 0x082706.l - to be confirmed
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( On ) )
-		PORT_SERVICE( 0x20, IP_ACTIVE_HIGH )			// 0x0824fe.l
-		PORT_DIPNAME( 0x40, 0x00, "Start Round" )			// 0x08224e.l
-		PORT_DIPSETTING(    0x00, "Gun Trigger" )
-		PORT_DIPSETTING(    0x40, "Start Button" )
-		PORT_DIPNAME( 0x80, 0x00, "Gun Test" )			// 0x082286.l
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) )
+	static InputPortPtr input_ports_oneshot = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* DSW 1	(0x19c020.l -> 0x08006c.l) */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );		// 0x080084.l : credits (00-09)
+		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPNAME( 0x0c, 0x00, "Gun X Shift Left" );	// 0x0824ec.l (not in "test mode")
+		PORT_DIPSETTING(    0x04, "30" );
+		PORT_DIPSETTING(    0x00, "35" );
+		PORT_DIPSETTING(    0x08, "40" );
+		PORT_DIPSETTING(    0x0c, "50" );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Demo_Sounds") );	// 0x082706.l - to be confirmed
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "On") );
+		PORT_SERVICE( 0x20, IP_ACTIVE_HIGH );		// 0x0824fe.l
+		PORT_DIPNAME( 0x40, 0x00, "Start Round" );		// 0x08224e.l
+		PORT_DIPSETTING(    0x00, "Gun Trigger" );
+		PORT_DIPSETTING(    0x40, "Start Button" );
+		PORT_DIPNAME( 0x80, 0x00, "Gun Test" );		// 0x082286.l
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START	/* DSW 2	(0x19c024.l -> 0x08006e.l) */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Lives ) )		// 0x082500.l
-		PORT_DIPSETTING(    0x01, "1" )
-		PORT_DIPSETTING(    0x02, "2" )
-		PORT_DIPSETTING(    0x00, "3" )
-		PORT_DIPSETTING(    0x03, "5" )
-		PORT_DIPNAME( 0x04, 0x00, DEF_STR( Unused ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x00, DEF_STR( Unused ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-		PORT_DIPNAME( 0x30, 0x00, DEF_STR( Difficulty ) )	// 0x082506.l
-		PORT_DIPSETTING(    0x10, "Easy" )				// 0
-		PORT_DIPSETTING(    0x00, "Normal" )			// 1
-		PORT_DIPSETTING(    0x20, "Hard" )				// 2
-		PORT_DIPSETTING(    0x30, "Hardest" )			// 3
-		PORT_DIPNAME( 0x40, 0x00, "Round Select" )		// 0x082f16.l - only after 1st stage
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )		// "On"  in the "test mode"
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )			// "Off" in the "test mode"
-		PORT_DIPNAME( 0x80, 0x00, DEF_STR( Free_Play ) )	// 0x0800ca.l
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) )
+		PORT_START(); 	/* DSW 2	(0x19c024.l -> 0x08006e.l) */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );		// 0x082500.l
+		PORT_DIPSETTING(    0x01, "1" );
+		PORT_DIPSETTING(    0x02, "2" );
+		PORT_DIPSETTING(    0x00, "3" );
+		PORT_DIPSETTING(    0x03, "5" );
+		PORT_DIPNAME( 0x04, 0x00, DEF_STR( "Unused") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unused") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
+		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Difficulty") );	// 0x082506.l
+		PORT_DIPSETTING(    0x10, "Easy" );			// 0
+		PORT_DIPSETTING(    0x00, "Normal" );		// 1
+		PORT_DIPSETTING(    0x20, "Hard" );			// 2
+		PORT_DIPSETTING(    0x30, "Hardest" );		// 3
+		PORT_DIPNAME( 0x40, 0x00, "Round Select" );	// 0x082f16.l - only after 1st stage
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );		// "On"  in the "test mode"
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );			// "Off" in the "test mode"
+		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Free_Play") );	// 0x0800ca.l
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START	/* Credits	(0x19c02c.l -> 0x08007a.l) */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* Credits	(0x19c02c.l -> 0x08007a.l) */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* Player 1 Gun Trigger	(0x19c030.l) */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* Player 1 Gun Trigger	(0x19c030.l) */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* Player 2 Gun Trigger	(0x19c034.l) */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* Player 2 Gun Trigger	(0x19c034.l) */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* Player 1 Gun X		($190026.l) */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 35, 15, 0, 0xff )
+		PORT_START(); 	/* Player 1 Gun X		($190026.l) */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER1, 35, 15, 0, 0xff );
 	
-		PORT_START	/* Player 1 Gun Y		($190036.l) */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 35, 15, 0, 0xff )
+		PORT_START(); 	/* Player 1 Gun Y		($190036.l) */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 35, 15, 0, 0xff );
 	
-		PORT_START	/* Player 2 Gun X		($19002e.l) */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 35, 15, 0, 0xff )
+		PORT_START(); 	/* Player 2 Gun X		($19002e.l) */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 35, 15, 0, 0xff );
 	
-		PORT_START	/* Player 2 Gun Y		($19003e.l) */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 35, 15, 0, 0xff )
+		PORT_START(); 	/* Player 2 Gun Y		($19003e.l) */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 35, 15, 0, 0xff );
 	
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( maddonna )
-		PORT_START /* DSW A */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coinage ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 2C_2C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPNAME( 0x04, 0x04, "Girl Pictures" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x00, DEF_STR( Unknown ) )		// Not defined in the manual
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x00, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x00, DEF_STR( Unknown ) )		// Not defined in the manual
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x00, "Invulnerability" )		// This one was not defined in the manual
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( On ) )
-		PORT_SERVICE( 0x80, IP_ACTIVE_HIGH )
+	static InputPortPtr input_ports_maddonna = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW A */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "2C_2C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPNAME( 0x04, 0x04, "Girl Pictures" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unknown") );		// Not defined in the manual
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unknown") );		// Not defined in the manual
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x00, "Invulnerability" );	// This one was not defined in the manual
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
+		PORT_SERVICE( 0x80, IP_ACTIVE_HIGH );
 	
-		PORT_START /* DSW B */
-		PORT_DIPNAME( 0x03, 0x02, DEF_STR( Difficulty ) )
-		PORT_DIPSETTING(    0x00, "Easy" )				// 2 Monsters at start, but "dumber"??
-		PORT_DIPSETTING(    0x01, "Normal" )			// 2 Monsters at start
-		PORT_DIPSETTING(    0x02, "Hard" )				// 3 Monsters at start
-		PORT_DIPSETTING(    0x03, "Hardest" )			// 4 Monsters at start
-		PORT_DIPNAME( 0x0c, 0x08, "Time Per Round" )
-		PORT_DIPSETTING(    0x08, "80 Seconds" )
-		PORT_DIPSETTING(    0x04, "90 Seconds" )
-		PORT_DIPSETTING(    0x00, "100 Seconds" )
-	//	PORT_DIPSETTING(    0x0c, "?? Seconds" )		// Not Defined for On+On
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Lives ) )
-		PORT_DIPSETTING(    0x10, "3" )
-		PORT_DIPSETTING(    0x00, "5" )
-		PORT_DIPNAME( 0x20, 0x00, DEF_STR( Unknown ) )		// Not defined in the manual
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( On ) )
-		PORT_DIPNAME( 0xc0, 0x00, "Hurry Up!" )			// Controls "Hurry Up!" banner & Vampire - Not defined the in manual
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )		// No Hurry up
-		PORT_DIPSETTING(    0x40, "On - 10" )			// The rest show the banner but is there a difference in how the Vampire shows up???
-		PORT_DIPSETTING(    0x80, "On - 01" )
-		PORT_DIPSETTING(    0xc0, "On - 11" )
+		PORT_START();  /* DSW B */
+		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Difficulty") );
+		PORT_DIPSETTING(    0x00, "Easy" );			// 2 Monsters at start, but "dumber"??
+		PORT_DIPSETTING(    0x01, "Normal" );		// 2 Monsters at start
+		PORT_DIPSETTING(    0x02, "Hard" );			// 3 Monsters at start
+		PORT_DIPSETTING(    0x03, "Hardest" );		// 4 Monsters at start
+		PORT_DIPNAME( 0x0c, 0x08, "Time Per Round" );
+		PORT_DIPSETTING(    0x08, "80 Seconds" );
+		PORT_DIPSETTING(    0x04, "90 Seconds" );
+		PORT_DIPSETTING(    0x00, "100 Seconds" );
+	//	PORT_DIPSETTING(    0x0c, "?? Seconds" );	// Not Defined for On+On
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Lives") );
+		PORT_DIPSETTING(    0x10, "3" );
+		PORT_DIPSETTING(    0x00, "5" );
+		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unknown") );		// Not defined in the manual
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "On") );
+		PORT_DIPNAME( 0xc0, 0x00, "Hurry Up!" );		// Controls "Hurry Up!" banner & Vampire - Not defined the in manual
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );		// No Hurry up
+		PORT_DIPSETTING(    0x40, "On - 10" );		// The rest show the banner but is there a difference in how the Vampire shows up???
+		PORT_DIPSETTING(    0x80, "On - 01" );
+		PORT_DIPSETTING(    0xc0, "On - 11" );
 	
-		PORT_START	/* Credits */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* Credits */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* Player 1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* Player 1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* Player 1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-	INPUT_PORTS_END
+		PORT_START(); 	/* Player 1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout oneshot16x16_layout =

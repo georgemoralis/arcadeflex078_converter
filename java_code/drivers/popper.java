@@ -74,7 +74,7 @@ Notes:
   special handling needed, possibly tied to the 0xe002 writes
 
 - the game freezes in much the same way as the stop dip switch when the coin
-  inputs are high (a short PORT_BIT_IMPULSE duration will still cause a hitch),
+  inputs are high (a short PORT_BIT_IMPULSE duration will still cause a hitch);
   so potentially there's a coin lockout mechanism
 */
 
@@ -208,78 +208,78 @@ public class popper
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	INPUT_PORTS_START( popper )
-		PORT_START	/* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN1 )			//ignored if held for 12 or more frames
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_SERVICE1 )
+	static InputPortPtr input_ports_popper = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN1 );		//ignored if held for 12 or more frames
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_SERVICE1 );
 	
-		PORT_START	/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_8WAY )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY )
+		PORT_START(); 	/* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_8WAY );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY );
 	
-		PORT_START	/* IN2 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN2 )			//ignored if held for 12 or more frames
+		PORT_START(); 	/* IN2 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_COIN2 );		//ignored if held for 12 or more frames
 	
-		PORT_START	/* IN3 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY | IPF_COCKTAIL )
+		PORT_START(); 	/* IN3 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY | IPF_COCKTAIL );
 	
-		PORT_START	/* IN4 - FAKE DSW1 */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coin_A ) )		//SW1:1-2
-		PORT_DIPSETTING(    0x02, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 1C_2C ) )
-		PORT_DIPNAME( 0x0c, 0x08, DEF_STR( Coin_B ) )		//SW1:3-4
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x0c, DEF_STR( 1C_6C ) )
-		PORT_DIPNAME( 0x30, 0x10, DEF_STR( Lives ) )		//SW1:5-6
-		PORT_DIPSETTING(    0x00, "2" )
-		PORT_DIPSETTING(    0x10, "3" )
-		PORT_DIPSETTING(    0x20, "4" )
-		PORT_DIPSETTING(    0x30, "5" )
-		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Bonus_Life ) )	//SW1:7-8
-		PORT_DIPSETTING(    0x00, "20k, then every 70k" )
-		PORT_DIPSETTING(    0x40, "30k, then every 70k" )
-		PORT_DIPSETTING(    0x80, "40k, then every 70k" )
-		PORT_DIPSETTING(    0xc0, "50k, then every 70k" )
+		PORT_START(); 	/* IN4 - FAKE DSW1 */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );		//SW1:1-2
+		PORT_DIPSETTING(    0x02, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "1C_2C") );
+		PORT_DIPNAME( 0x0c, 0x08, DEF_STR( "Coin_B") );		//SW1:3-4
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x0c, DEF_STR( "1C_6C") );
+		PORT_DIPNAME( 0x30, 0x10, DEF_STR( "Lives") );		//SW1:5-6
+		PORT_DIPSETTING(    0x00, "2" );
+		PORT_DIPSETTING(    0x10, "3" );
+		PORT_DIPSETTING(    0x20, "4" );
+		PORT_DIPSETTING(    0x30, "5" );
+		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Bonus_Life") );	//SW1:7-8
+		PORT_DIPSETTING(    0x00, "20k, then every 70k" );
+		PORT_DIPSETTING(    0x40, "30k, then every 70k" );
+		PORT_DIPSETTING(    0x80, "40k, then every 70k" );
+		PORT_DIPSETTING(    0xc0, "50k, then every 70k" );
 	
-		PORT_START	/* IN5 - FAKE DSW2 */
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Demo_Sounds ) )	//SW2:1
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( On ) )
-		PORT_DIPNAME( 0x02, 0x00, "Allow Continue" )		//SW2:2 (stored in 0xd987, never read)
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( On ) )
-		PORT_DIPNAME( 0x04, 0x00, DEF_STR( Free_Play ) )	//SW2:3
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_BITX(    0x08, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Pass (unlimited lives)", IP_KEY_NONE, IP_JOY_NONE )	//SW2:4
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x00, DEF_STR( Flip_Screen ) )	//SW2:5
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Cabinet ) )		//SW2:6
-		PORT_DIPSETTING(    0x20, DEF_STR( Upright ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
-		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Clear (current level)", IP_KEY_NONE, IP_JOY_NONE )	//SW2:7
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x00, "Stop" )					//SW2:8
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) )
-	INPUT_PORTS_END
+		PORT_START(); 	/* IN5 - FAKE DSW2 */
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Demo_Sounds") );	//SW2:1
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
+		PORT_DIPNAME( 0x02, 0x00, "Allow Continue" );	//SW2:2 (stored in 0xd987, never read)
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
+		PORT_DIPNAME( 0x04, 0x00, DEF_STR( "Free_Play") );	//SW2:3
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_BITX(    0x08, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Pass (unlimited lives);, IP_KEY_NONE, IP_JOY_NONE )	//SW2:4
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Flip_Screen") );	//SW2:5
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Cabinet") );		//SW2:6
+		PORT_DIPSETTING(    0x20, DEF_STR( "Upright") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
+		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Clear (current level);, IP_KEY_NONE, IP_JOY_NONE )	//SW2:7
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x00, "Stop" );				//SW2:8
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout popper_charlayout =
 	{

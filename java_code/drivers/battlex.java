@@ -101,80 +101,80 @@ public class battlex
 	
 	/*** INPUT PORTS *************************************************************/
 	
-	INPUT_PORTS_START( battlex )
-		PORT_START	/* IN0 */
-		PORT_DIPNAME( 0x03, 0x00, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPNAME( 0x04, 0x04, "Allow Continue" )			// Not on 1st stage
-		PORT_DIPSETTING(    0x00, DEF_STR( No ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( Yes ) )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Demo_Sounds ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x00, "Freeze" )				// VBLANK ?
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Upright ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
-		PORT_DIPNAME( 0x40, 0x00, DEF_STR( Flip_Screen ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( On ) )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED )
+	static InputPortPtr input_ports_battlex = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPNAME( 0x04, 0x04, "Allow Continue" );		// Not on 1st stage
+		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "Yes") );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x00, "Freeze" );			// VBLANK ?
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Upright") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
+		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Flip_Screen") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START	/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_START1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START2 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
+		PORT_START(); 	/* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_START1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START2 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
-		PORT_START	/* IN2 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_COCKTAIL )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL )
+		PORT_START(); 	/* IN2 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_COCKTAIL );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
 	
-		PORT_START	/* IN3 */
-		PORT_DIPNAME( 0x07, 0x00, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x07, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 2C_3C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 1C_7C ) )
-		PORT_DIPNAME( 0x18, 0x10, DEF_STR( Lives ) )
-		PORT_DIPSETTING(    0x00, "1" )
-		PORT_DIPSETTING(    0x08, "2" )
-		PORT_DIPSETTING(    0x10, "3" )
-		PORT_DIPSETTING(    0x18, "5" )
-		PORT_DIPNAME( 0x60, 0x00, DEF_STR( Bonus_Life ) )
-		PORT_DIPSETTING(    0x00, "5000" )
-		PORT_DIPSETTING(    0x20, "10000" )
-		PORT_DIPSETTING(    0x40, "15000" )
-		PORT_DIPSETTING(    0x60, "20000" )
-		PORT_DIPNAME( 0x80, 0x00, DEF_STR( Free_Play ) )		// See notes
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( On ) )
-	INPUT_PORTS_END
+		PORT_START(); 	/* IN3 */
+		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x07, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "2C_3C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "1C_7C") );
+		PORT_DIPNAME( 0x18, 0x10, DEF_STR( "Lives") );
+		PORT_DIPSETTING(    0x00, "1" );
+		PORT_DIPSETTING(    0x08, "2" );
+		PORT_DIPSETTING(    0x10, "3" );
+		PORT_DIPSETTING(    0x18, "5" );
+		PORT_DIPNAME( 0x60, 0x00, DEF_STR( "Bonus_Life") );
+		PORT_DIPSETTING(    0x00, "5000" );
+		PORT_DIPSETTING(    0x20, "10000" );
+		PORT_DIPSETTING(    0x40, "15000" );
+		PORT_DIPSETTING(    0x60, "20000" );
+		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Free_Play") );		// See notes
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
+	INPUT_PORTS_END(); }}; 
 	
 	/*** GFX DECODE **************************************************************/
 	
 	
 	static struct GfxLayout battlex_charlayout =
-	new IO_WritePort(
+	{
 		8,8,
 		RGN_FRAC(1,1),
 		4,
@@ -182,11 +182,11 @@ public class battlex
 		{ 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4 },
 		{ 0*8*4, 1*8*4, 2*8*4, 3*8*4, 4*8*4, 5*8*4, 6*8*4, 7*8*4 },
 		8*8*4
-	);
+	};
 	
 	
 	static struct GfxLayout battlex_spritelayout =
-	new IO_WritePort(
+	{
 		16,16,
 		RGN_FRAC(1,3),
 		3,
@@ -196,20 +196,20 @@ public class battlex
 		{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16,
 			8*16, 9*16, 10*16, 11*16, 12*16, 13*16, 14*16, 15*16 },
 		16*16
-	);
+	};
 	
 	
 	static struct GfxDecodeInfo gfxdecodeinfo[] =
-	new IO_WritePort(
-		{ REGION_GFX1, 0, battlex_charlayout,      0, 8 },
-		{ REGION_GFX2, 0, battlex_spritelayout, 16*8, 8 },
+	{
+		{ REGION_GFX1, 0, &battlex_charlayout,      0, 8 },
+		{ REGION_GFX2, 0, &battlex_spritelayout, 16*8, 8 },
 		{ -1 } /* end of array */
-	);
+	};
 	
 	/*** SOUND *******************************************************************/
 	
 	static struct AY8910interface battlex_ay8910_interface =
-	new IO_WritePort(
+	{
 		1,	/* 1 chip */
 		10000000/8,
 		{ 40 },
@@ -217,7 +217,7 @@ public class battlex
 		{ 0 },
 		{ 0 },
 		{ 0 }
-	);
+	};
 	
 	/*** MACHINE DRIVERS *********************************************************/
 	
@@ -276,7 +276,7 @@ public class battlex
 	ROM_END
 	
 	static DRIVER_INIT( battlex )
-	new IO_WritePort(
+	{
 		UINT8 *cold    = memory_region       ( REGION_USER1 );
 		UINT8 *mskd    = memory_region       ( REGION_USER2 );
 		UINT8 *dest    = memory_region       ( REGION_GFX1 );
@@ -295,17 +295,17 @@ public class battlex
 				for (bitcount = 0;bitcount < 8 ; bitcount ++)
 				{
 					int bit, col;
-					bit = (mskd[outcount*8+linecount]  bitmask) >> bitcount;
+					bit = (mskd[outcount*8+linecount] & bitmask) >> bitcount;
 	
-					if (bit) col = (cold[outcount*8+(linecount~1)+(bitcount/4)]  0x0f) << 4;
-					else col = (cold[outcount*8+(linecount~1)+(bitcount/4)]  0xf0);
+					if (bit) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
+					else col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0xf0);
 	
-					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount  1)));
+					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount & 1)));
 					bitmask = bitmask << 1;
 				}
 			}
 		}
-	)
+	}
 	
 	/*** GAME DRIVERS ************************************************************/
 	

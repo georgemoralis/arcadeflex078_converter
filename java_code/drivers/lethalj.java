@@ -93,172 +93,172 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	INPUT_PORTS_START( lethalj )
-		PORT_START
-		PORT_BIT( 0x0003, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_UNKNOWN )		/* ??? Seems to be rigged up to the auto scroll, and acts as a fast forward*/
-		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 ) 
-		PORT_BIT( 0xffe0, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_lethalj = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_BIT( 0x0003, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* ??? Seems to be rigged up to the auto scroll, and acts as a fast forward*/
+		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0xffe0, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_DIPNAME( 0x00c0, 0x0000, DEF_STR( Coinage ))
-		PORT_DIPSETTING(      0x0040, DEF_STR( 2C_1C ))
-		PORT_DIPSETTING(      0x0000, DEF_STR( 1C_1C ))
-		PORT_DIPSETTING(      0x0080, DEF_STR( 1C_2C ))
-		PORT_DIPSETTING(      0x00c0, DEF_STR( Free_Play ))
-		PORT_DIPNAME( 0x0300, 0x0100, DEF_STR( Lives ))
-		PORT_DIPSETTING(      0x0000, "2" )
-		PORT_DIPSETTING(      0x0100, "3" )
-		PORT_DIPSETTING(      0x0200, "4" )
-		PORT_DIPSETTING(      0x0300, "5" )
-		PORT_DIPNAME( 0x0c10, 0x0010, "Right Gun Offset" )
-		PORT_DIPSETTING(      0x0000, "-4" )
-		PORT_DIPSETTING(      0x0400, "-3" )
-		PORT_DIPSETTING(      0x0800, "-2" )
-		PORT_DIPSETTING(      0x0c00, "-1" )
-		PORT_DIPSETTING(      0x0010, "0" )
-		PORT_DIPSETTING(      0x0410, "+1" )
-		PORT_DIPSETTING(      0x0810, "+2" )
-		PORT_DIPSETTING(      0x0c10, "+3" )
-		PORT_DIPNAME( 0x3020, 0x0020, "Left Gun Offset" )
-		PORT_DIPSETTING(      0x0000, "-4" )
-		PORT_DIPSETTING(      0x1000, "-3" )
-		PORT_DIPSETTING(      0x2000, "-2" )
-		PORT_DIPSETTING(      0x3000, "-1" )
-		PORT_DIPSETTING(      0x0020, "0" )
-		PORT_DIPSETTING(      0x1020, "+1" )
-		PORT_DIPSETTING(      0x2020, "+2" )
-		PORT_DIPSETTING(      0x3020, "+3" )
-		PORT_DIPNAME( 0x4000, 0x0000, "DIP E" )
-		PORT_DIPSETTING(      0x0000, "0" )
-		PORT_DIPSETTING(      0x4000, "1" )
-		PORT_DIPNAME( 0x8000, 0x8000, "Global Gun Offset" )
-		PORT_DIPSETTING(      0x0000, "-2.5" )
-		PORT_DIPSETTING(      0x8000, "+0" )
+		PORT_START(); 
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_DIPNAME( 0x00c0, 0x0000, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(      0x0040, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(      0x0080, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(      0x00c0, DEF_STR( "Free_Play") );
+		PORT_DIPNAME( 0x0300, 0x0100, DEF_STR( "Lives") );
+		PORT_DIPSETTING(      0x0000, "2" );
+		PORT_DIPSETTING(      0x0100, "3" );
+		PORT_DIPSETTING(      0x0200, "4" );
+		PORT_DIPSETTING(      0x0300, "5" );
+		PORT_DIPNAME( 0x0c10, 0x0010, "Right Gun Offset" );
+		PORT_DIPSETTING(      0x0000, "-4" );
+		PORT_DIPSETTING(      0x0400, "-3" );
+		PORT_DIPSETTING(      0x0800, "-2" );
+		PORT_DIPSETTING(      0x0c00, "-1" );
+		PORT_DIPSETTING(      0x0010, "0" );
+		PORT_DIPSETTING(      0x0410, "+1" );
+		PORT_DIPSETTING(      0x0810, "+2" );
+		PORT_DIPSETTING(      0x0c10, "+3" );
+		PORT_DIPNAME( 0x3020, 0x0020, "Left Gun Offset" );
+		PORT_DIPSETTING(      0x0000, "-4" );
+		PORT_DIPSETTING(      0x1000, "-3" );
+		PORT_DIPSETTING(      0x2000, "-2" );
+		PORT_DIPSETTING(      0x3000, "-1" );
+		PORT_DIPSETTING(      0x0020, "0" );
+		PORT_DIPSETTING(      0x1020, "+1" );
+		PORT_DIPSETTING(      0x2020, "+2" );
+		PORT_DIPSETTING(      0x3020, "+3" );
+		PORT_DIPNAME( 0x4000, 0x0000, "DIP E" );
+		PORT_DIPSETTING(      0x0000, "0" );
+		PORT_DIPSETTING(      0x4000, "1" );
+		PORT_DIPNAME( 0x8000, 0x8000, "Global Gun Offset" );
+		PORT_DIPSETTING(      0x0000, "-2.5" );
+		PORT_DIPSETTING(      0x8000, "+0" );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 )
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 )
-	INPUT_PORTS_END
-	
-	
-	INPUT_PORTS_START( eggventr )
-		PORT_START
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_DIPNAME( 0x0070, 0x0000, DEF_STR( Coinage ))
-		PORT_DIPSETTING(      0x0040, DEF_STR( 8C_1C ))
-		PORT_DIPSETTING(      0x0030, DEF_STR( 4C_1C ))
-		PORT_DIPSETTING(      0x0020, DEF_STR( 3C_1C ))
-		PORT_DIPSETTING(      0x0010, DEF_STR( 2C_1C ))
-		PORT_DIPSETTING(      0x0000, DEF_STR( 1C_1C ))
-		PORT_DIPSETTING(      0x0050, DEF_STR( 1C_2C ))
-		PORT_DIPSETTING(      0x0060, DEF_STR( 1C_4C ))
-		PORT_DIPSETTING(      0x0070, DEF_STR( Free_Play ))
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Lives ) ) // Verified Correct
-		PORT_DIPSETTING(      0x0000, "3" )
-		PORT_DIPSETTING(      0x0100, "4" )
-		PORT_DIPSETTING(      0x0200, "5" )
-		PORT_DIPSETTING(      0x0300, "6" )
-		PORT_DIPNAME( 0x0c00, 0x0800, DEF_STR( Difficulty ) ) // According to info from The Gameroom
-		PORT_DIPSETTING(      0x0c00, "Very Easy" )
-		PORT_DIPSETTING(      0x0400, "Easy" )
-		PORT_DIPSETTING(      0x0800, "Medium" )
-		PORT_DIPSETTING(      0x0000, "Hard" )
-		PORT_DIPNAME( 0x1000, 0x1000, "Slot Machine" ) // Verified Correct - Unused for the Deluxe version?? Yes, the slot machine
-		PORT_DIPSETTING(      0x0000, DEF_STR( Off ) ) // is present in the code as a 'bonus stage' (when the egg reaches Vegas?), 
-		PORT_DIPSETTING(      0x1000, DEF_STR( On ) ) // but not actually called (EC). 
-		PORT_BIT( 0xe000, IP_ACTIVE_LOW, IPT_UNUSED )
-	
-		PORT_START
-		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x7f00, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_START2 )
-	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 )
-	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 )
-	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 )
-	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 )
-	INPUT_PORTS_END
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 );
+	INPUT_PORTS_END(); }}; 
 	
 	
-	INPUT_PORTS_START( eggventdx )
-		PORT_START
-		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 )
-		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 )
-		PORT_DIPNAME( 0x0070, 0x0000, DEF_STR( Coinage ))
-		PORT_DIPSETTING(      0x0040, DEF_STR( 8C_1C ))
-		PORT_DIPSETTING(      0x0030, DEF_STR( 4C_1C ))
-		PORT_DIPSETTING(      0x0020, DEF_STR( 3C_1C ))
-		PORT_DIPSETTING(      0x0010, DEF_STR( 2C_1C ))
-		PORT_DIPSETTING(      0x0000, DEF_STR( 1C_1C ))
-		PORT_DIPSETTING(      0x0050, DEF_STR( 1C_2C ))
-		PORT_DIPSETTING(      0x0060, DEF_STR( 1C_4C ))
-		PORT_DIPSETTING(      0x0070, DEF_STR( Free_Play ))
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Lives ) ) // Verified Correct
-		PORT_DIPSETTING(      0x0000, "3" )
-		PORT_DIPSETTING(      0x0100, "4" )
-		PORT_DIPSETTING(      0x0200, "5" )
-		PORT_DIPSETTING(      0x0300, "6" )
-		PORT_DIPNAME( 0x0c00, 0x0800, DEF_STR( Difficulty ) ) // According to info from The Gameroom
-		PORT_DIPSETTING(      0x0c00, "Very Easy" )
-		PORT_DIPSETTING(      0x0400, "Easy" )
-		PORT_DIPSETTING(      0x0800, "Medium" )
-		PORT_DIPSETTING(      0x0000, "Hard" )
-		PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_UNUSED )
-		PORT_BIT( 0xe000, IP_ACTIVE_LOW, IPT_UNUSED )
+	static InputPortPtr input_ports_eggventr = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_DIPNAME( 0x0070, 0x0000, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(      0x0040, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING(      0x0030, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(      0x0020, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(      0x0010, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(      0x0050, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(      0x0060, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(      0x0070, DEF_STR( "Free_Play") );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( "Lives") ); // Verified Correct
+		PORT_DIPSETTING(      0x0000, "3" );
+		PORT_DIPSETTING(      0x0100, "4" );
+		PORT_DIPSETTING(      0x0200, "5" );
+		PORT_DIPSETTING(      0x0300, "6" );
+		PORT_DIPNAME( 0x0c00, 0x0800, DEF_STR( "Difficulty") ); // According to info from The Gameroom
+		PORT_DIPSETTING(      0x0c00, "Very Easy" );
+		PORT_DIPSETTING(      0x0400, "Easy" );
+		PORT_DIPSETTING(      0x0800, "Medium" );
+		PORT_DIPSETTING(      0x0000, "Hard" );
+		PORT_DIPNAME( 0x1000, 0x1000, "Slot Machine" );// Verified Correct - Unused for the Deluxe version?? Yes, the slot machine
+		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") ); // is present in the code as a 'bonus stage' (when the egg reaches Vegas?), 
+		PORT_DIPSETTING(      0x1000, DEF_STR( "On") ); // but not actually called (EC). 
+		PORT_BIT( 0xe000, IP_ACTIVE_LOW, IPT_UNUSED );
 	
-		PORT_START
-		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START1 )
-		PORT_BIT( 0x7f00, IP_ACTIVE_LOW, IPT_UNUSED )
-		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_START2 )
+		PORT_START(); 
+		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x7f00, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_START2 );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 )
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 );
 	
-		PORT_START				/* fake analog X */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 )
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 );
 	
-		PORT_START				/* fake analog Y */
-		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 )
-	INPUT_PORTS_END
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 );
+	INPUT_PORTS_END(); }}; 
+	
+	
+	static InputPortPtr input_ports_eggventdx = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 
+		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 );
+		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x0008, IP_ACTIVE_LOW, IPT_COIN2 );
+		PORT_DIPNAME( 0x0070, 0x0000, DEF_STR( "Coinage") );
+		PORT_DIPSETTING(      0x0040, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING(      0x0030, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(      0x0020, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(      0x0010, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(      0x0000, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(      0x0050, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(      0x0060, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(      0x0070, DEF_STR( "Free_Play") );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( "Lives") ); // Verified Correct
+		PORT_DIPSETTING(      0x0000, "3" );
+		PORT_DIPSETTING(      0x0100, "4" );
+		PORT_DIPSETTING(      0x0200, "5" );
+		PORT_DIPSETTING(      0x0300, "6" );
+		PORT_DIPNAME( 0x0c00, 0x0800, DEF_STR( "Difficulty") ); // According to info from The Gameroom
+		PORT_DIPSETTING(      0x0c00, "Very Easy" );
+		PORT_DIPSETTING(      0x0400, "Easy" );
+		PORT_DIPSETTING(      0x0800, "Medium" );
+		PORT_DIPSETTING(      0x0000, "Hard" );
+		PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_UNUSED );
+		PORT_BIT( 0xe000, IP_ACTIVE_LOW, IPT_UNUSED );
+	
+		PORT_START(); 
+		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START1 );
+		PORT_BIT( 0x7f00, IP_ACTIVE_LOW, IPT_UNUSED );
+		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_START2 );
+	
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X, 50, 10, 0, 255 );
+	
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 );
+	
+		PORT_START(); 				/* fake analog X */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_X | IPF_PLAYER2, 50, 10, 0, 255 );
+	
+		PORT_START(); 				/* fake analog Y */
+		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 70, 10, 0, 255 );
+	INPUT_PORTS_END(); }}; 
 	
 	
 	/*************************************

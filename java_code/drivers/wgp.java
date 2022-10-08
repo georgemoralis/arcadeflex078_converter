@@ -703,57 +703,57 @@ public class wgp
 	
 	/* Same as TAITO_DIFFICULTY_8 in most Taito drivers. */
 	#define TAITO_DIFFICULTY_8 \
-		PORT_DIPNAME( 0x03, 0x03, DEF_STR( Difficulty ) ) \
-		PORT_DIPSETTING(    0x02, "Easy" ) \
-		PORT_DIPSETTING(    0x03, "Medium" ) \
-		PORT_DIPSETTING(    0x01, "Hard" ) \
-		PORT_DIPSETTING(    0x00, "Hardest" )
+		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") ); \
+		PORT_DIPSETTING(    0x02, "Easy" );\
+		PORT_DIPSETTING(    0x03, "Medium" );\
+		PORT_DIPSETTING(    0x01, "Hard" );\
+		PORT_DIPSETTING(    0x00, "Hardest" );
 	
 	/* Same as TAITO_COINAGE_JAPAN_NEW_8 in most Taito drivers. */
 	#define TAITO_COINAGE_JAPAN_NEW_8 \
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( Coin_A ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 3C_1C ) ) \
-		PORT_DIPSETTING(    0x10, DEF_STR( 2C_1C ) ) \
-		PORT_DIPSETTING(    0x30, DEF_STR( 1C_1C ) ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( 1C_2C ) ) \
-		PORT_DIPNAME( 0xc0, 0xc0, DEF_STR( Coin_B ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 3C_1C ) ) \
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_1C ) ) \
-		PORT_DIPSETTING(    0xc0, DEF_STR( 1C_1C ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( 1C_2C ) )
+		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Coin_A") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") ); \
+		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") ); \
+		PORT_DIPSETTING(    0x30, DEF_STR( "1C_1C") ); \
+		PORT_DIPSETTING(    0x20, DEF_STR( "1C_2C") ); \
+		PORT_DIPNAME( 0xc0, 0xc0, DEF_STR( "Coin_B") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") ); \
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") ); \
+		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_1C") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "1C_2C") );
 	
 	/* Same as TAITO_COINAGE_US_8 in most Taito drivers. */
 	#define TAITO_COINAGE_US_8 \
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( Coinage ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_1C ) ) \
-		PORT_DIPSETTING(    0x10, DEF_STR( 3C_1C ) ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( 2C_1C ) ) \
-		PORT_DIPSETTING(    0x30, DEF_STR( 1C_1C ) ) \
-		PORT_DIPNAME( 0xc0, 0xc0, "Price to Continue" ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 3C_1C ) ) \
-		PORT_DIPSETTING(    0x40, DEF_STR( 2C_1C ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( 1C_1C ) ) \
-		PORT_DIPSETTING(    0xc0, "Same as Start" )
+		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Coinage") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_1C") ); \
+		PORT_DIPSETTING(    0x10, DEF_STR( "3C_1C") ); \
+		PORT_DIPSETTING(    0x20, DEF_STR( "2C_1C") ); \
+		PORT_DIPSETTING(    0x30, DEF_STR( "1C_1C") ); \
+		PORT_DIPNAME( 0xc0, 0xc0, "Price to Continue" );\
+		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") ); \
+		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "1C_1C") ); \
+		PORT_DIPSETTING(    0xc0, "Same as Start" );
 	
 	
 	/* Duplicated macros from some other Taito drivers */
 	
 	/* Same as TAITO_B_DSWA_2_4 in taito_b.c and TAITO_L_DSWA_2_4 in taito_l.c */
 	#define TAITO_WGP_DSWA_2_4 \
-		PORT_DIPNAME( 0x02, 0x02, DEF_STR( Flip_Screen ) ) \
-		PORT_DIPSETTING(    0x02, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) ) \
-		PORT_SERVICE( 0x04, IP_ACTIVE_LOW ) \
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Demo_Sounds ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) ) \
-		PORT_DIPSETTING(    0x08, DEF_STR( On ) )
+		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Flip_Screen") ); \
+		PORT_DIPSETTING(    0x02, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") ); \
+		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );\
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
+		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
 	
 	/* Same as TAITO_X_SYSTEM_INPUT in taito_x.c */
 	#define TAITO_WGP_SYSTEM_INPUT \
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_TILT ) \
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 ) \
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 ) \
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 )
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_TILT );\
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );\
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 );\
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN2 );
 	
 	
 	/* Driver specific macros */
@@ -761,336 +761,336 @@ public class wgp
 	/* Slightly different from TAITO_COINAGE_WORLD_8 in MANY Taito drivers :
 	   1C_7C instead of 1C_6C for "Coin B". */
 	#define WGP_COINAGE_WORLD_8 \
-		PORT_DIPNAME( 0x30, 0x30, DEF_STR( Coin_A ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 4C_1C ) ) \
-		PORT_DIPSETTING(    0x10, DEF_STR( 3C_1C ) ) \
-		PORT_DIPSETTING(    0x20, DEF_STR( 2C_1C ) ) \
-		PORT_DIPSETTING(    0x30, DEF_STR( 1C_1C ) ) \
-		PORT_DIPNAME( 0xc0, 0xc0, DEF_STR( Coin_B ) ) \
-		PORT_DIPSETTING(    0xc0, DEF_STR( 1C_2C ) ) \
-		PORT_DIPSETTING(    0x80, DEF_STR( 1C_3C ) ) \
-		PORT_DIPSETTING(    0x40, DEF_STR( 1C_4C ) ) \
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_7C ) )
+		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Coin_A") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "4C_1C") ); \
+		PORT_DIPSETTING(    0x10, DEF_STR( "3C_1C") ); \
+		PORT_DIPSETTING(    0x20, DEF_STR( "2C_1C") ); \
+		PORT_DIPSETTING(    0x30, DEF_STR( "1C_1C") ); \
+		PORT_DIPNAME( 0xc0, 0xc0, DEF_STR( "Coin_B") ); \
+		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_2C") ); \
+		PORT_DIPSETTING(    0x80, DEF_STR( "1C_3C") ); \
+		PORT_DIPSETTING(    0x40, DEF_STR( "1C_4C") ); \
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_7C") );
 	
 	#define WGP_MACHINE_ID_8 \
-		PORT_DIPNAME( 0xe0, 0xe0, "Machine ID" ) \
-		PORT_DIPSETTING(    0xe0, "1" ) \
-		PORT_DIPSETTING(    0xc0, "2" ) \
-		PORT_DIPSETTING(    0xa0, "3" ) \
-		PORT_DIPSETTING(    0x80, "4" ) \
-		PORT_DIPSETTING(    0x60, "5" ) \
-		PORT_DIPSETTING(    0x40, "6" ) \
-		PORT_DIPSETTING(    0x20, "7" ) \
-		PORT_DIPSETTING(    0x00, "8" )
+		PORT_DIPNAME( 0xe0, 0xe0, "Machine ID" );\
+		PORT_DIPSETTING(    0xe0, "1" );\
+		PORT_DIPSETTING(    0xc0, "2" );\
+		PORT_DIPSETTING(    0xa0, "3" );\
+		PORT_DIPSETTING(    0x80, "4" );\
+		PORT_DIPSETTING(    0x60, "5" );\
+		PORT_DIPSETTING(    0x40, "6" );\
+		PORT_DIPSETTING(    0x20, "7" );\
+		PORT_DIPSETTING(    0x00, "8" );
 	
 	
-	INPUT_PORTS_START( wgp )
-		PORT_START /* DSW A */
-		PORT_DIPNAME( 0x01, 0x01, "Motor Test" )				// Only available in "test mode"
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_wgp = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW A */
+		PORT_DIPNAME( 0x01, 0x01, "Motor Test" );			// Only available in "test mode"
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		TAITO_WGP_DSWA_2_4
 		TAITO_COINAGE_US_8
 	
-		PORT_START /* DSW B */
+		PORT_START();  /* DSW B */
 		TAITO_DIFFICULTY_8
-		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, "Communication" )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, "Communication" );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		WGP_MACHINE_ID_8
 	
-		PORT_START      /* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 )	/* freeze */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 )	/* shift up */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 )	/* shift down */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 );/* freeze */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 );/* shift up */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 );/* shift down */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 )	/* "start lump" (lamp?) */
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 )	/* "brake lump" (lamp?) */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 );/* "start lump" (lamp?) */
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 );/* "brake lump" (lamp?) */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN2 */
+		PORT_START();       /* IN2 */
 		TAITO_WGP_SYSTEM_INPUT
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START      /* fake inputs, allowing digital steer etc. */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_DIPNAME( 0x10, 0x10, "Steering type" )
-		PORT_DIPSETTING(    0x10, "Digital" )
-		PORT_DIPSETTING(    0x00, "Analogue" )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )	/* accel */
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 )	/* brake */
+		PORT_START();       /* fake inputs, allowing digital steer etc. */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_DIPNAME( 0x10, 0x10, "Steering type" );
+		PORT_DIPSETTING(    0x10, "Digital" );
+		PORT_DIPSETTING(    0x00, "Analogue" );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );/* accel */
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );/* brake */
 	
 	/* It's not clear for accel and brake which is the input and
 	   which the offset, but that doesn't matter. These continuous
 	   inputs are replaced by discrete values derived from the fake
 	   input port above, so keyboard control is feasible. */
 	
-	//	PORT_START	/* accel, 0-255 */
-	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+	//	PORT_START(); 	/* accel, 0-255 */
+	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-		PORT_START	/* steer */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+		PORT_START(); 	/* steer */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-	//	PORT_START	/* steer offset */
+	//	PORT_START(); 	/* steer offset */
 	
-	//	PORT_START	/* accel offset */
+	//	PORT_START(); 	/* accel offset */
 	
-	//	PORT_START	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
-	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff)
+	//	PORT_START(); 	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
+	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff);
 	
-		PORT_START	/* unknown */
-		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff)
-	INPUT_PORTS_END
+		PORT_START(); 	/* unknown */
+		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff);
+	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'wgp', but different coinage */
-	INPUT_PORTS_START( wgpj )
-		PORT_START /* DSW A */
-		PORT_DIPNAME( 0x01, 0x01, "Motor Test" )				// Only available in "test mode"
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_wgpj = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW A */
+		PORT_DIPNAME( 0x01, 0x01, "Motor Test" );			// Only available in "test mode"
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		TAITO_WGP_DSWA_2_4
 		TAITO_COINAGE_JAPAN_NEW_8
 	
-		PORT_START /* DSW B */
+		PORT_START();  /* DSW B */
 		TAITO_DIFFICULTY_8
-		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, "Communication" )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, "Communication" );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		WGP_MACHINE_ID_8
 	
-		PORT_START      /* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 )	/* freeze */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 )	/* shift up */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 )	/* shift down */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 );/* freeze */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 );/* shift up */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 );/* shift down */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 )	/* "start lump" (lamp?) */
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 )	/* "brake lump" (lamp?) */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 );/* "start lump" (lamp?) */
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 );/* "brake lump" (lamp?) */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN2 */
+		PORT_START();       /* IN2 */
 		TAITO_WGP_SYSTEM_INPUT
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START      /* fake inputs, allowing digital steer etc. */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_DIPNAME( 0x10, 0x10, "Steering type" )
-		PORT_DIPSETTING(    0x10, "Digital" )
-		PORT_DIPSETTING(    0x00, "Analogue" )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )	/* accel */
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 )	/* brake */
+		PORT_START();       /* fake inputs, allowing digital steer etc. */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_DIPNAME( 0x10, 0x10, "Steering type" );
+		PORT_DIPSETTING(    0x10, "Digital" );
+		PORT_DIPSETTING(    0x00, "Analogue" );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );/* accel */
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );/* brake */
 	
 	/* It's not clear for accel and brake which is the input and
 	   which the offset, but that doesn't matter. These continuous
 	   inputs are replaced by discrete values derived from the fake
 	   input port above, so keyboard control is feasible. */
 	
-	//	PORT_START	/* accel, 0-255 */
-	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+	//	PORT_START(); 	/* accel, 0-255 */
+	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-		PORT_START	/* steer */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+		PORT_START(); 	/* steer */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-	//	PORT_START	/* steer offset */
+	//	PORT_START(); 	/* steer offset */
 	
-	//	PORT_START	/* accel offset */
+	//	PORT_START(); 	/* accel offset */
 	
-	//	PORT_START	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
-	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff)
+	//	PORT_START(); 	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
+	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff);
 	
-		PORT_START	/* unknown */
-		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff)
-	INPUT_PORTS_END
+		PORT_START(); 	/* unknown */
+		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff);
+	INPUT_PORTS_END(); }}; 
 	
-	INPUT_PORTS_START( wgpjoy )
-		PORT_START /* DSW A */
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
+	static InputPortPtr input_ports_wgpjoy = new InputPortPtr(){ public void handler() { 
+		PORT_START();  /* DSW A */
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		TAITO_WGP_DSWA_2_4
 		TAITO_COINAGE_JAPAN_NEW_8
 	
-		PORT_START /* DSW B */
+		PORT_START();  /* DSW B */
 		TAITO_DIFFICULTY_8
-		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x40, 0x40, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x80, 0x80, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START      /* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN1, is it read? */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN1, is it read? */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN2 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 )
-		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_START();       /* IN2 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
+		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN1 );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START	/* doesn't exist */
+		PORT_START(); 	/* doesn't exist */
 	
-		PORT_START	/* doesn't exist */
-	INPUT_PORTS_END
+		PORT_START(); 	/* doesn't exist */
+	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'wgpj', but no "Motor Test" Dip Switch (DSWA 0) */
-	INPUT_PORTS_START( wgp2 )	/* Wgp2 has no "lumps" ? */
-		PORT_START /* DSW A */
-		PORT_DIPNAME( 0x01, 0x01, DEF_STR( Unknown ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	static InputPortPtr input_ports_wgp2 = new InputPortPtr(){ public void handler() { 	/* Wgp2 has no "lumps" ? */
+		PORT_START();  /* DSW A */
+		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		TAITO_WGP_DSWA_2_4
 		TAITO_COINAGE_JAPAN_NEW_8
 	
-		PORT_START /* DSW B */
+		PORT_START();  /* DSW B */
 		TAITO_DIFFICULTY_8
-		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" )
-		PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" )
-		PORT_DIPSETTING(    0x08, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-		PORT_DIPNAME( 0x10, 0x10, "Communication" )
-		PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+		PORT_DIPNAME( 0x04, 0x04, "Shift Pattern Select" );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
+		PORT_DIPNAME( 0x08, 0x08, "Slave / Master ???" );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+		PORT_DIPNAME( 0x10, 0x10, "Communication" );
+		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		WGP_MACHINE_ID_8
 	
-		PORT_START      /* IN0 */
-		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 )	/* freeze */
-		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 )	/* shift up */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 )	/* shift down */
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN0 */
+		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON7 | IPF_PLAYER1 );/* freeze */
+		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON4 | IPF_PLAYER1 );/* shift up */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_BUTTON3 | IPF_PLAYER1 );/* shift down */
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_START1 );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 )	/* "start lump" (lamp?) */
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 )	/* "brake lump" (lamp?) */
-		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN )
+		PORT_START();       /* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON5 | IPF_PLAYER1 );/* "start lump" (lamp?) */
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON6 | IPF_PLAYER1 );/* "brake lump" (lamp?) */
+		PORT_BIT( 0x04, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x08, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x10, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW,  IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
-		PORT_START      /* IN2 */
+		PORT_START();       /* IN2 */
 		TAITO_WGP_SYSTEM_INPUT
-		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN )
-		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
+		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
+		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START      /* fake inputs, allowing digital steer etc. */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 )
-		PORT_DIPNAME( 0x10, 0x10, "Steering type" )
-		PORT_DIPSETTING(    0x10, "Digital" )
-		PORT_DIPSETTING(    0x00, "Analogue" )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )	/* accel */
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 )	/* brake */
+		PORT_START();       /* fake inputs, allowing digital steer etc. */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
+		PORT_DIPNAME( 0x10, 0x10, "Steering type" );
+		PORT_DIPSETTING(    0x10, "Digital" );
+		PORT_DIPSETTING(    0x00, "Analogue" );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );/* accel */
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );/* brake */
 	
 	/* It's not clear for accel and brake which is the input and
 	   which the offset, but that doesn't matter. These continuous
 	   inputs are replaced by discrete values derived from the fake
 	   input port above, so keyboard control is feasible. */
 	
-	//	PORT_START	/* accel, 0-255 */
-	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+	//	PORT_START(); 	/* accel, 0-255 */
+	//	PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-		PORT_START	/* steer */
-		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff)
+		PORT_START(); 	/* steer */
+		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_REVERSE | IPF_PLAYER1, 20, 25, 0, 0xff);
 	
-	//	PORT_START	/* steer offset */
+	//	PORT_START(); 	/* steer offset */
 	
-	//	PORT_START	/* accel offset */
+	//	PORT_START(); 	/* accel offset */
 	
-	//	PORT_START	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
-	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff)
+	//	PORT_START(); 	/* brake, 0-0x30: needs to start at 0xff; then 0xcf is max brake */
+	//	PORT_ANALOG( 0xff, 0xff, IPT_AD_STICK_X | IPF_PLAYER2, 10, 5, 0xcf, 0xff);
 	
-		PORT_START	/* unknown */
-		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff)
-	INPUT_PORTS_END
+		PORT_START(); 	/* unknown */
+		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff);
+	INPUT_PORTS_END(); }}; 
 	
 	
 	/***********************************************************

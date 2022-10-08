@@ -46,8 +46,8 @@ public class vamphalf
 		{ 0xffc00000, 0xffffffff, MWA32_ROM },
 	MEMORY_END
 	
-	INPUT_PORTS_START( vamphalf )
-	INPUT_PORTS_END
+	static InputPortPtr input_ports_vamphalf = new InputPortPtr(){ public void handler() { 
+	INPUT_PORTS_END(); }}; 
 	
 	
 	VIDEO_START( vamphalf )

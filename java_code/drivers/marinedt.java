@@ -265,86 +265,86 @@ public class marinedt
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	INPUT_PORTS_START( marinedt )
-		PORT_START	/* IN0 */
-		PORT_DIPNAME( 0x0f, 0x00, DEF_STR( Coin_A ) )
-		PORT_DIPSETTING(    0x0f, DEF_STR( 9C_1C ) )
-		PORT_DIPSETTING(    0x0e, DEF_STR( 8C_1C ) )
-		PORT_DIPSETTING(    0x0d, DEF_STR( 7C_1C ) )
-		PORT_DIPSETTING(    0x0c, DEF_STR( 6C_1C ) )
-		PORT_DIPSETTING(    0x0b, DEF_STR( 5C_1C ) )
-		PORT_DIPSETTING(    0x0a, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(    0x09, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x01, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x02, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x03, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x04, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x05, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x06, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x07, DEF_STR( 1C_8C ) )
-		PORT_DIPNAME( 0xf0, 0x00, DEF_STR( Coin_B ) )
-		PORT_DIPSETTING(    0xf0, DEF_STR( 9C_1C ) )
-		PORT_DIPSETTING(    0xe0, DEF_STR( 8C_1C ) )
-		PORT_DIPSETTING(    0xd0, DEF_STR( 7C_1C ) )
-		PORT_DIPSETTING(    0xc0, DEF_STR( 6C_1C ) )
-		PORT_DIPSETTING(    0xb0, DEF_STR( 5C_1C ) )
-		PORT_DIPSETTING(    0xa0, DEF_STR( 4C_1C ) )
-		PORT_DIPSETTING(    0x90, DEF_STR( 3C_1C ) )
-		PORT_DIPSETTING(    0x80, DEF_STR( 2C_1C ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
-		PORT_DIPSETTING(    0x10, DEF_STR( 1C_2C ) )
-		PORT_DIPSETTING(    0x20, DEF_STR( 1C_3C ) )
-		PORT_DIPSETTING(    0x30, DEF_STR( 1C_4C ) )
-		PORT_DIPSETTING(    0x40, DEF_STR( 1C_5C ) )
-		PORT_DIPSETTING(    0x50, DEF_STR( 1C_6C ) )
-		PORT_DIPSETTING(    0x60, DEF_STR( 1C_7C ) )
-		PORT_DIPSETTING(    0x70, DEF_STR( 1C_8C ) )
+	static InputPortPtr input_ports_marinedt = new InputPortPtr(){ public void handler() { 
+		PORT_START(); 	/* IN0 */
+		PORT_DIPNAME( 0x0f, 0x00, DEF_STR( "Coin_A") );
+		PORT_DIPSETTING(    0x0f, DEF_STR( "9C_1C") );
+		PORT_DIPSETTING(    0x0e, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING(    0x0d, DEF_STR( "7C_1C") );
+		PORT_DIPSETTING(    0x0c, DEF_STR( "6C_1C") );
+		PORT_DIPSETTING(    0x0b, DEF_STR( "5C_1C") );
+		PORT_DIPSETTING(    0x0a, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(    0x09, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x01, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x02, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x03, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x04, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x05, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x06, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x07, DEF_STR( "1C_8C") );
+		PORT_DIPNAME( 0xf0, 0x00, DEF_STR( "Coin_B") );
+		PORT_DIPSETTING(    0xf0, DEF_STR( "9C_1C") );
+		PORT_DIPSETTING(    0xe0, DEF_STR( "8C_1C") );
+		PORT_DIPSETTING(    0xd0, DEF_STR( "7C_1C") );
+		PORT_DIPSETTING(    0xc0, DEF_STR( "6C_1C") );
+		PORT_DIPSETTING(    0xb0, DEF_STR( "5C_1C") );
+		PORT_DIPSETTING(    0xa0, DEF_STR( "4C_1C") );
+		PORT_DIPSETTING(    0x90, DEF_STR( "3C_1C") );
+		PORT_DIPSETTING(    0x80, DEF_STR( "2C_1C") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
+		PORT_DIPSETTING(    0x10, DEF_STR( "1C_2C") );
+		PORT_DIPSETTING(    0x20, DEF_STR( "1C_3C") );
+		PORT_DIPSETTING(    0x30, DEF_STR( "1C_4C") );
+		PORT_DIPSETTING(    0x40, DEF_STR( "1C_5C") );
+		PORT_DIPSETTING(    0x50, DEF_STR( "1C_6C") );
+		PORT_DIPSETTING(    0x60, DEF_STR( "1C_7C") );
+		PORT_DIPSETTING(    0x70, DEF_STR( "1C_8C") );
 	
-		PORT_START	/* IN1 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
-		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 )
-		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE1 )
-		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_TILT )
-		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 )
-		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 )
-		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 )
-		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 )
+		PORT_START(); 	/* IN1 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
+		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
+		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE1 );
+		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_TILT );
+		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 );
+		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );
+		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_START2 );
+		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	
-		PORT_START	/* IN2 */
-	    PORT_DIPNAME( 0x01, 0x00, DEF_STR( Bonus_Life ) )
-	    PORT_DIPSETTING(    0x01, "5000" )
-	    PORT_DIPSETTING(    0x00, "10000" )
+		PORT_START(); 	/* IN2 */
+	    PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Bonus_Life") );
+	    PORT_DIPSETTING(    0x01, "5000" );
+	    PORT_DIPSETTING(    0x00, "10000" );
 	//cheat?
-	    PORT_DIPNAME( 0x02, 0x00, "ignore internal bounce?" )	//maybe die/bounce of rocks/coral?
-	    PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
-	    PORT_DIPSETTING(    0x02, DEF_STR( On ) )
+	    PORT_DIPNAME( 0x02, 0x00, "ignore internal bounce?" );//maybe die/bounce of rocks/coral?
+	    PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
+	    PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 	//freezes the game before the reset
 	//doesn't seem to be done as a dip, but what about mixing with diops like this?
-		PORT_BITX(0x04, IP_ACTIVE_HIGH, IPT_SERVICE | IPF_TOGGLE, DEF_STR( Service_Mode ), KEYCODE_F2, IP_JOY_NONE )
-		PORT_DIPNAME( 0x08, 0x08, DEF_STR( Cabinet ) )
-		PORT_DIPSETTING(    0x08, DEF_STR( Upright ) )
-		PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
-		PORT_DIPNAME( 0x10, 0x00, "Coin Chutes" )
-		PORT_DIPSETTING(    0x00, "Common" )
-		PORT_DIPSETTING(    0x10, "Individual" )
-	    PORT_DIPNAME( 0x20, 0x00, "Year Display" )
-	    PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-	    PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	    PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Lives ) )
-	    PORT_DIPSETTING(    0x00, "3" )
-	    PORT_DIPSETTING(    0x40, "4" )
-	    PORT_DIPSETTING(    0x80, "5" )
-	    PORT_DIPSETTING(    0xc0, "6" )
+		PORT_BITX(0x04, IP_ACTIVE_HIGH, IPT_SERVICE | IPF_TOGGLE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
+		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Cabinet") );
+		PORT_DIPSETTING(    0x08, DEF_STR( "Upright") );
+		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
+		PORT_DIPNAME( 0x10, 0x00, "Coin Chutes" );
+		PORT_DIPSETTING(    0x00, "Common" );
+		PORT_DIPSETTING(    0x10, "Individual" );
+	    PORT_DIPNAME( 0x20, 0x00, "Year Display" );
+	    PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
+	    PORT_DIPSETTING(    0x00, DEF_STR( "On") );
+	    PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Lives") );
+	    PORT_DIPSETTING(    0x00, "3" );
+	    PORT_DIPSETTING(    0x40, "4" );
+	    PORT_DIPSETTING(    0x80, "5" );
+	    PORT_DIPSETTING(    0xc0, "6" );
 	
-	    PORT_START  /* IN3 - FAKE MUXED */
+	    PORT_START();   /* IN3 - FAKE MUXED */
 	//check all bits are used
-	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X | IPF_REVERSE, 25, 10, 0, 0 )
+	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X | IPF_REVERSE, 25, 10, 0, 0 );
 	
-	    PORT_START  /* IN4 - FAKE MUXED */
-	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y, 25, 10, 0, 0 )
-	INPUT_PORTS_END
+	    PORT_START();   /* IN4 - FAKE MUXED */
+	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y, 25, 10, 0, 0 );
+	INPUT_PORTS_END(); }}; 
 	
 	static struct GfxLayout marinedt_charlayout =
 	{

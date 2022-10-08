@@ -212,51 +212,51 @@ public class ace
 	};
 	
 	
-	INPUT_PORTS_START( ace )
+	static InputPortPtr input_ports_ace = new InputPortPtr(){ public void handler() { 
 	
-		PORT_START	/* player thrust c008 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER1 )
+		PORT_START(); 	/* player thrust c008 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER1 );
 	
-		PORT_START	/* player slowdown c009 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 )
+		PORT_START(); 	/* player slowdown c009 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
 	
-		PORT_START	/* player left c00a */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 )
+		PORT_START(); 	/* player left c00a */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
 	
-		PORT_START	/* player right c00b */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 )
+		PORT_START(); 	/* player right c00b */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 	
-		PORT_START	/* player fire c00c */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 )
+		PORT_START(); 	/* player fire c00c */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );
 	
-		PORT_START	/* enemy thrust c00d */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER2 )
+		PORT_START(); 	/* enemy thrust c00d */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER2 );
 	
-		PORT_START	/* enemy slowdown c00e */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 )
+		PORT_START(); 	/* enemy slowdown c00e */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
 	
-		PORT_START	/* enemy left c00f */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 )
+		PORT_START(); 	/* enemy left c00f */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
 	
-		PORT_START	/* enemy right c010 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 )
+		PORT_START(); 	/* enemy right c010 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
 	
-		PORT_START	/* enemy fire c011 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 )
+		PORT_START(); 	/* enemy fire c011 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );
 	
 	//c012
 	
 	
-		PORT_START	/* VBLANK??? read from 0xc014 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_VBLANK )
+		PORT_START(); 	/* VBLANK??? read from 0xc014 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
-		PORT_START	/* coin input c015 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 )
+		PORT_START(); 	/* coin input c015 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 	
-		PORT_START	/* game start c016 */
-		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 )
+		PORT_START(); 	/* game start c016 */
+		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 	
-	INPUT_PORTS_END
+	INPUT_PORTS_END(); }}; 
 	
 	
 	static struct GfxLayout charlayout =
