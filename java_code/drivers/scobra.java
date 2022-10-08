@@ -718,7 +718,7 @@ public class scobra
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(    0x06, DEF_STR( "1C_4C") );
-		PORT_DIPNAME( 0x08, 0x08, "Cabinet (Not Supported); )
+		PORT_DIPNAME( 0x08, 0x08, "Cabinet (Not Supported"));
 		PORT_DIPSETTING(    0x08, DEF_STR( "Upright") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );

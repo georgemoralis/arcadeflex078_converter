@@ -183,12 +183,12 @@ public class pbaction
 		PORT_DIPNAME( 0x08, 0x00, "Extra" );
 		PORT_DIPSETTING(    0x00, "Easy" );
 		PORT_DIPSETTING(    0x08, "Hard" );
-		PORT_DIPNAME( 0x30, 0x00, "Difficulty (Flippers); )
+		PORT_DIPNAME( 0x30, 0x00, "Difficulty (Flippers"));
 		PORT_DIPSETTING(    0x00, "Easy" );
 		PORT_DIPSETTING(    0x10, "Medium" );
 		PORT_DIPSETTING(    0x20, "Hard" );
 		PORT_DIPSETTING(    0x30, "Hardest" );
-		PORT_DIPNAME( 0xc0, 0x00, "Difficulty (Outlanes); )
+		PORT_DIPNAME( 0xc0, 0x00, "Difficulty (Outlanes"));
 		PORT_DIPSETTING(    0x00, "Easy" );
 		PORT_DIPSETTING(    0x40, "Medium" );
 		PORT_DIPSETTING(    0x80, "Hard" );

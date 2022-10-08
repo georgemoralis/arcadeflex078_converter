@@ -1133,8 +1133,7 @@ public class namcos2
 		 *
 		 * (see also Cart Type(B) below in Port H)
 		 */
-		PORT_DIPNAME( 0x02, 0x02, "Car Type(A);
-		PORT_DIPSETTING(	0x02, "McLaren/Williams" );
+		PORT_DIPNAME( 0x02, 0x02, "Car Type(A"));	PORT_DIPSETTING(	0x02, "McLaren/Williams" );
 		PORT_DIPSETTING(	0x00, "Lotus/March" );
 		PORT_BIT( 0xfc, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
@@ -1182,8 +1181,7 @@ public class namcos2
 		PORT_DIPNAME( 0x40, 0x40, "PortH 0x40");
 		PORT_DIPSETTING(	0x40, "H" );
 		PORT_DIPSETTING(	0x00, "L" );
-		PORT_DIPNAME( 0x80, 0x80, "Car Type(B);
-		PORT_DIPSETTING(	0x00, "McLaren/March" );
+		PORT_DIPNAME( 0x80, 0x80, "Car Type(B"));	PORT_DIPSETTING(	0x00, "McLaren/March" );
 		PORT_DIPSETTING(	0x80, "Williams/Lotus" );
 	
 		NAMCOS2_MCU_DIPSW_DEFAULT /* 63B05Z0 - $2000 DIP SW */
@@ -1196,8 +1194,7 @@ public class namcos2
 		PORT_DIPNAME( 0x01, 0x01, "PortB 0x01");
 		PORT_DIPSETTING(	0x01, "H" );
 		PORT_DIPSETTING(	0x00, "L" );
-		PORT_DIPNAME( 0x02, 0x02, "Car Type(A);
-		PORT_DIPSETTING(	0x02, "McLaren/Williams" );
+		PORT_DIPNAME( 0x02, 0x02, "Car Type(A"));	PORT_DIPSETTING(	0x02, "McLaren/Williams" );
 		PORT_DIPSETTING(	0x00, "Lotus/March" );
 		PORT_BIT( 0xfc, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
@@ -1246,8 +1243,7 @@ public class namcos2
 		PORT_DIPNAME( 0x40, 0x40, "PortH 0x40");
 		PORT_DIPSETTING(	0x40, "H" );
 		PORT_DIPSETTING(	0x00, "L" );
-		PORT_DIPNAME( 0x80, 0x80, "Car Type(B);
-		PORT_DIPSETTING(	0x00, "McLaren/March" );
+		PORT_DIPNAME( 0x80, 0x80, "Car Type(B"));	PORT_DIPSETTING(	0x00, "McLaren/March" );
 		PORT_DIPSETTING(	0x80, "Williams/Lotus" );
 	
 		NAMCOS2_MCU_DIPSW_DEFAULT /* 63B05Z0 - $2000 DIP SW */
@@ -1323,8 +1319,7 @@ public class namcos2
 		PORT_DIPNAME( 0x04, 0x04, "PortH 0x04");
 		PORT_DIPSETTING(	0x04, "H" );
 		PORT_DIPSETTING(	0x00, "L" );
-		PORT_DIPNAME( 0x08, 0x08, "PortH 0x08 (onscreen diagnostics);
-		PORT_DIPSETTING(	0x08, "H" );
+		PORT_DIPNAME( 0x08, 0x08, "PortH 0x08 (onscreen diagnostics"));	PORT_DIPSETTING(	0x08, "H" );
 		PORT_DIPSETTING(	0x00, "L" );
 		PORT_DIPNAME( 0x10, 0x10, "PortH 0x10");
 		PORT_DIPSETTING(	0x10, "H" );

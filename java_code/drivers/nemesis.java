@@ -1419,10 +1419,10 @@ public class nemesis
 		PORT_DIPSETTING(    0x02, "3" );
 		PORT_DIPSETTING(    0x01, "5" );
 		PORT_DIPSETTING(    0x00, "7" );
-		PORT_DIPNAME( 0x04, 0x00, "Coin Slot(s); )
+		PORT_DIPNAME( 0x04, 0x00, "Coin Slot(s"));
 		PORT_DIPSETTING(    0x04, "1" );
 		PORT_DIPSETTING(    0x00, "2" );
-		PORT_DIPNAME( 0x18, 0x00, "Max Credit(s); )
+		PORT_DIPNAME( 0x18, 0x00, "Max Credit(s"));
 		PORT_DIPSETTING(    0x18, "1" );
 		PORT_DIPSETTING(    0x10, "3" );
 		PORT_DIPSETTING(    0x08, "5" );
@@ -1518,7 +1518,7 @@ public class nemesis
 		PORT_DIPSETTING(    0x02, "4" );
 		PORT_DIPSETTING(    0x01, "5" );
 		PORT_DIPSETTING(    0x00, "6" );
-		PORT_DIPNAME( 0x04, 0x00, "Coin Slot(s); )
+		PORT_DIPNAME( 0x04, 0x00, "Coin Slot(s"));
 		PORT_DIPSETTING(    0x04, "1" );
 		PORT_DIPSETTING(    0x00, "2" );
 		PORT_DIPNAME( 0x18, 0x18, DEF_STR( "Bonus_Life") );

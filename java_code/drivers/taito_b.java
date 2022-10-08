@@ -1730,7 +1730,7 @@ public class taito_b
 		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0xc0, "Same as Start" );
-		PORT_DIPSETTING(    0x00, "Same as Start or 1C/1C (if Coinage 4C/3C); )
+		PORT_DIPSETTING(    0x00, "Same as Start or 1C/1C (if Coinage 4C/3C"));
 	
 		PORT_START();  /* DSW B */
 		TAITO_DIFFICULTY_8

@@ -783,7 +783,7 @@ public class ms32
 		PORT_DIPSETTING(    0xc0, "Normal" );
 		PORT_DIPSETTING(    0x40, "Hard" );
 		PORT_DIPSETTING(    0x80, "Hardest" );
-		PORT_DIPNAME( 0x30, 0x30, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x30, 0x30, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(    0x00, "1/1" );
 		PORT_DIPSETTING(    0x30, "2/3" );
 		PORT_DIPSETTING(    0x10, "3/5" );
@@ -1057,7 +1057,7 @@ public class ms32
 		MS32_DIP1	// "Service Mode" Dip Switch doesn't work ! Use the "Test" button instead !
 	
 		PORT_START(); 	// DIP2
-		PORT_DIPNAME( 0xc0, 0xc0, "Computer's AI (VS Mode); )
+		PORT_DIPNAME( 0xc0, 0xc0, "Computer's AI (VS Mode"));
 		PORT_DIPSETTING(    0x40, "Low" );
 		PORT_DIPSETTING(    0xc0, "Normal" );
 		PORT_DIPSETTING(    0x80, "High" );
@@ -1069,14 +1069,14 @@ public class ms32
 	      /*   4     1:30       10     */
 	      /*   4     2:00       14     */
 	      /* final   2:00       18     */
-		PORT_DIPNAME( 0x30, 0x30, "Time (Race Mode); )
+		PORT_DIPNAME( 0x30, 0x30, "Time (Race Mode"));
 		PORT_DIPSETTING(    0x00, "Default - 0:15" );
 		PORT_DIPSETTING(    0x20, "Default - 0:10" );
 		PORT_DIPSETTING(    0x30, "Default" );
 		PORT_DIPSETTING(    0x10, "Default + 0:15" );
 		/* Round   Default    More */
 	      /*   1       10        15  */
-		PORT_DIPNAME( 0x08, 0x08, "Questions (VS Mode); )	// TO DO : check all rounds
+		PORT_DIPNAME( 0x08, 0x08, "Questions (VS Mode"));// TO DO : check all rounds
 		PORT_DIPSETTING(    0x08, "Default" );
 		PORT_DIPSETTING(    0x00, "More" );
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Unknown") );		// "Unused" ?

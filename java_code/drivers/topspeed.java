@@ -496,8 +496,8 @@ public class topspeed
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
-		PORT_DIPSETTING(    0x02, "Upright (?); )
-		PORT_DIPSETTING(    0x01, "Upright (alt?); )
+		PORT_DIPSETTING(    0x02, "Upright (?"));
+		PORT_DIPSETTING(    0x01, "Upright (alt?"));
 		PORT_DIPSETTING(    0x00, "Standard Cockpit" );
 		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );
@@ -569,8 +569,8 @@ public class topspeed
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
-		PORT_DIPSETTING(    0x02, "Upright (?); )
-		PORT_DIPSETTING(    0x01, "Upright (alt?); )
+		PORT_DIPSETTING(    0x02, "Upright (?"));
+		PORT_DIPSETTING(    0x01, "Upright (alt?"));
 		PORT_DIPSETTING(    0x00, "Standard Cockpit" );
 		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );
@@ -642,8 +642,8 @@ public class topspeed
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
-		PORT_DIPSETTING(    0x02, "Upright (?); )
-		PORT_DIPSETTING(    0x01, "Upright (alt?); )
+		PORT_DIPSETTING(    0x02, "Upright (?"));
+		PORT_DIPSETTING(    0x01, "Upright (alt?"));
 		PORT_DIPSETTING(    0x00, "Standard Cockpit" );
 		PORT_SERVICE( 0x04, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Demo_Sounds") );

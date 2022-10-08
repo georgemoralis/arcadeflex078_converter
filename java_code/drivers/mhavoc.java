@@ -414,11 +414,7 @@ public class mhavoc
 		PORT_DIPSETTING(    0x30, "Hard");
 		PORT_DIPSETTING(    0x20, "Demo");
 		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Lives") );
-		PORT_DIPSETTING(    0x00, "3 (2 in Free Play);
-		PORT_DIPSETTING(    0xc0, "4 (3 in Free Play);
-		PORT_DIPSETTING(    0x80, "5 (4 in Free Play);
-		PORT_DIPSETTING(    0x40, "6 (5 in Free Play);
-	
+		PORT_DIPSETTING(    0x00, "3 (2 in Free Play"));	PORT_DIPSETTING(    0xc0, "4 (3 in Free Play"));	PORT_DIPSETTING(    0x80, "5 (4 in Free Play"));	PORT_DIPSETTING(    0x40, "6 (5 in Free Play"));
 		PORT_START();  /* DIP Switch at position 8S */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -484,11 +480,7 @@ public class mhavoc
 		PORT_DIPSETTING(    0x30, "Hard");
 		PORT_DIPSETTING(    0x20, "Demo");
 		PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Lives") );
-		PORT_DIPSETTING(    0x00, "3 (2 in Free Play);
-		PORT_DIPSETTING(    0xc0, "4 (3 in Free Play);
-		PORT_DIPSETTING(    0x80, "5 (4 in Free Play);
-		PORT_DIPSETTING(    0x40, "6 (5 in Free Play);
-	
+		PORT_DIPSETTING(    0x00, "3 (2 in Free Play"));	PORT_DIPSETTING(    0xc0, "4 (3 in Free Play"));	PORT_DIPSETTING(    0x80, "5 (4 in Free Play"));	PORT_DIPSETTING(    0x40, "6 (5 in Free Play"));
 		PORT_START();  /* DIP Switch at position 8S */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );

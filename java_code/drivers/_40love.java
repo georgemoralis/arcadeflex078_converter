@@ -1002,10 +1002,10 @@ public class _40love
 	static InputPortPtr input_ports_undoukai = new InputPortPtr(){ public void handler() { 
 		PORT_START();  /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x00, "4 (Hard); )
+		PORT_DIPSETTING(    0x00, "4 (Hard"));
 		PORT_DIPSETTING(    0x01, "3" );
 		PORT_DIPSETTING(    0x02, "2" );
-		PORT_DIPSETTING(    0x03, "1 (Easy); )
+		PORT_DIPSETTING(    0x03, "1 (Easy"));
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Free_Play") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

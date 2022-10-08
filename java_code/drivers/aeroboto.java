@@ -189,10 +189,10 @@ public class aeroboto
 		PORT_DIPSETTING(    0x04, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(    0x06, DEF_STR( "1C_4C") );
 		PORT_DIPNAME( 0x18, 0x08, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x00, "0(Easy); )
-		PORT_DIPSETTING(    0x08, "1(Medium); )
-		PORT_DIPSETTING(    0x10, "2(Hard); )
-		PORT_DIPSETTING(    0x18, "3(Hardest); )
+		PORT_DIPSETTING(    0x00, "0(Easy"));
+		PORT_DIPSETTING(    0x08, "1(Medium"));
+		PORT_DIPSETTING(    0x10, "2(Hard"));
+		PORT_DIPSETTING(    0x18, "3(Hardest"));
 		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x20, DEF_STR( "On") );

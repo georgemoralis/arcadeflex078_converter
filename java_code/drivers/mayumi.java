@@ -124,7 +124,7 @@ public class mayumi
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_2C") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "1C_3C") );
-		PORT_DIPNAME( 0x04, 0x04, "Service Mode (DSW 1-6); )
+		PORT_DIPNAME( 0x04, 0x04, "Service Mode (DSW 1-6"));
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x02, 0x02, "Unknown 1-7" );

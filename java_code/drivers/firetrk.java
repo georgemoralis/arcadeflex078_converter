@@ -721,8 +721,8 @@ public class firetrk
 		PORT_BIT (0x10, IP_ACTIVE_HIGH, IPT_UNUSED);
 		PORT_BIT (0x20, IP_ACTIVE_LOW,  IPT_VBLANK);
 		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );
-		PORT_DIPSETTING(    0x00, "Smokey Joe (1 Player); )
-		PORT_DIPSETTING(    0x40, "Fire Truck (2 Players); )
+		PORT_DIPSETTING(    0x00, "Smokey Joe (1 Player"));
+		PORT_DIPSETTING(    0x40, "Fire Truck (2 Players"));
 		PORT_BITX(0x80, IP_ACTIVE_HIGH,	IPT_SERVICE, "Diag Hold", KEYCODE_F6, IP_JOY_NONE);
 	
 		PORT_START();  /* bit 7 */

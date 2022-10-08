@@ -209,7 +209,7 @@ public class geebee
 	
 		PORT_START(); 		/* IN4 FAKE for 3 lives */
 		PORT_BIT	( 0x0f, 0x00, IPT_UNUSED );
-		PORT_DIPNAME( 0x30, 0x00, "Bonus Life (3 lives); )
+		PORT_DIPNAME( 0x30, 0x00, "Bonus Life (3 lives"));
 		PORT_DIPSETTING(    0x10, "40k 80k" );
 		PORT_DIPSETTING(    0x20, "70k 140k" );
 		PORT_DIPSETTING(    0x30, "100k 200k" );
@@ -218,7 +218,7 @@ public class geebee
 	
 		PORT_START(); 		/* IN5 FAKE for 5 lives */
 		PORT_BIT	( 0x0f, 0x00, IPT_UNUSED );
-		PORT_DIPNAME( 0x30, 0x00, "Bonus Life (5 lives); )
+		PORT_DIPNAME( 0x30, 0x00, "Bonus Life (5 lives"));
 		PORT_DIPSETTING(    0x10, "60k 120k" );
 		PORT_DIPSETTING(    0x20, "100k 200k" );
 		PORT_DIPSETTING(    0x30, "150k 300k" );

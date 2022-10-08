@@ -401,10 +401,10 @@ public class rungun
 		PORT_DIPNAME( 0x40, 0x00, "Sound Output" );
 		PORT_DIPSETTING(    0x40, "Mono" );
 		PORT_DIPSETTING(    0x00, "Stereo" );
-		PORT_DIPNAME( 0x04, 0x04, "Bit2 (Unknown); )
+		PORT_DIPNAME( 0x04, 0x04, "Bit2 (Unknown"));
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Bit7 (Unknown); )
+		PORT_DIPNAME( 0x80, 0x80, "Bit7 (Unknown"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	

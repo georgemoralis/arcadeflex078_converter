@@ -1113,10 +1113,10 @@ public class namconb1
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
 		PORT_START(); 
-		PORT_DIPNAME( 0x01, 0x00, "DSW2 (Unused); )
+		PORT_DIPNAME( 0x01, 0x00, "DSW2 (Unused"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_SERVICE1 );
@@ -1149,7 +1149,7 @@ public class namconb1
 		PORT_DIPNAME( 0x01, 0x00, "Freeze Screen" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_DIPNAME( 0x04, 0x00, "Alternate Test Switch" );
@@ -1198,10 +1198,10 @@ public class namconb1
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
 		PORT_START(); 
-		PORT_DIPNAME( 0x01, 0x00, "DSW2 (Unused); )
+		PORT_DIPNAME( 0x01, 0x00, "DSW2 (Unused"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DSW1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_DIPNAME( 0x04, 0x00, DEF_STR( "Unknown") );

@@ -2378,7 +2378,7 @@ public class galaxian
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNUSED );
 	 	PORT_DIPNAME( 0xc0, 0x00, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(    0x80, "1C/1C (2 to start); )
+		PORT_DIPSETTING(    0x80, "1C/1C (2 to start"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "1C_2C") );
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Free_Play") );
@@ -2739,7 +2739,7 @@ public class galaxian
 		PORT_BIT( 0xc0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
 		PORT_START();       /* The Ghost Muncher PT3 - FAKE DSW0 (bits 0 to 5) and IN1 (bits 6 and 7) */
-		PORT_DIPNAME( 0x03, 0x00, "Bonus Life (GM PT3); )
+		PORT_DIPNAME( 0x03, 0x00, "Bonus Life (GM PT3"));
 		PORT_DIPSETTING(    0x01, "10000" );
 		PORT_DIPSETTING(    0x02, "15000" );
 		PORT_DIPSETTING(    0x03, "20000" );
@@ -2754,7 +2754,7 @@ public class galaxian
 	//	PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unused") );
 	//	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	//	PORT_DIPSETTING(    0x20, DEF_STR( "On") );
-		PORT_DIPNAME( 0xc0, 0x00, "Coinage (GM PT3); )
+		PORT_DIPNAME( 0xc0, 0x00, "Coinage (GM PT3"));
 		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_2C") );
@@ -2768,7 +2768,7 @@ public class galaxian
 	//	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	//	PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SPECIAL );// Lives
-		PORT_DIPNAME( 0x08, 0x00, "Allow Continue (S PT2); )
+		PORT_DIPNAME( 0x08, 0x00, "Allow Continue (S PT2"));
 		PORT_DIPSETTING(    0x08, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Unknown") );	// Scramble PT2 - Check code at 0x00c2
@@ -2777,14 +2777,14 @@ public class galaxian
 		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unknown") );	// Scramble PT2 - Check code at 0x00cc
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x20, DEF_STR( "On") );
-		PORT_DIPNAME( 0xc0, 0x00, "Coinage (S PT2); )
+		PORT_DIPNAME( 0xc0, 0x00, "Coinage (S PT2"));
 		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_2C") );
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Free_Play") );
 	
 		PORT_START();       /* Galaxian PT5 - FAKE DSW0 (bits 0 to 5) and IN1 (bits 6 and 7) */
-		PORT_DIPNAME( 0x03, 0x00, "Bonus Life (G PT5); )
+		PORT_DIPNAME( 0x03, 0x00, "Bonus Life (G PT5"));
 		PORT_DIPSETTING(    0x01, "4000" );
 		PORT_DIPSETTING(    0x02, "5000" );
 		PORT_DIPSETTING(    0x03, "7000" );
@@ -2799,14 +2799,14 @@ public class galaxian
 	//	PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unused") );
 	//	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	//	PORT_DIPSETTING(    0x20, DEF_STR( "On") );
-		PORT_DIPNAME( 0xc0, 0x00, "Coinage (G PT5); )
+		PORT_DIPNAME( 0xc0, 0x00, "Coinage (G PT5"));
 		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	//	PORT_DIPSETTING(    0x80, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Free_Play") );
 	
 		PORT_START();       /* Galactic Convoy - FAKE DSW0 (bits 0 to 5) and IN1 (bits 6 and 7) */
-		PORT_DIPNAME( 0x01, 0x00, "Bonus Life (GC); )
+		PORT_DIPNAME( 0x01, 0x00, "Bonus Life (GC"));
 		PORT_DIPSETTING(    0x00, "50000" );
 		PORT_DIPSETTING(    0x01, "80000" );
 	//	PORT_DIPNAME( 0x02, 0x00, DEF_STR( "Unused") );
@@ -2822,7 +2822,7 @@ public class galaxian
 	//	PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Unused") );
 	//	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	//	PORT_DIPSETTING(    0x20, DEF_STR( "On") );
-		PORT_DIPNAME( 0xc0, 0x00, "Coinage (GC); )
+		PORT_DIPNAME( 0xc0, 0x00, "Coinage (GC"));
 		PORT_DIPSETTING(    0x40, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	//	PORT_DIPSETTING(    0x80, DEF_STR( "2C_1C") );	// 1 credit for 1st coin !

@@ -2182,8 +2182,8 @@ public class kaneko16
 		PORT_DIPNAME( 0x1800, 0x1800, "Controls"    );
 		PORT_DIPSETTING(      0x1800, "1 Joystick"  );
 		PORT_DIPSETTING(      0x0800, "2 Joysticks" );
-		PORT_DIPSETTING(      0x1000, "Wheel (360); )
-		PORT_DIPSETTING(      0x0000, "Wheel (270); )
+		PORT_DIPSETTING(      0x1000, "Wheel (360"));
+		PORT_DIPSETTING(      0x0000, "Wheel (270"));
 		PORT_DIPNAME( 0x2000, 0x2000, "Use Brake"    );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x2000, DEF_STR( "On") ); )
@@ -2251,15 +2251,15 @@ public class kaneko16
 		PORT_DIPSETTING(      0x0400, "Machine 3" );
 		PORT_DIPSETTING(      0x0300, "Machine 4" );
 		/* 0x0000 to 0x0200 : "Machine 4"
-		PORT_DIPSETTING(      0x0200, "Machine 4 (0x0200); )
-		PORT_DIPSETTING(      0x0100, "Machine 4 (0x0100); )
-		PORT_DIPSETTING(      0x0000, "Machine 4 (0x0000); )
+		PORT_DIPSETTING(      0x0200, "Machine 4 (0x0200"));
+		PORT_DIPSETTING(      0x0100, "Machine 4 (0x0100"));
+		PORT_DIPSETTING(      0x0000, "Machine 4 (0x0000"));
 		*/
 		PORT_DIPNAME( 0x1800, 0x1800, "Controls" );
 		PORT_DIPSETTING(      0x1800, "Joystick" );
-		PORT_DIPSETTING(      0x0800, "Wheel (360); )			// Not working correctly in race
-		PORT_DIPSETTING(      0x1000, "Wheel (270D); )			// Not working correctly !
-		PORT_DIPSETTING(      0x0000, "Wheel (270A); )			// Not working correctly in race
+		PORT_DIPSETTING(      0x0800, "Wheel (360"));		// Not working correctly in race
+		PORT_DIPSETTING(      0x1000, "Wheel (270D"));		// Not working correctly !
+		PORT_DIPSETTING(      0x0000, "Wheel (270A"));		// Not working correctly in race
 		PORT_DIPNAME( 0x2000, 0x2000, "Pedal Function" );
 		PORT_DIPSETTING(      0x2000, "Microswitch" );
 	//	PORT_DIPSETTING(      0x0000, "Potentiometer" );		// Not implemented yet

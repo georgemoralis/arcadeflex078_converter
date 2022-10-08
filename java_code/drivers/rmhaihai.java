@@ -259,14 +259,14 @@ public class rmhaihai
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0xfe, 0xfe, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xfe, "1 (Easy); )
+		PORT_DIPSETTING(    0xfe, "1 (Easy"));
 		PORT_DIPSETTING(    0x7e, "2" );
 		PORT_DIPSETTING(    0xbe, "3" );
 		PORT_DIPSETTING(    0xde, "4" );
 		PORT_DIPSETTING(    0xee, "5" );
 		PORT_DIPSETTING(    0xf6, "6" );
 		PORT_DIPSETTING(    0xfa, "7" );
-		PORT_DIPSETTING(    0xfc, "8 (Difficult); )
+		PORT_DIPSETTING(    0xfc, "8 (Difficult"));
 	
 	    PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Free_Play") );

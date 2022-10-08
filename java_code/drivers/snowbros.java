@@ -222,9 +222,9 @@ public class snowbros
 	
 	static InputPortPtr input_ports_snowbros = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* 500001 */
-		PORT_DIPNAME( 0x01, 0x00, "Country (Affects Coinage); )
+		PORT_DIPNAME( 0x01, 0x00, "Country (Affects Coinage"));
 		PORT_DIPSETTING(    0x00, "Europe" );
-		PORT_DIPSETTING(    0x01, "America (Romstar license); )
+		PORT_DIPSETTING(    0x01, "America (Romstar license"));
 		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

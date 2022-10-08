@@ -1021,7 +1021,7 @@ public class neogeo
 		PORT_DIPNAME( 0x02, 0x02, "Coin Chutes?" );
 		PORT_DIPSETTING(	0x00, "1?" );
 		PORT_DIPSETTING(	0x02, "2?" );
-		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games); )
+		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games"));
 		PORT_DIPSETTING(	0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x38, 0x38, "COMM Setting" );
@@ -1227,7 +1227,7 @@ public class neogeo
 		PORT_DIPNAME( 0x02, 0x02, "Coin Chutes?" );
 		PORT_DIPSETTING(	0x00, "1?" );
 		PORT_DIPSETTING(	0x02, "2?" );
-		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games); )
+		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games"));
 		PORT_DIPSETTING(	0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x38, 0x38, "COMM Setting" );
@@ -1314,7 +1314,7 @@ public class neogeo
 		PORT_DIPNAME( 0x02, 0x02, "Coin Chutes?" );
 		PORT_DIPSETTING(	0x00, "1?" );
 		PORT_DIPSETTING(	0x02, "2?" );
-		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games); )
+		PORT_DIPNAME( 0x04, 0x04, "Autofire (in some games"));
 		PORT_DIPSETTING(	0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x38, 0x38, "COMM Setting" );

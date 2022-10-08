@@ -2789,14 +2789,14 @@ public class nbmj9195
 		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (Easy); )
+		PORT_DIPSETTING(    0xe0, "1 (Easy"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 	
 		PORT_START(); 	/* (1) DIPSW-B */
 		PORT_DIPNAME( 0x01, 0x01, "DIPSW 2-1" );
@@ -2913,14 +2913,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_pachiten = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
-		PORT_DIPSETTING(    0x07, "90% (Easy); )
+		PORT_DIPSETTING(    0x07, "90% (Easy"));
 		PORT_DIPSETTING(    0x06, "85%" );
 		PORT_DIPSETTING(    0x05, "80%" );
 		PORT_DIPSETTING(    0x04, "75%" );
 		PORT_DIPSETTING(    0x03, "70%" );
 		PORT_DIPSETTING(    0x02, "65%" );
 		PORT_DIPSETTING(    0x01, "60%" );
-		PORT_DIPSETTING(    0x00, "55% (Hard); )
+		PORT_DIPSETTING(    0x00, "55% (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -3050,14 +3050,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_sailorwr = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
-		PORT_DIPSETTING(    0x07, "90% (Easy); )
+		PORT_DIPSETTING(    0x07, "90% (Easy"));
 		PORT_DIPSETTING(    0x06, "85%" );
 		PORT_DIPSETTING(    0x05, "80%" );
 		PORT_DIPSETTING(    0x04, "75%" );
 		PORT_DIPSETTING(    0x03, "70%" );
 		PORT_DIPSETTING(    0x02, "65%" );
 		PORT_DIPSETTING(    0x01, "60%" );
-		PORT_DIPSETTING(    0x00, "55% (Hard); )
+		PORT_DIPSETTING(    0x00, "55% (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -3132,14 +3132,14 @@ public class nbmj9195
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "On") );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (Easy); )
+		PORT_DIPSETTING(    0xe0, "1 (Easy"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 	
 		PORT_START(); 	/* (1) DIPSW-B */
 		PORT_DIPNAME( 0x03, 0x03, "Start Score" );
@@ -3200,14 +3200,14 @@ public class nbmj9195
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "On") );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (Easy); )
+		PORT_DIPSETTING(    0xe0, "1 (Easy"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 	
 		PORT_START(); 	/* (1) DIPSW-B */
 		PORT_DIPNAME( 0x03, 0x03, "Start Score" );
@@ -3257,14 +3257,14 @@ public class nbmj9195
 	
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x00, "Game Sounds" );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -3325,14 +3325,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_ngpgal = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -3533,14 +3533,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_cmehyou = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -3603,14 +3603,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_mjkoiura = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -3673,14 +3673,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_mscoutm = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x18, 0x18, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x18, DEF_STR( "1C_1C") );
@@ -3742,14 +3742,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_imekura = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x00, "Game Sounds" );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -3811,14 +3811,14 @@ public class nbmj9195
 	static InputPortPtr input_ports_mjegolf = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x00, "Game Sounds" );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

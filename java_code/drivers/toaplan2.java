@@ -2215,9 +2215,9 @@ public class toaplan2
 		PORT_DIPSETTING(	0x03, "Hong Kong" );
 		PORT_DIPSETTING(	0x05, "Taiwan" );
 		PORT_DIPSETTING(	0x04, "Korea" );
-		PORT_DIPSETTING(	0x07, "USA (Romstar); )
-		PORT_DIPSETTING(	0x08, "Hong Kong (Honest Trading Co.); )
-		PORT_DIPSETTING(	0x06, "Taiwan (Spacy Co. Ltd); )
+		PORT_DIPSETTING(	0x07, "USA (Romstar"));
+		PORT_DIPSETTING(	0x08, "Hong Kong (Honest Trading Co."));
+		PORT_DIPSETTING(	0x06, "Taiwan (Spacy Co. Ltd"));
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
@@ -2257,17 +2257,17 @@ public class toaplan2
 		PORT_DIPSETTING(	0x01, "USA" );
 		PORT_DIPSETTING(	0x00, "Japan" );
 		PORT_DIPSETTING(	0x04, "Korea" );
-		PORT_DIPSETTING(	0x03, "Hong Kong (Honest Trading Co.); )
+		PORT_DIPSETTING(	0x03, "Hong Kong (Honest Trading Co."));
 		PORT_DIPSETTING(	0x05, "Taiwan" );
-		PORT_DIPSETTING(	0x06, "Spain & Portugal (APM Electronics SA); )
-		PORT_DIPSETTING(	0x07, "Italy (Star Electronica SRL); )
-		PORT_DIPSETTING(	0x08, "UK (JP Leisure Ltd); )
-		PORT_DIPSETTING(	0x0a, "Europe (Nova Apparate GMBH & Co); )
-		PORT_DIPSETTING(	0x0d, "Europe (Taito Corporation Japan); )
-		PORT_DIPSETTING(	0x09, "USA (Romstar); )
-		PORT_DIPSETTING(	0x0b, "USA (Taito America Corporation); )
-		PORT_DIPSETTING(	0x0c, "USA (Taito Corporation Japan); )
-		PORT_DIPSETTING(	0x0e, "Japan (Taito Corporation); )
+		PORT_DIPSETTING(	0x06, "Spain & Portugal (APM Electronics SA"));
+		PORT_DIPSETTING(	0x07, "Italy (Star Electronica SRL"));
+		PORT_DIPSETTING(	0x08, "UK (JP Leisure Ltd"));
+		PORT_DIPSETTING(	0x0a, "Europe (Nova Apparate GMBH & Co"));
+		PORT_DIPSETTING(	0x0d, "Europe (Taito Corporation Japan"));
+		PORT_DIPSETTING(	0x09, "USA (Romstar"));
+		PORT_DIPSETTING(	0x0b, "USA (Taito America Corporation"));
+		PORT_DIPSETTING(	0x0c, "USA (Taito Corporation Japan"));
+		PORT_DIPSETTING(	0x0e, "Japan (Taito Corporation"));
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
 		PORT_START(); 		/* (7)  Paddle 1 (left-right)  read at $100000 */
@@ -2329,20 +2329,20 @@ public class toaplan2
 		PORT_DIPSETTING(	0x03, "Europe" );
 		PORT_DIPSETTING(	0x01, "USA" );
 		PORT_DIPSETTING(	0x00, "Japan" );
-		PORT_DIPSETTING(	0x05, "Korea (Unite Trading license); )
-		PORT_DIPSETTING(	0x04, "Hong Kong (Charterfield license); )
+		PORT_DIPSETTING(	0x05, "Korea (Unite Trading license"));
+		PORT_DIPSETTING(	0x04, "Hong Kong (Charterfield license"));
 		PORT_DIPSETTING(	0x06, "Taiwan" );
-		PORT_DIPSETTING(	0x08, "South East Asia (Charterfield license); )
-		PORT_DIPSETTING(	0x0c, "USA (Atari Games Corp license); )
-		PORT_DIPSETTING(	0x0f, "Japan (Taito Corp license); )
+		PORT_DIPSETTING(	0x08, "South East Asia (Charterfield license"));
+		PORT_DIPSETTING(	0x0c, "USA (Atari Games Corp license"));
+		PORT_DIPSETTING(	0x0f, "Japan (Taito Corp license"));
 	/*	Duplicate settings
 		PORT_DIPSETTING(	0x0b, "Europe" );
 		PORT_DIPSETTING(	0x07, "USA" );
-		PORT_DIPSETTING(	0x0a, "Korea (Unite Trading license); )
-		PORT_DIPSETTING(	0x09, "Hong Kong (Charterfield license); )
+		PORT_DIPSETTING(	0x0a, "Korea (Unite Trading license"));
+		PORT_DIPSETTING(	0x09, "Hong Kong (Charterfield license"));
 		PORT_DIPSETTING(	0x0b, "Taiwan" );
-		PORT_DIPSETTING(	0x0d, "South East Asia (Charterfield license); )
-		PORT_DIPSETTING(	0x0c, "USA (Atari Games Corp license); )
+		PORT_DIPSETTING(	0x0d, "South East Asia (Charterfield license"));
+		PORT_DIPSETTING(	0x0c, "USA (Atari Games Corp license"));
 	*/
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
@@ -2403,8 +2403,8 @@ public class toaplan2
 		PORT_DIPSETTING(		0x0004, "Hong Kong" );
 		PORT_DIPSETTING(		0x0007, "Taiwan" );
 		PORT_DIPSETTING(		0x0006, "South East Asia" );
-		PORT_DIPSETTING(		0x0002, "Europe, USA (Atari License); )
-		PORT_DIPSETTING(		0x0001, "USA, Europe (Atari License); )
+		PORT_DIPSETTING(		0x0002, "Europe, USA (Atari License"));
+		PORT_DIPSETTING(		0x0001, "USA, Europe (Atari License"));
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
@@ -2500,11 +2500,11 @@ public class toaplan2
 		PORT_DIPSETTING(	0x06, "Europe" );
 		PORT_DIPSETTING(	0x04, "USA" );
 		PORT_DIPSETTING(	0x00, "Japan" );
-		PORT_DIPSETTING(	0x02, "Hong Kong (Honest Trading Co.); )
+		PORT_DIPSETTING(	0x02, "Hong Kong (Honest Trading Co."));
 		PORT_DIPSETTING(	0x03, "Taiwan" );
 		PORT_DIPSETTING(	0x01, "Asia" );
-		PORT_DIPSETTING(	0x07, "Europe (Nova Apparate GMBH & Co); )
-		PORT_DIPSETTING(	0x05, "USA (Romstar); )
+		PORT_DIPSETTING(	0x07, "Europe (Nova Apparate GMBH & Co"));
+		PORT_DIPSETTING(	0x05, "USA (Romstar"));
 		PORT_DIPNAME( 0x08,	0x00, "Nudity" );
 		PORT_DIPSETTING(	0x08, "Low" );
 		PORT_DIPSETTING(	0x00, "High, but censored" );
@@ -2546,11 +2546,11 @@ public class toaplan2
 		PORT_DIPSETTING(	0x06, "Europe" );
 		PORT_DIPSETTING(	0x04, "USA" );
 		PORT_DIPSETTING(	0x00, "Japan" );
-		PORT_DIPSETTING(	0x02, "Hong Kong (Honest Trading Co.); )
+		PORT_DIPSETTING(	0x02, "Hong Kong (Honest Trading Co."));
 		PORT_DIPSETTING(	0x03, "Taiwan" );
 		PORT_DIPSETTING(	0x01, "Asia" );
-		PORT_DIPSETTING(	0x07, "Europe (Nova Apparate GMBH & Co); )
-		PORT_DIPSETTING(	0x05, "USA (Romstar); )
+		PORT_DIPSETTING(	0x07, "Europe (Nova Apparate GMBH & Co"));
+		PORT_DIPSETTING(	0x05, "USA (Romstar"));
 		PORT_DIPNAME( 0x08,	0x08, "Nudity" );
 		PORT_DIPSETTING(	0x08, "Low" );
 		PORT_DIPSETTING(	0x00, "High, but censored" );
@@ -2600,13 +2600,13 @@ public class toaplan2
 	
 		PORT_START(); 		/* (6) Territory Jumper block */
 		PORT_DIPNAME( 0x07,	0x05, "Territory" );
-		PORT_DIPSETTING(	0x07, "World (Ryouta Kikaku); )
-		PORT_DIPSETTING(	0x00, "Japan (Ryouta Kikaku); )
+		PORT_DIPSETTING(	0x07, "World (Ryouta Kikaku"));
+		PORT_DIPSETTING(	0x00, "Japan (Ryouta Kikaku"));
 		PORT_DIPSETTING(	0x02, "World" );
 		PORT_DIPSETTING(	0x05, "Europe" );
 		PORT_DIPSETTING(	0x04, "USA" );
-		PORT_DIPSETTING(	0x01, "Hong Kong (Honest Trading Co.); )
-		PORT_DIPSETTING(	0x06, "Spain & Portugal (APM Electronics SA); )
+		PORT_DIPSETTING(	0x01, "Hong Kong (Honest Trading Co."));
+		PORT_DIPSETTING(	0x06, "Spain & Portugal (APM Electronics SA"));
 	//	PORT_DIPSETTING(	0x03, "World" );
 		PORT_DIPNAME( 0x08,	0x00, "Nudity" );
 		PORT_DIPSETTING(	0x08, "Low" );
@@ -2680,19 +2680,19 @@ public class toaplan2
 		PORT_START(); 		/* (6) Territory Jumper block */
 		PORT_DIPNAME( 0x0f,	0x09, "Territory" );
 		PORT_DIPSETTING(	0x09, "Europe" );
-		PORT_DIPSETTING(	0x08, "Europe (Taito Corp); )
+		PORT_DIPSETTING(	0x08, "Europe (Taito Corp"));
 		PORT_DIPSETTING(	0x0b, "USA" );
-		PORT_DIPSETTING(	0x0a, "USA (Taito America Corp); )
+		PORT_DIPSETTING(	0x0a, "USA (Taito America Corp"));
 		PORT_DIPSETTING(	0x0e, "Japan" );
-		PORT_DIPSETTING(	0x0f, "Japan (Taito corp); )
+		PORT_DIPSETTING(	0x0f, "Japan (Taito corp"));
 		PORT_DIPSETTING(	0x01, "Korea" );
-		PORT_DIPSETTING(	0x00, "Korea (Taito Corp); )
+		PORT_DIPSETTING(	0x00, "Korea (Taito Corp"));
 		PORT_DIPSETTING(	0x03, "Hong Kong" );
-		PORT_DIPSETTING(	0x02, "Hong Kong (Taito Corp); )
+		PORT_DIPSETTING(	0x02, "Hong Kong (Taito Corp"));
 		PORT_DIPSETTING(	0x05, "Taiwan" );
-		PORT_DIPSETTING(	0x04, "Taiwan (Taito corp); )
+		PORT_DIPSETTING(	0x04, "Taiwan (Taito corp"));
 		PORT_DIPSETTING(	0x07, "South East Asia" );
-		PORT_DIPSETTING(	0x06, "South East Asia (Taito corp); )
+		PORT_DIPSETTING(	0x06, "South East Asia (Taito corp"));
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
@@ -2745,17 +2745,17 @@ public class toaplan2
 		PORT_DIPSETTING(	0x03, "Hong Kong" );
 		PORT_DIPSETTING(	0x05, "Taiwan" );
 		PORT_DIPSETTING(	0x07, "South East Asia" );
-		PORT_DIPSETTING(	0x0a, "USA (American Sammy Corporation License); )
-		PORT_DIPSETTING(	0x00, "Korea (Unite Trading License); )
-		PORT_DIPSETTING(	0x02, "Hong Kong (Charterfield License); )
-		PORT_DIPSETTING(	0x04, "Taiwan (Anomoto International Inc License); )
-		PORT_DIPSETTING(	0x06, "South East Asia (Charterfield License); )
+		PORT_DIPSETTING(	0x0a, "USA (American Sammy Corporation License"));
+		PORT_DIPSETTING(	0x00, "Korea (Unite Trading License"));
+		PORT_DIPSETTING(	0x02, "Hong Kong (Charterfield License"));
+		PORT_DIPSETTING(	0x04, "Taiwan (Anomoto International Inc License"));
+		PORT_DIPSETTING(	0x06, "South East Asia (Charterfield License"));
 	/*	Duplicate settings
 		PORT_DIPSETTING(	0x09, "Europe" );
 		PORT_DIPSETTING(	0x0d, "USA" );
 		PORT_DIPSETTING(	0x0e, "Korea" );
 		PORT_DIPSETTING(	0x0f, "Korea" );
-		PORT_DIPSETTING(	0x0c, "USA (American Sammy Corporation License); )
+		PORT_DIPSETTING(	0x0c, "USA (American Sammy Corporation License"));
 	*/
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
@@ -2856,14 +2856,14 @@ public class toaplan2
 		PORT_DIPSETTING(		0x0003, "Hong Kong" );
 		PORT_DIPSETTING(		0x0005, "Taiwan" );
 		PORT_DIPSETTING(		0x0007, "South East Asia" );
-		PORT_DIPSETTING(		0x0008, "Europe (Taito Corp License); )
-		PORT_DIPSETTING(		0x000a, "USA (Taito Corp License); )
-		PORT_DIPSETTING(		0x000c, "Japan (Taito Corp License); )
-	//	PORT_DIPSETTING(		0x000d, "Japan (Taito Corp License); )
-		PORT_DIPSETTING(		0x0000, "Korea (Unite Trading License); )
-		PORT_DIPSETTING(		0x0002, "Hong Kong (Taito Corp License); )
-		PORT_DIPSETTING(		0x0004, "Taiwan (Taito Corp License); )
-		PORT_DIPSETTING(		0x0006, "South East Asia (Taito Corp License); )
+		PORT_DIPSETTING(		0x0008, "Europe (Taito Corp License"));
+		PORT_DIPSETTING(		0x000a, "USA (Taito Corp License"));
+		PORT_DIPSETTING(		0x000c, "Japan (Taito Corp License"));
+	//	PORT_DIPSETTING(		0x000d, "Japan (Taito Corp License"));
+		PORT_DIPSETTING(		0x0000, "Korea (Unite Trading License"));
+		PORT_DIPSETTING(		0x0002, "Hong Kong (Taito Corp License"));
+		PORT_DIPSETTING(		0x0004, "Taiwan (Taito Corp License"));
+		PORT_DIPSETTING(		0x0006, "South East Asia (Taito Corp License"));
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
@@ -3225,9 +3225,9 @@ public class toaplan2
 		PORT_DIPSETTING(		0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(		0x0008, DEF_STR( "On") );
 		PORT_DIPNAME( 0x0003,	0x0001, "Territory" );
-		PORT_DIPSETTING(		0x0001, "Denmark (German Tuning license); )
+		PORT_DIPSETTING(		0x0001, "Denmark (German Tuning license"));
 		/* These Settings End Up Reporting ROM-0 as BAD */
-	//	PORT_DIPSETTING(		0x0002, "USA (Fabtek license); )
+	//	PORT_DIPSETTING(		0x0002, "USA (Fabtek license"));
 	//	PORT_DIPSETTING(		0x0000, "Japan" );
 		PORT_DIPSETTING(		0x0003, "China" );
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3314,8 +3314,8 @@ public class toaplan2
 		PORT_DIPSETTING(		0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(		0x0008, DEF_STR( "On") );
 		PORT_DIPNAME( 0x0003,	0x0001, "Territory" );
-		PORT_DIPSETTING(		0x0001, "Europe (German Tuning license); )
-		PORT_DIPSETTING(		0x0002, "USA (Fabtek license); )
+		PORT_DIPSETTING(		0x0001, "Europe (German Tuning license"));
+		PORT_DIPSETTING(		0x0002, "USA (Fabtek license"));
 		PORT_DIPSETTING(		0x0000, "Japan" );
 		PORT_DIPSETTING(		0x0003, "Asia" );
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3402,9 +3402,9 @@ public class toaplan2
 		PORT_DIPSETTING(		0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(		0x0008, DEF_STR( "On") );
 		PORT_DIPNAME( 0x0003,	0x0001, "Territory" );
-		PORT_DIPSETTING(		0x0001, "Austria (German Tuning license); )
+		PORT_DIPSETTING(		0x0001, "Austria (German Tuning license"));
 		/* These Settings End Up Reporting ROM-0 as BAD */
-	//	PORT_DIPSETTING(		0x0002, "USA (Fabtek license); )
+	//	PORT_DIPSETTING(		0x0002, "USA (Fabtek license"));
 	//	PORT_DIPSETTING(		0x0000, "Japan" );
 		PORT_DIPSETTING(		0x0003, "Hong Kong" );
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );

@@ -297,13 +297,11 @@ public class vball
 		PORT_DIPSETTING(    0x04, "1:30");
 		PORT_DIPSETTING(    0x0c, "1:45");
 		PORT_DIPSETTING(    0x08, "2:00");
-		PORT_DIPNAME( 0x30, 0x00, "Start Buttons (4-player);
-		PORT_DIPSETTING(    0x00, "Normal");
+		PORT_DIPNAME( 0x30, 0x00, "Start Buttons (4-player"));	PORT_DIPSETTING(    0x00, "Normal");
 		PORT_DIPSETTING(    0x20, "Button A");
 		PORT_DIPSETTING(    0x10, "Button B");
 		PORT_DIPSETTING(    0x30, "Normal");
-		PORT_DIPNAME( 0x40, 0x40, "PL 1&4 (4-player);
-		PORT_DIPSETTING(    0x40, "Normal");
+		PORT_DIPNAME( 0x40, 0x40, "PL 1&4 (4-player"));	PORT_DIPSETTING(    0x40, "Normal");
 		PORT_DIPSETTING(    0x00, "Rot 90");
 		PORT_DIPNAME( 0x80, 0x00, "Player Mode");
 		PORT_DIPSETTING(    0x80, "2");

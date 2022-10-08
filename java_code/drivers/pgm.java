@@ -437,7 +437,7 @@ public class pgm
 		PORT_DIPNAME( 0x000f, 0x0005, "Region" );
 		PORT_DIPSETTING(      0x0000, "China" );
 		PORT_DIPSETTING(      0x0001, "Taiwan" );
-		PORT_DIPSETTING(      0x0002, "Japan (Alta License); )
+		PORT_DIPSETTING(      0x0002, "Japan (Alta License"));
 		PORT_DIPSETTING(      0x0003, "Korea" );
 		PORT_DIPSETTING(      0x0004, "Hong Kong" );
 		PORT_DIPSETTING(      0x0005, "World" );

@@ -135,10 +135,10 @@ public class ikki
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x00, "1 (Normal); )
+		PORT_DIPSETTING(    0x00, "1 (Normal"));
 		PORT_DIPSETTING(    0x02, "2" );
 		PORT_DIPSETTING(    0x04, "3" );
-		PORT_DIPSETTING(    0x06, "4 (Difficult); )
+		PORT_DIPSETTING(    0x06, "4 (Difficult"));
 		PORT_DIPNAME( 0x08, 0x00, "Unknown 2-4" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "On") );

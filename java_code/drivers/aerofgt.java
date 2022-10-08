@@ -536,7 +536,7 @@ public class aerofgt
 		PORT_DIPSETTING(      0x0060, "2 Players" );
 		PORT_DIPSETTING(      0x0040, "3 Players" );
 		PORT_DIPSETTING(      0x0020, "4 Players" );
-		PORT_DIPSETTING(      0x0000, "4 Players (Team); )
+		PORT_DIPSETTING(      0x0000, "4 Players (Team"));
 		/*  With 4 player (Team) selected and Same Coin Slot:
 			Coin A & B credit together for use by _only_ player 1 or player 2
 			Coin C & D credit together for use by _only_ player 3 or player 4
@@ -707,14 +707,13 @@ public class aerofgt
 		PORT_DIPSETTING(      0x0100, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 		PORT_DIPNAME( 0x0e00, 0x0800, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(      0x0e00, "1 (Easiest);
-		PORT_DIPSETTING(      0x0c00, "2" );
+		PORT_DIPSETTING(      0x0e00, "1 (Easiest"));	PORT_DIPSETTING(      0x0c00, "2" );
 		PORT_DIPSETTING(      0x0a00, "3" );
-		PORT_DIPSETTING(      0x0800, "4 (Normal); )
+		PORT_DIPSETTING(      0x0800, "4 (Normal"));
 		PORT_DIPSETTING(      0x0600, "5" );
 		PORT_DIPSETTING(      0x0400, "6" );
 		PORT_DIPSETTING(      0x0200, "7" );
-		PORT_DIPSETTING(      0x0000, "8 (Hardest); )
+		PORT_DIPSETTING(      0x0000, "8 (Hardest"));
 		PORT_DIPNAME( 0x1000, 0x1000, DEF_STR( "Lives") );
 		PORT_DIPSETTING(      0x0000, "2" );
 		PORT_DIPSETTING(      0x1000, "3" );

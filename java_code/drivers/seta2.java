@@ -886,7 +886,7 @@ public class seta2
 		PORT_DIPNAME( 0x0040, 0x0040, "Unknown 2-6" );
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_BITX(    0x0080, 0x0080, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Push Start To Freeze (Cheat);, IP_KEY_NONE, IP_JOY_NONE )
+		PORT_BITX(    0x0080, 0x0080, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Push Start To Freeze (Cheat"));P_KEY_NONE, IP_JOY_NONE )
 		PORT_DIPSETTING(      0x0080, DEF_STR( "No") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Yes") );
 	
@@ -1053,7 +1053,7 @@ public class seta2
 	//	PORT_DIPSETTING(      0x0010, "Normal" );
 	//	PORT_DIPSETTING(      0x0008, "Normal" );
 		PORT_DIPSETTING(      0x0000, "Hard" );
-		PORT_DIPNAME( 0x00c0, 0x00c0, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x00c0, 0x00c0, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x0040, "1" );
 		PORT_DIPSETTING(      0x00c0, "2" );
 	//	PORT_DIPSETTING(      0x0000, "2" );
@@ -1177,7 +1177,7 @@ public class seta2
 		PORT_DIPSETTING(      0x0030, "200k and 700k" );
 		PORT_DIPSETTING(      0x0000, "Every 250k" );// no extra life after the one at 1500k
 		PORT_DIPSETTING(      0x0020, "None" );
-		PORT_DIPNAME( 0x00c0, 0x00c0, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x00c0, 0x00c0, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x00c0, "2" );
 		PORT_DIPSETTING(      0x0040, "3" );
 		PORT_DIPSETTING(      0x0080, "4" );

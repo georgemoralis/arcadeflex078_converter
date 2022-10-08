@@ -1540,7 +1540,7 @@ public class m72
 		PORT_DIPSETTING(    0x00, "Mode 2" );
 		PORT_DIPNAME( 0x18, 0x10, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "Upright") );
-		PORT_DIPSETTING(    0x00, "Upright (2P); )
+		PORT_DIPSETTING(    0x00, "Upright (2P"));
 		PORT_DIPSETTING(    0x18, DEF_STR( "Cocktail") );
 		/* In stop mode, press 2 to stop and 1 to restart */
 		PORT_DIPNAME( 0x20, 0x20, "Stop Mode" );
@@ -1606,7 +1606,7 @@ public class m72
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x06, 0x04, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "Upright") );
-		PORT_DIPSETTING(    0x00, "Upright (2P); )
+		PORT_DIPSETTING(    0x00, "Upright (2P"));
 		PORT_DIPSETTING(    0x06, DEF_STR( "Cocktail") );
 		PORT_DIPNAME( 0x08, 0x08, "Coin Mode" );
 		PORT_DIPSETTING(    0x08, "Mode 1" );
@@ -1665,7 +1665,7 @@ public class m72
 		PORT_DIPSETTING(    0x03, "90" );
 		PORT_DIPSETTING(    0x01, "120" );
 		PORT_DIPSETTING(    0x00, "150" );
-		PORT_DIPNAME( 0x04, 0x04, "Matches/Credit (2P); )
+		PORT_DIPNAME( 0x04, 0x04, "Matches/Credit (2P"));
 		PORT_DIPSETTING(    0x04, "1" );
 		PORT_DIPSETTING(    0x00, "2" );
 		PORT_DIPNAME( 0x08, 0x08, "Rounds/Match" );
@@ -1688,7 +1688,7 @@ public class m72
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x06, 0x04, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "Upright") );
-		PORT_DIPSETTING(    0x02, "Upright (2P); )
+		PORT_DIPSETTING(    0x02, "Upright (2P"));
 		PORT_DIPSETTING(    0x06, DEF_STR( "Cocktail") );
 		PORT_DIPNAME( 0x08, 0x08, "Coin Mode" );
 		PORT_DIPSETTING(    0x08, "Mode 1" );
@@ -1858,7 +1858,7 @@ public class m72
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
-		PORT_DIPSETTING(    0x02, "Upright (2P); )
+		PORT_DIPSETTING(    0x02, "Upright (2P"));
 		PORT_DIPSETTING(    0x06, DEF_STR( "Cocktail") );
 		PORT_DIPNAME( 0x08, 0x08, "Coin Mode" );
 		PORT_DIPSETTING(    0x08, "Mode 1" );

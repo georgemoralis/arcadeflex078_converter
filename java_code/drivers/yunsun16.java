@@ -239,7 +239,7 @@ public class yunsun16
 		PORT_DIPNAME( 0x0002, 0x0002, "Unknown 2-1" );
 		PORT_DIPSETTING(      0x0002, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x000c, 0x000c, "Lives (Vs Mode); )
+		PORT_DIPNAME( 0x000c, 0x000c, "Lives (Vs Mode"));
 		PORT_DIPSETTING(      0x0008, "1" );
 		PORT_DIPSETTING(      0x000c, "2" );
 		PORT_DIPSETTING(      0x0004, "3" );

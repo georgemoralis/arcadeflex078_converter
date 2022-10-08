@@ -283,7 +283,7 @@ public class tbowl
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 );
-		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General);, KEYCODE_F1, IP_JOY_NONE )
+		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General"));EYCODE_F1, IP_JOY_NONE )
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -298,7 +298,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x05, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING (   0x06, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING (   0x07, DEF_STR( "1C_1C") );
-		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players); )
+		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players"));
 		PORT_DIPSETTING (   0x00, "7:00" );
 		PORT_DIPSETTING (   0x08, "6:00" );
 		PORT_DIPSETTING (   0x10, "5:00" );
@@ -333,12 +333,12 @@ public class tbowl
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
 		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?); )	// To be checked again
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
 		PORT_DIPSETTING (   0x02, "0x02" );
 		PORT_DIPSETTING (   0x03, "0x03" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players); )	// For multiple "credits"
+		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players"));// For multiple "credits"
 		PORT_DIPSETTING (   0x00, "0:30" );
 		PORT_DIPSETTING (   0x04, "0:20" );
 		PORT_DIPSETTING (   0x08, "0:10" );
@@ -356,12 +356,12 @@ public class tbowl
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
 		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
-		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter); )
+		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );
 		PORT_DIPSETTING (   0x03, "4:00" );
 		PORT_DIPSETTING (   0x02, "3:00" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w); )	// Check code at 0x6e16
+		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w"));// Check code at 0x6e16
 		PORT_DIPSETTING (   0x00, "0x00 = 0x54f3" );
 		PORT_DIPSETTING (   0x04, "0x04 = 0x54e1" );
 		PORT_DIPSETTING (   0x08, "0x08 = 0x54cf" );
@@ -389,7 +389,7 @@ public class tbowl
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN4 );
-		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General);, KEYCODE_F1, IP_JOY_NONE )
+		PORT_BITX(0x10, IP_ACTIVE_LOW, 0, "Service (General"));EYCODE_F1, IP_JOY_NONE )
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -404,7 +404,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x05, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING (   0x06, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING (   0x07, DEF_STR( "1C_1C") );
-		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players); )
+		PORT_DIPNAME( 0xf8, 0xb8, "Time (Players"));
 		PORT_DIPSETTING (   0x00, "7:00" );
 		PORT_DIPSETTING (   0x08, "6:00" );
 		PORT_DIPSETTING (   0x10, "5:00" );
@@ -439,12 +439,12 @@ public class tbowl
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
 		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?); )	// To be checked again
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
 		PORT_DIPSETTING (   0x02, "0x02" );
 		PORT_DIPSETTING (   0x03, "0x03" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players); )	// For multiple "credits"
+		PORT_DIPNAME( 0x0c, 0x0c, "Extra Time (Players"));// For multiple "credits"
 		PORT_DIPSETTING (   0x00, "0:30" );
 		PORT_DIPSETTING (   0x04, "0:20" );
 		PORT_DIPSETTING (   0x08, "0:10" );
@@ -462,12 +462,12 @@ public class tbowl
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
 		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
-		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter); )
+		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );
 		PORT_DIPSETTING (   0x02, "4:00" );
 		PORT_DIPSETTING (   0x03, "3:00" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w); )	// Check code at 0x6e37
+		PORT_DIPNAME( 0x0c, 0x0c, "Unknown (in 0x8126.w"));// Check code at 0x6e37
 		PORT_DIPSETTING (   0x00, "0x00 = 0x5414" );
 		PORT_DIPSETTING (   0x04, "0x04 = 0x5402" );
 		PORT_DIPSETTING (   0x08, "0x08 = 0x54f0" );

@@ -394,7 +394,7 @@ public class exidy
 		PORT_DIPNAME( 0x18, 0x08, "Q Coinage" );
 		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x00, "1C/1C (no display); )
+		PORT_DIPSETTING(    0x00, "1C/1C (no display"));
 		PORT_DIPSETTING(    0x18, DEF_STR( "1C_2C") );
 		PORT_DIPNAME( 0x60, 0x40, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x60, "2" );
@@ -443,7 +443,7 @@ public class exidy
 		PORT_DIPNAME( 0x18, 0x08, "Q Coinage" );
 		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x00, "1C/1C (no display); )
+		PORT_DIPSETTING(    0x00, "1C/1C (no display"));
 		PORT_DIPSETTING(    0x18, DEF_STR( "1C_2C") );
 		PORT_DIPNAME( 0x60, 0x40, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x60, "2" );
@@ -495,7 +495,7 @@ public class exidy
 		PORT_DIPNAME( 0x18, 0x08, "Q Coinage" );
 		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x00, "1C/1C (no display); )
+		PORT_DIPSETTING(    0x00, "1C/1C (no display"));
 		PORT_DIPSETTING(    0x18, DEF_STR( "1C_2C") );
 		PORT_DIPNAME( 0x60, 0x40, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x60, "2" );

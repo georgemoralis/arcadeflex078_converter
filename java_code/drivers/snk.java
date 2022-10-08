@@ -3440,11 +3440,11 @@ public class snk
 	
 		PORT_START();  /* DSW2 */
 		PORT_DIPNAME( 0x01, 0x01, "Shot Time" );
-		PORT_DIPSETTING(    0x00, "Short (10 sec); )
-		PORT_DIPSETTING(    0x01, "Long (12 sec); )
+		PORT_DIPSETTING(    0x00, "Short (10 sec"));
+		PORT_DIPSETTING(    0x01, "Long (12 sec"));
 		PORT_DIPNAME( 0x02, 0x02, "Bonus Holes" );
-		PORT_DIPSETTING(    0x02, "5 (Par 1,Birdie 2,Eagle 3); )
-		PORT_DIPSETTING(    0x00, "3 (Par 0,Birdie 1,Eagle 2); )
+		PORT_DIPSETTING(    0x02, "5 (Par 1,Birdie 2,Eagle 3"));
+		PORT_DIPSETTING(    0x00, "3 (Par 0,Birdie 1,Eagle 2"));
 		PORT_DIPNAME( 0x0c, 0x0c, "Game Mode" );
 		PORT_BITX( 0,       0x08, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Endless Game", IP_KEY_NONE, IP_JOY_NONE );
 		PORT_DIPSETTING(    0x0c, "Demo Sound On" );
@@ -3509,11 +3509,11 @@ public class snk
 	
 		PORT_START();  /* DSW2 */
 		PORT_DIPNAME( 0x01, 0x01, "Shot Time" );
-		PORT_DIPSETTING(    0x00, "Short (10 sec); )
-		PORT_DIPSETTING(    0x01, "Long (12 sec); )
+		PORT_DIPSETTING(    0x00, "Short (10 sec"));
+		PORT_DIPSETTING(    0x01, "Long (12 sec"));
 		PORT_DIPNAME( 0x02, 0x02, "Bonus Holes" );
-		PORT_DIPSETTING(    0x02, "5 (Par 1,Birdie 2,Eagle 3); )
-		PORT_DIPSETTING(    0x00, "3 (Par 0,Birdie 1,Eagle 2); )
+		PORT_DIPSETTING(    0x02, "5 (Par 1,Birdie 2,Eagle 3"));
+		PORT_DIPSETTING(    0x00, "3 (Par 0,Birdie 1,Eagle 2"));
 		PORT_DIPNAME( 0x0c, 0x0c, "Game Mode" );
 		PORT_BITX( 0,       0x08, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Endless Game", IP_KEY_NONE, IP_JOY_NONE );
 		PORT_DIPSETTING(    0x0c, "Demo Sound On" );
@@ -3601,10 +3601,10 @@ public class snk
 	
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
-		PORT_DIPSETTING(    0x03, "Upright (With VS); )
-		PORT_DIPSETTING(    0x02, "Upright (Without VS); )
-		PORT_DIPSETTING(    0x00, "Cocktail (2 Players); )
-		PORT_DIPSETTING(    0x01, "Cocktail (4 Players); )
+		PORT_DIPSETTING(    0x03, "Upright (With VS"));
+		PORT_DIPSETTING(    0x02, "Upright (Without VS"));
+		PORT_DIPSETTING(    0x00, "Cocktail (2 Players"));
+		PORT_DIPSETTING(    0x01, "Cocktail (4 Players"));
 		PORT_DIPNAME( 0x0c, 0x04, "Version" );
 		PORT_DIPSETTING(    0x04, "Europe" );
 		PORT_DIPSETTING(    0x00, "USA" );

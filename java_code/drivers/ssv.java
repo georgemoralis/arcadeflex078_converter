@@ -807,10 +807,10 @@ public class ssv
 		PORT_DIPSETTING(      0x0001, "Hard" );
 		PORT_DIPSETTING(      0x0000, "Hardest" );
 		PORT_DIPNAME( 0x000c, 0x000c, "Unknown 2-2&3*" );
-		PORT_DIPSETTING(      0x000c, "11 (0); )
-		PORT_DIPSETTING(      0x0008, "10 (1); )
-		PORT_DIPSETTING(      0x0004, "01 (0); )
-		PORT_DIPSETTING(      0x0000, "00 (2); )
+		PORT_DIPSETTING(      0x000c, "11 (0"));
+		PORT_DIPSETTING(      0x0008, "10 (1"));
+		PORT_DIPSETTING(      0x0004, "01 (0"));
+		PORT_DIPSETTING(      0x0000, "00 (2"));
 		PORT_DIPNAME( 0x0010, 0x0010, "Music Volume" );
 		PORT_DIPSETTING(      0x0000, "Quiet" );
 		PORT_DIPSETTING(      0x0010, "Loud" );
@@ -891,8 +891,8 @@ public class ssv
 		PORT_DIPSETTING(      0x0020, "Trackball" );
 		PORT_DIPSETTING(      0x0000, "Joystick" );
 		PORT_DIPNAME( 0x0040, 0x0040, "Trackball Type" );
-		PORT_DIPSETTING(      0x0040, "24 Counts (USA); )
-		PORT_DIPSETTING(      0x0000, "12 Counts (Japan); )
+		PORT_DIPSETTING(      0x0040, "24 Counts (USA"));
+		PORT_DIPSETTING(      0x0000, "12 Counts (Japan"));
 		PORT_DIPNAME( 0x0080, 0x0080, "Unused/Unknown" );
 		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
@@ -1226,8 +1226,8 @@ public class ssv
 		PORT_DIPNAME( 0x00c0, 0x00c0, "Communication" );
 	//	PORT_DIPSETTING(      0x0080, "unused" );
 		PORT_DIPSETTING(      0x00c0, "None" );
-		PORT_DIPSETTING(      0x0040, "Board 1 (Main); )
-		PORT_DIPSETTING(      0x0000, "Board 2 (Sub); )
+		PORT_DIPSETTING(      0x0040, "Board 1 (Main"));
+		PORT_DIPSETTING(      0x0000, "Board 2 (Sub"));
 	
 		PORT_START(); 	// IN2 - $210008
 		PORT_BIT(  0x00ff, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1412,8 +1412,8 @@ public class ssv
 		PORT_DIPNAME( 0x00c0, 0x00c0, "Communication" );
 	//	PORT_DIPSETTING(      0x0080, "unused" );
 		PORT_DIPSETTING(      0x00c0, "None" );
-		PORT_DIPSETTING(      0x0040, "Board 1 (Main); )
-		PORT_DIPSETTING(      0x0000, "Board 2 (Sub); )
+		PORT_DIPSETTING(      0x0040, "Board 1 (Main"));
+		PORT_DIPSETTING(      0x0000, "Board 2 (Sub"));
 	
 		PORT_START(); 	// IN2 - $210008
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_START1 );
@@ -1610,7 +1610,7 @@ public class ssv
 		PORT_DIPSETTING(      0x000c, "Normal" );
 		PORT_DIPSETTING(      0x0004, "Hard" );
 		PORT_DIPSETTING(      0x0000, "Hardest" );
-		PORT_DIPNAME( 0x0030, 0x0030, "Rounds (Vs Mode); )
+		PORT_DIPNAME( 0x0030, 0x0030, "Rounds (Vs Mode"));
 		PORT_DIPSETTING(      0x0000, "1" );
 		PORT_DIPSETTING(      0x0030, "2" );
 		PORT_DIPSETTING(      0x0020, "3" );

@@ -211,7 +211,7 @@ public class portrait
 		PORT_START();       /* DSW 2 */						//Verified to be correct (from attract mode at least)
 		PORT_DIPNAME( 0x01, 0x01, "Game Play" );
 		PORT_DIPSETTING(    0x01, "Normal Play" );
-		PORT_DIPSETTING(    0x00, "Freeplay (255 Cameras); )
+		PORT_DIPSETTING(    0x00, "Freeplay (255 Cameras"));
 		PORT_DIPNAME( 0x02, 0x00, "High Score" );
 		PORT_DIPSETTING(    0x02, "11.350 Points" );
 		PORT_DIPSETTING(    0x00, "1.350 Points" );

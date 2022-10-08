@@ -190,7 +190,7 @@ public class yard
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL );
 	
 		PORT_START(); 	/* DSW1 */
-		PORT_DIPNAME( 0x01, 0x00, "Continue (Vs. Mode Only); )
+		PORT_DIPNAME( 0x01, 0x00, "Continue (Vs. Mode Only"));
 		PORT_DIPSETTING( 0x01, DEF_STR( "No") );
 		PORT_DIPSETTING( 0x00, DEF_STR( "Yes") );
 		PORT_DIPNAME( 0x02, 0x02, "SW2A" );

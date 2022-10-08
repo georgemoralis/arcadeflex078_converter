@@ -669,7 +669,7 @@ public class asuka
 		/*       3            8:00	*/
 		/*       4            7:00	*/
 		/*       5            9:00	*/
-		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear); )
+		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear"));
 		PORT_DIPSETTING(    0x00, "Default - 2:00" );
 		PORT_DIPSETTING(    0x10, "Default - 1:00" );
 		PORT_DIPSETTING(    0x30, "Default" );
@@ -711,7 +711,7 @@ public class asuka
 		PORT_DIPSETTING(    0x04, "6:00" );
 		PORT_DIPSETTING(    0x0c, "7:00" );
 		PORT_DIPSETTING(    0x08, "8:00" );
-		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear); )
+		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear"));
 		PORT_DIPSETTING(    0x00, "Default - 2:00" );
 		PORT_DIPSETTING(    0x10, "Default - 1:00" );
 		PORT_DIPSETTING(    0x30, "Default" );
@@ -753,7 +753,7 @@ public class asuka
 		PORT_DIPSETTING(    0x04, "6:00" );
 		PORT_DIPSETTING(    0x0c, "7:00" );
 		PORT_DIPSETTING(    0x08, "8:00" );
-		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear); )
+		PORT_DIPNAME( 0x30, 0x30, "Added Time (after round clear"));
 		PORT_DIPSETTING(    0x00, "Default - 2:00" );
 		PORT_DIPSETTING(    0x10, "Default - 1:00" );
 		PORT_DIPSETTING(    0x30, "Default" );

@@ -606,7 +606,7 @@ public class toaplan1
 		PORT_DIPSETTING(    0x20, "World/Taito Corp Japan" );
 		PORT_DIPSETTING(    0x10, "USA/Taito America" );
 		PORT_DIPSETTING(    0x00, "Japan/Taito Corp" );
-		PORT_DIPSETTING(    0x30, "USA/Taito America (Romstar); )
+		PORT_DIPSETTING(    0x30, "USA/Taito America (Romstar"));
 		PORT_DIPNAME( 0x40, 0x00, "Dip Switch Display" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
@@ -1283,7 +1283,7 @@ public class toaplan1
 		PORT_DIPNAME( 0x06, 0x02, "Territory" );
 		PORT_DIPSETTING(    0x02, "Europe" );
 		PORT_DIPSETTING(    0x04, "USA" );
-		PORT_DIPSETTING(    0x00, "USA (Romstar); )
+		PORT_DIPSETTING(    0x00, "USA (Romstar"));
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "On") );

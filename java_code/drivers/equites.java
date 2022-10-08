@@ -478,10 +478,10 @@ public class equites
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x4000, DEF_STR( "On") );
 		PORT_DIPNAME( 0x9000, 0x0000, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(      0x9000, "1C/1C (2C per player); )
-		PORT_DIPSETTING(      0x0000, "1C/1C (1C per player); )
-		PORT_DIPSETTING(      0x8000, "1C/1C (1C for 2 players); )
-		PORT_DIPSETTING(      0x1000, "1C/3C (1C per player); )
+		PORT_DIPSETTING(      0x9000, "1C/1C (2C per player"));
+		PORT_DIPSETTING(      0x0000, "1C/1C (1C per player"));
+		PORT_DIPSETTING(      0x8000, "1C/1C (1C for 2 players"));
+		PORT_DIPSETTING(      0x1000, "1C/3C (1C per player"));
 	INPUT_PORTS_END(); }}; 
 	
 	/******************************************************************************/

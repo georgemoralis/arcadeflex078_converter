@@ -1058,14 +1058,14 @@ public class atarisy2
 		PORT_DIPSETTING(    0x00, "25" );
 		PORT_DIPSETTING(    0x06, "199" );
 		PORT_DIPNAME( 0x38, 0x38, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x38, "1 (Easy); )
+		PORT_DIPSETTING(    0x38, "1 (Easy"));
 		PORT_DIPSETTING(    0x30, "2" );
 		PORT_DIPSETTING(    0x28, "3" );
 		PORT_DIPSETTING(    0x00, "4" );
 		PORT_DIPSETTING(    0x20, "5" );
 		PORT_DIPSETTING(    0x10, "6" );
 		PORT_DIPSETTING(    0x08, "7" );
-		PORT_DIPSETTING(    0x18, "8 (Hard); )
+		PORT_DIPSETTING(    0x18, "8 (Hard"));
 		PORT_DIPNAME( 0xc0, 0x40, "Coins Required" );
 		PORT_DIPSETTING(    0x80, "3 to Start, 2 to Continue" );
 		PORT_DIPSETTING(    0xc0, "3 to Start, 1 to Continue" );

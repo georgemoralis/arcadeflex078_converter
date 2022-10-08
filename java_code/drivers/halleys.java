@@ -1806,16 +1806,16 @@ public class halleys
 		PORT_DIPSETTING(    0x20, "2" );
 		PORT_DIPSETTING(    0x30, "3" );
 		PORT_DIPSETTING(    0x10, "4" );
-		PORT_DIPSETTING(    0x00, "4 (no bonus ships); )
+		PORT_DIPSETTING(    0x00, "4 (no bonus ships"));
 		PORT_DIPNAME( 0x40, 0x40, "Record Data" );
 		PORT_DIPSETTING(    0x40, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
-		PORT_DIPNAME( 0x80, 0x80, "Unknown(2-8); )
+		PORT_DIPNAME( 0x80, 0x80, "Unknown(2-8"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
 		PORT_START();  // 0xff97
-		PORT_DIPNAME( 0x01, 0x01, "Unknown(3-1); )
+		PORT_DIPNAME( 0x01, 0x01, "Unknown(3-1"));
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Free_Play") );
@@ -1830,13 +1830,13 @@ public class halleys
 		PORT_DIPSETTING( 0x08, "16" );
 		PORT_DIPSETTING( 0x04, "19" );
 		PORT_DIPSETTING( 0x00, "22" );
-		PORT_DIPNAME( 0x20, 0x20, "Unknown(3-6); )
+		PORT_DIPNAME( 0x20, 0x20, "Unknown(3-6"));
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_BITX(    0x40, 0x40, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Invincibility", IP_KEY_NONE, IP_JOY_NONE );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Unknown(3-8); )
+		PORT_DIPNAME( 0x80, 0x80, "Unknown(3-8"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
@@ -1881,7 +1881,7 @@ public class halleys
 	
 	static InputPortPtr input_ports_benberob = new InputPortPtr(){ public void handler() { 
 		PORT_START();  // 0xff95
-		PORT_DIPNAME( 0x01, 0x01, "Unknown(1-1); )
+		PORT_DIPNAME( 0x01, 0x01, "Unknown(1-1"));
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x02, 0x02, "Controls" );
@@ -1895,13 +1895,13 @@ public class halleys
 		PORT_DIPSETTING(    0x08, "3" );
 		PORT_DIPSETTING(    0x10, "4" );
 		PORT_DIPSETTING(    0x18, "5" );
-		PORT_DIPNAME( 0x20, 0x20, "Unknown(1-6); )
+		PORT_DIPNAME( 0x20, 0x20, "Unknown(1-6"));
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x40, 0x40, "Unknown(1-7); )
+		PORT_DIPNAME( 0x40, 0x40, "Unknown(1-7"));
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Unknown(1-8); )
+		PORT_DIPNAME( 0x80, 0x80, "Unknown(1-8"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
@@ -1943,28 +1943,28 @@ public class halleys
 		PORT_DIPSETTING(    0x70, DEF_STR( "1C_8C") );
 	
 		PORT_START();  // 0xff97
-		PORT_DIPNAME( 0x01, 0x01, "Unknown(3-1); )
+		PORT_DIPNAME( 0x01, 0x01, "Unknown(3-1"));
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x02, 0x00, "Use Both Buttons" );
 		PORT_DIPSETTING(    0x02, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
-		PORT_DIPNAME( 0x04, 0x04, "Unknown(3-3); )
+		PORT_DIPNAME( 0x04, 0x04, "Unknown(3-3"));
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x08, 0x08, "Unknown(3-4); )
+		PORT_DIPNAME( 0x08, 0x08, "Unknown(3-4"));
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x10, 0x00, "Show Coinage" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "Yes") );
-		PORT_DIPNAME( 0x20, 0x20, "Unknown(3-6); )
+		PORT_DIPNAME( 0x20, 0x20, "Unknown(3-6"));
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_BITX(    0x40, 0x40, IPT_DIPSWITCH_NAME | IPF_CHEAT, "No Hit", IP_KEY_NONE, IP_JOY_NONE );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Unknown(3-8); )
+		PORT_DIPNAME( 0x80, 0x80, "Unknown(3-8"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	

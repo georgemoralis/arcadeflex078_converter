@@ -254,7 +254,7 @@ public class bigevglf
 		PORT_DIPNAME( 0x10, 0x00, "Title" );
 		PORT_DIPSETTING(    0x00, "English" );
 	 	PORT_DIPSETTING(    0x10, "Japanese" );
-	 	PORT_DIPNAME( 0xe0, 0xa0, "Full game price (credits); )
+	 	PORT_DIPNAME( 0xe0, 0xa0, "Full game price (credits"));
 		PORT_DIPSETTING(    0xe0, "3" );
 		PORT_DIPSETTING(    0xc0, "4" );
 		PORT_DIPSETTING(    0xa0, "5" );

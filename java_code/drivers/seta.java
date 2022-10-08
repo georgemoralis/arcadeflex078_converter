@@ -3223,7 +3223,7 @@ public class seta
 		PORT_DIPSETTING(      0x0001, "Romstar"       );
 		PORT_DIPSETTING(      0x4001, "Taito America" );
 		PORT_DIPSETTING(      0x4000, "Taito"         );
-		PORT_DIPSETTING(      0x0000, "None (Japan);  )
+		PORT_DIPSETTING(      0x0000, "None (Japan"));
 		PORT_DIPNAME( 0x0002, 0x0002, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(      0x0002, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
@@ -3298,8 +3298,8 @@ public class seta
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 		PORT_DIPNAME( 0x0080, 0x0080, "Country" );		// JP6
-		PORT_DIPSETTING(      0x0080, "USA (6 buttons); )
-		PORT_DIPSETTING(      0x0000, "Japan (2 buttons); )
+		PORT_DIPSETTING(      0x0080, "USA (6 buttons"));
+		PORT_DIPSETTING(      0x0000, "Japan (2 buttons"));
 	
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( "Coin_A") );
@@ -3381,8 +3381,8 @@ public class seta
 		PORT_DIPSETTING(      0x0020, "Dragon Unit" );
 		PORT_DIPSETTING(      0x0000, "Castle of Dragon" );
 		PORT_DIPNAME( 0x00c0, 0x00c0, "(C);/ License" )
-		PORT_DIPSETTING(      0x00c0, "Athena (Japan); )
-		PORT_DIPSETTING(      0x0080, "Athena / Taito (Japan); )
+		PORT_DIPSETTING(      0x00c0, "Athena (Japan"));
+		PORT_DIPSETTING(      0x0080, "Athena / Taito (Japan"));
 		PORT_DIPSETTING(      0x0040, "Seta USA / Taito America" );
 		PORT_DIPSETTING(      0x0000, "Seta USA / Romstar" );
 	
@@ -5035,8 +5035,8 @@ public class seta
 		PORT_DIPSETTING(      0x0010, DEF_STR( "On") );
 		PORT_DIPNAME( 0x00e0, 0x00e0, "Copyright" );
 		PORT_DIPSETTING(      0x0080, "Romstar" );
-		PORT_DIPSETTING(      0x00c0, "Seta (Romstar License); )
-		PORT_DIPSETTING(      0x00e0, "Seta (Visco License); )
+		PORT_DIPSETTING(      0x00c0, "Seta (Romstar License"));
+		PORT_DIPSETTING(      0x00e0, "Seta (Visco License"));
 		PORT_DIPSETTING(      0x00a0, "Visco" );
 		PORT_DIPSETTING(      0x0060, "None" );
 	//	PORT_DIPSETTING(      0x0040, "None" );
@@ -5262,10 +5262,10 @@ public class seta
 	
 		PORT_START(); 	// IN3 - 2 DSWs - $600001 & 3.b
 		PORT_DIPNAME( 0x4001, 0x4001, "Copyright" );	// Always "Seta" if sim. players = 1
-		PORT_DIPSETTING(      0x4001, "Seta (Taito license); )
+		PORT_DIPSETTING(      0x4001, "Seta (Taito license"));
 		PORT_DIPSETTING(      0x0001, "Taito" );
 		PORT_DIPSETTING(      0x4000, "Taito America" );
-		PORT_DIPSETTING(      0x0000, "Taito America (Romstar license); )
+		PORT_DIPSETTING(      0x0000, "Taito America (Romstar license"));
 		PORT_DIPNAME( 0x0002, 0x0002, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(      0x0002, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
@@ -5541,7 +5541,7 @@ public class seta
 		PORT_DIPSETTING(      0x0000, "+60 Yards" );
 		PORT_DIPNAME( 0xc000, 0xc000, "Licensed To"     );
 		PORT_DIPSETTING(      0xc000, "Romstar"       );
-		PORT_DIPSETTING(      0x8000, "None (Japan);  )
+		PORT_DIPSETTING(      0x8000, "None (Japan"));
 		PORT_DIPSETTING(      0x4000, "Taito"         );
 		PORT_DIPSETTING(      0x0000, "Taito America" );
 	INPUT_PORTS_END(); }}; 
@@ -5650,8 +5650,8 @@ public class seta
 		PORT_DIPNAME( 0x00c0, 0x0040, "License" );
 		PORT_DIPSETTING(      0x00c0, "Romstar" );
 		PORT_DIPSETTING(      0x0080, "Seta U.S.A" );
-		PORT_DIPSETTING(      0x0040, "Visco (Japan Only); )
-		PORT_DIPSETTING(      0x0000, "Athena (Japan Only); )
+		PORT_DIPSETTING(      0x0040, "Visco (Japan Only"));
+		PORT_DIPSETTING(      0x0000, "Athena (Japan Only"));
 	
 		PORT_START(); 	// IN3 - 2 DSWs - $600003 & 1.b
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );

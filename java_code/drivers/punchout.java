@@ -520,8 +520,8 @@ public class punchout
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	//	PORT_DIPSETTING(    0x03, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x08, "1 Coin/2 Credits (2 Credits/1 Play); )
-		PORT_DIPSETTING(    0x0d, "1 Coin/3 Credits (2 Credits/1 Play); )
+		PORT_DIPSETTING(    0x08, "1 Coin/2 Credits (2 Credits/1 Play"));
+		PORT_DIPSETTING(    0x0d, "1 Coin/3 Credits (2 Credits/1 Play"));
 		PORT_DIPSETTING(    0x02, DEF_STR( "1C_2C") );
 	//	PORT_DIPSETTING(    0x04, DEF_STR( "1C_2C") );
 	//	PORT_DIPSETTING(    0x09, DEF_STR( "1C_2C") );
@@ -593,9 +593,9 @@ public class punchout
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	//	PORT_DIPSETTING(    0x0e, DEF_STR( "1C_1C") );
-		PORT_DIPSETTING(    0x0d, "1 Coin/3 Credits (2 Credits/1 Play); )
+		PORT_DIPSETTING(    0x0d, "1 Coin/3 Credits (2 Credits/1 Play"));
 		PORT_DIPSETTING(    0x02, DEF_STR( "1C_2C") );
-		PORT_DIPSETTING(    0x0b, "1 Coin/2 Credits (3 Credits/1 Play); )
+		PORT_DIPSETTING(    0x0b, "1 Coin/2 Credits (3 Credits/1 Play"));
 		PORT_DIPSETTING(    0x05, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(    0x06, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(    0x0a, DEF_STR( "1C_5C") );

@@ -199,10 +199,10 @@ public class namcona1
 	
 	static InputPortPtr input_ports_namcona1_joy = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 
-		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze); )
+		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_DIPNAME( 0x20, 0x00, "Test" );
@@ -263,10 +263,10 @@ public class namcona1
 	
 	static InputPortPtr input_ports_namcona1_quiz = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 
-		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze); )
+		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_DIPNAME( 0x20, 0x00, "Test" );
@@ -327,10 +327,10 @@ public class namcona1
 	
 	static InputPortPtr input_ports_xday2 = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 
-		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze); )
+		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
-		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test); )
+		PORT_DIPNAME( 0x02, 0x00, "DIP1 (Test"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 		PORT_DIPNAME( 0x20, 0x00, "Test" );

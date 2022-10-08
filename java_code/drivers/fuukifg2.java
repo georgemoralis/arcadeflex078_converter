@@ -387,7 +387,7 @@ public class fuukifg2
 	//	PORT_DIPSETTING(      0x0000, "Normal"  );// 3
 	//	PORT_DIPSETTING(      0x000c, "Normal"  );// 3
 	//	PORT_DIPSETTING(      0x0014, "Normal"  );// 3
-		PORT_DIPNAME( 0x0060, 0x0060, "Lives (Vs Mode); )
+		PORT_DIPNAME( 0x0060, 0x0060, "Lives (Vs Mode"));
 		PORT_DIPSETTING(      0x0000, "1" );// 1 1
 		PORT_DIPSETTING(      0x0060, "2" );// 2 3
 	//	PORT_DIPSETTING(      0x0020, "2" );// 2 3

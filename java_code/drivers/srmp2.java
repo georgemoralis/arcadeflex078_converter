@@ -687,14 +687,14 @@ public class srmp2
 		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (Easy); )
+		PORT_DIPSETTING(    0xe0, "1 (Easy"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 	
 		PORT_START(); 			/* DSW (2) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Free_Play") );
@@ -765,14 +765,14 @@ public class srmp2
 		PORT_DIPSETTING(    0x10, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (Easy); )
+		PORT_DIPSETTING(    0xe0, "1 (Easy"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 	
 		PORT_START(); 			/* DSW (2) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Free_Play") );
@@ -828,14 +828,14 @@ public class srmp2
 	
 		PORT_START(); 			/* DSW (1) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x03, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x01, "4" );
 		PORT_DIPSETTING(    0x06, "5" );
 		PORT_DIPSETTING(    0x04, "6" );
 		PORT_DIPSETTING(    0x08, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, "Allow Continue" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Yes") );
@@ -938,14 +938,14 @@ public class srmp2
 	
 		PORT_START(); 			/* DSW (1) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x06, "1 (Easy); )
+		PORT_DIPSETTING(    0x06, "1 (Easy"));
 		PORT_DIPSETTING(    0x05, "2" );
 		PORT_DIPSETTING(    0x04, "3" );
 		PORT_DIPSETTING(    0x07, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, "Allow Continue" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Yes") );

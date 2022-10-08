@@ -439,7 +439,7 @@ public class astrocde
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_5C") );
 		PORT_DIPNAME( 0x08, 0x08, "Language" );
 		PORT_DIPSETTING(    0x08, "English" );
-		PORT_DIPSETTING(    0x00, "Foreign (NEED ROM); )
+		PORT_DIPSETTING(    0x00, "Foreign (NEED ROM"));
 		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Lives") );
 	 	PORT_DIPSETTING(    0x10, "2 for 1 Credit / 5 for 2 Credits" );
 	 	PORT_DIPSETTING(    0x00, "3 for 1 Credit / 7 for 2 Credits" );
@@ -498,7 +498,7 @@ public class astrocde
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_5C") );
 		PORT_DIPNAME( 0x08, 0x08, "Language" );
 		PORT_DIPSETTING(    0x08, "English" );
-		PORT_DIPSETTING(    0x00, "Foreign (NEED ROM); )
+		PORT_DIPSETTING(    0x00, "Foreign (NEED ROM"));
 		PORT_DIPNAME( 0x10, 0x00, "Lives per Credit" );
 		PORT_DIPSETTING(    0x10, "2" );
 		PORT_DIPSETTING(    0x00, "3" );

@@ -365,9 +365,9 @@ public class liberatr
 		PORT_DIPNAME( 0xe0, 0x00, "Bonus Coins" );
 		PORT_DIPSETTING (   0x00, "None" );
 		PORT_DIPSETTING (   0x80, "1 each 5" );
-		PORT_DIPSETTING (   0x40, "1 each 4 (+Demo); )
+		PORT_DIPSETTING (   0x40, "1 each 4 (+Demo"));
 		PORT_DIPSETTING (   0xa0, "1 each 3" );
-		PORT_DIPSETTING (   0x60, "2 each 4 (+Demo); )
+		PORT_DIPSETTING (   0x60, "2 each 4 (+Demo"));
 		PORT_DIPSETTING (   0x20, "1 each 2" );
 		PORT_DIPSETTING (   0xc0, "Freeze Mode" );
 		PORT_DIPSETTING (   0xe0, "Freeze Mode" );

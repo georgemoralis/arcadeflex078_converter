@@ -178,14 +178,14 @@ public class timeplt
 		PORT_DIPSETTING(    0x08, "10000 50000" );
 		PORT_DIPSETTING(    0x00, "20000 60000" );
 		PORT_DIPNAME( 0x70, 0x70, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x70, "1 (Easiest); )
+		PORT_DIPSETTING(    0x70, "1 (Easiest"));
 		PORT_DIPSETTING(    0x60, "2" );
 		PORT_DIPSETTING(    0x50, "3" );
 		PORT_DIPSETTING(    0x40, "4" );
-		PORT_DIPSETTING(    0x30, "5 (Average); )
+		PORT_DIPSETTING(    0x30, "5 (Average"));
 		PORT_DIPSETTING(    0x20, "6" );
 		PORT_DIPSETTING(    0x10, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 		PORT_DIPNAME( 0x80, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

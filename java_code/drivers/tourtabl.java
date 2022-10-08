@@ -141,8 +141,8 @@ public class tourtabl
 	
 		PORT_START();  /* TIA INPT5 */
 		PORT_DIPNAME( 0x80, 0x80, "Game Length" );
-		PORT_DIPSETTING(    0x00, "11 points (3 balls); )
-		PORT_DIPSETTING(    0x80, "15 points (5 balls); )
+		PORT_DIPSETTING(    0x00, "11 points (3 balls"));
+		PORT_DIPSETTING(    0x80, "15 points (5 balls"));
 	
 		PORT_START();  /* RIOT #0 SWCHA */
 		PORT_DIPNAME( 0x0F, 0x0E, "Replay Level" );

@@ -319,13 +319,13 @@ public class turbo
 		PORT_DIPSETTING( 0x01, "3" );
 		PORT_DIPSETTING( 0x00, "4" );
 		PORT_DIPNAME( 0x04, 0x04, "Game Time" );
-		PORT_DIPSETTING( 0x00, "Fixed (55 sec); )
+		PORT_DIPSETTING( 0x00, "Fixed (55 sec"));
 		PORT_DIPSETTING( 0x04, "Adjustable" );
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING( 0x00, "Easy");
 		PORT_DIPSETTING( 0x08, "Hard");
 		PORT_DIPNAME( 0x10, 0x00, "Game Mode" );
-		PORT_DIPSETTING( 0x10, "No Collisions (cheat); )
+		PORT_DIPSETTING( 0x10, "No Collisions (cheat"));
 		PORT_DIPSETTING( 0x00, "Normal" );
 		PORT_DIPNAME( 0x20, 0x00, "Initial Entry" );
 		PORT_DIPSETTING( 0x20, DEF_STR( "Off") );
@@ -361,9 +361,7 @@ public class turbo
 		PORT_BIT( 0x0f, 0x00, IPT_UNUSED );	/* Merged with collision bits */
 		PORT_BIT( 0x30, 0x00, IPT_UNUSED );
 		PORT_DIPNAME( 0x40, 0x40, "Tachometer" );
-		PORT_DIPSETTING(	0x40, "Analog (Meter);
-		PORT_DIPSETTING(	0x00, "Digital (led);
-		PORT_DIPNAME( 0x80, 0x80, "Sound System" );
+		PORT_DIPSETTING(	0x40, "Analog (Meter"));	PORT_DIPSETTING(	0x00, "Digital (led"));	PORT_DIPNAME( 0x80, 0x80, "Sound System" );
 		PORT_DIPSETTING(	0x80, DEF_STR( "Upright") );
 		PORT_DIPSETTING(	0x00, "Cockpit");
 	

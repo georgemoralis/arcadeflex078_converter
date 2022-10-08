@@ -159,10 +159,10 @@ public class pastelgl
 	static InputPortPtr input_ports_pastelgl = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x03, "1 (Easy); )
+		PORT_DIPSETTING(    0x03, "1 (Easy"));
 		PORT_DIPSETTING(    0x02, "2" );
 		PORT_DIPSETTING(    0x01, "3" );
-		PORT_DIPSETTING(    0x00, "4 (Hard); )
+		PORT_DIPSETTING(    0x00, "4 (Hard"));
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

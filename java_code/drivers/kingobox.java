@@ -365,7 +365,7 @@ public class kingobox
 	    PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Demo_Sounds") );
 	    PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	    PORT_DIPSETTING(    0x04, DEF_STR( "On") );
-	    PORT_DIPNAME( 0x18, 0x10, "Difficulty (2P); )
+	    PORT_DIPNAME( 0x18, 0x10, "Difficulty (2P"));
 	    PORT_DIPSETTING(    0x18, "Easy" );
 	    PORT_DIPSETTING(    0x10, "Medium" );
 	    PORT_DIPSETTING(    0x08, "Hard" );
@@ -387,7 +387,7 @@ public class kingobox
 	    PORT_DIPSETTING(    0x0c, DEF_STR( "1C_1C") );
 	    PORT_DIPSETTING(    0x08, DEF_STR( "1C_2C") );
 	    PORT_DIPSETTING(    0x04, DEF_STR( "1C_3C") );
-	    PORT_DIPNAME( 0x30, 0x10, "Difficulty (1P); )
+	    PORT_DIPNAME( 0x30, 0x10, "Difficulty (1P"));
 	    PORT_DIPSETTING(    0x30, "Easy" );
 	    PORT_DIPSETTING(    0x10, "Medium" );
 	    PORT_DIPSETTING(    0x20, "Hard" );

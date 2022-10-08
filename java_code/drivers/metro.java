@@ -2426,7 +2426,7 @@ public class metro
 		PORT_DIPNAME( 0x0400, 0x0400, DEF_STR( "Unused") );
 		PORT_DIPSETTING(      0x0400, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x0800, 0x0800, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x0800, 0x0800, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x0000, "1/1" );
 		PORT_DIPSETTING(      0x0800, "2/3" );
 		PORT_DIPNAME( 0x1000, 0x0000, "Retry Level On Continue" );
@@ -2515,10 +2515,10 @@ public class metro
 		PORT_DIPSETTING(      0x0003, "3" );
 		PORT_DIPSETTING(      0x0002, "4" );
 		PORT_DIPNAME( 0x000c, 0x000c, DEF_STR( "Unknown") );
-		PORT_DIPSETTING(      0x000c, "11 (0); )
-		PORT_DIPSETTING(      0x0008, "10 (1); )
-		PORT_DIPSETTING(      0x0004, "01 (2); )
-		PORT_DIPSETTING(      0x0000, "00 (3); )
+		PORT_DIPSETTING(      0x000c, "11 (0"));
+		PORT_DIPSETTING(      0x0008, "10 (1"));
+		PORT_DIPSETTING(      0x0004, "01 (2"));
+		PORT_DIPSETTING(      0x0000, "00 (3"));
 		PORT_DIPNAME( 0x0010, 0x0010, "Time" );
 		PORT_DIPSETTING(      0x0010, "60" );
 		PORT_DIPSETTING(      0x0000, "40" );
@@ -3029,10 +3029,10 @@ public class metro
 		PORT_DIPNAME( 0x0400, 0x0400, "Allow Continue" );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "No") );
 		PORT_DIPSETTING(      0x0400, DEF_STR( "Yes") );
-		PORT_DIPNAME( 0x0800, 0x0000, "Winning Rounds (Player VS Computer); )
+		PORT_DIPNAME( 0x0800, 0x0000, "Winning Rounds (Player VS Computer"));
 		PORT_DIPSETTING(      0x0800, "1/1" );
 		PORT_DIPSETTING(      0x0000, "2/3" );
-		PORT_DIPNAME( 0x1000, 0x1000, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x1000, 0x1000, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x1000, "1/1" );
 		PORT_DIPSETTING(      0x0000, "2/3" );
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Unused") );
@@ -3165,7 +3165,7 @@ public class metro
 		PORT_DIPNAME( 0x0800, 0x0800, "2 Players Game" );
 		PORT_DIPSETTING(      0x0000, "1 Credit" );
 		PORT_DIPSETTING(      0x0800, "2 Credits" );
-		PORT_DIPNAME( 0x1000, 0x1000, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x1000, 0x1000, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x0000, "1/1" );
 		PORT_DIPSETTING(      0x1000, "2/3" );
 		PORT_DIPNAME( 0x2000, 0x2000, "Allow Continue" );

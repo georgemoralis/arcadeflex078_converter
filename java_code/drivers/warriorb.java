@@ -415,8 +415,8 @@ public class warriorb
 		PORT_DIPSETTING(    0x00, DEF_STR( "No") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Yes") );
 		PORT_DIPNAME( 0x80, 0x80, "Rounds" );
-		PORT_DIPSETTING(    0x80, "Normal (10-14, depends on skill); )
-		PORT_DIPSETTING(    0x00, "Long (14); )
+		PORT_DIPSETTING(    0x80, "Normal (10-14, depends on skill"));
+		PORT_DIPSETTING(    0x00, "Long (14"));
 	
 		/* IN0 */
 		WARRIORB_SYSTEM_INPUT

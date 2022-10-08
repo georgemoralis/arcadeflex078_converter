@@ -488,7 +488,7 @@ public class _8080bw
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_2WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_PLAYER2 );
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(    0x00, "2C/1C 50p/3C (+ Bonus Life); )
+		PORT_DIPSETTING(    0x00, "2C/1C 50p/3C (+ Bonus Life"));
 		PORT_DIPSETTING(    0x80, "1C/1C 50p/5C" );
 	
 		PORT_START(); 		/* Dummy port for cocktail mode */
@@ -1986,7 +1986,7 @@ public class _8080bw
 		PORT_DIPNAME( 0x20, 0x00, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x00, "3000" );
 		PORT_DIPSETTING(    0x20, "4000" );
-		PORT_DIPNAME( 0x40, 0x00, "Lives? (Possible ROM bug);  )
+		PORT_DIPNAME( 0x40, 0x00, "Lives? (Possible ROM bug"));
 		PORT_DIPSETTING(    0x00, "2 Lives" );
 		PORT_DIPSETTING(    0x40, "Input Test ?" );
 		PORT_SERVICE( 0x80, IP_ACTIVE_HIGH );
@@ -2940,10 +2940,10 @@ public class _8080bw
 	
 		PORT_START();       /* IN2 Dips & Coins */
 		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Coinage") );
-		PORT_DIPSETTING(    0x02, "2C/1 In (1 or 2 Players); )
-		PORT_DIPSETTING(    0x03, "2C/1 In 4C/3 In (1 or 2 Pls); )
-		PORT_DIPSETTING(    0x00, "1 Coin/1 Inning (1 or 2 Pls); )
-		PORT_DIPSETTING(    0x01, "1C/1 In 2C/3 In (1 or 2 Pls); )
+		PORT_DIPSETTING(    0x02, "2C/1 In (1 or 2 Players"));
+		PORT_DIPSETTING(    0x03, "2C/1 In 4C/3 In (1 or 2 Pls"));
+		PORT_DIPSETTING(    0x00, "1 Coin/1 Inning (1 or 2 Pls"));
+		PORT_DIPSETTING(    0x01, "1C/1 In 2C/3 In (1 or 2 Pls"));
 		PORT_DIPSETTING(    0x04, "1C/1Pl 2C/2Pl 4C/3Inn" );
 		PORT_DIPSETTING(    0x05, "2C/1Pl 4C/2Pl 8C/3Inn" );
 	/* 0x06 and 0x07 same as 0x00 */

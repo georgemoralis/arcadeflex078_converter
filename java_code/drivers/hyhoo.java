@@ -148,10 +148,10 @@ public class hyhoo
 	static InputPortPtr input_ports_hyhoo = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x00, "4 (Easy); )
+		PORT_DIPSETTING(    0x00, "4 (Easy"));
 		PORT_DIPSETTING(    0x01, "3" );
 		PORT_DIPSETTING(    0x02, "2" );
-		PORT_DIPSETTING(    0x03, "1 (Hard); )
+		PORT_DIPSETTING(    0x03, "1 (Hard"));
 		PORT_DIPNAME( 0x0C, 0x00, "Quiz Count" );
 		PORT_DIPSETTING(    0x0C, "12" );
 		PORT_DIPSETTING(    0x08, "16" );
@@ -234,10 +234,10 @@ public class hyhoo
 	static InputPortPtr input_ports_hyhoo2 = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x00, "4 (Easy); )
+		PORT_DIPSETTING(    0x00, "4 (Easy"));
 		PORT_DIPSETTING(    0x01, "3" );
 		PORT_DIPSETTING(    0x02, "2" );
-		PORT_DIPSETTING(    0x03, "1 (Hard); )
+		PORT_DIPSETTING(    0x03, "1 (Hard"));
 		PORT_DIPNAME( 0x0C, 0x0C, "Quiz Count" );
 		PORT_DIPSETTING(    0x0C, "8" );
 		PORT_DIPSETTING(    0x08, "10" );

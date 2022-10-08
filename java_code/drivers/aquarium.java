@@ -170,12 +170,12 @@ public class aquarium
 		PORT_DIPSETTING(      0x0003, "Normal" );
 		PORT_DIPSETTING(      0x0001, "Hard" );
 		PORT_DIPSETTING(      0x0000, "Hardest" );
-		PORT_DIPNAME( 0x000c, 0x000c, "Winning Rounds (Player VS CPU); )
+		PORT_DIPNAME( 0x000c, 0x000c, "Winning Rounds (Player VS CPU"));
 		PORT_DIPSETTING(      0x000c, "1/1" );
 		PORT_DIPSETTING(      0x0008, "2/3" );
 		PORT_DIPSETTING(      0x0004, "3/5" );
 	//	PORT_DIPSETTING(      0x0000, "1/1" );
-		PORT_DIPNAME( 0x0030, 0x0030, "Winning Rounds (Player VS Player); )
+		PORT_DIPNAME( 0x0030, 0x0030, "Winning Rounds (Player VS Player"));
 		PORT_DIPSETTING(      0x0030, "1/1" );
 		PORT_DIPSETTING(      0x0020, "2/3" );
 		PORT_DIPSETTING(      0x0010, "3/5" );

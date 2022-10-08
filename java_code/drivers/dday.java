@@ -137,8 +137,8 @@ public class dday
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x80, "Start with 20000 Pts" );/Works the same as Centuri License, but not as well
-		PORT_DIPSETTING(    0x80, "No (Lives =A); )// Doesn't mention extended play, just gives lives
-		PORT_DIPSETTING(    0x00, "Yes (Lives =B); )// Also alters table for Extended Play
+		PORT_DIPSETTING(    0x80, "No (Lives =A"));/ Doesn't mention extended play, just gives lives
+		PORT_DIPSETTING(    0x00, "Yes (Lives =B"));/ Also alters table for Extended Play
 	
 		PORT_START();       /* DSW 1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
@@ -210,8 +210,8 @@ public class dday
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x80, "Start with 20000 Pts" );
-	    PORT_DIPSETTING(    0x80, "No (Lives =A); )
-		PORT_DIPSETTING(    0x00, "Yes (Lives =B); )
+	    PORT_DIPSETTING(    0x80, "No (Lives =A"));
+		PORT_DIPSETTING(    0x00, "Yes (Lives =B"));
 	
 		PORT_START();       /* DSW 1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );

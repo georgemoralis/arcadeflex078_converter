@@ -258,10 +258,10 @@ public class videopin
 		PORT_DIPSETTING(	0x08, "3" );
 		PORT_DIPSETTING(	0x00, "5" );
 		PORT_DIPNAME( 0x04, 0x00, "Replay" );
-		PORT_DIPSETTING(	0x04, "Off (award 80000 points instead); )
+		PORT_DIPSETTING(	0x04, "Off (award 80000 points instead"));
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x02, 0x00, "Extra Ball" );
-		PORT_DIPSETTING(	0x02, "Off (award 50000 points instead); )
+		PORT_DIPSETTING(	0x02, "Off (award 50000 points instead"));
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x01, 0x01, "Replay Level" );
 		PORT_DIPSETTING(	0x00, "180000 (3 balls);/ 300000 (5 balls)" )

@@ -544,7 +544,7 @@ public class konamigq
 		PORT_DIPNAME( 0x10, 0x10, "Number of Players" );
 		PORT_DIPSETTING(    0x00, "2" );
 		PORT_DIPSETTING(    0x10, "3" );
-		PORT_DIPNAME( 0x20, 0x20, "Coin Mechanism (2p only); )
+		PORT_DIPNAME( 0x20, 0x20, "Coin Mechanism (2p only"));
 		PORT_DIPSETTING(    0x20, "Common" );
 		PORT_DIPSETTING(    0x00, "Independent" );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );

@@ -299,11 +299,11 @@ public class actfancr
 		PORT_DIPSETTING(    0x01, "10" );
 		PORT_DIPSETTING(    0x03, "12" );
 		PORT_DIPSETTING(    0x02, "14" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty (Time); )
-		PORT_DIPSETTING(    0x08, "Easy (130); )
-		PORT_DIPSETTING(    0x0c, "Normal (100); )
-		PORT_DIPSETTING(    0x04, "Hard (70); )
-		PORT_DIPSETTING(    0x00, "Hardest (60); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty (Time"));
+		PORT_DIPSETTING(    0x08, "Easy (130"));
+		PORT_DIPSETTING(    0x0c, "Normal (100"));
+		PORT_DIPSETTING(    0x04, "Hard (70"));
+		PORT_DIPSETTING(    0x00, "Hardest (60"));
 		PORT_DIPNAME( 0x10, 0x10, "Bonus Lives" );
 		PORT_DIPSETTING(    0x00, "2" );
 		PORT_DIPSETTING(    0x10, "3" );

@@ -264,7 +264,7 @@ public class popper
 		PORT_DIPNAME( 0x04, 0x00, DEF_STR( "Free_Play") );	//SW2:3
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "On") );
-		PORT_BITX(    0x08, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Pass (unlimited lives);, IP_KEY_NONE, IP_JOY_NONE )	//SW2:4
+		PORT_BITX(    0x08, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Pass (unlimited lives"));P_KEY_NONE, IP_JOY_NONE )	//SW2:4
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
 		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Flip_Screen") );	//SW2:5
@@ -273,7 +273,7 @@ public class popper
 		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Cabinet") );		//SW2:6
 		PORT_DIPSETTING(    0x20, DEF_STR( "Upright") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
-		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Clear (current level);, IP_KEY_NONE, IP_JOY_NONE )	//SW2:7
+		PORT_BITX(    0x40, 0x00, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Clear (current level"));P_KEY_NONE, IP_JOY_NONE )	//SW2:7
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x00, "Stop" );				//SW2:8

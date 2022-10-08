@@ -427,7 +427,7 @@ public class cps1
 		PORT_DIPSETTING(    0x01, DEF_STR( "4C_1C") ); \
 		PORT_DIPSETTING(    0x02, DEF_STR( "3C_1C") ); \
 		PORT_DIPSETTING(    0x03, DEF_STR( "2C_1C") ); \
-		PORT_DIPSETTING(    0x00, "2 Coins/1 Credit (1 to continue); ) \
+		PORT_DIPSETTING(    0x00, "2 Coins/1 Credit (1 to continue"));\
 		PORT_DIPSETTING(    0x07, DEF_STR( "1C_1C") ); \
 		PORT_DIPSETTING(    0x06, DEF_STR( "1C_2C") ); \
 		PORT_DIPSETTING(    0x05, DEF_STR( "1C_3C") ); \
@@ -436,7 +436,7 @@ public class cps1
 		PORT_DIPSETTING(    0x08, DEF_STR( "4C_1C") ); \
 		PORT_DIPSETTING(    0x10, DEF_STR( "3C_1C") ); \
 		PORT_DIPSETTING(    0x18, DEF_STR( "2C_1C") ); \
-		PORT_DIPSETTING(    0x00, "2 Coins/1 Credit (1 to continue); ) \
+		PORT_DIPSETTING(    0x00, "2 Coins/1 Credit (1 to continue"));\
 		PORT_DIPSETTING(    0x38, DEF_STR( "1C_1C") ); \
 		PORT_DIPSETTING(    0x30, DEF_STR( "1C_2C") ); \
 		PORT_DIPSETTING(    0x28, DEF_STR( "1C_3C") ); \
@@ -444,25 +444,25 @@ public class cps1
 	
 	#define CPS1_DIFFICULTY_1 \
 		PORT_DIPNAME( 0x07, 0x04, DEF_STR( "Difficulty") ); \
-		PORT_DIPSETTING(    0x07, "1 (Easiest); ) \
+		PORT_DIPSETTING(    0x07, "1 (Easiest"));\
 		PORT_DIPSETTING(    0x06, "2" );\
 		PORT_DIPSETTING(    0x05, "3" );\
-		PORT_DIPSETTING(    0x04, "4 (Normal); ) \
+		PORT_DIPSETTING(    0x04, "4 (Normal"));\
 		PORT_DIPSETTING(    0x03, "5" );\
 		PORT_DIPSETTING(    0x02, "6" );\
 		PORT_DIPSETTING(    0x01, "7" );\
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 	
 	#define CPS1_DIFFICULTY_2 \
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") ); \
-		PORT_DIPSETTING(    0x04, "1 (Easiest); ) \
+		PORT_DIPSETTING(    0x04, "1 (Easiest"));\
 		PORT_DIPSETTING(    0x05, "2" );\
 		PORT_DIPSETTING(    0x06, "3" );\
-		PORT_DIPSETTING(    0x07, "4 (Normal); ) \
+		PORT_DIPSETTING(    0x07, "4 (Normal"));\
 		PORT_DIPSETTING(    0x03, "5" );\
 		PORT_DIPSETTING(    0x02, "6" );\
 		PORT_DIPSETTING(    0x01, "7" );\
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 	
 	
 	static InputPortPtr input_ports_forgottn = new InputPortPtr(){ public void handler() { 
@@ -1619,23 +1619,23 @@ public class cps1
 	
 		PORT_START();       /* DSWB */
 		PORT_DIPNAME( 0x07, 0x04, "Player's vitality consumption" );	// "Level 1"
-		PORT_DIPSETTING(    0x07, "1 (Easiest); )				// "Easy 3"		(-1 every 28 frames)
+		PORT_DIPSETTING(    0x07, "1 (Easiest"));			// "Easy 3"		(-1 every 28 frames)
 		PORT_DIPSETTING(    0x06, "2" );					// "Easy 2"		(-1 every 24 frames)
 		PORT_DIPSETTING(    0x05, "3" );					// "Easy 1"		(-1 every 20 frames)
-		PORT_DIPSETTING(    0x04, "4 (Normal); )				// "Normal"		(-1 every 18 frames)
+		PORT_DIPSETTING(    0x04, "4 (Normal"));			// "Normal"		(-1 every 18 frames)
 		PORT_DIPSETTING(    0x03, "5" );					// "Difficult 1"	(-1 every 16 frames)
 		PORT_DIPSETTING(    0x02, "6" );					// "Difficult 2"	(-1 every 14 frames)
 		PORT_DIPSETTING(    0x01, "7" );					// "Difficult 3"	(-1 every 12 frames)
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )				// "Difficult 4"	(-1 every 8 frames)
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));			// "Difficult 4"	(-1 every 8 frames)
 		PORT_DIPNAME( 0x38, 0x38, "Enemy's vitality and attacking power" );// "Level 2"
-		PORT_DIPSETTING(    0x20, "1 (Easiest); )				// "Easy 3"
+		PORT_DIPSETTING(    0x20, "1 (Easiest"));			// "Easy 3"
 		PORT_DIPSETTING(    0x28, "2" );					// "Easy 2"
 		PORT_DIPSETTING(    0x30, "3" );					// "Easy 1"
-		PORT_DIPSETTING(    0x38, "4 (Normal); )				// "Normal"
+		PORT_DIPSETTING(    0x38, "4 (Normal"));			// "Normal"
 		PORT_DIPSETTING(    0x18, "5" );					// "Difficult 1"
 		PORT_DIPSETTING(    0x10, "6" );					// "Difficult 2"
 		PORT_DIPSETTING(    0x08, "7" );					// "Difficult 3"
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )				// "Difficult 4"
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));			// "Difficult 4"
 		PORT_DIPNAME( 0x40, 0x00, "Stage Select" );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1647,8 +1647,8 @@ public class cps1
 		PORT_DIPNAME( 0x03, 0x03, "Vitality Packs" );
 		PORT_DIPSETTING(    0x00, "1" );					// 0x0320
 		PORT_DIPSETTING(    0x03, "2" );					// 0x0640
-		PORT_DIPSETTING(    0x02, "3 (2 when continue); )			// 0x0960 (0x0640 when continue)
-		PORT_DIPSETTING(    0x01, "4 (3 when continue); )			// 0x0c80 (0x0960 when continue)
+		PORT_DIPSETTING(    0x02, "3 (2 when continue"));		// 0x0960 (0x0640 when continue)
+		PORT_DIPSETTING(    0x01, "4 (3 when continue"));		// 0x0c80 (0x0960 when continue)
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Free_Play") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1708,16 +1708,16 @@ public class cps1
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
 		PORT_START();       /* DSWB */
-		PORT_DIPNAME( 0x07, 0x04, "Difficulty Level (Enemy's Strength); )
-		PORT_DIPSETTING(    0x07, "1 (Easiest); )
+		PORT_DIPNAME( 0x07, 0x04, "Difficulty Level (Enemy's Strength"));
+		PORT_DIPSETTING(    0x07, "1 (Easiest"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
-		PORT_DIPSETTING(    0x04, "4 (Normal); )
+		PORT_DIPSETTING(    0x04, "4 (Normal"));
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
-		PORT_DIPNAME( 0x18, 0x18, "Difficulty Level (Player's Strength); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
+		PORT_DIPNAME( 0x18, 0x18, "Difficulty Level (Player's Strength"));
 		PORT_DIPSETTING(    0x10, "Easy" );
 		PORT_DIPSETTING(    0x18, "Normal" );
 		PORT_DIPSETTING(    0x08, "Hard" );
@@ -2068,34 +2068,34 @@ public class cps1
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
 		PORT_START();       /* DSWB */
-		PORT_DIPNAME( 0x03, 0x02, "Lives (Midnight Wanderers); )
+		PORT_DIPNAME( 0x03, 0x02, "Lives (Midnight Wanderers"));
 		PORT_DIPSETTING(    0x03, "1" );
 		PORT_DIPSETTING(    0x02, "2" );
 		PORT_DIPSETTING(    0x01, "3" );
 		PORT_DIPSETTING(    0x00, "5" );
-		PORT_DIPNAME( 0x0c, 0x08, "Difficulty (Midnight Wanderers); )
+		PORT_DIPNAME( 0x0c, 0x08, "Difficulty (Midnight Wanderers"));
 		PORT_DIPSETTING(    0x0c, "Easy" );
 		PORT_DIPSETTING(    0x08, "Normal" );
 		PORT_DIPSETTING(    0x04, "Hard" );
 		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x30, 0x10, "Lives (Chariot); )
+		PORT_DIPNAME( 0x30, 0x10, "Lives (Chariot"));
 		PORT_DIPSETTING(    0x30, "1" );
 		PORT_DIPSETTING(    0x20, "2" );
 		PORT_DIPSETTING(    0x10, "3" );
 		PORT_DIPSETTING(    0x00, "5" );
-		PORT_DIPNAME( 0xc0, 0x80, "Difficulty (Chariot); )
+		PORT_DIPNAME( 0xc0, 0x80, "Difficulty (Chariot"));
 		PORT_DIPSETTING(    0xc0, "Easy" );
 		PORT_DIPSETTING(    0x80, "Normal" );
 		PORT_DIPSETTING(    0x40, "Hard" );
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
 		PORT_START();       /* DSWC */
-		PORT_DIPNAME( 0x03, 0x01, "Lives (Don´t Pull); )
+		PORT_DIPNAME( 0x03, 0x01, "Lives (Don´t Pull"));
 		PORT_DIPSETTING(    0x03, "1" );
 		PORT_DIPSETTING(    0x02, "2" );
 		PORT_DIPSETTING(    0x01, "3" );
 		PORT_DIPSETTING(    0x00, "5" );
-		PORT_DIPNAME( 0x0c, 0x08, "Difficulty (Don´t Pull); )
+		PORT_DIPNAME( 0x0c, 0x08, "Difficulty (Don´t Pull"));
 		PORT_DIPSETTING(    0x0c, "Easy" );
 		PORT_DIPSETTING(    0x08, "Normal" );
 		PORT_DIPSETTING(    0x04, "Hard" );
@@ -2368,14 +2368,14 @@ public class cps1
 	
 		PORT_START();       /* DSWB */
 		PORT_DIPNAME( 0x07, 0x04, "Difficulty 1" );
-		PORT_DIPSETTING(    0x07, "1 (Easiest); )
+		PORT_DIPSETTING(    0x07, "1 (Easiest"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
-		PORT_DIPSETTING(    0x04, "4 (Normal); )
+		PORT_DIPSETTING(    0x04, "4 (Normal"));
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 		PORT_DIPNAME( 0x18, 0x10, "Difficulty 2" );
 		PORT_DIPSETTING(    0x18, "Easy" );
 		PORT_DIPSETTING(    0x10, "Normal" );
@@ -2485,23 +2485,23 @@ public class cps1
 	
 		PORT_START();       /* DSWB */
 		PORT_DIPNAME( 0x07, 0x04, "Enemy's attack frequency" );
-		PORT_DIPSETTING(    0x07, "1 (Easiest); )
+		PORT_DIPSETTING(    0x07, "1 (Easiest"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
-		PORT_DIPSETTING(    0x04, "4 (Normal); )
+		PORT_DIPSETTING(    0x04, "4 (Normal"));
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 		PORT_DIPNAME( 0x38, 0x38, "Enemy's attack power" );
-		PORT_DIPSETTING(    0x10, "1 (Easiest); )
+		PORT_DIPSETTING(    0x10, "1 (Easiest"));
 		PORT_DIPSETTING(    0x08, "2" );
 		PORT_DIPSETTING(    0x00, "3" );
-		PORT_DIPSETTING(    0x38, "4 (Normal); )
+		PORT_DIPSETTING(    0x38, "4 (Normal"));
 		PORT_DIPSETTING(    0x30, "5" );
 		PORT_DIPSETTING(    0x28, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x18, "8 (Hardest); )
+		PORT_DIPSETTING(    0x18, "8 (Hardest"));
 		PORT_DIPNAME( 0x40, 0x40, "Coin Slots" );
 		PORT_DIPSETTING(    0x00, "1" );
 		PORT_DIPSETTING(    0x40, "3" );

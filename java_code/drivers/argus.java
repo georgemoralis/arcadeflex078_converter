@@ -652,7 +652,7 @@ public class argus
 		PORT_DIPSETTING(    0x04, "5" );
 		PORT_DIPSETTING(    0x00, "6" );
 		PORT_DIPNAME( 0x30, 0x30, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x30, "Rank 1 (Medium); )
+		PORT_DIPSETTING(    0x30, "Rank 1 (Medium"));
 		PORT_DIPSETTING(    0x20, "Rank 2" );
 		PORT_DIPSETTING(    0x10, "Rank 3" );
 		PORT_DIPSETTING(    0x00, "Rank 4" );

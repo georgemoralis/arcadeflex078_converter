@@ -805,7 +805,7 @@ public class psikyo
 		PORT_DIPNAME( 0x0020, 0x0020, "Unknown 2-5" );// used (energy lost?)
 		PORT_DIPSETTING(      0x0020, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x0040, 0x0040, "Use DSW 3 (Debug); )
+		PORT_DIPNAME( 0x0040, 0x0040, "Use DSW 3 (Debug"));
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 		PORT_SERVICE( 0x0080, IP_ACTIVE_LOW );
@@ -849,13 +849,13 @@ public class psikyo
 		************************************************/
 	
 		PORT_START(); 	// IN3 - c00006&7
-		PORT_DIPNAME( 0x000f, 0x0000, "Copyright (Country); )
-		PORT_DIPSETTING(      0x000f, "Psikyo (Japan); )
-		PORT_DIPSETTING(      0x000e, "Jaleco+Psikyo (USA & Canada); )
-		PORT_DIPSETTING(      0x000c, "Psikyo (Korea); )
-		PORT_DIPSETTING(      0x000a, "Psikyo (Hong Kong); )
-		PORT_DIPSETTING(      0x0006, "Psikyo (Taiwan); )
-		PORT_DIPSETTING(      0x0000, "Psikyo (World); )
+		PORT_DIPNAME( 0x000f, 0x0000, "Copyright (Country"));
+		PORT_DIPSETTING(      0x000f, "Psikyo (Japan"));
+		PORT_DIPSETTING(      0x000e, "Jaleco+Psikyo (USA & Canada"));
+		PORT_DIPSETTING(      0x000c, "Psikyo (Korea"));
+		PORT_DIPSETTING(      0x000a, "Psikyo (Hong Kong"));
+		PORT_DIPSETTING(      0x0006, "Psikyo (Taiwan"));
+		PORT_DIPSETTING(      0x0000, "Psikyo (World"));
 	
 		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x0020, IP_ACTIVE_LOW, IPT_UNKNOWN );

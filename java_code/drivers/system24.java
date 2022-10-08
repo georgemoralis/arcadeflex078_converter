@@ -1312,12 +1312,12 @@ public class system24
 		PORT_DIPNAME( 0x02, 0x02, "Start score" );
 		PORT_DIPSETTING(    0x02, "3000" );
 		PORT_DIPSETTING(    0x00, "2000" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty (computer); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty (computer"));
 		PORT_DIPSETTING(    0x0c, "Normal" );
 		PORT_DIPSETTING(    0x08, "Easy" );
 		PORT_DIPSETTING(    0x04, "Hard" );
 		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x30, 0x30, "Difficulty (player); )
+		PORT_DIPNAME( 0x30, 0x30, "Difficulty (player"));
 		PORT_DIPSETTING(    0x30, "Normal" );
 		PORT_DIPSETTING(    0x20, "Easy" );
 		PORT_DIPSETTING(    0x10, "Hard" );

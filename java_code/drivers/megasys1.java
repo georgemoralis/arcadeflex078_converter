@@ -2550,9 +2550,9 @@ public class megasys1
 		PORT_DIPSETTING(    0x08, "Paddles" );
 		PORT_DIPSETTING(    0x00, "Buttons" );
 		PORT_DIPNAME( 0x30, 0x30, "Nudity" );				// 1f0356<-!
-		PORT_DIPSETTING(    0x30, "Female and Male (Full); )
-		PORT_DIPSETTING(    0x20, "Female (Full); )
-		PORT_DIPSETTING(    0x10, "Female (Partial); )
+		PORT_DIPSETTING(    0x30, "Female and Male (Full"));
+		PORT_DIPSETTING(    0x20, "Female (Full"));
+		PORT_DIPSETTING(    0x10, "Female (Partial"));
 		PORT_DIPSETTING(    0x00, "None" );
 		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Cabinet") );			// 1f006a<-!
 		PORT_DIPSETTING(    0x40, DEF_STR( "Upright") );
@@ -3035,7 +3035,7 @@ public class megasys1
 		PORT_DIPSETTING(    0x03, "Normal" );
 		PORT_DIPSETTING(    0x02, "Hard"   );
 		PORT_DIPSETTING(    0x01, "Hadest" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Games To Play (Vs); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Games To Play (Vs"));
 		PORT_DIPSETTING(    0x00, "1" );
 		PORT_DIPSETTING(    0x0c, "2" );
 		PORT_DIPSETTING(    0x08, "3" );
@@ -3043,10 +3043,10 @@ public class megasys1
 		PORT_DIPNAME( 0x10, 0x10, "Allow Continue" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "On") ); )
-		PORT_DIPNAME( 0x20, 0x20, "Credits To Start (Vs); )
+		PORT_DIPNAME( 0x20, 0x20, "Credits To Start (Vs"));
 		PORT_DIPSETTING(    0x20, "1" );
 		PORT_DIPSETTING(    0x00, "2" );
-		PORT_DIPNAME( 0x40, 0x40, "Credits To Continue (Vs); )
+		PORT_DIPNAME( 0x40, 0x40, "Credits To Continue (Vs"));
 		PORT_DIPSETTING(    0x40, "1" );
 		PORT_DIPSETTING(    0x00, "2" );
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Flip_Screen") );

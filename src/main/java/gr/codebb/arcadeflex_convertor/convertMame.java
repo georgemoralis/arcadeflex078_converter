@@ -373,9 +373,20 @@ public class convertMame {
                 case ')': {
                     if (type2 == INPUTPORTS) {
                         i8--;
-                        Convertor.outbuf[(Convertor.outpos++)] = ')';
-                        Convertor.outbuf[(Convertor.outpos++)] = ';';
-                        Convertor.inpos += 2;
+                        i = Convertor.inpos;
+                        Convertor.inpos += 1;
+                        if (sUtil.parseChar() == '\"') {
+                            Convertor.outbuf[(Convertor.outpos++)] = '\"';
+                            Convertor.outbuf[(Convertor.outpos++)] = ')';
+                            Convertor.outbuf[(Convertor.outpos++)] = ')';
+                            Convertor.outbuf[(Convertor.outpos++)] = ';';
+                            Convertor.inpos += 3;
+                        } else {
+                            Convertor.inpos = i;
+                            Convertor.outbuf[(Convertor.outpos++)] = ')';
+                            Convertor.outbuf[(Convertor.outpos++)] = ';';
+                            Convertor.inpos += 2;
+                        }
                         if (sUtil.getChar() == ')') {
                             Convertor.inpos += 1;
                         }

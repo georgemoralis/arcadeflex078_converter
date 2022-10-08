@@ -279,14 +279,14 @@ public class sidearms
 	
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x04, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "0 (Easiest); )
+		PORT_DIPSETTING(    0x07, "0 (Easiest"));
 		PORT_DIPSETTING(    0x06, "1" );
 		PORT_DIPSETTING(    0x05, "2" );
-		PORT_DIPSETTING(    0x04, "3 (Normal); )
+		PORT_DIPSETTING(    0x04, "3 (Normal"));
 		PORT_DIPSETTING(    0x03, "4" );
 		PORT_DIPSETTING(    0x02, "5" );
 		PORT_DIPSETTING(    0x01, "6" );
-		PORT_DIPSETTING(    0x00, "7 (Hardest); )
+		PORT_DIPSETTING(    0x00, "7 (Hardest"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x08, "3" );
 		PORT_DIPSETTING(    0x00, "5" );

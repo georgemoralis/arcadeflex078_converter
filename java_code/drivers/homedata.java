@@ -755,14 +755,14 @@ public class homedata
 		PORT_DIPSETTING(    0x10, "1000" );
 		PORT_DIPSETTING(    0x00, "2000" );
 		PORT_DIPNAME( 0xe0, 0xe0, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0xe0, "1 (easiest); )
+		PORT_DIPSETTING(    0xe0, "1 (easiest"));
 		PORT_DIPSETTING(    0xc0, "2" );
 		PORT_DIPSETTING(    0xa0, "3" );
 		PORT_DIPSETTING(    0x80, "4" );
 		PORT_DIPSETTING(    0x60, "5" );
 		PORT_DIPSETTING(    0x40, "6" );
 		PORT_DIPSETTING(    0x20, "7" );
-		PORT_DIPSETTING(    0x00, "8 (hardest); )
+		PORT_DIPSETTING(    0x00, "8 (hardest"));
 	
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Flip_Screen") );

@@ -89,7 +89,7 @@ public class carpolo
 		PORT_START(); 	/* IN1 */
 		PORT_BIT (0x03, IP_ACTIVE_HIGH, IPT_UNUSED );/* the lowest 2 bits of the counter */
 		PORT_DIPNAME( 0xfc, 0x3c, "Game Sec/Real Sec" );
-		PORT_DIPSETTING(	0x00, "0.23 (Longest); )
+		PORT_DIPSETTING(	0x00, "0.23 (Longest"));
 		PORT_DIPSETTING(	0xfc, "0.24" );
 		PORT_DIPSETTING(	0xf8, "0.24" );
 		PORT_DIPSETTING(	0xf4, "0.25" );
@@ -151,7 +151,7 @@ public class carpolo
 		PORT_DIPSETTING(	0x10, "3.75" );
 		PORT_DIPSETTING(	0x0c, "5.00" );
 		PORT_DIPSETTING(	0x08, "7.50" );
-		PORT_DIPSETTING(	0x04, "15.00 (Shortest); )
+		PORT_DIPSETTING(	0x04, "15.00 (Shortest"));
 	
 		PORT_START(); 	/* IN2 */
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER1 | IPF_REVERSE, 50, 10, 0, 0 );

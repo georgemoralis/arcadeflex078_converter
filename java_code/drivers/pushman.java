@@ -348,10 +348,10 @@ public class pushman
 		PORT_DIPNAME( 0x0008, 0x0008, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0008, "Easy" );		// less bubbles before cycling
 		PORT_DIPSETTING(      0x0000, "Hard" );		// more bubbles before cycling
-		PORT_DIPNAME( 0x0010, 0x0000, "Music (In-game); )
+		PORT_DIPNAME( 0x0010, 0x0000, "Music (In-game"));
 		PORT_DIPSETTING(      0x0010, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x0020, 0x0000, "Music (Attract Mode); )
+		PORT_DIPNAME( 0x0020, 0x0000, "Music (Attract Mode"));
 		PORT_DIPSETTING(      0x0020, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 		PORT_DIPNAME( 0x00c0, 0x00c0, DEF_STR( "Lives") );

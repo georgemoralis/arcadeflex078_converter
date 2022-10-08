@@ -117,7 +117,7 @@ public class _1943
 	
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x0f, "1 (Easiest); )
+		PORT_DIPSETTING(    0x0f, "1 (Easiest"));
 		PORT_DIPSETTING(    0x0e, "2" );
 		PORT_DIPSETTING(    0x0d, "3" );
 		PORT_DIPSETTING(    0x0c, "4" );
@@ -132,7 +132,7 @@ public class _1943
 		PORT_DIPSETTING(    0x03, "13" );
 		PORT_DIPSETTING(    0x02, "14" );
 		PORT_DIPSETTING(    0x01, "15" );
-		PORT_DIPSETTING(    0x00, "16 (Hardest); )
+		PORT_DIPSETTING(    0x00, "16 (Hardest"));
 		PORT_DIPNAME( 0x10, 0x10, "2 Players Game" );
 		PORT_DIPSETTING(    0x00, "1 Credit" );
 		PORT_DIPSETTING(    0x10, "2 Credits" );

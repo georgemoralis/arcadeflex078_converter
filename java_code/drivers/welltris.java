@@ -581,17 +581,17 @@ public class welltris
 		PORT_DIPSETTING(      0x0008, DEF_STR( "On") );
 	#if WELLTRIS_4P_HACK
 		/* again might be handy if a real 4 player version shows up */
-		PORT_DIPNAME( 0x0010, 0x0010, "DIPSW 2-5 (see notes); )
+		PORT_DIPNAME( 0x0010, 0x0010, "DIPSW 2-5 (see notes"));
 		PORT_DIPSETTING(      0x0010, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x0020, 0x0020, "4 Players Mode (see notes); )
+		PORT_DIPNAME( 0x0020, 0x0020, "4 Players Mode (see notes"));
 		PORT_DIPSETTING(      0x0020, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	#else
-		PORT_DIPNAME( 0x0010, 0x0010, "DIPSW 2-5 (unused); )
+		PORT_DIPNAME( 0x0010, 0x0010, "DIPSW 2-5 (unused"));
 		PORT_DIPSETTING(      0x0010, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
-		PORT_DIPNAME( 0x0020, 0x0020, "DIPSW 2-6 (unused); )
+		PORT_DIPNAME( 0x0020, 0x0020, "DIPSW 2-6 (unused"));
 		PORT_DIPSETTING(      0x0020, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	#endif

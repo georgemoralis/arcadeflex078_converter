@@ -352,7 +352,7 @@ public class vicdual
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
-		PORT_DIPNAME( 0x04, 0x04, "S.A. Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x04, "S.A. Lives (1/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+1" );
 		PORT_DIPNAME( 0x08, 0x00, "H.O. Lives" );
@@ -365,7 +365,7 @@ public class vicdual
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
-		PORT_DIPNAME( 0x04, 0x00, "S.A. Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x00, "S.A. Lives (2/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+2" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_VBLANK );
@@ -490,7 +490,7 @@ public class vicdual
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x04, "Head On Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x04, "Head On Lives (1/2"));
 		PORT_DIPSETTING(    0x04, "+0" );
 		PORT_DIPSETTING(    0x00, "+1" );
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unused") );
@@ -503,7 +503,7 @@ public class vicdual
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x00, "Head On Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Head On Lives (2/2"));
 		PORT_DIPSETTING(    0x04, "+0" );
 		PORT_DIPSETTING(    0x00, "+1" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_VBLANK );
@@ -628,7 +628,7 @@ public class vicdual
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x00, "Invinco Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Invinco Lives (1/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+1" );
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unused") );
@@ -641,7 +641,7 @@ public class vicdual
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x00, "Invinco Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Invinco Lives (2/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+2" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_VBLANK );
@@ -652,7 +652,7 @@ public class vicdual
 		PORT_START(); 	/* IN2 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x00, "Deep Scan Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Deep Scan Lives (1/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+1" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );/* timer - unused */
@@ -664,7 +664,7 @@ public class vicdual
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		/* +1 and +2 gives 2 lives instead of 6 */
-		PORT_DIPNAME( 0x04, 0x00, "Deep Scan Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Deep Scan Lives (2/2"));
 		PORT_DIPSETTING(    0x04, "+0" );
 		PORT_DIPSETTING(    0x00, "+2" );
 		PORT_BIT_IMPULSE( 0x08, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
@@ -1016,7 +1016,7 @@ public class vicdual
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x04, "Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x04, "Lives (1/2"));
 		PORT_DIPSETTING(    0x04, "+0" );
 		PORT_DIPSETTING(    0x00, "+2" );
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Unused") );
@@ -1029,7 +1029,7 @@ public class vicdual
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x04, "Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x04, "Lives (2/2"));
 		PORT_DIPSETTING(    0x04, "+0" );
 		PORT_DIPSETTING(    0x00, "+1" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_VBLANK );
@@ -1112,7 +1112,7 @@ public class vicdual
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
-		PORT_DIPNAME( 0x04, 0x00, "Alpha Fighter Lives (1/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Alpha Fighter Lives (1/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+1" );
 		PORT_DIPNAME( 0x08, 0x00, "Head On Lives" );
@@ -1125,7 +1125,7 @@ public class vicdual
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
-		PORT_DIPNAME( 0x04, 0x00, "Alpha Fighter Lives (2/2); )
+		PORT_DIPNAME( 0x04, 0x00, "Alpha Fighter Lives (2/2"));
 		PORT_DIPSETTING(    0x00, "+0" );
 		PORT_DIPSETTING(    0x04, "+2" );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_VBLANK );

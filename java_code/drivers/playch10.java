@@ -458,7 +458,7 @@ public class playch10
 	    PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );												/* Coin 1			*/
 	
 	    PORT_START(); 	/* DSW A */
-		PORT_DIPNAME( 0x3f, 0x00, "Units of time (coin A/coin B); )
+		PORT_DIPNAME( 0x3f, 0x00, "Units of time (coin A/coin B"));
 		PORT_DIPSETTING(    0x00, "300/0" );
 		PORT_DIPSETTING(    0x01, "300/100" );
 		PORT_DIPSETTING(    0x02, "300/200" );
@@ -581,7 +581,7 @@ public class playch10
 	    PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );												/* Coin 1			*/
 	
 	    PORT_START(); 	/* DSW A */
-		PORT_DIPNAME( 0x3f, 0x00, "Units of time (coin A/coin B); )
+		PORT_DIPNAME( 0x3f, 0x00, "Units of time (coin A/coin B"));
 		PORT_DIPSETTING(    0x00, "300/0" );
 		PORT_DIPSETTING(    0x01, "300/100" );
 		PORT_DIPSETTING(    0x02, "300/200" );

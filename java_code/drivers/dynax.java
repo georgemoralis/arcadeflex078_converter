@@ -1301,14 +1301,14 @@ public class dynax
 	
 		PORT_START(); 	// IN4 - DSW
 		PORT_DIPNAME( 0x07, 0x04, DEF_STR( "Difficulty") );	// Time
-		PORT_DIPSETTING(    0x00, "1 (Easy); )
+		PORT_DIPSETTING(    0x00, "1 (Easy"));
 		PORT_DIPSETTING(    0x01, "2" );
 		PORT_DIPSETTING(    0x02, "3" );
 		PORT_DIPSETTING(    0x03, "4" );
 		PORT_DIPSETTING(    0x04, "5" );
 		PORT_DIPSETTING(    0x05, "6" );
 		PORT_DIPSETTING(    0x06, "7" );
-		PORT_DIPSETTING(    0x07, "8 (Hard); )
+		PORT_DIPSETTING(    0x07, "8 (Hard"));
 		PORT_DIPNAME( 0x18, 0x10, "Vs Time" );
 		PORT_DIPSETTING(    0x18, "8 s" );
 		PORT_DIPSETTING(    0x10, "10 s" );

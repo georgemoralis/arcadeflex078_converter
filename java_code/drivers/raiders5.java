@@ -200,7 +200,7 @@ public class raiders5
 		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Free_Play") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Endless Game (If Free Play); )
+		PORT_DIPNAME( 0x80, 0x80, "Endless Game (If Free Play"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	

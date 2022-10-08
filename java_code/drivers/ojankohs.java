@@ -379,14 +379,14 @@ public class ojankohs
 	
 		PORT_START(); 	/* (2) DIPSW-1 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x03, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x01, "4" );
 		PORT_DIPSETTING(    0x06, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x04, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x18, 0x18, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "2C_1C") );
@@ -488,14 +488,14 @@ public class ojankohs
 	
 		PORT_START(); 	/* (2) DIPSW-1 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x03, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x01, "4" );
 		PORT_DIPSETTING(    0x06, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x04, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x18, 0x18, "Player's initial score" );
 		PORT_DIPSETTING(    0x18, "1000" );
 		PORT_DIPSETTING(    0x08, "2000" );

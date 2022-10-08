@@ -1809,12 +1809,12 @@ public class taito_z
 		TAITO_Z_COINAGE_WORLD_8
 	
 		PORT_START();  /* DSW B */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty 1 (time/speed); )
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty 1 (time/speed"));
 		PORT_DIPSETTING(    0x02, "Easy" );
 		PORT_DIPSETTING(    0x03, "Normal" );
 		PORT_DIPSETTING(    0x01, "Hard" );
 		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty 2 (other cars); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty 2 (other cars"));
 		PORT_DIPSETTING(    0x08, "Easy" );
 		PORT_DIPSETTING(    0x0c, "Normal" );
 		PORT_DIPSETTING(    0x04, "Hard" );
@@ -1880,12 +1880,12 @@ public class taito_z
 		TAITO_Z_COINAGE_JAPAN_8		// confirmed
 	
 		PORT_START();  /* DSW B */
-		PORT_DIPNAME( 0x03, 0x03, "Difficulty 1 (time/speed); )
+		PORT_DIPNAME( 0x03, 0x03, "Difficulty 1 (time/speed"));
 		PORT_DIPSETTING(    0x02, "Easy" );
 		PORT_DIPSETTING(    0x03, "Normal" );
 		PORT_DIPSETTING(    0x01, "Hard" );
 		PORT_DIPSETTING(    0x00, "Hardest" );
-		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty 2 (other cars); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Difficulty 2 (other cars"));
 		PORT_DIPSETTING(    0x08, "Easy" );
 		PORT_DIPSETTING(    0x0c, "Normal" );
 		PORT_DIPSETTING(    0x04, "Hard" );
@@ -2715,7 +2715,7 @@ public class taito_z
 		PORT_DIPNAME( 0x40, 0x40, "Allow Continue" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x40, DEF_STR( "On") );
-		PORT_DIPNAME( 0x80, 0x80, "Disable Pedal (?); )
+		PORT_DIPNAME( 0x80, 0x80, "Disable Pedal (?"));
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	

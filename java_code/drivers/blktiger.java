@@ -193,14 +193,13 @@ public class blktiger
 		PORT_DIPSETTING(    0x01, "5" );
 		PORT_DIPSETTING(    0x00, "7");
 		PORT_DIPNAME( 0x1c, 0x0c, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x1c, "1 (Easiest);
-		PORT_DIPSETTING(    0x18, "2" );
+		PORT_DIPSETTING(    0x1c, "1 (Easiest"));	PORT_DIPSETTING(    0x18, "2" );
 		PORT_DIPSETTING(    0x14, "3" );
 		PORT_DIPSETTING(    0x10, "4" );
-		PORT_DIPSETTING(    0x0c, "5 (Normal); )
+		PORT_DIPSETTING(    0x0c, "5 (Normal"));
 		PORT_DIPSETTING(    0x08, "6" );
 		PORT_DIPSETTING(    0x04, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hardest); )
+		PORT_DIPSETTING(    0x00, "8 (Hardest"));
 		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x20, DEF_STR( "On") );

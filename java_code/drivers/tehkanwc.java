@@ -574,7 +574,7 @@ public class tehkanwc
 		   If offense player selects his formation before defense player,
 		   defense formation time will be set to 3, 5 or 7 seconds.
 		   Check code at 0x3ed9 and table at 0x3f89. */
-		PORT_DIPNAME( 0x0c, 0x0c, "Formation Time (Defense); )
+		PORT_DIPNAME( 0x0c, 0x0c, "Formation Time (Defense"));
 		PORT_DIPSETTING (   0x0c, "Same as Offense" );
 		PORT_DIPSETTING (   0x00, "7" );
 		PORT_DIPSETTING (   0x08, "5" );
@@ -584,7 +584,7 @@ public class tehkanwc
 		PORT_DIPSETTING (   0x00, "57/60" );
 		PORT_DIPSETTING (   0x10, "54/60" );
 		PORT_DIPSETTING (   0x20, "50/60" );
-		PORT_DIPNAME( 0xc0, 0xc0, "Formation Time (Offense); )
+		PORT_DIPNAME( 0xc0, 0xc0, "Formation Time (Offense"));
 		PORT_DIPSETTING (   0x00, "25" );
 		PORT_DIPSETTING (   0x40, "20" );
 		PORT_DIPSETTING (   0xc0, "15" );
@@ -691,12 +691,12 @@ public class tehkanwc
 	
 		PORT_START();  /* DSW2 - Active LOW */
 		PORT_BIT( 0x07, IP_ACTIVE_LOW, IPT_UNUSED );
-		PORT_DIPNAME( 0x18, 0x18, "Penalty (Over Par); )		// Check table at 0x2d67
+		PORT_DIPNAME( 0x18, 0x18, "Penalty (Over Par"));	// Check table at 0x2d67
 		PORT_DIPSETTING (   0x10, "1/1/2/3/4" );			// +1 / +2 / +3 / +4 / +5 or +6
 		PORT_DIPSETTING (   0x18, "1/2/3/3/4" );
 		PORT_DIPSETTING (   0x08, "1/2/3/4/4" );
 		PORT_DIPSETTING (   0x00, "2/3/3/4/4" );
-		PORT_DIPNAME( 0x20, 0x20, "Bonus Balls (Multiple coins); )
+		PORT_DIPNAME( 0x20, 0x20, "Bonus Balls (Multiple coins"));
 		PORT_DIPSETTING (   0x20, "None" );
 		PORT_DIPSETTING (   0x00, "+1" );
 		PORT_DIPNAME( 0xc0, 0xc0, "Difficulty?" );			// Check table at 0x5df9

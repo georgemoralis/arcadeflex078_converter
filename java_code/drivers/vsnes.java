@@ -966,7 +966,7 @@ public class vsnes
 		VS_DUAL_CONTROLS_REVERSE_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
-		PORT_DIPNAME( 0x07, 0x00, "Coinage (Left Side); )
+		PORT_DIPNAME( 0x07, 0x00, "Coinage (Left Side"));
 		PORT_DIPSETTING(	0x03, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(	0x05, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(	0x01, DEF_STR( "2C_1C") );
@@ -975,7 +975,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x02, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(	0x06, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(	0x07, DEF_STR( "Free_Play") );
-		PORT_DIPNAME( 0x18, 0x00, "Lives (Left Side); )
+		PORT_DIPNAME( 0x18, 0x00, "Lives (Left Side"));
 		PORT_DIPSETTING(	0x00, "3" );
 		PORT_DIPSETTING(	0x10, "4" );
 		PORT_DIPSETTING(	0x08, "5" );
@@ -986,14 +986,14 @@ public class vsnes
 		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x40, DEF_STR( "On") );
-		PORT_BITX(    0x80, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, "Service Mode (Left Side);, KEYCODE_F2, IP_JOY_NONE )
+		PORT_BITX(    0x80, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, "Service Mode (Left Side"));EYCODE_F2, IP_JOY_NONE )
 		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	
 		VS_DUAL_CONTROLS_REVERSE_R /* right side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
-		PORT_DIPNAME( 0x07, 0x00, "Coinage (Right Side); )
+		PORT_DIPNAME( 0x07, 0x00, "Coinage (Right Side"));
 		PORT_DIPSETTING(	0x03, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(	0x05, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(	0x01, DEF_STR( "2C_1C") );
@@ -1002,7 +1002,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x02, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(	0x06, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(	0x07, DEF_STR( "Free_Play") );
-		PORT_DIPNAME( 0x18, 0x00, "Lives (Right Side); )
+		PORT_DIPNAME( 0x18, 0x00, "Lives (Right Side"));
 		PORT_DIPSETTING(	0x00, "3" );
 		PORT_DIPSETTING(	0x10, "4" );
 		PORT_DIPSETTING(	0x08, "5" );
@@ -1013,7 +1013,7 @@ public class vsnes
 		PORT_DIPNAME( 0x40, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x40, DEF_STR( "On") );
-		PORT_BITX(    0x80, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, "Service Mode (Right Side);, KEYCODE_F1, IP_JOY_NONE )
+		PORT_BITX(    0x80, 0x00, IPT_DIPSWITCH_NAME | IPF_TOGGLE, "Service Mode (Right Side"));EYCODE_F1, IP_JOY_NONE )
 		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 

@@ -125,7 +125,7 @@ public class gaelco2
 		PORT_DIPSETTING(      0x0c00, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(      0x0b00, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0x0a00, DEF_STR( "1C_6C") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too"));
 		PORT_DIPNAME( 0xf000, 0xf000, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(      0x7000, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x8000, DEF_STR( "3C_1C") );
@@ -138,7 +138,7 @@ public class gaelco2
 		PORT_DIPSETTING(      0xc000, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(      0xb000, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0xa000, DEF_STR( "1C_6C") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too"));
 	
 	PORT_START(); 	/* DSW #2 + 2P INPUTS */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
@@ -472,7 +472,7 @@ public class gaelco2
 		PORT_DIPSETTING(      0x0c00, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(      0x0b00, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0x0a00, DEF_STR( "1C_6C") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too"));
 		PORT_DIPNAME( 0xf000, 0xf000, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(      0x7000, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x8000, DEF_STR( "3C_1C") );
@@ -485,7 +485,7 @@ public class gaelco2
 		PORT_DIPSETTING(      0xc000, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(      0xb000, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0xa000, DEF_STR( "1C_6C") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too"));
 	
 	PORT_START(); 	/* DSW #2 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
@@ -724,7 +724,7 @@ public class gaelco2
 		PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 );
 		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_DIPNAME( 0x0f00, 0x0f00, DEF_STR( "Coin_A") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin B too"));
 		PORT_DIPSETTING(      0x0300, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x0600, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(      0x0900, DEF_STR( "2C_1C") );
@@ -741,7 +741,7 @@ public class gaelco2
 		PORT_DIPSETTING(      0x0b00, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0x0a00, DEF_STR( "1C_6C") );
 		PORT_DIPNAME( 0xf000, 0xf000, DEF_STR( "Coin_B") );
-		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too); )
+		PORT_DIPSETTING(      0x0000, "Disabled or Free Play (if Coin A too"));
 		PORT_DIPSETTING(      0x3000, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x6000, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(      0x9000, DEF_STR( "2C_1C") );

@@ -1936,7 +1936,7 @@ public class segac2
 	    PORT_DIPSETTING(    0x0c, DEF_STR( "1C_4C") ); \
 	    PORT_DIPSETTING(    0x0b, DEF_STR( "1C_5C") ); \
 	    PORT_DIPSETTING(    0x0a, DEF_STR( "1C_6C") ); \
-	    PORT_DIPSETTING(    0x00, "1 Coin/1 Credit (Freeplay if Coin B also); )
+	    PORT_DIPSETTING(    0x00, "1 Coin/1 Credit (Freeplay if Coin B also"));
 	
 	#define COIN_B \
 	    PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( "Coin_B") ); \
@@ -1955,7 +1955,7 @@ public class segac2
 	    PORT_DIPSETTING(    0xc0, DEF_STR( "1C_4C") ); \
 	    PORT_DIPSETTING(    0xb0, DEF_STR( "1C_5C") ); \
 	    PORT_DIPSETTING(    0xa0, DEF_STR( "1C_6C") ); \
-		PORT_DIPSETTING(    0x00, "1 Coin/1 Credit (Freeplay if Coin A also); )
+		PORT_DIPSETTING(    0x00, "1 Coin/1 Credit (Freeplay if Coin A also"));
 	
 	
 	static InputPortPtr input_ports_columns = new InputPortPtr(){ public void handler() {  /* Columns Input Ports */
@@ -2789,7 +2789,7 @@ public class segac2
 	//	PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_START1 | IPF_PLAYER2 );
 	
 		PORT_START(); 	/* Temp - Fake dipswitch to turn on / off sms vdp display */
-	//	PORT_DIPNAME( 0x01, 0x01, "SMS VDP Display (fake); )
+	//	PORT_DIPNAME( 0x01, 0x01, "SMS VDP Display (fake"));
 	//	PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 	//	PORT_DIPSETTING(    0x01, DEF_STR( "On") );
 	

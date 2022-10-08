@@ -561,13 +561,13 @@ public class gaiden
 		PORT_DIPSETTING(      0x4000, "3" );
 	/*	PORT_DIPSETTING(      0x0000, "2" );*/
 		/* When bit 0 is On,  use bits 4 and 5 for difficulty */
-		PORT_DIPNAME( 0x3000, 0x3000, "Difficulty (Tecmo Knight); )
+		PORT_DIPNAME( 0x3000, 0x3000, "Difficulty (Tecmo Knight"));
 		PORT_DIPSETTING(      0x3000, "Easy" );
 		PORT_DIPSETTING(      0x1000, "Normal" );
 		PORT_DIPSETTING(      0x2000, "Hard" );
 		PORT_DIPSETTING(      0x0000, "Hardest" );
 		/* When bit 0 is 0ff, use bits 2 and 3 for difficulty */
-		PORT_DIPNAME( 0x0c00, 0x0c00, "Difficulty (Wild Fang); )
+		PORT_DIPNAME( 0x0c00, 0x0c00, "Difficulty (Wild Fang"));
 		PORT_DIPSETTING(      0x0c00, "Easy" );
 		PORT_DIPSETTING(      0x0400, "Normal" );
 		PORT_DIPSETTING(      0x0800, "Hard" );

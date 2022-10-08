@@ -982,10 +982,10 @@ public class cischeat
 		PORT_START(); 	// IN5 - DSW 3 (4 bits, Cabinet Linking) - $82200.w
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_DIPNAME( 0x06, 0x00, "Unit ID"             );
-		PORT_DIPSETTING(    0x00, "1 (Blue-White Car);  )
-		PORT_DIPSETTING(    0x02, "2 (Green-White Car); )
-		PORT_DIPSETTING(    0x04, "3 (Red-White Car);   )
-		PORT_DIPSETTING(    0x06, "4 (Yellow Car);      )
+		PORT_DIPSETTING(    0x00, "1 (Blue-White Car"));
+		PORT_DIPSETTING(    0x02, "2 (Green-White Car"));
+		PORT_DIPSETTING(    0x04, "3 (Red-White Car"));
+		PORT_DIPSETTING(    0x06, "4 (Yellow Car"));   )
 		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1058,10 +1058,10 @@ public class cischeat
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		// DSW 2
 		PORT_DIPNAME( 0x0300, 0x0300, "Unit ID"			);	// -> !f0020 (ID of this unit, when linked)
-		PORT_DIPSETTING(      0x0300, "0 (Red Car);    )
-		PORT_DIPSETTING(      0x0200, "1 (Blue Car);   )
-		PORT_DIPSETTING(      0x0100, "2 (Yellow Car); )
-		PORT_DIPSETTING(      0x0000, "3 (Green Car);  )
+		PORT_DIPSETTING(      0x0300, "0 (Red Car")); )
+		PORT_DIPSETTING(      0x0200, "1 (Blue Car"));
+		PORT_DIPSETTING(      0x0100, "2 (Yellow Car"));
+		PORT_DIPSETTING(      0x0000, "3 (Green Car"));
 		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// -> !f0026
 		PORT_DIPSETTING(      0x0000, "Easy"    );
 		PORT_DIPSETTING(      0x0c00, "Normal"  );
@@ -1082,11 +1082,11 @@ public class cischeat
 	
 		PORT_START(); 	// IN5 - DSW 3 (4 bits, Cabinet Linking) - $82200.w
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2); )	// -> f0020 (like DSW2 !!)
+		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2"));// -> f0020 (like DSW2 !!)
 		PORT_DIPSETTING(    0x06, "Use other"      );
-		PORT_DIPSETTING(    0x00, "0 (Red Car);    )
-		PORT_DIPSETTING(    0x02, "1 (Blue Car);   )
-		PORT_DIPSETTING(    0x04, "2 (Yellow Car); )
+		PORT_DIPSETTING(    0x00, "0 (Red Car")); )
+		PORT_DIPSETTING(    0x02, "1 (Blue Car"));
+		PORT_DIPSETTING(    0x04, "2 (Yellow Car"));
 		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1122,7 +1122,7 @@ public class cischeat
 	
 		PORT_START(); 	// IN1 - DSW 1 & 2 - $80000.w	-> !f9012
 		// DSW 1 ( Coinage - it changes with Country: we use IN6 & IN7 )
-		PORT_DIPNAME( 0x0040, 0x0040, "Free Play (UK FR); )
+		PORT_DIPNAME( 0x0040, 0x0040, "Free Play (UK FR"));
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x0080, 0x0080, DEF_STR( "Unknown") );	// unused?
@@ -1145,7 +1145,7 @@ public class cischeat
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x2000, DEF_STR( "On") ); )
-		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR);  )	// -> f0020
+		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR"));	// -> f0020
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x4000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x8000, 0x8000, "Vibrations" );
@@ -1191,10 +1191,10 @@ public class cischeat
 		PORT_DIPSETTING(    0x01, "Slave" );
 		PORT_DIPSETTING(    0x00, "Master" );
 		PORT_DIPNAME( 0x06, 0x06, "Unit ID" );		// -> !f901c
-		PORT_DIPSETTING(    0x06, "0 (Red-White Car); )
-		PORT_DIPSETTING(    0x04, "1 (Red Car); )
-		PORT_DIPSETTING(    0x02, "2 (Blue-White Car); )
-		PORT_DIPSETTING(    0x00, "3 (Blue Car); )
+		PORT_DIPSETTING(    0x06, "0 (Red-White Car"));
+		PORT_DIPSETTING(    0x04, "1 (Red Car"));
+		PORT_DIPSETTING(    0x02, "2 (Blue-White Car"));
+		PORT_DIPSETTING(    0x00, "3 (Blue Car"));
 		PORT_BIT(  0x08, IP_ACTIVE_LOW, IPT_UNKNOWN );// Redundant: Invert Unit ID
 		PORT_BIT(  0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1206,7 +1206,7 @@ public class cischeat
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_CENTER, 30, 30, 0, 0xff);
 	
 		PORT_START(); 	// IN6 - Coinage Japan & USA (it changes with Country)
-		PORT_DIPNAME( 0x0007, 0x0007, "Coin A (JP US); )
+		PORT_DIPNAME( 0x0007, 0x0007, "Coin A (JP US"));
 		PORT_DIPSETTING(      0x0001, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x0002, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(      0x0003, DEF_STR( "2C_1C") );
@@ -1215,7 +1215,7 @@ public class cischeat
 		PORT_DIPSETTING(      0x0005, DEF_STR( "1C_3C") );
 		PORT_DIPSETTING(      0x0004, DEF_STR( "1C_4C") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Free_Play") );
-		PORT_DIPNAME( 0x0038, 0x0038, "Coin B (JP US); )
+		PORT_DIPNAME( 0x0038, 0x0038, "Coin B (JP US"));
 		PORT_DIPSETTING(      0x0008, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x0010, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(      0x0018, DEF_STR( "2C_1C") );
@@ -1225,7 +1225,7 @@ public class cischeat
 		PORT_DIPSETTING(      0x0020, DEF_STR( "1C_4C") );
 	
 		PORT_START(); 	// IN7 - Coinage UK & France (it changes with Country)
-		PORT_DIPNAME( 0x0007, 0x0007, "Coin A (UK FR); )
+		PORT_DIPNAME( 0x0007, 0x0007, "Coin A (UK FR"));
 		PORT_DIPSETTING(      0x0007, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "2C_3C") );
 		PORT_DIPSETTING(      0x0006, DEF_STR( "1C_2C") );
@@ -1234,7 +1234,7 @@ public class cischeat
 		PORT_DIPSETTING(      0x0003, DEF_STR( "1C_5C") );
 		PORT_DIPSETTING(      0x0002, DEF_STR( "1C_6C") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "1C_7C") );
-		PORT_DIPNAME( 0x0038, 0x0038, "Coin B (UK FR); )
+		PORT_DIPNAME( 0x0038, 0x0038, "Coin B (UK FR"));
 		PORT_DIPSETTING(      0x0000, DEF_STR( "5C_1C") );
 		PORT_DIPSETTING(      0x0008, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x0010, DEF_STR( "3C_1C") );

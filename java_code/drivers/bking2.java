@@ -246,7 +246,7 @@ public class bking2
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR(Free_Play);
 		PORT_DIPSETTING(    0x04, DEF_STR(Off);
 		PORT_DIPSETTING(    0x00, DEF_STR(On);
-		PORT_DIPNAME( 0x18, 0x18, "Holes (Lives); )
+		PORT_DIPNAME( 0x18, 0x18, "Holes (Lives"));
 		PORT_DIPSETTING(    0x18, "3" );
 		PORT_DIPSETTING(    0x08, "4" );
 		PORT_DIPSETTING(    0x10, "5" );
@@ -360,7 +360,7 @@ public class bking2
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR(Free_Play);
 		PORT_DIPSETTING(    0x04, DEF_STR(Off);
 		PORT_DIPSETTING(    0x00, DEF_STR(On);
-		PORT_DIPNAME( 0x18, 0x18, "Holes (Lives); )
+		PORT_DIPNAME( 0x18, 0x18, "Holes (Lives"));
 		PORT_DIPSETTING(    0x18, "3" );
 		PORT_DIPSETTING(    0x08, "4" );
 		PORT_DIPSETTING(    0x10, "5" );

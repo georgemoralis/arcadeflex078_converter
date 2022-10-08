@@ -3416,9 +3416,9 @@ public class taito_f2
 		TAITO_DIFFICULTY_8
 		PORT_DIPNAME( 0x0c, 0x0c, "Cabinet Type" );
 		PORT_DIPSETTING(    0x0c, "2 players" );
-		PORT_DIPSETTING(    0x08, "TROG (4 players / 2 coin slots); )
-		PORT_DIPSETTING(    0x04, "MTX2 (4 players / 2 cabinets combined); )
-		PORT_DIPSETTING(    0x00, "TMNT (4 players / 4 coin slots); )
+		PORT_DIPSETTING(    0x08, "TROG (4 players / 2 coin slots"));
+		PORT_DIPSETTING(    0x04, "MTX2 (4 players / 2 cabinets combined"));
+		PORT_DIPSETTING(    0x00, "TMNT (4 players / 4 coin slots"));
 		PORT_DIPNAME( 0x30, 0x10, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x20, "2" );
 		PORT_DIPSETTING(    0x30, "3" );
@@ -3480,9 +3480,9 @@ public class taito_f2
 		TAITO_DIFFICULTY_8
 		PORT_DIPNAME( 0x0c, 0x0c, "Cabinet Type" );
 		PORT_DIPSETTING(    0x0c, "2 players" );
-		PORT_DIPSETTING(    0x08, "TROG (4 players / 2 coin slots); )
-		PORT_DIPSETTING(    0x04, "MTX2 (4 players / 2 cabinets combined); )
-		PORT_DIPSETTING(    0x00, "TMNT (4 players / 4 coin slots); )
+		PORT_DIPSETTING(    0x08, "TROG (4 players / 2 coin slots"));
+		PORT_DIPSETTING(    0x04, "MTX2 (4 players / 2 cabinets combined"));
+		PORT_DIPSETTING(    0x00, "TMNT (4 players / 4 coin slots"));
 		PORT_DIPNAME( 0x30, 0x10, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x20, "2" );
 		PORT_DIPSETTING(    0x30, "3" );

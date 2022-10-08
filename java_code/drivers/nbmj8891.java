@@ -806,14 +806,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_hanamomo = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -946,14 +946,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_msjiken = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1036,14 +1036,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_telmahjn = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1126,14 +1126,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_gionbana = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x18, 0x18, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x18, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x10, DEF_STR( "1C_2C") );
@@ -1195,14 +1195,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_mgmen89 = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1268,14 +1268,14 @@ public class nbmj8891
 	
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1338,14 +1338,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_mjfocusm = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
-		PORT_DIPSETTING(    0x07, "95% (Easy); )
+		PORT_DIPSETTING(    0x07, "95% (Easy"));
 		PORT_DIPSETTING(    0x06, "90%" );
 		PORT_DIPSETTING(    0x05, "85%" );
 		PORT_DIPSETTING(    0x04, "80%" );
 		PORT_DIPSETTING(    0x03, "75%" );
 		PORT_DIPSETTING(    0x02, "70%" );
 		PORT_DIPSETTING(    0x01, "65%" );
-		PORT_DIPSETTING(    0x00, "60% (Hard); )
+		PORT_DIPSETTING(    0x00, "60% (Hard"));
 		PORT_DIPNAME( 0x08, 0x00, "Last Chance" );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1406,14 +1406,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_peepshow = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1476,14 +1476,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_scandal = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1546,14 +1546,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_scandalm = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
-		PORT_DIPSETTING(    0x07, "90% (Easy); )
+		PORT_DIPSETTING(    0x07, "90% (Easy"));
 		PORT_DIPSETTING(    0x06, "85%" );
 		PORT_DIPSETTING(    0x05, "80%" );
 		PORT_DIPSETTING(    0x04, "75%" );
 		PORT_DIPSETTING(    0x03, "70%" );
 		PORT_DIPSETTING(    0x02, "65%" );
 		PORT_DIPSETTING(    0x01, "60%" );
-		PORT_DIPSETTING(    0x00, "55% (Hard); )
+		PORT_DIPSETTING(    0x00, "55% (Hard"));
 		PORT_DIPNAME( 0x08, 0x00, "Last Chance" );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1614,14 +1614,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_mjnanpas = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -1684,14 +1684,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_mjnanpaa = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
@@ -2034,14 +2034,14 @@ public class nbmj8891
 	static InputPortPtr input_ports_maiko = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
-		PORT_DIPSETTING(    0x07, "1 (Easy); )
+		PORT_DIPSETTING(    0x07, "1 (Easy"));
 		PORT_DIPSETTING(    0x06, "2" );
 		PORT_DIPSETTING(    0x05, "3" );
 		PORT_DIPSETTING(    0x04, "4" );
 		PORT_DIPSETTING(    0x03, "5" );
 		PORT_DIPSETTING(    0x02, "6" );
 		PORT_DIPSETTING(    0x01, "7" );
-		PORT_DIPSETTING(    0x00, "8 (Hard); )
+		PORT_DIPSETTING(    0x00, "8 (Hard"));
 		PORT_DIPNAME( 0x08, 0x08, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_2C") );
