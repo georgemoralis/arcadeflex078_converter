@@ -138,7 +138,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( jrpacman_interrupt )
+	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -157,7 +157,7 @@ public class jrpacman
 			}
 		}
 		irq0_line_hold();
-	}
+	} };
 	
 	
 	

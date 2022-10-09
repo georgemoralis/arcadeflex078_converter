@@ -101,7 +101,7 @@ public class xain
 	//	logerror("write %02x to 68705\n",data);
 	} };
 	
-	static INTERRUPT_GEN( xainA_interrupt )
+	public static InterruptHandlerPtr xainA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* returning nmi on iloops() == 0 will cause lockups because the nmi handler */
 		/* waits for the vblank bit to be clear and there are other places in the code */
@@ -110,7 +110,7 @@ public class xain
 			cpu_set_nmi_line(0,PULSE_LINE);
 		else
 			cpu_set_irq_line(0,M6809_FIRQ_LINE,ASSERT_LINE);
-	}
+	} };
 	
 	
 	

@@ -149,10 +149,10 @@ public class skyarmy
 	
 	static int skyarmy_nmi=0;
 	
-	static INTERRUPT_GEN( skyarmy_nmi_source )
+	public static InterruptHandlerPtr skyarmy_nmi_source = new InterruptHandlerPtr() {public void handler()
 	{
 		 if(skyarmy_nmi) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
-	}
+	} };
 	
 	
 	WRITE_HANDLER( nmi_enable_w )

@@ -23,13 +23,13 @@ public class blockout
 	WRITE16_HANDLER( blockout_frontcolor_w );
 	
 	
-	static INTERRUPT_GEN( blockout_interrupt )
+	public static InterruptHandlerPtr blockout_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* interrupt 6 is vblank */
 		/* interrupt 5 reads coin inputs - might have to be triggered only */
 		/* when a coin is inserted */
 		cpu_set_irq_line(0, 6 - cpu_getiloops(), HOLD_LINE);
-	}
+	} };
 	
 	static WRITE16_HANDLER( blockout_sound_command_w )
 	{

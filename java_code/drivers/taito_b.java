@@ -207,11 +207,11 @@ public class taito_b
 		cpu_set_irq_line(0,2,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( rastansaga2_interrupt )
+	public static InterruptHandlerPtr rastansaga2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,rsaga2_interrupt2);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	void crimec_interrupt3(int x)
@@ -219,11 +219,11 @@ public class taito_b
 		cpu_set_irq_line(0,3,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( crimec_interrupt )
+	public static InterruptHandlerPtr crimec_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,crimec_interrupt3);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
 	
 	void hitice_interrupt6(int x)
@@ -231,11 +231,11 @@ public class taito_b
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( hitice_interrupt )
+	public static InterruptHandlerPtr hitice_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,hitice_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	void rambo3_interrupt1(int x)
@@ -243,11 +243,11 @@ public class taito_b
 		cpu_set_irq_line(0,1,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( rambo3_interrupt )
+	public static InterruptHandlerPtr rambo3_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,rambo3_interrupt1);
 		cpu_set_irq_line(0, 6, HOLD_LINE);
-	}
+	} };
 	
 	
 	void pbobble_interrupt5(int x)
@@ -255,66 +255,66 @@ public class taito_b
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( pbobble_interrupt )
+	public static InterruptHandlerPtr pbobble_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,pbobble_interrupt5);
 		cpu_set_irq_line(0, 3, HOLD_LINE);
-	}
+	} };
 	
 	void viofight_interrupt1(int x)
 	{
 		cpu_set_irq_line(0,1,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( viofight_interrupt )
+	public static InterruptHandlerPtr viofight_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,viofight_interrupt1);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	void masterw_interrupt4(int x)
 	{
 		cpu_set_irq_line(0,4,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( masterw_interrupt )
+	public static InterruptHandlerPtr masterw_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,masterw_interrupt4);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
 	void silentd_interrupt6(int x)
 	{
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( silentd_interrupt )
+	public static InterruptHandlerPtr silentd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,silentd_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	void selfeena_interrupt4(int x)
 	{
 		cpu_set_irq_line(0,4,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( selfeena_interrupt )
+	public static InterruptHandlerPtr selfeena_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(5000,0),0,selfeena_interrupt4);
 		cpu_set_irq_line(0, 6, HOLD_LINE);
-	}
+	} };
 	
 	void sbm_interrupt5(int x)//4
 	{
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( sbm_interrupt )//5
+	public static InterruptHandlerPtr sbm_interrupt = new InterruptHandlerPtr() {public void handler()//5
 	{
 		timer_set(TIME_IN_CYCLES(10000,0),0,sbm_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	

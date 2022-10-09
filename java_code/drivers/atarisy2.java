@@ -236,12 +236,12 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( vblank_int )
+	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler()
 	{
 		/* clock the VBLANK through */
 		if (interrupt_enable & 8)
 			atarigen_video_int_gen();
-	}
+	} };
 	
 	
 	static WRITE16_HANDLER( int0_ack_w )

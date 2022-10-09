@@ -160,11 +160,11 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( capbowl_interrupt )
+	public static InterruptHandlerPtr capbowl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(4) & 1)	/* get status of the F2 key */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* trigger self test */
-	}
+	} };
 	
 	
 	

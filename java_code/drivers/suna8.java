@@ -2241,14 +2241,14 @@ public class suna8
 									Spark Man
 	***************************************************************************/
 	
-	static INTERRUPT_GEN( sparkman_interrupt )
+	public static InterruptHandlerPtr sparkman_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops())
 		{
 			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( sparkman )
 	

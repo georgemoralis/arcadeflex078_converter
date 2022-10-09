@@ -33,11 +33,11 @@ public class mainevt
 	
 	
 	
-	static INTERRUPT_GEN( mainevt_interrupt )
+	public static InterruptHandlerPtr mainevt_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled())
 			irq0_line_hold();
-	}
+	} };
 	
 	
 	static int nmi_enable;
@@ -47,11 +47,11 @@ public class mainevt
 		nmi_enable = data;
 	} };
 	
-	static INTERRUPT_GEN( dv_interrupt )
+	public static InterruptHandlerPtr dv_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (nmi_enable)
 			nmi_line_pulse();
-	}
+	} };
 	
 	
 	WRITE_HANDLER( mainevt_bankswitch_w )

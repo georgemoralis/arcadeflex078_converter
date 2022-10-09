@@ -40,14 +40,14 @@ public class thief
 	
 	
 	
-	static INTERRUPT_GEN( thief_interrupt )
+	public static InterruptHandlerPtr thief_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* SLAM switch causes an NMI if it's pressed */
 		if( (input_port_3_r(0) & 0x10) == 0 )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	/**********************************************************/
 	

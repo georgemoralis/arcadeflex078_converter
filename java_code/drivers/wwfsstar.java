@@ -312,7 +312,7 @@ public class wwfsstar
 	 file)
 	*******************************************************************************/
 	
-	static INTERRUPT_GEN( wwfsstar_interrupt ) {
+	public static InterruptHandlerPtr wwfsstar_interrupt = new InterruptHandlerPtr() {public void handler() {
 		if( cpu_getiloops() == 0 ){
 			vbl = 1;
 		}
@@ -325,7 +325,7 @@ public class wwfsstar
 		else if( cpu_getiloops() == 250 ){
 			 cpu_set_irq_line(0, 6, HOLD_LINE);
 		}
-	}
+	} };
 	
 	/*******************************************************************************
 	 Sound Stuff..

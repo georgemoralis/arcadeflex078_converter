@@ -253,14 +253,14 @@ public class skyfox
 	/* Check for coin insertion once a frame (polling a fake input port).
 	   Generate an NMI in case. Scroll the background too. */
 	
-	static INTERRUPT_GEN( skyfox_interrupt )
+	public static InterruptHandlerPtr skyfox_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Scroll the bg */
 		skyfox_bg_pos += (skyfox_bg_ctrl >> 1) & 0x7;	// maybe..
 	
 		/* Check coin 1 & 2 */
 		if ((readinputport(4) & 3) != 3) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static struct YM2203interface skyfox_ym2203_interface =
 	{

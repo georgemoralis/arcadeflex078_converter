@@ -218,11 +218,11 @@ public class bzone
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( bzone_interrupt )
+	public static InterruptHandlerPtr bzone_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(0) & 0x10)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	

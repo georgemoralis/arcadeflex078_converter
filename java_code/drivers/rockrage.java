@@ -18,11 +18,11 @@ public class rockrage
 	
 	/* from vidhrdw */
 	
-	static INTERRUPT_GEN( rockrage_interrupt )
+	public static InterruptHandlerPtr rockrage_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K007342_is_INT_enabled())
 	        cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr rockrage_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

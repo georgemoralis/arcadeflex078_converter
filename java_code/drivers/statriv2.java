@@ -438,10 +438,10 @@ public class statriv2
 		{ 0 }
 	};
 	
-	static INTERRUPT_GEN( statriv2_interrupt )
+	public static InterruptHandlerPtr statriv2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, I8085_RST75_LINE, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( statriv2 )
 		/* basic machine hardware */

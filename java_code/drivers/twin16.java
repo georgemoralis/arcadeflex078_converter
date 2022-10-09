@@ -952,15 +952,15 @@ public class twin16
 	
 	/* Interrupt Generators */
 	
-	static INTERRUPT_GEN( CPUA_interrupt )
+	public static InterruptHandlerPtr CPUA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (CPUA_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( CPUB_interrupt )
+	public static InterruptHandlerPtr CPUB_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (CPUB_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
-	}
+	} };
 	
 	/* Machine Drivers */
 	

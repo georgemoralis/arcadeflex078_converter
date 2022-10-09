@@ -547,13 +547,13 @@ public class multi32
 		system32_screen_old_mode = 1;
 	}
 	
-	static INTERRUPT_GEN( system32_interrupt )
+	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if(cpu_getiloops())
 			irq_raise(1);
 		else
 			irq_raise(0);
-	}
+	} };
 	
 	static void irq_handler(int irq)
 	{

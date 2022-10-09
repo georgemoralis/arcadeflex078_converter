@@ -650,7 +650,7 @@ public class namconb1
 		{ 0xf00000, 0xf0001f, MWA32_RAM }, /* misc cpu control registers */
 	MEMORY_END /* namconb2_writemem */
 	
-	static INTERRUPT_GEN( namconb1_interrupt )
+	public static InterruptHandlerPtr namconb1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if( namcos2_gametype == NAMCONB1_GUNBULET )
 		{
@@ -660,9 +660,9 @@ public class namconb1
 		{
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN( namconb2_interrupt )
+	public static InterruptHandlerPtr namconb2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -672,7 +672,7 @@ public class namconb1
 		{
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( namconb1 )
 	

@@ -967,7 +967,7 @@ public class namcos22
 	//	namcos22_shareram[(0xa0b000 - 0xa04000)/4] ^= 0x00800000;
 	}
 	
-	static INTERRUPT_GEN( namcos22s_interrupt )
+	public static InterruptHandlerPtr namcos22s_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch( namcos22_gametype )
 		{
@@ -1007,7 +1007,7 @@ public class namcos22
 			}
 			break;
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( namcos22s )
 		/* basic machine hardware */
@@ -1081,7 +1081,7 @@ public class namcos22
 		{ 0x900a0000, 0x900a000f, MWA32_RAM },	/* bg control register */
 	MEMORY_END
 	
-	static INTERRUPT_GEN( namcos22_interrupt )
+	public static InterruptHandlerPtr namcos22_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int i;
 		for( i=0; i<5; i++ )
@@ -1121,7 +1121,7 @@ public class namcos22
 			break;
 		}
 	
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( namcos22 )
 		/* basic machine hardware */

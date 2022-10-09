@@ -336,7 +336,7 @@ public class redalert
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
 	}
 	
-	static INTERRUPT_GEN( redalert_interrupt )
+	public static InterruptHandlerPtr redalert_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if( readinputport(3) )
 		{
@@ -346,7 +346,7 @@ public class redalert
 		{
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
-	}
+	} };
 	
 	static struct AY8910interface redalert_ay8910_interface =
 	{

@@ -32,7 +32,7 @@ public class lasso
 	
 	/* IRQ = VBlank, NMI = Coin Insertion */
 	
-	static INTERRUPT_GEN( lasso_interrupt )
+	public static InterruptHandlerPtr lasso_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int old;
 		int new;
@@ -52,7 +52,7 @@ public class lasso
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	
 		old = new;
-	}
+	} };
 	
 	
 	/* Shared RAM between Main CPU and sub CPU */

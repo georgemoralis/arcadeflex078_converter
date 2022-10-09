@@ -1145,10 +1145,10 @@ public class mazerbla
 	
 	
 	/* frequency is 14.318 MHz/16/16/16/16 */
-	static INTERRUPT_GEN( sound_interrupt )
+	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr sound_int_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -252,7 +252,7 @@ public class lazercmd
 	 * Fake something toggling the sense input line of the S2650
 	 * The rate should be at about 1 Hz
 	 *************************************************************/
-	static INTERRUPT_GEN( lazercmd_timer )
+	public static InterruptHandlerPtr lazercmd_timer = new InterruptHandlerPtr() {public void handler()
 	{
 		static int sense_state = 0;
 	
@@ -261,13 +261,13 @@ public class lazercmd
 			sense_state ^= 1;
 			cpu_set_irq_line( 0, 1, (sense_state) ? ASSERT_LINE : CLEAR_LINE );
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN( bbonk_timer )
+	public static InterruptHandlerPtr bbonk_timer = new InterruptHandlerPtr() {public void handler()
 	{
 		if( ++timer_count >= 64*128 )
 			timer_count = 0;
-	}
+	} };
 	
 	/*************************************************************
 	 *

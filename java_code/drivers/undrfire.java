@@ -588,11 +588,11 @@ public class undrfire
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) },		/* master volume */
 	};
 	
-	static INTERRUPT_GEN( undrfire_interrupt )
+	public static InterruptHandlerPtr undrfire_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		frame_counter^=1;
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( undrfire )
 	

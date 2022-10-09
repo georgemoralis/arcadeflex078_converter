@@ -122,10 +122,10 @@ public class sharrier
 		page[2] = data&0xf;
 	}
 	
-	static INTERRUPT_GEN( sys16_interrupt ){
+	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if(sys16_custom_irq) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
-	}
+	} };
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
 		if( ACCESSING_LSB ){

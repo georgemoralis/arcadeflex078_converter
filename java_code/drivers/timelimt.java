@@ -261,10 +261,10 @@ public class timelimt
 		{ 0 }
 	};
 	
-	static INTERRUPT_GEN( timelimt_irq ) {
+	public static InterruptHandlerPtr timelimt_irq = new InterruptHandlerPtr() {public void handler() {
 		if ( nmi_enabled )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	/***************************************************************************/
 	

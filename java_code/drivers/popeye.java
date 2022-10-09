@@ -31,12 +31,12 @@ public class popeye
 	
 	
 	
-	static INTERRUPT_GEN( popeye_interrupt )
+	public static InterruptHandlerPtr popeye_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* NMIs are enabled by the I register?? How can that be? */
 		if (activecpu_get_reg(Z80_I) & 1)	/* skyskipr: 0/1, popeye: 2/3 but also 0/1 */
 			cpu_set_nmi_line(0, PULSE_LINE);
-	}
+	} };
 	
 	
 	/* the protection device simply returns the last two values written shifted left */

@@ -830,11 +830,11 @@ public class kaneko16
 	
 	
 	/* Called once/frame to generate the VBLANK interrupt */
-	static INTERRUPT_GEN( sandscrp_interrupt )
+	public static InterruptHandlerPtr sandscrp_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		vblank_irq = 1;
 		update_irq_state();
-	}
+	} };
 	
 	
 	static VIDEO_EOF( sandscrp )

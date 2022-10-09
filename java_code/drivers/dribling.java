@@ -57,11 +57,11 @@ public class dribling
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( dribling_irq_gen )
+	public static InterruptHandlerPtr dribling_irq_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		if (di)
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
-	}
+	} };
 	
 	
 	

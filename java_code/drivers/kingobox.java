@@ -580,11 +580,11 @@ public class kingobox
 		{ 25 }
 	};
 	
-	static INTERRUPT_GEN( kingofb_interrupt ) {
+	public static InterruptHandlerPtr kingofb_interrupt = new InterruptHandlerPtr() {public void handler() {
 	
 		if ( kingofb_nmi_enable )
 			cpu_set_irq_line(cpu_getactivecpu(), IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( kingofb )
 	

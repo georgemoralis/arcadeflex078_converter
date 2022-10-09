@@ -259,14 +259,14 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( ultratnk_interrupt )
+	public static InterruptHandlerPtr ultratnk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(1) & 0x40 )
 		{
 			/* only do NMI interrupt if not in TEST mode */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	
 	

@@ -75,13 +75,13 @@ public class iqblock
 	} };
 	
 	
-	static INTERRUPT_GEN( iqblock_interrupt )
+	public static InterruptHandlerPtr iqblock_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* ???? */
 		else
 			cpu_set_irq_line(0, 0, ASSERT_LINE);			/* ???? */
-	}
+	} };
 	
 	public static WriteHandlerPtr iqblock_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

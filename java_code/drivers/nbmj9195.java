@@ -530,11 +530,11 @@ public class nbmj9195
 	}
 	
 	/* CTC of main cpu, ch0 trigger is vblank */
-	static INTERRUPT_GEN( ctc0_trg1 )
+	public static InterruptHandlerPtr ctc0_trg1 = new InterruptHandlerPtr() {public void handler()
 	{
 		z80ctc_0_trg1_w(0, 1);
 		z80ctc_0_trg1_w(0, 0);
-	}
+	} };
 	
 	static z80ctc_interface ctc_intf =
 	{

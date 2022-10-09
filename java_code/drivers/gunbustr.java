@@ -75,11 +75,11 @@ public class gunbustr
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( gunbustr_interrupt )
+	public static InterruptHandlerPtr gunbustr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, gunbustr_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	static WRITE32_HANDLER( gunbustr_palette_w )
 	{

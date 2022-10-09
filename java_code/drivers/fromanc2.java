@@ -129,7 +129,7 @@ public class fromanc2
 	// 	MAIN CPU Interrupt (fromanc2, fromancr, fromanc4)	TEST ROUTINE
 	// ----------------------------------------------------------------------------
 	
-	static INTERRUPT_GEN( fromanc2_interrupt )
+	public static InterruptHandlerPtr fromanc2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int fromanc2_playerside_old = -1;
 		static int key_F1_old = 0;
@@ -159,7 +159,7 @@ public class fromanc2
 		}
 	
 		cpu_set_irq_line(0, 1, HOLD_LINE);
-	}
+	} };
 	
 	
 	// ----------------------------------------------------------------------------

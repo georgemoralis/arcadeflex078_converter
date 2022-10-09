@@ -35,13 +35,13 @@ public class glass
 		cause_interrupt = 1;
 	}
 	
-	static INTERRUPT_GEN( glass_interrupt )
+	public static InterruptHandlerPtr glass_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cause_interrupt){
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 			cause_interrupt = 0;
 		}
-	}
+	} };
 	
 	
 	static struct GfxLayout glass_tilelayout16 =

@@ -773,11 +773,11 @@ public class taito_f2
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( taitof2_interrupt )
+	public static InterruptHandlerPtr taitof2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(500,0),0, taitof2_interrupt6);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
 	
 	/****************************************************************

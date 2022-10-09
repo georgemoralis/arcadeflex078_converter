@@ -132,11 +132,11 @@ public class skydiver
 	} };
 	
 	
-	static INTERRUPT_GEN( skydiver_interrupt )
+	public static InterruptHandlerPtr skydiver_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (skydiver_nmion)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	

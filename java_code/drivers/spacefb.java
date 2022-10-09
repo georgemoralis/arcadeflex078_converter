@@ -135,11 +135,11 @@ public class spacefb
 	
 	
 	
-	static INTERRUPT_GEN( spacefb_interrupt )
+	public static InterruptHandlerPtr spacefb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() != 0) cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);		/* RST 08h */
 		else cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);		/* RST 10h */
-	}
+	} };
 	
 	
 	unsigned char spacefb_sound_latch;

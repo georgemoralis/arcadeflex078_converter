@@ -560,12 +560,12 @@ public class shadfrce
 		{ 50 }
 	};
 	
-	static INTERRUPT_GEN( shadfrce_interrupt ) {
+	public static InterruptHandlerPtr shadfrce_interrupt = new InterruptHandlerPtr() {public void handler() {
 		if( cpu_getiloops() == 0 )
 			cpu_set_irq_line(0, 3, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( shadfrce )

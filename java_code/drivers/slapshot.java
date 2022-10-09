@@ -181,11 +181,11 @@ public class slapshot
 	}
 	
 	
-	static INTERRUPT_GEN( slapshot_interrupt )
+	public static InterruptHandlerPtr slapshot_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, slapshot_interrupt6);
 		cpu_set_irq_line(0,5,HOLD_LINE);
-	}
+	} };
 	
 	
 	/**********************************************************

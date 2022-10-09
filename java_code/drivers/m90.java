@@ -544,10 +544,10 @@ public class m90
 		{ 60 }
 	};
 	
-	static INTERRUPT_GEN( m90_interrupt )
+	public static InterruptHandlerPtr m90_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x60/4);
-	}
+	} };
 	
 	
 	

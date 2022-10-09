@@ -36,13 +36,13 @@ public class munchmo
 		mnchmobl_nmi_enable = data;
 	} };
 	
-	static INTERRUPT_GEN( mnchmobl_interrupt )
+	public static InterruptHandlerPtr mnchmobl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int which;
 		which = !which;
 		if( which ) cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if( mnchmobl_nmi_enable ) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( mnchmobl_soundlatch_w )
 	{

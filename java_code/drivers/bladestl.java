@@ -37,7 +37,7 @@ public class bladestl
 	/* from vidhrdw */
 	int bladestl_spritebank;
 	
-	static INTERRUPT_GEN( bladestl_interrupt )
+	public static InterruptHandlerPtr bladestl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0){
 			if (K007342_is_INT_enabled())
@@ -46,7 +46,7 @@ public class bladestl
 		else if (cpu_getiloops() % 2){
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

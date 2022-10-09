@@ -496,9 +496,9 @@ public class toaplan2
 		}
 	}
 	
-	static INTERRUPT_GEN( toaplan2_vblank_irq2 ) {toaplan2_irq(2);}
-	static INTERRUPT_GEN( toaplan2_vblank_irq3 ) {toaplan2_irq(3);}
-	static INTERRUPT_GEN( toaplan2_vblank_irq4 ) {toaplan2_irq(4);}
+	public static InterruptHandlerPtr toaplan2_vblank_irq2 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(2);} };
+	public static InterruptHandlerPtr toaplan2_vblank_irq3 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(3);} };
+	public static InterruptHandlerPtr toaplan2_vblank_irq4 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(4);} };
 	
 	static READ16_HANDLER( video_count_r )
 	{
@@ -1204,10 +1204,10 @@ public class toaplan2
 		logerror("YMZ280 is generating an interrupt. State=%08x\n",state);
 	}
 	
-	static INTERRUPT_GEN( bbakraid_snd_interrupt )
+	public static InterruptHandlerPtr bbakraid_snd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	static MEMORY_READ16_START( tekipaki_readmem )

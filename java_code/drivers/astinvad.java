@@ -246,13 +246,13 @@ public class astinvad
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static INTERRUPT_GEN( spaceint_interrupt )
+	public static InterruptHandlerPtr spaceint_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(2) & 1)	/* coin */
 			cpu_set_nmi_line(0, PULSE_LINE);
 	
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( astinvad )

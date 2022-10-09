@@ -493,10 +493,10 @@ public class niyanpai
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static INTERRUPT_GEN( niyanpai_interrupt )
+	public static InterruptHandlerPtr niyanpai_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, 1, HOLD_LINE);
-	}
+	} };
 	
 	static Z80_DaisyChain daisy_chain_sound[] =
 	{

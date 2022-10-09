@@ -164,7 +164,7 @@ public class gijoe
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( gijoe_interrupt )
+	public static InterruptHandlerPtr gijoe_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		// global interrupt masking (*this game only)
 		if (!K056832_is_IRQ_enabled(0)) return;
@@ -180,7 +180,7 @@ public class gijoe
 		// trigger V-blank interrupt
 		if (cur_control2 & 0x0080)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{

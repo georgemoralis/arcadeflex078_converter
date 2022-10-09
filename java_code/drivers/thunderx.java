@@ -26,11 +26,11 @@ public class thunderx
 	
 	/***************************************************************************/
 	
-	static INTERRUPT_GEN( scontra_interrupt )
+	public static InterruptHandlerPtr scontra_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	static void thunderx_firq_callback(int x)
 	{

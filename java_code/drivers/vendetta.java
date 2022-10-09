@@ -562,11 +562,11 @@ public class vendetta
 		{ 0 }
 	};
 	
-	static INTERRUPT_GEN( vendetta_irq )
+	public static InterruptHandlerPtr vendetta_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		if (irq_enabled)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( vendetta )
 	

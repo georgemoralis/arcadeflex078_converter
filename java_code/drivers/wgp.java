@@ -429,11 +429,11 @@ public class wgp
 	/* FWIW offset of 10000,10500 on ints can get CPUB obeying the
 	   first CPUA command the same frame; probably not necessary */
 	
-	static INTERRUPT_GEN( wgp_cpub_interrupt )
+	public static InterruptHandlerPtr wgp_cpub_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, wgp_cpub_interrupt6);
 		cpu_set_irq_line(2, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	/**********************************************************

@@ -247,7 +247,7 @@ public class gaelco2
 		clr_gun_int = 1;
 	}
 	
-	static INTERRUPT_GEN( bang_interrupt )
+	public static InterruptHandlerPtr bang_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0){
 			cpu_set_irq_line(0, 2, HOLD_LINE);
@@ -259,7 +259,7 @@ public class gaelco2
 				cpu_set_irq_line(0, 4, HOLD_LINE);
 			}
 		}
-	}
+	} };
 	
 	static READ16_HANDLER(p1_gun_x) {return (readinputport(3)*320/0x100)+1;}
 	static READ16_HANDLER(p1_gun_y) {return (readinputport(5)*240/0x100)-4;}

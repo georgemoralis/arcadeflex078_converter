@@ -266,17 +266,17 @@ public class lastduel
 		{ irqhandler }
 	};
 	
-	static INTERRUPT_GEN( lastduel_interrupt )
+	public static InterruptHandlerPtr lastduel_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 2, HOLD_LINE); /* VBL */
 		else cpu_set_irq_line(0, 4, HOLD_LINE); /* Controls */
-	}
+	} };
 	
-	static INTERRUPT_GEN( madgear_interrupt )
+	public static InterruptHandlerPtr madgear_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 5, HOLD_LINE); /* VBL */
 		else cpu_set_irq_line(0, 6, HOLD_LINE); /* Controls */
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( lastduel )
 	

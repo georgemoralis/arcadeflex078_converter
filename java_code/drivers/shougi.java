@@ -255,7 +255,7 @@ public class shougi
 		nmi_enabled = 1; /* enable NMIs */
 	} };
 	
-	static INTERRUPT_GEN( shougi_vblank_nmi )
+	public static InterruptHandlerPtr shougi_vblank_nmi = new InterruptHandlerPtr() {public void handler()
 	{
 		if ( nmi_enabled == 1 )
 		{
@@ -263,7 +263,7 @@ public class shougi
 			cpu_set_irq_line(0, IRQ_LINE_NMI, ASSERT_LINE);
 			cpu_set_irq_line(1, IRQ_LINE_NMI, ASSERT_LINE);
 		}
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

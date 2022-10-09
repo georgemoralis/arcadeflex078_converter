@@ -66,11 +66,11 @@ public class kinst
 	}
 	
 	
-	static INTERRUPT_GEN( irq0_start )
+	public static InterruptHandlerPtr irq0_start = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, 0, ASSERT_LINE);
 		timer_set(TIME_IN_USEC(50), 0, irq0_stop);
-	}
+	} };
 	
 	
 	static void ide_interrupt(int state)

@@ -63,13 +63,13 @@ public class segar
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( segar_interrupt )
+	public static InterruptHandlerPtr segar_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(5) & 1)       /* get status of the F2 key */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* trigger self test */
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	

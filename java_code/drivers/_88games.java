@@ -22,11 +22,11 @@ public class _88games
 	
 	
 	
-	static INTERRUPT_GEN( k88games_interrupt )
+	public static InterruptHandlerPtr k88games_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled())
 			irq0_line_hold();
-	}
+	} };
 	
 	static int zoomreadroms;
 	

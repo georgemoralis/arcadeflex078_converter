@@ -31,15 +31,15 @@ public class pandoras
 	
 	/* from vidhrdw */
 	
-	static INTERRUPT_GEN( pandoras_interrupt_a ){
+	public static InterruptHandlerPtr pandoras_interrupt_a = new InterruptHandlerPtr() {public void handler(){
 		if (irq_enable_a)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( pandoras_interrupt_b ){
+	public static InterruptHandlerPtr pandoras_interrupt_b = new InterruptHandlerPtr() {public void handler(){
 		if (irq_enable_b)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	public static ReadHandlerPtr pandoras_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pandoras_sharedram[offset];

@@ -18,6 +18,7 @@ public class convertMame {
     static final int READ_HANDLER8 = 5;
     static final int WRITE_HANDLER8 = 6;
     static final int INPUTPORTS = 7;
+    static final int INTERRUPT=8;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -159,6 +160,22 @@ public class convertMame {
                             continue;
                         }
                     }
+                    else if (sUtil.getToken("INTERRUPT_GEN(")) {
+                        sUtil.skipSpace();
+                        Convertor.token[0] = sUtil.parseToken();
+                        sUtil.skipSpace();
+                        if (sUtil.getToken(");"))//if it is a front function skip it
+                        {
+                            sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static InterruptHandlerPtr " + Convertor.token[0] + " = new InterruptHandlerPtr() {public void handler()");
+                            type = INTERRUPT;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     Convertor.inpos = i;
                     break;
                 }
@@ -253,7 +270,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT) {
                         i3++;
                     }
                 }
@@ -269,7 +286,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type ==INTERRUPT) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -361,7 +378,7 @@ public class convertMame {
                         sUtil.putString((new StringBuilder()).append("INPUT_PORTS_END(); }}; ").toString());
                         continue;
                     }
-
+                    
                     break;
                 case '&': {
                     if (type == MEMORY_READ8 || type == MEMORY_WRITE8 || type == PORT_READ8 || type == PORT_WRITE8) {

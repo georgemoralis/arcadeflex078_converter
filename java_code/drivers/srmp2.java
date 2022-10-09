@@ -88,14 +88,14 @@ public class srmp2
 	
 	***************************************************************************/
 	
-	static INTERRUPT_GEN( srmp2_interrupt )
+	public static InterruptHandlerPtr srmp2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 4, HOLD_LINE);	break;	/* vblank */
 			default:	cpu_set_irq_line(0, 2, HOLD_LINE);	break;	/* sound */
 		}
-	}
+	} };
 	
 	
 	static DRIVER_INIT( srmp2 )

@@ -202,10 +202,10 @@ public class outrun
 	}
 	#endif
 	
-	static INTERRUPT_GEN( sys16_interrupt ){
+	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if(sys16_custom_irq) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
-	}
+	} };
 	
 	public static IO_ReadPort sound_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -1067,11 +1067,11 @@ public class outrun
 	INPUT_PORTS_END(); }}; 
 	
 	/***************************************************************************/
-	static INTERRUPT_GEN( or_interrupt ){
+	public static InterruptHandlerPtr or_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int intleft=cpu_getiloops();
 		if(intleft!=0) cpu_set_irq_line(0, 2, HOLD_LINE);
 		else cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( outrun )

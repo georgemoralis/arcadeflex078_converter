@@ -286,7 +286,7 @@ public class realbrk
 		{ YM2413_VOL(50,MIXER_PAN_CENTER,50,MIXER_PAN_CENTER) }
 	};
 	
-	static INTERRUPT_GEN( realbrk_interrupt )
+	public static InterruptHandlerPtr realbrk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch ( cpu_getiloops() )
 		{
@@ -295,7 +295,7 @@ public class realbrk
 				tmp68301_external_interrupt_1();
 				break;
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( realbrk )
 	

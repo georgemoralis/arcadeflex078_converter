@@ -2135,7 +2135,7 @@ public class stv
 	/* to do, update bios idle skips so they work better with this arrangement.. */
 	
 	
-	static INTERRUPT_GEN( stv_interrupt )
+	public static InterruptHandlerPtr stv_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		scanline = 261-cpu_getiloops();
 	
@@ -2195,7 +2195,7 @@ public class stv
 	
 		}
 	
-	}
+	} };
 	
 	/*
 	I/O overview:

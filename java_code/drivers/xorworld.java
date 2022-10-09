@@ -115,7 +115,7 @@ public class xorworld
 	}
 	
 	
-	static INTERRUPT_GEN( xorworld_interrupt )
+	public static InterruptHandlerPtr xorworld_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0){		
 			cpu_set_irq_line(0, 2, HOLD_LINE);
@@ -123,7 +123,7 @@ public class xorworld
 		else if (cpu_getiloops() % 2){
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 		}
-	}
+	} };
 	
 	static MEMORY_READ16_START( xorworld_readmem )
 		{ 0x000000, 0x01ffff, MRA16_ROM },						/* ROM */

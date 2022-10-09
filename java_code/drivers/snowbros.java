@@ -71,10 +71,10 @@ public class snowbros
 	
 	static data16_t *hyperpac_ram;
 	
-	static INTERRUPT_GEN( snowbros_interrupt )
+	public static InterruptHandlerPtr snowbros_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, cpu_getiloops() + 2, HOLD_LINE);	/* IRQs 4, 3, and 2 */
-	}
+	} };
 	
 	
 	/* Sound Routines */

@@ -113,13 +113,13 @@ public class argus
 	
 	***************************************************************************/
 	
-	static INTERRUPT_GEN( argus_interrupt )
+	public static InterruptHandlerPtr argus_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		   cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 		else
 		   cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h */
-	}
+	} };
 	
 	/* Handler called by the YM2203 emulator when the internal timers cause an IRQ */
 	static void irqhandler(int irq)

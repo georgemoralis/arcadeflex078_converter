@@ -91,11 +91,11 @@ public class astrof
 	  slots.
 	
 	***************************************************************************/
-	static INTERRUPT_GEN( astrof_interrupt )
+	public static InterruptHandlerPtr astrof_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(2) & 1)	/* Coin */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	static InputPortPtr input_ports_astrof = new InputPortPtr(){ public void handler() { 

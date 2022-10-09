@@ -35,7 +35,7 @@ public class firetrk
 	}
 	
 	
-	static INTERRUPT_GEN( firetrk_interrupt )
+	public static InterruptHandlerPtr firetrk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* interrupts are disabled during service mode */
 	
@@ -55,7 +55,7 @@ public class firetrk
 		}
 	
 		cpu_set_nmi_line(0, PULSE_LINE);
-	}
+	} };
 	
 	
 	static void periodic_callback(int scanline)

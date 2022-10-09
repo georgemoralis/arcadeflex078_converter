@@ -136,13 +136,13 @@ public class polyplay
 	}
 	
 	
-	static INTERRUPT_GEN( periodic_interrupt )
+	public static InterruptHandlerPtr periodic_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x4e);
-	}
+	} };
 	
 	
-	static INTERRUPT_GEN( coin_interrupt )
+	public static InterruptHandlerPtr coin_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int last = 0;
 	
@@ -159,7 +159,7 @@ public class polyplay
 	
 			last = 1;
 		}
-	}
+	} };
 	
 	
 	/* memory mapping */

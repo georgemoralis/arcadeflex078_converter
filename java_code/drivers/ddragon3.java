@@ -504,14 +504,14 @@ public class ddragon3
 	
 	/* Interrupt Generators */
 	
-	static INTERRUPT_GEN( ddragon3_cpu_interrupt ) { /* 6:0x177e - 5:0x176a */
+	public static InterruptHandlerPtr ddragon3_cpu_interrupt = new InterruptHandlerPtr() {public void handler() { /* 6:0x177e - 5:0x176a */
 		if( cpu_getiloops() == 0 ){
 			cpu_set_irq_line(0, 6, HOLD_LINE);  /* VBlank */
 		}
 		else {
 			cpu_set_irq_line(0, 5, HOLD_LINE); /* Input Ports */
 		}
-	}
+	} };
 	
 	/* Machine Drivers */
 	

@@ -431,11 +431,11 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	static INTERRUPT_GEN( f3_interrupt )
+	public static InterruptHandlerPtr f3_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops()) cpu_set_irq_line(0, 3, HOLD_LINE);
 		else cpu_set_irq_line(0, 2, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_INIT( f3 )
 	{

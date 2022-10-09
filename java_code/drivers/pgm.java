@@ -485,12 +485,12 @@ public class pgm
 	
 	/*** Machine Driver **********************************************************/
 	
-	static INTERRUPT_GEN( pgm_interrupt ) {
+	public static InterruptHandlerPtr pgm_interrupt = new InterruptHandlerPtr() {public void handler() {
 		if( cpu_getiloops() == 0 )
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( pgm )
 	

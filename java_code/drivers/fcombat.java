@@ -293,12 +293,12 @@ public class fcombat
 	/* interrupt */
 	
 	
-	static INTERRUPT_GEN( fcombat_interrupt )
+	public static InterruptHandlerPtr fcombat_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Exerion triggers NMIs on coin insertion */
 		if (readinputport(4) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	/*************************************
 	 *

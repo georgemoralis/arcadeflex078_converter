@@ -5990,35 +5990,35 @@ public class seta
 	
 	#define SETA_INTERRUPTS_NUM 2
 	
-	static INTERRUPT_GEN( seta_interrupt_1_and_2 )
+	public static InterruptHandlerPtr seta_interrupt_1_and_2 = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 1, HOLD_LINE);	break;
 			case 1:		cpu_set_irq_line(0, 2, HOLD_LINE);	break;
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN( seta_interrupt_2_and_4 )
+	public static InterruptHandlerPtr seta_interrupt_2_and_4 = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 2, HOLD_LINE);	break;
 			case 1:		cpu_set_irq_line(0, 4, HOLD_LINE);	break;
 		}
-	}
+	} };
 	
 	
 	#define SETA_SUB_INTERRUPTS_NUM 2
 	
-	static INTERRUPT_GEN( seta_sub_interrupt )
+	public static InterruptHandlerPtr seta_sub_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);	break;
 			case 1:		cpu_set_irq_line(1, 0, HOLD_LINE);				break;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -6047,13 +6047,13 @@ public class seta
 	
 	
 	#define TNDRCADE_SUB_INTERRUPTS_NUM	32	/* 16 IRQ, 1 NMI */
-	static INTERRUPT_GEN( tndrcade_sub_interrupt )
+	public static InterruptHandlerPtr tndrcade_sub_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 		else if (cpu_getiloops() == 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( tndrcade )
 	
@@ -6594,10 +6594,10 @@ public class seta
 									Gundhara
 	***************************************************************************/
 	#if __uPD71054_TIMER
-	static INTERRUPT_GEN( wrofaero_interrupt )
+	public static InterruptHandlerPtr wrofaero_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line( 0, 2, HOLD_LINE );
-	}
+	} };
 	
 	MACHINE_INIT( wrofaero ) { uPD71054_timer_init(); }
 	MACHINE_STOP( wrofaero ) { uPD71054_timer_stop(); }

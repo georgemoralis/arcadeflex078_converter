@@ -263,7 +263,7 @@ public class strvmstr
 	};
 	
 	
-	static INTERRUPT_GEN( strvmstr_interrupt )
+	public static InterruptHandlerPtr strvmstr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if( readinputport(2) & 0x01 )
 		{
@@ -273,7 +273,7 @@ public class strvmstr
 		{
 			cpu_set_irq_line(0, 0, PULSE_LINE);
 		}
-	}
+	} };
 	
 	#undef CLOCK
 	#define CLOCK 12000000/4-50000

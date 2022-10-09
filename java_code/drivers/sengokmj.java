@@ -206,10 +206,10 @@ public class sengokmj
 	
 	/***************************************************************************************/
 	
-	static INTERRUPT_GEN( sengokmj_interrupt )
+	public static InterruptHandlerPtr sengokmj_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcb/4);
-	}
+	} };
 	
 	/***************************************************************************************/
 	static MACHINE_DRIVER_START( sengokmj )

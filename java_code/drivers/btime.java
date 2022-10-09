@@ -497,20 +497,20 @@ public class btime
 		else coin = 0;
 	}
 	
-	static INTERRUPT_GEN( btime_irq_interrupt )
+	public static InterruptHandlerPtr btime_irq_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		btime_interrupt(0, 1);
-	}
+	} };
 	
-	static INTERRUPT_GEN( zoar_irq_interrupt )
+	public static InterruptHandlerPtr zoar_irq_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		btime_interrupt(0, 0);
-	}
+	} };
 	
-	static INTERRUPT_GEN( btime_nmi_interrupt )
+	public static InterruptHandlerPtr btime_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		btime_interrupt(IRQ_LINE_NMI, 0);
-	}
+	} };
 	
 	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

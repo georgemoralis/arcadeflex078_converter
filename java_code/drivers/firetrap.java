@@ -553,7 +553,7 @@ public class firetrap
 		{ 30 }
 	};
 	
-	static INTERRUPT_GEN( firetrap )
+	public static InterruptHandlerPtr firetrap = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch=0;
 		static int coin_command_pending=0;
@@ -578,13 +578,13 @@ public class firetrap
 	
 		if (firetrap_nmi_enable && !cpu_getiloops())
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( bootleg )
+	public static InterruptHandlerPtr bootleg = new InterruptHandlerPtr() {public void handler()
 	{
 		if (firetrap_nmi_enable)
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( firetrap )
 	

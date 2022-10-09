@@ -258,7 +258,7 @@ public class taito_l
 	
 	
 	
-	static INTERRUPT_GEN( vbl_interrupt )
+	public static InterruptHandlerPtr vbl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* kludge to make plgirls boot */
 		if (cpunum_get_reg(0,Z80_IM) != 2) return;
@@ -271,7 +271,7 @@ public class taito_l
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_adr_table[1]);
 		else if (cpu_getiloops() == 0 && (irq_enable & 4))
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_adr_table[2]);
-	}
+	} };
 	
 	public static WriteHandlerPtr irq_adr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

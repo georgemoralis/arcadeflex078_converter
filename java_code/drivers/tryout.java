@@ -195,12 +195,12 @@ public class tryout
 		{ tryout_snd_irq },
 	};
 	
-	static INTERRUPT_GEN( tryout_interrupt )
+	public static InterruptHandlerPtr tryout_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (input_port_3_r(0) & 0xc0)
 			cpu_set_nmi_line(0, ASSERT_LINE);
 	//		nmi_line_pulse();
-	}
+	} };
 	
 	PALETTE_INIT( tryout )
 	{

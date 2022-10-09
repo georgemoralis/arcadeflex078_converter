@@ -107,11 +107,11 @@ public class policetr
 	}
 	
 	
-	static INTERRUPT_GEN( irq4_gen )
+	public static InterruptHandlerPtr irq4_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, R3000_IRQ4, ASSERT_LINE);
 		timer_set(cpu_getscanlinetime(0), 0, irq5_gen);
-	}
+	} };
 	
 	
 	

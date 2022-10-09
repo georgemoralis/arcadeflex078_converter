@@ -595,10 +595,10 @@ public class hal21
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
 	} };
 	
-	static INTERRUPT_GEN( hal21_sound_interrupt )
+	public static InterruptHandlerPtr hal21_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		hal21_sound_scheduler(3, 0);
-	}
+	} };
 	
 	/**************************************************************************/
 	

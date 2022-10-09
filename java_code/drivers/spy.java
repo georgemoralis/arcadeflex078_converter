@@ -31,11 +31,11 @@ public class spy
 	static data8_t *pmcram;
 	
 	
-	static INTERRUPT_GEN( spy_interrupt )
+	public static InterruptHandlerPtr spy_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	static int rambank,pmcbank;

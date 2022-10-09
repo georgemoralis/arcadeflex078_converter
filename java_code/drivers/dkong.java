@@ -1548,10 +1548,10 @@ public class dkong
 		MDRV_SOUND_ADD(SAMPLES, dkong_samples_interface)
 	MACHINE_DRIVER_END
 	
-	static INTERRUPT_GEN( hunchbkd_interrupt )
+	public static InterruptHandlerPtr hunchbkd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x03);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( hunchbkd )
 	

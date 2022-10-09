@@ -331,10 +331,10 @@ public class raiden2
 	
 	/* INTERRUPTS */
 	
-	static INTERRUPT_GEN( raiden2_interrupt )
+	public static InterruptHandlerPtr raiden2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc0/4);	/* VBL */
-	}
+	} };
 	
 	/* MACHINE DRIVERS */
 	

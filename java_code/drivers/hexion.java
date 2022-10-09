@@ -289,14 +289,14 @@ public class hexion
 	
 	
 	
-	static INTERRUPT_GEN( hexion_interrupt )
+	public static InterruptHandlerPtr hexion_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* NMI handles start and coin inputs, origin unknown */
 		if (cpu_getiloops())
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( hexion )
 	

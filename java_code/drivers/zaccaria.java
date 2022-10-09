@@ -150,13 +150,13 @@ public class zaccaria
 		last = data;
 	} };
 	
-	static INTERRUPT_GEN( zaccaria_cb1_toggle )
+	public static InterruptHandlerPtr zaccaria_cb1_toggle = new InterruptHandlerPtr() {public void handler()
 	{
 		static int toggle;
 	
 		pia_0_cb1_w(0,toggle & 1);
 		toggle ^= 1;
-	}
+	} };
 	
 	
 	

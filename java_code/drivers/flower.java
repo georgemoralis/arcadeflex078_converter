@@ -71,11 +71,11 @@ public class flower
 		cpu_set_irq_line(2, 0, CLEAR_LINE);
 	} };
 	
-	static INTERRUPT_GEN( sn_irq )
+	public static InterruptHandlerPtr sn_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		if (sn_irq_enable)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr sn_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -799,7 +799,7 @@ public class taito_z
 	
 	/***** Routines for particular games *****/
 	
-	static INTERRUPT_GEN( sci_interrupt )
+	public static InterruptHandlerPtr sci_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Need 2 int4's per int6 else (-$6b63,A5) never set to 1 which
 		   causes all sprites to vanish! Spriteram has areas for 2 frames
@@ -810,14 +810,14 @@ public class taito_z
 		if (sci_int6)
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	/* Double Axle seems to keep only 1 sprite frame in sprite ram,
 	   which is probably wrong. Game seems to work with no int 6's
 	   at all. Cpu control byte has 0,4,8,c poked into 2nd nibble
 	   and it seems possible this should be causing int6's ? */
 	
-	static INTERRUPT_GEN( dblaxle_interrupt )
+	public static InterruptHandlerPtr dblaxle_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		// Unsure how many int6's per frame, copy SCI for now
 		dblaxle_int6 = !dblaxle_int6;
@@ -826,14 +826,14 @@ public class taito_z
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 	
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( dblaxle_cpub_interrupt )
+	public static InterruptHandlerPtr dblaxle_cpub_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		// Unsure how many int6's per frame
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 		cpu_set_irq_line(2, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	/******************************************************************

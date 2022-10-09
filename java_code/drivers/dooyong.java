@@ -1087,13 +1087,13 @@ public class dooyong
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	MACHINE_DRIVER_END
 	
-	static INTERRUPT_GEN( rshark_interrupt )
+	public static InterruptHandlerPtr rshark_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 6, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( rshark )
 	

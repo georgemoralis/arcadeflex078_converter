@@ -24,11 +24,11 @@ public class mayumi
 	
 	/****************************************************************************/
 	
-	static INTERRUPT_GEN( mayumi_interrupt )
+	public static InterruptHandlerPtr mayumi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (int_enable)
 			 cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -27,11 +27,11 @@ public class aliens
 	static unsigned char *ram;
 	
 	
-	static INTERRUPT_GEN( aliens_interrupt )
+	public static InterruptHandlerPtr aliens_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K051960_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

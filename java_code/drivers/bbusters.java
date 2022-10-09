@@ -698,13 +698,13 @@ public class bbusters
 		}
 	}
 	
-	static INTERRUPT_GEN( bbuster )
+	public static InterruptHandlerPtr bbuster = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops()==0)
 			cpu_set_irq_line(0, 6, HOLD_LINE); /* VBL */
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
-	}
+	} };
 	
 	static VIDEO_EOF( bbuster )
 	{

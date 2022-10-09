@@ -25,7 +25,7 @@ public class finalizr
 	
 	
 	
-	static INTERRUPT_GEN( finalizr_interrupt )
+	public static InterruptHandlerPtr finalizr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -37,7 +37,7 @@ public class finalizr
 			if (*finalizr_interrupt_enable & 1)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr finalizr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

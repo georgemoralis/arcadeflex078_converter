@@ -322,11 +322,11 @@ public class xmen
 	
 	
 	
-	static INTERRUPT_GEN( xmen_interrupt )
+	public static InterruptHandlerPtr xmen_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) irq5_line_hold();
 		else irq3_line_hold();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( xmen )
 	

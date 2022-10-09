@@ -410,7 +410,7 @@ public class namcos11
 	
 	#define SHRAM( x ) namcos11_sharedram[ ( x - 0x4000 ) / 4 ]
 	
-	static INTERRUPT_GEN( namcos11_vblank )
+	public static InterruptHandlerPtr namcos11_vblank = new InterruptHandlerPtr() {public void handler()
 	{
 		UINT16 n_coin;
 		UINT32 n_input;
@@ -446,7 +446,7 @@ public class namcos11
 		n_oldcoin = ~n_coin;
 	
 		psx_vblank();
-	}
+	} };
 	
 	static UINT32 m_n_bankoffset;
 	static UINT32 m_p_n_bankoffset[ 8 ];

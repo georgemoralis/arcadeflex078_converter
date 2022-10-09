@@ -26,7 +26,7 @@ public class chqflag
 	/* from vidhrdw/chqflag.c */
 	
 	
-	static INTERRUPT_GEN( chqflag_interrupt )
+	public static InterruptHandlerPtr chqflag_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -38,7 +38,7 @@ public class chqflag
 			if (K051960_is_NMI_enabled())
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr chqflag_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

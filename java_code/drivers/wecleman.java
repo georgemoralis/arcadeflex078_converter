@@ -1122,13 +1122,13 @@ public class wecleman
 							WEC Le Mans 24 Hardware Definitions
 	***************************************************************************/
 	
-	static INTERRUPT_GEN( wecleman_interrupt )
+	public static InterruptHandlerPtr wecleman_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 4, HOLD_LINE);	/* once */
 		else
 			cpu_set_irq_line(0, 5, HOLD_LINE);	/* to read input ports */
-	}
+	} };
 	
 	static struct YM2151interface ym2151_interface =
 	{
@@ -1194,10 +1194,10 @@ public class wecleman
 							Hot Chase Hardware Definitions
 	***************************************************************************/
 	
-	static INTERRUPT_GEN( hotchase_sound_timer )
+	public static InterruptHandlerPtr hotchase_sound_timer = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line( 2, M6809_FIRQ_LINE, PULSE_LINE );
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( hotchase )
 	

@@ -21,7 +21,7 @@ public class labyrunr
 	
 	/* from vidhrdw/labyrunr.c */
 	
-	static INTERRUPT_GEN( labyrunr_interrupt )
+	public static InterruptHandlerPtr labyrunr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -33,7 +33,7 @@ public class labyrunr
 			if (K007121_ctrlram[0][0x07] & 0x01)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr labyrunr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -101,10 +101,10 @@ public class omegaf
 	  Interrupts
 	**************************************************************************/
 	
-	static INTERRUPT_GEN( omegaf_interrupt )
+	public static InterruptHandlerPtr omegaf_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
-	}
+	} };
 	
 	
 	/**************************************************************************

@@ -27,17 +27,17 @@ public class ddrible
 	/* video hardware functions */
 	
 	
-	static INTERRUPT_GEN( ddrible_interrupt_0 )
+	public static InterruptHandlerPtr ddrible_interrupt_0 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (ddrible_int_enable_0)
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( ddrible_interrupt_1 )
+	public static InterruptHandlerPtr ddrible_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (ddrible_int_enable_1)
 			cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr ddrible_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)

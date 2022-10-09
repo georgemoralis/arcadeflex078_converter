@@ -134,7 +134,7 @@ public class truco
 		mem[0x7c20] = mem[0x7c11];
 	}
 	
-	static INTERRUPT_GEN( truco_interrupt )
+	public static InterruptHandlerPtr truco_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* coinup */
 		static int trigger = 0;
@@ -148,7 +148,7 @@ public class truco
 			}
 		} else
 			trigger = 0;
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( truco )
 	

@@ -355,7 +355,7 @@ public class neogeo
 	
 	static int fc = 0;
 	
-	static INTERRUPT_GEN( neogeo_interrupt )
+	public static InterruptHandlerPtr neogeo_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int line = RASTER_LINES - cpu_getiloops();
 	
@@ -397,7 +397,7 @@ public class neogeo
 		}
 	
 		update_interrupts();
-	}
+	} };
 	
 	
 	static int neogeo_raster_enable = 1;
@@ -491,15 +491,15 @@ public class neogeo
 		update_interrupts();
 	}
 	
-	static INTERRUPT_GEN( neogeo_raster_interrupt )
+	public static InterruptHandlerPtr neogeo_raster_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		raster_interrupt(0);
-	}
+	} };
 	
-	static INTERRUPT_GEN( neogeo_raster_interrupt_busy )
+	public static InterruptHandlerPtr neogeo_raster_interrupt_busy = new InterruptHandlerPtr() {public void handler()
 	{
 		raster_interrupt(1);
-	}
+	} };
 	
 	
 	

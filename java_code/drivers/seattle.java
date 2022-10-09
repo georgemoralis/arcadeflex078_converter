@@ -194,7 +194,7 @@ public class seattle
 	}
 	
 	
-	static INTERRUPT_GEN( assert_vblank )
+	public static InterruptHandlerPtr assert_vblank = new InterruptHandlerPtr() {public void handler()
 	{
 		logerror("Setting IRQ3\n");
 		if (*vblank_enable & 0x80)
@@ -204,7 +204,7 @@ public class seattle
 			vblank_signalled = 1;
 			timer_set(cpu_getscanlinetime(cpu_getscanline() + 1), 0, clear_vblank);
 		}
-	}
+	} };
 	
 	
 	

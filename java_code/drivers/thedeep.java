@@ -352,7 +352,7 @@ public class thedeep
 		{ irqhandler }
 	};
 	
-	static INTERRUPT_GEN( thedeep_interrupt )
+	public static InterruptHandlerPtr thedeep_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops())
 		{
@@ -378,7 +378,7 @@ public class thedeep
 				cpu_set_nmi_line(0, CLEAR_LINE);
 			}
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( thedeep )
 	

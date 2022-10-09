@@ -48,12 +48,12 @@ public class exerion
 	} };
 	
 	
-	static INTERRUPT_GEN( exerion_interrupt )
+	public static InterruptHandlerPtr exerion_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Exerion triggers NMIs on coin insertion */
 		if (readinputport(4) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	

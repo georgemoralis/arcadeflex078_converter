@@ -210,7 +210,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( meadows_interrupt )
+	public static InterruptHandlerPtr meadows_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* preserve the actual cycle count */
 	    cycles_at_vsync = cycles_currently_ran();
@@ -230,7 +230,7 @@ public class meadows
 		}
 		else
 			coin1_state = 0;
-	}
+	} };
 	
 	
 	
@@ -240,13 +240,13 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( minferno_interrupt )
+	public static InterruptHandlerPtr minferno_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* preserve the actual cycle count */
 		cycles_at_vsync = cycles_currently_ran();
 		minferno_sense++;
 		cpu_set_irq_line(0, 1, (minferno_sense & 0x40) ? ASSERT_LINE : CLEAR_LINE );
-	}
+	} };
 	
 	
 	
@@ -323,12 +323,12 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static INTERRUPT_GEN( sound_interrupt )
+	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 	    /* fake something toggling the sense input line of the S2650 */
 		sound_sense_state ^= 1;
 		cpu_set_irq_line(1, 1, sound_sense_state ? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
 	
 	

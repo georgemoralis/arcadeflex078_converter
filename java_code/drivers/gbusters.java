@@ -26,11 +26,11 @@ public class gbusters
 	static int palette_selected;
 	static unsigned char *ram;
 	
-	static INTERRUPT_GEN( gbusters_interrupt )
+	public static InterruptHandlerPtr gbusters_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

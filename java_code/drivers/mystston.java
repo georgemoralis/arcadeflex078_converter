@@ -208,7 +208,7 @@ public class mystston
 	};
 	
 	
-	static INTERRUPT_GEN( mystston_interrupt )
+	public static InterruptHandlerPtr mystston_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int scanline = 271 - cpu_getiloops();
 		static int coin;
@@ -237,7 +237,7 @@ public class mystston
 		   as VLOC counter starts at 16, effectively every 16 scanlines */
 		if ((scanline % 16) == 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( mystston )

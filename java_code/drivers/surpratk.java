@@ -25,10 +25,10 @@ public class surpratk
 	static int videobank;
 	static unsigned char *ram;
 	
-	static INTERRUPT_GEN( surpratk_interrupt )
+	public static InterruptHandlerPtr surpratk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K052109_is_IRQ_enabled()) cpu_set_irq_line(0,0,HOLD_LINE);
-	}
+	} };
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

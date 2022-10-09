@@ -61,14 +61,14 @@ public class gcpinbal
 		}
 	}
 	
-	static INTERRUPT_GEN( gcpinbal_interrupt )
+	public static InterruptHandlerPtr gcpinbal_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Unsure of actual sequence */
 	
 		timer_set(TIME_IN_CYCLES(500,0),0, gcpinbal_interrupt1);
 		timer_set(TIME_IN_CYCLES(1000,0),0, gcpinbal_interrupt3);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	
 	/***********************************************************

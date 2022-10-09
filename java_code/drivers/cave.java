@@ -92,11 +92,11 @@ public class cave
 	}
 	
 	/* Called once/frame to generate the VBLANK interrupt */
-	static INTERRUPT_GEN( cave_interrupt )
+	public static InterruptHandlerPtr cave_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_USEC(17376-time_vblank_irq), 0, cave_vblank_start);
 		timer_set(TIME_IN_USEC(17376-time_vblank_irq + 2000), 0, cave_vblank_end);
-	}
+	} };
 	
 	/* Called by the YMZ280B to set the IRQ state */
 	static void sound_irq_gen(int state)

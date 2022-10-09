@@ -41,17 +41,17 @@ public class jailbrek
 		flip_screen_set(data & 0x08);
 	} };
 	
-	static INTERRUPT_GEN( jb_interrupt )
+	public static InterruptHandlerPtr jb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( jb_interrupt_nmi )
+	public static InterruptHandlerPtr jb_interrupt_nmi = new InterruptHandlerPtr() {public void handler()
 	{
 		if (nmi_enable)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr jailbrek_speech_r  = new ReadHandlerPtr() { public int handler(int offset) {

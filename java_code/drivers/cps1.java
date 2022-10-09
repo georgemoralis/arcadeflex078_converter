@@ -142,13 +142,13 @@ public class cps1
 	    }
 	}
 	
-	static INTERRUPT_GEN( cps1_interrupt )
+	public static InterruptHandlerPtr cps1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Strider also has a IRQ4 handler. It is input port related, but the game */
 		/* works without it (maybe it's used to multiplex controls). It is the */
 		/* *only* game to have that. */
 		cpu_set_irq_line(0, 2, HOLD_LINE);
-	}
+	} };
 	
 	/********************************************************************
 	*

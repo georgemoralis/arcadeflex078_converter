@@ -110,16 +110,16 @@ public class galpanic
 	
 	
 	
-	static INTERRUPT_GEN( galpanic_interrupt )
+	public static InterruptHandlerPtr galpanic_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* IRQ 3 drives the game, IRQ 5 updates the palette */
 		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 3, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( galhustl_interrupt )
+	public static InterruptHandlerPtr galhustl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch ( cpu_getiloops() )
 		{
@@ -127,7 +127,7 @@ public class galpanic
 			case 1:  cpu_set_irq_line(0, 4, HOLD_LINE); break;
 			case 0:  cpu_set_irq_line(0, 3, HOLD_LINE); break;
 		}
-	}
+	} };
 	
 	
 	static WRITE16_HANDLER( galpanic_6295_bankswitch_w )

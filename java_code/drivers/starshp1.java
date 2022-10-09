@@ -28,13 +28,13 @@ public class starshp1
 	static int starshp1_analog_in_select;
 	
 	
-	static INTERRUPT_GEN( starshp1_interrupt )
+	public static InterruptHandlerPtr starshp1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if ((readinputport(0) & 0x90) != 0x90)
 		{
 			cpu_set_irq_line(0, 0, PULSE_LINE);
 		}
-	}
+	} };
 	
 	
 	static void starshp1_write_palette(int inverse)

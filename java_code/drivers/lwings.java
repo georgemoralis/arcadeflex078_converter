@@ -98,19 +98,19 @@ public class lwings
 		coin_counter_w(0,data & 0x80);
 	} };
 	
-	static INTERRUPT_GEN( lwings_interrupt )
+	public static InterruptHandlerPtr lwings_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_r(0))
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7); /* RST 10h */
-	}
+	} };
 	
-	static INTERRUPT_GEN( avengers_interrupt )
+	public static InterruptHandlerPtr avengers_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if( cpu_getiloops()==0 )
 			irq0_line_hold();
 		else
 			nmi_line_pulse();
-	}
+	} };
 	
 	public static WriteHandlerPtr avengers_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

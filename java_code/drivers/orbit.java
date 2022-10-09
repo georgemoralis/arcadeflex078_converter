@@ -34,13 +34,13 @@ public class orbit
 	static UINT8 orbit_misc_flags;
 	
 	
-	static INTERRUPT_GEN( orbit_interrupt )
+	public static InterruptHandlerPtr orbit_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (orbit_nmi_enable)
 		{
 			cpu_set_nmi_line(0, PULSE_LINE);
 		}
-	}
+	} };
 	
 	
 	static void update_misc_flags(UINT8 val)

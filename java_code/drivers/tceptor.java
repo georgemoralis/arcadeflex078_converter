@@ -95,13 +95,13 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static INTERRUPT_GEN( m6809_vb_interrupt )
+	public static InterruptHandlerPtr m6809_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (m6809_irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else
 			m6809_irq_enable = 1;
-	}
+	} };
 	
 	public static WriteHandlerPtr m6809_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -114,11 +114,11 @@ public class tceptor
 	} };
 	
 	
-	static INTERRUPT_GEN( m68k_vb_interrupt )
+	public static InterruptHandlerPtr m68k_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (m68k_irq_enable)
 			cpu_set_irq_line(3, MC68000_IRQ_1, HOLD_LINE);
-	}
+	} };
 	
 	static WRITE16_HANDLER( m68k_irq_enable_w )
 	{
@@ -126,13 +126,13 @@ public class tceptor
 	}
 	
 	
-	static INTERRUPT_GEN( mcu_vb_interrupt )
+	public static InterruptHandlerPtr mcu_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (mcu_irq_enable)
 			cpu_set_irq_line(4, 0, HOLD_LINE);
 		else
 			mcu_irq_enable = 1;
-	}
+	} };
 	
 	public static WriteHandlerPtr mcu_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

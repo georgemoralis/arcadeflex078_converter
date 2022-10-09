@@ -330,11 +330,11 @@ public class sauro
 		{ -1 } /* end of array */
 	};
 	
-	static INTERRUPT_GEN( sauro_interrupt )
+	public static InterruptHandlerPtr sauro_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	static struct YM3526interface ym3812_interface =
 	{

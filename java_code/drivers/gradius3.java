@@ -128,13 +128,13 @@ public class gradius3
 			irqBmask = (data >> 8) & 0x07;
 	}
 	
-	static INTERRUPT_GEN( cpuA_interrupt )
+	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (irqAen)
 			cpu_set_irq_line(0, 2, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( cpuB_interrupt )
+	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() & 1)	/* ??? */
 		{
@@ -146,7 +146,7 @@ public class gradius3
 			if (irqBmask & 1)
 				cpu_set_irq_line(1, 1, HOLD_LINE);
 		}
-	}
+	} };
 	
 	static WRITE16_HANDLER( cpuB_irqtrigger_w )
 	{

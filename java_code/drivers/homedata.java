@@ -232,16 +232,16 @@ public class homedata
 	
 	static int vblank;
 	
-	static INTERRUPT_GEN( homedata_irq )
+	public static InterruptHandlerPtr homedata_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		vblank = 1;
 		cpu_set_irq_line(0,M6809_FIRQ_LINE,HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( upd7807_irq )
+	public static InterruptHandlerPtr upd7807_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1,UPD7810_INTF1,HOLD_LINE);
-	}
+	} };
 	
 	
 	/********************************************************************************

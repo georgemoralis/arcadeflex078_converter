@@ -295,7 +295,7 @@ public class simpsons
 			cpu_set_irq_line(0, KONAMI_FIRQ_LINE, HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN( simpsons_irq )
+	public static InterruptHandlerPtr simpsons_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		if (K053246_is_IRQ_enabled())
 		{
@@ -307,7 +307,7 @@ public class simpsons
 	
 		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( simpsons )
 	

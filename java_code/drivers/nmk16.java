@@ -2631,11 +2631,11 @@ public class nmk16
 		{ 100 }				/* volume */
 	};
 	
-	static INTERRUPT_GEN( nmk_interrupt )
+	public static InterruptHandlerPtr nmk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 4, HOLD_LINE);
 		else cpu_set_irq_line(0, 2, HOLD_LINE);
-	}
+	} };
 	
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4, 8000, REGION_SOUND1);

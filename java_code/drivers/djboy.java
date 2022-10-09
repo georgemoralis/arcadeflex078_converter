@@ -514,7 +514,7 @@ public class djboy
 	
 	/******************************************************************************/
 	
-	static INTERRUPT_GEN( djboy_interrupt )
+	public static InterruptHandlerPtr djboy_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* CPU1 uses interrupt mode 2.
 		 * For now, just alternate the two interrupts.  It isn't known what triggers them
@@ -522,7 +522,7 @@ public class djboy
 		static int addr = 0xff;
 		addr ^= 0x02;
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, addr);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( djboy )
 		MDRV_CPU_ADD(Z80,6000000) /* ? */

@@ -355,16 +355,16 @@ public class fantland
 		fantland_nmi_enable = 0;
 	}
 	
-	static INTERRUPT_GEN( fantland_irq )
+	public static InterruptHandlerPtr fantland_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		if (fantland_nmi_enable & 8)
 			cpu_set_nmi_line(0, PULSE_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( fantland_sound_irq )
+	public static InterruptHandlerPtr fantland_sound_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0x80/4);
-	}
+	} };
 	
 	static struct YM2151interface fantland_ym2151_interface =
 	{

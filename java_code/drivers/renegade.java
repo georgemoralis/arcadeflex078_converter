@@ -362,7 +362,7 @@ public class renegade
 		}
 	} };
 	
-	static INTERRUPT_GEN( renegade_interrupt )
+	public static InterruptHandlerPtr renegade_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 	/*
 		static int coin;
@@ -382,7 +382,7 @@ public class renegade
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr renegade_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -1156,14 +1156,14 @@ public class zaxxon
 	
 	/* Interrupt Generators */
 	
-	static INTERRUPT_GEN( zaxxon_interrupt )
+	public static InterruptHandlerPtr zaxxon_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		// Get F2 key press status
 		if (readinputport(5) & 0x01)
 			nmi_line_pulse();		// trigger self test
 		else
 			irq0_line_hold();
-	}
+	} };
 	
 	/* Machine Initialization */
 	

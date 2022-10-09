@@ -685,7 +685,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	static INTERRUPT_GEN( karnov_interrupt )
+	public static InterruptHandlerPtr karnov_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch;
 	
@@ -704,7 +704,7 @@ public class karnov
 		}
 	
 		cpu_set_irq_line(0,7,HOLD_LINE);	/* VBL */
-	}
+	} };
 	
 	static void sound_irq(int linestate)
 	{

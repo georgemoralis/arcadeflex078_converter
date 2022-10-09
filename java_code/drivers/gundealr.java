@@ -61,7 +61,7 @@ public class gundealr
 	
 	static int input_ports_hack;
 	
-	static INTERRUPT_GEN( yamyam_interrupt )
+	public static InterruptHandlerPtr yamyam_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -76,7 +76,7 @@ public class gundealr
 		}
 		else if ((cpu_getiloops() & 1) == 1)
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h sound (hand tuned) */
-	}
+	} };
 	
 	public static WriteHandlerPtr yamyam_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

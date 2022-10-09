@@ -1593,15 +1593,15 @@ public class deco32
 		raster_irq_timer = timer_alloc(interrupt_gen);
 	}
 	
-	static INTERRUPT_GEN( deco32_vbl_interrupt )
+	public static InterruptHandlerPtr deco32_vbl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, ARM_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN( tattass_snd_interrupt )
+	public static InterruptHandlerPtr tattass_snd_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( captaven )
 	

@@ -289,12 +289,12 @@ public class exidy440
 	}
 	
 	
-	static INTERRUPT_GEN( main_interrupt )
+	public static InterruptHandlerPtr main_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* generate coin interrupts */
 		handle_coins();
 		exidy440_vblank_interrupt();
-	}
+	} };
 	
 	
 	MACHINE_INIT( exidy440 )

@@ -1543,7 +1543,7 @@ public class halleys
 	//**************************************************************************
 	// Interrupt and Hardware Handlers
 	
-	static INTERRUPT_GEN( halleys_interrupt )
+	public static InterruptHandlerPtr halleys_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch_delay = 0;
 		BYTE latch_data;
@@ -1593,10 +1593,10 @@ public class halleys
 				mVectorType = 0; cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
 			break;
 		}
-	}
+	} };
 	
 	
-	static INTERRUPT_GEN( benberob_interrupt )
+	public static InterruptHandlerPtr benberob_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch_delay = 0;
 		BYTE latch_data;
@@ -1626,7 +1626,7 @@ public class halleys
 				if (!blitter_busy) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); else firq_level++;
 			break;
 		}
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr vector_r  = new ReadHandlerPtr() { public int handler(int offset)

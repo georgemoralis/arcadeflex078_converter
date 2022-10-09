@@ -248,7 +248,7 @@ public class rockola
 	
 	
 	
-	static INTERRUPT_GEN( satansat_interrupt )
+	public static InterruptHandlerPtr satansat_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() != 0)
 		{
@@ -257,9 +257,9 @@ public class rockola
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);	/* one IRQ per frame */
-	}
+	} };
 	
-	static INTERRUPT_GEN( rockola_interrupt )
+	public static InterruptHandlerPtr rockola_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() != 0)
 		{
@@ -268,7 +268,7 @@ public class rockola
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);	/* one IRQ per frame */
-	}
+	} };
 	
 	/* Derived from Zarzon. Might not reflect the actual hardware. */
 	static InputPortPtr input_ports_sasuke = new InputPortPtr(){ public void handler() { 

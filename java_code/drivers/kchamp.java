@@ -418,11 +418,11 @@ public class kchamp
 	
 	
 	
-	static INTERRUPT_GEN( kc_interrupt ) {
+	public static InterruptHandlerPtr kc_interrupt = new InterruptHandlerPtr() {public void handler() {
 	
 		if ( nmi_enable )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static void msmint( int data ) {
 	
@@ -466,11 +466,11 @@ public class kchamp
 	* 1 Player Version  *
 	********************/
 	
-	static INTERRUPT_GEN( sound_int ) {
+	public static InterruptHandlerPtr sound_int = new InterruptHandlerPtr() {public void handler() {
 	
 		if ( sound_nmi_enable )
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static struct DACinterface dac_interface =
 	{

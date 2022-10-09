@@ -40,11 +40,11 @@ public class skykid
 	static int irq_disabled = 1;
 	static int inputport_selected;
 	
-	static INTERRUPT_GEN( skykid_interrupt )
+	public static InterruptHandlerPtr skykid_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (!irq_disabled)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr skykid_irq_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

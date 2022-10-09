@@ -18,9 +18,9 @@ package drivers;
 public class namcos10
 {
 	
-	static INTERRUPT_GEN( namcos10_vblank )
+	public static InterruptHandlerPtr namcos10_vblank = new InterruptHandlerPtr() {public void handler()
 	{
-	}
+	} };
 	
 	static MEMORY_WRITE32_START( namcos10_writemem )
 		{ 0x00000000, 0x003fffff, MWA32_RAM },    /* ram */

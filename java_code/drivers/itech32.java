@@ -121,12 +121,12 @@ public class itech32
 	}
 	
 	
-	static INTERRUPT_GEN( generate_int1 )
+	public static InterruptHandlerPtr generate_int1 = new InterruptHandlerPtr() {public void handler()
 	{
 		/* signal the NMI */
 		itech32_update_interrupts(1, -1, -1);
 		if (FULL_LOGGING) logerror("------------ VBLANK (%d) --------------", cpu_getscanline());
-	}
+	} };
 	
 	
 	static WRITE16_HANDLER( int1_ack_w )

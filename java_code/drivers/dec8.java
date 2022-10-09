@@ -2089,7 +2089,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	static INTERRUPT_GEN( ghostb_interrupt )
+	public static InterruptHandlerPtr ghostb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch[4];
 		int i8751_out=readinputport(4);
@@ -2106,16 +2106,16 @@ public class dec8
 		if (((i8751_out & 0x1) != 0x1) && latch[3]) {latch[3]=0; cpu_set_irq_line(0,M6809_IRQ_LINE,HOLD_LINE); i8751_return=0x1001; } /* Service */
 	
 		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
-	}
+	} };
 	
-	static INTERRUPT_GEN( gondo_interrupt )
+	public static InterruptHandlerPtr gondo_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (nmi_enable)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
-	}
+	} };
 	
 	/* Coins generate NMI's */
-	static INTERRUPT_GEN( oscar_interrupt )
+	public static InterruptHandlerPtr oscar_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int latch=1;
 	
@@ -2124,7 +2124,7 @@ public class dec8
 			latch=0;
 	    	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	    }
-	}
+	} };
 	
 	/******************************************************************************/
 	
