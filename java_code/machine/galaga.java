@@ -264,13 +264,13 @@ public class galaga
 	
 	
 	
-	INTERRUPT_GEN( galaga_interrupt_1 )
+	public static InterruptHandlerPtr galaga_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
 		galaga_vh_interrupt();	/* update the background stars position */
 	
 		if (interrupt_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	
@@ -281,11 +281,11 @@ public class galaga
 	
 	
 	
-	INTERRUPT_GEN( galaga_interrupt_2 )
+	public static InterruptHandlerPtr galaga_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_2)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	
@@ -296,9 +296,9 @@ public class galaga
 	
 	
 	
-	INTERRUPT_GEN( galaga_interrupt_3 )
+	public static InterruptHandlerPtr galaga_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_3)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 }

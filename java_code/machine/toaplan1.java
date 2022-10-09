@@ -31,11 +31,11 @@ public class toaplan1
 	
 	
 	
-	INTERRUPT_GEN( toaplan1_interrupt )
+	public static InterruptHandlerPtr toaplan1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (toaplan1_intenable)
 			cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	WRITE16_HANDLER( toaplan1_intenable_w )
 	{

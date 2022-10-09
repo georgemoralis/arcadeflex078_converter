@@ -29,7 +29,7 @@ public class bsktball
 	bsktball_interrupt
 	***************************************************************************/
 	/* NMI every 32V, IRQ every VBLANK */
-	INTERRUPT_GEN( bsktball_interrupt )
+	public static InterruptHandlerPtr bsktball_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int i256V=0;
 	
@@ -40,7 +40,7 @@ public class bsktball
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if (NMION)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	/***************************************************************************
 	bsktball_ld_w

@@ -584,7 +584,7 @@ public class tnzs
 		}
 	}
 	
-	INTERRUPT_GEN( arknoid2_interrupt )
+	public static InterruptHandlerPtr arknoid2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int coin;
 	
@@ -605,7 +605,7 @@ public class tnzs
 		}
 	
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	MACHINE_INIT( tnzs )
 	{

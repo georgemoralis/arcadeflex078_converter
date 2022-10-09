@@ -130,12 +130,12 @@ public class victory
 	}
 	
 	
-	INTERRUPT_GEN( victory_vblank_interrupt )
+	public static InterruptHandlerPtr victory_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		vblank_irq = 1;
 		victory_update_irq();
 		logerror("------------- VBLANK ----------------\n");
-	}
+	} };
 	
 	
 	

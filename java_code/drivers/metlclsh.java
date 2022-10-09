@@ -317,14 +317,14 @@ public class metlclsh
 		{ metlclsh_irqhandler },
 	};
 	
-	INTERRUPT_GEN( metlclsh_interrupt2 )
+	public static InterruptHandlerPtr metlclsh_interrupt2 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 			return;
 		/* generate NMI on coin insertion */
 		if ((~readinputport(2) & 0xc0) || (~readinputport(3) & 0x40))
 			cpu_set_nmi_line(1, ASSERT_LINE);
-	}
+	} };
 	
 	static MACHINE_INIT( metlclsh )
 	{

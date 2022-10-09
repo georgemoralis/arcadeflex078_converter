@@ -65,14 +65,14 @@ public class mexico86
 	
 	***************************************************************************/
 	
-	INTERRUPT_GEN( mexico86_m68705_interrupt )
+	public static InterruptHandlerPtr mexico86_m68705_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* I don't know how to handle the interrupt line so I just toggle it every time. */
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(2,0,CLEAR_LINE);
 		else
 			cpu_set_irq_line(2,0,ASSERT_LINE);
-	}
+	} };
 	
 	
 	

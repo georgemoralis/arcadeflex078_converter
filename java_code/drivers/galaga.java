@@ -81,9 +81,6 @@ public class galaga
 	
 	
 	
-	INTERRUPT_GEN( galaga_interrupt_1 );
-	INTERRUPT_GEN( galaga_interrupt_2 );
-	INTERRUPT_GEN( galaga_interrupt_3 );
 	MACHINE_INIT( galaga );
 	
 	

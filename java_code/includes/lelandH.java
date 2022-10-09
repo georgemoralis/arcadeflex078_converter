@@ -27,7 +27,6 @@
 MACHINE_INIT( leland );
 MACHINE_INIT( ataxx );
 
-INTERRUPT_GEN( leland_master_interrupt );
 
 void cerberus_bankswitch(void);
 void mayhem_bankswitch(void);

@@ -2633,7 +2633,7 @@ public class kaneko16
 	***************************************************************************/
 	
 	#define KANEKO16_INTERRUPTS_NUM	3
-	INTERRUPT_GEN( kaneko16_interrupt )
+	public static InterruptHandlerPtr kaneko16_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch ( cpu_getiloops() )
 		{
@@ -2641,7 +2641,7 @@ public class kaneko16
 			case 1:  cpu_set_irq_line(0, 4, HOLD_LINE); break;
 			case 0:  cpu_set_irq_line(0, 5, HOLD_LINE); break;
 		}
-	}
+	} };
 	
 	static struct OKIM6295interface okim6295_intf_8kHz =
 	{
@@ -3019,7 +3019,7 @@ public class kaneko16
 		other: busy loop
 	*/
 	#define SHOGWARR_INTERRUPTS_NUM	3
-	INTERRUPT_GEN( shogwarr_interrupt )
+	public static InterruptHandlerPtr shogwarr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch ( cpu_getiloops() )
 		{
@@ -3027,7 +3027,7 @@ public class kaneko16
 			case 1:  cpu_set_irq_line(0, 3, HOLD_LINE); break;
 	//		case 0:  cpu_set_irq_line(0, 4, HOLD_LINE); break;
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( shogwarr )
 	

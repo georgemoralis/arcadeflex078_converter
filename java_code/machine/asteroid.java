@@ -17,26 +17,26 @@ public class asteroid
 {
 	
 	
-	INTERRUPT_GEN( asteroid_interrupt )
+	public static InterruptHandlerPtr asteroid_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Turn off interrupts if self-test is enabled */
 		if (!(readinputport(0) & 0x80))
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( asterock_interrupt )
+	public static InterruptHandlerPtr asterock_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Turn off interrupts if self-test is enabled */
 		if ((readinputport(0) & 0x80))
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( llander_interrupt )
+	public static InterruptHandlerPtr llander_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Turn off interrupts if self-test is enabled */
 		if (readinputport(0) & 0x02)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	READ_HANDLER( asteroid_IN0_r )

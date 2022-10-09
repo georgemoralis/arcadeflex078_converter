@@ -345,11 +345,11 @@ public class btime
 	}
 	
 	
-	INTERRUPT_GEN( lnc_sound_interrupt )
+	public static InterruptHandlerPtr lnc_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 	    if (lnc_sound_interrupt_enabled)
 	    	cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	/***************************************************************************

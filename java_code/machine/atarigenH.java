@@ -81,15 +81,12 @@ public class atarigenH
 	void atarigen_update_interrupts(void);
 	
 	void atarigen_scanline_int_set(int scanline);
-	INTERRUPT_GEN( atarigen_scanline_int_gen );
 	WRITE16_HANDLER( atarigen_scanline_int_ack_w );
 	WRITE32_HANDLER( atarigen_scanline_int_ack32_w );
 	
-	INTERRUPT_GEN( atarigen_sound_int_gen );
 	WRITE16_HANDLER( atarigen_sound_int_ack_w );
 	WRITE32_HANDLER( atarigen_sound_int_ack32_w );
 	
-	INTERRUPT_GEN( atarigen_video_int_gen );
 	WRITE16_HANDLER( atarigen_video_int_ack_w );
 	WRITE32_HANDLER( atarigen_video_int_ack32_w );
 	
@@ -130,7 +127,6 @@ public class atarigenH
 	
 	void atarigen_sound_io_reset(int cpu_num);
 	
-	INTERRUPT_GEN( atarigen_6502_irq_gen );
 	
 	void atarigen_ym2151_irq_gen(int irq);
 	

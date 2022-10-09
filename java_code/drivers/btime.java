@@ -64,7 +64,6 @@ public class btime
 	
 	
 	
-	INTERRUPT_GEN( lnc_sound_interrupt );
 	
 	
 	

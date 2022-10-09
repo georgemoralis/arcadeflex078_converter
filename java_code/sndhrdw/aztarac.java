@@ -52,13 +52,13 @@ public class aztarac
 	    sound_status &= ~0x10;
 	}
 	
-	INTERRUPT_GEN( aztarac_snd_timed_irq )
+	public static InterruptHandlerPtr aztarac_snd_timed_irq = new InterruptHandlerPtr() {public void handler()
 	{
 	    sound_status ^= 0x10;
 	
 	    if (sound_status & 0x10)
 	        cpu_set_irq_line(1,0,HOLD_LINE);
-	}
+	} };
 	
 	
 }

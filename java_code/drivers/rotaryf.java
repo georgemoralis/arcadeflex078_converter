@@ -26,14 +26,14 @@ public class rotaryf
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 	}
 	
-	INTERRUPT_GEN( rotaryf_interrupt )
+	public static InterruptHandlerPtr rotaryf_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if(cpu_getvblank())
 			cpu_set_irq_line(0,I8085_RST55_LINE,HOLD_LINE);
 		else
 			cpu_set_irq_line(0,I8085_RST75_LINE,HOLD_LINE);
 	
-	}
+	} };
 	
 	public static Memory_ReadAddress rotaryf_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -32,12 +32,12 @@ public class subs
 	/***************************************************************************
 	subs_interrupt
 	***************************************************************************/
-	INTERRUPT_GEN( subs_interrupt )
+	public static InterruptHandlerPtr subs_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* only do NMI interrupt if not in TEST mode */
 		if ((input_port_2_r(0) & 0x40)==0x40)
 			cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	/***************************************************************************
 	Steering

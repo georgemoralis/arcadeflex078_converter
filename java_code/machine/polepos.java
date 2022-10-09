@@ -110,17 +110,17 @@ public class polepos
 		LOG(("Z8K#%d cpu%d_nvi_enable_w $%02x\n", cpu_getactivecpu(), which, data));
 	}
 	
-	INTERRUPT_GEN( polepos_z8002_1_interrupt )
+	public static InterruptHandlerPtr polepos_z8002_1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (z8002_1_nvi_enabled)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( polepos_z8002_2_interrupt )
+	public static InterruptHandlerPtr polepos_z8002_2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (z8002_2_nvi_enabled)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( polepos_z8002_enable_w )
 	{

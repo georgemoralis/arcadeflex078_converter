@@ -319,7 +319,7 @@ public class ginganin
 	
 	
 	/* Modified by Takahiro Nogi. 1999/09/27 */
-	INTERRUPT_GEN( ginganin_sound_interrupt )
+	public static InterruptHandlerPtr ginganin_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
@@ -342,7 +342,7 @@ public class ginganin
 				MC6809_CTR++;
 			}
 		}
-	}
+	} };
 	
 	
 	

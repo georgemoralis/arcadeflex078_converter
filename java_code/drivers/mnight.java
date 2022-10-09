@@ -26,10 +26,10 @@ public class mnight
 		main_cpu_num = 0;
 	}
 	
-	INTERRUPT_GEN( mnight_interrupt )
+	public static InterruptHandlerPtr mnight_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);	/* RST 10h */
-	}
+	} };
 	
 	READ_HANDLER( mnight_bankselect_r )
 	{

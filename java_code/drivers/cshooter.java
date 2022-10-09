@@ -131,10 +131,10 @@ public class cshooter
 	
 	/* main cpu */
 	
-	INTERRUPT_GEN( cshooter_interrupt )
+	public static InterruptHandlerPtr cshooter_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x08); // almost certainly wrong?
-	}
+	} };
 	
 	
 	static int cshooter_counter;

@@ -29,7 +29,6 @@ package drivers;
 public class battlera
 {
 	
-	INTERRUPT_GEN( battlera_interrupt );
 	
 	
 	

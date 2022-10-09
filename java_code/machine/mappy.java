@@ -563,11 +563,11 @@ public class mappy
 	
 	
 	
-	INTERRUPT_GEN( mappy_interrupt_1 )
+	public static InterruptHandlerPtr mappy_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	
@@ -578,11 +578,11 @@ public class mappy
 	
 	
 	
-	INTERRUPT_GEN( mappy_interrupt_2 )
+	public static InterruptHandlerPtr mappy_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_2)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	WRITE_HANDLER( mappy_cpu_enable_w )

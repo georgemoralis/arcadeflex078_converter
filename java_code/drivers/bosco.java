@@ -75,9 +75,6 @@ package drivers;
 public class bosco
 {
 	
-	INTERRUPT_GEN( bosco_interrupt_1 );
-	INTERRUPT_GEN( bosco_interrupt_2 );
-	INTERRUPT_GEN( bosco_interrupt_3 );
 	MACHINE_INIT( bosco );
 	
 	

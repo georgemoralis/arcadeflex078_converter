@@ -572,7 +572,7 @@ public class namcos2
 		return scanline;
 	}
 	
-	INTERRUPT_GEN( namcos2_68k_master_vblank )
+	public static InterruptHandlerPtr namcos2_68k_master_vblank = new InterruptHandlerPtr() {public void handler()
 	{
 		if(namcos2_68k_master_C148[NAMCOS2_C148_POSIRQ])
 		{
@@ -580,7 +580,7 @@ public class namcos2
 			timer_set( cpu_getscanlinetime(scanline), scanline, namcos2_68k_master_posirq );
 		}
 		cpu_set_irq_line( CPU_MASTER, namcos2_68k_master_C148[NAMCOS2_C148_VBLANKIRQ], HOLD_LINE);
-	}
+	} };
 	
 	WRITE16_HANDLER( namcos2_68k_slave_C148_w ){
 		WriteC148( CPU_SLAVE, offset, data );
@@ -597,14 +597,14 @@ public class namcos2
 		cpu_set_irq_line(CPU_SLAVE , namcos2_68k_slave_C148[NAMCOS2_C148_POSIRQ] , ASSERT_LINE);
 	}
 	
-	INTERRUPT_GEN( namcos2_68k_slave_vblank ){
+	public static InterruptHandlerPtr namcos2_68k_slave_vblank = new InterruptHandlerPtr() {public void handler(){
 		if(namcos2_68k_slave_C148[NAMCOS2_C148_POSIRQ])
 		{
 			int scanline = GetPosIRQScanline();
 			timer_set( cpu_getscanlinetime(scanline), scanline, namcos2_68k_slave_posirq );
 		}
 		cpu_set_irq_line( CPU_SLAVE, namcos2_68k_slave_C148[NAMCOS2_C148_VBLANKIRQ], HOLD_LINE);
-	}
+	} };
 	
 	/**************************************************************/
 	/*	Sound sub-system										  */

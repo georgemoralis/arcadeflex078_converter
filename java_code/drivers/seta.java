@@ -6176,7 +6176,7 @@ public class seta
 	*/
 	
 	#define calibr50_INTERRUPTS_NUM (4+1)
-	INTERRUPT_GEN( calibr50_interrupt )
+	public static InterruptHandlerPtr calibr50_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
@@ -6186,7 +6186,7 @@ public class seta
 			case 3:		cpu_set_irq_line(0, 4, HOLD_LINE);	break;
 			case 4:		cpu_set_irq_line(0, 2, HOLD_LINE);	break;
 		}
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( usclssic )

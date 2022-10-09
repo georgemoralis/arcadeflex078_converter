@@ -79,13 +79,13 @@ public class twincobr
 	
 	
 	
-	INTERRUPT_GEN( twincobr_interrupt )
+	public static InterruptHandlerPtr twincobr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (twincobr_intenable) {
 			twincobr_intenable = 0;
 			cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 		}
-	}
+	} };
 	
 	
 	

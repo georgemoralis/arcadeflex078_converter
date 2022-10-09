@@ -28,7 +28,6 @@ public class balsenteH
 	
 	
 	
-	INTERRUPT_GEN( balsente_update_analog_inputs );
 	
 	
 	

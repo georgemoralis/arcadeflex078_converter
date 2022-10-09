@@ -615,14 +615,14 @@ public class suna16
 			MIXER(40,MIXER_PAN_LEFT), MIXER(40,MIXER_PAN_RIGHT)	}
 	};
 	
-	INTERRUPT_GEN( bssoccer_interrupt )
+	public static InterruptHandlerPtr bssoccer_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		switch (cpu_getiloops())
 		{
 			case 0: 	cpu_set_irq_line(0, 1, HOLD_LINE);	break;
 			case 1: 	cpu_set_irq_line(0, 2, HOLD_LINE);	break;
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( bssoccer )
 	

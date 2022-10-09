@@ -6,7 +6,6 @@
 
 /*----------- defined in machine/8080bw.c -----------*/
 
-INTERRUPT_GEN( c8080bw_interrupt );
 
 
 
@@ -63,8 +62,6 @@ void c8080bw_flip_screen_w(int data);
 void c8080bw_screen_red_w(int data);
 void c8080bw_helifire_colors_change_w(int data);
 
-INTERRUPT_GEN( polaris_interrupt );
-INTERRUPT_GEN( phantom2_interrupt );
 
 
 

@@ -221,11 +221,11 @@ public class mustache
 	};
 	
 	
-	INTERRUPT_GEN( mustache_interrupt)
+	public static InterruptHandlerPtr mustache_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		read_coins^=1;
 		cpu_set_irq_line(0, 0, PULSE_LINE);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( mustache )

@@ -120,9 +120,6 @@ package drivers;
 public class digdug
 {
 	
-	INTERRUPT_GEN( digdug_interrupt_1 );
-	INTERRUPT_GEN( digdug_interrupt_2 );
-	INTERRUPT_GEN( digdug_interrupt_3 );
 	MACHINE_INIT( digdig );
 	
 	

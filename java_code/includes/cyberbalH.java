@@ -12,7 +12,6 @@ void cyberbal_sound_reset(void);
 int cyberbal_samples_start(const struct MachineSound *msound);
 void cyberbal_samples_stop(void);
 
-INTERRUPT_GEN( cyberbal_sound_68k_irq_gen );
 
 
 READ16_HANDLER( cyberbal_sound_68k_r );

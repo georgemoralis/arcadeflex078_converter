@@ -91,7 +91,6 @@ package drivers;
 public class cvs
 {
 	
-	INTERRUPT_GEN( cvs_interrupt );
 	int  s2650_get_flag(void);
 	
 	

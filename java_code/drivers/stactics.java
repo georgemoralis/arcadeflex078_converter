@@ -52,7 +52,6 @@ public class stactics
 {
 	
 	/* Defined in machine/stactics.c */
-	INTERRUPT_GEN( stactics_interrupt );
 	
 	/* Defined in vidhrdw/stactics.c */
 	

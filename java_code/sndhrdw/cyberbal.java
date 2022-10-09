@@ -116,14 +116,14 @@ public class cyberbal
 	}
 	
 	
-	INTERRUPT_GEN( cyberbal_sound_68k_irq_gen )
+	public static InterruptHandlerPtr cyberbal_sound_68k_irq_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		if (!fast_68k_int)
 		{
 			fast_68k_int = 1;
 			update_sound_68k_interrupts();
 		}
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( cyberbal_io_68k_irq_ack_w )

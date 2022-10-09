@@ -680,7 +680,7 @@ public class segasyse
 	 Interrupt enable bits etc are a bit uncertain
 	*******************************************************************************/
 	
-	 INTERRUPT_GEN( segae_interrupt )
+	 public static InterruptHandlerPtr segae_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int sline;
 		sline = 261 - cpu_getiloops();
@@ -717,7 +717,7 @@ public class segasyse
 				cpu_set_irq_line(0, 0, HOLD_LINE);
 			}
 		}
-	}
+	} };
 	
 	/*******************************************************************************
 	 Machine Driver(s)

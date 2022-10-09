@@ -123,7 +123,7 @@ public class coolpool
 		}
 	}
 	
-	INTERRUPT_GEN( coolpool_vblank_start )
+	public static InterruptHandlerPtr coolpool_vblank_start = new InterruptHandlerPtr() {public void handler()
 	{
 		/* dpyadr is latched from dpystrt at the beginning of VBLANK every frame */
 		cpuintrf_push_context(0);
@@ -135,7 +135,7 @@ public class coolpool
 		dpyadrscan = 0;
 	
 		cpuintrf_pop_context();
-	}
+	} };
 	
 	VIDEO_UPDATE( coolpool )
 	{

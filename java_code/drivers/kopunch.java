@@ -11,7 +11,7 @@ public class kopunch
 	
 	
 	
-	INTERRUPT_GEN( kopunch_interrupt )
+	public static InterruptHandlerPtr kopunch_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -28,7 +28,7 @@ public class kopunch
 		}
 	
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xff);	/* RST 38h */
-	}
+	} };
 	
 	public static ReadHandlerPtr kopunch_in_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

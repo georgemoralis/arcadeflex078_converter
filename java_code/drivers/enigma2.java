@@ -220,11 +220,11 @@ public class enigma2
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	INPUT_PORTS_END(); }}; 
 	
-	INTERRUPT_GEN( enigma2_interrupt )
+	public static InterruptHandlerPtr enigma2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int vector = cpu_getvblank() ? 0xcf : 0xd7;
 	    cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
-	}
+	} };
 	
 	PALETTE_INIT( enigma2 )
 	{

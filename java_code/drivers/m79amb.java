@@ -24,7 +24,6 @@ public class m79amb
 	 */
 	
 	
-	INTERRUPT_GEN( invaders_interrupt );
 	void ramtek_sh_update(void);
 	
 	/*

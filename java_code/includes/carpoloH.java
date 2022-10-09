@@ -12,7 +12,6 @@ MACHINE_INIT( carpolo );
 
 
 
-INTERRUPT_GEN( carpolo_timer_interrupt );
 
 
 void carpolo_generate_car_car_interrupt(int car1, int car2);

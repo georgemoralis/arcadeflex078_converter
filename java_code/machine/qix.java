@@ -258,11 +258,11 @@ public class qix
 	}
 	
 	
-	INTERRUPT_GEN( qix_vblank_start )
+	public static InterruptHandlerPtr qix_vblank_start = new InterruptHandlerPtr() {public void handler()
 	{
 		pia_3_cb1_w(0, 1);
 		timer_set(cpu_getscanlinetime(0), 0, vblank_stop);
-	}
+	} };
 	
 	
 	

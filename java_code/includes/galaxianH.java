@@ -123,8 +123,6 @@ WRITE_HANDLER(mars_ppi8255_1_w);
 
 
 
-INTERRUPT_GEN( hunchbks_vh_interrupt );
-INTERRUPT_GEN( gmgalax_vh_interrupt );
 
 
 

@@ -86,13 +86,13 @@ public class ladybug
 	  slots. Left slot generates a NMI, Right slot an IRQ.
 	
 	***************************************************************************/
-	INTERRUPT_GEN( ladybug_interrupt )
+	public static InterruptHandlerPtr ladybug_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(5) & 1)	/* Left Coin */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else if (readinputport(5) & 2)	/* Right Coin */
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static InputPortPtr input_ports_ladybug = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* IN0 */

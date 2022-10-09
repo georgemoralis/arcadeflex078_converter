@@ -205,7 +205,6 @@ enum {
 	PORT_BIT ( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 
 MACHINE_INIT( nb1413m3 );
-INTERRUPT_GEN( nb1413m3_interrupt );
 NVRAM_HANDLER( nb1413m3 );
 int nb1413m3_sndrom_r(int offset);
 int nb1413m3_gfxrom_r(int offset);

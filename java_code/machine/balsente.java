@@ -570,7 +570,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	INTERRUPT_GEN( balsente_update_analog_inputs )
+	public static InterruptHandlerPtr balsente_update_analog_inputs = new InterruptHandlerPtr() {public void handler()
 	{
 		int i;
 	
@@ -580,7 +580,7 @@ public class balsente
 		/* read all the analog inputs at VBLANK time and just return the cached values. */
 		for (i = 0; i < 4; i++)
 			analog_input_data[i] = readinputport(4 + i);
-	}
+	} };
 	
 	
 	static void adc_finished(int which)

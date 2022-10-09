@@ -235,11 +235,11 @@ public class supertnk
 	
 	
 	
-	INTERRUPT_GEN( supertnk_interrupt )
+	public static InterruptHandlerPtr supertnk_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* On a TMS9980, a 6 on the interrupt bus means a level 4 interrupt */
 		cpu_set_irq_line_and_vector(0, 0, ASSERT_LINE, 6);
-	}
+	} };
 	
 	
 	

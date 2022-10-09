@@ -100,7 +100,7 @@ public class spiders
 	
 	***************************************************************************/
 	
-	INTERRUPT_GEN( spiders_timed_irq )
+	public static InterruptHandlerPtr spiders_timed_irq = new InterruptHandlerPtr() {public void handler()
 	{
 		/* Update CA1 on PIA1 - copy of PA0 (COIN1?) */
 		pia_0_ca1_w(0 , input_port_0_r(0)&0x01);
@@ -112,7 +112,7 @@ public class spiders
 		pia_0_cb1_w(0 , input_port_6_r(0));
 	
 		/* Update CB2 on PIA1 - NOT CONNECTED */
-	}
+	} };
 	
 	
 	/***************************************************************************

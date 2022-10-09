@@ -113,7 +113,6 @@ public class asuka
 	
 	WRITE16_HANDLER( asuka_spritectrl_w );
 	
-	INTERRUPT_GEN( rastan_s_interrupt );
 	
 	
 	
@@ -132,11 +131,11 @@ public class asuka
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	}
 	
-	INTERRUPT_GEN( cadash_interrupt )
+	public static InterruptHandlerPtr cadash_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_set(TIME_IN_CYCLES(500,0),0, cadash_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);  /* interrupt vector 4 */
-	}
+	} };
 	
 	
 	/************************************************

@@ -338,10 +338,10 @@ public class r2dtank
 		pia_reset();
 	}
 	
-	INTERRUPT_GEN( r2dtank_interrupt )
+	public static InterruptHandlerPtr r2dtank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( r2dtank )
 		MDRV_CPU_ADD(M6809,3000000)		 /* ?? too fast ? */

@@ -20,6 +20,5 @@ void exidy440_sh_update(void);
 /*----------- defined in vidhrdw/exidy440.c -----------*/
 
 
-INTERRUPT_GEN( exidy440_vblank_interrupt );
 
 

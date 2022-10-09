@@ -177,7 +177,7 @@ public class ssv
 	
 	static int interrupt_ultrax;
 	
-	INTERRUPT_GEN( ssv_interrupt )
+	public static InterruptHandlerPtr ssv_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops())
 		{
@@ -192,7 +192,7 @@ public class ssv
 			requested_int |= 1 << 3;	// vblank
 			update_irq_state();
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

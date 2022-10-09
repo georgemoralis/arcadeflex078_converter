@@ -227,7 +227,7 @@ public class carpolo
 	}
 	
 	
-	INTERRUPT_GEN( carpolo_timer_interrupt )
+	public static InterruptHandlerPtr carpolo_timer_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		data8_t port_value;
 		int player;
@@ -308,7 +308,7 @@ public class carpolo
 		}
 	
 		TTL74153_update(TTL74153_1K);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr coin1_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)

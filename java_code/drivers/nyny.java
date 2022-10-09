@@ -56,7 +56,7 @@ public class nyny
 	
 	
 	
-	INTERRUPT_GEN( nyny_interrupt )
+	public static InterruptHandlerPtr nyny_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* this is not accurate */
 		/* pia1_ca1 should be toggled by output of LS123 */
@@ -67,7 +67,7 @@ public class nyny
 		pia_0_ca2_w(0,input_port_6_r(0)&0x01);
 	
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	/***************************************************************************
 		6821 PIA handlers

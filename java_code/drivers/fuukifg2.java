@@ -535,7 +535,7 @@ public class fuukifg2
 				also used for water effects and titlescreen linescroll on gogomile
 	*/
 	#define INTERRUPTS_NUM	(256-1) // Give much better results than 256..
-	INTERRUPT_GEN( fuuki16_interrupt )
+	public static InterruptHandlerPtr fuuki16_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if ( cpu_getiloops() == 1 )
 			cpu_set_irq_line(0, 1, PULSE_LINE);
@@ -559,7 +559,7 @@ public class fuukifg2
 			cpu_set_irq_line(0, 5, PULSE_LINE);	// Raster Line IRQ
 			if(fuuki16_raster_enable) force_partial_update(cpu_getscanline());
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( fuuki16 )
 	

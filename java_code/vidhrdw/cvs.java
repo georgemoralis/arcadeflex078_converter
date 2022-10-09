@@ -435,13 +435,13 @@ public class cvs
 		return 0;
 	}
 	
-	INTERRUPT_GEN( cvs_interrupt )
+	public static InterruptHandlerPtr cvs_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		stars_scroll++;
 	
 		cpu_irq_line_vector_w(0,0,0x03);
 		cpu_set_irq_line(0,0,PULSE_LINE);
-	}
+	} };
 	
 	INLINE void plot_star(struct mame_bitmap *bitmap, int x, int y)
 	{

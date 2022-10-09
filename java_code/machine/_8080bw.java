@@ -53,12 +53,12 @@ public class _8080bw
 	}
 	
 	
-	INTERRUPT_GEN( c8080bw_interrupt )
+	public static InterruptHandlerPtr c8080bw_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int vector = cpu_getvblank() ? 0xcf : 0xd7;  /* RST 08h/10h */
 	
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
-	}
+	} };
 	
 	
 	/****************************************************************************

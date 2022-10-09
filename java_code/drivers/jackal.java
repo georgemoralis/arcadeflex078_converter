@@ -56,11 +56,11 @@ public class jackal
 		flip_screen_set(data & 0x08);
 	} };
 	
-	INTERRUPT_GEN( jackal_interrupt )
+	public static InterruptHandlerPtr jackal_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	

@@ -51,7 +51,6 @@ public class timeplt
 	
 	
 	
-	INTERRUPT_GEN( timeplt_interrupt );
 	
 	
 	

@@ -268,12 +268,12 @@ public class exidy440
 	}
 	
 	
-	INTERRUPT_GEN( exidy440_vblank_interrupt )
+	public static InterruptHandlerPtr exidy440_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* set the FIRQ line on a VBLANK */
 		exidy440_firq_vblank = 1;
 		exidy440_update_firq();
-	}
+	} };
 	
 	
 	

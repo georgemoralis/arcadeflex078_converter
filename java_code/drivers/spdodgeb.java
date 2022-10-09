@@ -28,7 +28,6 @@ public class spdodgeb
 	
 	
 	
-	INTERRUPT_GEN( spdodgeb_interrupt );
 	
 	
 	/* private globals */

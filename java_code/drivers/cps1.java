@@ -166,7 +166,7 @@ public class cps1
 	
 	static unsigned char *qsound_sharedram1,*qsound_sharedram2;
 	
-	INTERRUPT_GEN( cps1_qsound_interrupt )
+	public static InterruptHandlerPtr cps1_qsound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 	#if 0
 	I have removed CPU_AUDIO_CPU from the Z(0 so this is no longer necessary
@@ -176,7 +176,7 @@ public class cps1
 	#endif
 	
 		cpu_set_irq_line(cpu_getactivecpu(), 2, HOLD_LINE);
-	}
+	} };
 	
 	
 	READ16_HANDLER( qsound_rom_r )

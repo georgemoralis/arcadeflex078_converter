@@ -2078,11 +2078,11 @@ public class suna8
 			MIXER(17,MIXER_PAN_LEFT), MIXER(17,MIXER_PAN_RIGHT)	}
 	};
 	
-	INTERRUPT_GEN( brickzn_interrupt )
+	public static InterruptHandlerPtr brickzn_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops()) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else				 cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( brickzn )
 	
@@ -2130,14 +2130,14 @@ public class suna8
 	
 	/* 1 x 24 MHz crystal */
 	
-	INTERRUPT_GEN( hardhea2_interrupt )
+	public static InterruptHandlerPtr hardhea2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops())
 		{
 			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( hardhea2 )
 	

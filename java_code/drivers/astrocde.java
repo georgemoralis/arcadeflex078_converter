@@ -74,10 +74,8 @@ public class astrocde
 	
 	
 	
-	INTERRUPT_GEN( wow_interrupt );
 	
 	
-	INTERRUPT_GEN( gorf_interrupt );
 	
 	
 	int  wow_sh_start(const struct MachineSound *msound);

@@ -177,11 +177,11 @@ public class tankbatt
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	INTERRUPT_GEN( tankbatt_interrupt )
+	public static InterruptHandlerPtr tankbatt_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if ((readinputport (0) & 0x60) == 0) cpu_set_irq_line(0,0,HOLD_LINE);
 		else if (tankbatt_nmi_enable) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	static InputPortPtr input_ports_tankbatt = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* IN0 */

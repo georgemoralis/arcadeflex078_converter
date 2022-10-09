@@ -88,17 +88,17 @@ public class xxmissio
 		}
 	}
 	
-	INTERRUPT_GEN( xxmissio_interrupt_m )
+	public static InterruptHandlerPtr xxmissio_interrupt_m = new InterruptHandlerPtr() {public void handler()
 	{
 		xxmissio_status &= ~0x20;
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( xxmissio_interrupt_s )
+	public static InterruptHandlerPtr xxmissio_interrupt_s = new InterruptHandlerPtr() {public void handler()
 	{
 		xxmissio_status &= ~0x10;
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	/****************************************************************************/
 	

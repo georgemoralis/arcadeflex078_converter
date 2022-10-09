@@ -104,7 +104,7 @@ public class spdodgeb
 	
 	static int lastscroll;
 	
-	INTERRUPT_GEN( spdodgeb_interrupt )
+	public static InterruptHandlerPtr spdodgeb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int iloop = cpu_getiloops();
 	
@@ -115,7 +115,7 @@ public class spdodgeb
 		}
 		else if (!iloop)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( spdodgeb_scrollx_lo_w )
 	{

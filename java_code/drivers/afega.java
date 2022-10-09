@@ -536,14 +536,14 @@ public class afega
 		{ 70 }
 	};
 	
-	INTERRUPT_GEN( interrupt_afega )
+	public static InterruptHandlerPtr interrupt_afega = new InterruptHandlerPtr() {public void handler()
 	{
 		switch ( cpu_getiloops() )
 		{
 			case 0:		irq2_line_hold();	break;
 			case 1:		irq4_line_hold();	break;
 		}
-	}
+	} };
 	
 	MACHINE_INIT( afega )
 	{

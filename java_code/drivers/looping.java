@@ -220,11 +220,11 @@ public class looping
 		}
 	}
 	
-	INTERRUPT_GEN( looping_interrupt )
+	public static InterruptHandlerPtr looping_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_irq_line_vector_w(0, 0, 4);
 		cpu_set_irq_line(0, 0, ASSERT_LINE);
-	}
+	} };
 	
 	/****** sound *******/
 	

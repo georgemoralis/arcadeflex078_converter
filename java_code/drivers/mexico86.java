@@ -76,7 +76,6 @@ public class mexico86
 {
 	
 	/* in machine/mexico86.c */
-	INTERRUPT_GEN( mexico86_m68705_interrupt );
 	
 	/* in vidhrdw/mexico86.c */
 	

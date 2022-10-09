@@ -196,7 +196,6 @@ public class tnzs
 	DRIVER_INIT( insectx );
 	DRIVER_INIT( kageki );
 	MACHINE_INIT( tnzs );
-	INTERRUPT_GEN( arknoid2_interrupt );
 	
 	
 	/* prototypes for functions in ../vidhrdw/tnzs.c */

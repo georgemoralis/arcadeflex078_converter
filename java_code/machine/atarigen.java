@@ -179,11 +179,11 @@ public class atarigen
 		which sets the scanline interrupt state.
 	---------------------------------------------------------------*/
 	
-	INTERRUPT_GEN( atarigen_scanline_int_gen )
+	public static InterruptHandlerPtr atarigen_scanline_int_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		atarigen_scanline_int_state = 1;
 		(*update_int_callback)();
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------
@@ -209,11 +209,11 @@ public class atarigen
 		sets the sound interrupt state.
 	---------------------------------------------------------------*/
 	
-	INTERRUPT_GEN( atarigen_sound_int_gen )
+	public static InterruptHandlerPtr atarigen_sound_int_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		atarigen_sound_int_state = 1;
 		(*update_int_callback)();
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------
@@ -239,11 +239,11 @@ public class atarigen
 		sets the video interrupt state.
 	---------------------------------------------------------------*/
 	
-	INTERRUPT_GEN( atarigen_video_int_gen )
+	public static InterruptHandlerPtr atarigen_video_int_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		atarigen_video_int_state = 1;
 		(*update_int_callback)();
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------
@@ -551,11 +551,11 @@ public class atarigen
 		sound processor.
 	---------------------------------------------------------------*/
 	
-	INTERRUPT_GEN( atarigen_6502_irq_gen )
+	public static InterruptHandlerPtr atarigen_6502_irq_gen = new InterruptHandlerPtr() {public void handler()
 	{
 		timed_int = 1;
 		update_6502_irq();
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------

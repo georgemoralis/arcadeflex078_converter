@@ -211,11 +211,11 @@ public class naughtyb
 	
 	***************************************************************************/
 	
-	INTERRUPT_GEN( naughtyb_interrupt )
+	public static InterruptHandlerPtr naughtyb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (readinputport(2) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	static InputPortPtr input_ports_naughtyb = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	/* IN0 */

@@ -107,11 +107,11 @@ public class senjyo
 		int_delay_kludge = 10;
 	}
 	
-	INTERRUPT_GEN( senjyo_interrupt )
+	public static InterruptHandlerPtr senjyo_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (int_delay_kludge == 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 		else int_delay_kludge--;
-	}
+	} };
 	
 	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

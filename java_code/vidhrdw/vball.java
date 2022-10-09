@@ -191,7 +191,7 @@ public class vball
 	/*I don't really understand what the proper timing of this should be,
 	  but after TONS of testing, the tilemap individual line scrolling works as long as flip screen is not set -SJE
 	*/
-	INTERRUPT_GEN( vball_interrupt )
+	public static InterruptHandlerPtr vball_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int line = 31 - cpu_getiloops();
 		if (line < 13)
@@ -200,5 +200,5 @@ public class vball
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		//save the scroll x register value
 		if(line<32) scrollx[31-line] = (vb_scrollx_hi + vb_scrollx_lo+4);
-	}
+	} };
 }

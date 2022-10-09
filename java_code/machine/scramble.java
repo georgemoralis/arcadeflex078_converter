@@ -1448,12 +1448,12 @@ public class scramble
 	}
 	
 	
-	INTERRUPT_GEN( hunchbks_vh_interrupt )
+	public static InterruptHandlerPtr hunchbks_vh_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0,0,PULSE_LINE,0x03);
-	}
+	} };
 	
-	INTERRUPT_GEN( gmgalax_vh_interrupt )
+	public static InterruptHandlerPtr gmgalax_vh_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		// reset the cpu if the selected game changed
 		int new_game = input_port_6_r(0) & 0x01;
@@ -1467,5 +1467,5 @@ public class scramble
 	
 			cpu_set_reset_line(0, ASSERT_LINE);
 		}
-	}
+	} };
 }

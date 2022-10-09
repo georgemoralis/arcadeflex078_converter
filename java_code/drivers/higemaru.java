@@ -19,13 +19,13 @@ public class higemaru
 	
 	
 	
-	INTERRUPT_GEN( higemaru_interrupt )
+	public static InterruptHandlerPtr higemaru_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) 
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);	/* RST 08h */
 		else
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);	/* RST 10h */
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

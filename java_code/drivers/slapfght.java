@@ -202,7 +202,6 @@ public class slapfght
 	/* MCU */
 	
 	
-	INTERRUPT_GEN( getstar_interrupt );
 	
 	
 	

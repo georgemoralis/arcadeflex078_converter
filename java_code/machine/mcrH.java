@@ -29,8 +29,6 @@ public class mcrH
 	MACHINE_INIT( mcr68 );
 	MACHINE_INIT( zwackery );
 	
-	INTERRUPT_GEN( mcr_interrupt );
-	INTERRUPT_GEN( mcr68_interrupt );
 	
 	
 	WRITE16_HANDLER( mcr68_6840_upper_w );

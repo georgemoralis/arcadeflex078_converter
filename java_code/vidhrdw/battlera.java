@@ -439,7 +439,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	INTERRUPT_GEN( battlera_interrupt )
+	public static InterruptHandlerPtr battlera_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		static int last_line=0;
 	
@@ -465,5 +465,5 @@ public class battlera
 			bldwolf_vblank=0;
 			last_line=0;
 		}
-	}
+	} };
 }

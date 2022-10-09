@@ -23,7 +23,6 @@ WRITE16_HANDLER( cps2_objram2_w );
 DRIVER_INIT( cps1 );
 DRIVER_INIT( cps2 );
 
-INTERRUPT_GEN( cps1_qsound_interrupt );
 
 
 

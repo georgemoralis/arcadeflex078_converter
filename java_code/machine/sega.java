@@ -62,13 +62,13 @@ public class sega
 		}
 	}
 	
-	INTERRUPT_GEN( sega_interrupt )
+	public static InterruptHandlerPtr sega_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (input_port_5_r(0) & 0x01)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( sega_mult1_w )
 	{

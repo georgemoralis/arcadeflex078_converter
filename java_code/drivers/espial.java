@@ -28,13 +28,13 @@ public class espial
 	}
 	
 	
-	INTERRUPT_GEN( zodiac_master_interrupt )
+	public static InterruptHandlerPtr zodiac_master_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 			nmi_line_pulse();
 		else
 			irq0_line_hold();
-	}
+	} };
 	
 	
 	WRITE_HANDLER( zodiac_master_soundlatch_w )

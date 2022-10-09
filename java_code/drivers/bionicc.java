@@ -116,13 +116,13 @@ public class bionicc
 	
 	********************************************************************/
 	
-	INTERRUPT_GEN( bionicc_interrupt )
+	public static InterruptHandlerPtr bionicc_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) 
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	static MEMORY_READ16_START( readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },                /* 68000 ROM */

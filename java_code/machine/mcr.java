@@ -296,7 +296,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	INTERRUPT_GEN( mcr_interrupt )
+	public static InterruptHandlerPtr mcr_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* CTC line 2 is connected to VBLANK, which is once every 1/2 frame */
 		/* for the 30Hz interlaced display */
@@ -310,10 +310,10 @@ public class mcr
 			z80ctc_0_trg3_w(0, 1);
 			z80ctc_0_trg3_w(0, 0);
 		}
-	}
+	} };
 	
 	
-	INTERRUPT_GEN( mcr68_interrupt )
+	public static InterruptHandlerPtr mcr68_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* update the 6840 VBLANK clock */
 		if (!m6840_state[0].timer_active)
@@ -325,7 +325,7 @@ public class mcr
 		/* the timing of this is crucial for Blasted and Tri-Sports, which check the timing of */
 		/* VBLANK and 493 using counter 2 */
 		timer_set(TIME_IN_HZ(30) - mcr68_timing_factor, 0, v493_callback);
-	}
+	} };
 	
 	
 	

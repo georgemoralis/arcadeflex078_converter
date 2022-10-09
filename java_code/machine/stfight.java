@@ -101,21 +101,21 @@ public class stfight
 		cpu_setbank( 1, &ROM2[data<<14] );
 	}
 	
-	INTERRUPT_GEN( stfight_vb_interrupt )
+	public static InterruptHandlerPtr stfight_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 	    // Do a RST10
 	    cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);
-	}
+	} };
 	
 	/*
 	 *      CPU 1 timed interrupt - 30Hz???
 	 */
 	
-	INTERRUPT_GEN( stfight_interrupt_1 )
+	public static InterruptHandlerPtr stfight_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	{
 	    // Do a RST08
 	    cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);
-	}
+	} };
 	
 	/*
 	 *      Hardware handlers

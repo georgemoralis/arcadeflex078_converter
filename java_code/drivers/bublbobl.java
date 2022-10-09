@@ -146,7 +146,6 @@ public class bublbobl
 	/* vidhrdw/bublbobl.c */
 	
 	/* machine/bublbobl.c */
-	INTERRUPT_GEN( bublbobl_m68705_interrupt );
 	
 	
 	

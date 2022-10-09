@@ -147,11 +147,11 @@ public class slapfght
 	
 	
 	/* Generate interrups only if they have been enabled */
-	INTERRUPT_GEN( getstar_interrupt )
+	public static InterruptHandlerPtr getstar_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (getstar_sh_intenabled)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( getstar_port_04_w )
 	{

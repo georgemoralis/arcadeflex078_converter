@@ -68,23 +68,23 @@ public class gaplus
 	    int_enable_3 = 0;
 	}
 	
-	INTERRUPT_GEN( gaplus_interrupt_1 ) {
+	public static InterruptHandlerPtr gaplus_interrupt_1 = new InterruptHandlerPtr() {public void handler() {
 	
 		gaplus_starfield_update(); /* update starfields */
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( gaplus_interrupt_2 )
+	public static InterruptHandlerPtr gaplus_interrupt_2 = new InterruptHandlerPtr() {public void handler()
 	{
 	    if (int_enable_2)
 	    	cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( gaplus_interrupt_3 )
+	public static InterruptHandlerPtr gaplus_interrupt_3 = new InterruptHandlerPtr() {public void handler()
 	{
 	    if (int_enable_3)
 	    	cpu_set_irq_line(2, 0, HOLD_LINE);
-	}
+	} };
 	
 	WRITE_HANDLER( gaplus_reset_2_3_w )
 	{

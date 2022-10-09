@@ -23,7 +23,6 @@ public class ajax
 	
 	/* from machine/ajax.c */
 	MACHINE_INIT( ajax );
-	INTERRUPT_GEN( ajax_interrupt );
 	
 	/* from vidhrdw/ajax.c */
 	

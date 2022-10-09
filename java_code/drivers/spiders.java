@@ -177,7 +177,6 @@ public class spiders
 	/* MACHINE */
 	
 	MACHINE_INIT( spiders );
-	INTERRUPT_GEN( spiders_timed_irq );
 	
 	
 	/* Driver structure definition */

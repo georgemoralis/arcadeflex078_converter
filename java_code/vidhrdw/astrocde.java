@@ -198,7 +198,7 @@ public class astrocde
 		CurrentScan = next;
 	}
 	
-	INTERRUPT_GEN( wow_interrupt )
+	public static InterruptHandlerPtr wow_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		interrupt_common();
 	
@@ -206,13 +206,13 @@ public class astrocde
 	
 		if (interrupt_enable && (InterruptFlag & 0x08) && (CurrentScan == NextScanInt))
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, interrupt_vector);
-	}
+	} };
 	
 	/****************************************************************************
 	 * Gorf - Interrupt routine and Timer hack
 	 ****************************************************************************/
 	
-	INTERRUPT_GEN( gorf_interrupt )
+	public static InterruptHandlerPtr gorf_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		interrupt_common();
 	
@@ -224,7 +224,7 @@ public class astrocde
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, interrupt_vector & 0xf0);
 		else if (interrupt_enable && (InterruptFlag & 0x08) && (CurrentScan == NextScanInt))
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, interrupt_vector);
-	}
+	} };
 	
 	/* ======================================================================= */
 	

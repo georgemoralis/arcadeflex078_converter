@@ -964,7 +964,7 @@ public class namcona1
 		{ 0xfff000, 0xffffff, MWA16_RAM, &spriteram16 },
 	MEMORY_END
 	
-	INTERRUPT_GEN( namcona1_interrupt )
+	public static InterruptHandlerPtr namcona1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int level = cpu_getiloops(); /* 0,1,2,3,4 */
 		if( level==0 )
@@ -978,7 +978,7 @@ public class namcona1
 				cpu_set_irq_line(0, level+1, HOLD_LINE);
 			}
 		}
-	}
+	} };
 	
 	static struct NAMCONAinterface NAMCONA_interface =
 	{

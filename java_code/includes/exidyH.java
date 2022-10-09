@@ -28,6 +28,5 @@ void targ_sh_stop(void);
 
 
 
-INTERRUPT_GEN( exidy_vblank_interrupt );
 
 

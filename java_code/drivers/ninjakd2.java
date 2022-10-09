@@ -268,10 +268,10 @@ public class ninjakd2
 	}
 	
 	
-	INTERRUPT_GEN( ninjakd2_interrupt )
+	public static InterruptHandlerPtr ninjakd2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
-	}
+	} };
 	
 	READ_HANDLER( ninjakd2_bankselect_r )
 	{

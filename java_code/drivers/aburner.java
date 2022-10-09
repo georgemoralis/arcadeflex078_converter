@@ -871,12 +871,12 @@ public class aburner
 		sys16_interleave_sprite_data( 0x200000 );
 	}
 	
-	INTERRUPT_GEN( aburner_interrupt ){
+	public static InterruptHandlerPtr aburner_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( cpu_getiloops()!=0 )
 			irq2_line_hold(); /* (?) updates sound and inputs */
 		else
 			irq4_line_hold(); /* vblank */
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( aburner )
 	

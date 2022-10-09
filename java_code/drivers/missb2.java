@@ -21,7 +21,6 @@ public class missb2
 	/* vidhrdw/bublbobl.c */
 	
 	/* machine/bublbobl.c */
-	INTERRUPT_GEN( bublbobl_m68705_interrupt );
 	
 	
 	VIDEO_UPDATE( missb2 )

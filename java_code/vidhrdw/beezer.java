@@ -9,7 +9,7 @@ public class beezer
 	
 	static int scanline=0;
 	
-	INTERRUPT_GEN( beezer_interrupt )
+	public static InterruptHandlerPtr beezer_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		scanline = (scanline + 1) % 0x80;
 		via_0_ca2_w (0, scanline & 0x10);
@@ -17,7 +17,7 @@ public class beezer
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
-	}
+	} };
 	
 	VIDEO_UPDATE( beezer )
 	{

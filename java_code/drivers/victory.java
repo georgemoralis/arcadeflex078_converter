@@ -119,7 +119,6 @@ public class victory
 	
 	/* video driver data & functions */
 	
-	INTERRUPT_GEN( victory_vblank_interrupt );
 	
 	
 	

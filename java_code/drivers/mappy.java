@@ -56,8 +56,6 @@ public class mappy
 	/* machine driver data & functions */
 	MACHINE_INIT( mappy );
 	MACHINE_INIT( motos );
-	INTERRUPT_GEN( mappy_interrupt_1 );
-	INTERRUPT_GEN( mappy_interrupt_2 );
 	
 	
 	

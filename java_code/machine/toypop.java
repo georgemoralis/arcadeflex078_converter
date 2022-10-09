@@ -86,23 +86,23 @@ public class toypop
 		interrupt_enable_68k = 0;
 	}
 	
-	INTERRUPT_GEN( toypop_main_interrupt )
+	public static InterruptHandlerPtr toypop_main_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_mainCPU)
 			irq0_line_hold();
-	}
+	} };
 	
-	INTERRUPT_GEN( toypop_sound_interrupt )
+	public static InterruptHandlerPtr toypop_sound_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_sound)
 			irq0_line_hold();
-	}
+	} };
 	
-	INTERRUPT_GEN( toypop_m68000_interrupt )
+	public static InterruptHandlerPtr toypop_m68000_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (interrupt_enable_68k)
 			cpu_set_irq_line(2, 6, HOLD_LINE);
-	}
+	} };
 	
 	READ_HANDLER( toypop_customio_r )
 	{

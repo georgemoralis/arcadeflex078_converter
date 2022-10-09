@@ -208,9 +208,6 @@ public class xevious
 	
 	
 	/* XEVIOUS */
-	INTERRUPT_GEN( xevious_interrupt_1 );
-	INTERRUPT_GEN( xevious_interrupt_2 );
-	INTERRUPT_GEN( xevious_interrupt_3 );
 	MACHINE_INIT( xevious );
 	
 	
@@ -220,7 +217,6 @@ public class xevious
 	/* BATTLES */
 	
 	
-	INTERRUPT_GEN( battles_interrupt_4 );
 	
 	MACHINE_INIT( battles );
 	

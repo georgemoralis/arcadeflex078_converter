@@ -318,7 +318,7 @@ public class tp84
 		tilemap_draw(bitmap, &clip, fg_tilemap, 0, 0);
 	}
 	
-	INTERRUPT_GEN( tp84_6809_interrupt )
+	public static InterruptHandlerPtr tp84_6809_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		scanline = 255 - cpu_getiloops();
 	
@@ -326,5 +326,5 @@ public class tp84
 	
 		if (scanline == 255)
 			irq0_line_hold();
-	}
+	} };
 }

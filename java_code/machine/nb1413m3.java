@@ -65,7 +65,7 @@ public class nb1413m3
 		nb1413m3_nmi_clock = ((data & 0xf0) >> 4);
 	}
 	
-	INTERRUPT_GEN( nb1413m3_interrupt )
+	public static InterruptHandlerPtr nb1413m3_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0)
 		{
@@ -78,7 +78,7 @@ public class nb1413m3
 		{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	NVRAM_HANDLER( nb1413m3 )
 	{

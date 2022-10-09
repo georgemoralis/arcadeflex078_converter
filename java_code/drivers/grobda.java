@@ -21,8 +21,6 @@ public class grobda
 	/* custom IO chips functions */
 	
 	/* INT functions */
-	INTERRUPT_GEN( grobda_interrupt_1 );
-	INTERRUPT_GEN( grobda_interrupt_2 );
 	MACHINE_INIT( grobda );
 	
 	/* video functions */

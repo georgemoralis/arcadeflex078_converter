@@ -270,10 +270,10 @@ public class pbaction
 	};
 	
 	
-	INTERRUPT_GEN( pbaction_interrupt )
+	public static InterruptHandlerPtr pbaction_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0x02);	/* the CPU is in Interrupt Mode 2 */
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( pbaction )

@@ -329,7 +329,6 @@ typedef struct _ygv608 {
 } YGV608, *pYGV608;
 
 
-INTERRUPT_GEN( ygv608_timed_interrupt );
 
 READ16_HANDLER( ygv608_r );
 WRITE16_HANDLER( ygv608_w );

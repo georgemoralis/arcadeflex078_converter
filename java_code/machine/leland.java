@@ -480,12 +480,12 @@ public class leland
 	}
 	
 	
-	INTERRUPT_GEN( leland_master_interrupt )
+	public static InterruptHandlerPtr leland_master_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* check for coins here */
 		if ((readinputport(1) & 0x0e) != 0x0e)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, ASSERT_LINE);
-	}
+	} };
 	
 	
 	

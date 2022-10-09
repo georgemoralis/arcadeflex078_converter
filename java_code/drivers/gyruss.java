@@ -67,7 +67,6 @@ public class gyruss
 	
 	void konami1_decode_cpu2(void);
 	
-	INTERRUPT_GEN( gyruss_6809_interrupt );
 	
 	
 	

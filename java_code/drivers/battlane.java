@@ -134,7 +134,7 @@ public class battlane
 	};
 	
 	
-	INTERRUPT_GEN( battlane_cpu1_interrupt )
+	public static InterruptHandlerPtr battlane_cpu1_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* See note in battlane_cpu_command_w */
 	
@@ -143,7 +143,7 @@ public class battlane
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	
 	static InputPortPtr input_ports_battlane = new InputPortPtr(){ public void handler() { 

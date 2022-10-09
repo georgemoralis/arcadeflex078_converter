@@ -82,8 +82,8 @@ public class avalnche
 		discrete_sound_w(3, data & 0x3f);
 	}
 	
-	INTERRUPT_GEN( avalnche_interrupt )
+	public static InterruptHandlerPtr avalnche_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 }

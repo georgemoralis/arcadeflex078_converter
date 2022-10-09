@@ -27,11 +27,11 @@ public class drmicro
 	
 	static int drmicro_nmi_enable;
 	
-	INTERRUPT_GEN( drmicro_interrupt )
+	public static InterruptHandlerPtr drmicro_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (drmicro_nmi_enable)
 			 cpu_set_nmi_line(0, PULSE_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{	// bit2,3 unknown

@@ -109,7 +109,7 @@ public class blockade
 	/* Need to check for a coin on the interrupt, */
 	/* This will reset the cpu                    */
 	
-	INTERRUPT_GEN( blockade_interrupt )
+	public static InterruptHandlerPtr blockade_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		timer_suspendcpu(0, 0, SUSPEND_ANY_REASON);
 	
@@ -118,7 +118,7 @@ public class blockade
 			just_been_reset = 1;
 			cpu_set_reset_line(0,PULSE_LINE);
 		}
-	}
+	} };
 	
 	READ_HANDLER( blockade_input_port_0_r )
 	{

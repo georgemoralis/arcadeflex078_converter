@@ -72,7 +72,6 @@ public class gberet
 	
 	
 	
-	INTERRUPT_GEN( gberet_interrupt );
 	
 	
 	public static WriteHandlerPtr gberet_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)

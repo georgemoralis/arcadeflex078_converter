@@ -79,40 +79,14 @@ public class cpuintH
 	 *
 	 *************************************/
 	
-	INTERRUPT_GEN( nmi_line_pulse );
-	INTERRUPT_GEN( nmi_line_assert );
 	
-	INTERRUPT_GEN( irq0_line_hold );
-	INTERRUPT_GEN( irq0_line_pulse );
-	INTERRUPT_GEN( irq0_line_assert );
 	
-	INTERRUPT_GEN( irq1_line_hold );
-	INTERRUPT_GEN( irq1_line_pulse );
-	INTERRUPT_GEN( irq1_line_assert );
 	
-	INTERRUPT_GEN( irq2_line_hold );
-	INTERRUPT_GEN( irq2_line_pulse );
-	INTERRUPT_GEN( irq2_line_assert );
 	
-	INTERRUPT_GEN( irq3_line_hold );
-	INTERRUPT_GEN( irq3_line_pulse );
-	INTERRUPT_GEN( irq3_line_assert );
 	
-	INTERRUPT_GEN( irq4_line_hold );
-	INTERRUPT_GEN( irq4_line_pulse );
-	INTERRUPT_GEN( irq4_line_assert );
 	
-	INTERRUPT_GEN( irq5_line_hold );
-	INTERRUPT_GEN( irq5_line_pulse );
-	INTERRUPT_GEN( irq5_line_assert );
 	
-	INTERRUPT_GEN( irq6_line_hold );
-	INTERRUPT_GEN( irq6_line_pulse );
-	INTERRUPT_GEN( irq6_line_assert );
 	
-	INTERRUPT_GEN( irq7_line_hold );
-	INTERRUPT_GEN( irq7_line_pulse );
-	INTERRUPT_GEN( irq7_line_assert );
 	
 	
 	

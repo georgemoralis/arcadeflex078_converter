@@ -75,11 +75,11 @@ public class yiear
 		VLM5030_RST( ( data >> 2 ) & 1 );
 	} };
 	
-	INTERRUPT_GEN( yiear_nmi_interrupt )
+	public static InterruptHandlerPtr yiear_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* can't use nmi_line_pulse() because interrupt_enable_w() effects it */
 		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

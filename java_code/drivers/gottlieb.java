@@ -360,7 +360,7 @@ public class gottlieb
 		}
 	}
 	
-	INTERRUPT_GEN( gottlieb_interrupt )
+	public static InterruptHandlerPtr gottlieb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (access_time > 0) {
 			access_time--;
@@ -385,7 +385,7 @@ public class gottlieb
 			}
 		}
 		cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress reactor_readmem[]={

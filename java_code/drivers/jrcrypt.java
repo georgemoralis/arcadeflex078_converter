@@ -429,10 +429,10 @@ public class jrcrypt
 	doesn't use an interrupt vector */
 							/* (see Z80.c for details). */
 	
-	INTERRUPT_GEN( jrpacman_interrupt )
+	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		irq0_line_hold();
-	}
+	} };
 	
 	
 	

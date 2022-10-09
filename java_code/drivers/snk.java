@@ -234,17 +234,17 @@ public class snk
 	// see IRQ notes in drivers\marvins.c
 	static void irq_trigger_callback(int cpu) { cpu_set_irq_line(cpu, 0, HOLD_LINE); }
 	
-	INTERRUPT_GEN( snk_irq_AB )
+	public static InterruptHandlerPtr snk_irq_AB = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 		timer_set(TIME_IN_USEC(snk_irq_delay), 1, irq_trigger_callback);
-	}
+	} };
 	
-	INTERRUPT_GEN( snk_irq_BA )
+	public static InterruptHandlerPtr snk_irq_BA = new InterruptHandlerPtr() {public void handler()
 	{
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 		timer_set(TIME_IN_USEC(snk_irq_delay), 0, irq_trigger_callback);
-	}
+	} };
 	
 	// NMI handshakes between CPUs are determined to be much simpler
 	READ_HANDLER ( snk_cpuA_nmi_trigger_r ) { cpu_set_nmi_line(0, ASSERT_LINE); return 0; }

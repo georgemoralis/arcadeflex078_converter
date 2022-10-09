@@ -5,7 +5,6 @@
 
 
 /************* Machine stuff ****** machine/toaplan1.c *************/
-INTERRUPT_GEN( toaplan1_interrupt );
 WRITE16_HANDLER( toaplan1_intenable_w );
 READ16_HANDLER ( toaplan1_shared_r );
 WRITE16_HANDLER( toaplan1_shared_w );

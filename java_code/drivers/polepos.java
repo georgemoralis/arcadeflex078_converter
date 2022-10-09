@@ -77,8 +77,6 @@ public class polepos
 	/* from machine */
 	MACHINE_INIT( polepos );
 	WRITE16_HANDLER( polepos_z8002_nvi_enable_w );
-	INTERRUPT_GEN( polepos_z8002_1_interrupt );
-	INTERRUPT_GEN( polepos_z8002_2_interrupt );
 	READ16_HANDLER( polepos2_ic25_r );
 	
 	/* from sndhrdw */

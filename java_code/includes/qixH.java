@@ -34,7 +34,6 @@ public class qixH
 	
 	
 	
-	INTERRUPT_GEN( qix_vblank_start );
 	void qix_scanline_callback(int scanline);
 	
 	

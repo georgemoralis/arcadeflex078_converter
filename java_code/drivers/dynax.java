@@ -115,11 +115,11 @@ public class dynax
 		sprtmtch_update_irq();
 	}
 	
-	INTERRUPT_GEN( sprtmtch_vblank_interrupt )
+	public static InterruptHandlerPtr sprtmtch_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		dynax_vblank_irq = 1;
 		sprtmtch_update_irq();
-	}
+	} };
 	
 	void sprtmtch_sound_callback(int state)
 	{
@@ -2238,14 +2238,14 @@ public class dynax
 						Yarunara / Quiz TV Q&Q / Mahjong Angels
 	***************************************************************************/
 	
-	INTERRUPT_GEN( yarunara_clock_interrupt )
+	public static InterruptHandlerPtr yarunara_clock_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		dynax_sound_irq = 1;
 		sprtmtch_update_irq();
 	
 		dynax_sound_irq = 0;
 		sprtmtch_update_irq();
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( yarunara )
 	

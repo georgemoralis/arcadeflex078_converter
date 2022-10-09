@@ -8,7 +8,6 @@
 
 
 
-INTERRUPT_GEN( sega_interrupt );
 
 
 

@@ -38,7 +38,7 @@ public class m72
 		machine_init_m72_sound();
 	}
 	
-	INTERRUPT_GEN( m72_interrupt )
+	public static InterruptHandlerPtr m72_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		int line = 255 - cpu_getiloops();
 	
@@ -62,7 +62,7 @@ public class m72
 			 */
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irqbase+2);
 		}
-	}
+	} };
 	
 	
 	

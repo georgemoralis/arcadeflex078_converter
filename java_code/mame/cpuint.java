@@ -360,19 +360,19 @@ public class cpuint
 	 *
 	 *************************************/
 	
-	INTERRUPT_GEN( nmi_line_pulse )
+	public static InterruptHandlerPtr nmi_line_pulse = new InterruptHandlerPtr() {public void handler()
 	{
 		int cpunum = cpu_getactivecpu();
 		if (interrupt_enable[cpunum])
 			cpu_set_irq_line(cpunum, IRQ_LINE_NMI, PULSE_LINE);
-	}
+	} };
 	
-	INTERRUPT_GEN( nmi_line_assert )
+	public static InterruptHandlerPtr nmi_line_assert = new InterruptHandlerPtr() {public void handler()
 	{
 		int cpunum = cpu_getactivecpu();
 		if (interrupt_enable[cpunum])
 			cpu_set_irq_line(cpunum, IRQ_LINE_NMI, ASSERT_LINE);
-	}
+	} };
 	
 	
 	
@@ -420,37 +420,37 @@ public class cpuint
 	 *
 	 *************************************/
 	
-	INTERRUPT_GEN( irq0_line_hold )		{ irqn_line_hold(0); }
-	INTERRUPT_GEN( irq0_line_pulse )	{ irqn_line_pulse(0); }
-	INTERRUPT_GEN( irq0_line_assert )	{ irqn_line_assert(0); }
+	public static InterruptHandlerPtr irq0_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(0); } };
+	public static InterruptHandlerPtr irq0_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(0); } };
+	public static InterruptHandlerPtr irq0_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(0); } };
 	
-	INTERRUPT_GEN( irq1_line_hold )		{ irqn_line_hold(1); }
-	INTERRUPT_GEN( irq1_line_pulse )	{ irqn_line_pulse(1); }
-	INTERRUPT_GEN( irq1_line_assert )	{ irqn_line_assert(1); }
+	public static InterruptHandlerPtr irq1_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(1); } };
+	public static InterruptHandlerPtr irq1_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(1); } };
+	public static InterruptHandlerPtr irq1_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(1); } };
 	
-	INTERRUPT_GEN( irq2_line_hold )		{ irqn_line_hold(2); }
-	INTERRUPT_GEN( irq2_line_pulse )	{ irqn_line_pulse(2); }
-	INTERRUPT_GEN( irq2_line_assert )	{ irqn_line_assert(2); }
+	public static InterruptHandlerPtr irq2_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(2); } };
+	public static InterruptHandlerPtr irq2_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(2); } };
+	public static InterruptHandlerPtr irq2_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(2); } };
 	
-	INTERRUPT_GEN( irq3_line_hold )		{ irqn_line_hold(3); }
-	INTERRUPT_GEN( irq3_line_pulse )	{ irqn_line_pulse(3); }
-	INTERRUPT_GEN( irq3_line_assert )	{ irqn_line_assert(3); }
+	public static InterruptHandlerPtr irq3_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(3); } };
+	public static InterruptHandlerPtr irq3_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(3); } };
+	public static InterruptHandlerPtr irq3_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(3); } };
 	
-	INTERRUPT_GEN( irq4_line_hold )		{ irqn_line_hold(4); }
-	INTERRUPT_GEN( irq4_line_pulse )	{ irqn_line_pulse(4); }
-	INTERRUPT_GEN( irq4_line_assert )	{ irqn_line_assert(4); }
+	public static InterruptHandlerPtr irq4_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(4); } };
+	public static InterruptHandlerPtr irq4_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(4); } };
+	public static InterruptHandlerPtr irq4_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(4); } };
 	
-	INTERRUPT_GEN( irq5_line_hold )		{ irqn_line_hold(5); }
-	INTERRUPT_GEN( irq5_line_pulse )	{ irqn_line_pulse(5); }
-	INTERRUPT_GEN( irq5_line_assert )	{ irqn_line_assert(5); }
+	public static InterruptHandlerPtr irq5_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(5); } };
+	public static InterruptHandlerPtr irq5_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(5); } };
+	public static InterruptHandlerPtr irq5_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(5); } };
 	
-	INTERRUPT_GEN( irq6_line_hold )		{ irqn_line_hold(6); }
-	INTERRUPT_GEN( irq6_line_pulse )	{ irqn_line_pulse(6); }
-	INTERRUPT_GEN( irq6_line_assert )	{ irqn_line_assert(6); }
+	public static InterruptHandlerPtr irq6_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(6); } };
+	public static InterruptHandlerPtr irq6_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(6); } };
+	public static InterruptHandlerPtr irq6_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(6); } };
 	
-	INTERRUPT_GEN( irq7_line_hold )		{ irqn_line_hold(7); }
-	INTERRUPT_GEN( irq7_line_pulse )	{ irqn_line_pulse(7); }
-	INTERRUPT_GEN( irq7_line_assert )	{ irqn_line_assert(7); }
+	public static InterruptHandlerPtr irq7_line_hold = new InterruptHandlerPtr() {public void handler()		{ irqn_line_hold(7); } };
+	public static InterruptHandlerPtr irq7_line_pulse = new InterruptHandlerPtr() {public void handler()	{ irqn_line_pulse(7); } };
+	public static InterruptHandlerPtr irq7_line_assert = new InterruptHandlerPtr() {public void handler()	{ irqn_line_assert(7); } };
 	
 	
 	

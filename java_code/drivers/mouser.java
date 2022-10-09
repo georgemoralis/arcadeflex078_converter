@@ -34,11 +34,11 @@ public class mouser
 		mouser_nmi_enable = data;
 	}
 	
-	INTERRUPT_GEN( mouser_nmi_interrupt )
+	public static InterruptHandlerPtr mouser_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if ((mouser_nmi_enable & 1) == 1)
 			nmi_line_pulse();
-	}
+	} };
 	
 	/* Sound CPU interrupted on write */
 	

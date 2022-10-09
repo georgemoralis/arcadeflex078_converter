@@ -21,14 +21,14 @@ public class shaolins
 	
 	
 	
-	INTERRUPT_GEN( shaolins_interrupt )
+	public static InterruptHandlerPtr shaolins_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if (cpu_getiloops() % 2)
 		{
 			if (shaolins_nmi_enable & 0x02) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
-	}
+	} };
 	
 	
 	

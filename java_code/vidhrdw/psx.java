@@ -3462,11 +3462,11 @@ public class psx
 		return data;
 	}
 	
-	INTERRUPT_GEN( psx_vblank )
+	public static InterruptHandlerPtr psx_vblank = new InterruptHandlerPtr() {public void handler()
 	{
 		m_n_gpustatus ^= ( 1L << 31 );
 		psx_irq_set( 0x0001 );
-	}
+	} };
 	
 	void psx_gpu_reset( void )
 	{
