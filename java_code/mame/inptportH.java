@@ -378,7 +378,7 @@ public class inptportH
 		STR_TOTAL
 	};
 	
-	enum { IKT_STD, IKT_IPT, IKT_IPT_EXT, IKT_OSD_KEY, IKT_OSD_JOY };
+	static final int IKT_STD = 0, IKT_IPT = 1, IKT_IPT_EXT = 2, IKT_OSD_KEY = 3, IKT_OSD_JOY = 4;
 	
 	#define DEF_STR(str_num) (ipdn_defaultstrings[STR_##str_num])
 	

@@ -23,7 +23,7 @@ public class popeye
 	static struct mame_bitmap *tmpbitmap2;
 	static int invertmask;
 	static int bitmap_type;
-	enum { TYPE_SKYSKIPR, TYPE_POPEYE };
+	static final int TYPE_SKYSKIPR = 0, TYPE_POPEYE = 1;
 	
 	#define BGRAM_SIZE 0x2000
 	

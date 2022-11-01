@@ -19,8 +19,8 @@ public class convertMame {
     static final int WRITE_HANDLER8 = 6;
     static final int INPUTPORTS = 7;
     static final int INTERRUPT = 8;
-    static final int PALETTE_INIT=9;
-    static final int VIDEO_UPDATE=10;
+    static final int PALETTE_INIT = 9;
+    static final int VIDEO_UPDATE = 10;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -186,7 +186,36 @@ public class convertMame {
                         sUtil.skipLine();
                         continue;
                     }
-                    Convertor.inpos = i;
+                    if (sUtil.getToken("enum")) {
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != '{') {
+                            Convertor.inpos = i;
+                        } else {
+                            sUtil.skipSpace();
+                            int i5 = 0;
+                            do {
+                                Convertor.token[(i5++)] = sUtil.parseToken();
+                                sUtil.skipSpace();
+                                c = sUtil.parseChar();
+                                if ((c != '}') && (c != ',')) {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                sUtil.skipSpace();
+                            } while (c == ',');
+                            if (sUtil.parseChar() != ';') {
+                                Convertor.inpos = i;
+                            } else {
+                                sUtil.putString("static final int ");
+                                for (int i6 = 0; i6 < i5; i6++) {
+                                    sUtil.putString(Convertor.token[i6] + " = " + i6);
+                                    sUtil.putString(i6 == i5 - 1 ? ";" : ", ");
+                                }
+                                continue;
+                            }
+                        }
+                    } 
+                    Convertor.inpos=i;
                     break;
                 }
                 case 'W': {
@@ -241,9 +270,7 @@ public class convertMame {
                         {
                             sUtil.skipLine();
                             continue;
-                        }
-                        else
-                        {
+                        } else {
                             sUtil.putString("public static VideoUpdateHandlerPtr video_update_" + Convertor.token[0] + "  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)");
                             type = VIDEO_UPDATE;
                             i3 = -1;
@@ -291,7 +318,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT || type==VIDEO_UPDATE) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE) {
                         i3++;
                     }
                 }
@@ -307,7 +334,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT || type==VIDEO_UPDATE) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type == PALETTE_INIT || type == VIDEO_UPDATE) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -320,6 +347,10 @@ public class convertMame {
                 }
                 case 'M': {
                     i = Convertor.inpos;
+                    if (sUtil.getToken("videoram_size")) {
+                        sUtil.putString((new StringBuilder()).append("videoram_size[0]").toString());
+                        continue;
+                    }
                     if (!sUtil.getToken("MEMORY_END")) {
                         Convertor.inpos = i;
                         break;
@@ -362,8 +393,7 @@ public class convertMame {
                         {
                             sUtil.skipLine();
                             continue;
-                        }
-                        else {
+                        } else {
                             sUtil.putString("public static PaletteInitHandlerPtr palette_init_" + Convertor.token[0] + "  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)");
                             type = PALETTE_INIT;
                             i3 = -1;

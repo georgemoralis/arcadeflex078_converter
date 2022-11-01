@@ -18,7 +18,7 @@ public class m79amb
 	
 	
 	/* palette colors (see drivers/8080bw.c) */
-	enum { BLACK, WHITE };
+	static final int BLACK = 0, WHITE = 1;
 	
 	
 	static unsigned char mask = 0;
