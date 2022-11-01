@@ -221,7 +221,7 @@ public class vigilant
 						color,
 						0,0,
 						sx,sy,
-						&Machine.visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
+						Machine.visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
 			}
 		}
 	}
@@ -354,8 +354,8 @@ public class vigilant
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
-		draw_sprites(bitmap,&Machine.visible_area);
+		draw_sprites(bitmap,Machine.visible_area);
 	} };
 }

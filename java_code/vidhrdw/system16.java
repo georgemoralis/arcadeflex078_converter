@@ -108,7 +108,7 @@ public class system16
 				0,
 				0,0,
 				x+digit*6,y,
-				&Machine.visible_area,TRANSPARENCY_NONE,0);
+				Machine.visible_area,TRANSPARENCY_NONE,0);
 			data = (data<<4)&0xffff;
 		}
 	}

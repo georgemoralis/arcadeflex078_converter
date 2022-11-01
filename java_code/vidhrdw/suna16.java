@@ -199,7 +199,7 @@ public class suna16
 								attr + (color_bank ? 0x10 : 0),
 								tile_flipx, tile_flipy,
 								sx, sy,
-								&Machine.visible_area,TRANSPARENCY_PEN,15	);
+								Machine.visible_area,TRANSPARENCY_PEN,15	);
 	
 					tile_x += tile_xinc;
 				}
@@ -223,7 +223,7 @@ public class suna16
 	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* I believe background is black */
-		fillbitmap(bitmap,get_black_pen(),&Machine.visible_area);
+		fillbitmap(bitmap,get_black_pen(),Machine.visible_area);
 		suna16_draw_sprites(bitmap);
 	} };
 }

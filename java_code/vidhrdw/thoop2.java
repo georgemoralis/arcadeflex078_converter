@@ -207,7 +207,7 @@ public class thoop2
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							color,xflip,yflip,
 							sx-0x0f+x*8,sy+y*8,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}

@@ -351,7 +351,7 @@ public class polepos
 			roadpal = polepos_road16_memory[yoffs] & 15;
 	
 			/* this becomes the palette base for the scanline */
-			colortable = &Machine.remapped_colortable[0x1000 + (roadpal << 6)];
+			colortable = Machine.remapped_colortable[0x1000 + (roadpal << 6)];
 	
 			/* now fetch the horizontal scroll offset for this scanline */
 			xoffs = polepos_road16_memory[0x380 + (y & 0x7f)] & 0x3ff;
@@ -424,7 +424,7 @@ public class polepos
 			if (vpos >= 128) color |= 0x40;
 			drawgfxzoom(bitmap, gfx,
 					 code, color, hflip, 0, hpos, vpos,
-					 &Machine.visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
+					 Machine.visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
 		}
 	}
 	
@@ -442,7 +442,7 @@ public class polepos
 				if (y >= 16) color |= 0x40;
 				drawgfx(bitmap, Machine.gfx[0],
 						 code, color, 0, 0, 8*x, 8*y,
-						 &Machine.visible_area, TRANSPARENCY_COLOR, 0);
+						 Machine.visible_area, TRANSPARENCY_COLOR, 0);
 			}
 	
 		/* Now draw the shift if selected on the fake dipswitch */
@@ -453,20 +453,20 @@ public class polepos
 				/* L */
 				drawgfx(bitmap, Machine.gfx[0],
 						 0x15, 0, 0, 0, 30*8-1, 29*8,
-						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine.visible_area, TRANSPARENCY_PEN, 0);
 				/* O */
 				drawgfx(bitmap, Machine.gfx[0],
 						 0x18, 0, 0, 0, 31*8-1, 29*8,
-						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine.visible_area, TRANSPARENCY_PEN, 0);
 			} else {
 				/* H */
 				drawgfx(bitmap, Machine.gfx[0],
 						 0x11, 0, 0, 0, 30*8-1, 29*8,
-						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine.visible_area, TRANSPARENCY_PEN, 0);
 				/* I */
 				drawgfx(bitmap, Machine.gfx[0],
 						 0x12, 0, 0, 0, 31*8-1, 29*8,
-						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine.visible_area, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}

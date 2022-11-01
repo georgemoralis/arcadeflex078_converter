@@ -2283,7 +2283,7 @@ public class taitoic
 				sx, sy,
 				zx, 0, 0, zy,
 				0,					/* why no wraparound ?? */
-				&Machine.visible_area,
+				Machine.visible_area,
 				TRANSPARENCY_COLOR, 0, priority);
 		}
 	}

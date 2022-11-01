@@ -129,10 +129,10 @@ public class wiping
 						colorram[offs] & 0x3f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 	        	}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Note, we're counting up on purpose ! */
 		/* This way the vacuum cleaner is always on top */
@@ -159,7 +159,7 @@ public class wiping
 				spriteram.read(offs+1)& 0x3f,
 				flipx,flipy,
 				sx,sy,
-				&Machine.visible_area,TRANSPARENCY_COLOR,0x1f);
+				Machine.visible_area,TRANSPARENCY_COLOR,0x1f);
 		}
 	
 		/* redraw high priority chars */
@@ -199,7 +199,7 @@ public class wiping
 						colorram[offs] & 0x3f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 	        	}
 		}
 	

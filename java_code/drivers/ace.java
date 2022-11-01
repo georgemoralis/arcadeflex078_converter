@@ -80,7 +80,7 @@ public class ace
 		}
 	
 		/* first of all, fill the screen with the background color */
-		fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 	
 	
 			drawgfx(bitmap,Machine.gfx[1],
@@ -88,21 +88,21 @@ public class ace
 					0,
 					0,0,
 					objpos[0],objpos[1],
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 			drawgfx(bitmap,Machine.gfx[2],
 					0,
 					0,
 					0,0,
 					objpos[2],objpos[3],
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 			drawgfx(bitmap,Machine.gfx[3],
 					0,
 					0,
 					0,0,
 					objpos[4],objpos[5],
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		for (offs = 0; offs < 8; offs++)
 		{
@@ -111,7 +111,7 @@ public class ace
 					0,
 					0,0,
 					10*8+offs*16,256-16, /* ?? */
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	} };
 	

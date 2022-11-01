@@ -198,7 +198,7 @@ public class glass
 			drawgfx(bitmap,gfx,number,
 					0x10 + (color & 0x0f),xflip,yflip,
 					sx-0x0f,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -217,7 +217,7 @@ public class glass
 		tilemap_set_scrollx(pant[1], 0, glass_vregs[3]);
 	
 		/* draw layers + sprites */
-		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
+		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 		copybitmap(bitmap,screen,0,0,0x18,0x24,cliprect,TRANSPARENCY_NONE,0);
 		tilemap_draw(bitmap,cliprect,pant[1],0,0);
 		tilemap_draw(bitmap,cliprect,pant[0],0,0);

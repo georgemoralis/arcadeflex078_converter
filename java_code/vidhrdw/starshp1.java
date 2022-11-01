@@ -434,12 +434,12 @@ public class starshp1
 		if (rect.max_y > helper.height - 1)
 			rect.max_y = helper.height - 1;
 	
-		fillbitmap(helper, Machine.pens[0], &Machine.visible_area);
+		fillbitmap(helper, Machine.pens[0], Machine.visible_area);
 	
 		if (starshp1_attract == 0)
-			draw_spaceship(helper, &Machine.visible_area);
+			draw_spaceship(helper, Machine.visible_area);
 	
-		if (circle_collision(&Machine.visible_area))
+		if (circle_collision(Machine.visible_area))
 		{
 			starshp1_collision_latch |= 1;
 		}
@@ -451,7 +451,7 @@ public class starshp1
 		{
 			starshp1_collision_latch |= 4;
 		}
-		if (spaceship_collision(helper, &Machine.visible_area))
+		if (spaceship_collision(helper, Machine.visible_area))
 		{
 			starshp1_collision_latch |= 8;
 		}

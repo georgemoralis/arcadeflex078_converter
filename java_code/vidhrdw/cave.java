@@ -822,7 +822,7 @@ public class cave
 					if(!mame_get_performance_info().partial_updates_this_frame)
 					{
 						if(!(sprite_zbuf_baseval += MAX_SPRITE_NUM))
-							fillbitmap(sprite_zbuf,0,&Machine.visible_area);
+							fillbitmap(sprite_zbuf,0,Machine.visible_area);
 					}
 					break;
 	
@@ -831,7 +831,7 @@ public class cave
 					if(!mame_get_performance_info().partial_updates_this_frame)
 					{
 						if(!(sprite_zbuf_baseval += MAX_SPRITE_NUM))
-							fillbitmap(sprite_zbuf,0,&Machine.visible_area);
+							fillbitmap(sprite_zbuf,0,Machine.visible_area);
 					}
 					break;
 	

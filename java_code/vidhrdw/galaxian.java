@@ -1284,18 +1284,18 @@ public class galaxian
 	static void galaxian_draw_background(struct mame_bitmap *bitmap)
 	{
 		/* plain black background */
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	}
 	
 	static void scramble_draw_background(struct mame_bitmap *bitmap)
 	{
 		if (background_enable != 0)
 		{
-			fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE],Machine.visible_area);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		}
 	}
 	
@@ -1303,7 +1303,7 @@ public class galaxian
 	{
 		int color = (background_blue << 2) | (background_green << 1) | background_red;
 	
-		fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE + color],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE + color],Machine.visible_area);
 	}
 	
 	static void frogger_draw_background(struct mame_bitmap *bitmap)
@@ -1381,7 +1381,7 @@ public class galaxian
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		}
 	}
 	
@@ -1406,7 +1406,7 @@ public class galaxian
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		}
 	}
 	

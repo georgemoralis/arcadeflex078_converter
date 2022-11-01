@@ -254,7 +254,7 @@ public class pengo
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 	        }
 		}
 	
@@ -369,7 +369,7 @@ public class pengo
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 	        }
 		}
 	

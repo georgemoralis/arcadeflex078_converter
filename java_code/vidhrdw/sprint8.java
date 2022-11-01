@@ -159,11 +159,11 @@ public class sprint8
 		int x;
 		int y;
 	
-		tilemap_draw(helper2, &Machine.visible_area, tilemap2, 0, 0);
+		tilemap_draw(helper2, Machine.visible_area, tilemap2, 0, 0);
 	
-		fillbitmap(helper1, 16, &Machine.visible_area);
+		fillbitmap(helper1, 16, Machine.visible_area);
 	
-		draw_sprites(helper1, &Machine.visible_area);
+		draw_sprites(helper1, Machine.visible_area);
 	
 		for (y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++)
 		{

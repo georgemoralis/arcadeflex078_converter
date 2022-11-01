@@ -86,6 +86,6 @@ public class dotrikun
 			for (offs = 0; offs < videoram_size[0]; offs++)
 				dotrikun_videoram_w(offs,videoram.read(offs));
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

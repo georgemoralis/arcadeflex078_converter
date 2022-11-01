@@ -237,7 +237,7 @@ public class exedexes
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
@@ -247,11 +247,11 @@ public class exedexes
 		if (sc2on != 0)
 		{
 			tilemap_set_scrollx(bg_tilemap, 0, ((exedexes_bg_scroll[1]) << 8) + exedexes_bg_scroll[0]);
-			tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+			fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 		}
 	
 		exedexes_draw_sprites(bitmap, 1);
@@ -260,14 +260,14 @@ public class exedexes
 		{
 			tilemap_set_scrollx(fg_tilemap, 0, ((exedexes_nbg_yscroll[1]) << 8) + exedexes_nbg_yscroll[0]);
 			tilemap_set_scrolly(fg_tilemap, 0, ((exedexes_nbg_xscroll[1]) << 8) + exedexes_nbg_xscroll[0]);
-			tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+			tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		}
 		
 		exedexes_draw_sprites(bitmap, 0);
 	
 		if (chon != 0)
 		{
-			tilemap_draw(bitmap, &Machine.visible_area, tx_tilemap, 0, 0);
+			tilemap_draw(bitmap, Machine.visible_area, tx_tilemap, 0, 0);
 		}
 	} };
 	

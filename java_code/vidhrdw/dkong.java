@@ -275,7 +275,7 @@ public class dkong
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							!(spriteram.read(offs + 2)& 0x80),!(spriteram.read(offs + 1)& 0x80),
 							x,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
 					drawgfx(bitmap,Machine.gfx[1],
@@ -283,7 +283,7 @@ public class dkong
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x-256,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
@@ -292,7 +292,7 @@ public class dkong
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
 					drawgfx(bitmap,Machine.gfx[1],
@@ -300,7 +300,7 @@ public class dkong
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x+256,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -341,14 +341,14 @@ public class dkong
 	{
 		palette_set_color(256,0xff,0x00,0x00);	/* stars */
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		draw_grid(bitmap);
 		draw_sprites(bitmap, 0x40, 1);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, 0x40, 1);
 	} };
 	
@@ -356,7 +356,7 @@ public class dkong
 	{
 		int offs;
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 4)
@@ -368,14 +368,14 @@ public class dkong
 						(spriteram.read(offs + 1)& 0x0f) + 16 * palette_bank,
 						spriteram.read(offs + 1)& 0x80,spriteram.read(offs + 1)& 0x40,
 						spriteram.read(offs + 3)- 8,240 - spriteram.read(offs)+ 8,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_spclforc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	
 		/* it uses spriteram.read(offs + 2)& 0x10 for sprite bank */
 		draw_sprites(bitmap, 0x10, 3);

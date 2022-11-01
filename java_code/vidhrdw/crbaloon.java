@@ -139,7 +139,7 @@ public class crbaloon
 				15,
 				0,0,
 				bx,by,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 	    crbaloon_collision = 0;
 	
@@ -171,12 +171,12 @@ public class crbaloon
 				(spritectrl[0] & 0xf0) >> 4,
 				0,0,
 				bx,by,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		crbaloon_draw_sprites(bitmap);
 	} };
 }

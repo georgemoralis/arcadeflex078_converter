@@ -698,7 +698,7 @@ public class namcos1
 		if (update_status & UPDATE_TIED && update_status & USE_SP_BUFFER)
 			memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
 	
-		namcos1_draw_screen(Machine.scrbitmap, &Machine.visible_area);
+		namcos1_draw_screen(Machine.scrbitmap, Machine.visible_area);
 	} };
 	
 	public static WriteHandlerPtr namcos1_sub_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)

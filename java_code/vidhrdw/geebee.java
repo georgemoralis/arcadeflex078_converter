@@ -171,7 +171,7 @@ public class geebee
 				drawgfx(tmpbitmap,Machine.gfx[0],
 						code,color,
 						geebee_inv,geebee_inv,sx,sy,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);

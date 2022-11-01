@@ -809,7 +809,7 @@ public class ygv608
 		{
 			// If the background tilemap is disabled, we need to clear the bitmap to black
 			fillbitmap (work_bitmap,Machine.pens[0],cliprect);
-	//		fillbitmap (work_bitmap,1,&Machine.visible_area);
+	//		fillbitmap (work_bitmap,1,Machine.visible_area);
 		}
 		else
 	#endif
@@ -849,7 +849,7 @@ public class ygv608
 	  // - look at why this is the case?!?
 	  fillbitmap( work_bitmap,
 	              Machine.pens[0],
-	              &Machine.visible_area );
+	              Machine.visible_area );
 	#endif
 	
 		if ((ygv608.regs.s.r11 & r11_prm) == PRM_ASBDEX ||

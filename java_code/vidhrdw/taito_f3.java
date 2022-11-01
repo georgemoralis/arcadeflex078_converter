@@ -1483,7 +1483,7 @@ public class taito_f3
 			UINT32 orient,
 			int skip_layer_num)
 	{
-		pen_t *clut = &Machine.remapped_colortable[0];
+		pen_t *clut = Machine.remapped_colortable[0];
 		UINT32 bgcolor=clut[0];
 		int length;
 	

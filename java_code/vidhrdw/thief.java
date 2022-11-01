@@ -195,7 +195,7 @@ public class thief
 				dirty[offs] = 0;
 			}
 		}
-		copybitmap(bitmap,page,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,page,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	/***************************************************************************/

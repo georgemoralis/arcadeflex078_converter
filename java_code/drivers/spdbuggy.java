@@ -671,7 +671,7 @@ public class spdbuggy
 	#if 0
 		unsigned char *RAM = memory_region( REGION_CPU1 );
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		for (i = 0; i < 0x1000; i+=2)
 		{
 			drawgfx(bitmap,Machine.gfx[1],
@@ -679,7 +679,7 @@ public class spdbuggy
 					0,
 					0, 0,
 					((i/2)%FG_NX)*8,((i/2)/FG_NX)*8,
-					&Machine.drv.visible_area,TRANSPARENCY_PEN,0);
+					Machine.drv.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	

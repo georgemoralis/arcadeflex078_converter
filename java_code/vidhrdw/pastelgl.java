@@ -322,7 +322,7 @@ public class pastelgl
 	
 		if (pastelgl_dispflag != 0)
 		{
-			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{

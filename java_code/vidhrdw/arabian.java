@@ -383,7 +383,7 @@ public class arabian
 	
 	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pen_t *colortable = &Machine.remapped_colortable[(arabian_video_control >> 3) << 8];
+		pen_t *colortable = Machine.remapped_colortable[(arabian_video_control >> 3) << 8];
 		int y;
 	
 		/* render the screen from the bitmap */

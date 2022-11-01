@@ -197,12 +197,12 @@ public class circus
 				0,
 				0,0,
 				clown_y,clown_x,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_circus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		circus_draw_fg(bitmap);
 	} };
 	
@@ -246,12 +246,12 @@ public class circus
 				0,
 				0,0,
 				clown_y+8,clown_x+8, /* Y is horizontal position */
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_robotbwl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		robotbwl_draw_scoreboard(bitmap);
 		robotbwl_draw_bowling_alley(bitmap);
 		robotbwl_draw_ball(bitmap);
@@ -264,12 +264,12 @@ public class circus
 			0,
 			0,0,
 			clown_y,clown_x, /* Y is horizontal position */
-			&Machine.visible_area,TRANSPARENCY_PEN,0);
+			Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_crash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		crash_draw_car(bitmap);
 	} };
 	
@@ -286,7 +286,7 @@ public class circus
 		int collision, eax, edx;
 	
 		gfx = Machine.gfx[0];
-		clip = &Machine.visible_area;
+		clip = Machine.visible_area;
 	
 		code = clown_z;
 		color = 0;
@@ -355,7 +355,7 @@ public class circus
 	
 	public static VideoUpdateHandlerPtr video_update_ripcord  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		ripcord_draw_skydiver(bitmap);
 	} };
 }

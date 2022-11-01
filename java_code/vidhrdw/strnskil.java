@@ -132,7 +132,7 @@ public class strnskil
 				code, color,
 				flipx, flipy,
 				px, py,
-				&Machine.visible_area,
+				Machine.visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
@@ -157,7 +157,7 @@ public class strnskil
 			}
 		}
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		strnskil_draw_sprites(bitmap);
 	} };
 }

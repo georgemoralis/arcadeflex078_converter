@@ -405,7 +405,7 @@ public class cninja
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine.visible_area,trans,0,0);
+							Machine.visible_area,trans,0,0);
 				}
 			}
 	
@@ -439,7 +439,7 @@ public class cninja
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
 		if (deco16_raster_display_position != 0)
 			raster_pf3_draw(bitmap,cliprect,0,2);

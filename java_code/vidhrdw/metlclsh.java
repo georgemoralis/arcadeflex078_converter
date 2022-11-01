@@ -225,15 +225,15 @@ public class metlclsh
 				if (sizey != 0)
 				{
 					drawgfx(bitmap,gfx, code & ~1, color, flipx,flipy,
-							sx, sy + (flipy ? 0 : -16) + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx, sy + (flipy ? 0 : -16) + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					drawgfx(bitmap,gfx, code |  1, color, flipx,flipy,
-							sx,sy + (flipy ? -16 : 0) + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + (flipy ? -16 : 0) + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
 					drawgfx(bitmap,gfx, code, color, flipx,flipy,
-							sx,sy + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}

@@ -272,9 +272,9 @@ public class kingobox
 	public static VideoUpdateHandlerPtr video_update_kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		kingofb_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 	
 	/* Ring King */
@@ -339,8 +339,8 @@ public class kingobox
 	public static VideoUpdateHandlerPtr video_update_ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		ringking_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

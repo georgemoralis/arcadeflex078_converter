@@ -100,7 +100,7 @@ public class ambush
 					(col & 0x0f) | ((*ambush_colorbank & 0x03) << 4),
 					flip_screen,flip_screen,
 					8*sx, (8*sy + scroll) & 0xff,
-					&Machine.visible_area,transparency,0);
+					Machine.visible_area,transparency,0);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class ambush
 		int offs;
 	
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 		/* Draw the background priority characters */
@@ -178,7 +178,7 @@ public class ambush
 					code, col | ((*ambush_colorbank & 0x03) << 4),
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	

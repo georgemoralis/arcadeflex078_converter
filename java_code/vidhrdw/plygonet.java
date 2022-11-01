@@ -108,7 +108,7 @@ public class plygonet
 	VIDEO_UPDATE(polygonet_vh_screenrefresh)
 	{
 		fillbitmap(priority_bitmap, 0, NULL);
-		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
+		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 	
 		tilemap_draw(bitmap, cliprect, ttl_tilemap, 0, 1<<0);
 	}

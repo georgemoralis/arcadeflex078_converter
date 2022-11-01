@@ -148,14 +148,14 @@ public class pbaction
 					spriteram.read(offs + 1)& 0x0f,
 					flipx,flipy,
 					sx + (flip_screen ? scroll : -scroll), sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_pbaction  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		pbaction_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

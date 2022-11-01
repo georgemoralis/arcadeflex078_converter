@@ -101,19 +101,19 @@ public class nitedrvr
 			drawgfx(bitmap,Machine.gfx[0],
 					gear_buf[offs],0,
 					0,0,(offs)*8,31*8,
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* track indicator - not a part of the original game!!! */
 		for (offs = 0; offs < 6; offs++)
 			drawgfx(bitmap,Machine.gfx[0],
 					track_buf[offs + 6*nitedrvr_track],0,
 					0,0,(offs+26)*8,31*8,
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		nitedrvr_draw_road(bitmap);
 		//nitedrvr_draw_hacks(bitmap);
 	} };

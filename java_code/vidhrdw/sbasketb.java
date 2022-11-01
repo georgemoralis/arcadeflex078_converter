@@ -177,7 +177,7 @@ public class sbasketb
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 			}
 		}
@@ -185,7 +185,7 @@ public class sbasketb
 	
 	public static VideoUpdateHandlerPtr video_update_sbasketb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		sbasketb_draw_sprites(bitmap);
 	} };
 }

@@ -143,7 +143,7 @@ public class srmp2
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					&Machine.visible_area, TRANSPARENCY_PEN, 15);
+					Machine.visible_area, TRANSPARENCY_PEN, 15);
 		}
 	}
 	
@@ -208,7 +208,7 @@ public class srmp2
 						color, \
 						flipx, flipy, \
 						_x_, _y_, \
-						&Machine.visible_area, TRANSPARENCY_PEN, 0);
+						Machine.visible_area, TRANSPARENCY_PEN, 0);
 	
 				DRAWTILE(sx - 0x000, sy + 0x000)
 				DRAWTILE(sx - 0x200, sy + 0x000)
@@ -300,7 +300,7 @@ public class srmp2
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					&Machine.visible_area, TRANSPARENCY_PEN, 0);
+					Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -372,7 +372,7 @@ public class srmp2
 						color, \
 						flipx, flipy, \
 						_x_, _y_, \
-						&Machine.visible_area, TRANSPARENCY_PEN, 0);
+						Machine.visible_area, TRANSPARENCY_PEN, 0);
 	
 				DRAWTILE(sx - 0x000, sy + 0x000)
 				DRAWTILE(sx - 0x200, sy + 0x000)
@@ -457,28 +457,28 @@ public class srmp2
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					&Machine.visible_area, TRANSPARENCY_PEN, 0);
+					Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	
 	public static VideoUpdateHandlerPtr video_update_srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine.pens[0x1f0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		srmp2_draw_sprites(bitmap);
 	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine.pens[0x1f0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		srmp3_draw_sprites(bitmap);
 	} };
 	
 	
 	public static VideoUpdateHandlerPtr video_update_mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine.pens[0x1f0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		mjyuugi_draw_sprites(bitmap);
 	} };
 }

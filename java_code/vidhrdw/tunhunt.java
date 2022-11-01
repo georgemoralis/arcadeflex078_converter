@@ -376,7 +376,7 @@ public class tunhunt
 						0, /* color */
 						0,0, /* flip */
 						sx,sy,
-						&Machine.visible_area,
+						Machine.visible_area,
 						TRANSPARENCY_PEN,0 );
 				}
 			}
@@ -402,7 +402,7 @@ public class tunhunt
 				0, /* color */
 				0,0, /* flip */
 				255-hposition-16,vstart-32,
-				&Machine.visible_area,
+				Machine.visible_area,
 				TRANSPARENCY_PEN,0 );
 	}
 	

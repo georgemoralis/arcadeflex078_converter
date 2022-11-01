@@ -669,7 +669,7 @@ public class atarisy1
 			return -1;
 	
 		/* set the color information */
-		Machine.gfx[gfx_index].colortable = &Machine.remapped_colortable[256];
+		Machine.gfx[gfx_index].colortable = Machine.remapped_colortable[256];
 		Machine.gfx[gfx_index].color_granularity = 8;
 		Machine.gfx[gfx_index].total_colors = 0x40;
 		bank_color_shift[gfx_index] = bpp - 3;

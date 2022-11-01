@@ -177,7 +177,7 @@ public class tnzs
 					color,
 					flipx,flipy,
 					sx,sy+2,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class tnzs
 	
 	
 		/* Blank the background */
-		fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 	
 		/* Redraw the background tiles (c400-c5ff) */
 		tnzs_vh_draw_background(bitmap, tnzs_objram + 0x400);

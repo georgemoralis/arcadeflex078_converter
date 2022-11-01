@@ -254,7 +254,7 @@ public class chaknpop
 					color,
 					flipx, flipy,
 					sx, sy,
-					&Machine . visible_area,
+					Machine . visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}

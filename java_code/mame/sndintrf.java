@@ -1242,7 +1242,7 @@ public class sndintrf
 	
 		while (Machine.drv.sound[totalsound].sound_type != 0 && totalsound < MAX_SOUND)
 		{
-			if ((*sndintf[Machine.drv.sound[totalsound].sound_type].start)(&Machine.drv.sound[totalsound]) != 0)
+			if ((*sndintf[Machine.drv.sound[totalsound].sound_type].start)(Machine.drv.sound[totalsound]) != 0)
 				goto getout;
 	
 			totalsound++;

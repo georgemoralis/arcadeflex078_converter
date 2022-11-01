@@ -281,9 +281,9 @@ public class jrpacman
 		}
 	
 		if (*jrpacman_bgpriority & 1)
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		else
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Draw the sprites. Note that it is important to draw them exactly in this */
 		/* order, to have the correct priorities. */
@@ -295,7 +295,7 @@ public class jrpacman
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					272 - spriteram_2[offs + 1],spriteram_2[offs]-31,
-					&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 		/* the first two sprites must be offset one pixel to the left */
 		for (offs = 2*2;offs > 0;offs -= 2)
@@ -306,10 +306,10 @@ public class jrpacman
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					272 - spriteram_2[offs + 1],spriteram_2[offs]-30,
-					&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 		if (*jrpacman_bgpriority & 1)
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	} };
 }

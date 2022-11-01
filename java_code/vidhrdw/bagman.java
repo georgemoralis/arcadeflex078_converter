@@ -154,7 +154,7 @@ public class bagman
 						spriteram.read(offs + 1)& 0x1f,
 						flipx,flipy,
 						sx,sy+1,	/* compensate misplacement */
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -170,7 +170,7 @@ public class bagman
 		if (*bagman_video_enable == 0)
 			return;
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		bagman_draw_sprites(bitmap);
 	} };
 }

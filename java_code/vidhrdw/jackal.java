@@ -115,7 +115,7 @@ public class jackal
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x08)
 				{
@@ -124,13 +124,13 @@ public class jackal
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum - 2,
 						color,
 						flipx,flipy,
 						sx,sy+8,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x04)
 				{
@@ -139,13 +139,13 @@ public class jackal
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum + 1,
 						color,
 						flipx,flipy,
 						sx+8,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 			else
@@ -159,25 +159,25 @@ public class jackal
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy+16:sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+1,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy+16:sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+2,
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy:sy+16,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+3,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy:sy+16,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
@@ -186,7 +186,7 @@ public class jackal
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -268,9 +268,9 @@ public class jackal
 			}
 	
 			if ((h_scroll_num == 0) && (v_scroll_num == 0))
-				copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,h_scroll_num,h_scroll,v_scroll_num,v_scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,h_scroll_num,h_scroll,v_scroll_num,v_scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 		/* Draw the sprites. */

@@ -182,7 +182,7 @@ public class zac2650
 	    CollisionBackground = 0;	/* Read from 0x1e80 bit 7 */
 	
 		// for collision detection checking
-		copybitmap(tmpbitmap,bitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(tmpbitmap,bitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	    for(offs=0;offs<0x50;offs+=0x10)
 	    {
@@ -254,7 +254,7 @@ public class zac2650
 	
 	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tinvader_draw_sprites(bitmap);
 	} };
 }

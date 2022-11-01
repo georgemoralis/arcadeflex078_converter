@@ -461,12 +461,12 @@ public class nbmj8891
 		{
 			if (gfxdraw_mode != 0)
 			{
-				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly1, &Machine.visible_area, TRANSPARENCY_NONE, 0);
-				copyscrollbitmap(bitmap, gionbana_tmpbitmap1, 0, 0, 1, &gionbana_scrolly2, &Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0xff]);
+				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly1, Machine.visible_area, TRANSPARENCY_NONE, 0);
+				copyscrollbitmap(bitmap, gionbana_tmpbitmap1, 0, 0, 1, &gionbana_scrolly2, Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0xff]);
 			}
 			else
 			{
-				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly2, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly2, Machine.visible_area, TRANSPARENCY_NONE, 0);
 			}
 		}
 		else

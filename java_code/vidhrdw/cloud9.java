@@ -258,7 +258,7 @@ public class cloud9
 	{
 		int offs;
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* draw the sprites */
 		for (offs = 0;offs < 20;offs++)
@@ -281,7 +281,7 @@ public class cloud9
 					1 + ((*cloud9_color_bank & 0x80) >> 6),
 					xflip,yflip,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	

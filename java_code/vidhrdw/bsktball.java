@@ -65,13 +65,13 @@ public class bsktball
 	        drawgfx(bitmap,Machine.gfx[1],
 	            pic, color,
 				flipx,0,sx,sy,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_bsktball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		bsktball_draw_sprites(bitmap);
 	} };
 }

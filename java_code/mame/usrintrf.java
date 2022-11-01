@@ -2380,21 +2380,21 @@ public class usrintrf
 		i = 0;
 		while (i < MAX_SOUND && Machine.drv.sound[i].sound_type)
 		{
-			if (sound_num(&Machine.drv.sound[i]))
-				sprintf(&buf[strlen(buf)],"%dx",sound_num(&Machine.drv.sound[i]));
+			if (sound_num(Machine.drv.sound[i]))
+				sprintf(&buf[strlen(buf)],"%dx",sound_num(Machine.drv.sound[i]));
 	
-			sprintf(&buf[strlen(buf)],"%s",sound_name(&Machine.drv.sound[i]));
+			sprintf(&buf[strlen(buf)],"%s",sound_name(Machine.drv.sound[i]));
 	
-			if (sound_clock(&Machine.drv.sound[i]))
+			if (sound_clock(Machine.drv.sound[i]))
 			{
-				if (sound_clock(&Machine.drv.sound[i]) >= 1000000)
+				if (sound_clock(Machine.drv.sound[i]) >= 1000000)
 					sprintf(&buf[strlen(buf)]," %d.%06d MHz",
-							sound_clock(&Machine.drv.sound[i]) / 1000000,
-							sound_clock(&Machine.drv.sound[i]) % 1000000);
+							sound_clock(Machine.drv.sound[i]) / 1000000,
+							sound_clock(Machine.drv.sound[i]) % 1000000);
 				else
 					sprintf(&buf[strlen(buf)]," %d.%03d kHz",
-							sound_clock(&Machine.drv.sound[i]) / 1000,
-							sound_clock(&Machine.drv.sound[i]) % 1000);
+							sound_clock(Machine.drv.sound[i]) / 1000,
+							sound_clock(Machine.drv.sound[i]) % 1000);
 			}
 	
 			strcat(buf,"\n");

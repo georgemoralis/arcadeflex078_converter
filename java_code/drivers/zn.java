@@ -716,7 +716,7 @@ public class zn
 				scode_last = scode;
 			}
 	
-			fillbitmap( bitmap, 0, &Machine.visible_area );
+			fillbitmap( bitmap, 0, Machine.visible_area );
 	
 			sprintf( text1, "%s", Machine.gamedrv.description );
 			if( strlen( text1 ) > Machine.uiwidth / Machine.uifontwidth )

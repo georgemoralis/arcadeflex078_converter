@@ -193,7 +193,7 @@ public class troangel
 				for (offs = 128;offs < 256;offs++) xscroll[offs] = -troangel_scroll[offs];
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -231,7 +231,7 @@ public class troangel
 				color,
 				flipx,flipy,
 				sx,sy,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

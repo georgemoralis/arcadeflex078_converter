@@ -774,7 +774,7 @@ public class dynax
 		dynax_blit_palbank  = (c >>  4) & 1;
 		dynax_blit_dest = 1;
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		memset(dynax_pixmap[0][0],0,sizeof(UINT8)*0x100*0x100);
 		memset(dynax_pixmap[0][1],0,sizeof(UINT8)*0x100*0x100);
 		hanamai_layer_half = 0;

@@ -402,7 +402,7 @@ public class irobot
 							code, color,
 							0,0,
 							8*x,8*y,
-							&Machine.visible_area,TRANSPARENCY_COLOR,transp);
+							Machine.visible_area,TRANSPARENCY_COLOR,transp);
 				}
 	} };
 }

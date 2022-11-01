@@ -407,7 +407,7 @@ public class liberatr
 			*liberatr_y = liberatr_y_save;
 			*liberatr_x = liberatr_x_save;
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* draw the planet */
 		liberatr_draw_planet(bitmap);

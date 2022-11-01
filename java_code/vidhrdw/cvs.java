@@ -544,8 +544,8 @@ public class cvs
 	
 	    /* Update screen - 8 regions, fixed scrolling area */
 	
-		copyscrollbitmap(bitmap,tmpbitmap,0,0,8,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
-		copyscrollbitmap(scrolled_background,collision_background,0,0,8,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap,0,0,8,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(scrolled_background,collision_background,0,0,8,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	    /* 2636's */
 	

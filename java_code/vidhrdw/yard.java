@@ -303,7 +303,7 @@ public class yard
 				scroll_y = -*yard_scroll_y_low ;
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scroll_x,1,&scroll_y,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scroll_x,1,&scroll_y,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -347,14 +347,14 @@ public class yard
 					spriteram.read(offs + 1)& 0x1f,
 					flipx,flipy,
 					sx, sy1,
-					&Machine.visible_area,TRANSPARENCY_COLOR,256);
+					Machine.visible_area,TRANSPARENCY_COLOR,256);
 	
 			drawgfx(bitmap,Machine.gfx[1],
 					code2 + 256 * bank,
 					spriteram.read(offs + 1)& 0x1f,
 					flipx,flipy,
 					sx, sy2,
-					&Machine.visible_area,TRANSPARENCY_COLOR,256);
+					Machine.visible_area,TRANSPARENCY_COLOR,256);
 		}
 	
 	

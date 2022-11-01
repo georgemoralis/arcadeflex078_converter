@@ -102,7 +102,7 @@ public class wecleman
 	
 	static void sprite_init(void)
 	{
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 		struct mame_bitmap *bitmap = Machine.scrbitmap;
 	
 		screen_clip_left   = clip.min_x;

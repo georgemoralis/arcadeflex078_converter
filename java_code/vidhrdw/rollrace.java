@@ -73,7 +73,7 @@ public class rollrace
 		int col;
 	
 		/* fill in background colour*/
-		fillbitmap(bitmap,Machine.pens[ra_bkgpen],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[ra_bkgpen],Machine.visible_area);
 	
 		/* draw road */
 		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
@@ -100,7 +100,7 @@ public class rollrace
 					ra_bkgcol,
 					ra_flipx,(ra_bkgflip^ra_flipy),
 					sx*8,sy*8,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 	
 			}
@@ -138,7 +138,7 @@ public class rollrace
 				spriteram.read(offs+2)& 0x1f,
 				ra_flipx,!(s_flipy^ra_flipy),
 				sx,sy,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -167,7 +167,7 @@ public class rollrace
 				col,
 				ra_flipx,ra_flipy,
 				8*sx,scroll,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 		}
 	

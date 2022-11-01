@@ -366,7 +366,7 @@ public class exerion
 			}
 	
 			/* draw the scanline */
-			pens = &Machine.remapped_colortable[0x200 + (latches[12] >> 4) * 16];
+			pens = Machine.remapped_colortable[0x200 + (latches[12] >> 4) * 16];
 			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], pens, -1);
 		}
 	}

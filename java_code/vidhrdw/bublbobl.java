@@ -41,7 +41,7 @@ public class bublbobl
 		/* the background character columns is stored in the area dd00-dd3f */
 	
 		/* This clears & redraws the entire screen each pass */
-		fillbitmap(bitmap,Machine.pens[255],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[255],Machine.visible_area);
 	
 		if (!bublbobl_video_enable) return;
 	
@@ -101,7 +101,7 @@ public class bublbobl
 							color,
 							flipx,flipy,
 							x,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,15);
+							Machine.visible_area,TRANSPARENCY_PEN,15);
 				}
 			}
 	

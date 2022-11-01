@@ -128,7 +128,7 @@ public class deadang
 			pdrawgfx(bitmap,Machine.gfx[1],
 					sprite,
 					color,fx,fy,x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,15,pri);
+					Machine.visible_area,TRANSPARENCY_PEN,15,pri);
 		}
 	}
 	

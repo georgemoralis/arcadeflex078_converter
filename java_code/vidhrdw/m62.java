@@ -348,7 +348,7 @@ public class m62
 							code + i * incr,col,
 							flipx,flipy,
 							sx,sy + 16 * i,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					i--;
 				} while (i >= 0);

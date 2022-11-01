@@ -518,7 +518,7 @@ public class niyanpai
 	
 		if (niyanpai_dispflag[0])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap0, 1, &niyanpai_scrollx[0], 1, &niyanpai_scrolly[0], &Machine.visible_area, TRANSPARENCY_NONE, 0);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap0, 1, &niyanpai_scrollx[0], 1, &niyanpai_scrolly[0], Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
@@ -527,12 +527,12 @@ public class niyanpai
 	
 		if (niyanpai_dispflag[1])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap1, 1, &niyanpai_scrollx[1], 1, &niyanpai_scrolly[1], &Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x01ff]);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap1, 1, &niyanpai_scrollx[1], 1, &niyanpai_scrolly[1], Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x01ff]);
 		}
 	
 		if (niyanpai_dispflag[2])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap2, 1, &niyanpai_scrollx[2], 1, &niyanpai_scrolly[2], &Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x02ff]);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap2, 1, &niyanpai_scrollx[2], 1, &niyanpai_scrolly[2], Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x02ff]);
 		}
 	} };
 }

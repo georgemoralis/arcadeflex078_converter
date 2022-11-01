@@ -240,11 +240,11 @@ public class gunsmoke
 					yscroll = 256 - yscroll;
 				}
 	
-				copyscrollbitmap(bitmap,bgbitmap,1,&xscroll,1,&yscroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,bgbitmap,1,&xscroll,1,&yscroll,Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 		else
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 	
@@ -276,7 +276,7 @@ public class gunsmoke
 						spriteram.read(offs + 1)& 0x0f,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -299,7 +299,7 @@ public class gunsmoke
 						colorram[offs] & 0x1f,
 						!flip_screen,!flip_screen,
 						8*sx,8*sy,
-						&Machine.visible_area,TRANSPARENCY_COLOR,79);
+						Machine.visible_area,TRANSPARENCY_COLOR,79);
 			}
 		}
 	} };

@@ -152,21 +152,21 @@ public class mazerbla
 	
 	
 		if (planes_enabled[3])
-			copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 );
+			copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE, 0 );
 	
 	
 		if (planes_enabled[2])
-			copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+			copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 		fillbitmap(tmpbitmaps[2],Machine.pens[color_base],NULL);
 	
 	
 		if (planes_enabled[1])
-			copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+			copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 		fillbitmap(tmpbitmaps[1],Machine.pens[color_base],NULL);
 	
 	
 		if (planes_enabled[0])
-			copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+			copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 		fillbitmap(tmpbitmaps[0],Machine.pens[color_base],NULL);
 	
 		if (keyboard_pressed_memory(KEYCODE_1))	/* plane 1 */
@@ -269,10 +269,10 @@ public class mazerbla
 	
 	//fillbitmap(bitmap,0,NULL);
 	
-		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 );
-		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
-		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
-		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE, 0 );
+		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -288,10 +288,10 @@ public class mazerbla
 	
 	//fillbitmap(bitmap,0,NULL);
 	
-		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 ); //text
-		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] );
-		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //haircross
-		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //sprites
+		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE, 0 ); //text
+		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] );
+		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //haircross
+		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //sprites
 	} };
 	
 	

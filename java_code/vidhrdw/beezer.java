@@ -33,7 +33,7 @@ public class beezer
 				}
 			}
 		
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	public static WriteHandlerPtr beezer_map_w = new WriteHandlerPtr() {public void handler(int offset, int data)

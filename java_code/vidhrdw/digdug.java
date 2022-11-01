@@ -132,7 +132,7 @@ public class digdug
 	void digdug_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
+		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
@@ -234,7 +234,7 @@ public class digdug
 							(pfval >> 4) + pfcolor,
 							flipscreen,flipscreen,
 							8*sx,8*sy,
-							&Machine.visible_area,TRANSPARENCY_NONE,0);
+							Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 					/* overlay with the character */
 					if ((vrval & 0x7f) != 0x7f)
@@ -243,7 +243,7 @@ public class digdug
 								(vrval >> 5) | ((vrval >> 4) & 1),
 								flipscreen,flipscreen,
 								8*sx,8*sy,
-								&Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
@@ -253,13 +253,13 @@ public class digdug
 							(vrval >> 5) | ((vrval >> 4) & 1),
 							flipscreen,flipscreen,
 							8*sx,8*sy,
-							&Machine.visible_area,TRANSPARENCY_NONE,0);
+							Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 		}
 	
 		/* copy the temporary bitmap to the screen */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 2)

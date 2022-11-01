@@ -83,7 +83,7 @@ public class flyball
 		/* draw pitcher */
 	
 		drawgfx(bitmap, Machine.gfx[1], flyball_pitcher_pic ^ 0xf,
-			0, 1, 0, pitcherx, pitchery, &Machine.visible_area, TRANSPARENCY_PEN, 1);
+			0, 1, 0, pitcherx, pitchery, Machine.visible_area, TRANSPARENCY_PEN, 1);
 	
 		/* draw ball */
 	

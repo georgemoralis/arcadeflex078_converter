@@ -322,7 +322,7 @@ public class bosco
 		}
 	
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 		/* draw the sprites */
@@ -357,7 +357,7 @@ public class bosco
 				scrolly = -(bosco_scrolly + 16);
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,0);
+			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -387,7 +387,7 @@ public class bosco
 					0,
 					flipscreen,flipscreen,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,3);
+					Machine.visible_area,TRANSPARENCY_PEN,3);
 		}
 	
 	

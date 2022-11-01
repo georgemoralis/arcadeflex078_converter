@@ -899,7 +899,7 @@ public class atarimo
 	
 		mo.palettebase = base;
 		for (i = 0; i < MAX_GFX_ELEMENTS; i++)
-			mo.gfxelement[i].colortable = &Machine.remapped_colortable[base];
+			mo.gfxelement[i].colortable = Machine.remapped_colortable[base];
 	}
 	
 	

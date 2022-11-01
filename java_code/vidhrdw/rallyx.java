@@ -305,7 +305,7 @@ public class rallyx
 	
 	
 		/* copy the temporary bitmap to the screen */
-		copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		/* draw the sprites */
@@ -319,7 +319,7 @@ public class rallyx
 					spriteram_2[offs + 1] & 0x3f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -379,7 +379,7 @@ public class rallyx
 					0,
 					0,0,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,3);
+					Machine.visible_area,TRANSPARENCY_PEN,3);
 		}
 	} };
 	
@@ -467,7 +467,7 @@ public class rallyx
 	
 	
 		/* copy the temporary bitmap to the screen */
-		copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		/* draw the sprites */
@@ -481,7 +481,7 @@ public class rallyx
 					spriteram_2[offs + 1] & 0x3f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -505,7 +505,7 @@ public class rallyx
 					0,
 					0,0,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -599,7 +599,7 @@ public class rallyx
 				scrolly = -(*rallyx_scrolly + 16);
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -624,7 +624,7 @@ public class rallyx
 					spriteram_2[offs + 1] & 0x3f,
 					spriteram.read(offs)& 2,spriteram.read(offs)& 2,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -645,7 +645,7 @@ public class rallyx
 					0,
 					0,0,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,3);
+					Machine.visible_area,TRANSPARENCY_PEN,3);
 		}
 	} };
 	
@@ -738,7 +738,7 @@ public class rallyx
 				scrolly = -(*rallyx_scrolly + 16);
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -772,7 +772,7 @@ public class rallyx
 						spriteram_2[offs + 1] & 0x3f,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_COLOR,0);
+						Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -799,7 +799,7 @@ public class rallyx
 					0,
 					0,0,
 					x,y,
-					&Machine.visible_area,TRANSPARENCY_PEN,3);
+					Machine.visible_area,TRANSPARENCY_PEN,3);
 		}
 	} };
 }

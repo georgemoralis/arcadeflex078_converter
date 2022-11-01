@@ -111,7 +111,7 @@ public class dooyong
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,transparency,15);
+					Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
@@ -120,7 +120,7 @@ public class dooyong
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine.visible_area,transparency,15);
+						Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ public class dooyong
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,transparency,15);
+					Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
@@ -168,7 +168,7 @@ public class dooyong
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine.visible_area,transparency,15);
+						Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -207,7 +207,7 @@ public class dooyong
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,transparency,15);
+					Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
@@ -216,7 +216,7 @@ public class dooyong
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine.visible_area,transparency,15);
+						Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -257,7 +257,7 @@ public class dooyong
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,transparency,15);
+					Machine.visible_area,transparency,15);
 		}
 	}
 	
@@ -283,7 +283,7 @@ public class dooyong
 					(attr & 0xf0) >> 4,
 					flip_screen,flip_screen,
 					8*sx,8*(sy + yoffset),
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
@@ -309,7 +309,7 @@ public class dooyong
 					(attr & 0xf0) >> 4,
 					flip_screen,flip_screen,
 					8*sx,8*sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
@@ -362,7 +362,7 @@ public class dooyong
 						color,
 						flipx,flipy,
 						sx,flipy ? sy + 16*(height-y) : sy + 16*y,
-						&Machine.visible_area,TRANSPARENCY_PEN,15);
+						Machine.visible_area,TRANSPARENCY_PEN,15);
 			}
 		}
 	}
@@ -403,7 +403,7 @@ public class dooyong
 								flipx,flipy,
 								flipx ? sx + 16*(width-x) : sx + 16*x,
 								flipy ? sy + 16*(height-y) : sy + 16*y,
-								&Machine.visible_area,TRANSPARENCY_PEN,15);
+								Machine.visible_area,TRANSPARENCY_PEN,15);
 	
 						code++;
 					}

@@ -90,7 +90,7 @@ public class exzisus
 		int gfx_num, gfx_attr, gfx_offs;
 	
 		/* Is this correct ? */
-		fillbitmap(bitmap, Machine.pens[1023], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[1023], Machine.visible_area);
 	
 		/* ---------- 1st TC0010VCU ---------- */
 		sx = 0;
@@ -156,7 +156,7 @@ public class exzisus
 							color,
 							flip_screen, flip_screen,
 							x, y,
-							&Machine.visible_area, TRANSPARENCY_PEN, 15);
+							Machine.visible_area, TRANSPARENCY_PEN, 15);
 					goffs += 2;
 				}
 				gfx_offs += height << 1;
@@ -226,7 +226,7 @@ public class exzisus
 							color,
 							flip_screen, flip_screen,
 							x, y,
-							&Machine.visible_area, TRANSPARENCY_PEN, 15);
+							Machine.visible_area, TRANSPARENCY_PEN, 15);
 					goffs += 2;
 				}
 				gfx_offs += height << 1;

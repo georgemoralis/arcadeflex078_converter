@@ -246,12 +246,12 @@ public class galaga
 						colorram[offs],
 						flip_screen,flip_screen,
 						8*sx,8*sy,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 		/* Draw the sprites. */
@@ -288,46 +288,46 @@ public class galaga
 				{
 					drawgfx(bitmap,Machine.gfx[1],
 							code+2,color,flipx,flipy,sx+sfa,sy-sfa,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx+sfa,sy-sfb,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 	
 					drawgfx(bitmap,Machine.gfx[1],
 							code+3,color,flipx,flipy,sx+sfb,sy-sfa,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 					drawgfx(bitmap,Machine.gfx[1],
 							code+1,color,flipx,flipy,sx+sfb,sy-sfb,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else if (spriteram_3[offs] & 8)	/* double width */
 				{
 					drawgfx(bitmap,Machine.gfx[1],
 							code+2,color,flipx,flipy,sx,sy-sfa,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx,sy-sfb,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else if (spriteram_3[offs] & 4)	/* double height */
 				{
 					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx+sfa,sy,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 					drawgfx(bitmap,Machine.gfx[1],
 							code+1,color,flipx,flipy,sx+sfb,sy,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else	/* normal */
 					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx,sy,
-							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+							Machine.visible_area,TRANSPARENCY_COLOR,0);
 			}
 		}
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	
 	
 		/* draw the stars */

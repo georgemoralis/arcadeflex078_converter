@@ -132,7 +132,7 @@ public class markham
 				col,
 				fx,fy,
 				px,py,
-				&Machine.visible_area,TRANSPARENCY_COLOR,0);
+				Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	}
 	
@@ -148,7 +148,7 @@ public class markham
 				tilemap_set_scrollx(bg_tilemap, i, markham_xscroll[1]);
 		}
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		markham_draw_sprites(bitmap);
 	} };
 }

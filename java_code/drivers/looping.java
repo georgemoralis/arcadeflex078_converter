@@ -198,7 +198,7 @@ public class looping
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN, 0 );
 	
 			source += 4;

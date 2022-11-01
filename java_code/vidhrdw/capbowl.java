@@ -146,7 +146,7 @@ public class capbowl
 			}
 	
 			/* redraw the scanline and mark it no longer dirty */
-			draw_scanline8(bitmap, cliprect.min_x, y, halfwidth * 2, scanline, &Machine.pens[16 * y], -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, halfwidth * 2, scanline, Machine.pens[16 * y], -1);
 			state.dirty[y] = 0;
 		}
 	} };

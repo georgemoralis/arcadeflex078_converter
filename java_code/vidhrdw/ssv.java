@@ -742,7 +742,7 @@ public class ssv
 												color,
 												flipx, flipy,
 												sx + x * 16, sy + y * 8,
-												&Machine.visible_area,
+												Machine.visible_area,
 												transparency, 0 );
 						}
 					}
@@ -783,7 +783,7 @@ public class ssv
 	public static VideoUpdateHandlerPtr video_update_ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* The background color is the first one in the palette */
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		if (!enable_video)	return;
 	

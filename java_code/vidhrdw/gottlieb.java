@@ -195,7 +195,7 @@ public class gottlieb
 					code, 0,
 					flip_screen_x, flip_screen_y,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -204,18 +204,18 @@ public class gottlieb
 	{
 		if (!background_priority)
 		{
-			tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
+			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+			fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 		}
 	
 		gottlieb_draw_sprites(bitmap);
 	
 		if (background_priority != 0)
 		{
-			tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		}
 	} };
 }

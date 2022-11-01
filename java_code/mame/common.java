@@ -388,7 +388,7 @@ public class common
 		if (num < MAX_MEMORY_REGIONS)
 		{
 			free(Machine.memory_region[num].base);
-			memset(&Machine.memory_region[num], 0, sizeof(Machine.memory_region[num]));
+			memset(Machine.memory_region[num], 0, sizeof(Machine.memory_region[num]));
 		}
 		else
 		{
@@ -397,7 +397,7 @@ public class common
 				if (Machine.memory_region[i].type == num)
 				{
 					free(Machine.memory_region[i].base);
-					memset(&Machine.memory_region[i], 0, sizeof(Machine.memory_region[i]));
+					memset(Machine.memory_region[i], 0, sizeof(Machine.memory_region[i]));
 					return;
 				}
 			}

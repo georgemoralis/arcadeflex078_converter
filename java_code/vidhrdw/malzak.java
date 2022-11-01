@@ -178,14 +178,14 @@ public class malzak
 				if (saa5050_state.saa5050_flags & SAA5050_DBLHI)
 				{
 					drawgfx (bitmap, Machine.gfx[4], code, colour, 0, 0,
-						sx * 6, sy * 10, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+						sx * 6, sy * 10, Machine.visible_area, TRANSPARENCY_NONE, 0);
 					drawgfx (bitmap, Machine.gfx[5], code, colour, 0, 0,
-						sx * 6, (sy + 1) * 10, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+						sx * 6, (sy + 1) * 10, Machine.visible_area, TRANSPARENCY_NONE, 0);
 				}
 				else
 				{
 					drawgfx (bitmap, Machine.gfx[3], code, colour, 0, 0,
-						sx * 6, sy * 10, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+						sx * 6, sy * 10, Machine.visible_area, TRANSPARENCY_NONE, 0);
 				}
 			}
 			if (saa5050_state.saa5050_flags & SAA5050_DBLHI)
@@ -212,7 +212,7 @@ public class malzak
 					sx+=256;
 	
 				drawgfx(bitmap,Machine.gfx[0],field[x*16 + y].code,7,0,0,
-				sx, sy, &Machine.visible_area, TRANSPARENCY_COLOR, 0);
+				sx, sy, Machine.visible_area, TRANSPARENCY_COLOR, 0);
 			}
 	
 		// S2636 - Sprites / Collision detection (x2)

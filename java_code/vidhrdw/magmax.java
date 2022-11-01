@@ -290,7 +290,7 @@ public class magmax
 		/* copy the background graphics */
 		if ((magmax_vreg & 0x40) != 0)		/* background disable */
 		{
-			fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+			fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 		}
 		else
 		{
@@ -300,7 +300,7 @@ public class magmax
 			UINT32 scroll_v = (*magmax_scroll_y) & 0xff;
 	
 			/*clear background-over-sprites bitmap*/
-			fillbitmap(tmpbitmap, 0, &Machine.visible_area);
+			fillbitmap(tmpbitmap, 0, Machine.visible_area);
 	
 			for (v = 2*8; v < 30*8; v++) /*only for visible area*/
 			{
@@ -309,7 +309,7 @@ public class magmax
 				UINT32 rom15F_addr   = (((scroll_v + v) & 0x07)<<2) + (map_v_scr_100<<5);
 				UINT32 map_v_scr_1fe_6 =((scroll_v + v) & 0x1fe)<<6;
 	
-				pen_t *pens = &Machine.pens[2*16 + (map_v_scr_100>>1)];
+				pen_t *pens = Machine.pens[2*16 + (map_v_scr_100>>1)];
 	
 				if (!map_v_scr_100)
 				{
@@ -502,12 +502,12 @@ public class magmax
 						color,
 						flipx, flipy,
 						sx, sy,
-						&Machine.visible_area, TRANSPARENCY_COLOR, 31);
+						Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}
 		}
 		if (!(magmax_vreg & 0x40))		/* background disable */
 		{
-			copybitmap(bitmap, tmpbitmap, flipscreen,flipscreen,0,0, &Machine.visible_area, TRANSPARENCY_PEN, 0);
+			copybitmap(bitmap, tmpbitmap, flipscreen,flipscreen,0,0, Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	
 	
@@ -534,7 +534,7 @@ public class magmax
 						0,
 						flipscreen, flipscreen,
 						8 * sx, 8 * sy,
-						&Machine.visible_area, TRANSPARENCY_PEN, 15);
+						Machine.visible_area, TRANSPARENCY_PEN, 15);
 			}
 		}
 	} };

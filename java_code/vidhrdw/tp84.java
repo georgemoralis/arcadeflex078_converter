@@ -298,7 +298,7 @@ public class tp84
 	{
 		struct rectangle clip;
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tp84_draw_sprites(bitmap);
 	
 		/* draw top fg_tilemap status layer part */

@@ -768,7 +768,7 @@ public class _8080bw
 				scanline[ helifire_star_latch ] = scanline[ helifire_star_latch ] + 256; /* background with the star */
 			}
 	
-			draw_scanline16(bitmap, 0, y, 256, scanline, &Machine.pens[0], -1);
+			draw_scanline16(bitmap, 0, y, 256, scanline, Machine.pens[0], -1);
 		}
 	
 		/* foreground */

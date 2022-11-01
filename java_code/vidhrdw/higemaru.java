@@ -138,7 +138,7 @@ public class higemaru
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 	
 			/* draw again with wraparound */
 			drawgfx(bitmap,Machine.gfx[1],
@@ -146,13 +146,13 @@ public class higemaru
 					col,
 					flipx,flipy,
 					sx - 256,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_higemaru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		higemaru_draw_sprites(bitmap);
 	} };
 }

@@ -137,7 +137,7 @@ public class targeth
 			drawgfx(bitmap,gfx,number,
 					0x20 + color,xflip,yflip,
 					sx - 0x0f,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

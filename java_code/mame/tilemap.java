@@ -431,7 +431,7 @@ public class tilemap
 	static void pdo15( UINT16 *dest, const UINT16 *source, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			dest[i] = clut[source[i]];
@@ -443,7 +443,7 @@ public class tilemap
 	static void pdo32( UINT32 *dest, const UINT16 *source, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			dest[i] = clut[source[i]];
@@ -458,7 +458,7 @@ public class tilemap
 		int oddcount = count & 3;
 		int unrcount = count & ~3;
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<oddcount; i++ )
 		{
 			dest[i] = clut[source[i]];
@@ -534,7 +534,7 @@ public class tilemap
 	static void pdt15( UINT16 *dest, const UINT16 *source, const UINT8 *pMask, int mask, int value, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			if( (pMask[i]&mask)==value )
@@ -549,7 +549,7 @@ public class tilemap
 	static void pdt32( UINT32 *dest, const UINT16 *source, const UINT8 *pMask, int mask, int value, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			if( (pMask[i]&mask)==value )
@@ -567,7 +567,7 @@ public class tilemap
 		int oddcount = count & 3;
 		int unrcount = count & ~3;
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 	
 		for( i=0; i<oddcount; i++ )
 		{
@@ -589,7 +589,7 @@ public class tilemap
 	static void pbo15( UINT16 *dest, const UINT16 *source, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			dest[i] = alpha_blend16(dest[i], clut[source[i]]);
@@ -601,7 +601,7 @@ public class tilemap
 	static void pbo32( UINT32 *dest, const UINT16 *source, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			dest[i] = alpha_blend32(dest[i], clut[source[i]]);
@@ -616,7 +616,7 @@ public class tilemap
 		int oddcount = count & 3;
 		int unrcount = count & ~3;
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<oddcount; i++ )
 		{
 			dest[i] = alpha_blend32(dest[i], clut[source[i]]);
@@ -637,7 +637,7 @@ public class tilemap
 	static void pbt15( UINT16 *dest, const UINT16 *source, const UINT8 *pMask, int mask, int value, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			if( (pMask[i]&mask)==value )
@@ -652,7 +652,7 @@ public class tilemap
 	static void pbt32( UINT32 *dest, const UINT16 *source, const UINT8 *pMask, int mask, int value, int count, UINT8 *pri, UINT32 pcode )
 	{
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 		for( i=0; i<count; i++ )
 		{
 			if( (pMask[i]&mask)==value )
@@ -670,7 +670,7 @@ public class tilemap
 		int oddcount = count & 3;
 		int unrcount = count & ~3;
 		int i;
-		pen_t *clut = &Machine.remapped_colortable[pcode >> 16];
+		pen_t *clut = Machine.remapped_colortable[pcode >> 16];
 	
 		for( i=0; i<oddcount; i++ )
 		{

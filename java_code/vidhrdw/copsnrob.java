@@ -46,7 +46,7 @@ public class copsnrob
 					videoram.read(offs)& 0x3f,0,
 					0,0,
 					8*sx,8*sy,
-					&Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine.visible_area,TRANSPARENCY_NONE,0);
 	    }
 	
 	
@@ -57,7 +57,7 @@ public class copsnrob
 	                copsnrob_carimage[0],0,
 	                1,0,
 	                0xe4,256-copsnrob_cary[0],
-	                &Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine.visible_area,TRANSPARENCY_PEN,0);
 	    }
 	
 	    if (copsnrob_cary[1])
@@ -66,7 +66,7 @@ public class copsnrob
 	                copsnrob_carimage[1],0,
 	                1,0,
 	                0xc4,256-copsnrob_cary[1],
-	                &Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine.visible_area,TRANSPARENCY_PEN,0);
 	    }
 	
 	    if (copsnrob_cary[2])
@@ -75,7 +75,7 @@ public class copsnrob
 	                copsnrob_carimage[2],0,
 	                0,0,
 	                0x24,256-copsnrob_cary[2],
-	                &Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine.visible_area,TRANSPARENCY_PEN,0);
 	    }
 	
 	    if (copsnrob_cary[3])
@@ -84,7 +84,7 @@ public class copsnrob
 	                copsnrob_carimage[3],0,
 	                0,0,
 	                0x04,256-copsnrob_cary[3],
-	                &Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine.visible_area,TRANSPARENCY_PEN,0);
 	    }
 	
 	
@@ -115,7 +115,7 @@ public class copsnrob
 							0,0,
 							0,0,
 							0x80,256-(y+31),
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 					/* Skip past this truck's front end so we don't draw this
 					truck twice. */
 					y += 31;
@@ -128,7 +128,7 @@ public class copsnrob
 							0,0,
 							0,0,
 							0x80,256-y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 	    }

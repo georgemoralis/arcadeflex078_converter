@@ -197,7 +197,7 @@ public class shaolins
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_COLOR, 0);
 					/* transparency_color, otherwise sprites in test mode are not visible */
 			}
@@ -206,7 +206,7 @@ public class shaolins
 	
 	public static VideoUpdateHandlerPtr video_update_shaolins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		shaolins_draw_sprites(bitmap);
 	} };
 }

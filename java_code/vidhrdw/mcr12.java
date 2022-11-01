@@ -385,7 +385,7 @@ public class mcr12
 		for (offs = videoram_size - 1; offs >= 0; offs--)
 			if (dirtybuffer[offs])
 			{
-				render_sprite_tile(bitmap, &Machine.pens[16], offs);
+				render_sprite_tile(bitmap, Machine.pens[16], offs);
 				dirtybuffer[offs] = 0;
 			}
 	}
@@ -416,7 +416,7 @@ public class mcr12
 	
 				/* lookup the attributes for the tile underneath to get the color */
 				attr = videoram.read((ty * 32 + tx) * 2 + 1);
-				render_sprite_tile(bitmap, &Machine.pens[(attr & 0xc0) >> 2], offs);
+				render_sprite_tile(bitmap, Machine.pens[(attr & 0xc0) >> 2], offs);
 				dirtybuffer[offs] = 0;
 			}
 	}

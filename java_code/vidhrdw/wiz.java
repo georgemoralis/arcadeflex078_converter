@@ -199,7 +199,7 @@ public class wiz
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -238,7 +238,7 @@ public class wiz
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -279,11 +279,11 @@ public class wiz
 	
 	public static VideoUpdateHandlerPtr video_update_kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0] , 0);
 		draw_foreground(bitmap, 0);
-		draw_sprites(bitmap, spriteram_2, 4, &Machine.visible_area);
-		draw_sprites(bitmap, spriteram  , 5, &Machine.visible_area);
+		draw_sprites(bitmap, spriteram_2, 4, Machine.visible_area);
+		draw_sprites(bitmap, spriteram  , 5, Machine.visible_area);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -291,7 +291,7 @@ public class wiz
 		int bank;
 		const struct rectangle* visible_area;
 	
-		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],Machine.visible_area);
 		draw_background(bitmap, 2 + ((char_bank[0] << 1) | char_bank[1]), 0);
 		draw_foreground(bitmap, 0);
 	
@@ -306,10 +306,10 @@ public class wiz
 	
 	public static VideoUpdateHandlerPtr video_update_stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0], 1);
 		draw_foreground(bitmap, 1);
-		draw_sprites(bitmap, spriteram_2, 4, &Machine.visible_area);
-		draw_sprites(bitmap, spriteram  , 5, &Machine.visible_area);
+		draw_sprites(bitmap, spriteram_2, 4, Machine.visible_area);
+		draw_sprites(bitmap, spriteram  , 5, Machine.visible_area);
 	} };
 }

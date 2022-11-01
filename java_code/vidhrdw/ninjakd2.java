@@ -77,7 +77,7 @@ public class ninjakd2
 		if (sp_overdraw!=data)
 		{
 			ninjakd2_spoverdraw_ram[offset] = data;
-			fillbitmap(bitmap_sp,15,&Machine.visible_area);
+			fillbitmap(bitmap_sp,15,Machine.visible_area);
 			sp_overdraw = data;
 		}
 	} };
@@ -109,7 +109,7 @@ public class ninjakd2
 							palette,
 							flipx,flipy,
 							sx,sy,
-							&Machine.visible_area,TRANSPARENCY_PEN, 15);
+							Machine.visible_area,TRANSPARENCY_PEN, 15);
 			}
 	
 		}
@@ -175,7 +175,7 @@ public class ninjakd2
 							palette,
 							flipx,flipy,
 							sx,sy,
-							&Machine.visible_area,
+							Machine.visible_area,
 							TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -203,12 +203,12 @@ public class ninjakd2
 		{
 			ninjakd2_draw_sprites(bitmap_sp);
 			ninjakd2_draw_foreground(bitmap_sp);
-			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
-			copybitmap(bitmap,bitmap_sp,0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, 15);
+			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copybitmap(bitmap,bitmap_sp,0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, 15);
 		}
 		else 			/* normal sprite mode */
 		{
-			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 			ninjakd2_draw_sprites(bitmap);
 			ninjakd2_draw_foreground(bitmap);
 		}

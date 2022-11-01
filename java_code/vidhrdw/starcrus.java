@@ -503,7 +503,7 @@ public class starcrus
 	
 	public static VideoUpdateHandlerPtr video_update_starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+	    fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		/* Draw ship 1 */
 	    drawgfx(bitmap,
@@ -512,7 +512,7 @@ public class starcrus
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
 	            s1_x,s1_y,
-	            &Machine.visible_area,
+	            Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
@@ -523,7 +523,7 @@ public class starcrus
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
 	            s2_x,s2_y,
-	            &Machine.visible_area,
+	            Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
@@ -534,7 +534,7 @@ public class starcrus
 	            0,
 	            0,0,
 	            p1_x,p1_y,
-	            &Machine.visible_area,
+	            Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
@@ -545,7 +545,7 @@ public class starcrus
 	            0,
 	            0,0,
 	            p2_x,p2_y,
-	            &Machine.visible_area,
+	            Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	

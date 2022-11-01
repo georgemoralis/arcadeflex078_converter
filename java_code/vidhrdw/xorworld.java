@@ -145,7 +145,7 @@ public class xorworld
 			drawgfx(bitmap,gfx,number,
 							color,0,0,
 							sx,sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

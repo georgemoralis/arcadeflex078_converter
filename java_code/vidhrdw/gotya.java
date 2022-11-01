@@ -152,7 +152,7 @@ public class gotya
 				gotya_videoram2[row * 32 + col + 0x10] & 0x0f,
 				flip_screen_x, flip_screen_y,
 				8 * sx, 8 * sy,
-				&Machine.visible_area,
+				Machine.visible_area,
 				TRANSPARENCY_NONE, 0);
 		}
 	}
@@ -177,7 +177,7 @@ public class gotya
 				code, color,
 				flip_screen_x, flip_screen_y,
 				sx, sy,
-				&Machine.visible_area,
+				Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -195,7 +195,7 @@ public class gotya
 	public static VideoUpdateHandlerPtr video_update_gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, -(*gotya_scroll + (scroll_bit_8 * 256)) - 2 * 8);
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		gotya_draw_sprites(bitmap);
 		gotya_draw_status(bitmap);
 	} };

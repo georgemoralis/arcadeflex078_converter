@@ -231,14 +231,14 @@ public class gsword
 						gsword_spritetile_ram[offs+1] & 0x3f,
 						flipx,flipy,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_COLOR, 15);
+						Machine.visible_area,TRANSPARENCY_COLOR, 15);
 			}
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		gsword_draw_sprites(bitmap);
 	} };
 }

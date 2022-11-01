@@ -115,13 +115,13 @@ public class tankbatt
 				color,
 				0,0,
 				x,y,
-				&Machine.visible_area,TRANSPARENCY_NONE,0);
+				Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_tankbatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tankbatt_draw_bullets(bitmap);
 	} };
 }

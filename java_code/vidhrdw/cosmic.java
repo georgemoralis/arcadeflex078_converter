@@ -326,7 +326,7 @@ public class cosmic
 						    code, color,
 						    0, ~spriteram.read(offs)& 0x40,
 					    	256-spriteram.read(offs+2),spriteram.read(offs+1),
-					        &Machine.visible_area,TRANSPARENCY_PEN,0);
+					        Machine.visible_area,TRANSPARENCY_PEN,0);
 	            }
 	            else
 	            {
@@ -336,7 +336,7 @@ public class cosmic
 						    code >> 2, color,
 						    0, ~spriteram.read(offs)& 0x40,
 					    	256-spriteram.read(offs+2),spriteram.read(offs+1),
-					        &Machine.visible_area,TRANSPARENCY_PEN,0);
+					        Machine.visible_area,TRANSPARENCY_PEN,0);
 	            }
 	        }
 		}

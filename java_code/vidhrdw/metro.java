@@ -217,7 +217,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -255,7 +255,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -298,7 +298,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}

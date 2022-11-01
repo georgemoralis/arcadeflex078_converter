@@ -154,7 +154,7 @@ public class wrally
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							0x20 + color,xflip,yflip,
 							sx-0x0f+x*16,sy+y*16,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}

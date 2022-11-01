@@ -83,14 +83,14 @@ public class phozon
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine.gfx[2],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
+		drawgfx(dest,Machine.gfx[2],code,color,flipx,flipy,sx,sy,Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
 	void phozon_draw_sprite8(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine.gfx[3],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
+		drawgfx(dest,Machine.gfx[3],code,color,flipx,flipy,sx,sy,Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
@@ -147,11 +147,11 @@ public class phozon
 						colorram[offs] & 0x3f,
 						0,0,
 						8*sx,8*sy,
-						&Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 2){
@@ -252,7 +252,7 @@ public class phozon
 						colorram[offs] & 0x3f,
 						0,0,
 						8*sx,8*sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 		}
 	} };

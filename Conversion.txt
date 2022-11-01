@@ -26,3 +26,4 @@ videoram (from generic vidhrdw) , reads-writes
 spriteram (from generic vidhrdw) , reads-writes
 convert -> to .
 videoram_size to videoram_size[0]
+&Machine to Machine

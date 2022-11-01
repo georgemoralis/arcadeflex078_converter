@@ -207,7 +207,7 @@ public class deco32
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine.visible_area,TRANSPARENCY_PEN,0,prival);
+							Machine.visible_area,TRANSPARENCY_PEN,0,prival);
 				}
 			}
 		}
@@ -281,7 +281,7 @@ public class deco32
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine.visible_area,trans,0,pri,1<<gfxbank);
+						Machine.visible_area,trans,0,pri,1<<gfxbank);
 	
 				multi--;
 			}
@@ -642,7 +642,7 @@ public class deco32
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							&Machine.visible_area,trans,15,zoomx,zoomy,NULL,0,
+							Machine.visible_area,trans,15,zoomx,zoomy,NULL,0,
 							((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16) );
 					else
 						drawgfx(bitmap,Machine.gfx[bank],
@@ -650,7 +650,7 @@ public class deco32
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							&Machine.visible_area,trans,15);
+							Machine.visible_area,trans,15);
 	
 					if (fx != 0)
 						xpos-=zoomx<<4;

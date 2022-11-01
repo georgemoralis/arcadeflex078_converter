@@ -26,7 +26,7 @@ public class destroyr
 		int i;
 		int j;
 	
-		fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
+		fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 	
 		/* draw major objects */
 	
@@ -51,7 +51,7 @@ public class destroyr
 			}
 	
 			drawgfx(bitmap, Machine.gfx[2], num, 0, flipx, 0,
-				horz, 16 * i, &Machine.visible_area, TRANSPARENCY_PEN, 0);
+				horz, 16 * i, Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	
 		/* draw alpha numerics */
@@ -63,7 +63,7 @@ public class destroyr
 				int num = destroyr_alpha_num_ram[32 * i + j];
 	
 				drawgfx(bitmap, Machine.gfx[0], num, 0, 0, 0,
-					8 * j, 8 * i, &Machine.visible_area, TRANSPARENCY_PEN, 0);
+					8 * j, 8 * i, Machine.visible_area, TRANSPARENCY_PEN, 0);
 			}
 		}
 	
@@ -75,7 +75,7 @@ public class destroyr
 			int vert = 256 - destroyr_minor_obj_ram[i + 4];
 	
 			drawgfx(bitmap, Machine.gfx[1], destroyr_minor_obj_ram[i + 0], 0, 0, 0,
-				horz, vert, &Machine.visible_area, TRANSPARENCY_PEN, 0);
+				horz, vert, Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	
 		/* draw waves */
@@ -83,7 +83,7 @@ public class destroyr
 		for (i = 0; i < 4; i++)
 		{
 			drawgfx(bitmap, Machine.gfx[3], destroyr_wavemod ? 1 : 0, 0, 0, 0,
-				64 * i, 0x4e, &Machine.visible_area, TRANSPARENCY_PEN, 0);
+				64 * i, 0x4e, Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	
 		/* draw cursor */

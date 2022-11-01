@@ -124,8 +124,8 @@ public class kopunch
 	{
 		int offs;
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
-		//tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
+		//tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	
 		for (offs = 1023;offs >= 0;offs--)
 		{
@@ -139,7 +139,7 @@ public class kopunch
 					0,
 					0,gfxflip,
 					8*(sx+8)+scroll[0],8*(8+(gfxflip ? 15-sy : sy))+scroll[1],
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 }

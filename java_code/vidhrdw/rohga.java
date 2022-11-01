@@ -131,7 +131,7 @@ public class rohga
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine.visible_area,TRANSPARENCY_PEN,0,pri);
+						Machine.visible_area,TRANSPARENCY_PEN,0,pri);
 	
 				multi--;
 			}
@@ -228,7 +228,7 @@ public class rohga
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine.visible_area,trans,0);
+						Machine.visible_area,trans,0);
 	
 				multi--;
 			}
@@ -417,7 +417,7 @@ public class rohga
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine.visible_area,trans,0,tilemap_pri,sprite_pri);
+							Machine.visible_area,trans,0,tilemap_pri,sprite_pri);
 				}
 			}
 	
@@ -459,7 +459,7 @@ public class rohga
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		/* Draw playfields - Palette of 2nd playfield chip visible if playfields turned off */
-		fillbitmap(bitmap,Machine.pens[512],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[512],Machine.visible_area);
 	
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 		wizdfire_drawsprites(bitmap,buffered_spriteram16,4,3);
@@ -487,7 +487,7 @@ public class rohga
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		/* Draw playfields - Palette of 2nd playfield chip visible if playfields turned off */
-		fillbitmap(bitmap,Machine.pens[512],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[512],Machine.visible_area);
 		fillbitmap(priority_bitmap,0,NULL);
 		deco16_clear_sprite_priority_bitmap(); 
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);

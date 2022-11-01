@@ -167,13 +167,13 @@ public class munchmo
 	
 			copyscrollbitmap(bitmap,tmpbitmap,
 				1,&scrollx,1,&scrolly,
-				&Machine.visible_area,TRANSPARENCY_NONE,0);
+				Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap )
 	{
-		const struct rectangle *clip = &Machine.visible_area;
+		const struct rectangle *clip = Machine.visible_area;
 		int scroll = mnchmobl_vreg[6];
 		int flags = mnchmobl_vreg[7];					/*   XB?????? */
 		int xadjust = - 128-16 - ((flags&0x80)?1:0);

@@ -156,14 +156,14 @@ public class mario
 						(spriteram.read(offs + 1)& 0x0f) + 16 * palette_bank,
 						spriteram.read(offs + 1)& 0x80,spriteram.read(offs + 1)& 0x40,
 						spriteram.read(offs + 3)- 8,240 - spriteram.read(offs)+ 8,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_mario  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		mario_draw_sprites(bitmap);
 	} };
 }

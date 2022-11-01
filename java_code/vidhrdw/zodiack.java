@@ -188,7 +188,7 @@ public class zodiack
 				0,
 				0,0,
 				x,y,
-				&Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -219,7 +219,7 @@ public class zodiack
 				sx, sy,
 				//flip_screen[0] ? &spritevisibleareaflipx : &spritevisiblearea,TRANSPARENCY_PEN,0);
 				//&spritevisiblearea,TRANSPARENCY_PEN,0);
-				&Machine.visible_area, TRANSPARENCY_PEN, 0);
+				Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -232,8 +232,8 @@ public class zodiack
 			tilemap_set_scrolly(fg_tilemap, i, zodiack_attributesram[i * 2]);
 		}
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		zodiack_draw_bullets(bitmap);
 		zodiack_draw_sprites(bitmap);
 	} };

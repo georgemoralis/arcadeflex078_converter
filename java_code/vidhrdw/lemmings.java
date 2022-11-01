@@ -77,7 +77,7 @@ public class lemmings
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				multi--;
 			}
@@ -207,7 +207,7 @@ public class lemmings
 	
 		/* Pixel layer can be windowed in hardware (two player mode) */
 		if ((lemmings_control_data[6]&2)==0) {
-			copyscrollbitmap(bitmap,bitmap0,1,&x1,1,&y,&Machine.visible_area,TRANSPARENCY_PEN,0x100);
+			copyscrollbitmap(bitmap,bitmap0,1,&x1,1,&y,Machine.visible_area,TRANSPARENCY_PEN,0x100);
 		} else {
 			rect.max_x=159;
 			rect.min_x=0;

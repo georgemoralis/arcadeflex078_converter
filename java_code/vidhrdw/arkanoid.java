@@ -111,13 +111,13 @@ public class arkanoid
 					((spriteram.read(offs + 2)& 0xf8) >> 3) + 32 * palettebank,
 					flip_screen_x,flip_screen_y,
 					sx,sy + (flip_screen_y ? 8 : -8),
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 			drawgfx(bitmap,Machine.gfx[0],
 					2 * code + 1,
 					((spriteram.read(offs + 2)& 0xf8) >> 3) + 32 * palettebank,
 					flip_screen_x,flip_screen_y,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class arkanoid
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_arkanoid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		arkanoid_draw_sprites(bitmap);
 	} };
 }

@@ -111,7 +111,7 @@ public class tigeroad
 					color,
 					flipx, flipy,
 					sx, 240 - sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN, 15);
 			}
 	
@@ -173,11 +173,11 @@ public class tigeroad
 	
 	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, TILEMAP_BACK, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_BACK, 0);
 		tigeroad_draw_sprites(bitmap, 0);
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, TILEMAP_FRONT, 1);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_FRONT, 1);
 		//tigeroad_draw_sprites(bitmap, 1); draw priority sprites?
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 2);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 2);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

@@ -701,7 +701,7 @@ public class turbo
 		turbo_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = &Machine.pens[(turbo_fbcol & 6) << 6];
+		colortable = Machine.pens[(turbo_fbcol & 6) << 6];
 	
 		/* loop over rows */
 		for (y = 4; y < VIEW_HEIGHT - 4; y++)
@@ -831,7 +831,7 @@ public class turbo
 		subroc3d_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = &Machine.pens[(subroc3d_col & 15) << 5];
+		colortable = Machine.pens[(subroc3d_col & 15) << 5];
 	
 		/* loop over rows */
 		for (y = 0; y < VIEW_HEIGHT; y++)

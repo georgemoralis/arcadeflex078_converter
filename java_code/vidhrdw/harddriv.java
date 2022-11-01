@@ -482,7 +482,7 @@ public class harddriv
 	
 	public static VideoUpdateHandlerPtr video_update_harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pen_t *pens = &Machine.pens[gfx_palettebank * 256];
+		pen_t *pens = Machine.pens[gfx_palettebank * 256];
 		pen_t black = get_black_pen();
 		offs_t adjusted_offs;
 		int start, end, x, y;

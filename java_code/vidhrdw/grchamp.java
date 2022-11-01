@@ -237,7 +237,7 @@ public class grchamp
 	{
 		int bgcolor = Machine.pens[0];
 		int sprite_transp = Machine.pens[0x24];
-		const struct rectangle *clip = &Machine.visible_area;
+		const struct rectangle *clip = Machine.visible_area;
 		int y0 = 240-grchamp_player_ypos;
 		int x0 = 256-grchamp_player_xpos;
 		int x,y;

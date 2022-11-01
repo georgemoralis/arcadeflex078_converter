@@ -563,6 +563,10 @@ public class convertMame {
                         Convertor.inpos += 1;
                         continue;
                     }
+                    if (sUtil.getToken("&Machine")) {
+                        sUtil.putString((new StringBuilder()).append("Machine").toString());
+                        continue;
+                    }
                     break;
                 }
                 case ')': {

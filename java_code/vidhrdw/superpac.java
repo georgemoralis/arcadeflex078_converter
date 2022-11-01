@@ -251,14 +251,14 @@ public class superpac
 	
 				drawgfx(tmpbitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
-						&Machine.visible_area, TRANSPARENCY_NONE, 0);
+						Machine.visible_area, TRANSPARENCY_NONE, 0);
 			}
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, Machine.visible_area, TRANSPARENCY_NONE, 0);
 	
 		/* Draw the sprites. */
-		draw_sprites(bitmap, &Machine.visible_area, TRANSPARENCY_COLOR);
+		draw_sprites(bitmap, Machine.visible_area, TRANSPARENCY_COLOR);
 	
 		/* Draw the high priority characters */
 		for (offs = videoram_size[0] - 1;offs >= 0;offs--)
@@ -293,10 +293,10 @@ public class superpac
 	
 				drawgfx(bitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
-						&Machine.visible_area, TRANSPARENCY_COLOR, 31);
+						Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}
 	
 		/* Color 31 still has priority over that (ghost eyes in Pac 'n Pal) */
-		draw_sprites(bitmap, &Machine.visible_area, TRANSPARENCY_PENS);
+		draw_sprites(bitmap, Machine.visible_area, TRANSPARENCY_PENS);
 	} };
 }

@@ -390,7 +390,7 @@ public class system1
 							color,
 							flip_screen,flip_screen,
 							8*sx + blockgal_kludgeoffset,8*sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -450,9 +450,9 @@ public class system1
 	
 			/* copy the temporary bitmap to the screen */
 			if (flip_screen != 0)
-				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx_flip,1,&background_scrolly_flip,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx_flip,1,&background_scrolly_flip,Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx,1,&background_scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx,1,&background_scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 		else
 		{
@@ -488,25 +488,25 @@ public class system1
 							color,
 							flip_screen,flip_screen,
 							sx,sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flip_screen,flip_screen,
 							sx-256,sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flip_screen,flip_screen,
 							sx,sy-256,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flip_screen,flip_screen,
 							sx-256,sy-256,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -527,7 +527,7 @@ public class system1
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if ((system1_video_mode & 0x10) != 0)  /* screen off */
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	} };
 	
 	
@@ -599,13 +599,13 @@ public class system1
 					for (i = 0; i < 32; i++)
 						scrollx_row_flip[31-i] = (256-scrollx_row[i]) & 0xff;
 	
-					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row_flip,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row_flip,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 				else
-					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 			else
-				copybitmap(bitmap,tmp_bitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copybitmap(bitmap,tmp_bitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 		else
 		{
@@ -646,7 +646,7 @@ public class system1
 							color,
 							flip_screen,flip_screen,
 							sx,8*sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -667,7 +667,7 @@ public class system1
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if ((system1_video_mode & 0x10) != 0)  /* screen off */
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 	#ifdef MAME_DEBUG
@@ -743,14 +743,14 @@ public class system1
 								((code >> 5) & 0x3f) + 64,
 								flip_screen,flip_screen,
 								x,y,
-								&Machine.visible_area, TRANSPARENCY_NONE, 0);
+								Machine.visible_area, TRANSPARENCY_NONE, 0);
 					else if (priority != 0)
 						drawgfx(bitmap,Machine.gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
 								flip_screen,flip_screen,
 								x,y,
-								&Machine.visible_area, TRANSPARENCY_PEN, 0);
+								Machine.visible_area, TRANSPARENCY_PEN, 0);
 	
 					source+=2;
 				}
@@ -784,7 +784,7 @@ public class system1
 					(code >> 5) & 0x3f,
 					flip_screen,flip_screen,
 					8*sx,8*sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -798,7 +798,7 @@ public class system1
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if ((system1_video_mode & 0x10) != 0)  /* screen off */
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -818,7 +818,7 @@ public class system1
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
 		if ((system1_video_mode & 0x10) != 0)  /* screen off */
-			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		blockgal_kludgeoffset = 0;
 	} };

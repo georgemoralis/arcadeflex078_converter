@@ -747,16 +747,16 @@ public class ddenlovr
 				usrintf_showmessage("priority = %02x",pri);
 				pri = 0;
 			}
-			fillbitmap(framebuffer,dynax_bgcolor,&Machine.visible_area);
+			fillbitmap(framebuffer,dynax_bgcolor,Machine.visible_area);
 	
 	//if (!keyboard_pressed(KEYCODE_Q))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][0]);
+			copylayer(framebuffer,Machine.visible_area,order[pri][0]);
 	//if (!keyboard_pressed(KEYCODE_W))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][1]);
+			copylayer(framebuffer,Machine.visible_area,order[pri][1]);
 	//if (!keyboard_pressed(KEYCODE_E))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][2]);
+			copylayer(framebuffer,Machine.visible_area,order[pri][2]);
 	//if (!keyboard_pressed(KEYCODE_R))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][3]);
+			copylayer(framebuffer,Machine.visible_area,order[pri][3]);
 	
 			if (extra_layers != 0)
 			{
@@ -768,13 +768,13 @@ public class ddenlovr
 				pri = 0;
 			}
 	//if (!keyboard_pressed(KEYCODE_A))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][0]+4);
+			copylayer(framebuffer,Machine.visible_area,order[pri][0]+4);
 	//if (!keyboard_pressed(KEYCODE_S))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][1]+4);
+			copylayer(framebuffer,Machine.visible_area,order[pri][1]+4);
 	//if (!keyboard_pressed(KEYCODE_D))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][2]+4);
+			copylayer(framebuffer,Machine.visible_area,order[pri][2]+4);
 	//if (!keyboard_pressed(KEYCODE_F))
-			copylayer(framebuffer,&Machine.visible_area,order[pri][3]+4);
+			copylayer(framebuffer,Machine.visible_area,order[pri][3]+4);
 			}
 		}
 	}

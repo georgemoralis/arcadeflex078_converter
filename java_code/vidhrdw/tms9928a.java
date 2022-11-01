@@ -491,10 +491,10 @@ public class tms9928a
 			tms.StatusReg = tms.oldStatusReg;
 	
 		if (! (tms.Regs[1] & 0x40))
-			fillbitmap(bitmap, Machine.pens[tms.BackColour], &Machine.visible_area);
+			fillbitmap(bitmap, Machine.pens[tms.BackColour], Machine.visible_area);
 		else
 		{
-			copybitmap(bitmap, tms.tmpbmp, 0, 0, LEFT_BORDER, TOP_BORDER, &Machine.visible_area, TRANSPARENCY_NONE, 0);
+			copybitmap(bitmap, tms.tmpbmp, 0, 0, LEFT_BORDER, TOP_BORDER, Machine.visible_area, TRANSPARENCY_NONE, 0);
 			{
 				struct rectangle rt;
 	

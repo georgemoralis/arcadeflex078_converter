@@ -158,12 +158,12 @@ public class gladiatr
 		copyscrollbitmap(bitmap,tmpbitmap,
 			1,&scrollx,
 			0,0,
-			&Machine.visible_area,TRANSPARENCY_NONE,0);
+			Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	static void render_text( struct mame_bitmap *bitmap );
 	static void render_text( struct mame_bitmap *bitmap ){
-		const struct rectangle *clip = &Machine.visible_area;
+		const struct rectangle *clip = Machine.visible_area;
 		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		int tile_bank_offset = (video_attributes&3)*256;
@@ -198,7 +198,7 @@ public class gladiatr
 	
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big );
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big ){
-		const struct rectangle *clip = &Machine.visible_area;
+		const struct rectangle *clip = Machine.visible_area;
 	
 		static int tile_offset[4][4] = {
 			{0x0,0x1,0x4,0x5},

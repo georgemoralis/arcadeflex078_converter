@@ -146,7 +146,7 @@ public class blueprnt
 				}
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -173,7 +173,7 @@ public class blueprnt
 					0,
 					flipx,flipy,
 					2+sx,sy-1,	/* sprites are slightly misplaced, regardless of the screen flip */
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -198,7 +198,7 @@ public class blueprnt
 						colorram[offs] & 0x7f,
 						flipscreen,flipscreen,
 						8*sx,(8*sy+scroll[sx]) & 0xff,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	} };

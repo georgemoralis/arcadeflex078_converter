@@ -678,12 +678,12 @@ public class taito_b
 	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  if (~video_control & 0x01)
-	    fillbitmap(framebuffer[framebuffer_page],0,&Machine.visible_area);
+	    fillbitmap(framebuffer[framebuffer_page],0,Machine.visible_area);
 	
 	  if (~video_control & 0x80)
 	    framebuffer_page ^= 1;
 	
-	  taitob_draw_sprites(framebuffer[framebuffer_page],&Machine.visible_area);
+	  taitob_draw_sprites(framebuffer[framebuffer_page],Machine.visible_area);
 	} };
 	
 }

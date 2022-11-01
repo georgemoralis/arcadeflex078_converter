@@ -965,7 +965,7 @@ public class mame
 	
 			/* if we have a remapped colortable, point our local colortable to it */
 			if (Machine.remapped_colortable)
-				Machine.gfx[i].colortable = &Machine.remapped_colortable[gfxdecodeinfo[i].color_codes_start];
+				Machine.gfx[i].colortable = Machine.remapped_colortable[gfxdecodeinfo[i].color_codes_start];
 			Machine.gfx[i].total_colors = gfxdecodeinfo[i].total_color_codes;
 		}
 		return 0;

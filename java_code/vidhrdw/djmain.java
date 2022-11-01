@@ -23,7 +23,7 @@ public class djmain
 		int offs, pri_code;
 		int sortedlist[NUM_SPRITES];
 	
-		Machine.gfx[0].colortable = &Machine.remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
+		Machine.gfx[0].colortable = Machine.remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
 	
 		for (offs = 0; offs < NUM_SPRITES; offs++)
 			sortedlist[offs] = -1;

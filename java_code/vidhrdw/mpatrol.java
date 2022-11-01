@@ -410,7 +410,7 @@ public class mpatrol
 			draw_background(bitmap, bg1xpos, bg1ypos, Machine.visible_area.max_y,
 			                (bgcontrol == 0x04) ? 1 : 2, TRANSPARENCY_COLOR);
 		}
-		else fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		else fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 		/* copy the temporary bitmap to the screen */
@@ -476,7 +476,7 @@ public class mpatrol
 					spriteram_2[offs + 1] & 0x3f,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,128+32);
+					Machine.visible_area,TRANSPARENCY_COLOR,128+32);
 		}
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
@@ -499,7 +499,7 @@ public class mpatrol
 					spriteram.read(offs + 1)& 0x3f,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,128+32);
+					Machine.visible_area,TRANSPARENCY_COLOR,128+32);
 		}
 	} };
 }

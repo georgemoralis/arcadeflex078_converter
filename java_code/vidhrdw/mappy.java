@@ -140,7 +140,7 @@ public class mappy
 	{
 		if (special_display == 1) sy++;	/* Motos */
 	
-		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
+		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,Machine.visible_area,
 			TRANSPARENCY_COLOR,15);
 	}
 	
@@ -255,7 +255,7 @@ public class mappy
 					scroll[offs] = 224 - scroll[offs];
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 		/* Draw the sprites. */

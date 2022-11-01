@@ -272,6 +272,6 @@ public class shangha3
 	
 	public static VideoUpdateHandlerPtr video_update_shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,rawbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,rawbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

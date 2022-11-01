@@ -212,7 +212,7 @@ public class battlane
 					color,
 					flipx, flipy,
 					sx, sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 	
 				if ((attr & 0x10) != 0)  /* Double Y direction */
@@ -224,7 +224,7 @@ public class battlane
 						color,
 						flipx, flipy,
 						sx, sy + dy,
-						&Machine.visible_area,
+						Machine.visible_area,
 						TRANSPARENCY_PEN, 0);
 				}
 			}
@@ -260,7 +260,7 @@ public class battlane
 	{
 		tilemap_mark_all_tiles_dirty(bg_tilemap); // HACK
 	
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		battlane_draw_sprites(bitmap);
 		battlane_draw_fg_bitmap(bitmap);
 	} };

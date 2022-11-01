@@ -248,14 +248,14 @@ public class liberate
 					color,
 					fx,fy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 	        if (multi != 0)
 	    		drawgfx(bitmap,Machine.gfx[1],
 					code+1,
 					color,
 					fx,fy,
 					sx,sy2,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -303,14 +303,14 @@ public class liberate
 					color,
 					fx,fy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 	        if (multi != 0)
 	    		drawgfx(bitmap,Machine.gfx[1],
 					code2,
 					color,
 					fx,fy,
 					sx,sy2,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -359,14 +359,14 @@ public class liberate
 					color,
 					fx,fy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 	        if (multi != 0)
 	    		drawgfx(bitmap,Machine.gfx[1],
 					code2,
 					color,
 					fx,fy,
 					sx,sy2,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -378,7 +378,7 @@ public class liberate
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
 		if (background_disable != 0)
-			fillbitmap(bitmap,Machine.pens[32],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);
 		boomrang_drawsprites(bitmap,0);
@@ -389,7 +389,7 @@ public class liberate
 	{
 		int mx,my,tile,color,offs;
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		prosport_drawsprites(bitmap);
 	
@@ -406,7 +406,7 @@ public class liberate
 	
 			drawgfx(bitmap,Machine.gfx[0],
 					tile,1,0,0,248-8*mx,8*my,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -416,7 +416,7 @@ public class liberate
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
 		if (background_disable != 0)
-			fillbitmap(bitmap,Machine.pens[32],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_BACK,0);
 	
@@ -433,7 +433,7 @@ public class liberate
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
 		if (background_disable != 0)
-			fillbitmap(bitmap,Machine.pens[32],&Machine.visible_area);
+			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);
 	

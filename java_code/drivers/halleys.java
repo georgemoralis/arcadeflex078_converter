@@ -2018,7 +2018,7 @@ public class halleys
 		memset(io_ram, 0xff, io_ramsize);
 		memset(render_layer[0], 0, SCREEN_BYTESIZE * MAX_LAYERS);
 	
-		fillbitmap(Machine.scrbitmap, bgcolor, &Machine.visible_area);
+		fillbitmap(Machine.scrbitmap, bgcolor, Machine.visible_area);
 	}
 	
 	

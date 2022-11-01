@@ -1844,7 +1844,7 @@ public class mamedbg
 	{
 		static char buffer[16][79+1];
 		static int which = 0;
-		const struct MachineCPU *cpu = &Machine.drv.cpu[active_cpu];
+		const struct MachineCPU *cpu = Machine.drv.cpu[active_cpu];
 		const struct Memory_ReadAddress *mr = cpu.memory_read;
 		int ram_cnt = 1, nop_cnt = 1;
 		const char *name;
@@ -1969,7 +1969,7 @@ public class mamedbg
 	{
 		static char buffer[16][79+1];
 		static int which = 0;
-		const struct MachineCPU *cpu = &Machine.drv.cpu[active_cpu];
+		const struct MachineCPU *cpu = Machine.drv.cpu[active_cpu];
 		const struct Memory_WriteAddress *mw = cpu.memory_write;
 		int ram_cnt = 1, nop_cnt = 1;
 		const char *name;

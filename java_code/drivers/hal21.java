@@ -196,7 +196,7 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = &Machine.visible_area;
+		cliprect = Machine.visible_area;
 		bankbase = attrs<<3 & 0x100;
 		c = attrs & 0x0f;
 		if (c > 11) { fillbitmap(bitmap,Machine.pens[(c<<4)+8], cliprect); return; }
@@ -236,7 +236,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color, fy;
 	
-		cliprect = &Machine.visible_area;
+		cliprect = Machine.visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	
@@ -267,7 +267,7 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = &Machine.visible_area;
+		cliprect = Machine.visible_area;
 		bankbase = attrs<<4 & 0x300;
 		c = attrs & 0x0f;
 		if (c == 7) c = 15;
@@ -300,7 +300,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color;
 	
-		cliprect = &Machine.visible_area;
+		cliprect = Machine.visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	

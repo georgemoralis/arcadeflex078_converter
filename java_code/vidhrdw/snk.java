@@ -97,7 +97,7 @@ public class snk
 						int x_size, int y_size, int bg_type )
 	{
 		const struct GfxElement *gfx = Machine.gfx[1];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs, x, y;
@@ -141,7 +141,7 @@ public class snk
 	void tnk3_draw_text( struct mame_bitmap *bitmap, int bank, unsigned char *source )
 	{
 		const struct GfxElement *gfx = Machine.gfx[0];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int x, y;
@@ -168,7 +168,7 @@ public class snk
 	void tnk3_draw_status_main( struct mame_bitmap *bitmap, int bank, unsigned char *source, int start )
 	{
 		const struct GfxElement *gfx = Machine.gfx[0];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int x, y;
@@ -200,7 +200,7 @@ public class snk
 	void tnk3_draw_sprites( struct mame_bitmap *bitmap, int xscroll, int yscroll )
 	{
 		const struct GfxElement *gfx = Machine.gfx[2];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs;
@@ -285,7 +285,7 @@ public class snk
 	static void sgladiat_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly )
 	{
 		const struct GfxElement *gfx = Machine.gfx[1];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int offs, x, y;
@@ -336,7 +336,7 @@ public class snk
 	static void ikari_draw_sprites( struct mame_bitmap *bitmap, int start, int xscroll, int yscroll,
 					unsigned char *source, int mode )
 	{
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 		struct GfxElement *gfx = Machine.gfx[mode];
 		int tile_number, attributes, color, sx, sy;
 		int which, finish;
@@ -407,7 +407,7 @@ public class snk
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[0xd000];
 		const struct GfxElement *gfx = Machine.gfx[1];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs, x, y;
@@ -466,7 +466,7 @@ public class snk
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[(mode==2)?0xe800:0xe000];
 		const struct GfxElement *gfx = Machine.gfx[(mode==1)?3:2];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 		int tile_number, attributes, sx, sy, color, pen_mode;
 		int which, finish, sp_size;
 	
@@ -521,7 +521,7 @@ public class snk
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[base];
 		const struct GfxElement *gfx = Machine.gfx[0];
-		struct rectangle *clip = &Machine.visible_area;
+		struct rectangle *clip = Machine.visible_area;
 	
 		int tile_high = (attributes & 0xf0) << 4;
 		int color = attributes & 0xf;

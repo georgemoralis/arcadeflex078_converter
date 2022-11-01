@@ -268,7 +268,7 @@ public class ppu2c03b
 					return -1;
 	
 				if ( Machine.remapped_colortable )
-					Machine.gfx[intf.gfx_layout_number[i]].colortable = &Machine.remapped_colortable[intf.color_base[i]];
+					Machine.gfx[intf.gfx_layout_number[i]].colortable = Machine.remapped_colortable[intf.color_base[i]];
 	
 				Machine.gfx[intf.gfx_layout_number[i]].total_colors = 8;
 			}

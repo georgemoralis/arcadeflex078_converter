@@ -264,7 +264,7 @@ public class equites
 		memset(dirtybuf, 1, 0x800);
 	
 		if ((prestep = (struct PRESTEP_TYPE *)auto_malloc(i * sizeof(struct PRESTEP_TYPE))) == NULL) return(-1);
-		splndrbt_prestep(prestep, &Machine.visible_area, BMW, 434, 96, 480);
+		splndrbt_prestep(prestep, Machine.visible_area, BMW, 434, 96, 480);
 	
 		defcharram = videoram16 + videoram_size[0] / 2;
 	

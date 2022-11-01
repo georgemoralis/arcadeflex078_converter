@@ -236,9 +236,9 @@ public class matmania
 	
 			scrolly = -*matmania_scroll;
 			if (*matmania_pageselect)
-				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -252,7 +252,7 @@ public class matmania
 						(spriteram.read(offs)& 0x08) >> 3,
 						spriteram.read(offs)& 0x04,spriteram.read(offs)& 0x02,
 						239 - spriteram.read(offs+3),(240 - spriteram.read(offs+2)) & 0xff,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -271,7 +271,7 @@ public class matmania
 					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -332,9 +332,9 @@ public class matmania
 	
 			scrolly = -*matmania_scroll;
 			if (*matmania_pageselect)
-				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -348,7 +348,7 @@ public class matmania
 						(spriteram.read(offs)& 0x08) >> 3,
 						spriteram.read(offs)& 0x04,spriteram.read(offs)& 0x02,
 						239 - spriteram.read(offs+3),(240 - spriteram.read(offs+2)) & 0xff,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -367,7 +367,7 @@ public class matmania
 					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 }

@@ -896,7 +896,7 @@ public class namcoic
 				struct GfxElement *pGfx = decodegfx( 0x10000+(UINT8 *)mpRoadRAM, &RoadTileLayout );
 				if (pGfx != 0)
 				{
-					pGfx.colortable = &Machine.remapped_colortable[0xf00];
+					pGfx.colortable = Machine.remapped_colortable[0xf00];
 					pGfx.total_colors = 0x3f;
 	
 					Machine.gfx[gfxbank] = pGfx;

@@ -83,12 +83,12 @@ public class cloak
 		{
 			if (bmap != 0)
 			{
-				fillbitmap(tmpbitmap, Machine.pens[16], &Machine.visible_area);
+				fillbitmap(tmpbitmap, Machine.pens[16], Machine.visible_area);
 				memset(tmpvideoram, 0, 256*256);
 			}
 			else
 			{
-				fillbitmap(tmpbitmap2, Machine.pens[16], &Machine.visible_area);
+				fillbitmap(tmpbitmap2, Machine.pens[16], Machine.visible_area);
 				memset(tmpvideoram2, 0, 256*256);
 			}
 		}

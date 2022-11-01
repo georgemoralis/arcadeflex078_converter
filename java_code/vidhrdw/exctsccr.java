@@ -190,7 +190,7 @@ public class exctsccr
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 		}
 	
@@ -222,7 +222,7 @@ public class exctsccr
 					0x0e,
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 	
 				color += 6;
@@ -234,14 +234,14 @@ public class exctsccr
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 				drawgfx(bitmap,Machine.gfx[4],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_COLOR, 16);
 	
 			} else
@@ -251,7 +251,7 @@ public class exctsccr
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine.visible_area,
+					Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 			}
 		}
@@ -259,7 +259,7 @@ public class exctsccr
 	
 	public static VideoUpdateHandlerPtr video_update_exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		exctsccr_draw_sprites( bitmap );
 	} };
 }

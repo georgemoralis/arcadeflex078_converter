@@ -304,7 +304,7 @@ public class docastle
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,256,
+					Machine.visible_area,TRANSPARENCY_COLOR,256,
 					0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
@@ -313,15 +313,15 @@ public class docastle
 					color + 32,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_COLOR,256,
+					Machine.visible_area,TRANSPARENCY_COLOR,256,
 					0x02);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		docastle_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

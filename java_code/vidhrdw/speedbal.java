@@ -179,7 +179,7 @@ public class speedbal
 					SPTColor,
 					0,0,
 					SPTX,SPTY,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -218,7 +218,7 @@ public class speedbal
 			}
 		}
 	
-		copybitmap (bitmap,bitmap_bg,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap (bitmap,bitmap_bg,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	
@@ -250,7 +250,7 @@ public class speedbal
 						color,
 						0,0,
 						8*sx,8*sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				ch_dirtybuffer[offset] = 0;
 			}

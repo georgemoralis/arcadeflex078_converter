@@ -148,7 +148,7 @@ public class s2636
 				            1,
 			                0,0,
 			                fx1,fy1,
-			                &Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine.visible_area, TRANSPARENCY_PEN, 0,
 					        expand1,expand1);
 	
 	            /* Get fingerprint */
@@ -176,7 +176,7 @@ public class s2636
 				            0,
 			                0,0,
 					        fx2,fy2,
-			                &Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine.visible_area, TRANSPARENCY_PEN, 0,
 					        expand2,expand2);
 	
 	            /* Remove fingerprint */
@@ -204,7 +204,7 @@ public class s2636
 				            0,
 			                0,0,
 			                fx1,fy1,
-			                &Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine.visible_area, TRANSPARENCY_PEN, 0,
 					        expand1,expand1);
 	            }
 	    }
@@ -250,7 +250,7 @@ public class s2636
 					            colour,
 				                0,0,
 				                bx,by,
-				                &Machine.visible_area,
+				                Machine.visible_area,
 								TRANSPARENCY_BLEND_RAW, 0,
 						        expand,expand);
 	
@@ -271,7 +271,7 @@ public class s2636
 							                colour,
 					    	                0,0,
 					        	            bx,by,
-					            	        &Machine.visible_area,
+					            	        Machine.visible_area,
 											TRANSPARENCY_BLEND_RAW, 0,
 							        	    expand,expand);
 		                    }

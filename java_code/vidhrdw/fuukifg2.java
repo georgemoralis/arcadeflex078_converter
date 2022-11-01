@@ -362,6 +362,6 @@ public class fuukifg2
 	
 		// don't do the rasters on the sprites . its very slow and the hw might not anyway.
 		if (cliprect.max_y == Machine.visible_area.max_y)
-			fuuki16_draw_sprites(bitmap,&Machine.visible_area);
+			fuuki16_draw_sprites(bitmap,Machine.visible_area);
 	} };
 }

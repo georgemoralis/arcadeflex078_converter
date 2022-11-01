@@ -45,14 +45,14 @@ public class lsasquad
 						color,
 						flip_screen,flip_screen,
 						sx,sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,15);
+						Machine.visible_area,TRANSPARENCY_PEN,15);
 				if (sx > 248)	/* wraparound */
 					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flip_screen,flip_screen,
 							sx-256,sy,
-							&Machine.visible_area,TRANSPARENCY_PEN,15);
+							Machine.visible_area,TRANSPARENCY_PEN,15);
 			}
 		}
 	}
@@ -86,20 +86,20 @@ public class lsasquad
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 			/* wraparound */
 			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx-256,sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_lsasquad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine.pens[511],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[511],Machine.visible_area);
 	
 		draw_layer(bitmap,lsasquad_scrollram + 0x000);
 		draw_layer(bitmap,lsasquad_scrollram + 0x080);

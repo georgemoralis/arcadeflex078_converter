@@ -142,7 +142,7 @@ public class gridlee
 	
 	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pen_t *pens = &Machine.pens[palettebank_vis * 32];
+		pen_t *pens = Machine.pens[palettebank_vis * 32];
 		int x, y, i;
 	
 		/* draw scanlines from the VRAM directly */

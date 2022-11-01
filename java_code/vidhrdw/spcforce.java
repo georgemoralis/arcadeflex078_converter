@@ -38,7 +38,7 @@ public class spcforce
 	
 		/* draw the characters as sprites because they could be overlapping */
 	
-		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
 		for (offs = 0; offs < videoram_size[0]; offs++)
@@ -62,7 +62,7 @@ public class spcforce
 					code, col,
 					flip_screen, flip_screen,
 					sx, sy,
-					&Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 }

@@ -235,8 +235,8 @@ public class ttmahjng
 		video_remap_2 = 0;
 	
 	
-		copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
-		copybitmap(bitmap,tmpbitmap1,0,0,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,0);
+		copybitmap(bitmap,tmpbitmap2,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap1,0,0,0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	} };
 	
 	/***************************************************************************

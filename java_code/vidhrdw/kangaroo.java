@@ -320,14 +320,14 @@ public class kangaroo
 		if (*kangaroo_bank_select & 0x01)
 		{
 			/* Plane B is primary */
-			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,8);
+			copybitmap(bitmap,tmpbitmap2,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_COLOR,8);
 		}
 		else
 		{
 			/* Plane A is primary */
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
-			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,16);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copybitmap(bitmap,tmpbitmap2,0,0,0,0,Machine.visible_area,TRANSPARENCY_COLOR,16);
 		}
 	} };
 }

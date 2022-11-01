@@ -117,7 +117,7 @@ public class galspnbl
 							color,
 							flipx,flipy,
 							x,y,
-							&Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine.visible_area,TRANSPARENCY_PEN,0);
 					}
 				}
 			}
@@ -131,7 +131,7 @@ public class galspnbl
 	
 	
 		/* copy the temporary bitmap to the screen */
-		copyscrollbitmap(bitmap,tmpbitmap,1,&screenscroll,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap,1,&screenscroll,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		draw_sprites(bitmap,0);
 	
@@ -153,7 +153,7 @@ public class galspnbl
 						color,
 						0,0,
 						16*sx + screenscroll,8*sy,
-						&Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
