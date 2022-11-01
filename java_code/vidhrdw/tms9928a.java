@@ -171,10 +171,10 @@ public class tms9928a
 	/*
 	** initialize the palette
 	*/
-	static PALETTE_INIT( tms9928a )
+	static public static PaletteInitHandlerPtr tms9928a  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_colors(0, TMS9928A_palette, TMS9928A_PALETTE_SIZE);
-	}
+	} };
 	
 	
 	/*

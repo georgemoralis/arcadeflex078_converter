@@ -82,7 +82,7 @@ public class lasso
 		palette_set_color( i,r,g,b );
 	}
 	
-	PALETTE_INIT( lasso )
+	public static PaletteInitHandlerPtr lasso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -91,10 +91,10 @@ public class lasso
 			lasso_set_color(i,*color_prom);
 			color_prom++;
 		}
-	}
+	} };
 	
 	/* 16 color tiles with a 4 color step for the palettes */
-	PALETTE_INIT( wwjgtin )
+	public static PaletteInitHandlerPtr wwjgtin  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -103,7 +103,7 @@ public class lasso
 		for( color = 0; color < 0x10; color++ )
 			for( pen = 0; pen < 16; pen++ )
 				colortable[color * 16 + pen + 4*16] = (color * 4 + pen) % 0x40;
-	}
+	} };
 	
 	
 	/***************************************************************************

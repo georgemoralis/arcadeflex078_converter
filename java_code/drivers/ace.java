@@ -116,11 +116,11 @@ public class ace
 	}
 	
 	
-	static PALETTE_INIT( ace )
+	static public static PaletteInitHandlerPtr ace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x10,0x20,0xd0); /* light bluish */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr ace_characterram_r  = new ReadHandlerPtr() { public int handler(int offset)

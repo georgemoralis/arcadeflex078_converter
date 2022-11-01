@@ -18,7 +18,7 @@ public class spdodgeb
 	
 	
 	
-	PALETTE_INIT( spdodgeb )
+	public static PaletteInitHandlerPtr spdodgeb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -50,7 +50,7 @@ public class spdodgeb
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

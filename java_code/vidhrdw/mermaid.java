@@ -55,7 +55,7 @@ public class mermaid
 	  I'm not sure about the resistor value, I'm using the Galaxian ones.
 	
 	***************************************************************************/
-	PALETTE_INIT( mermaid )
+	public static PaletteInitHandlerPtr mermaid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -96,7 +96,7 @@ public class mermaid
 	
 	    COLOR(2,2) = 64;
 	    COLOR(2,3) = 33;
-	}
+	} };
 	
 	
 	/***************************************************************************

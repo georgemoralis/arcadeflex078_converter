@@ -80,7 +80,7 @@ public class fastfred
 		palette_set_color(pen,r,g,b);
 	}
 	
-	PALETTE_INIT( fastfred )
+	public static PaletteInitHandlerPtr fastfred  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		pen_t i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -107,7 +107,7 @@ public class fastfred
 	
 			COLOR(0,i) = COLOR(1,i) = color;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

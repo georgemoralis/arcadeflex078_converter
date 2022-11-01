@@ -56,7 +56,7 @@ public class m62
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( irem )
+	public static PaletteInitHandlerPtr irem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -93,9 +93,9 @@ public class m62
 		/* color_prom now points to the beginning of the sprite height table */
 	
 		sprite_height_prom = color_prom;	/* we'll need this at run time */
-	}
+	} };
 	
-	PALETTE_INIT( battroad )
+	public static PaletteInitHandlerPtr battroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -156,9 +156,9 @@ public class m62
 		/* color_prom now points to the beginning of the sprite height table */
 	
 		sprite_height_prom = color_prom;	/* we'll need this at run time */
-	}
+	} };
 	
-	PALETTE_INIT( spelunk2 )
+	public static PaletteInitHandlerPtr spelunk2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -228,7 +228,7 @@ public class m62
 	
 		/* color_prom now points to the beginning of the sprite height table */
 		sprite_height_prom = color_prom;	/* we'll need this at run time */
-	}
+	} };
 	
 	
 	

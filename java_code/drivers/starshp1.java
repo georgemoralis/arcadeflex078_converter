@@ -50,7 +50,7 @@ public class starshp1
 	}
 	
 	
-	static PALETTE_INIT( starshp1 )
+	static public static PaletteInitHandlerPtr starshp1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{
@@ -64,7 +64,7 @@ public class starshp1
 		starshp1_write_palette(0);
 	
 		memcpy(colortable, colortable_source, sizeof(colortable_source));
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr starshp1_audio_w = new WriteHandlerPtr() {public void handler(int offset, int data)

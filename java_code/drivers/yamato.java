@@ -20,7 +20,7 @@ public class yamato
 	
 	
 	
-	PALETTE_INIT( yamato )
+	public static PaletteInitHandlerPtr yamato  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -100,7 +100,7 @@ public class yamato
 			if (i % 4 == 0) COLOR(2,i) = 0;
 			else COLOR(2,i) = i + 64;
 		}
-	}
+	} };
 	
 	
 	

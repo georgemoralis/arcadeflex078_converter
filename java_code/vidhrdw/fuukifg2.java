@@ -90,7 +90,7 @@ public class fuukifg2
 	***************************************************************************/
 	
 	/* Not used atm, seems to be fine without clearing pens? */
-	PALETTE_INIT( fuuki16 )
+	public static PaletteInitHandlerPtr fuuki16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int pen;
 	
@@ -98,7 +98,7 @@ public class fuukifg2
 		   be totally black */
 		for (pen = 0; pen < Machine->drv->total_colors; pen++)
 			palette_set_color(pen,0,0,0);
-	}
+	} };
 	
 	VIDEO_START( fuuki16 )
 	{

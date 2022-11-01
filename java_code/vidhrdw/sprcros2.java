@@ -16,7 +16,7 @@ public class sprcros2
 	data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 	size_t sprcros2_spriteram_size;
 	
-	PALETTE_INIT( sprcros2 )
+	public static PaletteInitHandlerPtr sprcros2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
@@ -46,7 +46,7 @@ public class sprcros2
 			colortable[i+0x100]=color_prom[i+0x220];						//sprites
 			colortable[i+0x200]=color_prom[i+0x320];						//fg
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr sprcros2_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

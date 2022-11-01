@@ -61,7 +61,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( segar )
+	public static PaletteInitHandlerPtr segar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static unsigned char color_scale[] = {0x00, 0x40, 0x80, 0xC0 };
 		int i;
@@ -87,7 +87,7 @@ public class segar
 		for (i = 0;i < Machine->drv->total_colors;i++)
 			colortable[i] = i;
 	
-	}
+	} };
 	
 	
 	/***************************************************************************

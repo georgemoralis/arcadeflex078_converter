@@ -34,7 +34,7 @@ public class epos
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( epos )
+	public static PaletteInitHandlerPtr epos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -61,7 +61,7 @@ public class epos
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr epos_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -156,7 +156,7 @@ public class stactics
 	static int firebeam_state;
 	static int old_firebeam_state;
 	
-	PALETTE_INIT( stactics )
+	public static PaletteInitHandlerPtr stactics  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    int i,j;
 	
@@ -221,7 +221,7 @@ public class stactics
 	            *(colortable++) = color_prom[i*0x100+0x08*0x10+j];
 	        }
 	    }
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -40,16 +40,16 @@ public class cinemat
 		lasty = toy;
 	}
 	
-	PALETTE_INIT( cinemat )
+	public static PaletteInitHandlerPtr cinemat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    color_display = 0;
-	}
+	} };
 	
 	
-	PALETTE_INIT( cinemat_color )
+	public static PaletteInitHandlerPtr cinemat_color  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    color_display = 1;
-	}
+	} };
 	
 	
 	/***************************************************************************

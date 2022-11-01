@@ -136,7 +136,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( exidy )
+	public static PaletteInitHandlerPtr exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		if (exidy_palette)
 		{
@@ -146,7 +146,7 @@ public class exidy
 				palette_set_color(i,exidy_palette[i*3+0],exidy_palette[i*3+1],exidy_palette[i*3+2]);
 		}
 		memcpy(colortable, exidy_colortable, COLORTABLE_LEN * sizeof(colortable[0]));
-	}
+	} };
 	
 	
 	

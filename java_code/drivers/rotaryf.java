@@ -20,11 +20,11 @@ public class rotaryf
 {
 	
 	
-	static PALETTE_INIT( rotaryf )
+	static public static PaletteInitHandlerPtr rotaryf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
-	}
+	} };
 	
 	public static InterruptHandlerPtr rotaryf_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

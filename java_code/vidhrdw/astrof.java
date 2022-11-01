@@ -27,10 +27,10 @@ public class astrof
 	
 	
 	/* Just save the colorprom pointer */
-	PALETTE_INIT( astrof )
+	public static PaletteInitHandlerPtr astrof  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		prom = color_prom;
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -12,7 +12,7 @@ public class battlex
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( battlex )
+	public static PaletteInitHandlerPtr battlex  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,col;
 	
@@ -38,7 +38,7 @@ public class battlex
 				palette_set_color(i + 16 * col,r,g,b);
 			}
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr battlex_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

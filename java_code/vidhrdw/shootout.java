@@ -15,7 +15,7 @@ public class shootout
 	static struct tilemap *background, *foreground;
 	
 	
-	PALETTE_INIT( shootout )
+	public static PaletteInitHandlerPtr shootout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -42,7 +42,7 @@ public class shootout
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

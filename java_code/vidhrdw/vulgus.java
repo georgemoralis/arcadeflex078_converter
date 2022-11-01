@@ -28,7 +28,7 @@ public class vulgus
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( vulgus )
+	public static PaletteInitHandlerPtr vulgus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -83,7 +83,7 @@ public class vulgus
 			COLOR(1,i+3*32*8) = *color_prom + 192;
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

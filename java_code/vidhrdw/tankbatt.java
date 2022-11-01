@@ -25,7 +25,7 @@ public class tankbatt
 	  Convert the color PROMs into a more useable format.
 	
 	***************************************************************************/
-	PALETTE_INIT( tankbatt )
+	public static PaletteInitHandlerPtr tankbatt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -70,7 +70,7 @@ public class tankbatt
 			colortable[i++] = 0;
 			colortable[i] = (i/2) + 1;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr tankbatt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

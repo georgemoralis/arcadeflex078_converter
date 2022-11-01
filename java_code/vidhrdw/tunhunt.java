@@ -110,7 +110,7 @@ public class tunhunt
 		return 0;
 	}
 	
-	PALETTE_INIT( tunhunt )
+	public static PaletteInitHandlerPtr tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* Tunnel Hunt uses a combination of color proms and palette RAM to specify a 16 color
 		 * palette.  Here, we manage only the mappings for alphanumeric characters and SHELL
@@ -146,7 +146,7 @@ public class tunhunt
 		colortable[0x9] = 4;//1;
 		colortable[0xa] = 2;
 		colortable[0xb] = 4;
-	}
+	} };
 	
 	/*
 	Color Array Ram Assignments:

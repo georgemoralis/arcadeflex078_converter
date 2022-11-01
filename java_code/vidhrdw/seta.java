@@ -553,7 +553,7 @@ public class seta
 	
 	   I think that's because this game's a prototype..
 	*/
-	PALETTE_INIT( blandia )
+	public static PaletteInitHandlerPtr blandia  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -562,13 +562,13 @@ public class seta
 				colortable[color * 64 + pen + 16*32]       = (pen%16) + 16*32*1;
 				colortable[color * 64 + pen + 16*32+64*32] = pen      + 16*32*2;
 			}
-	}
+	} };
 	
 	
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity,
 	   even if the low 2 bits are ignored (so there are only 4 different palettes) */
-	PALETTE_INIT( gundhara )
+	public static PaletteInitHandlerPtr gundhara  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -577,12 +577,12 @@ public class seta
 				colortable[color * 64 + pen + 32*16 + 32*64*0] = (((color&~3) * 16 + pen)%(32*16)) + 32*16*2;
 				colortable[color * 64 + pen + 32*16 + 32*64*1] = (((color&~3) * 16 + pen)%(32*16)) + 32*16*1;
 			}
-	}
+	} };
 	
 	
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity */
-	PALETTE_INIT( jjsquawk )
+	public static PaletteInitHandlerPtr jjsquawk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -591,29 +591,29 @@ public class seta
 				colortable[color * 64 + pen + 32*16 + 32*64*0] = ((color * 16 + pen)%(32*16)) + 32*16*2;
 				colortable[color * 64 + pen + 32*16 + 32*64*1] = ((color * 16 + pen)%(32*16)) + 32*16*1;
 			}
-	}
+	} };
 	
 	
 	/* layer 0 is 6 bit per pixel, but the color code has a 16 colors granularity */
-	PALETTE_INIT( zingzip )
+	public static PaletteInitHandlerPtr zingzip  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
 				colortable[color * 64 + pen + 32*16*2] = ((color * 16 + pen)%(32*16)) + 32*16*2;
-	}
+	} };
 	
 	
 	
 	
 	/* 6 bit layer. The colors are still WRONG */
-	PALETTE_INIT( usclssic )
+	public static PaletteInitHandlerPtr usclssic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
 				colortable[color * 64 + pen + 512] = (((color & 0xf) * 16 + pen)%(512));
-	}
+	} };
 	
 	
 	

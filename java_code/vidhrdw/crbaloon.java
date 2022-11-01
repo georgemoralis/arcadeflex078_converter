@@ -33,7 +33,7 @@ public class crbaloon
 	  bit 0 RED
 	
 	***************************************************************************/
-	PALETTE_INIT( crbaloon )
+	public static PaletteInitHandlerPtr crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -61,7 +61,7 @@ public class crbaloon
 			COLOR(0,i) = 15;		/* black background */
 			COLOR(0,i + 1) = i / 2;	/* colored foreground */
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr crbaloon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

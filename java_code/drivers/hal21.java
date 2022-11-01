@@ -139,7 +139,7 @@ public class hal21
 	public static WriteHandlerPtr hal21_vreg7_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[7] = data; } };
 	
 	
-	PALETTE_INIT( aso )
+	public static PaletteInitHandlerPtr aso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int num_colors = 1024;
@@ -179,7 +179,7 @@ public class hal21
 	
 		gfx_drawmode_table[6] = DRAWMODE_SHADOW;
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
-	}
+	} };
 	
 	VIDEO_START( aso )
 	{

@@ -58,7 +58,7 @@ public class matmania
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( matmania )
+	public static PaletteInitHandlerPtr matmania  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -89,7 +89,7 @@ public class matmania
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	

@@ -51,7 +51,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( phoenix )
+	public static PaletteInitHandlerPtr phoenix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -88,9 +88,9 @@ public class phoenix
 			COLOR(0,i) = col;
 			COLOR(1,i) = col | 0x20;
 		}
-	}
+	} };
 	
-	PALETTE_INIT( pleiads )
+	public static PaletteInitHandlerPtr pleiads  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -128,7 +128,7 @@ public class phoenix
 			COLOR(0,i) = col;
 			COLOR(1,i) = col | 0x20;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

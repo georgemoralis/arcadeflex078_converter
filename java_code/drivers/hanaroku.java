@@ -26,7 +26,7 @@ public class hanaroku
 	UINT8 *hanaroku_spriteram3;
 	
 	
-	PALETTE_INIT( hanaroku )
+	public static PaletteInitHandlerPtr hanaroku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int r,g,b;
@@ -39,7 +39,7 @@ public class hanaroku
 	
 			palette_set_color(i,r<<3,g<<3,b<<3);
 		}
-	}
+	} };
 	
 	
 	VIDEO_START(hanaroku)

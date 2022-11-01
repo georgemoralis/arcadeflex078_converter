@@ -27,7 +27,7 @@ public class astinvad
 	
 	
 	
-	static PALETTE_INIT( astinvad )
+	static public static PaletteInitHandlerPtr astinvad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -38,7 +38,7 @@ public class astinvad
 				(i & 4) ? 0xff : 0,
 				(i & 2) ? 0xff : 0);
 		}
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress astinvad_readmem[]={

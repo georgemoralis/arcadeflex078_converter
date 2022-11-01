@@ -9,7 +9,7 @@ public class bladestl
 	
 	static int layer_colorbase[2];
 	
-	PALETTE_INIT( bladestl )
+	public static PaletteInitHandlerPtr bladestl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -18,7 +18,7 @@ public class bladestl
 		/* build the lookup table for sprites. Palette is dynamic. */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 			COLOR(1,i) = 0x20 + (*(color_prom++) & 0x0f);
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -40,7 +40,7 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	PALETTE_INIT( pastelgl )
+	public static PaletteInitHandlerPtr pastelgl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -67,7 +67,7 @@ public class pastelgl
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	void pastelgl_paltbl_w(int offset, int data)
 	{

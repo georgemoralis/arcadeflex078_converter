@@ -122,7 +122,7 @@ public class tankbust
 	
 	
 	
-	PALETTE_INIT( tankbust )
+	public static PaletteInitHandlerPtr tankbust  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -170,7 +170,7 @@ public class tankbust
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	#if 0
 	public static ReadHandlerPtr read_from_unmapped_memory  = new ReadHandlerPtr() { public int handler(int offset)

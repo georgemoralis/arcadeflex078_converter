@@ -44,14 +44,14 @@ public class ultratnk
 		0x02, 0x01
 	};
 	
-	static PALETTE_INIT( ultratnk )
+	static public static PaletteInitHandlerPtr ultratnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		palette_set_color(2,0x80,0x80,0x80); /* LT GREY */
 		palette_set_color(3,0x55,0x55,0x55); /* DK GREY */
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
-	}
+	} };
 	
 	
 	

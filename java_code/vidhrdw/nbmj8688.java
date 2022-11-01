@@ -67,7 +67,7 @@ public class nbmj8688
 	
 	******************************************************************************/
 	
-	PALETTE_INIT( mbmj8688_8bit )
+	public static PaletteInitHandlerPtr mbmj8688_8bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -95,9 +95,9 @@ public class nbmj8688
 	
 			palette_set_color(i, r, g, b);
 		}
-	}
+	} };
 	
-	PALETTE_INIT( mbmj8688_12bit )
+	public static PaletteInitHandlerPtr mbmj8688_12bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -117,9 +117,9 @@ public class nbmj8688
 	
 			palette_set_color(i, r, g, b);
 		}
-	}
+	} };
 	
-	PALETTE_INIT( mbmj8688_16bit )
+	public static PaletteInitHandlerPtr mbmj8688_16bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -138,7 +138,7 @@ public class nbmj8688
 	
 			palette_set_color(i, r, g, b);
 		}
-	}
+	} };
 	
 	
 	

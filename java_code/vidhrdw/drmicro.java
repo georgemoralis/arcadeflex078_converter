@@ -77,7 +77,7 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	PALETTE_INIT( drmicro )
+	public static PaletteInitHandlerPtr drmicro  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -104,7 +104,7 @@ public class drmicro
 	
 		for (i=0; i<Machine->drv->color_table_len; i++)
 			colortable[i] = color_prom[i] & 0x0f;
-	}
+	} };
 	
 	VIDEO_START( drmicro)
 	{

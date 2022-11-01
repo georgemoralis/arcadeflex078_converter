@@ -34,7 +34,7 @@ public class grobda
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( grobda )
+	public static PaletteInitHandlerPtr grobda  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -62,7 +62,7 @@ public class grobda
 		/* sprites */
 		for (i = 256; i < 512; i++)
 			colortable[i] = (color_prom[i + 32] & 0x0f);
-	}
+	} };
 	
 	
 	

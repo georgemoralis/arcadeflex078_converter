@@ -37,7 +37,7 @@ public class suprloco
 	  I'm not sure about the resistor values, I'm using the Galaxian ones.
 	
 	***************************************************************************/
-	PALETTE_INIT( suprloco )
+	public static PaletteInitHandlerPtr suprloco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -73,7 +73,7 @@ public class suprloco
 					palette_set_color(i+256,r,g,b);
 			}
 		}
-	}
+	} };
 	
 	
 	

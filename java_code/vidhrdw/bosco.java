@@ -75,7 +75,7 @@ public class bosco
 	
 	
 	
-	PALETTE_INIT( bosco )
+	public static PaletteInitHandlerPtr bosco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -131,7 +131,7 @@ public class bosco
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	VIDEO_START( bosco )
 	{

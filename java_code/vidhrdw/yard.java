@@ -66,7 +66,7 @@ public class yard
 	  bit 0 -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( yard )
+	public static PaletteInitHandlerPtr yard  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -168,7 +168,7 @@ public class yard
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	

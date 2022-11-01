@@ -341,11 +341,11 @@ public class malzak
 	//		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0x0300);
 	} };
 	
-	static PALETTE_INIT( malzak )
+	static public static PaletteInitHandlerPtr malzak  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_colors(0, saa5050_palette, sizeof(saa5050_palette) / 3);
 		memcpy(colortable, saa5050_colortable, sizeof (saa5050_colortable));
-	}
+	} };
 	
 	
 	MACHINE_INIT(malzak)

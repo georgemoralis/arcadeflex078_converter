@@ -39,7 +39,7 @@ public class tnzs
 	  form 512 xRRRRRGGGGGBBBBB color values.
 	
 	***************************************************************************/
-	PALETTE_INIT( arknoid2 )
+	public static PaletteInitHandlerPtr arknoid2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,col,r,g,b;
 	
@@ -51,7 +51,7 @@ public class tnzs
 			b =  (col & 0x001f)<<3;	/* Blue */
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

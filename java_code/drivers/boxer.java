@@ -75,7 +75,7 @@ public class boxer
 	}
 	
 	
-	static PALETTE_INIT( boxer )
+	static public static PaletteInitHandlerPtr boxer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0xff, 0xff, 0xff);
@@ -84,7 +84,7 @@ public class boxer
 		colortable[1] = 1;
 		colortable[2] = 1;
 		colortable[3] = 0;
-	}
+	} };
 	
 	
 	static MACHINE_INIT( boxer )

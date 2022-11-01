@@ -65,7 +65,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( dday )
+	public static PaletteInitHandlerPtr dday  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -174,7 +174,7 @@ public class dday
 		colortable[7*8+4+1] = 2;
 		colortable[7*8+4+2] = 4;
 		colortable[7*8+4+3] = 27;
-	}
+	} };
 	
 	
 	/***************************************************************************

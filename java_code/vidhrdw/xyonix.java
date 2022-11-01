@@ -12,7 +12,7 @@ public class xyonix
 	static struct tilemap *xyonix_tilemap;
 	
 	
-	PALETTE_INIT( xyonix )
+	public static PaletteInitHandlerPtr xyonix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -38,7 +38,7 @@ public class xyonix
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	static void get_xyonix_tile_info(int tile_index)

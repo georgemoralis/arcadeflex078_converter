@@ -22,7 +22,7 @@ package vidhrdw;
 public class mouser
 {
 	
-	PALETTE_INIT( mouser )
+	public static PaletteInitHandlerPtr mouser  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -48,7 +48,7 @@ public class mouser
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr mouser_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

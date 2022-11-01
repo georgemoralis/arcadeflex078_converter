@@ -141,7 +141,7 @@ public class safarir
 		0x00, 0x07,
 	};
 	
-	static PALETTE_INIT( safarir )
+	static public static PaletteInitHandlerPtr safarir  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0x80, 0x80, 0x80);
@@ -154,7 +154,7 @@ public class safarir
 		palette_set_color(7, 0x00, 0x00, 0x00);
 	
 		memcpy(colortable, colortable_source, sizeof(colortable_source));
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

@@ -39,7 +39,7 @@ public class tugboat
 	
 	/*  there isn't the usual resistor array anywhere near the color prom,
 	    just four 1k resistors. */
-	PALETTE_INIT( tugboat )
+	public static PaletteInitHandlerPtr tugboat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -57,7 +57,7 @@ public class tugboat
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

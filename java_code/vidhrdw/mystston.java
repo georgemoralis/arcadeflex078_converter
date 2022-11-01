@@ -37,7 +37,7 @@ public class mystston
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( mystston )
+	public static PaletteInitHandlerPtr mystston  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -73,7 +73,7 @@ public class mystston
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr mystston_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

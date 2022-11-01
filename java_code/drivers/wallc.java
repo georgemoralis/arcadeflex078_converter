@@ -82,7 +82,7 @@ public class wallc
 	
 	***************************************************************************/
 	
-	static PALETTE_INIT( wallc )
+	static public static PaletteInitHandlerPtr wallc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class wallc
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr wallc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

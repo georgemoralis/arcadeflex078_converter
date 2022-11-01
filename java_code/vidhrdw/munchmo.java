@@ -17,7 +17,7 @@ public class munchmo
 	static int mnchmobl_palette_bank;
 	static int flipscreen;
 	
-	PALETTE_INIT( mnchmobl )
+	public static PaletteInitHandlerPtr mnchmobl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -42,7 +42,7 @@ public class munchmo
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr mnchmobl_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

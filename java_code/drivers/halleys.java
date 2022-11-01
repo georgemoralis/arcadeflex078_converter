@@ -1057,7 +1057,7 @@ public class halleys
 	//**************************************************************************
 	// Video Initializations and Updates
 	
-	static PALETTE_INIT( halleys )
+	static public static PaletteInitHandlerPtr halleys  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		DWORD d, r, g, b, i, j, count;
 		DWORD *pal_ptr = internal_palette;
@@ -1103,7 +1103,7 @@ public class halleys
 	
 			palette_set_color(j, r, g, b);
 		}
-	}
+	} };
 	
 	static void halleys_decode_rgb(DWORD *r, DWORD *g, DWORD *b, int addr, int data)
 	{

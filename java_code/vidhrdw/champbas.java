@@ -40,7 +40,7 @@ public class champbas
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( champbas )
+	public static PaletteInitHandlerPtr champbas  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -81,7 +81,7 @@ public class champbas
 		/* sprites use the same color lookup table as characters */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
 			COLOR(0,i) = (*(color_prom++) & 0x0f);
-	}
+	} };
 	
 	public static WriteHandlerPtr champbas_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

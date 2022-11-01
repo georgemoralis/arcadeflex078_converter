@@ -21,7 +21,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( dribling )
+	public static PaletteInitHandlerPtr dribling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		const UINT8 *prom = memory_region(REGION_PROMS) + 0x400;
 		int i;
@@ -38,7 +38,7 @@ public class dribling
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

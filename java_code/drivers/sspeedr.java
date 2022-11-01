@@ -21,7 +21,7 @@ public class sspeedr
 	static UINT8 led_SCORE[24];
 	
 	
-	static PALETTE_INIT( sspeedr )
+	static public static PaletteInitHandlerPtr sspeedr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -40,7 +40,7 @@ public class sspeedr
 	
 			palette_set_color(i, r, g, b);
 		}
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr sspeedr_steering_r  = new ReadHandlerPtr() { public int handler(int offset)

@@ -57,7 +57,7 @@ public class pengo
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( pacman )
+	public static PaletteInitHandlerPtr pacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -96,9 +96,9 @@ public class pengo
 		/* sprites use the same color lookup table as characters */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
 			COLOR(0,i) = *(color_prom++) & 0x0f;
-	}
+	} };
 	
-	PALETTE_INIT( pengo )
+	public static PaletteInitHandlerPtr pengo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -148,7 +148,7 @@ public class pengo
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	

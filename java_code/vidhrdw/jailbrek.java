@@ -12,7 +12,7 @@ public class jailbrek
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( jailbrek )
+	public static PaletteInitHandlerPtr jailbrek  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -52,7 +52,7 @@ public class jailbrek
 	
 		for ( i = 0; i < TOTAL_COLORS(1); i++ )
 			COLOR(1,i) = *color_prom++;
-	}
+	} };
 	
 	public static WriteHandlerPtr jailbrek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

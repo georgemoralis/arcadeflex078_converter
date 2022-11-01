@@ -186,7 +186,7 @@ public class shangkid
 	}
 	
 	
-	PALETTE_INIT( dynamski )
+	public static PaletteInitHandlerPtr dynamski  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -216,7 +216,7 @@ public class shangkid
 		/* characters */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
 			COLOR(0,i) = (color_prom[i] & 0x0f);
-	}
+	} };
 	
 	
 	static void dynamski_draw_background( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri )

@@ -39,7 +39,7 @@ public class xevious
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( xevious )
+	public static PaletteInitHandlerPtr xevious  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -108,11 +108,11 @@ public class xevious
 			if (i % 2 == 0) COLOR(0,i) = 0x80;  /* transparent */
 			else COLOR(0,i) = i / 2;
 		}
-	}
+	} };
 	
 	
 	
-	PALETTE_INIT( battles )
+	public static PaletteInitHandlerPtr battles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -180,7 +180,7 @@ public class xevious
 			if (i % 2 == 0) COLOR(0,i) = 0x80;  /* transparent */
 			else COLOR(0,i) = i / 2;
 		}
-	}
+	} };
 	
 	
 	

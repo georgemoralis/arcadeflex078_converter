@@ -34,7 +34,7 @@ public class mikie
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( mikie )
+	public static PaletteInitHandlerPtr mikie  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -94,7 +94,7 @@ public class mikie
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr mikie_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -150,12 +150,12 @@ public class starcrus
 	{
 		0x00, 0x01, /* White on Black */
 	};
-	static PALETTE_INIT( starcrus )
+	static public static PaletteInitHandlerPtr starcrus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* Black */
 	    palette_set_color(1,0xff,0xff,0xff); /* White */
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
-	}
+	} };
 	
 	static const char *starcrus_sample_names[] =
 	{

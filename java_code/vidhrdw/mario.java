@@ -39,7 +39,7 @@ public class mario
 	  bit 0 -- 470 ohm resistor -- inverter  -- BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( mario )
+	public static PaletteInitHandlerPtr mario  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -90,7 +90,7 @@ public class mario
 		/* sprites */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 			COLOR(1,i) = i;
-	}
+	} };
 	
 	public static WriteHandlerPtr mario_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -28,7 +28,7 @@ public class redclash
 	  schematics show a different resistor network.
 	
 	***************************************************************************/
-	PALETTE_INIT( redclash )
+	public static PaletteInitHandlerPtr redclash  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -78,7 +78,7 @@ public class redclash
 			bit3 = (color_prom[i + 32] >> 4) & 0x01;
 			colortable[i + 4 * 16] = 1 * bit0 + 2 * bit1 + 4 * bit2 + 8 * bit3;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr redclash_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

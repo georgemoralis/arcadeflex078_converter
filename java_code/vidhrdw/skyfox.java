@@ -99,7 +99,7 @@ public class skyfox
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( skyfox )
+	public static PaletteInitHandlerPtr skyfox  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -134,7 +134,7 @@ public class skyfox
 		{
 			palette_set_color(i+256,i,i,i);
 		}
-	}
+	} };
 	
 	
 	

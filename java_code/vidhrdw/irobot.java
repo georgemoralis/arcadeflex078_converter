@@ -48,7 +48,7 @@ public class irobot
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( irobot )
+	public static PaletteInitHandlerPtr irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -92,7 +92,7 @@ public class irobot
 		{
 			COLOR(0,i) = ((i & 0x18) | ((i & 0x01) << 2) | ((i & 0x06) >> 1)) + 64;
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr irobot_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -37,10 +37,10 @@ public class ttmahjng
 	
 	
 	
-	PALETTE_INIT( ttmahjng )
+	public static PaletteInitHandlerPtr ttmahjng  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		ttmahjng_color_prom = color_prom;	/* we'll need this later */
-	}
+	} };
 	
 	
 	/***************************************************************************

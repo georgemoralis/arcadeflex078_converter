@@ -214,7 +214,7 @@ public class firetrk
 	}
 	
 	
-	static PALETTE_INIT( firetrk )
+	static public static PaletteInitHandlerPtr firetrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{
@@ -233,7 +233,7 @@ public class firetrk
 		palette_set_color(3, 0xff, 0xff, 0xff);
 	
 		memcpy(colortable, colortable_source, sizeof(colortable_source));
-	}
+	} };
 	
 	
 	static void prom_to_palette(int number, UINT8 val)
@@ -245,7 +245,7 @@ public class firetrk
 	}
 	
 	
-	static PALETTE_INIT( montecar )
+	static public static PaletteInitHandlerPtr montecar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{
@@ -319,7 +319,7 @@ public class firetrk
 		palette_set_color(number++, 0xff, 0xff, 0xff);
 	
 		memcpy(colortable, colortable_source, sizeof(colortable_source));
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr firetrk_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)

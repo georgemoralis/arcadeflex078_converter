@@ -23,7 +23,7 @@ public class hanaawas
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( hanaawas )
+	public static PaletteInitHandlerPtr hanaawas  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -73,7 +73,7 @@ public class hanaawas
 			COLOR(0,i*8+6) = color_prom[i*4+0x82] & 0x0f;
 			COLOR(0,i*8+7) = color_prom[i*4+0x83] & 0x0f;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr hanaawas_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

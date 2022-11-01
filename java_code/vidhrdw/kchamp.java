@@ -17,7 +17,7 @@ public class kchamp
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( kchamp )
+	public static PaletteInitHandlerPtr kchamp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, red, green, blue;
 	
@@ -34,7 +34,7 @@ public class kchamp
 	
 			*(colortable++) = i;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr kchamp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

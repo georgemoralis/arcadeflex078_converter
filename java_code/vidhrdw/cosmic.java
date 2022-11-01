@@ -102,7 +102,7 @@ public class cosmic
 	 * (1k to ground) so second version of table has blue set to 2/3
 	 */
 	
-	PALETTE_INIT( panic )
+	public static PaletteInitHandlerPtr panic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -126,7 +126,7 @@ public class cosmic
 	
 	
 	    map_color = panic_map_color;
-	}
+	} };
 	
 	
 	/*
@@ -138,7 +138,7 @@ public class cosmic
 	 *
 	 */
 	
-	PALETTE_INIT( cosmica )
+	public static PaletteInitHandlerPtr cosmica  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -162,7 +162,7 @@ public class cosmic
 	
 	
 	    map_color = cosmica_map_color;
-	}
+	} };
 	
 	
 	/*
@@ -175,7 +175,7 @@ public class cosmic
 	 * resistor chain would never drop to zero, Anybody know ?
 	 */
 	
-	PALETTE_INIT( cosmicg )
+	public static PaletteInitHandlerPtr cosmicg  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -193,9 +193,9 @@ public class cosmic
 	
 	
 	    map_color = cosmicg_map_color;
-	}
+	} };
 	
-	PALETTE_INIT( magspot2 )
+	public static PaletteInitHandlerPtr magspot2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -225,10 +225,10 @@ public class cosmic
 	
 	    map_color = magspot2_map_color;
 	    magspot_pen_mask = 0x0f;
-	}
+	} };
 	
 	
-	PALETTE_INIT( nomnlnd )
+	public static PaletteInitHandlerPtr nomnlnd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -254,7 +254,7 @@ public class cosmic
 	
 	    map_color = magspot2_map_color;
 	    magspot_pen_mask = 0x07;
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr cosmic_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)

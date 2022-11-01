@@ -24,7 +24,7 @@ public class exctsccr
 	  Convert the color PROMs into a more useable format.
 	
 	***************************************************************************/
-	PALETTE_INIT( exctsccr )
+	public static PaletteInitHandlerPtr exctsccr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,idx;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -101,7 +101,7 @@ public class exctsccr
 		/* Patch for goalkeeper */
 		COLOR(2,29*8+7) = 16;
 	
-	}
+	} };
 	
 	static void exctsccr_fm_callback( int param )
 	{

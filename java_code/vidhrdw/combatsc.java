@@ -32,7 +32,7 @@ public class combatsc
 	static unsigned char *combasc_scrollram;
 	
 	
-	PALETTE_INIT( combasc )
+	public static PaletteInitHandlerPtr combasc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal,clut = 0;
 		for( pal=0; pal<8; pal++ )
@@ -73,9 +73,9 @@ public class combatsc
 					*(colortable++) = 16 * pal + color_prom[256 * clut + i];
 			}
 		}
-	}
+	} };
 	
-	PALETTE_INIT( combascb )
+	public static PaletteInitHandlerPtr combascb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal;
 		for( pal=0; pal<8; pal++ )
@@ -88,7 +88,7 @@ public class combatsc
 					*(colortable++) = 16 * pal + (i & 0x0f);	/* no lookup? */
 			}
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -12,7 +12,7 @@ public class labyrunr
 	static struct rectangle clip0, clip1;
 	
 	
-	PALETTE_INIT( labyrunr )
+	public static PaletteInitHandlerPtr labyrunr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal;
 	
@@ -32,7 +32,7 @@ public class labyrunr
 						*(colortable++) = 16 * pal + color_prom[i];
 			}
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

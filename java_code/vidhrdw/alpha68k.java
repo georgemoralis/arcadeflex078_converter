@@ -444,7 +444,7 @@ public class alpha68k
 	//ZT
 	/******************************************************************************/
 	
-	PALETTE_INIT( kyros )
+	public static PaletteInitHandlerPtr kyros  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	//AT: reconstructed Super Stingry CLUT(bad ic5.5)
 		const UINT8 temp_clut[256] = {
@@ -502,9 +502,9 @@ public class alpha68k
 			*colortable++ = ((color_prom[0] & 0x0f) << 4) | (color_prom[0x100] & 0x0f);
 			color_prom++;
 		}
-	}
+	} };
 	
-	PALETTE_INIT( paddlem )
+	public static PaletteInitHandlerPtr paddlem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -535,7 +535,7 @@ public class alpha68k
 		/* Fill in clut */
 		color_prom += 0x200;
 		for (i=0; i<1024; i++) colortable[i] = color_prom[i]|(color_prom[i+0x400]<<4);
-	}
+	} };
 	
 	static void kyros_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int c,int d)
 	{

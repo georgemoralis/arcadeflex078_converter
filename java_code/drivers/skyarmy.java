@@ -75,7 +75,7 @@ public class skyarmy
 	} };
 	
 	
-	PALETTE_INIT( skyarmy )
+	public static PaletteInitHandlerPtr skyarmy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -101,7 +101,7 @@ public class skyarmy
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	VIDEO_START( skyarmy )
 	{

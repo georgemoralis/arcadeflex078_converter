@@ -58,7 +58,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( kinst )
+	public static PaletteInitHandlerPtr kinst  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -70,7 +70,7 @@ public class kinst
 			int b = (i >> 10) & 31;
 			palette_set_color(i, (r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2));
 		}
-	}
+	} };
 	
 	
 	

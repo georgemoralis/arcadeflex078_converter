@@ -15,7 +15,7 @@ package vidhrdw;
 public class truco
 {
 	
-	PALETTE_INIT( truco )
+	public static PaletteInitHandlerPtr truco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -35,7 +35,7 @@ public class truco
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	VIDEO_UPDATE( truco )
 	{

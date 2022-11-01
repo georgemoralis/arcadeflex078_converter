@@ -35,7 +35,7 @@ public class seicross
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( seicross )
+	public static PaletteInitHandlerPtr seicross  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -61,7 +61,7 @@ public class seicross
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr seicross_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -61,14 +61,14 @@ public class nitedrvr
 		0x01, 0x00,
 	};
 	
-	static PALETTE_INIT( nitedrvr )
+	static public static PaletteInitHandlerPtr nitedrvr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		palette_set_color(2,0x55,0x55,0x55); /* DK GREY - for MAME text only */
 		palette_set_color(3,0x80,0x80,0x80); /* LT GREY - for MAME text only */
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
-	}
+	} };
 	
 	
 	static MACHINE_INIT( nitedrvr )

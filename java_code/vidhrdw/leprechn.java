@@ -22,7 +22,7 @@ public class leprechn
 	
 	
 	/* RGBI palette. Is it correct? */
-	PALETTE_INIT( leprechn )
+	public static PaletteInitHandlerPtr leprechn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -35,7 +35,7 @@ public class leprechn
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

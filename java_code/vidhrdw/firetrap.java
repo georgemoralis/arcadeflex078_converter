@@ -49,7 +49,7 @@ public class firetrap
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( firetrap )
+	public static PaletteInitHandlerPtr firetrap  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -77,7 +77,7 @@ public class firetrap
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

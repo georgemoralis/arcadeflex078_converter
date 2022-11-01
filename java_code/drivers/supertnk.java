@@ -111,7 +111,7 @@ public class supertnk
 	
 	
 	
-	PALETTE_INIT( supertnk )
+	public static PaletteInitHandlerPtr supertnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, r, g, b;
 	
@@ -124,7 +124,7 @@ public class supertnk
 			palette_set_color(i, r, g, b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	

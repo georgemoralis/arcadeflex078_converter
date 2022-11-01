@@ -39,7 +39,7 @@ public class superpac
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( superpac )
+	public static PaletteInitHandlerPtr superpac  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, j;
 	
@@ -78,7 +78,7 @@ public class superpac
 				if (colortable[64*4 + i*4 + j] == 0x1f)
 					color15_mask[i] |= 1 << j;
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr superpac_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)

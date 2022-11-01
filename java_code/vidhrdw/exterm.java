@@ -26,7 +26,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( exterm )
+	public static PaletteInitHandlerPtr exterm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -45,7 +45,7 @@ public class exterm
 			
 			palette_set_color(i+4096,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

@@ -211,13 +211,13 @@ public class poolshrk
 	};
 	
 	
-	static PALETTE_INIT( poolshrk )
+	static public static PaletteInitHandlerPtr poolshrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x7F, 0x7F, 0x7F);
 		palette_set_color(1,0xFF, 0xFF, 0xFF);
 		palette_set_color(2,0x7F, 0x7F, 0x7F);
 		palette_set_color(3,0x00, 0x00, 0x00);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( poolshrk )

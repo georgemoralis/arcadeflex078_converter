@@ -435,22 +435,22 @@ public class blockade
 	};
 	
 	
-	static PALETTE_INIT( green )
+	static public static PaletteInitHandlerPtr green  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0x00,0xff,0x00); /* GREEN */     /* overlay (Blockade) */
-	}
+	} };
 	
-	static PALETTE_INIT( yellow )
+	static public static PaletteInitHandlerPtr yellow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0x20); /* YELLOW */     /* overlay (Hustle) */
-	}
-	static PALETTE_INIT( bw )
+	} };
+	static public static PaletteInitHandlerPtr bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */     /* Comotion/Blasto */
-	}
+	} };
 	
 	
 	

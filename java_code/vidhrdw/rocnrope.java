@@ -35,7 +35,7 @@ public class rocnrope
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( rocnrope )
+	public static PaletteInitHandlerPtr rocnrope  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -75,7 +75,7 @@ public class rocnrope
 		/* characters */
 		for (i = 0;i < TOTAL_COLORS(0);i++)
 			COLOR(0,i) = *(color_prom++) & 0x0f;
-	}
+	} };
 	
 	public static WriteHandlerPtr rocnrope_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

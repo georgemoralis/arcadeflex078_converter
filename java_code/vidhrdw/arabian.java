@@ -38,7 +38,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( arabian )
+	public static PaletteInitHandlerPtr arabian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -156,7 +156,7 @@ public class arabian
 							(ghi << 3) | (glo << 2) |
 							(bhi << 1) | bbase;
 		}
-	}
+	} };
 	
 	
 	

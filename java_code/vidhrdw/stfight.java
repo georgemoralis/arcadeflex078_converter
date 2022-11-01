@@ -44,7 +44,7 @@ public class stfight
 	
 	 */
 	
-	PALETTE_INIT( stfight )
+	public static PaletteInitHandlerPtr stfight  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -86,7 +86,7 @@ public class stfight
 			color_prom++;
 		}
 		color_prom += 256;
-	}
+	} };
 	
 	/***************************************************************************
 	

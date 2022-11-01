@@ -245,7 +245,7 @@ public class kaneko16
 	
 	/* Berlwall has an additional hi-color background */
 	
-	PALETTE_INIT( berlwall )
+	public static PaletteInitHandlerPtr berlwall  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -266,7 +266,7 @@ public class kaneko16
 	
 			palette_set_color(2048 + i,r,g,b);
 		}
-	}
+	} };
 	
 	VIDEO_START( berlwall )
 	{

@@ -20,7 +20,7 @@ public class hcastle
 	static int pf2_bankbase,pf1_bankbase;
 	
 	
-	PALETTE_INIT( hcastle )
+	public static PaletteInitHandlerPtr hcastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,chip,pal,clut;
 	
@@ -43,7 +43,7 @@ public class hcastle
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	

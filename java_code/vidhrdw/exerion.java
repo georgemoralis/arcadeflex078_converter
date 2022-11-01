@@ -58,7 +58,7 @@ public class exerion
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( exerion )
+	public static PaletteInitHandlerPtr exerion  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -104,7 +104,7 @@ public class exerion
 		/* using another PROM */
 		for (i = 0; i < 256; i++)
 			colortable[i + 0x200] = *color_prom++ & 15;
-	}
+	} };
 	
 	
 	

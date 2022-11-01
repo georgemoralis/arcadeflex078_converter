@@ -66,7 +66,7 @@ public class zodiack
 		}
 	} };
 	
-	PALETTE_INIT( zodiack )
+	public static PaletteInitHandlerPtr zodiack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -125,7 +125,7 @@ public class zodiack
 		/* bullet */
 		COLOR(2, 0) = 0;
 		COLOR(2, 1) = 48;
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

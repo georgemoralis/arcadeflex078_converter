@@ -10,16 +10,16 @@ public class vsnes
 	/* from machine */
 	
 	
-	PALETTE_INIT( vsnes )
+	public static PaletteInitHandlerPtr vsnes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		ppu2c03b_init_palette( 0 );
-	}
+	} };
 	
-	PALETTE_INIT( vsdual )
+	public static PaletteInitHandlerPtr vsdual  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		ppu2c03b_init_palette( 0 );
 		ppu2c03b_init_palette( 64 );
-	}
+	} };
 	
 	static void ppu_irq( int num, int *ppu_regs )
 	{

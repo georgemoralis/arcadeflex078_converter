@@ -56,7 +56,7 @@ public class galaga
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( galaga )
+	public static PaletteInitHandlerPtr galaga  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -117,7 +117,7 @@ public class galaga
 			b = map[bits];
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

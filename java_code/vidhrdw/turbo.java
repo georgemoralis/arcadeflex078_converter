@@ -58,7 +58,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( turbo )
+	public static PaletteInitHandlerPtr turbo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -91,10 +91,10 @@ public class turbo
 	
 			palette_set_color(adjusted_index,r,g,b);
 		}
-	}
+	} };
 	
 	
-	PALETTE_INIT( subroc3d )
+	public static PaletteInitHandlerPtr subroc3d  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -123,10 +123,10 @@ public class turbo
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
-	PALETTE_INIT( buckrog )
+	public static PaletteInitHandlerPtr buckrog  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -208,7 +208,7 @@ public class turbo
 	
 			palette_set_color(i+1024+512,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

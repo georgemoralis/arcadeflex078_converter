@@ -105,7 +105,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( thedeep )
+	public static PaletteInitHandlerPtr thedeep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0;i < 512;i++)
@@ -115,7 +115,7 @@ public class thedeep
 			int r = ((color_prom[0x400 + i] >> 0) & 0xf) * 0x11;
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

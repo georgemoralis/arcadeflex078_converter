@@ -121,7 +121,7 @@ public class shougi
 	***************************************************************************/
 	
 	
-	static PALETTE_INIT( shougi )
+	static public static PaletteInitHandlerPtr shougi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		const int resistances_b[2]  = { 470, 220 };
@@ -157,7 +157,7 @@ public class shougi
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

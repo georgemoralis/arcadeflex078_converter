@@ -53,7 +53,7 @@ public class mrdo
 	  200 ohm pulldown on all three components
 	
 	***************************************************************************/
-	PALETTE_INIT( mrdo )
+	public static PaletteInitHandlerPtr mrdo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -120,7 +120,7 @@ public class mrdo
 	
 			COLOR(2,i) = bits + ((bits & 0x0c) << 3);
 		}
-	}
+	} };
 	
 	
 	

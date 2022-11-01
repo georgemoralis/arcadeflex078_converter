@@ -133,14 +133,14 @@ public class atarifb
 		0x03, 0x02,
 	};
 	
-	static PALETTE_INIT( atarifb )
+	static public static PaletteInitHandlerPtr atarifb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* black  */
 		palette_set_color(1,0x80,0x80,0x80); /* grey  */
 		palette_set_color(2,0xff,0xff,0xff); /* white  */
 		palette_set_color(3,0x40,0x40,0x40); /* dark grey (?) - used in Soccer only */
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
-	}
+	} };
 	
 	
 	

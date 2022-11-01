@@ -61,7 +61,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( galivan )
+	public static PaletteInitHandlerPtr galivan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -132,7 +132,7 @@ public class galivan
 	
 		/* color_prom now points to the beginning of the sprite palette bank table */
 		spritepalettebank = color_prom;	/* we'll need it at run time */
-	}
+	} };
 	
 	
 	

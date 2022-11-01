@@ -326,7 +326,7 @@ public class sbowling
 		{ 0 }
 	};
 	
-	static PALETTE_INIT( sbowling )
+	static public static PaletteInitHandlerPtr sbowling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -362,7 +362,7 @@ public class sbowling
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	static MACHINE_DRIVER_START( sbowling )
 	

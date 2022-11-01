@@ -16,7 +16,7 @@ public class carjmbre
 	
 	static int carjmbre_flipscreen, carjmbre_bgcolor;
 	
-	PALETTE_INIT( carjmbre )
+	public static PaletteInitHandlerPtr carjmbre  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
@@ -41,7 +41,7 @@ public class carjmbre
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr carjmbre_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

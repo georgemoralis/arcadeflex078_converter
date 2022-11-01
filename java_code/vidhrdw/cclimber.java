@@ -42,7 +42,7 @@ public class cclimber
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( cclimber )
+	public static PaletteInitHandlerPtr cclimber  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -91,7 +91,7 @@ public class cclimber
 			if (i % 4 == 0) COLOR(2,i) = 0;
 			else COLOR(2,i) = i + 64;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -133,7 +133,7 @@ public class cclimber
 	#define BGPEN (256+32)
 	#define SIDEPEN (256+32+1)
 	
-	PALETTE_INIT( swimmer )
+	public static PaletteInitHandlerPtr swimmer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -215,7 +215,7 @@ public class cclimber
 		palette_set_color(SIDEPEN,0x24,0x5d,0x4e);
 	#endif
 		palette_set_color(SIDEPEN,0x20,0x98,0x79);
-	}
+	} };
 	
 	
 	

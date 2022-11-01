@@ -55,7 +55,7 @@ public class tp84
 				220 ohm
 				100 ohm
 	*/
-	PALETTE_INIT( tp84 )
+	public static PaletteInitHandlerPtr tp84  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -120,7 +120,7 @@ public class tp84
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr tp84_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)

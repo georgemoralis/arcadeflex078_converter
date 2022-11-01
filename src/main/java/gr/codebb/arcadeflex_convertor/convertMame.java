@@ -19,6 +19,7 @@ public class convertMame {
     static final int WRITE_HANDLER8 = 6;
     static final int INPUTPORTS = 7;
     static final int INTERRUPT = 8;
+    static final int PALETTE_INIT=9;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -281,7 +282,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT) {
                         i3++;
                     }
                 }
@@ -297,7 +298,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT) {
+                    if (type == READ_HANDLER8 || type == WRITE_HANDLER8 || type == INTERRUPT || type==PALETTE_INIT) {
                         i3--;
                         if (i3 == -1) {
                             sUtil.putString("} };");
@@ -351,6 +352,13 @@ public class convertMame {
                         if (sUtil.getToken(");"))//if it is a front function skip it
                         {
                             sUtil.skipLine();
+                            continue;
+                        }
+                        else {
+                            sUtil.putString("public static PaletteInitHandlerPtr " + Convertor.token[0] + "  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)");
+                            type = PALETTE_INIT;
+                            i3 = -1;
+                            Convertor.inpos += 1;
                             continue;
                         }
                     }

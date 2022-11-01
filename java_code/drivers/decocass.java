@@ -415,7 +415,7 @@ public class decocass
 		{ 0 }
 	};
 	
-	static PALETTE_INIT( decocass )
+	static public static PaletteInitHandlerPtr decocass  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		/* set up 32 colors 1:1 pens */
@@ -438,7 +438,7 @@ public class decocass
 		colortable[48+2*2+1] = 26;	/* testtape green from 4th palette section? */
 		colortable[48+3*2+0] = 0;
 		colortable[48+3*2+1] = 23;	/* ???? */
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( decocass )

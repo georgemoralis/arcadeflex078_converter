@@ -12,11 +12,11 @@ public class hitme
 	
 	/* Palette Init */
 	
-	PALETTE_INIT( hitme )
+	public static PaletteInitHandlerPtr hitme  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00);	/* black */
 		palette_set_color(1,0xff,0xff,0xff);	/* white */
-	}
+	} };
 	
 	/* Tilemap */
 	

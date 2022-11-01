@@ -24,7 +24,7 @@ public class cheekyms
 	static int char_palette = 0;
 	
 	
-	PALETTE_INIT( cheekyms )
+	public static PaletteInitHandlerPtr cheekyms  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,j,bit,r,g,b;
 	
@@ -68,7 +68,7 @@ public class cheekyms
 				color_prom++;
 			}
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr cheekyms_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)

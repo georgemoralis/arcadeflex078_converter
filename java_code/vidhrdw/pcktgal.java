@@ -9,7 +9,7 @@ public class pcktgal
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( pcktgal )
+	public static PaletteInitHandlerPtr pcktgal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -35,7 +35,7 @@ public class pcktgal
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr pcktgal_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

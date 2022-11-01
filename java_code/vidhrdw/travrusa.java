@@ -50,7 +50,7 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( travrusa )
+	public static PaletteInitHandlerPtr travrusa  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -116,9 +116,9 @@ public class travrusa
 		/* sprite lookup table */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 			COLOR(1,i) = (color_prom[i] & 0x0f) + 128;
-	}
+	} };
 	
-	PALETTE_INIT( shtrider )
+	public static PaletteInitHandlerPtr shtrider  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -184,7 +184,7 @@ public class travrusa
 		/* sprite lookup table */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 			COLOR(1,i) = (color_prom[i] & 0x0f) + 128;
-	}
+	} };
 	
 	
 	

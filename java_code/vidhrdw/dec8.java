@@ -82,7 +82,7 @@ public class dec8
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( ghostb )
+	public static PaletteInitHandlerPtr ghostb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -108,7 +108,7 @@ public class dec8
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr dec8_bac06_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

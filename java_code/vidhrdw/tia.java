@@ -88,7 +88,7 @@ public class tia
 	};
 	
 	
-	PALETTE_INIT( tia_NTSC )
+	public static PaletteInitHandlerPtr tia_NTSC  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, j;
 	
@@ -143,10 +143,10 @@ public class tia
 					(UINT8) (255 * B + 0.5));
 			}
 		}
-	}
+	} };
 	
 	
-	PALETTE_INIT( tia_PAL )
+	public static PaletteInitHandlerPtr tia_PAL  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, j;
 	
@@ -201,7 +201,7 @@ public class tia
 					(UINT8) (255 * B + 0.5));
 			}
 		}
-	}
+	} };
 	
 	
 	VIDEO_START( tia )

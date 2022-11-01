@@ -56,16 +56,16 @@ public class clshroad
 	} };
 	
 	
-	PALETTE_INIT( clshroad )
+	public static PaletteInitHandlerPtr clshroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0;i < 256;i++)
 			palette_set_color(i,	color_prom[i + 256 * 0] * 0x11,
 									color_prom[i + 256 * 1] * 0x11,
 									color_prom[i + 256 * 2] * 0x11	);
-	}
+	} };
 	
-	PALETTE_INIT( firebatl )
+	public static PaletteInitHandlerPtr firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -107,7 +107,7 @@ public class clshroad
 	
 		for (i = 0;i < TOTAL_COLORS(2);i++)
 			COLOR(2,i) = ((color_prom[i] & 0x0f) << 4) + (color_prom[i+256] & 0x0f);
-	}
+	} };
 	
 	
 	

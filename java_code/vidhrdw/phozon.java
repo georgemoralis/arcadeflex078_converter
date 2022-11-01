@@ -28,7 +28,7 @@ public class phozon
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( phozon ){
+	public static PaletteInitHandlerPtr phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -68,7 +68,7 @@ public class phozon
 		/* sprites */
 		for (i = 0; i < TOTAL_COLORS(2); i++)
 			COLOR(2,i) = (*(color_prom++) & 0x0f) + 0x10;
-	}
+	} };
 	
 	VIDEO_START( phozon ) {
 		/* set up spriteram area */

@@ -26,7 +26,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( xorworld )
+	public static PaletteInitHandlerPtr xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -58,7 +58,7 @@ public class xorworld
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	

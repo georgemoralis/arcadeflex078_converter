@@ -14,7 +14,7 @@ public class kopunch
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	PALETTE_INIT( kopunch )
+	public static PaletteInitHandlerPtr kopunch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -42,7 +42,7 @@ public class kopunch
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr kopunch_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

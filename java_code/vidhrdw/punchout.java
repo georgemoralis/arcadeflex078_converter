@@ -110,7 +110,7 @@ public class punchout
 	/* these depend on jumpers on the board and change from game to game */
 	static int gfx0inv,gfx1inv,gfx2inv,gfx3inv;
 	
-	PALETTE_INIT( punchout )
+	public static PaletteInitHandlerPtr punchout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -141,9 +141,9 @@ public class punchout
 			if (i % 4 == 0) COLOR(3,i ^ gfx3inv) = 1024;	/* transparent */
 			else COLOR(3,i ^ gfx3inv) = i + 512;
 		}
-	}
+	} };
 	
-	PALETTE_INIT( armwrest )
+	public static PaletteInitHandlerPtr armwrest  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -174,7 +174,7 @@ public class punchout
 			if (i % 4 == 3) COLOR(3,i ^ 3) = 1024;	/* transparent */
 			else COLOR(3,i ^ 3) = i + 512;
 		}
-	}
+	} };
 	
 	
 	

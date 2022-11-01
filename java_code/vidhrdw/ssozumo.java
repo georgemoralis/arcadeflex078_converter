@@ -26,7 +26,7 @@ public class ssozumo
 	
 	/**************************************************************************/
 	
-	PALETTE_INIT( ssozumo )
+	public static PaletteInitHandlerPtr ssozumo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int	bit0, bit1, bit2, bit3, r, g, b;
 		int	i;
@@ -52,7 +52,7 @@ public class ssozumo
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr ssozumo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

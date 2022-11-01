@@ -273,13 +273,13 @@ public class flyball
 	};
 	
 	
-	PALETTE_INIT( flyball )
+	public static PaletteInitHandlerPtr flyball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0x3F, 0x3F, 0x3F);  /* tiles, ball */
 		palette_set_color(1, 0xFF, 0xFF, 0xFF);
 		palette_set_color(2, 0xFF ,0xFF, 0xFF);  /* sprites */
 		palette_set_color(3, 0x00, 0x00, 0x00);
-	}
+	} };
 	
 	
 	static MACHINE_DRIVER_START( flyball )

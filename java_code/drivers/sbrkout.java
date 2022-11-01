@@ -99,11 +99,11 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	static PALETTE_INIT( sbrkout )
+	static public static PaletteInitHandlerPtr sbrkout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00);
 		palette_set_color(1,0xff,0xff,0xff);
-	}
+	} };
 	
 	
 	

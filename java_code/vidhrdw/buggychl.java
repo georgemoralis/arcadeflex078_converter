@@ -20,14 +20,14 @@ public class buggychl
 	
 	
 	
-	PALETTE_INIT( buggychl )
+	public static PaletteInitHandlerPtr buggychl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
 		/* arbitrary blue shading for the sky */
 		for (i = 0;i < 128;i++)
 			palette_set_color(i+128,0,i,2*i);
-	}
+	} };
 	
 	
 	

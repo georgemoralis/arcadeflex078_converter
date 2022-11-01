@@ -43,7 +43,7 @@ public class warpwarp
 	  Moreover, the bullet is pure white, obtained with three 220 ohm resistors.
 	
 	***************************************************************************/
-	PALETTE_INIT( warpwarp )
+	public static PaletteInitHandlerPtr warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -79,7 +79,7 @@ public class warpwarp
 			COLOR(0,i) = 0;			/* black background */
 			COLOR(0,i + 1) = i / 2;	/* colored foreground */
 		}
-	}
+	} };
 	
 	
 	

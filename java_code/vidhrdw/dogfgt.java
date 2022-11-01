@@ -30,7 +30,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( dogfgt )
+	public static PaletteInitHandlerPtr dogfgt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -60,7 +60,7 @@ public class dogfgt
 			palette_set_color(i+16,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

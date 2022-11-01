@@ -1909,11 +1909,11 @@ public class palette
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( black_and_white )
+	public static PaletteInitHandlerPtr black_and_white  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -1927,7 +1927,7 @@ public class palette
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( RRRR_GGGG_BBBB )
+	public static PaletteInitHandlerPtr RRRR_GGGG_BBBB  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -1957,5 +1957,5 @@ public class palette
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 }

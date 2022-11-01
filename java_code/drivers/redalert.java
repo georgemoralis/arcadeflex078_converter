@@ -320,7 +320,7 @@ public class redalert
 		0,8,5,1,
 	};
 	
-	static PALETTE_INIT( redalert )
+	static public static PaletteInitHandlerPtr redalert  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* Arbitrary colors */
 		palette_set_color(0,0x40,0x80,0xff);	/* Background */
@@ -334,7 +334,7 @@ public class redalert
 		palette_set_color(8,0x00,0x00,0x00);	/* Black */
 	
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
-	}
+	} };
 	
 	public static InterruptHandlerPtr redalert_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

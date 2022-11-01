@@ -79,7 +79,7 @@ public class compgolf
 		SET_TILE_INFO(1, compgolf_bg_ram[cgindex+1]|(compgolf_bg_ram[cgindex]<<8), compgolf_bg_ram[cgindex]>>2, 0)
 	}
 	
-	PALETTE_INIT( compgolf )
+	public static PaletteInitHandlerPtr compgolf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -101,7 +101,7 @@ public class compgolf
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	VIDEO_START( compgolf )
 	{

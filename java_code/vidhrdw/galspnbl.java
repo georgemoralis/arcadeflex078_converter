@@ -13,7 +13,7 @@ public class galspnbl
 	
 	
 	
-	PALETTE_INIT( galspnbl )
+	public static PaletteInitHandlerPtr galspnbl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -31,7 +31,7 @@ public class galspnbl
 			b = (b << 3) | (b >> 2);
 			palette_set_color(i+1024,r,g,b);
 		}
-	}
+	} };
 	
 	
 	

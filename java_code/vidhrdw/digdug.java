@@ -42,7 +42,7 @@ public class digdug
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	PALETTE_INIT( digdug )
+	public static PaletteInitHandlerPtr digdug  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -77,7 +77,7 @@ public class digdug
 		/* playfield */
 		for (i = 64*4;i < 128*4;i++)
 			colortable[8*2 + i] = 31 - (color_prom[i + 32] & 0x0f);
-	}
+	} };
 	
 	
 	

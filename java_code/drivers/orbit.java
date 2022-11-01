@@ -311,11 +311,11 @@ public class orbit
 	};
 	
 	
-	static PALETTE_INIT( orbit )
+	static public static PaletteInitHandlerPtr orbit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0xFF, 0xFF, 0xFF);
-	}
+	} };
 	
 	
 	/************************************************************************/

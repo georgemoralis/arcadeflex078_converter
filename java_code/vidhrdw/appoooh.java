@@ -36,7 +36,7 @@ public class appoooh
 	  Because these hardware is similar.
 	
 	***************************************************************************/
-	PALETTE_INIT( appoooh )
+	public static PaletteInitHandlerPtr appoooh  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -79,7 +79,7 @@ public class appoooh
 		/* TODO: the driver currently uses only 16 of the 32 color codes. */
 		/* 16-31 might be unused, but there might be a palette bank selector */
 		/* to use them somewhere in the game. */
-	}
+	} };
 	
 	/***************************************************************************
 	

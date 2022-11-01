@@ -35,7 +35,7 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	PALETTE_INIT( ojankoy )
+	public static PaletteInitHandlerPtr ojankoy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int bit0, bit1, bit2, bit3, bit4, r, g, b;
@@ -63,7 +63,7 @@ public class ojankohs
 			palette_set_color(i, r, g, b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static ReadHandlerPtr ojankohs_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{

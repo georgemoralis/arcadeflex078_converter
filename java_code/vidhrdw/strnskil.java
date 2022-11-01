@@ -22,7 +22,7 @@ public class strnskil
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( strnskil )
+	public static PaletteInitHandlerPtr strnskil  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -48,7 +48,7 @@ public class strnskil
 		for (i=0; i<512; i++)
 			*(colortable++) = *(color_prom++);
 	
-	}
+	} };
 	
 	public static WriteHandlerPtr strnskil_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

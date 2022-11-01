@@ -27,7 +27,7 @@ public class ambush
 	  I'm not sure about the resistor value, I'm using the Galaxian ones.
 	
 	***************************************************************************/
-	PALETTE_INIT( ambush )
+	public static PaletteInitHandlerPtr ambush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -53,7 +53,7 @@ public class ambush
 	
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

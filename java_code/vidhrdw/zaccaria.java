@@ -56,7 +56,7 @@ public class zaccaria
 	
 	
 	***************************************************************************/
-	PALETTE_INIT( zaccaria )
+	public static PaletteInitHandlerPtr zaccaria  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,j,k;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -128,7 +128,7 @@ public class zaccaria
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	

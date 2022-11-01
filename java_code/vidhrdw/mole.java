@@ -24,7 +24,7 @@ public class mole
 	#define NUM_COLS	40
 	#define NUM_TILES	(NUM_ROWS * NUM_COLS)
 	
-	PALETTE_INIT( moleattack )
+	public static PaletteInitHandlerPtr moleattack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int r, g, b;
@@ -35,7 +35,7 @@ public class mole
 			b = (i & 2) ? 0xff : 0x00;
 			palette_set_color(i, r, g, b);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

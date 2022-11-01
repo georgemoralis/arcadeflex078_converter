@@ -25,7 +25,7 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	PALETTE_INIT( kncljoe )
+	public static PaletteInitHandlerPtr kncljoe  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -89,7 +89,7 @@ public class kncljoe
 		{
 			COLOR(1,i) = 128 + (*(color_prom++) & 0x0f);
 		}
-	}
+	} };
 	
 	
 	

@@ -21,7 +21,7 @@ public class markham
 	
 	static struct tilemap *bg_tilemap;
 	
-	PALETTE_INIT( markham )
+	public static PaletteInitHandlerPtr markham  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -47,7 +47,7 @@ public class markham
 		for (i=0; i<512; i++)
 			*(colortable++) = *(color_prom++);
 	
-	}
+	} };
 	
 	public static WriteHandlerPtr markham_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

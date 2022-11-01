@@ -42,7 +42,7 @@ public class hyhoo
 	
 	
 	******************************************************************************/
-	PALETTE_INIT( hyhoo )
+	public static PaletteInitHandlerPtr hyhoo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -61,7 +61,7 @@ public class hyhoo
 			b = ((b << 3) | (b >> 2));
 			palette_set_color(i,r,g,b);
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr hyhoo_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

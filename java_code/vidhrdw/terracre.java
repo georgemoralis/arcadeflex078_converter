@@ -101,7 +101,7 @@ public class terracre
 		}
 	}
 	
-	PALETTE_INIT( amazon )
+	public static PaletteInitHandlerPtr amazon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -169,7 +169,7 @@ public class terracre
 	
 		/* color_prom now points to the beginning of the sprite palette bank table */
 		spritepalettebank = color_prom;	/* we'll need it at run time */
-	}
+	} };
 	
 	WRITE16_HANDLER( amazon_background_w )
 	{

@@ -27,7 +27,7 @@ public class gaplus
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( gaplus )
+	public static PaletteInitHandlerPtr gaplus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -76,7 +76,7 @@ public class gaplus
 			COLOR(2,i) = (color_prom[0] & 0x0f) + ((color_prom[TOTAL_COLORS(2)] & 0x0f) << 4);
 			color_prom++;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 		Starfield information

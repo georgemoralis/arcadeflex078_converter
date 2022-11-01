@@ -34,7 +34,7 @@ public class shaolins
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( shaolins )
+	public static PaletteInitHandlerPtr shaolins  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -97,7 +97,7 @@ public class shaolins
 	
 			color_prom++;
 		}
-	}
+	} };
 	
 	public static WriteHandlerPtr shaolins_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

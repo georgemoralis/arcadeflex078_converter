@@ -46,7 +46,7 @@ public class karnov
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( karnov )
+	public static PaletteInitHandlerPtr karnov  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -73,7 +73,7 @@ public class karnov
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
-	}
+	} };
 	
 	void karnov_flipscreen_w(int data)
 	{

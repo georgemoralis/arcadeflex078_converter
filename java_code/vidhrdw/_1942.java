@@ -38,7 +38,7 @@ public class _1942
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	PALETTE_INIT( 1942 )
+	public static PaletteInitHandlerPtr 1942  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -93,7 +93,7 @@ public class _1942
 		/* sprites use colors 64-79 */
 		for (i = 0;i < TOTAL_COLORS(2);i++)
 			COLOR(2,i) = *(color_prom++) + 64;
-	}
+	} };
 	
 	
 	/***************************************************************************

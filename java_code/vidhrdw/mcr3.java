@@ -292,12 +292,12 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	PALETTE_INIT( spyhunt )
+	public static PaletteInitHandlerPtr spyhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* add some colors for the alpha RAM */
 		palette_set_color(4*16+0,0x00,0x00,0x00);
 		palette_set_color(4*16+1,0x00,0xff,0x00);
 		palette_set_color(4*16+2,0x00,0x00,0xff);
 		palette_set_color(4*16+3,0xff,0xff,0xff);
-	}
+	} };
 }
