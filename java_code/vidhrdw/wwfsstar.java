@@ -211,7 +211,7 @@ public class wwfsstar
 	*******************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg0_tilemap = tilemap_create(get_fg0_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		tilemap_set_transparent_pen(fg0_tilemap,0);
@@ -225,7 +225,7 @@ public class wwfsstar
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly( bg0_tilemap, 0, wwfsstar_scrolly  );
 		tilemap_set_scrollx( bg0_tilemap, 0, wwfsstar_scrollx  );

@@ -28,7 +28,7 @@ public class othunder
 	
 	/**********************************************************/
 	
-	static public static VideoUpdateHandlerPtr othunder_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_othunder_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Up to $800/8 big sprites, requires 0x100 * sizeof(*spritelist)
 		   Multiply this by 32 to give room for the number of small sprites,
@@ -48,7 +48,7 @@ public class othunder
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* There is a problem here. 4 is correct for text layer/sprite
 		   alignment, but the bg layers [or one of them] are wrong */
@@ -244,7 +244,7 @@ public class othunder
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	

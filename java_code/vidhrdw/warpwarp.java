@@ -43,7 +43,7 @@ public class warpwarp
 	  Moreover, the bullet is pure white, obtained with three 220 ohm resistors.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -90,7 +90,7 @@ public class warpwarp
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr warpwarp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_warpwarp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

@@ -44,7 +44,7 @@ public class crshrace
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		tilemap2 = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
@@ -197,7 +197,7 @@ public class crshrace
 	}
 	
 	
-	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (gfxctrl & 0x04)	/* display disable? */
 		{
@@ -226,7 +226,7 @@ public class crshrace
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);

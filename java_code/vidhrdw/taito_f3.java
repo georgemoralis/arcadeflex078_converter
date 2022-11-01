@@ -541,7 +541,7 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (sprite_lag==2)
 		{
@@ -560,7 +560,7 @@ public class taito_f3
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if DEBUG_F3
 	#define FWRITE32(pRAM,len,file)	\
@@ -608,7 +608,7 @@ public class taito_f3
 	#endif	//DEBUG_F3
 	} };
 	
-	public static VideoUpdateHandlerPtr f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const struct F3config *pCFG=&f3_config_table[0];
 		int tile;
@@ -3184,7 +3184,7 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_f3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle tempclip;
 		unsigned int sy_fix[4],sx_fix[4];

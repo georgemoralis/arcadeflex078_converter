@@ -60,7 +60,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr 88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
@@ -85,7 +85,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr 88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	

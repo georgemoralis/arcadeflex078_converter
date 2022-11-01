@@ -743,7 +743,7 @@ public class jaguar
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (jagobj_init())
 			return 1;
@@ -770,7 +770,7 @@ public class jaguar
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* if not enabled, just blank */
 		if (!(gpu_regs[VMODE] & 1))

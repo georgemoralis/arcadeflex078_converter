@@ -15,7 +15,7 @@ package vidhrdw;
 public class truco
 {
 	
-	public static PaletteInitHandlerPtr truco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_truco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -37,7 +37,7 @@ public class truco
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr truco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_truco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data8_t		*vid = memory_region( REGION_CPU1 ) + 0x1800;
 		int x, y;

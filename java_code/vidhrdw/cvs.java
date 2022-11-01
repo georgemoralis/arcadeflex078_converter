@@ -82,7 +82,7 @@ public class cvs
 	 * colours are taken from SRAM and are programmable   *
 	 ******************************************************/
 	
-	public static PaletteInitHandlerPtr cvs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cvs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int attr,col,map;
 	
@@ -370,7 +370,7 @@ public class cvs
 	    }
 	} };
 	
-	public static VideoUpdateHandlerPtr cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int generator = 0;
 	    int x,y;
@@ -460,7 +460,7 @@ public class cvs
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,character;
 		int sx,sy;

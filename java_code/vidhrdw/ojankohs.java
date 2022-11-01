@@ -35,7 +35,7 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	public static PaletteInitHandlerPtr ojankoy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_ojankoy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int bit0, bit1, bit2, bit3, bit4, r, g, b;
@@ -295,7 +295,7 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankohs_tilemap = tilemap_create(ojankohs_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 4, 64, 64);
 		ojankohs_videoram = auto_malloc(0x2000);
@@ -307,7 +307,7 @@ public class ojankohs
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr ojankoy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ojankoy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankohs_tilemap = tilemap_create(ojankoy_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 4, 64, 64);
 		ojankohs_videoram = auto_malloc(0x2000);
@@ -319,7 +319,7 @@ public class ojankohs
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		ojankoc_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 		ojankohs_videoram = auto_malloc(0x8000);
@@ -337,7 +337,7 @@ public class ojankohs
 	
 	******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ojankohs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(ojankohs_tilemap, 0, ojankohs_scrollx);
 		tilemap_set_scrolly(ojankohs_tilemap, 0, ojankohs_scrolly);
@@ -345,7 +345,7 @@ public class ojankohs
 		tilemap_draw(bitmap, cliprect, ojankohs_tilemap, 0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

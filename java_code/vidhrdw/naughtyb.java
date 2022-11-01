@@ -72,7 +72,7 @@ public class naughtyb
 	  plus 270 ohm pullup and pulldown resistors on all lines
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr naughtyb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_naughtyb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -154,7 +154,7 @@ public class naughtyb
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		videoreg = palreg = bankreg = 0;
 	
@@ -266,7 +266,7 @@ public class naughtyb
 	
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

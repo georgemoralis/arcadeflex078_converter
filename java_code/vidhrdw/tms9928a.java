@@ -171,7 +171,7 @@ public class tms9928a
 	/*
 	** initialize the palette
 	*/
-	static public static PaletteInitHandlerPtr tms9928a  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_tms9928a  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_colors(0, TMS9928A_palette, TMS9928A_PALETTE_SIZE);
 	} };
@@ -468,7 +468,7 @@ public class tms9928a
 	/*
 	** Updates the screen (the dMem memory area).
 	*/
-	public static VideoUpdateHandlerPtr tms9928a  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tms9928a  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int c;
 	

@@ -119,7 +119,7 @@ public class thief
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr thief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_thief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		memset( &thief_coprocessor, 0x00, sizeof(thief_coprocessor) );
 	
 		thief_page0	= auto_bitmap_alloc( 256,256 );
@@ -142,7 +142,7 @@ public class thief
 		return 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr thief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_thief  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		unsigned int offs;
 		int flipscreen = thief_video_control&1;
 		const pen_t *pal_data = Machine->pens;

@@ -38,7 +38,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr arabian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_arabian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -166,7 +166,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
 		int offs;
@@ -381,7 +381,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *colortable = &Machine->remapped_colortable[(arabian_video_control >> 3) << 8];
 		int y;

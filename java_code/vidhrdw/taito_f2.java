@@ -155,67 +155,67 @@ public class taito_f2
 	/*    ( spritetype, hide, hideflip, xoffs, yoffs, flipx, flipy, textflipx, textflipy) */
 	/**************************************************************************************/
 	
-	public static VideoUpdateHandlerPtr taitof2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_megab  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Megab, Liquidk */
+	public static VideoUpdateHandlerPtr video_update_taitof2_megab  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Megab, Liquidk */
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_quiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Quiz Crayons, Quiz Jinsei */
+	public static VideoUpdateHandlerPtr video_update_taitof2_quiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)   /* Quiz Crayons, Quiz Jinsei */
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_finalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_finalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,1,1,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_growl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_growl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_ninjak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_ninjak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,1,2));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,0,4,0,0,-4,0,-11,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_solfigtr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_solfigtr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,6,0,6,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_koshien  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_koshien  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,1,-1,0,0,2,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_gunfront  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_gunfront  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,-3,0,0,5,0,4,1));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_mjnquest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_mjnquest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed = (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));	/* non-zero = failure */
 		if (!failed)  TC0100SCN_set_bg_tilemask(0x7fff);
@@ -223,7 +223,7 @@ public class taito_f2
 		return failed;
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_footchmp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_footchmp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x1d;
@@ -236,7 +236,7 @@ public class taito_f2
 		return failed;
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_hthero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_hthero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int failed;
 		f2_tilemap_xoffs = 0x33;
@@ -249,7 +249,7 @@ public class taito_f2
 		return failed;
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x1e;
 		f2_tilemap_yoffs = 0x08;
@@ -258,7 +258,7 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_deadconj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_deadconj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x34;
 		f2_tilemap_yoffs = - 0x05;
@@ -267,7 +267,7 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_tilemap_xoffs = 0x32;
 		f2_tilemap_yoffs = - 0x04;
@@ -276,36 +276,36 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_yuyugogo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_yuyugogo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(1,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_dinorex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_dinorex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_dondokod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* dondokod, cameltry */
+	public static VideoUpdateHandlerPtr video_update_taitof2_dondokod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* dondokod, cameltry */
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_pulirula  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_pulirula  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_pivot_xdisp = -10;	/* alignment seems correct (see level 2, falling */
 		f2_pivot_ydisp = 16;	/* block of ice after armour man) */
 		return (taitof2_core_vh_start(2,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_driftout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_driftout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 16;
@@ -829,14 +829,14 @@ public class taito_f2
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr taitof2_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_full_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_full_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -849,7 +849,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -862,7 +862,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -879,7 +879,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size);
 	} };
 	
-	public static VideoUpdateHandlerPtr taitof2_partial_buffer_delayed_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_partial_buffer_delayed_qzchikyu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* spriteram[2] and [3] are 1 frame behind...
 		   probably thundfox_eof_callback would work fine */
@@ -904,7 +904,7 @@ public class taito_f2
 	
 	
 	/* SSI */
-	public static VideoUpdateHandlerPtr ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -916,7 +916,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -931,7 +931,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr taitof2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taitof2_handle_sprite_buffering();
 	
@@ -946,7 +946,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr taitof2_pri  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_pri  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[3];
 		int spritepri[4];
@@ -1012,7 +1012,7 @@ public class taito_f2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr taitof2_pri_roz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitof2_pri_roz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[3];
 		int spritepri[4];
@@ -1086,7 +1086,7 @@ public class taito_f2
 	
 	
 	/* Thunderfox */
-	public static VideoUpdateHandlerPtr thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int tilepri[2][3];
 		int spritepri[4];
@@ -1215,7 +1215,7 @@ public class taito_f2
 	
 	********************************************************************/
 	
-	public static VideoUpdateHandlerPtr metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];
@@ -1281,7 +1281,7 @@ public class taito_f2
 	
 	
 	/* Deadconx, Footchmp */
-	public static VideoUpdateHandlerPtr deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];

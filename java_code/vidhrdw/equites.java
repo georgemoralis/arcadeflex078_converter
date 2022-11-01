@@ -81,7 +81,7 @@ public class equites
 	}
 	
 	// Equites Hardware
-	public static PaletteInitHandlerPtr equites  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_equites  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		UINT8 *clut_ptr;
 		int i, r, g, b;
@@ -117,7 +117,7 @@ public class equites
 		SET_TILE_INFO(0, tile, color, 0);
 	}
 	
-	public static VideoUpdateHandlerPtr equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		charmap0 = tilemap_create(equites_charinfo, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 		tilemap_set_transparent_pen(charmap0, 0);
@@ -130,7 +130,7 @@ public class equites
 	} };
 	
 	// Splendor Blast Hardware
-	public static PaletteInitHandlerPtr splndrbt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_splndrbt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		UINT8 *prom_ptr;
 		int i, r, g, b;
@@ -231,7 +231,7 @@ public class equites
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#define BMW (1<<BMW_l2)
 	
@@ -391,7 +391,7 @@ public class equites
 	#undef SPRITE_BANKBASE
 	}
 	
-	public static VideoUpdateHandlerPtr equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		equites_update_clut();
 		equites_draw_scroll(bitmap);
@@ -571,7 +571,7 @@ public class equites
 	#undef SPRITE_BANKBASE
 	}
 	
-	public static VideoUpdateHandlerPtr splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		splndrbt_update_clut();
 		fillbitmap(bitmap, *bgcolor, &halfclip);

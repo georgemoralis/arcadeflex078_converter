@@ -54,7 +54,7 @@ public class darius
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(darius_fg_get_tile_info[0],tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
 		if (!fg_tilemap)
@@ -153,7 +153,7 @@ public class darius
 	
 	
 	
-	public static VideoUpdateHandlerPtr darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		PC080SN_tilemap_update();
 	

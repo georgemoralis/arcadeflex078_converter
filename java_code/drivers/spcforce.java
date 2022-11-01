@@ -254,7 +254,7 @@ public class spcforce
 		0, 3, 4, 5, 6, 7, 0, 1,
 		0, 2, 3, 4, 5, 6, 7, 0
 	};
-	static public static PaletteInitHandlerPtr spcforce  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_spcforce  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0; i < 8; i++)

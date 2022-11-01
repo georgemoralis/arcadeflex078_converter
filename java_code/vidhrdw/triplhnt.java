@@ -41,7 +41,7 @@ public class triplhnt
 	}
 	
 	
-	public static VideoUpdateHandlerPtr triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 	
@@ -148,7 +148,7 @@ public class triplhnt
 	}
 	
 	
-	public static VideoUpdateHandlerPtr triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int cross_x = readinputport(8);
 		int cross_y = readinputport(9);

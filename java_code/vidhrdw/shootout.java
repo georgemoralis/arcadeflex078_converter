@@ -15,7 +15,7 @@ public class shootout
 	static struct tilemap *background, *foreground;
 	
 	
-	public static PaletteInitHandlerPtr shootout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_shootout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -81,7 +81,7 @@ public class shootout
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		if( background && foreground ){
@@ -168,7 +168,7 @@ public class shootout
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	
@@ -177,7 +177,7 @@ public class shootout
 		draw_sprites(bitmap,cliprect,3/*bank bits */);
 	} };
 	
-	public static VideoUpdateHandlerPtr shootouj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_shootouj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	

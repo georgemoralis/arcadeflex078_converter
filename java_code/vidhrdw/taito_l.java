@@ -77,7 +77,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -314,7 +314,7 @@ public class taito_l
 	}
 	
 	
-	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int dx,dy;
 	
@@ -354,7 +354,7 @@ public class taito_l
 	
 	
 	
-	public static VideoUpdateHandlerPtr taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *spriteram = taitol_rambanks + 0x7000;
 	

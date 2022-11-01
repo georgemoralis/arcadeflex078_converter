@@ -91,7 +91,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* start a timer going on the first scanline of every frame */
 		setup_gun_timer = timer_alloc(setup_gun_interrupts);
@@ -108,7 +108,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int v, h, width, xoffs, beamx, beamy;
 		UINT8 *base1 = (UINT8 *)tickee_vram;

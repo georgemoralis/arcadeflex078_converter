@@ -54,7 +54,7 @@ public class shangkid
 			(memory_region( REGION_PROMS )[0x800+color*4]==2)?1:0;
 	}
 	
-	public static VideoUpdateHandlerPtr shangkid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_shangkid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		return background?0:1;
@@ -173,7 +173,7 @@ public class shangkid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr shangkid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_shangkid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flipscreen = shangkid_videoreg[1]&0x80;
 		tilemap_set_flip( background, flipscreen?(TILEMAP_FLIPX|TILEMAP_FLIPY):0 );
@@ -186,7 +186,7 @@ public class shangkid
 	} };
 	
 	
-	public static PaletteInitHandlerPtr dynamski  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_dynamski  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -304,7 +304,7 @@ public class shangkid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr dynamski  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dynamski  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dynamski_draw_background( bitmap,cliprect, 0 );
 		dynamski_draw_sprites( bitmap,cliprect );

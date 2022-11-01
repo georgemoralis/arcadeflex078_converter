@@ -50,7 +50,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		cbasebal_textram = auto_malloc(0x1000);
 		cbasebal_scrollram = auto_malloc(0x1000);
@@ -194,7 +194,7 @@ public class cbasebal
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (bg_on)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);

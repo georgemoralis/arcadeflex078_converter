@@ -448,7 +448,7 @@ public class atarirle
 		video_eof_atarirle: Flush remaining changes.
 	---------------------------------------------------------------*/
 	
-	public static VideoUpdateHandlerPtr atarirle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarirle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	

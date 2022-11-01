@@ -49,7 +49,7 @@ public class yumefuda
 	}
 	
 	
-	public static VideoUpdateHandlerPtr yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(y_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -59,7 +59,7 @@ public class yumefuda
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
 	

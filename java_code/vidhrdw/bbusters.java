@@ -76,7 +76,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,128,32);
@@ -91,7 +91,7 @@ public class bbusters
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -285,7 +285,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );
@@ -304,7 +304,7 @@ public class bbusters
 		draw_crosshair(bitmap,readinputport(10),readinputport(9),cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );

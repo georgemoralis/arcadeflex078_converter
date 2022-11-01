@@ -73,7 +73,7 @@ public class afega
 	
 	/* This game uses 8 bit tiles, so it ignores the color codes and just
 	   uses the same 256 colors for every tile */
-	public static PaletteInitHandlerPtr grdnstrm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_grdnstrm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 16; color++ )
@@ -150,7 +150,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, afega_tilemap_scan_pages,
 									TILEMAP_OPAQUE,
@@ -283,7 +283,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -315,7 +315,7 @@ public class afega
 	} };
 	
 	/* Same as 'afega', but no screen flip support */
-	public static VideoUpdateHandlerPtr bubl2000  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bubl2000  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	

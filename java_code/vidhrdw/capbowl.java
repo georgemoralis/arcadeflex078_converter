@@ -43,7 +43,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
@@ -97,7 +97,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int halfwidth = (cliprect->max_x - cliprect->min_x + 1) / 2;
 		struct tms34061_display state;

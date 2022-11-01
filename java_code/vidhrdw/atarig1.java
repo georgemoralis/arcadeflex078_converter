@@ -71,7 +71,7 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atarig1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarig1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarirle_desc modesc_hydra =
 		{
@@ -218,7 +218,7 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atarig1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarig1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield */
 		tilemap_draw(bitmap, cliprect, atarigen_playfield_tilemap, 0, 0);

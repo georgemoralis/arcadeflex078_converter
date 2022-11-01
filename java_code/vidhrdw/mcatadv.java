@@ -166,7 +166,7 @@ public class mcatadv
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, scrollx, scrolly, flip;
 	
@@ -227,7 +227,7 @@ public class mcatadv
 		profiler_mark(PROFILER_END);
 	} };
 	
-	public static VideoUpdateHandlerPtr mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mcatadv_tilemap1 = tilemap_create(get_mcatadv_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap1,0);
@@ -249,7 +249,7 @@ public class mcatadv
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		memcpy(spriteram_old,spriteram16,spriteram_size);
 		memcpy(vidregs_old,mcatadv_vidregs,0xf);

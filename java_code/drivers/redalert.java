@@ -320,7 +320,7 @@ public class redalert
 		0,8,5,1,
 	};
 	
-	static public static PaletteInitHandlerPtr redalert  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_redalert  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* Arbitrary colors */
 		palette_set_color(0,0x40,0x80,0xff);	/* Background */

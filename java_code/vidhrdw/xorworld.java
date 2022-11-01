@@ -26,7 +26,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -108,7 +108,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		screen = tilemap_create(get_tile_info_xorworld_screen,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -155,7 +155,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{	
 		tilemap_draw(bitmap, cliprect, screen, 0, 0);
 	

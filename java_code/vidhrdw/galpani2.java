@@ -128,7 +128,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr galpani2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_galpani2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		/* first $4200 colors are dynamic */
@@ -148,7 +148,7 @@ public class galpani2
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((galpani2_bg15_bitmap  = auto_bitmap_alloc_depth(256*8, 256, 16)) == 0)	return 1;
 	
@@ -167,7 +167,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	

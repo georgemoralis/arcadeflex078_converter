@@ -244,7 +244,7 @@ public class convertMame {
                         }
                         else
                         {
-                            sUtil.putString("public static VideoUpdateHandlerPtr " + Convertor.token[0] + "  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)");
+                            sUtil.putString("public static VideoUpdateHandlerPtr video_update_" + Convertor.token[0] + "  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)");
                             type = VIDEO_UPDATE;
                             i3 = -1;
                             Convertor.inpos += 1;
@@ -364,7 +364,7 @@ public class convertMame {
                             continue;
                         }
                         else {
-                            sUtil.putString("public static PaletteInitHandlerPtr " + Convertor.token[0] + "  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)");
+                            sUtil.putString("public static PaletteInitHandlerPtr palette_init_" + Convertor.token[0] + "  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)");
                             type = PALETTE_INIT;
                             i3 = -1;
                             Convertor.inpos += 1;

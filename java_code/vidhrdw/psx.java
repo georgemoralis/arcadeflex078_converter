@@ -228,7 +228,7 @@ public class psx
 	#define TEXTURE_V( a ) ( (UINT8)a.b.h )
 	#define TEXTURE_U( a ) ( (UINT8)a.b.l )
 	
-	public static PaletteInitHandlerPtr psx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_psx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		UINT32 n_r;
 		UINT32 n_g;
@@ -618,29 +618,29 @@ public class psx
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr psx_type1_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psx_type1_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 1;
 		return psx_gpu_init( 1024, 1024 );
 	} };
 	
-	public static VideoUpdateHandlerPtr psx_type2_1024x512  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psx_type2_1024x512  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 512 );
 	} };
 	
-	public static VideoUpdateHandlerPtr psx_type2_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psx_type2_1024x1024  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 1024 );
 	} };
 	
-	public static VideoUpdateHandlerPtr psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	} };
 	
-	public static VideoUpdateHandlerPtr psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 n_x;
 		UINT32 n_y;

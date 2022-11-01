@@ -164,7 +164,7 @@ public class tryout
 		return (row ^ 0x1f) + (col << 5);
 	}
 	
-	public static VideoUpdateHandlerPtr tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{	
 		fg_tilemap = tilemap_create(get_tile_info,get_fg_memory_offset_tryout,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -173,7 +173,7 @@ public class tryout
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
@@ -202,7 +202,7 @@ public class tryout
 	//		nmi_line_pulse();
 	} };
 	
-	public static PaletteInitHandlerPtr tryout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tryout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

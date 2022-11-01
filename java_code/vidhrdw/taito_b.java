@@ -182,7 +182,7 @@ public class taito_b
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr taitob_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_taitob_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		framebuffer[0] = auto_bitmap_alloc(512,256);
 		framebuffer[1] = auto_bitmap_alloc(512,256);
@@ -205,7 +205,7 @@ public class taito_b
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr taitob_color_order0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitob_color_order0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  /*graphics are shared, only that they use different palette*/
 	  /*this is the basic layout used in: Nastar, Ashura Blaster, Hit the Ice, Rambo3, Tetris*/
@@ -222,7 +222,7 @@ public class taito_b
 	  return video_start_taitob_core();
 	} };
 	
-	public static VideoUpdateHandlerPtr taitob_color_order1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitob_color_order1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  /*and this is the reversed layout used in: Crime City, Puzzle Bobble*/
 	  b_bg_color_base = 0x00;
@@ -233,7 +233,7 @@ public class taito_b
 	  return video_start_taitob_core();
 	} };
 	
-	public static VideoUpdateHandlerPtr taitob_color_order2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitob_color_order2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  /*this is used in: rambo3a, masterw, silentd, selfeena, ryujin */
 	  b_bg_color_base = 0x30;
@@ -245,7 +245,7 @@ public class taito_b
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr hitice  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hitice  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  if (video_start_taitob_color_order0())
 	    return 1;
@@ -633,7 +633,7 @@ public class taito_b
 	profiler_mark(PROFILER_END);
 	}
 	
-	public static VideoUpdateHandlerPtr taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  if ((video_control & 0x20) == 0)
 	  {
@@ -675,7 +675,7 @@ public class taito_b
 	
 	
 	
-	public static VideoUpdateHandlerPtr taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  if (~video_control & 0x01)
 	    fillbitmap(framebuffer[framebuffer_page],0,&Machine->visible_area);

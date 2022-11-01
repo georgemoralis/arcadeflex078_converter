@@ -140,7 +140,7 @@ public class cave
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr dfeveron  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_dfeveron  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -154,7 +154,7 @@ public class cave
 				colortable[color * 256 + pen] = color * 16 + pen;
 	} };
 	
-	public static PaletteInitHandlerPtr ddonpach  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_ddonpach  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -168,7 +168,7 @@ public class cave
 				colortable[color * 16 + pen + 0x8000] = 0x4000 + color * 256 + pen;
 	} };
 	
-	public static PaletteInitHandlerPtr mazinger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mazinger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -184,7 +184,7 @@ public class cave
 				colortable[color * 64 + pen + 0x4400] = 0x400 + (color % (64/4)) * 64 + pen;
 	} };
 	
-	public static PaletteInitHandlerPtr sailormn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_sailormn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -200,7 +200,7 @@ public class cave
 				colortable[color * 64 + pen + 0x4c00] = 0xc00 + (color % (64/4)) * 64 + pen;
 	} };
 	
-	public static PaletteInitHandlerPtr pwrinst2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_pwrinst2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 	
@@ -473,13 +473,13 @@ public class cave
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr cave_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)		{	return cave_vh_start(1);	} };
-	public static VideoUpdateHandlerPtr cave_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(2);	} };
-	public static VideoUpdateHandlerPtr cave_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(3);	} };
-	public static VideoUpdateHandlerPtr cave_4_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(4);	} };
+	public static VideoUpdateHandlerPtr video_update_cave_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)		{	return cave_vh_start(1);	} };
+	public static VideoUpdateHandlerPtr video_update_cave_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(2);	} };
+	public static VideoUpdateHandlerPtr video_update_cave_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(3);	} };
+	public static VideoUpdateHandlerPtr video_update_cave_4_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{	return cave_vh_start(4);	} };
 	
 	
-	public static VideoUpdateHandlerPtr sailormn_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sailormn_3_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (cave_vh_start(2))
 			return 1;
@@ -1427,7 +1427,7 @@ public class cave
 	{	 cave_tilemap_draw( bitmap, cliprect, tilemap_3, cave_vram_3, cave_vctrl_3, flags, priority, priority2 );	}
 	
 	
-	public static VideoUpdateHandlerPtr cave  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cave  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri, pri2;
 		int layers_ctrl = -1;

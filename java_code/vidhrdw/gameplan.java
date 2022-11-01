@@ -38,7 +38,7 @@ public class gameplan
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr gameplan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gameplan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (strcmp(Machine->gamedrv->name, "kaos") == 0)
 			gameplan_this_is_kaos = 1;

@@ -143,14 +143,14 @@ public class popeye
 		}
 	}
 	
-	public static PaletteInitHandlerPtr popeye  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_popeye  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		invertmask = 0xff;
 	
 		convert_color_prom(colortable,color_prom);
 	} };
 	
-	public static PaletteInitHandlerPtr popeyebl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_popeyebl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		invertmask = 0x00;
 	
@@ -272,7 +272,7 @@ public class popeye
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr skyskipr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skyskipr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
@@ -293,7 +293,7 @@ public class popeye
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
@@ -406,7 +406,7 @@ public class popeye
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		popeye_draw_background(bitmap);
 		popeye_draw_sprites(bitmap);

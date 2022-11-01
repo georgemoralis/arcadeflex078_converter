@@ -299,7 +299,7 @@ public class triplhnt
 	};
 	
 	
-	static public static PaletteInitHandlerPtr triplhnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_triplhnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0xAF, 0xAF, 0xAF);  /* sprites */
 		palette_set_color(1, 0x00, 0x00, 0x00);

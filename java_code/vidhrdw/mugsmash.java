@@ -149,7 +149,7 @@ public class mugsmash
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr mugsmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mugsmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		mugsmash_tilemap1 = tilemap_create(get_mugsmash_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
@@ -160,7 +160,7 @@ public class mugsmash
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mugsmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mugsmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,mugsmash_tilemap2,0,0);
 		tilemap_draw(bitmap,cliprect,mugsmash_tilemap1,0,0);

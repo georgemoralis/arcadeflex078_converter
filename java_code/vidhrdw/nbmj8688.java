@@ -67,7 +67,7 @@ public class nbmj8688
 	
 	******************************************************************************/
 	
-	public static PaletteInitHandlerPtr mbmj8688_8bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_8bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -97,7 +97,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr mbmj8688_12bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_12bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -119,7 +119,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr mbmj8688_16bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_16bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -573,37 +573,37 @@ public class nbmj8688
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr mbmj8688_8bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_8bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_8BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoUpdateHandlerPtr mbmj8688_hybrid_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_hybrid_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_12BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoUpdateHandlerPtr mbmj8688_pure_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_12bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_12BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoUpdateHandlerPtr mbmj8688_hybrid_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_hybrid_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_16BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoUpdateHandlerPtr mbmj8688_pure_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_16bit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoUpdateHandlerPtr mbmj8688_pure_16bit_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_pure_16bit_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 	
@@ -685,7 +685,7 @@ public class nbmj8688
 	******************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr mbmj8688  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	
@@ -720,7 +720,7 @@ public class nbmj8688
 	
 	
 	
-	public static VideoUpdateHandlerPtr mbmj8688_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y, b;
 		struct rectangle clip = *cliprect;

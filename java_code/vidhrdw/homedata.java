@@ -337,7 +337,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr mrokumei  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mrokumei  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -363,7 +363,7 @@ public class homedata
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr reikaids  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_reikaids  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -389,7 +389,7 @@ public class homedata
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr pteacher  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_pteacher  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -517,7 +517,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0][0] = tilemap_create( mrokumei_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( mrokumei_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -533,7 +533,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0][0] = tilemap_create( reikaids_get_info0_0, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
 		tilemap[0][1] = tilemap_create( reikaids_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
@@ -560,7 +560,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0][0] = tilemap_create( pteacher_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( pteacher_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -576,7 +576,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr lemnangl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lemnangl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap[0][0] = tilemap_create( lemnangl_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( lemnangl_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
@@ -721,7 +721,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flags,width;
 	
@@ -763,7 +763,7 @@ public class homedata
 		tilemap_draw(bitmap, cliprect, tilemap[homedata_visible_page][1], 0, 0);
 	} };
 	/*
-	public static VideoUpdateHandlerPtr reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flags;
 		static int pritable[8][4] =
@@ -796,7 +796,7 @@ public class homedata
 	} };
 	
 	*/
-	public static VideoUpdateHandlerPtr reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flags;
 		static int pritable[2][8][4] =	/* table of priorities derived from the PROM */
@@ -841,7 +841,7 @@ public class homedata
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flags,scroll_low,scroll_high;
 	
@@ -919,7 +919,7 @@ public class homedata
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr homedata  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_homedata  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		homedata_visible_page ^= 1;
 	} };

@@ -202,7 +202,7 @@ public class ninjakid
 	 vh_start / vh_refresh
 	*******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    fg_tilemap = tilemap_create( get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
 		bg_tilemap = tilemap_create( get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap_set_transparent_pen( fg_tilemap,0 );
@@ -264,7 +264,7 @@ public class ninjakid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,chr,col,px,py,x,y;
 	

@@ -40,12 +40,12 @@ public class taito_z
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr taitoz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taitoz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitoz_core_vh_start(0));
 	} };
 	
-	public static VideoUpdateHandlerPtr spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return (taitoz_core_vh_start(4));
 	} };
@@ -839,7 +839,7 @@ public class taito_z
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr contcirc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_contcirc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -865,7 +865,7 @@ public class taito_z
 	
 	/* Nightstr and ChaseHQ */
 	
-	public static VideoUpdateHandlerPtr chasehq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_chasehq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -889,7 +889,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr bshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -913,7 +913,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr sci  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sci  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -937,7 +937,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr aquajack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aquajack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -961,7 +961,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3];
 	
@@ -1089,7 +1089,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr dblaxle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dblaxle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT16 priority;

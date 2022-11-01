@@ -36,7 +36,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate dirty buffer for the foreground characters */
 		fgdirty = dirtybuffer = auto_malloc(videoram_size);
@@ -271,7 +271,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jedi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bgexdirty[32][2];
 		int offs;

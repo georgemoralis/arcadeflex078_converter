@@ -10,12 +10,12 @@ public class vsnes
 	/* from machine */
 	
 	
-	public static PaletteInitHandlerPtr vsnes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_vsnes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		ppu2c03b_init_palette( 0 );
 	} };
 	
-	public static PaletteInitHandlerPtr vsdual  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_vsdual  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		ppu2c03b_init_palette( 0 );
 		ppu2c03b_init_palette( 64 );
@@ -48,12 +48,12 @@ public class vsnes
 		{ ppu_irq, ppu_irq }					/* irq */
 	};
 	
-	public static VideoUpdateHandlerPtr vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return ppu2c03b_init( &ppu_interface );
 	} };
 	
-	public static VideoUpdateHandlerPtr vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return ppu2c03b_init( &ppu_dual_interface );
 	} };
@@ -63,7 +63,7 @@ public class vsnes
 	  Display refresh
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vsnes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* render the ppu */
 		ppu2c03b_render( 0, bitmap, 0, 0, 0, 0 );
@@ -81,7 +81,7 @@ public class vsnes
 		} };
 	
 	
-	public static VideoUpdateHandlerPtr vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vsdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* render the ppu's */
 		ppu2c03b_render( 0, bitmap, 0, 0, 0, 0 );

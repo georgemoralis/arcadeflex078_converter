@@ -64,7 +64,7 @@ public class rollrace
 		ra_flipx = data & 0x01;
 	} };
 	
-	public static VideoUpdateHandlerPtr rollrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rollrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		int offs;

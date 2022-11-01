@@ -59,7 +59,7 @@ public class kickgoal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr kickgoal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kickgoal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		kickgoal_fgtm = tilemap_create(get_kickgoal_fg_tile_info,tilemap_scan_kicksfg,TILEMAP_TRANSPARENT, 8, 16,64,64);
 			tilemap_set_transparent_pen(kickgoal_fgtm,15);
@@ -129,7 +129,7 @@ public class kickgoal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr kickgoal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kickgoal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll */
 		tilemap_set_scrollx( kickgoal_fgtm, 0, kickgoal_scrram[0]  );

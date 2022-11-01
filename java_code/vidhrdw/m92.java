@@ -408,7 +408,7 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (RYPELEO_SPEEDUP) {
 			pf1_hlayer = tilemap_create(
@@ -592,7 +592,7 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Screen refresh is handled by raster interrupt routine, here
 			we just check the keyboard */

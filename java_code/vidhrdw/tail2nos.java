@@ -56,7 +56,7 @@ public class tail2nos
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -177,7 +177,7 @@ public class tail2nos
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static struct GfxLayout tilelayout =
 		{

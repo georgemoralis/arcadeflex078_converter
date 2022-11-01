@@ -37,7 +37,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate memory for the full video RAM */
 		videoram = auto_malloc(256 * 256);
@@ -239,7 +239,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *pens = &Machine->pens[qix_palettebank * 256];
 		int y;

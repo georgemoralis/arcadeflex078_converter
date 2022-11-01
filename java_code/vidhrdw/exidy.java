@@ -136,7 +136,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		if (exidy_palette)
 		{
@@ -156,7 +156,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (video_start_generic())
 	        return 1;
@@ -357,7 +357,7 @@ public class exidy
 		return (!(*exidy_sprite_enable & 0x40));
 	}
 	
-	public static VideoUpdateHandlerPtr exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	    struct rectangle clip = { 0, 15, 0, 15 };
@@ -456,7 +456,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx, sy;
 	

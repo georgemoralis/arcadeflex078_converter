@@ -33,7 +33,7 @@ public class crbaloon
 	  bit 0 RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -103,7 +103,7 @@ public class crbaloon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -174,7 +174,7 @@ public class crbaloon
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
-	public static VideoUpdateHandlerPtr crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		crbaloon_draw_sprites(bitmap);

@@ -35,7 +35,7 @@ public class kingobox
 	  bit 3 --  51 ohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr kingofb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_kingofb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -92,7 +92,7 @@ public class kingobox
 	
 	
 	/* Ring King has one 256x8 PROM instead of two 256x4 */
-	public static PaletteInitHandlerPtr ringking  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_ringking  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -220,7 +220,7 @@ public class kingobox
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -269,7 +269,7 @@ public class kingobox
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
@@ -287,7 +287,7 @@ public class kingobox
 		SET_TILE_INFO(4, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(ringking_get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -336,7 +336,7 @@ public class kingobox
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);

@@ -176,7 +176,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen = -1; old_bg_color = old_fg_color = -1;
 	
@@ -347,7 +347,7 @@ public class marvins
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *mem = memory_region(REGION_CPU1);
 		unsigned char sprite_partition = mem[0xfe00];
@@ -393,7 +393,7 @@ public class marvins
 		draw_status( bitmap,cliprect );
 	} };
 	
-	public static VideoUpdateHandlerPtr madcrash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_madcrash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	/***************************************************************************
 	**

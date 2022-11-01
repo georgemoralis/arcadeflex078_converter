@@ -496,7 +496,7 @@ public class twin16
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows_flip_y,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -509,7 +509,7 @@ public class twin16
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr fround  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fround  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -522,7 +522,7 @@ public class twin16
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( twin16_spriteram_process_enable() && need_process_spriteram )
 			twin16_spriteram_process();
@@ -532,7 +532,7 @@ public class twin16
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 		draw_layer( bitmap,1 );

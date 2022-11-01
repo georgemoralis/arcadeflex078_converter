@@ -88,7 +88,7 @@ public class tecmo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (tecmo_video_type == 2)	/* gemini */
 		{
@@ -260,7 +260,7 @@ public class tecmo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine->pens[0x100],cliprect);

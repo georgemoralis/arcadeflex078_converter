@@ -74,7 +74,7 @@ public class _8080bw
 	
 	
 	
-	static public static PaletteInitHandlerPtr 8080bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_8080bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
@@ -2526,7 +2526,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static public static PaletteInitHandlerPtr phantom2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_phantom2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */

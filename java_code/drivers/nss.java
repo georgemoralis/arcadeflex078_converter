@@ -212,7 +212,7 @@ public class nss
 		{ -1 } /* end of array */
 	};
 	
-	static public static PaletteInitHandlerPtr snes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_snes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, r, g, b;
 	

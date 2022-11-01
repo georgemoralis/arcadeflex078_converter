@@ -58,7 +58,7 @@ public class bking2
 	  bit 0 -- 220 ohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr bking2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_bking2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -259,7 +259,7 @@ public class bking2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 8, 8, 32, 32)) == NULL)
 		{
@@ -278,7 +278,7 @@ public class bking2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
@@ -309,7 +309,7 @@ public class bking2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static struct rectangle rect = { 0, 7, 0, 15 };
 	

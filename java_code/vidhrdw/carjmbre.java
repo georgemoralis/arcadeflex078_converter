@@ -16,7 +16,7 @@ public class carjmbre
 	
 	static int carjmbre_flipscreen, carjmbre_bgcolor;
 	
-	public static PaletteInitHandlerPtr carjmbre  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_carjmbre  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
@@ -85,7 +85,7 @@ public class carjmbre
 	
 	
 	
-	public static VideoUpdateHandlerPtr carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		carjmbre_tilemap = tilemap_create( get_carjmbre_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
@@ -96,7 +96,7 @@ public class carjmbre
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,troffs,sx,sy,flipx,flipy;
 	

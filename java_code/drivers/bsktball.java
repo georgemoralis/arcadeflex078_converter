@@ -128,7 +128,7 @@ public class bsktball
 		0x01, 0x03, 0x03, 0x03,
 	};
 	
-	static public static PaletteInitHandlerPtr bsktball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_bsktball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0x80,0x80,0x80); /* LIGHT GREY */

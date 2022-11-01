@@ -102,7 +102,7 @@ public class cosmic
 	 * (1k to ground) so second version of table has blue set to 2/3
 	 */
 	
-	public static PaletteInitHandlerPtr panic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_panic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -138,7 +138,7 @@ public class cosmic
 	 *
 	 */
 	
-	public static PaletteInitHandlerPtr cosmica  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cosmica  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -175,7 +175,7 @@ public class cosmic
 	 * resistor chain would never drop to zero, Anybody know ?
 	 */
 	
-	public static PaletteInitHandlerPtr cosmicg  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cosmicg  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -195,7 +195,7 @@ public class cosmic
 	    map_color = cosmicg_map_color;
 	} };
 	
-	public static PaletteInitHandlerPtr magspot2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_magspot2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -228,7 +228,7 @@ public class cosmic
 	} };
 	
 	
-	public static PaletteInitHandlerPtr nomnlnd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_nomnlnd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -607,7 +607,7 @@ public class cosmic
 	}
 	
 	
-	public static VideoUpdateHandlerPtr cosmicg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cosmicg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -615,7 +615,7 @@ public class cosmic
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr panic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_panic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -625,7 +625,7 @@ public class cosmic
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr cosmica  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cosmica  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -637,7 +637,7 @@ public class cosmic
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr magspot2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_magspot2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -647,7 +647,7 @@ public class cosmic
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr devzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_devzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	
@@ -662,7 +662,7 @@ public class cosmic
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr nomnlnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nomnlnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* according to the video summation logic on pg4, the trees and river
 		   have the highest priority */

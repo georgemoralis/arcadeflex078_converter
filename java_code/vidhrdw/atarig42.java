@@ -96,7 +96,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarirle_desc modesc =
 		{
@@ -232,7 +232,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield */
 		fillbitmap(priority_bitmap, 0, cliprect);

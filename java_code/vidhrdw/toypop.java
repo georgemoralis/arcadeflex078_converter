@@ -28,7 +28,7 @@ public class toypop
 	
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr toypop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_toypop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -166,7 +166,7 @@ public class toypop
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr toypop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_toypop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		register int offs, x, y;
 	

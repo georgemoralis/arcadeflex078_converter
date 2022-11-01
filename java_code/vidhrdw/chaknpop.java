@@ -43,7 +43,7 @@ public class chaknpop
 	  palette decode
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr chaknpop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_chaknpop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -185,7 +185,7 @@ public class chaknpop
 	  Initialize video hardware emulation
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
@@ -298,7 +298,7 @@ public class chaknpop
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, tx_tilemap, 0, 0);
 		chaknpop_draw_sprites(bitmap);

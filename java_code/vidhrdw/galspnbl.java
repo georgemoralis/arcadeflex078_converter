@@ -13,7 +13,7 @@ public class galspnbl
 	
 	
 	
-	public static PaletteInitHandlerPtr galspnbl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_galspnbl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -125,7 +125,7 @@ public class galspnbl
 	}
 	
 	
-	public static VideoUpdateHandlerPtr galspnbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galspnbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

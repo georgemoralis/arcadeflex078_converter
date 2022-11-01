@@ -31,7 +31,7 @@ public class skychut
 	static UINT8 *memory;
 	
 	
-	static public static PaletteInitHandlerPtr skychut  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_skychut  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

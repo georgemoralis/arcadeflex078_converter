@@ -67,7 +67,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg2_tile_info,vaportra_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
@@ -230,7 +230,7 @@ public class vaportra
 	}
 	
 	
-	public static VideoUpdateHandlerPtr vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri=vaportra_control_2[0];
 	

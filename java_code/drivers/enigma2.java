@@ -226,7 +226,7 @@ public class enigma2
 	    cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
 	} };
 	
-	public static PaletteInitHandlerPtr enigma2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_enigma2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	/*
 		Washed colors were hand-tuned from :

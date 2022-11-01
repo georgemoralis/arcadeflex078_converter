@@ -63,7 +63,7 @@ public class portrait
 		get_tile_info( portrait_fgvideoram, tile_index );
 	}
 	
-	public static VideoUpdateHandlerPtr portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create( get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32 );
 		foreground = tilemap_create( get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 32, 32 );
@@ -76,7 +76,7 @@ public class portrait
 	} };
 	
 	
-	public static PaletteInitHandlerPtr portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	} };
 	
@@ -116,7 +116,7 @@ public class portrait
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly( background, 0, portrait_scrollx_hi );
 		tilemap_set_scrolly( foreground, 0, portrait_scrollx_hi );

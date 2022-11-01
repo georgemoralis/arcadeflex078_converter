@@ -111,7 +111,7 @@ public class supertnk
 	
 	
 	
-	public static PaletteInitHandlerPtr supertnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_supertnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, r, g, b;
 	
@@ -128,7 +128,7 @@ public class supertnk
 	
 	
 	
-	public static VideoUpdateHandlerPtr supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		supertnk_videoram = auto_malloc(0x6000);	/* allocate physical video RAM */
 	
@@ -183,7 +183,7 @@ public class supertnk
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
 	} };

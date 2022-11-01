@@ -86,7 +86,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr lethalj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_lethalj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, r, g, b;
 		for (r = i = 0; r < 32; r++)
@@ -103,7 +103,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate video RAM for screen */
 		screenram = auto_malloc(BLITTER_DEST_WIDTH * BLITTER_DEST_HEIGHT * sizeof(screenram[0]));
@@ -197,7 +197,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int beamx, beamy;
 		

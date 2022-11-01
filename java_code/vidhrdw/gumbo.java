@@ -47,7 +47,7 @@ public class gumbo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr gumbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gumbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gumbo_bg_tilemap = tilemap_create(get_gumbo_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,      8, 8, 64,32);
 		gumbo_fg_tilemap = tilemap_create(get_gumbo_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 4, 4,128,64);
@@ -56,7 +56,7 @@ public class gumbo
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr gumbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gumbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,gumbo_bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,gumbo_fg_tilemap,0,0);

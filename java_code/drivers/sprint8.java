@@ -102,7 +102,7 @@ public class sprint8
 	}
 	
 	
-	static public static PaletteInitHandlerPtr sprint8  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_sprint8  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

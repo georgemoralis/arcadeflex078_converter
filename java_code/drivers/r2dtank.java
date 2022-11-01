@@ -265,7 +265,7 @@ public class r2dtank
 	
 	INPUT_PORTS_END(); }}; 
 	
-	public static PaletteInitHandlerPtr r2dtank  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_r2dtank  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* colours derived from tim's screenshots */
 	
@@ -280,7 +280,7 @@ public class r2dtank
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr r2dtank  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_r2dtank  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int loop, data0, data1;
 	

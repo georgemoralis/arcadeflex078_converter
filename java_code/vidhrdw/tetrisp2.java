@@ -193,7 +193,7 @@ public class tetrisp2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -216,7 +216,7 @@ public class tetrisp2
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -406,7 +406,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int flipscreen_old = -1;
 		int flipscreen;
@@ -490,7 +490,7 @@ public class tetrisp2
 		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int flipscreen_old = -1;
 		int flipscreen;

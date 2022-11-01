@@ -277,7 +277,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -303,7 +303,7 @@ public class gaelco2
 	
 	#ifdef ONE_MONITOR
 	
-	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -326,7 +326,7 @@ public class gaelco2
 	
 	#else
 	
-	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		gaelco2_videoram = spriteram16;
 	
@@ -489,7 +489,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -517,7 +517,7 @@ public class gaelco2
 		gaelco2_draw_sprites(bitmap, cliprect, 0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr bang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    /* standard rendering on this hardware */
 	    video_update_gaelco2(bitmap, cliprect);
@@ -541,7 +541,7 @@ public class gaelco2
 	
 	#ifdef ONE_MONITOR
 	
-	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -574,7 +574,7 @@ public class gaelco2
 	
 	#else
 	
-	public static VideoUpdateHandlerPtr gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -620,7 +620,7 @@ public class gaelco2
 	
 	#endif
 	
-	public static VideoUpdateHandlerPtr gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* sprites are one frame ahead */
 		buffer_spriteram16_w(0, 0, 0);

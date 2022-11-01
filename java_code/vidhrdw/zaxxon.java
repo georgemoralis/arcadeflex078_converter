@@ -59,7 +59,7 @@ public class zaxxon
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr zaxxon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_zaxxon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -226,7 +226,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( zaxxon_create_background() )
 			return 1;
@@ -366,7 +366,7 @@ public class zaxxon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
@@ -383,7 +383,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -445,7 +445,7 @@ public class zaxxon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		razmataz_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
@@ -462,7 +462,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( zaxxon_create_background() )
 			return 1;
@@ -521,7 +521,7 @@ public class zaxxon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		congo_draw_sprites(bitmap, cliprect);
@@ -559,7 +559,7 @@ public class zaxxon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr futspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_futspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zaxxon_draw_background(bitmap, cliprect);
 		futspy_draw_sprites(bitmap, cliprect);

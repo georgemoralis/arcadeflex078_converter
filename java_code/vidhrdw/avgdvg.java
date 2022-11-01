@@ -1026,55 +1026,55 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	public static VideoUpdateHandlerPtr dvg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dvg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_DVG);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_starwars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_starwars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_SWARS);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_tempest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_tempest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_TEMPEST);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_mhavoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_mhavoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_MHAVOC);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_alphaone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_alphaone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_ALPHAONE);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_bzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_bzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_BZONE);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_quantum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_quantum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_QUANTUM);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr avg_redbaron  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avg_redbaron  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return avgdvg_init(USE_AVG_RBARON);
 	} };
@@ -1088,7 +1088,7 @@ public class avgdvg
 	 ************************************/
 	
 	/* Black and White vector colors for Asteroids, Lunar Lander, Omega Race */
-	public static PaletteInitHandlerPtr avg_white  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_avg_white  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0; i < 32; i++)
@@ -1097,7 +1097,7 @@ public class avgdvg
 	
 	
 	/* Basic 8 rgb vector colors for Tempest, Gravitar, Major Havoc etc. */
-	public static PaletteInitHandlerPtr avg_multi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_avg_multi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0; i < 32; i++)

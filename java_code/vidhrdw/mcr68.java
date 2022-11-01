@@ -66,7 +66,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
@@ -77,7 +77,7 @@ public class mcr68
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(zwackery_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,32);
@@ -101,7 +101,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr zwackery  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_zwackery  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		const UINT8 *colordatabase = (const UINT8 *)memory_region(REGION_GFX3);
 		struct GfxElement *gfx0 = Machine->gfx[0];
@@ -346,7 +346,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY | 0, 0);
@@ -363,7 +363,7 @@ public class mcr68
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);

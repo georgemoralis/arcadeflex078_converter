@@ -11,7 +11,7 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return 0;
 	} };
@@ -108,7 +108,7 @@ public class avengrgs
 	
 	*/
 	
-	public static VideoUpdateHandlerPtr avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_avengrgs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int mx,my;
 		data32_t *vram_ptr=avengrgs_ram1 + (0x1dc00/4);

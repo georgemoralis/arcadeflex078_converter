@@ -224,7 +224,7 @@ public class cyberbal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_cyberbal_common(2);
 		if (!result)
@@ -237,7 +237,7 @@ public class cyberbal
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr cyberb2p  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cyberb2p  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_cyberbal_common(1);
 		if (!result)
@@ -434,7 +434,7 @@ public class cyberbal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if (CYBERBALL_DUAL_MODE)
 		struct rectangle rect;

@@ -40,7 +40,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* reset the system */
 		palettebank_vis = 0;
@@ -274,7 +274,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int update_all = get_vh_global_attribute_changed();
 		int y, i;

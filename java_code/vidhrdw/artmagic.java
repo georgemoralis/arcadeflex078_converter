@@ -59,7 +59,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		blitter_base = (UINT16 *)memory_region(REGION_GFX1);
 		blitter_mask = memory_region_length(REGION_GFX1)/2 - 1;
@@ -349,7 +349,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 offset, dpytap;
 		UINT16 *vram;

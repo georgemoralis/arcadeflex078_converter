@@ -193,7 +193,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -1106,7 +1106,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int y;
 	

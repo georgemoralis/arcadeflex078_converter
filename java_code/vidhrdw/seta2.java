@@ -359,7 +359,7 @@ public class seta2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		Machine->gfx[2]->color_granularity = 16;
 		Machine->gfx[3]->color_granularity = 16;
@@ -372,7 +372,7 @@ public class seta2
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr seta2_offset  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta2_offset  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_seta2();
 	
@@ -380,7 +380,7 @@ public class seta2
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Black or pens[0]? */
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
@@ -390,7 +390,7 @@ public class seta2
 		seta2_draw_sprites(bitmap,cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Buffer sprites by 1 frame */
 		memcpy(buffered_spriteram16,spriteram16,spriteram_size);

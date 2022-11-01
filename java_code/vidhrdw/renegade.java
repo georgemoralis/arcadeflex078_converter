@@ -75,7 +75,7 @@ public class renegade
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tilemap_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,64,16);
 		fg_tilemap = tilemap_create(get_fg_tilemap_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -137,7 +137,7 @@ public class renegade
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( bg_tilemap, 0, renegade_scrollx );
 		tilemap_draw( bitmap,cliprect,bg_tilemap,0 ,0);

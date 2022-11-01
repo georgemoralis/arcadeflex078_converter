@@ -78,7 +78,7 @@ public class alpha68k
 		tilemap_mark_tile_dirty(fix_tilemap,offset/2);
 	}
 	
-	public static VideoUpdateHandlerPtr alpha68k  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_alpha68k  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fix_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -158,7 +158,7 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr alpha68k_II  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_alpha68k_II  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_bank=0;
 	
@@ -314,7 +314,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr alpha68k_V  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_alpha68k_V  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_bank=0;
 	
@@ -349,7 +349,7 @@ public class alpha68k
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr alpha68k_V_sb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_alpha68k_V_sb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_bank=0;
 	
@@ -430,7 +430,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr alpha68k_I  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_alpha68k_I  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int yshift = (microcontroller_id == 0x890a) ? 1 : 0; // The Next Space is 1 pixel off
 	
@@ -444,7 +444,7 @@ public class alpha68k
 	//ZT
 	/******************************************************************************/
 	
-	public static PaletteInitHandlerPtr kyros  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_kyros  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	//AT: reconstructed Super Stingry CLUT(bad ic5.5)
 		const UINT8 temp_clut[256] = {
@@ -504,7 +504,7 @@ public class alpha68k
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr paddlem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_paddlem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -592,7 +592,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr kyros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kyros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		//fillbitmap(bitmap,Machine->pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT
@@ -658,7 +658,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr sstingry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sstingry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		//fillbitmap(bitmap,Machine->pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT

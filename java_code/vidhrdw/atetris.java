@@ -53,7 +53,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
 		if (!tilemap)
@@ -69,7 +69,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, tilemap, 0,0);
 	} };

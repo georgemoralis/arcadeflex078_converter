@@ -50,7 +50,7 @@ public class subs
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr subs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_subs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int updateall = get_vh_global_attribute_changed();
 		int offs;

@@ -47,7 +47,7 @@ public class thepit
 	
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr thepit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_thepit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -96,7 +96,7 @@ public class thepit
 	 unknown.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr suprmous  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_suprmous  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -336,7 +336,7 @@ public class thepit
 	}
 	
 	
-	public static VideoUpdateHandlerPtr thepit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thepit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{

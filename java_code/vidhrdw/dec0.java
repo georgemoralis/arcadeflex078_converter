@@ -496,7 +496,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr hbarrel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hbarrel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -516,7 +516,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr baddudes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_baddudes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* WARNING: priority inverted wrt all the other games */
 		dec0_pf1_update();
@@ -566,7 +566,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr robocop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_robocop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int trans;
 	
@@ -616,7 +616,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr birdtry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_birdtry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* This game doesn't have the extra playfield chip on the game board */
 		dec0_pf1_update();
@@ -629,7 +629,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr hippodrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hippodrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -656,7 +656,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr slyspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_slyspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -678,7 +678,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr midres  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_midres  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int trans;
 	
@@ -883,7 +883,7 @@ public class dec0
 		SET_TILE_INFO(2,tile&0xfff,tile>>12,TILE_SPLIT(pri))
 	}
 	
-	public static VideoUpdateHandlerPtr dec0_nodma  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dec0_nodma  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap_0 = tilemap_create(get_pf1_tile_info,tile_shape0_8x8_scan,TILEMAP_TRANSPARENT, 8, 8,128, 32);
 		pf1_tilemap_1 = tilemap_create(get_pf1_tile_info,tile_shape1_8x8_scan,TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -927,7 +927,7 @@ public class dec0
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr dec0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dec0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_dec0_nodma();
 		dec0_spriteram=auto_malloc(0x800);

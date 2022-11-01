@@ -136,7 +136,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 16,16, DIM_NX, DIM_NY );
@@ -239,7 +239,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,layers_ctrl = -1;
 	

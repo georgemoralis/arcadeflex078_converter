@@ -28,7 +28,7 @@ public class phozon
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
+	public static PaletteInitHandlerPtr palette_init_phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -70,7 +70,7 @@ public class phozon
 			COLOR(2,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	public static VideoUpdateHandlerPtr phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
+	public static VideoUpdateHandlerPtr video_update_phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
 		/* set up spriteram area */
 		spriteram_size = 0x80;
 		spriteram = &phozon_spriteram[0x780];
@@ -101,7 +101,7 @@ public class phozon
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

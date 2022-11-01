@@ -1123,7 +1123,7 @@ public class cps1
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr cps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -1200,13 +1200,13 @@ public class cps1
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    cps_version=1;
 	    return video_start_cps();
 	} };
 	
-	public static VideoUpdateHandlerPtr cps2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cps2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (cps_version != 99)
 	    {
@@ -1809,7 +1809,7 @@ public class cps1
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int layercontrol,l0,l1,l2,l3;
 		int videocontrol=cps1_port(0x22);
@@ -1943,7 +1943,7 @@ public class cps1
 	#endif
 	} };
 	
-	public static VideoUpdateHandlerPtr cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Get video memory base registers */
 		cps1_get_video_base();

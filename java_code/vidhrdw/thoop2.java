@@ -94,7 +94,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -219,7 +219,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, thoop2_vregs[0]);

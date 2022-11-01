@@ -121,7 +121,7 @@ public class sega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -176,7 +176,7 @@ public class sega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sega_generate_vector_list();
 		video_update_vector(bitmap,0);

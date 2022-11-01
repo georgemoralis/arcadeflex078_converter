@@ -304,7 +304,7 @@ public class dragrace
 	};
 	
 	
-	static public static PaletteInitHandlerPtr dragrace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_dragrace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0xFF, 0xFF, 0xFF);   /* 2 color tiles */
 		palette_set_color(1, 0x00, 0x00, 0x00);

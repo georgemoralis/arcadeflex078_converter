@@ -65,7 +65,7 @@ public class system1
 	  accurate to +/- .003K ohms.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr system1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_system1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		system1_color_prom = color_prom;
 	} };
@@ -120,7 +120,7 @@ public class system1
 	
 	
 	
-	public static VideoUpdateHandlerPtr system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sprite_onscreen_map = auto_malloc(256*256)) == 0)
 			return 1;
@@ -512,7 +512,7 @@ public class system1
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	
@@ -652,7 +652,7 @@ public class system1
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr choplifter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_choplifter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	
@@ -789,7 +789,7 @@ public class system1
 	}
 	
 	
-	public static VideoUpdateHandlerPtr wbml  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wbml  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		wbml_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
@@ -801,7 +801,7 @@ public class system1
 			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
 	} };
 	
-	public static VideoUpdateHandlerPtr blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int drawn;
 	

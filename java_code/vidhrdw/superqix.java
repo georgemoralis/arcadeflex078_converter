@@ -131,7 +131,7 @@ public class superqix
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* palette RAM is accessed thorough I/O ports, so we have to */
 		/* allocate it ourselves */
@@ -260,7 +260,7 @@ public class superqix
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);

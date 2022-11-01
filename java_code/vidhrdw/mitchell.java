@@ -52,7 +52,7 @@ public class mitchell
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pang_objram=NULL;
 		paletteram=NULL;
@@ -257,7 +257,7 @@ public class mitchell
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);

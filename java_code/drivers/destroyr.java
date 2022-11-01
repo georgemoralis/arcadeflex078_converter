@@ -344,7 +344,7 @@ public class destroyr
 	};
 	
 	
-	static public static PaletteInitHandlerPtr destroyr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_destroyr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0, 0x00, 0x00, 0x00);   /* major objects */
 		palette_set_color(1, 0x50, 0x50, 0x50);

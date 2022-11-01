@@ -62,7 +62,7 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_colorbase = 192;
 		zoom_colorbase[0] = 0;
@@ -139,7 +139,7 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K051316_zoom_draw_2(bitmap,cliprect,0,0);
 		K051316_zoom_draw_1(bitmap,cliprect,0,0);

@@ -125,7 +125,7 @@ public class cchasm
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr cchasm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cchasm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int xmin, xmax, ymin, ymax;
 	

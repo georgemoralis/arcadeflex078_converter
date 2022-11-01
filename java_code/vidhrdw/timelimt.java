@@ -34,7 +34,7 @@ public class timelimt
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr timelimt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom) {
+	public static PaletteInitHandlerPtr palette_init_timelimt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom) {
 		int i;
 	
 		for (i = 0;i < Machine->drv->total_colors;i++)
@@ -77,7 +77,7 @@ public class timelimt
 		SET_TILE_INFO(0, videoram[tile_index], 0, 0);
 	}
 	
-	public static VideoUpdateHandlerPtr timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
@@ -171,7 +171,7 @@ public class timelimt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly);

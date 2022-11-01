@@ -59,7 +59,7 @@ public class holeland
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(holeland_get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 	
@@ -71,7 +71,7 @@ public class holeland
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(crzrally_get_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,8,8,32,32);
 	
@@ -199,7 +199,7 @@ public class holeland
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	/*tilemap_mark_all_tiles_dirty(bg_tilemap); */
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
@@ -207,7 +207,7 @@ public class holeland
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		crzrally_draw_sprites(bitmap,cliprect);

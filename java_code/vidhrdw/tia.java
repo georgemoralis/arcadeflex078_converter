@@ -88,7 +88,7 @@ public class tia
 	};
 	
 	
-	public static PaletteInitHandlerPtr tia_NTSC  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tia_NTSC  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, j;
 	
@@ -146,7 +146,7 @@ public class tia
 	} };
 	
 	
-	public static PaletteInitHandlerPtr tia_PAL  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tia_PAL  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i, j;
 	
@@ -204,7 +204,7 @@ public class tia
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int cx = Machine->drv->screen_width;
 		int cy = Machine->drv->screen_height;
@@ -221,7 +221,7 @@ public class tia
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap, helper[1 - current_bitmap], 0, 0, 0, 0,
 			cliprect, TRANSPARENCY_NONE, 0);

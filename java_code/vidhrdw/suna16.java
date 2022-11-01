@@ -87,7 +87,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16_2 = auto_malloc( 0x100 * sizeof(data16_t) );
 		if (paletteram16_2 != NULL)	return 0;
@@ -220,7 +220,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* I believe background is black */
 		fillbitmap(bitmap,get_black_pen(),&Machine->visible_area);

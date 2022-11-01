@@ -66,7 +66,7 @@ public class bigevglf
 		return vidram[ 0x10000 * plane_selected + vidram_bank + offset];
 	} };
 	
-	public static VideoUpdateHandlerPtr bigevglf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bigevglf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmp_bitmap[0] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
 		tmp_bitmap[1] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
@@ -95,7 +95,7 @@ public class bigevglf
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr bigevglf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bigevglf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		copybitmap(bitmap,tmp_bitmap[ plane_visible ],0,0,0,0,cliprect,TRANSPARENCY_NONE, 0);
 		beg_draw_sprites(bitmap,cliprect);

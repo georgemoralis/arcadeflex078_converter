@@ -34,7 +34,7 @@ public class _40love
 	*	color prom decoding
 	*/
 	
-	public static PaletteInitHandlerPtr fortyl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_fortyl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -109,7 +109,7 @@ public class _40love
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fortyl_pixram1 = auto_malloc(0x4000);
 		fortyl_pixram2 = auto_malloc(0x4000);
@@ -353,7 +353,7 @@ public class _40love
 			copybitmap(bitmap,pixel_bitmap2,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);
 	}
 	
-	public static VideoUpdateHandlerPtr fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_pixram(bitmap,cliprect);
 	

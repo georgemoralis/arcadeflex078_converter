@@ -103,7 +103,7 @@ public class ddragon3
 		SET_TILE_INFO(0, code, color, flags);
 	}
 	
-	public static VideoUpdateHandlerPtr ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
@@ -192,7 +192,7 @@ public class ddragon3
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, ddragon3_bg_scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, ddragon3_bg_scrolly);
@@ -213,7 +213,7 @@ public class ddragon3
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr ctribe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ctribe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( bg_tilemap, 0, ddragon3_bg_scrollx );
 		tilemap_set_scrolly( bg_tilemap, 0, ddragon3_bg_scrolly );

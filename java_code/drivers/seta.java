@@ -1401,7 +1401,7 @@ public class seta
 	 Sprites Buffering
 	
 	*/
-	public static VideoUpdateHandlerPtr seta_buffer_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta_buffer_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ctrl2	=	spriteram16[ 0x602/2 ];
 		if (~ctrl2 & 0x20)

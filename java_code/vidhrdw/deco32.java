@@ -783,7 +783,7 @@ public class deco32
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf4_bank,(tile >> 12)&3,flags)
 	}
 	
-	public static VideoUpdateHandlerPtr captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1a_tilemap =tilemap_create(get_pf1a_tile_info,   deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -805,7 +805,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) //unused
+	public static VideoUpdateHandlerPtr video_update_fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) //unused
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -826,7 +826,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -853,7 +853,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr lockload  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lockload  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -880,7 +880,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -906,13 +906,13 @@ public class deco32
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
 		deco32_raster_display_position=0;
 	} };
 	
-	public static VideoUpdateHandlerPtr dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		deco32_raster_display_position=0;
 	} };
@@ -1063,7 +1063,7 @@ public class deco32
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pf1_enable,pf2_enable,pf3_enable;
 		static int last_pf3_bank;
@@ -1127,7 +1127,7 @@ public class deco32
 			tilemap_draw(bitmap,cliprect,pf1a_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Tilemap graphics banking */
 		if ((((deco32_pf12_control[7]>> 4)&0x7)<<12)!=deco32_pf1_bank || deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3)) {
@@ -1211,7 +1211,7 @@ public class deco32
 			tilemap_draw(bitmap,cliprect,pf1a_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Dirty tilemaps if any globals change */
 		if (deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3))
@@ -1263,7 +1263,7 @@ public class deco32
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Dirty tilemaps if any globals change */
 		if (deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3))

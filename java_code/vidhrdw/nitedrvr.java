@@ -41,7 +41,7 @@ public class nitedrvr
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -111,7 +111,7 @@ public class nitedrvr
 					&Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
 	
-	public static VideoUpdateHandlerPtr nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		nitedrvr_draw_road(bitmap);

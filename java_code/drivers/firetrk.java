@@ -214,7 +214,7 @@ public class firetrk
 	}
 	
 	
-	static public static PaletteInitHandlerPtr firetrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_firetrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{
@@ -245,7 +245,7 @@ public class firetrk
 	}
 	
 	
-	static public static PaletteInitHandlerPtr montecar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_montecar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{

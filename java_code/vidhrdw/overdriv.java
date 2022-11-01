@@ -55,7 +55,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -83,7 +83,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_colorbase  = K053251_get_palette_index(K053251_CI0);
 		road_colorbase[1] = K053251_get_palette_index(K053251_CI1);

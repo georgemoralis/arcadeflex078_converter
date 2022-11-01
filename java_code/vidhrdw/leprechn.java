@@ -22,7 +22,7 @@ public class leprechn
 	
 	
 	/* RGBI palette. Is it correct? */
-	public static PaletteInitHandlerPtr leprechn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_leprechn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -39,7 +39,7 @@ public class leprechn
 	
 	
 	
-	public static VideoUpdateHandlerPtr leprechn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_leprechn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		videoram_size = Machine->drv->screen_width * Machine->drv->screen_height;
 	

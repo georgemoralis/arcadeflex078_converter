@@ -7351,7 +7351,7 @@ public class konamiic
 		K053250_info.chip[chip].offsy = offsy;
 	}
 	
-	// The DMA process should be instantaneous but since rendering in MAME is performed at public static VideoUpdateHandlerPtr   = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	// The DMA process should be instantaneous but since rendering in MAME is performed at public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	// the K053250 memory must be buffered to maintain visual integrity.
 	void K053250_dma(int chip, int limiter)
 	{

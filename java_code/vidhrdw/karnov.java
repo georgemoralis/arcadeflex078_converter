@@ -46,7 +46,7 @@ public class karnov
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr karnov  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_karnov  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -205,7 +205,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_background(bitmap,cliprect);
 		draw_sprites(bitmap,cliprect);
@@ -238,7 +238,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)
@@ -257,7 +257,7 @@ public class karnov
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr wndrplnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wndrplnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)

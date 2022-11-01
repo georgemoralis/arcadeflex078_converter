@@ -991,7 +991,7 @@ public class asuka
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static VideoUpdateHandlerPtr asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		PC090OJ_eof_callback();
 	} };

@@ -48,7 +48,7 @@ public class surpratk
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -76,7 +76,7 @@ public class surpratk
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_surpratk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	

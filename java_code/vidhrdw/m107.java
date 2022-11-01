@@ -221,7 +221,7 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr m107  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m107  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_layer = tilemap_create(
 			get_pf1_tile_info,tilemap_scan_rows,
@@ -358,7 +358,7 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr m107  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m107  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Nothing - screen refresh is handled by raster interrupt routine */
 	} };

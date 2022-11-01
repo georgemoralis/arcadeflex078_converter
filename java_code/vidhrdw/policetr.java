@@ -44,7 +44,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* the source bitmap is in ROM */
 		srcbitmap = memory_region(REGION_GFX1);
@@ -360,7 +360,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int width = cliprect->max_x - cliprect->min_x + 1;
 		int beamx, beamy;

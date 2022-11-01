@@ -252,7 +252,7 @@ public class megasys1
 	
 	
 	
-	public static VideoUpdateHandlerPtr megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -784,7 +784,7 @@ public class megasys1
 		pens.
 	*/
 	
-	public static PaletteInitHandlerPtr megasys1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_megasys1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int pri_code, offset, i, order;
 	
@@ -952,7 +952,7 @@ public class megasys1
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,flag,pri,primask;
 		int active_layers;

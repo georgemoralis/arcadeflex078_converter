@@ -96,7 +96,7 @@ public class armedf
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( scroll_type == 4 || /* cclimbr2 */
 			scroll_type == 3 )  /* legion */
@@ -260,7 +260,7 @@ public class armedf
 	
 	
 	
-	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sprite_enable = armedf_vreg & 0x200;
 	
@@ -322,7 +322,7 @@ public class armedf
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram16_w(0,0,0);
 	} };

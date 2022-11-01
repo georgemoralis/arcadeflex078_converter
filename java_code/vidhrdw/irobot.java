@@ -48,7 +48,7 @@ public class irobot
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -118,7 +118,7 @@ public class irobot
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Setup 2 bitmaps for the polygon generator */
 		if ((polybitmap1 = auto_malloc(BITMAP_WIDTH * Machine->drv->screen_height)) == 0)
@@ -380,7 +380,7 @@ public class irobot
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *bitmap_base = irobot_bufsel ? polybitmap1 : polybitmap2;
 		int x, y, offs;

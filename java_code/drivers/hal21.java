@@ -10,7 +10,7 @@ Change Log
 AT08XX03:
 
 [Common]
- - cleaned and consolidated public static VideoUpdateHandlerPtr   = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+ - cleaned and consolidated public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
  - added shadows and highlights
 
  * A.S.O and HAL21 do a lot of palette cycling therefore
@@ -139,7 +139,7 @@ public class hal21
 	public static WriteHandlerPtr hal21_vreg7_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[7] = data; } };
 	
 	
-	public static PaletteInitHandlerPtr aso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_aso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int num_colors = 1024;
@@ -181,7 +181,7 @@ public class hal21
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
 	} };
 	
-	public static VideoUpdateHandlerPtr aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		snk_blink_parity = 0;
 	
@@ -324,7 +324,7 @@ public class hal21
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *ram = memory_region(REGION_CPU1);
 		int attr, msbs, spsy, spsx, bgsy, bgsx, bank, i;

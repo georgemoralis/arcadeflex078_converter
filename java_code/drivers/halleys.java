@@ -1057,7 +1057,7 @@ public class halleys
 	//**************************************************************************
 	// Video Initializations and Updates
 	
-	static public static PaletteInitHandlerPtr halleys  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_halleys  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		DWORD d, r, g, b, i, j, count;
 		DWORD *pal_ptr = internal_palette;
@@ -1179,7 +1179,7 @@ public class halleys
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#define HALLEYS_Y0  0x8e
 	#define HALLEYS_X0  0x9a
@@ -1492,7 +1492,7 @@ public class halleys
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, j;
 	
@@ -1516,7 +1516,7 @@ public class halleys
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr benberob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_benberob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (io_ram[0xa0] & 0x80)
 			copy_scroll_op(bitmap, render_layer[2], *scrollx1, *scrolly1);

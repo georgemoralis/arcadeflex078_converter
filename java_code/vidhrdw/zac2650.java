@@ -147,7 +147,7 @@ public class zac2650
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 24, 24, 32, 32);
@@ -252,7 +252,7 @@ public class zac2650
 	//  if(SpriteCollision(2,4)) CollisionSprite |= 0x01;	/* Not Used */
 	}
 	
-	public static VideoUpdateHandlerPtr tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		tinvader_draw_sprites(bitmap);

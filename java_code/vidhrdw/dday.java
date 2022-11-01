@@ -65,7 +65,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr dday  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_dday  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -242,7 +242,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap   = tilemap_create(get_bg_tile_info,  tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32);
 		fg_tilemap   = tilemap_create(get_fg_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -351,7 +351,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(main_bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		tilemap_draw(main_bitmap,cliprect,fg_tilemap,0,0);

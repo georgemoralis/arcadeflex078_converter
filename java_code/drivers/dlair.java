@@ -48,7 +48,7 @@ public class dlair
 		led1 = data;
 	} };
 	
-	public static VideoUpdateHandlerPtr dlair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dlair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

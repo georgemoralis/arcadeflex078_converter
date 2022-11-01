@@ -156,7 +156,7 @@ public class stactics
 	static int firebeam_state;
 	static int old_firebeam_state;
 	
-	public static PaletteInitHandlerPtr stactics  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_stactics  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    int i,j;
 	
@@ -229,7 +229,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int i,j;
 	    const unsigned char *firebeam_data;
@@ -512,7 +512,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int offs, sx, sy, i;
 	    int char_number;

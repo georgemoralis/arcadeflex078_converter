@@ -58,7 +58,7 @@ public class vendetta
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -69,7 +69,7 @@ public class vendetta
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr esckids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_esckids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    K053251_vh_start();
 	
@@ -104,7 +104,7 @@ public class vendetta
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	

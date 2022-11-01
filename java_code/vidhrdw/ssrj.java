@@ -237,7 +237,7 @@ public class ssrj
 	
 	};
 	
-	public static VideoUpdateHandlerPtr ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap1 = tilemap_create( get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap2 = tilemap_create( get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
@@ -278,7 +278,7 @@ public class ssrj
 	}
 	
 	
-	public static PaletteInitHandlerPtr ssrj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_ssrj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,j;
 		for(i=0;i<4*4;i++)
@@ -286,7 +286,7 @@ public class ssrj
 		  palette_set_color(i*8+j,fakecols[i][j][0],fakecols[i][j][1],fakecols[i][j][2]);	
 	} };
 	
-	public static VideoUpdateHandlerPtr ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(tilemap1 , 0, 0xff-ssrj_scrollram[2] );
 		tilemap_set_scrollx(tilemap1 , 0, ssrj_scrollram[0] );

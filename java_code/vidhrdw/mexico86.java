@@ -27,7 +27,7 @@ public class mexico86
 	
 	
 	
-	public static VideoUpdateHandlerPtr mexico86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mexico86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy,xc,yc;
@@ -107,7 +107,7 @@ public class mexico86
 	} };
 	//AT
 	#if 0 // old code
-	public static VideoUpdateHandlerPtr kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy,xc,yc;
@@ -186,7 +186,7 @@ public class mexico86
 	} };
 	#endif
 	
-	public static VideoUpdateHandlerPtr kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy,yc;

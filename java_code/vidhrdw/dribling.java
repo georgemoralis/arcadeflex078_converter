@@ -21,7 +21,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr dribling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_dribling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		const UINT8 *prom = memory_region(REGION_PROMS) + 0x400;
 		int i;
@@ -62,7 +62,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr dribling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dribling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *prombase = memory_region(REGION_PROMS);
 		UINT8 *gfxbase = memory_region(REGION_GFX1);

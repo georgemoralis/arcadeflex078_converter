@@ -404,7 +404,7 @@ public class metro
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	public static VideoUpdateHandlerPtr metro_14100  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metro_14100  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 0;
 		support_16x16 = 0;
@@ -431,7 +431,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr metro_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metro_14220  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 1;
 		support_16x16 = 0;
@@ -462,7 +462,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr metro_14300  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metro_14300  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		support_8bpp = 1;
 		support_16x16 = 1;
@@ -494,7 +494,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr blzntrnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_blzntrnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_metro_14220())
 			return 1;
@@ -517,7 +517,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr gstrik2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gstrik2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_metro_14220())
 			return 1;
@@ -850,7 +850,7 @@ public class metro
 	}
 	
 	
-	public static VideoUpdateHandlerPtr metro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i,pri,sprites_pri,layers_ctrl = -1;
 		data8_t *dirtyindex;

@@ -114,7 +114,7 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 			static const struct atarirle_desc modesc =
 		{
@@ -568,7 +568,7 @@ public class atarigt
 	*/
 	
 	
-	public static VideoUpdateHandlerPtr atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct mame_bitmap *mo_bitmap = atarirle_get_vram(0, 0);
 		struct mame_bitmap *tm_bitmap = atarirle_get_vram(0, 1);

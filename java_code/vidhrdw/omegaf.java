@@ -275,7 +275,7 @@ public class omegaf
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scrollx_mask = 0x07ff;
 		bank_mask = 7;
@@ -300,7 +300,7 @@ public class omegaf
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr robokid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_robokid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		scrollx_mask = 0x01ff;
 		bank_mask = 1;
@@ -599,7 +599,7 @@ public class omegaf
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[15],cliprect);	// ??
 	

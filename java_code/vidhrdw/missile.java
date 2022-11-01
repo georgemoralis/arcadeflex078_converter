@@ -22,7 +22,7 @@ public class missile
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* force video ram to be $0000-$FFFF even though only $1900-$FFFF is used */
 		if ((missile_videoram = auto_malloc (256 * 256)) == 0)
@@ -157,7 +157,7 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static VideoUpdateHandlerPtr missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{

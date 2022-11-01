@@ -153,7 +153,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		metlclsh_otherram = auto_malloc(0x800);	// banked ram
 	
@@ -253,7 +253,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0x10],cliprect);
 	

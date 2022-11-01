@@ -96,7 +96,7 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffered_spriteram32   = auto_malloc(spriteram_size);
 		buffered_spriteram32_2 = auto_malloc(spriteram_size);
@@ -315,7 +315,7 @@ public class fuukifg3
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t layer0_scrollx, layer0_scrolly;
 		data16_t layer1_scrollx, layer1_scrolly;
@@ -377,7 +377,7 @@ public class fuukifg3
 			fuuki32_draw_sprites(bitmap,&Machine->visible_area);
 	} };
 	
-	public static VideoUpdateHandlerPtr fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Buffer sprites and tilebank by 2 frames */
 	

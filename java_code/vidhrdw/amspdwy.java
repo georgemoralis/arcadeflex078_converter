@@ -89,7 +89,7 @@ public class amspdwy
 	}
 	
 	
-	public static VideoUpdateHandlerPtr amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap	=	tilemap_create(	get_tile_info,	tilemap_scan_cols_back,
 									TILEMAP_OPAQUE,	8,8,	0x20, 0x20 );
@@ -158,7 +158,7 @@ public class amspdwy
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 		draw_sprites(bitmap,cliprect);

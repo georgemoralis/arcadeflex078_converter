@@ -666,7 +666,7 @@ public class zn
 		}
 	}
 	
-	static public static VideoUpdateHandlerPtr player  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_player  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( keyboard_pressed_memory( KEYCODE_F1 ) )
 		{

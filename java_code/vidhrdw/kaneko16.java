@@ -126,7 +126,7 @@ public class kaneko16
 	KANEKO16_LAYER(2)
 	KANEKO16_LAYER(3)
 	
-	public static VideoUpdateHandlerPtr kaneko16_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kaneko16_sprites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* 0x400 sprites max */
 		spritelist.first_sprite = (struct tempsprite *)auto_malloc(0x400 * sizeof(spritelist.first_sprite[0]));
@@ -137,7 +137,7 @@ public class kaneko16
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr kaneko16_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kaneko16_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (	video_start_kaneko16_sprites()	)
 			return 1;
@@ -187,7 +187,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr kaneko16_2xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kaneko16_2xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
@@ -232,7 +232,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr sandscrp_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sandscrp_1xVIEW2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
@@ -245,7 +245,7 @@ public class kaneko16
 	
 	/* Berlwall has an additional hi-color background */
 	
-	public static PaletteInitHandlerPtr berlwall  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_berlwall  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -268,7 +268,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr berlwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_berlwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx, x,y;
 		unsigned char *RAM	=	memory_region(REGION_GFX3);
@@ -794,7 +794,7 @@ public class kaneko16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr kaneko16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kaneko16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_flip_0, layers_flip_1 = 0;
 		int layers_ctrl = -1;

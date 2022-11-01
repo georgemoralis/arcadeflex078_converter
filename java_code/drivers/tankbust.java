@@ -122,7 +122,7 @@ public class tankbust
 	
 	
 	
-	public static PaletteInitHandlerPtr tankbust  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tankbust  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

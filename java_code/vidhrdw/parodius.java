@@ -48,7 +48,7 @@ public class parodius
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -77,7 +77,7 @@ public class parodius
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	

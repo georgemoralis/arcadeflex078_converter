@@ -58,7 +58,7 @@ public class bagman
 	  bit 0 -- 1  kohm resistor  -- /
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr bagman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_bagman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		const int resistances_rg[3] = { 1000, 470, 220 };
@@ -113,7 +113,7 @@ public class bagman
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -165,7 +165,7 @@ public class bagman
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (*bagman_video_enable == 0)
 			return;

@@ -24,7 +24,7 @@ public class mole
 	#define NUM_COLS	40
 	#define NUM_TILES	(NUM_ROWS * NUM_COLS)
 	
-	public static PaletteInitHandlerPtr moleattack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_moleattack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int r, g, b;
@@ -43,7 +43,7 @@ public class mole
 		SET_TILE_INFO((code & 0x200) ? 1 : 0, code & 0x1ff, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tile_data = (UINT16 *)auto_malloc(NUM_TILES * sizeof(UINT16));
 	
@@ -80,7 +80,7 @@ public class mole
 		flip_screen_set(data);
 	} };
 	
-	public static VideoUpdateHandlerPtr moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_moleattack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	} };

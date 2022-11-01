@@ -50,7 +50,7 @@ public class btime
 	    bit 0 -- 47 kohm resistor  -- RED (inverted)
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr btime  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_btime  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -99,7 +99,7 @@ public class btime
 	    bit 0 -- 15 kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr lnc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_lnc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -140,7 +140,7 @@ public class btime
 	Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (video_start_generic() != 0)
 	        return 1;
@@ -159,7 +159,7 @@ public class btime
 	    return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
@@ -534,7 +534,7 @@ public class btime
 	}
 	
 	
-	public static VideoUpdateHandlerPtr btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -573,7 +573,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -587,7 +587,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -601,7 +601,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);
@@ -626,7 +626,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	    {
@@ -692,7 +692,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr cookrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cookrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    int offs;
 	
@@ -731,7 +731,7 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size);

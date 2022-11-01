@@ -12,7 +12,7 @@ public class fastlane
 	static struct rectangle clip0, clip1;
 	
 	
-	public static PaletteInitHandlerPtr fastlane  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_fastlane  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int pal,col;
 	
@@ -87,7 +87,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
@@ -139,7 +139,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle finalclip0 = clip0, finalclip1 = clip1;
 		int i, xoffs;

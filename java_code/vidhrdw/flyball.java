@@ -54,7 +54,7 @@ public class flyball
 	}
 	
 	
-	public static VideoUpdateHandlerPtr flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flyball_tilemap = tilemap_create(flyball_get_tile_info,
 			flyball_get_memory_offset, TILEMAP_OPAQUE, 8, 16, 32, 16);
@@ -63,7 +63,7 @@ public class flyball
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pitcherx = flyball_pitcher_horz;
 		int pitchery = flyball_pitcher_vert - 31;

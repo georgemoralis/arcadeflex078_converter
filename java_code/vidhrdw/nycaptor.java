@@ -66,7 +66,7 @@ public class nycaptor
 	}
 	
 	
-	public static VideoUpdateHandlerPtr nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	  nycaptor_spriteram = auto_malloc (160);
 	  tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32 );
@@ -220,7 +220,7 @@ public class nycaptor
 	}
 	#endif
 	
-	public static VideoUpdateHandlerPtr nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#ifdef MAME_DEBUG
 	  nycaptor_setmask();

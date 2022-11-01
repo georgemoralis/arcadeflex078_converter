@@ -51,7 +51,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		hsyncram = auto_malloc(0x800);
 		if (!hsyncram)
@@ -220,7 +220,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	

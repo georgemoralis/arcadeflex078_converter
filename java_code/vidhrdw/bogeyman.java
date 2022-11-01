@@ -11,7 +11,7 @@ public class bogeyman
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static PaletteInitHandlerPtr bogeyman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_bogeyman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -106,7 +106,7 @@ public class bogeyman
 		SET_TILE_INFO(gfxbank, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
@@ -173,7 +173,7 @@ public class bogeyman
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		bogeyman_draw_sprites(bitmap);

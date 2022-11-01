@@ -101,7 +101,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -129,7 +129,7 @@ public class midtunit
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr midwunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_midwunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
@@ -137,7 +137,7 @@ public class midtunit
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr midxunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_midxunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int result = video_start_midtunit();
 		midtunit_gfx_rom_large = 1;
@@ -874,7 +874,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_midtunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int v, width, xoffs, dpytap;
 		UINT32 offset;

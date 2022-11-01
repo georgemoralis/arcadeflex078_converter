@@ -186,7 +186,7 @@ public class vector
 	 * Initializes vector game video emulation
 	 */
 	
-	public static VideoUpdateHandlerPtr vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -717,7 +717,7 @@ public class vector
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 		point *curpoint;

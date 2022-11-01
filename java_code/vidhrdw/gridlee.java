@@ -46,7 +46,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr gridlee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_gridlee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -68,7 +68,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
@@ -140,7 +140,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pen_t *pens = &Machine->pens[palettebank_vis * 32];
 		int x, y, i;

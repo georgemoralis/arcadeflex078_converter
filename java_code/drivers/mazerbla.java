@@ -87,7 +87,7 @@ public class mazerbla
 	
 	static double weights_r[2], weights_g[3], weights_b[3];
 	
-	static public static PaletteInitHandlerPtr mazerbla  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_mazerbla  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	
 		const int resistances_r[2]  = { 4700, 2200 };
@@ -106,7 +106,7 @@ public class mazerbla
 	
 	static struct mame_bitmap * tmpbitmaps[4];
 	
-	public static VideoUpdateHandlerPtr mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmpbitmaps[0] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
 		tmpbitmaps[1] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
@@ -133,7 +133,7 @@ public class mazerbla
 	#endif
 	
 	#if 0
-	public static VideoUpdateHandlerPtr test_vcu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_test_vcu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int j,trueorientation;
 		char buf[128];
@@ -255,8 +255,8 @@ public class mazerbla
 	#endif
 	
 	
-	/* these two public static VideoUpdateHandlerPtr   = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)s will be joined one day */
-	public static VideoUpdateHandlerPtr greatgun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	/* these two public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)s will be joined one day */
+	public static VideoUpdateHandlerPtr video_update_greatgun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		UINT32 color_base=0;
@@ -275,7 +275,7 @@ public class mazerbla
 		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
 	} };
 	
-	public static VideoUpdateHandlerPtr mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		UINT32 color_base=0;

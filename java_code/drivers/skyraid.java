@@ -20,7 +20,7 @@ public class skyraid
 	static int analog_offset;
 	
 	
-	static public static PaletteInitHandlerPtr skyraid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_skyraid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color( 0, 0x00, 0x00, 0x00);	/* terrain */
 		palette_set_color( 1, 0x18, 0x18, 0x18);

@@ -105,7 +105,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr thedeep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_thedeep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0;i < 512;i++)
@@ -123,7 +123,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0  = tilemap_create(get_tile_info_0,tilemap_scan_rows_back,TILEMAP_TRANSPARENT,16,16,0x20,0x20);
 		tilemap_1  = tilemap_create(get_tile_info_1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,0x20,0x20);
@@ -235,7 +235,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx = thedeep_scroll[0] + (thedeep_scroll[1]<<8);
 		int scrolly = thedeep_scroll[2] + (thedeep_scroll[3]<<8);

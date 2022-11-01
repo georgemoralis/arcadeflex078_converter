@@ -22,7 +22,7 @@ public class snowbros
 	}
 	
 	
-	public static VideoUpdateHandlerPtr snowbros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_snowbros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sx=0, sy=0, x=0, y=0, offs;
 	
@@ -101,7 +101,7 @@ public class snowbros
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr wintbob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wintbob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

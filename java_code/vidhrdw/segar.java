@@ -61,7 +61,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr segar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_segar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static unsigned char color_scale[] = {0x00, 0x40, 0x80, 0xC0 };
 		int i;
@@ -211,7 +211,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic()!=0)
 			return 1;
@@ -288,7 +288,7 @@ public class segar
 	"Standard" refresh for games without special background boards.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
@@ -311,7 +311,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_segar())
 			return 1;
@@ -410,7 +410,7 @@ public class segar
 	Special refresh for Space Odyssey, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;
@@ -523,7 +523,7 @@ public class segar
 	 ---------------------------------------------------------------------------
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_segar())
 			return 1;
@@ -573,7 +573,7 @@ public class segar
 	Special refresh for Monster Bash, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;
@@ -748,7 +748,7 @@ public class segar
 	Special refresh for Sinbad Mystery, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sindbadm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sindbadm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int charcode;

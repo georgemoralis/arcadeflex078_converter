@@ -47,7 +47,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
@@ -67,7 +67,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		K007342_tilemap_update();
 	

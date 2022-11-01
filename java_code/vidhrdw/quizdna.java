@@ -61,7 +61,7 @@ public class quizdna
 	}
 	
 	
-	public static VideoUpdateHandlerPtr quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		quizdna_bg_ram = auto_malloc(0x2000);
 		quizdna_fg_ram = auto_malloc(0x1000);
@@ -204,7 +204,7 @@ public class quizdna
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (quizdna_video_enable)
 		{

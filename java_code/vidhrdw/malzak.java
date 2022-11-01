@@ -63,7 +63,7 @@ public class malzak
 	unsigned char s2636_1_dirty[4];
 	unsigned char s2636_2_dirty[4];
 	
-	public static VideoUpdateHandlerPtr malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_start_generic();
 	
@@ -77,7 +77,7 @@ public class malzak
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int code, colour;
 		int sx, sy;

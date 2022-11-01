@@ -40,13 +40,13 @@ public class cinemat
 		lasty = toy;
 	}
 	
-	public static PaletteInitHandlerPtr cinemat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cinemat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    color_display = 0;
 	} };
 	
 	
-	public static PaletteInitHandlerPtr cinemat_color  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cinemat_color  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 	    color_display = 1;
 	} };
@@ -58,20 +58,20 @@ public class cinemat
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		cinemat_screenh = Machine->visible_area.max_y - Machine->visible_area.min_y;
 		return video_start_vector();
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		vector_clear_list();
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int sw_option = readinputport(1);
 	

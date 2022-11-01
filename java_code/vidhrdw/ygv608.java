@@ -441,7 +441,7 @@ public class ygv608
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		memset( &ygv608, 0, sizeof(ygv608) );
 	
@@ -453,7 +453,7 @@ public class ygv608
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_A = NULL;
 		tilemap_B = NULL;
@@ -657,7 +657,7 @@ public class ygv608
 	static char *psize[] = { "8x8", "16x16", "32x32", "64x64" };
 	#endif
 	
-	public static VideoUpdateHandlerPtr ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ygv608  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#ifdef _SHOW_VIDEO_DEBUG
 	    char buffer[64];

@@ -211,7 +211,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -224,7 +224,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr cuebrckj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cuebrckj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -237,7 +237,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
@@ -250,7 +250,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -261,7 +261,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* also tmnt2, ssriders */
+	public static VideoUpdateHandlerPtr video_update_lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	/* also tmnt2, ssriders */
 	{
 		K053251_vh_start();
 	
@@ -282,7 +282,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr sunsetbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sunsetbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -293,7 +293,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -304,7 +304,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -326,7 +326,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -337,7 +337,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr prmrsocr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prmrsocr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -631,7 +631,7 @@ public class tmnt
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -642,7 +642,7 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -654,7 +654,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -682,7 +682,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -722,7 +722,7 @@ public class tmnt
 		else return glfgreat_pixel & 0xff;
 	}
 	
-	public static VideoUpdateHandlerPtr glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_set_tilemaps(NULL,NULL,K052109_tilemap[0],K052109_tilemap[1],K052109_tilemap[2]);
 	
@@ -769,7 +769,7 @@ public class tmnt
 		K053245_sprites_draw(bitmap,cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr tmnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tmnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		double brt;
 		int i, newdim, newen, cb, ce;
@@ -819,7 +819,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
@@ -855,7 +855,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_detatwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053245_clear_buffer();
 	} };

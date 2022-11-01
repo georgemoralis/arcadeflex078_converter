@@ -1129,7 +1129,7 @@ public class wecleman
 								Initializations
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1238,7 +1238,7 @@ public class wecleman
 		*color = ((*color & 0x3f) << 1) | ((*code & 0x80) >> 7);
 	}
 	
-	public static VideoUpdateHandlerPtr hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
@@ -1373,7 +1373,7 @@ public class wecleman
 									Hot Chase
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int video_on;
 	

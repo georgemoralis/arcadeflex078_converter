@@ -46,7 +46,7 @@ public class snk
 		drawgfx( bitmap,Machine->uifont,digit[num&0xf],     0,0,0,32,row*8+8,0,TRANSPARENCY_NONE,0);
 	}
 	
-	public static PaletteInitHandlerPtr snk_3bpp_shadow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_snk_3bpp_shadow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		palette_init_RRRR_GGGG_BBBB(colortable, color_prom);
@@ -61,7 +61,7 @@ public class snk
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
 	} };
 	
-	public static PaletteInitHandlerPtr snk_4bpp_shadow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_snk_4bpp_shadow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		palette_init_RRRR_GGGG_BBBB(colortable, color_prom);
@@ -76,7 +76,7 @@ public class snk
 		gfx_drawmode_table[15] = DRAWMODE_NONE;
 	} };
 	
-	public static VideoUpdateHandlerPtr snk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_snk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		snk_blink_parity = 0;
 	
@@ -228,7 +228,7 @@ public class snk
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr tnk3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tnk3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *ram = memory_region(REGION_CPU1);
 		int attributes = ram[0xc800];
@@ -272,7 +272,7 @@ public class snk
 	
 	/************************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = auto_malloc( MAX_VRAM_SIZE );
 		if(!dirtybuffer) return 1;
@@ -309,7 +309,7 @@ public class snk
 		copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,clip,TRANSPARENCY_NONE,0);
 	}
 	
-	public static VideoUpdateHandlerPtr sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sgladiat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *pMem = memory_region(REGION_CPU1);
 		int attributes, scrollx, scrolly;
@@ -372,7 +372,7 @@ public class snk
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ikari  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ikari  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned char *ram = memory_region(REGION_CPU1);
 	
@@ -543,7 +543,7 @@ public class snk
 	
 	/**************************************************************/
 	
-	public static VideoUpdateHandlerPtr tdfever  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tdfever  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const unsigned char *ram = memory_region(REGION_CPU1);
 		int i;
@@ -585,7 +585,7 @@ public class snk
 		tdfever_draw_tx( bitmap, tx_attributes, 0, 0, 0xf800 );
 	} };
 	
-	public static VideoUpdateHandlerPtr gwar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gwar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const unsigned char *ram = memory_region(REGION_CPU1);
 		int gwar_sp_baseaddr, gwar_tx_baseaddr;

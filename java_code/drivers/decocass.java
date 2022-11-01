@@ -415,7 +415,7 @@ public class decocass
 		{ 0 }
 	};
 	
-	static public static PaletteInitHandlerPtr decocass  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_decocass  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		/* set up 32 colors 1:1 pens */

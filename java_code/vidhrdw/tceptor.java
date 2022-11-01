@@ -46,7 +46,7 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	public static PaletteInitHandlerPtr tceptor  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tceptor  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int totcolors, totlookup;
 		int i;
@@ -444,7 +444,7 @@ public class tceptor
 		tilemap_mark_all_tiles_dirty(bg2_tilemap);
 	}
 	
-	public static VideoUpdateHandlerPtr tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int gfx_index;
 	
@@ -612,7 +612,7 @@ public class tceptor
 	}
 	
 	
-	public static VideoUpdateHandlerPtr tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle rect;
 		int pri;

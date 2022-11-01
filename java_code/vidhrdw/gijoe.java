@@ -43,7 +43,7 @@ public class gijoe
 		*color = (*color>>2 & 0x0f) | layer_colorbase[layer];
 	}
 	
-	public static VideoUpdateHandlerPtr gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -80,7 +80,7 @@ public class gijoe
 		SWAP(2, 3)
 	}
 	
-	public static VideoUpdateHandlerPtr gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];

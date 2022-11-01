@@ -175,7 +175,7 @@ public class psikyo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* The Hardware is Capable of Changing the Dimensions of the Tilemaps, its safer to create
 		   the various sized tilemaps now as opposed to later */
@@ -437,7 +437,7 @@ public class psikyo
 		else				return 0x10*16;
 	}
 	
-	public static VideoUpdateHandlerPtr psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, layers_ctrl = -1;
 	
@@ -574,7 +574,7 @@ public class psikyo
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psikyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		memcpy(spritebuf2, spritebuf1, 0x2000);
 		memcpy(spritebuf1, spriteram32, 0x2000);

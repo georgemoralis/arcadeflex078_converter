@@ -29,7 +29,7 @@ public class copsnrob
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr copsnrob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_copsnrob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs, x, y;
 	

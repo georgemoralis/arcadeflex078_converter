@@ -23,7 +23,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
@@ -35,7 +35,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
 			return 1;
@@ -46,7 +46,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
@@ -58,7 +58,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (PC080SN_vh_start(1,1,0,0,1,0,0))
 			return 1;
@@ -119,7 +119,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[2];
 	
@@ -146,7 +146,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[2];
 	
@@ -176,7 +176,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[2];
 	
@@ -203,7 +203,7 @@ public class rastan
 	
 	*/
 	
-	public static VideoUpdateHandlerPtr jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,layer[2];
 		int sprite_colbank = (sprite_ctrl & 0xe0) >> 1;

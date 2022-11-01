@@ -238,7 +238,7 @@ public class taotaido
 		taotaido_drawsprites(bitmap,cliprect);
 	}
 	
-	public static VideoUpdateHandlerPtr taotaido  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taotaido  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* sprites need to be delayed by 2 frames? */
 	

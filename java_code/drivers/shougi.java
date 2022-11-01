@@ -99,7 +99,7 @@ package drivers;
 public class shougi
 {
 	
-	//public static VideoUpdateHandlerPtr shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	//public static VideoUpdateHandlerPtr video_update_shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	//{
 	//	generic_vh_start();
 	//} };
@@ -121,7 +121,7 @@ public class shougi
 	***************************************************************************/
 	
 	
-	static public static PaletteInitHandlerPtr shougi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_shougi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		const int resistances_b[2]  = { 470, 220 };
@@ -162,7 +162,7 @@ public class shougi
 	
 	
 	
-	public static VideoUpdateHandlerPtr shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	int offs;
 	

@@ -24,7 +24,7 @@ public class srmp2
 	int mjyuugi_gfx_bank;
 	
 	
-	public static PaletteInitHandlerPtr srmp2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_srmp2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -52,7 +52,7 @@ public class srmp2
 	} };
 	
 	
-	public static PaletteInitHandlerPtr srmp3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_srmp3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -462,21 +462,21 @@ public class srmp2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		srmp2_draw_sprites(bitmap);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		srmp3_draw_sprites(bitmap);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0x1f0], &Machine->visible_area);
 		mjyuugi_draw_sprites(bitmap);

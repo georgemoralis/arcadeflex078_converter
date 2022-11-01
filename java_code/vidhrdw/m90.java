@@ -60,7 +60,7 @@ public class m90
 	static void get_pf2w_tile_info(int tile_index) { get_tile_info(tile_index,1,2); }
 	
 	
-	public static VideoUpdateHandlerPtr m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_layer =      tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
 		pf1_wide_layer = tilemap_create(get_pf1w_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
@@ -169,7 +169,7 @@ public class m90
 		markdirty(pf2_wide_layer,m90_video_control_data[0xc] & 0x2,offset);
 	} };
 	
-	public static VideoUpdateHandlerPtr m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_pf1,last_pf2;
 		int pf1_base = m90_video_control_data[0xa] & 0x3;

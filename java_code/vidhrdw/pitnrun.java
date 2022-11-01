@@ -229,7 +229,7 @@ public class pitnrun
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr pitnrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pitnrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int dx=0,dy=0;
 		struct rectangle myclip=*cliprect; 

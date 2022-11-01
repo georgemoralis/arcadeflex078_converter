@@ -50,7 +50,7 @@ public class starshp1
 	}
 	
 	
-	static public static PaletteInitHandlerPtr starshp1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_starshp1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		static const UINT16 colortable_source[] =
 		{

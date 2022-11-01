@@ -36,7 +36,7 @@ public class flstory
 	}
 	
 	
-	public static VideoUpdateHandlerPtr flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	    tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32 );
 	//	tilemap_set_transparent_pen( tilemap,15 );
@@ -151,7 +151,7 @@ public class flstory
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

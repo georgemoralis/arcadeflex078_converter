@@ -62,7 +62,7 @@ public class twincobr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* the video RAM is accessed via ports, it's not memory mapped */
 		videoram_size = 0x800;
@@ -294,7 +294,7 @@ public class twincobr
 	
 	
 	
-	public static VideoUpdateHandlerPtr toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int offs,code,tile,color;
 	
@@ -439,7 +439,7 @@ public class twincobr
 		twincobr_draw_sprites (bitmap, 0x0c00);
 	} };
 	
-	public static VideoUpdateHandlerPtr toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*  Spriteram is always 1 frame ahead, suggesting spriteram buffering.
 			There are no CPU output registers that control this so we

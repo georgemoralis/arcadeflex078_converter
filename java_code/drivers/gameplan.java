@@ -482,7 +482,7 @@ public class gameplan
 	
 	
 	
-	static public static PaletteInitHandlerPtr gameplan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_gameplan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0xff,0xff,0xff); /* 0 WHITE   */
 		palette_set_color(1,0x20,0xff,0xff); /* 1 CYAN    */

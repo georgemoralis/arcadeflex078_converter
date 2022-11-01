@@ -199,7 +199,7 @@ public class bwing
 	}
 	
 	
-	public static VideoUpdateHandlerPtr bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 *dwptr;
 		int i;
@@ -263,7 +263,7 @@ public class bwing
 	}
 	
 	
-	public static VideoUpdateHandlerPtr bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		unsigned x, y, shiftx;
 	

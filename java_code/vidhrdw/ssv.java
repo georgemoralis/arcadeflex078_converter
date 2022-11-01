@@ -138,7 +138,7 @@ package vidhrdw;
 public class ssv
 {
 	
-	public static VideoUpdateHandlerPtr ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		Machine->gfx[0]->color_granularity = 64; /* 256 colour sprites with palette selectable on 64 colour boundaries */
 	
@@ -780,7 +780,7 @@ public class ssv
 		enable_video = enable;
 	}
 	
-	public static VideoUpdateHandlerPtr ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* The background color is the first one in the palette */
 		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);

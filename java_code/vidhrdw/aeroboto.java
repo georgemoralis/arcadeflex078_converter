@@ -47,7 +47,7 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,64);
 	
@@ -157,7 +157,7 @@ public class aeroboto
 	}
 	
 	
-	public static VideoUpdateHandlerPtr aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static struct rectangle splitrect1 = { 0, 255, 0, 39 };
 		static struct rectangle splitrect2 = { 0, 255, 40, 255 };

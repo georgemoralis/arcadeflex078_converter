@@ -18,7 +18,7 @@ public class popper
 	static int popper_flipscreen, popper_e002, popper_gfx_bank;
 	static struct rectangle tilemap_clip;
 	
-	public static PaletteInitHandlerPtr popper  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_popper  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -172,7 +172,7 @@ public class popper
 				flags)
 	}
 	
-	public static VideoUpdateHandlerPtr popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		popper_p123_tilemap    = tilemap_create( get_popper_p123_tile_info,   tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
 		popper_p0_tilemap      = tilemap_create( get_popper_p0_tile_info,     tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
@@ -242,7 +242,7 @@ public class popper
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle finalclip = tilemap_clip;
 		sect_rect(&finalclip, cliprect);

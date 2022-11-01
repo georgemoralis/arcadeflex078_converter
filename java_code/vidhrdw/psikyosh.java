@@ -1054,7 +1054,7 @@ public class psikyosh
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		zoom_bitmap = 0, z_bitmap = 0;
 		if ((zoom_bitmap = auto_bitmap_alloc_depth(16*16, 16*16,8)) == 0) /* hw can do 16-tile wide sprites */
@@ -1142,7 +1142,7 @@ public class psikyosh
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) /* Note the z-buffer on each sprite to get correct priority */
+	public static VideoUpdateHandlerPtr video_update_psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) /* Note the z-buffer on each sprite to get correct priority */
 	{
 			int i;
 			fillbitmap(bitmap,get_black_pen(),cliprect);
@@ -1157,7 +1157,7 @@ public class psikyosh
 			}
 	} };
 	
-	public static VideoUpdateHandlerPtr psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_psikyosh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram32_w(0,0,0);
 	} };

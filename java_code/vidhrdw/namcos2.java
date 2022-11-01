@@ -643,7 +643,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr namcos2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -658,7 +658,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	
@@ -683,7 +683,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -694,7 +694,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	
@@ -712,7 +712,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -730,7 +730,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	
@@ -753,7 +753,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -763,7 +763,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	
@@ -781,7 +781,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if( CreateTilemaps()==0 )
 		{
@@ -791,7 +791,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	

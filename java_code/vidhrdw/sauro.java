@@ -101,7 +101,7 @@ public class sauro
 		tilemap_set_scrollx(fg_tilemap, 0, scroll);
 	} };
 	
-	public static VideoUpdateHandlerPtr sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -166,7 +166,7 @@ public class sauro
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
@@ -180,7 +180,7 @@ public class sauro
 		spriteram[offset] = data;
 	} };
 	
-	public static VideoUpdateHandlerPtr trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -245,7 +245,7 @@ public class sauro
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		trckydoc_draw_sprites(bitmap);

@@ -20,7 +20,7 @@ public class superchs
 	};
 	static struct tempsprite *spritelist;
 	
-	public static VideoUpdateHandlerPtr superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (!spritelist)
@@ -223,7 +223,7 @@ public class superchs
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT16 priority;

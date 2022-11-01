@@ -42,7 +42,7 @@ public class wiz
 	static int palette_bank;
 	
 	
-	public static VideoUpdateHandlerPtr wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic())
 			return 1;
@@ -69,7 +69,7 @@ public class wiz
 	  bit 0 -- 1  kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr wiz  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_wiz  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -277,7 +277,7 @@ public class wiz
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
 		draw_background(bitmap, 2 + char_bank[0] , 0);
@@ -286,7 +286,7 @@ public class wiz
 		draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
 	} };
 	
-	public static VideoUpdateHandlerPtr wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bank;
 		const struct rectangle* visible_area;
@@ -304,7 +304,7 @@ public class wiz
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
 		draw_background(bitmap, 2 + char_bank[0], 1);

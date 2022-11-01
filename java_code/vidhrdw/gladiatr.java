@@ -85,7 +85,7 @@ public class gladiatr
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sprite_bank = 2;
 	
 		dirtybuffer = auto_malloc(64*32);
@@ -258,7 +258,7 @@ public class gladiatr
 	
 	
 	
-	public static VideoUpdateHandlerPtr gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_attributes & 0x20)	/* screen refresh enable? */
 		{

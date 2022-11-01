@@ -128,7 +128,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -141,7 +141,7 @@ public class liberate
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_SPLIT,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -155,7 +155,7 @@ public class liberate
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -176,7 +176,7 @@ public class liberate
 		paletteram_BBGGGRRR_w(offset,~data);
 	} };
 	
-	public static PaletteInitHandlerPtr liberate  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_liberate  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,g,r,b;
 	
@@ -372,7 +372,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(background_tilemap,0,deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
@@ -385,7 +385,7 @@ public class liberate
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr prosport  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prosport  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int mx,my,tile,color,offs;
 	
@@ -410,7 +410,7 @@ public class liberate
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
@@ -427,7 +427,7 @@ public class liberate
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);

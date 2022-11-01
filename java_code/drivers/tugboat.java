@@ -39,7 +39,7 @@ public class tugboat
 	
 	/*  there isn't the usual resistor array anywhere near the color prom,
 	    just four 1k resistors. */
-	public static PaletteInitHandlerPtr tugboat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tugboat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class tugboat
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr tugboat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tugboat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int startaddr0 = hd46505_0_reg[0x0c]*256 + hd46505_0_reg[0x0d];
 		int startaddr1 = hd46505_1_reg[0x0c]*256 + hd46505_1_reg[0x0d];

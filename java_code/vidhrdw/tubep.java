@@ -45,7 +45,7 @@ public class tubep
 	  bit 0 -- 1  kohm resistor  -- /
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr rjammer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_rjammer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -216,7 +216,7 @@ public class tubep
 	***************************************************************************/
 	
 	
-	public static PaletteInitHandlerPtr tubep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tubep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,r,g,b;
 	
@@ -428,7 +428,7 @@ public class tubep
 	
 	
 	
-	public static VideoUpdateHandlerPtr tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((dirtybuff = auto_malloc(0x800/2)) == 0)
 			return 1;
@@ -653,7 +653,7 @@ public class tubep
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr tubep_eof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tubep_eof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* clear displayed frame */
 		memset(spritemap+DISP*256*256, 0x0f, 256*256);
@@ -661,7 +661,7 @@ public class tubep
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	
@@ -782,7 +782,7 @@ public class tubep
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr rjammer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rjammer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

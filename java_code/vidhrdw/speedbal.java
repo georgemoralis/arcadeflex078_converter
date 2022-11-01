@@ -28,7 +28,7 @@ public class speedbal
 	static struct mame_bitmap *bitmap_bg;   /* background tiles */
 	static struct mame_bitmap *bitmap_ch;   /* foreground char  */
 	
-	public static PaletteInitHandlerPtr speedbal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_speedbal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -82,7 +82,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((bg_dirtybuffer = auto_malloc (speedbal_background_videoram_size)) == 0)
 			return 1;
@@ -265,7 +265,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		// first background
 		speedbal_draw_background (bitmap);

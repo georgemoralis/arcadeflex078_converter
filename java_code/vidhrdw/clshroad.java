@@ -56,7 +56,7 @@ public class clshroad
 	} };
 	
 	
-	public static PaletteInitHandlerPtr clshroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_clshroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0;i < 256;i++)
@@ -65,7 +65,7 @@ public class clshroad
 									color_prom[i + 256 * 2] * 0x11	);
 	} };
 	
-	public static PaletteInitHandlerPtr firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -236,7 +236,7 @@ public class clshroad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr firebatl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_firebatl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -265,7 +265,7 @@ public class clshroad
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
@@ -364,7 +364,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx  = clshroad_vregs[ 0 ] + (clshroad_vregs[ 1 ] << 8);
 	//	int priority = clshroad_vregs[ 2 ];

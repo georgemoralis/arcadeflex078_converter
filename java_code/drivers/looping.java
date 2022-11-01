@@ -69,7 +69,7 @@ public class looping
 	
 	static struct tilemap *tilemap;
 	
-	public static PaletteInitHandlerPtr looping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_looping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for (i = 0;i < 0x20;i++)
@@ -142,7 +142,7 @@ public class looping
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		if( tilemap )
@@ -205,7 +205,7 @@ public class looping
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw( bitmap,cliprect,tilemap,0,0 );
 		draw_sprites( bitmap,cliprect );

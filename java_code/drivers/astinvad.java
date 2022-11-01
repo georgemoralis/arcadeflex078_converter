@@ -27,7 +27,7 @@ public class astinvad
 	
 	
 	
-	static public static PaletteInitHandlerPtr astinvad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_astinvad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

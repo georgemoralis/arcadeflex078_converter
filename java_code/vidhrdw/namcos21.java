@@ -395,7 +395,7 @@ public class namcos21
 		return code;
 	}
 	
-	public static VideoUpdateHandlerPtr namcos21  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos21  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		namcos3d_Init( kScreenWidth, kScreenHeight, NULL, NULL );
 	
@@ -441,7 +441,7 @@ public class namcos21
 		}
 	} /* update_palette */
 	
-	public static VideoUpdateHandlerPtr namcos21_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos21_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int pri;
 	

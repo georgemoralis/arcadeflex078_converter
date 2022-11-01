@@ -75,7 +75,7 @@ public class skyarmy
 	} };
 	
 	
-	public static PaletteInitHandlerPtr skyarmy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_skyarmy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -103,7 +103,7 @@ public class skyarmy
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	        skyarmy_tilemap = tilemap_create(get_skyarmy_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	        tilemap_set_scroll_cols(skyarmy_tilemap,32);
@@ -113,7 +113,7 @@ public class skyarmy
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	        int sx, sy, flipx, flipy, offs,pal;
 	        int i;

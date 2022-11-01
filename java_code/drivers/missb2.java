@@ -23,7 +23,7 @@ public class missb2
 	/* machine/bublbobl.c */
 	
 	
-	public static VideoUpdateHandlerPtr missb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_missb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy,xc,yc;

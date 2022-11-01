@@ -39,7 +39,7 @@ public class tnzs
 	  form 512 xRRRRRGGGGGBBBBB color values.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr arknoid2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_arknoid2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,col,r,g,b;
 	
@@ -181,7 +181,7 @@ public class tnzs
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr tnzs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tnzs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* If the byte at f300 has bit 6 set, flip the screen
 		   (I'm not 100% sure about this) */

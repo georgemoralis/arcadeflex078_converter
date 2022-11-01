@@ -20,7 +20,7 @@ public class hcastle
 	static int pf2_bankbase,pf1_bankbase;
 	
 	
-	public static PaletteInitHandlerPtr hcastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_hcastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,chip,pal,clut;
 	
@@ -112,7 +112,7 @@ public class hcastle
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan,TILEMAP_OPAQUE,     8,8,64,32);
@@ -203,7 +203,7 @@ public class hcastle
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int old_pf1,old_pf2;
 	

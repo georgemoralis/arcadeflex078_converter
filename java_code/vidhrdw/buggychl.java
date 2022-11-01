@@ -20,7 +20,7 @@ public class buggychl
 	
 	
 	
-	public static PaletteInitHandlerPtr buggychl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_buggychl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -32,7 +32,7 @@ public class buggychl
 	
 	
 	
-	public static VideoUpdateHandlerPtr buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		dirtybuffer = auto_malloc(videoram_size);
 		dirtychar = auto_malloc(256 * sizeof(*dirtychar));
@@ -256,7 +256,7 @@ public class buggychl
 	}
 	
 	
-	public static VideoUpdateHandlerPtr buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int code;
 	

@@ -87,7 +87,7 @@ public class sprint8
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		helper1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
 		helper2 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
@@ -146,7 +146,7 @@ public class sprint8
 	}
 	
 	
-	public static VideoUpdateHandlerPtr sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, tilemap1, 0, 0);
 	
@@ -154,7 +154,7 @@ public class sprint8
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x;
 		int y;

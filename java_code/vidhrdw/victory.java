@@ -75,7 +75,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate bitmapram */
 		rram = auto_malloc(0x4000);
@@ -1185,7 +1185,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;
@@ -1229,7 +1229,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;

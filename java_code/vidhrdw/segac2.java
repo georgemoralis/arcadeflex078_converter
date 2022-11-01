@@ -198,7 +198,7 @@ public class segac2
 	};
 	#endif
 	
-	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const UINT8 vdp_init[24] =
 		{
@@ -309,7 +309,7 @@ public class segac2
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr puckpkmn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_puckpkmn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -326,7 +326,7 @@ public class segac2
 	
 	
 	
-	public static VideoUpdateHandlerPtr megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -344,7 +344,7 @@ public class segac2
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
@@ -381,7 +381,7 @@ public class segac2
 	
 	
 	/* end-of-frame callback to mark the start of VBLANK */
-	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* set VBLANK flag */
 		internal_vblank = 1;
@@ -425,7 +425,7 @@ public class segac2
 	
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
@@ -463,7 +463,7 @@ public class segac2
 	/* megatech, same but drawing the sms display too */
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
@@ -507,7 +507,7 @@ public class segac2
 	/* megaplay, draws either Genesis or SMS (single screen display) */
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;

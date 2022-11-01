@@ -86,7 +86,7 @@ public class royalmah
 	static int palette_base;
 	
 	
-	public static PaletteInitHandlerPtr royalmah  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_royalmah  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -117,7 +117,7 @@ public class royalmah
 	} };
 	
 	/* 0 B01234 G01234 R01234 */
-	public static PaletteInitHandlerPtr mjderngr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mjderngr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -188,7 +188,7 @@ public class royalmah
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr royalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_royalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{

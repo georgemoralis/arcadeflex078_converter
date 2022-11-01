@@ -1404,7 +1404,7 @@ public class namcos22
 	}
 	
 	
-	public static VideoUpdateHandlerPtr namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mpMatrix = auto_malloc(sizeof(struct Matrix)*MAX_CAMERA);
 		if( mpMatrix )
@@ -1452,7 +1452,7 @@ public class namcos22
 		return -1; /* error */
 	} };
 	
-	public static VideoUpdateHandlerPtr namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mbSuperSystem22 = 1;
 		UpdatePaletteS();
@@ -1463,7 +1463,7 @@ public class namcos22
 		DrawTextLayer( bitmap, cliprect );
 	} };
 	
-	public static VideoUpdateHandlerPtr namcos22  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_namcos22  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		mbSuperSystem22 = 0;
 		UpdatePalette();

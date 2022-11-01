@@ -50,7 +50,7 @@ public class djboy
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,32);
 		if( background )
@@ -120,7 +120,7 @@ public class djboy
 			(b * 0xff) / 0xf );
 	} };
 	
-	public static VideoUpdateHandlerPtr djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/**
 		 * xx------ msb x

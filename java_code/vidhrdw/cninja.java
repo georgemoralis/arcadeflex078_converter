@@ -44,7 +44,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -56,7 +56,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr stoneage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_stoneage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(1))
 			return 1;
@@ -73,7 +73,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -85,7 +85,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -98,7 +98,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -119,7 +119,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		deco16_raster_display_position=0;
 	} };
@@ -415,7 +415,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -432,7 +432,7 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -450,7 +450,7 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* One of the tilemap chips can switch between 2 tilemaps at 4bpp, or 1 at 8bpp */
 		if (deco16_priority&4) {
@@ -497,7 +497,7 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);

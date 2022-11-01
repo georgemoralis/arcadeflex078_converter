@@ -79,7 +79,7 @@ public class carpolo
 	 *
 	 **************************************************************************/
 	
-	public static PaletteInitHandlerPtr carpolo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_carpolo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* thanks to Jarek Burczynski for analyzing the circuit */
 	//	const static float MAX_VOLTAGE = 6.9620;
@@ -178,7 +178,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((sprite_sprite_collision_bitmap1 = auto_bitmap_alloc(SPRITE_WIDTH*2,SPRITE_HEIGHT*2)) == 0)
 			return 1;
@@ -266,7 +266,7 @@ public class carpolo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield elements, in the correct priority order */
 	
@@ -628,7 +628,7 @@ public class carpolo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int col_x, col_y;
 		int car1_x, car2_x, car3_x, car4_x, ball_x;

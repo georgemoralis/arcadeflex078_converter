@@ -51,7 +51,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* initialize the swapped pointers */
 		vram_fg_draw = (UINT8 *)btoads_vram_fg0;
@@ -336,7 +336,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	

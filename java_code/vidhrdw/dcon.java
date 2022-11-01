@@ -144,7 +144,7 @@ public class dcon
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -205,7 +205,7 @@ public class dcon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Setup the tilemaps */
 		tilemap_set_scrollx( background_layer,0, dcon_scroll_ram[0] );
@@ -229,7 +229,7 @@ public class dcon
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr sdgndmps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sdgndmps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_gfx_bank=0;
 	

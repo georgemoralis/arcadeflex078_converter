@@ -82,7 +82,7 @@ public class tunhunt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/*
 		Motion Object RAM contains 64 lines of run-length encoded data.
@@ -110,7 +110,7 @@ public class tunhunt
 		return 0;
 	} };
 	
-	public static PaletteInitHandlerPtr tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* Tunnel Hunt uses a combination of color proms and palette RAM to specify a 16 color
 		 * palette.  Here, we manage only the mappings for alphanumeric characters and SHELL
@@ -406,7 +406,7 @@ public class tunhunt
 				TRANSPARENCY_PEN,0 );
 	}
 	
-	public static VideoUpdateHandlerPtr tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const UINT8 *pMem = memory_region( REGION_CPU1 );
 	

@@ -26,7 +26,7 @@ public class hanaroku
 	UINT8 *hanaroku_spriteram3;
 	
 	
-	public static PaletteInitHandlerPtr hanaroku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_hanaroku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int r,g,b;

@@ -182,7 +182,7 @@ public class sshangha
 		SET_TILE_INFO(0,(tile&0xfff)|sshangha_pf1_bank,tile>>12,0)
 	}
 	
-	public static VideoUpdateHandlerPtr sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		pf1_8x8_tilemap   = tilemap_create(get_pf1_8x8_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_16x16_tilemap = tilemap_create(get_pf1_16x16_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -199,7 +199,7 @@ public class sshangha
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int last_pf1_bank,last_pf2_bank;
 		int offs;

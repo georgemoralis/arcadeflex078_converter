@@ -27,7 +27,7 @@ public class skykid
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr skykid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_skykid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		int bit0,bit1,bit2,bit3,r,g,b;
@@ -101,7 +101,7 @@ public class skykid
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background = tilemap_create(get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
@@ -222,7 +222,7 @@ public class skykid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 	

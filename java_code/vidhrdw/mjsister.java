@@ -28,7 +28,7 @@ public class mjsister
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((mjsister_tmpbitmap0 = bitmap_alloc(256,256)) == 0)
 			return 1;
@@ -89,7 +89,7 @@ public class mjsister
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int f = mjsister_flip_screen;
 		int i,j;

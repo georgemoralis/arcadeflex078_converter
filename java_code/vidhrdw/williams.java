@@ -183,7 +183,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate space for video RAM and dirty scanlines */
 		williams_videoram = auto_malloc(VIDEORAM_SIZE);
@@ -213,7 +213,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the pixels into the final result */
 		copy_pixels(bitmap, cliprect, -1);
@@ -246,7 +246,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* standard initialization */
 		if (video_start_williams())
@@ -278,7 +278,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 *tileram = &memory_region(REGION_CPU1)[0xc000];
 		int xpixeloffset, xtileoffset;
@@ -464,7 +464,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr blaster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_blaster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i, j;
 	

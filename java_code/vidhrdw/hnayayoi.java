@@ -43,12 +43,12 @@ public class hnayayoi
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return common_vh_start(4);	/* 4 bitmaps -> 2 layers */
 	} };
 	
-	public static VideoUpdateHandlerPtr untoucha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_untoucha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return common_vh_start(8);	/* 8 bitmaps -> 4 layers */
 	} };
@@ -260,7 +260,7 @@ public class hnayayoi
 	}
 	
 	
-	public static VideoUpdateHandlerPtr hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int col0 = (palbank >>  0) & 0x0f;
 		int col1 = (palbank >>  4) & 0x0f;

@@ -28,7 +28,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		HuC6270_vram=auto_malloc(0x20000);
 		tile_dirty=auto_malloc(0x1000);
@@ -390,7 +390,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Nothing */
 	} };

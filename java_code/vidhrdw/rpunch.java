@@ -90,7 +90,7 @@ public class rpunch
 	}
 	
 	
-	public static VideoUpdateHandlerPtr rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -330,7 +330,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int effbins;
 	

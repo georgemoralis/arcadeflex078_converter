@@ -85,7 +85,7 @@ public class raiders5
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr raiders5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_raiders5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int chr,col;

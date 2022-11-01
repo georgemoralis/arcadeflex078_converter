@@ -36,7 +36,7 @@ public class speedatk
 	
 	*/
 	
-	public static PaletteInitHandlerPtr speedatk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_speedatk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -108,7 +108,7 @@ public class speedatk
 		SET_TILE_INFO(region, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,34,32);
 	
@@ -118,7 +118,7 @@ public class speedatk
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 	} };

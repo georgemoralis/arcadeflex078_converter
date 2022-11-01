@@ -550,13 +550,13 @@ public class _8080bw
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr 8080bw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_8080bw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_p(bitmap, cliprect);
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr 8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -582,7 +582,7 @@ public class _8080bw
 	static int death_colors_rng = 0;
 	static int death_colors_timing = 0;
 	
-	public static PaletteInitHandlerPtr helifire  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_helifire  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -681,7 +681,7 @@ public class _8080bw
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr helifire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_helifire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 		int sun_brightness = readinputport(4);
@@ -841,7 +841,7 @@ public class _8080bw
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr seawolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_seawolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
@@ -849,7 +849,7 @@ public class _8080bw
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x1f) * 8) + 4, 63);
 	} };
 	
-	static public static VideoUpdateHandlerPtr blueshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_blueshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
@@ -857,7 +857,7 @@ public class _8080bw
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x7f) * 2) - 12, 63);
 	} };
 	
-	static public static VideoUpdateHandlerPtr desertgu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_desertgu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
@@ -878,7 +878,7 @@ public class _8080bw
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr bowler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_bowler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x,y,i;
 	
@@ -931,7 +931,7 @@ public class _8080bw
 	} };
 	
 	
-	public static PaletteInitHandlerPtr invadpt2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_invadpt2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -947,7 +947,7 @@ public class _8080bw
 	} };
 	
 	
-	public static PaletteInitHandlerPtr sflush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_sflush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -987,7 +987,7 @@ public class _8080bw
 		plot_byte(x, y, data, col, 0);
 	} };
 	
-	public static PaletteInitHandlerPtr cosmo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_cosmo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	

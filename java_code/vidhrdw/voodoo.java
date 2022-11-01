@@ -881,7 +881,7 @@ public class voodoo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr voodoo_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmus = 1;
 		voodoo2 = 0;
@@ -890,7 +890,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr voodoo_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmus = 2;
 		voodoo2 = 0;
@@ -899,7 +899,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr voodoo2_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo2_1x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmus = 1;
 		voodoo2 = 1;
@@ -908,7 +908,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr voodoo2_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo2_2x4mb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tmus = 2;
 		voodoo2 = 1;
@@ -917,7 +917,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if LOG_RENDERERS
 		int i;
@@ -944,7 +944,7 @@ public class voodoo
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	

@@ -32,7 +32,7 @@ public class combatsc
 	static unsigned char *combasc_scrollram;
 	
 	
-	public static PaletteInitHandlerPtr combasc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_combasc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal,clut = 0;
 		for( pal=0; pal<8; pal++ )
@@ -75,7 +75,7 @@ public class combatsc
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr combascb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_combascb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal;
 		for( pal=0; pal<8; pal++ )
@@ -227,7 +227,7 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		combasc_vreg = -1;
 	
@@ -254,7 +254,7 @@ public class combatsc
 		return 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		combasc_vreg = -1;
 	
@@ -489,7 +489,7 @@ public class combatsc
 	}
 	
 	
-	public static VideoUpdateHandlerPtr combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -648,7 +648,7 @@ public class combatsc
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	

@@ -85,7 +85,7 @@ public class lkage
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tile_bank = fg_tile_bank = 0;
 	
@@ -183,7 +183,7 @@ public class lkage
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flip_screen_x_set(~lkage_vreg[2] & 0x01);
 		flip_screen_y_set(~lkage_vreg[2] & 0x02);

@@ -112,7 +112,7 @@ public class jcross
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		flipscreen = -1;  old_fg_color = -1;
 	
@@ -197,7 +197,7 @@ public class jcross
 	}
 	
 	
-	public static VideoUpdateHandlerPtr jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scroll_attributes = jcross_vregs[0];
 		int sprite_scrolly = jcross_vregs[1];

@@ -90,7 +90,7 @@ public class fuukifg2
 	***************************************************************************/
 	
 	/* Not used atm, seems to be fine without clearing pens? */
-	public static PaletteInitHandlerPtr fuuki16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_fuuki16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int pen;
 	
@@ -100,7 +100,7 @@ public class fuukifg2
 			palette_set_color(pen,0,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 16, 16, 64,32);
@@ -297,7 +297,7 @@ public class fuukifg2
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		data16_t layer0_scrollx, layer0_scrolly;
 		data16_t layer1_scrollx, layer1_scrolly;

@@ -73,7 +73,7 @@ public class mainevt
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 8;
@@ -88,7 +88,7 @@ public class mainevt
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
@@ -105,7 +105,7 @@ public class mainevt
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	
@@ -118,7 +118,7 @@ public class mainevt
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
 	} };
 	
-	public static VideoUpdateHandlerPtr dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	

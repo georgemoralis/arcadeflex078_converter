@@ -49,7 +49,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* reset the system */
 		firq_enable = 0;
@@ -484,7 +484,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* if we need a full refresh, mark all scanlines dirty */
 		if (get_vh_global_attribute_changed())
@@ -519,7 +519,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* generate an interrupt once/frame for the beam */
 		if (!exidy440_topsecret)

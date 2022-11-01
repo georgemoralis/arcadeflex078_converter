@@ -79,7 +79,7 @@ public class taito_h
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,1,1,1,-2))
 			return 1;
@@ -87,7 +87,7 @@ public class taito_h
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
@@ -95,7 +95,7 @@ public class taito_h
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
@@ -430,7 +430,7 @@ public class taito_h
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -447,7 +447,7 @@ public class taito_h
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	
@@ -477,7 +477,7 @@ public class taito_h
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		TC0080VCO_tilemap_update();
 	

@@ -25,7 +25,7 @@ public class gsword
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr josvolly  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_josvolly  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* sprite lookup table is not original but it is almost 98% correct */
 	
@@ -76,7 +76,7 @@ public class gsword
 			COLOR(1,i) = sprite_lookup_table[*(color_prom++)];
 	} };
 	
-	public static PaletteInitHandlerPtr gsword  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_gsword  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* sprite lookup table is not original but it is almost 98% correct */
 	
@@ -183,7 +183,7 @@ public class gsword
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoUpdateHandlerPtr gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 64);
@@ -236,7 +236,7 @@ public class gsword
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		gsword_draw_sprites(bitmap);

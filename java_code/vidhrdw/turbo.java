@@ -58,7 +58,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr turbo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_turbo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -94,7 +94,7 @@ public class turbo
 	} };
 	
 	
-	public static PaletteInitHandlerPtr subroc3d  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_subroc3d  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -126,7 +126,7 @@ public class turbo
 	} };
 	
 	
-	public static PaletteInitHandlerPtr buckrog  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_buckrog  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -315,7 +315,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -378,7 +378,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -426,7 +426,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
@@ -962,7 +962,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* only do collision checking if we didn't draw */
 		if (!drew_frame)
@@ -971,7 +971,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* perform the actual drawing */
 		turbo_render(bitmap);
@@ -984,7 +984,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* perform the actual drawing */
 		subroc3d_render(bitmap);
@@ -994,7 +994,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* perform the actual drawing */
 		buckrog_render(bitmap);

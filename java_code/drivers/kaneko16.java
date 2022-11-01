@@ -837,7 +837,7 @@ public class kaneko16
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr sandscrp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_sandscrp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprite_irq = 1;
 		update_irq_state();

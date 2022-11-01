@@ -22,7 +22,7 @@ public class skyraid
 	static struct mame_bitmap *helper;
 	
 	
-	public static VideoUpdateHandlerPtr skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if ((helper = auto_bitmap_alloc(128, 240)) == NULL)
 			return 1;
@@ -156,7 +156,7 @@ public class skyraid
 	}
 	
 	
-	public static VideoUpdateHandlerPtr skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap, Machine->pens[0], cliprect);
 	

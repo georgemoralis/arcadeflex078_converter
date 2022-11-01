@@ -12,7 +12,7 @@ public class labyrunr
 	static struct rectangle clip0, clip1;
 	
 	
-	public static PaletteInitHandlerPtr labyrunr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_labyrunr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,pal;
 	
@@ -98,7 +98,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
@@ -150,7 +150,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		struct rectangle finalclip0 = clip0, finalclip1 = clip1;
 	

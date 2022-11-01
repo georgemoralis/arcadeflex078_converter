@@ -52,7 +52,7 @@ public class xmen
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K053251_vh_start();
 	
@@ -88,7 +88,7 @@ public class xmen
 	}
 	
 	
-	public static VideoUpdateHandlerPtr xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layer[3];
 	

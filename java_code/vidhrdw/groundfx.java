@@ -26,7 +26,7 @@ public class groundfx
 	
 	/******************************************************************/
 	
-	public static VideoUpdateHandlerPtr groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
 		if (!spritelist)
@@ -231,7 +231,7 @@ public class groundfx
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 pivlayer[3];

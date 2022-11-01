@@ -35,7 +35,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static const struct atarimo_desc modesc =
 		{
@@ -97,7 +97,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* draw the playfield */
 		rampart_bitmap_render(bitmap, cliprect);

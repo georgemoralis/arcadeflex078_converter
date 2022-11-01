@@ -813,7 +813,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int bank_default[16] = {
 			0x0,0x1,0x2,0x3,
 			0x4,0x5,0x6,0x7,
@@ -923,7 +923,7 @@ public class system16
 		return 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -940,7 +940,7 @@ public class system16
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sys16_bg1_trans=1;
 	
 		background2 = tilemap_create(
@@ -1141,7 +1141,7 @@ public class system16
 		tilemap_set_enable( foreground2, sys18_fg2_active );
 	}
 	
-	public static VideoUpdateHandlerPtr system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_system16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 	
 		if( sys16_update_proc ) sys16_update_proc();
@@ -1166,7 +1166,7 @@ public class system16
 		draw_sprites( bitmap,cliprect,0 );
 	} };
 	
-	public static VideoUpdateHandlerPtr system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_system18  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 		if( sys16_update_proc ) sys16_update_proc();
 		update_page();
@@ -1377,7 +1377,7 @@ public class system16
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_hangon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (!sys16_refreshenable) return;
 		if( sys16_update_proc ) sys16_update_proc();
 		update_page();
@@ -1559,7 +1559,7 @@ public class system16
 	}
 	
 	
-	public static VideoUpdateHandlerPtr outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 		sys16_bg1_trans=1;
 		ret = video_start_system16();
@@ -1576,7 +1576,7 @@ public class system16
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_outrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if( sys16_refreshenable ){
 			if( sys16_update_proc ) sys16_update_proc();
 			update_page();
@@ -1641,7 +1641,7 @@ public class system16
 		return result;
 	}
 	
-	public static VideoUpdateHandlerPtr aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int ret;
 	
 		aburner_backdrop = aburner_unpack_backdrop( memory_region(REGION_GFX3) );
@@ -1885,7 +1885,7 @@ public class system16
 		tilemap_set_scrolly( foreground2, 0, -256+sys16_fg2_scrolly );
 	}
 	
-	public static VideoUpdateHandlerPtr aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_aburner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sys16_aburner_vh_screenrefresh_helper();
 		update_page();
 	

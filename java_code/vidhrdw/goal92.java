@@ -146,7 +146,7 @@ public class goal92
 	}
 	
 	
-	public static VideoUpdateHandlerPtr goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -162,7 +162,7 @@ public class goal92
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx( background_layer, 0, goal92_scrollram16[0] + 60);
 		tilemap_set_scrolly( background_layer, 0, goal92_scrollram16[1] + 8);

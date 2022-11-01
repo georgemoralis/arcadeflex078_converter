@@ -26,7 +26,7 @@ public class ninjaw
 	
 	/**********************************************************/
 	
-	static public static VideoUpdateHandlerPtr ninjaw_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_ninjaw_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int chips;
 	
@@ -60,7 +60,7 @@ public class ninjaw
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_hide_pixels = 22;
 		return video_start_ninjaw_core();
@@ -150,7 +150,7 @@ public class ninjaw
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[3], nodraw;
 	

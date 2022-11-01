@@ -26,7 +26,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr exterm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_exterm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -83,7 +83,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		return 0;
 	} };
@@ -96,7 +96,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int x, y;
 	

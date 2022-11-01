@@ -16,7 +16,7 @@ public class sprcros2
 	data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 	size_t sprcros2_spriteram_size;
 	
-	public static PaletteInitHandlerPtr sprcros2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_sprcros2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
@@ -118,7 +118,7 @@ public class sprcros2
 				0)
 	}
 	
-	public static VideoUpdateHandlerPtr sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sprcros2_bgtilemap = tilemap_create( get_sprcros2_bgtile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		sprcros2_fgtilemap = tilemap_create( get_sprcros2_fgtile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,32,32 );
@@ -177,7 +177,7 @@ public class sprcros2
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw( bitmap,cliprect,sprcros2_bgtilemap,0,0 );
 		sprcros2_draw_sprites(bitmap,cliprect);

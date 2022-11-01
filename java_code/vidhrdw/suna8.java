@@ -188,9 +188,9 @@ public class suna8
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr suna8_textdim0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(0);  } };
-	public static VideoUpdateHandlerPtr suna8_textdim8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(8);  } };
-	public static VideoUpdateHandlerPtr suna8_textdim12  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(12); } };
+	public static VideoUpdateHandlerPtr video_update_suna8_textdim0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(0);  } };
+	public static VideoUpdateHandlerPtr video_update_suna8_textdim8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(8);  } };
+	public static VideoUpdateHandlerPtr video_update_suna8_textdim12  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{ return suna8_vh_start_common(12); } };
 	
 	/***************************************************************************
 	
@@ -413,7 +413,7 @@ public class suna8
 	*/
 	#define TILEMAPS 0
 	
-	public static VideoUpdateHandlerPtr suna8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_suna8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#ifdef MAME_DEBUG
 	#if TILEMAPS

@@ -9,7 +9,7 @@ public class bladestl
 	
 	static int layer_colorbase[2];
 	
-	public static PaletteInitHandlerPtr bladestl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_bladestl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -52,7 +52,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 1;
@@ -72,7 +72,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K007342_tilemap_update();
 	

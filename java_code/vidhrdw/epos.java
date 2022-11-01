@@ -34,7 +34,7 @@ public class epos
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr epos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_epos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -107,7 +107,7 @@ public class epos
 	  To be used by bitmapped games not using sprites.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr epos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_epos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{

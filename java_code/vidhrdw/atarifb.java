@@ -51,7 +51,7 @@ public class atarifb
 	/***************************************************************************
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_generic())
 			return 1;
@@ -69,7 +69,7 @@ public class atarifb
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,obj;
 		int sprite_bank;

@@ -40,7 +40,7 @@ public class subs
 		0x02, 0x03		/* Left screen */
 	};
 	
-	static public static PaletteInitHandlerPtr subs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_subs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK - modified on video invert */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE - modified on video invert */

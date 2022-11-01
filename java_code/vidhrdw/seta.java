@@ -409,7 +409,7 @@ public class seta
 	}
 	
 	/* 2 layers */
-	public static VideoUpdateHandlerPtr seta_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -448,7 +448,7 @@ public class seta
 	
 	
 	/* 1 layer */
-	public static VideoUpdateHandlerPtr seta_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -480,7 +480,7 @@ public class seta
 		else return 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr twineagl_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_twineagl_1_layer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
@@ -514,7 +514,7 @@ public class seta
 	
 	
 	/* NO layers, only sprites */
-	public static VideoUpdateHandlerPtr seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = 0;
 		tilemap_1 = 0;
@@ -525,7 +525,7 @@ public class seta
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr oisipuzl_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_oisipuzl_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_seta_2_layers())
 			return 1;
@@ -553,7 +553,7 @@ public class seta
 	
 	   I think that's because this game's a prototype..
 	*/
-	public static PaletteInitHandlerPtr blandia  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_blandia  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -568,7 +568,7 @@ public class seta
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity,
 	   even if the low 2 bits are ignored (so there are only 4 different palettes) */
-	public static PaletteInitHandlerPtr gundhara  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_gundhara  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -582,7 +582,7 @@ public class seta
 	
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity */
-	public static PaletteInitHandlerPtr jjsquawk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_jjsquawk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -595,7 +595,7 @@ public class seta
 	
 	
 	/* layer 0 is 6 bit per pixel, but the color code has a 16 colors granularity */
-	public static PaletteInitHandlerPtr zingzip  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_zingzip  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -607,7 +607,7 @@ public class seta
 	
 	
 	/* 6 bit layer. The colors are still WRONG */
-	public static PaletteInitHandlerPtr usclssic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_usclssic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int color, pen;
 		for( color = 0; color < 32; color++ )
@@ -807,7 +807,7 @@ public class seta
 	
 	
 	/* For games without tilemaps */
-	public static VideoUpdateHandlerPtr seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(bitmap,Machine->pens[0],cliprect);
 		seta_draw_sprites(bitmap,cliprect);
@@ -815,7 +815,7 @@ public class seta
 	
 	
 	/* For games with 1 or 2 tilemaps */
-	public static VideoUpdateHandlerPtr seta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 		int enab_0, enab_1, x_0, x_1, y_0, y_1;

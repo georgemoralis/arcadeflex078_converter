@@ -173,7 +173,7 @@ public class sidearms
 		return ((offset & 0xf801) | ((offset & 0x0700) >> 7) | ((offset & 0x00fe) << 3)) & 0x7fff;
 	}
 	
-	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilerom = memory_region(REGION_GFX4);
 	
@@ -382,7 +382,7 @@ public class sidearms
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		sidearms_draw_starfield(bitmap);
 	
@@ -399,7 +399,7 @@ public class sidearms
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		buffer_spriteram_w(0, 0);
 	} };

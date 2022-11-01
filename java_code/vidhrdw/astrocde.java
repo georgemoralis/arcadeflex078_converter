@@ -56,7 +56,7 @@ public class astrocde
 	
 	
 	
-	public static PaletteInitHandlerPtr astrocde  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_astrocde  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* This routine builds a palette using a transformation from */
 		/* the YUV (Y, B-Y, R-Y) to the RGB color space */
@@ -694,7 +694,7 @@ public class astrocde
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		rng = auto_malloc(RNG_PERIOD * sizeof(rng[0]));
 		star = auto_malloc(SCREEN_WIDTH * MAX_LINES * sizeof(star[0]));
@@ -708,7 +708,7 @@ public class astrocde
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr astrocde_stars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_astrocde_stars  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int res;
 	
@@ -791,7 +791,7 @@ public class astrocde
 	
 	
 	
-	public static VideoUpdateHandlerPtr astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_astrocde  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -799,7 +799,7 @@ public class astrocde
 			wow_update_line(bitmap,i);
 	} };
 	
-	public static VideoUpdateHandlerPtr seawolf2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_seawolf2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int centre;
 		unsigned char *RAM = memory_region(REGION_CPU1);

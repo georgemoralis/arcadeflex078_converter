@@ -882,7 +882,7 @@ public class seattle
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr carnevil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_carnevil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int beamx, beamy;
 	

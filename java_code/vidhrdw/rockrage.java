@@ -10,7 +10,7 @@ public class rockrage
 	static int layer_colorbase[2];
 	static int rockrage_vreg;
 	
-	public static PaletteInitHandlerPtr rockrage  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_rockrage  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
@@ -70,7 +70,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		layer_colorbase[0] = 0x00;
 		layer_colorbase[1] = 0x10;
@@ -93,7 +93,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K007342_tilemap_update();
 	

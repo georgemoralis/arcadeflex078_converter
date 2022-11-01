@@ -100,7 +100,7 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		astinvad_adjust = 0x80;
 	
@@ -108,7 +108,7 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr spcking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spcking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		astinvad_adjust = 0;
 	
@@ -116,7 +116,7 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		colorram = auto_malloc(0x2000);
 	
@@ -131,7 +131,7 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (get_vh_global_attribute_changed())
 		{
@@ -147,7 +147,7 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (astinvad_flash)
 		{

@@ -36,7 +36,7 @@ public class dynax
 	
 	
 	/* 0 B01234 G01234 R01234 */
-	public static PaletteInitHandlerPtr sprtmtch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_sprtmtch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -549,7 +549,7 @@ public class dynax
 		trigger_irq = 1;
 	}
 	
-	public static VideoUpdateHandlerPtr hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -566,7 +566,7 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -585,14 +585,14 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mcnpshnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mcnpshnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (video_start_hnoridur())	return 1;
 		priority_table = priority_mcnpshnt;
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
@@ -607,7 +607,7 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
@@ -813,7 +813,7 @@ public class dynax
 	}
 	
 	
-	public static VideoUpdateHandlerPtr hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = ~dynax_layer_enable;
 		int lay[4];
@@ -853,7 +853,7 @@ public class dynax
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = ~BITSWAP8(hanamai_priority, 7,6,5,4, 0,1,2,3);
 		int lay[4];
@@ -888,7 +888,7 @@ public class dynax
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = ~dynax_layer_enable;
 	
@@ -905,7 +905,7 @@ public class dynax
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = ~dynax_layer_enable;
 	

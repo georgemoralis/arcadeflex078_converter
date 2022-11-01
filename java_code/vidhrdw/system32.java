@@ -1236,7 +1236,7 @@ public class system32
 		get_system32_tile_info(tile_index,3);
 	}
 	
-	public static VideoUpdateHandlerPtr system32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
+	public static VideoUpdateHandlerPtr video_update_system32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
 		int i;
 	
 		system32_layer_tilemap[0] = tilemap_create(get_system32_layer0_tile_info,sys32_bg_map,TILEMAP_TRANSPARENT, 16, 16,64,32);
@@ -1387,7 +1387,7 @@ public class system32
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr system32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
+	public static VideoUpdateHandlerPtr video_update_system32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) {
 		int i;
 	
 		int monitor_setting;

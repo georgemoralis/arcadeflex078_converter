@@ -77,7 +77,7 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	public static PaletteInitHandlerPtr drmicro  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_drmicro  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -106,7 +106,7 @@ public class drmicro
 			colortable[i] = color_prom[i] & 0x0f;
 	} };
 	
-	public static VideoUpdateHandlerPtr drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		drmicro_videoram = auto_malloc(0x1000);
 	
@@ -121,7 +121,7 @@ public class drmicro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,adr,g;
 		int chr,col,attr;

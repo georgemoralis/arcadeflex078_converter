@@ -30,7 +30,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr dogfgt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_dogfgt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -85,7 +85,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 	
@@ -229,7 +229,7 @@ public class dogfgt
 	}
 	
 	
-	public static VideoUpdateHandlerPtr dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		static int lastflip,lastpixcolor;
 		int offs;

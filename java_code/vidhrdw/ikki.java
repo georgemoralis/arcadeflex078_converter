@@ -19,7 +19,7 @@ public class ikki
 	
 	static UINT8 ikki_flipscreen, ikki_scroll[2];
 	
-	public static PaletteInitHandlerPtr ikki  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_ikki  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -70,7 +70,7 @@ public class ikki
 		ikki_flipscreen = (data >> 2) & 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr ikki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ikki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	
 		int offs,chr,col,px,py,f,bank,d;

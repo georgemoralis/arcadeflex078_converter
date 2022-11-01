@@ -62,7 +62,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate memory */
 	    leland_video_ram = auto_malloc(VRAM_SIZE);
@@ -78,7 +78,7 @@ public class leland
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* first do the standard stuff */
 		if (video_start_leland())
@@ -482,7 +482,7 @@ public class leland
 	}
 	
 	
-	public static VideoUpdateHandlerPtr leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* update anything remaining */
 		update_for_scanline(VIDEO_HEIGHT * 8);
@@ -499,7 +499,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const UINT8 *background_prom = memory_region(REGION_USER1);
 		const struct GfxElement *gfx = Machine->gfx[0];
@@ -550,7 +550,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const struct GfxElement *gfx = Machine->gfx[0];
 		int xcoarse = xscroll / 8;

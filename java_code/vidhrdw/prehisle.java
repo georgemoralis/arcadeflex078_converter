@@ -105,7 +105,7 @@ public class prehisle
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg2_tilemap = tilemap_create(get_bg2_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 16, 16, 1024, 32);
@@ -160,7 +160,7 @@ public class prehisle
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, cliprect, bg2_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);

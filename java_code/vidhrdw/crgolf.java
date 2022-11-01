@@ -157,7 +157,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr crgolf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_crgolf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -195,7 +195,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate temporary bitmaps */
 		screena = auto_bitmap_alloc(256, 256);
@@ -220,7 +220,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int flip = *crgolf_screen_flip & 1;
 	

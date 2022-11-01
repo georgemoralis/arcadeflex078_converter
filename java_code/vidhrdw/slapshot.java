@@ -37,7 +37,7 @@ public class slapshot
 	
 	/**********************************************************/
 	
-	public static VideoUpdateHandlerPtr slapshot_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_slapshot_core  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	
@@ -78,7 +78,7 @@ public class slapshot
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_hide_pixels = 3;
 		taito_sprite_type = 2;
@@ -504,7 +504,7 @@ public class slapshot
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr taito_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taito_no_buffer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		taito_update_sprites_active_area();
 	
@@ -528,7 +528,7 @@ public class slapshot
 	a bg layer given priority over some sprites.
 	********************************************************************/
 	
-	public static VideoUpdateHandlerPtr slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_slapshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		UINT8 layer[5];
 		UINT8 tilepri[5];

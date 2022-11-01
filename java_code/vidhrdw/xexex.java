@@ -38,7 +38,7 @@ public class xexex
 		*color = layer_colorbase[layer] | (*color>>2 & 0x0f);
 	}
 	
-	public static VideoUpdateHandlerPtr xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int region = REGION_GFX3;
 	
@@ -86,7 +86,7 @@ public class xexex
 		SWAP(2, 3)
 	}
 	
-	public static VideoUpdateHandlerPtr xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];

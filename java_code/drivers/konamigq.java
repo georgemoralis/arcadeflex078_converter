@@ -223,7 +223,7 @@ public class konamigq
 	
 	/* Video */
 	
-	static public static VideoUpdateHandlerPtr konamigq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	static public static VideoUpdateHandlerPtr video_update_konamigq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		video_update_psx( bitmap, cliprect );
 	

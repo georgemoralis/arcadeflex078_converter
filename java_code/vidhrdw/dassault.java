@@ -154,7 +154,7 @@ public class dassault
 		return ((bank>>4)&0xf)<<12;
 	}
 	
-	public static VideoUpdateHandlerPtr dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (deco16_2_video_init(0))
 			return 1;
@@ -171,7 +171,7 @@ public class dassault
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Update tilemaps */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );

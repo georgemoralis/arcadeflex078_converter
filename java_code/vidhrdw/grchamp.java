@@ -53,7 +53,7 @@ public class grchamp
 		grchamp_rain_ypos = data;
 	} };
 	
-	public static PaletteInitHandlerPtr grchamp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_grchamp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 		for( i=0; i<0x20; i++ )
@@ -144,7 +144,7 @@ public class grchamp
 		return offset;
 	}
 	
-	public static VideoUpdateHandlerPtr grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		headlight_bitmap = auto_bitmap_alloc( 64,128 );
 		if( !headlight_bitmap )
@@ -408,7 +408,7 @@ public class grchamp
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int bFog = grchamp_videoreg0&0x40;
 	
 		draw_background( bitmap,cliprect ); /* 3 layers */

@@ -22,7 +22,7 @@ public class taxidrvr
 	
 	
 	
-	public static VideoUpdateHandlerPtr taxidrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_taxidrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
 		int sx,sy;

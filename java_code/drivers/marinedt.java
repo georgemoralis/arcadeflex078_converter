@@ -376,7 +376,7 @@ public class marinedt
 		{ -1 }
 	};
 	
-	public static PaletteInitHandlerPtr marinedt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_marinedt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,r,b,g;
 	
@@ -408,7 +408,7 @@ public class marinedt
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr marinedt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_marinedt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs,sx,sy,flipx,flipy;
 	#if 0

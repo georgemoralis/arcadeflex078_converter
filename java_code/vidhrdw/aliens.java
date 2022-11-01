@@ -57,7 +57,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		paletteram = auto_malloc(0x400);
 		if (!paletteram)
@@ -83,7 +83,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		K052109_tilemap_update();
 	

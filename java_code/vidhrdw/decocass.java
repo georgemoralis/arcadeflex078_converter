@@ -600,7 +600,7 @@ public class decocass
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		if (NULL == (sprite_dirty = auto_malloc(256)) ||
 			NULL == (char_dirty = auto_malloc(1024)) ||
@@ -644,7 +644,7 @@ public class decocass
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int scrollx, scrolly_l, scrolly_r;
 		struct rectangle clip;

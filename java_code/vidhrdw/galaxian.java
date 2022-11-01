@@ -170,7 +170,7 @@ public class galaxian
 	  The RGB outputs have a 470 ohm pull-down each.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr galaxian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_galaxian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -209,7 +209,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+1,0xef,0xef,0xef);
 	} };
 	
-	public static PaletteInitHandlerPtr scramble  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_scramble  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_init_galaxian(colortable, color_prom);
 	
@@ -218,7 +218,7 @@ public class galaxian
 		palette_set_color(BACKGROUND_COLOR_BASE,0,0,0x56);
 	} };
 	
-	public static PaletteInitHandlerPtr moonwar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_moonwar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_init_scramble(colortable, color_prom);
 	
@@ -227,7 +227,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+0,0xef,0xef,0x97);
 	} };
 	
-	public static PaletteInitHandlerPtr turtles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_turtles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -251,7 +251,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr stratgyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_stratgyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -275,7 +275,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr frogger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_frogger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		palette_init_galaxian(colortable, color_prom);
 	
@@ -284,7 +284,7 @@ public class galaxian
 		palette_set_color(BACKGROUND_COLOR_BASE,0,0,0x47);
 	} };
 	
-	public static PaletteInitHandlerPtr rockclim  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_rockclim  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -332,7 +332,7 @@ public class galaxian
 	  The RGB outputs have a 470 ohm pull-down each.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr darkplnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_darkplnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -366,7 +366,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+1,0x00,0x00,0xef);
 	} };
 	
-	public static PaletteInitHandlerPtr minefld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_minefld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -397,7 +397,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr rescue  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_rescue  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -418,7 +418,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr mariner  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	public static PaletteInitHandlerPtr palette_init_mariner  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
 	
@@ -494,7 +494,7 @@ public class galaxian
 		return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr galaxian_plain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galaxian_plain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_common(tilemap_scan_rows);
 	
@@ -504,7 +504,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -515,7 +515,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr gmgalax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gmgalax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -526,7 +526,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr mooncrst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mooncrst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -536,7 +536,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr mooncrgx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mooncrgx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -546,7 +546,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr moonqsr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_moonqsr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -556,7 +556,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr mshuttle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mshuttle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -566,7 +566,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr pisces  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pisces  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -576,7 +576,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr gteikob2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_gteikob2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_pisces();
 	
@@ -585,7 +585,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr batman2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_batman2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -595,7 +595,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr scramble  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_scramble  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -608,7 +608,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr sfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_sfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_common(tilemap_scan_cols);
 	
@@ -624,7 +624,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr turtles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_turtles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -633,7 +633,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr theend  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_theend  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 	
@@ -642,7 +642,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr darkplnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_darkplnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -651,7 +651,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr rescue  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rescue  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -662,7 +662,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr minefld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_minefld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -673,7 +673,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr stratgyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_stratgyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -682,7 +682,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr ckongs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ckongs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -691,7 +691,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr calipso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_calipso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -704,7 +704,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr mariner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mariner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -719,7 +719,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr froggers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_froggers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -728,7 +728,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr frogger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_frogger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_froggers();
 	
@@ -738,7 +738,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr froggrmc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_froggrmc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_froggers();
 	
@@ -747,7 +747,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr jumpbug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_jumpbug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -759,7 +759,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr mimonkey  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_mimonkey  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -769,7 +769,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr dkongjrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_dkongjrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian_plain();
 	
@@ -781,7 +781,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoUpdateHandlerPtr newsin7  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_newsin7  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_scramble();
 	
@@ -802,7 +802,7 @@ public class galaxian
 		if (gfxbank[2])	*code|=0x40;
 	}
 	
-	public static VideoUpdateHandlerPtr rockclim  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_rockclim  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int ret = video_start_galaxian();
 		rockclim_tilemap = tilemap_create(rockclim_get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
@@ -825,7 +825,7 @@ public class galaxian
 		SET_TILE_INFO(0,code,color,0)
 	}
 	
-	public static VideoUpdateHandlerPtr drivfrcg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_drivfrcg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap = tilemap_create(drivfrcg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -1910,7 +1910,7 @@ public class galaxian
 	}
 	
 	
-	public static VideoUpdateHandlerPtr galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		draw_background(bitmap);
 	

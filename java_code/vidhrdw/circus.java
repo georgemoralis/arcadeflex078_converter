@@ -116,7 +116,7 @@ public class circus
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoUpdateHandlerPtr circus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_circus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
@@ -200,7 +200,7 @@ public class circus
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
-	public static VideoUpdateHandlerPtr circus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_circus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		circus_draw_fg(bitmap);
@@ -249,7 +249,7 @@ public class circus
 				&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
-	public static VideoUpdateHandlerPtr robotbwl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_robotbwl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		robotbwl_draw_scoreboard(bitmap);
@@ -267,7 +267,7 @@ public class circus
 			&Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
-	public static VideoUpdateHandlerPtr crash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_crash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		crash_draw_car(bitmap);
@@ -353,7 +353,7 @@ public class circus
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr ripcord  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_ripcord  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 		ripcord_draw_skydiver(bitmap);

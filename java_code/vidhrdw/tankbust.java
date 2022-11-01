@@ -87,7 +87,7 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* not scrollable */
 		txt_tilemap = tilemap_create(get_txt_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
@@ -249,7 +249,7 @@ public class tankbust
 	}
 	
 	
-	public static VideoUpdateHandlerPtr tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 	#if 0
 		int i;

@@ -76,7 +76,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate tilemaps */
 		bg_tilemap = tilemap_create(get_fromance_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8,4, 64,64);
@@ -101,7 +101,7 @@ public class fromance
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr nekkyoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_nekkyoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate tilemaps */
 		bg_tilemap = tilemap_create(get_nekkyoku_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8,4, 64,64);
@@ -408,7 +408,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_fromance  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, scrollx[0]);
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly[0]);
@@ -420,7 +420,7 @@ public class fromance
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr pipedrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_pipedrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* there seems to be no logical mapping for the X scroll register -- maybe it's gone */
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly[1]);

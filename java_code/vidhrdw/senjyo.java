@@ -124,7 +124,7 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		bgbitmap = auto_bitmap_alloc(256,256);
 		if (!bgbitmap)
@@ -353,7 +353,7 @@ public class senjyo
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int i;
 	

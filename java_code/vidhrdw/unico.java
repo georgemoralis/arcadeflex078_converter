@@ -149,7 +149,7 @@ public class unico
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	public static VideoUpdateHandlerPtr unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -179,7 +179,7 @@ public class unico
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_0 = tilemap_create(	get_tile_info32_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
@@ -349,7 +349,7 @@ public class unico
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	
@@ -399,7 +399,7 @@ public class unico
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
+	public static VideoUpdateHandlerPtr video_update_zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int layers_ctrl = -1;
 	

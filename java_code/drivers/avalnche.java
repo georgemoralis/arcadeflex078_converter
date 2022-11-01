@@ -65,7 +65,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr avalnche  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
+	static public static PaletteInitHandlerPtr palette_init_avalnche  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		/* 2 colors in the palette: black & white */
 		palette_set_color(0,0x00,0x00,0x00);
