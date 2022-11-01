@@ -139,13 +139,13 @@ public class trackfld
 	
 		for (offs = spriteram_size - 2; offs >= 0; offs -= 2)
 		{
-			int attr = spriteram_2[offs];
+			int attr = spriteram_2.read(offs);
 			int code = spriteram.read(offs + 1);
 			int color = attr & 0x0f;
 			int flipx = ~attr & 0x40;
 			int flipy = attr & 0x80;
 			int sx = spriteram.read(offs)- 1;
-			int sy = 240 - spriteram_2[offs + 1];
+			int sy = 240 - spriteram_2.read(offs + 1);
 	
 			if (flip_screen != 0)
 			{

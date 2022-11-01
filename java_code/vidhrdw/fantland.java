@@ -76,8 +76,8 @@ public class fantland
 			idx		=	ram2[0] * 4;
 	
 			/* Fetch the offsets */
-			yoffs	=	spriteram_2[idx + 0] + (spriteram_2[idx + 1] << 8);
-			xoffs	=	spriteram_2[idx + 2] + (spriteram_2[idx + 3] << 8);
+			yoffs	=	spriteram_2.read(idx + 0)+ (spriteram_2.read(idx + 1)<< 8);
+			xoffs	=	spriteram_2.read(idx + 2)+ (spriteram_2.read(idx + 3)<< 8);
 	
 			y		+=	yoffs;
 			x		+=	xoffs;

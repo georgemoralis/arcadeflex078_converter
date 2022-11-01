@@ -180,9 +180,9 @@ public class srmp2
 			/* draw this column */
 			for (offs = 0; offs < 0x40/2; offs += 2/2)
 			{
-				int code	=	(((spriteram_3[((col)&0x0f) * 0x40/2 + offs + 0x800/2] & 0xff) << 8) + (spriteram_2[((col)&0xf) * 0x40/2 + offs + 0x800/2] & 0xff));
+				int code	=	(((spriteram_3.read(((col)&0x0f) * 0x40/2 + offs + 0x800/2)& 0xff) << 8) + (spriteram_2.read(((col)&0xf) * 0x40/2 + offs + 0x800/2)& 0xff));
 	
-				int color   =	 ((spriteram_3[((col)&0x0f) * 0x40/2 + offs + 0xc00/2] & 0xf8) >> 3);
+				int color   =	 ((spriteram_3.read(((col)&0x0f) * 0x40/2 + offs + 0xc00/2)& 0xf8) >> 3);
 	
 				int flipx	=	code & 0x8000;
 				int flipy	=	code & 0x4000;
@@ -273,12 +273,12 @@ public class srmp2
 	
 		for (offs = 0x200 - 1; offs >= 0; offs--)
 		{
-			int code	=	(((spriteram_3[offs + 0x000] & 0xff) << 8) + (spriteram_2[offs + 0x000] & 0xff));
-			int gfxbank	=	  (spriteram_3[offs + 0x000] & 0x20);
+			int code	=	(((spriteram_3.read(offs + 0x000)& 0xff) << 8) + (spriteram_2.read(offs + 0x000)& 0xff));
+			int gfxbank	=	  (spriteram_3.read(offs + 0x000)& 0x20);
 	
-			int color	=	((spriteram_3[offs + 0x200] & 0xf8) >> 3);
+			int color	=	((spriteram_3.read(offs + 0x200)& 0xf8) >> 3);
 	
-			int x		=	(((spriteram_3[offs + 0x200] & 0x01) << 8) + (spriteram_2[offs + 0x200] & 0xff));
+			int x		=	(((spriteram_3.read(offs + 0x200)& 0x01) << 8) + (spriteram_2.read(offs + 0x200)& 0xff));
 			int y		=	  (spriteram.read(offs + 0x000)& 0xff);
 	
 			int flipx	=	code & 0x8000;

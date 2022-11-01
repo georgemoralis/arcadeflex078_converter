@@ -105,24 +105,24 @@ public class marvins
 	
 	public static ReadHandlerPtr marvins_foreground_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return spriteram_2[offset];
+		return spriteram_2.read(offset);
 	} };
 	public static WriteHandlerPtr marvins_foreground_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset < 0x800 && spriteram_2[offset] != data) tilemap_mark_tile_dirty(fg_tilemap,offset);
+		if (offset < 0x800 && spriteram_2.read(offset)!= data) tilemap_mark_tile_dirty(fg_tilemap,offset);
 	
-		spriteram_2[offset] = data;
+		spriteram_2.write(offset,data);
 	} };
 	
 	public static ReadHandlerPtr marvins_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return spriteram_3[offset];
+		return spriteram_3.read(offset);
 	} };
 	public static WriteHandlerPtr marvins_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (offset < 0x800 && spriteram_3[offset] != data) tilemap_mark_tile_dirty(bg_tilemap,offset);
+		if (offset < 0x800 && spriteram_3.read(offset)!= data) tilemap_mark_tile_dirty(bg_tilemap,offset);
 	
-		spriteram_3[offset] = data;
+		spriteram_3.write(offset,data);
 	} };
 	
 	public static ReadHandlerPtr marvins_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -146,7 +146,7 @@ public class marvins
 	{
 		SET_TILE_INFO(
 				2,
-				spriteram_3[tile_index],
+				spriteram_3.read(tile_index),
 				0,
 				0)
 	}
@@ -155,7 +155,7 @@ public class marvins
 	{
 		SET_TILE_INFO(
 				1,
-				spriteram_2[tile_index],
+				spriteram_2.read(tile_index),
 				0,
 				0)
 	}

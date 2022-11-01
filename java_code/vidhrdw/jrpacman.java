@@ -294,7 +294,7 @@ public class jrpacman
 					(spriteram.read(offs + 1)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
-					272 - spriteram_2[offs + 1],spriteram_2[offs]-31,
+					272 - spriteram_2.read(offs + 1),spriteram_2.read(offs)-31,
 					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 		/* the first two sprites must be offset one pixel to the left */
@@ -305,7 +305,7 @@ public class jrpacman
 					(spriteram.read(offs + 1)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
-					272 - spriteram_2[offs + 1],spriteram_2[offs]-30,
+					272 - spriteram_2.read(offs + 1),spriteram_2.read(offs)-30,
 					Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	

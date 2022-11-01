@@ -158,12 +158,12 @@ public class generic
 	
 	public static ReadHandlerPtr spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return spriteram_2[offset];
+		return spriteram_2.read(offset);
 	} };
 	
 	public static WriteHandlerPtr spriteram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		spriteram_2[offset] = data;
+		spriteram_2.write(offset,data);
 	} };
 	
 	/* Mish:  171099

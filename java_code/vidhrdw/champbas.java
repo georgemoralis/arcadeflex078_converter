@@ -148,8 +148,8 @@ public class champbas
 			int color = spriteram.read(offs + 1);
 			int flipx = spriteram.read(offs)& 0x01;
 			int flipy = spriteram.read(offs)& 0x02;
-			int sx = ((256 + 16 - spriteram_2[offs + 1]) & 0xff) - 16;
-			int sy = spriteram_2[offs] - 16;
+			int sx = ((256 + 16 - spriteram_2.read(offs + 1)) & 0xff) - 16;
+			int sy = spriteram_2.read(offs)- 16;
 	
 			drawgfx(bitmap,
 				Machine.gfx[2 + gfxbank],

@@ -107,16 +107,16 @@ public class mjkjidai
 	
 		for (offs = 0x20-2;offs >= 0;offs -= 2)
 		{
-			int code = spriteram.read(offs)+ ((spriteram_2[offs] & 0x1f) << 8);
-			int color = (spriteram_3[offs] & 0x78) >> 3;
-			int sx = 2*spriteram_2[offs+1];
+			int code = spriteram.read(offs)+ ((spriteram_2.read(offs)& 0x1f) << 8);
+			int color = (spriteram_3.read(offs)& 0x78) >> 3;
+			int sx = 2*spriteram_2.read(offs+1);
 			int sy = 240 - spriteram.read(offs+1);
 			int flipx = code & 1;
 			int flipy = code & 2;
 	
 			code >>= 2;
 	
-			sx += (spriteram_2[offs] & 0x20) >> 5;	// not sure about this
+			sx += (spriteram_2.read(offs)& 0x20) >> 5;	// not sure about this
 	
 			if (flip_screen != 0)
 			{

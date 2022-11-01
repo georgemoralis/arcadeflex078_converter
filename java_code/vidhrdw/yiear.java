@@ -130,12 +130,12 @@ public class yiear
 		for (offs = spriteram_size - 2;offs >= 0;offs -= 2)
 		{
 			int attr = spriteram.read(offs);
-			int code = spriteram_2[offs + 1] + 256 * (attr & 0x01);
+			int code = spriteram_2.read(offs + 1)+ 256 * (attr & 0x01);
 			int color = 0;
 			int flipx = ~attr & 0x40;
 			int flipy = attr & 0x80;
 			int sy = 240 - spriteram.read(offs + 1);
-			int sx = spriteram_2[offs];
+			int sx = spriteram_2.read(offs);
 	
 			if (flip_screen != 0)
 			{
