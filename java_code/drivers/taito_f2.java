@@ -651,7 +651,7 @@ public class taito_f2
 	          ----------------------	-----------------------------------------------
 	finalb    8000 0300    0000 0000	Needs partial buffering like dondokod to avoid glitches
 	dondokod  8000 0000/8  0000 0000	IRQ6 just sets a flag. IRQ5 waits for that flag,
-	                                	toggles ctrl register 0000<->0008, and copies bytes
+	                                	toggles ctrl register 0000<.0008, and copies bytes
 										0 and 8 *ONLY* of sprite data (code, color, flip,
 										ctrl). The other bytes of sprite data (coordinates
 										and zoom) are updated by the main program.

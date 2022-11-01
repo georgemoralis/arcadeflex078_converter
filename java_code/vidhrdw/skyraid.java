@@ -44,9 +44,9 @@ public class skyraid
 	
 			y = 136 + 16 * (i ^ 1);
 	
-			for (x = 0; x < bitmap->width; x += 16)
+			for (x = 0; x < bitmap.width; x += 16)
 			{
-				drawgfx(bitmap, Machine->gfx[0], *p++, 0, 0, 0,
+				drawgfx(bitmap, Machine.gfx[0], *p++, 0, 0, 0,
 					x, y, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}
@@ -60,13 +60,13 @@ public class skyraid
 		int x;
 		int y;
 	
-		for (y = 0; y < bitmap->height; y++)
+		for (y = 0; y < bitmap.height; y++)
 		{
 			int offset = (16 * skyraid_scroll + 16 * ((y + 1) / 2)) & 0x7FF;
 	
 			x = 0;
 	
-			while (x < bitmap->width)
+			while (x < bitmap.width)
 			{
 				UINT8 val = p[offset++];
 	
@@ -80,7 +80,7 @@ public class skyraid
 				r.max_y = y + 1;
 				r.max_x = x + 31 - count;
 	
-				fillbitmap(bitmap, Machine->pens[color], &r);
+				fillbitmap(bitmap, Machine.pens[color], &r);
 	
 				x += 32 - count;
 			}
@@ -103,7 +103,7 @@ public class skyraid
 	
 			if ((flag & 1) != 0)
 			{
-				drawgfx(bitmap, Machine->gfx[1],
+				drawgfx(bitmap, Machine.gfx[1],
 					code ^ 15, code >> 3, 0, 0,
 					horz / 2, vert, cliprect, TRANSPARENCY_PEN, 2);
 			}
@@ -126,7 +126,7 @@ public class skyraid
 			vert -= 15;
 			horz -= 31;
 	
-			drawgfx(bitmap, Machine->gfx[2],
+			drawgfx(bitmap, Machine.gfx[2],
 				code ^ 15, 0, 0, 0,
 				horz / 2, vert, cliprect, TRANSPARENCY_PEN, 0);
 		}
@@ -140,10 +140,10 @@ public class skyraid
 		int x;
 		int y;
 	
-		for (y = 0; y < dst->height; y++)
+		for (y = 0; y < dst.height; y++)
 		{
-			UINT16* pSrc = src->line[y];
-			UINT16* pDst = dst->line[y];
+			UINT16* pSrc = src.line[y];
+			UINT16* pDst = dst.line[y];
 	
 			int x1 = 0x000 + p[(y & ~1) + 0];
 			int x2 = 0x100 + p[(y & ~1) + 1];
@@ -158,7 +158,7 @@ public class skyraid
 	
 	public static VideoUpdateHandlerPtr video_update_skyraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		draw_terrain(helper);
 		draw_sprites(helper, cliprect);

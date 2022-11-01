@@ -1989,7 +1989,7 @@ public class z180
 	
 		if (daisy_chain != 0)
 		{
-			while( daisy_chain->irq_param != -1 && Z180.irq_max < Z80_MAXDAISY )
+			while( daisy_chain.irq_param != -1 && Z180.irq_max < Z80_MAXDAISY )
 			{
 				/* set callbackhandler after reti */
 				Z180.irq[Z180.irq_max] = *daisy_chain;
@@ -2395,7 +2395,7 @@ public class z180
 				daisychain = (*Z180.irq_callback)(irqline);
 				device = daisychain >> 8;
 				int_state = daisychain & 0xff;
-				LOG(("Z180 #%d daisy chain $%04x -> device %d, state $%02x",cpu_getactivecpu(), daisychain, device, int_state));
+				LOG(("Z180 #%d daisy chain $%04x . device %d, state $%02x",cpu_getactivecpu(), daisychain, device, int_state));
 	
 				if( Z180.int_state[device] != int_state )
 				{
@@ -2456,49 +2456,49 @@ public class z180
 	
 		switch( regnum )
 		{
-		case CPU_INFO_REG+Z180_PC: sprintf(buffer[which], "PC:%04X", r->PC.w.l); break;
-		case CPU_INFO_REG+Z180_SP: sprintf(buffer[which], "SP:%04X", r->SP.w.l); break;
-		case CPU_INFO_REG+Z180_AF: sprintf(buffer[which], "AF:%04X", r->AF.w.l); break;
-		case CPU_INFO_REG+Z180_BC: sprintf(buffer[which], "BC:%04X", r->BC.w.l); break;
-		case CPU_INFO_REG+Z180_DE: sprintf(buffer[which], "DE:%04X", r->DE.w.l); break;
-		case CPU_INFO_REG+Z180_HL: sprintf(buffer[which], "HL:%04X", r->HL.w.l); break;
-		case CPU_INFO_REG+Z180_IX: sprintf(buffer[which], "IX:%04X", r->IX.w.l); break;
-		case CPU_INFO_REG+Z180_IY: sprintf(buffer[which], "IY:%04X", r->IY.w.l); break;
-		case CPU_INFO_REG+Z180_R:  sprintf(buffer[which], "R   :%02X", (r->R & 0x7f) | (r->R2 & 0x80)); break;
-		case CPU_INFO_REG+Z180_I:  sprintf(buffer[which], "I   :%02X", r->I); break;
-		case CPU_INFO_REG+Z180_IL: sprintf(buffer[which], "IL  :%02X", r->io[Z180_IL-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_AF2: sprintf(buffer[which], "AF'%04X", r->AF2.w.l); break;
-		case CPU_INFO_REG+Z180_BC2: sprintf(buffer[which], "BC'%04X", r->BC2.w.l); break;
-		case CPU_INFO_REG+Z180_DE2: sprintf(buffer[which], "DE'%04X", r->DE2.w.l); break;
-		case CPU_INFO_REG+Z180_HL2: sprintf(buffer[which], "HL'%04X", r->HL2.w.l); break;
-		case CPU_INFO_REG+Z180_IM: sprintf(buffer[which], "IM  :%X", r->IM); break;
-		case CPU_INFO_REG+Z180_IFF1: sprintf(buffer[which], "IFF1:%X", r->IFF1); break;
-		case CPU_INFO_REG+Z180_IFF2: sprintf(buffer[which], "IFF2:%X", r->IFF2); break;
-		case CPU_INFO_REG+Z180_HALT: sprintf(buffer[which], "HALT:%X", r->HALT); break;
-		case CPU_INFO_REG+Z180_INT0_STATE: sprintf(buffer[which], "INT0:%X", r->irq_state[0]); break;
-		case CPU_INFO_REG+Z180_INT1_STATE: sprintf(buffer[which], "INT1:%X", r->irq_state[1]); break;
-		case CPU_INFO_REG+Z180_INT2_STATE: sprintf(buffer[which], "INT2:%X", r->irq_state[2]); break;
-		case CPU_INFO_REG+Z180_DC0: if(Z180.irq_max >= 1) sprintf(buffer[which], "DC0:%X", r->int_state[0]); break;
-		case CPU_INFO_REG+Z180_DC1: if(Z180.irq_max >= 2) sprintf(buffer[which], "DC1:%X", r->int_state[1]); break;
-		case CPU_INFO_REG+Z180_DC2: if(Z180.irq_max >= 3) sprintf(buffer[which], "DC2:%X", r->int_state[2]); break;
-		case CPU_INFO_REG+Z180_DC3: if(Z180.irq_max >= 4) sprintf(buffer[which], "DC3:%X", r->int_state[3]); break;
-		case CPU_INFO_REG+Z180_CCR:  sprintf(buffer[which], "CCR :%02X", r->io[Z180_CCR-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_ITC:  sprintf(buffer[which], "ITC :%02X", r->io[Z180_ITC-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_CBR:  sprintf(buffer[which], "CBR :%02X", r->io[Z180_CBR-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_BBR:  sprintf(buffer[which], "BBR :%02X", r->io[Z180_BBR-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_CBAR: sprintf(buffer[which], "CBAR:%02X", r->io[Z180_CBAR-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_OMCR: sprintf(buffer[which], "OMCR:%02X", r->io[Z180_OMCR-Z180_CNTLA0]); break;
-		case CPU_INFO_REG+Z180_IOCR: sprintf(buffer[which], "IOCR:%02X", r->io[Z180_IOCR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_PC: sprintf(buffer[which], "PC:%04X", r.PC.w.l); break;
+		case CPU_INFO_REG+Z180_SP: sprintf(buffer[which], "SP:%04X", r.SP.w.l); break;
+		case CPU_INFO_REG+Z180_AF: sprintf(buffer[which], "AF:%04X", r.AF.w.l); break;
+		case CPU_INFO_REG+Z180_BC: sprintf(buffer[which], "BC:%04X", r.BC.w.l); break;
+		case CPU_INFO_REG+Z180_DE: sprintf(buffer[which], "DE:%04X", r.DE.w.l); break;
+		case CPU_INFO_REG+Z180_HL: sprintf(buffer[which], "HL:%04X", r.HL.w.l); break;
+		case CPU_INFO_REG+Z180_IX: sprintf(buffer[which], "IX:%04X", r.IX.w.l); break;
+		case CPU_INFO_REG+Z180_IY: sprintf(buffer[which], "IY:%04X", r.IY.w.l); break;
+		case CPU_INFO_REG+Z180_R:  sprintf(buffer[which], "R   :%02X", (r.R & 0x7f) | (r.R2 & 0x80)); break;
+		case CPU_INFO_REG+Z180_I:  sprintf(buffer[which], "I   :%02X", r.I); break;
+		case CPU_INFO_REG+Z180_IL: sprintf(buffer[which], "IL  :%02X", r.io[Z180_IL-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_AF2: sprintf(buffer[which], "AF'%04X", r.AF2.w.l); break;
+		case CPU_INFO_REG+Z180_BC2: sprintf(buffer[which], "BC'%04X", r.BC2.w.l); break;
+		case CPU_INFO_REG+Z180_DE2: sprintf(buffer[which], "DE'%04X", r.DE2.w.l); break;
+		case CPU_INFO_REG+Z180_HL2: sprintf(buffer[which], "HL'%04X", r.HL2.w.l); break;
+		case CPU_INFO_REG+Z180_IM: sprintf(buffer[which], "IM  :%X", r.IM); break;
+		case CPU_INFO_REG+Z180_IFF1: sprintf(buffer[which], "IFF1:%X", r.IFF1); break;
+		case CPU_INFO_REG+Z180_IFF2: sprintf(buffer[which], "IFF2:%X", r.IFF2); break;
+		case CPU_INFO_REG+Z180_HALT: sprintf(buffer[which], "HALT:%X", r.HALT); break;
+		case CPU_INFO_REG+Z180_INT0_STATE: sprintf(buffer[which], "INT0:%X", r.irq_state[0]); break;
+		case CPU_INFO_REG+Z180_INT1_STATE: sprintf(buffer[which], "INT1:%X", r.irq_state[1]); break;
+		case CPU_INFO_REG+Z180_INT2_STATE: sprintf(buffer[which], "INT2:%X", r.irq_state[2]); break;
+		case CPU_INFO_REG+Z180_DC0: if(Z180.irq_max >= 1) sprintf(buffer[which], "DC0:%X", r.int_state[0]); break;
+		case CPU_INFO_REG+Z180_DC1: if(Z180.irq_max >= 2) sprintf(buffer[which], "DC1:%X", r.int_state[1]); break;
+		case CPU_INFO_REG+Z180_DC2: if(Z180.irq_max >= 3) sprintf(buffer[which], "DC2:%X", r.int_state[2]); break;
+		case CPU_INFO_REG+Z180_DC3: if(Z180.irq_max >= 4) sprintf(buffer[which], "DC3:%X", r.int_state[3]); break;
+		case CPU_INFO_REG+Z180_CCR:  sprintf(buffer[which], "CCR :%02X", r.io[Z180_CCR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_ITC:  sprintf(buffer[which], "ITC :%02X", r.io[Z180_ITC-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_CBR:  sprintf(buffer[which], "CBR :%02X", r.io[Z180_CBR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_BBR:  sprintf(buffer[which], "BBR :%02X", r.io[Z180_BBR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_CBAR: sprintf(buffer[which], "CBAR:%02X", r.io[Z180_CBAR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_OMCR: sprintf(buffer[which], "OMCR:%02X", r.io[Z180_OMCR-Z180_CNTLA0]); break;
+		case CPU_INFO_REG+Z180_IOCR: sprintf(buffer[which], "IOCR:%02X", r.io[Z180_IOCR-Z180_CNTLA0]); break;
 	    case CPU_INFO_FLAGS:
 			sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-				r->AF.b.l & 0x80 ? 'S':'.',
-				r->AF.b.l & 0x40 ? 'Z':'.',
-				r->AF.b.l & 0x20 ? '5':'.',
-				r->AF.b.l & 0x10 ? 'H':'.',
-				r->AF.b.l & 0x08 ? '3':'.',
-				r->AF.b.l & 0x04 ? 'P':'.',
-				r->AF.b.l & 0x02 ? 'N':'.',
-				r->AF.b.l & 0x01 ? 'C':'.');
+				r.AF.b.l & 0x80 ? 'S':'.',
+				r.AF.b.l & 0x40 ? 'Z':'.',
+				r.AF.b.l & 0x20 ? '5':'.',
+				r.AF.b.l & 0x10 ? 'H':'.',
+				r.AF.b.l & 0x08 ? '3':'.',
+				r.AF.b.l & 0x04 ? 'P':'.',
+				r.AF.b.l & 0x02 ? 'N':'.',
+				r.AF.b.l & 0x01 ? 'C':'.');
 			break;
 		case CPU_INFO_NAME: return "Z180";
 		case CPU_INFO_FAMILY: return "Zilog Z8x180";

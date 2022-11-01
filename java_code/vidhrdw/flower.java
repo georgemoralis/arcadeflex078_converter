@@ -30,7 +30,7 @@ public class flower
 				sy=tt-2;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					vr[0xe000+offs],
 					0,
 					0,0,
@@ -44,7 +44,7 @@ public class flower
 	{
 		unsigned char *floweram = memory_region(REGION_CPU1);
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data8_t *source = &floweram[0xde00]+0x200;
 		data8_t *finish = source - 0x200;
 	

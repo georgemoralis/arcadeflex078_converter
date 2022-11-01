@@ -74,7 +74,7 @@ public class generic
 			return 1;
 		memset(dirtybuffer,1,videoram_size);
 	
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		state_save_register_func_postload(video_generic_postload);
@@ -85,7 +85,7 @@ public class generic
 	
 	public static VideoUpdateHandlerPtr video_update_generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -100,7 +100,7 @@ public class generic
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	
@@ -266,25 +266,25 @@ public class generic
 	
 		tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x) | (TILEMAP_FLIPY & flip_screen_y));
 	
-		min_x = Machine->drv->default_visible_area.min_x;
-		max_x = Machine->drv->default_visible_area.max_x;
-		min_y = Machine->drv->default_visible_area.min_y;
-		max_y = Machine->drv->default_visible_area.max_y;
+		min_x = Machine.drv.default_visible_area.min_x;
+		max_x = Machine.drv.default_visible_area.max_x;
+		min_y = Machine.drv.default_visible_area.min_y;
+		max_y = Machine.drv.default_visible_area.max_y;
 	
 		if (flip_screen_x != 0)
 		{
 			int temp;
 	
-			temp = Machine->drv->screen_width - min_x - 1;
-			min_x = Machine->drv->screen_width - max_x - 1;
+			temp = Machine.drv.screen_width - min_x - 1;
+			min_x = Machine.drv.screen_width - max_x - 1;
 			max_x = temp;
 		}
 		if (flip_screen_y != 0)
 		{
 			int temp;
 	
-			temp = Machine->drv->screen_height - min_y - 1;
-			min_y = Machine->drv->screen_height - max_y - 1;
+			temp = Machine.drv.screen_height - min_y - 1;
+			min_y = Machine.drv.screen_height - max_y - 1;
 			max_y = temp;
 		}
 	

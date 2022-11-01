@@ -21,14 +21,14 @@ public class kchamp
 	{
 		int i, red, green, blue;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			red = color_prom[i];
-			green = color_prom[Machine->drv->total_colors+i];
-			blue = color_prom[2*Machine->drv->total_colors+i];
+			green = color_prom[Machine.drv.total_colors+i];
+			blue = color_prom[2*Machine.drv.total_colors+i];
 	
 			palette_set_color(i,red*0x11,green*0x11,blue*0x11);
 	
@@ -111,8 +111,8 @@ public class kchamp
 				flipy = !flipy;
 			}
 	
-	        drawgfx(bitmap, Machine->gfx[bank], code, color, flipx, flipy, sx, sy,
-	            &Machine->visible_area, TRANSPARENCY_PEN, 0);
+	        drawgfx(bitmap, Machine.gfx[bank], code, color, flipx, flipy, sx, sy,
+	            &Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -139,8 +139,8 @@ public class kchamp
 				flipy = !flipy;
 			}
 	
-	        drawgfx(bitmap, Machine->gfx[bank], code, color, flipx, flipy, sx, sy,
-	            &Machine->visible_area, TRANSPARENCY_PEN, 0);
+	        drawgfx(bitmap, Machine.gfx[bank], code, color, flipx, flipy, sx, sy,
+	            &Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	

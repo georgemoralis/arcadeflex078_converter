@@ -41,12 +41,12 @@ public class gstriker
 		int data;
 		int tileno, pal;
 	
-		data = VS920A_cur_chip->vram[tile_index];
+		data = VS920A_cur_chip.vram[tile_index];
 	
 		tileno = data & 0xFFF;
 		pal =   (data >> 12) & 0xF;
 	
-		SET_TILE_INFO(VS920A_cur_chip->gfx_region, tileno, VS920A_cur_chip->pal_base + pal, 0)
+		SET_TILE_INFO(VS920A_cur_chip.gfx_region, tileno, VS920A_cur_chip.pal_base + pal, 0)
 	}
 	
 	WRITE16_HANDLER( VS920A_0_vram_w )
@@ -95,7 +95,7 @@ public class gstriker
 	{
 		VS920A_cur_chip = &VS920A[numchip];
 	
-		tilemap_draw(screen, cliprect, VS920A_cur_chip->tmap, 0, priority);
+		tilemap_draw(screen, cliprect, VS920A_cur_chip.tmap, 0, priority);
 	}
 	
 	
@@ -155,13 +155,13 @@ public class gstriker
 		int data, bankno;
 		int tileno, pal;
 	
-		data = MB60553_cur_chip->vram[tile_index];
+		data = MB60553_cur_chip.vram[tile_index];
 	
 		tileno = data & 0x1FF;
 		pal = (data >> 12) & 0xF;
 		bankno = (data >> 9) & 0x7;
 	
-		SET_TILE_INFO(MB60553->gfx_region, tileno + MB60553_cur_chip->bank[bankno] * 0x200, pal + MB60553->pal_base, 0)
+		SET_TILE_INFO(MB60553.gfx_region, tileno + MB60553_cur_chip.bank[bankno] * 0x200, pal + MB60553.pal_base, 0)
 	}
 	
 	static void MB60553_reg_written(int numchip, int num_reg)
@@ -171,35 +171,35 @@ public class gstriker
 		switch (num_reg)
 		{
 		case 0:
-			tilemap_set_scrollx(cur->tmap, 0, cur->regs[0]>>4);
+			tilemap_set_scrollx(cur.tmap, 0, cur.regs[0]>>4);
 			break;
 	
 		case 1:
-			tilemap_set_scrolly(cur->tmap, 0, cur->regs[1]>>4);
+			tilemap_set_scrolly(cur.tmap, 0, cur.regs[1]>>4);
 			break;
 	
 		case 4:
-			cur->bank[0] = (cur->regs[4] >> 8) & 0x1F;
-			cur->bank[1] = (cur->regs[4] >> 0) & 0x1F;
-			tilemap_mark_all_tiles_dirty(cur->tmap);
+			cur.bank[0] = (cur.regs[4] >> 8) & 0x1F;
+			cur.bank[1] = (cur.regs[4] >> 0) & 0x1F;
+			tilemap_mark_all_tiles_dirty(cur.tmap);
 			break;
 	
 		case 5:
-			cur->bank[2] = (cur->regs[5] >> 8) & 0x1F;
-			cur->bank[3] = (cur->regs[5] >> 0) & 0x1F;
-			tilemap_mark_all_tiles_dirty(cur->tmap);
+			cur.bank[2] = (cur.regs[5] >> 8) & 0x1F;
+			cur.bank[3] = (cur.regs[5] >> 0) & 0x1F;
+			tilemap_mark_all_tiles_dirty(cur.tmap);
 			break;
 	
 		case 6:
-			cur->bank[4] = (cur->regs[6] >> 8) & 0x1F;
-			cur->bank[5] = (cur->regs[6] >> 0) & 0x1F;
-			tilemap_mark_all_tiles_dirty(cur->tmap);
+			cur.bank[4] = (cur.regs[6] >> 8) & 0x1F;
+			cur.bank[5] = (cur.regs[6] >> 0) & 0x1F;
+			tilemap_mark_all_tiles_dirty(cur.tmap);
 			break;
 	
 		case 7:
-			cur->bank[6] = (cur->regs[7] >> 8) & 0x1F;
-			cur->bank[7] = (cur->regs[7] >> 0) & 0x1F;
-			tilemap_mark_all_tiles_dirty(cur->tmap);
+			cur.bank[6] = (cur.regs[7] >> 8) & 0x1F;
+			cur.bank[7] = (cur.regs[7] >> 0) & 0x1F;
+			tilemap_mark_all_tiles_dirty(cur.tmap);
 			break;
 		}
 	}
@@ -233,7 +233,7 @@ public class gstriker
 	{
 		MB60553_cur_chip = &MB60553[numchip];
 	
-		tilemap_draw(screen, cliprect, MB60553_cur_chip->tmap, 0, priority);
+		tilemap_draw(screen, cliprect, MB60553_cur_chip.tmap, 0, priority);
 	}
 	
 	struct tilemap* MB60553_get_tilemap(int numchip)
@@ -388,7 +388,7 @@ public class gstriker
 	
 		// @@@ Add here optional connection to the VS9210 for extra level of tile number indirection
 	#if 0
-		if (CG10103_cur_chip->connected_vs9210)
+		if (CG10103_cur_chip.connected_vs9210)
 		{
 			// ...
 		}
@@ -402,8 +402,8 @@ public class gstriker
 			for (x=0;x<xnum;x++)
 			{
 				// Hack to handle horizontal wrapping
-				drawgfxzoom(screen, Machine->gfx[CG10103_cur_chip->gfx_region], tile, color+CG10103_cur_chip->pal_base, flipx, flipy, xp>>16, ypos>>16, cliprect, TRANSPARENCY_PEN, 0x0, xfact, yfact);
-				drawgfxzoom(screen, Machine->gfx[CG10103_cur_chip->gfx_region], tile, color+CG10103_cur_chip->pal_base, flipx, flipy, (xp>>16) - 0x200, ypos>>16, cliprect, TRANSPARENCY_PEN, 0x0, xfact, yfact);
+				drawgfxzoom(screen, Machine.gfx[CG10103_cur_chip.gfx_region], tile, color+CG10103_cur_chip.pal_base, flipx, flipy, xp>>16, ypos>>16, cliprect, TRANSPARENCY_PEN, 0x0, xfact, yfact);
+				drawgfxzoom(screen, Machine.gfx[CG10103_cur_chip.gfx_region], tile, color+CG10103_cur_chip.pal_base, flipx, flipy, (xp>>16) - 0x200, ypos>>16, cliprect, TRANSPARENCY_PEN, 0x0, xfact, yfact);
 				xp += xstep;
 				tile++;
 			}
@@ -420,7 +420,7 @@ public class gstriker
 	
 		CG10103_cur_chip = &CG10103[numchip];
 	
-		splist = CG10103_cur_chip->vram;
+		splist = CG10103_cur_chip.vram;
 	
 		// Parse the sorting list
 		for (i=0;i<0x400;i++)
@@ -438,7 +438,7 @@ public class gstriker
 				int num = cmd & 0xFF;
 	
 				// Draw the sprite
-				CG10103_draw_sprite(screen, cliprect, CG10103_cur_chip->vram + 0x400 + num*4, priority);
+				CG10103_draw_sprite(screen, cliprect, CG10103_cur_chip.vram + 0x400 + num*4, priority);
 			}
 		}
 	}

@@ -79,7 +79,7 @@ public class stadhero
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -136,7 +136,7 @@ public class stadhero
 	
 	static UINT32 stadhero_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0xf) + ((row & 0xf) << 4) + ((row & 0x30) << 4) + ((col & 0x30) << 6);
 	}
 	

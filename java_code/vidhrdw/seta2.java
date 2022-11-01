@@ -246,14 +246,14 @@ public class seta2
 					clip.min_y = (sy + yoffs) & 0x1ff;
 					clip.max_y = clip.min_y + height * 0x10 - 1;
 	
-					if (clip.min_y > cliprect->max_y)	continue;
-					if (clip.max_y < cliprect->min_y)	continue;
+					if (clip.min_y > cliprect.max_y)	continue;
+					if (clip.max_y < cliprect.min_y)	continue;
 	
-					clip.min_x = cliprect->min_x;
-					clip.max_x = cliprect->max_x;
+					clip.min_x = cliprect.min_x;
+					clip.max_x = cliprect.max_x;
 	
-					if (clip.min_y < cliprect->min_y)	clip.min_y = cliprect->min_y;
-					if (clip.max_y > cliprect->max_y)	clip.max_y = cliprect->max_y;
+					if (clip.min_y < cliprect.min_y)	clip.min_y = cliprect.min_y;
+					if (clip.max_y > cliprect.max_y)	clip.max_y = cliprect.max_y;
 	
 					dx = sx + (scrollx & 0x3ff) + xoffs + 0x10;
 	
@@ -292,7 +292,7 @@ public class seta2
 							{
 								for (tx = 0; tx <= tilesize; tx++)
 								{
-									drawgfx(bitmap, Machine->gfx[gfx],
+									drawgfx(bitmap, Machine.gfx[gfx],
 											code ^ tx ^ (ty<<1),
 											color,
 											flipx, flipy,
@@ -335,7 +335,7 @@ public class seta2
 					{
 						for (x = 0; x <= sizex; x++)
 						{
-							drawgfx(bitmap, Machine->gfx[gfx],
+							drawgfx(bitmap, Machine.gfx[gfx],
 									code++,
 									color,
 									flipx, flipy,
@@ -361,10 +361,10 @@ public class seta2
 	
 	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		Machine->gfx[2]->color_granularity = 16;
-		Machine->gfx[3]->color_granularity = 16;
-		Machine->gfx[4]->color_granularity = 16;
-		Machine->gfx[5]->color_granularity = 16;
+		Machine.gfx[2].color_granularity = 16;
+		Machine.gfx[3].color_granularity = 16;
+		Machine.gfx[4].color_granularity = 16;
+		Machine.gfx[5].color_granularity = 16;
 	
 		buffered_spriteram16 = auto_malloc(spriteram_size);
 	
@@ -383,7 +383,7 @@ public class seta2
 	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Black or pens[0]? */
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if (seta2_vregs[0x30/2] & 1)	return;		// BLANK SCREEN
 	

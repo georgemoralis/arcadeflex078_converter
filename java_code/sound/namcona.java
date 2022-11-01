@@ -67,7 +67,7 @@ public class namcona
 		INT32 delta; /* fixed point */
 		INT32 pos;
 		INT32 volume;
-		INT32 masterVolume; /* copied from pSequence->volume each time a note is played */
+		INT32 masterVolume; /* copied from pSequence.volume each time a note is played */
 		INT32 pan;
 		INT32 dnote;
 		INT32 detune;
@@ -182,9 +182,9 @@ public class namcona
 	static void
 	PushSequenceAddr( struct sequence *pSequence, int addr )
 	{
-		if( pSequence->stackSize<MAX_SEQUENCE_RECURSION )
+		if( pSequence.stackSize<MAX_SEQUENCE_RECURSION )
 		{
-			pSequence->stackData[pSequence->stackSize++] = addr;
+			pSequence.stackData[pSequence.stackSize++] = addr;
 		}
 		else
 		{
@@ -195,9 +195,9 @@ public class namcona
 	static void
 	PopSequenceAddr( struct sequence *pSequence )
 	{
-		if( pSequence->stackSize )
+		if( pSequence.stackSize )
 		{
-			pSequence->addr = pSequence->stackData[--pSequence->stackSize];
+			pSequence.addr = pSequence.stackData[--pSequence.stackSize];
 		}
 		else
 		{
@@ -209,42 +209,42 @@ public class namcona
 	static void
 	HandleSubroutine( struct sequence *pSequence )
 	{
-		int addr = ReadMetaDataWord( pSequence->addr );
-		PushSequenceAddr( pSequence, pSequence->addr+2 );
-		pSequence->addr = addr;
+		int addr = ReadMetaDataWord( pSequence.addr );
+		PushSequenceAddr( pSequence, pSequence.addr+2 );
+		pSequence.addr = addr;
 	} /* HandleSubroutine */
 	
 	static void
 	HandleRepeat( struct sequence *pSequence )
 	{
-		int count = ReadMetaDataByte( pSequence->addr++ );
-		int addr = ReadMetaDataWord( pSequence->addr );
-		if( pSequence->count < count )
+		int count = ReadMetaDataByte( pSequence.addr++ );
+		int addr = ReadMetaDataWord( pSequence.addr );
+		if( pSequence.count < count )
 		{
-			pSequence->count++;
-			pSequence->addr = addr;
+			pSequence.count++;
+			pSequence.addr = addr;
 		}
 		else
 		{
-			pSequence->count = 0;
-			pSequence->addr += 2;
+			pSequence.count = 0;
+			pSequence.addr += 2;
 		}
 	} /* HandleRepeat */
 	
 	static void
 	HandleRepeatOut( struct sequence *pSequence )
 	{
-		int count = ReadMetaDataByte( pSequence->addr++ );
-		int addr = ReadMetaDataWord( pSequence->addr );
-		if( pSequence->count2 < count )
+		int count = ReadMetaDataByte( pSequence.addr++ );
+		int addr = ReadMetaDataWord( pSequence.addr );
+		if( pSequence.count2 < count )
 		{
-			pSequence->count2++;
-			pSequence->addr += 2;
+			pSequence.count2++;
+			pSequence.addr += 2;
 		}
 		else
 		{
-			pSequence->count2 = 0;
-			pSequence->addr = addr;
+			pSequence.count2 = 0;
+			pSequence.addr = addr;
 		}
 	} /* HandleRepeatOut */
 	
@@ -253,12 +253,12 @@ public class namcona
 			 int bCommon,
 			 void (*callback)( struct sequence *, int chan, data8_t data ) )
 	{
-		data8_t set = ReadMetaDataByte(pSequence->addr++);
+		data8_t set = ReadMetaDataByte(pSequence.addr++);
 		data8_t data = 0;
 		int i;
 		if (bCommon != 0)
 		{
-			data = ReadMetaDataByte( pSequence->addr++ );
+			data = ReadMetaDataByte( pSequence.addr++ );
 		}
 		for( i=0; i<8; i++ )
 		{
@@ -266,7 +266,7 @@ public class namcona
 			{
 				if( !bCommon )
 				{
-					data = ReadMetaDataByte( pSequence->addr++ );
+					data = ReadMetaDataByte( pSequence.addr++ );
 				}
 				callback( pSequence, i, data );
 			}
@@ -279,13 +279,13 @@ public class namcona
 		if( data<MAX_VOICE )
 		{
 			struct voice *pVoice = &mVoice[data];
-			pSequence->channel[chan] = data;
-			pVoice->bActive = 0;
-			pVoice->bank = 0;
-			pVoice->volume = 0x80;
-			pVoice->pan = 0x80;
-			pVoice->dnote = 0;
-			pVoice->detune = 0;
+			pSequence.channel[chan] = data;
+			pVoice.bActive = 0;
+			pVoice.bank = 0;
+			pVoice.volume = 0x80;
+			pVoice.pan = 0x80;
+			pVoice.dnote = 0;
+			pVoice.detune = 0;
 		}
 	} /* AssignChannel */
 	
@@ -297,48 +297,48 @@ public class namcona
 	static void
 	SelectWave( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		int bank = 0x20000 + pVoice->bank*0x20000;
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
+		int bank = 0x20000 + pVoice.bank*0x20000;
 		int addr  = ReadMetaDataWord(2)+10*data;
 	
-		pVoice->flags    = ReadMetaDataWord(addr+0*2);
-		pVoice->start    = ReadMetaDataWord(addr+1*2)*2+bank;
-		pVoice->end      = ReadMetaDataWord(addr+2*2)*2+bank;
-		pVoice->loop     = ReadMetaDataWord(addr+3*2)*2+bank;
-		pVoice->baseFreq = ReadMetaDataWord(addr+4*2); /* unsure what this is; not currently used */
+		pVoice.flags    = ReadMetaDataWord(addr+0*2);
+		pVoice.start    = ReadMetaDataWord(addr+1*2)*2+bank;
+		pVoice.end      = ReadMetaDataWord(addr+2*2)*2+bank;
+		pVoice.loop     = ReadMetaDataWord(addr+3*2)*2+bank;
+		pVoice.baseFreq = ReadMetaDataWord(addr+4*2); /* unsure what this is; not currently used */
 	
-		pVoice->start <<= FIXED_POINT_SHIFT;
-		pVoice->end   <<= FIXED_POINT_SHIFT;
-		pVoice->loop  <<= FIXED_POINT_SHIFT;
+		pVoice.start <<= FIXED_POINT_SHIFT;
+		pVoice.end   <<= FIXED_POINT_SHIFT;
+		pVoice.loop  <<= FIXED_POINT_SHIFT;
 	
-		pVoice->bActive = 0;
-		pVoice->dnote = 0;
-		pVoice->detune = 0;
+		pVoice.bActive = 0;
+		pVoice.dnote = 0;
+		pVoice.detune = 0;
 	} /* SelectWave */
 	
 	static void
 	PlayNote( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
 		if ((data & 0x80) != 0)
 		{
-			pVoice->bActive = 0;
+			pVoice.bActive = 0;
 		}
 		else
 		{
-			data16_t Note = (data<<8) + (pVoice->dnote<<8) + pVoice->detune + pVoice->baseFreq;
+			data16_t Note = (data<<8) + (pVoice.dnote<<8) + pVoice.detune + pVoice.baseFreq;
 			if (Note < 0x7f00)
 			{
-				pVoice->delta = mpPitchTable[Note>>8];
-				pVoice->delta += (mpPitchTable[(Note>>8)+1]-pVoice->delta) *(Note&0xff)/256;
+				pVoice.delta = mpPitchTable[Note>>8];
+				pVoice.delta += (mpPitchTable[(Note>>8)+1]-pVoice.delta) *(Note&0xff)/256;
 	
-				pVoice->bActive = 1;
-				pVoice->pos = pVoice->start;
-				pVoice->masterVolume = pSequence->volume;
+				pVoice.bActive = 1;
+				pVoice.pos = pVoice.start;
+				pVoice.masterVolume = pSequence.volume;
 			}
 			else
 			{
-				pVoice->bActive = 0;
+				pVoice.bActive = 0;
 			}
 		}
 	} /* PlayNote */
@@ -346,30 +346,30 @@ public class namcona
 	static void
 	Detune( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		pVoice->detune = data;
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
+		pVoice.detune = data;
 	} /* Detune */
 	
 	
 	static void
 	DNote( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		pVoice->dnote = data;
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
+		pVoice.dnote = data;
 	} /* DNote */
 	
 	static void
 	Pan( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		pVoice->pan = data;
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
+		pVoice.pan = data;
 	} /* Pan */
 	
 	static void
 	Volume( struct sequence *pSequence, int chan, data8_t data )
 	{
-		struct voice *pVoice = &mVoice[pSequence->channel[chan]];
-		pVoice->volume = data;
+		struct voice *pVoice = &mVoice[pSequence.channel[chan]];
+		pVoice.volume = data;
 	} /* Volume */
 	
 	static void
@@ -383,23 +383,23 @@ public class namcona
 			int offs = ReadMetaDataWord(0)+(data>>8)*2;
 			memset( pSequence, 0x00, sizeof(struct sequence) );
 			if( pSequence == &mSequence[0] ) Silence(); /* hack! */
-			pSequence->addr = ReadMetaDataWord(offs);
+			pSequence.addr = ReadMetaDataWord(offs);
 			*pStatus = (data&0xffbf)|0x0080; /* set "sequence-is-playing" flag */
 		}
 	
 		while( (*pStatus)&0x0080 )
 		{
-			if( pSequence->pause )
+			if( pSequence.pause )
 			{
-				pSequence->pause--;
+				pSequence.pause--;
 				return;
 			}
 			else
 			{
-				int code = ReadMetaDataByte(pSequence->addr++);
+				int code = ReadMetaDataByte(pSequence.addr++);
 				if ((code & 0x80) != 0)
 				{
-					pSequence->pause = pSequence->tempo*((code&0x3f)+1);
+					pSequence.pause = pSequence.tempo*((code&0x3f)+1);
 				}
 				else
 				{
@@ -407,16 +407,16 @@ public class namcona
 					switch( code&0x3f )
 					{
 					case 0x01: /* master volume */
-						pSequence->volume = ReadMetaDataByte(pSequence->addr++);
+						pSequence.volume = ReadMetaDataByte(pSequence.addr++);
 						break;
 	
 					case 0x02: /* master freq adjust? */
-						pSequence->reg2 = ReadMetaDataByte(pSequence->addr++);
+						pSequence.reg2 = ReadMetaDataByte(pSequence.addr++);
 						break;
 	
 					case 0x03: /* tempo */
-						pSequence->tempo = ReadMetaDataByte(pSequence->addr++)/2;
-						if (pSequence->tempo == 0) pSequence->tempo = 1;
+						pSequence.tempo = ReadMetaDataByte(pSequence.addr++)/2;
+						if (pSequence.tempo == 0) pSequence.tempo = 1;
 						break;
 	
 					case 0x04:
@@ -429,7 +429,7 @@ public class namcona
 	
 					case 0x06: /* operand is note index */
 						MapArgs( pSequence, bCommon, PlayNote );
-						pSequence->pause = pSequence->tempo;
+						pSequence.pause = pSequence.tempo;
 						break;
 	
 					case 0x07:
@@ -441,7 +441,7 @@ public class namcona
 						break;
 	
 					case 0x09:
-						pSequence->addr = ReadMetaDataWord(pSequence->addr);
+						pSequence.addr = ReadMetaDataWord(pSequence.addr);
 						break;
 	
 					case 0x0a:
@@ -479,30 +479,30 @@ public class namcona
 						break;
 	
 					case 0x19: // one loop?
-						if (pSequence->count3 == 0)
+						if (pSequence.count3 == 0)
 						{
-							pSequence->addr = ReadMetaDataWord(pSequence->addr);
-							pSequence->count3++;
+							pSequence.addr = ReadMetaDataWord(pSequence.addr);
+							pSequence.count3++;
 						}
 						else
 						{
-							pSequence->addr += 2;
-							pSequence->count3 = 0;
+							pSequence.addr += 2;
+							pSequence.count3 = 0;
 						}
 						break;
 	
 					case 0x1b: // ?
-						pSequence->addr += 2;
+						pSequence.addr += 2;
 						break;
 	
 					case 0x1c: // ?
-						pSequence->addr += 2;
+						pSequence.addr += 2;
 						break;
 	
 					case 0x1e:
 						{
-							int no = ReadMetaDataByte(pSequence->addr++);	/* Sequence No */
-							int cod = ReadMetaDataByte(pSequence->addr++);
+							int no = ReadMetaDataByte(pSequence.addr++);	/* Sequence No */
+							int cod = ReadMetaDataByte(pSequence.addr++);
 							if (no < MAX_SEQUENCE)
 							{
 								struct sequence *pSequence2 = &mSequence[no];
@@ -510,7 +510,7 @@ public class namcona
 								int offs = 0x12+cod*2;
 								*pStatus2 = (cod<<8)|0x0080;
 								memset( pSequence2, 0x00, sizeof(struct sequence) );
-								pSequence2->addr = ReadMetaDataWord(offs);
+								pSequence2.addr = ReadMetaDataWord(offs);
 							}
 						}
 						break;
@@ -525,8 +525,8 @@ public class namcona
 	
 					case 0x23:
 						{
-							data8_t reg23_0 = ReadMetaDataByte(pSequence->addr++); /* Channel select */
-							data8_t reg23_1 = ReadMetaDataByte(pSequence->addr++); /* PCM bank select */
+							data8_t reg23_0 = ReadMetaDataByte(pSequence.addr++); /* Channel select */
+							data8_t reg23_1 = ReadMetaDataByte(pSequence.addr++); /* PCM bank select */
 							/* reg23_0: 0 = Ch. 0- 3 PCM Bank select
 							            1 = Ch. 4- 7 PCM Bank select
 							            2 = Ch. 8-11 PCM Bank select
@@ -571,13 +571,13 @@ public class namcona
 		for( i=0;i<MAX_VOICE;i++ )
 		{
 			struct voice *pVoice = &mVoice[i];
-			if( pVoice->bActive && pVoice->delta )
+			if( pVoice.bActive && pVoice.delta )
 			{
-				INT32 delta  = pVoice->delta;
-				INT32 end    = pVoice->end;
-				INT32 pos    = pVoice->pos;
-				INT32 vol    = pVoice->volume*pVoice->masterVolume/8;
-				INT32 pan    = pVoice->pan;
+				INT32 delta  = pVoice.delta;
+				INT32 end    = pVoice.end;
+				INT32 pos    = pVoice.pos;
+				INT32 vol    = pVoice.volume*pVoice.masterVolume/8;
+				INT32 pan    = pVoice.pan;
 				INT16 *pDest = mpMixerBuffer;
 				INT16 dat;
 				int j;
@@ -585,22 +585,22 @@ public class namcona
 				{
 					if( pos >= end )
 					{
-						if( pVoice->flags&0x1000 )
+						if( pVoice.flags&0x1000 )
 						{
-							pos = pos - end + pVoice->loop;
+							pos = pos - end + pVoice.loop;
 						}
 						else
 						{
-							pVoice->bActive = 0;
+							pVoice.bActive = 0;
 							break;
 						}
 					}
-					dat = ReadPCMSample(pos>>FIXED_POINT_SHIFT, pVoice->flags)*vol/256;
+					dat = ReadPCMSample(pos>>FIXED_POINT_SHIFT, pVoice.flags)*vol/256;
 					*pDest++ += dat*(0x100-pan)/256;
 					*pDest++ += dat*pan/256;
 					pos += delta;
 				}
-				pVoice->pos = pos;
+				pVoice.pos = pos;
 			}
 		}
 		RenderSamples( buffer, mpMixerBuffer, length );
@@ -609,12 +609,12 @@ public class namcona
 	int
 	NAMCONA_sh_start( const struct MachineSound *msound )
 	{
-		const struct NAMCONAinterface *intf = msound->sound_interface;
+		const struct NAMCONAinterface *intf = msound.sound_interface;
 		int vol[2];
 		const char *name[2] = { "NAMCONA Left","NAMCONA Right" };
-		vol[0] = MIXER(intf->mixing_level, MIXER_PAN_LEFT);
-		vol[1] = MIXER(intf->mixing_level, MIXER_PAN_RIGHT);
-		mSampleRate = intf->frequency;
+		vol[0] = MIXER(intf.mixing_level, MIXER_PAN_LEFT);
+		vol[1] = MIXER(intf.mixing_level, MIXER_PAN_RIGHT);
+		mSampleRate = intf.frequency;
 		mStream = stream_init_multi(2, name, vol, mSampleRate, 0, UpdateSound);
 		mpROM = (data16_t *)memory_region(REGION_CPU1);
 		if( namcona1_gametype==NAMCO_KNCKHEAD )

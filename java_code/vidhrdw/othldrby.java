@@ -177,7 +177,7 @@ public class othldrby
 			{
 				for (x = 0;x < sizex;x++)
 				{
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code + x + sizex * y,
 							color,
 							flipx,flipy,
@@ -211,7 +211,7 @@ public class othldrby
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (layer = 0;layer < 3;layer++)
 			tilemap_draw(bitmap,cliprect,tilemap[layer],0,0);

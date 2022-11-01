@@ -29,7 +29,7 @@ Video :
 	32x32 Tilemap stored in VRAM (10 bits/tile (tile numebr 0-1023))
 
 	3 gfx ROMS
-	ROM1 - R component (ROM ->(parallel in) shift register 74166 (serial out) -> jamma output
+	ROM1 - R component (ROM .(parallel in) shift register 74166 (serial out) . jamma output
 	ROM2 - B component
 	ROM3 - G component
 

@@ -85,7 +85,7 @@ public class snowbros
 	
 		/* If the sound CPU is running, read the YM3812 status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0)
+		if (Machine.sample_rate != 0)
 		{
 			ret = soundlatch_r(offset);
 		}
@@ -1144,7 +1144,7 @@ public class snowbros
 		HCROM[0x048610/2] = 0x0004;
 		HCROM[0x048612/2] = 0x8800;
 	
-		HCROM[0x048614/2] = 0x3004; // d4 -> d0
+		HCROM[0x048614/2] = 0x3004; // d4 . d0
 		HCROM[0x048616/2] = 0xe348;
 	
 		HCROM[0x048618/2] = 0x3173;

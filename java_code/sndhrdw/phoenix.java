@@ -38,7 +38,7 @@ public class phoenix
 	 *
 	 *		1D5 		 1Q1  2D4		2Q0  3D4	   3Q0	4D5 	 4Q1 4Q0
 	 *		+--+--+--+--+--+  +--+--+--+--+  +--+--+--+--+	+--+--+--+--+--+
-	 *	 +->| 0| 1| 2| 3| 4|->| 5| 6| 7| 8|->| 9|10|11|12|->|13|14|15|16|17|
+	 *	 +.| 0| 1| 2| 3| 4|.| 5| 6| 7| 8|.| 9|10|11|12|.|13|14|15|16|17|
 	 *	 |	+--+--+--+--+--+  +--+--+--+--+  +--+--+--+--+	+--+--+--+--+--+
 	 *	 |											 ____			  |  |
 	 *	 |											/	 |------------+  |
@@ -214,7 +214,7 @@ public class phoenix
 				/*		R42 10k
 				 * +5V -/\/\/------------+
 				 *			   5V		 |
-				 * +5V -/\/\/--+--/\/\/--+--> V/C
+				 * +5V -/\/\/--+--/\/\/--+-. V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -230,7 +230,7 @@ public class phoenix
 				/*		R42 10k
 				 *	0V -/\/\/------------+
 				 *			  2.7V		 |
-				 * +5V -/\/\/--+--/\/\/--+--> V/C
+				 * +5V -/\/\/--+--/\/\/--+-. V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -253,7 +253,7 @@ public class phoenix
 				/*		R42 10k
 				 * +5V -/\/\/------------+
 				 *			  2.3V		 |
-				 *	0V -/\/\/--+--/\/\/--+--> V/C
+				 *	0V -/\/\/--+--/\/\/--+-. V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -273,7 +273,7 @@ public class phoenix
 				/*		R42 10k
 				 *	0V -/\/\/------------+
 				 *			   0V		 |
-				 *	0V -/\/\/--+--/\/\/--+--> V/C
+				 *	0V -/\/\/--+--/\/\/--+-. V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -331,7 +331,7 @@ public class phoenix
 		 *							 \ 100k
 		 *							 /
 		 * !bit4	| /|	R22 	 |
-		 * 0V/5V >--|< |---/\/\/-----+-------+---> V C7
+		 * 0V/5V >--|< |---/\/\/-----+-------+--. V C7
 		 *			| \|	47k 	 |		 |
 		 *			D4				 |		_|_
 		 *					   6.8u --- 	\ / D5
@@ -549,7 +549,7 @@ public class phoenix
 	
 	static void phoenix_sound_update(int param, INT16 *buffer, int length)
 	{
-		int samplerate = Machine->sample_rate;
+		int samplerate = Machine.sample_rate;
 	
 		while( length-- > 0 )
 		{
@@ -616,7 +616,7 @@ public class phoenix
 			poly18[i] = bits;
 		}
 	
-		channel = stream_init("Custom", 50, Machine->sample_rate, 0, phoenix_sound_update);
+		channel = stream_init("Custom", 50, Machine.sample_rate, 0, phoenix_sound_update);
 		if( channel == -1 )
 			return 1;
 	

@@ -55,8 +55,8 @@ public class r2dtank
 	static int r2dtank_video_flip;
 	public static WriteHandlerPtr r2dtank_video_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		/*	0 -> flipped
-			1 -> not flipped */
+		/*	0 . flipped
+			1 . not flipped */
 	
 		r2dtank_video_flip = !data;
 	} };
@@ -302,14 +302,14 @@ public class r2dtank
 	
 				col = (data0 & 0x80) ? ((data1 & 0xe0) >> 5) : ((data1 & 0x0e)>> 1);
 	
-				plot_pixel(tmpbitmap, x, y, Machine->pens[col]);
+				plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
 				data0 <<= 1;
 	
 			}
 		}
 	
 		/* Now copy the temp bitmap to the screen */
-		copybitmap(bitmap,tmpbitmap,r2dtank_video_flip,r2dtank_video_flip,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,r2dtank_video_flip,r2dtank_video_flip,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	/* Declare PIA structure */

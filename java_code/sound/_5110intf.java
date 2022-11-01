@@ -49,26 +49,26 @@ public class _5110intf
 	
 	int tms5110_sh_start(const struct MachineSound *msound)
 	{
-	    intf = msound->sound_interface;
+	    intf = msound.sound_interface;
 	
-	    if (intf->M0_callback==NULL)
+	    if (intf.M0_callback==NULL)
 	    {
 		logerror("\n file: 5110intf.c, tms5110_sh_start(), line 53:\n  Missing _mandatory_ 'M0_callback' function pointer in the TMS5110 interface\n  This function is used by TMS5110 to call for a single bits\n  needed to generate the speech\n  Aborting startup...\n");
 		return 1;
 	    }
-	    tms5110_set_M0_callback( intf->M0_callback );
+	    tms5110_set_M0_callback( intf.M0_callback );
 	
 	    /* reset the 5110 */
 	    tms5110_reset();
 	
 	    /* set the initial frequency */
 	    stream = -1;
-	    tms5110_set_frequency(intf->baseclock);
+	    tms5110_set_frequency(intf.baseclock);
 	    source_pos = 0;
 	    last_sample = curr_sample = 0;
 	
 		/* initialize a stream */
-		stream = stream_init("TMS5110", intf->mixing_level, Machine->sample_rate, 0, tms5110_update);
+		stream = stream_init("TMS5110", intf.mixing_level, Machine.sample_rate, 0, tms5110_update);
 		if (stream == -1)
 			return 1;
 	
@@ -242,12 +242,12 @@ public class _5110intf
 	void tms5110_set_frequency(int frequency)
 	{
 		/* skip if output frequency is zero */
-		if (!Machine->sample_rate)
+		if (!Machine.sample_rate)
 			return;
 	
 		/* update the stream and compute a new step size */
 		if (stream != -1)
 			stream_update(stream, 0);
-		source_step = (UINT32)((double)(frequency / 80) * (double)FRAC_ONE / (double)Machine->sample_rate);
+		source_step = (UINT32)((double)(frequency / 80) * (double)FRAC_ONE / (double)Machine.sample_rate);
 	}
 }

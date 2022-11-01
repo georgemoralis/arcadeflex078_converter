@@ -195,7 +195,7 @@ public class atarisy2
 	
 	static void scanline_update(int scanline)
 	{
-		if (scanline <= Machine->drv->screen_height)
+		if (scanline <= Machine.drv.screen_height)
 		{
 			/* generate the 32V interrupt (IRQ 2) */
 			if ((scanline % 64) == 0)

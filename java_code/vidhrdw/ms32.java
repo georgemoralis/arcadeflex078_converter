@@ -92,10 +92,10 @@ public class ms32
 		ms32_reverse_sprite_order = 1;
 	
 		/* i hate per game patches...how should priority really work? tetrisp2.c ? i can't follow it */
-		if (!strcmp(Machine->gamedrv->name,"kirarast"))	ms32_reverse_sprite_order = 0;
-		if (!strcmp(Machine->gamedrv->name,"tp2m32"))	ms32_reverse_sprite_order = 0;
-		if (!strcmp(Machine->gamedrv->name,"47pie2"))	ms32_reverse_sprite_order = 0;
-		if (!strcmp(Machine->gamedrv->name,"47pie2o"))	ms32_reverse_sprite_order = 0;
+		if (!strcmp(Machine.gamedrv.name,"kirarast"))	ms32_reverse_sprite_order = 0;
+		if (!strcmp(Machine.gamedrv.name,"tp2m32"))	ms32_reverse_sprite_order = 0;
+		if (!strcmp(Machine.gamedrv.name,"47pie2"))	ms32_reverse_sprite_order = 0;
+		if (!strcmp(Machine.gamedrv.name,"47pie2o"))	ms32_reverse_sprite_order = 0;
 	
 		// tp2m32 doesn't set the brightness registers so we need sensible defaults
 		brt[0] = brt[1] = 0xffff;
@@ -289,7 +289,7 @@ public class ms32
 		int tx, ty, sx, sy, flipx, flipy;
 		int xsize, ysize, xzoom, yzoom;
 		int code, attr, color, size, pri, pri_mask, trans;
-		struct GfxElement *gfx = Machine->gfx[0];
+		struct GfxElement *gfx = Machine.gfx[0];
 		struct GfxElement mygfx = *gfx;
 	
 		data32_t		*source	= sprram_top;
@@ -356,7 +356,7 @@ public class ms32
 			/* change GfxElement parameters to draw only the needed part of the 256x256 tile */
 			mygfx.width = xsize;
 			mygfx.height = ysize;
-			mygfx.gfxdata = gfx->gfxdata + tx + ty * gfx->line_modulo;
+			mygfx.gfxdata = gfx.gfxdata + tx + ty * gfx.line_modulo;
 	
 	#if 0
 	if (keyboard_pressed(KEYCODE_A) && (pri & 8)) color = rand();
@@ -396,11 +396,11 @@ public class ms32
 			struct rectangle my_clip;
 			int y,maxy;
 	
-			my_clip.min_x = cliprect->min_x;
-			my_clip.max_x = cliprect->max_x;
+			my_clip.min_x = cliprect.min_x;
+			my_clip.max_x = cliprect.max_x;
 	
-			y = cliprect->min_y;
-			maxy = cliprect->max_y;
+			y = cliprect.min_y;
+			maxy = cliprect.max_y;
 	
 			while (y <= maxy)
 			{
@@ -496,7 +496,7 @@ public class ms32
 	
 		/* TODO: 0 is correct for gametngk, but break f1superb scrolling grid (text at
 		   top and bottom of the screen becomes black on black) */
-		fillbitmap(bitmap,Machine->pens[0],cliprect);	/* bg color */
+		fillbitmap(bitmap,Machine.pens[0],cliprect);	/* bg color */
 	
 	#ifdef MAME_DEBUG
 	if (!keyboard_pressed(KEYCODE_Q))

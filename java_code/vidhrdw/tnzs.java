@@ -43,7 +43,7 @@ public class tnzs
 	{
 		int i,col,r,g,b;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			col = (color_prom[i]<<8)+color_prom[i+512];
 			r =  (col & 0x7c00)>>7;	/* Red */
@@ -128,7 +128,7 @@ public class tnzs
 						flipy = !flipy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flipx,flipy,
@@ -172,12 +172,12 @@ public class tnzs
 				if ((sy == 0) && (code == 0)) sy += 240;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy+2,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class tnzs
 	
 	
 		/* Blank the background */
-		fillbitmap(bitmap, Machine->pens[0], &Machine->visible_area);
+		fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
 	
 		/* Redraw the background tiles (c400-c5ff) */
 		tnzs_vh_draw_background(bitmap, tnzs_objram + 0x400);

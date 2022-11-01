@@ -264,7 +264,7 @@ public class homedata
 		BaseAddr= (DestParam&0x4000);
 		DestAddr= (DestParam&0x3fff);
 	
-	//	logerror( "[blit %02x %04x %04x]->%d\n",blitter_bank,SourceAddr,DestParam,homedata_visible_page);
+	//	logerror( "[blit %02x %04x %04x].%d\n",blitter_bank,SourceAddr,DestParam,homedata_visible_page);
 	
 		if( homedata_visible_page == 0 )
 		{

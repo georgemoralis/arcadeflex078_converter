@@ -211,8 +211,8 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship1_vid,Machine->pens[0],&clip);
-	    fillbitmap(ship2_vid,Machine->pens[0],&clip);
+	    fillbitmap(ship1_vid,Machine.pens[0],&clip);
+	    fillbitmap(ship2_vid,Machine.pens[0],&clip);
 	
 		/* origin is with respect to ship1 */
 	
@@ -221,7 +221,7 @@ public class starcrus
 	
 		/* Draw ship 1 */
 	    drawgfx(ship1_vid,
-	            Machine->gfx[8+((s1_sprite&0x04)>>2)],
+	            Machine.gfx[8+((s1_sprite&0x04)>>2)],
 	            (s1_sprite&0x03)^0x03,
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
@@ -232,7 +232,7 @@ public class starcrus
 	
 		/* Draw ship 2 */
 	    drawgfx(ship2_vid,
-	            Machine->gfx[10+((s2_sprite&0x04)>>2)],
+	            Machine.gfx[10+((s2_sprite&0x04)>>2)],
 	            (s2_sprite&0x03)^0x03,
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
@@ -246,10 +246,10 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship1_vid, sx, sy)==Machine->pens[1])
+	        	if (read_pixel(ship1_vid, sx, sy)==Machine.pens[1])
 	           	{
 	        		/* Condition 1 - ship 1 = ship 2 */
-					if (read_pixel(ship2_vid, sx, sy)==Machine->pens[1])
+					if (read_pixel(ship2_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 				}
 	        }
@@ -276,8 +276,8 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
 	
 		/* origin is with respect to proj1 */
 	
@@ -288,7 +288,7 @@ public class starcrus
 		{
 			/* Draw score/projectile 1 */
 			drawgfx(proj1_vid,
-					Machine->gfx[(p1_sprite&0x0c)>>2],
+					Machine.gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -302,7 +302,7 @@ public class starcrus
 		{
 			/* Draw score/projectile 2 */
 			drawgfx(proj2_vid,
-					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -317,10 +317,10 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
+	        	if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
 	           	{
 	        		/* Condition 1 - proj 1 = proj 2 */
-					if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
+					if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 				}
 	        }
@@ -347,9 +347,9 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship1_vid,Machine->pens[0],&clip);
-	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
+	    fillbitmap(ship1_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
 	
 		/* origin is with respect to ship1 */
 	
@@ -358,7 +358,7 @@ public class starcrus
 	
 		/* Draw ship 1 */
 	    drawgfx(ship1_vid,
-	            Machine->gfx[8+((s1_sprite&0x04)>>2)],
+	            Machine.gfx[8+((s1_sprite&0x04)>>2)],
 	            (s1_sprite&0x03)^0x03,
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
@@ -371,7 +371,7 @@ public class starcrus
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
-					Machine->gfx[(p1_sprite&0x0c)>>2],
+					Machine.gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -385,7 +385,7 @@ public class starcrus
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,
-					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -400,13 +400,13 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship1_vid, sx, sy)==Machine->pens[1])
+	        	if (read_pixel(ship1_vid, sx, sy)==Machine.pens[1])
 	           	{
 	        		/* Condition 1 - ship 1 = proj 1 */
-					if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
+					if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 	        		/* Condition 2 - ship 1 = proj 2 */
-	        		if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
+	        		if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 	            }
 	        }
@@ -433,9 +433,9 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship2_vid,Machine->pens[0],&clip);
-	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
+	    fillbitmap(ship2_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
 	
 		/* origin is with respect to ship2 */
 	
@@ -444,7 +444,7 @@ public class starcrus
 	
 		/* Draw ship 2 */
 	    drawgfx(ship2_vid,
-	            Machine->gfx[10+((s2_sprite&0x04)>>2)],
+	            Machine.gfx[10+((s2_sprite&0x04)>>2)],
 	            (s2_sprite&0x03)^0x03,
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
@@ -457,7 +457,7 @@ public class starcrus
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
-					Machine->gfx[(p1_sprite&0x0c)>>2],
+					Machine.gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -471,7 +471,7 @@ public class starcrus
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,
-					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -486,13 +486,13 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship2_vid, sx, sy)==Machine->pens[1])
+	        	if (read_pixel(ship2_vid, sx, sy)==Machine.pens[1])
 	           	{
 	        		/* Condition 1 - ship 2 = proj 1 */
-					if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
+					if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 	        		/* Condition 2 - ship 2 = proj 2 */
-	        		if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
+	        		if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
 	                	return 1;
 	            }
 	        }
@@ -503,49 +503,49 @@ public class starcrus
 	
 	public static VideoUpdateHandlerPtr video_update_starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+	    fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 		/* Draw ship 1 */
 	    drawgfx(bitmap,
-	            Machine->gfx[8+((s1_sprite&0x04)>>2)],
+	            Machine.gfx[8+((s1_sprite&0x04)>>2)],
 	            (s1_sprite&0x03)^0x03,
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
 	            s1_x,s1_y,
-	            &Machine->visible_area,
+	            &Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
 		/* Draw ship 2 */
 	    drawgfx(bitmap,
-	            Machine->gfx[10+((s2_sprite&0x04)>>2)],
+	            Machine.gfx[10+((s2_sprite&0x04)>>2)],
 	            (s2_sprite&0x03)^0x03,
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
 	            s2_x,s2_y,
-	            &Machine->visible_area,
+	            &Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
 		/* Draw score/projectile 1 */
 		drawgfx(bitmap,
-	            Machine->gfx[(p1_sprite&0x0c)>>2],
+	            Machine.gfx[(p1_sprite&0x0c)>>2],
 	            (p1_sprite&0x03)^0x03,
 	            0,
 	            0,0,
 	            p1_x,p1_y,
-	            &Machine->visible_area,
+	            &Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	
 		/* Draw score/projectile 2 */
 		drawgfx(bitmap,
-	            Machine->gfx[4+((p2_sprite&0x0c)>>2)],
+	            Machine.gfx[4+((p2_sprite&0x0c)>>2)],
 	            (p2_sprite&0x03)^0x03,
 	            0,
 	            0,0,
 	            p2_x,p2_y,
-	            &Machine->visible_area,
+	            &Machine.visible_area,
 	            TRANSPARENCY_PEN,
 	            0);
 	

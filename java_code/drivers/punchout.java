@@ -179,7 +179,7 @@ public class punchout
 	
 			case 0x05:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x29D1 */
-					return prot_mem[offset] & 0x03; /* AND 0FH -> AND 06H */
+					return prot_mem[offset] & 0x03; /* AND 0FH . AND 06H */
 			break;
 	
 			case 0x06:
@@ -193,19 +193,19 @@ public class punchout
 			case 0x09:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x0313 */
 					return ( prot_mem[15] << 4 ); /* pipe through register 0xf7 << 4 */
-					/* (ret or 0x10) -> (D7DF),(D7A0) - (D7DF),(D7A0) = 0d0h(ret nc) */
+					/* (ret or 0x10) . (D7DF),(D7A0) - (D7DF),(D7A0) = 0d0h(ret nc) */
 			break;
 	
 			case 0x0a:
 				if ( prot_mode_sel == 0x0b ) /* PC = 0x060a */
 					return 0x05; /* write "JMP (IX)"code to 0d79eh */
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x1bd7 */
-					return prot_mem[offset] & 0x01; /* AND 0FH -> AND 01H */
+					return prot_mem[offset] & 0x01; /* AND 0FH . AND 01H */
 			break;
 	
 			case 0x0b:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x2AA3 */
-					return prot_mem[11] & 0x03;	/* AND 0FH -> AND 03H */
+					return prot_mem[11] & 0x03;	/* AND 0FH . AND 03H */
 			break;
 	
 			case 0x0c:

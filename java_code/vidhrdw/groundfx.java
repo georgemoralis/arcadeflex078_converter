@@ -189,16 +189,16 @@ public class groundfx
 						flipy = !flipy;
 					}
 	
-					sprite_ptr->gfx = 0;
-					sprite_ptr->code = code;
-					sprite_ptr->color = color;
-					sprite_ptr->flipx = !flipx;
-					sprite_ptr->flipy = flipy;
-					sprite_ptr->x = curx;
-					sprite_ptr->y = cury;
-					sprite_ptr->zoomx = zx << 12;
-					sprite_ptr->zoomy = zy << 12;
-					sprite_ptr->pri = priority;
+					sprite_ptr.gfx = 0;
+					sprite_ptr.code = code;
+					sprite_ptr.color = color;
+					sprite_ptr.flipx = !flipx;
+					sprite_ptr.flipy = flipy;
+					sprite_ptr.x = curx;
+					sprite_ptr.y = cury;
+					sprite_ptr.zoomx = zx << 12;
+					sprite_ptr.zoomy = zy << 12;
+					sprite_ptr.pri = priority;
 					sprite_ptr++;
 				}
 			}
@@ -211,19 +211,19 @@ public class groundfx
 	
 			sprite_ptr--;
 	
-			if (do_hack && sprite_ptr->pri==1 && sprite_ptr->y<100)
+			if (do_hack && sprite_ptr.pri==1 && sprite_ptr.y<100)
 				clipper=&hack_cliprect;
 			else
 				clipper=cliprect;
 	
-			pdrawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
-					sprite_ptr->code,
-					sprite_ptr->color,
-					sprite_ptr->flipx,sprite_ptr->flipy,
-					sprite_ptr->x,sprite_ptr->y,
+			pdrawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
+					sprite_ptr.code,
+					sprite_ptr.color,
+					sprite_ptr.flipx,sprite_ptr.flipy,
+					sprite_ptr.x,sprite_ptr.y,
 					clipper,TRANSPARENCY_PEN,0,
-					sprite_ptr->zoomx,sprite_ptr->zoomy,
-					primasks[sprite_ptr->pri]);
+					sprite_ptr.zoomx,sprite_ptr.zoomy,
+					primasks[sprite_ptr.pri]);
 		}
 	}
 	
@@ -253,7 +253,7 @@ public class groundfx
 		pivlayer[2] = 2;
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0],cliprect);	/* wrong color? */
+		fillbitmap(bitmap,Machine.pens[0],cliprect);	/* wrong color? */
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,pivlayer[0],0,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,pivlayer[1],0,0);

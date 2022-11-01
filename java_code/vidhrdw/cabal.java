@@ -142,7 +142,7 @@ public class cabal
 					flipy = !flipy;
 				}
 	
-				drawgfx( bitmap,Machine->gfx[2],
+				drawgfx( bitmap,Machine.gfx[2],
 					tile_number,
 					color,
 					flipx,flipy,

@@ -49,13 +49,13 @@ public class strvmstr
 	/*
 	
 	bits:
-		1 -> change to 1 or 0 when change screen orientation
-		2 -> setted in intro
-		3 -> background bank
-		4,5 -> question offsets
-		6 -> unused ?
-		7 -> unused ?
-		8 -> setted when coin is inserted
+		1 . change to 1 or 0 when change screen orientation
+		2 . setted in intro
+		3 . background bank
+		4,5 . question offsets
+		6 . unused ?
+		7 . unused ?
+		8 . setted when coin is inserted
 	
 	*/
 	

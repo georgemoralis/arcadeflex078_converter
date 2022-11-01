@@ -141,27 +141,27 @@ public class window
 		{
 			for( i = 0, pwin = p_windows; i < MAX_WINDOWS; i++, pwin++ )
 			{
-				if ( pwin->prio == prio && pwin->text && !(pwin->flags & HIDDEN) )
+				if ( pwin.prio == prio && pwin.text && !(pwin.flags & HIDDEN) )
 					break;
 			}
 	
-			if( i != MAX_WINDOWS && pwin->x < screen_w )
+			if( i != MAX_WINDOWS && pwin.x < screen_w )
 			{
 				UINT32 w;
 				xadd = 0;
 				yadd = 0;
 	
-				if( pwin->flags & BORDER_LEFT )   ++xadd;
-				if( pwin->flags & BORDER_RIGHT )  ++xadd;
-				if( pwin->flags & BORDER_TOP )	  ++yadd;
-				if( pwin->flags & BORDER_BOTTOM ) ++yadd;
+				if( pwin.flags & BORDER_LEFT )   ++xadd;
+				if( pwin.flags & BORDER_RIGHT )  ++xadd;
+				if( pwin.flags & BORDER_TOP )	  ++yadd;
+				if( pwin.flags & BORDER_BOTTOM ) ++yadd;
 	
-				w = pwin->w + xadd;
+				w = pwin.w + xadd;
 				if( w > screen_w )
-					w = screen_w - pwin->x;
+					w = screen_w - pwin.x;
 	
-				for( y = pwin->y; y < screen_h && y < pwin->y + pwin->h + yadd; y++ )
-					memset(&p_prio_map[y * screen_w + pwin->x], prio, w);
+				for( y = pwin.y; y < screen_h && y < pwin.y + pwin.h + yadd; y++ )
+					memset(&p_prio_map[y * screen_w + pwin.x], prio, w);
 			}
 		}
 	
@@ -173,35 +173,35 @@ public class window
 		{
 			/* Let's figure out if we should be doing a shadow */
 	
-			if( pwin->text && (pwin->flags & SHADOW) && !(pwin->flags & HIDDEN) )
+			if( pwin.text && (pwin.flags & SHADOW) && !(pwin.flags & HIDDEN) )
 			{
-				yadd = pwin->y + pwin->h;
-				xadd = pwin->x + pwin->w;
+				yadd = pwin.y + pwin.h;
+				xadd = pwin.x + pwin.w;
 	
 				/* If we have additional borders, extend it! */
-				if( pwin->flags & BORDER_TOP )	  ++yadd;
-				if( pwin->flags & BORDER_BOTTOM ) ++yadd;
-				if( pwin->flags & BORDER_LEFT )   ++xadd;
-				if( pwin->flags & BORDER_RIGHT )  ++xadd;
+				if( pwin.flags & BORDER_TOP )	  ++yadd;
+				if( pwin.flags & BORDER_BOTTOM ) ++yadd;
+				if( pwin.flags & BORDER_LEFT )   ++xadd;
+				if( pwin.flags & BORDER_RIGHT )  ++xadd;
 	
 				/* If the line is still within range, go figure it! */
 	
 				if( (yadd + 1) < screen_h )
 				{
-					for( x = pwin->x + 1; x < screen_w && x < (xadd + 1); x++ )
+					for( x = pwin.x + 1; x < screen_w && x < (xadd + 1); x++ )
 					{
-						if( pwin->prio < p_shadow_map[x + (yadd * screen_w)] )
-							p_shadow_map[x + (yadd * screen_w)] = pwin->prio;
+						if( pwin.prio < p_shadow_map[x + (yadd * screen_w)] )
+							p_shadow_map[x + (yadd * screen_w)] = pwin.prio;
 					}
 				}
 	
 				/* Now let's draw us a vertical shadow line */
 				if( (xadd + 1) < screen_w )
 				{
-					for( y = pwin->y + 1; y < yadd; y++ )
+					for( y = pwin.y + 1; y < yadd; y++ )
 					{
-						if( pwin->prio < p_shadow_map[xadd + (y * screen_w)] )
-							p_shadow_map[xadd + (y * screen_w)] = pwin->prio;
+						if( pwin.prio < p_shadow_map[xadd + (y * screen_w)] )
+							p_shadow_map[xadd + (y * screen_w)] = pwin.prio;
 					}
 				}
 			}
@@ -229,24 +229,24 @@ public class window
 		UINT32 x, y, xadd, yadd;
 		UINT8 bMap = 0;
 	
-		xadd = pwin->w;
-		yadd = pwin->h;
+		xadd = pwin.w;
+		yadd = pwin.h;
 	
-		if( pwin->flags & BORDER_LEFT )   ++xadd;
-		if( pwin->flags & BORDER_RIGHT )  ++xadd;
-		if( pwin->flags & BORDER_TOP )	  ++yadd;
-		if( pwin->flags & BORDER_BOTTOM ) ++yadd;
+		if( pwin.flags & BORDER_LEFT )   ++xadd;
+		if( pwin.flags & BORDER_RIGHT )  ++xadd;
+		if( pwin.flags & BORDER_TOP )	  ++yadd;
+		if( pwin.flags & BORDER_BOTTOM ) ++yadd;
 	
 		/* Now check to see if we need to update anything because of the shadow */
 	
-		if( pwin->flags & SHADOW )
+		if( pwin.flags & SHADOW )
 		{
 			/* Check out the shadow on the bottom and see if we need */
 			/* to update a window below. */
-			y = yadd + pwin->y;
+			y = yadd + pwin.y;
 			if( y < screen_h )
 			{
-				for( x = pwin->x + 2; x < (pwin->x + xadd + 2); x++ )
+				for( x = pwin.x + 2; x < (pwin.x + xadd + 2); x++ )
 				{
 					if( x < screen_w )
 					{
@@ -258,9 +258,9 @@ public class window
 			}
 	
 			/* And now down the right side */
-			for( y = pwin->y + 1; y < screen_h && y < pwin->y + yadd + 1; y++ )
+			for( y = pwin.y + 1; y < screen_h && y < pwin.y + yadd + 1; y++ )
 			{
-				for( x = xadd + pwin->x; x < (xadd + pwin->x + 2); x++ )
+				for( x = xadd + pwin.x; x < (xadd + pwin.x + 2); x++ )
 				{
 					if( x < screen_w )
 					{
@@ -301,105 +301,105 @@ public class window
 	
 		/* If this isn't a valid window or it's hidden, just bail out */
 	
-		if( NULL == pwin->text || (pwin->flags & HIDDEN) )
+		if( NULL == pwin.text || (pwin.flags & HIDDEN) )
 			return;
 	
 		/* Let's whip through and draw the whole stinking window, shall we? */
 	
-		x0 = pwin->x;
-		y0 = pwin->y;
+		x0 = pwin.x;
+		y0 = pwin.y;
 	
-		if( pwin->flags & BORDER_LEFT ) ++x0;
-		if( pwin->flags & BORDER_TOP )	++y0;
+		if( pwin.flags & BORDER_LEFT ) ++x0;
+		if( pwin.flags & BORDER_TOP )	++y0;
 	
-		color = pwin->co_frame;
+		color = pwin.co_frame;
 	
 		/* See if we need a character in the upper left hand corner of our window */
-		if( (pwin->flags & BORDER_TOP) && (pwin->flags & BORDER_LEFT) )
+		if( (pwin.flags & BORDER_TOP) && (pwin.flags & BORDER_LEFT) )
 		{
-			if( pwin->x < screen_w && pwin->y < screen_h )
-				if( p_prio_map[pwin->x + (pwin->y * screen_w)] >= pwin->prio )
-					win_out(FRAME_TL, color, pwin->x, pwin->y, idx);
+			if( pwin.x < screen_w && pwin.y < screen_h )
+				if( p_prio_map[pwin.x + (pwin.y * screen_w)] >= pwin.prio )
+					win_out(FRAME_TL, color, pwin.x, pwin.y, idx);
 		}
 	
 		/* See if we need a character in the lower left hand corner of our window */
-		if( (pwin->flags & BORDER_BOTTOM) && (pwin->flags & BORDER_LEFT) )
+		if( (pwin.flags & BORDER_BOTTOM) && (pwin.flags & BORDER_LEFT) )
 		{
-			if( pwin->x < screen_w && pwin->y + y0 < screen_h )
-				if( p_prio_map[pwin->x + ((y0 + pwin->h) * screen_w)] >= pwin->prio )
-					win_out(FRAME_BL, color, pwin->x, pwin->h + y0, idx);
+			if( pwin.x < screen_w && pwin.y + y0 < screen_h )
+				if( p_prio_map[pwin.x + ((y0 + pwin.h) * screen_w)] >= pwin.prio )
+					win_out(FRAME_BL, color, pwin.x, pwin.h + y0, idx);
 		}
 	
 		/* See if we need a character in the upper right hand corner of our window */
-		if( (pwin->flags & BORDER_TOP) && (pwin->flags & BORDER_RIGHT) )
+		if( (pwin.flags & BORDER_TOP) && (pwin.flags & BORDER_RIGHT) )
 		{
-			if( pwin->x + x0 < screen_w && pwin->y < screen_h )
-				if( p_prio_map[pwin->w + x0 + (pwin->y * screen_w)] >= pwin->prio )
-					win_out(FRAME_TR, color, pwin->w + x0, pwin->y, idx);
+			if( pwin.x + x0 < screen_w && pwin.y < screen_h )
+				if( p_prio_map[pwin.w + x0 + (pwin.y * screen_w)] >= pwin.prio )
+					win_out(FRAME_TR, color, pwin.w + x0, pwin.y, idx);
 		}
 	
 		/* See if we need a character in the lower right hand corner of our window */
-		if( (pwin->flags & BORDER_BOTTOM) && (pwin->flags & BORDER_RIGHT) )
+		if( (pwin.flags & BORDER_BOTTOM) && (pwin.flags & BORDER_RIGHT) )
 		{
-			if( pwin->x + x0 < screen_w && pwin->y + y0 < screen_h )
-				if( p_prio_map[pwin->w + x0 + ((pwin->h + y0) * screen_w)] >= pwin->prio )
-					win_out(FRAME_BR, color, pwin->w + x0, pwin->h + y0, idx);
+			if( pwin.x + x0 < screen_w && pwin.y + y0 < screen_h )
+				if( p_prio_map[pwin.w + x0 + ((pwin.h + y0) * screen_w)] >= pwin.prio )
+					win_out(FRAME_BR, color, pwin.w + x0, pwin.h + y0, idx);
 	    }
 	
 		/* Let's go through and draw the frame for the window (if any) */
-		if( pwin->flags & BORDER_LEFT )    /* Here we have a left border */
+		if( pwin.flags & BORDER_LEFT )    /* Here we have a left border */
 		{
-	        for( y = y0; y < (y0 + pwin->h); y++ )
+	        for( y = y0; y < (y0 + pwin.h); y++ )
 			{
-				if( p_prio_map[pwin->x + (y * screen_w)] >= pwin->prio )
-					win_out(FRAME_V, color, pwin->x, y, idx);
+				if( p_prio_map[pwin.x + (y * screen_w)] >= pwin.prio )
+					win_out(FRAME_V, color, pwin.x, y, idx);
 			}
 		}
 	
 		/* Let's draw the right side of the window (if any) */
-		if( pwin->flags & BORDER_RIGHT ) /* Here we have a right border */
+		if( pwin.flags & BORDER_RIGHT ) /* Here we have a right border */
 		{
-			if( pwin->w + x0 < screen_w )
-				for( y = y0; y < screen_h && y < (y0 + pwin->h); y++ )
+			if( pwin.w + x0 < screen_w )
+				for( y = y0; y < screen_h && y < (y0 + pwin.h); y++ )
 				{
-					if( p_prio_map[pwin->w + x0 + (y * screen_w)] >= pwin->prio )
-						win_out(FRAME_V, color, x0 + pwin->w, y, idx);
+					if( p_prio_map[pwin.w + x0 + (y * screen_w)] >= pwin.prio )
+						win_out(FRAME_V, color, x0 + pwin.w, y, idx);
 				}
 		}
 	
 		/* Let's draw the bottom side of the window (if any) */
-		if( pwin->flags & BORDER_BOTTOM )
+		if( pwin.flags & BORDER_BOTTOM )
 		{
-			if( pwin->h + y0 < screen_h )
-				for( x = x0; x < (x0 + pwin->w); x++ )
+			if( pwin.h + y0 < screen_h )
+				for( x = x0; x < (x0 + pwin.w); x++ )
 				{
-					if( p_prio_map[((y0 + pwin->h) * screen_w) + x] >= pwin->prio )
-						win_out(FRAME_H, color, x, y0 + pwin->h, idx);
+					if( p_prio_map[((y0 + pwin.h) * screen_w) + x] >= pwin.prio )
+						win_out(FRAME_H, color, x, y0 + pwin.h, idx);
 				}
 		}
 	
 		/* And now the top! */
-		if( pwin->flags & BORDER_TOP )
+		if( pwin.flags & BORDER_TOP )
 		{
 			/* If we've got a title, let's put that in, too... */
-			if( pwin->title )
+			if( pwin.title )
 	        {
 				UINT32 i, j, length1, length2;
-				char *p = strchr(pwin->title, '\t');
+				char *p = strchr(pwin.title, '\t');
 	
 				/* If the title contains a tab, split it into two parts */
 	            if (p != 0)
 				{
 	                i = 0;
 	                j = 1;
-					length1 = (UINT32)(p - pwin->title);
+					length1 = (UINT32)(p - pwin.title);
 					length2 = strlen(p + j);
 	
-					for( x = x0; x < screen_w && x < (x0 + pwin->w); x++ )
+					for( x = x0; x < screen_w && x < (x0 + pwin.w); x++ )
 					{
-						if( p_prio_map[x + (pwin->y * screen_w)] < pwin->prio )
+						if( p_prio_map[x + (pwin.y * screen_w)] < pwin.prio )
 							continue;
-						color = pwin->co_frame;
+						color = pwin.co_frame;
 	                    if( x < (x0 + 1) )
 						{
 							ch = FRAME_H;
@@ -407,20 +407,20 @@ public class window
 	                    else
 						if( x > (x0 + 1 + length1 + 1) )
 						{
-							if( x < (x0 + pwin->w - 1 - length2 - 1) )
+							if( x < (x0 + pwin.w - 1 - length2 - 1) )
 							{
 								ch = FRAME_H;
 							}
 							else
 							{
-								if( x == (x0 + pwin->w - 1) )
+								if( x == (x0 + pwin.w - 1) )
 									ch = CAPTION_R;
 								else
-								if( x == (x0 + pwin->w - 1 - length2 - 1) )
+								if( x == (x0 + pwin.w - 1 - length2 - 1) )
 									ch = CAPTION_L;
 								else
 								{
-	                                color = pwin->co_title;
+	                                color = pwin.co_title;
 									ch = p[j++];
 								}
 							}
@@ -434,23 +434,23 @@ public class window
 								ch = CAPTION_R;
 							else
 							{
-	                            color = pwin->co_title;
-								ch = pwin->title[i++];
+	                            color = pwin.co_title;
+								ch = pwin.title[i++];
 							}
 						}
-						win_out(ch, color, x, pwin->y, idx);
+						win_out(ch, color, x, pwin.y, idx);
 	                }
 	            }
 				else
 				{
 					/* Draw a top border with a title in the left part */
-					length1 = strlen(pwin->title);
+					length1 = strlen(pwin.title);
 					i = 0;
-					for( x = x0; x < screen_w && x < (x0 + pwin->w); x++ )
+					for( x = x0; x < screen_w && x < (x0 + pwin.w); x++ )
 					{
-						if( p_prio_map[x + (pwin->y * screen_w)] < pwin->prio )
+						if( p_prio_map[x + (pwin.y * screen_w)] < pwin.prio )
 							continue;
-						color = pwin->co_frame;
+						color = pwin.co_frame;
 	                    if( x < (x0 + 1) || x > (x0 + 1 + length1 + 1) )
 						{
 							ch = FRAME_H;
@@ -464,36 +464,36 @@ public class window
 								ch = CAPTION_R;
 							else
 							{
-	                            color = pwin->co_title;
-								ch = pwin->title[i++];
+	                            color = pwin.co_title;
+								ch = pwin.title[i++];
 							}
 						}
-						win_out(ch, color, x, pwin->y, idx);
+						win_out(ch, color, x, pwin.y, idx);
 					}
 				}
 	        }
 			else
 			{
-				for( x = x0; x < screen_w && x < (x0 + pwin->w); x++ )
+				for( x = x0; x < screen_w && x < (x0 + pwin.w); x++ )
 				{
-					if( p_prio_map[(pwin->y * screen_w) + x] >= pwin->prio )
-						win_out(FRAME_H, color, x, pwin->y, idx);
+					if( p_prio_map[(pwin.y * screen_w) + x] >= pwin.prio )
+						win_out(FRAME_H, color, x, pwin.y, idx);
 				}
 			}
 	
 		}
 	
 		/* Loop through our existing window and update it on the screen */
-		for( y = 0; y < pwin->h; y++ )
+		for( y = 0; y < pwin.h; y++ )
 		{
 			win_offs = y * screen_w;
 			scr_offs = (y0 + y) * screen_w + x0;
-			for( x = 0; x < pwin->w; x++ )
+			for( x = 0; x < pwin.w; x++ )
 			{
-				if( p_prio_map[scr_offs] >= pwin->prio )
+				if( p_prio_map[scr_offs] >= pwin.prio )
 				{
-					ch = pwin->text[win_offs];
-					color = pwin->attr[win_offs];
+					ch = pwin.text[win_offs];
+					color = pwin.attr[win_offs];
 					win_out(ch, color, x0 + x, y0 + y, idx);
 				}
 				win_offs++;
@@ -531,34 +531,34 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		if( NULL == pwin->text )
+		if( NULL == pwin.text )
 			return;
 	
 		memset( affected, 0, sizeof(affected) );
 	
 		/* Let's fake like the window is gone */
 	
-		flags_old = pwin->flags;
-		pwin->flags |= HIDDEN;
+		flags_old = pwin.flags;
+		pwin.flags |= HIDDEN;
 	
 		/* Recompute the display matrix */
 	
 		win_update_map();
 	
-		xadd = pwin->w;
-		yadd = pwin->h;
+		xadd = pwin.w;
+		yadd = pwin.h;
 	
-		if( pwin->flags & BORDER_LEFT )   ++xadd;
-		if( pwin->flags & BORDER_RIGHT )  ++xadd;
-		if( pwin->flags & BORDER_TOP )	  ++yadd;
-		if( pwin->flags & BORDER_BOTTOM ) ++yadd;
+		if( pwin.flags & BORDER_LEFT )   ++xadd;
+		if( pwin.flags & BORDER_RIGHT )  ++xadd;
+		if( pwin.flags & BORDER_TOP )	  ++yadd;
+		if( pwin.flags & BORDER_BOTTOM ) ++yadd;
 	
-		win_set_cursor_char(idx, 0, pwin->flags & CURSOR_ON);
+		win_set_cursor_char(idx, 0, pwin.flags & CURSOR_ON);
 	
 		/* Go see if we need to do anything about our shadows */
-		for( y = pwin->y; y < screen_h && y < (pwin->y + yadd); y++ )
+		for( y = pwin.y; y < screen_h && y < (pwin.y + yadd); y++ )
 		{
-			for( x = pwin->x; x < screen_w && x < (pwin->x + xadd); x++ )
+			for( x = pwin.x; x < screen_w && x < (pwin.x + xadd); x++ )
 			{
 				bMap = p_prio_map[(y * screen_w) + x];
 				if( 0xff == bMap )
@@ -582,7 +582,7 @@ public class window
 			}
 		}
 	
-		pwin->flags = flags_old;
+		pwin.flags = flags_old;
 	}
 	
 	/************************************************************************
@@ -607,25 +607,25 @@ public class window
 		if( INVALID == idx )
 			return;
 	
-		if( NULL == pwin->text )
+		if( NULL == pwin.text )
 			return;
 	
-	    if( pwin->flags & HIDDEN )
+	    if( pwin.flags & HIDDEN )
 			return;
 	
-		if( pwin->flags & NO_WRAP )
+		if( pwin.flags & NO_WRAP )
 		{
-			if( pwin->x >= pwin->w )
+			if( pwin.x >= pwin.w )
 				return;
-			if( pwin->y >= pwin->h )
+			if( pwin.y >= pwin.h )
 				return;
 		}
 	
-	    x0 = pwin->x + pwin->cx;
-		y0 = pwin->y + pwin->cy;
+	    x0 = pwin.x + pwin.cx;
+		y0 = pwin.y + pwin.cy;
 	
-		if( pwin->flags & BORDER_LEFT ) ++x0;
-		if( pwin->flags & BORDER_TOP )	++y0;
+		if( pwin.flags & BORDER_LEFT ) ++x0;
+		if( pwin.flags & BORDER_TOP )	++y0;
 	
 		/* If we are outside of the physical screen, just exit */
 	    if( x0 >= screen_w || y0 >= screen_h )
@@ -633,19 +633,19 @@ public class window
 	
 		win_offs = y0 * screen_w + x0;
 	
-		if( p_prio_map[win_offs] < pwin->prio )
+		if( p_prio_map[win_offs] < pwin.prio )
 			return;
 	
 		if (state != 0)
 		{
-			pwin->saved_text = p_text[win_offs];
-			pwin->saved_attr = p_attr[win_offs];
+			pwin.saved_text = p_text[win_offs];
+			pwin.saved_attr = p_attr[win_offs];
 			win_out(CHAR_CURSORON, WIN_BRIGHT_WHITE, x0, y0, idx);
 		}
 		else
 		{
 			if( 0 != state_old )
-				win_out(pwin->saved_text, pwin->saved_attr, x0, y0, idx);
+				win_out(pwin.saved_text, pwin.saved_attr, x0, y0, idx);
 		}
 	}
 	
@@ -672,9 +672,9 @@ public class window
 	
 	    if( idx >= MAX_WINDOWS )
 			return FALSE;
-		if( pwin->text == NULL )
+		if( pwin.text == NULL )
 			return FALSE;
-		if( pwin->attr == NULL )
+		if( pwin.attr == NULL )
 	        return FALSE;
 	
 	    return TRUE;
@@ -802,40 +802,40 @@ public class window
 	
 		/* Is the window already open? Return FALSE if so */
 	
-		if( pwin->text )
+		if( pwin.text )
 			return(FALSE);
 	
 		xadd = 0;
 		yadd = 0;
 	
-		if( psWin->flags & BORDER_LEFT )
+		if( psWin.flags & BORDER_LEFT )
 			++xadd;
-		if( psWin->flags & BORDER_RIGHT )
+		if( psWin.flags & BORDER_RIGHT )
 			++xadd;
-		if( psWin->flags & BORDER_TOP )
+		if( psWin.flags & BORDER_TOP )
 			++yadd;
-		if( psWin->flags & BORDER_BOTTOM )
+		if( psWin.flags & BORDER_BOTTOM )
 			++yadd;
 	
-	//	ASSERT((psWin->x + psWin->w + xadd) <= screen_w);
-	//	ASSERT((psWin->y + psWin->h + yadd) <= screen_h);
+	//	ASSERT((psWin.x + psWin.w + xadd) <= screen_w);
+	//	ASSERT((psWin.y + psWin.h + yadd) <= screen_h);
 	
-		psWin->text = MyMalloc( screen_w * (yadd + psWin->h), "win_open()" );
-		psWin->attr = MyMalloc( screen_w * (yadd + psWin->h), "win_open()" );
-		psWin->title = MyMalloc( screen_w + 1, "win_open()" );
+		psWin.text = MyMalloc( screen_w * (yadd + psWin.h), "win_open()" );
+		psWin.attr = MyMalloc( screen_w * (yadd + psWin.h), "win_open()" );
+		psWin.title = MyMalloc( screen_w + 1, "win_open()" );
 	
 		/* This is our fill character */
-		ch = psWin->filler;
-		color = psWin->co_text;
+		ch = psWin.filler;
+		color = psWin.co_text;
 	
-		for (i = 0; i < screen_w * (yadd + psWin->h); i++)
+		for (i = 0; i < screen_w * (yadd + psWin.h); i++)
 		{
-			psWin->text[i] = ch;
-			psWin->attr[i] = color;
+			psWin.text[i] = ch;
+			psWin.attr[i] = color;
 		}
 	
-	    psWin->cx = 0;
-		psWin->cy = 0;
+	    psWin.cx = 0;
+		psWin.cy = 0;
 	
 		/* Copy it into the regular structure, update the window map and show */
 		/* the window (if it's not hidden) */
@@ -857,15 +857,15 @@ public class window
 			}
 		}
 	
-		pwin->saved_text = ch;
-		pwin->saved_attr = color;
-		win_set_cursor_char(idx, pwin->flags & CURSOR_ON, 0);
+		pwin.saved_text = ch;
+		pwin.saved_attr = color;
+		win_set_cursor_char(idx, pwin.flags & CURSOR_ON, 0);
 	
 		/* Now that the window is opened, if there's a resize handler available, */
 		/* call it! */
 	
-		if( pwin->Resize )
-			pwin->Resize(idx, pwin);
+		if( pwin.Resize )
+			pwin.Resize(idx, pwin);
 	
 		return(TRUE);
 	}
@@ -892,14 +892,14 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		if( NULL == pwin->text )
+		if( NULL == pwin.text )
 			return;
 	
 		/* Call the shutdown client if applicable */
 	
-		if( pwin->Close )
+		if( pwin.Close )
 		{
-			if( FALSE == pwin->Close(idx, pwin) )
+			if( FALSE == pwin.Close(idx, pwin) )
 				return;
 		}
 	
@@ -909,9 +909,9 @@ public class window
 	
 		/* Delete all we've allocated */
 	
-		MyFree((void **) &pwin->text, "win_close()"); /* Free our video data */
-		MyFree((void **) &pwin->attr, "win_close()"); /* Free our video data */
-		MyFree((void **) &pwin->title, "win_close()"); /* Free our video data */
+		MyFree((void **) &pwin.text, "win_close()"); /* Free our video data */
+		MyFree((void **) &pwin.attr, "win_close()"); /* Free our video data */
+		MyFree((void **) &pwin.title, "win_close()"); /* Free our video data */
 	}
 	
 	/************************************************************************
@@ -939,29 +939,29 @@ public class window
 	
 		/* Is the window already open? Return FALSE if so */
 	
-		if( NULL == pwin->text )
+		if( NULL == pwin.text )
 			return(FALSE);
 	
 		/* If we don't scroll it, don't scroll it! */
 	
-		if( pwin->flags & NO_SCROLL )
+		if( pwin.flags & NO_SCROLL )
 			return(FALSE);
 	
 		/* Let's do the scroll */
 	
-		ptext = pwin->text;
-		pattr = pwin->attr;
+		ptext = pwin.text;
+		pattr = pwin.attr;
 	
-		if( pwin->h != 1 )
+		if( pwin.h != 1 )
 		{
-			memcpy( ptext, ptext + screen_w, screen_w * (pwin->h - 1) );
-			memcpy( pattr, pattr + screen_w, screen_w * (pwin->h - 1) );
+			memcpy( ptext, ptext + screen_w, screen_w * (pwin.h - 1) );
+			memcpy( pattr, pattr + screen_w, screen_w * (pwin.h - 1) );
 		}
 	
 		/* Now that we've done the scroll, let's clear out the bottom line */
 	
-		color = pwin->co_text;
-		for (i = 0; i < pwin->w; i++)
+		color = pwin.co_text;
+		for (i = 0; i < pwin.w; i++)
 		{
 			*ptext++ = ' ';
 			*pattr++ = color;
@@ -994,36 +994,36 @@ public class window
 		UINT32 x0, y0;
 		UINT8 color;
 	
-		if( NULL == pwin->text )
+		if( NULL == pwin.text )
 			return 0;
 	
-		color = pwin->co_text;
+		color = pwin.co_text;
 	
 	    switch( ch )
 		{
 		case '\b':  /* Backspace? */
-			if( pwin->cx )
+			if( pwin.cx )
 			{
-				pwin->cx--;
+				pwin.cx--;
 				rel--;
 			}
 			break;
 	
 		case '\r':  /* Carriage return */
-			rel = - pwin->cx;
-			pwin->cx = 0;
+			rel = - pwin.cx;
+			pwin.cx = 0;
 			break;
 	
 		case '\n':  /* Newline or linefeed? */
 	#if NEWLINE_ERASE_EOL
 			win_erase_eol( idx, ' ' );
 	#endif
-			rel = - pwin->cx;
-			pwin->cx = 0;
-			pwin->cy++;
-			if( pwin->cy >= pwin->h )
+			rel = - pwin.cx;
+			pwin.cx = 0;
+			pwin.cy++;
+			if( pwin.cy >= pwin.h )
 			{
-				pwin->cy--;
+				pwin.cy--;
 				win_scroll(idx);
 			}
 			break;
@@ -1032,43 +1032,43 @@ public class window
 			do
 			{
 				rel += win_internal_putchar( idx, ' ');
-			} while( pwin->cx % TAB_STOP );
+			} while( pwin.cx % TAB_STOP );
 			break;
 	
 	    default:
-	        x0 = pwin->x + pwin->cx;
-			y0 = pwin->y + pwin->cy;
+	        x0 = pwin.x + pwin.cx;
+			y0 = pwin.y + pwin.cy;
 	
-			if( pwin->flags & BORDER_LEFT )
+			if( pwin.flags & BORDER_LEFT )
 				++x0;
-			if( pwin->flags & BORDER_TOP )
+			if( pwin.flags & BORDER_TOP )
 				++y0;
 	
 			/* Sanity check */
 	        if( x0 < screen_w && y0 < screen_h )
 			{
-				pwin->text[pwin->cy * screen_w + pwin->cx] = ch;
-	            pwin->attr[pwin->cy * screen_w + pwin->cx] = color;
-				if( pwin->cx < pwin->w )
+				pwin.text[pwin.cy * screen_w + pwin.cx] = ch;
+	            pwin.attr[pwin.cy * screen_w + pwin.cx] = color;
+				if( pwin.cx < pwin.w )
 				{
-					if( p_prio_map[y0 * screen_w + x0] >= pwin->prio && !(pwin->flags & HIDDEN) )
+					if( p_prio_map[y0 * screen_w + x0] >= pwin.prio && !(pwin.flags & HIDDEN) )
 						win_out(ch, color, x0, y0, idx);
 				}
 			}
 	
 			rel++;
-			pwin->cx++;
-			if( pwin->cx >= pwin->w )
+			pwin.cx++;
+			if( pwin.cx >= pwin.w )
 			{
 				/* If we do not wrap at the right side, just exit */
-	            if( pwin->flags & NO_WRAP )
+	            if( pwin.flags & NO_WRAP )
 					return rel;
-	            pwin->cx = 0;
-				pwin->cy++;
-				if( pwin->cy >= pwin->h )
+	            pwin.cx = 0;
+				pwin.cy++;
+				if( pwin.cy >= pwin.h )
 				{
 					win_scroll(idx);
-	                pwin->cy--;
+	                pwin.cy--;
 				}
 			}
 	    }
@@ -1097,15 +1097,15 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return 0;
 	
-		if( pwin->flags & CURSOR_ON )
-			win_set_cursor_char(idx, 0, pwin->flags);
+		if( pwin.flags & CURSOR_ON )
+			win_set_cursor_char(idx, 0, pwin.flags);
 	
 		rel = win_internal_putchar(idx, bChar);
 	
-		if( pwin->flags & CURSOR_ON )
+		if( pwin.flags & CURSOR_ON )
 			win_set_cursor_char(idx, 1, 0);
 	
 		return rel;
@@ -1134,27 +1134,27 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
-		flags_old = pwin->flags;
-		pwin->flags |= NO_SCROLL;
+		flags_old = pwin.flags;
+		pwin.flags |= NO_SCROLL;
 	
-		if( pwin->flags & CURSOR_ON )
-			win_set_cursor_char(idx, 0, pwin->flags);
+		if( pwin.flags & CURSOR_ON )
+			win_set_cursor_char(idx, 0, pwin.flags);
 	
 		/* Do the fill! */
 	
-		x = pwin->cx;
-		y = pwin->cy;
-		for( i = x; i < pwin->w ; i++ )
+		x = pwin.cx;
+		y = pwin.cy;
+		for( i = x; i < pwin.w ; i++ )
 			win_internal_putchar(idx, ch);
 	
-		pwin->cx = x;
-		pwin->cy = y;
-		pwin->flags = flags_old;
+		pwin.cx = x;
+		pwin.cy = y;
+		pwin.flags = flags_old;
 	
-		if( pwin->flags & CURSOR_ON )
+		if( pwin.flags & CURSOR_ON )
 			win_set_cursor_char(idx, 1, 0);
 	}
 	
@@ -1179,27 +1179,27 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
 		/* Make sure we're in range */
 	
 		/* If we do not wrap at the right side, just exit */
-		if( !(pwin->flags & NO_WRAP) )
+		if( !(pwin.flags & NO_WRAP) )
 		{
-			if( x >= pwin->w )
+			if( x >= pwin.w )
 				return;
-			if( y >= pwin->h )
+			if( y >= pwin.h )
 				return;
 		}
 	
-		win_set_cursor_char(idx, 0, pwin->flags & CURSOR_ON);
+		win_set_cursor_char(idx, 0, pwin.flags & CURSOR_ON);
 	
 		/* Now put the cursor there */
 	
-		pwin->cx = x;
-		pwin->cy = y;
-		win_set_cursor_char(idx, pwin->flags & CURSOR_ON, 0);
+		pwin.cx = x;
+		pwin.cy = y;
+		win_set_cursor_char(idx, pwin.flags & CURSOR_ON, 0);
 	}
 	
 	static char tmp_text[450];
@@ -1227,18 +1227,18 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 	        return length;
 	
-	    if( pwin->flags & CURSOR_ON )
-	        win_set_cursor_char(idx, 0, pwin->flags & CURSOR_ON);
+	    if( pwin.flags & CURSOR_ON )
+	        win_set_cursor_char(idx, 0, pwin.flags & CURSOR_ON);
 	
 		length = vsprintf(tmp_text, fmt, arg);
 	
 	    while( *src )
 	        win_internal_putchar( idx, *src++ );
 	
-	    if( pwin->flags & CURSOR_ON )
+	    if( pwin.flags & CURSOR_ON )
 	        win_set_cursor_char(idx, 1, 0);
 	
 	    return length;
@@ -1269,11 +1269,11 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return length;
 	
-		if( pwin->flags & CURSOR_ON )
-			win_set_cursor_char(idx, 0, pwin->flags & CURSOR_ON);
+		if( pwin.flags & CURSOR_ON )
+			win_set_cursor_char(idx, 0, pwin.flags & CURSOR_ON);
 	
 		va_start(arg, fmt);
 		length = vsprintf(tmp_text, fmt, arg);
@@ -1282,7 +1282,7 @@ public class window
 		while( *src )
 			win_internal_putchar( idx, *src++ );
 	
-		if( pwin->flags & CURSOR_ON )
+		if( pwin.flags & CURSOR_ON )
 			win_set_cursor_char(idx, 1, 0);
 	
 		return length;
@@ -1310,10 +1310,10 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
-		pwin->co_text = color;
+		pwin.co_text = color;
 	}
 	
 	/************************************************************************
@@ -1337,10 +1337,10 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
-		pwin->co_title = color;
+		pwin.co_title = color;
 		win_update( idx );
 	}
 	
@@ -1365,10 +1365,10 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
-		pwin->co_frame = color;
+		pwin.co_frame = color;
 		win_update( idx );
 	}
 	
@@ -1394,17 +1394,17 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( NULL == pwin->text )
+	    if( NULL == pwin.text )
 			return;
 	
 		if (state != 0)
-			cursor = pwin->flags |= CURSOR_ON;
+			cursor = pwin.flags |= CURSOR_ON;
 		else
-			cursor = pwin->flags &= ~CURSOR_ON;
+			cursor = pwin.flags &= ~CURSOR_ON;
 	
-		win_set_cursor_char(idx, state, pwin->flags & CURSOR_ON);
+		win_set_cursor_char(idx, state, pwin.flags & CURSOR_ON);
 	
-		pwin->flags = cursor;
+		pwin.flags = cursor;
 	}
 	
 	/************************************************************************
@@ -1430,13 +1430,13 @@ public class window
 	
 		/* If it's already hidden, don't hide it again! */
 	
-		if( pwin->flags & HIDDEN )
+		if( pwin.flags & HIDDEN )
 			return;
 	
 		/* Otherwise, hide it */
 	
 		win_erase(idx);
-		pwin->flags |= HIDDEN;
+		pwin.flags |= HIDDEN;
 	}
 	
 	/************************************************************************
@@ -1462,9 +1462,9 @@ public class window
 	
 		/* Don't redraw the window if it's already shown */
 	
-		if( pwin->flags & HIDDEN )
+		if( pwin.flags & HIDDEN )
 		{
-			pwin->flags &= ~HIDDEN;
+			pwin.flags &= ~HIDDEN;
 			win_update_map();
 		}
 	
@@ -1495,7 +1495,7 @@ public class window
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
 		/* If BORDER_TOP is not set, changing a title makes no sense */
-		if( (pwin->flags & BORDER_TOP) == 0 )
+		if( (pwin.flags & BORDER_TOP) == 0 )
 			return FALSE;
 	
 		va_start(arg, fmt);
@@ -1503,10 +1503,10 @@ public class window
 		va_end(arg);
 	
 		/* If a title is there and did not change, just exit */
-		if( pwin->title && !strcmp(pwin->title, tmp_text) )
+		if( pwin.title && !strcmp(pwin.title, tmp_text) )
 			return TRUE;
 	
-		strncpy( pwin->title, tmp_text, screen_w );
+		strncpy( pwin.title, tmp_text, screen_w );
 	
 		win_update(idx);
 		return TRUE;
@@ -1533,7 +1533,7 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    return pwin->cx;
+	    return pwin.cx;
 	}
 	
 	/************************************************************************
@@ -1557,7 +1557,7 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		return pwin->cy;
+		return pwin.cy;
 	}
 	
 	/************************************************************************
@@ -1582,8 +1582,8 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		x = pwin->x + pwin->cx;
-		if( pwin->flags & BORDER_LEFT )
+		x = pwin.x + pwin.cx;
+		if( pwin.flags & BORDER_LEFT )
 			x++;
 	
 		return x;
@@ -1611,8 +1611,8 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		y = pwin->y + pwin->cy;
-		if( pwin->flags & BORDER_TOP )
+		y = pwin.y + pwin.cy;
+		if( pwin.flags & BORDER_TOP )
 			y++;
 	
 		return y;
@@ -1640,8 +1640,8 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		x = pwin->x;
-		if( pwin->flags & BORDER_LEFT )
+		x = pwin.x;
+		if( pwin.flags & BORDER_LEFT )
 			x++;
 	
 		return x;
@@ -1669,8 +1669,8 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		y = pwin->y;
-		if( pwin->flags & BORDER_TOP )
+		y = pwin.y;
+		if( pwin.flags & BORDER_TOP )
 			y++;
 	
 		return y;
@@ -1697,7 +1697,7 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		return pwin->w;
+		return pwin.w;
 	}
 	
 	/************************************************************************
@@ -1721,7 +1721,7 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		return pwin->h;
+		return pwin.h;
 	}
 	
 	/************************************************************************
@@ -1746,7 +1746,7 @@ public class window
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
 	    win_erase(idx);
-	    pwin->w = w;
+	    pwin.w = w;
 	    win_update_map();
 	    win_update(idx);
 	}
@@ -1774,17 +1774,17 @@ public class window
 	
 	    yadd = 0;
 	
-		if( pwin->flags & BORDER_TOP )
+		if( pwin.flags & BORDER_TOP )
 	        ++yadd;
-		if( pwin->flags & BORDER_BOTTOM )
+		if( pwin.flags & BORDER_BOTTOM )
 	        ++yadd;
 	
 	    win_erase(idx);
-	    pwin->text = MyReAlloc(pwin->text, screen_w * (h + yadd), "win_set_h()");
-	    pwin->attr = MyReAlloc(pwin->attr, screen_w * (h + yadd), "win_set_h()");
-	    pwin->h = h;
-	    if( pwin->cy >= pwin->h )
-	        pwin->cy = pwin->h - 1;
+	    pwin.text = MyReAlloc(pwin.text, screen_w * (h + yadd), "win_set_h()");
+	    pwin.attr = MyReAlloc(pwin.attr, screen_w * (h + yadd), "win_set_h()");
+	    pwin.h = h;
+	    if( pwin.cy >= pwin.h )
+	        pwin.cy = pwin.h - 1;
 	    win_update_map();
 	    win_update(idx);
 	}
@@ -1810,7 +1810,7 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-		return pwin->prio;
+		return pwin.prio;
 	}
 	
 	/************************************************************************
@@ -1834,11 +1834,11 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	
-	    if( pwin->prio == prio )
+	    if( pwin.prio == prio )
 			return;
 	
 		win_erase(idx);
-	    pwin->prio = prio;
+	    pwin.prio = prio;
 		win_update_map();
 		win_update(idx);
 	}
@@ -1864,8 +1864,8 @@ public class window
 		ASSERT(idx < MAX_WINDOWS);	/* This had better be in range */
 		ASSERT(p_windows);			/* And this had better be initialized */
 	    win_erase(idx);
-		pwin->x = x;
-		pwin->y = y;
+		pwin.x = x;
+		pwin.y = y;
 		win_update_map();
 	    win_update(idx);
 	}

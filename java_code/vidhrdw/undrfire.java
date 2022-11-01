@@ -186,31 +186,31 @@ public class undrfire
 						flipy = !flipy;
 					}
 	
-					sprite_ptr->gfx = 0;
-					sprite_ptr->code = code;
-					sprite_ptr->color = color;
-					sprite_ptr->flipx = !flipx;
-					sprite_ptr->flipy = flipy;
-					sprite_ptr->x = curx;
-					sprite_ptr->y = cury;
-					sprite_ptr->zoomx = zx << 12;
-					sprite_ptr->zoomy = zy << 12;
+					sprite_ptr.gfx = 0;
+					sprite_ptr.code = code;
+					sprite_ptr.color = color;
+					sprite_ptr.flipx = !flipx;
+					sprite_ptr.flipy = flipy;
+					sprite_ptr.x = curx;
+					sprite_ptr.y = cury;
+					sprite_ptr.zoomx = zx << 12;
+					sprite_ptr.zoomy = zy << 12;
 	
 					if (primasks != 0)
 					{
-						sprite_ptr->primask = primasks[priority];
+						sprite_ptr.primask = primasks[priority];
 	
 						sprite_ptr++;
 					}
 					else
 					{
-						drawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
-								sprite_ptr->code,
-								sprite_ptr->color,
-								sprite_ptr->flipx,sprite_ptr->flipy,
-								sprite_ptr->x,sprite_ptr->y,
+						drawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
+								sprite_ptr.code,
+								sprite_ptr.color,
+								sprite_ptr.flipx,sprite_ptr.flipy,
+								sprite_ptr.x,sprite_ptr.y,
 								cliprect,TRANSPARENCY_PEN,0,
-								sprite_ptr->zoomx,sprite_ptr->zoomy);
+								sprite_ptr.zoomx,sprite_ptr.zoomy);
 					}
 				}
 			}
@@ -224,14 +224,14 @@ public class undrfire
 		{
 			sprite_ptr--;
 	
-			pdrawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
-					sprite_ptr->code,
-					sprite_ptr->color,
-					sprite_ptr->flipx,sprite_ptr->flipy,
-					sprite_ptr->x,sprite_ptr->y,
+			pdrawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
+					sprite_ptr.code,
+					sprite_ptr.color,
+					sprite_ptr.flipx,sprite_ptr.flipy,
+					sprite_ptr.x,sprite_ptr.y,
 					cliprect,TRANSPARENCY_PEN,0,
-					sprite_ptr->zoomx,sprite_ptr->zoomy,
-					sprite_ptr->primask);
+					sprite_ptr.zoomx,sprite_ptr.zoomy,
+					sprite_ptr.primask);
 		}
 	}
 	
@@ -302,7 +302,7 @@ public class undrfire
 		pivlayer[2] = 2;
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0],cliprect);	/* wrong color? */
+		fillbitmap(bitmap,Machine.pens[0],cliprect);	/* wrong color? */
 	
 	
 	/* The "PIV" chip seems to be a renamed TC0100SCN. It has a
@@ -375,7 +375,7 @@ public class undrfire
 			for (i = 0; i < 8; i += 1)
 			{
 				sprintf (buf, "%02x: %04x", i, undrfire_rotate_ctrl[i]);
-				ui_text (Machine->scrbitmap, buf, 0, i*8);
+				ui_text (Machine.scrbitmap, buf, 0, i*8);
 			}
 		}
 	#endif

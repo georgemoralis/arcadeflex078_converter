@@ -168,7 +168,7 @@ public class supertnk
 			col2 = (supertnk_videoram[0x4000 + offset] >> (7-i)) & 0x01;
 			col = ( (col0 << 2) | (col1 << 1) | (col2 << 0) );
 	
-			plot_pixel(tmpbitmap, x+i, y, Machine->pens[col]);
+			plot_pixel(tmpbitmap, x+i, y, Machine.pens[col]);
 		}
 	} };
 	
@@ -185,7 +185,7 @@ public class supertnk
 	
 	public static VideoUpdateHandlerPtr video_update_supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	

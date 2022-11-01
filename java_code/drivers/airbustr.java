@@ -70,7 +70,7 @@ ff-100	address of int: 0x16
 3cd7	hiscores table (0x40 bytes, copied to e160)
 		Try entering TERU as your name :)
 
-7fff	country code: 0 <-> Japan; else World
+7fff	country code: 0 <. Japan; else World
 
 e615	rank:	0-easy	1-normal	2-hard	3-hardest
 e624	sound code during sound test
@@ -78,7 +78,7 @@ e624	sound code during sound test
 -- Shared RAM --
 
 f148<-	sound code (copied from e624)
-f14a->	read on nmi routine. main cpu writes the value and writes to port 02
+f14a.	read on nmi routine. main cpu writes the value and writes to port 02
 f150<-	index of table of routines at 2907
 
 ----------------
@@ -146,7 +146,7 @@ port 06 <- f100 + f140	x		port 04 <- f104 + f142	y
 port 0a <- f120 + f140	x		port 08 <- f124 + f142	y
 port 0c <- f14c = bit 0/1/2/3 = port 6/4/a/8 val < FF
 
-f148->	sound code (from main cpu)
+f148.	sound code (from main cpu)
 f14c	scroll regs high bits
 
 ----------------
@@ -441,7 +441,7 @@ public class airbustr
 	
 	public static ReadHandlerPtr soundcommand_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-	/* bits: 2 <-> ?	1 <-> soundlatch full	0 <-> soundlatch2 empty */
+	/* bits: 2 <. ?	1 <. soundlatch full	0 <. soundlatch2 empty */
 		return 4 + soundlatch_status * 2 + (1-soundlatch2_status);
 	} };
 	
@@ -799,7 +799,7 @@ public class airbustr
 	static struct OKIM6295interface okim6295_interface =
 	{
 		1,
-		{ 12000000/4/165 }, /* 3MHz -> 6295 (mode A) */
+		{ 12000000/4/165 }, /* 3MHz . 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 50 }
 	};

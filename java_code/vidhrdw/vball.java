@@ -37,7 +37,7 @@ public class vball
 	
 	static UINT32 background_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) <<6);
 	}
 	
@@ -128,7 +128,7 @@ public class vball
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		unsigned char *src = spriteram;
 		int i;
 	

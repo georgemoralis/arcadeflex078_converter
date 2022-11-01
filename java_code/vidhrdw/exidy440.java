@@ -64,7 +64,7 @@ public class exidy440
 		topsecex_last_yscroll = 0;
 	
 		/* allocate a bitmap */
-		tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		if (!tmpbitmap)
 			return 1;
 	
@@ -362,7 +362,7 @@ public class exidy440
 			UINT8 *src;
 	
 			/* skip if out of range */
-			if (yoffs < cliprect->min_y || yoffs >= cliprect->max_y + 16)
+			if (yoffs < cliprect.min_y || yoffs >= cliprect.max_y + 16)
 				continue;
 	
 			/* get a pointer to the source image */
@@ -383,11 +383,11 @@ public class exidy440
 					sy += 240;
 	
 				/* stop if we get before the current scanline */
-				if (yoffs < cliprect->min_y)
+				if (yoffs < cliprect.min_y)
 					break;
 	
 				/* only draw scanlines that are in this cliprect */
-				if (yoffs <= cliprect->max_y)
+				if (yoffs <= cliprect.max_y)
 				{
 					UINT8 *old = &local_videoram[sy * 512 + xoffs];
 					int currx = xoffs;
@@ -405,7 +405,7 @@ public class exidy440
 						{
 							/* combine with the background */
 							pen = left | old[0];
-							plot_pixel(bitmap, currx, yoffs, Machine->pens[pen]);
+							plot_pixel(bitmap, currx, yoffs, Machine.pens[pen]);
 	
 							/* check the collisions bit */
 							if ((palette[2 * pen] & 0x80) && count++ < 128)
@@ -418,7 +418,7 @@ public class exidy440
 						{
 							/* combine with the background */
 							pen = right | old[1];
-							plot_pixel(bitmap, currx, yoffs, Machine->pens[pen]);
+							plot_pixel(bitmap, currx, yoffs, Machine.pens[pen]);
 	
 							/* check the collisions bit */
 							if ((palette[2 * pen] & 0x80) && count++ < 128)
@@ -447,8 +447,8 @@ public class exidy440
 		int beamx, beamy;
 	
 		/* draw any dirty scanlines from the VRAM directly */
-		sy = scroll_offset + cliprect->min_y;
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++, sy++)
+		sy = scroll_offset + cliprect.min_y;
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++, sy++)
 		{
 			/* wrap at the bottom of the screen */
 			if (sy >= 240)
@@ -457,7 +457,7 @@ public class exidy440
 			/* only redraw if dirty */
 			if (scanline_dirty[sy])
 			{
-				draw_scanline8(tmpbitmap, 0, y, 320, &local_videoram[sy * 512], Machine->pens, -1);
+				draw_scanline8(tmpbitmap, 0, y, 320, &local_videoram[sy * 512], Machine.pens, -1);
 				scanline_dirty[sy] = 0;
 			}
 		}

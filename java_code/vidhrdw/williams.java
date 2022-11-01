@@ -120,16 +120,16 @@ public class williams
 	
 	static void copy_pixels(struct mame_bitmap *bitmap, const struct rectangle *clip, int transparent_pen)
 	{
-		int pairs = (clip->max_x - clip->min_x + 1) / 2;
-		int xoffset = clip->min_x;
+		int pairs = (clip.max_x - clip.min_x + 1) / 2;
+		int xoffset = clip.min_x;
 		int x, y;
 	
 		/* determine an accurate state for the Blaster background color */
-		if (williams_blitter_remap && clip->min_y == Machine->visible_area.min_y)
+		if (williams_blitter_remap && clip.min_y == Machine.visible_area.min_y)
 			blaster_back_color = 0;
 	
 		/* loop over rows */
-		for (y = clip->min_y; y <= clip->max_y; y++)
+		for (y = clip.min_y; y <= clip.max_y; y++)
 		{
 			UINT8 *source = &williams_videoram[y + 256 * (xoffset / 2)];
 			UINT8 scanline[400];
@@ -150,7 +150,7 @@ public class williams
 	
 			/* handle general case */
 			if (!williams_blitter_remap)
-				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine->pens, transparent_pen);
+				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine.pens, transparent_pen);
 	
 			/* handle Blaster special case */
 			else
@@ -161,16 +161,16 @@ public class williams
 				if (*blaster_video_bits & 1)
 				{
 					if (blaster_color_zero_flags[y] & 1)
-						blaster_back_color = 16 + y - Machine->visible_area.min_y;
+						blaster_back_color = 16 + y - Machine.visible_area.min_y;
 				}
 				else
 					blaster_back_color = 0;
 	
 				/* draw the scanline, temporarily remapping pen 0 */
-				saved_pen0 = Machine->pens[0];
-				Machine->pens[0] = Machine->pens[blaster_back_color];
-				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine->pens, transparent_pen);
-				Machine->pens[0] = saved_pen0;
+				saved_pen0 = Machine.pens[0];
+				Machine.pens[0] = Machine.pens[blaster_back_color];
+				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine.pens, transparent_pen);
+				Machine.pens[0] = saved_pen0;
 			}
 		}
 	}
@@ -292,8 +292,8 @@ public class williams
 		xtileoffset = *williams2_xscroll_high >> 1;
 	
 		/* adjust the offset for the row and compute the palette index */
-		tileram += cliprect->min_y / 16;
-		for (y = cliprect->min_y / 16; y < cliprect->max_y / 16 + 1; y++, tileram++)
+		tileram += cliprect.min_y / 16;
+		for (y = cliprect.min_y / 16; y < cliprect.max_y / 16 + 1; y++, tileram++)
 		{
 			color = williams2_row_to_palette[y];
 	
@@ -302,7 +302,7 @@ public class williams
 			{
 				unsigned int map = tileram[((col + xtileoffset) * 16) & 0x07ff];
 	
-				drawgfx(bitmap, Machine->gfx[0], map & williams2_tilemap_mask,
+				drawgfx(bitmap, Machine.gfx[0], map & williams2_tilemap_mask,
 						color, map & williams2_M7_flip, 0, col * 24 - xpixeloffset, y * 16,
 						cliprect, TRANSPARENCY_NONE, 0);
 			}
@@ -357,7 +357,7 @@ public class williams
 		if (!williams2_special_bg_color)
 		{
 			/* only modify the palette if we're talking to the current page */
-			if (offset >= page_offset && offset < page_offset + Machine->drv->total_colors - 16)
+			if (offset >= page_offset && offset < page_offset + Machine.drv.total_colors - 16)
 				williams2_modify_color(offset - page_offset + 16, offset);
 		}
 	
@@ -406,7 +406,7 @@ public class williams
 		{
 			/* remap the background colors */
 			palindex = williams2_bg_color * 16;
-			for (i = 16; i < Machine->drv->total_colors; i++)
+			for (i = 16; i < Machine.drv.total_colors; i++)
 				williams2_modify_color(i, palindex++);
 		}
 	
@@ -503,7 +503,7 @@ public class williams
 	{
 		blaster_color_zero_table[offset] = data;
 		data ^= 0xff;
-		if (offset >= Machine->visible_area.min_y && offset <= Machine->visible_area.max_y)
+		if (offset >= Machine.visible_area.min_y && offset <= Machine.visible_area.max_y)
 		{
 			int r = data & 7;
 			int g = (data >> 3) & 7;
@@ -512,7 +512,7 @@ public class williams
 			r = (r << 5) | (r << 2) | (r >> 1);
 			g = (g << 5) | (g << 2) | (g >> 1);
 			b = (b << 6) | (b << 4) | (b << 2) | b;
-			palette_set_color(16 + offset - Machine->visible_area.min_y, r, g, b);
+			palette_set_color(16 + offset - Machine.visible_area.min_y, r, g, b);
 		}
 	} };
 	

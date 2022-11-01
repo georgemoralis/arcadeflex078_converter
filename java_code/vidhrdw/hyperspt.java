@@ -40,11 +40,11 @@ public class hyperspt
 	public static PaletteInitHandlerPtr palette_init_hyperspt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -151,22 +151,22 @@ public class hyperspt
 	
 			sy += 1;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
 				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_COLOR, 0);
 	
 			/* redraw with wraparound */
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
 				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx - 256, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
@@ -182,7 +182,7 @@ public class hyperspt
 			tilemap_set_scrollx(bg_tilemap, row, scrollx);
 		}
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		hyperspt_draw_sprites(bitmap);
 	} };
 	

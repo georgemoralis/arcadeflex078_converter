@@ -162,7 +162,7 @@ public class hyprduel
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -200,7 +200,7 @@ public class hyprduel
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -243,7 +243,7 @@ public class hyprduel
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -418,8 +418,8 @@ public class hyprduel
 		unsigned char *base_gfx	=	memory_region(region);
 		unsigned char *gfx_max	=	base_gfx + memory_region_length(region);
 	
-		int max_x				=	Machine->drv->screen_width;
-		int max_y				=	Machine->drv->screen_height;
+		int max_x				=	Machine.drv.screen_width;
+		int max_y				=	Machine.drv.screen_height;
 	
 		int max_sprites			=	spriteram_size / 8;
 		int sprites				=	hyprduel_videoregs[0x00/2] % max_sprites;
@@ -482,7 +482,7 @@ public class hyprduel
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 256;
-				gfx.colortable = Machine->remapped_colortable;
+				gfx.colortable = Machine.remapped_colortable;
 				gfx.total_colors = 0x20;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -510,7 +510,7 @@ public class hyprduel
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 16;
-				gfx.colortable = Machine->remapped_colortable;
+				gfx.colortable = Machine.remapped_colortable;
 				gfx.total_colors = 0x200;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -536,7 +536,7 @@ public class hyprduel
 		sprintf(buf, "%02X %02X",((src[ 0 ] & 0xf800) >> 11)^0x1f,((src[ 1 ] & 0xfc00) >> 10) );
 	    dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 	    dt[0].x = x;    dt[0].y = y;    dt[1].text = 0; /* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 		}
 	}
@@ -570,7 +570,7 @@ public class hyprduel
 	
 				if (layers_ctrl & (1<<layer))
 				{
-					for (offs = cliprect->min_y; offs <= cliprect->max_y; offs++)
+					for (offs = cliprect.min_y; offs <= cliprect.max_y; offs++)
 					{
 						clip.min_y = offs;
 						clip.max_y = offs;
@@ -639,11 +639,11 @@ public class hyprduel
 			free(dirtyindex);
 		}
 	
-		hyprduel_sprite_xoffs	=	hyprduel_videoregs[0x06/2] - Machine->drv->screen_width  / 2;
-		hyprduel_sprite_yoffs	=	hyprduel_videoregs[0x04/2] - Machine->drv->screen_height / 2;
+		hyprduel_sprite_xoffs	=	hyprduel_videoregs[0x06/2] - Machine.drv.screen_width  / 2;
+		hyprduel_sprite_yoffs	=	hyprduel_videoregs[0x04/2] - Machine.drv.screen_height / 2;
 	
 		/* The background color is selected by a register */
-		fillbitmap(bitmap,Machine->pens[((hyprduel_videoregs[0x12/2] & 0x0fff) ^ 0x0ff) + 0x1000],cliprect);
+		fillbitmap(bitmap,Machine.pens[((hyprduel_videoregs[0x12/2] & 0x0fff) ^ 0x0ff) + 0x1000],cliprect);
 	
 		/*	Screen Control Register:
 	

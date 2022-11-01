@@ -182,7 +182,7 @@ public class ddragon3
 	
 				for (i = 0; i <= height; i++)
 				{
-					drawgfx(bitmap, Machine->gfx[1], code + i, color, flipx, flipy,
+					drawgfx(bitmap, Machine.gfx[1], code + i, color, flipx, flipy,
 						sx, sy + (flip_screen ? (i * 16) : (-i * 16)), cliprect, 
 						TRANSPARENCY_PEN, 0);
 				}

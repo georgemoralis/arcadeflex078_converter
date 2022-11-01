@@ -159,7 +159,7 @@ public class neogeo
 	
 	public static VideoUpdateHandlerPtr video_update_neogeo_mvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		no_of_tiles=Machine->gfx[2]->total_elements;
+		no_of_tiles=Machine.gfx[2].total_elements;
 		if (no_of_tiles>0x10000) high_tile=1; else high_tile=0;
 		if (no_of_tiles>0x20000) vhigh_tile=1; else vhigh_tile=0;
 		if (no_of_tiles>0x40000) vvhigh_tile=1; else vvhigh_tile=0;
@@ -321,7 +321,7 @@ public class neogeo
 		int col;
 		int mydword;
 		UINT8 *fspr = memory_region(REGION_GFX3);
-		const pen_t *paldata = &gfx->colortable[gfx->color_granularity * color];
+		const pen_t *paldata = &gfx.colortable[gfx.color_granularity * color];
 	
 		if (sx <= -16) return;
 	
@@ -329,7 +329,7 @@ public class neogeo
 		code %= no_of_tiles;
 	
 		/* Check for total transparency, no need to draw */
-		if ((gfx->pen_usage[code] & ~1) == 0)
+		if ((gfx.pen_usage[code] & ~1) == 0)
 			return;
 	
 		fspr += code*128 + 8*yoffs;
@@ -444,16 +444,16 @@ public class neogeo
 		int offs,count;
 		int tileno,tileatr,t1,t2,t3;
 		char fullmode = 0;
-		void **line=bitmap->line;
+		void **line=bitmap.line;
 		unsigned int *pen_usage;
-		struct GfxElement *gfx=Machine->gfx[2]; /* Save constant struct dereference */
+		struct GfxElement *gfx=Machine.gfx[2]; /* Save constant struct dereference */
 	
 	profiler_mark(PROFILER_VIDEO);
 	
 		/* Palette swap occured after last frame but before this one */
 		if (palette_swap_pending != 0) swap_palettes();
 	
-		fillbitmap(bitmap,Machine->pens[4095],cliprect);
+		fillbitmap(bitmap,Machine.pens[4095],cliprect);
 	
 		/* Draw sprites */
 		for (count = 0; count < 0x300 >> 1; count++)
@@ -522,7 +522,7 @@ public class neogeo
 			{
 				int yy = (sy + drawn_lines) & 0x1ff;
 	
-				if (yy >= cliprect->min_y && yy <= cliprect->max_y)
+				if (yy >= cliprect.min_y && yy <= cliprect.max_y)
 				{
 					int tile,yoffs;
 					int zoom_line;
@@ -586,8 +586,8 @@ public class neogeo
 	
 	
 		/* Save some struct de-refs */
-		gfx = Machine->gfx[fix_bank];
-		pen_usage=gfx->pen_usage;
+		gfx = Machine.gfx[fix_bank];
+		pen_usage=gfx.pen_usage;
 	
 		/* Character foreground */
 		/* thanks to Mr K for the garou & kof2000 banking info */
@@ -596,7 +596,7 @@ public class neogeo
 			int banked;
 			int garouoffsets[32];
 	
-			banked = (fix_bank == 0 && Machine->gfx[0]->total_elements > 0x1000) ? 1 : 0;
+			banked = (fix_bank == 0 && Machine.gfx[0].total_elements > 0x1000) ? 1 : 0;
 	
 			/* Build line banking table for Garou & MS3 before starting render */
 			if (banked && neogeo_fix_bank_type == 1)
@@ -616,7 +616,7 @@ public class neogeo
 				}
 			}
 	
-			for (y=cliprect->min_y / 8; y <= cliprect->max_y / 8; y++)
+			for (y=cliprect.min_y / 8; y <= cliprect.max_y / 8; y++)
 			{
 				for (x = 0; x < 40; x++)
 				{

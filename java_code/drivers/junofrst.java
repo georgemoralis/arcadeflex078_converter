@@ -11,7 +11,7 @@ Juno First emu and the mame driver is based on.
 Read/Write memory
 
 $0000-$7FFF = Screen RAM (only written to)
-$8000-$800f = Palette RAM. BBGGGRRR (D7->D0)
+$8000-$800f = Palette RAM. BBGGGRRR (D7.D0)
 $8100-$8FFF = Work RAM
 
 Write memory
@@ -50,28 +50,28 @@ $802c	- Dipswitch 1
 
 
 
-$9000->$9FFF Banked Memory - see below
-$A000->$BFFF "juno\\JFA_B9.BIN",
-$C000->$DFFF "juno\\JFB_B10.BIN",
-$E000->$FFFF "juno\\JFC_A10.BIN",
+$9000.$9FFF Banked Memory - see below
+$A000.$BFFF "juno\\JFA_B9.BIN",
+$C000.$DFFF "juno\\JFB_B10.BIN",
+$E000.$FFFF "juno\\JFC_A10.BIN",
 
-Banked memory - Paged into $9000->$9FFF..
+Banked memory - Paged into $9000.$9FFF..
 
 NOTE - In Tutankhm this only contains graphics, in Juno First it also contains code. (which
 		generally sets up the blitter)
 
-	"juno\\JFC1_A4.BIN",	$0000->$1FFF
-	"juno\\JFC2_A5.BIN",	$2000->$3FFF
-	"juno\\JFC3_A6.BIN",	$4000->$5FFF
-	"juno\\JFC4_A7.BIN",	$6000->$7FFF
-	"juno\\JFC5_A8.BIN",	$8000->$9FFF
-	"juno\\JFC6_A9.BIN",	$A000->$bFFF
+	"juno\\JFC1_A4.BIN",	$0000.$1FFF
+	"juno\\JFC2_A5.BIN",	$2000.$3FFF
+	"juno\\JFC3_A6.BIN",	$4000.$5FFF
+	"juno\\JFC4_A7.BIN",	$6000.$7FFF
+	"juno\\JFC5_A8.BIN",	$8000.$9FFF
+	"juno\\JFC6_A9.BIN",	$A000.$bFFF
 
 Blitter source graphics
 
-	"juno\\JFS3_C7.BIN",	$C000->$DFFF
-	"juno\\JFS4_D7.BIN",	$E000->$FFFF
-	"juno\\JFS5_E7.BIN",	$10000->$11FFF
+	"juno\\JFS3_C7.BIN",	$C000.$DFFF
+	"juno\\JFS4_D7.BIN",	$E000.$FFFF
+	"juno\\JFS5_E7.BIN",	$10000.$11FFF
 
 
 ***************************************************************************/

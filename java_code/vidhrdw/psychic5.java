@@ -337,7 +337,7 @@ public class psychic5
 	    return 0;
 	} };
 	
-	#define DRAW_SPRITE(code, sx, sy) drawgfx(bitmap, Machine->gfx[0], code, color, flipx, flipy, sx, sy, cliprect, TRANSPARENCY_PEN, 15);
+	#define DRAW_SPRITE(code, sx, sy) drawgfx(bitmap, Machine.gfx[0], code, color, flipx, flipy, sx, sy, cliprect, TRANSPARENCY_PEN, 15);
 	
 	void psychic5_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

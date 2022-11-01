@@ -554,8 +554,8 @@ public class memoryH
 	***************************************************************************/
 	
 	/* ----- macros for identifying memory/port struct markers ----- */
-	#define IS_MEMPORT_MARKER(ma)		((ma)->start == MEMPORT_MARKER && (ma)->end < MEMPORT_MARKER)
-	#define IS_MEMPORT_END(ma)			((ma)->start == MEMPORT_MARKER && (ma)->end == 0)
+	#define IS_MEMPORT_MARKER(ma)		((ma).start == MEMPORT_MARKER && (ma).end < MEMPORT_MARKER)
+	#define IS_MEMPORT_END(ma)			((ma).start == MEMPORT_MARKER && (ma).end == 0)
 	
 	/* ----- macros for defining the start/stop points ----- */
 	#define MEMPORT_ARRAY_START(t,n,f)	const struct t n[] = { { MEMPORT_MARKER, (f) },

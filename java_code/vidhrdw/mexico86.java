@@ -39,7 +39,7 @@ public class mexico86
 		/* the background character columns is stored inthe area dd00-dd3f */
 	
 		/* This clears & redraws the entire screen each pass */
-		fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[255],&Machine.visible_area);
 	
 		sx = 0;
 	/* the score display seems to be outside of the main objectram. */
@@ -95,12 +95,12 @@ public class mexico86
 					x = (sx + xc * 8) & 0xff;
 					y = (sy + yc * 8) & 0xff;
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flipx,flipy,
 							x,y,
-							&Machine->visible_area,TRANSPARENCY_PEN,15);
+							&Machine.visible_area,TRANSPARENCY_PEN,15);
 				}
 			}
 		}
@@ -119,7 +119,7 @@ public class mexico86
 		/* the background character columns is stored inthe area dd00-dd3f */
 	
 		/* This clears & redraws the entire screen each pass */
-		fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[255],&Machine.visible_area);
 	
 		sx = 0;
 	/* the score display seems to be outside of the main objectram. */
@@ -174,12 +174,12 @@ public class mexico86
 					x = (sx + xc * 8) & 0xff;
 					y = (sy + yc * 8) & 0xff;
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flipx,flipy,
 							x,y,
-							&Machine->visible_area,TRANSPARENCY_PEN,15);
+							&Machine.visible_area,TRANSPARENCY_PEN,15);
 				}
 			}
 		}
@@ -195,7 +195,7 @@ public class mexico86
 		int goffs,code,color,y;
 		int tx, ty;
 	
-		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 		sx = 0;
 		for (offs=0; offs<mexico86_objectram_size; offs+=4)
 		{
@@ -231,22 +231,22 @@ public class mexico86
 				color = (mexico86_videoram[goffs + 1] & 0xe0) >> 5;
 				goffs += 0x40;
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						code,
 						color,
 						0,0,
 						sx&0xff,y,
-						&Machine->visible_area,TRANSPARENCY_PEN,15);
+						&Machine.visible_area,TRANSPARENCY_PEN,15);
 	
 				code = mexico86_videoram[goffs] + ((mexico86_videoram[goffs + 1] & 0x1f) << 8);
 				color = (mexico86_videoram[goffs + 1] & 0xe0) >> 5;
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						code,
 						color,
 						0,0,
 						(sx+8)&0xff,y,
-						&Machine->visible_area,TRANSPARENCY_PEN,15);
+						&Machine.visible_area,TRANSPARENCY_PEN,15);
 			}
 		}
 	} };

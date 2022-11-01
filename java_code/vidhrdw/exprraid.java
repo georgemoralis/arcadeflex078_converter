@@ -135,7 +135,7 @@ public class exprraid
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
@@ -145,7 +145,7 @@ public class exprraid
 	
 			if ((attr & 0x10) != 0)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 					code + 1, color,
 					flipx, flipy,
 					sx, sy + (flip_screen ? -16 : 16),
@@ -156,9 +156,9 @@ public class exprraid
 	
 	public static VideoUpdateHandlerPtr video_update_exprraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		exprraid_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 1, 0);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 1, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

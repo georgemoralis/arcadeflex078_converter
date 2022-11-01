@@ -83,7 +83,7 @@ public class compgolf
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 			bit0 = (color_prom[i] >> 0) & 0x01;
@@ -143,19 +143,19 @@ public class compgolf
 			/*Double Height*/
 			if(spriteram.read(offs)& 0x10)
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					sprite+1,
 					color,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);
 			}
 			else
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);

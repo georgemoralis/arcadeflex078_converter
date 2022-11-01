@@ -61,8 +61,8 @@ public class mpatrol
 	public static PaletteInitHandlerPtr palette_init_mpatrol  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		/* character palette */
@@ -220,13 +220,13 @@ public class mpatrol
 	
 			for (j = 0;j < 8;j++)
 			{
-				drawgfx(bgbitmap[i],Machine->gfx[2 + 2 * i],
+				drawgfx(bgbitmap[i],Machine.gfx[2 + 2 * i],
 						j,0,
 						0,0,
 						32 * j,0,
 						0,TRANSPARENCY_NONE,0);
 	
-				drawgfx(bgbitmap[i],Machine->gfx[2 + 2 * i + 1],
+				drawgfx(bgbitmap[i],Machine.gfx[2 + 2 * i + 1],
 						j,0,
 						0,0,
 						32 * j,(BGHEIGHT / 2),
@@ -315,18 +315,18 @@ public class mpatrol
 	
 	static void get_clip(struct rectangle *clip, int min_y, int max_y)
 	{
-		clip->min_x = Machine->visible_area.min_x;
-		clip->max_x = Machine->visible_area.max_x;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
 	
 		if (flip_screen != 0)
 		{
-			clip->min_y = Machine->drv->screen_height - 1 - max_y;
-			clip->max_y = Machine->drv->screen_height - 1 - min_y;
+			clip.min_y = Machine.drv.screen_height - 1 - max_y;
+			clip.max_y = Machine.drv.screen_height - 1 - min_y;
 		}
 		else
 		{
-			clip->min_y = min_y;
-			clip->max_y = max_y;
+			clip.min_y = min_y;
+			clip.max_y = max_y;
 		}
 	}
 	
@@ -342,11 +342,11 @@ public class mpatrol
 		if (flip_screen != 0)
 		{
 			xpos = 256 - xpos;
-			ypos = Machine->drv->screen_height - BGHEIGHT - ypos;
+			ypos = Machine.drv.screen_height - BGHEIGHT - ypos;
 		}
 		copybitmap(bitmap,bgbitmap[image],flip_screen,flip_screen,xpos,      ypos,&clip1,transparency,128);
 		copybitmap(bitmap,bgbitmap[image],flip_screen,flip_screen,xpos - 256,ypos,&clip1,transparency,128);
-		fillbitmap(bitmap,Machine->gfx[image*2+2]->colortable[3],&clip2);
+		fillbitmap(bitmap,Machine.gfx[image*2+2].colortable[3],&clip2);
 	}
 	
 	/***************************************************************************
@@ -388,7 +388,7 @@ public class mpatrol
 					sy = 31 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ 2 * (colorram[offs] & 0x80),
 						color,
 						flip_screen,flip_screen,
@@ -404,13 +404,13 @@ public class mpatrol
 			struct rectangle clip;
 	
 			get_clip(&clip, 7*8, bg2ypos-1);
-			fillbitmap(bitmap,Machine->pens[0],&clip);
+			fillbitmap(bitmap,Machine.pens[0],&clip);
 	
 			draw_background(bitmap, bg2xpos, bg2ypos, bg1ypos + BGHEIGHT - 1, 0, TRANSPARENCY_NONE);
-			draw_background(bitmap, bg1xpos, bg1ypos, Machine->visible_area.max_y,
+			draw_background(bitmap, bg1xpos, bg1ypos, Machine.visible_area.max_y,
 			                (bgcontrol == 0x04) ? 1 : 2, TRANSPARENCY_COLOR);
 		}
-		else fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		else fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 	
 		/* copy the temporary bitmap to the screen */
@@ -419,8 +419,8 @@ public class mpatrol
 			struct rectangle clip;
 	
 	
-			clip.min_x = Machine->visible_area.min_x;
-			clip.max_x = Machine->visible_area.max_x;
+			clip.min_x = Machine.visible_area.min_x;
+			clip.max_x = Machine.visible_area.max_x;
 	
 			if (flip_screen != 0)
 			{
@@ -471,12 +471,12 @@ public class mpatrol
 				sy = 242 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					spriteram_2[offs + 2],
 					spriteram_2[offs + 1] & 0x3f,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_COLOR,128+32);
+					&Machine.visible_area,TRANSPARENCY_COLOR,128+32);
 		}
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
@@ -494,12 +494,12 @@ public class mpatrol
 				sy = 242 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					spriteram.read(offs + 2),
 					spriteram.read(offs + 1)& 0x3f,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_COLOR,128+32);
+					&Machine.visible_area,TRANSPARENCY_COLOR,128+32);
 		}
 	} };
 }

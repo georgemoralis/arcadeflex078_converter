@@ -13,7 +13,7 @@ public class pcktgal
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -27,10 +27,10 @@ public class pcktgal
 			bit2 = (color_prom[i] >> 6) & 0x01;
 			bit3 = (color_prom[i] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -97,19 +97,19 @@ public class pcktgal
 					if (flipy != 0) flipy=0; else flipy=1;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						spriteram.read(offs+3)+ ((spriteram.read(offs+1)& 1) << 8),
 						(spriteram.read(offs+1)& 0x70) >> 4,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_pcktgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		pcktgal_draw_sprites(bitmap);
 	} };
 }

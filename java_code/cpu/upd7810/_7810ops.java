@@ -98,7 +98,7 @@ static void SK_Z(void)
 /* 48 18: 0100 1000 0001 1000 */
 static void SKN_NV(void)
 {
-	/* skip not never -> skip always ;-) */
+	/* skip not never . skip always ;-) */
 	PSW |= SK;
 }
 

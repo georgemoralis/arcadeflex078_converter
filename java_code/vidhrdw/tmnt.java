@@ -702,7 +702,7 @@ public class tmnt
 		sortlayers(sorted_layer,layerpri);
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[16 * bg_colorbase],cliprect);
+		fillbitmap(bitmap,Machine.pens[16 * bg_colorbase],cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[0]],0,1);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[1]],0,2);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[2]],0,4);
@@ -746,7 +746,7 @@ public class tmnt
 		/* not sure about the 053936 priority, but it seems to work */
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[16 * bg_colorbase],cliprect);
+		fillbitmap(bitmap,Machine.pens[16 * bg_colorbase],cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[0]],0,1);
 		if (layerpri[0] >= 0x30 && layerpri[1] < 0x30)
 		{
@@ -839,7 +839,7 @@ public class tmnt
 		sortlayers(sorted_layer,layerpri);
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[16 * bg_colorbase],cliprect);
+		fillbitmap(bitmap,Machine.pens[16 * bg_colorbase],cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[0]],0,1);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[1]],0,2);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[sorted_layer[2]],0,4);

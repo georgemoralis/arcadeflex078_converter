@@ -102,7 +102,7 @@ public class battlex
 	
 	static void battlex_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		UINT8 *source = spriteram;
 		UINT8 *finish = spriteram + 0x200;
 	
@@ -133,7 +133,7 @@ public class battlex
 	VIDEO_UPDATE(battlex)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, battlex_scroll_lsb | (battlex_scroll_msb << 8));
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-		battlex_drawsprites(bitmap, &Machine->visible_area);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		battlex_drawsprites(bitmap, &Machine.visible_area);
 	}
 }

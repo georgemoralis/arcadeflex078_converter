@@ -86,7 +86,7 @@ public class liberatr
 	
 		liberatr_videoram[(y<<8) | x] = data & 0xe0;
 	
-		pen = Machine->pens[(data >> 5) + 0x10];
+		pen = Machine.pens[(data >> 5) + 0x10];
 		plot_pixel(tmpbitmap, x, y, pen);
 	}
 	
@@ -232,9 +232,9 @@ public class liberatr
 					if (visible_array[segment]) break;
 	
 				/* transfer from the temporary arrays to the structure */
-				line->max_x = (latitude_scale_factor * 0xc0) >> 8;
-				if (line->max_x & 1)
-					line->max_x += 1; 				/* make it even */
+				line.max_x = (latitude_scale_factor * 0xc0) >> 8;
+				if (line.max_x & 1)
+					line.max_x += 1; 				/* make it even */
 	
 				/*
 				   as part of the quest to reduce memory usage (and to a lesser degree
@@ -253,14 +253,14 @@ public class liberatr
 						if (segment == start_segment)
 							break;
 					}
-					line->color_array[ i ] = color;
-					line->x_array[ i ]     = (x > line->max_x) ? line->max_x : x;
+					line.color_array[ i ] = color;
+					line.x_array[ i ]     = (x > line.max_x) ? line.max_x : x;
 					i++;
 					segment_count++;
-				} while ((i < 32) && (x <= line->max_x));
+				} while ((i < 32) && (x <= line.max_x));
 	
 				total_segment_count += segment_count;
-				line->segment_count = segment_count;
+				line.segment_count = segment_count;
 			}
 	
 			/* now that the all the lines have been processed, and we know how
@@ -270,7 +270,7 @@ public class liberatr
 			if ((buffer = (UINT8 *)auto_malloc(2*(128 + total_segment_count))) == 0)
 				return 1;
 	
-			liberatr_planet_segs[ planet_select ]->frame[ longitude ] = buffer;
+			liberatr_planet_segs[ planet_select ].frame[ longitude ] = buffer;
 	
 			for (latitude = 0; latitude < 0x80; latitude++)
 			{
@@ -278,18 +278,18 @@ public class liberatr
 	
 	
 				line = &frame.line[ latitude ];
-				segment_count = line->segment_count;
+				segment_count = line.segment_count;
 				*buffer++ = segment_count;
 				last_x = 0;
 	
 				/* calculate the bitmap's x coordinate for the western horizon
 				   center of bitmap - (the number of planet pixels) / 4 */
-				*buffer++ = Machine->drv->screen_width/2 - (line->max_x + 2) / 4;
+				*buffer++ = Machine.drv.screen_width/2 - (line.max_x + 2) / 4;
 	
 				for (i = 0; i < segment_count; i++)
 				{
-					UINT8 current_x = (line->x_array[ i ] + 1) / 2;
-					*buffer++ = line->color_array[ i ];
+					UINT8 current_x = (line.x_array[ i ] + 1) / 2;
+					*buffer++ = line.color_array[ i ];
 					*buffer++ = current_x - last_x;
 					last_x = current_x;
 				}
@@ -313,10 +313,10 @@ public class liberatr
 	    liberatr_planet_segs[1] = 0;
 	
 	    /* allocate a tmpbitmap */
-	    if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0)
+	    if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0)
 	    	return 1;
 	
-		if ((liberatr_videoram = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height)) == 0)
+		if ((liberatr_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		/* allocate the planet descriptor structure */
@@ -349,7 +349,7 @@ public class liberatr
 		UINT8 *buffer;
 	
 	
-		buffer = liberatr_planet_segs[ (*liberatr_planet_select >> 4) & 0x01 ]->frame[ *liberatr_planet_frame ];
+		buffer = liberatr_planet_segs[ (*liberatr_planet_select >> 4) & 0x01 ].frame[ *liberatr_planet_frame ];
 	
 		/* for each latitude */
 		for (latitude = 0; latitude < 0x80; latitude++)
@@ -373,7 +373,7 @@ public class liberatr
 				if ((color & 0x0c) == 0x0c)
 					color = base_color;
 	
-				pen = Machine->pens[color];
+				pen = Machine.pens[color];
 	
 				segment_length = *buffer++;
 	
@@ -396,9 +396,9 @@ public class liberatr
 			UINT8 liberatr_x_save = *liberatr_x;
 	
 			/* redraw bitmap */
-			for (*liberatr_y = Machine->visible_area.min_y; *liberatr_y < Machine->visible_area.max_y; (*liberatr_y)++)
+			for (*liberatr_y = Machine.visible_area.min_y; *liberatr_y < Machine.visible_area.max_y; (*liberatr_y)++)
 			{
-				for (*liberatr_x = Machine->visible_area.min_x; *liberatr_x < Machine->visible_area.max_x; (*liberatr_x)++)
+				for (*liberatr_x = Machine.visible_area.min_x; *liberatr_x < Machine.visible_area.max_x; (*liberatr_x)++)
 				{
 					liberatr_bitmap_xy_w(0, liberatr_bitmap_xy_r(0));
 				}
@@ -407,7 +407,7 @@ public class liberatr
 			*liberatr_y = liberatr_y_save;
 			*liberatr_x = liberatr_x_save;
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* draw the planet */
 		liberatr_draw_planet(bitmap);

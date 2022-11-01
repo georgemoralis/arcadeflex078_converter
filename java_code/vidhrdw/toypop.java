@@ -103,7 +103,7 @@ public class toypop
 	INLINE void toypop_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine->gfx[1],code,color,flipx,flipy,sx,sy,&Machine->visible_area,TRANSPARENCY_COLOR,0xff);
+		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,&Machine.visible_area,TRANSPARENCY_COLOR,0xff);
 	}
 	
 	void draw_background_and_characters(struct mame_bitmap *bitmap)
@@ -124,7 +124,7 @@ public class toypop
 					scanline[x+1] = data >> 8;
 					offs--;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, &Machine->pens[0x60 + 0x80*palettebank], -1);
+				draw_scanline8(bitmap, 0, y, 288, scanline, &Machine.pens[0x60 + 0x80*palettebank], -1);
 			}
 		}
 		else
@@ -139,7 +139,7 @@ public class toypop
 					scanline[x+1] = data;
 					offs++;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, &Machine->pens[0x60 + 0x80*palettebank], -1);
+				draw_scanline8(bitmap, 0, y, 288, scanline, &Machine.pens[0x60 + 0x80*palettebank], -1);
 			}
 		}
 	
@@ -162,7 +162,7 @@ public class toypop
 				x = 280 - x;
 				y = 216 - y;
 			}
-			drawgfx(bitmap,Machine->gfx[0],videoram.read(offs),colorram[offs] + 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
+			drawgfx(bitmap,Machine.gfx[0],videoram.read(offs),colorram[offs] + 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
 		}
 	}
 	

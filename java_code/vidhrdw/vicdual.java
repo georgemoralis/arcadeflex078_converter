@@ -57,7 +57,7 @@ public class vicdual
 	
 		if (color_prom == 0) color_prom = bw_color_prom;
 	
-		for (i = 0;i < Machine->drv->total_colors / 2;i++)
+		for (i = 0;i < Machine.drv.total_colors / 2;i++)
 		{
 			int bit,r,g,b;
 	
@@ -92,13 +92,13 @@ public class vicdual
 		{
 									
 			/* Heiankyo Alien doesn't write to port 0x40, it expects it to default to 3 */
-			if (Machine->gamedrv == &driver_heiankyo)
+			if (Machine.gamedrv == &driver_heiankyo)
 				palette_bank = 3;
 	
 			/* and many others expect it to default to 1 */
-			if (Machine->gamedrv == &driver_invinco ||
-					Machine->gamedrv == &driver_digger ||
-					Machine->gamedrv == &driver_tranqgun)
+			if (Machine.gamedrv == &driver_invinco ||
+					Machine.gamedrv == &driver_digger ||
+					Machine.gamedrv == &driver_tranqgun)
 				palette_bank = 1;
 		}
 	} };
@@ -165,7 +165,7 @@ public class vicdual
 				/* decode modified characters */
 				if (dirtycharacter[charcode] == 1)
 				{
-					decodechar(Machine->gfx[0],charcode,vicdual_characterram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
+					decodechar(Machine.gfx[0],charcode,vicdual_characterram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 					dirtycharacter[charcode] = 2;
 				}
 	
@@ -175,16 +175,16 @@ public class vicdual
 				sx = offs % 32;
 				sy = offs / 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						charcode,
 						(charcode >> 5) + 8 * palette_bank,
 						0,0,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 			}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		for (offs = 0;offs < 256;offs++)

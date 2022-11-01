@@ -313,7 +313,7 @@ public class _8080bw
 			y = 255-y;
 		}
 	
-		plot_pixel(tmpbitmap,x,y,Machine->pens[col]);
+		plot_pixel(tmpbitmap,x,y,Machine.pens[col]);
 	}
 	
 	INLINE void plot_byte(int x, int y, int data, int fore_color, int back_color)
@@ -753,7 +753,7 @@ public class _8080bw
 			}
 	
 			/* there will be two stars:
-				- one at each line when MV2 goes low->high in a pixels range of 128-255
+				- one at each line when MV2 goes low.high in a pixels range of 128-255
 				- one at the very next line in a pixels range of 0-127
 			*/
 	
@@ -768,7 +768,7 @@ public class _8080bw
 				scanline[ helifire_star_latch ] = scanline[ helifire_star_latch ] + 256; /* background with the star */
 			}
 	
-			draw_scanline16(bitmap, 0, y, 256, scanline, &Machine->pens[0], -1);
+			draw_scanline16(bitmap, 0, y, 256, scanline, &Machine.pens[0], -1);
 		}
 	
 		/* foreground */
@@ -914,19 +914,19 @@ public class _8080bw
 			}
 	
 	
-			drawgfx(bitmap,Machine->uifont,
+			drawgfx(bitmap,Machine.uifont,
 					score_line_1[i],col,
 					0,1,
 					x,y,
 					cliprect,TRANSPARENCY_NONE,0);
 	
-			drawgfx(bitmap,Machine->uifont,
+			drawgfx(bitmap,Machine.uifont,
 					score_line_2[i],col,
 					0,1,
 					x+8,y,
 					cliprect,TRANSPARENCY_NONE,0);
 	
-			y -= Machine->uifontwidth;
+			y -= Machine.uifontwidth;
 		}
 	} };
 	
@@ -936,7 +936,7 @@ public class _8080bw
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			/* this bit arrangment is a little unusual but are confirmed by screen shots */
 			int r = 0xff * ((i >> 0) & 1);
@@ -952,7 +952,7 @@ public class _8080bw
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			/* this bit arrangment is a little unusual but are confirmed by screen shots */
 			int r = 0xff * ((i >> 0) & 1);
@@ -992,7 +992,7 @@ public class _8080bw
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = 0xff * ((i >> 0) & 1);
 			int g = 0xff * ((i >> 1) & 1);

@@ -118,7 +118,7 @@ public class namcos12
 		psx_vblank();
 	
 		/* kludge: protection hacks */
-		if( strcmp( Machine->gamedrv->name, "fgtlayer" ) == 0 )
+		if( strcmp( Machine.gamedrv.name, "fgtlayer" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_CPU1 );
 			if( *( (data32_t *)&RAM[ 0x2ac494 ] ) == 0x080ab125 )
@@ -126,7 +126,7 @@ public class namcos12
 				*( (data32_t *)&RAM[ 0x2ac494 ] ) = 0;
 			}
 		}
-		else if( strcmp( Machine->gamedrv->name, "pacapp" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "pacapp" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_CPU1 );
 			if( *( (data32_t *)&RAM[ 0x16d50 ] ) == 0x08005b54 )
@@ -263,11 +263,11 @@ public class namcos12
 		state_save_register_UINT32( "namcos12", 0, "m_n_bankoffset", &m_n_bankoffset, 1 );
 	
 		/* kludge: some kind of protection? */
-		if( strcmp( Machine->gamedrv->name, "tekkentt" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "fgtlayer" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "golgo13" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "mrdrillr" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "pacapp" ) == 0 )
+		if( strcmp( Machine.gamedrv.name, "tekkentt" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "fgtlayer" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "golgo13" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "mrdrillr" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "pacapp" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_USER2 );
 	

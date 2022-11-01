@@ -25,7 +25,7 @@ public class gameplan
 	public static WriteHandlerPtr gameplan_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef VERY_VERBOSE
-		logerror("VIA 2: PC %04x: %x -> reg%X\n",activecpu_get_pc(), data, offset);
+		logerror("VIA 2: PC %04x: %x . reg%X\n",activecpu_get_pc(), data, offset);
 	#endif /* VERY_VERBOSE */
 	
 		switch (offset)
@@ -76,7 +76,7 @@ public class gameplan
 				break;
 	
 			default:
-				logerror("  VIA 2: unexpected register written to in VIA 2: %02x -> %02x\n",
+				logerror("  VIA 2: unexpected register written to in VIA 2: %02x . %02x\n",
 							data, offset);
 				break;
 		}

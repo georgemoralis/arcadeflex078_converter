@@ -70,48 +70,48 @@ public class ace
 	{
 		int offs;
 	
-		decodechar(Machine->gfx[1], 0, ace_characterram, Machine->drv->gfxdecodeinfo[1].gfxlayout);
-		decodechar(Machine->gfx[2], 0, ace_characterram, Machine->drv->gfxdecodeinfo[2].gfxlayout);
-		decodechar(Machine->gfx[3], 0, ace_characterram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
+		decodechar(Machine.gfx[1], 0, ace_characterram, Machine.drv.gfxdecodeinfo[1].gfxlayout);
+		decodechar(Machine.gfx[2], 0, ace_characterram, Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine.gfx[3], 0, ace_characterram, Machine.drv.gfxdecodeinfo[3].gfxlayout);
 	
 		for (offs = 0; offs < 8; offs++)
 		{
-			decodechar(Machine->gfx[4], offs, ace_scoreram, Machine->drv->gfxdecodeinfo[4].gfxlayout);
+			decodechar(Machine.gfx[4], offs, ace_scoreram, Machine.drv.gfxdecodeinfo[4].gfxlayout);
 		}
 	
 		/* first of all, fill the screen with the background color */
-		fillbitmap(bitmap, Machine->pens[0], &Machine->visible_area);
+		fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
 	
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					0,
 					0,
 					0,0,
 					objpos[0],objpos[1],
-					&Machine->visible_area,TRANSPARENCY_NONE,0);
+					&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					0,
 					0,
 					0,0,
 					objpos[2],objpos[3],
-					&Machine->visible_area,TRANSPARENCY_NONE,0);
+					&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 					0,
 					0,
 					0,0,
 					objpos[4],objpos[5],
-					&Machine->visible_area,TRANSPARENCY_NONE,0);
+					&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		for (offs = 0; offs < 8; offs++)
 		{
-			drawgfx(bitmap,Machine->gfx[4],
+			drawgfx(bitmap,Machine.gfx[4],
 					offs,
 					0,
 					0,0,
 					10*8+offs*16,256-16, /* ?? */
-					&Machine->visible_area,TRANSPARENCY_NONE,0);
+					&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	} };
 	

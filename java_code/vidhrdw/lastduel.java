@@ -247,7 +247,7 @@ public class lastduel
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx,flipy,

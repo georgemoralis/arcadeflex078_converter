@@ -47,11 +47,11 @@ public class _1943
 	public static PaletteInitHandlerPtr palette_init_1943  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -61,21 +61,21 @@ public class _1943
 			bit2 = (color_prom[i] >> 2) & 0x01;
 			bit3 = (color_prom[i] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[i + 2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + 2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + 2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + 2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + 2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + 2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + 2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + 2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 		}
 	
-		color_prom += 3*Machine->drv->total_colors;
+		color_prom += 3*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* characters use colors 64-79 */
@@ -87,7 +87,7 @@ public class _1943
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
 			/* color 0 MUST map to pen 0 in order for transparency to work */
-			if (i % Machine->gfx[1]->color_granularity == 0)
+			if (i % Machine.gfx[1].color_granularity == 0)
 				COLOR(1,i) = 0;
 			else
 				COLOR(1,i) = color_prom[0] + 16 * (color_prom[256] & 0x03);
@@ -221,7 +221,7 @@ public class _1943
 					{
 						map[0] = tile;
 						map[1] = attr;
-						drawgfx(sc2bitmap,Machine->gfx[2],
+						drawgfx(sc2bitmap,Machine.gfx[2],
 								tile,
 								(attr & 0x3c) >> 2,
 								attr&0x40, attr&0x80,
@@ -265,7 +265,7 @@ public class _1943
 						sy = 240 - sy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[3],
+					drawgfx(bitmap,Machine.gfx[3],
 							spriteram.read(offs)+ ((spriteram.read(offs + 1)& 0xe0) << 3),
 							color,
 							flipscreen,flipscreen,
@@ -312,7 +312,7 @@ public class _1943
 						map[0] = tile;
 						map[1] = attr;
 						tile+=256*(attr&0x01);
-						drawgfx(sc1bitmap,Machine->gfx[1],
+						drawgfx(sc1bitmap,Machine.gfx[1],
 								tile,
 								(attr & 0x3c) >> 2,
 								attr & 0x40,attr & 0x80,
@@ -354,7 +354,7 @@ public class _1943
 						sy = 240 - sy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[3],
+					drawgfx(bitmap,Machine.gfx[3],
 							spriteram.read(offs)+ ((spriteram.read(offs + 1)& 0xe0) << 3),
 							color,
 							flipscreen,flipscreen,
@@ -378,7 +378,7 @@ public class _1943
 					sy = 31 - sy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						videoram.read(offs)+ ((colorram[offs] & 0xe0) << 3),
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,

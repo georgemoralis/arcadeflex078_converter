@@ -24,7 +24,7 @@ public class bigstrkb
 			( rest unused )
 		**- End of Comments -*/
 	
-		const struct GfxElement *gfx = Machine->gfx[2];
+		const struct GfxElement *gfx = Machine.gfx[2];
 		data16_t *source = bigstrkb_spriteram;
 		data16_t *finish = source + 0x800/2;
 	

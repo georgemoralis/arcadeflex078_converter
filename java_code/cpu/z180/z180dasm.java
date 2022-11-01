@@ -616,10 +616,10 @@ public class z180dasm
 			break;
 		}
 	
-		if( d->arguments )
+		if( d.arguments )
 		{
-			dst += sprintf(dst, "%-5s ", s_mnemonic[d->mnemonic]);
-			src = d->arguments;
+			dst += sprintf(dst, "%-5s ", s_mnemonic[d.mnemonic]);
+			src = d.arguments;
 			while( *src )
 			{
 				switch( *src )
@@ -630,7 +630,7 @@ public class z180dasm
 				case 'A':
 					ea = cpu_readmemz180(pc) + ( cpu_readmemz180((pc+1)&0xffff) << 8);
 					pc += 2;
-					symbol = set_ea_info(0, ea, EA_UINT16, d->access);
+					symbol = set_ea_info(0, ea, EA_UINT16, d.access);
 					dst += sprintf( dst, "%s", symbol );
 					break;
 				case 'B':   /* Byte op arg */
@@ -643,46 +643,46 @@ public class z180dasm
 					if( !strncmp( src, "(bc)", 4) )
 					{
 						ea = z180_get_reg( Z180_BC );
-						set_ea_info(0, ea, EA_UINT8, d->access);
+						set_ea_info(0, ea, EA_UINT8, d.access);
 					}
 					else
 					if( !strncmp( src, "(de)", 4) )
 					{
 						ea = z180_get_reg( Z180_DE );
-						set_ea_info(0, ea, EA_UINT8, d->access);
+						set_ea_info(0, ea, EA_UINT8, d.access);
 					}
 					else
 					if( !strncmp( src, "(hl)", 4) )
 					{
 						ea = z180_get_reg( Z180_HL );
-						if( d->access == EA_ABS_PC )
+						if( d.access == EA_ABS_PC )
 							set_ea_info(0, ea, EA_DEFAULT, EA_ABS_PC);
 						else
-							set_ea_info(0, ea, EA_UINT8, d->access);
+							set_ea_info(0, ea, EA_UINT8, d.access);
 					}
 					else
 					if( !strncmp( src, "(sp)", 4) )
 					{
 						ea = z180_get_reg( Z180_SP );
-						set_ea_info(0, ea, EA_UINT16, d->access);
+						set_ea_info(0, ea, EA_UINT16, d.access);
 					}
 					else
 					if( !strncmp( src, "(P)", 3) )
 					{
 						ea = (z180_get_reg( Z180_AF ) & 0xff00) | cpu_readmemz180( pc );
-						set_ea_info(0, ea, EA_UINT16, d->access);
+						set_ea_info(0, ea, EA_UINT16, d.access);
 					}
 					else
 					if( !strncmp( src, "(c)", 3) )
 					{
 						ea = z180_get_reg( Z180_BC );
-						set_ea_info(0, ea, EA_UINT16, d->access);
+						set_ea_info(0, ea, EA_UINT16, d.access);
 					}
 					else
 					if( !strncmp( src, "(I)", 3) )
 					{
 						ea = xy;
-						set_ea_info(0, ea, EA_DEFAULT, d->access);
+						set_ea_info(0, ea, EA_DEFAULT, d.access);
 					}
 					break;
 				case 'N':   /* Immediate 16 bit */
@@ -693,7 +693,7 @@ public class z180dasm
 					break;
 				case 'O':   /* Offset relative to PC */
 					offset = (INT8) cpu_readmemz180(pc++);
-					symbol = set_ea_info(0, PC, offset + 2, d->access);
+					symbol = set_ea_info(0, PC, offset + 2, d.access);
 					dst += sprintf( dst, "%s", symbol );
 					break;
 				case 'P':   /* Port number */
@@ -702,20 +702,20 @@ public class z180dasm
 					break;
 				case 'V':   /* Restart vector */
 					ea = op & 0x38;
-					symbol = set_ea_info(0, ea, EA_UINT8, d->access);
+					symbol = set_ea_info(0, ea, EA_UINT8, d.access);
 					dst += sprintf( dst, "%s", symbol );
 					break;
 				case 'W':   /* Memory address word */
 					ea = cpu_readmemz180(pc) + ( cpu_readmemz180((pc+1)&0xffff) << 8);
 					pc += 2;
-					symbol = set_ea_info(0, ea, EA_UINT16, d->access);
+					symbol = set_ea_info(0, ea, EA_UINT16, d.access);
 					dst += sprintf( dst, "%s", symbol );
 					break;
 				case 'X':
 					offset = (INT8) cpu_readmemz180(pc++);
 					ea = (xy + offset) & 0xffff;
 				case 'Y':
-					symbol = set_ea_info(0, ea, EA_UINT8, d->access);
+					symbol = set_ea_info(0, ea, EA_UINT8, d.access);
 					dst += sprintf( dst,"(%s%c$%02x)", ixy, sign(offset), offs(offset) );
 					break;
 				case 'I':
@@ -730,7 +730,7 @@ public class z180dasm
 		}
 		else
 		{
-			dst += sprintf(dst, "%s", s_mnemonic[d->mnemonic]);
+			dst += sprintf(dst, "%s", s_mnemonic[d.mnemonic]);
 		}
 	
 		return pc - PC;

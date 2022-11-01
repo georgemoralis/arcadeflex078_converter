@@ -173,7 +173,7 @@ public class tms5110
 				FIFO_data_write(data);
 			}
 			else
-				if (DEBUG_5110 != 0) logerror("-->ERROR: TMS5110 missing M0 callback function\n");
+				if (DEBUG_5110 != 0) logerror("-.ERROR: TMS5110 missing M0 callback function\n");
 		}
 	}
 	
@@ -185,7 +185,7 @@ public class tms5110
 		        if (DEBUG_5110 != 0) logerror("TMS5110 performing dummy read; value read = %1i\n", data&1);
 		}
 	    	else
-		        if (DEBUG_5110 != 0) logerror("-->ERROR: TMS5110 missing M0 callback function\n");
+		        if (DEBUG_5110 != 0) logerror("-.ERROR: TMS5110 missing M0 callback function\n");
 	}
 	
 	/**********************************************************************************************
@@ -459,7 +459,7 @@ public class tms5110
 		if (PDC != (data & 0x1) )
 		{
 			PDC = data & 0x1;
-			if (PDC == 0) /* toggling 1->0 processes command on CTL_pins */
+			if (PDC == 0) /* toggling 1.0 processes command on CTL_pins */
 			{
 				/* only real commands we handle now are SPEAK and RESET */
 	

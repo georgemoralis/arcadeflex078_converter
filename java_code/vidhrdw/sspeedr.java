@@ -216,7 +216,7 @@ public class sspeedr
 	
 			y = 0xf0 - drones_vert[i >> 1];
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code[i] ^ toggle,
 				0,
 				0, 0,
@@ -247,7 +247,7 @@ public class sspeedr
 	
 		y = 0xf0 - driver_vert;
 	
-		drawgfx(bitmap, Machine->gfx[0],
+		drawgfx(bitmap, Machine.gfx[0],
 			driver_pic,
 			0,
 			0, 0,

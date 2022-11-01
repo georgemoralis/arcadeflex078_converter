@@ -191,7 +191,7 @@ public class gaelco
 	static void gaelco_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri)
 	{
 		int j, x, y, ex, ey;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		static int x_offset[2] = {0x0,0x2};
 		static int y_offset[2] = {0x0,0x1};
@@ -248,7 +248,7 @@ public class gaelco
 		gaelco_sort_sprites();
 	
 	
-		fillbitmap( bitmap, Machine->pens[0], cliprect );
+		fillbitmap( bitmap, Machine.pens[0], cliprect );
 	
 		tilemap_draw(bitmap,cliprect,pant[1],3,0);
 		tilemap_draw(bitmap,cliprect,pant[0],3,0);
@@ -278,7 +278,7 @@ public class gaelco
 		gaelco_sort_sprites();
 	
 	
-		fillbitmap( bitmap, Machine->pens[0], cliprect );
+		fillbitmap( bitmap, Machine.pens[0], cliprect );
 	
 		tilemap_draw(bitmap,cliprect,pant[1],TILEMAP_BACK | 3,0);
 		tilemap_draw(bitmap,cliprect,pant[0],TILEMAP_BACK | 3,0);

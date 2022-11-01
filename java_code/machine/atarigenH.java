@@ -225,24 +225,24 @@ public class atarigenH
 		atarig42.c		 *		 *		rle	 *
 		atarigt.c				 *		rle	 *
 		atarigx2.c				 *		rle	 *
-		atarisy1.c	 *	 *		 *		 *	 *				270->260
-		atarisy2.c	 *	 *		 *		 *	 *				150->120
-		badlands.c		 *		 *		 *					250->260
-		batman.c	 *	 *	 *	 *	 *	 *	 *		 *		200->160 ?
-		blstroid.c		 *		 *		 *					240->230
-		cyberbal.c		 *		 *	 	 *	 *				125->105 ?
-		eprom.c			 *		 *		 *	 *				170->170
-		gauntlet.c	 *	 *		 *		 *	 *		 *		220->250
-		klax.c		 *	 *		 *		 *					480->440 ?
-		offtwall.c		 *	 *	 *		 *					260->260
-		rampart.c		 *				 *		 *			280->280
-		relief.c	 *	 *	 *	 *	 *	 *					240->240
-		shuuz.c			 *	 *	 *		 *					410->290 fix!
-		skullxbo.c		 *	 	 *		 *	 *				150->145
-		thunderj.c		 *	 *	 *	 *	 *	 *		 *		180->180
-		toobin.c		 *		 *		 *	 *				140->115 fix!
-		vindictr.c	 *	 *		 *		 *	 *		 *		200->210
-		xybots.c	 *	 *		 *		 *	 *				235->238
+		atarisy1.c	 *	 *		 *		 *	 *				270.260
+		atarisy2.c	 *	 *		 *		 *	 *				150.120
+		badlands.c		 *		 *		 *					250.260
+		batman.c	 *	 *	 *	 *	 *	 *	 *		 *		200.160 ?
+		blstroid.c		 *		 *		 *					240.230
+		cyberbal.c		 *		 *	 	 *	 *				125.105 ?
+		eprom.c			 *		 *		 *	 *				170.170
+		gauntlet.c	 *	 *		 *		 *	 *		 *		220.250
+		klax.c		 *	 *		 *		 *					480.440 ?
+		offtwall.c		 *	 *	 *		 *					260.260
+		rampart.c		 *				 *		 *			280.280
+		relief.c	 *	 *	 *	 *	 *	 *					240.240
+		shuuz.c			 *	 *	 *		 *					410.290 fix!
+		skullxbo.c		 *	 	 *		 *	 *				150.145
+		thunderj.c		 *	 *	 *	 *	 *	 *		 *		180.180
+		toobin.c		 *		 *		 *	 *				140.115 fix!
+		vindictr.c	 *	 *		 *		 *	 *		 *		200.210
+		xybots.c	 *	 *		 *		 *	 *				235.238
 		----------	---	---	---	---	---	---	--- ---	---
 	
 		Pr? - do we have verifiable proof on priorities?

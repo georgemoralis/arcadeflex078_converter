@@ -24,3 +24,4 @@ enum's conversion (partial)
 if(something) will be become if(something!=0)
 videoram (from generic vidhrdw) , reads-writes
 spriteram (from generic vidhrdw) , reads-writes
+convert -> to .

@@ -577,7 +577,7 @@ public class stv
 							idx0 = CR2 & 0xff;
 							idx1 = CR4 & 0xff;
 	
-							logerror("play : pm=%02x track=%i idx=%i -> track=%i idx=%i\n", pm, tn0, idx0, tn1, idx1);
+							logerror("play : pm=%02x track=%i idx=%i . track=%i idx=%i\n", pm, tn0, idx0, tn1, idx1);
 	
 							if(tn1 < tn0 || (tn1 == tn0 && idx1 < idx0)){
 								logerror("ERROR: play track negative range\n");
@@ -1002,7 +1002,7 @@ public class stv
 					//
 					// b7		init false output connectors
 					// b6		init true output connectors
-					// b5		init input connectors			used for host -> cdb ?
+					// b5		init input connectors			used for host . cdb ?
 					// b4		init filter conditions
 					// b3		init partition output connectors	?
 					// b2		init partition data
@@ -1183,10 +1183,10 @@ public class stv
 	
 					s = CD_part[pn].sect[sn];
 	
-					CR1 = (CD_status << 8) | (s->fad >> 16);
-					CR2 = s->fad;
-					CR3 = (s->fid << 8) | s->chan;
-					CR4 = (s->sub << 8) | s->cod;
+					CR1 = (CD_status << 8) | (s.fad >> 16);
+					CR2 = s.fad;
+					CR3 = (s.fid << 8) | s.chan;
+					CR4 = (s.sub << 8) | s.cod;
 	
 					break;
 			case 0x55:
@@ -1216,7 +1216,7 @@ public class stv
 					j = (sp - 1) % CD_part[pn].size;
 					while(i != j){
 	
-						if(CD_part[pn].sect[i]->fad == fad){
+						if(CD_part[pn].sect[i].fad == fad){
 	
 							// matching sector fad found!
 	
@@ -1226,13 +1226,13 @@ public class stv
 							break;
 	
 						}else
-						if((CD_part[pn].sect[i]->fad < fad) &&
-						   (CD_part[pn].sect[i]->fad > nearest)){
+						if((CD_part[pn].sect[i].fad < fad) &&
+						   (CD_part[pn].sect[i].fad > nearest)){
 	
 							// adjusting to nearest sector
 	
 							nearest = i;
-							fad2 = CD_part[pn].sect[i]->fad;
+							fad2 = CD_part[pn].sect[i].fad;
 						}
 	
 						i = (i + 1) % CD_part[pn].size;
@@ -1340,7 +1340,7 @@ public class stv
 	//					exit(1);
 					}
 	
-	/*				CD_part[pn].sect[sp]->size = 0;
+	/*				CD_part[pn].sect[sp].size = 0;
 					CD_part[pn].sect[sp] = (sect_t *)NULL;
 					CD_part[pn].size--;
 					CD_free_space++;
@@ -1991,13 +1991,13 @@ public class stv
 					logerror ("SMPC: Status Acquire\n");
 					smpc_ram[0x5f]=0x10;
 					smpc_ram[0x21]=0x80;
-				  	smpc_ram[0x23] = DectoBCD((today->tm_year + 1900)/100);
-			    	smpc_ram[0x25] = DectoBCD((today->tm_year + 1900)%100);
-		    		smpc_ram[0x27] = (today->tm_wday << 4) | (today->tm_mon+1);
-			    	smpc_ram[0x29] = DectoBCD(today->tm_mday);
-			    	smpc_ram[0x2b] = DectoBCD(today->tm_hour);
-			    	smpc_ram[0x2d] = DectoBCD(today->tm_min);
-			    	smpc_ram[0x2f] = DectoBCD(today->tm_sec);
+				  	smpc_ram[0x23] = DectoBCD((today.tm_year + 1900)/100);
+			    	smpc_ram[0x25] = DectoBCD((today.tm_year + 1900)%100);
+		    		smpc_ram[0x27] = (today.tm_wday << 4) | (today.tm_mon+1);
+			    	smpc_ram[0x29] = DectoBCD(today.tm_mday);
+			    	smpc_ram[0x2b] = DectoBCD(today.tm_hour);
+			    	smpc_ram[0x2d] = DectoBCD(today.tm_min);
+			    	smpc_ram[0x2f] = DectoBCD(today.tm_sec);
 	
 					smpc_ram[0x31]=0x00;  //BHOOOOO
 	
@@ -3538,13 +3538,13 @@ public class stv
 		install_mem_write32_handler(1, 0x60ffc44, 0x60ffc47, w60ffc44_write );
 		install_mem_write32_handler(1, 0x60ffc48, 0x60ffc4b, w60ffc48_write );
 	
-	  	smpc_ram[0x23] = DectoBCD((today->tm_year + 1900)/100);
-	    smpc_ram[0x25] = DectoBCD((today->tm_year + 1900)%100);
-	    smpc_ram[0x27] = (today->tm_wday << 4) | (today->tm_mon+1);
-	    smpc_ram[0x29] = DectoBCD(today->tm_mday);
-	    smpc_ram[0x2b] = DectoBCD(today->tm_hour);
-	    smpc_ram[0x2d] = DectoBCD(today->tm_min);
-	    smpc_ram[0x2f] = DectoBCD(today->tm_sec);
+	  	smpc_ram[0x23] = DectoBCD((today.tm_year + 1900)/100);
+	    smpc_ram[0x25] = DectoBCD((today.tm_year + 1900)%100);
+	    smpc_ram[0x27] = (today.tm_wday << 4) | (today.tm_mon+1);
+	    smpc_ram[0x29] = DectoBCD(today.tm_mday);
+	    smpc_ram[0x2b] = DectoBCD(today.tm_hour);
+	    smpc_ram[0x2d] = DectoBCD(today.tm_min);
+	    smpc_ram[0x2f] = DectoBCD(today.tm_sec);
 	    smpc_ram[0x31] = 0x00; //CTG1=0 CTG0=0 (correct??)
 	//  smpc_ram[0x33] = readinputport(7);
 	 	smpc_ram[0x5f] = 0x10;
@@ -3571,8 +3571,8 @@ public class stv
 		sinit_boost = 400;
 	
 		/* puyosun doesn't seem to care */
-		if ((!strcmp(Machine->gamedrv->name,"puyosun")) ||
-		    (!strcmp(Machine->gamedrv->name,"mausuke")))
+		if ((!strcmp(Machine.gamedrv.name,"puyosun")) ||
+		    (!strcmp(Machine.gamedrv.name,"mausuke")))
 		{
 			minit_boost = 0;
 			sinit_boost = 0;

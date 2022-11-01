@@ -553,20 +553,20 @@ public class tms34061
 	
 	void tms34061_get_display_state(struct tms34061_display *state)
 	{
-		state->blanked = (~tms34061.regs[TMS34061_CONTROL2] >> 13) & 1;
-		state->vram = tms34061.vram;
-		state->latchram = tms34061.latchram;
-		state->dirty = tms34061.dirty;
-		state->regs = tms34061.regs;
+		state.blanked = (~tms34061.regs[TMS34061_CONTROL2] >> 13) & 1;
+		state.vram = tms34061.vram;
+		state.latchram = tms34061.latchram;
+		state.dirty = tms34061.dirty;
+		state.regs = tms34061.regs;
 	
 		/* compute the display start */
-		state->dispstart = tms34061.regs[TMS34061_DISPSTART];
+		state.dispstart = tms34061.regs[TMS34061_DISPSTART];
 	
 		/* if B6 of control reg 2 is set, upper bits of display start come from B0-B1 */
 		if (tms34061.regs[TMS34061_CONTROL2] & 0x0040)
-			state->dispstart |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
+			state.dispstart |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 	
 		/* mask to actual VRAM size */
-		state->dispstart &= tms34061.vrammask;
+		state.dispstart &= tms34061.vrammask;
 	}
 }

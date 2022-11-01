@@ -94,25 +94,25 @@ public class ymz280b
 	
 	INLINE void update_irq_state(struct YMZ280BChip *chip)
 	{
-		int irq_bits = chip->status_register & chip->irq_mask;
+		int irq_bits = chip.status_register & chip.irq_mask;
 	
 		/* always off if the enable is off */
-		if (!chip->irq_enable)
+		if (!chip.irq_enable)
 			irq_bits = 0;
 	
 		/* update the state if changed */
-		if (irq_bits && !chip->irq_state)
+		if (irq_bits && !chip.irq_state)
 		{
-			chip->irq_state = 1;
-			if (chip->irq_callback)
-				(*chip->irq_callback)(1);
+			chip.irq_state = 1;
+			if (chip.irq_callback)
+				(*chip.irq_callback)(1);
 	else logerror("ymz280 irq_callback = 0");
 		}
-		else if (!irq_bits && chip->irq_state)
+		else if (!irq_bits && chip.irq_state)
 		{
-			chip->irq_state = 0;
-			if (chip->irq_callback)
-				(*chip->irq_callback)(0);
+			chip.irq_state = 0;
+			if (chip.irq_callback)
+				(*chip.irq_callback)(0);
 	else logerror("ymz280 irq_callback = 0");
 		}
 	}
@@ -123,37 +123,37 @@ public class ymz280b
 		double frequency;
 	
 		/* handle the sound-off case */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 		{
-			voice->output_step = 0;
+			voice.output_step = 0;
 			return;
 		}
 	
 		/* compute the frequency */
-		if (voice->mode == 1)
-			frequency = chip->master_clock * (double)((voice->fnum & 0x0ff) + 1) * (1.0 / 256.0);
+		if (voice.mode == 1)
+			frequency = chip.master_clock * (double)((voice.fnum & 0x0ff) + 1) * (1.0 / 256.0);
 		else
-			frequency = chip->master_clock * (double)((voice->fnum & 0x1ff) + 1) * (1.0 / 256.0);
-		voice->output_step = (UINT32)(frequency * (double)FRAC_ONE / (double)Machine->sample_rate);
+			frequency = chip.master_clock * (double)((voice.fnum & 0x1ff) + 1) * (1.0 / 256.0);
+		voice.output_step = (UINT32)(frequency * (double)FRAC_ONE / (double)Machine.sample_rate);
 	}
 	
 	
 	INLINE void update_volumes(struct YMZ280BVoice *voice)
 	{
-		if (voice->pan == 8)
+		if (voice.pan == 8)
 		{
-			voice->output_left = voice->level;
-			voice->output_right = voice->level;
+			voice.output_left = voice.level;
+			voice.output_right = voice.level;
 		}
-		else if (voice->pan < 8)
+		else if (voice.pan < 8)
 		{
-			voice->output_left = voice->level;
-			voice->output_right = voice->level * voice->pan / 8;
+			voice.output_left = voice.level;
+			voice.output_right = voice.level * voice.pan / 8;
 		}
 		else
 		{
-			voice->output_left = voice->level * (15 - voice->pan) / 8;
-			voice->output_right = voice->level;
+			voice.output_left = voice.level * (15 - voice.pan) / 8;
+			voice.output_right = voice.level;
 		}
 	}
 	
@@ -186,13 +186,13 @@ public class ymz280b
 	
 	static int generate_adpcm(struct YMZ280BVoice *voice, UINT8 *base, INT16 *buffer, int samples)
 	{
-		int position = voice->position;
-		int signal = voice->signal;
-		int step = voice->step;
+		int position = voice.position;
+		int signal = voice.signal;
+		int step = voice.step;
 		int val;
 	
 		/* two cases: first cases is non-looping */
-		if (!voice->looping)
+		if (!voice.looping)
 		{
 			/* loop while we still have samples to generate */
 			while (samples)
@@ -220,7 +220,7 @@ public class ymz280b
 	
 				/* next! */
 				position++;
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
@@ -254,30 +254,30 @@ public class ymz280b
 	
 				/* next! */
 				position++;
-				if (position == voice->loop_start && voice->loop_count == 0)
+				if (position == voice.loop_start && voice.loop_count == 0)
 				{
-					voice->loop_signal = signal;
-					voice->loop_step = step;
+					voice.loop_signal = signal;
+					voice.loop_step = step;
 				}
-				if (position >= voice->loop_end)
+				if (position >= voice.loop_end)
 				{
-					if (voice->keyon)
+					if (voice.keyon)
 					{
-						position = voice->loop_start;
-						signal = voice->loop_signal;
-						step = voice->loop_step;
-						voice->loop_count++;
+						position = voice.loop_start;
+						signal = voice.loop_signal;
+						step = voice.loop_step;
+						voice.loop_count++;
 					}
 				}
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
 	
 		/* update the parameters */
-		voice->position = position;
-		voice->signal = signal;
-		voice->step = step;
+		voice.position = position;
+		voice.signal = signal;
+		voice.step = step;
 	
 		return samples;
 	}
@@ -292,11 +292,11 @@ public class ymz280b
 	
 	static int generate_pcm8(struct YMZ280BVoice *voice, UINT8 *base, INT16 *buffer, int samples)
 	{
-		int position = voice->position;
+		int position = voice.position;
 		int val;
 	
 		/* two cases: first cases is non-looping */
-		if (!voice->looping)
+		if (!voice.looping)
 		{
 			/* loop while we still have samples to generate */
 			while (samples)
@@ -310,7 +310,7 @@ public class ymz280b
 	
 				/* next! */
 				position += 2;
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
@@ -330,18 +330,18 @@ public class ymz280b
 	
 				/* next! */
 				position += 2;
-				if (position >= voice->loop_end)
+				if (position >= voice.loop_end)
 				{
-					if (voice->keyon)
-						position = voice->loop_start;
+					if (voice.keyon)
+						position = voice.loop_start;
 				}
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
 	
 		/* update the parameters */
-		voice->position = position;
+		voice.position = position;
 	
 		return samples;
 	}
@@ -356,11 +356,11 @@ public class ymz280b
 	
 	static int generate_pcm16(struct YMZ280BVoice *voice, UINT8 *base, INT16 *buffer, int samples)
 	{
-		int position = voice->position;
+		int position = voice.position;
 		int val;
 	
 		/* two cases: first cases is non-looping */
-		if (!voice->looping)
+		if (!voice.looping)
 		{
 			/* loop while we still have samples to generate */
 			while (samples)
@@ -374,7 +374,7 @@ public class ymz280b
 	
 				/* next! */
 				position += 4;
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
@@ -394,18 +394,18 @@ public class ymz280b
 	
 				/* next! */
 				position += 4;
-				if (position >= voice->loop_end)
+				if (position >= voice.loop_end)
 				{
-					if (voice->keyon)
-						position = voice->loop_start;
+					if (voice.keyon)
+						position = voice.loop_start;
 				}
-				if (position >= voice->stop)
+				if (position >= voice.stop)
 					break;
 			}
 		}
 	
 		/* update the parameters */
-		voice->position = position;
+		voice.position = position;
 	
 		return samples;
 	}
@@ -431,57 +431,57 @@ public class ymz280b
 		/* loop over voices */
 		for (v = 0; v < 8; v++)
 		{
-			struct YMZ280BVoice *voice = &chip->voice[v];
-			INT16 prev = voice->last_sample;
-			INT16 curr = voice->curr_sample;
+			struct YMZ280BVoice *voice = &chip.voice[v];
+			INT16 prev = voice.last_sample;
+			INT16 curr = voice.curr_sample;
 			INT16 *curr_data = scratch;
 			INT32 *ldest = lacc;
 			INT32 *rdest = racc;
 			UINT32 new_samples, samples_left;
 			UINT32 final_pos;
 			int remaining = length;
-			int lvol = voice->output_left;
-			int rvol = voice->output_right;
+			int lvol = voice.output_left;
+			int rvol = voice.output_right;
 	
 			/* quick out if we're not playing and we're at 0 */
-			if (!voice->playing && curr == 0)
+			if (!voice.playing && curr == 0)
 				continue;
 	
 			/* finish off the current sample */
-			if (voice->output_pos > 0)
+			if (voice.output_pos > 0)
 			{
 				/* interpolate */
-				while (remaining > 0 && voice->output_pos < FRAC_ONE)
+				while (remaining > 0 && voice.output_pos < FRAC_ONE)
 				{
-					int interp_sample = (((INT32)prev * (FRAC_ONE - voice->output_pos)) + ((INT32)curr * voice->output_pos)) >> FRAC_BITS;
+					int interp_sample = (((INT32)prev * (FRAC_ONE - voice.output_pos)) + ((INT32)curr * voice.output_pos)) >> FRAC_BITS;
 					*ldest++ += interp_sample * lvol;
 					*rdest++ += interp_sample * rvol;
-					voice->output_pos += voice->output_step;
+					voice.output_pos += voice.output_step;
 					remaining--;
 				}
 	
 				/* if we're over, continue; otherwise, we're done */
-				if (voice->output_pos >= FRAC_ONE)
-					voice->output_pos -= FRAC_ONE;
+				if (voice.output_pos >= FRAC_ONE)
+					voice.output_pos -= FRAC_ONE;
 				else
 					continue;
 			}
 	
 			/* compute how many new samples we need */
-			final_pos = voice->output_pos + remaining * voice->output_step;
+			final_pos = voice.output_pos + remaining * voice.output_step;
 			new_samples = (final_pos + FRAC_ONE) >> FRAC_BITS;
 			if (new_samples > MAX_SAMPLE_CHUNK)
 				new_samples = MAX_SAMPLE_CHUNK;
 			samples_left = new_samples;
 	
 			/* generate them into our buffer */
-			if (voice->playing)
+			if (voice.playing)
 			{
-				switch (voice->mode)
+				switch (voice.mode)
 				{
-					case 1:	samples_left = generate_adpcm(voice, chip->region_base, scratch, new_samples);	break;
-					case 2:	samples_left = generate_pcm8(voice, chip->region_base, scratch, new_samples);	break;
-					case 3:	samples_left = generate_pcm16(voice, chip->region_base, scratch, new_samples);	break;
+					case 1:	samples_left = generate_adpcm(voice, chip.region_base, scratch, new_samples);	break;
+					case 2:	samples_left = generate_pcm8(voice, chip.region_base, scratch, new_samples);	break;
+					case 3:	samples_left = generate_pcm16(voice, chip.region_base, scratch, new_samples);	break;
 					default:
 					case 0:	samples_left = 0; memset(scratch, 0, new_samples * sizeof(scratch[0]));			break;
 				}
@@ -502,8 +502,8 @@ public class ymz280b
 				/* if we hit the end and IRQs are enabled, signal it */
 				if (base != 0)
 				{
-					voice->playing = 0;
-					chip->status_register |= 1 << v;
+					voice.playing = 0;
+					chip.status_register |= 1 << v;
 					update_irq_state(chip);
 				}
 			}
@@ -516,27 +516,27 @@ public class ymz280b
 			while (remaining > 0)
 			{
 				/* interpolate */
-				while (remaining > 0 && voice->output_pos < FRAC_ONE)
+				while (remaining > 0 && voice.output_pos < FRAC_ONE)
 				{
-					int interp_sample = (((INT32)prev * (FRAC_ONE - voice->output_pos)) + ((INT32)curr * voice->output_pos)) >> FRAC_BITS;
+					int interp_sample = (((INT32)prev * (FRAC_ONE - voice.output_pos)) + ((INT32)curr * voice.output_pos)) >> FRAC_BITS;
 					*ldest++ += interp_sample * lvol;
 					*rdest++ += interp_sample * rvol;
-					voice->output_pos += voice->output_step;
+					voice.output_pos += voice.output_step;
 					remaining--;
 				}
 	
 				/* if we're over, grab the next samples */
-				if (voice->output_pos >= FRAC_ONE)
+				if (voice.output_pos >= FRAC_ONE)
 				{
-					voice->output_pos -= FRAC_ONE;
+					voice.output_pos -= FRAC_ONE;
 					prev = curr;
 					curr = *curr_data++;
 				}
 			}
 	
 			/* remember the last samples */
-			voice->last_sample = prev;
-			voice->curr_sample = curr;
+			voice.last_sample = prev;
+			voice.curr_sample = curr;
 		}
 	
 		/* mix and clip the result */
@@ -556,8 +556,8 @@ public class ymz280b
 	
 	#if MAKE_WAVS
 		/* log the resampled data */
-		if (chip->wavresample)
-			wav_add_data_16lr(chip->wavresample, buffer[0], buffer[1], length);
+		if (chip.wavresample)
+			wav_add_data_16lr(chip.wavresample, buffer[0], buffer[1], length);
 	#endif
 	}
 	
@@ -572,7 +572,7 @@ public class ymz280b
 			for (j = 0; j < 8; j++)
 			{
 				struct YMZ280BChip *chip = &ymz280b[i];
-				struct YMZ280BVoice *voice = &chip->voice[j];
+				struct YMZ280BVoice *voice = &chip.voice[j];
 				update_step(chip, voice);
 			}
 		}
@@ -586,7 +586,7 @@ public class ymz280b
 	
 	int YMZ280B_sh_start(const struct MachineSound *msound)
 	{
-		const struct YMZ280Binterface *intf = msound->sound_interface;
+		const struct YMZ280Binterface *intf = msound.sound_interface;
 		char stream_name[2][40];
 		const char *stream_name_ptrs[2];
 		int vol[2];
@@ -597,7 +597,7 @@ public class ymz280b
 	
 		/* initialize the voices */
 		memset(&ymz280b, 0, sizeof(ymz280b));
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
 			/* generate the name and create the stream */
 			sprintf(stream_name[0], "%s #%d Ch1", sound_name(msound), i);
@@ -606,18 +606,18 @@ public class ymz280b
 			stream_name_ptrs[1] = stream_name[1];
 	
 			/* set the volumes */
-			vol[0] = intf->mixing_level[i] & 0xffff;
-			vol[1] = intf->mixing_level[i] >> 16;
+			vol[0] = intf.mixing_level[i] & 0xffff;
+			vol[1] = intf.mixing_level[i] >> 16;
 	
 			/* create the stream */
-			ymz280b[i].stream = stream_init_multi(2, stream_name_ptrs, vol, Machine->sample_rate, i, ymz280b_update);
+			ymz280b[i].stream = stream_init_multi(2, stream_name_ptrs, vol, Machine.sample_rate, i, ymz280b_update);
 			if (ymz280b[i].stream == -1)
 				return 1;
 	
 			/* initialize the rest of the structure */
-			ymz280b[i].master_clock = (double)intf->baseclock[i] / 384.0;
-			ymz280b[i].region_base = memory_region(intf->region[i]);
-			ymz280b[i].irq_callback = intf->irq_callback[i];
+			ymz280b[i].master_clock = (double)intf.baseclock[i] / 384.0;
+			ymz280b[i].region_base = memory_region(intf.region[i]);
+			ymz280b[i].irq_callback = intf.irq_callback[i];
 		}
 	
 		/* allocate memory */
@@ -628,7 +628,7 @@ public class ymz280b
 	
 	//ks s
 		/* state save */
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
 			int j;
 			state_save_register_UINT8("YMZ280B", i, "current_register", &ymz280b[i].current_register,1);
@@ -664,11 +664,11 @@ public class ymz280b
 			}
 		}
 		state_save_register_func_postload(YMZ280B_state_save_update_step);
-		chip_num = intf->num;
+		chip_num = intf.num;
 	//ks e
 	
 	#if MAKE_WAVS
-		ymz280b[0].wavresample = wav_open("resamp.wav", Machine->sample_rate, 2);
+		ymz280b[0].wavresample = wav_open("resamp.wav", Machine.sample_rate, 2);
 	#endif
 	
 		/* success */
@@ -721,103 +721,103 @@ public class ymz280b
 		int i;
 	
 		/* force an update */
-		stream_update(chip->stream, 0);
+		stream_update(chip.stream, 0);
 	
 		/* lower registers follow a pattern */
-		if (chip->current_register < 0x80)
+		if (chip.current_register < 0x80)
 		{
-			voice = &chip->voice[(chip->current_register >> 2) & 7];
+			voice = &chip.voice[(chip.current_register >> 2) & 7];
 	
-			switch (chip->current_register & 0xe3)
+			switch (chip.current_register & 0xe3)
 			{
 				case 0x00:		/* pitch low 8 bits */
-					voice->fnum = (voice->fnum & 0x100) | (data & 0xff);
+					voice.fnum = (voice.fnum & 0x100) | (data & 0xff);
 					update_step(chip, voice);
 					break;
 	
 				case 0x01:		/* pitch upper 1 bit, loop, key on, mode */
-					voice->fnum = (voice->fnum & 0xff) | ((data & 0x01) << 8);
-					voice->looping = (data & 0x10) >> 4;
-					voice->mode = (data & 0x60) >> 5;
-					if (!voice->keyon && (data & 0x80) && chip->keyon_enable)
+					voice.fnum = (voice.fnum & 0xff) | ((data & 0x01) << 8);
+					voice.looping = (data & 0x10) >> 4;
+					voice.mode = (data & 0x60) >> 5;
+					if (!voice.keyon && (data & 0x80) && chip.keyon_enable)
 					{
-						voice->playing = 1;
-						voice->position = voice->start;
-						voice->signal = voice->loop_signal = 0;
-						voice->step = voice->loop_step = 0x7f;
-						voice->loop_count = 0;
+						voice.playing = 1;
+						voice.position = voice.start;
+						voice.signal = voice.loop_signal = 0;
+						voice.step = voice.loop_step = 0x7f;
+						voice.loop_count = 0;
 					}
-					if (voice->keyon && !(data & 0x80) && !voice->looping)
+					if (voice.keyon && !(data & 0x80) && !voice.looping)
 	//ks start
 					{
-						voice->playing = 0;
-	//					chip->status_register &= ~(1 << ((chip->current_register >> 2) & 7));
+						voice.playing = 0;
+	//					chip.status_register &= ~(1 << ((chip.current_register >> 2) & 7));
 					}
 	//ks end
-					voice->keyon = (data & 0x80) >> 7;
+					voice.keyon = (data & 0x80) >> 7;
 					update_step(chip, voice);
 					break;
 	
 				case 0x02:		/* total level */
-					voice->level = data;
+					voice.level = data;
 					update_volumes(voice);
 					break;
 	
 				case 0x03:		/* pan */
-					voice->pan = data & 0x0f;
+					voice.pan = data & 0x0f;
 					update_volumes(voice);
 					break;
 	
 				case 0x20:		/* start address high */
-					voice->start = (voice->start & (0x00ffff << 1)) | (data << 17);
+					voice.start = (voice.start & (0x00ffff << 1)) | (data << 17);
 					break;
 	
 				case 0x21:		/* loop start address high */
-					voice->loop_start = (voice->loop_start & (0x00ffff << 1)) | (data << 17);
+					voice.loop_start = (voice.loop_start & (0x00ffff << 1)) | (data << 17);
 					break;
 	
 				case 0x22:		/* loop end address high */
-					voice->loop_end = (voice->loop_end & (0x00ffff << 1)) | (data << 17);
+					voice.loop_end = (voice.loop_end & (0x00ffff << 1)) | (data << 17);
 					break;
 	
 				case 0x23:		/* stop address high */
-					voice->stop = (voice->stop & (0x00ffff << 1)) | (data << 17);
+					voice.stop = (voice.stop & (0x00ffff << 1)) | (data << 17);
 					break;
 	
 				case 0x40:		/* start address middle */
-					voice->start = (voice->start & (0xff00ff << 1)) | (data << 9);
+					voice.start = (voice.start & (0xff00ff << 1)) | (data << 9);
 					break;
 	
 				case 0x41:		/* loop start address middle */
-					voice->loop_start = (voice->loop_start & (0xff00ff << 1)) | (data << 9);
+					voice.loop_start = (voice.loop_start & (0xff00ff << 1)) | (data << 9);
 					break;
 	
 				case 0x42:		/* loop end address middle */
-					voice->loop_end = (voice->loop_end & (0xff00ff << 1)) | (data << 9);
+					voice.loop_end = (voice.loop_end & (0xff00ff << 1)) | (data << 9);
 					break;
 	
 				case 0x43:		/* stop address middle */
-					voice->stop = (voice->stop & (0xff00ff << 1)) | (data << 9);
+					voice.stop = (voice.stop & (0xff00ff << 1)) | (data << 9);
 					break;
 	
 				case 0x60:		/* start address low */
-					voice->start = (voice->start & (0xffff00 << 1)) | (data << 1);
+					voice.start = (voice.start & (0xffff00 << 1)) | (data << 1);
 					break;
 	
 				case 0x61:		/* loop start address low */
-					voice->loop_start = (voice->loop_start & (0xffff00 << 1)) | (data << 1);
+					voice.loop_start = (voice.loop_start & (0xffff00 << 1)) | (data << 1);
 					break;
 	
 				case 0x62:		/* loop end address low */
-					voice->loop_end = (voice->loop_end & (0xffff00 << 1)) | (data << 1);
+					voice.loop_end = (voice.loop_end & (0xffff00 << 1)) | (data << 1);
 					break;
 	
 				case 0x63:		/* stop address low */
-					voice->stop = (voice->stop & (0xffff00 << 1)) | (data << 1);
+					voice.stop = (voice.stop & (0xffff00 << 1)) | (data << 1);
 					break;
 	
 				default:
-					logerror("YMZ280B: unknown register write %02X = %02X\n", chip->current_register, data);
+					logerror("YMZ280B: unknown register write %02X = %02X\n", chip.current_register, data);
 					break;
 			}
 		}
@@ -825,30 +825,30 @@ public class ymz280b
 		/* upper registers are special */
 		else
 		{
-			switch (chip->current_register)
+			switch (chip.current_register)
 			{
 				case 0xfe:		/* IRQ mask */
-					chip->irq_mask = data;
+					chip.irq_mask = data;
 					update_irq_state(chip);
 					break;
 	
 				case 0xff:		/* IRQ enable, test, etc */
-					chip->irq_enable = (data & 0x10) >> 4;
+					chip.irq_enable = (data & 0x10) >> 4;
 					update_irq_state(chip);
 	//ks start
-					if (chip->keyon_enable && !(data & 0x80))
+					if (chip.keyon_enable && !(data & 0x80))
 						for (i = 0; i < 8; i++)
-							chip->voice[i].playing = 0;
-					if (!chip->keyon_enable && (data & 0x80))
+							chip.voice[i].playing = 0;
+					if (!chip.keyon_enable && (data & 0x80))
 						for (i = 0; i < 8; i++)
-							if (chip->voice[i].keyon && chip->voice[i].looping)
-								chip->voice[i].playing = 1;
-					chip->keyon_enable = (data & 0x80) >> 7;
+							if (chip.voice[i].keyon && chip.voice[i].looping)
+								chip.voice[i].playing = 1;
+					chip.keyon_enable = (data & 0x80) >> 7;
 	//ks end
 					break;
 	
 				default:
-					logerror("YMZ280B: unknown register write %02X = %02X\n", chip->current_register, data);
+					logerror("YMZ280B: unknown register write %02X = %02X\n", chip.current_register, data);
 					break;
 			}
 		}
@@ -864,13 +864,13 @@ public class ymz280b
 	
 	static int compute_status(struct YMZ280BChip *chip)
 	{
-		UINT8 result = chip->status_register;
+		UINT8 result = chip.status_register;
 	
 		/* force an update */
-		stream_update(chip->stream, 0);
+		stream_update(chip.stream, 0);
 	
 		/* clear the IRQ state */
-		chip->status_register = 0;
+		chip.status_register = 0;
 		update_irq_state(chip);
 	
 		return result;

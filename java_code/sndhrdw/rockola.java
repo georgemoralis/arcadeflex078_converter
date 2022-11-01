@@ -143,13 +143,13 @@ public class rockola
 		/* bit 1 = to 76477 */
 	
 		/* bit 2 = analog sound trigger */
-		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
+		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
 		{
 			if (data & 0x04 && !(LastPort1 & 0x04))
 			{
-				mixer_play_sample(samplechannels+0,Machine->samples->sample[0]->data,
-				                  Machine->samples->sample[0]->length,
-				                  Machine->samples->sample[0]->smpfreq,
+				mixer_play_sample(samplechannels+0,Machine.samples.sample[0].data,
+				                  Machine.samples.sample[0].length,
+				                  Machine.samples.sample[0].smpfreq,
 				                  0);
 			}
 		}
@@ -200,29 +200,29 @@ public class rockola
 		Sound0StopOnRollover = 0;
 	
 		/* play noise samples requested by sound command byte */
-		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
+		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
 		{
 			if (data & 0x20 && !(LastPort1 & 0x20))
-				mixer_play_sample(samplechannels+2,Machine->samples->sample[1]->data,
-				                  Machine->samples->sample[1]->length,
-				                  Machine->samples->sample[1]->smpfreq,
+				mixer_play_sample(samplechannels+2,Machine.samples.sample[1].data,
+				                  Machine.samples.sample[1].length,
+				                  Machine.samples.sample[1].smpfreq,
 				                  0);
 			else if (!(data & 0x20) && LastPort1 & 0x20)
 				mixer_stop_sample(samplechannels+2);
 	
 			if (data & 0x40 && !(LastPort1 & 0x40))
-				mixer_play_sample(samplechannels+0,Machine->samples->sample[1]->data,
-				                  Machine->samples->sample[1]->length,
-				                  Machine->samples->sample[1]->smpfreq,
+				mixer_play_sample(samplechannels+0,Machine.samples.sample[1].data,
+				                  Machine.samples.sample[1].length,
+				                  Machine.samples.sample[1].smpfreq,
 				                  0);
 			else if (!(data & 0x20) && LastPort1 & 0x20)
 				mixer_stop_sample(samplechannels+0);
 	
 			if (data & 0x80 && !(LastPort1 & 0x80))
 			{
-				mixer_play_sample(samplechannels+1,Machine->samples->sample[0]->data,
-				                  Machine->samples->sample[0]->length,
-				                  Machine->samples->sample[0]->smpfreq,
+				mixer_play_sample(samplechannels+1,Machine.samples.sample[0].data,
+				                  Machine.samples.sample[0].length,
+				                  Machine.samples.sample[0].smpfreq,
 				                  0);
 			}
 		}
@@ -266,13 +266,13 @@ public class rockola
 		Sound0StopOnRollover = 0;
 	
 		/* play noise samples requested by sound command byte */
-		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
+		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
 		{
 			if (data & 0x80 && !(LastPort1 & 0x80))
 			{
-				mixer_play_sample(samplechannels+0,Machine->samples->sample[0]->data,
-				                  Machine->samples->sample[0]->length,
-				                  Machine->samples->sample[0]->smpfreq,
+				mixer_play_sample(samplechannels+0,Machine.samples.sample[0].data,
+				                  Machine.samples.sample[0].length,
+				                  Machine.samples.sample[0].smpfreq,
 				                  0);
 			}
 		}

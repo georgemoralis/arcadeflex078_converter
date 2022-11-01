@@ -236,7 +236,7 @@ public class taotaido
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 );// see notes - SERVICE in "test mode"
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );// VBLANK ? The game freezes when ON
 	
-		PORT_START(); 	/* DSW A (0xffff87.b -> !0xfe2f6c.w or !0xfe30d0) */
+		PORT_START(); 	/* DSW A (0xffff87.b . !0xfe2f6c.w or !0xfe30d0) */
 		PORT_DIPNAME( 0x01, 0x01, "Coin Slot" );
 		PORT_DIPSETTING(    0x01, "Same" );
 		PORT_DIPSETTING(    0x00, "Individual" );
@@ -262,7 +262,7 @@ public class taotaido
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW B (0xffff89.b -> !0xfe73c2.w or !0xfe751c.w) */
+		PORT_START(); 	/* DSW B (0xffff89.b . !0xfe73c2.w or !0xfe751c.w) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Flip_Screen") );	// check code at 0x0963e2 or 0x845e2
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -285,7 +285,7 @@ public class taotaido
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW C (0xffff8b.b -> !0xfe2f94.w or !0xfe30f8.w) */
+		PORT_START(); 	/* DSW C (0xffff8b.b . !0xfe2f94.w or !0xfe30f8.w) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );	// doesn't seem to be demo sounds
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );

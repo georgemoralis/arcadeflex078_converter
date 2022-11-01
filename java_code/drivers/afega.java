@@ -62,7 +62,7 @@ public class afega
 	
 	WRITE16_HANDLER( afega_soundlatch_w )
 	{
-		if (ACCESSING_LSB && Machine->sample_rate)
+		if (ACCESSING_LSB && Machine.sample_rate)
 			soundlatch_w(0,data&0xff);
 	}
 	

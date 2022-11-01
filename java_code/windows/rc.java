@@ -59,10 +59,10 @@ public class rc
 	/* private methods */
 	static int rc_verify(struct rc_option *option, float value)
 	{
-	   if(option->min == option->max)
+	   if(option.min == option.max)
 	      return 0;
 	
-	   if( (value < option->min) || (value > option->max) )
+	   if( (value < option.min) || (value > option.max) )
 	      return -1;
 	
 	   return 0;
@@ -133,13 +133,13 @@ public class rc
 	
 	void rc_destroy(struct rc_struct *rc)
 	{
-	   if(rc->option)
+	   if(rc.option)
 	   {
-	      rc_free_stuff(rc->option);
-	      free (rc->option);
+	      rc_free_stuff(rc.option);
+	      free (rc.option);
 	   }
-	   if(rc->arg)
-	      free(rc->arg);
+	   if(rc.arg)
+	      free(rc.arg);
 	   free(rc);
 	}
 	
@@ -148,24 +148,24 @@ public class rc
 	   int i;
 	
 	   /* try to find a free entry in our option list */
-	   for(i = 0; i < rc->option_size; i++)
-	      if(rc->option[i].type <= 0)
+	   for(i = 0; i < rc.option_size; i++)
+	      if(rc.option[i].type <= 0)
 	         break;
 	
 	   /* do we have space to register this option list ? */
-	   if(i >= (rc->option_size-1))
+	   if(i >= (rc.option_size-1))
 	   {
-	      struct rc_option *tmp = realloc(rc->option,
-	         (rc->option_size + BUF_SIZE) * sizeof(struct rc_option));
+	      struct rc_option *tmp = realloc(rc.option,
+	         (rc.option_size + BUF_SIZE) * sizeof(struct rc_option));
 	      if (!tmp)
 	      {
 	         fprintf(stderr, "error: malloc failed in rc_register_option\n");
 	         return -1;
 	      }
-	      rc->option = tmp;
-	      memset(rc->option + rc->option_size, 0, BUF_SIZE *
+	      rc.option = tmp;
+	      memset(rc.option + rc.option_size, 0, BUF_SIZE *
 	         sizeof(struct rc_option));
-	      rc->option_size += BUF_SIZE;
+	      rc.option_size += BUF_SIZE;
 	   }
 	
 	   /* set the defaults */
@@ -173,8 +173,8 @@ public class rc
 	      return -1;
 	
 	   /* register the option */
-	   rc->option[i].type = rc_link;
-	   rc->option[i].dest = option;
+	   rc.option[i].type = rc_link;
+	   rc.option[i].dest = option;
 	
 	   return 0;
 	}
@@ -185,12 +185,12 @@ public class rc
 	
 	   /* try to find the entry in our option list, unregister later registered
 	      duplicates first */
-	   for(i = rc->option_size - 1; i >= 0; i--)
+	   for(i = rc.option_size - 1; i >= 0; i--)
 	   {
-	      if(rc->option[i].dest == option)
+	      if(rc.option[i].dest == option)
 	      {
-	         memset(rc->option + i, 0, sizeof(struct rc_option));
-	         rc->option[i].type = rc_ignore;
+	         memset(rc.option + i, 0, sizeof(struct rc_option));
+	         rc.option[i].type = rc_ignore;
 	         return 0;
 	      }
 	   }
@@ -257,12 +257,12 @@ public class rc
 	         arg = strtok (arg, " \t\r\n");
 	      }
 	
-	      if(!(option = rc_get_option2(rc->option, name)))
+	      if(!(option = rc_get_option2(rc.option, name)))
 	      {
 	         fprintf(stderr, "error: unknown option %s, on line %d of file: %s\n",
 	            name, line, description);
 	      }
-	      else if (rc_requires_arg[option->type] && !arg)
+	      else if (rc_requires_arg[option.type] && !arg)
 	      {
 	         fprintf(stderr,
 	            "error: %s requires an argument, on line %d of file: %s\n",
@@ -324,12 +324,12 @@ public class rc
 	      else
 	         arg = strtok (arg, " \t\r\n");
 	
-	      if(!(option = rc_get_option2(rc->option, name)))
+	      if(!(option = rc_get_option2(rc.option, name)))
 	      {
 	         fprintf(stderr, "error: unknown option %s, on line %d of file: %s\n",
 	            name, line, description);
 	      }
-	      else if (rc_requires_arg[option->type] && !arg)
+	      else if (rc_requires_arg[option.type] && !arg)
 	      {
 	         fprintf(stderr,
 	            "error: %s requires an argument, on line %d of file: %s\n",
@@ -407,7 +407,7 @@ public class rc
 	
 	int osd_rc_write(struct rc_struct *rc, mame_file *f, const char *description)
 	{
-		return real_rc_write(rc->option, f, description);
+		return real_rc_write(rc.option, f, description);
 	}
 	
 	/* needed to walk the tree */
@@ -463,7 +463,7 @@ public class rc
 	
 	int rc_write(struct rc_struct *rc, FILE *f, const char *description)
 	{
-	   return rc_real_write(rc->option, f, description);
+	   return rc_real_write(rc.option, f, description);
 	}
 	
 	int rc_parse_commandline(struct rc_struct *rc, int argc, char *argv[],
@@ -482,9 +482,9 @@ public class rc
 	         if(argv[i][1] == '-')
 	            start = 2;
 	
-	         if((option = rc_get_option2(rc->option, argv[i] + start)))
+	         if((option = rc_get_option2(rc.option, argv[i] + start)))
 	         {
-	            if (option->type == rc_bool)
+	            if (option.type == rc_bool)
 	            {
 	               /* handle special bool set case */
 	               arg = "1";
@@ -492,7 +492,7 @@ public class rc
 	            else
 	            {
 	               /* normal option */
-	               if (rc_requires_arg[option->type])
+	               if (rc_requires_arg[option.type])
 	               {
 	                  i++;
 	                  if (i >= argc)
@@ -505,8 +505,8 @@ public class rc
 	            }
 	         }
 	         else if(!strncmp(argv[i] + start, "no", 2) &&
-	            (option = rc_get_option2(rc->option, argv[i] + start + 2)) &&
-	            (option->type == rc_bool))
+	            (option = rc_get_option2(rc.option, argv[i] + start + 2)) &&
+	            (option.type == rc_bool))
 	         {
 	            /* handle special bool clear case */
 	            arg = "0";
@@ -523,9 +523,9 @@ public class rc
 	      else
 	      {
 	         /* do we have space to register the non-option arg */
-	         if(rc->args_registered >= (rc->arg_size))
+	         if(rc.args_registered >= (rc.arg_size))
 	         {
-	            char **tmp = realloc(rc->arg, (rc->arg_size + BUF_SIZE) *
+	            char **tmp = realloc(rc.arg, (rc.arg_size + BUF_SIZE) *
 	               sizeof(char *));
 	            if (!tmp)
 	            {
@@ -533,14 +533,14 @@ public class rc
 	                  "error: malloc failed in rc_parse_commadline\n");
 	               return -1;
 	            }
-	            rc->arg = tmp;
-	            memset(rc->arg + rc->arg_size, 0, BUF_SIZE * sizeof(char *));
-	            rc->arg_size += BUF_SIZE;
+	            rc.arg = tmp;
+	            memset(rc.arg + rc.arg_size, 0, BUF_SIZE * sizeof(char *));
+	            rc.arg_size += BUF_SIZE;
 	         }
 	
 	         /* register the non-option arg */
-	         rc->arg[rc->args_registered] = argv[i];
-	         rc->args_registered++;
+	         rc.arg[rc.args_registered] = argv[i];
+	         rc.args_registered++;
 	
 	         /* call the callback if defined */
 	         if(arg_callback && (*arg_callback)(argv[i]))
@@ -552,8 +552,8 @@ public class rc
 	
 	int rc_get_non_option_args(struct rc_struct *rc, int *argc, char **argv[])
 	{
-	   *argv = rc->arg;
-	   *argc = rc->args_registered;
+	   *argv = rc.arg;
+	   *argc = rc.args_registered;
 	   return 0;
 	}
 	
@@ -593,7 +593,7 @@ public class rc
 	
 	void rc_print_help(struct rc_struct *rc, FILE *f)
 	{
-	   rc_real_print_help(rc->option, f);
+	   rc_real_print_help(rc.option, f);
 	}
 	
 	/* needed to walk the tree */
@@ -630,7 +630,7 @@ public class rc
 	
 	void rc_print_man_options(struct rc_struct *rc, FILE *f)
 	{
-	   rc_real_print_man_options(rc->option, f);
+	   rc_real_print_man_options(rc.option, f);
 	}
 	
 	int rc_verify_power_of_2(struct rc_option *option, const char *arg,
@@ -638,25 +638,25 @@ public class rc
 	{
 	   int i, value;
 	
-	   value = *(int *)option->dest;
+	   value = *(int *)option.dest;
 	
 	   for(i=0; i<(sizeof(int)*8); i++)
 	      if(((int)0x01 << i) == value)
 	         break;
 	   if(i == (sizeof(int)*8))
 	   {
-	      fprintf(stderr, "error invalid value for %s: %s\n", option->name, arg);
+	      fprintf(stderr, "error invalid value for %s: %s\n", option.name, arg);
 	      return -1;
 	   }
 	
-	   option->priority = priority;
+	   option.priority = priority;
 	
 	   return 0;
 	}
 	
 	int rc_option_requires_arg(struct rc_struct *rc, const char *name)
 	{
-	   return rc_option_requires_arg2(rc->option, name);
+	   return rc_option_requires_arg2(rc.option, name);
 	}
 	
 	int rc_option_requires_arg2(struct rc_option *option, const char *name)
@@ -668,17 +668,17 @@ public class rc
 	      fprintf(stderr, "error: unknown option %s\n", name);
 	      return -1;
 	   }
-	   return rc_requires_arg[my_option->type];
+	   return rc_requires_arg[my_option.type];
 	}
 	
 	int rc_option_requires_arg3(struct rc_option *option)
 	{
-	   return rc_requires_arg[option->type];
+	   return rc_requires_arg[option.type];
 	}
 	
 	int rc_get_priority(struct rc_struct *rc, const char *name)
 	{
-	   return rc_get_priority2(rc->option, name);
+	   return rc_get_priority2(rc.option, name);
 	}
 	
 	int rc_get_priority2(struct rc_option *option, const char *name)
@@ -690,18 +690,18 @@ public class rc
 	      fprintf(stderr, "error: unknown option %s\n", name);
 	      return -1;
 	   }
-	   return my_option->priority;
+	   return my_option.priority;
 	}
 	
 	int rc_get_priority3(struct rc_option *option)
 	{
-	   return option->priority;
+	   return option.priority;
 	}
 	
 	int rc_set_option(struct rc_struct *rc, const char *name, const char *arg,
 	   int priority)
 	{
-	   return rc_set_option2(rc->option, name, arg, priority);
+	   return rc_set_option2(rc.option, name, arg, priority);
 	}
 	
 	int rc_set_option2(struct rc_option *option, const char *name,
@@ -722,23 +722,23 @@ public class rc
 	   char *end;
 	
 	   /* check priority */
-	   if(priority < option->priority)
+	   if(priority < option.priority)
 	      return 0;
 	
-	   switch(option->type)
+	   switch(option.type)
 	   {
 	      case rc_string:
 	         {
 	            char *str;
 	            if ( !( str = malloc(strlen(arg)+1) ) )
 	            {
-	               fprintf(stderr, "error: malloc failed for %s\n", option->name);
+	               fprintf(stderr, "error: malloc failed for %s\n", option.name);
 	               return -1;
 	            }
 	            strcpy(str, arg);
-	            if(*(char **)option->dest)
-	               free(*(char **)option->dest);
-	            *(char **)option->dest = str;
+	            if(*(char **)option.dest)
+	               free(*(char **)option.dest);
+	            *(char **)option.dest = str;
 	         }
 	         break;
 	      case rc_int:
@@ -748,10 +748,10 @@ public class rc
 	            x = strtol(arg, &end, 0);
 	            if (*end || rc_verify(option, x))
 	            {
-	               fprintf(stderr, "error invalid value for %s: %s\n", option->name, arg);
+	               fprintf(stderr, "error invalid value for %s: %s\n", option.name, arg);
 	               return -1;
 	            }
-	            *(int *)option->dest = x;
+	            *(int *)option.dest = x;
 	         }
 	         break;
 	      case rc_float:
@@ -760,26 +760,26 @@ public class rc
 	            x = strtod(arg, &end);
 	            if (*end || rc_verify(option, x))
 	            {
-	               fprintf(stderr, "error invalid value for %s: %s\n", option->name, arg);
+	               fprintf(stderr, "error invalid value for %s: %s\n", option.name, arg);
 	               return -1;
 	            }
-	            *(float *)option->dest = x;
+	            *(float *)option.dest = x;
 	         }
 	         break;
 	      case rc_set_int:
-	         *(int*)option->dest = option->min;
+	         *(int*)option.dest = option.min;
 	         break;
 	      case rc_file:
 	         {
-	            FILE *f = fopen(arg, (option->min)? "w":"r");
+	            FILE *f = fopen(arg, (option.min)? "w":"r");
 	            if(!f)
 	            {
 	               fprintf(stderr, "error: couldn't open file: %s\n", arg);
 	               return -1;
 	            }
-	            if (*(FILE **)option->dest)
-	               fclose(*(FILE **)option->dest);
-	            *(FILE **)option->dest = f;
+	            if (*(FILE **)option.dest)
+	               fclose(*(FILE **)option.dest);
+	            *(FILE **)option.dest = f;
 	         }
 	         break;
 	      case rc_use_function:
@@ -788,22 +788,22 @@ public class rc
 	      default:
 	         fprintf(stderr,
 	            "error: unknown option type: %d, this should not happen!\n",
-	            option->type);
+	            option.type);
 	         return -1;
 	   }
 	   /* functions should do there own priority handling, so that they can
 	      ignore priority handling if they wish */
-	   if(option->func)
-	      return (*option->func)(option, arg, priority);
+	   if(option.func)
+	      return (*option.func)(option, arg, priority);
 	
-	   option->priority = priority;
+	   option.priority = priority;
 	
 	   return 0;
 	}
 	
 	struct rc_option *rc_get_option(struct rc_struct *rc, const char *name)
 	{
-	   return rc_get_option2(rc->option, name);
+	   return rc_get_option2(rc.option, name);
 	}
 	
 	struct rc_option *rc_get_option2(struct rc_option *option, const char *name)
@@ -835,7 +835,7 @@ public class rc
 	/* gimmi the entire tree, I want todo all the parsing myself */
 	struct rc_option *rc_get_options(struct rc_struct *rc)
 	{
-	   return rc->option;
+	   return rc.option;
 	}
 	
 	
@@ -855,12 +855,12 @@ public class rc
 	      fprintf(stderr, "Who are you? Not found in passwd database!!\n");
 	      return NULL;
 	   }
-	   if (!(s=malloc(strlen(pw->pw_dir)+1)))
+	   if (!(s=malloc(strlen(pw.pw_dir)+1)))
 	   {
 	      fprintf(stderr, "error: malloc faild for homedir string\n");
 	      return NULL;
 	   }
-	   strcpy(s, pw->pw_dir);
+	   strcpy(s, pw.pw_dir);
 	   return s;
 	}
 	

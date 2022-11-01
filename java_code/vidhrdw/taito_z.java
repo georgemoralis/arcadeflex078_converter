@@ -256,7 +256,7 @@ public class taito_z
 					flipy = !flipy;
 				}
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -351,7 +351,7 @@ public class taito_z
 						flipy = !flipy;
 					}
 	
-					pdrawgfxzoom(bitmap,Machine->gfx[0],
+					pdrawgfxzoom(bitmap,Machine.gfx[0],
 							code,
 							color,
 							flipx,flipy,
@@ -395,7 +395,7 @@ public class taito_z
 						flipy = !flipy;
 					}
 	
-					pdrawgfxzoom(bitmap,Machine->gfx[2],
+					pdrawgfxzoom(bitmap,Machine.gfx[2],
 							code,
 							color,
 							flipx,flipy,
@@ -439,7 +439,7 @@ public class taito_z
 						flipy = !flipy;
 					}
 	
-					pdrawgfxzoom(bitmap,Machine->gfx[2],
+					pdrawgfxzoom(bitmap,Machine.gfx[2],
 							code,
 							color,
 							flipx,flipy,
@@ -533,7 +533,7 @@ public class taito_z
 					flipy = !flipy;
 				}
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -635,7 +635,7 @@ public class taito_z
 					flipy = !flipy;
 				}
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -727,7 +727,7 @@ public class taito_z
 					flipy = !flipy;
 				}
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -819,7 +819,7 @@ public class taito_z
 					flipy = !flipy;
 				}
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -852,7 +852,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,1);
@@ -878,7 +878,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,1);
@@ -902,7 +902,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0],cliprect);
+		fillbitmap(bitmap, Machine.pens[0],cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,1);
@@ -926,7 +926,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,1);
@@ -950,7 +950,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,1);
@@ -974,7 +974,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,1);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,2);
@@ -1107,7 +1107,7 @@ public class taito_z
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked - this shouldn't be necessary! */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0480SCP_tilemap_draw(bitmap,cliprect,layer[1],0,0);

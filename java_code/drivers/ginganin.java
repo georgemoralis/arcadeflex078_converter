@@ -16,7 +16,7 @@ OSC.  : 6.000MHz 3.579545MHz
 
 Interrupts: 1-7]	d17a:	clears 20018 etc.
 
-f4b2	print string:	a1->(char)*,0x25(%) d7.w=color	a0->screen (30000)
+f4b2	print string:	a1.(char)*,0x25(%) d7.w=color	a0.screen (30000)
 f5d6	print 7 digit BCD number: d0.l to (a1)+ color $3000
 
 
@@ -380,9 +380,9 @@ public class ginganin
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) /* ? (vectors 1-7 cointain the same address) */
 	
 		MDRV_CPU_ADD(M6809, 1000000)
-		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)	/* ? */ /* Takahiro Nogi. 1999/09/27 (3579545 -> 1000000) */
+		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)	/* ? */ /* Takahiro Nogi. 1999/09/27 (3579545 . 1000000) */
 		MDRV_CPU_MEMORY(sound_readmem,sound_writemem)
-		MDRV_CPU_VBLANK_INT(ginganin_sound_interrupt,60)	/* Takahiro Nogi. 1999/09/27 (1 -> 60) */
+		MDRV_CPU_VBLANK_INT(ginganin_sound_interrupt,60)	/* Takahiro Nogi. 1999/09/27 (1 . 60) */
 	
 		MDRV_FRAMES_PER_SECOND(60)
 		MDRV_VBLANK_DURATION(DEFAULT_60HZ_VBLANK_DURATION)

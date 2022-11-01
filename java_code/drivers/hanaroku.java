@@ -67,14 +67,14 @@ public class hanaroku
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[0], code, color, flipx, flipy,
+			drawgfx(bitmap, Machine.gfx[0], code, color, flipx, flipy,
 				sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	VIDEO_UPDATE(hanaroku)
 	{
-		fillbitmap(bitmap, Machine->pens[0x1f0], cliprect);	// ???
+		fillbitmap(bitmap, Machine.pens[0x1f0], cliprect);	// ???
 		hanaroku_draw_sprites(bitmap, cliprect);
 	}
 	

@@ -116,7 +116,7 @@ public class megazone
 		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
 		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x3800, 0x3fff, megazone_sharedram_r ),
-		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),		/* 4000->5FFF is a debug rom */
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),		/* 4000.5FFF is a debug rom */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -146,7 +146,7 @@ public class megazone
 		new Memory_ReadAddress( 0x6002, 0x6002, input_port_2_r ), /* P2 IO */
 		new Memory_ReadAddress( 0x8000, 0x8000, input_port_3_r ), /* DIP 1 */
 		new Memory_ReadAddress( 0x8001, 0x8001, input_port_4_r ), /* DIP 2 */
-		new Memory_ReadAddress( 0xe000, 0xe7ff, megazone_sharedram_r ),  /* Shared with $3800->3fff of main CPU */
+		new Memory_ReadAddress( 0xe000, 0xe7ff, megazone_sharedram_r ),  /* Shared with $3800.3fff of main CPU */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -158,7 +158,7 @@ public class megazone
 		new Memory_WriteAddress( 0xa000, 0xa000, MWA_RAM ),				/* INTMAIN - Interrupts main CPU (unused) */
 		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ),				/* INT (Actually is NMI) enable/disable (unused)*/
 		new Memory_WriteAddress( 0xc001, 0xc001, watchdog_reset_w ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, megazone_sharedram_w ),	/* Shared with $3800->3fff of main CPU */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, megazone_sharedram_w ),	/* Shared with $3800.3fff of main CPU */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	

@@ -38,7 +38,7 @@ public class epos
 	{
 		int i;
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -73,8 +73,8 @@ public class epos
 		x = (offset % 136) * 2;
 		y = (offset / 136);
 	
-		plot_pixel(tmpbitmap, x,     y, Machine->pens[current_palette | (data & 0x0f)]);
-		plot_pixel(tmpbitmap, x + 1, y, Machine->pens[current_palette | (data >> 4)]);
+		plot_pixel(tmpbitmap, x,     y, Machine.pens[current_palette | (data & 0x0f)]);
+		plot_pixel(tmpbitmap, x + 1, y, Machine.pens[current_palette | (data >> 4)]);
 	} };
 	
 	
@@ -120,6 +120,6 @@ public class epos
 				epos_videoram_w(offs, videoram.read(offs));
 			}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

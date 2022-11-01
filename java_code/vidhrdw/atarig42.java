@@ -248,18 +248,18 @@ public class atarig42
 		/* copy the motion objects on top */
 		{
 			struct mame_bitmap *mo_bitmap = atarirle_get_vram(0, 0);
-			int left	= cliprect->min_x;
-			int top		= cliprect->min_y;
-			int right	= cliprect->max_x + 1;
-			int bottom	= cliprect->max_y + 1;
+			int left	= cliprect.min_x;
+			int top		= cliprect.min_y;
+			int right	= cliprect.max_x + 1;
+			int bottom	= cliprect.max_y + 1;
 			int x, y;
 	
 			/* now blend with the playfield */
 			for (y = top; y < bottom; y++)
 			{
-				UINT16 *pf = (UINT16 *)bitmap->base + y * bitmap->rowpixels;
-				UINT16 *mo = (UINT16 *)mo_bitmap->base + y * mo_bitmap->rowpixels;
-				UINT8 *pri = (UINT8 *)priority_bitmap->base + priority_bitmap->rowpixels * y;
+				UINT16 *pf = (UINT16 *)bitmap.base + y * bitmap.rowpixels;
+				UINT16 *mo = (UINT16 *)mo_bitmap.base + y * mo_bitmap.rowpixels;
+				UINT8 *pri = (UINT8 *)priority_bitmap.base + priority_bitmap.rowpixels * y;
 				for (x = left; x < right; x++)
 					if (mo[x])
 					{

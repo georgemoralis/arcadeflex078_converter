@@ -58,7 +58,7 @@ void RENDERFUNC(void)
 		if (!FBZMODE_BITS(20,1))
 		{
 			if (!FBZMODE_BITS(3,1))
-				logerror("Depth Z: %c%c %s %08X,%08X,%08X -> %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
+				logerror("Depth Z: %c%c %s %08X,%08X,%08X . %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
 					tri_startz,
 					tri_startz + (INT32)((tri_vb.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vb.x - tri_va.x) * (float)tri_dzdx),
 					tri_startz + (INT32)((tri_vc.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vc.x - tri_va.x) * (float)tri_dzdx),
@@ -66,7 +66,7 @@ void RENDERFUNC(void)
 					(UINT16)(tri_startz + (INT32)((tri_vb.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vb.x - tri_va.x) * (float)tri_dzdx)) >> 12,
 					(UINT16)(tri_startz + (INT32)((tri_vc.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vc.x - tri_va.x) * (float)tri_dzdx)) >> 12);
 			else if (!FBZMODE_BITS(21,1))
-				logerror("Depth Wf: %c%c %s %f,%f,%f -> %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
+				logerror("Depth Wf: %c%c %s %f,%f,%f . %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
 					tri_startw,
 					tri_startw + (INT32)((tri_vb.y - tri_va.y) * tri_dwdy) + (INT32)((tri_vb.x - tri_va.x) * tri_dwdx),
 					tri_startw + (INT32)((tri_vc.y - tri_va.y) * tri_dwdy) + (INT32)((tri_vc.x - tri_va.x) * tri_dwdx),
@@ -74,7 +74,7 @@ void RENDERFUNC(void)
 					float_to_depth(tri_startw + (INT32)((tri_vb.y - tri_va.y) * tri_dwdy) + (INT32)((tri_vb.x - tri_va.x) * tri_dwdx)),
 					float_to_depth(tri_startw + (INT32)((tri_vc.y - tri_va.y) * tri_dwdy) + (INT32)((tri_vc.x - tri_va.x) * tri_dwdx)));
 			else
-				logerror("Depth Wz: %c%c %s %08X,%08X,%08X -> %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
+				logerror("Depth Wz: %c%c %s %08X,%08X,%08X . %04X,%04X,%04X", FBZMODE_BITS(4,1) ? 'T' : ' ', FBZMODE_BITS(10,1) ? 'W' : ' ', funcs[FBZMODE_BITS(5,3)],
 					tri_startz,
 					tri_startz + (INT32)((tri_vb.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vb.x - tri_va.x) * (float)tri_dzdx),
 					tri_startz + (INT32)((tri_vc.y - tri_va.y) * (float)tri_dzdy) + (INT32)((tri_vc.x - tri_va.x) * (float)tri_dzdx),
@@ -122,30 +122,30 @@ void RENDERFUNC(void)
 	vmin = &tri_va;
 	vmid = &tri_vb;
 	vmax = &tri_vc;
-	if (vmid->y < vmin->y) { struct tri_vertex *temp = vmid; vmid = vmin; vmin = temp; }
-	if (vmax->y < vmin->y) { struct tri_vertex *temp = vmax; vmax = vmin; vmin = temp; }
-	if (vmax->y < vmid->y) { struct tri_vertex *temp = vmax; vmax = vmid; vmid = temp; }
+	if (vmid.y < vmin.y) { struct tri_vertex *temp = vmid; vmid = vmin; vmin = temp; }
+	if (vmax.y < vmin.y) { struct tri_vertex *temp = vmax; vmax = vmin; vmin = temp; }
+	if (vmax.y < vmid.y) { struct tri_vertex *temp = vmax; vmax = vmid; vmid = temp; }
 
 	/* compute the clipped start/end y */
-	starty = TRUNC_TO_INT(vmin->y + 0.5f);
-	stopy = TRUNC_TO_INT(vmax->y + 0.5f);
-	if (starty < fbz_cliprect->min_y)
-		starty = fbz_cliprect->min_y;
-	if (stopy > fbz_cliprect->max_y)
-		starty = fbz_cliprect->max_y;
+	starty = TRUNC_TO_INT(vmin.y + 0.5f);
+	stopy = TRUNC_TO_INT(vmax.y + 0.5f);
+	if (starty < fbz_cliprect.min_y)
+		starty = fbz_cliprect.min_y;
+	if (stopy > fbz_cliprect.max_y)
+		starty = fbz_cliprect.max_y;
 	if (starty >= stopy)
 		return;
 	
 	/* compute the slopes */
-	fptemp = vmid->y - vmin->y;
+	fptemp = vmid.y - vmin.y;
 	if (fptemp == 0.0f) fptemp = 1.0f;
-	dxdy_minmid = (vmid->x - vmin->x) / fptemp;
-	fptemp = vmax->y - vmin->y;
+	dxdy_minmid = (vmid.x - vmin.x) / fptemp;
+	fptemp = vmax.y - vmin.y;
 	if (fptemp == 0.0f) fptemp = 1.0f;
-	dxdy_minmax = (vmax->x - vmin->x) / fptemp;
-	fptemp = vmax->y - vmid->y;
+	dxdy_minmax = (vmax.x - vmin.x) / fptemp;
+	fptemp = vmax.y - vmid.y;
 	if (fptemp == 0.0f) fptemp = 1.0f;
-	dxdy_midmax = (vmax->x - vmid->x) / fptemp;
+	dxdy_midmax = (vmax.x - vmid.x) / fptemp;
 
 	/* setup texture */
 	if (FBZCOLORPATH_BITS(27,1))
@@ -205,14 +205,14 @@ void RENDERFUNC(void)
 			
 			/* compute X endpoints */
 			fpy = (float)y + 0.5f;
-			startx = TRUNC_TO_INT((fpy - vmin->y) * dxdy_minmax + vmin->x + 0.5f);
-			if (fpy < vmid->y)
-				stopx = TRUNC_TO_INT((fpy - vmin->y) * dxdy_minmid + vmin->x + 0.5f);
+			startx = TRUNC_TO_INT((fpy - vmin.y) * dxdy_minmax + vmin.x + 0.5f);
+			if (fpy < vmid.y)
+				stopx = TRUNC_TO_INT((fpy - vmin.y) * dxdy_minmid + vmin.x + 0.5f);
 			else
-				stopx = TRUNC_TO_INT((fpy - vmid->y) * dxdy_midmax + vmid->x + 0.5f);
+				stopx = TRUNC_TO_INT((fpy - vmid.y) * dxdy_midmax + vmid.x + 0.5f);
 			if (startx > stopx) { int temp = startx; startx = stopx; stopx = temp; }
-			if (startx < fbz_cliprect->min_x) startx = fbz_cliprect->min_x;
-			if (stopx > fbz_cliprect->max_x) stopx = fbz_cliprect->max_x;
+			if (startx < fbz_cliprect.min_x) startx = fbz_cliprect.min_x;
+			if (stopx > fbz_cliprect.max_x) stopx = fbz_cliprect.max_x;
 			if (startx >= stopx)
 				continue;
 
@@ -1588,10 +1588,10 @@ logparams: path=0C482435 fog=00000000 alpha=00045119 mode=000B4379
 up front:
 * pre-scale curs,curt,ds,dt by 256 so that when we truncate to int we still have some bits
 * create clampstmask:
-    if (!clamptmu0.s) -> 0xffffffff 0xffffffff 0xffffffff 0x000000ff 
-    if (!clamptmu0.t) -> 0xffffffff 0xffffffff 0x000000ff 0xffffffff 
-    if (!clamptmu1.s) -> 0xffffffff 0x000000ff 0xffffffff 0xffffffff 
-    if (!clamptmu1.t) -> 0x000000ff 0xffffffff 0xffffffff 0xffffffff
+    if (!clamptmu0.s) . 0xffffffff 0xffffffff 0xffffffff 0x000000ff 
+    if (!clamptmu0.t) . 0xffffffff 0xffffffff 0x000000ff 0xffffffff 
+    if (!clamptmu1.s) . 0xffffffff 0x000000ff 0xffffffff 0xffffffff 
+    if (!clamptmu1.t) . 0x000000ff 0xffffffff 0xffffffff 0xffffffff
 * create invertmask[0,1] to XOR texel data with
 
 

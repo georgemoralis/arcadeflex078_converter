@@ -76,10 +76,10 @@ public class suprnova
 		int bxs = 0, bys = 0;				\
 		struct rectangle clip;					\
 							\
-		clip.min_x = cliprect->min_x<<6;					\
-		clip.max_x = (cliprect->max_x+1)<<6;					\
-		clip.min_y = cliprect->min_y<<6;					\
-		clip.max_y = (cliprect->max_y+1)<<6;					\
+		clip.min_x = cliprect.min_x<<6;					\
+		clip.max_x = (cliprect.max_x+1)<<6;					\
+		clip.min_y = cliprect.min_y<<6;					\
+		clip.max_y = (cliprect.max_y+1)<<6;					\
 		sx <<= 6;					\
 		sy <<= 6;					\
 		x <<= 6;					\
@@ -385,12 +385,12 @@ public class suprnova
 				if ((sprite_flip & 2) != 0)
 				{
 					xflip ^= 1;
-					sx = Machine->visible_area.max_x+1 - sx;
+					sx = Machine.visible_area.max_x+1 - sx;
 				}
 				if ((sprite_flip & 1) != 0)
 				{
 					yflip ^= 1;
-					sy = Machine->visible_area.max_y+1 - sy;
+					sy = Machine.visible_area.max_y+1 - sy;
 				}
 	
 				/* Palette linking */
@@ -432,7 +432,7 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+xx < (cliprect->max_x+1)) && (sx+xx >= cliprect->min_x) && (sy+yy < (cliprect->max_y+1)) && (sy+yy >= cliprect->min_y))
+									if ((sx+xx < (cliprect.max_x+1)) && (sx+xx >= cliprect.min_x) && (sy+yy < (cliprect.max_y+1)) && (sy+yy >= cliprect.min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
@@ -448,7 +448,7 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+xx < (cliprect->max_x+1)) && (sx+xx >= cliprect->min_x) && (sy+(ysize-1-yy) < (cliprect->max_y+1)) && (sy+(ysize-1-yy) >= cliprect->min_y))
+									if ((sx+xx < (cliprect.max_x+1)) && (sx+xx >= cliprect.min_x) && (sy+(ysize-1-yy) < (cliprect.max_y+1)) && (sy+(ysize-1-yy) >= cliprect.min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
@@ -464,7 +464,7 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+(xsize-1-xx) < (cliprect->max_x+1)) && (sx+(xsize-1-xx) >= cliprect->min_x) && (sy+yy < (cliprect->max_y+1)) && (sy+yy >= cliprect->min_y))
+									if ((sx+(xsize-1-xx) < (cliprect.max_x+1)) && (sx+(xsize-1-xx) >= cliprect.min_x) && (sy+yy < (cliprect.max_y+1)) && (sy+yy >= cliprect.min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
@@ -481,7 +481,7 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+(xsize-1-xx) < (cliprect->max_x+1)) && (sx+(xsize-1-xx) >= cliprect->min_x) && (sy+(ysize-1-yy) < (cliprect->max_y+1)) && (sy+(ysize-1-yy) >= cliprect->min_y))
+									if ((sx+(xsize-1-xx) < (cliprect.max_x+1)) && (sx+(xsize-1-xx) >= cliprect.min_x) && (sy+(ysize-1-yy) < (cliprect.max_y+1)) && (sy+(ysize-1-yy) >= cliprect.min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
@@ -579,8 +579,8 @@ public class suprnova
 		skns_tilemap_B = tilemap_create(get_tilemap_B_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64, 64);
 			tilemap_set_transparent_pen(skns_tilemap_B,0);
 	
-		Machine->gfx[2]->color_granularity=256;
-		Machine->gfx[3]->color_granularity=256;
+		Machine.gfx[2].color_granularity=256;
+		Machine.gfx[3].color_granularity=256;
 	
 		return 0;
 	}
@@ -718,7 +718,7 @@ public class suprnova
 				{
 					if (skns_v3t_dirty[i] == 1)
 					{
-						decodechar(Machine->gfx[1], i, (data8_t*)btiles, Machine->drv->gfxdecodeinfo[0].gfxlayout);
+						decodechar(Machine.gfx[1], i, (data8_t*)btiles, Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 						skns_v3t_dirty[i] = 0;
 					}
@@ -744,7 +744,7 @@ public class suprnova
 				{
 					if (skns_v3t_4bppdirty[i] == 1)
 					{
-						decodechar(Machine->gfx[3], i, (data8_t*)btiles, Machine->drv->gfxdecodeinfo[3].gfxlayout);
+						decodechar(Machine.gfx[3], i, (data8_t*)btiles, Machine.drv.gfxdecodeinfo[3].gfxlayout);
 	
 						skns_v3t_4bppdirty[i] = 0;
 					}
@@ -764,10 +764,10 @@ public class suprnova
 	
 	
 			/* needed until we have the per tile priorities sorted out */
-			if (!strcmp(Machine->gamedrv->name,"vblokbrk") ||
-				!strcmp(Machine->gamedrv->name,"sarukani") ||
-				!strcmp(Machine->gamedrv->name,"sengekis") ||
-				!strcmp(Machine->gamedrv->name,"sengekij"))
+			if (!strcmp(Machine.gamedrv.name,"vblokbrk") ||
+				!strcmp(Machine.gamedrv.name,"sarukani") ||
+				!strcmp(Machine.gamedrv.name,"sengekis") ||
+				!strcmp(Machine.gamedrv.name,"sengekij"))
 			{
 				supernova_pri_b = 0;
 				supernova_pri_a = 1;

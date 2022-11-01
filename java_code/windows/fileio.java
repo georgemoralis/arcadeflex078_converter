@@ -279,7 +279,7 @@ public class fileio
 	
 	static void expand_pathlist(struct pathdata *list)
 	{
-		const char *rawpath = (list->rawpath) ? list->rawpath : "";
+		const char *rawpath = (list.rawpath) ? list.rawpath : "";
 		const char *token;
 	
 	#if VERBOSE
@@ -287,18 +287,18 @@ public class fileio
 	#endif
 	
 		// free any existing paths
-		if (list->pathcount != 0)
+		if (list.pathcount != 0)
 		{
 			int pathindex;
 	
-			for (pathindex = 0; pathindex < list->pathcount; pathindex++)
-				free((void *)list->path[pathindex]);
-			free(list->path);
+			for (pathindex = 0; pathindex < list.pathcount; pathindex++)
+				free((void *)list.path[pathindex]);
+			free(list.path);
 		}
 	
 		// by default, start with an empty list
-		list->path = NULL;
-		list->pathcount = 0;
+		list.path = NULL;
+		list.pathcount = 0;
 	
 		// look for separators
 		token = strchr(rawpath, ';');
@@ -309,14 +309,14 @@ public class fileio
 		while (1)
 		{
 			// allocate space for the new pointer
-			list->path = realloc(list->path, (list->pathcount + 1) * sizeof(char *));
-			if (!list->path)
+			list.path = realloc(list.path, (list.pathcount + 1) * sizeof(char *));
+			if (!list.path)
 				goto out_of_memory;
 	
 			// copy the path in
-			list->path[list->pathcount++] = copy_and_expand_variables(rawpath, token - rawpath);
+			list.path[list.pathcount++] = copy_and_expand_variables(rawpath, token - rawpath);
 	#if VERBOSE
-			printf("  %s\n", list->path[list->pathcount - 1]);
+			printf("  %s\n", list.path[list.pathcount - 1]);
 	#endif
 	
 			// if this was the end, break
@@ -332,7 +332,7 @@ public class fileio
 	
 		// when finished, reset the path info, so that future INI parsing will
 		// cause us to get called again
-		list->rawpath = NULL;
+		list.rawpath = NULL;
 		return;
 	
 	out_of_memory:
@@ -365,16 +365,16 @@ public class fileio
 		}
 	
 		// if we don't have expanded paths, expand them now
-		if (list->pathcount == 0 || list->rawpath)
+		if (list.pathcount == 0 || list.rawpath)
 		{
 			// special hack for ROMs
 			if (list == &pathlist[FILETYPE_ROM] && rompath_extra)
 			{
 				// this may leak a little memory, but it's a hack anyway! :-P
-				const char *rawpath = (list->rawpath) ? list->rawpath : "";
+				const char *rawpath = (list.rawpath) ? list.rawpath : "";
 				char *newpath = malloc(strlen(rompath_extra) + strlen(rawpath) + 2);
 				sprintf(newpath, "%s;%s", rompath_extra, rawpath);
-				list->rawpath = newpath;
+				list.rawpath = newpath;
 			}
 	
 			// decompose the path
@@ -383,10 +383,10 @@ public class fileio
 	
 		// set the count
 		if (count != 0)
-			*count = list->pathcount;
+			*count = list.pathcount;
 	
 		// return a valid path always
-		return (pathindex < list->pathcount) ? list->path[pathindex] : "";
+		return (pathindex < list.pathcount) ? list.path[pathindex] : "";
 	}
 	
 	
@@ -495,8 +495,8 @@ public class fileio
 		compose_path(fullpath, pathtype, pathindex, filename);
 	
 		/* attempt to open the file */
-		file->handle = CreateFile(fullpath, access, sharemode, NULL, disposition, 0, NULL);
-		if (file->handle == INVALID_HANDLE_VALUE)
+		file.handle = CreateFile(fullpath, access, sharemode, NULL, disposition, 0, NULL);
+		if (file.handle == INVALID_HANDLE_VALUE)
 		{
 			DWORD error = GetLastError();
 	
@@ -506,16 +506,16 @@ public class fileio
 	
 			/* create the path and try again */
 			create_path(fullpath, 1);
-			file->handle = CreateFile(fullpath, access, sharemode, NULL, disposition, 0, NULL);
+			file.handle = CreateFile(fullpath, access, sharemode, NULL, disposition, 0, NULL);
 	
 			/* if that doesn't work, we give up */
-			if (file->handle == INVALID_HANDLE_VALUE)
+			if (file.handle == INVALID_HANDLE_VALUE)
 				return NULL;
 		}
 	
 		/* get the file size */
-		file->end = GetFileSize(file->handle, &upperPos);
-		file->end |= (UINT64)upperPos << 32;
+		file.end = GetFileSize(file.handle, &upperPos);
+		file.end |= (UINT64)upperPos << 32;
 		return file;
 	}
 	
@@ -531,9 +531,9 @@ public class fileio
 		switch (whence)
 		{
 			default:
-			case SEEK_SET:	file->offset = offset;				break;
-			case SEEK_CUR:	file->offset += offset;				break;
-			case SEEK_END:	file->offset = file->end + offset;	break;
+			case SEEK_SET:	file.offset = offset;				break;
+			case SEEK_CUR:	file.offset += offset;				break;
+			case SEEK_END:	file.offset = file.end + offset;	break;
 		}
 		return 0;
 	}
@@ -546,7 +546,7 @@ public class fileio
 	
 	UINT64 osd_ftell(osd_file *file)
 	{
-		return file->offset;
+		return file.offset;
 	}
 	
 	
@@ -557,7 +557,7 @@ public class fileio
 	
 	int osd_feof(osd_file *file)
 	{
-		return (file->offset >= file->end);
+		return (file.offset >= file.end);
 	}
 	
 	
@@ -573,17 +573,17 @@ public class fileio
 		DWORD result;
 	
 		// handle data from within the buffer
-		if (file->offset >= file->bufferbase && file->offset < file->bufferbase + file->bufferbytes)
+		if (file.offset >= file.bufferbase && file.offset < file.bufferbase + file.bufferbytes)
 		{
 			// copy as much as we can
-			bytes_to_copy = file->bufferbase + file->bufferbytes - file->offset;
+			bytes_to_copy = file.bufferbase + file.bufferbytes - file.offset;
 			if (bytes_to_copy > length)
 				bytes_to_copy = length;
-			memcpy(buffer, &file->buffer[file->offset - file->bufferbase], bytes_to_copy);
+			memcpy(buffer, &file.buffer[file.offset - file.bufferbase], bytes_to_copy);
 	
 			// account for it
 			bytes_left -= bytes_to_copy;
-			file->offset += bytes_to_copy;
+			file.offset += bytes_to_copy;
 			buffer = (UINT8 *)buffer + bytes_to_copy;
 	
 			// if that's it, we're done
@@ -592,35 +592,35 @@ public class fileio
 		}
 	
 		// attempt to seek to the current location if we're not there already
-		if (file->offset != file->filepos)
+		if (file.offset != file.filepos)
 		{
-			LONG upperPos = file->offset >> 32;
-			result = SetFilePointer(file->handle, (UINT32)file->offset, &upperPos, FILE_BEGIN);
+			LONG upperPos = file.offset >> 32;
+			result = SetFilePointer(file.handle, (UINT32)file.offset, &upperPos, FILE_BEGIN);
 			if (result == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR)
 			{
-				file->filepos = ~0;
+				file.filepos = ~0;
 				return length - bytes_left;
 			}
-			file->filepos = file->offset;
+			file.filepos = file.offset;
 		}
 	
 		// if we have a small read remaining, do it to the buffer and copy out the results
 		if (length < FILE_BUFFER_SIZE/2)
 		{
 			// read as much of the buffer as we can
-			file->bufferbase = file->offset;
-			file->bufferbytes = 0;
-			ReadFile(file->handle, file->buffer, FILE_BUFFER_SIZE, &file->bufferbytes, NULL);
-			file->filepos += file->bufferbytes;
+			file.bufferbase = file.offset;
+			file.bufferbytes = 0;
+			ReadFile(file.handle, file.buffer, FILE_BUFFER_SIZE, &file.bufferbytes, NULL);
+			file.filepos += file.bufferbytes;
 	
 			// copy it out
 			bytes_to_copy = bytes_left;
-			if (bytes_to_copy > file->bufferbytes)
-				bytes_to_copy = file->bufferbytes;
-			memcpy(buffer, file->buffer, bytes_to_copy);
+			if (bytes_to_copy > file.bufferbytes)
+				bytes_to_copy = file.bufferbytes;
+			memcpy(buffer, file.buffer, bytes_to_copy);
 	
 			// adjust pointers and return
-			file->offset += bytes_to_copy;
+			file.offset += bytes_to_copy;
 			bytes_left -= bytes_to_copy;
 			return length - bytes_left;
 		}
@@ -629,11 +629,11 @@ public class fileio
 		else
 		{
 			// do the read
-			ReadFile(file->handle, buffer, bytes_left, &result, NULL);
-			file->filepos += result;
+			ReadFile(file.handle, buffer, bytes_left, &result, NULL);
+			file.filepos += result;
 	
 			// adjust the pointers and return
-			file->offset += result;
+			file.offset += result;
 			bytes_left -= result;
 			return length - bytes_left;
 		}
@@ -651,22 +651,22 @@ public class fileio
 		DWORD result;
 	
 		// invalidate any buffered data
-		file->bufferbytes = 0;
+		file.bufferbytes = 0;
 	
 		// attempt to seek to the current location
-		upperPos = file->offset >> 32;
-		result = SetFilePointer(file->handle, (UINT32)file->offset, &upperPos, FILE_BEGIN);
+		upperPos = file.offset >> 32;
+		result = SetFilePointer(file.handle, (UINT32)file.offset, &upperPos, FILE_BEGIN);
 		if (result == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR)
 			return 0;
 	
 		// do the write
-		WriteFile(file->handle, buffer, length, &result, NULL);
-		file->filepos += result;
+		WriteFile(file.handle, buffer, length, &result, NULL);
+		file.filepos += result;
 	
 		// adjust the pointers
-		file->offset += result;
-		if (file->offset > file->end)
-			file->end = file->offset;
+		file.offset += result;
+		if (file.offset > file.end)
+			file.end = file.offset;
 		return result;
 	}
 	
@@ -679,9 +679,9 @@ public class fileio
 	void osd_fclose(osd_file *file)
 	{
 		// close the handle and clear it out
-		if (file->handle)
-			CloseHandle(file->handle);
-		file->handle = NULL;
+		if (file.handle)
+			CloseHandle(file.handle);
+		file.handle = NULL;
 	}
 	
 	
@@ -734,20 +734,20 @@ public class fileio
 		struct pathdata *list = &pathlist[file_type];
 	
 		// free any existing paths
-		if (list->pathcount != 0)
+		if (list.pathcount != 0)
 		{
 			int pathindex;
 	
-			for (pathindex = 0; pathindex < list->pathcount; pathindex++)
-				free((void *)list->path[pathindex]);
-			free(list->path);
+			for (pathindex = 0; pathindex < list.pathcount; pathindex++)
+				free((void *)list.path[pathindex]);
+			free(list.path);
 		}
 	
 		// by default, start with an empty list
-		list->path = NULL;
-		list->pathcount = 0;
+		list.path = NULL;
+		list.pathcount = 0;
 	
-		list->rawpath = new_rawpath;
+		list.rawpath = new_rawpath;
 	
 	}
 	#endif

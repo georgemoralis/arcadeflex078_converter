@@ -11,8 +11,8 @@
  * Suggestions
  * - norotate? funny, leads to option -nonorotate ...
  *   fix when rotation options take turnable LCD's in account
- * - win_switch_res --> switch_resolution, swres
- * - win_switch_bpp --> switch_bpp, swbpp
+ * - win_switch_res -. switch_resolution, swres
+ * - win_switch_bpp -. switch_bpp, swbpp
  * - give up distinction between vector_width and win_gfx_width
  *   eventually introduce options.width, options.height
  * - new core options:
@@ -90,7 +90,7 @@ public class config
 			options.beam = 0x00010000;
 		if (options.beam > 0x00100000)
 			options.beam = 0x00100000;
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -101,14 +101,14 @@ public class config
 			options.vector_flicker = 0;
 		if (options.vector_flicker > 255)
 			options.vector_flicker = 255;
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
 	static int video_set_intensity(struct rc_option *option, const char *arg, int priority)
 	{
 		options.vector_intensity = f_intensity;
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -124,7 +124,7 @@ public class config
 			fprintf(stderr, "error: invalid value for debugres: %s\n", arg);
 			return -1;
 		}
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -141,7 +141,7 @@ public class config
 				exit (1);
 			}
 		}
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -283,8 +283,8 @@ public class config
 		{
 			int tmp;
 	
-			penalty = penalty_compare (gamename, drivers[i]->description);
-			tmp = penalty_compare (gamename, drivers[i]->name);
+			penalty = penalty_compare (gamename, drivers[i].description);
+			tmp = penalty_compare (gamename, drivers[i].name);
 			if (tmp < penalty) penalty = tmp;
 	
 			/* eventually insert into table of approximate matches */
@@ -304,15 +304,15 @@ public class config
 		for (i = 9; i >= 0; i--)
 		{
 			if (topten[i].index != -1)
-				fprintf (stderr, "%-10s%s\n", drivers[topten[i].index]->name, drivers[topten[i].index]->description);
+				fprintf (stderr, "%-10s%s\n", drivers[topten[i].index].name, drivers[topten[i].index].description);
 		}
 	}
 	
 	/*
-	 * gamedrv  = NULL --> parse named configfile
-	 * gamedrv != NULL --> parse gamename.ini and all parent.ini's (recursively)
-	 * return 0 --> no problem
-	 * return 1 --> something went wrong
+	 * gamedrv  = NULL -. parse named configfile
+	 * gamedrv != NULL -. parse gamename.ini and all parent.ini's (recursively)
+	 * return 0 -. no problem
+	 * return 1 -. something went wrong
 	 */
 	int parse_config (const char* filename, const struct GameDriver *gamedrv)
 	{
@@ -324,13 +324,13 @@ public class config
 	
 		if (gamedrv != 0)
 		{
-			if (gamedrv->clone_of && strlen(gamedrv->clone_of->name))
+			if (gamedrv.clone_of && strlen(gamedrv.clone_of.name))
 			{
-				retval = parse_config (NULL, gamedrv->clone_of);
+				retval = parse_config (NULL, gamedrv.clone_of);
 				if (retval != 0)
 					return retval;
 			}
-			sprintf(buffer, "%s.ini", gamedrv->name);
+			sprintf(buffer, "%s.ini", gamedrv.name);
 		}
 		else
 		{
@@ -498,12 +498,12 @@ public class config
 			{
 				for (i = 0; (drivers[i] != 0); i++) /* find game and play it */
 				{
-					if (strcmp(drivers[i]->name, inp_header.name) == 0)
+					if (strcmp(drivers[i].name, inp_header.name) == 0)
 					{
 						game_index = i;
-						gamename = (char *)drivers[i]->name;
+						gamename = (char *)drivers[i].name;
 						printf("Playing back previously recorded " GAMENOUN " %s (%s) [press return]\n",
-								drivers[game_index]->name,drivers[game_index]->description);
+								drivers[game_index].name,drivers[game_index].description);
 						getchar();
 						break;
 					}
@@ -523,7 +523,7 @@ public class config
 		{
 			/* do we have a driver for this? */
 			for (i = 0; drivers[i]; i++)
-				if (stricmp(gamename,drivers[i]->name) == 0)
+				if (stricmp(gamename,drivers[i].name) == 0)
 				{
 					game_index = i;
 					break;
@@ -544,7 +544,7 @@ public class config
 				rand();
 				game_index = rand() % i;
 	
-				fprintf(stderr, "running %s (%s) [press return]",drivers[game_index]->name,drivers[game_index]->description);
+				fprintf(stderr, "running %s (%s) [press return]",drivers[game_index].name,drivers[game_index].description);
 				getchar();
 			}
 		}
@@ -562,7 +562,7 @@ public class config
 		/* ok, got a gamename */
 	
 		/* if this is a vector game, parse vector.ini first */
-		expand_machine_driver(drivers[game_index]->drv, &drv);
+		expand_machine_driver(drivers[game_index].drv, &drv);
 		if (drv.video_attributes & VIDEO_TYPE_VECTOR)
 			if (parse_config ("vector.ini", NULL))
 				exit(1);
@@ -571,14 +571,14 @@ public class config
 		{
 			const struct GameDriver *tmp_gd;
 	
-			sprintf(buffer, "%s", drivers[game_index]->source_file+12);
+			sprintf(buffer, "%s", drivers[game_index].source_file+12);
 			buffer[strlen(buffer) - 2] = 0;
 	
 			tmp_gd = drivers[game_index];
 			while (tmp_gd != NULL)
 			{
-				if (strcmp(tmp_gd->name, buffer) == 0) break;
-				tmp_gd = tmp_gd->clone_of;
+				if (strcmp(tmp_gd.name, buffer) == 0) break;
+				tmp_gd = tmp_gd.clone_of;
 			}
 	
 			if (tmp_gd == NULL)
@@ -611,7 +611,7 @@ public class config
 			INP_HEADER inp_header;
 	
 			memset(&inp_header, '\0', sizeof(INP_HEADER));
-			strcpy(inp_header.name, drivers[game_index]->name);
+			strcpy(inp_header.name, drivers[game_index].name);
 			/* MAME32 stores the MAME version numbers at bytes 9 - 11
 			 * MAME DOS keeps this information in a string, the
 			 * Windows code defines them in the Makefile.
@@ -648,7 +648,7 @@ public class config
 	
 	{
 		/* first start with the game's built in orientation */
-		int orientation = drivers[game_index]->flags & ORIENTATION_MASK;
+		int orientation = drivers[game_index].flags & ORIENTATION_MASK;
 		options.ui_orientation = orientation;
 	
 		if (options.ui_orientation & ORIENTATION_SWAP_XY)
@@ -686,7 +686,7 @@ public class config
 		}
 	
 		/* auto-rotate right (e.g. for rotating lcds), based on original orientation */
-		if (video_autoror && (drivers[game_index]->flags & ORIENTATION_SWAP_XY) )
+		if (video_autoror && (drivers[game_index].flags & ORIENTATION_SWAP_XY) )
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -697,7 +697,7 @@ public class config
 		}
 	
 		/* auto-rotate left (e.g. for rotating lcds), based on original orientation */
-		if (video_autorol && (drivers[game_index]->flags & ORIENTATION_SWAP_XY) )
+		if (video_autorol && (drivers[game_index].flags & ORIENTATION_SWAP_XY) )
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -745,7 +745,7 @@ public class config
 	
 	#ifdef MESS
 		if (win_write_config != 0)
-			write_config(NULL, Machine->gamedrv);
+			write_config(NULL, Machine.gamedrv);
 	#endif /* MESS */
 	}
 	

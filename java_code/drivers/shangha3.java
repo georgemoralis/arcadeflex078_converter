@@ -39,15 +39,15 @@ public class shangha3
 	/* this looks like a simple protection check */
 	/*
 	write    read
-	78 78 -> 0
-	9b 10 -> 1
-	9b 20 -> 3
-	9b 40 -> 7
-	9b 80 -> f
-	08    -> e
-	10    -> c
-	20    -> 8
-	40    -> 0
+	78 78 . 0
+	9b 10 . 1
+	9b 20 . 3
+	9b 40 . 7
+	9b 80 . f
+	08    . e
+	10    . c
+	20    . 8
+	40    . 0
 	*/
 	static READ16_HANDLER( shangha3_prot_r )
 	{

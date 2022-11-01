@@ -96,7 +96,7 @@ public class fuukifg2
 	
 		/* The game does not initialise the palette at startup. It should
 		   be totally black */
-		for (pen = 0; pen < Machine->drv->total_colors; pen++)
+		for (pen = 0; pen < Machine.drv.total_colors; pen++)
 			palette_set_color(pen,0,0,0);
 	} };
 	
@@ -122,7 +122,7 @@ public class fuukifg2
 		tilemap_set_transparent_pen(tilemap_2,0x0f);	// 4 bits
 		tilemap_set_transparent_pen(tilemap_3,0x0f);	// 4 bits
 	
-		Machine->gfx[2]->color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
+		Machine.gfx[2].color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
 	
 		return 0;
 	} };
@@ -159,8 +159,8 @@ public class fuukifg2
 	{
 		int offs;
 	
-		int max_x		=	Machine->visible_area.max_x+1;
-		int max_y		=	Machine->visible_area.max_y+1;
+		int max_x		=	Machine.visible_area.max_x+1;
+		int max_y		=	Machine.visible_area.max_y+1;
 	
 		/* Draw them backwards, for pdrawgfx */
 		for ( offs = (spriteram_size-8)/2; offs >=0; offs -= 8/2 )
@@ -212,7 +212,7 @@ public class fuukifg2
 				for (x = xstart; x != xend; x += xinc)
 				{
 					if (xzoom == (16*8) && yzoom == (16*8))
-						pdrawgfx(		bitmap,Machine->gfx[0],
+						pdrawgfx(		bitmap,Machine.gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -220,7 +220,7 @@ public class fuukifg2
 										cliprect,TRANSPARENCY_PEN,15,
 										pri_mask	);
 					else
-						pdrawgfxzoom(	bitmap,Machine->gfx[0],
+						pdrawgfxzoom(	bitmap,Machine.gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -240,7 +240,7 @@ public class fuukifg2
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 		dt[0].x = sx;		dt[0].y = sy;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -361,7 +361,7 @@ public class fuukifg2
 		fuuki16_draw_layer(bitmap,cliprect, tm_front,  0, 4);
 	
 		// don't do the rasters on the sprites . its very slow and the hw might not anyway.
-		if (cliprect->max_y == Machine->visible_area.max_y)
-			fuuki16_draw_sprites(bitmap,&Machine->visible_area);
+		if (cliprect.max_y == Machine.visible_area.max_y)
+			fuuki16_draw_sprites(bitmap,&Machine.visible_area);
 	} };
 }

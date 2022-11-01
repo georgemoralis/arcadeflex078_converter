@@ -53,7 +53,7 @@ public class brkthru
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -68,10 +68,10 @@ public class brkthru
 			bit2 = (color_prom[0] >> 6) & 0x01;
 			bit3 = (color_prom[0] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -189,7 +189,7 @@ public class brkthru
 		int n;
 	
 		for( n=0; n<4; n++ ){
-			drawgfx( bitmap, Machine->uifont,
+			drawgfx( bitmap, Machine.uifont,
 				"0123456789abcdef"[(data>>(12-4*n))&0xf],
 				0,
 				1,0,
@@ -244,50 +244,50 @@ public class brkthru
 	
 				if (spriteram.read(offs)& 0x10)	/* double height */
 				{
-					drawgfx(bitmap,Machine->gfx[9],
+					drawgfx(bitmap,Machine.gfx[9],
 							code & ~1,
 							color,
 							flipscreen,flipscreen,
 							sx,flipscreen? sy + 16 : sy - 16,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[9],
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[9],
 							code | 1,
 							color,
 							flipscreen,flipscreen,
 							sx,sy,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					/* redraw with wraparound */
-					drawgfx(bitmap,Machine->gfx[9],
+					drawgfx(bitmap,Machine.gfx[9],
 							code & ~1,
 							color,
 							flipscreen,flipscreen,
 							sx,(flipscreen? sy + 16 : sy - 16) + 256,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[9],
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[9],
 							code | 1,
 							color,
 							flipscreen,flipscreen,
 							sx,sy + 256,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				}
 				else
 				{
-					drawgfx(bitmap,Machine->gfx[9],
+					drawgfx(bitmap,Machine.gfx[9],
 							code,
 							color,
 							flipscreen,flipscreen,
 							sx,sy,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					/* redraw with wraparound */
-					drawgfx(bitmap,Machine->gfx[9],
+					drawgfx(bitmap,Machine.gfx[9],
 							code,
 							color,
 							flipscreen,flipscreen,
 							sx,sy + 256,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				}
 				}

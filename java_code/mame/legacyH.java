@@ -234,9 +234,9 @@ static struct ver_table ver_567_table_joystick[] = {
 static int code_table_ver_567_keyboard(int v) {
 	struct ver_table* i = ver_567_table_keyboard;
 
-	while (i->pre!=-1 || i->post!=-1) {
-		if (i->pre == v)
-			return i->post;
+	while (i.pre!=-1 || i.post!=-1) {
+		if (i.pre == v)
+			return i.post;
 		++i;
 	}
 
@@ -250,9 +250,9 @@ static int code_table_ver_567_keyboard(int v) {
 static int code_table_ver_567_joystick(int v) {
 	struct ver_table* i = ver_567_table_joystick;
 
-	while (i->pre!=-1 || i->post!=-1) {
-		if (i->pre == v)
-			return i->post;
+	while (i.pre!=-1 || i.post!=-1) {
+		if (i.pre == v)
+			return i.post;
 		++i;
 	}
 
@@ -374,17 +374,17 @@ static int input_port_read_ver_5(mame_file *f, struct InputPort *in)
 	UINT16 w;
 	if (readint(f,&i) != 0)
 		return -1;
-	in->type = i;
+	in.type = i;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->mask = w;
+	in.mask = w;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->default_value = w;
+	in.default_value = w;
 
-	if (seq_read_ver_5(f,&in->seq) != 0)
+	if (seq_read_ver_5(f,&in.seq) != 0)
 		return -1;
 	return 0;
 }
@@ -395,17 +395,17 @@ static int input_port_read_ver_6(mame_file *f, struct InputPort *in)
 	UINT16 w;
 	if (readint(f,&i) != 0)
 		return -1;
-	in->type = i;
+	in.type = i;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->mask = w;
+	in.mask = w;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->default_value = w;
+	in.default_value = w;
 
-	if (seq_read_ver_6(f,&in->seq) != 0)
+	if (seq_read_ver_6(f,&in.seq) != 0)
 		return -1;
 	return 0;
 }
@@ -416,17 +416,17 @@ static int input_port_read_ver_7(mame_file *f, struct InputPort *in)
 	UINT16 w;
 	if (readint(f,&i) != 0)
 		return -1;
-	in->type = i;
+	in.type = i;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->mask = w;
+	in.mask = w;
 
 	if (readword(f,&w) != 0)
 		return -1;
-	in->default_value = w;
+	in.default_value = w;
 
-	if (seq_read_ver_7(f,&in->seq) != 0)
+	if (seq_read_ver_7(f,&in.seq) != 0)
 		return -1;
 	return 0;
 }

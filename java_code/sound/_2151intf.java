@@ -35,7 +35,7 @@ public class _2151intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf->irqhandler[n]) intf->irqhandler[n](irq);
+		if(intf.irqhandler[n]) intf.irqhandler[n](irq);
 	}
 	
 	static void timer_callback_2151(int param)
@@ -72,14 +72,14 @@ public class _2151intf
 	static int my_YM2151_sh_start(const struct MachineSound *msound,int mode)
 	{
 		int i,j;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 		char buf[YM2151_NUMBUF][40];
 		const char *name[YM2151_NUMBUF];
 		int mixed_vol,vol[YM2151_NUMBUF];
 	
 		if( rate == 0 ) rate = 1000;	/* kludge to prevent nasty crashes */
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
 		if (mode != 0) FMMode = CHIP_YM2151_ALT;
 		else       FMMode = CHIP_YM2151_DAC;
@@ -89,9 +89,9 @@ public class _2151intf
 	#if (HAS_YM2151)
 		case CHIP_YM2151_DAC:	/* Tatsuyuki's */
 			/* stream system initialize */
-			for (i = 0;i < intf->num;i++)
+			for (i = 0;i < intf.num;i++)
 			{
-				mixed_vol = intf->volume[i];
+				mixed_vol = intf.volume[i];
 				/* stream setup */
 				for (j = 0 ; j < YM2151_NUMBUF ; j++)
 				{
@@ -104,16 +104,16 @@ public class _2151intf
 					name,vol,rate,i,OPMUpdateOne);
 			}
 			/* Set Timer handler */
-			for (i = 0; i < intf->num; i++)
+			for (i = 0; i < intf.num; i++)
 			{
 				Timer[i][0] = timer_alloc(timer_callback_2151);
 				Timer[i][1] = timer_alloc(timer_callback_2151);
 			}
-			if (OPMInit(intf->num,intf->baseclock,Machine->sample_rate,TimerHandler,IRQHandler) == 0)
+			if (OPMInit(intf.num,intf.baseclock,Machine.sample_rate,TimerHandler,IRQHandler) == 0)
 			{
 				/* set port handler */
-				for (i = 0; i < intf->num; i++)
-					OPMSetPortHander(i,intf->portwritehandler[i]);
+				for (i = 0; i < intf.num; i++)
+					OPMSetPortHander(i,intf.portwritehandler[i]);
 				return 0;
 			}
 			/* error */
@@ -123,13 +123,13 @@ public class _2151intf
 		case CHIP_YM2151_ALT:	/* Jarek's */
 	
 			if (options.use_filter)
-				rate = intf->baseclock/64;
+				rate = intf.baseclock/64;
 	
 			/* stream system initialize */
-			for (i = 0;i < intf->num;i++)
+			for (i = 0;i < intf.num;i++)
 			{
 				/* stream setup */
-				mixed_vol = intf->volume[i];
+				mixed_vol = intf.volume[i];
 				for (j = 0 ; j < YM2151_NUMBUF ; j++)
 				{
 					name[j]=buf[j];
@@ -141,12 +141,12 @@ public class _2151intf
 					name,vol,rate,i,YM2151UpdateOne);
 			}
 	
-			if (YM2151Init(intf->num,intf->baseclock,rate) == 0)
+			if (YM2151Init(intf.num,intf.baseclock,rate) == 0)
 			{
-				for (i = 0; i < intf->num; i++)
+				for (i = 0; i < intf.num; i++)
 				{
-					YM2151SetIrqHandler(i,intf->irqhandler[i]);
-					YM2151SetPortWriteHandler(i,intf->portwritehandler[i]);
+					YM2151SetIrqHandler(i,intf.irqhandler[i]);
+					YM2151SetPortWriteHandler(i,intf.portwritehandler[i]);
 				}
 				return 0;
 			}
@@ -190,7 +190,7 @@ public class _2151intf
 	{
 		int i;
 	
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		switch(FMMode)
 		{
 	#if (HAS_YM2151)

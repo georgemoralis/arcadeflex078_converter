@@ -44,7 +44,7 @@ public class toratora
 	
 			for (i = 0; i < 8; i++)
 			{
-				plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? 1 : 0]);
+				plot_pixel(tmpbitmap, x, y, Machine.pens[(data & 0x80) ? 1 : 0]);
 	
 				x++;
 				data <<= 1;

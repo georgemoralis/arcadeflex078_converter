@@ -42,7 +42,7 @@ public class gundealr
 	
 	static UINT32 gundealr_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x0f) + ((col & 0x3f) << 4) + ((row & 0x10) << 6);
 	}
 	

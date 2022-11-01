@@ -94,7 +94,7 @@ public class snes
 		const int volume[2] = { MIXER( 50, MIXER_PAN_LEFT ), MIXER( 50, MIXER_PAN_RIGHT ) };
 	
 		/* If sound is disabled then we'd better use the SPC skipper */
-		if( Machine->sample_rate == 0 )
+		if( Machine.sample_rate == 0 )
 		{
 			spc_usefakeapu = 1;
 			return 0;
@@ -125,7 +125,7 @@ public class snes
 			snes_dsp.voice[ii].pos = 0;
 		}
 	
-		channel = stream_init_multi( 2, names, volume, Machine->sample_rate, 0, snes_sh_update );
+		channel = stream_init_multi( 2, names, volume, Machine.sample_rate, 0, snes_sh_update );
 	
 		/* Initialize the timers */
 		timers[0].timer = timer_alloc( snes_spc_timer );

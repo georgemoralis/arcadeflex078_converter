@@ -217,7 +217,7 @@ public class thedeep
 	
 				for (y = 0; y < ny; y++)
 				{
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code + (flipy ? (ny - y - 1) :  y),
 							color,
 							flipx,flipy,

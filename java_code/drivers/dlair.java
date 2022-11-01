@@ -68,52 +68,52 @@ public class dlair
 				sx = (offs/2) % 32;
 				sy = (offs/2) / 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs+1),
 						0,
 						0,0,
 						8*sx,16*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	if ((led0 & 128) != 0)
 	{
-	if ((led0 & 1) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		8,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 2) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		16,8,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 4) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		16,24,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 8) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		8,32,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 16) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		0,24,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 32) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		0,8,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led0 & 64) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		8,16,&Machine->visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 1) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		8,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 2) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		16,8,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 4) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		16,24,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 8) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		8,32,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 16) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		0,24,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 32) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		0,8,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led0 & 64) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		8,16,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	if ((led1 & 128) != 0)
 	{
-	if ((led1 & 1) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+8,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 2) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+16,8,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 4) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+16,24,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 8) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+8,32,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 16) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+0,24,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 32) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+0,8,&Machine->visible_area,TRANSPARENCY_NONE,0);
-	if ((led1 & 64) == 0) drawgfx(bitmap,Machine->uifont,'x',0,0,0,
-		32+8,16,&Machine->visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 1) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+8,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 2) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+16,8,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 4) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+16,24,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 8) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+8,32,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 16) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+0,24,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 32) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+0,8,&Machine.visible_area,TRANSPARENCY_NONE,0);
+	if ((led1 & 64) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
+		32+8,16,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	} };
 	
@@ -140,7 +140,7 @@ public class dlair
 	MACHINE_INIT( dlair )
 	{
 	   /* initialize the CTC */
-	   ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
+	   ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
 	   z80ctc_init(&ctc_intf);
 	}
 	

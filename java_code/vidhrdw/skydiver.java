@@ -192,7 +192,7 @@ public class skydiver
 				sx -= 8;
 			}
 	
-			drawgfxzoom(bitmap,Machine->gfx[1],
+			drawgfxzoom(bitmap,Machine.gfx[1],
 				charcode, color,
 				xflip,yflip,sx,sy,
 				cliprect,TRANSPARENCY_PEN,0,

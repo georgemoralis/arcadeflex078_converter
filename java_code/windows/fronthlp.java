@@ -202,7 +202,7 @@ public class fronthlp
 					{
 						if (*found != 0)
 							printf("             ");
-						printf("= %s%-12s  %s\n",baddump ? "(BAD) " : "",ROM_GETNAME(rom),driver->description);
+						printf("= %s%-12s  %s\n",baddump ? "(BAD) " : "",ROM_GETNAME(rom),driver.description);
 					}
 					(*found)++;
 				}
@@ -338,13 +338,13 @@ public class fronthlp
 	
 		while ((ent = readzip(zip))) {
 			/* Skip empty file and directory */
-			if (ent->uncompressed_size!=0) {
-				char* buf = (char*)malloc(strlen(zipname)+1+strlen(ent->name)+1);
+			if (ent.uncompressed_size!=0) {
+				char* buf = (char*)malloc(strlen(zipname)+1+strlen(ent.name)+1);
 				char hash[HASH_BUF_SIZE];
 				UINT8 crcs[4];
 	
-	//			sprintf(buf,"%s/%s",zipname,ent->name);
-				sprintf(buf,"%-12s",ent->name);
+	//			sprintf(buf,"%s/%s",zipname,ent.name);
+				sprintf(buf,"%-12s",ent.name);
 	
 				/* Decompress the ROM from the ZIP, and compute all the needed
 				   checksums. Since MAME for now carries informations only for CRC and
@@ -354,20 +354,20 @@ public class fronthlp
 	
 				if (!options.crc_only)
 				{
-					UINT8* data =  (UINT8*)malloc(ent->uncompressed_size);
+					UINT8* data =  (UINT8*)malloc(ent.uncompressed_size);
 					readuncompresszip(zip, ent, data);
-					hash_compute(hash, data, ent->uncompressed_size, HASH_SHA1);
+					hash_compute(hash, data, ent.uncompressed_size, HASH_SHA1);
 					free(data);
 				}
 	
-				crcs[0] = (UINT8)(ent->crc32 >> 24);
-				crcs[1] = (UINT8)(ent->crc32 >> 16);
-				crcs[2] = (UINT8)(ent->crc32 >> 8);
-				crcs[3] = (UINT8)(ent->crc32 >> 0);
+				crcs[0] = (UINT8)(ent.crc32 >> 24);
+				crcs[1] = (UINT8)(ent.crc32 >> 16);
+				crcs[2] = (UINT8)(ent.crc32 >> 8);
+				crcs[3] = (UINT8)(ent.crc32 >> 0);
 				hash_data_insert_binary_checksum(hash, HASH_CRC, crcs);
 	
 				/* Try to identify the ROM */
-				identify_rom(buf, hash, ent->uncompressed_size);
+				identify_rom(buf, hash, ent.uncompressed_size);
 	
 				free(buf);
 			}
@@ -391,9 +391,9 @@ public class fronthlp
 		ent = readdir(dir);
 		while (ent) {
 			/* Skip special files */
-			if (ent->d_name[0]!='.') {
-				char* buf = (char*)malloc(strlen(dirname)+1+strlen(ent->d_name)+1);
-				sprintf(buf,"%s/%s",dirname,ent->d_name);
+			if (ent.d_name[0]!='.') {
+				char* buf = (char*)malloc(strlen(dirname)+1+strlen(ent.d_name)+1);
+				sprintf(buf,"%s/%s",dirname,ent.d_name);
 				romident(buf,0);
 				free(buf);
 			}
@@ -436,8 +436,8 @@ public class fronthlp
 		struct GameDriver *drv1 = *(struct GameDriver **)elem1;
 		struct GameDriver *drv2 = *(struct GameDriver **)elem2;
 		char name1[200],name2[200];
-		namecopy(name1,drv1->description);
-		namecopy(name2,drv2->description);
+		namecopy(name1,drv1.description);
+		namecopy(name2,drv2.description);
 		return strcmp(name1,name2);
 	}
 	
@@ -446,7 +446,7 @@ public class fronthlp
 	{
 		struct GameDriver *drv1 = *(struct GameDriver **)elem1;
 		struct GameDriver *drv2 = *(struct GameDriver **)elem2;
-		return strcmp(drv1->name, drv2->name);
+		return strcmp(drv1.name, drv2.name);
 	}
 	
 	
@@ -534,11 +534,11 @@ public class fronthlp
 				printf("\nMESS currently supports the following systems:\n\n");
 				#endif
 				for (i = j = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->name))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].name))
 					{
-						printf("%-8s",drivers[i]->name);
+						printf("%-8s",drivers[i].name);
 						j++;
 						if (!(j % 8)) printf("\n");
 						else printf("  ");
@@ -557,22 +557,22 @@ public class fronthlp
 			case LIST_FULL: /* games list with descriptions */
 				printf("Name:     Description:\n");
 				for (i = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->name))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].name))
 					{
 						char name[200];
 	
-						printf("%-10s",drivers[i]->name);
+						printf("%-10s",drivers[i].name);
 	
-						namecopy(name,drivers[i]->description);
+						namecopy(name,drivers[i].description);
 						printf("\"%s",name);
 	
 						/* print the additional description only if we are listing clones */
 						if (listclones != 0)
 						{
-							if (strchr(drivers[i]->description,'('))
-								printf(" %s",strchr(drivers[i]->description,'('));
+							if (strchr(drivers[i].description,'('))
+								printf(" %s",strchr(drivers[i].description,'('));
 						}
 						printf("\"\n");
 					}
@@ -582,26 +582,26 @@ public class fronthlp
 			case LIST_SAMDIR: /* games list with samples directories */
 				printf("Name:     Samples dir:\n");
 				for (i = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->name))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].name))
 					{
-						expand_machine_driver(drivers[i]->drv, &drv);
+						expand_machine_driver(drivers[i].drv, &drv);
 	#if (HAS_SAMPLES || HAS_VLM5030)
 						for( j = 0; drv.sound[j].sound_type && j < MAX_SOUND; j++ )
 						{
 							const char **samplenames = NULL;
 	#if (HAS_SAMPLES)
 							if( drv.sound[j].sound_type == SOUND_SAMPLES )
-								samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface)->samplenames;
+								samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface).samplenames;
 	#endif
 							if (samplenames != 0 && samplenames[0] != 0)
 							{
-								printf("%-10s",drivers[i]->name);
+								printf("%-10s",drivers[i].name);
 								if (samplenames[0][0] == '*')
 									printf("%s\n",samplenames[0]+1);
 								else
-									printf("%s\n",drivers[i]->name);
+									printf("%s\n",drivers[i].name);
 							}
 						}
 	#endif
@@ -612,7 +612,7 @@ public class fronthlp
 			case LIST_ROMS: /* game roms list or */
 			case LIST_SAMPLES: /* game samples list */
 				j = 0;
-				while (drivers[j] && (stricmp(gamename,drivers[j]->name) != 0))
+				while (drivers[j] && (stricmp(gamename,drivers[j].name) != 0))
 					j++;
 				if (drivers[j] == 0)
 				{
@@ -621,18 +621,18 @@ public class fronthlp
 				}
 				gamedrv = drivers[j];
 				if (list == LIST_ROMS)
-					printromlist(gamedrv->rom,gamename);
+					printromlist(gamedrv.rom,gamename);
 				else
 				{
 	#if (HAS_SAMPLES || HAS_VLM5030)
 					int k;
-					expand_machine_driver(gamedrv->drv, &drv);
+					expand_machine_driver(gamedrv.drv, &drv);
 					for( k = 0; drv.sound[k].sound_type && k < MAX_SOUND; k++ )
 					{
 						const char **samplenames = NULL;
 	#if (HAS_SAMPLES)
 						if( drv.sound[k].sound_type == SOUND_SAMPLES )
-								samplenames = ((struct Samplesinterface *)drv.sound[k].sound_interface)->samplenames;
+								samplenames = ((struct Samplesinterface *)drv.sound[k].sound_interface).samplenames;
 	#endif
 						if (samplenames != 0 && samplenames[0] != 0)
 						{
@@ -669,9 +669,9 @@ public class fronthlp
 								printf ("--------  --------  -----------\n");
 							}
 							printf ("%-10s%-10s%s\n",
-									drivers[i]->name,
-									(drivers[i]->clone_of) ? drivers[i]->clone_of->name : "",
-									drivers[i]->description);
+									drivers[i].name,
+									(drivers[i].clone_of) ? drivers[i].clone_of.name : "",
+									drivers[i].description);
 						}
 						fprintf(stderr,"%d%%\r",100 * (i+1) / total);
 					}
@@ -695,9 +695,9 @@ public class fronthlp
 				/* Let's cycle through the drivers */
 	
 				for (i = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->name))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].name))
 					{
 						/* Dummy structs to fetch the information from */
 	
@@ -705,20 +705,20 @@ public class fronthlp
 						const struct MachineSound *x_sound;
 						struct InternalMachineDriver x_driver;
 	
-						expand_machine_driver(drivers[i]->drv, &x_driver);
+						expand_machine_driver(drivers[i].drv, &x_driver);
 						x_cpu = x_driver.cpu;
 						x_sound = x_driver.sound;
 	
 						/* First, the rom name */
 	
-						printf("%-8s ",drivers[i]->name);
+						printf("%-8s ",drivers[i].name);
 	
 						#ifndef MESS
 						/* source file (skip the leading "src/drivers/" */
-						printf("%-10s ",&drivers[i]->source_file[12]);
+						printf("%-10s ",&drivers[i].source_file[12]);
 						#else
 						/* source file (skip the leading "src/mess/systems/" */
-						printf("%-10s ",&drivers[i]->source_file[17]);
+						printf("%-10s ",&drivers[i].source_file[17]);
 						#endif
 	
 						/* Then, cpus */
@@ -746,7 +746,7 @@ public class fronthlp
 	
 						/* Lastly, the name of the game and a \newline */
 	
-						printf("%s\n",drivers[i]->description);
+						printf("%s\n",drivers[i].description);
 					}
 				return 0;
 				break;
@@ -810,41 +810,41 @@ public class fronthlp
 				printf("+----------------------------------+-------+-------+-------+-------+----------+\n");
 	
 				for (i = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->name))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].name))
 					{
 						char name_ref[200];
 	
-						namecopy(name_ref,drivers[i]->description);
+						namecopy(name_ref,drivers[i].description);
 	
 						strcat(name_ref," ");
 	
 						/* print the additional description only if we are listing clones */
 						if (listclones != 0)
 						{
-							if (strchr(drivers[i]->description,'('))
-								strcat(name_ref,strchr(drivers[i]->description,'('));
+							if (strchr(drivers[i].description,'('))
+								strcat(name_ref,strchr(drivers[i].description,'('));
 						}
 	
 						printf("| %-33.33s",name_ref);
 	
-						if (drivers[i]->flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION))
+						if (drivers[i].flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION))
 						{
 							const struct GameDriver *maindrv;
 							int foundworking;
 	
-							if (drivers[i]->clone_of && !(drivers[i]->clone_of->flags & NOT_A_DRIVER))
-								maindrv = drivers[i]->clone_of;
+							if (drivers[i].clone_of && !(drivers[i].clone_of.flags & NOT_A_DRIVER))
+								maindrv = drivers[i].clone_of;
 							else maindrv = drivers[i];
 	
 							foundworking = 0;
 							j = 0;
 							while (drivers[j])
 							{
-								if (drivers[j] == maindrv || drivers[j]->clone_of == maindrv)
+								if (drivers[j] == maindrv || drivers[j].clone_of == maindrv)
 								{
-									if ((drivers[j]->flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)) == 0)
+									if ((drivers[j].flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)) == 0)
 									{
 										foundworking = 1;
 										break;
@@ -861,31 +861,31 @@ public class fronthlp
 						else
 							printf("|  Yes  ");
 	
-						if (drivers[i]->flags & GAME_WRONG_COLORS)
+						if (drivers[i].flags & GAME_WRONG_COLORS)
 							printf("|   No  ");
-						else if (drivers[i]->flags & GAME_IMPERFECT_COLORS)
+						else if (drivers[i].flags & GAME_IMPERFECT_COLORS)
 							printf("| Close ");
 						else
 							printf("|  Yes  ");
 	
 						{
 							const char **samplenames = NULL;
-							expand_machine_driver(drivers[i]->drv, &drv);
+							expand_machine_driver(drivers[i].drv, &drv);
 	#if (HAS_SAMPLES || HAS_VLM5030)
 							for (j = 0;drv.sound[j].sound_type && j < MAX_SOUND; j++)
 							{
 	#if (HAS_SAMPLES)
 								if (drv.sound[j].sound_type == SOUND_SAMPLES)
 								{
-									samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface)->samplenames;
+									samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface).samplenames;
 									break;
 								}
 	#endif
 							}
 	#endif
-							if (drivers[i]->flags & GAME_NO_SOUND)
+							if (drivers[i].flags & GAME_NO_SOUND)
 								printf("|   No  ");
-							else if (drivers[i]->flags & GAME_IMPERFECT_SOUND)
+							else if (drivers[i].flags & GAME_IMPERFECT_SOUND)
 							{
 								if (samplenames != 0)
 									printf("|Part(2)");
@@ -901,12 +901,12 @@ public class fronthlp
 							}
 						}
 	
-						if (drivers[i]->flags & GAME_NO_COCKTAIL)
+						if (drivers[i].flags & GAME_NO_COCKTAIL)
 							printf("|   No  ");
 						else
 							printf("|  Yes  ");
 	
-						printf("| %-8s |\n",drivers[i]->name);
+						printf("| %-8s |\n",drivers[i].name);
 					}
 	
 				printf("+----------------------------------+-------+-------+-------+-------+----------+\n\n");
@@ -919,22 +919,22 @@ public class fronthlp
 	
 			case LIST_GAMES: /* list games, production year, manufacturer */
 				for (i = 0; drivers[i]; i++)
-					if ((listclones || drivers[i]->clone_of == 0
-							|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)
-							) && !strwildcmp(gamename, drivers[i]->description))
+					if ((listclones || drivers[i].clone_of == 0
+							|| (drivers[i].clone_of.flags & NOT_A_DRIVER)
+							) && !strwildcmp(gamename, drivers[i].description))
 					{
 						char name[200];
 	
-						printf("%-5s%-36s ",drivers[i]->year,drivers[i]->manufacturer);
+						printf("%-5s%-36s ",drivers[i].year,drivers[i].manufacturer);
 	
-						namecopy(name,drivers[i]->description);
+						namecopy(name,drivers[i].description);
 						printf("%s",name);
 	
 						/* print the additional description only if we are listing clones */
 						if (listclones != 0)
 						{
-							if (strchr(drivers[i]->description,'('))
-								printf(" %s",strchr(drivers[i]->description,'('));
+							if (strchr(drivers[i].description,'('))
+								printf(" %s",strchr(drivers[i].description,'('));
 						}
 						printf("\n");
 					}
@@ -944,74 +944,74 @@ public class fronthlp
 			case LIST_CLONES: /* list clones */
 				printf("Name:    Clone of:\n");
 				for (i = 0; drivers[i]; i++)
-					if (drivers[i]->clone_of && !(drivers[i]->clone_of->flags & NOT_A_DRIVER) &&
-							(!strwildcmp(gamename,drivers[i]->name)
-									|| !strwildcmp(gamename,drivers[i]->clone_of->name)))
-						printf("%-8s %-8s\n",drivers[i]->name,drivers[i]->clone_of->name);
+					if (drivers[i].clone_of && !(drivers[i].clone_of.flags & NOT_A_DRIVER) &&
+							(!strwildcmp(gamename,drivers[i].name)
+									|| !strwildcmp(gamename,drivers[i].clone_of.name)))
+						printf("%-8s %-8s\n",drivers[i].name,drivers[i].clone_of.name);
 				return 0;
 				break;
 	
 			case LIST_WRONGORIENTATION: /* list drivers which incorrectly use the orientation and visible area fields */
 				for (i = 0; drivers[i]; i++)
 				{
-					expand_machine_driver(drivers[i]->drv, &drv);
+					expand_machine_driver(drivers[i].drv, &drv);
 					if ((drv.video_attributes & VIDEO_TYPE_VECTOR) == 0 &&
-							(drivers[i]->clone_of == 0
-									|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)) &&
+							(drivers[i].clone_of == 0
+									|| (drivers[i].clone_of.flags & NOT_A_DRIVER)) &&
 							drv.default_visible_area.max_x - drv.default_visible_area.min_x + 1 <=
 							drv.default_visible_area.max_y - drv.default_visible_area.min_y + 1)
 					{
-						if (strcmp(drivers[i]->name,"crater") &&
-							strcmp(drivers[i]->name,"mpatrol") &&
-							strcmp(drivers[i]->name,"troangel") &&
-							strcmp(drivers[i]->name,"travrusa") &&
-							strcmp(drivers[i]->name,"kungfum") &&
-							strcmp(drivers[i]->name,"battroad") &&
-							strcmp(drivers[i]->name,"vigilant") &&
-							strcmp(drivers[i]->name,"sonson") &&
-							strcmp(drivers[i]->name,"brkthru") &&
-							strcmp(drivers[i]->name,"darwin") &&
-							strcmp(drivers[i]->name,"exprraid") &&
-							strcmp(drivers[i]->name,"sidetrac") &&
-							strcmp(drivers[i]->name,"targ") &&
-							strcmp(drivers[i]->name,"spectar") &&
-							strcmp(drivers[i]->name,"venture") &&
-							strcmp(drivers[i]->name,"mtrap") &&
-							strcmp(drivers[i]->name,"pepper2") &&
-							strcmp(drivers[i]->name,"hardhat") &&
-							strcmp(drivers[i]->name,"fax") &&
-							strcmp(drivers[i]->name,"circus") &&
-							strcmp(drivers[i]->name,"robotbwl") &&
-							strcmp(drivers[i]->name,"crash") &&
-							strcmp(drivers[i]->name,"ripcord") &&
-							strcmp(drivers[i]->name,"starfire") &&
-							strcmp(drivers[i]->name,"fireone") &&
-							strcmp(drivers[i]->name,"renegade") &&
-							strcmp(drivers[i]->name,"battlane") &&
-							strcmp(drivers[i]->name,"megatack") &&
-							strcmp(drivers[i]->name,"killcom") &&
-							strcmp(drivers[i]->name,"challeng") &&
-							strcmp(drivers[i]->name,"kaos") &&
-							strcmp(drivers[i]->name,"formatz") &&
-							strcmp(drivers[i]->name,"bankp") &&
-							strcmp(drivers[i]->name,"liberatr") &&
-							strcmp(drivers[i]->name,"toki") &&
-							strcmp(drivers[i]->name,"stactics") &&
-							strcmp(drivers[i]->name,"sprint1") &&
-							strcmp(drivers[i]->name,"sprint2") &&
-							strcmp(drivers[i]->name,"nitedrvr") &&
-							strcmp(drivers[i]->name,"punchout") &&
-							strcmp(drivers[i]->name,"spnchout") &&
-							strcmp(drivers[i]->name,"armwrest") &&
-							strcmp(drivers[i]->name,"route16") &&
-							strcmp(drivers[i]->name,"stratvox") &&
-							strcmp(drivers[i]->name,"irobot") &&
-							strcmp(drivers[i]->name,"leprechn") &&
-							strcmp(drivers[i]->name,"starcrus") &&
-							strcmp(drivers[i]->name,"astrof") &&
-							strcmp(drivers[i]->name,"tomahawk") &&
+						if (strcmp(drivers[i].name,"crater") &&
+							strcmp(drivers[i].name,"mpatrol") &&
+							strcmp(drivers[i].name,"troangel") &&
+							strcmp(drivers[i].name,"travrusa") &&
+							strcmp(drivers[i].name,"kungfum") &&
+							strcmp(drivers[i].name,"battroad") &&
+							strcmp(drivers[i].name,"vigilant") &&
+							strcmp(drivers[i].name,"sonson") &&
+							strcmp(drivers[i].name,"brkthru") &&
+							strcmp(drivers[i].name,"darwin") &&
+							strcmp(drivers[i].name,"exprraid") &&
+							strcmp(drivers[i].name,"sidetrac") &&
+							strcmp(drivers[i].name,"targ") &&
+							strcmp(drivers[i].name,"spectar") &&
+							strcmp(drivers[i].name,"venture") &&
+							strcmp(drivers[i].name,"mtrap") &&
+							strcmp(drivers[i].name,"pepper2") &&
+							strcmp(drivers[i].name,"hardhat") &&
+							strcmp(drivers[i].name,"fax") &&
+							strcmp(drivers[i].name,"circus") &&
+							strcmp(drivers[i].name,"robotbwl") &&
+							strcmp(drivers[i].name,"crash") &&
+							strcmp(drivers[i].name,"ripcord") &&
+							strcmp(drivers[i].name,"starfire") &&
+							strcmp(drivers[i].name,"fireone") &&
+							strcmp(drivers[i].name,"renegade") &&
+							strcmp(drivers[i].name,"battlane") &&
+							strcmp(drivers[i].name,"megatack") &&
+							strcmp(drivers[i].name,"killcom") &&
+							strcmp(drivers[i].name,"challeng") &&
+							strcmp(drivers[i].name,"kaos") &&
+							strcmp(drivers[i].name,"formatz") &&
+							strcmp(drivers[i].name,"bankp") &&
+							strcmp(drivers[i].name,"liberatr") &&
+							strcmp(drivers[i].name,"toki") &&
+							strcmp(drivers[i].name,"stactics") &&
+							strcmp(drivers[i].name,"sprint1") &&
+							strcmp(drivers[i].name,"sprint2") &&
+							strcmp(drivers[i].name,"nitedrvr") &&
+							strcmp(drivers[i].name,"punchout") &&
+							strcmp(drivers[i].name,"spnchout") &&
+							strcmp(drivers[i].name,"armwrest") &&
+							strcmp(drivers[i].name,"route16") &&
+							strcmp(drivers[i].name,"stratvox") &&
+							strcmp(drivers[i].name,"irobot") &&
+							strcmp(drivers[i].name,"leprechn") &&
+							strcmp(drivers[i].name,"starcrus") &&
+							strcmp(drivers[i].name,"astrof") &&
+							strcmp(drivers[i].name,"tomahawk") &&
 							1)
-							printf("%s %dx%d\n",drivers[i]->name,
+							printf("%s %dx%d\n",drivers[i].name,
 									drv.default_visible_area.max_x - drv.default_visible_area.min_x + 1,
 									drv.default_visible_area.max_y - drv.default_visible_area.min_y + 1);
 					}
@@ -1022,15 +1022,15 @@ public class fronthlp
 			case LIST_WRONGFPS: /* list drivers with too high frame rate */
 				for (i = 0; drivers[i]; i++)
 				{
-					expand_machine_driver(drivers[i]->drv, &drv);
+					expand_machine_driver(drivers[i].drv, &drv);
 					if ((drv.video_attributes & VIDEO_TYPE_VECTOR) == 0 &&
-							(drivers[i]->clone_of == 0
-									|| (drivers[i]->clone_of->flags & NOT_A_DRIVER)) &&
+							(drivers[i].clone_of == 0
+									|| (drivers[i].clone_of.flags & NOT_A_DRIVER)) &&
 							drv.frames_per_second > 57 &&
 							drv.default_visible_area.max_y - drv.default_visible_area.min_y + 1 > 244 &&
 							drv.default_visible_area.max_y - drv.default_visible_area.min_y + 1 <= 256)
 					{
-						printf("%s %dx%d %fHz\n",drivers[i]->name,
+						printf("%s %dx%d %fHz\n",drivers[i].name,
 								drv.default_visible_area.max_x - drv.default_visible_area.min_x + 1,
 								drv.default_visible_area.max_y - drv.default_visible_area.min_y + 1,
 								drv.frames_per_second);
@@ -1041,8 +1041,8 @@ public class fronthlp
 	
 			case LIST_SOURCEFILE:
 				for (i = 0; drivers[i]; i++)
-					if (!strwildcmp(gamename,drivers[i]->name))
-						printf("%-8s %s\n",drivers[i]->name,drivers[i]->source_file);
+					if (!strwildcmp(gamename,drivers[i].name))
+						printf("%-8s %s\n",drivers[i].name,drivers[i].source_file);
 				return 0;
 				break;
 	
@@ -1056,18 +1056,18 @@ public class fronthlp
 	
 					for (i = 0; drivers[i]; i++)
 					{
-						if (drivers[i]->clone_of == 0 ||
-								(drivers[i]->clone_of->flags & NOT_A_DRIVER))
+						if (drivers[i].clone_of == 0 ||
+								(drivers[i].clone_of.flags & NOT_A_DRIVER))
 						{
-							const char *sf = drivers[i]->source_file;
+							const char *sf = drivers[i].source_file;
 							int total = 0;
 	
 							for (j = 0; drivers[j]; j++)
 							{
-								if (drivers[j]->clone_of == 0 ||
-										(drivers[j]->clone_of->flags & NOT_A_DRIVER))
+								if (drivers[j].clone_of == 0 ||
+										(drivers[j].clone_of.flags & NOT_A_DRIVER))
 								{
-									if (drivers[j]->source_file == sf)
+									if (drivers[j].source_file == sf)
 									{
 										if (j < i) break;
 	
@@ -1123,7 +1123,7 @@ public class fronthlp
 							char chksum[256];
 	
 							if (hash_data_extract_printable_checksum(ROM_GETHASHDATA(rom), j, chksum))
-								printf("%s %-12s %s\n",chksum,ROM_GETNAME(rom),drivers[i]->description);
+								printf("%s %-12s %s\n",chksum,ROM_GETNAME(rom),drivers[i].description);
 						}
 				}
 				return 0;
@@ -1160,11 +1160,11 @@ public class fronthlp
 	
 													hash_data_print(ROM_GETHASHDATA(rom), 0, buf);
 													printf("%s\n", buf);
-													printf("    %-12s %-8s\n", ROM_GETNAME(rom),drivers[i]->name);
+													printf("    %-12s %-8s\n", ROM_GETNAME(rom),drivers[i].name);
 	
 												}
 	
-												printf("    %-12s %-8s\n", ROM_GETNAME(rom1),drivers[j]->name);
+												printf("    %-12s %-8s\n", ROM_GETNAME(rom1),drivers[j].name);
 											}
 											}
 								}
@@ -1189,10 +1189,10 @@ public class fronthlp
 								for (j = 0; drivers[j]; j++)
 								{
 									if (j != i &&
-										drivers[j]->clone_of &&
-										(drivers[j]->clone_of->flags & NOT_A_DRIVER) == 0 &&
-										(drivers[j]->clone_of == drivers[i] ||
-										(i < j && drivers[j]->clone_of == drivers[i]->clone_of)))
+										drivers[j].clone_of &&
+										(drivers[j].clone_of.flags & NOT_A_DRIVER) == 0 &&
+										(drivers[j].clone_of == drivers[i] ||
+										(i < j && drivers[j].clone_of == drivers[i].clone_of)))
 									{
 										const struct RomModule *region1, *rom1;
 										int match = 0;
@@ -1216,10 +1216,10 @@ public class fronthlp
 														printf("%s:\n", ROM_GETNAME(rom));
 	
 														hash_data_print(ROM_GETHASHDATA(rom), functions, temp);
-														printf("  %-8s: %s\n", drivers[i]->name, temp);
+														printf("  %-8s: %s\n", drivers[i].name, temp);
 	
 														hash_data_print(ROM_GETHASHDATA(rom1), functions, temp);
-														printf("  %-8s: %s\n", drivers[j]->name, temp);
+														printf("  %-8s: %s\n", drivers[j].name, temp);
 													}
 													else
 														match = 1;
@@ -1245,8 +1245,8 @@ public class fronthlp
 	
 														hash_data_print(ROM_GETHASHDATA(rom), functions, temp);
 														printf("%s\n", temp);
-														printf("  %-12s %-8s\n", ROM_GETNAME(rom), drivers[i]->name);
-														printf("  %-12s %-8s\n", ROM_GETNAME(rom1),drivers[j]->name);
+														printf("  %-12s %-8s\n", ROM_GETNAME(rom), drivers[i].name);
+														printf("  %-12s %-8s\n", ROM_GETNAME(rom1),drivers[j].name);
 													}
 												}
 											}
@@ -1263,7 +1263,7 @@ public class fronthlp
 			case LIST_ROMSIZE: /* I used this for statistical analysis */
 				for (i = 0; drivers[i]; i++)
 				{
-					if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+					if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 					{
 						const struct RomModule *region, *rom, *chunk;
 						int romtotal = 0,romcpu = 0,romgfx = 0,romsound = 0;
@@ -1284,8 +1284,8 @@ public class fronthlp
 							}
 						}
 	
-	//					printf("%-8s\t%-5s\t%u\t%u\t%u\t%u\n",drivers[i]->name,drivers[i]->year,romtotal,romcpu,romgfx,romsound);
-						printf("%-8s\t%-5s\t%u\n",drivers[i]->name,drivers[i]->year,romtotal);
+	//					printf("%-8s\t%-5s\t%u\t%u\t%u\t%u\n",drivers[i].name,drivers[i].year,romtotal,romcpu,romgfx,romsound);
+						printf("%-8s\t%-5s\t%u\n",drivers[i].name,drivers[i].year,romtotal);
 					}
 				}
 				return 0;
@@ -1301,9 +1301,9 @@ public class fronthlp
 	
 						for (i = 0; drivers[i]; i++)
 						{
-							if (atoi(drivers[i]->year) == year)
+							if (atoi(drivers[i].year) == year)
 							{
-								if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+								if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 								{
 									const struct RomModule *region, *rom, *chunk;
 	
@@ -1343,7 +1343,7 @@ public class fronthlp
 	
 					for (i = 0; drivers[i]; i++)
 					{
-						if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+						if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 						{
 							const struct RomModule *region, *rom;
 							int romnum = 0;
@@ -1374,10 +1374,10 @@ public class fronthlp
 	
 			case LIST_PALETTESIZE: /* I used this for statistical analysis */
 				for (i = 0; drivers[i]; i++)
-					if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+					if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 					{
-						expand_machine_driver(drivers[i]->drv, &drv);
-						printf("%-8s\t%-5s\t%u\n",drivers[i]->name,drivers[i]->year,drv.total_colors);
+						expand_machine_driver(drivers[i].drv, &drv);
+						printf("%-8s\t%-5s\t%u\n",drivers[i].name,drivers[i].year,drv.total_colors);
 					}
 				return 0;
 				break;
@@ -1393,12 +1393,12 @@ public class fronthlp
 						i = 0;
 						while (drivers[i])
 						{
-							if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+							if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 							{
 								struct InternalMachineDriver x_driver;
 								const struct MachineCPU *x_cpu;
 	
-								expand_machine_driver(drivers[i]->drv, &x_driver);
+								expand_machine_driver(drivers[i].drv, &x_driver);
 								x_cpu = x_driver.cpu;
 	
 								for (j = 0;j < MAX_CPU;j++)
@@ -1447,15 +1447,15 @@ public class fronthlp
 						i = 0;
 						while (drivers[i])
 						{
-							if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+							if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 							{
 								struct InternalMachineDriver x_driver;
 								const struct MachineCPU *x_cpu;
 	
-								expand_machine_driver(drivers[i]->drv, &x_driver);
+								expand_machine_driver(drivers[i].drv, &x_driver);
 								x_cpu = x_driver.cpu;
 	
-								if (atoi(drivers[i]->year) == year)
+								if (atoi(drivers[i].year) == year)
 								{
 	//								for (j = 0;j < MAX_CPU;j++)
 	j = 0;	// count only the main cpu
@@ -1498,12 +1498,12 @@ public class fronthlp
 						i = 0;
 						while (drivers[i])
 						{
-							if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+							if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 							{
-								if (atoi(drivers[i]->year) == year)
+								if (atoi(drivers[i].year) == year)
 								{
 									games++;
-									if (drivers[i]->flags & GAME_NO_SOUND) nosound++;
+									if (drivers[i].flags & GAME_NO_SOUND) nosound++;
 								}
 							}
 	
@@ -1529,19 +1529,19 @@ public class fronthlp
 						i = 0;
 						while (drivers[i])
 						{
-							if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+							if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 							{
 								struct InternalMachineDriver x_driver;
 								const struct MachineSound *x_sound;
 	
-								expand_machine_driver(drivers[i]->drv, &x_driver);
+								expand_machine_driver(drivers[i].drv, &x_driver);
 								x_sound = x_driver.sound;
 	
 								for (j = 0;j < MAX_SOUND;j++)
 								{
 									if (x_sound[j].sound_type == type)
 									{
-										int year = atoi(drivers[i]->year);
+										int year = atoi(drivers[i].year);
 	
 										count++;
 	
@@ -1578,13 +1578,13 @@ public class fronthlp
 						i = 0;
 						while (drivers[i])
 						{
-							if (drivers[i]->clone_of == 0 || (drivers[i]->clone_of->flags & NOT_A_DRIVER))
+							if (drivers[i].clone_of == 0 || (drivers[i].clone_of.flags & NOT_A_DRIVER))
 							{
 								struct InternalMachineDriver x_driver;
 	
-								expand_machine_driver(drivers[i]->drv, &x_driver);
+								expand_machine_driver(drivers[i].drv, &x_driver);
 	
-								if (atoi(drivers[i]->year) == year)
+								if (atoi(drivers[i].year) == year)
 								{
 									games++;
 									if (x_driver.nvram_handler) nvram++;
@@ -1624,13 +1624,13 @@ public class fronthlp
 	
 			for (i = 0; drivers[i]; i++)
 			{
-				if (!strwildcmp(gamename, drivers[i]->name))
+				if (!strwildcmp(gamename, drivers[i].name))
 					total++;
 			}
 	
 			for (i = 0; drivers[i]; i++)
 			{
-				if (strwildcmp(gamename, drivers[i]->name))
+				if (strwildcmp(gamename, drivers[i].name))
 					continue;
 	
 				/* set rom and sample path correctly */
@@ -1648,21 +1648,21 @@ public class fronthlp
 	
 					if (res == INCORRECT || res == BEST_AVAILABLE || (verify & VERIFY_VERBOSE))
 					{
-						printf ("romset %s ", drivers[i]->name);
-						if (drivers[i]->clone_of && !(drivers[i]->clone_of->flags & NOT_A_DRIVER))
-							printf ("[%s] ", drivers[i]->clone_of->name);
+						printf ("romset %s ", drivers[i].name);
+						if (drivers[i].clone_of && !(drivers[i].clone_of.flags & NOT_A_DRIVER))
+							printf ("[%s] ", drivers[i].clone_of.name);
 					}
 				}
 				if ((verify & VERIFY_SAMPLES) != 0)
 				{
 					const char **samplenames = NULL;
-					expand_machine_driver(drivers[i]->drv, &drv);
+					expand_machine_driver(drivers[i].drv, &drv);
 	#if (HAS_SAMPLES || HAS_VLM5030)
 	 				for( j = 0; drv.sound[j].sound_type && j < MAX_SOUND; j++ )
 					{
 	#if (HAS_SAMPLES)
 	 					if( drv.sound[j].sound_type == SOUND_SAMPLES )
-	 						samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface)->samplenames;
+	 						samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface).samplenames;
 	#endif
 					}
 	#endif
@@ -1676,7 +1676,7 @@ public class fronthlp
 						notfound++;
 						goto nextloop;
 					}
-					printf ("sampleset %s ", drivers[i]->name);
+					printf ("sampleset %s ", drivers[i].name);
 				}
 	
 				if (res == NOTFOUND)

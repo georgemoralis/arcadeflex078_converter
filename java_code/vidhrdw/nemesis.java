@@ -255,8 +255,8 @@ public class nemesis
 	{
 		int i, j;
 		for(i=0; i<8; i++)
-			for(j=0; j<Machine->drv->gfxdecodeinfo[i].gfxlayout->width; j++)
-				Machine->drv->gfxdecodeinfo[i].gfxlayout->xoffset[j] ^= 8;
+			for(j=0; j<Machine.drv.gfxdecodeinfo[i].gfxlayout.width; j++)
+				Machine.drv.gfxdecodeinfo[i].gfxlayout.xoffset[j] ^= 8;
 	}
 	
 	
@@ -330,8 +330,8 @@ public class nemesis
 		if (!blank_characterdata)
 			return 1;
 		memset(blank_characterdata,0x00,32*8/8*(2048+1));
-		decodechar(Machine->gfx[0],0x800,(unsigned char *)blank_characterdata,
-						Machine->drv->gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine.gfx[0],0x800,(unsigned char *)blank_characterdata,
+						Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 		flipscreen = 0;
 		tilemap_flip = 0;
@@ -454,7 +454,7 @@ public class nemesis
 							flipx = !flipx;
 							flipy = !flipy;
 						}
-						pdrawgfxzoom(bitmap,Machine->gfx[char_type],
+						pdrawgfxzoom(bitmap,Machine.gfx[char_type],
 							code,
 							color,
 							flipx,flipy,
@@ -480,8 +480,8 @@ public class nemesis
 		{
 			if (char_dirty[offs] )
 			{
-				decodechar(Machine->gfx[0],offs,(unsigned char *)nemesis_characterram,
-						Machine->drv->gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine.gfx[0],offs,(unsigned char *)nemesis_characterram,
+						Machine.drv.gfxdecodeinfo[0].gfxlayout);
 				bAnyDirty = 1;
 				char_dirty[offs] = 0;
 			}
@@ -514,8 +514,8 @@ public class nemesis
 						code/=8;
 						if (sprite3232_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite3232_dirty[code] = 0;
 						}
 						break;
@@ -525,8 +525,8 @@ public class nemesis
 						code/=4;
 						if (sprite1632_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite1632_dirty[code] = 0;
 	
 						}
@@ -537,8 +537,8 @@ public class nemesis
 						code/=4;
 						if (sprite3216_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite3216_dirty[code] = 0;
 						}
 						break;
@@ -548,8 +548,8 @@ public class nemesis
 						code/=32;
 						if (sprite6464_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite6464_dirty[code] = 0;
 						}
 						break;
@@ -559,8 +559,8 @@ public class nemesis
 						code*=2;
 						if (char_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-							Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+							Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							char_dirty[code] = 0;
 						}
 						break;
@@ -569,8 +569,8 @@ public class nemesis
 						char_type=6;
 						if (sprite168_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite168_dirty[code] = 0;
 						}
 						break;
@@ -579,8 +579,8 @@ public class nemesis
 						char_type=3;
 						if (sprite816_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite816_dirty[code] = 0;
 						}
 						break;
@@ -592,8 +592,8 @@ public class nemesis
 						code/=2;
 						if (sprite_dirty[code] == 1)
 						{
-							decodechar(Machine->gfx[char_type],code,(unsigned char *)nemesis_characterram,
-									Machine->drv->gfxdecodeinfo[char_type].gfxlayout);
+							decodechar(Machine.gfx[char_type],code,(unsigned char *)nemesis_characterram,
+									Machine.drv.gfxdecodeinfo[char_type].gfxlayout);
 							sprite_dirty[code] = 2;
 	
 						}
@@ -612,7 +612,7 @@ public class nemesis
 		update_gfx();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_set_scrolly( background, 0, (nemesis_yscroll[0x180] & 0xff) );
 	
@@ -640,7 +640,7 @@ public class nemesis
 		update_gfx();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		clip.min_x = 0;
 		clip.max_x = 255;
@@ -656,7 +656,7 @@ public class nemesis
 			tilemap_set_scrolly( foreground, offs, nemesis_yscroll2[offs] );
 		}
 	
-		for (offs = cliprect->min_y; offs <= cliprect->max_y; offs++)
+		for (offs = cliprect.min_y; offs <= cliprect.max_y; offs++)
 		{
 			clip.min_y = offs;
 			clip.max_y = offs;

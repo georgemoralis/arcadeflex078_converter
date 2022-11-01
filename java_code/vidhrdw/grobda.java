@@ -118,12 +118,12 @@ public class grobda
 						ex = flipx ? (width-1-x) : x;
 						ey = flipy ? (height-1-y) : y;
 	
-						drawgfx(bitmap,Machine->gfx[1],
+						drawgfx(bitmap,Machine.gfx[1],
 							(number)+x_offset[ex]+y_offset[ey],
 							color,
 							flipx, flipy,
 							sx+x*16,sy+y*16,
-							&Machine->visible_area,
+							&Machine.visible_area,
 							TRANSPARENCY_PEN,0);
 					}
 				}
@@ -174,16 +174,16 @@ public class grobda
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						colorram[offs] & 0x3f,
 						flip_screen,flip_screen,
 						sx*8,sy*8,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 	        }
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		grobda_draw_sprites(bitmap);
 	} };

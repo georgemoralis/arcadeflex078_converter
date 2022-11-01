@@ -111,7 +111,7 @@ public class othunder
 	static void othunder_draw_sprites_16x8(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int *primasks,int y_offs)
 	{
 		data16_t *spritemap = (data16_t *)memory_region(REGION_USER1);
-		UINT16 tile_mask = (Machine->gfx[0]->total_elements) - 1;
+		UINT16 tile_mask = (Machine.gfx[0].total_elements) - 1;
 		int offs, data, tilenum, color, flipx, flipy;
 		int x, y, priority, curx, cury;
 		int sprites_flipscreen = 0;
@@ -193,29 +193,29 @@ public class othunder
 					flipy = !flipy;
 				}
 	
-				sprite_ptr->code = code;
-				sprite_ptr->color = color;
-				sprite_ptr->flipx = flipx;
-				sprite_ptr->flipy = flipy;
-				sprite_ptr->x = curx;
-				sprite_ptr->y = cury;
-				sprite_ptr->zoomx = zx << 12;
-				sprite_ptr->zoomy = zy << 13;
+				sprite_ptr.code = code;
+				sprite_ptr.color = color;
+				sprite_ptr.flipx = flipx;
+				sprite_ptr.flipy = flipy;
+				sprite_ptr.x = curx;
+				sprite_ptr.y = cury;
+				sprite_ptr.zoomx = zx << 12;
+				sprite_ptr.zoomy = zy << 13;
 	
 				if (primasks != 0)
 				{
-					sprite_ptr->primask = primasks[priority];
+					sprite_ptr.primask = primasks[priority];
 					sprite_ptr++;
 				}
 				else
 				{
-					drawgfxzoom(bitmap,Machine->gfx[0],
-							sprite_ptr->code,
-							sprite_ptr->color,
-							sprite_ptr->flipx,sprite_ptr->flipy,
-							sprite_ptr->x,sprite_ptr->y,
+					drawgfxzoom(bitmap,Machine.gfx[0],
+							sprite_ptr.code,
+							sprite_ptr.color,
+							sprite_ptr.flipx,sprite_ptr.flipy,
+							sprite_ptr.x,sprite_ptr.y,
 							cliprect,TRANSPARENCY_PEN,0,
-							sprite_ptr->zoomx,sprite_ptr->zoomy);
+							sprite_ptr.zoomx,sprite_ptr.zoomy);
 				}
 			}
 	
@@ -228,14 +228,14 @@ public class othunder
 		{
 			sprite_ptr--;
 	
-			pdrawgfxzoom(bitmap,Machine->gfx[0],
-					sprite_ptr->code,
-					sprite_ptr->color,
-					sprite_ptr->flipx,sprite_ptr->flipy,
-					sprite_ptr->x,sprite_ptr->y,
+			pdrawgfxzoom(bitmap,Machine.gfx[0],
+					sprite_ptr.code,
+					sprite_ptr.color,
+					sprite_ptr.flipx,sprite_ptr.flipy,
+					sprite_ptr.x,sprite_ptr.y,
 					cliprect,TRANSPARENCY_PEN,0,
-					sprite_ptr->zoomx,sprite_ptr->zoomy,
-					sprite_ptr->primask);
+					sprite_ptr.zoomx,sprite_ptr.zoomy,
+					sprite_ptr.primask);
 		}
 	}
 	
@@ -257,7 +257,7 @@ public class othunder
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* Ensure screen blanked even when bottom layer not drawn due to disable bit */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[0],TILEMAP_IGNORE_TRANSPARENCY,1);
 		TC0100SCN_tilemap_draw(bitmap,cliprect,0,layer[1],0,2);

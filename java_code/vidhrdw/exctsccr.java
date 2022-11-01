@@ -27,10 +27,10 @@ public class exctsccr
 	public static PaletteInitHandlerPtr palette_init_exctsccr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,idx;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -50,7 +50,7 @@ public class exctsccr
 			palette_set_color(i,r,g,b);
 		}
 	
-		color_prom += Machine->drv->total_colors;
+		color_prom += Machine.drv.total_colors;
 	
 		/* characters */
 		idx = 0;
@@ -185,12 +185,12 @@ public class exctsccr
 			bank = 2;
 			bank += ( ( OBJ1[offs+1] >> 4 ) & 1 );
 	
-			drawgfx(bitmap,Machine->gfx[bank],
+			drawgfx(bitmap,Machine.gfx[bank],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 		}
 	
@@ -217,41 +217,41 @@ public class exctsccr
 	
 			if ( color > 0x10 && color < 0x17 )
 			{
-				drawgfx(bitmap,Machine->gfx[4],
+				drawgfx(bitmap,Machine.gfx[4],
 					code,
 					0x0e,
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 	
 				color += 6;
 			}
 			if ( color==0x1d && gfx_bank==1 )
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine->gfx[4],
+				drawgfx(bitmap,Machine.gfx[4],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_COLOR, 16);
 	
 			} else
 			{
-			drawgfx(bitmap,Machine->gfx[bank],
+			drawgfx(bitmap,Machine.gfx[bank],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN,0);
 			}
 		}
@@ -259,7 +259,7 @@ public class exctsccr
 	
 	public static VideoUpdateHandlerPtr video_update_exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		exctsccr_draw_sprites( bitmap );
 	} };
 }

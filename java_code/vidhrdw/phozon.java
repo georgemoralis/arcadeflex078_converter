@@ -30,10 +30,10 @@ public class phozon
 	***************************************************************************/
 	public static PaletteInitHandlerPtr palette_init_phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0; i < Machine->drv->total_colors; i++){
+		for (i = 0; i < Machine.drv.total_colors; i++){
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
 			/* red component */
@@ -43,23 +43,23 @@ public class phozon
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* characters */
@@ -83,14 +83,14 @@ public class phozon
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine->gfx[2],code,color,flipx,flipy,sx,sy,&Machine->visible_area,
+		drawgfx(dest,Machine.gfx[2],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
 	void phozon_draw_sprite8(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine->gfx[3],code,color,flipx,flipy,sx,sy,&Machine->visible_area,
+		drawgfx(dest,Machine.gfx[3],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
@@ -142,16 +142,16 @@ public class phozon
 					sy = my - 2;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[(colorram[offs] & 0x80) ? 1 : 0],
+				drawgfx(tmpbitmap,Machine.gfx[(colorram[offs] & 0x80) ? 1 : 0],
 						videoram.read(offs),
 						colorram[offs] & 0x3f,
 						0,0,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 2){
@@ -160,7 +160,7 @@ public class phozon
 				int sprite = spriteram.read(offs);
 				int color = spriteram.read(offs+1);
 				int x = (spriteram_2[offs+1]-69) + 0x100*(spriteram_3[offs+1] & 1);
-				int y = ( Machine->drv->screen_height ) - spriteram_2[offs] - 8;
+				int y = ( Machine.drv.screen_height ) - spriteram_2[offs] - 8;
 				int flipx = spriteram_3[offs] & 1;
 				int flipy = spriteram_3[offs] & 2;
 	
@@ -247,12 +247,12 @@ public class phozon
 					sy = my - 2;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[(colorram[offs] & 0x80) ? 1 : 0],
+				drawgfx(bitmap,Machine.gfx[(colorram[offs] & 0x80) ? 1 : 0],
 						videoram.read(offs),
 						colorram[offs] & 0x3f,
 						0,0,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 		}
 	} };

@@ -108,12 +108,12 @@ public class ymf278b
 			return 0;
 		if(val == 15)
 			return 63;
-		if(slot->RC != 15)
+		if(slot.RC != 15)
 		{
-			oct = slot->OCT;
+			oct = slot.OCT;
 			if ((oct & 8) != 0) oct |= -8;
 	
-			res = (oct+slot->RC)*2 + (slot->FN & 0x200 ? 1 : 0) + val*4;
+			res = (oct+slot.RC)*2 + (slot.FN & 0x200 ? 1 : 0) + val*4;
 		}
 		else
 			res = val * 4;
@@ -141,92 +141,92 @@ public class ymf278b
 				samples += 2;
 		}
 	
-		return ((UINT64)samples * Machine->sample_rate) / 44100;
+		return ((UINT64)samples * Machine.sample_rate) / 44100;
 	}
 	
 	static void ymf278b_envelope_next(YMF278BSlot *slot, float clock_ratio)
 	{
-		if(slot->env_step == 0)
+		if(slot.env_step == 0)
 		{
 			// Attack
-			slot->env_vol = (256U << 23) - 1;
-			slot->env_vol_lim = 256U<<23;
+			slot.env_vol = (256U << 23) - 1;
+			slot.env_vol_lim = 256U<<23;
 	#ifdef VERBOSE
-			logerror("YMF278B: Skipping attack (rate = %d)\n", slot->AR);
+			logerror("YMF278B: Skipping attack (rate = %d)\n", slot.AR);
 	#endif
-			slot->env_step++;
+			slot.env_step++;
 		}
-		if(slot->env_step == 1)
+		if(slot.env_step == 1)
 		{
 			// Decay 1
-			slot->env_vol = 0;
-			slot->env_step++;
-			if(slot->DL)
+			slot.env_vol = 0;
+			slot.env_step++;
+			if(slot.DL)
 			{
-				int rate = ymf278b_compute_rate(slot, slot->D1R);
+				int rate = ymf278b_compute_rate(slot, slot.D1R);
 	#ifdef VERBOSE
-				logerror("YMF278B: Decay step 1, dl=%d, val = %d rate = %d, delay = %g\n", slot->DL, slot->D1R, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine->sample_rate);
+				logerror("YMF278B: Decay step 1, dl=%d, val = %d rate = %d, delay = %g\n", slot.DL, slot.D1R, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine.sample_rate);
 	#endif
 				if(rate<4)
-					slot->env_vol_step = 0;
+					slot.env_vol_step = 0;
 				else
-					slot->env_vol_step = ((slot->DL*8)<<23) / (ymf278_compute_decay_rate(rate) * clock_ratio);
-				slot->env_vol_lim = (slot->DL*8)<<23;
+					slot.env_vol_step = ((slot.DL*8)<<23) / (ymf278_compute_decay_rate(rate) * clock_ratio);
+				slot.env_vol_lim = (slot.DL*8)<<23;
 				return;
 			}
 		}
-		if(slot->env_step == 2)
+		if(slot.env_step == 2)
 		{
 			// Decay 2
-			int rate = ymf278b_compute_rate(slot, slot->D2R);
+			int rate = ymf278b_compute_rate(slot, slot.D2R);
 	#ifdef VERBOSE
-			logerror("YMF278B: Decay step 2, val = %d, rate = %d, delay = %g, current vol = %d\n", slot->D2R, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine->sample_rate, slot->env_vol >> 23);
+			logerror("YMF278B: Decay step 2, val = %d, rate = %d, delay = %g, current vol = %d\n", slot.D2R, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine.sample_rate, slot.env_vol >> 23);
 	#endif
 			if(rate<4)
-				slot->env_vol_step = 0;
+				slot.env_vol_step = 0;
 			else
-				slot->env_vol_step = ((256U-slot->DL*8)<<23) / (ymf278_compute_decay_rate(rate) * clock_ratio);
-			slot->env_vol_lim = 256U<<23;
-			slot->env_step++;
+				slot.env_vol_step = ((256U-slot.DL*8)<<23) / (ymf278_compute_decay_rate(rate) * clock_ratio);
+			slot.env_vol_lim = 256U<<23;
+			slot.env_step++;
 			return;
 		}
-		if(slot->env_step == 3)
+		if(slot.env_step == 3)
 		{
 			// Decay 2 reached -96dB
 	#ifdef VERBOSE
 			logerror("YMF278B: Voice cleared because of decay 2\n");
 	#endif
-			slot->env_vol = 256U<<23;
-			slot->env_vol_step = 0;
-			slot->env_vol_lim = 0;
-			slot->active = 0;
+			slot.env_vol = 256U<<23;
+			slot.env_vol_step = 0;
+			slot.env_vol_lim = 0;
+			slot.active = 0;
 			return;
 		}
-		if(slot->env_step == 4)
+		if(slot.env_step == 4)
 		{
 			// Release
-			int rate = ymf278b_compute_rate(slot, slot->RR);
+			int rate = ymf278b_compute_rate(slot, slot.RR);
 	#ifdef VERBOSE
-			logerror("YMF278B: Release, val = %d, rate = %d, delay = %g\n", slot->RR, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine->sample_rate);
+			logerror("YMF278B: Release, val = %d, rate = %d, delay = %g\n", slot.RR, rate, ymf278_compute_decay_rate(rate)*1000.0*clock_ratio/Machine.sample_rate);
 	#endif
 			if(rate<4)
-				slot->env_vol_step = 0;
+				slot.env_vol_step = 0;
 			else
-				slot->env_vol_step = ((256U<<23)-slot->env_vol) / (ymf278_compute_decay_rate(rate) * clock_ratio);
-			slot->env_vol_lim = 256U<<23;
-			slot->env_step++;
+				slot.env_vol_step = ((256U<<23)-slot.env_vol) / (ymf278_compute_decay_rate(rate) * clock_ratio);
+			slot.env_vol_lim = 256U<<23;
+			slot.env_step++;
 			return;
 		}
-		if(slot->env_step == 5)
+		if(slot.env_step == 5)
 		{
 			// Release reached -96dB
 	#ifdef VERBOSE
 			logerror("YMF278B: Release ends\n");
 	#endif
-			slot->env_vol = 256U<<23;
-			slot->env_vol_step = 0;
-			slot->env_vol_lim = 0;
-			slot->active = 0;
+			slot.env_vol = 256U<<23;
+			slot.env_vol_step = 0;
+			slot.env_vol_lim = 0;
+			slot.active = 0;
 			return;
 		}
 	}
@@ -249,54 +249,54 @@ public class ymf278b
 		{
 			slot = &YMF278B[num].slots[i];
 	
-			if (slot->active)
+			if (slot.active)
 			{
 				mixp = mix;
 	
 				for (j = 0; j < length; j++)
 				{
-					switch (slot->bits)
+					switch (slot.bits)
 					{
 						case 8: 	// 8 bit
-							sample = rombase[slot->startaddr + (slot->stepptr>>16)]<<8;
+							sample = rombase[slot.startaddr + (slot.stepptr>>16)]<<8;
 							break;
 	
 						case 12:  	// 12 bit
-							if (slot->stepptr & 1)
-								sample = rombase[slot->startaddr + (slot->stepptr>>17)*3 + 2]<<8 | ((rombase[slot->startaddr + (slot->stepptr>>17)*3 + 1] << 4) & 0xf0);
+							if (slot.stepptr & 1)
+								sample = rombase[slot.startaddr + (slot.stepptr>>17)*3 + 2]<<8 | ((rombase[slot.startaddr + (slot.stepptr>>17)*3 + 1] << 4) & 0xf0);
 							else
-								sample = rombase[slot->startaddr + (slot->stepptr>>17)*3]<<8 | (rombase[slot->startaddr + (slot->stepptr>>17)*3 + 1] & 0xf0);
+								sample = rombase[slot.startaddr + (slot.stepptr>>17)*3]<<8 | (rombase[slot.startaddr + (slot.stepptr>>17)*3 + 1] & 0xf0);
 							break;
 	
 						case 16:  	// 16 bit
-							sample = rombase[slot->startaddr + ((slot->stepptr>>16)*2)]<<8;
-							sample |= rombase[slot->startaddr + ((slot->stepptr>>16)*2) + 1];
+							sample = rombase[slot.startaddr + ((slot.stepptr>>16)*2)]<<8;
+							sample |= rombase[slot.startaddr + ((slot.stepptr>>16)*2) + 1];
 							break;
 					}
 	
-					*mixp++ += (sample * volume[slot->TL+pan_left [slot->pan]+(slot->env_vol>>23)])>>16;
-					*mixp++ += (sample * volume[slot->TL+pan_right[slot->pan]+(slot->env_vol>>23)])>>16;
+					*mixp++ += (sample * volume[slot.TL+pan_left [slot.pan]+(slot.env_vol>>23)])>>16;
+					*mixp++ += (sample * volume[slot.TL+pan_right[slot.pan]+(slot.env_vol>>23)])>>16;
 	
 					// update frequency
-					slot->stepptr += slot->step;
-					if(slot->stepptr >= slot->endaddr)
+					slot.stepptr += slot.step;
+					if(slot.stepptr >= slot.endaddr)
 					{
-						slot->stepptr = slot->stepptr - slot->endaddr + slot->loopaddr;
+						slot.stepptr = slot.stepptr - slot.endaddr + slot.loopaddr;
 						// If the step is bigger than the loop, finish the sample forcibly
-						if(slot->stepptr >= slot->endaddr)
+						if(slot.stepptr >= slot.endaddr)
 						{
-							slot->env_vol = 256U<<23;
-							slot->env_vol_step = 0;
-							slot->env_vol_lim = 0;
-							slot->active = 0;
-							slot->stepptr = 0;
-							slot->step = 0;
+							slot.env_vol = 256U<<23;
+							slot.env_vol_step = 0;
+							slot.env_vol_lim = 0;
+							slot.active = 0;
+							slot.stepptr = 0;
+							slot.step = 0;
 						}
 					}
 	
 					// update envelope
-					slot->env_vol += slot->env_vol_step;
-					if(((INT32)(slot->env_vol - slot->env_vol_lim)) >= 0)
+					slot.env_vol += slot.env_vol_step;
+					if(((INT32)(slot.env_vol - slot.env_vol_lim)) >= 0)
 				 		ymf278b_envelope_next(slot, YMF278B[num].clock_ratio);
 				}
 			}
@@ -315,18 +315,18 @@ public class ymf278b
 	static void ymf278b_irq_check(int num)
 	{
 		YMF278BChip *chip = &YMF278B[num];
-		int prev_line = chip->irq_line;
-		chip->irq_line = chip->current_irq ? ASSERT_LINE : CLEAR_LINE;
-		if(chip->irq_line != prev_line && chip->irq_callback)
-			chip->irq_callback(chip->irq_line);
+		int prev_line = chip.irq_line;
+		chip.irq_line = chip.current_irq ? ASSERT_LINE : CLEAR_LINE;
+		if(chip.irq_line != prev_line && chip.irq_callback)
+			chip.irq_callback(chip.irq_line);
 	}
 	
 	static void ymf278b_timer_a_tick(int num)
 	{
 		YMF278BChip *chip = &YMF278B[num];
-		if(!(chip->enable & 0x40))
+		if(!(chip.enable & 0x40))
 		{
-			chip->current_irq |= 0x40;
+			chip.current_irq |= 0x40;
 			ymf278b_irq_check(num);
 		}
 	}
@@ -334,9 +334,9 @@ public class ymf278b
 	static void ymf278b_timer_b_tick(int num)
 	{
 		YMF278BChip *chip = &YMF278B[num];
-		if(!(chip->enable & 0x20))
+		if(!(chip.enable & 0x20))
 		{
-			chip->current_irq |= 0x20;
+			chip.current_irq |= 0x20;
 			ymf278b_irq_check(num);
 		}
 	}
@@ -344,51 +344,51 @@ public class ymf278b
 	static void ymf278b_timer_a_reset(int num)
 	{
 		YMF278BChip *chip = &YMF278B[num];
-		if(chip->enable & 1)
+		if(chip.enable & 1)
 		{
-			double period = (256-chip->timer_a_count) * 80.8 * chip->clock_ratio;
-			timer_adjust(chip->timer_a, TIME_IN_USEC(period), num, TIME_IN_USEC(period));
+			double period = (256-chip.timer_a_count) * 80.8 * chip.clock_ratio;
+			timer_adjust(chip.timer_a, TIME_IN_USEC(period), num, TIME_IN_USEC(period));
 		}
 		else
-			timer_adjust(chip->timer_a, TIME_NEVER, num, 0);
+			timer_adjust(chip.timer_a, TIME_NEVER, num, 0);
 	}
 	
 	static void ymf278b_timer_b_reset(int num)
 	{
 		YMF278BChip *chip = &YMF278B[num];
-		if(chip->enable & 2)
+		if(chip.enable & 2)
 		{
-			double period = (256-chip->timer_b_count) * 323.1 * chip->clock_ratio;
-			timer_adjust(chip->timer_b, TIME_IN_USEC(period), num, TIME_IN_USEC(period));
+			double period = (256-chip.timer_b_count) * 323.1 * chip.clock_ratio;
+			timer_adjust(chip.timer_b, TIME_IN_USEC(period), num, TIME_IN_USEC(period));
 		}
 		else
-			timer_adjust(chip->timer_b, TIME_NEVER, num, 0);
+			timer_adjust(chip.timer_b, TIME_NEVER, num, 0);
 	}
 	
 	static void ymf278b_A_w(int num, UINT8 reg, UINT8 data)
 	{
 		YMF278BChip *chip = &YMF278B[num];
 	
-		if (!Machine->sample_rate) return;
+		if (!Machine.sample_rate) return;
 	
 		switch(reg)
 		{
 			case 0x02:
-				chip->timer_a_count = data;
+				chip.timer_a_count = data;
 				ymf278b_timer_a_reset(num);
 				break;
 			case 0x03:
-				chip->timer_b_count = data;
+				chip.timer_b_count = data;
 				ymf278b_timer_b_reset(num);
 				break;
 			case 0x04:
 				if ((data & 0x80) != 0)
-					chip->current_irq = 0;
+					chip.current_irq = 0;
 				else
 				{
-					UINT8 old_enable = chip->enable;
-					chip->enable = data;
-					chip->current_irq &= ~data;
+					UINT8 old_enable = chip.enable;
+					chip.enable = data;
+					chip.current_irq &= ~data;
 					if((old_enable ^ data) & 1)
 						ymf278b_timer_a_reset(num);
 					if((old_enable ^ data) & 2)
@@ -403,7 +403,7 @@ public class ymf278b
 	
 	static void ymf278b_B_w(int num, UINT8 reg, UINT8 data)
 	{
-		if (!Machine->sample_rate) return;
+		if (!Machine.sample_rate) return;
 	
 		logerror("YMF278B:  Port B write %02x, %02x\n", reg, data);
 	}
@@ -412,7 +412,7 @@ public class ymf278b
 	{
 		YMF278BChip *chip = &YMF278B[num];
 	
-		if (!Machine->sample_rate) return;
+		if (!Machine.sample_rate) return;
 	
 		// Handle slot registers specifically
 		if (reg >= 0x08 && reg <= 0xf7)
@@ -427,89 +427,89 @@ public class ymf278b
 				{
 					const UINT8 *p;
 	
-					slot->wave &= 0x100;
-					slot->wave |= data;
+					slot.wave &= 0x100;
+					slot.wave |= data;
 	
-					if(slot->wave < 384 || !chip->wavetblhdr)
-						p = chip->rom + (slot->wave * 12);
+					if(slot.wave < 384 || !chip.wavetblhdr)
+						p = chip.rom + (slot.wave * 12);
 					else
-						p = chip->rom + chip->wavetblhdr*0x80000 + ((slot->wave - 384) * 12);
+						p = chip.rom + chip.wavetblhdr*0x80000 + ((slot.wave - 384) * 12);
 	
 					switch (p[0]&0xc0)
 					{
 						case 0:
-							slot->bits = 8;
+							slot.bits = 8;
 							break;
 						case 0x40:
-							slot->bits = 12;
+							slot.bits = 12;
 							break;
 						case 0x80:
-							slot->bits = 16;
+							slot.bits = 16;
 							break;
 					}
 	
-					slot->lfo = (p[7] >> 2) & 7;
-					slot->vib = p[7] & 7;
-					slot->AR = p[8] >> 4;
-					slot->D1R = p[8] & 0xf;
-					slot->DL = p[9] >> 4;
-					slot->D2R = p[9] & 0xf;
-					slot->RC = p[10] >> 4;
-					slot->RR = p[10] & 0xf;
-					slot->AM = p[11] & 7;
+					slot.lfo = (p[7] >> 2) & 7;
+					slot.vib = p[7] & 7;
+					slot.AR = p[8] >> 4;
+					slot.D1R = p[8] & 0xf;
+					slot.DL = p[9] >> 4;
+					slot.D2R = p[9] & 0xf;
+					slot.RC = p[10] >> 4;
+					slot.RR = p[10] & 0xf;
+					slot.AM = p[11] & 7;
 	
-					slot->startaddr = (p[2] | (p[1]<<8) | ((p[0]&0x3f)<<16));
-					slot->loopaddr = (p[4]<<16) | (p[3]<<24);
-					slot->endaddr = (p[6]<<16) | (p[5]<<24);
-					slot->endaddr -= 0x00010000U;
-					slot->endaddr ^= 0xffff0000U;
+					slot.startaddr = (p[2] | (p[1]<<8) | ((p[0]&0x3f)<<16));
+					slot.loopaddr = (p[4]<<16) | (p[3]<<24);
+					slot.endaddr = (p[6]<<16) | (p[5]<<24);
+					slot.endaddr -= 0x00010000U;
+					slot.endaddr ^= 0xffff0000U;
 					break;
 				}
 				case 1:
-					slot->wave &= 0xff;
-					slot->wave |= ((data&0x1)<<8);
-					slot->FN &= 0x380;
-					slot->FN |= (data>>1);
+					slot.wave &= 0xff;
+					slot.wave |= ((data&0x1)<<8);
+					slot.FN &= 0x380;
+					slot.FN |= (data>>1);
 					break;
 				case 2:
-					slot->FN &= 0x07f;
-					slot->FN |= ((data&0x07)<<7);
-					slot->PRVB = ((data&0x4)>>3);
-					slot->OCT = ((data&0xf0)>>4);
+					slot.FN &= 0x07f;
+					slot.FN |= ((data&0x07)<<7);
+					slot.PRVB = ((data&0x4)>>3);
+					slot.OCT = ((data&0xf0)>>4);
 					break;
 				case 3:
-					slot->TL = (data>>1);
-					slot->LD = data&0x1;
+					slot.TL = (data>>1);
+					slot.LD = data&0x1;
 					break;
 				case 4:
-					slot->pan = data&0xf;
+					slot.pan = data&0xf;
 					if ((data & 0x80) != 0)
 					{
 						unsigned int step;
 						int oct;
 	
-						slot->active = 1;
+						slot.active = 1;
 	
-						oct = slot->OCT;
+						oct = slot.OCT;
 						if ((oct & 8) != 0)
 							oct |= -8;
 	
-						slot->env_step = 0;
-						slot->env_vol = 256U<<23;
-						slot->env_vol_step = 0;
-						slot->env_vol_lim = 256U<<23;
-						slot->stepptr = 0;
-						slot->step = 0;
+						slot.env_step = 0;
+						slot.env_vol = 256U<<23;
+						slot.env_vol_step = 0;
+						slot.env_vol_lim = 256U<<23;
+						slot.stepptr = 0;
+						slot.step = 0;
 	
-						step = (slot->FN | 1024) << (oct + 7);
-						slot->step = (UINT32) ((((INT64)step)*(44100/4)) / Machine->sample_rate * chip->clock_ratio);
+						step = (slot.FN | 1024) << (oct + 7);
+						slot.step = (UINT32) ((((INT64)step)*(44100/4)) / Machine.sample_rate * chip.clock_ratio);
 	
-						ymf278b_envelope_next(slot, chip->clock_ratio);
+						ymf278b_envelope_next(slot, chip.clock_ratio);
 	
 	#ifdef VERBOSE
-						logerror("YMF278B: slot %2d wave %3d lfo=%d vib=%d ar=%d d1r=%d dl=%d d2r=%d rc=%d rr=%d am=%d\n", snum, slot->wave,
-								 slot->lfo, slot->vib, slot->AR, slot->D1R, slot->DL, slot->D2R, slot->RC, slot->RR, slot->AM);
-						logerror("                  b=%d, start=%x, loop=%x, end=%x, oct=%d, fn=%d, step=%x\n", slot->bits, slot->startaddr, slot->loopaddr>>16, slot->endaddr>>16, oct, slot->FN, slot->step);
+						logerror("YMF278B: slot %2d wave %3d lfo=%d vib=%d ar=%d d1r=%d dl=%d d2r=%d rc=%d rr=%d am=%d\n", snum, slot.wave,
+								 slot.lfo, slot.vib, slot.AR, slot.D1R, slot.DL, slot.D2R, slot.RC, slot.RR, slot.AM);
+						logerror("                  b=%d, start=%x, loop=%x, end=%x, oct=%d, fn=%d, step=%x\n", slot.bits, slot.startaddr, slot.loopaddr>>16, slot.endaddr>>16, oct, slot.FN, slot.step);
 	#endif
 					}
 					else
@@ -517,31 +517,31 @@ public class ymf278b
 	#ifdef VERBOSE
 						logerror("YMF278B: slot %2d off\n", snum);
 	#endif
-						if(slot->active)
+						if(slot.active)
 						{
-							slot->env_step = 4;
-							ymf278b_envelope_next(slot, chip->clock_ratio);
+							slot.env_step = 4;
+							ymf278b_envelope_next(slot, chip.clock_ratio);
 						}
 					}
 					break;
 				case 5:
-					slot->vib = data&0x7;
-					slot->lfo = (data>>3)&0x7;
+					slot.vib = data&0x7;
+					slot.lfo = (data>>3)&0x7;
 			       	break;
 				case 6:
-					slot->AR = data>>4;
-					slot->D1R = data&0xf;
+					slot.AR = data>>4;
+					slot.D1R = data&0xf;
 					break;
 				case 7:
-					slot->DL = data>>4;
-					slot->D2R = data&0xf;
+					slot.DL = data>>4;
+					slot.D2R = data&0xf;
 					break;
 				case 8:
-					slot->RC = data>>4;
-					slot->RR = data&0xf;
+					slot.RC = data>>4;
+					slot.RR = data&0xf;
 					break;
 				case 9:
-					slot->AM = data & 0x7;
+					slot.AM = data & 0x7;
 					break;
 			}
 		}
@@ -555,23 +555,23 @@ public class ymf278b
 					break;
 	
 				case 0x02:
-					chip->wavetblhdr = (data>>2)&0x7;
-					chip->memmode = data&1;
+					chip.wavetblhdr = (data>>2)&0x7;
+					chip.memmode = data&1;
 					break;
 	
 				case 0x03:
-					chip->memadr &= 0xffff;
-					chip->memadr |= (data<<16);
+					chip.memadr &= 0xffff;
+					chip.memadr |= (data<<16);
 					break;
 	
 				case 0x04:
-					chip->memadr &= 0xff00ff;
-					chip->memadr |= (data<<8);
+					chip.memadr &= 0xff00ff;
+					chip.memadr |= (data<<8);
 					break;
 	
 				case 0x05:
-					chip->memadr &= 0xffff00;
-					chip->memadr |= data;
+					chip.memadr &= 0xffff00;
+					chip.memadr |= data;
 					break;
 	
 				case 0x06:  // memory data (ignored, we don't support RAM)
@@ -579,13 +579,13 @@ public class ymf278b
 					break;
 	
 				case 0xf8:
-					chip->fm_l = data & 0x7;
-					chip->fm_r = (data>>3)&0x7;
+					chip.fm_l = data & 0x7;
+					chip.fm_r = (data>>3)&0x7;
 					break;
 	
 				case 0xf9:
-					chip->pcm_l = data & 0x7;
-					chip->pcm_r = (data>>3)&0x7;
+					chip.pcm_l = data & 0x7;
+					chip.pcm_r = (data>>3)&0x7;
 					break;
 			}
 		}
@@ -651,18 +651,18 @@ public class ymf278b
 		struct YMF278B_interface *intf;
 		int i;
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
-		for(i=0; i<intf->num; i++)
+		for(i=0; i<intf.num; i++)
 		{
 			sprintf(buf[0], "YMF278B %d L", i);
 			sprintf(buf[1], "YMF278B %d R", i);
 			name[0] = buf[0];
 			name[1] = buf[1];
-			vol[0]=intf->mixing_level[i] >> 16;
-			vol[1]=intf->mixing_level[i] & 0xffff;
-			ymf278b_init(i, memory_region(intf->region[0]), intf->irq_callback[i], intf->clock[i]);
-			stream_init_multi(2, name, vol, Machine->sample_rate, i, ymf278b_pcm_update);
+			vol[0]=intf.mixing_level[i] >> 16;
+			vol[1]=intf.mixing_level[i] & 0xffff;
+			ymf278b_init(i, memory_region(intf.region[0]), intf.irq_callback[i], intf.clock[i]);
+			stream_init_multi(2, name, vol, Machine.sample_rate, i, ymf278b_pcm_update);
 		}
 	
 		// Volume table, 1 = -0.375dB, 8 = -3dB, 256 = -96dB

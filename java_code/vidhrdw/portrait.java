@@ -106,7 +106,7 @@ public class portrait
 			sy = (512-64)-sy;
 			//sy += portrait_scrollx_hi;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 				tilenum,color,
 				0,flip,
 				sx,sy,

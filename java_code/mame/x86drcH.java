@@ -193,9 +193,9 @@ struct linkdata
 **#################################################################################################*/
 
 /* lowest-level opcode emitters */
-#define OP1(x)		do { *drc->cache_top++ = (UINT8)(x); } while (0)
-#define OP2(x)		do { *(UINT16 *)drc->cache_top = (UINT16)(x); drc->cache_top += 2; } while (0)
-#define OP4(x)		do { *(UINT32 *)drc->cache_top = (UINT32)(x); drc->cache_top += 4; } while (0)
+#define OP1(x)		do { *drc.cache_top++ = (UINT8)(x); } while (0)
+#define OP2(x)		do { *(UINT16 *)drc.cache_top = (UINT16)(x); drc.cache_top += 2; } while (0)
+#define OP4(x)		do { *(UINT32 *)drc.cache_top = (UINT32)(x); drc.cache_top += 4; } while (0)
 
 
 
@@ -945,21 +945,21 @@ do { OP1(0x0f); OP1(0x90 + cond); MODRM_MABS(0, addr); } while (0)
 
 
 #define _jcc_short_link(cond, link) \
-do { OP1(0x70 + (cond)); OP1(0x00); (link)->target = drc->cache_top; (link)->size = 1; } while (0)
+do { OP1(0x70 + (cond)); OP1(0x00); (link).target = drc.cache_top; (link).size = 1; } while (0)
 
 #define _jcc_near_link(cond, link) \
-do { OP1(0x0f); OP1(0x80 + (cond)); OP4(0x00); (link)->target = drc->cache_top; (link)->size = 4; } while (0)
+do { OP1(0x0f); OP1(0x80 + (cond)); OP4(0x00); (link).target = drc.cache_top; (link).size = 4; } while (0)
 
 #define _jcc(cond, target) 									\
 do {														\
-	INT32 delta = (UINT8 *)(target) - (drc->cache_top + 2);	\
+	INT32 delta = (UINT8 *)(target) - (drc.cache_top + 2);	\
 	if ((INT8)delta == (INT32)delta)						\
 	{														\
 		OP1(0x70 + (cond));	OP1(delta);						\
 	}														\
 	else													\
 	{														\
-		delta = (UINT8 *)(target) - (drc->cache_top + 6);	\
+		delta = (UINT8 *)(target) - (drc.cache_top + 6);	\
 		OP1(0x0f); OP1(0x80 + (cond)); OP4(delta);			\
 	}														\
 } while (0)
@@ -967,18 +967,18 @@ do {														\
 
 
 #define _jmp_short_link(link) \
-do { OP1(0xeb); OP1(0x00); (link)->target = drc->cache_top; (link)->size = 1; } while (0)
+do { OP1(0xeb); OP1(0x00); (link).target = drc.cache_top; (link).size = 1; } while (0)
 
 #define _jmp_near_link(link) \
-do { OP1(0xe9); OP4(0x00); (link)->target = drc->cache_top; (link)->size = 4; } while (0)
+do { OP1(0xe9); OP4(0x00); (link).target = drc.cache_top; (link).size = 4; } while (0)
 
 #define _jmp(target) \
-do { OP1(0xe9); OP4((UINT32)(target) - ((UINT32)drc->cache_top + 4)); } while (0)
+do { OP1(0xe9); OP4((UINT32)(target) - ((UINT32)drc.cache_top + 4)); } while (0)
 
 
 
 #define _call(target) \
-do { if (drc->uses_fp) OP1(0xe8); OP4((UINT32)(target) - ((UINT32)drc->cache_top + 4)); } while (0)
+do { if (drc.uses_fp) OP1(0xe8); OP4((UINT32)(target) - ((UINT32)drc.cache_top + 4)); } while (0)
 
 
 
@@ -995,15 +995,15 @@ do { OP1(0xff); MODRM_MBISD(4, base, indx, scale, disp); } while (0)
 
 #define _resolve_link(link)							\
 do {												\
-	INT32 delta = drc->cache_top - (link)->target;	\
-	if ((link)->size == 1)							\
+	INT32 delta = drc.cache_top - (link).target;	\
+	if ((link).size == 1)							\
 	{												\
 		if ((INT8)delta != delta)					\
 			printf("Error: link out of range!\n");	\
-		(link)->target[-1] = delta;					\
+		(link).target[-1] = delta;					\
 	}												\
-	else if ((link)->size == 4)						\
-		*(UINT32 *)&(link)->target[-4] = delta;		\
+	else if ((link).size == 4)						\
+		*(UINT32 *)&(link).target[-4] = delta;		\
 	else											\
 		printf("Unsized link!\n");					\
 } while (0)

@@ -68,8 +68,8 @@ public class clshroad
 	public static PaletteInitHandlerPtr palette_init_firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 	#if 1
@@ -187,7 +187,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	/* logical (col,row) -> memory offset */
+	/* logical (col,row) . memory offset */
 	static UINT32 tilemap_scan_rows_extra( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
 		// The leftmost columns come from the bottom rows
@@ -346,7 +346,7 @@ public class clshroad
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					attr & 0x0f,
 					flipx,flipy,

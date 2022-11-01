@@ -277,7 +277,7 @@ public class zaccaria
 				return 0x40;    /* Jack Rabbit */
 	
 			case 6:
-				if (Machine->gamedrv == &monymony_driver)
+				if (Machine.gamedrv == &monymony_driver)
 					return 0x70;    /* Money Money */
 				return 0xa0;    /* Jack Rabbit */
 	

@@ -182,37 +182,37 @@ public class wind3d
 		blitfx.DUMMYUNIONNAMEN(5).dwFillColor = 0;
 	
 		// clear the left edge
-		if (inner->left > outer->left)
+		if (inner.left > outer.left)
 		{
 			clear = *outer;
-			clear.right = inner->left;
+			clear.right = inner.left;
 			if (surface != 0)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the right edge
-		if (inner->right < outer->right)
+		if (inner.right < outer.right)
 		{
 			clear = *outer;
-			clear.left = inner->right;
+			clear.left = inner.right;
 			if (surface != 0)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the top edge
-		if (inner->top > outer->top)
+		if (inner.top > outer.top)
 		{
 			clear = *outer;
-			clear.bottom = inner->top;
+			clear.bottom = inner.top;
 			if (surface != 0)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the bottom edge
-		if (inner->bottom < outer->bottom)
+		if (inner.bottom < outer.bottom)
 		{
 			clear = *outer;
-			clear.top = inner->bottom;
+			clear.top = inner.bottom;
 			if (surface != 0)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
@@ -624,8 +624,8 @@ public class wind3d
 		}
 		if (effect != 0)
 		{
-			effect_min_xscale = effect->min_xscale;
-			effect_min_yscale = effect->min_yscale;
+			effect_min_xscale = effect.min_xscale;
+			effect_min_yscale = effect.min_yscale;
 		}
 	
 		// set the cooperative level
@@ -739,20 +739,20 @@ public class wind3d
 	
 	static HRESULT WINAPI enum_callback(LPDDSURFACEDESC2 desc, LPVOID context)
 	{
-		int refresh = (win_match_refresh || win_gfx_refresh) ? desc->DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
-		int depth = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
+		int refresh = (win_match_refresh || win_gfx_refresh) ? desc.DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
+		int depth = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 		double score;
 	
 		// compute this mode's score
-		score = compute_mode_score(desc->dwWidth, desc->dwHeight, depth, refresh);
+		score = compute_mode_score(desc.dwWidth, desc.dwHeight, depth, refresh);
 	
 		// is it the best?
 		if (score > best_score)
 		{
 			// if so, remember it
 			best_score = score;
-			best_width = desc->dwWidth;
-			best_height = desc->dwHeight;
+			best_width = desc.dwWidth;
+			best_height = desc.dwHeight;
 			best_depth = depth;
 			best_refresh = refresh;
 		}
@@ -872,14 +872,14 @@ public class wind3d
 			return 0.0;
 	
 		// finally, compute refresh score
-		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine->drv->frames_per_second));
+		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine.drv.frames_per_second));
 	
 		// if we're looking for a particular refresh, make sure it matches
 		if (win_gfx_refresh && refresh && refresh != win_gfx_refresh)
 			return 0.0;
 	
 		// if refresh is smaller than we'd like, it only scores up to 0.1
-		if ((double)refresh < Machine->drv->frames_per_second)
+		if ((double)refresh < Machine.drv.frames_per_second)
 			refresh_score *= 0.1;
 	
 		// weight size/aspect highest, followed by depth and refresh
@@ -1241,12 +1241,12 @@ public class wind3d
 	
 	static HRESULT CALLBACK enum_textures_callback(LPDDPIXELFORMAT pixelformat, LPVOID preferred_pixelformat)
 	{
-	    if (pixelformat->dwFlags == DDPF_RGB && pixelformat->DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
+	    if (pixelformat.dwFlags == DDPF_RGB && pixelformat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
 	    {
 			// use RGB:555 format if supported by the 3D hardware and scaling effect
-			if (pixelformat->DUMMYUNIONNAMEN(2).dwRBitMask == 0x7C00 &&
-				pixelformat->DUMMYUNIONNAMEN(3).dwGBitMask == 0x03E0 &&
-				pixelformat->DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
+			if (pixelformat.DUMMYUNIONNAMEN(2).dwRBitMask == 0x7C00 &&
+				pixelformat.DUMMYUNIONNAMEN(3).dwGBitMask == 0x03E0 &&
+				pixelformat.DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
 			{
 				memcpy(preferred_pixelformat, pixelformat, sizeof(DDPIXELFORMAT));
 	
@@ -1255,9 +1255,9 @@ public class wind3d
 		}
 	
 		// use RGB:565 format otherwise
-		if (pixelformat->DUMMYUNIONNAMEN(2).dwRBitMask == 0xF800 &&
-			pixelformat->DUMMYUNIONNAMEN(3).dwGBitMask == 0x07E0 &&
-			pixelformat->DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
+		if (pixelformat.DUMMYUNIONNAMEN(2).dwRBitMask == 0xF800 &&
+			pixelformat.DUMMYUNIONNAMEN(3).dwGBitMask == 0x07E0 &&
+			pixelformat.DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
 		{
 				memcpy(preferred_pixelformat, pixelformat, sizeof(DDPIXELFORMAT));
 	    }
@@ -1777,13 +1777,13 @@ public class wind3d
 	static void compute_color_masks(const DDSURFACEDESC2 *desc)
 	{
 		// 16bpp case
-		if (desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
+		if (desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
 		{
 			int temp;
 	
 			// red
 			win_color16_rdst_shift = win_color16_rsrc_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_rdst_shift++;
 			while (!(temp & 0x80))
@@ -1791,7 +1791,7 @@ public class wind3d
 	
 			// green
 			win_color16_gdst_shift = win_color16_gsrc_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_gdst_shift++;
 			while (!(temp & 0x80))
@@ -1799,7 +1799,7 @@ public class wind3d
 	
 			// blue
 			win_color16_bdst_shift = win_color16_bsrc_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_bdst_shift++;
 			while (!(temp & 0x80))
@@ -1807,26 +1807,26 @@ public class wind3d
 		}
 	
 		// 24/32bpp case
-		else if (desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
-				 desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
+		else if (desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
+				 desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
 		{
 			int temp;
 	
 			// red
 			win_color32_rdst_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_rdst_shift++;
 	
 			// green
 			win_color32_gdst_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_gdst_shift++;
 	
 			// blue
 			win_color32_bdst_shift = 0;
-			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_bdst_shift++;
 		}
@@ -1882,8 +1882,8 @@ public class wind3d
 		// succeed, or else we will miss some areas
 		if (bounds != 0)
 		{
-			if (bounds->min_x != last_bounds.min_x || bounds->min_y != last_bounds.min_y ||
-				bounds->max_x != last_bounds.max_x || bounds->max_y != last_bounds.max_y)
+			if (bounds.min_x != last_bounds.min_x || bounds.min_y != last_bounds.min_y ||
+				bounds.max_x != last_bounds.max_x || bounds.max_y != last_bounds.max_y)
 				result = 1;
 			last_bounds = *bounds;
 		}
@@ -1972,9 +1972,9 @@ public class wind3d
 		params.dstyskip		= 0;
 		params.dsteffect	= win_determine_effect(&params);
 	
-		params.srcdata		= bitmap->base;
-		params.srcpitch		= bitmap->rowbytes;
-		params.srcdepth		= bitmap->depth;
+		params.srcdata		= bitmap.base;
+		params.srcpitch		= bitmap.rowbytes;
+		params.srcdepth		= bitmap.depth;
 		params.srclookup	= win_prepare_palette(&params);
 	
 		// adjust for more optimal bounds
@@ -1983,10 +1983,10 @@ public class wind3d
 			params.dstxoffs -= temprect.min_x;
 			params.dstyoffs -= temprect.min_y;
 	
-			temprect.min_x	= bounds->min_x;
-			temprect.max_x	= bounds->max_x;
-			temprect.min_y	= bounds->min_y;
-			temprect.max_y	= bounds->max_y;
+			temprect.min_x	= bounds.min_x;
+			temprect.max_x	= bounds.max_x;
+			temprect.min_y	= bounds.min_y;
+			temprect.max_y	= bounds.max_y;
 	
 			win_disorient_rect(&temprect);
 	
@@ -2115,18 +2115,18 @@ public class wind3d
 		RECT margins;
 	
 		// determine the current zoom level
-		win_d3d_current_zoom = win_d3d_effects_swapxy ? (dst->right - dst->left) / win_visible_width :
-														(dst->bottom - dst->top) / win_visible_height;
+		win_d3d_current_zoom = win_d3d_effects_swapxy ? (dst.right - dst.left) / win_visible_width :
+														(dst.bottom - dst.top) / win_visible_height;
 	
 		// determing if the window position has changed
-		if (src->left != prev_src.left ||
-			src->right != prev_src.right ||
-			src->top != prev_src.top ||
-			src->bottom != prev_src.bottom ||
-			dst->left != prev_dst.left ||
-			dst->right != prev_dst.right ||
-			dst->top != prev_dst.top ||
-			dst->bottom != prev_dst.bottom)
+		if (src.left != prev_src.left ||
+			src.right != prev_src.right ||
+			src.top != prev_src.top ||
+			src.bottom != prev_src.bottom ||
+			dst.left != prev_dst.left ||
+			dst.right != prev_dst.right ||
+			dst.top != prev_dst.top ||
+			dst.bottom != prev_dst.bottom)
 		{
 			position_changed = 1;
 		}
@@ -2135,16 +2135,16 @@ public class wind3d
 		{
 			char src_size_changed = 0;
 	
-			if ((src->right - src->left != prev_src.right - prev_src.left ||
-				 src->bottom - src->top != prev_src.bottom - prev_src.top))
+			if ((src.right - src.left != prev_src.right - prev_src.left ||
+				 src.bottom - src.top != prev_src.bottom - prev_src.top))
 			{
 				src_size_changed = 1;
 			}
 	
-			prev_src.left = src->left;
-			prev_src.right = src->right;
-			prev_src.top = src->top;
-			prev_src.bottom = src->bottom;
+			prev_src.left = src.left;
+			prev_src.right = src.right;
+			prev_src.top = src.top;
+			prev_src.bottom = src.bottom;
 	
 			if (win_default_constraints && src_size_changed)
 			{
@@ -2170,17 +2170,17 @@ public class wind3d
 			}
 	
 			// adjust prescale settings to the new zoom level
-			adjust_prescale(dst->right - dst->left, dst->bottom - dst->top);
+			adjust_prescale(dst.right - dst.left, dst.bottom - dst.top);
 	
 			init_vertices_screen(src, dst);
 	
 			if ((win_d3d_use_prescale && (current_prescalex > 1 || current_prescaley > 1)) || win_d3d_use_feedback)
 				init_vertices_preprocess(src);
 	
-			prev_dst.left = dst->left;
-			prev_dst.right = dst->right;
-			prev_dst.top = dst->top;
-			prev_dst.bottom = dst->bottom;
+			prev_dst.left = dst.left;
+			prev_dst.right = dst.right;
+			prev_dst.top = dst.top;
+			prev_dst.bottom = dst.bottom;
 	
 			position_changed = 0;
 		}
@@ -2381,7 +2381,7 @@ public class wind3d
 		result = IDirect3DDevice7_EndScene(d3d_device7);
 	
 		// sync to VBLANK?
-		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info()->game_speed_percent > 95)
+		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info().game_speed_percent > 95)
 		{
 			BOOL is_vblank;
 	
@@ -2409,7 +2409,7 @@ public class wind3d
 		if (win_window_mode != 0)
 		{
 			// blit from the upper left of the back surface to the correct position on the screen
-			RECT rect = { 0, 0, dst->right - dst->left, dst->bottom - dst->top };
+			RECT rect = { 0, 0, dst.right - dst.left, dst.bottom - dst.top };
 	
 			result = IDirectDrawSurface7_Blt(primary_surface, dst, back_surface, &rect, DDBLT_ASYNC, NULL);
 			if (result == DDERR_SURFACELOST)
@@ -2491,23 +2491,23 @@ public class wind3d
 		{
 			RECT rgb_dst;
 			RECT rgb_src = { 0, 0,
-							 win_d3d_effects_swapxy ? zoom * win_visible_width : dst->right - dst->left,
-							 win_d3d_effects_swapxy ? dst->bottom - dst->top : zoom * win_visible_height};
+							 win_d3d_effects_swapxy ? zoom * win_visible_width : dst.right - dst.left,
+							 win_d3d_effects_swapxy ? dst.bottom - dst.top : zoom * win_visible_height};
 	
 			if (win_window_mode != 0)
 			{
 				rgb_dst.left = 0; rgb_dst.top = 0;
-				rgb_dst.right = dst->right - dst->left;
-				rgb_dst.bottom = dst->bottom - dst->top;
+				rgb_dst.right = dst.right - dst.left;
+				rgb_dst.bottom = dst.bottom - dst.top;
 			}
 	
 			return IDirectDrawSurface7_Blt(surface, win_window_mode ? &rgb_dst : dst, win_d3d_background_surface, &rgb_src, DDBLT_ASYNC, NULL);
 		}
 		else
 		{
-			RECT rect = { 0, 0, dst->right - dst->left, dst->bottom - dst->top };
+			RECT rect = { 0, 0, dst.right - dst.left, dst.bottom - dst.top };
 	
-			return IDirectDrawSurface7_BltFast(surface, win_window_mode ? 0 : dst->left, win_window_mode ? 0 : dst->top, win_d3d_background_surface, &rect, DDBLTFAST_WAIT);
+			return IDirectDrawSurface7_BltFast(surface, win_window_mode ? 0 : dst.left, win_window_mode ? 0 : dst.top, win_d3d_background_surface, &rect, DDBLTFAST_WAIT);
 		}
 	}
 	
@@ -2523,34 +2523,34 @@ public class wind3d
 		{
 			if (blit_swapxy != 0)
 			{
-				screen_vertex[2].tu = screen_vertex[3].tu = (float)(!blit_flipy ? src->right : src->left) / texture_width;
-				screen_vertex[0].tu = screen_vertex[1].tu = (float)(!blit_flipy ? src->left : src->right) / texture_width;
-				screen_vertex[1].tv = screen_vertex[3].tv = (float)(!blit_flipx ? src->bottom : src->top) / texture_height;
-				screen_vertex[0].tv = screen_vertex[2].tv = (float)(!blit_flipx ? src->top : src->bottom) / texture_height;
+				screen_vertex[2].tu = screen_vertex[3].tu = (float)(!blit_flipy ? src.right : src.left) / texture_width;
+				screen_vertex[0].tu = screen_vertex[1].tu = (float)(!blit_flipy ? src.left : src.right) / texture_width;
+				screen_vertex[1].tv = screen_vertex[3].tv = (float)(!blit_flipx ? src.bottom : src.top) / texture_height;
+				screen_vertex[0].tv = screen_vertex[2].tv = (float)(!blit_flipx ? src.top : src.bottom) / texture_height;
 			}
 			else
 			{
-				screen_vertex[0].tu = screen_vertex[2].tu = (float)(blit_flipx ? src->right : src->left) / texture_width;
-				screen_vertex[1].tu = screen_vertex[3].tu = (float)(blit_flipx ? src->left : src->right) / texture_width;
-				screen_vertex[0].tv = screen_vertex[1].tv = (float)(blit_flipy ? src->bottom : src->top) / texture_height;
-				screen_vertex[2].tv = screen_vertex[3].tv = (float)(blit_flipy ? src->top : src->bottom) / texture_height;
+				screen_vertex[0].tu = screen_vertex[2].tu = (float)(blit_flipx ? src.right : src.left) / texture_width;
+				screen_vertex[1].tu = screen_vertex[3].tu = (float)(blit_flipx ? src.left : src.right) / texture_width;
+				screen_vertex[0].tv = screen_vertex[1].tv = (float)(blit_flipy ? src.bottom : src.top) / texture_height;
+				screen_vertex[2].tv = screen_vertex[3].tv = (float)(blit_flipy ? src.top : src.bottom) / texture_height;
 			}
 		}
 		else
 		{
 			if (blit_swapxy != 0)
 			{
-				screen_vertex[2].tu = screen_vertex[3].tu = !blit_flipy ? (float)(src->right - src->left) / texture_width : 0;
-				screen_vertex[0].tu = screen_vertex[1].tu = !blit_flipy ? 0 : (float)(src->right - src->left)  / texture_width;
-				screen_vertex[1].tv = screen_vertex[3].tv = !blit_flipx ? (float)(src->bottom - src->top) / texture_height : 0;
-				screen_vertex[0].tv = screen_vertex[2].tv = !blit_flipx ? 0 : (float)(src->bottom - src->top) / texture_height;
+				screen_vertex[2].tu = screen_vertex[3].tu = !blit_flipy ? (float)(src.right - src.left) / texture_width : 0;
+				screen_vertex[0].tu = screen_vertex[1].tu = !blit_flipy ? 0 : (float)(src.right - src.left)  / texture_width;
+				screen_vertex[1].tv = screen_vertex[3].tv = !blit_flipx ? (float)(src.bottom - src.top) / texture_height : 0;
+				screen_vertex[0].tv = screen_vertex[2].tv = !blit_flipx ? 0 : (float)(src.bottom - src.top) / texture_height;
 			}
 			else
 			{
-				screen_vertex[0].tu = screen_vertex[2].tu = blit_flipx ? (float)(src->right - src->left) / texture_width : 0;
-				screen_vertex[1].tu = screen_vertex[3].tu = blit_flipx ? 0 : (float)(src->right - src->left) / texture_width;
-				screen_vertex[0].tv = screen_vertex[1].tv = blit_flipy ? (float)(src->bottom - src->top) / texture_height : 0;
-				screen_vertex[2].tv = screen_vertex[3].tv = blit_flipy ? 0 : (float)(src->bottom - src->top) / texture_height;
+				screen_vertex[0].tu = screen_vertex[2].tu = blit_flipx ? (float)(src.right - src.left) / texture_width : 0;
+				screen_vertex[1].tu = screen_vertex[3].tu = blit_flipx ? 0 : (float)(src.right - src.left) / texture_width;
+				screen_vertex[0].tv = screen_vertex[1].tv = blit_flipy ? (float)(src.bottom - src.top) / texture_height : 0;
+				screen_vertex[2].tv = screen_vertex[3].tv = blit_flipy ? 0 : (float)(src.bottom - src.top) / texture_height;
 			}
 		}
 	}
@@ -2580,16 +2580,16 @@ public class wind3d
 		{
 			// render to the upper left of the back surface
 			screen_vertex[0].sx = -0.5f;								   screen_vertex[0].sy = -0.5f;
-			screen_vertex[1].sx = -0.5f + (float)(dst->right - dst->left); screen_vertex[1].sy = -0.5f;
-			screen_vertex[2].sx = -0.5f;								   screen_vertex[2].sy = -0.5f + (float)(dst->bottom - dst->top);
-			screen_vertex[3].sx = -0.5f + (float)(dst->right - dst->left); screen_vertex[3].sy = -0.5f + (float)(dst->bottom - dst->top);
+			screen_vertex[1].sx = -0.5f + (float)(dst.right - dst.left); screen_vertex[1].sy = -0.5f;
+			screen_vertex[2].sx = -0.5f;								   screen_vertex[2].sy = -0.5f + (float)(dst.bottom - dst.top);
+			screen_vertex[3].sx = -0.5f + (float)(dst.right - dst.left); screen_vertex[3].sy = -0.5f + (float)(dst.bottom - dst.top);
 		}
 		else
 		{
-			screen_vertex[0].sx = -0.5f + (float)dst->left;  screen_vertex[0].sy = -0.5f + (float)dst->top;
-			screen_vertex[1].sx = -0.5f + (float)dst->right; screen_vertex[1].sy = -0.5f + (float)dst->top;
-			screen_vertex[2].sx = -0.5f + (float)dst->left;  screen_vertex[2].sy = -0.5f + (float)dst->bottom;
-			screen_vertex[3].sx = -0.5f + (float)dst->right; screen_vertex[3].sy = -0.5f + (float)dst->bottom;
+			screen_vertex[0].sx = -0.5f + (float)dst.left;  screen_vertex[0].sy = -0.5f + (float)dst.top;
+			screen_vertex[1].sx = -0.5f + (float)dst.right; screen_vertex[1].sy = -0.5f + (float)dst.top;
+			screen_vertex[2].sx = -0.5f + (float)dst.left;  screen_vertex[2].sy = -0.5f + (float)dst.bottom;
+			screen_vertex[3].sx = -0.5f + (float)dst.right; screen_vertex[3].sy = -0.5f + (float)dst.bottom;
 		}
 	
 		// set texture coordinates for scanlines
@@ -2620,7 +2620,7 @@ public class wind3d
 	
 	static void init_vertices_preprocess(LPRECT src)
 	{
-		RECT rect = { 0, 0, (src->right - src->left) * current_prescalex, (src->bottom - src->top) * current_prescaley };
+		RECT rect = { 0, 0, (src.right - src.left) * current_prescalex, (src.bottom - src.top) * current_prescaley };
 		int i;
 	
 		for (i = 0; i < 4; i++)
@@ -2633,17 +2633,17 @@ public class wind3d
 		// set the texture coordinates for the preprocess vertices
 		if (win_d3d_tex_manage != 0)
 		{
-			preprocess_vertex[0].tu = preprocess_vertex[2].tu = (float)src->left / texture_desc.dwWidth;
-			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)src->right / texture_desc.dwWidth;
-			preprocess_vertex[0].tv = preprocess_vertex[1].tv = (float)src->top / texture_desc.dwHeight;
-			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)src->bottom / texture_desc.dwHeight;
+			preprocess_vertex[0].tu = preprocess_vertex[2].tu = (float)src.left / texture_desc.dwWidth;
+			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)src.right / texture_desc.dwWidth;
+			preprocess_vertex[0].tv = preprocess_vertex[1].tv = (float)src.top / texture_desc.dwHeight;
+			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)src.bottom / texture_desc.dwHeight;
 		}
 		else
 		{
 			preprocess_vertex[0].tu = preprocess_vertex[2].tu = 0;
-			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)(src->right - src->left) / texture_desc.dwWidth;
+			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)(src.right - src.left) / texture_desc.dwWidth;
 			preprocess_vertex[0].tv = preprocess_vertex[1].tv = 0;
-			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)(src->bottom - src->top) / texture_desc.dwHeight;
+			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)(src.bottom - src.top) / texture_desc.dwHeight;
 		}
 	
 		// set the texture coordinates for the screen vertices

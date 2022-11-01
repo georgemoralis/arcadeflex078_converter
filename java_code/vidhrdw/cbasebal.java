@@ -63,10 +63,10 @@ public class cbasebal
 	
 		tilemap_set_transparent_pen(fg_tilemap,3);
 	
-	#define COLORTABLE_START(gfxn,color_code) Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + \
-					color_code * Machine->gfx[gfxn]->color_granularity
-	#define GFX_COLOR_CODES(gfxn) Machine->gfx[gfxn]->total_colors
-	#define GFX_ELEM_COLORS(gfxn) Machine->gfx[gfxn]->color_granularity
+	#define COLORTABLE_START(gfxn,color_code) Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + \
+					color_code * Machine.gfx[gfxn].color_granularity
+	#define GFX_COLOR_CODES(gfxn) Machine.gfx[gfxn].total_colors
+	#define GFX_ELEM_COLORS(gfxn) Machine.gfx[gfxn].color_granularity
 	
 		return 0;
 	} };
@@ -185,7 +185,7 @@ public class cbasebal
 				flipx = !flipx;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					code,
 					color,
 					flipx,flipscreen,
@@ -199,7 +199,7 @@ public class cbasebal
 		if (bg_on != 0)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		else
-			fillbitmap(bitmap,Machine->pens[768],cliprect);
+			fillbitmap(bitmap,Machine.pens[768],cliprect);
 	
 		if (obj_on != 0)
 			draw_sprites(bitmap,cliprect);

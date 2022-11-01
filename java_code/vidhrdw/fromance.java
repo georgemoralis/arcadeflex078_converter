@@ -268,7 +268,7 @@ public class fromance
 	{
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 		if (param != 0)
-			timer_adjust(crtc_timer, TIME_IN_HZ(Machine->drv->frames_per_second * param), 0, TIME_IN_HZ(Machine->drv->frames_per_second * param));
+			timer_adjust(crtc_timer, TIME_IN_HZ(Machine.drv.frames_per_second * param), 0, TIME_IN_HZ(Machine.drv.frames_per_second * param));
 	}
 	
 	
@@ -280,7 +280,7 @@ public class fromance
 		{
 			/* only register we know about.... */
 			case 0x0b:
-				timer_adjust(crtc_timer, cpu_getscanlinetime(Machine->visible_area.max_y + 1), (data > 0x80) ? 2 : 1, 0);
+				timer_adjust(crtc_timer, cpu_getscanlinetime(Machine.visible_area.max_y + 1), (data > 0x80) ? 2 : 1, 0);
 				break;
 	
 			default:
@@ -338,8 +338,8 @@ public class fromance
 				yzoom = 16 - zoomtable[yzoom] / 8;
 	
 				/* wrap around */
-				if (x > Machine->visible_area.max_x) x -= 0x200;
-				if (y > Machine->visible_area.max_y) y -= 0x200;
+				if (x > Machine.visible_area.max_x) x -= 0x200;
+				if (y > Machine.visible_area.max_y) y -= 0x200;
 	
 				/* normal case */
 				if (!xflip && !yflip)
@@ -347,10 +347,10 @@ public class fromance
 					for (yt = 0; yt < ytiles; yt++)
 						for (xt = 0; xt < xtiles; xt++, code++)
 							if (!zoomed)
-								drawgfx(bitmap, Machine->gfx[2], code, color, 0, 0,
+								drawgfx(bitmap, Machine.gfx[2], code, color, 0, 0,
 										x + xt * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 							else
-								drawgfxzoom(bitmap, Machine->gfx[2], code, color, 0, 0,
+								drawgfxzoom(bitmap, Machine.gfx[2], code, color, 0, 0,
 										x + xt * xzoom, y + yt * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 										0x1000 * xzoom, 0x1000 * yzoom);
 				}
@@ -361,10 +361,10 @@ public class fromance
 					for (yt = 0; yt < ytiles; yt++)
 						for (xt = 0; xt < xtiles; xt++, code++)
 							if (!zoomed)
-								drawgfx(bitmap, Machine->gfx[2], code, color, 1, 0,
+								drawgfx(bitmap, Machine.gfx[2], code, color, 1, 0,
 										x + (xtiles - 1 - xt) * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 							else
-								drawgfxzoom(bitmap, Machine->gfx[2], code, color, 1, 0,
+								drawgfxzoom(bitmap, Machine.gfx[2], code, color, 1, 0,
 										x + (xtiles - 1 - xt) * xzoom, y + yt * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 										0x1000 * xzoom, 0x1000 * yzoom);
 				}
@@ -375,10 +375,10 @@ public class fromance
 					for (yt = 0; yt < ytiles; yt++)
 						for (xt = 0; xt < xtiles; xt++, code++)
 							if (!zoomed)
-								drawgfx(bitmap, Machine->gfx[2], code, color, 0, 1,
+								drawgfx(bitmap, Machine.gfx[2], code, color, 0, 1,
 										x + xt * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 							else
-								drawgfxzoom(bitmap, Machine->gfx[2], code, color, 0, 1,
+								drawgfxzoom(bitmap, Machine.gfx[2], code, color, 0, 1,
 										x + xt * xzoom, y + (ytiles - 1 - yt) * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 										0x1000 * xzoom, 0x1000 * yzoom);
 				}
@@ -389,10 +389,10 @@ public class fromance
 					for (yt = 0; yt < ytiles; yt++)
 						for (xt = 0; xt < xtiles; xt++, code++)
 							if (!zoomed)
-								drawgfx(bitmap, Machine->gfx[2], code, color, 1, 1,
+								drawgfx(bitmap, Machine.gfx[2], code, color, 1, 1,
 										x + (xtiles - 1 - xt) * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 							else
-								drawgfxzoom(bitmap, Machine->gfx[2], code, color, 1, 1,
+								drawgfxzoom(bitmap, Machine.gfx[2], code, color, 1, 1,
 										x + (xtiles - 1 - xt) * xzoom, y + (ytiles - 1 - yt) * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 										0x1000 * xzoom, 0x1000 * yzoom);
 				}

@@ -33,7 +33,7 @@ public class cheekyms
 			const unsigned char* color_prom_save = color_prom;
 	
 			/* lower nibble */
-			for (j = 0;j < Machine->drv->total_colors/6;j++)
+			for (j = 0;j < Machine.drv.total_colors/6;j++)
 			{
 				/* red component */
 				bit = (color_prom[0] >> 0) & 0x01;
@@ -45,14 +45,14 @@ public class cheekyms
 				bit = (color_prom[0] >> 2) & 0x01;
 				b = 0xff * bit;
 	
-				palette_set_color(((i*2)*Machine->drv->total_colors/6)+j,r,g,b);
+				palette_set_color(((i*2)*Machine.drv.total_colors/6)+j,r,g,b);
 				color_prom++;
 			}
 	
 			color_prom = color_prom_save;
 	
 			/* upper nibble */
-			for (j = 0;j < Machine->drv->total_colors/6;j++)
+			for (j = 0;j < Machine.drv.total_colors/6;j++)
 			{
 				/* red component */
 				bit = (color_prom[0] >> 4) & 0x01;
@@ -64,7 +64,7 @@ public class cheekyms
 				bit = (color_prom[0] >> 6) & 0x01;
 				b = 0xff * bit;
 	
-				palette_set_color(((i*2+1)*Machine->drv->total_colors/6)+j,r,g,b);
+				palette_set_color(((i*2+1)*Machine.drv.total_colors/6)+j,r,g,b);
 				color_prom++;
 			}
 		}
@@ -136,7 +136,7 @@ public class cheekyms
 		}
 	
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 		/* Draw the sprites first, because they're supposed to appear below
 		   the characters */
@@ -160,27 +160,27 @@ public class cheekyms
 					code++;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,col,
 						0,0,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 			else
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code + 0x20,
 						col,
 						0,0,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code + 0x21,
 						col,
 						0,0,
 						sx + 8*(v1 & 2),sy + 8*(~v1 & 2),
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -213,18 +213,18 @@ public class cheekyms
 					sy = 31 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						0 + char_palette,
 						flip_screen,flip_screen,
 						8*sx, 8*sy - (man_area ? man_scroll : 0),
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 		redraw_man = 0;
 	
 		/* copy the temporary bitmap to the screen over the sprites */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN,Machine->pens[4*char_palette]);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN,Machine.pens[4*char_palette]);
 	} };
 }

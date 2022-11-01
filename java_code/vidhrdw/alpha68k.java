@@ -141,7 +141,7 @@ public class alpha68k
 				}
 	
 				if (color != 0)
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 						tile,
 						color,
 						fx,fy,
@@ -167,7 +167,7 @@ public class alpha68k
 		last_bank=bank_base;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
-		fillbitmap(bitmap,Machine->pens[2047],cliprect);
+		fillbitmap(bitmap,Machine.pens[2047],cliprect);
 	//AT
 	/*
 		draw_sprites(bitmap,cliprect,1,0x000);
@@ -299,7 +299,7 @@ public class alpha68k
 				}
 	
 				if (color != 0)
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 						tile,
 						color,
 						fx,fy,
@@ -323,7 +323,7 @@ public class alpha68k
 		last_bank=bank_base;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
-		fillbitmap(bitmap,Machine->pens[4095],cliprect);
+		fillbitmap(bitmap,Machine.pens[4095],cliprect);
 	
 		/* This appears to be correct priority */
 		if (microcontroller_id == 0x8814) /* Sky Adventure */
@@ -358,7 +358,7 @@ public class alpha68k
 		last_bank=bank_base;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
-		fillbitmap(bitmap,Machine->pens[4095],cliprect);
+		fillbitmap(bitmap,Machine.pens[4095],cliprect);
 	
 		/* This appears to be correct priority */
 		draw_sprites_V(bitmap,cliprect,0,0x07c0,0x0800,0x4000,0x8000,0x3fff);
@@ -396,7 +396,7 @@ public class alpha68k
 				tile&=0x3fff;
 	
 				if (tile && tile!=0x3000 && tile!=0x26)
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 						tile,
 						color,
 						0,0,
@@ -407,7 +407,7 @@ public class alpha68k
 	{
 		int data, offs, mx, my, tile, color, fy, i;
 		UINT8 *color_prom = memory_region(REGION_USER1);
-		struct GfxElement *gfx = Machine->gfx[0];
+		struct GfxElement *gfx = Machine.gfx[0];
 	
 		for (offs=0; offs<0x400; offs+=0x20)
 		{
@@ -434,7 +434,7 @@ public class alpha68k
 	{
 		int yshift = (microcontroller_id == 0x890a) ? 1 : 0; // The Next Space is 1 pixel off
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		/* This appears to be correct priority */
 		draw_sprites2(bitmap,cliprect,2,0x0800,yshift);
@@ -493,7 +493,7 @@ public class alpha68k
 	
 		color_prom += 0x200;
 	//AT: fill Super Stingray CLUT(bad ic5.5)
-		if (!strcmp(Machine->gamedrv->name, "sstingry")) {
+		if (!strcmp(Machine.gamedrv.name, "sstingry")) {
 			for (i=0; i<256; i++) colortable[i] = temp_clut[i];
 			return; }
 	//ZT
@@ -555,7 +555,7 @@ public class alpha68k
 				bank=((tile>>10)&0x3)+((tile&0x8000)?4:0);
 				tile=(tile&0x3ff)+((tile&0x2000)?0x400:0);
 	
-				drawgfx(bitmap,Machine->gfx[bank],
+				drawgfx(bitmap,Machine.gfx[bank],
 						tile,
 						color,
 						0,fy,
@@ -582,7 +582,7 @@ public class alpha68k
 						fy = data & 0x1000;
 						tile = (data>>3 & 0x400) | (data & 0x3ff);
 						bank = (data>>13 & 4) | (data>>10 & 3);
-						drawgfx(bitmap, Machine->gfx[bank], tile, color, 0, fy, mx, my,
+						drawgfx(bitmap, Machine.gfx[bank], tile, color, 0, fy, mx, my,
 								cliprect, TRANSPARENCY_PEN, 0);
 					}
 				}
@@ -594,7 +594,7 @@ public class alpha68k
 	
 	public static VideoUpdateHandlerPtr video_update_kyros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		//fillbitmap(bitmap,Machine->pens[0],cliprect);
+		//fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT
 	
 		kyros_draw_sprites(bitmap,cliprect,2,0x0800);
@@ -624,7 +624,7 @@ public class alpha68k
 				tile=(tile&0xfff);
 				bank=tile/0x400;
 	
-				drawgfx(bitmap,Machine->gfx[bank],
+				drawgfx(bitmap,Machine.gfx[bank],
 						tile&0x3ff,
 						color,
 						fx,fy,
@@ -649,7 +649,7 @@ public class alpha68k
 					color = (data>>7 & 0x18) | (data>>13 & 7); // can't verify(PROMs missing)                        bank = tile>>10 & 3;
 					tile = data & 0x3ff;
 					bank = data>>10 & 3;
-					drawgfx(bitmap, Machine->gfx[bank], tile, color, 0, fy, mx, my,
+					drawgfx(bitmap, Machine.gfx[bank], tile, color, 0, fy, mx, my,
 							cliprect, TRANSPARENCY_PEN, 0);
 				}
 	//ZT
@@ -660,7 +660,7 @@ public class alpha68k
 	
 	public static VideoUpdateHandlerPtr video_update_sstingry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		//fillbitmap(bitmap,Machine->pens[0],cliprect);
+		//fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT
 	
 		sstingry_draw_sprites(bitmap,cliprect,2,0x0800);

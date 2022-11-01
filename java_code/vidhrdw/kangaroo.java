@@ -47,7 +47,7 @@ public class kangaroo
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = ((i & 4) >> 2) * 0xff;
 			int g = ((i & 2) >> 1) * 0xff;
@@ -66,13 +66,13 @@ public class kangaroo
 	
 	public static VideoUpdateHandlerPtr video_update_kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		if ((tmpbitmap2 = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap2 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		if ((videoram = auto_malloc(Machine->drv->screen_width*Machine->drv->screen_height)) == 0)
+		if ((videoram = auto_malloc(Machine.drv.screen_width*Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -206,11 +206,11 @@ public class kangaroo
 	{
 		if (flip != 0)
 		{
-			x = bitmap->width - 1 - x;
-			y = bitmap->height - 1 - y;
+			x = bitmap.width - 1 - x;
+			y = bitmap.height - 1 - y;
 		}
 	
-		plot_pixel(bitmap, x, y, Machine->pens[((col & 0x08) ? 0 : color_base) + (col & 0x07)]);
+		plot_pixel(bitmap, x, y, Machine.pens[((col & 0x08) ? 0 : color_base) + (col & 0x07)]);
 	}
 	
 	INLINE void kangaroo_redraw_4pixels(int x, int y)
@@ -320,14 +320,14 @@ public class kangaroo
 		if (*kangaroo_bank_select & 0x01)
 		{
 			/* Plane B is primary */
-			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_COLOR,8);
+			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,8);
 		}
 		else
 		{
 			/* Plane A is primary */
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
-			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,16);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copybitmap(bitmap,tmpbitmap2,0,0,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,16);
 		}
 	} };
 }

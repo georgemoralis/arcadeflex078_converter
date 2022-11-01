@@ -561,7 +561,7 @@ public class toaplan2
 			toaplan2_coin_w(offset, data & 0xff);
 			if (toaplan2_sub_cpu == CPU_2_Z80)
 			{
-				if (Machine->drv->sound[1].sound_type == SOUND_OKIM6295)
+				if (Machine.drv.sound[1].sound_type == SOUND_OKIM6295)
 				{
 					OKIM6295_set_bank_base(0, (((data & 0x10) >> 4) * 0x40000));
 				}

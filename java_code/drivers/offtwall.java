@@ -139,7 +139,7 @@ public class offtwall
 	{
 		/* this is the table lookup; the bank is determined by the address that was requested */
 		bank_offset = (offset & 3) * 0x1000;
-		logerror("Bankswitch index %d -> %04X\n", offset, bank_offset);
+		logerror("Bankswitch index %d . %04X\n", offset, bank_offset);
 	
 		return bankswitch_base[offset];
 	}

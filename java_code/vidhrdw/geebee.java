@@ -115,8 +115,8 @@ public class geebee
 	
 	INLINE void geebee_plot(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int x, int y)
 	{
-		if (x >= cliprect->min_x && x <= cliprect->max_x && y >= cliprect->min_y && y <= cliprect->max_y)
-			plot_pixel(bitmap,x,y,Machine->pens[1]);
+		if (x >= cliprect.min_x && x <= cliprect.max_x && y >= cliprect.min_y && y <= cliprect.max_y)
+			plot_pixel(bitmap,x,y,Machine.pens[1]);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -126,7 +126,7 @@ public class geebee
 	#ifdef MAME_DEBUG
 		if( geebee_cnt > 0 )
 		{
-			ui_text(Machine->scrbitmap, geebee_msg, Machine->visible_area.min_y, Machine->visible_area.max_x - 8);
+			ui_text(Machine.scrbitmap, geebee_msg, Machine.visible_area.min_y, Machine.visible_area.max_x - 8);
 	    }
 	#endif
 	
@@ -168,10 +168,10 @@ public class geebee
 	
 				code = videoram.read(offs);
 				color = ((geebee_bgw & 1) << 1) | ((code & 0x80) >> 7);
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						code,color,
 						geebee_inv,geebee_inv,sx,sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);

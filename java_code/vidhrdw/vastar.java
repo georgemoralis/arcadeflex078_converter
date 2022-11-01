@@ -169,14 +169,14 @@ public class vastar
 				if (!flip_screen)
 					sy = 224 - sy;
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						code/2,
 						color,
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						code/2,
 						color,
 						flipx,flipy,
@@ -188,7 +188,7 @@ public class vastar
 				if (!flip_screen)
 					sy = 240 - sy;
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,
 						color,
 						flipx,flipy,

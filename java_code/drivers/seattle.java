@@ -877,8 +877,8 @@ public class seattle
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = (((readinputport(4 + player * 2) & 0xff) << 4) * Machine->visible_area.max_x) / 0xfff;
-		*y = (((readinputport(5 + player * 2) & 0xff) << 2) * Machine->visible_area.max_y) / 0x3ff;
+		*x = (((readinputport(4 + player * 2) & 0xff) << 4) * Machine.visible_area.max_x) / 0xfff;
+		*y = (((readinputport(5 + player * 2) & 0xff) << 2) * Machine.visible_area.max_y) / 0x3ff;
 	}
 	
 	

@@ -76,7 +76,7 @@ public class lazercmd
 				if (x+xbit < 0 || x+xbit >= HORZ_RES * HORZ_CHR)
 					continue;
 	
-				plot_pixel(bitmap, x+xbit, y+ybit, Machine->pens[2]);
+				plot_pixel(bitmap, x+xbit, y+ybit, Machine.pens[2]);
 			}
 		}
 	}
@@ -122,14 +122,14 @@ public class lazercmd
 				sx *= HORZ_CHR;
 				sy *= VERT_CHR;
 	
-				drawgfx(tmpbitmap, Machine->gfx[0],
+				drawgfx(tmpbitmap, Machine.gfx[0],
 						videoram.read(i), video_inverted ? 1 : 0,
 						0,0,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		x = marker_x - 1;             /* normal video lags marker by 1 pixel */
 		y = vert_scale(marker_y) - VERT_CHR; /* first line used as scratch pad */

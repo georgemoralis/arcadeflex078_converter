@@ -100,8 +100,8 @@ c003    "DIPSW1"
         76543210
         ||||||||
         |||||||^-UNUSED?
-        ||||||^-->EXTRA
-        |||||^--->LIVES
+        ||||||^-.EXTRA
+        |||||^--.LIVES
         ||||^----CONTINUE MODE
         |||^-----DEMO SOUND
         ||^------NORMAL/HARD
@@ -116,11 +116,11 @@ c004    "DIPSW2"
         |||||||^-TEST MODE
         ||||||^--TABLE/UPRIGHT
         |||||^---"CREDIT SERVICE"
-        ||||^---->
-        |||^----->>
-        ||^------>>> coin/credit configurations
-        |^------->>
-        ^-------->
+        ||||^---.
+        |||^----.>
+        ||^-----.>> coin/credit configurations
+        |^------.>
+        ^-------.
 
 c200	Sound command?
 	This byte is written when game plays sound effects...
@@ -244,22 +244,22 @@ public class ninjakd2
 		int sample_info [9][2] = { {0x0000,0x0A00},{0x0A00,0x1D00},{0x2700,0x1700},
 		{0x3E00,0x1500},{0x5300,0x0B00},{0x5E00,0x0A00},{0x6800,0x0E00},{0x7600,0x1E00},{0xF000,0x0400} };
 	
-		if ((Machine->samples = auto_malloc(sizeof(struct GameSamples) + 9 * sizeof(struct GameSample *))) == NULL)
+		if ((Machine.samples = auto_malloc(sizeof(struct GameSamples) + 9 * sizeof(struct GameSample *))) == NULL)
 			return 1;
 	
-		samples = Machine->samples;
-		samples->total = 8;
+		samples = Machine.samples;
+		samples.total = 8;
 	
 		for (i=0;i<8;i++)
 		{
-			if ((samples->sample[i] = auto_malloc(sizeof(struct GameSample) + (sample_info[i][1]))) == NULL)
+			if ((samples.sample[i] = auto_malloc(sizeof(struct GameSample) + (sample_info[i][1]))) == NULL)
 				return 1;
 	
-			samples->sample[i]->length = sample_info[i][1];
-			samples->sample[i]->smpfreq = 16000;	/* 16 kHz */
-			samples->sample[i]->resolution = 8;
+			samples.sample[i].length = sample_info[i][1];
+			samples.sample[i].smpfreq = 16000;	/* 16 kHz */
+			samples.sample[i].resolution = 8;
 			for (n=0; n<sample_info[i][1]; n++)
-				samples->sample[i]->data[n] = source[sample_info[i][0]+n] ^ 0x80;
+				samples.sample[i].data[n] = source[sample_info[i][0]+n] ^ 0x80;
 		}
 	
 		/*	The samples are now ready to be used.  They are a 8 bit, 16 kHz samples. 	 */

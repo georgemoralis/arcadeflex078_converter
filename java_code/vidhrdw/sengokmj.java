@@ -145,12 +145,12 @@ public class sengokmj
 			for (ax=0; ax<dx; ax++)
 				for (ay=0; ay<dy; ay++) {
 					if (!fx)
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 							sprite++,
 							color,fx,fy,x+ax*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);
 					else
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 							sprite++,
 							color,fx,fy,x+(dx-1-ax)*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);

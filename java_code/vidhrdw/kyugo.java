@@ -225,7 +225,7 @@ public class kyugo
 				}
 	
 	
-				drawgfx( bitmap, Machine->gfx[2],
+				drawgfx( bitmap, Machine.gfx[2],
 						 code,
 						 color,
 						 flipx,flipy,

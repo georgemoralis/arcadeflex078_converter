@@ -241,7 +241,7 @@ public class video
 			return -1;
 		}
 	
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -278,7 +278,7 @@ public class video
 		options.vector_width = win_gfx_width;
 		options.vector_height = win_gfx_height;
 	
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -298,7 +298,7 @@ public class video
 			return -1;
 		}
 		win_blit_effect = temp_blit_effect;
-		option->priority = priority;
+		option.priority = priority;
 	
 		return 0;
 	}
@@ -320,7 +320,7 @@ public class video
 		}
 		win_screen_aspect = (double)num / (double)den;
 	
-		option->priority = priority;
+		option.priority = priority;
 		return 0;
 	}
 	
@@ -337,24 +337,24 @@ public class video
 		// apply X/Y swap first
 		if (blit_swapxy != 0)
 		{
-			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
-			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
+			temp = rect.min_x; rect.min_x = rect.min_y; rect.min_y = temp;
+			temp = rect.max_x; rect.max_x = rect.max_y; rect.max_y = temp;
 		}
 	
 		// apply X flip
 		if (blit_flipx != 0)
 		{
-			temp = video_width - rect->min_x - 1;
-			rect->min_x = video_width - rect->max_x - 1;
-			rect->max_x = temp;
+			temp = video_width - rect.min_x - 1;
+			rect.min_x = video_width - rect.max_x - 1;
+			rect.max_x = temp;
 		}
 	
 		// apply Y flip
 		if (blit_flipy != 0)
 		{
-			temp = video_height - rect->min_y - 1;
-			rect->min_y = video_height - rect->max_y - 1;
-			rect->max_y = temp;
+			temp = video_height - rect.min_y - 1;
+			rect.min_y = video_height - rect.max_y - 1;
+			rect.max_y = temp;
 		}
 	}
 	
@@ -371,24 +371,24 @@ public class video
 		// unapply Y flip
 		if (blit_flipy != 0)
 		{
-			temp = video_height - rect->min_y - 1;
-			rect->min_y = video_height - rect->max_y - 1;
-			rect->max_y = temp;
+			temp = video_height - rect.min_y - 1;
+			rect.min_y = video_height - rect.max_y - 1;
+			rect.max_y = temp;
 		}
 	
 		// unapply X flip
 		if (blit_flipx != 0)
 		{
-			temp = video_width - rect->min_x - 1;
-			rect->min_x = video_width - rect->max_x - 1;
-			rect->max_x = temp;
+			temp = video_width - rect.min_x - 1;
+			rect.min_x = video_width - rect.max_x - 1;
+			rect.max_x = temp;
 		}
 	
 		// unapply X/Y swap last
 		if (blit_swapxy != 0)
 		{
-			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
-			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
+			temp = rect.min_x; rect.min_x = rect.min_y; rect.min_y = temp;
+			temp = rect.max_x; rect.max_x = rect.max_y; rect.max_y = temp;
 		}
 	}
 	
@@ -404,14 +404,14 @@ public class video
 		double aspect_ratio;
 		int r, g, b;
 	
-		logerror("width %d, height %d depth %d\n", params->width, params->height, params->depth);
+		logerror("width %d, height %d depth %d\n", params.width, params.height, params.depth);
 	
 		// copy the parameters into globals for later use
-		video_width			= blit_swapxy ? params->height : params->width;
-		video_height		= blit_swapxy ? params->width : params->height;
-		video_depth			= (params->depth != 15) ? params->depth : 16;
-		video_fps			= params->fps;
-		video_attributes	= params->video_attributes;
+		video_width			= blit_swapxy ? params.height : params.width;
+		video_height		= blit_swapxy ? params.width : params.height;
+		video_depth			= (params.depth != 15) ? params.depth : 16;
+		video_fps			= params.fps;
+		video_attributes	= params.video_attributes;
 	
 		// clamp the frameskip value to within range
 		if (frameskip < 0)
@@ -420,14 +420,14 @@ public class video
 			frameskip = FRAMESKIP_LEVELS - 1;
 	
 		// extract useful parameters from the attributes
-		vector_game			= ((params->video_attributes & VIDEO_TYPE_VECTOR) != 0);
-		rgb_direct			= ((params->video_attributes & VIDEO_RGB_DIRECT) != 0);
+		vector_game			= ((params.video_attributes & VIDEO_TYPE_VECTOR) != 0);
+		rgb_direct			= ((params.video_attributes & VIDEO_RGB_DIRECT) != 0);
 	
 		// create the window
 		if (!blit_swapxy)
-			aspect_ratio = (double)params->aspect_x / (double)params->aspect_y;
+			aspect_ratio = (double)params.aspect_x / (double)params.aspect_y;
 		else
-			aspect_ratio = (double)params->aspect_y / (double)params->aspect_x;
+			aspect_ratio = (double)params.aspect_y / (double)params.aspect_x;
 		if (win_create_window(video_width, video_height, video_depth, video_attributes, aspect_ratio))
 			return 1;
 	
@@ -515,18 +515,18 @@ public class video
 		// display the FPS, frameskip, percent, fps and target fps
 		dest += sprintf(dest, "%s%2d%4d%%%4d/%d fps",
 				autoframeskip ? "auto" : "fskp", frameskip,
-				(int)(performance->game_speed_percent + 0.5),
-				(int)(performance->frames_per_second + 0.5),
-				(int)(Machine->drv->frames_per_second + 0.5));
+				(int)(performance.game_speed_percent + 0.5),
+				(int)(performance.frames_per_second + 0.5),
+				(int)(Machine.drv.frames_per_second + 0.5));
 	
 		/* for vector games, add the number of vector updates */
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 		{
-			dest += sprintf(dest, "\n %d vector updates", performance->vector_updates_last_second);
+			dest += sprintf(dest, "\n %d vector updates", performance.vector_updates_last_second);
 		}
-		else if (performance->partial_updates_this_frame > 1)
+		else if (performance.partial_updates_this_frame > 1)
 		{
-			dest += sprintf(dest, "\n %d partial updates", performance->partial_updates_this_frame);
+			dest += sprintf(dest, "\n %d partial updates", performance.partial_updates_this_frame);
 		}
 	
 		/* return a pointer to the static buffer */
@@ -683,20 +683,20 @@ public class video
 		int i, j;
 	
 		// loop over dirty colors in batches of 32
-		for (i = 0; i < display->game_palette_entries; i += 32)
+		for (i = 0; i < display.game_palette_entries; i += 32)
 		{
-			UINT32 dirtyflags = palette_lookups_invalid ? ~0 : display->game_palette_dirty[i / 32];
-	//		UINT32 dirtyflags = display->game_palette_dirty[i / 32];
+			UINT32 dirtyflags = palette_lookups_invalid ? ~0 : display.game_palette_dirty[i / 32];
+	//		UINT32 dirtyflags = display.game_palette_dirty[i / 32];
 			if (dirtyflags != 0)
 			{
-				display->game_palette_dirty[i / 32] = 0;
+				display.game_palette_dirty[i / 32] = 0;
 	
 				// loop over all 32 bits and update dirty entries
-				for (j = 0; (j < 32) && (i+j < display->game_palette_entries); j++, dirtyflags >>= 1)
+				for (j = 0; (j < 32) && (i+j < display.game_palette_entries); j++, dirtyflags >>= 1)
 					if ((dirtyflags & 1) != 0)
 					{
 						// extract the RGB values
-						rgb_t rgbvalue = display->game_palette[i + j];
+						rgb_t rgbvalue = display.game_palette[i + j];
 						int r = RGB_RED(rgbvalue);
 						int g = RGB_GREEN(rgbvalue);
 						int b = RGB_BLUE(rgbvalue);
@@ -720,11 +720,11 @@ public class video
 	
 	static void update_visible_area(struct mame_display *display)
 	{
-		struct rectangle adjusted = display->game_visible_area;
+		struct rectangle adjusted = display.game_visible_area;
 	
 		// tell the UI where it can draw
-		set_ui_visarea(display->game_visible_area.min_x, display->game_visible_area.min_y,
-				display->game_visible_area.max_x, display->game_visible_area.max_y);
+		set_ui_visarea(display.game_visible_area.min_x, display.game_visible_area.min_y,
+				display.game_visible_area.max_x, display.game_visible_area.max_y);
 	
 		// adjust for orientation
 		win_orient_rect(&adjusted);
@@ -762,7 +762,7 @@ public class video
 			const struct performance_info *performance = mame_get_performance_info();
 	
 			// if we're too fast, attempt to increase the frameskip
-			if (performance->game_speed_percent >= 99.5)
+			if (performance.game_speed_percent >= 99.5)
 			{
 				frameskipadjust++;
 	
@@ -778,8 +778,8 @@ public class video
 			else
 			{
 				// if below 80% speed, be more aggressive
-				if (performance->game_speed_percent < 80)
-					frameskipadjust -= (90 - performance->game_speed_percent) / 5;
+				if (performance.game_speed_percent < 80)
+					frameskipadjust -= (90 - performance.game_speed_percent) / 5;
 	
 				// if we're close, only force it up to frameskip 8
 				else if (frameskip < 8)
@@ -854,7 +854,7 @@ public class video
 	
 	void osd_update_video_and_audio(struct mame_display *display)
 	{
-		struct rectangle updatebounds = display->game_bitmap_update;
+		struct rectangle updatebounds = display.game_bitmap_update;
 		cycles_t cps = osd_cycles_per_second();
 	
 		// if this is the first time through, initialize the previous time value
@@ -869,38 +869,38 @@ public class video
 			this_frame_base = last_skipcount0_time + (int)((double)FRAMESKIP_LEVELS * (double)cps / video_fps);
 	
 		// if the visible area has changed, update it
-		if (display->changed_flags & GAME_VISIBLE_AREA_CHANGED)
+		if (display.changed_flags & GAME_VISIBLE_AREA_CHANGED)
 			update_visible_area(display);
 	
 		// if the debugger focus changed, update it
-		if (display->changed_flags & DEBUG_FOCUS_CHANGED)
-			win_set_debugger_focus(display->debug_focus);
+		if (display.changed_flags & DEBUG_FOCUS_CHANGED)
+			win_set_debugger_focus(display.debug_focus);
 	
 		// if the game palette has changed, update it
-		if (display->changed_flags & GAME_PALETTE_CHANGED)
+		if (display.changed_flags & GAME_PALETTE_CHANGED)
 			update_palette(display);
 	
 		// if we're not skipping this frame, draw it
-		if (display->changed_flags & GAME_BITMAP_CHANGED)
+		if (display.changed_flags & GAME_BITMAP_CHANGED)
 		{
 			win_orient_rect(&updatebounds);
 	
-			if (display->changed_flags & VECTOR_PIXELS_CHANGED)
-				render_frame(display->game_bitmap, &updatebounds, display->vector_dirty_pixels);
+			if (display.changed_flags & VECTOR_PIXELS_CHANGED)
+				render_frame(display.game_bitmap, &updatebounds, display.vector_dirty_pixels);
 			else
-				render_frame(display->game_bitmap, &updatebounds, NULL);
+				render_frame(display.game_bitmap, &updatebounds, NULL);
 		}
 	
 		// update the debugger
-		if (display->changed_flags & DEBUG_BITMAP_CHANGED)
+		if (display.changed_flags & DEBUG_BITMAP_CHANGED)
 		{
-			win_update_debug_window(display->debug_bitmap, display->debug_palette);
+			win_update_debug_window(display.debug_bitmap, display.debug_palette);
 			debugger_was_visible = 1;
 		}
 	
 		// if the LEDs have changed, update them
-		if (display->changed_flags & LED_STATE_CHANGED)
-			osd_set_leds(display->led_state);
+		if (display.changed_flags & LED_STATE_CHANGED)
+			osd_set_leds(display.led_state);
 	
 		// increment the frameskip counter
 		frameskip_counter = (frameskip_counter + 1) % FRAMESKIP_LEVELS;
@@ -930,15 +930,15 @@ public class video
 			return NULL;
 	
 		// allocate a copy
-		w = blit_swapxy ? bitmap->height : bitmap->width;
-		h = blit_swapxy ? bitmap->width : bitmap->height;
-		copy = bitmap_alloc_depth(w, h, bitmap->depth);
+		w = blit_swapxy ? bitmap.height : bitmap.width;
+		h = blit_swapxy ? bitmap.width : bitmap.height;
+		copy = bitmap_alloc_depth(w, h, bitmap.depth);
 		if (!copy)
 			return NULL;
 	
 		// populate the copy
-		for (y = bounds->min_y; y <= bounds->max_y; y++)
-			for (x = bounds->min_x; x <= bounds->max_x; x++)
+		for (y = bounds.min_y; y <= bounds.max_y; y++)
+			for (x = bounds.min_x; x <= bounds.max_x; x++)
 			{
 				int tx = x, ty = y;
 	
@@ -948,22 +948,22 @@ public class video
 					t = tx; tx = ty; ty = t;
 				}
 				if (blit_flipx != 0)
-					tx = copy->width - tx - 1;
+					tx = copy.width - tx - 1;
 				if (blit_flipy != 0)
-					ty = copy->height - ty - 1;
+					ty = copy.height - ty - 1;
 	
 				// read the old pixel and copy to the new location
-				switch (copy->depth)
+				switch (copy.depth)
 				{
 					case 15:
 					case 16:
-						*((UINT16 *)copy->base + ty * copy->rowpixels + tx) =
-								*((UINT16 *)bitmap->base + y * bitmap->rowpixels + x);
+						*((UINT16 *)copy.base + ty * copy.rowpixels + tx) =
+								*((UINT16 *)bitmap.base + y * bitmap.rowpixels + x);
 						break;
 	
 					case 32:
-						*((UINT32 *)copy->base + ty * copy->rowpixels + tx) =
-								*((UINT32 *)bitmap->base + y * bitmap->rowpixels + x);
+						*((UINT32 *)copy.base + ty * copy.rowpixels + tx) =
+								*((UINT32 *)bitmap.base + y * bitmap.rowpixels + x);
 						break;
 				}
 			}
@@ -981,16 +981,16 @@ public class video
 		// apply X flip
 		if (blit_flipx != 0)
 		{
-			t = copy->width - newbounds.min_x - 1;
-			newbounds.min_x = copy->width - newbounds.max_x - 1;
+			t = copy.width - newbounds.min_x - 1;
+			newbounds.min_x = copy.width - newbounds.max_x - 1;
 			newbounds.max_x = t;
 		}
 	
 		// apply Y flip
 		if (blit_flipy != 0)
 		{
-			t = copy->height - newbounds.min_y - 1;
-			newbounds.min_y = copy->height - newbounds.max_y - 1;
+			t = copy.height - newbounds.min_y - 1;
+			newbounds.min_y = copy.height - newbounds.max_y - 1;
 			newbounds.max_y = t;
 		}
 	

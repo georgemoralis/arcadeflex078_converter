@@ -179,7 +179,7 @@ public class superqix
 		pens[0]=0;
 	
 		for (i=1; i<16; i++)
-			pens[i]=Machine->pens[i];
+			pens[i]=Machine.pens[i];
 	
 		if (sqix_current_bitmap==0)		/* Bitmap 1 */
 		{
@@ -230,7 +230,7 @@ public class superqix
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap2,flip_screen,flip_screen,0,0,&Machine->visible_area,TRANSPARENCY_PEN,0);
+		copybitmap(bitmap,tmpbitmap2,flip_screen,flip_screen,0,0,&Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	static void superqix_draw_sprites( struct mame_bitmap *bitmap )
@@ -255,8 +255,8 @@ public class superqix
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[5],	code, color, flipx, flipy, sx, sy,
-					&Machine->visible_area, TRANSPARENCY_PEN, 0);
+			drawgfx(bitmap,Machine.gfx[5],	code, color, flipx, flipy, sx, sy,
+					&Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	

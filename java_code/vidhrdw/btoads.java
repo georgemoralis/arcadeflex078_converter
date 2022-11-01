@@ -341,7 +341,7 @@ public class btoads
 		int x, y;
 	
 		/* loop over all scanlines */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			UINT16 *bg0_base = &btoads_vram_bg0[((y + yscroll0) & 0xff) * TOWORD(0x4000)];
 			UINT16 *bg1_base = &btoads_vram_bg1[((y + yscroll1) & 0xff) * TOWORD(0x4000)];
@@ -455,7 +455,7 @@ public class btoads
 			}
 	
 			/* render the scanline */
-			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], NULL, -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], NULL, -1);
 		}
 	
 		/* debugging - dump the screen contents to a file */

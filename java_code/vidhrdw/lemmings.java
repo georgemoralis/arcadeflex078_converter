@@ -72,12 +72,12 @@ public class lemmings
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[gfxbank],
+				drawgfx(bitmap,Machine.gfx[gfxbank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				multi--;
 			}
@@ -154,8 +154,8 @@ public class lemmings
 		if (sx>2047 || sy>255)
 			return;
 	
-		plot_pixel(bitmap0,sx+0,sy,Machine->pens[((src>>8)&0xf)|0x100]);
-		plot_pixel(bitmap0,sx+1,sy,Machine->pens[((src>>0)&0xf)|0x100]);
+		plot_pixel(bitmap0,sx+0,sy,Machine.pens[((src>>8)&0xf)|0x100]);
+		plot_pixel(bitmap0,sx+1,sy,Machine.pens[((src>>0)&0xf)|0x100]);
 	}
 	
 	WRITE16_HANDLER( lemmings_pixel_1_w )
@@ -190,13 +190,13 @@ public class lemmings
 	{
 		int x1=-lemmings_control_data[0],x0=-lemmings_control_data[2],i,y=0;
 		struct rectangle rect;
-		rect.max_y=cliprect->max_y;
-		rect.min_y=cliprect->min_y;
+		rect.max_y=cliprect.max_y;
+		rect.min_y=cliprect.min_y;
 	
 		/* Decode any characters that have changed in vram */
 		for (i=0; i<2048; i++) {
 			if (vram_dirty[i]) {
-				decodechar(Machine->gfx[2],i,vram_buffer,Machine->drv->gfxdecodeinfo[2].gfxlayout);
+				decodechar(Machine.gfx[2],i,vram_buffer,Machine.drv.gfxdecodeinfo[2].gfxlayout);
 				tilemap_mark_tile_dirty(vram_tilemap,i);
 				vram_dirty[i]=0;
 			}
@@ -207,7 +207,7 @@ public class lemmings
 	
 		/* Pixel layer can be windowed in hardware (two player mode) */
 		if ((lemmings_control_data[6]&2)==0) {
-			copyscrollbitmap(bitmap,bitmap0,1,&x1,1,&y,&Machine->visible_area,TRANSPARENCY_PEN,0x100);
+			copyscrollbitmap(bitmap,bitmap0,1,&x1,1,&y,&Machine.visible_area,TRANSPARENCY_PEN,0x100);
 		} else {
 			rect.max_x=159;
 			rect.min_x=0;

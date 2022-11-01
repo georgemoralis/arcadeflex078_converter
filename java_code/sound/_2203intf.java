@@ -17,7 +17,7 @@ public class _2203intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf->handler[n]) intf->handler[n](irq);
+		if(intf.handler[n]) intf.handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -75,21 +75,21 @@ public class _2203intf
 	
 		if (AY8910_sh_start_ym(msound)) return 1;
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
 		/* Timer Handler set */
 		FMTimerInit();
 		/* stream system initialize */
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			int volume;
 			char name[20];
 			sprintf(name,"%s #%d FM",sound_name(msound),i);
-			volume = intf->mixing_level[i]>>16; /* high 16 bit */
-			stream[i] = stream_init(name,volume,Machine->sample_rate,i,YM2203UpdateOne/*YM2203UpdateCallback*/);
+			volume = intf.mixing_level[i]>>16; /* high 16 bit */
+			stream[i] = stream_init(name,volume,Machine.sample_rate,i,YM2203UpdateOne/*YM2203UpdateCallback*/);
 		}
 		/* Initialize FM emurator */
-		if (YM2203Init(intf->num,intf->baseclock,Machine->sample_rate,TimerHandler,IRQHandler) == 0)
+		if (YM2203Init(intf.num,intf.baseclock,Machine.sample_rate,TimerHandler,IRQHandler) == 0)
 		{
 			/* Ready */
 			return 0;
@@ -109,7 +109,7 @@ public class _2203intf
 	{
 		int i;
 	
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 			YM2203ResetChip(i);
 	}
 	

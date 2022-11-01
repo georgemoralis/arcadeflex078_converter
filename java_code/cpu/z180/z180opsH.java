@@ -88,8 +88,8 @@ void cpu_writememz180(offs_t offset, data8_t data)
  ***************************************************************/
 INLINE void RM16( offs_t addr, PAIR *r )
 {
-	r->b.l = RM(addr);
-	r->b.h = RM(addr+1);
+	r.b.l = RM(addr);
+	r.b.h = RM(addr+1);
 }
 
 /***************************************************************
@@ -97,8 +97,8 @@ INLINE void RM16( offs_t addr, PAIR *r )
  ***************************************************************/
 INLINE void WM16( offs_t addr, PAIR *r )
 {
-	WM(addr,r->b.l);
-	WM(addr+1,r->b.h);
+	WM(addr,r.b.l);
+	WM(addr+1,r.b.h);
 }
 
 /***************************************************************
@@ -869,8 +869,8 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 io = RM(_HL); 										\
 	WM( _DE, io );												\
 	_F &= SF | ZF | CF; 										\
-	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
-	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
+	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 . flag 5 */		\
+	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 . flag 3 */		\
 	_HL++; _DE++; _BC--;										\
 	if (_BC != 0) _F |= VF; 										\
 }
@@ -893,8 +893,8 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	_HL++; _BC--;												\
 	_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
 	if ((_F & HF) != 0) res -= 1; 									\
-	if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
-	if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+	if ((res & 0x02) != 0) _F |= YF; /* bit 1 . flag 5 */			\
+	if ((res & 0x08) != 0) _F |= XF; /* bit 3 . flag 3 */			\
 	if (_BC != 0) _F |= VF; 										\
 }
 #else
@@ -969,8 +969,8 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	UINT8 io = RM(_HL); 										\
 	WM( _DE, io );												\
 	_F &= SF | ZF | CF; 										\
-	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 -> flag 5 */		\
-	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 -> flag 3 */		\
+	if( (_A + io) & 0x02 ) _F |= YF; /* bit 1 . flag 5 */		\
+	if( (_A + io) & 0x08 ) _F |= XF; /* bit 3 . flag 3 */		\
 	_HL--; _DE--; _BC--;										\
 	if (_BC != 0) _F |= VF; 										\
 }
@@ -993,8 +993,8 @@ INLINE UINT8 SET(UINT8 bit, UINT8 value)
 	_HL--; _BC--;												\
 	_F = (_F & CF) | (SZ[res] & ~(YF|XF)) | ((_A ^ val ^ res) & HF) | NF;  \
 	if ((_F & HF) != 0) res -= 1; 									\
-	if ((res & 0x02) != 0) _F |= YF; /* bit 1 -> flag 5 */			\
-	if ((res & 0x08) != 0) _F |= XF; /* bit 3 -> flag 3 */			\
+	if ((res & 0x02) != 0) _F |= YF; /* bit 1 . flag 5 */			\
+	if ((res & 0x08) != 0) _F |= XF; /* bit 3 . flag 3 */			\
 	if (_BC != 0) _F |= VF; 										\
 }
 #else

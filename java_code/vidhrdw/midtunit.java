@@ -897,16 +897,16 @@ public class midtunit
 		offset += dpytap * 2;
 	
 		/* determine how many pixels to copy */
-		xoffs = cliprect->min_x;
-		width = cliprect->max_x - xoffs + 1;
+		xoffs = cliprect.min_x;
+		width = cliprect.max_x - xoffs + 1;
 	
 		/* adjust the offset */
 		offset += xoffs;
-		offset += 512 * cliprect->min_y;
+		offset += 512 * cliprect.min_y;
 		offset &= 0x3ffff;
 	
 		/* loop over rows */
-		for (v = cliprect->min_y; v <= cliprect->max_y; v++)
+		for (v = cliprect.min_y; v <= cliprect.max_y; v++)
 		{
 			draw_scanline16(bitmap, xoffs, v, width, &local_videoram[offset], pen_map, -1);
 			offset = (offset + 512) & 0x3ffff;

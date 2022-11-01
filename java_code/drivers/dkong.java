@@ -230,10 +230,10 @@ public class dkong
 	
 	public static WriteHandlerPtr dkong_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		/*   If P2.Bit7 -> is apparently an external signal decay or other output control
-		 *   If P2.Bit6 -> activates the external compressed sample ROM
-		 *   If P2.Bit4 -> status code to main cpu
-		 *   P2.Bit2-0  -> select the 256 byte bank for external ROM
+		/*   If P2.Bit7 . is apparently an external signal decay or other output control
+		 *   If P2.Bit6 . activates the external compressed sample ROM
+		 *   If P2.Bit4 . status code to main cpu
+		 *   P2.Bit2-0  . select the 256 byte bank for external ROM
 		 */
 	
 		decay = !(data & 0x80);

@@ -30,11 +30,11 @@ public class gaplus
 	public static PaletteInitHandlerPtr palette_init_gaplus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -46,23 +46,23 @@ public class gaplus
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 	
@@ -82,11 +82,11 @@ public class gaplus
 		Starfield information
 		There's 3 sets of stars planes at different speeds.
 	
-		a000 ---> (bit 0 = 1) enable starfield.
+		a000 --. (bit 0 = 1) enable starfield.
 		  		  (bit 0 = 0) disable starfield.
-		a001 ---> starfield plane 0 control
-		a002 ---> starfield plane 1 control
-		a003 ---> starfield plane 2 control
+		a001 --. starfield plane 0 control
+		a002 --. starfield plane 1 control
+		a003 --. starfield plane 2 control
 	***************************************************************************/
 	
 	#define MAX_STARS			250
@@ -112,8 +112,8 @@ public class gaplus
 		int set = 0;
 		int width, height;
 	
-		width = Machine->drv->screen_width;
-		height = Machine->drv->screen_height;
+		width = Machine.drv.screen_width;
+		height = Machine.drv.screen_height;
 	
 		total_stars = 0;
 	
@@ -137,7 +137,7 @@ public class gaplus
 					if ( color && total_stars < MAX_STARS ) {
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
-						stars[total_stars].col = Machine->pens[color];
+						stars[total_stars].col = Machine.pens[color];
 						stars[total_stars].set = set++;
 	
 						if ( set == 3 )
@@ -154,8 +154,8 @@ public class gaplus
 		int i;
 		int width, height;
 	
-		width = Machine->drv->screen_width;
-		height = Machine->drv->screen_height;
+		width = Machine.drv.screen_width;
+		height = Machine.drv.screen_height;
 	
 		/* check if we're running */
 		if ( ( gaplus_starfield_control[0] & 1 ) == 0 )
@@ -229,8 +229,8 @@ public class gaplus
 		int i;
 		int width, height;
 	
-		width = Machine->drv->screen_width;
-		height = Machine->drv->screen_height;
+		width = Machine.drv.screen_width;
+		height = Machine.drv.screen_height;
 	
 		/* check if we're running */
 		if ( ( gaplus_starfield_control[0] & 1 ) == 0 )
@@ -283,7 +283,7 @@ public class gaplus
 				int number = spriteram.read(offs)+4*(spriteram_3[offs] & 0x40);
 				int color = spriteram.read(offs+1)& 0x3f;
 	            int sx = (spriteram_2[offs+1]-71) + 0x100*(spriteram_3[offs+1] & 1);
-				int sy = ( Machine->drv->screen_height ) - spriteram_2[offs]-24;
+				int sy = ( Machine.drv.screen_height ) - spriteram_2[offs]-24;
 				int flipy = spriteram_3[offs] & 2;
 				int flipx = spriteram_3[offs] & 1;
 				int width, height;
@@ -297,12 +297,12 @@ public class gaplus
 				}
 	
 				if ((spriteram_3[offs] & 0xa8) == 0xa0){ /* draw the sprite twice in a row */
-	                    drawgfx(bitmap,Machine->gfx[2+(number >> 7)],
+	                    drawgfx(bitmap,Machine.gfx[2+(number >> 7)],
 									number,color,flipx,flipy,sx,sy,
-									&Machine->visible_area,TRANSPARENCY_COLOR,255);
-						drawgfx(bitmap,Machine->gfx[2+(number >> 7)],
+									&Machine.visible_area,TRANSPARENCY_COLOR,255);
+						drawgfx(bitmap,Machine.gfx[2+(number >> 7)],
 									number,color,flipx,flipy,sx,sy+16,
-									&Machine->visible_area,TRANSPARENCY_COLOR,255);
+									&Machine.visible_area,TRANSPARENCY_COLOR,255);
 				}
 				else{
 					switch (spriteram_3[offs] & 0x28){
@@ -325,12 +325,12 @@ public class gaplus
 								ex = flipx ? (width-1-x) : x;
 								ey = flipy ? (height-1-y) : y;
 	
-								drawgfx(bitmap,Machine->gfx[2+(number >> 7)],
+								drawgfx(bitmap,Machine.gfx[2+(number >> 7)],
 									(number)+x_offset[ex]+y_offset[ey],
 									color,
 									flipx, flipy,
 									sx+x*16,sy+y*16,
-									&Machine->visible_area,
+									&Machine.visible_area,
 									TRANSPARENCY_COLOR,255);
 							}
 						}
@@ -344,7 +344,7 @@ public class gaplus
 	{
 		int offs;
 	
-		fillbitmap( bitmap, Machine->pens[0], &Machine->visible_area );
+		fillbitmap( bitmap, Machine.pens[0], &Machine.visible_area );
 	
 		starfield_render( bitmap );
 	
@@ -391,15 +391,15 @@ public class gaplus
 				sy = 35 - sy;
 			}
 	
-			sx = ( ( Machine->drv->screen_height - 1 ) / 8 ) - sx;
+			sx = ( ( Machine.drv.screen_height - 1 ) / 8 ) - sx;
 	
 			bank = ( colorram[offs] & 0x80 ) ? 1 : 0;
 	
-	        drawgfx(bitmap,Machine->gfx[bank],
+	        drawgfx(bitmap,Machine.gfx[bank],
 	                videoram.read(offs),
 	                colorram[offs] & 0x3f,
 	                flip_screen,flip_screen,8*sy,8*sx,
-	                &Machine->visible_area,TRANSPARENCY_PEN,0);
+	                &Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 		gaplus_draw_sprites(bitmap);

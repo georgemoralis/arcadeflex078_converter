@@ -371,7 +371,7 @@ public class homedata
 	
 		coin_counter_w(0,~data & 0x80);
 	
-		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* write clock 1->0 */
+		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* write clock 1.0 */
 		{
 			if (BIT(data,3))
 				YM2203_write_port_0_w(0,upd7807_porta);
@@ -379,7 +379,7 @@ public class homedata
 				YM2203_control_port_0_w(0,upd7807_porta);
 		}
 	
-		if (BIT(upd7807_portc,4) && !BIT(data,4))	/* read clock 1->0 */
+		if (BIT(upd7807_portc,4) && !BIT(data,4))	/* read clock 1.0 */
 		{
 			if (BIT(data,3))
 				upd7807_porta = YM2203_read_port_0_r(0);
@@ -529,7 +529,7 @@ public class homedata
 	
 		coin_counter_w(0,~data & 0x80);
 	
-		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* clock 1->0 */
+		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* clock 1.0 */
 			SN76496_0_w(0,upd7807_porta);
 	
 		upd7807_portc = data;

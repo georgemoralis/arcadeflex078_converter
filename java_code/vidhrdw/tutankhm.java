@@ -45,8 +45,8 @@ public class tutankhm
 			y2 = 255 - y2;
 		}
 	
-		plot_pixel(tmpbitmap,x1,y1,Machine->pens[data & 0x0f]);
-		plot_pixel(tmpbitmap,x2,y2,Machine->pens[data >> 4]);
+		plot_pixel(tmpbitmap,x1,y1,Machine.pens[data & 0x0f]);
+		plot_pixel(tmpbitmap,x2,y2,Machine.pens[data >> 4]);
 	}
 	
 	
@@ -102,7 +102,7 @@ public class tutankhm
 					scroll[i] = 0;
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	} };
 	
@@ -112,8 +112,8 @@ public class tutankhm
 	
 		Juno First can blit a 16x16 graphics which comes from un-memory mapped graphics roms
 	
-		$8070->$8071 specifies the destination NIBBLE address
-		$8072->$8073 specifies the source NIBBLE address
+		$8070.$8071 specifies the destination NIBBLE address
+		$8072.$8073 specifies the source NIBBLE address
 	
 		Depending on bit 0 of the source address either the source pixels will be copied to
 		the destination address, or a zero will be written.

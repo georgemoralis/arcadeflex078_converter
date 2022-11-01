@@ -69,7 +69,7 @@ public class ddragon
 	
 	static UINT32 background_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
@@ -174,7 +174,7 @@ public class ddragon
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		data8_t *src;
 		int i;

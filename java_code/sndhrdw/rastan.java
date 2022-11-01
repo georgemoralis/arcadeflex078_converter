@@ -32,7 +32,7 @@ public class rastan
 	public static WriteHandlerPtr rastan_d000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if 0
-		if (Machine->samples == 0) return;
+		if (Machine.samples == 0) return;
 		if (data==0)
 			mixer_stop_sample(channel);
 	#endif

@@ -166,13 +166,13 @@ public class bagman
 	
 			if (offset==3)
 			{
-				if (ls259_buf[3] == 0)	/* 1->0 transition */
+				if (ls259_buf[3] == 0)	/* 1.0 transition */
 				{
 					reset_talking();
 				}
 				else
 				{
-					start_talking();	/* 0->1 transition */
+					start_talking();	/* 0.1 transition */
 				}
 			}
 		}

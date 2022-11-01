@@ -55,7 +55,7 @@ Tile format:	fedc------------	Palette
 Offset:		00						Scroll X
 			02						Scroll Y
 			04 fedc ba98 765- ----	? (unused?)
-			   ---- ---- ---4 ----	0<->16x16 Tiles	1<->8x8 Tiles
+			   ---- ---- ---4 ----	0<.16x16 Tiles	1<.8x8 Tiles
 			   ---- ---- ---- 32--	? (used, by p47!)
 			   ---- ---- ---- --10	N: Layer H pages = 16 / (2^N)
 
@@ -68,7 +68,7 @@ Offset:		00						Scroll X
 	---- ba9- ---- ---- 	? (unused?)
 	---- ---8 ---- ---- 	Portrait F/F (?FullFill?)
 	---- ---- 765- ---- 	? (unused?)
-	---- ---- ---4 ---- 	Reset Sound CPU (1->0 Transition)
+	---- ---- ---4 ---- 	Reset Sound CPU (1.0 Transition)
 	---- ---- ---- 321- 	? (unused?)
 	---- ---- ---- ---0		Flip Screen
 
@@ -290,14 +290,14 @@ public class megasys1
 		megasys1_8x8_scroll_1_factor = 1;	megasys1_16x16_scroll_1_factor = 4;
 		megasys1_8x8_scroll_2_factor = 1;	megasys1_16x16_scroll_2_factor = 4;
 	
-		if (Machine->gamedrv == &driver_soldamj)
+		if (Machine.gamedrv == &driver_soldamj)
 		{
 			megasys1_8x8_scroll_1_factor = 4;	megasys1_16x16_scroll_1_factor = 4;
 		}
 	
 		hardware_type_z = 0;
-		if (Machine->gamedrv			==	&driver_lomakai ||
-			Machine->gamedrv->clone_of	==	&driver_lomakai )
+		if (Machine.gamedrv			==	&driver_lomakai ||
+			Machine.gamedrv.clone_of	==	&driver_lomakai )
 			hardware_type_z = 1;
 	
 	 	return 0;
@@ -629,7 +629,7 @@ public class megasys1
 					code  = spritedata[0x0E/2] + objectdata[0x06/2];
 					color = (attr & color_mask);
 	
-					pdrawgfx(bitmap,Machine->gfx[3],
+					pdrawgfx(bitmap,Machine.gfx[3],
 							(code & 0xfff ) + ((megasys1_sprite_bank & 1) << 12),
 							color,
 							flipx, flipy,
@@ -669,7 +669,7 @@ public class megasys1
 					sx = 240-sx;		sy = 240-sy;
 				}
 	
-				pdrawgfx(bitmap,Machine->gfx[2],
+				pdrawgfx(bitmap,Machine.gfx[2],
 						code,
 						color,
 						flipx, flipy,
@@ -794,8 +794,8 @@ public class megasys1
 	
 		i = 0;
 		while (	priorities[i].driver &&
-				priorities[i].driver != Machine->gamedrv &&
-				priorities[i].driver != Machine->gamedrv->clone_of)
+				priorities[i].driver != Machine.gamedrv &&
+				priorities[i].driver != Machine.gamedrv.clone_of)
 			i++;
 	
 		if (priorities[i].driver)
@@ -1026,7 +1026,7 @@ public class megasys1
 					if (flag != 0)
 					{
 						flag = 0;
-						fillbitmap(bitmap,Machine->pens[0],cliprect);
+						fillbitmap(bitmap,Machine.pens[0],cliprect);
 					}
 	
 					if ((megasys1_sprite_flag & 0x100) != 0)	/* sprites are split */

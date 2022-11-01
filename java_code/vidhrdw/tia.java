@@ -206,8 +206,8 @@ public class tia
 	
 	public static VideoUpdateHandlerPtr video_update_tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		int cx = Machine->drv->screen_width;
-		int cy = Machine->drv->screen_height;
+		int cx = Machine.drv.screen_width;
+		int cy = Machine.drv.screen_height;
 	
 		helper[0] = auto_bitmap_alloc(cx, cy);
 		helper[1] = auto_bitmap_alloc(cx, cy);
@@ -538,12 +538,12 @@ public class tia
 			if (collision_check(lineM0, lineM1, x1, x2))
 				CXPPMM |= 0x40;
 	
-			if (y >= helper[current_bitmap]->height)
+			if (y >= helper[current_bitmap].height)
 			{
 				continue;
 			}
 	
-			p = helper[current_bitmap]->line[y];
+			p = helper[current_bitmap].line[y];
 	
 			for (x = x1; x < x2; x++)
 			{
@@ -592,8 +592,8 @@ public class tia
 			if (!(VSYNC & 2))
 			{
 				update_bitmap(
-					Machine->drv->screen_width,
-					Machine->drv->screen_height);
+					Machine.drv.screen_width,
+					Machine.drv.screen_height);
 				
 				current_bitmap ^= 1;
 	
@@ -649,9 +649,9 @@ public class tia
 	
 		if (curr_x <= -8)
 		{
-			if (curr_y < helper[current_bitmap]->height)
+			if (curr_y < helper[current_bitmap].height)
 			{
-				memset(helper[current_bitmap]->line[curr_y], 0, 16);
+				memset(helper[current_bitmap].line[curr_y], 0, 16);
 			}
 	
 			prev_x = 8;

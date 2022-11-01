@@ -368,14 +368,14 @@ public class artmagic
 			fillbitmap(bitmap, get_black_pen(), cliprect);
 			return;
 		}
-		offset += cliprect->min_y * TOWORD(0x2000);
+		offset += cliprect.min_y * TOWORD(0x2000);
 		offset += dpytap;
 	
 		/* render the bitmap */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			UINT16 *dest = (UINT16 *)bitmap->base + y * bitmap->rowpixels;
-			for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+			UINT16 *dest = (UINT16 *)bitmap.base + y * bitmap.rowpixels;
+			for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				dest[x] = vram[(offset + x) & TOWORD(0x1fffff)] & 0xff;
 			offset += TOWORD(0x2000);
 		}

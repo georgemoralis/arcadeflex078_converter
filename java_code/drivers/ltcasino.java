@@ -80,7 +80,7 @@ public class ltcasino
 		new Memory_ReadAddress( 0xec10, 0xec10, input_port_4_r ),
 		new Memory_ReadAddress( 0xec12, 0xec12, input_port_5_r ),
 		new Memory_ReadAddress( 0xec20, 0xec20, AY8910_read_port_0_r ),
-		new Memory_ReadAddress( 0xec21, 0xec21, input_port_6_r ), //ltcasino -> pc: F3F3 (A in service) and F3FD (B in service)
+		new Memory_ReadAddress( 0xec21, 0xec21, input_port_6_r ), //ltcasino . pc: F3F3 (A in service) and F3FD (B in service)
 		new Memory_ReadAddress( 0xec3e, 0xec3e, MRA_NOP ), //not used
 	
 		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),

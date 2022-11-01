@@ -1000,10 +1000,10 @@ public class scramble
 	
 		/* Address lines are scrambled on the main CPU */
 	
-		/* A0 -> A2 */
-		/* A1 -> A0 */
-		/* A2 -> A3 */
-		/* A3 -> A1 */
+		/* A0 . A2 */
+		/* A1 . A0 */
+		/* A2 . A3 */
+		/* A3 . A1 */
 	
 		RAM = memory_region(REGION_CPU1);
 		for (i = 0; i < 0x10000; i += 16)

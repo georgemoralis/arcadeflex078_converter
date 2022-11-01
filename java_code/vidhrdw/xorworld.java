@@ -29,10 +29,10 @@ public class xorworld
 	public static PaletteInitHandlerPtr palette_init_xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++){
+		for (i = 0;i < Machine.drv.total_colors;i++){
 			int bit0,bit1,bit2,bit3;
 			int r,g,b;
 	
@@ -43,16 +43,16 @@ public class xorworld
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e*bit0 + 0x1e*bit1 + 0x44*bit2 + 0x8f*bit3;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e*bit0 + 0x1e*bit1 + 0x44*bit2 + 0x8f*bit3;
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e*bit0 + 0x1e * bit1 + 0x44*bit2 + 0x8f*bit3;
 			palette_set_color(i,r,g,b);
 	
@@ -134,7 +134,7 @@ public class xorworld
 	static void xorworld_draw_sprites(struct mame_bitmap *bitmap)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		for (i = 0; i < 0x40; i += 2){		
 			int sx = xorworld_spriteram[i] & 0x00ff;
@@ -145,7 +145,7 @@ public class xorworld
 			drawgfx(bitmap,gfx,number,
 							color,0,0,
 							sx,sy,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

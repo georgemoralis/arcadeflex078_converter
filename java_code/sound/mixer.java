@@ -135,27 +135,27 @@ public class mixer
 	static void mixer_channel_resample_set(struct mixer_channel_data *channel, unsigned from_frequency, unsigned lowpass_frequency, int restart)
 	{
 		unsigned to_frequency;
-		to_frequency = Machine->sample_rate;
+		to_frequency = Machine.sample_rate;
 	
-		mixerlogerror(("Mixer:mixer_channel_resample_set(%s,%d,%d)\n",channel->name,from_frequency,lowpass_frequency,restart));
+		mixerlogerror(("Mixer:mixer_channel_resample_set(%s,%d,%d)\n",channel.name,from_frequency,lowpass_frequency,restart));
 	
 		if (restart != 0)
 		{
 			mixerlogerror(("\tpivot=0\n"));
-			channel->pivot = 0;
-			channel->frac = 0;
+			channel.pivot = 0;
+			channel.frac = 0;
 		}
 	
 		/* only if the filter change */
-		if (from_frequency != channel->from_frequency
-			|| to_frequency != channel->to_frequency
-			|| lowpass_frequency != channel->lowpass_frequency)
+		if (from_frequency != channel.from_frequency
+			|| to_frequency != channel.to_frequency
+			|| lowpass_frequency != channel.lowpass_frequency)
 		{
 			/* delete the previous filter */
-			if (channel->filter)
+			if (channel.filter)
 			{
-				filter_free(channel->filter);
-				channel->filter = 0;
+				filter_free(channel.filter);
+				channel.filter = 0;
 			}
 	
 			/* make a new filter */
@@ -181,24 +181,24 @@ public class mixer
 					cut = (double)cut_frequency / from_frequency;
 				}
 	
-				channel->filter = filter_lp_fir_alloc(cut, FILTER_WIDTH);
+				channel.filter = filter_lp_fir_alloc(cut, FILTER_WIDTH);
 	
 				mixerlogerror(("\tfilter from %d Hz, to %d Hz, cut %f, cut %d Hz\n",from_frequency,to_frequency,cut,cut_frequency));
 			}
 		}
 	
-		channel->lowpass_frequency = lowpass_frequency;
-		channel->from_frequency = from_frequency;
-		channel->to_frequency = to_frequency;
-		channel->step = (double)from_frequency * (1 << FRACTION_BITS) / to_frequency;
+		channel.lowpass_frequency = lowpass_frequency;
+		channel.from_frequency = from_frequency;
+		channel.to_frequency = to_frequency;
+		channel.step = (double)from_frequency * (1 << FRACTION_BITS) / to_frequency;
 	
 		/* reset the filter state */
-		if (channel->filter && channel->is_reset_requested)
+		if (channel.filter && channel.is_reset_requested)
 		{
 			mixerlogerror(("\tstate clear\n"));
-			channel->is_reset_requested = 0;
-			filter_state_reset(channel->filter,channel->left);
-			filter_state_reset(channel->filter,channel->right);
+			channel.is_reset_requested = 0;
+			filter_state_reset(channel.filter,channel.left);
+			filter_state_reset(channel.filter,channel.right);
 		}
 	}
 	
@@ -213,16 +213,16 @@ public class mixer
 	*/
 	static unsigned mixer_channel_resample_16(struct mixer_channel_data* channel, filter_state* state, int volume, int* dst, unsigned dst_len, INT16** psrc, unsigned src_len)
 	{
-		unsigned dst_base = (accum_base + channel->samples_available) & ACCUMULATOR_MASK;
+		unsigned dst_base = (accum_base + channel.samples_available) & ACCUMULATOR_MASK;
 		unsigned dst_pos = dst_base;
 	
 		INT16* src = *psrc;
 	
 		assert( dst_len <= ACCUMULATOR_MASK );
 	
-		if (!channel->filter)
+		if (!channel.filter)
 		{
-			if (channel->from_frequency == channel->to_frequency)
+			if (channel.from_frequency == channel.to_frequency)
 			{
 				/* copy */
 				unsigned len;
@@ -277,8 +277,8 @@ public class mixer
 				INT16* src_end = src + src_len;
 				unsigned dst_pos_end = (dst_pos + dst_len) & ACCUMULATOR_MASK;
 	
-				int step = channel->step;
-				int frac = channel->frac;
+				int step = channel.step;
+				int frac = channel.frac;
 				src += frac >> FRACTION_BITS;
 				frac &= FRACTION_MASK;
 	
@@ -297,12 +297,12 @@ public class mixer
 					src = src_end;
 				}
 	
-				channel->frac = frac;
+				channel.frac = frac;
 			}
-		} else if (!channel->from_frequency) {
+		} else if (!channel.from_frequency) {
 			dst_pos = (dst_pos + dst_len) & ACCUMULATOR_MASK;
 		} else {
-			int pivot = channel->pivot;
+			int pivot = channel.pivot;
 	
 			/* end address */
 			INT16* src_end = src + src_len;
@@ -311,21 +311,21 @@ public class mixer
 			/* volume */
 			filter_real v = volume;
 	
-			if (channel->from_frequency < channel->to_frequency)
+			if (channel.from_frequency < channel.to_frequency)
 			{
 				/* upsampling */
 				while (src != src_end && dst_pos != dst_pos_end)
 				{
 					/* source */
-					filter_insert(channel->filter,state,*src * v / 256.0);
-					pivot += channel->from_frequency;
+					filter_insert(channel.filter,state,*src * v / 256.0);
+					pivot += channel.from_frequency;
 					if (pivot > 0)
 					{
-						pivot -= channel->to_frequency;
+						pivot -= channel.to_frequency;
 						++src;
 					}
 					/* dest */
-					dst[dst_pos] += filter_compute(channel->filter,state);
+					dst[dst_pos] += filter_compute(channel.filter,state);
 					dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
 				}
 			} else {
@@ -333,20 +333,20 @@ public class mixer
 				while (src != src_end && dst_pos != dst_pos_end)
 				{
 					/* source */
-					filter_insert(channel->filter,state,*src * v / 256.0);
-					pivot -= channel->to_frequency;
+					filter_insert(channel.filter,state,*src * v / 256.0);
+					pivot -= channel.to_frequency;
 					++src;
 					/* dest */
 					if (pivot < 0)
 					{
-						pivot += channel->from_frequency;
-						dst[dst_pos] += filter_compute(channel->filter,state);
+						pivot += channel.from_frequency;
+						dst[dst_pos] += filter_compute(channel.filter,state);
 						dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
 					}
 				}
 			}
 	
-			channel->pivot = pivot;
+			channel.pivot = pivot;
 		}
 	
 		*psrc = src;
@@ -356,16 +356,16 @@ public class mixer
 	
 	static unsigned mixer_channel_resample_8(struct mixer_channel_data *channel, filter_state* state, int volume, int* dst, unsigned dst_len, INT8** psrc, unsigned src_len)
 	{
-		unsigned dst_base = (accum_base + channel->samples_available) & ACCUMULATOR_MASK;
+		unsigned dst_base = (accum_base + channel.samples_available) & ACCUMULATOR_MASK;
 		unsigned dst_pos = dst_base;
 	
 		INT8* src = *psrc;
 	
 		assert( dst_len <= ACCUMULATOR_MASK );
 	
-		if (!channel->filter)
+		if (!channel.filter)
 		{
-			if (channel->from_frequency == channel->to_frequency)
+			if (channel.from_frequency == channel.to_frequency)
 			{
 				/* copy */
 				unsigned len;
@@ -387,8 +387,8 @@ public class mixer
 				INT8* src_end = src + src_len;
 				unsigned dst_pos_end = (dst_pos + dst_len) & ACCUMULATOR_MASK;
 	
-				int step = channel->step;
-				int frac = channel->frac;
+				int step = channel.step;
+				int frac = channel.frac;
 				src += frac >> FRACTION_BITS;
 				frac &= FRACTION_MASK;
 	
@@ -407,12 +407,12 @@ public class mixer
 					src = src_end;
 				}
 	
-				channel->frac = frac;
+				channel.frac = frac;
 			}
-		} else if (!channel->from_frequency) {
+		} else if (!channel.from_frequency) {
 			dst_pos = (dst_pos + dst_len) & ACCUMULATOR_MASK;
 		} else {
-			int pivot = channel->pivot;
+			int pivot = channel.pivot;
 	
 			/* end address */
 			INT8* src_end = src + src_len;
@@ -421,21 +421,21 @@ public class mixer
 			/* volume */
 			filter_real v = volume;
 	
-			if (channel->from_frequency < channel->to_frequency)
+			if (channel.from_frequency < channel.to_frequency)
 			{
 				/* upsampling */
 				while (src != src_end && dst_pos != dst_pos_end)
 				{
 					/* source */
-					filter_insert(channel->filter,state,*src * v);
-					pivot += channel->from_frequency;
+					filter_insert(channel.filter,state,*src * v);
+					pivot += channel.from_frequency;
 					if (pivot > 0)
 					{
-						pivot -= channel->to_frequency;
+						pivot -= channel.to_frequency;
 						++src;
 					}
 					/* dest */
-					dst[dst_pos] += filter_compute(channel->filter,state);
+					dst[dst_pos] += filter_compute(channel.filter,state);
 					dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
 				}
 			} else {
@@ -443,20 +443,20 @@ public class mixer
 				while (src != src_end && dst_pos != dst_pos_end)
 				{
 					/* source */
-					filter_insert(channel->filter,state,*src * v);
-					pivot -= channel->to_frequency;
+					filter_insert(channel.filter,state,*src * v);
+					pivot -= channel.to_frequency;
 					++src;
 					/* dest */
 					if (pivot < 0)
 					{
-						pivot += channel->from_frequency;
-						dst[dst_pos] += filter_compute(channel->filter,state);
+						pivot += channel.from_frequency;
+						dst[dst_pos] += filter_compute(channel.filter,state);
 						dst_pos = (dst_pos + 1) & ACCUMULATOR_MASK;
 					}
 				}
 			}
 	
-			channel->pivot = pivot;
+			channel.pivot = pivot;
 		}
 	
 		*psrc = src;
@@ -473,38 +473,38 @@ public class mixer
 		if (mmsnd_stereomono != 0){
 		  /**** all sound mono mode ****/
 		  /* save */
-		  unsigned save_pivot = channel->pivot;
-		  unsigned save_frac = channel->frac;
+		  unsigned save_pivot = channel.pivot;
+		  unsigned save_frac = channel.frac;
 		  INT8* save_src = *src;
-		  count = mixer_channel_resample_8(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
+		  count = mixer_channel_resample_8(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
 		  /* restore */
-		  channel->pivot = save_pivot;
-		  channel->frac = save_frac;
+		  channel.pivot = save_pivot;
+		  channel.frac = save_frac;
 		  *src = save_src;
-		  mixer_channel_resample_8(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
-		  channel->samples_available += count;
+		  mixer_channel_resample_8(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
+		  channel.samples_available += count;
 		  return count;
 		}
 	#endif
 	
-		if (!is_stereo || channel->pan == MIXER_PAN_LEFT) {
-			count = mixer_channel_resample_8(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
-		} else if (channel->pan == MIXER_PAN_RIGHT) {
-			count = mixer_channel_resample_8(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
+		if (!is_stereo || channel.pan == MIXER_PAN_LEFT) {
+			count = mixer_channel_resample_8(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
+		} else if (channel.pan == MIXER_PAN_RIGHT) {
+			count = mixer_channel_resample_8(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
 		} else {
 			/* save */
-			unsigned save_pivot = channel->pivot;
-			unsigned save_frac = channel->frac;
+			unsigned save_pivot = channel.pivot;
+			unsigned save_frac = channel.frac;
 			INT8* save_src = *src;
-			count = mixer_channel_resample_8(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
+			count = mixer_channel_resample_8(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
 			/* restore */
-			channel->pivot = save_pivot;
-			channel->frac = save_frac;
+			channel.pivot = save_pivot;
+			channel.frac = save_frac;
 			*src = save_src;
-			mixer_channel_resample_8(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
+			mixer_channel_resample_8(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
 		}
 	
-		channel->samples_available += count;
+		channel.samples_available += count;
 		return count;
 	}
 	
@@ -517,38 +517,38 @@ public class mixer
 		if (mmsnd_stereomono != 0){
 		  /**** all sound mono mode ****/
 		  /* save */
-		  unsigned save_pivot = channel->pivot;
-		  unsigned save_frac = channel->frac;
+		  unsigned save_pivot = channel.pivot;
+		  unsigned save_frac = channel.frac;
 		  INT16* save_src = *src;
-		  count = mixer_channel_resample_16(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
+		  count = mixer_channel_resample_16(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
 		  /* restore */
-		  channel->pivot = save_pivot;
-		  channel->frac = save_frac;
+		  channel.pivot = save_pivot;
+		  channel.frac = save_frac;
 		  *src = save_src;
-		  mixer_channel_resample_16(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
-		  channel->samples_available += count;
+		  mixer_channel_resample_16(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
+		  channel.samples_available += count;
 		  return count;
 		}
 	#endif
 	
-		if (!is_stereo || channel->pan == MIXER_PAN_LEFT) {
-			count = mixer_channel_resample_16(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
-		} else if (channel->pan == MIXER_PAN_RIGHT) {
-			count = mixer_channel_resample_16(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
+		if (!is_stereo || channel.pan == MIXER_PAN_LEFT) {
+			count = mixer_channel_resample_16(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
+		} else if (channel.pan == MIXER_PAN_RIGHT) {
+			count = mixer_channel_resample_16(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
 		} else {
 			/* save */
-			unsigned save_pivot = channel->pivot;
-			unsigned save_frac = channel->frac;
+			unsigned save_pivot = channel.pivot;
+			unsigned save_frac = channel.frac;
 			INT16* save_src = *src;
-			count = mixer_channel_resample_16(channel, channel->left, volume[0], left_accum, dst_len, src, src_len);
+			count = mixer_channel_resample_16(channel, channel.left, volume[0], left_accum, dst_len, src, src_len);
 			/* restore */
-			channel->pivot = save_pivot;
-			channel->frac = save_frac;
+			channel.pivot = save_pivot;
+			channel.frac = save_frac;
 			*src = save_src;
-			mixer_channel_resample_16(channel, channel->right, volume[1], right_accum, dst_len, src, src_len);
+			mixer_channel_resample_16(channel, channel.right, volume[1], right_accum, dst_len, src, src_len);
 		}
 	
-		channel->samples_available += count;
+		channel.samples_available += count;
 		return count;
 	}
 	
@@ -564,15 +564,15 @@ public class mixer
 		/* compute the overall mixing volume */
 		if (mixer_sound_enabled != 0)
 		{
-			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
-			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
+			mixing_volume[0] = ((channel.left_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
+			mixing_volume[1] = ((channel.right_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
 		} else {
 			mixing_volume[0] = 0;
 			mixing_volume[1] = 0;
 		}
 		/* get the initial state */
-		source = channel->data_current;
-		source_end = channel->data_end;
+		source = channel.data_current;
+		source_end = channel.data_end;
 	
 		/* an outer loop to handle looping samples */
 		while (samples_to_generate > 0)
@@ -585,20 +585,20 @@ public class mixer
 			if (source >= source_end)
 			{
 				/* if we're done, stop playing */
-				if (!channel->is_looping)
+				if (!channel.is_looping)
 				{
-					channel->is_playing = 0;
+					channel.is_playing = 0;
 					break;
 				}
 	
 				/* if we're looping, wrap to the beginning */
 				else
-					source -= (INT8 *)source_end - (INT8 *)channel->data_start;
+					source -= (INT8 *)source_end - (INT8 *)channel.data_start;
 			}
 		}
 	
 		/* update the final positions */
-		channel->data_current = source;
+		channel.data_current = source;
 	}
 	
 	/***************************************************************************
@@ -613,15 +613,15 @@ public class mixer
 		/* compute the overall mixing volume */
 		if (mixer_sound_enabled != 0)
 		{
-			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
-			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
+			mixing_volume[0] = ((channel.left_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
+			mixing_volume[1] = ((channel.right_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
 		} else {
 			mixing_volume[0] = 0;
 			mixing_volume[1] = 0;
 		}
 		/* get the initial state */
-		source = channel->data_current;
-		source_end = channel->data_end;
+		source = channel.data_current;
+		source_end = channel.data_end;
 	
 		/* an outer loop to handle looping samples */
 		while (samples_to_generate > 0)
@@ -634,20 +634,20 @@ public class mixer
 			if (source >= source_end)
 			{
 				/* if we're done, stop playing */
-				if (!channel->is_looping)
+				if (!channel.is_looping)
 				{
-					channel->is_playing = 0;
+					channel.is_playing = 0;
 					break;
 				}
 	
 				/* if we're looping, wrap to the beginning */
 				else
-					source -= (INT16 *)source_end - (INT16 *)channel->data_start;
+					source -= (INT16 *)source_end - (INT16 *)channel.data_start;
 			}
 		}
 	
 		/* update the final positions */
-		channel->data_current = source;
+		channel.data_current = source;
 	}
 	
 	/***************************************************************************
@@ -664,10 +664,10 @@ public class mixer
 		int mixing_volume[2];
 		unsigned save_available;
 	
-		mixerlogerror(("Mixer:mixer_flush(%s)\n",channel->name));
+		mixerlogerror(("Mixer:mixer_flush(%s)\n",channel.name));
 	
 		/* filter reset request */
-		channel->is_reset_requested = 1;
+		channel.is_reset_requested = 1;
 	
 		/* null volume */
 		mixing_volume[0] = 0;
@@ -678,13 +678,13 @@ public class mixer
 		source_end = (INT8*)silence_data + FILTER_FLUSH;
 	
 		/* save the number of samples availables */
-		save_available = channel->samples_available;
+		save_available = channel.samples_available;
 	
 		/* mix the silence */
 		mixer_channel_resample_8_pan(channel,mixing_volume,ACCUMULATOR_MASK,&source_begin,source_end - source_begin);
 	
 		/* restore the number of samples availables */
-		channel->samples_available = save_available;
+		channel.samples_available = save_available;
 	}
 	
 	/***************************************************************************
@@ -700,18 +700,18 @@ public class mixer
 		memset(&mixer_channel, 0, sizeof(mixer_channel));
 		for (i = 0, channel = mixer_channel; i < MIXER_MAX_CHANNELS; i++, channel++)
 		{
-			channel->mixing_level 					= 0xff;
-			channel->default_mixing_level 			= 0xff;
-			channel->config_mixing_level 			= config_mixing_level[i];
-			channel->config_default_mixing_level 	= config_default_mixing_level[i];
+			channel.mixing_level 					= 0xff;
+			channel.default_mixing_level 			= 0xff;
+			channel.config_mixing_level 			= config_mixing_level[i];
+			channel.config_default_mixing_level 	= config_default_mixing_level[i];
 	
-			channel->left = filter_state_alloc();
-			channel->right = filter_state_alloc();
+			channel.left = filter_state_alloc();
+			channel.right = filter_state_alloc();
 		}
 	
 		/* determine if we're playing in stereo or not */
 		first_free_channel = 0;
-		is_stereo = ((Machine->drv->sound_attributes & SOUND_SUPPORTS_STEREO) != 0);
+		is_stereo = ((Machine.drv.sound_attributes & SOUND_SUPPORTS_STEREO) != 0);
 	
 		/* clear the accumulators */
 		accum_base = 0;
@@ -739,10 +739,10 @@ public class mixer
 	
 		for (i = 0, channel = mixer_channel; i < MIXER_MAX_CHANNELS; i++, channel++)
 		{
-			if (channel->filter)
-				filter_free(channel->filter);
-			filter_state_free(channel->left);
-			filter_state_free(channel->right);
+			if (channel.filter)
+				filter_free(channel.filter);
+			filter_state_free(channel.left);
+			filter_state_free(channel.right);
 		}
 	}
 	
@@ -752,10 +752,10 @@ public class mixer
 	
 	void mixer_update_channel(struct mixer_channel_data *channel, int total_sample_count)
 	{
-		int samples_to_generate = total_sample_count - channel->samples_available;
+		int samples_to_generate = total_sample_count - channel.samples_available;
 	
 		/* don't do anything for streaming channels */
-		if (channel->is_stream)
+		if (channel.is_stream)
 			return;
 	
 		/* if we're all caught up, just return */
@@ -763,14 +763,14 @@ public class mixer
 			return;
 	
 	        /* if we're playing, mix in the data */
-		if (channel->is_playing)
+		if (channel.is_playing)
 		{
-			if (channel->is_16bit)
+			if (channel.is_16bit)
 				mix_sample_16(channel, samples_to_generate);
 			else
 				mix_sample_8(channel, samples_to_generate);
 	
-			if (!channel->is_playing)
+			if (!channel.is_playing)
 				mixer_flush(channel);
 		}
 	}
@@ -799,10 +799,10 @@ public class mixer
 			mixer_update_channel(channel, samples_this_frame);
 	
 			/* if we needed more than they could give, adjust their pointers */
-			if (samples_this_frame > channel->samples_available)
-				channel->samples_available = 0;
+			if (samples_this_frame > channel.samples_available)
+				channel.samples_available = 0;
 			else
-				channel->samples_available -= samples_this_frame;
+				channel.samples_available -= samples_this_frame;
 		}
 	
 		/* copy the mono 32-bit data to a 16-bit buffer, clipping along the way */
@@ -912,24 +912,24 @@ public class mixer
 			struct mixer_channel_data *channel = &mixer_channel[first_free_channel + i];
 	
 			/* extract the basic data */
-			channel->default_mixing_level 	= MIXER_GET_LEVEL(default_mixing_levels[i]);
-			channel->pan 					= MIXER_GET_PAN(default_mixing_levels[i]);
-			channel->gain 					= MIXER_GET_GAIN(default_mixing_levels[i]);
+			channel.default_mixing_level 	= MIXER_GET_LEVEL(default_mixing_levels[i]);
+			channel.pan 					= MIXER_GET_PAN(default_mixing_levels[i]);
+			channel.gain 					= MIXER_GET_GAIN(default_mixing_levels[i]);
 			/* add by hiro-shi */
-			channel->left_volume 				= 100;
-			channel->right_volume 				= 100;
+			channel.left_volume 				= 100;
+			channel.right_volume 				= 100;
 	
 			/* backwards compatibility with old 0-255 volume range */
-			if (channel->default_mixing_level > 100)
-				channel->default_mixing_level = channel->default_mixing_level * 25 / 255;
+			if (channel.default_mixing_level > 100)
+				channel.default_mixing_level = channel.default_mixing_level * 25 / 255;
 	
 			/* attempt to load in the configuration data for this channel */
-			channel->mixing_level = channel->default_mixing_level;
+			channel.mixing_level = channel.default_mixing_level;
 			if (!is_config_invalid)
 			{
 				/* if the defaults match, set the mixing level from the config */
-				if (channel->default_mixing_level == channel->config_default_mixing_level && channel->config_mixing_level <= 100)
-					channel->mixing_level = channel->config_mixing_level;
+				if (channel.default_mixing_level == channel.config_default_mixing_level && channel.config_mixing_level <= 100)
+					channel.mixing_level = channel.config_mixing_level;
 	
 				/* otherwise, invalidate all channels that have been created so far */
 				else
@@ -960,15 +960,15 @@ public class mixer
 	
 		/* either copy the name or create a default one */
 		if (name != NULL)
-			strcpy(channel->name, name);
+			strcpy(channel.name, name);
 		else
-			sprintf(channel->name, "<channel #%d>", ch);
+			sprintf(channel.name, "<channel #%d>", ch);
 	
 		/* append left/right onto the channel as appropriate */
-		if (channel->pan == MIXER_PAN_LEFT)
-			strcat(channel->name, " (Lt)");
-		else if (channel->pan == MIXER_PAN_RIGHT)
-			strcat(channel->name, " (Rt)");
+		if (channel.pan == MIXER_PAN_LEFT)
+			strcat(channel.name, " (Lt)");
+		else if (channel.pan == MIXER_PAN_RIGHT)
+			strcat(channel.name, " (Rt)");
 	}
 	
 	
@@ -981,8 +981,8 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
 		/* return a pointer to the name or a NULL for an unused channel */
-		if (channel->name[0] != 0)
-			return channel->name;
+		if (channel.name[0] != 0)
+			return channel.name;
 		else
 			return NULL;
 	}
@@ -997,8 +997,8 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-		channel->left_volume  = volume;
-		channel->right_volume = volume;
+		channel.left_volume  = volume;
+		channel.right_volume = volume;
 	}
 	
 	
@@ -1011,7 +1011,7 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-		channel->mixing_level = level;
+		channel.mixing_level = level;
 	}
 	
 	
@@ -1023,8 +1023,8 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-		channel->left_volume  = l_vol;
-		channel->right_volume = r_vol;
+		channel.left_volume  = l_vol;
+		channel.right_volume = r_vol;
 	}
 	
 	/***************************************************************************
@@ -1034,7 +1034,7 @@ public class mixer
 	int mixer_get_mixing_level(int ch)
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
-		return channel->mixing_level;
+		return channel.mixing_level;
 	}
 	
 	
@@ -1045,7 +1045,7 @@ public class mixer
 	int mixer_get_default_mixing_level(int ch)
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
-		return channel->default_mixing_level;
+		return channel.default_mixing_level;
 	}
 	
 	
@@ -1059,8 +1059,8 @@ public class mixer
 	
 		for (i = 0; i < MIXER_MAX_CHANNELS; i++)
 		{
-			config_default_mixing_level[i] = config->default_levels[i];
-			config_mixing_level[i] = config->mixing_levels[i];
+			config_default_mixing_level[i] = config.default_levels[i];
+			config_mixing_level[i] = config.mixing_levels[i];
 		}
 		is_config_invalid = 0;
 	}
@@ -1076,8 +1076,8 @@ public class mixer
 	
 		for (i = 0; i < MIXER_MAX_CHANNELS; i++)
 		{
-			config->default_levels[i] = mixer_channel[i].default_mixing_level;
-			config->mixing_levels[i] = mixer_channel[i].mixing_level;
+			config.default_levels[i] = mixer_channel[i].default_mixing_level;
+			config.mixing_levels[i] = mixer_channel[i].mixing_level;
 		}
 	}
 	
@@ -1124,25 +1124,25 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 		int mixing_volume[2];
 	
-		mixerlogerror(("Mixer:mixer_play_streamed_sample_16(%s,,%d,%d)\n",channel->name,len/2,freq));
+		mixerlogerror(("Mixer:mixer_play_streamed_sample_16(%s,,%d,%d)\n",channel.name,len/2,freq));
 	
 		/* skip if sound is off */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
-		channel->is_stream = 1;
+		channel.is_stream = 1;
 	
 		profiler_mark(PROFILER_MIXER);
 	
 		/* compute the overall mixing volume */
 		if (mixer_sound_enabled != 0) {
-			mixing_volume[0] = ((channel->left_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
-			mixing_volume[1] = ((channel->right_volume * channel->mixing_level * 256) << channel->gain) / (100*100);
+			mixing_volume[0] = ((channel.left_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
+			mixing_volume[1] = ((channel.right_volume * channel.mixing_level * 256) << channel.gain) / (100*100);
 		} else {
 			mixing_volume[0] = 0;
 			mixing_volume[1] = 0;
 		}
 	
-		mixer_channel_resample_set(channel,freq,channel->request_lowpass_frequency,0);
+		mixer_channel_resample_set(channel,freq,channel.request_lowpass_frequency,0);
 	
 		/* compute the length in fractional form */
 		len = len / 2; /* convert len from byte to word */
@@ -1170,7 +1170,7 @@ public class mixer
 	int mixer_need_samples_this_frame(int channel,int freq)
 	{
 		return (samples_this_frame - mixer_channel[channel].samples_available)
-				* freq / Machine->sample_rate + EXTRA_SAMPLES;
+				* freq / Machine.sample_rate + EXTRA_SAMPLES;
 	}
 	
 	
@@ -1182,24 +1182,24 @@ public class mixer
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
-		mixerlogerror(("Mixer:mixer_play_sample_8(%s,,%d,%d,%s)\n",channel->name,len,freq,loop ? "loop" : "single"));
+		mixerlogerror(("Mixer:mixer_play_sample_8(%s,,%d,%d,%s)\n",channel.name,len,freq,loop ? "loop" : "single"));
 	
 		/* skip if sound is off, or if this channel is a stream */
-		if (Machine->sample_rate == 0 || channel->is_stream)
+		if (Machine.sample_rate == 0 || channel.is_stream)
 			return;
 	
 		/* update the state of this channel */
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
 	
-		mixer_channel_resample_set(channel,freq,channel->request_lowpass_frequency,1);
+		mixer_channel_resample_set(channel,freq,channel.request_lowpass_frequency,1);
 	
 		/* now determine where to mix it */
-		channel->data_start = data;
-		channel->data_current = data;
-		channel->data_end = (UINT8 *)data + len;
-		channel->is_playing = 1;
-		channel->is_looping = loop;
-		channel->is_16bit = 0;
+		channel.data_start = data;
+		channel.data_current = data;
+		channel.data_end = (UINT8 *)data + len;
+		channel.is_playing = 1;
+		channel.is_looping = loop;
+		channel.is_16bit = 0;
 	}
 	
 	
@@ -1211,24 +1211,24 @@ public class mixer
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
-		mixerlogerror(("Mixer:mixer_play_sample_16(%s,,%d,%d,%s)\n",channel->name,len/2,freq,loop ? "loop" : "single"));
+		mixerlogerror(("Mixer:mixer_play_sample_16(%s,,%d,%d,%s)\n",channel.name,len/2,freq,loop ? "loop" : "single"));
 	
 		/* skip if sound is off, or if this channel is a stream */
-		if (Machine->sample_rate == 0 || channel->is_stream)
+		if (Machine.sample_rate == 0 || channel.is_stream)
 			return;
 	
 		/* update the state of this channel */
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
 	
-		mixer_channel_resample_set(channel,freq,channel->request_lowpass_frequency,1);
+		mixer_channel_resample_set(channel,freq,channel.request_lowpass_frequency,1);
 	
 		/* now determine where to mix it */
-		channel->data_start = data;
-		channel->data_current = data;
-		channel->data_end = (UINT8 *)data + len;
-		channel->is_playing = 1;
-		channel->is_looping = loop;
-		channel->is_16bit = 1;
+		channel.data_start = data;
+		channel.data_current = data;
+		channel.data_end = (UINT8 *)data + len;
+		channel.is_playing = 1;
+		channel.is_looping = loop;
+		channel.is_16bit = 1;
 	}
 	
 	
@@ -1240,12 +1240,12 @@ public class mixer
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
-		mixerlogerror(("Mixer:mixer_stop_sample(%s)\n",channel->name));
+		mixerlogerror(("Mixer:mixer_stop_sample(%s)\n",channel.name));
 	
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
 	
-		if (channel->is_playing) {
-			channel->is_playing = 0;
+		if (channel.is_playing) {
+			channel.is_playing = 0;
 			mixer_flush(channel);
 		}
 	}
@@ -1259,7 +1259,7 @@ public class mixer
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
 		mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
-		return channel->is_playing;
+		return channel.is_playing;
 	}
 	
 	
@@ -1271,14 +1271,14 @@ public class mixer
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
-		assert( !channel->is_stream );
+		assert( !channel.is_stream );
 	
-		if (channel->is_playing) {
-			mixerlogerror(("Mixer:mixer_set_sample_frequency(%s,%d)\n",channel->name,freq));
+		if (channel.is_playing) {
+			mixerlogerror(("Mixer:mixer_set_sample_frequency(%s,%d)\n",channel.name,freq));
 	
 			mixer_update_channel(channel, sound_scalebufferpos(samples_this_frame));
 	
-			mixer_channel_resample_set(channel,freq,channel->request_lowpass_frequency,0);
+			mixer_channel_resample_set(channel,freq,channel.request_lowpass_frequency,0);
 		}
 	}
 	
@@ -1297,11 +1297,11 @@ public class mixer
 	{
 		struct mixer_channel_data *channel = &mixer_channel[ch];
 	
-		assert(!channel->is_playing && !channel->is_stream);
+		assert(!channel.is_playing && !channel.is_stream);
 	
-		mixerlogerror(("Mixer:mixer_set_lowpass_frequency(%s,%d)\n",channel->name,freq));
+		mixerlogerror(("Mixer:mixer_set_lowpass_frequency(%s,%d)\n",channel.name,freq));
 	
-		channel->request_lowpass_frequency = freq;
+		channel.request_lowpass_frequency = freq;
 	}
 	
 	/***************************************************************************

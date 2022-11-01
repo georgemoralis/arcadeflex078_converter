@@ -24,8 +24,8 @@ public class jackal
 	public static PaletteInitHandlerPtr palette_init_jackal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < TOTAL_COLORS(0);i++)
@@ -60,7 +60,7 @@ public class jackal
 			return 1;
 	
 		memset(dirtybuffer,1,videoram_size);
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -110,42 +110,42 @@ public class jackal
 	
 				if ((sp & 0x0C) == 0x0C)
 				{
-					drawgfx(bitmap,Machine->gfx[bank+1],
+					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x08)
 				{
-					drawgfx(bitmap,Machine->gfx[bank+1],
+					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[bank+1],
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum - 2,
 						color,
 						flipx,flipy,
 						sx,sy+8,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x04)
 				{
-					drawgfx(bitmap,Machine->gfx[bank+1],
+					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[bank+1],
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[bank+1],
 						spritenum + 1,
 						color,
 						flipx,flipy,
 						sx+8,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 			else
@@ -154,39 +154,39 @@ public class jackal
 	
 				if ((sp & 0x10) != 0)
 				{
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum,
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy+16:sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[bank],
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+1,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy+16:sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[bank],
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+2,
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy:sy+16,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[bank],
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum+3,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy:sy+16,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -230,7 +230,7 @@ public class jackal
 				sx = offs % 32;
 				sy = offs / 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 					videoram.read(offs)+ ((colorram[offs] & 0xc0) << 2) + ((colorram[offs] & 0x30) << 6),
 					colorram[offs] & 0x0f,
 					colorram[offs] & 0x10,colorram[offs] & 0x20,
@@ -268,9 +268,9 @@ public class jackal
 			}
 	
 			if ((h_scroll_num == 0) && (v_scroll_num == 0))
-				copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,h_scroll_num,h_scroll,v_scroll_num,v_scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,h_scroll_num,h_scroll,v_scroll_num,v_scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 		/* Draw the sprites. */

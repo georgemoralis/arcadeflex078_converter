@@ -37,8 +37,8 @@ public class blueprnt
 	public static PaletteInitHandlerPtr palette_init_blueprnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 16;i++)
@@ -116,7 +116,7 @@ public class blueprnt
 					sy = 31 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ 256 * gfx_bank,
 						colorram[offs] & 0x7f,
 						flipscreen,flipscreen,
@@ -146,7 +146,7 @@ public class blueprnt
 				}
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -168,12 +168,12 @@ public class blueprnt
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					spriteram.read(offs + 1),
 					0,
 					flipx,flipy,
 					2+sx,sy-1,	/* sprites are slightly misplaced, regardless of the screen flip */
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -193,12 +193,12 @@ public class blueprnt
 					sy = 31 - sy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						videoram.read(offs)+ 256 * gfx_bank,
 						colorram[offs] & 0x7f,
 						flipscreen,flipscreen,
 						8*sx,(8*sy+scroll[sx]) & 0xff,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	} };

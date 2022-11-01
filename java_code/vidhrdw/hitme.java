@@ -50,10 +50,10 @@ public class hitme
 			}
 			sx = 10 * (offs % 40);
 			sy = 11 * (offs / 40);
-			drawgfx(tmpbitmap,Machine->gfx[0],
+			drawgfx(tmpbitmap,Machine.gfx[0],
 	        charcode, invert,
 			0,0,sx,sy,
-			&Machine->drv->visible_area,TRANSPARENCY_NONE,0);
+			&Machine.drv.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	*/

@@ -148,8 +148,8 @@ public class gottlieb
 		{
 			gottlieb_charram[offset] = data;
 	
-			decodechar(Machine->gfx[0], offset / 32, gottlieb_charram, 
-				Machine->drv->gfxdecodeinfo[0].gfxlayout);
+			decodechar(Machine.gfx[0], offset / 32, gottlieb_charram, 
+				Machine.drv.gfxdecodeinfo[0].gfxlayout);
 			
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
@@ -191,11 +191,11 @@ public class gottlieb
 			if (flip_screen_y != 0) sy = 244 - sy;
 	
 			if (spriteram.read(offs)|| spriteram.read(offs + 1))	/* needed to avoid garbage on screen */
-				drawgfx(bitmap, Machine->gfx[1],
+				drawgfx(bitmap, Machine.gfx[1],
 					code, 0,
 					flip_screen_x, flip_screen_y,
 					sx,sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -204,18 +204,18 @@ public class gottlieb
 	{
 		if (!background_priority)
 		{
-			tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
+			tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0], &Machine->visible_area);
+			fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
 		}
 	
 		gottlieb_draw_sprites(bitmap);
 	
 		if (background_priority != 0)
 		{
-			tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+			tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		}
 	} };
 }

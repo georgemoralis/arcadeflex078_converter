@@ -247,7 +247,7 @@ public class ginganin
 				flipx = !flipx; 	flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 					code & 0x3fff,
 					attr >> 12,
 					flipx, flipy,
@@ -294,7 +294,7 @@ public class ginganin
 	
 	
 		if ((layers_ctrl1 & 1) != 0)	tilemap_draw(bitmap,cliprect, bg_tilemap,  0,0);
-		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if ((layers_ctrl1 & 2) != 0)	tilemap_draw(bitmap,cliprect, fg_tilemap,  0,0);
 		if ((layers_ctrl1 & 8) != 0)	draw_sprites(bitmap,cliprect);

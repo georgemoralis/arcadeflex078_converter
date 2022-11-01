@@ -68,7 +68,7 @@ public class ohmygod
 	
 	READ16_HANDLER( ohmygod_sound_status_r )
 	{
-		if(Machine->sample_rate == 0)
+		if(Machine.sample_rate == 0)
 		{
 			/* strobe 'sample playing' flags of the OKIM6295 to make it start up */
 	

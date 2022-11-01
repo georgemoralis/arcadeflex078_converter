@@ -81,7 +81,7 @@ public class drmicro
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -102,7 +102,7 @@ public class drmicro
 			color_prom++;
 		}
 	
-		for (i=0; i<Machine->drv->color_table_len; i++)
+		for (i=0; i<Machine.drv.color_table_len; i++)
 			colortable[i] = color_prom[i] & 0x0f;
 	} };
 	
@@ -155,7 +155,7 @@ public class drmicro
 				else
 					x = (240-x) & 0xff;
 	
-				drawgfx(bitmap,Machine->gfx[3-g],
+				drawgfx(bitmap,Machine.gfx[3-g],
 						chr,
 						col,
 						fx,fy,
@@ -164,7 +164,7 @@ public class drmicro
 	
 				if (x>240)
 				{
-					drawgfx(bitmap,Machine->gfx[3-g],
+					drawgfx(bitmap,Machine.gfx[3-g],
 							chr,
 							col,
 							fx,fy,

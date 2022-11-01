@@ -70,7 +70,7 @@ public class sbowling
 			y = 255-y;
 			x = 247-x;
 		}
-		plot_pixel(tmpbitmap,x,y,Machine->pens[col]);
+		plot_pixel(tmpbitmap,x,y,Machine.pens[col]);
 	}
 	
 	public static WriteHandlerPtr sbw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -97,7 +97,7 @@ public class sbowling
 	
 	VIDEO_UPDATE(sbowling)
 	{
-		fillbitmap(bitmap,Machine->pens[0x18],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x18],cliprect);
 		tilemap_draw(bitmap,cliprect,sb_tilemap,0,0);
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect, TRANSPARENCY_PEN, color_prom_address);
 	}
@@ -339,7 +339,7 @@ public class sbowling
 				3,	resistances_rg,	weights_g,	0,	100,
 				2,	resistances_b,	weights_b,	0,	100);
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	

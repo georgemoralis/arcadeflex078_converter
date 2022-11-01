@@ -56,14 +56,14 @@ public class dotrikun
 		x = 2 * (((offset % 16) * 8));
 		y = 2 * ((offset / 16));
 	
-		if (x >= Machine->visible_area.min_x &&
-				x <= Machine->visible_area.max_x &&
-				y >= Machine->visible_area.min_y &&
-				y <= Machine->visible_area.max_y)
+		if (x >= Machine.visible_area.min_x &&
+				x <= Machine.visible_area.max_x &&
+				y >= Machine.visible_area.min_y &&
+				y <= Machine.visible_area.max_y)
 		{
 			for (i = 0; i < 8; i++)
 			{
-				color = Machine->pens[((data >> i) & 0x01)];
+				color = Machine.pens[((data >> i) & 0x01)];
 	
 				/* I think the video hardware doubles pixels, screen would be too small otherwise */
 				plot_pixel(tmpbitmap, x + 2*(7 - i),   y,   color);
@@ -86,6 +86,6 @@ public class dotrikun
 			for (offs = 0; offs < videoram_size; offs++)
 				dotrikun_videoram_w(offs,videoram.read(offs));
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

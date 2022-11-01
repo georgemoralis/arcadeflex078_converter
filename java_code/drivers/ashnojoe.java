@@ -62,7 +62,7 @@ Dips:
                    Rank C           OFF ON  OFF OFF OFF OFF OFF OFF
                    Rank D           ON  ON  OFF OFF OFF OFF OFF OFF
 
-   Easy (A) -> Difficult (D)
+   Easy (A) . Difficult (D)
 
 Game is controled with 4-direction lever and two buttons
 Coin B is not used
@@ -167,8 +167,8 @@ public class ashnojoe
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
 		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
-		new IO_ReadPort( 0x04, 0x04, soundlatch_r ), //PC: 15D -> cp $7f
-		new IO_ReadPort( 0x06, 0x06, fake_6_r/*soundlatch_r */), //PC: 14A -> and $1
+		new IO_ReadPort( 0x04, 0x04, soundlatch_r ), //PC: 15D . cp $7f
+		new IO_ReadPort( 0x06, 0x06, fake_6_r/*soundlatch_r */), //PC: 14A . and $1
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	

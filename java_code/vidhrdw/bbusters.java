@@ -125,7 +125,7 @@ public class bbusters
 	
 	INLINE const data8_t *get_source_ptr(unsigned int sprite, int dx, int dy, int bank, int block)
 	{
-		const struct GfxElement *gfx=Machine->gfx[bank];
+		const struct GfxElement *gfx=Machine.gfx[bank];
 		int source_base,code=0;
 	
 		/* Get a tile index from the x,y position in the block */
@@ -159,13 +159,13 @@ public class bbusters
 			break;
 		}
 	
-		source_base=((sprite+code) % gfx->total_elements) * 16;
-		return gfx->gfxdata + ((source_base+(dy%16)) * gfx->line_modulo);
+		source_base=((sprite+code) % gfx.total_elements) * 16;
+		return gfx.gfxdata + ((source_base+(dy%16)) * gfx.line_modulo);
 	}
 	
 	static void bbusters_draw_block(struct mame_bitmap *dest,int x,int y,int size,int flipx,int flipy,unsigned int sprite,int color,int bank,int block)
 	{
-		const pen_t *pal = &Machine->gfx[bank]->colortable[Machine->gfx[bank]->color_granularity * (color % Machine->gfx[bank]->total_colors)];
+		const pen_t *pal = &Machine.gfx[bank].colortable[Machine.gfx[bank].color_granularity * (color % Machine.gfx[bank].total_colors)];
 		unsigned int xinc=(scale_line_count * 0x10000 ) / size;
 		data8_t pixel;
 		int x_index;
@@ -175,7 +175,7 @@ public class bbusters
 		while (scale_line_count) {
 	
 			if (dy>=16 && dy<240) {
-				UINT16 *destline = (UINT16 *)dest->line[dy];
+				UINT16 *destline = (UINT16 *)dest.line[dy];
 				data8_t srcline=*scale_table_ptr;
 				const data8_t *srcptr=0;
 	

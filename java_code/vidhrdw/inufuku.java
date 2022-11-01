@@ -151,7 +151,7 @@ public class inufuku
 	
 						code  = ((inufuku_spriteram2[map_start] & 0x0007) << 16) + inufuku_spriteram2[map_start + 1];
 	
-						pdrawgfxzoom(bitmap, Machine->gfx[2],
+						pdrawgfxzoom(bitmap, Machine.gfx[2],
 								code,
 								color,
 								flipx, flipy,

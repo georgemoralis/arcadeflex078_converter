@@ -163,7 +163,7 @@ public class sound
 	#endif
 	
 		// skip if sound disabled
-		if (Machine->sample_rate != 0)
+		if (Machine.sample_rate != 0)
 		{
 			// attempt to initialize directsound
 			if (dsound_init() != 0)
@@ -174,7 +174,7 @@ public class sound
 		}
 	
 		// determine the number of samples per frame
-		samples_per_frame = (double)Machine->sample_rate / (double)Machine->drv->frames_per_second;
+		samples_per_frame = (double)Machine.sample_rate / (double)Machine.drv.frames_per_second;
 	
 		// compute how many samples to generate the first frame
 		samples_left_over = samples_per_frame;
@@ -194,7 +194,7 @@ public class sound
 	void osd_stop_audio_stream(void)
 	{
 		// if nothing to do, don't do it
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
 	
 		// kill the buffers and dsound
@@ -342,7 +342,7 @@ public class sound
 	int osd_update_audio_stream(INT16 *buffer)
 	{
 		// if nothing to do, don't do it
-		if (Machine->sample_rate != 0 && stream_buffer)
+		if (Machine.sample_rate != 0 && stream_buffer)
 		{
 			int original_bytes = bytes_in_stream_buffer();
 			int input_bytes = samples_this_frame * stream_format.nBlockAlign;
@@ -481,15 +481,15 @@ public class sound
 		// make a format description for what we want
 		stream_format.wBitsPerSample	= 16;
 		stream_format.wFormatTag		= WAVE_FORMAT_PCM;
-		stream_format.nChannels			= (Machine->drv->sound_attributes & SOUND_SUPPORTS_STEREO) ? 2 : 1;
-		stream_format.nSamplesPerSec	= Machine->sample_rate;
+		stream_format.nChannels			= (Machine.drv.sound_attributes & SOUND_SUPPORTS_STEREO) ? 2 : 1;
+		stream_format.nSamplesPerSec	= Machine.sample_rate;
 		stream_format.nBlockAlign		= stream_format.wBitsPerSample * stream_format.nChannels / 8;
 		stream_format.nAvgBytesPerSec	= stream_format.nSamplesPerSec * stream_format.nBlockAlign;
 	
 		// compute the buffer sizes
 		stream_buffer_size = ((UINT64)MAX_BUFFER_SIZE * (UINT64)stream_format.nSamplesPerSec) / 44100;
 		stream_buffer_size = (stream_buffer_size * stream_format.nBlockAlign) / 4;
-		stream_buffer_size = (stream_buffer_size * 30) / Machine->drv->frames_per_second;
+		stream_buffer_size = (stream_buffer_size * 30) / Machine.drv.frames_per_second;
 		stream_buffer_size = (stream_buffer_size / 1024) * 1024;
 	
 		// compute the upper/lower thresholds

@@ -621,7 +621,7 @@ public class ssv
 			if ((data & 0x20) != 0)
 				serial = readinputport(6) & 0xff;
 	
-			if ( (old & 0x40) && !(data & 0x40) )	// $40 -> $00
+			if ( (old & 0x40) && !(data & 0x40) )	// $40 . $00
 				serial <<= 1;						// shift 1 bit
 	
 			old = data;
@@ -2206,7 +2206,7 @@ public class ssv
 		PORT_START(); 	// IN2 - $210008
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
-		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON2        | IPF_PLAYER1 );// -> ball sensor on
+		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON2        | IPF_PLAYER1 );// . ball sensor on
 		PORT_BIT(  0x0008, IP_ACTIVE_LOW, IPT_BUTTON1        | IPF_PLAYER1 );
 		PORT_BIT(  0x0010, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 | IPF_2WAY );
 		PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 | IPF_2WAY );
@@ -2225,7 +2225,7 @@ public class ssv
 		PORT_BIT(  0x00e0, IP_ACTIVE_LOW, IPT_UNKNOWN  );
 	
 		PORT_START(); 	// IN5 - $500002
-		PORT_BIT(  0x0001, IP_ACTIVE_HIGH,  IPT_SERVICE2 );// ball switch on -> handle motor off
+		PORT_BIT(  0x0001, IP_ACTIVE_HIGH,  IPT_SERVICE2 );// ball switch on . handle motor off
 	
 		PORT_START(); 	// IN6 - $500004
 		PORT_ANALOGX( 0xff, 0x00, IPT_PADDLE, 15, 15, 0, 0xcf, KEYCODE_N, KEYCODE_M, 0, 0 );

@@ -489,7 +489,7 @@ public class galaxian
 		spritevisiblearea      = &_spritevisiblearea;
 		spritevisibleareaflipx = &_spritevisibleareaflipx;
 	
-		color_mask = (Machine->gfx[0]->color_granularity == 4) ? 7 : 3;
+		color_mask = (Machine.gfx[0].color_granularity == 4) ? 7 : 3;
 	
 		return 0;
 	}
@@ -861,7 +861,7 @@ public class galaxian
 		spritevisiblearea      = &_spritevisiblearea;
 		spritevisibleareaflipx = &_spritevisibleareaflipx;
 	
-		color_mask = (Machine->gfx[0]->color_granularity == 4) ? 7 : 3;
+		color_mask = (Machine.gfx[0].color_granularity == 4) ? 7 : 3;
 	
 		return 0;
 	} };
@@ -1214,8 +1214,8 @@ public class galaxian
 		{
 			x--;
 	
-			if (x >= Machine->visible_area.min_x &&
-				x <= Machine->visible_area.max_x)
+			if (x >= Machine.visible_area.min_x &&
+				x <= Machine.visible_area.max_x)
 			{
 				int color;
 	
@@ -1223,7 +1223,7 @@ public class galaxian
 				/* yellow missile, white shells (this is the terminology on the schematics) */
 				color = ((offs == 7*4) ? BULLETS_COLOR_BASE : BULLETS_COLOR_BASE + 1);
 	
-				plot_pixel(bitmap, x, y, Machine->pens[color]);
+				plot_pixel(bitmap, x, y, Machine.pens[color]);
 			}
 		}
 	}
@@ -1239,11 +1239,11 @@ public class galaxian
 	
 		x = x - 6;
 	
-		if (x >= Machine->visible_area.min_x &&
-			x <= Machine->visible_area.max_x)
+		if (x >= Machine.visible_area.min_x &&
+			x <= Machine.visible_area.max_x)
 		{
 			/* yellow bullets */
-			plot_pixel(bitmap, x, y, Machine->pens[BULLETS_COLOR_BASE]);
+			plot_pixel(bitmap, x, y, Machine.pens[BULLETS_COLOR_BASE]);
 		}
 	}
 	
@@ -1253,10 +1253,10 @@ public class galaxian
 	
 		x = x - 6;
 	
-		if (x >= Machine->visible_area.min_x &&
-			x <= Machine->visible_area.max_x)
+		if (x >= Machine.visible_area.min_x &&
+			x <= Machine.visible_area.max_x)
 		{
-			plot_pixel(bitmap, x, y, Machine->pens[32 + darkplnt_bullet_color]);
+			plot_pixel(bitmap, x, y, Machine.pens[32 + darkplnt_bullet_color]);
 		}
 	}
 	
@@ -1270,10 +1270,10 @@ public class galaxian
 		{
 			x--;
 	
-			if (x >= Machine->visible_area.min_x &&
-				x <= Machine->visible_area.max_x)
+			if (x >= Machine.visible_area.min_x &&
+				x <= Machine.visible_area.max_x)
 			{
-				plot_pixel(bitmap, x, y, Machine->pens[BULLETS_COLOR_BASE]);
+				plot_pixel(bitmap, x, y, Machine.pens[BULLETS_COLOR_BASE]);
 			}
 		}
 	}
@@ -1284,18 +1284,18 @@ public class galaxian
 	static void galaxian_draw_background(struct mame_bitmap *bitmap)
 	{
 		/* plain black background */
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	}
 	
 	static void scramble_draw_background(struct mame_bitmap *bitmap)
 	{
 		if (background_enable != 0)
 		{
-			fillbitmap(bitmap,Machine->pens[BACKGROUND_COLOR_BASE],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE],&Machine.visible_area);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		}
 	}
 	
@@ -1303,7 +1303,7 @@ public class galaxian
 	{
 		int color = (background_blue << 2) | (background_green << 1) | background_red;
 	
-		fillbitmap(bitmap,Machine->pens[BACKGROUND_COLOR_BASE + color],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE + color],&Machine.visible_area);
 	}
 	
 	static void frogger_draw_background(struct mame_bitmap *bitmap)
@@ -1311,13 +1311,13 @@ public class galaxian
 		/* color split point verified on real machine */
 		if (flip_screen_x != 0)
 		{
-			plot_box(bitmap,   0, 0, 128, 256, Machine->pens[0]);
-			plot_box(bitmap, 128, 0, 128, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap,   0, 0, 128, 256, Machine.pens[0]);
+			plot_box(bitmap, 128, 0, 128, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			plot_box(bitmap,   0, 0, 128, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
-			plot_box(bitmap, 128, 0, 128, 256, Machine->pens[0]);
+			plot_box(bitmap,   0, 0, 128, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 128, 0, 128, 256, Machine.pens[0]);
 		}
 	}
 	
@@ -1356,7 +1356,7 @@ public class galaxian
 				sx = 8 * x;
 			}
 	
-			plot_box(bitmap, sx, 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
+			plot_box(bitmap, sx, 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
 		}
 	}
 	
@@ -1369,19 +1369,19 @@ public class galaxian
 	
 			for (x = 0; x < 128; x++)
 			{
-				plot_box(bitmap, x,       0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x]);
+				plot_box(bitmap, x,       0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x]);
 			}
 	
 			for (x = 0; x < 120; x++)
 			{
-				plot_box(bitmap, x + 128, 0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x + 128]);
+				plot_box(bitmap, x + 128, 0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x + 128]);
 			}
 	
-			plot_box(bitmap, 248, 0, 16, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 248, 0, 16, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		}
 	}
 	
@@ -1394,19 +1394,19 @@ public class galaxian
 	
 			for (x = 0; x < 128; x++)
 			{
-				plot_box(bitmap, x,       0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x]);
+				plot_box(bitmap, x,       0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x]);
 			}
 	
 			for (x = 0; x < 120; x++)
 			{
-				plot_box(bitmap, x + 128, 0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x + 8]);
+				plot_box(bitmap, x + 128, 0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x + 8]);
 			}
 	
-			plot_box(bitmap, 248, 0, 16, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 248, 0, 16, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		}
 	}
 	
@@ -1434,7 +1434,7 @@ public class galaxian
 				else
 					color = prom[0x20 + x - 1];
 	
-				plot_box(bitmap, 8 * (31 - x), 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
+				plot_box(bitmap, 8 * (31 - x), 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
 			}
 		}
 		else
@@ -1449,7 +1449,7 @@ public class galaxian
 				else
 					color = prom[x + 1];
 	
-				plot_box(bitmap, 8 * x, 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
+				plot_box(bitmap, 8 * x, 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
 			}
 		}
 	}
@@ -1531,10 +1531,10 @@ public class galaxian
 	
 	static void plot_star(struct mame_bitmap *bitmap, int x, int y, int color)
 	{
-		if (y < Machine->visible_area.min_y ||
-			y > Machine->visible_area.max_y ||
-			x < Machine->visible_area.min_x ||
-			x > Machine->visible_area.max_x)
+		if (y < Machine.visible_area.min_y ||
+			y > Machine.visible_area.max_y ||
+			x < Machine.visible_area.min_x ||
+			x > Machine.visible_area.max_x)
 			return;
 	
 	
@@ -1547,7 +1547,7 @@ public class galaxian
 			y = 255 - y;
 		}
 	
-		plot_pixel(bitmap, x, y, Machine->pens[STARS_COLOR_BASE + color]);
+		plot_pixel(bitmap, x, y, Machine.pens[STARS_COLOR_BASE + color]);
 	}
 	
 	static void noop_draw_stars(struct mame_bitmap *bitmap)
@@ -1783,7 +1783,7 @@ public class galaxian
 	
 	static void start_stars_scroll_timer()
 	{
-		timer_adjust(stars_scroll_timer, TIME_IN_HZ(Machine->drv->frames_per_second), 0, TIME_IN_HZ(Machine->drv->frames_per_second));
+		timer_adjust(stars_scroll_timer, TIME_IN_HZ(Machine.drv.frames_per_second), 0, TIME_IN_HZ(Machine.drv.frames_per_second));
 	}
 	
 	
@@ -1833,8 +1833,8 @@ public class galaxian
 			sy = 255 - galaxian_bulletsram[offs + 1];
 			sx = 255 - galaxian_bulletsram[offs + 3];
 	
-			if (sy < Machine->visible_area.min_y ||
-				sy > Machine->visible_area.max_y)
+			if (sy < Machine.visible_area.min_y ||
+				sy > Machine.visible_area.max_y)
 				continue;
 	
 			if (flip_screen_y != 0)  sy = 255 - sy;
@@ -1901,7 +1901,7 @@ public class galaxian
 			if (offs < 3*4)  sy++;
 	
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,color,
 					flipx,flipy,
 					sx,sy,

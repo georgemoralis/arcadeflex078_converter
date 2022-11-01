@@ -3091,7 +3091,7 @@ public class dec8
 	
 		sound_cpu = 1;
 		/* Oscar has three CPUs */
-		if (Machine->drv->cpu[2].cpu_type != 0) sound_cpu = 2;
+		if (Machine.drv.cpu[2].cpu_type != 0) sound_cpu = 2;
 	
 		/* bits 5 and 6 of the opcodes are swapped */
 		rom = memory_region(REGION_CPU1+sound_cpu);

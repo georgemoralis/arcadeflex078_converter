@@ -107,51 +107,51 @@ void LFO_Init(void)
 INLINE signed int PLFO_Step(struct _LFO *LFO)
 {
 	int p;
-    LFO->phase+=LFO->phase_step;    
+    LFO.phase+=LFO.phase_step;    
 #if LFO_SHIFT!=8    
-    LFO->phase&=(1<<(LFO_SHIFT+8))-1;
+    LFO.phase&=(1<<(LFO_SHIFT+8))-1;
 #endif    
-    p=LFO->table[LFO->phase>>LFO_SHIFT];
-	p=LFO->scale[p+128];
+    p=LFO.table[LFO.phase>>LFO_SHIFT];
+	p=LFO.scale[p+128];
 	return p<<(SHIFT-LFO_SHIFT);
 }
 
 INLINE signed int ALFO_Step(struct _LFO *LFO)
 {
 	int p;
-    LFO->phase+=LFO->phase_step;    
+    LFO.phase+=LFO.phase_step;    
 #if LFO_SHIFT!=8    
-    LFO->phase&=(1<<(LFO_SHIFT+8))-1;
+    LFO.phase&=(1<<(LFO_SHIFT+8))-1;
 #endif    
-    p=LFO->table[LFO->phase>>LFO_SHIFT];
-	p=LFO->scale[p];
+    p=LFO.table[LFO.phase>>LFO_SHIFT];
+	p=LFO.scale[p];
 	return p<<(SHIFT-LFO_SHIFT);
 }
 
 void LFO_ComputeStep(struct _LFO *LFO,data32_t LFOF,data32_t LFOWS,data32_t LFOS,int ALFO)
 {
-    float step=(float) LFOFreq[LFOF]*256.0/(float)Machine->sample_rate;
-    LFO->phase_step=(unsigned int) ((float) (1<<LFO_SHIFT)*step);
+    float step=(float) LFOFreq[LFOF]*256.0/(float)Machine.sample_rate;
+    LFO.phase_step=(unsigned int) ((float) (1<<LFO_SHIFT)*step);
     if (ALFO != 0)
     {
 		switch(LFOWS)
 		{
-			case 0: LFO->table=ALFO_SAW; break;
-			case 1: LFO->table=ALFO_SQR; break;
-			case 2: LFO->table=ALFO_TRI; break;
-			case 3: LFO->table=ALFO_NOI; break;
+			case 0: LFO.table=ALFO_SAW; break;
+			case 1: LFO.table=ALFO_SQR; break;
+			case 2: LFO.table=ALFO_TRI; break;
+			case 3: LFO.table=ALFO_NOI; break;
 		}
-		LFO->scale=ASCALES[LFOS];
+		LFO.scale=ASCALES[LFOS];
 	}
 	else
 	{
 		switch(LFOWS)
 		{
-		    case 0: LFO->table=PLFO_SAW; break;
-		    case 1: LFO->table=PLFO_SQR; break;
-			case 2: LFO->table=PLFO_TRI; break;
-		    case 3: LFO->table=PLFO_NOI; break;
+		    case 0: LFO.table=PLFO_SAW; break;
+		    case 1: LFO.table=PLFO_SQR; break;
+			case 2: LFO.table=PLFO_TRI; break;
+		    case 3: LFO.table=PLFO_NOI; break;
 		}
-		LFO->scale=PSCALES[LFOS];
+		LFO.scale=PSCALES[LFOS];
 	}
 }

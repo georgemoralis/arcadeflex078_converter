@@ -480,7 +480,7 @@ public class harddriv
 		{ ADSP_PGM_ADDR_RANGE (0x0000, 0x3fff), MRA16_RAM },
 	//
 	//	/SIRQ2 = IRQ2
-	//	/SRES -> RESET
+	//	/SRES . RESET
 	//
 	//	2xx0 W = SWR0 (POUT)
 	//	2xx1 W = SWR1 (SINT)
@@ -497,7 +497,7 @@ public class harddriv
 	//	2xx7 R = SFWCLR
 	//
 	//
-	//	/XRES -> RESET
+	//	/XRES . RESET
 	//	communicate over serial I/O
 	
 	MEMORY_END
@@ -3555,10 +3555,10 @@ public class harddriv
 		install_mem_write16_handler(hdcpu_main, 0x823800, 0x823fff, hd68k_ds3_control_w);
 	
 		/* if we have a sound DSP, boot it */
-		if (hdcpu_sound != -1 && Machine->drv->cpu[hdcpu_sound].cpu_type == CPU_ADSP2105)
+		if (hdcpu_sound != -1 && Machine.drv.cpu[hdcpu_sound].cpu_type == CPU_ADSP2105)
 			adsp2105_load_boot_data((data8_t *)(memory_region(REGION_CPU1 + hdcpu_sound) + ADSP2100_SIZE),
 									(data32_t *)(memory_region(REGION_CPU1 + hdcpu_sound) + ADSP2100_PGM_OFFSET));
-		if (hdcpu_sounddsp != -1 && Machine->drv->cpu[hdcpu_sounddsp].cpu_type == CPU_ADSP2105)
+		if (hdcpu_sounddsp != -1 && Machine.drv.cpu[hdcpu_sounddsp].cpu_type == CPU_ADSP2105)
 			adsp2105_load_boot_data((data8_t *)(memory_region(REGION_CPU1 + hdcpu_sounddsp) + ADSP2100_SIZE),
 									(data32_t *)(memory_region(REGION_CPU1 + hdcpu_sounddsp) + ADSP2100_PGM_OFFSET));
 	

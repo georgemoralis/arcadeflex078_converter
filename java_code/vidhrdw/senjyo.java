@@ -227,7 +227,7 @@ public class senjyo
 	
 		if (senjyo_bgstripes == 0xff)	/* off */
 		{
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 			return;
 		}
 	
@@ -245,14 +245,14 @@ public class senjyo
 				{
 					for (y = 0;y < 256;y++)
 					{
-						plot_pixel(bgbitmap, 255 - x, y, Machine->pens[384 + pen]);
+						plot_pixel(bgbitmap, 255 - x, y, Machine.pens[384 + pen]);
 					}
 				}
 				else
 				{
 					for (y = 0;y < 256;y++)
 					{
-						plot_pixel(bgbitmap, x, y, Machine->pens[384 + pen]);
+						plot_pixel(bgbitmap, x, y, Machine.pens[384 + pen]);
 					}
 				}
 	
@@ -291,11 +291,11 @@ public class senjyo
 							sy = 255 - sy;
 						}
 	
-						if (sy >= cliprect->min_y && sy <= cliprect->max_y &&
-							sx >= cliprect->min_x && sx <= cliprect->max_x)
+						if (sy >= cliprect.min_y && sy <= cliprect.max_y &&
+							sx >= cliprect.min_x && sx <= cliprect.max_x)
 							plot_pixel(bitmap,
 									   sx, sy,
-									   Machine->pens[offs < 0x200 ? 400 : 401]);
+									   Machine.pens[offs < 0x200 ? 400 : 401]);
 					}
 				}
 			}
@@ -343,7 +343,7 @@ public class senjyo
 				}
 	
 	
-				drawgfx(bitmap,Machine->gfx[big ? 5 : 4],
+				drawgfx(bitmap,Machine.gfx[big ? 5 : 4],
 						spriteram.read(offs),
 						spriteram.read(offs + 1)& 0x07,
 						flipx,flipy,

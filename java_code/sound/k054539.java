@@ -224,15 +224,15 @@ public class k054539
 					pdelta = +1;
 				}
 	
-				if(cur_pos != chan->pos) {
-					chan->pos = cur_pos;
+				if(cur_pos != chan.pos) {
+					chan.pos = cur_pos;
 					cur_pfrac = 0;
 					cur_val = 0;
 					cur_pval = 0;
 				} else {
-					cur_pfrac = chan->pfrac;
-					cur_val = chan->val;
-					cur_pval = chan->pval;
+					cur_pfrac = chan.pfrac;
+					cur_val = chan.val;
+					cur_pval = chan.pval;
 				}
 	
 	#define UPDATE_CHANNELS																	\
@@ -350,10 +350,10 @@ public class k054539
 	#endif
 					break;
 				}
-				chan->pos = cur_pos;
-				chan->pfrac = cur_pfrac;
-				chan->pval = cur_pval;
-				chan->val = cur_val;
+				chan.pos = cur_pos;
+				chan.pfrac = cur_pfrac;
+				chan.pval = cur_pval;
+				chan.val = cur_val;
 				if(K054539_regupdate(chip)) {
 					base1[0x0c] = cur_pos     & 0xff;
 					base1[0x0d] = cur_pos>> 8 & 0xff;
@@ -450,7 +450,7 @@ public class k054539
 	static void K054539_irq(int chip)
 	{
 		if(K054539_chips.chip[chip].regs[0x22f] & 0x20)
-			K054539_chips.intf->irq[chip] ();
+			K054539_chips.intf.irq[chip] ();
 	}
 	
 	static void K054539_init_chip(int chip, const struct MachineSound *msound)
@@ -470,8 +470,8 @@ public class k054539
 		K054539_chips.chip[chip].cur_ptr = 0;
 		memset(K054539_chips.chip[chip].ram, 0, 0x4000*2+48000/55*2);
 	
-		K054539_chips.chip[chip].rom = memory_region(K054539_chips.intf->region[chip]);
-		K054539_chips.chip[chip].rom_size = memory_region_length(K054539_chips.intf->region[chip]);
+		K054539_chips.chip[chip].rom = memory_region(K054539_chips.intf.region[chip]);
+		K054539_chips.chip[chip].rom_size = memory_region_length(K054539_chips.intf.region[chip]);
 		K054539_chips.chip[chip].rom_mask = 0xffffffffU;
 		for(i=0; i<32; i++)
 			if((1U<<i) >= K054539_chips.chip[chip].rom_size) {
@@ -479,7 +479,7 @@ public class k054539
 				break;
 			}
 	
-		if(K054539_chips.intf->irq[chip])
+		if(K054539_chips.intf.irq[chip])
 			// One or more of the registers must be the timer period
 			// And anyway, this particular frequency is probably wrong
 			// 480 hz is TRUSTED by gokuparo disco stage - the looping sample doesn't line up otherwise
@@ -501,10 +501,10 @@ public class k054539
 			panright = MIXER_PAN_RIGHT;
 		}
 	
-		vol[0] = MIXER(K054539_chips.intf->mixing_level[chip][0], panleft);
-		vol[1] = MIXER(K054539_chips.intf->mixing_level[chip][1], panright);
+		vol[0] = MIXER(K054539_chips.intf.mixing_level[chip][0], panleft);
+		vol[1] = MIXER(K054539_chips.intf.mixing_level[chip][1], panright);
 	
-		K054539_chips.chip[chip].stream = stream_init_multi(2, bufp, vol, Machine->sample_rate, chip, K054539_update);
+		K054539_chips.chip[chip].stream = stream_init_multi(2, bufp, vol, Machine.sample_rate, chip, K054539_update);
 	
 		state_save_register_UINT8("K054539", chip, "registers", K054539_chips.chip[chip].regs, 0x230);
 		state_save_register_UINT8("K054539", chip, "ram",       K054539_chips.chip[chip].ram,  0x4000);
@@ -565,8 +565,8 @@ public class k054539
 		{
 			case 0x13f:
 				pan = data >= 0x11 && data <= 0x1f ? data - 0x11 : 0x18 - 0x11;
-				if(K054539_chips.intf->apan[chip])
-					K054539_chips.intf->apan[chip](K054539_chips.pantab[pan], K054539_chips.pantab[0xe - pan]);
+				if(K054539_chips.intf.apan[chip])
+					K054539_chips.intf.apan[chip](K054539_chips.pantab[pan], K054539_chips.pantab[0xe - pan]);
 			break;
 	
 			case 0x214:
@@ -642,7 +642,7 @@ public class k054539
 	static void reset_zones(void)
 	{
 		int chip;
-		for(chip=0; chip<K054539_chips.intf->num; chip++) {
+		for(chip=0; chip<K054539_chips.intf.num; chip++) {
 			int data = K054539_chips.chip[chip].regs[0x22e];
 			K054539_chips.chip[chip].cur_zone =
 				data == 0x80 ? K054539_chips.chip[chip].ram :
@@ -678,10 +678,10 @@ public class k054539
 	{
 		int i;
 	
-		K054539_chips.intf = msound->sound_interface;
+		K054539_chips.intf = msound.sound_interface;
 	
-		if(Machine->sample_rate)
-			K054539_chips.freq_ratio = (double)(K054539_chips.intf->clock) / (double)(Machine->sample_rate);
+		if(Machine.sample_rate)
+			K054539_chips.freq_ratio = (double)(K054539_chips.intf.clock) / (double)(Machine.sample_rate);
 		else
 			K054539_chips.freq_ratio = 1.0;
 	
@@ -696,7 +696,7 @@ public class k054539
 			appraoch seems most appropriate.
 		*/
 		// Factor the 1/4 for the number of channels in the volume (1/8 is too harsh, 1/2 gives clipping)
-		// vol=0 -> no attenuation, vol=0x40 -> -36dB
+		// vol=0 . no attenuation, vol=0x40 . -36dB
 		for(i=0; i<256; i++)
 			K054539_chips.voltab[i] = pow(10.0, (-36.0 * (double)i / (double)0x40) / 20.0) / 4.0;
 	
@@ -707,7 +707,7 @@ public class k054539
 		for(i=0; i<0xf; i++)
 			K054539_chips.pantab[i] = sqrt(i) / sqrt(0xe);
 	
-		for(i=0; i<K054539_chips.intf->num; i++)
+		for(i=0; i<K054539_chips.intf.num; i++)
 			K054539_init_chip(i, msound);
 	
 		state_save_register_func_postload(reset_zones);
@@ -717,7 +717,7 @@ public class k054539
 	void K054539_sh_stop(void)
 	{
 		int i;
-		for(i=0; i<K054539_chips.intf->num; i++)
+		for(i=0; i<K054539_chips.intf.num; i++)
 			K054539_stop_chip(i);
 	
 		for (i=0; i<MAX_K054539*8; i++) ((double *)K054539_gain)[i] = 1.0;

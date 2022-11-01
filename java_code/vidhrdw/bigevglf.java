@@ -68,10 +68,10 @@ public class bigevglf
 	
 	public static VideoUpdateHandlerPtr video_update_bigevglf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tmp_bitmap[0] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmp_bitmap[1] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmp_bitmap[2] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmp_bitmap[3] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
+		tmp_bitmap[0] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmp_bitmap[1] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmp_bitmap[2] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmp_bitmap[3] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		vidram = auto_malloc(0x100*0x100 * 4);
 		return 0;
 	} };
@@ -86,7 +86,7 @@ public class bigevglf
 			sx = beg_spriteram2[i+3];
 			sy = 200-beg_spriteram2[i];
 			for(j=0;j<16;j++)
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					beg_spriteram1[(code<<4)+j]+((beg_spriteram1[0x400+(code<<4)+j]&0xf)<<8),
 					beg_spriteram2[i+2] & 0xf,
 					0,0,

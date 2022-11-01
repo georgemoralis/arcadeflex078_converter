@@ -26,7 +26,7 @@ public class avalnche
 			y = offset / 32;
 	
 			for (i = 0;i < 8;i++)
-				plot_pixel(tmpbitmap,x+7-i,y,Machine->pens[(data >> i) & 1]);
+				plot_pixel(tmpbitmap,x+7-i,y,Machine.pens[(data >> i) & 1]);
 		}
 	} };
 	
@@ -42,6 +42,6 @@ public class avalnche
 		}
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

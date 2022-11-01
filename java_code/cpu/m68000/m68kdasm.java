@@ -594,8 +594,8 @@ public class m68kdasm
 	 * mm  : memory to memory
 	 * r   : register
 	 * s   : static
-	 * er  : effective address -> register
-	 * re  : register -> effective address
+	 * er  : effective address . register
+	 * re  : register . effective address
 	 * ea  : using effective address mode of operation
 	 * d   : data register direct
 	 * a   : address register direct
@@ -3174,8 +3174,8 @@ public class m68kdasm
 	/* Used by qsort */
 	static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr)
 	{
-		uint a = ((const opcode_struct*)aptr)->mask;
-		uint b = ((const opcode_struct*)bptr)->mask;
+		uint a = ((const opcode_struct*)aptr).mask;
+		uint b = ((const opcode_struct*)bptr).mask;
 	
 		a = ((a & 0xAAAA) >> 1) + (a & 0x5555);
 		a = ((a & 0xCCCC) >> 2) + (a & 0x3333);
@@ -3198,7 +3198,7 @@ public class m68kdasm
 		opcode_struct* ostruct;
 		uint opcode_info_length = 0;
 	
-		for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
+		for(ostruct = g_opcode_info;ostruct.opcode_handler != 0;ostruct++)
 			opcode_info_length++;
 	
 		qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
@@ -3208,20 +3208,20 @@ public class m68kdasm
 			g_instruction_table[i] = d68000_illegal; /* default to illegal */
 			opcode = i;
 			/* search through opcode info for a match */
-			for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
+			for(ostruct = g_opcode_info;ostruct.opcode_handler != 0;ostruct++)
 			{
 				/* match opcode mask and allowed ea modes */
-				if((opcode & ostruct->mask) == ostruct->match)
+				if((opcode & ostruct.mask) == ostruct.match)
 				{
 					/* Handle destination ea for move instructions */
-					if((ostruct->opcode_handler == d68000_move_8 ||
-						 ostruct->opcode_handler == d68000_move_16 ||
-						 ostruct->opcode_handler == d68000_move_32) &&
+					if((ostruct.opcode_handler == d68000_move_8 ||
+						 ostruct.opcode_handler == d68000_move_16 ||
+						 ostruct.opcode_handler == d68000_move_32) &&
 						 !valid_ea(((opcode>>9)&7) | ((opcode>>3)&0x38), 0xbf8))
 							continue;
-					if(valid_ea(opcode, ostruct->ea_mask))
+					if(valid_ea(opcode, ostruct.ea_mask))
 					{
-						g_instruction_table[i] = ostruct->opcode_handler;
+						g_instruction_table[i] = ostruct.opcode_handler;
 						break;
 					}
 				}

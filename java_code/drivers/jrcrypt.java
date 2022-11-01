@@ -494,7 +494,7 @@ public class jrcrypt
 	
 	void Load(char *name,byte *buffer,int from, int length)
 	{
-		void *file = mame_fopen(Machine->gamedrv->name,0,FILETYPE_HIGHSCORE,0);
+		void *file = mame_fopen(Machine.gamedrv.name,0,FILETYPE_HIGHSCORE,0);
 		if (!file)
 			return;
 		while (length--)

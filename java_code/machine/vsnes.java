@@ -358,7 +358,7 @@ public class vsnes
 				int x = readinputport( 4 );
 				int y = readinputport( 5 );
 				UINT32 pix, color_base;
-				pen_t *pens = Machine->pens;
+				pen_t *pens = Machine.pens;
 	
 				/* get the pixel at the gun position */
 				pix = ppu2c03b_get_pixel( 0, x, y );

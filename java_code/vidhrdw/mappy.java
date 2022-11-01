@@ -45,7 +45,7 @@ public class mappy
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -71,7 +71,7 @@ public class mappy
 			colortable[i] = (color_prom[(i^3)] & 0x0f) + 0x10;
 	
 		/* sprites */
-		for (i = 64*4;i < Machine->drv->color_table_len;i++)
+		for (i = 64*4;i < Machine.drv.color_table_len;i++)
 			colortable[i] = color_prom[i] & 0x0f;
 	} };
 	
@@ -140,7 +140,7 @@ public class mappy
 	{
 		if (special_display == 1) sy++;	/* Motos */
 	
-		drawgfx(dest,Machine->gfx[1],code,color,flipx,flipy,sx,sy,&Machine->visible_area,
+		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,&Machine.visible_area,
 			TRANSPARENCY_COLOR,15);
 	}
 	
@@ -230,7 +230,7 @@ public class mappy
 					sy = 59 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						colorram[offs] & 0x3f,
 						flipscreen,flipscreen,8*sx,8*sy,
@@ -255,7 +255,7 @@ public class mappy
 					scroll[offs] = 224 - scroll[offs];
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 		/* Draw the sprites. */
@@ -393,7 +393,7 @@ public class mappy
 						sy = 216 - sy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							videoram.read(offs),
 							colorram[offs] & 0x3f,
 							flipscreen,flipscreen,8*sx,sy,

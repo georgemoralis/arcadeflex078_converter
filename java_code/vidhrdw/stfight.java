@@ -47,8 +47,8 @@ public class stfight
 	public static PaletteInitHandlerPtr palette_init_stfight  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		/* unique color for transparency */
@@ -96,7 +96,7 @@ public class stfight
 	
 	static UINT32 fg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x70) << 4) + ((row & 0xf0) << 7);
 	}
 	
@@ -117,7 +117,7 @@ public class stfight
 	
 	static UINT32 bg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return ((col & 0x0e) >> 1) + ((row & 0x0f) << 3) + ((col & 0x70) << 3) +
 				((row & 0x80) << 3) + ((row & 0x10) << 7) + ((col & 0x01) << 12) +
 				((row & 0x60) << 8);
@@ -289,7 +289,7 @@ public class stfight
 	
 				code = stfight_sprite_base + stfight_sprite_ram[offs];
 	
-				pdrawgfx(bitmap,Machine->gfx[4],
+				pdrawgfx(bitmap,Machine.gfx[4],
 					     code,
 						 color,
 						 flipx,flip_screen,
@@ -305,7 +305,7 @@ public class stfight
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);	/* in case bg_tilemap is disabled */
+		fillbitmap(bitmap,Machine.pens[0],cliprect);	/* in case bg_tilemap is disabled */
 	    tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,1);
 	

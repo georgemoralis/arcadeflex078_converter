@@ -274,7 +274,7 @@ public class atarigen
 		atarigen_scanline_int_gen();
 	
 		/* set a new timer to go off at the same scan line next frame */
-		timer_adjust(scanline_interrupt_timer, TIME_IN_HZ(Machine->drv->frames_per_second), 0, 0);
+		timer_adjust(scanline_interrupt_timer, TIME_IN_HZ(Machine.drv.frames_per_second), 0, 0);
 	}
 	
 	
@@ -898,10 +898,10 @@ public class atarigen
 		scanlines_per_callback = frequency;
 	
 		/* compute the last scanline */
-		last_scanline = (int)(TIME_IN_HZ(Machine->drv->frames_per_second) / cpu_getscanlineperiod());
+		last_scanline = (int)(TIME_IN_HZ(Machine.drv.frames_per_second) / cpu_getscanlineperiod());
 	
 		/* set a timer to go off on the next VBLANK */
-		timer_set(cpu_getscanlinetime(Machine->drv->screen_height), 0, vblank_timer);
+		timer_set(cpu_getscanlinetime(Machine.drv.screen_height), 0, vblank_timer);
 	}
 	
 	
@@ -913,10 +913,10 @@ public class atarigen
 	static void vblank_timer(int param)
 	{
 		/* set a timer to go off at scanline 0 */
-		timer_set(TIME_IN_USEC(Machine->drv->vblank_duration), 0, scanline_timer);
+		timer_set(TIME_IN_USEC(Machine.drv.vblank_duration), 0, scanline_timer);
 	
 		/* set a timer to go off on the next VBLANK */
-		timer_set(cpu_getscanlinetime(Machine->drv->screen_height), 1, vblank_timer);
+		timer_set(cpu_getscanlinetime(Machine.drv.screen_height), 1, vblank_timer);
 	}
 	
 	
@@ -1165,7 +1165,7 @@ public class atarigen
 	
 			if (result > 255)
 				result = 255;
-			if (result > Machine->visible_area.max_y)
+			if (result > Machine.visible_area.max_y)
 				result |= 0x4000;
 	
 			return result;
@@ -1355,7 +1355,7 @@ public class atarigen
 	
 	int atarigen_get_hblank(void)
 	{
-		return (cpu_gethorzbeampos() > (Machine->drv->screen_width * 9 / 10));
+		return (cpu_gethorzbeampos() > (Machine.drv.screen_width * 9 / 10));
 	}
 	
 	
@@ -1368,15 +1368,15 @@ public class atarigen
 	{
 		/* halt the CPU until the next HBLANK */
 		int hpos = cpu_gethorzbeampos();
-		int hblank = Machine->drv->screen_width * 9 / 10;
+		int hblank = Machine.drv.screen_width * 9 / 10;
 		double fraction;
 	
 		/* if we're in hblank, set up for the next one */
 		if (hpos >= hblank)
-			hblank += Machine->drv->screen_width;
+			hblank += Machine.drv.screen_width;
 	
 		/* halt and set a timer to wake up */
-		fraction = (double)(hblank - hpos) / (double)Machine->drv->screen_width;
+		fraction = (double)(hblank - hpos) / (double)Machine.drv.screen_width;
 		timer_set(cpu_getscanlineperiod() * fraction, 0, unhalt_cpu);
 		cpu_set_halt_line(0, ASSERT_LINE);
 	}
@@ -1515,37 +1515,37 @@ public class atarigen
 	
 	void atarigen_blend_gfx(int gfx0, int gfx1, int mask0, int mask1)
 	{
-		struct GfxElement *gx0 = Machine->gfx[gfx0];
-		struct GfxElement *gx1 = Machine->gfx[gfx1];
+		struct GfxElement *gx0 = Machine.gfx[gfx0];
+		struct GfxElement *gx1 = Machine.gfx[gfx1];
 		int c, x, y;
 	
 		/* loop over elements */
-		for (c = 0; c < gx0->total_elements; c++)
+		for (c = 0; c < gx0.total_elements; c++)
 		{
-			UINT8 *c0base = gx0->gfxdata + gx0->char_modulo * c;
-			UINT8 *c1base = gx1->gfxdata + gx1->char_modulo * c;
+			UINT8 *c0base = gx0.gfxdata + gx0.char_modulo * c;
+			UINT8 *c1base = gx1.gfxdata + gx1.char_modulo * c;
 			UINT32 usage = 0;
 	
 			/* loop over height */
-			for (y = 0; y < gx0->height; y++)
+			for (y = 0; y < gx0.height; y++)
 			{
 				UINT8 *c0 = c0base, *c1 = c1base;
 	
-				for (x = 0; x < gx0->width; x++, c0++, c1++)
+				for (x = 0; x < gx0.width; x++, c0++, c1++)
 				{
 					*c0 = (*c0 & mask0) | (*c1 & mask1);
 					usage |= 1 << *c0;
 				}
-				c0base += gx0->line_modulo;
-				c1base += gx1->line_modulo;
-				if (gx0->pen_usage)
-					gx0->pen_usage[c] = usage;
+				c0base += gx0.line_modulo;
+				c1base += gx1.line_modulo;
+				if (gx0.pen_usage)
+					gx0.pen_usage[c] = usage;
 			}
 		}
 	
 		/* free the second graphics element */
 		freegfx(gx1);
-		Machine->gfx[gfx1] = NULL;
+		Machine.gfx[gfx1] = NULL;
 	}
 	
 	

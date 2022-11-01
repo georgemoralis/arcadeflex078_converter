@@ -167,14 +167,14 @@ public class chaknpop
 	static void chaknpop_get_tx_tile_info(int tile_index)
 	{
 		int tile = chaknpop_txram[tile_index];
-		int tile_h_bank = (gfxmode & GFX_TX_BANK2) << 2;	/* 0x00-0xff -> 0x200-0x2ff */
+		int tile_h_bank = (gfxmode & GFX_TX_BANK2) << 2;	/* 0x00-0xff . 0x200-0x2ff */
 		int color = chaknpop_attrram[TX_COLOR2];
 	
 		if (tile == 0x74)
 			color = chaknpop_attrram[TX_COLOR1];
 	
 		if (gfxmode & GFX_TX_BANK1 && tile >= 0xc0)
-			tile += 0xc0;					/* 0xc0-0xff -> 0x180-0x1bf */
+			tile += 0xc0;					/* 0xc0-0xff . 0x180-0x1bf */
 		tile |= tile_h_bank;
 	
 		SET_TILE_INFO(1, tile, color, 0)
@@ -249,12 +249,12 @@ public class chaknpop
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					tile,
 					color,
 					flipx, flipy,
 					sx, sy,
-					&Machine -> visible_area,
+					&Machine . visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}

@@ -561,7 +561,7 @@ public class v60
 	
 		if(regnum > CPU_INFO_REG && regnum < CPU_INFO_REG + V60_REGMAX) {
 			int reg = regnum - CPU_INFO_REG - 1;
-			sprintf(buffer[which], "%s:%08X", v60_reg_names[reg], reg == V60_TCB ? r->tcb : r->reg[reg]);
+			sprintf(buffer[which], "%s:%08X", v60_reg_names[reg], reg == V60_TCB ? r.tcb : r.reg[reg]);
 		}
 	
 		return buffer[which];

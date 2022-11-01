@@ -192,14 +192,14 @@ public class suprloco
 	{
 		if (flip_screen != 0)
 		{
-			x = bitmap->width - x - 1;
-			y = bitmap->height - y - 1;
+			x = bitmap.width - x - 1;
+			y = bitmap.height - y - 1;
 		}
 	
-		if (x < cliprect->min_x ||
-			x > cliprect->max_x ||
-			y < cliprect->min_y ||
-			y > cliprect->max_y)
+		if (x < cliprect.min_x ||
+			x > cliprect.max_x ||
+			y < cliprect.min_y ||
+			y > cliprect.max_y)
 			return;
 	
 		plot_pixel(bitmap, x, y, color);
@@ -220,7 +220,7 @@ public class suprloco
 		skip = spr_reg[SPR_SKIP_LO] + (spr_reg[SPR_SKIP_HI] << 8);
 	
 		height		= spr_reg[SPR_Y_BOTTOM] - spr_reg[SPR_Y_TOP];
-		spr_palette	= Machine->remapped_colortable + 0x100 + 0x10 * (spr_reg[SPR_COL]&0x03) + ((control & 0x20)?0x100:0);
+		spr_palette	= Machine.remapped_colortable + 0x100 + 0x10 * (spr_reg[SPR_COL]&0x03) + ((control & 0x20)?0x100:0);
 		sx = spr_reg[SPR_X];
 		sy = spr_reg[SPR_Y_TOP] + 1;
 	

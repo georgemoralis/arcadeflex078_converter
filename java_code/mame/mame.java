@@ -285,9 +285,9 @@ public class mame
 		memset(Machine, 0, sizeof(Machine));
 	
 		/* initialize the driver-related variables in the Machine */
-		Machine->gamedrv = gamedrv = drivers[game];
-		expand_machine_driver(gamedrv->drv, &internal_drv);
-		Machine->drv = &internal_drv;
+		Machine.gamedrv = gamedrv = drivers[game];
+		expand_machine_driver(gamedrv.drv, &internal_drv);
+		Machine.drv = &internal_drv;
 	
 		/* initialize the game options */
 		if (init_game_options() != 0)
@@ -356,21 +356,21 @@ public class mame
 		}
 	
 		/* if we have inputs, process them now */
-		if (gamedrv->input_ports)
+		if (gamedrv.input_ports)
 		{
 			/* allocate input ports */
-			Machine->input_ports = input_port_allocate(gamedrv->input_ports);
-			if (!Machine->input_ports)
+			Machine.input_ports = input_port_allocate(gamedrv.input_ports);
+			if (!Machine.input_ports)
 			{
-				logerror("could not allocate Machine->input_ports\n");
+				logerror("could not allocate Machine.input_ports\n");
 				goto cant_allocate_input_ports;
 			}
 	
 			/* allocate default input ports */
-			Machine->input_ports_default = input_port_allocate(gamedrv->input_ports);
-			if (!Machine->input_ports_default)
+			Machine.input_ports_default = input_port_allocate(gamedrv.input_ports);
+			if (!Machine.input_ports_default)
 			{
-				logerror("could not allocate Machine->input_ports_default\n");
+				logerror("could not allocate Machine.input_ports_default\n");
 				goto cant_allocate_input_ports_default;
 			}
 		}
@@ -379,7 +379,7 @@ public class mame
 		chd_set_interface(&mame_chd_interface);
 	
 		/* load the ROMs if we have some */
-		if (gamedrv->rom && rom_load(gamedrv->rom) != 0)
+		if (gamedrv.rom && rom_load(gamedrv.rom) != 0)
 		{
 			logerror("readroms failed\n");
 			goto cant_load_roms;
@@ -416,8 +416,8 @@ public class mame
 		}
 	
 		/* call the game driver's init function */
-		if (gamedrv->driver_init)
-			(*gamedrv->driver_init)();
+		if (gamedrv.driver_init)
+			(*gamedrv.driver_init)();
 	
 	#ifdef MESS
 		/* initialize the devices */
@@ -432,11 +432,11 @@ public class mame
 	
 	cant_init_memory:
 	cant_load_roms:
-		input_port_free(Machine->input_ports_default);
-		Machine->input_ports_default = 0;
+		input_port_free(Machine.input_ports_default);
+		Machine.input_ports_default = 0;
 	cant_allocate_input_ports_default:
-		input_port_free(Machine->input_ports);
-		Machine->input_ports = 0;
+		input_port_free(Machine.input_ports);
+		Machine.input_ports = 0;
 	cant_allocate_input_ports:
 		code_close();
 	cant_init_input:
@@ -465,7 +465,7 @@ public class mame
 			tilemap_init();
 	
 			/* start up the driver's video */
-			if (Machine->drv->video_start && (*Machine->drv->video_start)())
+			if (Machine.drv.video_start && (*Machine.drv.video_start)())
 				bail_and_print("Unable to start video emulation");
 			else
 			{
@@ -478,15 +478,15 @@ public class mame
 	
 					/* free memory regions allocated with REGIONFLAG_DISPOSE (typically gfx roms) */
 					for (region = 0; region < MAX_MEMORY_REGIONS; region++)
-						if (Machine->memory_region[region].flags & ROMREGION_DISPOSE)
+						if (Machine.memory_region[region].flags & ROMREGION_DISPOSE)
 						{
 							int i;
 	
 							/* invalidate contents to avoid subtle bugs */
 							for (i = 0; i < memory_region_length(region); i++)
 								memory_region(region)[i] = rand();
-							free(Machine->memory_region[region].base);
-							Machine->memory_region[region].base = 0;
+							free(Machine.memory_region[region].base);
+							Machine.memory_region[region].base = 0;
 						}
 	
 					/* now do the core execution */
@@ -498,8 +498,8 @@ public class mame
 				}
 	
 				/* shut down the driver's video and kill and artwork */
-				if (Machine->drv->video_stop)
-					(*Machine->drv->video_stop)();
+				if (Machine.drv.video_stop)
+					(*Machine.drv.video_stop)();
 			}
 	
 			/* close down the tilemap and video systems */
@@ -536,7 +536,7 @@ public class mame
 					artwork_enable(1);
 	
 					/* disable cheat if no roms */
-					if (!gamedrv->rom)
+					if (!gamedrv.rom)
 						options.cheat = 0;
 	
 					/* start the cheat engine */
@@ -544,10 +544,10 @@ public class mame
 						InitCheat();
 	
 					/* load the NVRAM now */
-					if (Machine->drv->nvram_handler)
+					if (Machine.drv.nvram_handler)
 					{
-						mame_file *nvram_file = mame_fopen(Machine->gamedrv->name, 0, FILETYPE_NVRAM, 0);
-						(*Machine->drv->nvram_handler)(nvram_file, 0);
+						mame_file *nvram_file = mame_fopen(Machine.gamedrv.name, 0, FILETYPE_NVRAM, 0);
+						(*Machine.drv.nvram_handler)(nvram_file, 0);
 						if (nvram_file != 0)
 							mame_fclose(nvram_file);
 					}
@@ -556,12 +556,12 @@ public class mame
 					cpu_run();
 	
 					/* save the NVRAM */
-					if (Machine->drv->nvram_handler)
+					if (Machine.drv.nvram_handler)
 					{
-						mame_file *nvram_file = mame_fopen(Machine->gamedrv->name, 0, FILETYPE_NVRAM, 1);
+						mame_file *nvram_file = mame_fopen(Machine.gamedrv.name, 0, FILETYPE_NVRAM, 1);
 						if (nvram_file != NULL)
 						{
-							(*Machine->drv->nvram_handler)(nvram_file, 1);
+							(*Machine.drv.nvram_handler)(nvram_file, 1);
 							mame_fclose(nvram_file);
 						}
 					}
@@ -607,8 +607,8 @@ public class mame
 		cpu_exit();
 	
 		/* free the memory allocated for input ports definition */
-		input_port_free(Machine->input_ports);
-		input_port_free(Machine->input_ports_default);
+		input_port_free(Machine.input_ports);
+		input_port_free(Machine.input_ports_default);
 	
 		/* close down the input system */
 		code_close();
@@ -655,28 +655,28 @@ public class mame
 	{
 		struct osd_create_params params;
 		struct artwork_callbacks *artcallbacks;
-		int bmwidth = Machine->drv->screen_width;
-		int bmheight = Machine->drv->screen_height;
+		int bmwidth = Machine.drv.screen_width;
+		int bmheight = Machine.drv.screen_height;
 	
 		/* first allocate the necessary palette structures */
 		if (palette_start() != 0)
 			goto cant_start_palette;
 	
 		/* convert the gfx ROMs into character sets. This is done BEFORE calling the driver's */
-		/* palette_init() routine because it might need to check the Machine->gfx[] data */
-		if (Machine->drv->gfxdecodeinfo)
-			if (decode_graphics(Machine->drv->gfxdecodeinfo))
+		/* palette_init() routine because it might need to check the Machine.gfx[] data */
+		if (Machine.drv.gfxdecodeinfo)
+			if (decode_graphics(Machine.drv.gfxdecodeinfo))
 				goto cant_decode_graphics;
 	
 		/* if we're a vector game, override the screen width and height */
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 			scale_vectorgames(options.vector_width, options.vector_height, &bmwidth, &bmheight);
 	
 		/* compute the visible area for raster games */
-		if (!(Machine->drv->video_attributes & VIDEO_TYPE_VECTOR))
+		if (!(Machine.drv.video_attributes & VIDEO_TYPE_VECTOR))
 		{
-			params.width = Machine->drv->default_visible_area.max_x - Machine->drv->default_visible_area.min_x + 1;
-			params.height = Machine->drv->default_visible_area.max_y - Machine->drv->default_visible_area.min_y + 1;
+			params.width = Machine.drv.default_visible_area.max_x - Machine.drv.default_visible_area.min_x + 1;
+			params.height = Machine.drv.default_visible_area.max_y - Machine.drv.default_visible_area.min_y + 1;
 		}
 		else
 		{
@@ -685,12 +685,12 @@ public class mame
 		}
 	
 		/* fill in the rest of the display parameters */
-		compute_aspect_ratio(Machine->drv, &params.aspect_x, &params.aspect_y);
-		params.depth = Machine->color_depth;
+		compute_aspect_ratio(Machine.drv, &params.aspect_x, &params.aspect_y);
+		params.depth = Machine.color_depth;
 		params.colors = palette_get_total_colors_with_ui();
-		params.fps = Machine->drv->frames_per_second;
-		params.video_attributes = Machine->drv->video_attributes;
-		params.orientation = Machine->orientation;
+		params.fps = Machine.drv.frames_per_second;
+		params.video_attributes = Machine.drv.video_attributes;
+		params.orientation = Machine.orientation;
 	
 	#ifdef MESS
 		artcallbacks = &mess_artwork_callbacks;
@@ -703,24 +703,24 @@ public class mame
 			goto cant_create_display;
 	
 		/* the create display process may update the vector width/height, so recompute */
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 			scale_vectorgames(options.vector_width, options.vector_height, &bmwidth, &bmheight);
 	
 		/* now allocate the screen bitmap */
-		Machine->scrbitmap = auto_bitmap_alloc_depth(bmwidth, bmheight, Machine->color_depth);
-		if (!Machine->scrbitmap)
+		Machine.scrbitmap = auto_bitmap_alloc_depth(bmwidth, bmheight, Machine.color_depth);
+		if (!Machine.scrbitmap)
 			goto cant_create_scrbitmap;
 	
 		/* set the default visible area */
 		set_visible_area(0,1,0,1);	// make sure everything is recalculated on multiple runs
 		set_visible_area(
-				Machine->drv->default_visible_area.min_x,
-				Machine->drv->default_visible_area.max_x,
-				Machine->drv->default_visible_area.min_y,
-				Machine->drv->default_visible_area.max_y);
+				Machine.drv.default_visible_area.min_x,
+				Machine.drv.default_visible_area.max_x,
+				Machine.drv.default_visible_area.min_y,
+				Machine.drv.default_visible_area.max_y);
 	
 		/* create spriteram buffers if necessary */
-		if (Machine->drv->video_attributes & VIDEO_BUFFERS_SPRITERAM)
+		if (Machine.drv.video_attributes & VIDEO_BUFFERS_SPRITERAM)
 			if (init_buffered_spriteram() != 0)
 				goto cant_init_buffered_spriteram;
 	
@@ -729,24 +729,24 @@ public class mame
 		/* resolution we are running at and can pick a different font depending on it. */
 		/* It must be done BEFORE palette_init() because that will also initialize */
 		/* (through osd_allocate_colors()) the uifont colortable. */
-		Machine->uifont = builduifont();
-		if (Machine->uifont == NULL)
+		Machine.uifont = builduifont();
+		if (Machine.uifont == NULL)
 			goto cant_build_uifont;
 	
 	#ifdef MAME_DEBUG
 		/* if the debugger is enabled, initialize its bitmap and font */
 		if (mame_debug != 0)
 		{
-			int depth = options.debug_depth ? options.debug_depth : Machine->color_depth;
+			int depth = options.debug_depth ? options.debug_depth : Machine.color_depth;
 	
 			/* first allocate the debugger bitmap */
-			Machine->debug_bitmap = auto_bitmap_alloc_depth(options.debug_width, options.debug_height, depth);
-			if (!Machine->debug_bitmap)
+			Machine.debug_bitmap = auto_bitmap_alloc_depth(options.debug_width, options.debug_height, depth);
+			if (!Machine.debug_bitmap)
 				goto cant_create_debug_bitmap;
 	
 			/* then create the debugger font */
-			Machine->debugger_font = build_debugger_font();
-			if (Machine->debugger_font == NULL)
+			Machine.debugger_font = build_debugger_font();
+			if (Machine.debugger_font == NULL)
 				goto cant_build_debugger_font;
 		}
 	#endif
@@ -762,7 +762,7 @@ public class mame
 		last_fps_time = osd_cycles();
 		rendered_frames_since_last_fps = frames_since_last_fps = 0;
 		performance.game_speed_percent = 100;
-		performance.frames_per_second = Machine->drv->frames_per_second;
+		performance.frames_per_second = Machine.drv.frames_per_second;
 		performance.vector_updates_last_second = 0;
 	
 		/* reset video statics and get out of here */
@@ -801,20 +801,20 @@ public class mame
 		/* free all the graphics elements */
 		for (i = 0; i < MAX_GFX_ELEMENTS; i++)
 		{
-			freegfx(Machine->gfx[i]);
-			Machine->gfx[i] = 0;
+			freegfx(Machine.gfx[i]);
+			Machine.gfx[i] = 0;
 		}
 	
 		/* free the font elements */
-		if (Machine->uifont)
+		if (Machine.uifont)
 		{
-			freegfx(Machine->uifont);
-			Machine->uifont = NULL;
+			freegfx(Machine.uifont);
+			Machine.uifont = NULL;
 		}
-		if (Machine->debugger_font)
+		if (Machine.debugger_font)
 		{
-			freegfx(Machine->debugger_font);
-			Machine->debugger_font = NULL;
+			freegfx(Machine.debugger_font);
+			Machine.debugger_font = NULL;
 		}
 	
 		/* close down the OSD layer's display */
@@ -831,17 +831,17 @@ public class mame
 	static void compute_aspect_ratio(const struct InternalMachineDriver *drv, int *aspect_x, int *aspect_y)
 	{
 		/* if it's explicitly specified, use it */
-		if (drv->aspect_x && drv->aspect_y)
+		if (drv.aspect_x && drv.aspect_y)
 		{
-			*aspect_x = drv->aspect_x;
-			*aspect_y = drv->aspect_y;
+			*aspect_x = drv.aspect_x;
+			*aspect_y = drv.aspect_y;
 		}
 	
 		/* otherwise, attempt to deduce the result */
-		else if (!(drv->video_attributes & VIDEO_DUAL_MONITOR))
+		else if (!(drv.video_attributes & VIDEO_DUAL_MONITOR))
 		{
 			*aspect_x = 4;
-			*aspect_y = (drv->video_attributes & VIDEO_DUAL_MONITOR) ? 6 : 3;
+			*aspect_y = (drv.video_attributes & VIDEO_DUAL_MONITOR) ? 6 : 3;
 		}
 	}
 	
@@ -860,19 +860,19 @@ public class mame
 		mame_debug = options.mame_debug;
 	
 		/* determine the color depth */
-		Machine->color_depth = 16;
+		Machine.color_depth = 16;
 		alpha_active = 0;
-		if (Machine->drv->video_attributes & VIDEO_RGB_DIRECT)
+		if (Machine.drv.video_attributes & VIDEO_RGB_DIRECT)
 		{
 			/* first pick a default */
-			if (Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN)
-				Machine->color_depth = 32;
+			if (Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN)
+				Machine.color_depth = 32;
 			else
-				Machine->color_depth = 15;
+				Machine.color_depth = 15;
 	
 			/* now allow overrides */
 			if (options.color_depth == 15 || options.color_depth == 32)
-				Machine->color_depth = options.color_depth;
+				Machine.color_depth = options.color_depth;
 	
 			/* enable alpha for direct video modes */
 			alpha_active = 1;
@@ -884,11 +884,11 @@ public class mame
 		if (options.vector_height == 0) options.vector_height = 480;
 	
 		/* initialize the samplerate */
-		Machine->sample_rate = options.samplerate;
+		Machine.sample_rate = options.samplerate;
 	
 		/* get orientation right */
-		Machine->orientation = ROT0;
-		Machine->ui_orientation = options.ui_orientation;
+		Machine.orientation = ROT0;
+		Machine.ui_orientation = options.ui_orientation;
 	
 		return 0;
 	}
@@ -956,7 +956,7 @@ public class mame
 			}
 	
 			/* now decode the actual graphics */
-			if ((Machine->gfx[i] = decodegfx(region_base + gfxdecodeinfo[i].start, &glcopy)) == 0)
+			if ((Machine.gfx[i] = decodegfx(region_base + gfxdecodeinfo[i].start, &glcopy)) == 0)
 			{
 				bailing = 1;
 				printf("Out of memory decoding gfx\n");
@@ -964,9 +964,9 @@ public class mame
 			}
 	
 			/* if we have a remapped colortable, point our local colortable to it */
-			if (Machine->remapped_colortable)
-				Machine->gfx[i]->colortable = &Machine->remapped_colortable[gfxdecodeinfo[i].color_codes_start];
-			Machine->gfx[i]->total_colors = gfxdecodeinfo[i].total_color_codes;
+			if (Machine.remapped_colortable)
+				Machine.gfx[i].colortable = &Machine.remapped_colortable[gfxdecodeinfo[i].color_codes_start];
+			Machine.gfx[i].total_colors = gfxdecodeinfo[i].total_color_codes;
 		}
 		return 0;
 	}
@@ -1057,33 +1057,33 @@ public class mame
 	
 	void set_visible_area(int min_x, int max_x, int min_y, int max_y)
 	{
-		if (       Machine->visible_area.min_x == min_x
-				&& Machine->visible_area.max_x == max_x
-				&& Machine->visible_area.min_y == min_y
-				&& Machine->visible_area.max_y == max_y)
+		if (       Machine.visible_area.min_x == min_x
+				&& Machine.visible_area.max_x == max_x
+				&& Machine.visible_area.min_y == min_y
+				&& Machine.visible_area.max_y == max_y)
 			return;
 	
 		/* "dirty" the area for the next display update */
 		visible_area_changed = 1;
 	
 		/* set the new values in the Machine struct */
-		Machine->visible_area.min_x = min_x;
-		Machine->visible_area.max_x = max_x;
-		Machine->visible_area.min_y = min_y;
-		Machine->visible_area.max_y = max_y;
+		Machine.visible_area.min_x = min_x;
+		Machine.visible_area.max_x = max_x;
+		Machine.visible_area.min_y = min_y;
+		Machine.visible_area.max_y = max_y;
 	
 		/* vector games always use the whole bitmap */
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 		{
-			Machine->absolute_visible_area.min_x = 0;
-			Machine->absolute_visible_area.max_x = Machine->scrbitmap->width - 1;
-			Machine->absolute_visible_area.min_y = 0;
-			Machine->absolute_visible_area.max_y = Machine->scrbitmap->height - 1;
+			Machine.absolute_visible_area.min_x = 0;
+			Machine.absolute_visible_area.max_x = Machine.scrbitmap.width - 1;
+			Machine.absolute_visible_area.min_y = 0;
+			Machine.absolute_visible_area.max_y = Machine.scrbitmap.height - 1;
 		}
 	
 		/* raster games need to use the visible area */
 		else
-			Machine->absolute_visible_area = Machine->visible_area;
+			Machine.absolute_visible_area = Machine.visible_area;
 	
 		/* recompute scanline timing */
 		cpu_compute_scanline_timing();
@@ -1124,7 +1124,7 @@ public class mame
 	
 	void force_partial_update(int scanline)
 	{
-		struct rectangle clip = Machine->visible_area;
+		struct rectangle clip = Machine.visible_area;
 	
 		/* if skipping this frame, bail */
 		if (osd_skip_this_frame() != 0)
@@ -1137,7 +1137,7 @@ public class mame
 		/* if there's a dirty bitmap and we didn't do any partial updates yet, handle it now */
 		if (full_refresh_pending && last_partial_scanline == 0)
 		{
-			fillbitmap(Machine->scrbitmap, get_black_pen(), NULL);
+			fillbitmap(Machine.scrbitmap, get_black_pen(), NULL);
 			full_refresh_pending = 0;
 		}
 	
@@ -1151,7 +1151,7 @@ public class mame
 		if (clip.min_y <= clip.max_y)
 		{
 			profiler_mark(PROFILER_VIDEO);
-			(*Machine->drv->video_update)(Machine->scrbitmap, &clip);
+			(*Machine.drv.video_update)(Machine.scrbitmap, &clip);
 			performance.partial_updates_this_frame++;
 			profiler_mark(PROFILER_END);
 		}
@@ -1171,7 +1171,7 @@ public class mame
 	void draw_screen(void)
 	{
 		/* finish updating the screen */
-		force_partial_update(Machine->visible_area.max_y);
+		force_partial_update(Machine.visible_area.max_y);
 		if (gbPriorityBitmapIsDirty != 0)
 		{
 			fillbitmap( priority_bitmap, 0x00, NULL );
@@ -1197,18 +1197,18 @@ public class mame
 		current_display.changed_flags = 0;
 	
 		/* set the main game bitmap */
-		current_display.game_bitmap = Machine->scrbitmap;
-		current_display.game_bitmap_update = Machine->absolute_visible_area;
+		current_display.game_bitmap = Machine.scrbitmap;
+		current_display.game_bitmap_update = Machine.absolute_visible_area;
 		if (!skipped_it)
 			current_display.changed_flags |= GAME_BITMAP_CHANGED;
 	
 		/* set the visible area */
-		current_display.game_visible_area = Machine->absolute_visible_area;
+		current_display.game_visible_area = Machine.absolute_visible_area;
 		if (visible_area_changed != 0)
 			current_display.changed_flags |= GAME_VISIBLE_AREA_CHANGED;
 	
 		/* set the vector dirty list */
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 			if (!full_refresh_pending && !ui_dirty && !skipped_it)
 			{
 				current_display.vector_dirty_pixels = vector_dirty_list;
@@ -1217,7 +1217,7 @@ public class mame
 	
 	#ifdef MAME_DEBUG
 		/* set the debugger bitmap */
-		current_display.debug_bitmap = Machine->debug_bitmap;
+		current_display.debug_bitmap = Machine.debug_bitmap;
 		if (debugger_bitmap_changed != 0)
 			current_display.changed_flags |= DEBUG_BITMAP_CHANGED;
 		debugger_bitmap_changed = 0;
@@ -1273,7 +1273,7 @@ public class mame
 			double frames_per_sec = (double)frames_since_last_fps / seconds_elapsed;
 	
 			/* compute the performance data */
-			performance.game_speed_percent = 100.0 * frames_per_sec / Machine->drv->frames_per_second;
+			performance.game_speed_percent = 100.0 * frames_per_sec / Machine.drv.frames_per_second;
 			performance.frames_per_second = (double)rendered_frames_since_last_fps / seconds_elapsed;
 	
 			/* reset the info */
@@ -1284,7 +1284,7 @@ public class mame
 	
 		/* for vector games, compute the vector update count once/second */
 		vfcount++;
-		if (vfcount >= (int)Machine->drv->frames_per_second)
+		if (vfcount >= (int)Machine.drv.frames_per_second)
 		{
 	#ifndef MESS
 			/* from vidhrdw/avgdvg.c */
@@ -1292,7 +1292,7 @@ public class mame
 			performance.vector_updates_last_second = vector_updates;
 			vector_updates = 0;
 	#endif
-			vfcount -= (int)Machine->drv->frames_per_second;
+			vfcount -= (int)Machine.drv.frames_per_second;
 		}
 	}
 	
@@ -1328,10 +1328,10 @@ public class mame
 		update_video_and_audio();
 	
 		/* call the end-of-frame callback */
-		if (Machine->drv->video_eof)
+		if (Machine.drv.video_eof)
 		{
 			profiler_mark(PROFILER_VIDEO);
-			(*Machine->drv->video_eof)();
+			(*Machine.drv.video_eof)();
 			profiler_mark(PROFILER_END);
 		}
 	
@@ -1412,7 +1412,7 @@ public class mame
 		int cpunum;
 	
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
-			if (Machine->drv->cpu[cpunum].tag && strcmp(Machine->drv->cpu[cpunum].tag, tag) == 0)
+			if (Machine.drv.cpu[cpunum].tag && strcmp(Machine.drv.cpu[cpunum].tag, tag) == 0)
 				return cpunum;
 	
 		return -1;
@@ -1430,12 +1430,12 @@ public class mame
 		int cpunum;
 	
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
-			if (machine->cpu[cpunum].cpu_type == 0)
+			if (machine.cpu[cpunum].cpu_type == 0)
 			{
-				machine->cpu[cpunum].tag = tag;
-				machine->cpu[cpunum].cpu_type = type;
-				machine->cpu[cpunum].cpu_clock = cpuclock;
-				return &machine->cpu[cpunum];
+				machine.cpu[cpunum].tag = tag;
+				machine.cpu[cpunum].cpu_type = type;
+				machine.cpu[cpunum].cpu_clock = cpuclock;
+				return &machine.cpu[cpunum];
 			}
 	
 		logerror("Out of CPU's!\n");
@@ -1454,8 +1454,8 @@ public class mame
 		int cpunum;
 	
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
-			if (machine->cpu[cpunum].tag && strcmp(machine->cpu[cpunum].tag, tag) == 0)
-				return &machine->cpu[cpunum];
+			if (machine.cpu[cpunum].tag && strcmp(machine.cpu[cpunum].tag, tag) == 0)
+				return &machine.cpu[cpunum];
 	
 		logerror("Can't find CPU '%s'!\n", tag);
 		return NULL;
@@ -1473,10 +1473,10 @@ public class mame
 		int cpunum;
 	
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
-			if (machine->cpu[cpunum].tag && strcmp(machine->cpu[cpunum].tag, tag) == 0)
+			if (machine.cpu[cpunum].tag && strcmp(machine.cpu[cpunum].tag, tag) == 0)
 			{
-				memmove(&machine->cpu[cpunum], &machine->cpu[cpunum + 1], sizeof(machine->cpu[0]) * (MAX_CPU - cpunum - 1));
-				memset(&machine->cpu[MAX_CPU - 1], 0, sizeof(machine->cpu[0]));
+				memmove(&machine.cpu[cpunum], &machine.cpu[cpunum + 1], sizeof(machine.cpu[0]) * (MAX_CPU - cpunum - 1));
+				memset(&machine.cpu[MAX_CPU - 1], 0, sizeof(machine.cpu[0]));
 				return;
 			}
 	
@@ -1495,12 +1495,12 @@ public class mame
 		int soundnum;
 	
 		for (soundnum = 0; soundnum < MAX_SOUND; soundnum++)
-			if (machine->sound[soundnum].sound_type == 0)
+			if (machine.sound[soundnum].sound_type == 0)
 			{
-				machine->sound[soundnum].tag = tag;
-				machine->sound[soundnum].sound_type = type;
-				machine->sound[soundnum].sound_interface = sndintf;
-				return &machine->sound[soundnum];
+				machine.sound[soundnum].tag = tag;
+				machine.sound[soundnum].sound_type = type;
+				machine.sound[soundnum].sound_interface = sndintf;
+				return &machine.sound[soundnum];
 			}
 	
 		logerror("Out of sounds!\n");
@@ -1520,8 +1520,8 @@ public class mame
 		int soundnum;
 	
 		for (soundnum = 0; soundnum < MAX_SOUND; soundnum++)
-			if (machine->sound[soundnum].tag && strcmp(machine->sound[soundnum].tag, tag) == 0)
-				return &machine->sound[soundnum];
+			if (machine.sound[soundnum].tag && strcmp(machine.sound[soundnum].tag, tag) == 0)
+				return &machine.sound[soundnum];
 	
 		logerror("Can't find sound '%s'!\n", tag);
 		return NULL;
@@ -1539,10 +1539,10 @@ public class mame
 		int soundnum;
 	
 		for (soundnum = 0; soundnum < MAX_SOUND; soundnum++)
-			if (machine->sound[soundnum].tag && strcmp(machine->sound[soundnum].tag, tag) == 0)
+			if (machine.sound[soundnum].tag && strcmp(machine.sound[soundnum].tag, tag) == 0)
 			{
-				memmove(&machine->sound[soundnum], &machine->sound[soundnum + 1], sizeof(machine->sound[0]) * (MAX_SOUND - soundnum - 1));
-				memset(&machine->sound[MAX_SOUND - 1], 0, sizeof(machine->sound[0]));
+				memmove(&machine.sound[soundnum], &machine.sound[soundnum + 1], sizeof(machine.sound[0]) * (MAX_SOUND - soundnum - 1));
+				memset(&machine.sound[MAX_SOUND - 1], 0, sizeof(machine.sound[0]));
 				return;
 			}
 	
@@ -1564,9 +1564,9 @@ public class mame
 			const struct GameDriver *drv;
 	
 			/* attempt reading up the chain through the parents */
-			for (drv = Machine->gamedrv; drv != NULL; drv = drv->clone_of)
+			for (drv = Machine.gamedrv; drv != NULL; drv = drv.clone_of)
 			{
-				void* file = mame_fopen(drv->name, filename, FILETYPE_IMAGE, 0);
+				void* file = mame_fopen(drv.name, filename, FILETYPE_IMAGE, 0);
 	
 				if (file != NULL)
 					return file;
@@ -1677,69 +1677,69 @@ public class mame
 			const struct RomModule *romp;
 			const struct InputPortTiny *inp;
 	
-			expand_machine_driver(drivers[i]->drv, &drv);
+			expand_machine_driver(drivers[i].drv, &drv);
 	
-			if (drivers[i]->clone_of == drivers[i])
+			if (drivers[i].clone_of == drivers[i])
 			{
-				printf("%s: %s is set as a clone of itself\n",drivers[i]->source_file,drivers[i]->name);
+				printf("%s: %s is set as a clone of itself\n",drivers[i].source_file,drivers[i].name);
 				error = 1;
 			}
 	
-			if (drivers[i]->clone_of && drivers[i]->clone_of->clone_of)
+			if (drivers[i].clone_of && drivers[i].clone_of.clone_of)
 			{
-				if ((drivers[i]->clone_of->clone_of->flags & NOT_A_DRIVER) == 0)
+				if ((drivers[i].clone_of.clone_of.flags & NOT_A_DRIVER) == 0)
 				{
-					printf("%s: %s is a clone of a clone\n",drivers[i]->source_file,drivers[i]->name);
+					printf("%s: %s is a clone of a clone\n",drivers[i].source_file,drivers[i].name);
 					error = 1;
 				}
 			}
 	
 	#if 0
-	//		if (drivers[i]->drv->color_table_len == drivers[i]->drv->total_colors &&
-			if (drivers[i]->drv->color_table_len && drivers[i]->drv->total_colors &&
-					drivers[i]->drv->vh_init_palette == 0)
+	//		if (drivers[i].drv.color_table_len == drivers[i].drv.total_colors &&
+			if (drivers[i].drv.color_table_len && drivers[i].drv.total_colors &&
+					drivers[i].drv.vh_init_palette == 0)
 			{
-				printf("%s: %s could use color_table_len = 0\n",drivers[i]->source_file,drivers[i]->name);
+				printf("%s: %s could use color_table_len = 0\n",drivers[i].source_file,drivers[i].name);
 				error = 1;
 			}
 	#endif
 	
 			for (j = i+1;drivers[j];j++)
 			{
-				if (!strcmp(drivers[i]->name,drivers[j]->name))
+				if (!strcmp(drivers[i].name,drivers[j].name))
 				{
-					printf("%s: %s is a duplicate name (%s, %s)\n",drivers[i]->source_file,drivers[i]->name,drivers[i]->source_file,drivers[j]->source_file);
+					printf("%s: %s is a duplicate name (%s, %s)\n",drivers[i].source_file,drivers[i].name,drivers[i].source_file,drivers[j].source_file);
 					error = 1;
 				}
-				if (!strcmp(drivers[i]->description,drivers[j]->description))
+				if (!strcmp(drivers[i].description,drivers[j].description))
 				{
-					printf("%s: %s is a duplicate description (%s, %s)\n",drivers[i]->description,drivers[i]->source_file,drivers[i]->name,drivers[j]->name);
+					printf("%s: %s is a duplicate description (%s, %s)\n",drivers[i].description,drivers[i].source_file,drivers[i].name,drivers[j].name);
 					error = 1;
 				}
 	#ifndef MESS
-				if (drivers[i]->rom && drivers[i]->rom == drivers[j]->rom
-						&& (drivers[i]->flags & NOT_A_DRIVER) == 0
-						&& (drivers[j]->flags & NOT_A_DRIVER) == 0)
+				if (drivers[i].rom && drivers[i].rom == drivers[j].rom
+						&& (drivers[i].flags & NOT_A_DRIVER) == 0
+						&& (drivers[j].flags & NOT_A_DRIVER) == 0)
 				{
-					printf("%s: %s and %s use the same ROM set\n",drivers[i]->source_file,drivers[i]->name,drivers[j]->name);
+					printf("%s: %s and %s use the same ROM set\n",drivers[i].source_file,drivers[i].name,drivers[j].name);
 					error = 1;
 				}
 	#endif
 			}
 	
 	#ifndef MESS
-			if ((drivers[i]->flags & NOT_A_DRIVER) == 0)
+			if ((drivers[i].flags & NOT_A_DRIVER) == 0)
 			{
-				if (drv.sound[0].sound_type == 0 && (drivers[i]->flags & GAME_NO_SOUND) == 0 &&
-						strcmp(drivers[i]->name,"minivadr"))
+				if (drv.sound[0].sound_type == 0 && (drivers[i].flags & GAME_NO_SOUND) == 0 &&
+						strcmp(drivers[i].name,"minivadr"))
 				{
-					printf("%s: %s missing GAME_NO_SOUND flag\n",drivers[i]->source_file,drivers[i]->name);
+					printf("%s: %s missing GAME_NO_SOUND flag\n",drivers[i].source_file,drivers[i].name);
 					error = 1;
 				}
 			}
 	#endif
 	
-			romp = drivers[i]->rom;
+			romp = drivers[i].rom;
 	
 			if (romp != 0)
 			{
@@ -1765,7 +1765,7 @@ public class mame
 						count++;
 						if (type && (type >= REGION_MAX || type <= REGION_INVALID))
 						{
-							printf("%s: %s has invalid ROM_REGION type %x\n",drivers[i]->source_file,drivers[i]->name,type);
+							printf("%s: %s has invalid ROM_REGION type %x\n",drivers[i].source_file,drivers[i].name,type);
 							error = 1;
 						}
 	
@@ -1781,7 +1781,7 @@ public class mame
 						{
 							if (tolower(*c) != *c)
 							{
-								printf("%s: %s has upper case ROM name %s\n",drivers[i]->source_file,drivers[i]->name,ROM_GETNAME(romp));
+								printf("%s: %s has upper case ROM name %s\n",drivers[i].source_file,drivers[i].name,ROM_GETNAME(romp));
 								error = 1;
 							}
 							c++;
@@ -1790,7 +1790,7 @@ public class mame
 						hash = ROM_GETHASHDATA(romp);
 						if (!hash_verify_string(hash))
 						{
-							printf("%s: rom '%s' has an invalid hash string '%s'\n", drivers[i]->name, ROM_GETNAME(romp), hash);
+							printf("%s: rom '%s' has an invalid hash string '%s'\n", drivers[i].name, ROM_GETNAME(romp), hash);
 							error = 1;
 						}
 					}
@@ -1798,7 +1798,7 @@ public class mame
 					{
 						if (ROM_GETOFFSET(romp) + ROM_GETLENGTH(romp) > region_length[count])
 						{
-							printf("%s: %s has ROM %s extending past the defined memory region\n",drivers[i]->source_file,drivers[i]->name,last_name);
+							printf("%s: %s has ROM %s extending past the defined memory region\n",drivers[i].source_file,drivers[i].name,last_name);
 							error = 1;
 						}
 					}
@@ -1809,7 +1809,7 @@ public class mame
 				{
 					if (region_type_used[j] > 1)
 					{
-						printf("%s: %s has duplicated ROM_REGION type %x\n",drivers[i]->source_file,drivers[i]->name,j);
+						printf("%s: %s has duplicated ROM_REGION type %x\n",drivers[i].source_file,drivers[i].name,j);
 						error = 1;
 					}
 				}
@@ -1829,32 +1829,32 @@ public class mame
 						{
 							const struct Memory_ReadAddress *mra = drv.cpu[cpu].memory_read;
 	
-							if (!IS_MEMPORT_MARKER(mra) || (mra->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
+							if (!IS_MEMPORT_MARKER(mra) || (mra.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
 							{
-								printf("%s: %s wrong MEMPORT_READ_START\n",drivers[i]->source_file,drivers[i]->name);
+								printf("%s: %s wrong MEMPORT_READ_START\n",drivers[i].source_file,drivers[i].name);
 								error = 1;
 							}
 	
 							switch (databus_width)
 							{
 								case 8:
-									if ((mra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
+									if ((mra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mra->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mra.end);
 										error = 1;
 									}
 									break;
 								case 16:
-									if ((mra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
+									if ((mra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mra->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mra.end);
 										error = 1;
 									}
 									break;
 								case 32:
-									if ((mra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
+									if ((mra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mra->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mra.end);
 										error = 1;
 									}
 									break;
@@ -1864,14 +1864,14 @@ public class mame
 							{
 								if (!IS_MEMPORT_MARKER(mra))
 								{
-									if (mra->end < mra->start)
+									if (mra.end < mra.start)
 									{
-										printf("%s: %s wrong memory read handler start = %08x > end = %08x\n",drivers[i]->source_file,drivers[i]->name,mra->start,mra->end);
+										printf("%s: %s wrong memory read handler start = %08x > end = %08x\n",drivers[i].source_file,drivers[i].name,mra.start,mra.end);
 										error = 1;
 									}
-									if ((mra->start & (alignunit-1)) != 0 || (mra->end & (alignunit-1)) != (alignunit-1))
+									if ((mra.start & (alignunit-1)) != 0 || (mra.end & (alignunit-1)) != (alignunit-1))
 									{
-										printf("%s: %s wrong memory read handler start = %08x, end = %08x ALIGN = %d\n",drivers[i]->source_file,drivers[i]->name,mra->start,mra->end,alignunit);
+										printf("%s: %s wrong memory read handler start = %08x, end = %08x ALIGN = %d\n",drivers[i].source_file,drivers[i].name,mra.start,mra.end,alignunit);
 										error = 1;
 									}
 								}
@@ -1882,33 +1882,33 @@ public class mame
 						{
 							const struct Memory_WriteAddress *mwa = drv.cpu[cpu].memory_write;
 	
-							if (mwa->start != MEMPORT_MARKER ||
-									(mwa->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
+							if (mwa.start != MEMPORT_MARKER ||
+									(mwa.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
 							{
-								printf("%s: %s wrong MEMPORT_WRITE_START\n",drivers[i]->source_file,drivers[i]->name);
+								printf("%s: %s wrong MEMPORT_WRITE_START\n",drivers[i].source_file,drivers[i].name);
 								error = 1;
 							}
 	
 							switch (databus_width)
 							{
 								case 8:
-									if ((mwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
+									if ((mwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mwa->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mwa.end);
 										error = 1;
 									}
 									break;
 								case 16:
-									if ((mwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
+									if ((mwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mwa->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mwa.end);
 										error = 1;
 									}
 									break;
 								case 32:
-									if ((mwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
+									if ((mwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
 									{
-										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,mwa->end);
+										printf("%s: %s cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,mwa.end);
 										error = 1;
 									}
 									break;
@@ -1918,14 +1918,14 @@ public class mame
 							{
 								if (!IS_MEMPORT_MARKER(mwa))
 								{
-									if (mwa->end < mwa->start)
+									if (mwa.end < mwa.start)
 									{
-										printf("%s: %s wrong memory write handler start = %08x > end = %08x\n",drivers[i]->source_file,drivers[i]->name,mwa->start,mwa->end);
+										printf("%s: %s wrong memory write handler start = %08x > end = %08x\n",drivers[i].source_file,drivers[i].name,mwa.start,mwa.end);
 										error = 1;
 									}
-									if ((mwa->start & (alignunit-1)) != 0 || (mwa->end & (alignunit-1)) != (alignunit-1))
+									if ((mwa.start & (alignunit-1)) != 0 || (mwa.end & (alignunit-1)) != (alignunit-1))
 									{
-										printf("%s: %s wrong memory write handler start = %08x, end = %08x ALIGN = %d\n",drivers[i]->source_file,drivers[i]->name,mwa->start,mwa->end,alignunit);
+										printf("%s: %s wrong memory write handler start = %08x, end = %08x ALIGN = %d\n",drivers[i].source_file,drivers[i].name,mwa.start,mwa.end,alignunit);
 										error = 1;
 									}
 								}
@@ -1937,32 +1937,32 @@ public class mame
 						{
 							const struct IO_ReadPort *pra = drv.cpu[cpu].port_read;
 	
-							if (!IS_MEMPORT_MARKER(pra) || (pra->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
+							if (!IS_MEMPORT_MARKER(pra) || (pra.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
 							{
-								printf("%s: %s wrong PORT_READ_START\n",drivers[i]->source_file,drivers[i]->name);
+								printf("%s: %s wrong PORT_READ_START\n",drivers[i].source_file,drivers[i].name);
 								error = 1;
 							}
 	
 							switch (databus_width)
 							{
 								case 8:
-									if ((pra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
+									if ((pra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pra->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pra.end);
 										error = 1;
 									}
 									break;
 								case 16:
-									if ((pra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
+									if ((pra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pra->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pra.end);
 										error = 1;
 									}
 									break;
 								case 32:
-									if ((pra->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
+									if ((pra.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pra->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pra.end);
 										error = 1;
 									}
 									break;
@@ -1972,14 +1972,14 @@ public class mame
 							{
 								if (!IS_MEMPORT_MARKER(pra))
 								{
-									if (pra->end < pra->start)
+									if (pra.end < pra.start)
 									{
-										printf("%s: %s wrong port read handler start = %08x > end = %08x\n",drivers[i]->source_file,drivers[i]->name,pra->start,pra->end);
+										printf("%s: %s wrong port read handler start = %08x > end = %08x\n",drivers[i].source_file,drivers[i].name,pra.start,pra.end);
 										error = 1;
 									}
-									if ((pra->start & (alignunit-1)) != 0 || (pra->end & (alignunit-1)) != (alignunit-1))
+									if ((pra.start & (alignunit-1)) != 0 || (pra.end & (alignunit-1)) != (alignunit-1))
 									{
-										printf("%s: %s wrong port read handler start = %08x, end = %08x ALIGN = %d\n",drivers[i]->source_file,drivers[i]->name,pra->start,pra->end,alignunit);
+										printf("%s: %s wrong port read handler start = %08x, end = %08x ALIGN = %d\n",drivers[i].source_file,drivers[i].name,pra.start,pra.end,alignunit);
 										error = 1;
 									}
 	
@@ -1992,33 +1992,33 @@ public class mame
 						{
 							const struct IO_WritePort *pwa = drv.cpu[cpu].port_write;
 	
-							if (pwa->start != MEMPORT_MARKER ||
-									(pwa->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
+							if (pwa.start != MEMPORT_MARKER ||
+									(pwa.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
 							{
-								printf("%s: %s wrong PORT_WRITE_START\n",drivers[i]->source_file,drivers[i]->name);
+								printf("%s: %s wrong PORT_WRITE_START\n",drivers[i].source_file,drivers[i].name);
 								error = 1;
 							}
 	
 							switch (databus_width)
 							{
 								case 8:
-									if ((pwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
+									if ((pwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_8)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pwa->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pwa.end);
 										error = 1;
 									}
 									break;
 								case 16:
-									if ((pwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
+									if ((pwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_16)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pwa->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pwa.end);
 										error = 1;
 									}
 									break;
 								case 32:
-									if ((pwa->end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
+									if ((pwa.end & MEMPORT_WIDTH_MASK) != MEMPORT_WIDTH_32)
 									{
-										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i]->source_file,drivers[i]->name,cpu,databus_width,pwa->end);
+										printf("%s: %s cpu #%d uses wrong data width port handlers! (width = %d, port = %08x)\n",drivers[i].source_file,drivers[i].name,cpu,databus_width,pwa.end);
 										error = 1;
 									}
 									break;
@@ -2028,14 +2028,14 @@ public class mame
 							{
 								if (!IS_MEMPORT_MARKER(pwa))
 								{
-									if (pwa->end < pwa->start)
+									if (pwa.end < pwa.start)
 									{
-										printf("%s: %s wrong port write handler start = %08x > end = %08x\n",drivers[i]->source_file,drivers[i]->name,pwa->start,pwa->end);
+										printf("%s: %s wrong port write handler start = %08x > end = %08x\n",drivers[i].source_file,drivers[i].name,pwa.start,pwa.end);
 										error = 1;
 									}
-									if ((pwa->start & (alignunit-1)) != 0 || (pwa->end & (alignunit-1)) != (alignunit-1))
+									if ((pwa.start & (alignunit-1)) != 0 || (pwa.end & (alignunit-1)) != (alignunit-1))
 									{
-										printf("%s: %s wrong port write handler start = %08x, end = %08x ALIGN = %d\n",drivers[i]->source_file,drivers[i]->name,pwa->start,pwa->end,alignunit);
+										printf("%s: %s wrong port write handler start = %08x, end = %08x ALIGN = %d\n",drivers[i].source_file,drivers[i].name,pwa.start,pwa.end,alignunit);
 										error = 1;
 									}
 	
@@ -2059,27 +2059,27 @@ public class mame
 	/*
 						if (type && (type >= REGION_MAX || type <= REGION_INVALID))
 						{
-							printf("%s: %s has invalid memory region for gfx[%d]\n",drivers[i]->source_file,drivers[i]->name,j);
+							printf("%s: %s has invalid memory region for gfx[%d]\n",drivers[i].source_file,drivers[i].name,j);
 							error = 1;
 						}
 	*/
 	
-						if (!IS_FRAC(drv.gfxdecodeinfo[j].gfxlayout->total))
+						if (!IS_FRAC(drv.gfxdecodeinfo[j].gfxlayout.total))
 						{
 							start = 0;
 							for (k = 0;k < MAX_GFX_PLANES;k++)
 							{
-								if (drv.gfxdecodeinfo[j].gfxlayout->planeoffset[k] > start)
-									start = drv.gfxdecodeinfo[j].gfxlayout->planeoffset[k];
+								if (drv.gfxdecodeinfo[j].gfxlayout.planeoffset[k] > start)
+									start = drv.gfxdecodeinfo[j].gfxlayout.planeoffset[k];
 							}
-							start &= ~(drv.gfxdecodeinfo[j].gfxlayout->charincrement-1);
-							len = drv.gfxdecodeinfo[j].gfxlayout->total *
-									drv.gfxdecodeinfo[j].gfxlayout->charincrement;
+							start &= ~(drv.gfxdecodeinfo[j].gfxlayout.charincrement-1);
+							len = drv.gfxdecodeinfo[j].gfxlayout.total *
+									drv.gfxdecodeinfo[j].gfxlayout.charincrement;
 							avail = region_length[type]
-									- (drv.gfxdecodeinfo[j].start & ~(drv.gfxdecodeinfo[j].gfxlayout->charincrement/8-1));
+									- (drv.gfxdecodeinfo[j].start & ~(drv.gfxdecodeinfo[j].gfxlayout.charincrement/8-1));
 							if ((start + len) / 8 > avail)
 							{
-								printf("%s: %s has gfx[%d] extending past allocated memory\n",drivers[i]->source_file,drivers[i]->name,j);
+								printf("%s: %s has gfx[%d] extending past allocated memory\n",drivers[i].source_file,drivers[i].name,j);
 								error = 1;
 							}
 						}
@@ -2088,81 +2088,81 @@ public class mame
 			}
 	
 	
-			inp = drivers[i]->input_ports;
+			inp = drivers[i].input_ports;
 	
 			if (inp != 0)
 			{
-				while (inp->type != IPT_END)
+				while (inp.type != IPT_END)
 				{
-					if (inp->name && inp->name != IP_NAME_DEFAULT)
+					if (inp.name && inp.name != IP_NAME_DEFAULT)
 					{
 						j = 0;
 	
 						for (j = 0;j < STR_TOTAL;j++)
 						{
-							if (inp->name == ipdn_defaultstrings[j]) break;
-							else if (!my_stricmp(inp->name,ipdn_defaultstrings[j]))
+							if (inp.name == ipdn_defaultstrings[j]) break;
+							else if (!my_stricmp(inp.name,ipdn_defaultstrings[j]))
 							{
-								printf("%s: %s must use DEF_STR( %s )\n",drivers[i]->source_file,drivers[i]->name,inp->name);
+								printf("%s: %s must use DEF_STR( %s )\n",drivers[i].source_file,drivers[i].name,inp.name);
 								error = 1;
 							}
 						}
 	
-						if (inp->name == DEF_STR( On ) && (inp+1)->name == DEF_STR( Off ))
+						if (inp.name == DEF_STR( On ) && (inp+1).name == DEF_STR( Off ))
 						{
-							printf("%s: %s has inverted Off/On dipswitch order\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s has inverted Off/On dipswitch order\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Yes ) && (inp+1)->name == DEF_STR( No ))
+						if (inp.name == DEF_STR( Yes ) && (inp+1).name == DEF_STR( No ))
 						{
-							printf("%s: %s has inverted No/Yes dipswitch order\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s has inverted No/Yes dipswitch order\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 	
-						if (!my_stricmp(inp->name,"table"))
+						if (!my_stricmp(inp.name,"table"))
 						{
-							printf("%s: %s must use DEF_STR( Cocktail ), not %s\n",drivers[i]->source_file,drivers[i]->name,inp->name);
+							printf("%s: %s must use DEF_STR( Cocktail ), not %s\n",drivers[i].source_file,drivers[i].name,inp.name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Cabinet ) && (inp+1)->name == DEF_STR( Upright )
-								&& inp->default_value != (inp+1)->default_value)
+						if (inp.name == DEF_STR( Cabinet ) && (inp+1).name == DEF_STR( Upright )
+								&& inp.default_value != (inp+1).default_value)
 						{
-							printf("%s: %s Cabinet must default to Upright\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s Cabinet must default to Upright\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Cocktail ) && (inp+1)->name == DEF_STR( Upright ))
+						if (inp.name == DEF_STR( Cocktail ) && (inp+1).name == DEF_STR( Upright ))
 						{
-							printf("%s: %s has inverted Upright/Cocktail dipswitch order\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s has inverted Upright/Cocktail dipswitch order\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 	
-						if (inp->name >= DEF_STR( 9C_1C ) && inp->name <= DEF_STR( Free_Play )
-								&& (inp+1)->name >= DEF_STR( 9C_1C ) && (inp+1)->name <= DEF_STR( Free_Play )
-								&& inp->name >= (inp+1)->name)
+						if (inp.name >= DEF_STR( 9C_1C ) && inp.name <= DEF_STR( Free_Play )
+								&& (inp+1).name >= DEF_STR( 9C_1C ) && (inp+1).name <= DEF_STR( Free_Play )
+								&& inp.name >= (inp+1).name)
 						{
-							printf("%s: %s has unsorted coinage %s > %s\n",drivers[i]->source_file,drivers[i]->name,inp->name,(inp+1)->name);
+							printf("%s: %s has unsorted coinage %s > %s\n",drivers[i].source_file,drivers[i].name,inp.name,(inp+1).name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Flip_Screen ) && (inp+1)->name != DEF_STR( Off ))
+						if (inp.name == DEF_STR( Flip_Screen ) && (inp+1).name != DEF_STR( Off ))
 						{
-							printf("%s: %s has wrong Flip Screen option %s\n",drivers[i]->source_file,drivers[i]->name,(inp+1)->name);
+							printf("%s: %s has wrong Flip Screen option %s\n",drivers[i].source_file,drivers[i].name,(inp+1).name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Demo_Sounds ) && (inp+2)->name == DEF_STR( On )
-								&& inp->default_value != (inp+2)->default_value)
+						if (inp.name == DEF_STR( Demo_Sounds ) && (inp+2).name == DEF_STR( On )
+								&& inp.default_value != (inp+2).default_value)
 						{
-							printf("%s: %s Demo Sounds must default to On\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s Demo Sounds must default to On\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 	
-						if (inp->name == DEF_STR( Demo_Sounds ) && (inp+1)->name == DEF_STR( No ))
+						if (inp.name == DEF_STR( Demo_Sounds ) && (inp+1).name == DEF_STR( No ))
 						{
-							printf("%s: %s has wrong Demo Sounds option No instead of Off\n",drivers[i]->source_file,drivers[i]->name);
+							printf("%s: %s has wrong Demo Sounds option No instead of Off\n",drivers[i].source_file,drivers[i].name);
 							error = 1;
 						}
 					}

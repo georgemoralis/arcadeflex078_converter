@@ -45,7 +45,7 @@ public class galspnbl
 		sx = offset % 512;
 		sy = offset / 512;
 	
-		plot_pixel(tmpbitmap,sx,sy,Machine->pens[1024 + (data >> 1)]);
+		plot_pixel(tmpbitmap,sx,sy,Machine.pens[1024 + (data >> 1)]);
 	}
 	
 	WRITE16_HANDLER( galspnbl_scroll_w )
@@ -112,12 +112,12 @@ public class galspnbl
 					{
 						int x = sx + 8*(flipx?(size-1-col):col);
 						int y = sy + 8*(flipy?(size-1-row):row);
-						drawgfx(bitmap,Machine->gfx[1],
+						drawgfx(bitmap,Machine.gfx[1],
 							code + layout[row][col],
 							color,
 							flipx,flipy,
 							x,y,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 					}
 				}
 			}
@@ -131,7 +131,7 @@ public class galspnbl
 	
 	
 		/* copy the temporary bitmap to the screen */
-		copyscrollbitmap(bitmap,tmpbitmap,1,&screenscroll,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap,1,&screenscroll,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		draw_sprites(bitmap,0);
 	
@@ -148,12 +148,12 @@ public class galspnbl
 			/* What is this? A priority/half transparency marker? */
 			if (!(attr & 0x0008))
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						code,
 						color,
 						0,0,
 						16*sx + screenscroll,8*sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	

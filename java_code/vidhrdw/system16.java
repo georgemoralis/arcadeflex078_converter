@@ -103,12 +103,12 @@ public class system16
 	static void debug_draw( struct mame_bitmap *bitmap, int x, int y, unsigned int data ){
 		int digit;
 		for( digit=0; digit<4; digit++ ){
-			drawgfx( bitmap, Machine->uifont,
+			drawgfx( bitmap, Machine.uifont,
 				"0123456789abcdef"[data>>12],
 				0,
 				0,0,
 				x+digit*6,y,
-				&Machine->visible_area,TRANSPARENCY_NONE,0);
+				&Machine.visible_area,TRANSPARENCY_NONE,0);
 			data = (data<<4)&0xffff;
 		}
 	}
@@ -238,11 +238,11 @@ public class system16
 		int shadow,
 		int shadow_pen, int eos )
 	{
-		const pen_t *shadow_base = Machine->gfx[0]->colortable + (Machine->drv->total_colors/2);
+		const pen_t *shadow_base = Machine.gfx[0].colortable + (Machine.drv.total_colors/2);
 		const UINT8 *source;
 		int full_shadow=shadow&SYS16_SPR_SHADOW;
 		int partial_shadow=shadow&SYS16_SPR_PARTIAL_SHADOW;
-		int shadow_mask=(Machine->drv->total_colors/2)-1;
+		int shadow_mask=(Machine.drv.total_colors/2)-1;
 		int sx, x, xcount;
 		int sy, y, ycount = 0;
 		int dx,dy;
@@ -274,10 +274,10 @@ public class system16
 			for( y=height; y; y-- ){
 				ycount += screen_height;
 				while( ycount>=height ){
-					if( sy>=cliprect->min_y && sy<=cliprect->max_y ){
+					if( sy>=cliprect.min_y && sy<=cliprect.max_y ){
 						source = addr;
-						dest = (UINT16 *)bitmap->line[sy];
-						pri = priority_bitmap->line[sy];
+						dest = (UINT16 *)bitmap.line[sy];
+						pri = priority_bitmap.line[sy];
 						sx = x0;
 						xcount = 0;
 						for( x=width; x; x-=2 ){
@@ -286,7 +286,7 @@ public class system16
 							xcount += screen_width;
 							while( xcount>=width )
 							{
-								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x ){
+								if( pen && pen!=0xf && sx>=cliprect.min_x && sx<=cliprect.max_x ){
 									if(!(pri[sx]&priority)){
 										if (full_shadow != 0)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
@@ -303,7 +303,7 @@ public class system16
 							xcount += screen_width;
 							while( xcount>=width )
 							{
-								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x ){
+								if( pen && pen!=0xf && sx>=cliprect.min_x && sx<=cliprect.max_x ){
 									if(!(pri[sx]&priority)){
 										if (full_shadow != 0)
 											dest[sx] = shadow_base[dest[sx]&shadow_mask];
@@ -330,10 +330,10 @@ public class system16
 			for( y=height; y; y-- ){
 				ycount += screen_height;
 				while( ycount>=height ){
-					if( sy>=cliprect->min_y && sy<=cliprect->max_y ){
+					if( sy>=cliprect.min_y && sy<=cliprect.max_y ){
 						source = addr;
-						dest = (UINT16 *)bitmap->line[sy];
-						pri = priority_bitmap->line[sy];
+						dest = (UINT16 *)bitmap.line[sy];
+						pri = priority_bitmap.line[sy];
 						sx = x0;
 						xcount = 0;
 						for( x=width; x; x-=2 ){
@@ -343,7 +343,7 @@ public class system16
 							xcount += screen_width;
 							while( xcount>=width )
 							{
-								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x )
+								if( pen && pen!=0xf && sx>=cliprect.min_x && sx<=cliprect.max_x )
 									if(!(pri[sx]&priority)) dest[sx] = paldata[pen];
 								xcount -= width;
 								sx+=dx;
@@ -352,7 +352,7 @@ public class system16
 							xcount += screen_width;
 							while( xcount>=width )
 							{
-								if( pen && pen!=0xf && sx>=cliprect->min_x && sx<=cliprect->max_x )
+								if( pen && pen!=0xf && sx>=cliprect.min_x && sx<=cliprect.max_x )
 									if(!(pri[sx]&priority)) dest[sx] = paldata[pen];
 								xcount -= width;
 								sx+=dx;
@@ -369,7 +369,7 @@ public class system16
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int b3d ) //*
 	{
-		const pen_t *base_pal = Machine->gfx[0]->colortable;
+		const pen_t *base_pal = Machine.gfx[0].colortable;
 		const unsigned char *base_gfx = memory_region(REGION_GFX2);
 		const int gfx_rom_size = memory_region_length(REGION_GFX2);
 		const data16_t *source = sys16_spriteram;
@@ -527,13 +527,13 @@ public class system16
 				b=(b << 3) | (b >> 2); /* 5 bits blue */
 	
 				palette_set_color( offset,r,g,b);
-				if (Machine->gamedrv != &driver_aburner && Machine->gamedrv != &driver_aburner2) { //JUN
+				if (Machine.gamedrv != &driver_aburner && Machine.gamedrv != &driver_aburner2) { //JUN
 				/* shadow color */
 				r= r * 160 / 256;
 				g= g * 160 / 256;
 				b= b * 160 / 256;
 	
-				palette_set_color( offset+Machine->drv->total_colors/2,r,g,b); }
+				palette_set_color( offset+Machine.drv.total_colors/2,r,g,b); }
 			}
 	#endif
 		}
@@ -856,7 +856,7 @@ public class system16
 		if( background && foreground && text_layer ){
 			/* initialize all entries to black - needed for Golden Axe*/
 			int i;
-			for( i=0; i<Machine->drv->total_colors; i++ ){
+			for( i=0; i<Machine.drv.total_colors; i++ ){
 				palette_set_color( i, 0,0,0 );
 			}
 	
@@ -1176,7 +1176,7 @@ public class system16
 		if (sys18_bg2_active != 0)
 			tilemap_draw( bitmap,cliprect, background2, 0, 0 );
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw( bitmap,cliprect, background, TILEMAP_IGNORE_TRANSPARENCY, 0 );
 		tilemap_draw( bitmap,cliprect, background, TILEMAP_IGNORE_TRANSPARENCY | 1, 0 );	//??
@@ -1214,8 +1214,8 @@ public class system16
 		int yflip=0, ypos;
 		int dx=1,xoff=0;
 	
-		pen_t *paldata1 = Machine->gfx[0]->colortable + sys16_gr_palette;
-		pen_t *paldata2 = Machine->gfx[0]->colortable + sys16_gr_palette_default;
+		pen_t *paldata1 = Machine.gfx[0].colortable + sys16_gr_palette;
+		pen_t *paldata2 = Machine.gfx[0].colortable + sys16_gr_palette_default;
 	
 	#if 0
 	if( keyboard_pressed( KEYCODE_S ) ){
@@ -1240,18 +1240,18 @@ public class system16
 	
 		priority=priority << 10;
 	
-		if (Machine->scrbitmap->depth == 16) /* 16 bit */
+		if (Machine.scrbitmap.depth == 16) /* 16 bit */
 		{
-			if( Machine->orientation & ORIENTATION_SWAP_XY ){
-				if( Machine->orientation & ORIENTATION_FLIP_Y ){
+			if( Machine.orientation & ORIENTATION_SWAP_XY ){
+				if( Machine.orientation & ORIENTATION_FLIP_Y ){
 					dx=-1;
 					xoff=319;
 				}
-				if( Machine->orientation & ORIENTATION_FLIP_X ){
+				if( Machine.orientation & ORIENTATION_FLIP_X ){
 					yflip=1;
 				}
 	
-				for(i=cliprect->min_y;i<=cliprect->max_y;i++){
+				for(i=cliprect.min_y;i<=cliprect.max_y;i++){
 					if (yflip != 0) ypos=223-i;
 					else ypos=i;
 					ver_data=*data_ver;
@@ -1262,9 +1262,9 @@ public class system16
 						if((ver_data & 0x500) == 0x100 || (ver_data & 0x300) == 0x200)
 						{
 							// fill line
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++)
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++)
 							{
-								line16=(UINT16 *)bitmap->line[j]+ypos;
+								line16=(UINT16 *)bitmap.line[j]+ypos;
 								*line16=colors[0];
 							}
 						}
@@ -1295,9 +1295,9 @@ public class system16
 	
 							source = data + hor_pos + ver_data + 18 + 8;
 	
-							for(j=cliprect->min_x;j<cliprect->max_x;j++)
+							for(j=cliprect.min_x;j<cliprect.max_x;j++)
 							{
-								line16=(UINT16 *)bitmap->line[xoff+j*dx]+ypos;
+								line16=(UINT16 *)bitmap.line[xoff+j*dx]+ypos;
 								*line16 = colors[*source++];
 							}
 						}
@@ -1307,15 +1307,15 @@ public class system16
 			}
 			else
 			{ /* 16 bpp, normal screen orientation */
-				if( Machine->orientation & ORIENTATION_FLIP_X ){
+				if( Machine.orientation & ORIENTATION_FLIP_X ){
 					dx=-1;
 					xoff=319;
 				}
-				if( Machine->orientation & ORIENTATION_FLIP_Y ){
+				if( Machine.orientation & ORIENTATION_FLIP_Y ){
 					yflip=1;
 				}
 	
-				for(i=cliprect->min_y;i<=cliprect->max_y;i++){ /* with each scanline */
+				for(i=cliprect.min_y;i<=cliprect.max_y;i++){ /* with each scanline */
 					if (yflip != 0) ypos=223-i; else ypos=i;
 					ver_data= *data_ver; /* scanline parameters */
 					/*
@@ -1338,14 +1338,14 @@ public class system16
 						colors[0] = paldata1[ sys16_gr_pal[ver_data&0xff]&0xff ];
 	
 						if((ver_data & 0x500) == 0x100 || (ver_data & 0x300) == 0x200){
-							line16 = (UINT16 *)bitmap->line[ypos]; /* dest for drawing */
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++){
+							line16 = (UINT16 *)bitmap.line[ypos]; /* dest for drawing */
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++){
 								*line16++=colors[0]; /* opaque fill with background color */
 							}
 						}
 						else {
 							// copy line
-							line16 = (UINT16 *)bitmap->line[ypos]+xoff; /* dest for drawing */
+							line16 = (UINT16 *)bitmap.line[ypos]+xoff; /* dest for drawing */
 							ver_data &= 0xff;
 	
 							colorflip = (sys16_gr_flip[ver_data] >> 3) & 1;
@@ -1365,7 +1365,7 @@ public class system16
 							ver_data <<= sys16_gr_bitmap_width;
 							source = data + hor_pos + ver_data + 18 + 8;
 	
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++){
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++){
 								*line16 = colors[*source++];
 								line16+=dx;
 							}
@@ -1413,24 +1413,24 @@ public class system16
 	
 		int second_road = sys16_gr_second_road[0];
 	
-		pen_t *paldata1 = Machine->gfx[0]->colortable + sys16_gr_palette;
-		pen_t *paldata2 = Machine->gfx[0]->colortable + sys16_gr_palette_default;
+		pen_t *paldata1 = Machine.gfx[0].colortable + sys16_gr_palette;
+		pen_t *paldata2 = Machine.gfx[0].colortable + sys16_gr_palette_default;
 	
 		priority=priority << 11;
 	
-		if (Machine->scrbitmap->depth == 16) /* 16 bit */
+		if (Machine.scrbitmap.depth == 16) /* 16 bit */
 		{
-			if( Machine->orientation & ORIENTATION_SWAP_XY )
+			if( Machine.orientation & ORIENTATION_SWAP_XY )
 			{
-				if( Machine->orientation & ORIENTATION_FLIP_Y ){
+				if( Machine.orientation & ORIENTATION_FLIP_Y ){
 					dx=-1;
 					xoff=319;
 				}
-				if( Machine->orientation & ORIENTATION_FLIP_X ){
+				if( Machine.orientation & ORIENTATION_FLIP_X ){
 					yflip=1;
 				}
 	
-				for(i=cliprect->min_y;i<=cliprect->max_y;i++)
+				for(i=cliprect.min_y;i<=cliprect.max_y;i++)
 				{
 					if (yflip != 0) ypos=223-i;
 					else ypos=i;
@@ -1442,9 +1442,9 @@ public class system16
 						{
 							colors[0] = paldata1[ ver_data&0x3f ];
 							// fill line
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++)
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++)
 							{
-								line16=(UINT16 *)bitmap->line[j]+ypos;
+								line16=(UINT16 *)bitmap.line[j]+ypos;
 								*line16=colors[0];
 							}
 						}
@@ -1482,9 +1482,9 @@ public class system16
 	
 							source2++;
 	
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++)
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++)
 							{
-								line16=(UINT16 *)bitmap->line[xoff+j*dx]+ypos;
+								line16=(UINT16 *)bitmap.line[xoff+j*dx]+ypos;
 								if(*source2 <= *source)
 									*line16 = colors[*source];
 								else
@@ -1499,15 +1499,15 @@ public class system16
 			}
 			else
 			{
-				if( Machine->orientation & ORIENTATION_FLIP_X ){
+				if( Machine.orientation & ORIENTATION_FLIP_X ){
 					dx=-1;
 					xoff=319;
 				}
-				if( Machine->orientation & ORIENTATION_FLIP_Y ){
+				if( Machine.orientation & ORIENTATION_FLIP_Y ){
 					yflip=1;
 				}
 	
-				for(i=cliprect->min_y;i<=cliprect->max_y;i++){
+				for(i=cliprect.min_y;i<=cliprect.max_y;i++){
 					if (yflip != 0) ypos=223-i;
 					else ypos=i;
 					ver_data= *data_ver;
@@ -1515,14 +1515,14 @@ public class system16
 						if ((ver_data & 0x800) != 0){
 							colors[0] = paldata1[ ver_data&0x3f ];
 							// fill line
-							line16 = (UINT16 *)bitmap->line[ypos];
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++){
+							line16 = (UINT16 *)bitmap.line[ypos];
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++){
 								*line16++ = colors[0];
 							}
 						}
 						else {
 							// copy line
-							line16 = (UINT16 *)bitmap->line[ypos]+xoff;
+							line16 = (UINT16 *)bitmap.line[ypos]+xoff;
 							ver_data &= 0x01ff;		//???
 							colorflip_info = sys16_gr_flip[ver_data];
 							colors[0] = paldata2[ ((colorflip_info >> 8) & 0x1f) + 0x20 ];		//??
@@ -1544,7 +1544,7 @@ public class system16
 								case 3:	source=source2;	break;
 							}
 							source2++;
-							for(j=cliprect->min_x;j<=cliprect->max_x;j++){
+							for(j=cliprect.min_x;j<=cliprect.max_x;j++){
 								if(*source2 <= *source) *line16 = colors[*source]; else *line16 = colors[*source2];
 								source++;
 								source2++;
@@ -1684,9 +1684,9 @@ public class system16
 		/*
 			sys16_roadram[0x1000]:
 				0x04: flying (sky/horizon)
-				0x43: (flying->landing)
+				0x43: (flying.landing)
 				0xc3: runway landing
-				0xe3: (landing -> flying)
+				0xe3: (landing . flying)
 				0x03: rocky canyon
 	
 				Thunderblade: 0x04, 0xfe
@@ -1709,16 +1709,16 @@ public class system16
 		int page = sys16_roadram[0x1000];
 		int sy;
 	
-		for( sy=cliprect->min_y; sy<=cliprect->max_y; sy++ ){
-			UINT16 *dest = (UINT16 *)bitmap->line[sy] + cliprect->min_x; /* assume 16bpp */
+		for( sy=cliprect.min_y; sy<=cliprect.max_y; sy++ ){
+			UINT16 *dest = (UINT16 *)bitmap.line[sy] + cliprect.min_x; /* assume 16bpp */
 			int sx;
 			UINT16 line = vreg[0x100+sy];
 	
 			if ((page & 4) != 0){ /* flying */
 				int xscroll = vreg[0x200+sy] - 0x552;
-				UINT16 sky = Machine->pens[0x1720];
-				UINT16 ground = Machine->pens[0x1700];
-				for( sx=cliprect->min_x; sx<=cliprect->max_x; sx++ ){
+				UINT16 sky = Machine.pens[0x1720];
+				UINT16 ground = Machine.pens[0x1700];
+				for( sx=cliprect.min_x; sx<=cliprect.max_x; sx++ ){
 					int temp = xscroll+sx;
 					if( temp<0 ){
 						*dest++ = sky;
@@ -1733,8 +1733,8 @@ public class system16
 			}
 			else if ((line & 0x800) != 0){
 				/* opaque fill; the least significant nibble selects color */
-				unsigned short color = Machine->pens[0x1780+(line&0xf)];
-				for( sx=cliprect->min_x; sx<=cliprect->max_x; sx++ ){
+				unsigned short color = Machine.pens[0x1780+(line&0xf)];
+				for( sx=cliprect.min_x; sx<=cliprect.max_x; sx++ ){
 					*dest++ = color;
 				}
 			}
@@ -1747,21 +1747,21 @@ public class system16
 				int clut[5];
 				{
 					int road_color = 0x1708+(flip&0x1);
-					clut[0] = Machine->pens[road_color];
-					clut[1] = Machine->pens[road_color+2];
-					clut[2] = Machine->pens[road_color+4];
-					clut[3] = Machine->pens[road_color+6];
-					clut[4] = Machine->pens[(flip&0x100)?0x1730:0x1731]; /* edge of road */
+					clut[0] = Machine.pens[road_color];
+					clut[1] = Machine.pens[road_color+2];
+					clut[2] = Machine.pens[road_color+4];
+					clut[3] = Machine.pens[road_color+6];
+					clut[4] = Machine.pens[(flip&0x100)?0x1730:0x1731]; /* edge of road */
 				}
-				for( sx=cliprect->min_x; sx<=cliprect->max_x; sx++ ){
+				for( sx=cliprect.min_x; sx<=cliprect.max_x; sx++ ){
 					int xpos = (sx + xscroll)&0x1ff;
 					*dest++ = clut[source[xpos]];
 				}
 			}
 			else { /* rocky canyon */
 				UINT16 flip = vreg[0x600+sy];
-				unsigned short color = Machine->pens[(flip&0x100)?0x1730:0x1731];
-				for( sx=cliprect->min_x; sx<=cliprect->max_x; sx++ ){
+				unsigned short color = Machine.pens[(flip&0x100)?0x1730:0x1731];
+				for( sx=cliprect.min_x; sx<=cliprect.max_x; sx++ ){
 					*dest++ = color;
 				}
 			}

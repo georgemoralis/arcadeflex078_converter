@@ -34,7 +34,7 @@ public class taitosj
 	
 		zaccept = 1;
 		zready = 0;
-	 	if (Machine->drv->cpu[2].cpu_type != CPU_DUMMY)
+	 	if (Machine.drv.cpu[2].cpu_type != CPU_DUMMY)
 		cpu_set_irq_line(2,0,CLEAR_LINE);
 	}
 	
@@ -208,7 +208,7 @@ public class taitosj
 		if (~data & 0x04)
 		{
 	#if DEBUG_MCU
-	logerror("%04x: 68705 -> Z80 %02x\n",activecpu_get_pc(),portA_out);
+	logerror("%04x: 68705 . Z80 %02x\n",activecpu_get_pc(),portA_out);
 	#endif
 			/* 68705 is writing data for the Z80 */
 			timer_set(TIME_NOW,portA_out,taitosj_mcu_status_real_w);

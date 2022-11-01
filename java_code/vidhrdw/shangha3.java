@@ -80,7 +80,7 @@ public class shangha3
 	
 	public static VideoUpdateHandlerPtr video_update_shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((rawbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((rawbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		if (shangha3_do_shadows != 0)
@@ -88,12 +88,12 @@ public class shangha3
 			int i;
 	
 			/* Prepare the shadow table */
-			/* We draw in a raw bitmap so we don't have to remap pens through Machine->pens */
+			/* We draw in a raw bitmap so we don't have to remap pens through Machine.pens */
 			for (i = 0;i < 14;i++)
 				gfx_drawmode_table[i] = DRAWMODE_SOURCE;
 			gfx_drawmode_table[14] = DRAWMODE_SHADOW;
 			for (i = 0;i < 128;i++)
-				palette_shadow_table[Machine->pens[i]] = Machine->pens[i+128];
+				palette_shadow_table[Machine.pens[i]] = Machine.pens[i+128];
 		}
 	
 		return 0;
@@ -221,7 +221,7 @@ public class shangha3
 							if (flipy != 0) dy = sy + sizey-15 - dy;
 							else dy = sy + dy;
 	
-							drawgfx(rawbitmap,Machine->gfx[0],
+							drawgfx(rawbitmap,Machine.gfx[0],
 									(tile & 0x0fff) | (code & 0xf000),
 									(tile >> 12) | (color & 0x70),
 									flipx,flipy,
@@ -235,7 +235,7 @@ public class shangha3
 					int w;
 	
 	if (zoomx <= 1 && zoomy <= 1)
-		drawgfxzoom(rawbitmap,Machine->gfx[0],
+		drawgfxzoom(rawbitmap,Machine.gfx[0],
 				code,
 				color,
 				flipx,flipy,
@@ -248,7 +248,7 @@ public class shangha3
 	
 					for (x = 0;x < w;x++)
 					{
-						drawgfxzoom(rawbitmap,Machine->gfx[0],
+						drawgfxzoom(rawbitmap,Machine.gfx[0],
 								code,
 								color,
 								flipx,flipy,
@@ -272,6 +272,6 @@ public class shangha3
 	
 	public static VideoUpdateHandlerPtr video_update_shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,rawbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,rawbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

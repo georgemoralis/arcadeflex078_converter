@@ -232,10 +232,10 @@ public class balsente
 	
 	void balsente_noise_gen(int chip, int count, short *buffer)
 	{
-		if (Machine->sample_rate)
+		if (Machine.sample_rate)
 		{
 			/* noise generator runs at 100kHz */
-			UINT32 step = (100000 << 14) / Machine->sample_rate;
+			UINT32 step = (100000 << 14) / Machine.sample_rate;
 			UINT32 noise_counter = noise_position[chip];
 	
 			/* try to use the poly17 if we can */
@@ -278,7 +278,7 @@ public class balsente
 	{
 		unsigned int cc;
 	
-		/* CPU runs at 1.25MHz, noise source at 100kHz --> multiply by 12.5 */
+		/* CPU runs at 1.25MHz, noise source at 100kHz -. multiply by 12.5 */
 		cc = activecpu_gettotalcycles();
 	
 		/* 12.5 = 8 + 4 + 0.5 */
@@ -364,7 +364,7 @@ public class balsente
 	{
 		UINT8 new_state;
 	
-		/* sound -> main CPU communications */
+		/* sound . main CPU communications */
 		if (!(m6850_sound_status & 0x02))
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */
@@ -381,7 +381,7 @@ public class balsente
 			m6850_sound_status |= 0x02;
 		}
 	
-		/* main -> sound CPU communications */
+		/* main . sound CPU communications */
 		if (m6850_data_ready != 0)
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */

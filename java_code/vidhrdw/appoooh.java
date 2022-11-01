@@ -39,10 +39,10 @@ public class appoooh
 	public static PaletteInitHandlerPtr palette_init_appoooh  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -250,16 +250,16 @@ public class appoooh
 		if (priority == 1)
 		{
 			/* sprite set #1 */
-			appoooh_draw_sprites( bitmap, cliprect, Machine->gfx[2],spriteram);
+			appoooh_draw_sprites( bitmap, cliprect, Machine.gfx[2],spriteram);
 			/* sprite set #2 */
-			appoooh_draw_sprites( bitmap, cliprect, Machine->gfx[3],spriteram_2);
+			appoooh_draw_sprites( bitmap, cliprect, Machine.gfx[3],spriteram_2);
 		}
 		else
 		{
 			/* sprite set #2 */
-			appoooh_draw_sprites( bitmap, cliprect, Machine->gfx[3],spriteram_2);
+			appoooh_draw_sprites( bitmap, cliprect, Machine.gfx[3],spriteram_2);
 			/* sprite set #1 */
-			appoooh_draw_sprites( bitmap, cliprect, Machine->gfx[2],spriteram);
+			appoooh_draw_sprites( bitmap, cliprect, Machine.gfx[2],spriteram);
 		}
 	
 		if (priority != 0)	/* fg in front of sprites */

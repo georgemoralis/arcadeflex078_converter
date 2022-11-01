@@ -147,7 +147,7 @@ public class aeroboto
 				y = 240 - y;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 					spriteram.read(offs+1),
 					spriteram.read(offs+2)& 0x07,
 					flip_screen, flip_screen,

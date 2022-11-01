@@ -196,10 +196,10 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = &Machine->visible_area;
+		cliprect = &Machine.visible_area;
 		bankbase = attrs<<3 & 0x100;
 		c = attrs & 0x0f;
-		if (c > 11) { fillbitmap(bitmap,Machine->pens[(c<<4)+8], cliprect); return; }
+		if (c > 11) { fillbitmap(bitmap,Machine.pens[(c<<4)+8], cliprect); return; }
 		if (c<8 || color[0]<14 || bankbase)
 		{
 			c ^= 0x08;
@@ -236,7 +236,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color, fy;
 	
-		cliprect = &Machine->visible_area;
+		cliprect = &Machine.visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	
@@ -267,7 +267,7 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = &Machine->visible_area;
+		cliprect = &Machine.visible_area;
 		bankbase = attrs<<4 & 0x300;
 		c = attrs & 0x0f;
 		if (c == 7) c = 15;
@@ -300,7 +300,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color;
 	
-		cliprect = &Machine->visible_area;
+		cliprect = &Machine.visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	
@@ -338,18 +338,18 @@ public class hal21
 	
 		if (snk_gamegroup != 0)
 		{
-			hal21_draw_background(bitmap, bgsx+(msbs<<7 & 0x100), bgsy, attr, Machine->gfx[1]);
+			hal21_draw_background(bitmap, bgsx+(msbs<<7 & 0x100), bgsy, attr, Machine.gfx[1]);
 	
 			attr = snk_blink_parity;
 			snk_blink_parity ^= 0xdf;
 			for (i=6; i<0x80; i+=8) { palette_set_color(i, attr, attr, attr); }
 	
-			hal21_draw_sprites(bitmap, spsx, spsy, Machine->gfx[2]);
+			hal21_draw_sprites(bitmap, spsx, spsy, Machine.gfx[2]);
 		}
 		else
 		{
-			aso_draw_background(bitmap, bgsx+(~msbs<<7 & 0x100), bgsy, attr, Machine->gfx[1]);
-			aso_draw_sprites(bitmap, spsx, spsy, Machine->gfx[2]);
+			aso_draw_background(bitmap, bgsx+(~msbs<<7 & 0x100), bgsy, attr, Machine.gfx[1]);
+			aso_draw_sprites(bitmap, spsx, spsy, Machine.gfx[2]);
 		}
 	
 		bank = msbs>>6 & 1;
@@ -424,7 +424,7 @@ public class hal21
 		PORT_DIPSETTING(    0x10, DEF_STR( "Demo_Sounds"));
 		PORT_DIPSETTING(    0x08, "Infinite Lives" );
 		PORT_DIPSETTING(    0x00, "Freeze" );
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Flip_Screen") ); // 0x20 -> fe65
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Flip_Screen") ); // 0x20 . fe65
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unused") );

@@ -56,7 +56,7 @@ public class astrof
 	
 		col_index = (palette_bank ? 16 : 0);
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,r,g,b;
 	
@@ -112,8 +112,8 @@ public class astrof
 		videoram.write(offset,data);
 		colorram[offset] = color;
 	
-		fore = Machine->pens[color | 1];
-		back = Machine->pens[color    ];
+		fore = Machine.pens[color | 1];
+		back = Machine.pens[color    ];
 	
 		x = (offset >> 8) << 3;
 		y = 255 - (offset & 0xff);
@@ -251,6 +251,6 @@ public class astrof
 			}
 		}
 		
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

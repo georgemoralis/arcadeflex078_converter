@@ -20,7 +20,7 @@ public class carjmbre
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			/* red component */
 			bit0 = (*color_prom >> 0) & 0x01;
@@ -143,7 +143,7 @@ public class carjmbre
 						flipy = !flipy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							spriteram.read(troffs+1),
 							spriteram.read(troffs+2)&0x07,
 							flipx,flipy,

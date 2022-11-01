@@ -269,22 +269,22 @@ public class spy
 		*
 		*   See "MCPU" page of S.P.Y schematics for more...
 		*
-		*    PMC ERWE -> ~WR of 2128SL
-		*    PMC ERCS -> ~CE of 2128SL
-		*    PMC EROE -> ~OE of 2128SL
+		*    PMC ERWE . ~WR of 2128SL
+		*    PMC ERCS . ~CE of 2128SL
+		*    PMC EROE . ~OE of 2128SL
 		*
-		*    PMCOUTO -> PMCFIRQ -> 6809E ~FIRQ and PORT4, bit 0x08
+		*    PMCOUTO . PMCFIRQ . 6809E ~FIRQ and PORT4, bit 0x08
 		*
 		*   PMC selected by PMC/RVRAMCS signal: pin 16 of PAL20P 05318
 		*
-		*    AB0xC -> 0x1000, so if address & 0x1000, appears PMC is selected.
+		*    AB0xC . 0x1000, so if address & 0x1000, appears PMC is selected.
 		*
 		*   Other apparent selects:
 		*
-		*    0x0800 -> COLORCS (color enable?)
-		*    0x2000 -> ~CS1 on 6264W
-		*    0x4000 -> ~OE on S63 27512
-		*    0x8000 -> ~OE on S22 27512
+		*    0x0800 . COLORCS (color enable?)
+		*    0x2000 . ~CS1 on 6264W
+		*    0x4000 . ~OE on S63 27512
+		*    0x8000 . ~OE on S22 27512
 		*
 		********************************************************************/
 	

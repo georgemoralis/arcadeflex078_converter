@@ -117,12 +117,12 @@ public class xxmissio
 					chr = chr + ((col & 0xc0) << 2 );
 					col = col & 0x0f;
 	
-					drawgfx(tmpbitmap,Machine->gfx[2],
+					drawgfx(tmpbitmap,Machine.gfx[2],
 						chr,
 						col,
 						flipscreen,flipscreen,
 						px,py,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 		}
@@ -138,7 +138,7 @@ public class xxmissio
 			sy = xxmissio_yscroll;
 		}
 	
-		copyscrollbitmap(bitmap,tmpbitmap,1,&sx,1,&sy,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap,1,&sx,1,&sy,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		xxmissio_bg_redraw = 0;
 	
 	/* draw sprites */
@@ -170,19 +170,19 @@ public class xxmissio
 	
 			px &= 0x1ff;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 				chr,
 				col,
 				fx,fy,
 				px,py,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 			if (px>0x1e0)
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 					chr,
 					col,
 					fx,fy,
 					px-0x200,py,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 		}
 	
@@ -208,12 +208,12 @@ public class xxmissio
 					py = 248-8*y;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					chr,
 					col,
 					flipscreen,flipscreen,
 					px,py,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	

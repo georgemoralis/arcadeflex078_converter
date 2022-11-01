@@ -1291,7 +1291,7 @@ public class mcr68
 		MCR_CONFIGURE_SOUND(MCR_CHIP_SQUEAK_DELUXE);
 	
 		/* Zwackery doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	}
 	
 	
@@ -1303,7 +1303,7 @@ public class mcr68
 		mcr68_sprite_xoffset = 0;
 	
 		/* Xenophobe doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		/* install control port handler */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, xenophobe_control_w);
@@ -1318,7 +1318,7 @@ public class mcr68
 		mcr68_sprite_xoffset = -6;
 	
 		/* Spy Hunter 2 doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		/* analog port handling is a bit tricky */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, spyhunt2_control_w);
@@ -1337,7 +1337,7 @@ public class mcr68
 		/* Blasted checks the timing of VBLANK relative to the 493 interrupt */
 		/* VBLANK is required to come within 220-256 E clocks (i.e., 2200-2560 CPU clocks) */
 		/* after the 493; we also allow 16 E clocks for latency  */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		/* handle control writes */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, blasted_control_w);
@@ -1356,7 +1356,7 @@ public class mcr68
 		mcr68_sprite_xoffset = 0;
 	
 		/* Arch Rivals doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		/* handle control writes */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, archrivl_control_w);
@@ -1383,7 +1383,7 @@ public class mcr68
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
 		/* Pigskin doesn't care too much about this value; currently taken from Tri-Sports */
-		mcr68_timing_factor = 115.0 / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = 115.0 / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		mcr68_sprite_clip = 16;
 		mcr68_sprite_xoffset = 0;
@@ -1402,7 +1402,7 @@ public class mcr68
 		/* Tri-Sports checks the timing of VBLANK relative to the 493 interrupt */
 		/* VBLANK is required to come within 87-119 E clocks (i.e., 870-1190 CPU clocks) */
 		/* after the 493 */
-		mcr68_timing_factor = 115.0 / (double)(Machine->drv->cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = 115.0 / (double)(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		mcr68_sprite_clip = 0;
 		mcr68_sprite_xoffset = 0;

@@ -120,14 +120,14 @@ public class runaway
 	
 			code |= (runaway_sprite_ram[i + 0x30] << 2) & 0x1c0;
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code,
 				0,
 				flipx, flipy,
 				x, 240 - y,
 				cliprect, TRANSPARENCY_PEN, 0);
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code,
 				0,
 				flipx, flipy,
@@ -155,14 +155,14 @@ public class runaway
 	
 			code |= (runaway_sprite_ram[i + 0x30] << 2) & 0x1c0;
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code,
 				0,
 				flipx, flipy,
 				x, 240 - y,
 				cliprect, TRANSPARENCY_PEN, 0);
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code,
 				0,
 				flipx, flipy,

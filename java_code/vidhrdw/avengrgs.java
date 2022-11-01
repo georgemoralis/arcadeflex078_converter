@@ -85,7 +85,7 @@ public class avengrgs
 	
 			for (by=0; by<h; by++) {
 				for (bx=0; bx<w; bx++) {
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							sprite,
 							color,fx,fy,x+(bx*xmult),y+(by*ymult),
 							cliprect,TRANSPARENCY_PEN,0);
@@ -132,7 +132,7 @@ public class avengrgs
 		for (my=0; my<16; my++) {
 			for (mx=0; mx<16; mx++) {
 				int t=rom[base+o]|(rom[base+1+o]<<8);
-				drawgfx(bitmap,Machine->gfx[bank],t,5,0,0,mx*16,my*16,0,TRANSPARENCY_PEN,0);
+				drawgfx(bitmap,Machine.gfx[bank],t,5,0,0,mx*16,my*16,0,TRANSPARENCY_PEN,0);
 				o+=2;
 			}
 		}
@@ -155,7 +155,7 @@ public class avengrgs
 					indx+=0x10;
 	
 				if ((vram_ptr[indx])&0xff)
-					drawgfx(bitmap,Machine->gfx[3],(vram_ptr[indx])&0xff,15-((vram_ptr[indx]>>12)&0xf),0,0,mx*8,my*8,0,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine.gfx[3],(vram_ptr[indx])&0xff,15-((vram_ptr[indx]>>12)&0xf),0,0,mx*8,my*8,0,TRANSPARENCY_PEN,0);
 			}
 		}
 	

@@ -409,7 +409,7 @@ public class dcon
 	static DRIVER_INIT( sdgndmps )
 	{
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
-		RAM[0x1356/2] = 0x4e71; /* beq -> nop */
+		RAM[0x1356/2] = 0x4e71; /* beq . nop */
 		RAM[0x1358/2] = 0x4e71;
 		
 		RAM[0x4de/2]  = 0x4245; /* ROM checksum */

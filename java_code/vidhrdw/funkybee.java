@@ -100,7 +100,7 @@ public class funkybee
 	
 	static UINT32 funkybee_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return 256 * row + col;
 	}
 	
@@ -136,11 +136,11 @@ public class funkybee
 				flipx = !flipx;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2+gfx_bank],
+			drawgfx(bitmap,Machine.gfx[2+gfx_bank],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -162,7 +162,7 @@ public class funkybee
 				sy = 248 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx_bank],
+			drawgfx(bitmap,Machine.gfx[gfx_bank],
 					code, color,
 					flip_screen, flip_screen,
 					sx, sy,
@@ -179,7 +179,7 @@ public class funkybee
 				sy = 248 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx_bank],
+			drawgfx(bitmap,Machine.gfx[gfx_bank],
 					code, color,
 					flip_screen, flip_screen,
 					sx, sy,
@@ -189,7 +189,7 @@ public class funkybee
 	
 	public static VideoUpdateHandlerPtr video_update_funkybee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		funkybee_draw_sprites(bitmap);
 		funkybee_draw_columns(bitmap);
 	} };

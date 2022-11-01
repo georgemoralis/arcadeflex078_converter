@@ -16,7 +16,7 @@ public class mogura
 	public static PaletteInitHandlerPtr palette_init_mogura  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,j;
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 		j = 0;
 		for (i = 0;i < 0x20;i++)
@@ -69,17 +69,17 @@ public class mogura
 	{
 		/* tilemap layout is a bit strange ... */
 		struct rectangle clip;
-		clip.min_x = Machine->visible_area.min_x;
+		clip.min_x = Machine.visible_area.min_x;
 		clip.max_x = 256-1;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 		tilemap_set_scrollx(mogura_tilemap,0, 256);
 		tilemap_draw(bitmap,&clip,mogura_tilemap,0,0);
 	
 		clip.min_x = 256;
 		clip.max_x = 512-1;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 		tilemap_set_scrollx(mogura_tilemap,0, -128);
 		tilemap_draw(bitmap,&clip,mogura_tilemap,0,0);
 	
@@ -123,7 +123,7 @@ public class mogura
 	{
 		mogura_gfxram[offset] = data ;
 	
-		decodechar(Machine->gfx[0], offset/16, mogura_gfxram, Machine->drv->gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine.gfx[0], offset/16, mogura_gfxram, Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 		tilemap_mark_all_tiles_dirty(mogura_tilemap);
 	} };

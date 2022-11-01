@@ -165,7 +165,7 @@ public class oneshot
 	};
 	
 	static InputPortPtr input_ports_oneshot = new InputPortPtr(){ public void handler() { 
-		PORT_START(); 	/* DSW 1	(0x19c020.l -> 0x08006c.l) */
+		PORT_START(); 	/* DSW 1	(0x19c020.l . 0x08006c.l) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );		// 0x080084.l : credits (00-09)
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -187,7 +187,7 @@ public class oneshot
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW 2	(0x19c024.l -> 0x08006e.l) */
+		PORT_START(); 	/* DSW 2	(0x19c024.l . 0x08006e.l) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );		// 0x082500.l
 		PORT_DIPSETTING(    0x01, "1" );
 		PORT_DIPSETTING(    0x02, "2" );
@@ -211,7 +211,7 @@ public class oneshot
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* Credits	(0x19c02c.l -> 0x08007a.l) */
+		PORT_START(); 	/* Credits	(0x19c02c.l . 0x08007a.l) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );

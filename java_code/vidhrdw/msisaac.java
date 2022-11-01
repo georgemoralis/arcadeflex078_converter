@@ -191,12 +191,12 @@ public class msisaac
 			int flipx = (attributes&0x1);
 			int flipy = (attributes&0x2);
 	
-			struct GfxElement *gfx = Machine->gfx[2];
+			struct GfxElement *gfx = Machine.gfx[2];
 	
 			if ((attributes & 4) != 0)
 			{
 				//color = rand()&15;
-				gfx = Machine->gfx[3];
+				gfx = Machine.gfx[3];
 			}
 	
 			if ((attributes & 8) != 0)	/* double size sprite */

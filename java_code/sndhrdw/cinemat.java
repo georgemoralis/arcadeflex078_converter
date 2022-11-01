@@ -805,7 +805,7 @@ public class cinemat
 	
 	MACHINE_INIT( demon_sound )
 	{
-		demon_z80ctc_interface.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
+		demon_z80ctc_interface.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
 		z80ctc_init(&demon_z80ctc_interface);
 	}
 	

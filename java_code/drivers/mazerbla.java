@@ -108,10 +108,10 @@ public class mazerbla
 	
 	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tmpbitmaps[0] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmpbitmaps[1] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmpbitmaps[2] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
-		tmpbitmaps[3] = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
+		tmpbitmaps[0] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmpbitmaps[1] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmpbitmaps[2] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
+		tmpbitmaps[3] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 	
 		if ((tmpbitmaps[0]==0) || (tmpbitmaps[1]==0) || (tmpbitmaps[2]==0) || (tmpbitmaps[3]==0))
 		{
@@ -148,26 +148,26 @@ public class mazerbla
 	
 	
 		fillbitmap(bitmap,0,NULL);
-	//logerror("-->frame\n");
+	//logerror("-.frame\n");
 	
 	
 		if (planes_enabled[3])
-			copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE, 0 );
+			copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 );
 	
 	
 		if (planes_enabled[2])
-			copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
-		fillbitmap(tmpbitmaps[2],Machine->pens[color_base],NULL);
+			copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		fillbitmap(tmpbitmaps[2],Machine.pens[color_base],NULL);
 	
 	
 		if (planes_enabled[1])
-			copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
-		fillbitmap(tmpbitmaps[1],Machine->pens[color_base],NULL);
+			copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		fillbitmap(tmpbitmaps[1],Machine.pens[color_base],NULL);
 	
 	
 		if (planes_enabled[0])
-			copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
-		fillbitmap(tmpbitmaps[0],Machine->pens[color_base],NULL);
+			copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		fillbitmap(tmpbitmaps[0],Machine.pens[color_base],NULL);
 	
 		if (keyboard_pressed_memory(KEYCODE_1))	/* plane 1 */
 		{
@@ -214,12 +214,12 @@ public class mazerbla
 	
 		if (dbg_info != 0)
 		{
-			trueorientation = Machine->orientation;
-			Machine->orientation = ROT0;
+			trueorientation = Machine.orientation;
+			Machine.orientation = ROT0;
 	
 			sprintf(buf,"I-info, G-gfx, C-color, V-vbank, 1-4 enable planes");
 			for (j = 0;j < 52;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,10+6*j,4,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,10+6*j,4,0,TRANSPARENCY_NONE,0);
 	
 			sprintf(buf,"g:%1i c:%1i v:%1i vbk=%1i  planes=%1i%1i%1i%1i  ", dbg_gfx_e&1, dbg_clr_e&1, dbg_vbank, vbank&1,
 				planes_enabled[0],
@@ -228,7 +228,7 @@ public class mazerbla
 				planes_enabled[3] );
 	
 			for (j = 0;j < 32;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,10+6*j,16,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,10+6*j,16,0,TRANSPARENCY_NONE,0);
 	
 			if (dbg_lookup!=4)
 			{
@@ -244,11 +244,11 @@ public class mazerbla
 						sprintf( buf+strlen(buf), "%02x ", lookup_RAM[ lookup_offs+x+y*16 ] );
 					}
 					for (j = 0;j < 55;j++)
-						drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,6*j,30+y*8,0,TRANSPARENCY_NONE,0);
+						drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,6*j,30+y*8,0,TRANSPARENCY_NONE,0);
 				}
 			}
 	
-			Machine->orientation = trueorientation;
+			Machine.orientation = trueorientation;
 		}
 	
 	} };
@@ -269,10 +269,10 @@ public class mazerbla
 	
 	//fillbitmap(bitmap,0,NULL);
 	
-		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE, 0 );
-		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
-		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
-		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 );
+		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
+		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -288,10 +288,10 @@ public class mazerbla
 	
 	//fillbitmap(bitmap,0,NULL);
 	
-		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE, 0 ); //text
-		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[0] );
-		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[0] ); //haircross
-		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, Machine->pens[0] ); //sprites
+		copybitmap(bitmap,tmpbitmaps[3],0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE, 0 ); //text
+		copybitmap(bitmap,tmpbitmaps[2],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] );
+		copybitmap(bitmap,tmpbitmaps[1],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //haircross
+		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[0] ); //sprites
 	} };
 	
 	
@@ -330,7 +330,7 @@ public class mazerbla
 	note:
 	1111 11110 (0xfe) - cannot happen and is not handled by game */
 	
-		return (zpu_int_vector & ~1);	/* D0->GND is performed on CFB board */
+		return (zpu_int_vector & ~1);	/* D0.GND is performed on CFB board */
 	}
 	
 	

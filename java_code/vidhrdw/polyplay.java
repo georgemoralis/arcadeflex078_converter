@@ -79,7 +79,7 @@ public class polyplay
 				int sx,sy;
 	
 	
-				/* index=0 -> 1 bit chr; index=1 -> 3 bit chr */
+				/* index=0 . 1 bit chr; index=1 . 3 bit chr */
 				if (charcode < 0x80) {
 	
 					/* ROM chr, no need for decoding */
@@ -89,19 +89,19 @@ public class polyplay
 					sx = offs % 64;
 					sy = offs / 64;
 	
-					drawgfx(tmpbitmap,Machine->gfx[0],
+					drawgfx(tmpbitmap,Machine.gfx[0],
 							charcode,
 							0,
 							0,0,
 							8*sx,8*sy,
-							&Machine->visible_area,TRANSPARENCY_NONE,0);
+							&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 				}
 				else {
 					/* decode modified characters */
 					if (dirtycharacter[charcode] == 1)
 					{
-						decodechar(Machine->gfx[1],charcode-0x80,polyplay_characterram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
+						decodechar(Machine.gfx[1],charcode-0x80,polyplay_characterram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
 						dirtycharacter[charcode] = 2;
 					}
 	
@@ -111,17 +111,17 @@ public class polyplay
 					sx = offs % 64;
 					sy = offs / 64;
 	
-					drawgfx(tmpbitmap,Machine->gfx[1],
+					drawgfx(tmpbitmap,Machine.gfx[1],
 							charcode,
 							0,
 							0,0,
 							8*sx,8*sy,
-							&Machine->visible_area,TRANSPARENCY_NONE,0);
+							&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 				}
 			}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		for (offs = 0;offs < 256;offs++)

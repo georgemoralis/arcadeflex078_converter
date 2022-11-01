@@ -220,7 +220,7 @@ public class ninjakid
 		const UINT8 *source = spriteram;
 		const UINT8 *finish = source+0x800;
 	
-		const struct GfxElement *gfx = Machine->gfx[2];
+		const struct GfxElement *gfx = Machine.gfx[2];
 	
 		while( source<finish ){
 			int tile_number = source[0];
@@ -295,7 +295,7 @@ public class ninjakid
 						py = 248-8*y;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 						chr,
 						col & 0x0f,
 						flipscreen,flipscreen,

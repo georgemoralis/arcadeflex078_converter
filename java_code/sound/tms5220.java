@@ -349,11 +349,11 @@ public class tms5220
 				/* read energy */
 				val = (fifo[fifo_head] >> fifo_bits_taken) & 0xf;
 				if (val == 0)
-					/* 0 -> silence frame: we will only read 4 bits, and we will
+					/* 0 . silence frame: we will only read 4 bits, and we will
 					therefore need to read another frame before the FIFO is not
 					full any more */
 					answer += 200;
-				/* 15 -> stop frame, we will only read 4 bits, but the FIFO will
+				/* 15 . stop frame, we will only read 4 bits, but the FIFO will
 				we cleared */
 				/* otherwise, we need to parse the repeat flag (1 bit) and the
 				pitch (6 bits), so everything will be OK. */

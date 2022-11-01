@@ -1886,7 +1886,7 @@ public class harddriv
 	
 	READ16_HANDLER( stmsp_speedup_r )
 	{
-		/* assumes: stmsp_sync[0] -> $80010, stmsp_sync[1] -> $99680, stmsp_sync[2] -> $99d30 */
+		/* assumes: stmsp_sync[0] . $80010, stmsp_sync[1] . $99680, stmsp_sync[2] . $99d30 */
 		if (stmsp_sync[0][0] == 0 &&		/* 80010 */
 			stmsp_sync[0][1] == 0 &&		/* 80020 */
 			stmsp_sync[0][2] == 0 &&		/* 80030 */

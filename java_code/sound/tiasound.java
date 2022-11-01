@@ -514,7 +514,7 @@ public class tiasound
 	    Samp_n_cnt = Samp_n_max;                     /* initialize all bits of the sample counter */
 	
 		if (Samp_n_max < 256) /* we need to use oversampling for sample_rate > clock_rate */
-		                      /* at the Machine->sample_rate for now */
+		                      /* at the Machine.sample_rate for now */
 		{
 	    	Samp_n_max = ((UINT16)(UINT32)sample_rate << 8) / clock;
 			Samp_n_cnt = Samp_n_max;

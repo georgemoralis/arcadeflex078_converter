@@ -292,7 +292,7 @@ public class battlera
 			else code2=code+1;
 	
 			for (i=0; i<cgy; i++) {
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 					code,
 					colour,
 					fx,fy,
@@ -300,7 +300,7 @@ public class battlera
 					clip,TRANSPARENCY_PEN,0);
 	
 				if (cgx != 0)
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code2,
 							colour,
 							fx,fy,
@@ -323,12 +323,12 @@ public class battlera
 		/* Dynamically decode chars if dirty */
 		for (code = 0x0000;code < 0x1000;code++)
 			if (tile_dirty[code])
-				decodechar(Machine->gfx[0],code,HuC6270_vram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine.gfx[0],code,HuC6270_vram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 		/* Dynamically decode sprites if dirty */
 		for (code = 0x0000;code < 0x400;code++)
 			if (sprite_dirty[code])
-				decodechar(Machine->gfx[1],code,HuC6270_vram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
+				decodechar(Machine.gfx[1],code,HuC6270_vram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
 	
 		/* NB: If first 0x1000 byte is always tilemap, no need to decode the first batch of tiles/sprites */
 	
@@ -343,19 +343,19 @@ public class battlera
 			/* If this tile was changed OR tilemap was changed, redraw */
 			if (tile_dirty[code] || vram_dirty[offs/2]) {
 				vram_dirty[offs/2]=0;
-		        drawgfx(tile_bitmap,Machine->gfx[0],
+		        drawgfx(tile_bitmap,Machine.gfx[0],
 						code,
 						HuC6270_vram[offs] >> 4,
 						0,0,
 						8*mx,8*my,
 						0,TRANSPARENCY_NONE,0);
-				drawgfx(front_bitmap,Machine->gfx[2],
+				drawgfx(front_bitmap,Machine.gfx[2],
 						0,
 						0,	/* fill the spot with pen 256 */
 						0,0,
 						8*mx,8*my,
 						0,TRANSPARENCY_NONE,0);
-		        drawgfx(front_bitmap,Machine->gfx[0],
+		        drawgfx(front_bitmap,Machine.gfx[0],
 						code,
 						HuC6270_vram[offs] >> 4,
 						0,0,
@@ -372,7 +372,7 @@ public class battlera
 	
 		/* Render bitmap */
 		scrollx=-HuC6270_registers[7];
-		scrolly=-HuC6270_registers[8]+clip->min_y-1;
+		scrolly=-HuC6270_registers[8]+clip.min_y-1;
 	
 		copyscrollbitmap(bitmap,tile_bitmap,1,&scrollx,1,&scrolly,clip,TRANSPARENCY_NONE,0);
 	
@@ -400,14 +400,14 @@ public class battlera
 	{
 		struct rectangle clip;
 	
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
 		clip.min_y = next_update_first_line;
 		clip.max_y = current_line;
-		if (clip.min_y < Machine->visible_area.min_y)
-			clip.min_y = Machine->visible_area.min_y;
-		if (clip.max_y > Machine->visible_area.max_y)
-			clip.max_y = Machine->visible_area.max_y;
+		if (clip.min_y < Machine.visible_area.min_y)
+			clip.min_y = Machine.visible_area.min_y;
+		if (clip.max_y > Machine.visible_area.max_y)
+			clip.max_y = Machine.visible_area.max_y;
 	
 		if (clip.max_y >= clip.min_y)
 		{
@@ -422,14 +422,14 @@ public class battlera
 	{
 		struct rectangle clip;
 	
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
 		clip.min_y = start_line;
 		clip.max_y = end_line;
-		if (clip.min_y < Machine->visible_area.min_y)
-			clip.min_y = Machine->visible_area.min_y;
-		if (clip.max_y > Machine->visible_area.max_y)
-			clip.max_y = Machine->visible_area.max_y;
+		if (clip.min_y < Machine.visible_area.min_y)
+			clip.min_y = Machine.visible_area.min_y;
+		if (clip.max_y > Machine.visible_area.max_y)
+			clip.max_y = Machine.visible_area.max_y;
 	
 		if (clip.max_y > clip.min_y)
 		{
@@ -447,7 +447,7 @@ public class battlera
 	
 		/* If raster interrupt occurs, refresh screen _up_ to this point */
 		if (rcr_enable && (current_scanline+56)==HuC6270_registers[6]) {
-			battlera_raster_partial_refresh(Machine->scrbitmap,last_line,current_scanline);
+			battlera_raster_partial_refresh(Machine.scrbitmap,last_line,current_scanline);
 			last_line=current_scanline;
 			cpu_set_irq_line(0, 0, HOLD_LINE); /* RCR interrupt */
 		}
@@ -455,7 +455,7 @@ public class battlera
 		/* Start of vblank */
 		else if (current_scanline==240) {
 			bldwolf_vblank=1;
-			battlera_raster_partial_refresh(Machine->scrbitmap,last_line,240);
+			battlera_raster_partial_refresh(Machine.scrbitmap,last_line,240);
 			if (irq_enable != 0)
 				cpu_set_irq_line(0, 0, HOLD_LINE); /* VBL */
 		}

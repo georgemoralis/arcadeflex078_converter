@@ -530,8 +530,8 @@ public class zn
 		cpu_setbank( 6, memory_region( REGION_USER2 ) ); /* capcom country rom */
 		cpu_setbank( 7, memory_region( REGION_CPU1 ) + 0x0400000 ); /* bios */
 	
-		if( strcmp( Machine->gamedrv->name, "glpracr" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "glprac2l" ) == 0 )
+		if( strcmp( Machine.gamedrv.name, "glpracr" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "glprac2l" ) == 0 )
 		{
 			/* disable:
 				the QSound CPU for glpracr as it doesn't have any roms &
@@ -540,61 +540,61 @@ public class zn
 		}
 	
 	#if PROTECTION_HACK
-		if( strcmp( Machine->gamedrv->name, "doapp" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "glpracr2" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "glprac2j" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "glprac2l" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "tondemo" ) == 0 )
+		if( strcmp( Machine.gamedrv.name, "doapp" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "glpracr2" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "glprac2j" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "glprac2l" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "tondemo" ) == 0 )
 		{
 			p_sio0_ret = mg_protection_hack;
 			n_sio0_ret_size = sizeof( mg_protection_hack );
 		}
-		else if( strcmp( Machine->gamedrv->name, "sncwgltd" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "sncwgltd" ) == 0 )
 		{
 			p_sio0_ret = kn_protection_hack;
 			n_sio0_ret_size = sizeof( kn_protection_hack );
 		}
-		else if( strcmp( Machine->gamedrv->name, "ftimpcta" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "gdarius" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "gdarius2" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "mgcldate" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "psyforce" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "raystorm" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfchamp" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "beastrzb" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "ftimpcta" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "gdarius" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "gdarius2" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "mgcldate" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "psyforce" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "raystorm" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfchamp" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "beastrzb" ) == 0 )
 		{
 			p_sio0_ret = tt_protection_hack;
 			n_sio0_ret_size = sizeof( tt_protection_hack );
 		}
-		else if( strcmp( Machine->gamedrv->name, "starglad" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "ts2u" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "ts2j" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfex" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfexj" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "glpracr" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfexp" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfexpj" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "rvschool" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "jgakuen" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "tgmj" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "starglad" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "ts2u" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "ts2j" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfex" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfexj" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "glpracr" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfexp" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfexpj" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "rvschool" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "jgakuen" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "tgmj" ) == 0 )
 		{
 			p_sio0_ret = cpzn1_protection_hack;
 			n_sio0_ret_size = sizeof( cpzn1_protection_hack );
 		}
-		else if( strcmp( Machine->gamedrv->name, "sfex2" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sg2j" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "techromn" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "kikaioh" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfex2p" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "strider2" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "stridr2a" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "shiryu2" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "sfex2" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sg2j" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "techromn" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "kikaioh" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfex2p" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "strider2" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "stridr2a" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "shiryu2" ) == 0 )
 		{
 			p_sio0_ret = cpzn2_protection_hack;
 			n_sio0_ret_size = sizeof( cpzn2_protection_hack );
 		}
-		else if ( strcmp( Machine->gamedrv->name, "beastrzr" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "brvblade" ) == 0 )
+		else if ( strcmp( Machine.gamedrv.name, "beastrzr" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "brvblade" ) == 0 )
 		{
 			p_sio0_ret = psarc95_protection_hack;
 			n_sio0_ret_size = sizeof( psarc95_protection_hack );
@@ -639,14 +639,14 @@ public class zn
 		queue_len = 0;
 		scode_last = -1;
 	
-		if( strcmp( Machine->gamedrv->name, "sfex2" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "sfex2p" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "tgmj" ) == 0 )
+		if( strcmp( Machine.gamedrv.name, "sfex2" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "sfex2p" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "tgmj" ) == 0 )
 		{
 			scode = 0x0400;
 		}
-		else if( strcmp( Machine->gamedrv->name, "techromn" ) == 0 ||
-			strcmp( Machine->gamedrv->name, "kikaioh" ) == 0 )
+		else if( strcmp( Machine.gamedrv.name, "techromn" ) == 0 ||
+			strcmp( Machine.gamedrv.name, "kikaioh" ) == 0 )
 		{
 			scode = 0x8000;
 		}
@@ -716,37 +716,37 @@ public class zn
 				scode_last = scode;
 			}
 	
-			fillbitmap( bitmap, 0, &Machine->visible_area );
+			fillbitmap( bitmap, 0, &Machine.visible_area );
 	
-			sprintf( text1, "%s", Machine->gamedrv->description );
-			if( strlen( text1 ) > Machine->uiwidth / Machine->uifontwidth )
+			sprintf( text1, "%s", Machine.gamedrv.description );
+			if( strlen( text1 ) > Machine.uiwidth / Machine.uifontwidth )
 			{
-				text1[ Machine->uiwidth / Machine->uifontwidth ] = 0;
+				text1[ Machine.uiwidth / Machine.uifontwidth ] = 0;
 			}
 			sprintf( text2, "SOUND CODE=%02x/%02x", scode >> 8, scode & 0xff );
-			if( strlen( text2 ) > Machine->uiwidth / Machine->uifontwidth )
+			if( strlen( text2 ) > Machine.uiwidth / Machine.uifontwidth )
 			{
-				text2[ Machine->uiwidth / Machine->uifontwidth ] = 0;
+				text2[ Machine.uiwidth / Machine.uifontwidth ] = 0;
 			}
 			sprintf( text3, "SELECT WITH RIGHT&LEFT/UP&DN" );
-			if( strlen( text3 ) > Machine->uiwidth / Machine->uifontwidth )
+			if( strlen( text3 ) > Machine.uiwidth / Machine.uifontwidth )
 			{
-				text3[ Machine->uiwidth / Machine->uifontwidth ] = 0;
+				text3[ Machine.uiwidth / Machine.uifontwidth ] = 0;
 			}
 			dt[ 0 ].text = text1;
 			dt[ 0 ].color = UI_COLOR_NORMAL;
-			dt[ 0 ].x = ( Machine->uiwidth - Machine->uifontwidth * strlen( dt[ 0 ].text ) ) / 2;
-			dt[ 0 ].y = Machine->uiheight - Machine->uifontheight * 5;
+			dt[ 0 ].x = ( Machine.uiwidth - Machine.uifontwidth * strlen( dt[ 0 ].text ) ) / 2;
+			dt[ 0 ].y = Machine.uiheight - Machine.uifontheight * 5;
 			dt[ 1 ].text = text2;
 			dt[ 1 ].color = UI_COLOR_NORMAL;
-			dt[ 1 ].x = ( Machine->uiwidth - Machine->uifontwidth * strlen( dt[ 1 ].text ) ) / 2;
-			dt[ 1 ].y = Machine->uiheight - Machine->uifontheight * 3;
+			dt[ 1 ].x = ( Machine.uiwidth - Machine.uifontwidth * strlen( dt[ 1 ].text ) ) / 2;
+			dt[ 1 ].y = Machine.uiheight - Machine.uifontheight * 3;
 			dt[ 2 ].text = text3;
 			dt[ 2 ].color = UI_COLOR_NORMAL;
-			dt[ 2 ].x = ( Machine->uiwidth - Machine->uifontwidth * strlen( dt[ 2 ].text ) ) / 2;
-			dt[ 2 ].y = Machine->uiheight - Machine->uifontheight * 1;
+			dt[ 2 ].x = ( Machine.uiwidth - Machine.uifontwidth * strlen( dt[ 2 ].text ) ) / 2;
+			dt[ 2 ].y = Machine.uiheight - Machine.uifontheight * 1;
 			dt[ 3 ].text = 0; /* terminate array */
-			displaytext( Machine->scrbitmap, dt );
+			displaytext( Machine.scrbitmap, dt );
 		}
 	} };
 	

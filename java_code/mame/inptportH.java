@@ -174,7 +174,7 @@ public class inptportH
 	#define IPF_REVERSE    0x00400000	/* By default, analog inputs like IPT_TRACKBALL increase */
 										/* when going right/up. This flag inverts them. */
 	
-	#define IPF_CENTER     0x00800000	/* always preload in->default, autocentering the STICK/TRACKBALL */
+	#define IPF_CENTER     0x00800000	/* always preload in.default, autocentering the STICK/TRACKBALL */
 	
 	#define IPF_CUSTOM_UPDATE 0x01000000 /* normally, analog ports are updated when they are accessed. */
 										/* When this flag is set, they are never updated automatically, */
@@ -188,16 +188,16 @@ public class inptportH
 	#define IPF_SENSITIVITY(percent)	((percent & 0xff) << 8)
 	#define IPF_DELTA(val)				((val & 0xff) << 16)
 	
-	#define IP_GET_PLAYER(port) (((port)->type >> 16) & 7)
-	#define IP_GET_IMPULSE(port) (((port)->type >> 8) & 0xff)
-	#define IP_GET_SENSITIVITY(port) ((((port)+1)->type >> 8) & 0xff)
-	#define IP_SET_SENSITIVITY(port,val) ((port)+1)->type = ((port+1)->type & 0xffff00ff)|((val&0xff)<<8)
-	#define IP_GET_DELTA(port) ((((port)+1)->type >> 16) & 0xff)
-	#define IP_SET_DELTA(port,val) ((port)+1)->type = ((port+1)->type & 0xff00ffff)|((val&0xff)<<16)
-	#define IP_GET_MIN(port) (((port)+1)->mask)
-	#define IP_GET_MAX(port) (((port)+1)->default_value)
-	#define IP_GET_CODE_OR1(port) ((port)->mask)
-	#define IP_GET_CODE_OR2(port) ((port)->default_value)
+	#define IP_GET_PLAYER(port) (((port).type >> 16) & 7)
+	#define IP_GET_IMPULSE(port) (((port).type >> 8) & 0xff)
+	#define IP_GET_SENSITIVITY(port) ((((port)+1).type >> 8) & 0xff)
+	#define IP_SET_SENSITIVITY(port,val) ((port)+1).type = ((port+1).type & 0xffff00ff)|((val&0xff)<<8)
+	#define IP_GET_DELTA(port) ((((port)+1).type >> 16) & 0xff)
+	#define IP_SET_DELTA(port,val) ((port)+1).type = ((port+1).type & 0xff00ffff)|((val&0xff)<<16)
+	#define IP_GET_MIN(port) (((port)+1).mask)
+	#define IP_GET_MAX(port) (((port)+1).default_value)
+	#define IP_GET_CODE_OR1(port) ((port).mask)
+	#define IP_GET_CODE_OR2(port) ((port).default_value)
 	
 	#define IP_NAME_DEFAULT ((const char *)-1)
 	

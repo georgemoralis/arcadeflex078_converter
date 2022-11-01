@@ -187,7 +187,7 @@ public class konamigx
 	
 	VIDEO_START(konamigx_5bpp)
 	{
-		if (!strcmp(Machine->gamedrv->name,"sexyparo"))
+		if (!strcmp(Machine.gamedrv.name,"sexyparo"))
 			game_tile_callback = konamigx_alpha_tile_callback;
 		else
 			game_tile_callback = konamigx_type2_tile_callback;
@@ -202,29 +202,29 @@ public class konamigx
 		/* here are some hand tuned per game scroll offsets to go with the per game visible areas,
 		   i see no better way of doing this for now... */
 	
-		if (!strcmp(Machine->gamedrv->name,"tbyahhoo"))
+		if (!strcmp(Machine.gamedrv.name,"tbyahhoo"))
 		{
 			K056832_set_UpdateMode(1);
 			gx_tilemode = 1;
 		} else
 	
-		if (!strcmp(Machine->gamedrv->name,"puzldama"))
+		if (!strcmp(Machine.gamedrv.name,"puzldama"))
 		{
 			K053247GP_set_SpriteOffset(-46, -23);
 			konamigx_mixer_primode(5);
 		} else
 	
-		if (!strcmp(Machine->gamedrv->name,"daiskiss"))
+		if (!strcmp(Machine.gamedrv.name,"daiskiss"))
 		{
 			konamigx_mixer_primode(4);
 		} else
 	
-		if (!strcmp(Machine->gamedrv->name,"gokuparo") || !strcmp(Machine->gamedrv->name,"fantjour"))
+		if (!strcmp(Machine.gamedrv.name,"gokuparo") || !strcmp(Machine.gamedrv.name,"fantjour"))
 	 	{
 			K053247GP_set_SpriteOffset(-46, -23);
 		} else
 	
-		if (!strcmp(Machine->gamedrv->name,"sexyparo"))
+		if (!strcmp(Machine.gamedrv.name,"sexyparo"))
 		{
 			K053247GP_set_SpriteOffset(-42, -23);
 		}
@@ -300,7 +300,7 @@ public class konamigx
 	
 		if (_gxcommoninit() != 0) return 1;
 	
-		if (!strcmp(Machine->gamedrv->name,"tokkae") || !strcmp(Machine->gamedrv->name,"tkmmpzdm"))
+		if (!strcmp(Machine.gamedrv.name,"tokkae") || !strcmp(Machine.gamedrv.name,"tkmmpzdm"))
 		{
 			K053247GP_set_SpriteOffset(-46, -23);
 			konamigx_mixer_primode(5);
@@ -352,7 +352,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (!strcmp(Machine->gamedrv->name,"salmndr2"))
+		if (!strcmp(Machine.gamedrv.name,"salmndr2"))
 		{
 			if (K055673_vh_start(REGION_GFX2, K055673_LAYOUT_GX6, -48, -23, konamigx_salmndr2_sprite_callback))
 			{

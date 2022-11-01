@@ -29,7 +29,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 		The game only uses this scheme:
 
-		Back -> Front:	Layer 0, Layer 1, Sprites
+		Back . Front:	Layer 0, Layer 1, Sprites
 
 ***************************************************************************/
 
@@ -186,8 +186,8 @@ public class esd16
 	{
 		int offs;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 8/2 )
 		{
@@ -220,7 +220,7 @@ public class esd16
 	
 			for (y = starty ; y != endy ; y += incy)
 			{
-				drawgfx(	bitmap, Machine->gfx[0],
+				drawgfx(	bitmap, Machine.gfx[0],
 							code++,
 							color,
 							flipx, flipy,
@@ -235,8 +235,8 @@ public class esd16
 	{
 		int offs;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 8/2 )
 		{
@@ -272,7 +272,7 @@ public class esd16
 	
 			for (y = starty ; y != endy ; y += incy)
 			{
-				drawgfx(	bitmap, Machine->gfx[0],
+				drawgfx(	bitmap, Machine.gfx[0],
 							code++,
 							color,
 							flipx, flipy,
@@ -312,7 +312,7 @@ public class esd16
 	#endif
 	
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
-		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_1,0,0);
 	
@@ -338,7 +338,7 @@ public class esd16
 	#endif
 	
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
-		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if ((layers_ctrl & 2) != 0)
 		{

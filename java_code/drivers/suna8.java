@@ -145,8 +145,8 @@ public class suna8
 		{
 			switch ( i & 0xf )
 			{
-	//825b  ->  see 715a!
-	//8280  ->  see 7192!
+	//825b  .  see 715a!
+	//8280  .  see 7192!
 	//8280:	e=2 m=90
 	//8281:	e=2 m=90
 	//8283:	e=2 m=90
@@ -358,14 +358,14 @@ public class suna8
 	
 	/* !!!!!! PATCHES !!!!!! */
 	
-	RAM[0x3337+size] = 0xc9;	// RET Z -> RET (to avoid: jp $C800)
-	//RAM[0x3338+size] = 0x00;	// jp $C800 -> NOP
-	//RAM[0x3339+size] = 0x00;	// jp $C800 -> NOP
-	//RAM[0x333a+size] = 0x00;	// jp $C800 -> NOP
+	RAM[0x3337+size] = 0xc9;	// RET Z . RET (to avoid: jp $C800)
+	//RAM[0x3338+size] = 0x00;	// jp $C800 . NOP
+	//RAM[0x3339+size] = 0x00;	// jp $C800 . NOP
+	//RAM[0x333a+size] = 0x00;	// jp $C800 . NOP
 	
-	RAM[0x1406+size] = 0x00;	// HALT -> NOP (NMI source??)
-	RAM[0x2487+size] = 0x00;	// HALT -> NOP
-	RAM[0x256c+size] = 0x00;	// HALT -> NOP
+	RAM[0x1406+size] = 0x00;	// HALT . NOP (NMI source??)
+	RAM[0x2487+size] = 0x00;	// HALT . NOP
+	RAM[0x256c+size] = 0x00;	// HALT . NOP
 	}
 	
 	
@@ -970,11 +970,11 @@ public class suna8
 	} };
 	
 	/*
-		7--- ----	1 -> Garbled title (another romset?)
+		7--- ----	1 . Garbled title (another romset?)
 		-654 ----
-		---- 3---	1 -> No sound (soundlatch full?)
+		---- 3---	1 . No sound (soundlatch full?)
 		---- -2--
-		---- --1-	1 -> Interlude screens
+		---- --1-	1 . Interlude screens
 		---- ---0
 	*/
 	public static ReadHandlerPtr rranger_soundstatus_r  = new ReadHandlerPtr() { public int handler(int offset)

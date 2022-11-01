@@ -122,7 +122,7 @@ public class targeth
 	static void targeth_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		for (i = 3; i < (0x1000 - 6)/2; i += 4){
 			int sx = targeth_spriteram[i+2] & 0x03ff;
@@ -137,7 +137,7 @@ public class targeth
 			drawgfx(bitmap,gfx,number,
 					0x20 + color,xflip,yflip,
 					sx - 0x0f,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

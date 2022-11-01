@@ -95,7 +95,7 @@ public class decocass
 	
 	public static WriteHandlerPtr decocass_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		LOG(2,("CPU #%d sound command -> $%02x\n", cpu_getactivecpu(), data));
+		LOG(2,("CPU #%d sound command . $%02x\n", cpu_getactivecpu(), data));
 		soundlatch_w(0,data);
 		decocass_sound_ack |= 0x80;
 		/* remove snd cpu data ack bit. i don't see it in the schems, but... */
@@ -119,7 +119,7 @@ public class decocass
 	
 	public static WriteHandlerPtr decocass_sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		LOG(2,("CPU #%d sound data    -> $%02x\n", cpu_getactivecpu(), data));
+		LOG(2,("CPU #%d sound data    . $%02x\n", cpu_getactivecpu(), data));
 		soundlatch2_w(0, data);
 		decocass_sound_ack |= 0x40;
 	} };
@@ -140,7 +140,7 @@ public class decocass
 	
 	public static WriteHandlerPtr decocass_sound_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		LOG(2,("CPU #%d sound NMI enb -> $%02x\n", cpu_getactivecpu(), data));
+		LOG(2,("CPU #%d sound NMI enb . $%02x\n", cpu_getactivecpu(), data));
 		timer_adjust(decocass_sound_timer, TIME_IN_HZ(256 * 57 / 8 / 2), 0, TIME_IN_HZ(256 * 57 / 8 / 2));
 	} };
 	
@@ -162,7 +162,7 @@ public class decocass
 	
 	public static WriteHandlerPtr decocass_sound_data_ack_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		LOG(2,("CPU #%d sound ack rst -> $%02x\n", cpu_getactivecpu(), data));
+		LOG(2,("CPU #%d sound ack rst . $%02x\n", cpu_getactivecpu(), data));
 		decocass_sound_ack &= ~0x40;
 	} };
 	
@@ -927,18 +927,18 @@ public class decocass
 		{
 			if (1 == (offset & 1))
 			{
-				LOG(4,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> set PROM+D2 latch", timer_get_time(), activecpu_get_previouspc(), offset, data));
+				LOG(4,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . set PROM+D2 latch", timer_get_time(), activecpu_get_previouspc(), offset, data));
 			}
 			else
 			{
 				type2_promaddr = data;
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> set PROM addr $%02x\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type2_promaddr));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . set PROM addr $%02x\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type2_promaddr));
 				return;
 			}
 		}
 		else
 		{
-			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s ", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041 DATA"));
+			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s ", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041 DATA"));
 		}
 		if (1 == (offset & 1))
 		{
@@ -1180,7 +1180,7 @@ public class decocass
 			if (1 == type3_pal_19)
 			{
 				type3_ctrs = data << 4;
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "LDCTRS"));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "LDCTRS"));
 				return;
 			}
 			else
@@ -1192,11 +1192,11 @@ public class decocass
 			if (1 == type3_pal_19)
 			{
 				/* write nowhere?? */
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "nowhere?"));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "nowhere?"));
 				return;
 			}
 		}
-		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
+		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
 		cpunum_set_reg(2, offset & 1 ? I8X41_CMND : I8X41_DATA, data);
 	} };
 	
@@ -1264,7 +1264,7 @@ public class decocass
 			if (1 == type4_latch)
 			{
 				type4_ctrs = (type4_ctrs & 0x00ff) | ((data & 0x7f) << 8);
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> CTRS MSB (%04x)\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type4_ctrs));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . CTRS MSB (%04x)\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type4_ctrs));
 				return;
 			}
 			else
@@ -1278,11 +1278,11 @@ public class decocass
 			if (type4_latch != 0)
 			{
 				type4_ctrs = (type4_ctrs & 0xff00) | data;
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> CTRS LSB (%04x)\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type4_ctrs));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . CTRS LSB (%04x)\n", timer_get_time(), activecpu_get_previouspc(), offset, data, type4_ctrs));
 				return;
 			}
 		}
-		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
+		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
 		cpunum_set_reg(2, offset & 1 ? I8X41_CMND : I8X41_DATA, data);
 	} };
 	
@@ -1343,7 +1343,7 @@ public class decocass
 		{
 			if (1 == type5_latch)
 			{
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "latch #2??"));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "latch #2??"));
 				return;
 			}
 			else
@@ -1355,11 +1355,11 @@ public class decocass
 			if (type5_latch != 0)
 			{
 				/* write nowhere?? */
-				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "nowhere?"));
+				LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, "nowhere?"));
 				return;
 			}
 		}
-		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
+		LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
 		cpunum_set_reg(2, offset & 1 ? I8X41_CMND : I8X41_DATA, data);
 	} };
 	
@@ -1419,7 +1419,7 @@ public class decocass
 	
 		if (0 == (offset & E5XX_MASK))
 		{
-			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
+			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . %s\n", timer_get_time(), activecpu_get_previouspc(), offset, data, offset & 1 ? "8041-CMND" : "8041-DATA"));
 			cpunum_set_reg(2, offset & 1 ? I8X41_CMND : I8X41_DATA, data);
 	#ifdef MAME_DEBUG
 			decocass_fno(offset, data);
@@ -1427,7 +1427,7 @@ public class decocass
 		}
 		else
 		{
-			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x -> dongle\n", timer_get_time(), activecpu_get_previouspc(), offset, data));
+			LOG(3,("%9.7f 6502-PC: %04x decocass_e5xx_w(%02x): $%02x . dongle\n", timer_get_time(), activecpu_get_previouspc(), offset, data));
 		}
 	} };
 	

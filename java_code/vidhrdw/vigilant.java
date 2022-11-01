@@ -79,7 +79,7 @@ public class vigilant
 				for( col=0; col<512; col+=32 )
 				{
 					drawgfx(bg_bitmap,
-							Machine->gfx[2],
+							Machine.gfx[2],
 							charcode,
 							row < 128 ? 0 : 1,
 							0,0,
@@ -202,7 +202,7 @@ public class vigilant
 					{
 						sx = (sx + scroll) & 0x1ff;
 	
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 								tile_number,
 								color,
 								0,0,
@@ -216,12 +216,12 @@ public class vigilant
 				if (sy >= 48)
 					sx = (sx + scroll) & 0x1ff;
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						tile_number,
 						color,
 						0,0,
 						sx,sy,
-						&Machine->visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
+						&Machine.visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
 			}
 		}
 	}
@@ -279,7 +279,7 @@ public class vigilant
 				if (flipy != 0) c += h-1-y;
 				else c += y;
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						c,
 						color,
 						flipx,flipy,
@@ -345,7 +345,7 @@ public class vigilant
 			{
 				dirtybuffer[offs] = dirtybuffer[offs+1] = 0;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						tile_number,
 						color,
 						0,0,
@@ -354,8 +354,8 @@ public class vigilant
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
-		draw_sprites(bitmap,&Machine->visible_area);
+		draw_sprites(bitmap,&Machine.visible_area);
 	} };
 }

@@ -387,7 +387,7 @@ public class wgp
 		UINT8 small_sprite,col,flipx,flipy;
 		UINT16 code,bigsprite,map_index;
 		UINT16 rotate=0;
-		UINT16 tile_mask = (Machine->gfx[0]->total_elements) - 1;
+		UINT16 tile_mask = (Machine.gfx[0].total_elements) - 1;
 		int primasks[2] = {0x0, 0xfffc};	/* fff0 => under rhs of road only */
 	
 		for (offs = 0x1ff;offs >= 0;offs--)
@@ -461,7 +461,7 @@ public class wgp
 						zx = x + (((k+1)*zoomx)/2) - curx;
 						zy = y + (((j+1)*zoomy)/2) - cury;
 	
-						pdrawgfxzoom(bitmap, Machine->gfx[0],
+						pdrawgfxzoom(bitmap, Machine.gfx[0],
 								code,
 								col,
 								flipx, flipy,
@@ -493,7 +493,7 @@ public class wgp
 						zx = x + (((k+1)*zoomx)/4) - curx;
 						zy = y + (((j+1)*zoomy)/4) - cury;
 	
-						pdrawgfxzoom(bitmap, Machine->gfx[0],
+						pdrawgfxzoom(bitmap, Machine.gfx[0],
 								code,
 								col,
 								flipx, flipy,
@@ -525,12 +525,12 @@ public class wgp
 	
 	#undef ADJUST_FOR_ORIENTATION
 	#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-		type *dsti = &((type *)bitmapi->line[y])[x];							\
-		UINT8 *dstp = &((UINT8 *)bitmapp->line[y])[x];							\
+		type *dsti = &((type *)bitmapi.line[y])[x];							\
+		UINT8 *dstp = &((UINT8 *)bitmapp.line[y])[x];							\
 		int xadv = 1;															\
 		if (orientation != 0)														\
 		{																		\
-			int dy = (type *)bitmap->line[1] - (type *)bitmap->line[0];			\
+			int dy = (type *)bitmap.line[1] - (type *)bitmap.line[0];			\
 			int tx = x, ty = y, temp;											\
 			if ((orientation) & ORIENTATION_SWAP_XY)							\
 			{																	\
@@ -539,24 +539,24 @@ public class wgp
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_X)								\
 			{																	\
-				tx = bitmap->width - 1 - tx;									\
+				tx = bitmap.width - 1 - tx;									\
 				if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_Y)								\
 			{																	\
-				ty = bitmap->height - 1 - ty;									\
+				ty = bitmap.height - 1 - ty;									\
 				if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 			}																	\
 			/* can't lookup line because it may be negative! */					\
-			dsti = (type *)((type *)bitmapi->line[0] + dy * ty) + tx;			\
-			dstp = (UINT8 *)((UINT8 *)bitmapp->line[0] + dy * ty / sizeof(type)) + tx;	\
+			dsti = (type *)((type *)bitmapi.line[0] + dy * ty) + tx;			\
+			dstp = (UINT8 *)((UINT8 *)bitmapp.line[0] + dy * ty / sizeof(type)) + tx;	\
 		}
 	
 	INLINE void bryan2_drawscanline(
 			struct mame_bitmap *bitmap,int x,int y,int length,
 			const UINT16 *src,int transparent,UINT32 orient,int pri)
 	{
-		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
+		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation ^ orient, bitmap, priority_bitmap, x, y);
 		if (transparent != 0) {
 			while (length--) {
 				UINT32 spixel = *src++;
@@ -593,16 +593,16 @@ public class wgp
 		   falling through from max +ve to max -ve quite a lot in this routine */
 		int sx,x_index,x_step,x_max;
 	
-		UINT32 zoomx,zoomy,rot=Machine->orientation;
+		UINT32 zoomx,zoomy,rot=Machine.orientation;
 		UINT16 scanline[512];
 		UINT16 row_colbank,row_scroll;
 		int flipscreen = 0;	/* n/a */
 		int machine_flip = 0;	/* for  ROT 180 ? */
 	
-		UINT16 screen_width = cliprect->max_x -
-								cliprect->min_x + 1;
-		UINT16 min_y = cliprect->min_y;
-		UINT16 max_y = cliprect->max_y;
+		UINT16 screen_width = cliprect.max_x -
+								cliprect.min_x + 1;
+		UINT16 min_y = cliprect.min_y;
+		UINT16 max_y = cliprect.max_y;
 	
 		int width_mask=0x3ff;
 	
@@ -664,8 +664,8 @@ public class wgp
 			}
 	
 			x_max = x_index + screen_width * x_step;
-			src16 = (UINT16 *)srcbitmap->line[src_y_index];
-			tsrc  = (UINT8 *)transbitmap->line[src_y_index];
+			src16 = (UINT16 *)srcbitmap.line[src_y_index];
+			tsrc  = (UINT8 *)transbitmap.line[src_y_index];
 			dst16 = scanline;
 	
 			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
@@ -749,7 +749,7 @@ public class wgp
 	
 		TC0100SCN_tilemap_update();
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		layer[0] = 0;
 		layer[1] = 1;

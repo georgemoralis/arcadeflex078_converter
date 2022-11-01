@@ -152,7 +152,7 @@ public class holeland
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -190,7 +190,7 @@ public class holeland
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,

@@ -141,7 +141,7 @@ public class jcross
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		const unsigned char *base =  memory_region(REGION_CPU1)+0xf400;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -167,7 +167,7 @@ public class jcross
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly )
 	{
-		const struct GfxElement *gfx = Machine->gfx[3];
+		const struct GfxElement *gfx = Machine.gfx[3];
 		const unsigned char *source, *finish;
 		source = jcr_sharedram;
 		finish = jcr_sharedram + 0x64;

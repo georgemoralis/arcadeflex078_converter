@@ -752,7 +752,7 @@ public class itech8
 		/* if we're blanked, just fill with black */
 		if (tms_state.blanked)
 		{
-			fillbitmap(bitmap, Machine->pens[0], cliprect);
+			fillbitmap(bitmap, Machine.pens[0], cliprect);
 			return;
 		}
 	
@@ -766,15 +766,15 @@ public class itech8
 		/* width can be up to 512 pixels */
 		if ((BLITTER_OUTPUT & 0x40) != 0)
 		{
-			int halfwidth = (Machine->visible_area.max_x + 2) / 2;
+			int halfwidth = (Machine.visible_area.max_x + 2) / 2;
 			UINT8 *base = &tms_state.vram[(~*itech8_display_page & 0x80) << 10];
 			UINT8 *latch = &tms_state.latchram[(~*itech8_display_page & 0x80) << 10];
 	
-			base += (cliprect->min_y - Machine->visible_area.min_y) * 256;
-			latch += (cliprect->min_y - Machine->visible_area.min_y) * 256;
+			base += (cliprect.min_y - Machine.visible_area.min_y) * 256;
+			latch += (cliprect.min_y - Machine.visible_area.min_y) * 256;
 	
 			/* now regenerate the bitmap */
-			for (ty = 0, y = cliprect->min_y; y <= cliprect->max_y; y++, ty++)
+			for (ty = 0, y = cliprect.min_y; y <= cliprect.max_y; y++, ty++)
 			{
 				UINT8 scanline[512];
 				int x;
@@ -784,7 +784,7 @@ public class itech8
 					scanline[x * 2 + 0] = (latch[256 * ty + x] & 0xf0) | (base[256 * ty + x] >> 4);
 					scanline[x * 2 + 1] = (latch[256 * ty + x] << 4) | (base[256 * ty + x] & 0x0f);
 				}
-				draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], Machine->pens, -1);
+				draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], Machine.pens, -1);
 			}
 		}
 	
@@ -796,13 +796,13 @@ public class itech8
 		{
 			UINT8 *base = &tms_state.vram[tms_state.dispstart & ~0x30000];
 	
-			base += (cliprect->min_y - Machine->visible_area.min_y) * 256;
+			base += (cliprect.min_y - Machine.visible_area.min_y) * 256;
 	
 			/* now regenerate the bitmap */
-			for (ty = 0, y = cliprect->min_y; y <= cliprect->max_y; y++, ty++)
+			for (ty = 0, y = cliprect.min_y; y <= cliprect.max_y; y++, ty++)
 			{
-				draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &base[0x20000 + 256 * ty + cliprect->min_x], Machine->pens, -1);
-				draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &base[0x00000 + 256 * ty + cliprect->min_x], Machine->pens, 0);
+				draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &base[0x20000 + 256 * ty + cliprect.min_x], Machine.pens, -1);
+				draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &base[0x00000 + 256 * ty + cliprect.min_x], Machine.pens, 0);
 			}
 		}
 	

@@ -69,17 +69,17 @@ public class dis32031
 	//
 	// for instructions 0x000-0x3f
 	//	G = (op >> 21) & 3;
-	//	G == 0 -> register  -> 000ooooo o00ddddd 00000000 000sssss
-	//	G == 1 -> direct    -> 000ooooo o01ddddd DDDDDDDD DDDDDDDD
-	//	G == 2 -> indirect  -> 000ooooo o10ddddd mmmmmaaa DDDDDDDD
-	//	G == 3 -> immediate -> 000ooooo o11ddddd iiiiiiii iiiiiiii
+	//	G == 0 . register  . 000ooooo o00ddddd 00000000 000sssss
+	//	G == 1 . direct    . 000ooooo o01ddddd DDDDDDDD DDDDDDDD
+	//	G == 2 . indirect  . 000ooooo o10ddddd mmmmmaaa DDDDDDDD
+	//	G == 3 . immediate . 000ooooo o11ddddd iiiiiiii iiiiiiii
 	//
 	// for instructions 0x040-0x7f
 	//	T = (op >> 21) & 3;                       (src1)   (src2)
-	//	T == 0 -> reg reg   -> 001ooooo o00ddddd 000sssss 000SSSSS
-	//	T == 1 -> ind reg	-> 001ooooo o01ddddd mmmmmaaa 000SSSSS
-	//	T == 2 -> reg ind	-> 001ooooo o10ddddd 000sssss MMMMMAAA
-	//	T == 3 -> ind ind	-> 001ooooo o11ddddd mmmmmaaa MMMMMAAA
+	//	T == 0 . reg reg   . 001ooooo o00ddddd 000sssss 000SSSSS
+	//	T == 1 . ind reg	. 001ooooo o01ddddd mmmmmaaa 000SSSSS
+	//	T == 2 . reg ind	. 001ooooo o10ddddd 000sssss MMMMMAAA
+	//	T == 3 . ind ind	. 001ooooo o11ddddd mmmmmaaa MMMMMAAA
 	//
 	// for instructions 0x100-0x1ff
 	//	10ooooPP dDsssSSS mmmmmaaa MMMMMAAA

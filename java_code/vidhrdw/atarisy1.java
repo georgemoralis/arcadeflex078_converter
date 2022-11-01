@@ -335,7 +335,7 @@ public class atarisy1
 		/* because this latches a new value into the scroll base,
 		   we need to adjust for the scanline */
 		adjusted_scroll = newscroll;
-		if (scanline <= Machine->visible_area.max_y)
+		if (scanline <= Machine.visible_area.max_y)
 			adjusted_scroll -= (scanline + 1);
 		tilemap_set_scrolly(atarigen_playfield_tilemap, 0, adjusted_scroll);
 	
@@ -512,11 +512,11 @@ public class atarisy1
 		/* draw and merge the MO */
 		mobitmap = atarimo_render(0, cliprect, &rectlist);
 		for (r = 0; r < rectlist.numrects; r++, rectlist.rect++)
-			for (y = rectlist.rect->min_y; y <= rectlist.rect->max_y; y++)
+			for (y = rectlist.rect.min_y; y <= rectlist.rect.max_y; y++)
 			{
-				UINT16 *mo = (UINT16 *)mobitmap->base + mobitmap->rowpixels * y;
-				UINT16 *pf = (UINT16 *)bitmap->base + bitmap->rowpixels * y;
-				for (x = rectlist.rect->min_x; x <= rectlist.rect->max_x; x++)
+				UINT16 *mo = (UINT16 *)mobitmap.base + mobitmap.rowpixels * y;
+				UINT16 *pf = (UINT16 *)bitmap.base + bitmap.rowpixels * y;
+				for (x = rectlist.rect.min_x; x <= rectlist.rect.max_x; x++)
 					if (mo[x])
 					{
 						/* high priority MO? */
@@ -653,7 +653,7 @@ public class atarisy1
 	
 		/* don't have one? let's make it ... first find any empty slot */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == NULL)
+			if (Machine.gfx[gfx_index] == NULL)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return -1;
@@ -664,14 +664,14 @@ public class atarisy1
 			objlayout.planeoffset[i] = (bpp - i - 1) * 0x8000 * 8;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(&memory_region(REGION_GFX2)[bank_offset[bank_index]], &objlayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(&memory_region(REGION_GFX2)[bank_offset[bank_index]], &objlayout);
+		if (!Machine.gfx[gfx_index])
 			return -1;
 	
 		/* set the color information */
-		Machine->gfx[gfx_index]->colortable = &Machine->remapped_colortable[256];
-		Machine->gfx[gfx_index]->color_granularity = 8;
-		Machine->gfx[gfx_index]->total_colors = 0x40;
+		Machine.gfx[gfx_index].colortable = &Machine.remapped_colortable[256];
+		Machine.gfx[gfx_index].color_granularity = 8;
+		Machine.gfx[gfx_index].total_colors = 0x40;
 		bank_color_shift[gfx_index] = bpp - 3;
 	
 		/* set the entry and return it */

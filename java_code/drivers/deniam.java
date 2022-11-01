@@ -319,7 +319,7 @@ public class deniam
 	static void irqhandler(int linestate)
 	{
 		/* system 16c doesn't have the sound CPU */
-		if (Machine->drv->cpu[1].cpu_type)
+		if (Machine.drv.cpu[1].cpu_type)
 			cpu_set_irq_line(1,0,linestate);
 	}
 	

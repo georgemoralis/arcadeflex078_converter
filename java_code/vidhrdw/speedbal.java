@@ -31,11 +31,11 @@ public class speedbal
 	public static PaletteInitHandlerPtr palette_init_speedbal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -91,11 +91,11 @@ public class speedbal
 			return 1;
 	
 		/* foreground bitmap */
-		if ((bitmap_ch = auto_bitmap_alloc (Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((bitmap_ch = auto_bitmap_alloc (Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		/* background bitmap */
-		if ((bitmap_bg = auto_bitmap_alloc (Machine->drv->screen_width*2,Machine->drv->screen_height*2)) == 0)
+		if ((bitmap_bg = auto_bitmap_alloc (Machine.drv.screen_width*2,Machine.drv.screen_height*2)) == 0)
 			return 1;
 	
 		memset (ch_dirtybuffer,1,speedbal_foreground_videoram_size / 2);
@@ -174,12 +174,12 @@ public class speedbal
 	
 			if (!(SPTRegs[SPRITE_PALETTE]&0x40)) SPTTile+=256;
 	
-			drawgfx (bitmap,Machine->gfx[2],
+			drawgfx (bitmap,Machine.gfx[2],
 					SPTTile,
 					SPTColor,
 					0,0,
 					SPTX,SPTY,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -209,7 +209,7 @@ public class speedbal
 				sx = 15 - (offset / 2) / 16;
 				sy = (offset / 2) % 16;
 	
-				drawgfx (bitmap_bg,Machine->gfx[1],
+				drawgfx (bitmap_bg,Machine.gfx[1],
 						tile,
 						color,
 						0,0,
@@ -218,7 +218,7 @@ public class speedbal
 			}
 		}
 	
-		copybitmap (bitmap,bitmap_bg,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap (bitmap,bitmap_bg,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	
@@ -245,12 +245,12 @@ public class speedbal
 				sx = 31 - (offset / 2) / 32;
 				sy = (offset / 2) % 32;
 	
-				drawgfx (bitmap,Machine->gfx[0],
+				drawgfx (bitmap,Machine.gfx[0],
 						caracter,
 						color,
 						0,0,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				ch_dirtybuffer[offset] = 0;
 			}

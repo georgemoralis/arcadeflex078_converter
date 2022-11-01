@@ -59,11 +59,11 @@ public class zaccaria
 	public static PaletteInitHandlerPtr palette_init_zaccaria  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i,j,k;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -89,12 +89,12 @@ public class zaccaria
 				r = 0x46 * bit0 + 0x53 * bit1 + 0x66 * bit2;
 				/* green component */
 				bit0 = (color_prom[0] >> 0) & 0x01;
-				bit1 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
-				bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
+				bit1 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
+				bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
 				g = 0x46 * bit0 + 0x53 * bit1 + 0x66 * bit2;
 				/* blue component */
-				bit0 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-				bit1 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
+				bit0 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+				bit1 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
 				b = 0x66 * bit0 + 0x96 * bit1;
 				palette_set_color(i,r,g,b);
 			}
@@ -263,7 +263,7 @@ public class zaccaria
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram_2[offs + 2] & 0x3f) + (spriteram_2[offs + 1] & 0xc0),
 					4 * (spriteram_2[offs + 1] & 0x07),
 					flipx,flipy,
@@ -289,7 +289,7 @@ public class zaccaria
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs + 1)& 0x3f) + (spriteram.read(offs + 2)& 0xc0),
 					4 * (spriteram.read(offs + 2)& 0x07),
 					flipx,flipy,

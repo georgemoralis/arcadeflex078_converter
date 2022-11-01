@@ -213,10 +213,10 @@ public class g65816ds
 		instruction = read_8(address);
 		opcode = g_opcodes + instruction;
 	
-		strcpy(buff, g_opnames[opcode->name]);
+		strcpy(buff, g_opnames[opcode.name]);
 		ptr = buff + strlen(buff);
 	
-		switch(opcode->ea)
+		switch(opcode.ea)
 		{
 			case IMP :
 				break;
@@ -235,7 +235,7 @@ public class g65816ds
 				length += 2;
 				break;
 			case IMM :
-				if((opcode->flag == M && !m_flag) || (opcode->flag == X && !x_flag))
+				if((opcode.flag == M && !m_flag) || (opcode.flag == X && !x_flag))
 				{
 					sprintf(ptr, " #$%04x", read_16(address+1));
 					length += 2;

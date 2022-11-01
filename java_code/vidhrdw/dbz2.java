@@ -157,7 +157,7 @@ public class dbz2
 	VIDEO_UPDATE(dbz2)
 	{
 		fillbitmap(priority_bitmap, 0, NULL);
-		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 	
 		K053936_0_zoom_draw(bitmap,cliprect,dbz2_bg2_tilemap,0,0);
 		K053936_1_zoom_draw(bitmap,cliprect,dbz2_bg_tilemap,0,0);
@@ -172,7 +172,7 @@ public class dbz2
 	VIDEO_UPDATE(dbz)
 	{
 		fillbitmap(priority_bitmap, 0, NULL);
-		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 	
 	
 		K054157_tilemap_update();

@@ -283,25 +283,25 @@ public class policetr
 		{
 			/* latch 0x00 is player 1's gun X coordinate */
 			case 0x00:
-				inputval = ((readinputport(3) & 0xff) * Machine->drv->screen_width) >> 8;
+				inputval = ((readinputport(3) & 0xff) * Machine.drv.screen_width) >> 8;
 				inputval += 0x50;
 				return (inputval << 20) | 0x20000000;
 	
 			/* latch 0x01 is player 1's gun Y coordinate */
 			case 0x01:
-				inputval = ((readinputport(4) & 0xff) * Machine->drv->screen_height) >> 8;
+				inputval = ((readinputport(4) & 0xff) * Machine.drv.screen_height) >> 8;
 				inputval += 0x17;
 				return (inputval << 20);
 	
 			/* latch 0x02 is player 2's gun X coordinate */
 			case 0x02:
-				inputval = ((readinputport(5) & 0xff) * Machine->drv->screen_width) >> 8;
+				inputval = ((readinputport(5) & 0xff) * Machine.drv.screen_width) >> 8;
 				inputval += 0x50;
 				return (inputval << 20) | 0x20000000;
 	
 			/* latch 0x03 is player 2's gun Y coordinate */
 			case 0x03:
-				inputval = ((readinputport(6) & 0xff) * Machine->drv->screen_height) >> 8;
+				inputval = ((readinputport(6) & 0xff) * Machine.drv.screen_height) >> 8;
 				inputval += 0x17;
 				return (inputval << 20);
 	
@@ -362,22 +362,22 @@ public class policetr
 	
 	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		int width = cliprect->max_x - cliprect->min_x + 1;
+		int width = cliprect.max_x - cliprect.min_x + 1;
 		int beamx, beamy;
 		int y;
 	
 		/* render all the scanlines from the dstbitmap to MAME's bitmap */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
-			draw_scanline8(bitmap, cliprect->min_x, y, width, &dstbitmap[DSTBITMAP_WIDTH * y + cliprect->min_x], NULL, -1);
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
+			draw_scanline8(bitmap, cliprect.min_x, y, width, &dstbitmap[DSTBITMAP_WIDTH * y + cliprect.min_x], NULL, -1);
 	
 		/* draw player 1's crosshair */
-		beamx = ((readinputport(3) & 0xff) * Machine->drv->screen_width) >> 8;
-		beamy = ((readinputport(4) & 0xff) * Machine->drv->screen_height) >> 8;
+		beamx = ((readinputport(3) & 0xff) * Machine.drv.screen_width) >> 8;
+		beamy = ((readinputport(4) & 0xff) * Machine.drv.screen_height) >> 8;
 		draw_crosshair(bitmap, beamx, beamy, cliprect);
 	
 		/* draw player 2's crosshair */
-		beamx = ((readinputport(5) & 0xff) * Machine->drv->screen_width) >> 8;
-		beamy = ((readinputport(6) & 0xff) * Machine->drv->screen_height) >> 8;
+		beamx = ((readinputport(5) & 0xff) * Machine.drv.screen_width) >> 8;
+		beamy = ((readinputport(6) & 0xff) * Machine.drv.screen_height) >> 8;
 		draw_crosshair(bitmap, beamx, beamy, cliprect);
 	} };
 }

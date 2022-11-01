@@ -36,7 +36,7 @@ public class missb2
 		/* the background character columns is stored in the area dd00-dd3f */
 	
 		/* This clears & redraws the entire screen each pass */
-		fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[255],&Machine.visible_area);
 	
 		if (!bublbobl_video_enable) return;
 	
@@ -44,12 +44,12 @@ public class missb2
 		//usrintf_showmessage("%02x",(*bg_vram) & 0x1f);
 		for(bg_offs = ((*bg_vram) << 4);bg_offs<(((*bg_vram)<< 4)|0xf);bg_offs++)
 		{
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					bg_offs,
 					1,
 					0,0,
 					0,(bg_offs & 0xf) * 0x10,
-					&Machine->visible_area,TRANSPARENCY_NONE,0xff);
+					&Machine.visible_area,TRANSPARENCY_NONE,0xff);
 		}
 	
 	
@@ -104,12 +104,12 @@ public class missb2
 						flipy = !flipy;
 					}
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code,
 							0,
 							flipx,flipy,
 							x,y,
-							&Machine->visible_area,TRANSPARENCY_PEN,0xff);
+							&Machine.visible_area,TRANSPARENCY_PEN,0xff);
 				}
 			}
 	

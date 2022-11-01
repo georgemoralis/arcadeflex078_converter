@@ -47,11 +47,11 @@ public class gyruss
 	public static PaletteInitHandlerPtr palette_init_gyruss  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -130,14 +130,14 @@ public class gyruss
 	
 	static void draw_sprites(struct mame_bitmap *bitmap)
 	{
-		struct rectangle clip = Machine->visible_area;
+		struct rectangle clip = Machine.visible_area;
 		int offs;
 		int line;
 	
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= Machine->visible_area.min_y && line <= Machine->visible_area.max_y)
+			if (line >= Machine.visible_area.min_y && line <= Machine.visible_area.max_y)
 			{
 				unsigned char *sr;
 	
@@ -152,7 +152,7 @@ public class gyruss
 					sy = 241 - sr[offs + 3];
 					if (sy > line-16 && sy <= line)
 					{
-						drawgfx(bitmap,Machine->gfx[1 + (sr[offs + 1] & 1)],
+						drawgfx(bitmap,Machine.gfx[1 + (sr[offs + 1] & 1)],
 								sr[offs + 1]/2 + 4*(sr[offs + 2] & 0x20),
 								sr[offs + 2] & 0x0f,
 								!(sr[offs + 2] & 0x40),sr[offs + 2] & 0x80,
@@ -193,18 +193,18 @@ public class gyruss
 					flipy = !flipy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ 8 * (colorram[offs] & 0x20),
 						colorram[offs] & 0x0f,
 						flipx,flipy,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		draw_sprites(bitmap);
@@ -229,12 +229,12 @@ public class gyruss
 			}
 	
 			if ((colorram[offs] & 0x10) != 0)
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						videoram.read(offs)+ 8 * (colorram[offs] & 0x20),
 						colorram[offs] & 0x0f,
 						flipx,flipy,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	} };
 	

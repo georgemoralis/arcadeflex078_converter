@@ -246,7 +246,7 @@ public class tecmo
 					{
 						int sx = xpos + 8*(flipx?(size-1-x):x);
 						int sy = ypos + 8*(flipy?(size-1-y):y);
-						pdrawgfx(bitmap,Machine->gfx[1],
+						pdrawgfx(bitmap,Machine.gfx[1],
 								code + layout[y][x],
 								flags & 0xf,
 								flipx,flipy,
@@ -263,7 +263,7 @@ public class tecmo
 	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0x100],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x100],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,1);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,2);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,4);

@@ -396,7 +396,7 @@ public class itech32
 			itech32_video[0x1a/2] == 0x000 && itech32_video[0x1c/2] == 0x100 &&
 			itech32_video[0x1e/2] == 0x000 && itech32_video[0x20/2] == 0x000)
 		{
-			logerror("%s: p=%d%d c=%02x%02x %02x%04x -> (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x)\n", tag,
+			logerror("%s: p=%d%d c=%02x%02x %02x%04x . (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x)\n", tag,
 					enable_latch[0], enable_latch[1],
 					color_latch[0] >> 8, color_latch[1] >> 8,
 					VIDEO_TRANSFER_ADDRHI, VIDEO_TRANSFER_ADDRLO,
@@ -406,7 +406,7 @@ public class itech32
 		}
 		else
 		{
-			logerror("%s: p=%d%d c=%02x%02x %02x%04x -> (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x) s=%04x %04x %04x %04x %04x %04x\n", tag,
+			logerror("%s: p=%d%d c=%02x%02x %02x%04x . (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x) s=%04x %04x %04x %04x %04x %04x\n", tag,
 					enable_latch[0], enable_latch[1],
 					color_latch[0] >> 8, color_latch[1] >> 8,
 					VIDEO_TRANSFER_ADDRHI, VIDEO_TRANSFER_ADDRLO,
@@ -1111,7 +1111,7 @@ public class itech32
 		int y;
 	
 		/* loop over height */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			UINT16 *src1 = &videoplane[0][compute_safe_address(VIDEO_DISPLAY_XORIGIN1, VIDEO_DISPLAY_YORIGIN1 + y)];
 	
@@ -1123,7 +1123,7 @@ public class itech32
 				int x;
 	
 				/* blend the pixels in the scanline; color xxFF is transparent */
-				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				{
 					UINT16 pixel = src1[x];
 					if ((pixel & 0xff) == 0xff)
@@ -1132,12 +1132,12 @@ public class itech32
 				}
 	
 				/* draw from the buffer */
-				draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], Machine->pens, -1);
+				draw_scanline16(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], Machine.pens, -1);
 			}
 	
 			/* otherwise, draw directly from VRAM */
 			else
-				draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &src1[cliprect->min_x], Machine->pens, -1);
+				draw_scanline16(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &src1[cliprect.min_x], Machine.pens, -1);
 		}
 	} };
 }

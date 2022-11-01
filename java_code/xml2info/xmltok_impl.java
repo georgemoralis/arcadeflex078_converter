@@ -1750,22 +1750,22 @@ PREFIX(updatePosition)(const ENCODING *enc,
     LEAD_CASE(2) LEAD_CASE(3) LEAD_CASE(4)
 #undef LEAD_CASE
     case BT_LF:
-      pos->columnNumber = (unsigned)-1;
-      pos->lineNumber++;
+      pos.columnNumber = (unsigned)-1;
+      pos.lineNumber++;
       ptr += MINBPC(enc);
       break;
     case BT_CR:
-      pos->lineNumber++;
+      pos.lineNumber++;
       ptr += MINBPC(enc);
       if (ptr != end && BYTE_TYPE(enc, ptr) == BT_LF)
         ptr += MINBPC(enc);
-      pos->columnNumber = (unsigned)-1;
+      pos.columnNumber = (unsigned)-1;
       break;
     default:
       ptr += MINBPC(enc);
       break;
     }
-    pos->columnNumber++;
+    pos.columnNumber++;
   }
 }
 

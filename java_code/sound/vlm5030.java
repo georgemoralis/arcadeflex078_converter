@@ -322,7 +322,7 @@ public class vlm5030
 						if ( interp_count == 0 )
 						{	/* end mark found */
 							interp_count = FR_SIZE;
-							sample_count = VLM5030_frame_size; /* end -> stop time */
+							sample_count = VLM5030_frame_size; /* end . stop time */
 							VLM5030_phase = PH_STOP;
 						}
 						/* Set old target as new start of frame */
@@ -353,7 +353,7 @@ public class vlm5030
 					/* next interpolator */
 					/* Update values based on step values 25% , 50% , 75% , 100% */
 					interp_count -= interp_step;
-					/* 3,2,1,0 -> 1,2,3,4 */
+					/* 3,2,1,0 . 1,2,3,4 */
 					interp_effect = FR_SIZE - (interp_count%FR_SIZE);
 					current_energy = old_energy + (target_energy - old_energy) * interp_effect / FR_SIZE;
 					if (old_pitch > 1)
@@ -539,7 +539,7 @@ public class vlm5030
 		if (pin_RST != 0)
 		{
 			if( !pin )
-			{	/* H -> L : latch parameters */
+			{	/* H . L : latch parameters */
 				pin_RST = 0;
 				VLM5030_setup_parameter(latch_data);
 			}
@@ -547,7 +547,7 @@ public class vlm5030
 		else
 		{
 			if (pin != 0)
-			{	/* L -> H : reset chip */
+			{	/* L . H : reset chip */
 				pin_RST = 1;
 				if (pin_BSY != 0)
 				{
@@ -574,7 +574,7 @@ public class vlm5030
 		{
 			/* pin level is change */
 			if( !pin )
-			{	/* H -> L */
+			{	/* H . L */
 				pin_ST = 0;
 	
 				if (pin_VCU != 0)
@@ -584,7 +584,7 @@ public class vlm5030
 				else
 				{
 					/* start speech */
-					if (Machine->sample_rate == 0)
+					if (Machine.sample_rate == 0)
 					{
 						pin_BSY = 0;
 						return;
@@ -617,7 +617,7 @@ public class vlm5030
 				}
 			}
 			else
-			{	/* L -> H */
+			{	/* L . H */
 				pin_ST = 1;
 				/* setup speech , BSY on after 30ms? */
 				VLM5030_phase = PH_SETUP;
@@ -628,14 +628,14 @@ public class vlm5030
 	}
 	
 	/* start VLM5030 with sound rom              */
-	/* speech_rom == 0 -> use sampling data mode */
+	/* speech_rom == 0 . use sampling data mode */
 	int VLM5030_sh_start(const struct MachineSound *msound)
 	{
 		int emulation_rate;
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
-		emulation_rate = intf->baseclock / 440;
+		emulation_rate = intf.baseclock / 440;
 	
 		/* reset input pins */
 		pin_RST = pin_ST = pin_VCU= 0;
@@ -644,17 +644,17 @@ public class vlm5030
 		VLM5030_reset();
 		VLM5030_phase = PH_IDLE;
 	
-		VLM5030_rom = memory_region(intf->memory_region);
+		VLM5030_rom = memory_region(intf.memory_region);
 		/* memory size */
-		if( intf->memory_size == 0)
-			VLM5030_address_mask = memory_region_length(intf->memory_region)-1;
+		if( intf.memory_size == 0)
+			VLM5030_address_mask = memory_region_length(intf.memory_region)-1;
 		else
-			VLM5030_address_mask = intf->memory_size-1;
+			VLM5030_address_mask = intf.memory_size-1;
 	
-		channel = stream_init(VLM_NAME,intf->volume,emulation_rate,0,vlm5030_update_callback);
+		channel = stream_init(VLM_NAME,intf.volume,emulation_rate,0,vlm5030_update_callback);
 		if (channel == -1) return 1;
 	
-		schannel = mixer_allocate_channel(intf->volume);
+		schannel = mixer_allocate_channel(intf.volume);
 	
 	#ifdef _STATE_H
 		/* don't restore "UINT8 *VLM5030_rom" when use VLM5030_set_rom() */

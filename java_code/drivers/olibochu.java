@@ -5,7 +5,7 @@ Oli-Boo-Chu
 driver by Nicola Salmoria
 
 TODO:
-- main->sound cpu communication is completely wrong, commands don't play the
+- main.sound cpu communication is completely wrong, commands don't play the
   intended sound.
 
 ***************************************************************************/
@@ -24,11 +24,11 @@ public class olibochu
 	public static PaletteInitHandlerPtr palette_init_olibochu  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -138,11 +138,11 @@ public class olibochu
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	
@@ -166,18 +166,18 @@ public class olibochu
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[0],
+			drawgfx(bitmap, Machine.gfx[0],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_olibochu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		olibochu_draw_sprites(bitmap);
 	} };
 	

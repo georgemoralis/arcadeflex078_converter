@@ -187,28 +187,28 @@ public class sf1
 				}
 	
 				drawgfx(bitmap,
-						Machine->gfx[2],
+						Machine.gfx[2],
 						sf1_invert(c1),
 						color,
 						flipx,flipy,
 						sx,sy,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine->gfx[2],
+						Machine.gfx[2],
 						sf1_invert(c2),
 						color,
 						flipx,flipy,
 						sx+16,sy,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine->gfx[2],
+						Machine.gfx[2],
 						sf1_invert(c3),
 						color,
 						flipx,flipy,
 						sx,sy+16,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine->gfx[2],
+						Machine.gfx[2],
 						sf1_invert(c4),
 						color,
 						flipx,flipy,
@@ -226,7 +226,7 @@ public class sf1
 				}
 	
 				drawgfx(bitmap,
-						Machine->gfx[2],
+						Machine.gfx[2],
 						sf1_invert(c),
 						color,
 						flipx,flipy,
@@ -242,7 +242,7 @@ public class sf1
 		if ((sf1_active & 0x20) != 0)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	

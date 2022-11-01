@@ -73,7 +73,7 @@ public class rollrace
 		int col;
 	
 		/* fill in background colour*/
-		fillbitmap(bitmap,Machine->pens[ra_bkgpen],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[ra_bkgpen],&Machine.visible_area);
 	
 		/* draw road */
 		for (offs = videoram_size - 1;offs >= 0;offs--)
@@ -94,13 +94,13 @@ public class rollrace
 					sy = 31-sy ;
 	
 				drawgfx(bitmap,
-					Machine->gfx[RA_BGCHAR_BASE],
+					Machine.gfx[RA_BGCHAR_BASE],
 					memory_region(REGION_USER1)[offs + ( ra_bkgpage * 1024 )] \
 					+ ((( memory_region(REGION_USER1)[offs + 0x4000 + ( ra_bkgpage * 1024 )] & 0xc0 ) >> 6 ) * 256 ) ,
 					ra_bkgcol,
 					ra_flipx,(ra_bkgflip^ra_flipy),
 					sx*8,sy*8,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 	
 			}
@@ -133,12 +133,12 @@ public class rollrace
 			if (bank != 0)
 				bank += ra_spritebank;
 	
-			drawgfx(bitmap, Machine->gfx[ RA_SP_BASE + bank ],
+			drawgfx(bitmap, Machine.gfx[ RA_SP_BASE + bank ],
 				spriteram.read(offs+1)& 0x3f ,
 				spriteram.read(offs+2)& 0x1f,
 				ra_flipx,!(s_flipy^ra_flipy),
 				sx,sy,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -162,12 +162,12 @@ public class rollrace
 	
 			if (ra_flipx != 0) sx = 31 - sx;
 	
-			drawgfx(bitmap,Machine->gfx[RA_FGCHAR_BASE + ra_chrbank]  ,
+			drawgfx(bitmap,Machine.gfx[RA_FGCHAR_BASE + ra_chrbank]  ,
 				videoram.read( offs ),
 				col,
 				ra_flipx,ra_flipy,
 				8*sx,scroll,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 		}
 	

@@ -180,7 +180,7 @@ public class cage
 		cpu_setbank(11, memory_region(boot_region + 1));
 	
 		cage_cpu = mame_find_cpu_index("cage");
-		cage_cpu_clock_period = 1.0 / (double)Machine->drv->cpu[cage_cpu].cpu_clock;
+		cage_cpu_clock_period = 1.0 / (double)Machine.drv.cpu[cage_cpu].cpu_clock;
 		cage_cpu_h1_clock = cage_cpu_clock_period * 2.0;
 	
 		dma_timer = timer_alloc(dma_timer_callback);
@@ -282,7 +282,7 @@ public class cage
 	#endif
 	
 		/* allocate a DAC stream */
-		sound_stream = stream_init_multi(DAC_BUFFER_CHANNELS, names, mixing_levels, Machine->sample_rate, 0, dac_update);
+		sound_stream = stream_init_multi(DAC_BUFFER_CHANNELS, names, mixing_levels, Machine.sample_rate, 0, dac_update);
 	
 		/* allocate memory for our buffers */
 		sound_buffer = auto_malloc(DAC_BUFFER_SAMPLES * sizeof(INT16));
@@ -290,7 +290,7 @@ public class cage
 			return 1;
 	
 	#if (LOG_WAVE)
-		wavfile = wav_open("cage.wav", Machine->sample_rate, 2);
+		wavfile = wav_open("cage.wav", Machine.sample_rate, 2);
 	#endif
 	
 		return 0;
@@ -435,8 +435,8 @@ public class cage
 		/* and times the number of bits per sample */
 		serial_time_per_word = bit_clock * 8.0 * (double)(((tms32031_io_regs[SPORT_GLOBAL_CTL] >> 18) & 3) + 1);
 	
-		/* compute the step value to stretch this to the Machine->sample_rate */
-		buffer_out_step = (UINT32)(65536.0 / (serial_time_per_word * DAC_BUFFER_CHANNELS * (double)Machine->sample_rate));
+		/* compute the step value to stretch this to the Machine.sample_rate */
+		buffer_out_step = (UINT32)(65536.0 / (serial_time_per_word * DAC_BUFFER_CHANNELS * (double)Machine.sample_rate));
 	}
 	
 	
@@ -459,7 +459,7 @@ public class cage
 		}
 	
 		if (LOG_32031_IOPORTS != 0)
-			logerror("CAGE:%06X:%s read -> %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], result);
+			logerror("CAGE:%06X:%s read . %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], result);
 		return result;
 	}
 	

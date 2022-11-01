@@ -242,8 +242,8 @@ public class jaguar
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = ((readinputport(3 + player * 2) & 0xff) * Machine->drv->screen_width) >> 8;
-		*y = ((readinputport(4 + player * 2) & 0xff) * Machine->drv->screen_height) >> 8;
+		*x = ((readinputport(3 + player * 2) & 0xff) * Machine.drv.screen_width) >> 8;
+		*y = ((readinputport(4 + player * 2) & 0xff) * Machine.drv.screen_height) >> 8;
 	}
 	
 	
@@ -641,7 +641,7 @@ public class jaguar
 				return cpu_irq_state;
 	
 			case HC:
-				return cpu_gethorzbeampos() % (Machine->drv->screen_width / 2);
+				return cpu_gethorzbeampos() % (Machine.drv.screen_width / 2);
 	
 			case VC:
 				return cpu_getscanline() * 2 + gpu_regs[VBE];

@@ -71,7 +71,7 @@ public class drgnmst
 	
 	static void drgnmst_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		data16_t *source = spriteram16;
 		data16_t *finish = source + 0x800/2;
 	

@@ -290,7 +290,7 @@ public class midvunit
 	
 			/* bit 0x200 selects internal clocking, which is 1/2 the main CPU clock rate */
 			if ((data & 0x200) != 0)
-				timer_rate = (double)Machine->drv->cpu[0].cpu_clock * 0.5;
+				timer_rate = (double)Machine.drv.cpu[0].cpu_clock * 0.5;
 			else
 				timer_rate = 10000000.;
 		}

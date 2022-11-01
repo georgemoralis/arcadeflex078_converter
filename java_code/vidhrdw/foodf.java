@@ -133,11 +133,11 @@ public class foodf
 			int hflip = (data1 >> 15) & 1;
 			int vflip = (data1 >> 14) & 1;
 	
-			drawgfx(bitmap, Machine->gfx[1], pict, color, hflip, vflip,
+			drawgfx(bitmap, Machine.gfx[1], pict, color, hflip, vflip,
 					xpos, ypos, cliprect, TRANSPARENCY_PEN, 0);
 	
 			/* draw again with wraparound (needed to get the end of level animation right) */
-			drawgfx(bitmap, Machine->gfx[1], pict, color, hflip, vflip,
+			drawgfx(bitmap, Machine.gfx[1], pict, color, hflip, vflip,
 					xpos - 256, ypos, cliprect, TRANSPARENCY_PEN, 0);
 		}
 	} };

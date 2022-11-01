@@ -134,12 +134,12 @@ public class dassault
 	
 				while (multi >= 0)
 				{
-					deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
+					deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
 							sprite - multi * inc,
 							colour,
 							fx,fy,
 							x,y + mult * multi,
-							&Machine->visible_area,trans,0,pmask,1<<bank);
+							&Machine.visible_area,trans,0,pmask,1<<bank);
 	
 					multi--;
 				}
@@ -180,8 +180,8 @@ public class dassault
 	
 		/* Draw playfields/update priority bitmap */
 		deco16_clear_sprite_priority_bitmap();
-		fillbitmap(priority_bitmap,0,&Machine->visible_area);
-		fillbitmap(bitmap,Machine->pens[3072],&Machine->visible_area);
+		fillbitmap(priority_bitmap,0,&Machine.visible_area);
+		fillbitmap(bitmap,Machine.pens[3072],&Machine.visible_area);
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 	
 		/* The middle playfields can be swapped priority-wise */

@@ -182,7 +182,7 @@ public class taito_h
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine -> gfx[0],
+							drawgfxzoom( bitmap, Machine . gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -294,7 +294,7 @@ public class taito_h
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine -> gfx[0],
+							drawgfxzoom( bitmap, Machine . gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -395,7 +395,7 @@ public class taito_h
 									flipy ^= 0x0080;
 								}
 	
-								drawgfxzoom( bitmap, Machine -> gfx[0],
+								drawgfxzoom( bitmap, Machine . gfx[0],
 										 tile,
 										 color,
 										 flipx, flipy,
@@ -438,7 +438,7 @@ public class taito_h
 		taitoh_log_vram();
 	#endif
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		TC0080VCO_tilemap_draw(bitmap,cliprect,0,TILEMAP_IGNORE_TRANSPARENCY,0);
 		TC0080VCO_tilemap_draw(bitmap,cliprect,1,0,0);
@@ -455,7 +455,7 @@ public class taito_h
 		taitoh_log_vram();
 	#endif
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 	#ifdef MAME_DEBUG
 		if ( !keyboard_pressed(KEYCODE_A) )
@@ -485,7 +485,7 @@ public class taito_h
 		taitoh_log_vram();
 	#endif
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 	#ifdef MAME_DEBUG
 		if ( !keyboard_pressed(KEYCODE_A) )

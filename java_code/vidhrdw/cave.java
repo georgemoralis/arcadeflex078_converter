@@ -208,8 +208,8 @@ public class cave
 			for( pen = 0; pen < 16; pen++ )
 				colortable[color * 256 + pen] = color * 16 + pen;
 	
-		for( color = 0x8000; color < Machine->drv->color_table_len; color++ )
-				colortable[color] = (color - 0x8000) % Machine->drv->total_colors;
+		for( color = 0x8000; color < Machine.drv.color_table_len; color++ )
+				colortable[color] = (color - 0x8000) % Machine.drv.total_colors;
 	} };
 	
 	/***************************************************************************
@@ -451,10 +451,10 @@ public class cave
 		cave_row_effect_offs_n = -1;
 		cave_row_effect_offs_f = 1;
 	
-	//	background_color =	 Machine->drv->gfxdecodeinfo[0].color_codes_start;
-		background_color =	 Machine->drv->gfxdecodeinfo[0].color_codes_start +
-							(Machine->drv->gfxdecodeinfo[0].total_color_codes-1) *
-							 Machine->gfx[0]->color_granularity;
+	//	background_color =	 Machine.drv.gfxdecodeinfo[0].color_codes_start;
+		background_color =	 Machine.drv.gfxdecodeinfo[0].color_codes_start +
+							(Machine.drv.gfxdecodeinfo[0].total_color_codes-1) *
+							 Machine.gfx[0].color_granularity;
 	
 		switch(cave_kludge)
 		{
@@ -533,7 +533,7 @@ public class cave
 	{
 		const int region				=	REGION_GFX1;
 	
-		const pen_t          *base_pal	=	Machine->remapped_colortable + 0;
+		const pen_t          *base_pal	=	Machine.remapped_colortable + 0;
 		const unsigned char  *base_gfx	=	memory_region(region);
 		int                   code_max	=	memory_region_length(region) / (16*16);
 	
@@ -545,8 +545,8 @@ public class cave
 		int	glob_flipx	=	cave_videoregs[ 0 ] & 0x8000;
 		int	glob_flipy	=	cave_videoregs[ 1 ] & 0x8000;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for (; source < finish; source+=8 )
 		{
@@ -569,58 +569,58 @@ public class cave
 			zoomy		=		source[ 5 ];
 			size		=		source[ 6 ];
 	
-			sprite->tile_width		=	( (size >> 8) & 0x1f ) * 16;
-			sprite->tile_height		=	( (size >> 0) & 0x1f ) * 16;
+			sprite.tile_width		=	( (size >> 8) & 0x1f ) * 16;
+			sprite.tile_height		=	( (size >> 0) & 0x1f ) * 16;
 	
-			if ( !sprite->tile_width || !sprite->tile_height )	continue;
+			if ( !sprite.tile_width || !sprite.tile_height )	continue;
 	
 			/* Bound checking */
 			code					%=	code_max;
-			sprite->pen_data		=	base_gfx + (16*16) * code;
+			sprite.pen_data		=	base_gfx + (16*16) * code;
 	
 			flipx		=		attr & 0x0008;
 			flipy		=		attr & 0x0004;
 	
-			sprite->total_width		=	(total_width_f  = sprite->tile_width  * zoomx) / 0x100;
-			sprite->total_height	=	(total_height_f = sprite->tile_height * zoomy) / 0x100;
+			sprite.total_width		=	(total_width_f  = sprite.tile_width  * zoomx) / 0x100;
+			sprite.total_height	=	(total_height_f = sprite.tile_height * zoomy) / 0x100;
 	
-			if (sprite->total_width <= 1)
+			if (sprite.total_width <= 1)
 			{
-				sprite->total_width  = 1;
-				sprite->zoomx_re = sprite->tile_width << 16;
-				sprite->xcount0 = sprite->zoomx_re / 2;
+				sprite.total_width  = 1;
+				sprite.zoomx_re = sprite.tile_width << 16;
+				sprite.xcount0 = sprite.zoomx_re / 2;
 				x -= 0x80;
 			}
 			else
 			{
-				sprite->zoomx_re = 0x1000000 / zoomx;
-				sprite->xcount0 = sprite->zoomx_re - 1;
+				sprite.zoomx_re = 0x1000000 / zoomx;
+				sprite.xcount0 = sprite.zoomx_re - 1;
 			}
 	
-			if (sprite->total_height <= 1)
+			if (sprite.total_height <= 1)
 			{
-				sprite->total_height = 1;
-				sprite->zoomy_re = sprite->tile_height << 16;
-				sprite->ycount0 = sprite->zoomy_re / 2;
+				sprite.total_height = 1;
+				sprite.zoomy_re = sprite.tile_height << 16;
+				sprite.ycount0 = sprite.zoomy_re / 2;
 				y -= 0x80;
 			}
 			else
 			{
-				sprite->zoomy_re = 0x1000000 / zoomy;
-				sprite->ycount0 = sprite->zoomy_re - 1;
+				sprite.zoomy_re = 0x1000000 / zoomy;
+				sprite.ycount0 = sprite.zoomy_re - 1;
 			}
 	
 			if (cave_spritetype == 2)
 			{
 				x >>= 8;
 				y >>= 8;
-				if (flipx && (zoomx != 0x100)) x += sprite->tile_width - sprite->total_width;
-				if (flipy && (zoomy != 0x100)) y += sprite->tile_height - sprite->total_height;
+				if (flipx && (zoomx != 0x100)) x += sprite.tile_width - sprite.total_width;
+				if (flipy && (zoomy != 0x100)) y += sprite.tile_height - sprite.total_height;
 			}
 			else
 			{
-				if (flipx && (zoomx != 0x100)) x += (sprite->tile_width<<8) - total_width_f - 0x80;
-				if (flipy && (zoomy != 0x100)) y += (sprite->tile_height<<8) - total_height_f - 0x80;
+				if (flipx && (zoomx != 0x100)) x += (sprite.tile_width<<8) - total_width_f - 0x80;
+				if (flipy && (zoomy != 0x100)) y += (sprite.tile_height<<8) - total_height_f - 0x80;
 				x >>= 8;
 				y >>= 8;
 			}
@@ -628,22 +628,22 @@ public class cave
 			if (x > 0x1FF)	x -= 0x400;
 			if (y > 0x1FF)	y -= 0x400;
 	
-			if (x + sprite->total_width<=0 || x>=max_x || y + sprite->total_height<=0 || y>=max_y )
+			if (x + sprite.total_width<=0 || x>=max_x || y + sprite.total_height<=0 || y>=max_y )
 			{continue;}
 	
-			sprite->priority		=	(attr & 0x0030) >> 4;
-			sprite->flags			=	SPRITE_VISIBLE_CAVE;
-			sprite->line_offset		=	sprite->tile_width;
-			sprite->pal_data		=	base_pal + (attr & 0x3f00);	// first 0x4000 colors
+			sprite.priority		=	(attr & 0x0030) >> 4;
+			sprite.flags			=	SPRITE_VISIBLE_CAVE;
+			sprite.line_offset		=	sprite.tile_width;
+			sprite.pal_data		=	base_pal + (attr & 0x3f00);	// first 0x4000 colors
 	
-			if (glob_flipx != 0)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
-			if (glob_flipy != 0)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
+			if (glob_flipx != 0)	{ x = max_x - x - sprite.total_width;	flipx = !flipx; }
+			if (glob_flipy != 0)	{ y = max_y - y - sprite.total_height;	flipy = !flipy; }
 	
-			sprite->x				=	x;
-			sprite->y				=	y;
+			sprite.x				=	x;
+			sprite.y				=	y;
 	
-			if (flipx != 0)	sprite->flags |= SPRITE_FLIPX_CAVE;
-			if (flipy != 0)	sprite->flags |= SPRITE_FLIPY_CAVE;
+			if (flipx != 0)	sprite.flags |= SPRITE_FLIPX_CAVE;
+			if (flipy != 0)	sprite.flags |= SPRITE_FLIPY_CAVE;
 	
 			sprite++;
 		}
@@ -654,7 +654,7 @@ public class cave
 	{
 		const int region				=	REGION_GFX1;
 	
-		const pen_t          *base_pal	=	Machine->remapped_colortable + 0;
+		const pen_t          *base_pal	=	Machine.remapped_colortable + 0;
 		const unsigned char  *base_gfx	=	memory_region(region);
 		int                   code_max	=	memory_region_length(region) / (16*16);
 	
@@ -666,8 +666,8 @@ public class cave
 		int	glob_flipx	=	cave_videoregs[ 0 ] & 0x8000;
 		int	glob_flipy	=	cave_videoregs[ 1 ] & 0x8000;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for (; source < finish; source+=8 )
 		{
@@ -684,18 +684,18 @@ public class cave
 	
 			size		=		source[ 4 ];
 	
-			sprite->tile_width		=	sprite->total_width		=	( (size >> 8) & 0x1f ) * 16;
-			sprite->tile_height		=	sprite->total_height	=	( (size >> 0) & 0x1f ) * 16;
+			sprite.tile_width		=	sprite.total_width		=	( (size >> 8) & 0x1f ) * 16;
+			sprite.tile_height		=	sprite.total_height	=	( (size >> 0) & 0x1f ) * 16;
 	
 			/* Bound checking */
 			code					%=	code_max;
-			sprite->pen_data		=	base_gfx + (16*16) * code;
+			sprite.pen_data		=	base_gfx + (16*16) * code;
 	
 			if (x > 0x1FF)	x -= 0x400;
 			if (y > 0x1FF)	y -= 0x400;
 	
-			if ( !sprite->tile_width || !sprite->tile_height ||
-				x + sprite->total_width<=0 || x>=max_x || y + sprite->total_height<=0 || y>=max_y )
+			if ( !sprite.tile_width || !sprite.tile_height ||
+				x + sprite.total_width<=0 || x>=max_x || y + sprite.total_height<=0 || y>=max_y )
 			{continue;}
 	
 			flipx		=		attr & 0x0008;
@@ -703,26 +703,26 @@ public class cave
 	
 			if (cave_spritetype == 3)	/* pwrinst2 */
 			{
-				sprite->priority		=	((attr & 0x0010) >> 4)+2;
-				sprite->pal_data		=	base_pal + (attr & 0x3f00) + 0x4000*((attr & 0x0020) >> 5);
+				sprite.priority		=	((attr & 0x0010) >> 4)+2;
+				sprite.pal_data		=	base_pal + (attr & 0x3f00) + 0x4000*((attr & 0x0020) >> 5);
 			}
 			else
 			{
-				sprite->priority		=	(attr & 0x0030) >> 4;
-				sprite->pal_data		=	base_pal + (attr & 0x3f00);	// first 0x4000 colors
+				sprite.priority		=	(attr & 0x0030) >> 4;
+				sprite.pal_data		=	base_pal + (attr & 0x3f00);	// first 0x4000 colors
 			}
 	
-			sprite->flags			=	SPRITE_VISIBLE_CAVE;
-			sprite->line_offset		=	sprite->tile_width;
+			sprite.flags			=	SPRITE_VISIBLE_CAVE;
+			sprite.line_offset		=	sprite.tile_width;
 	
-			if (glob_flipx != 0)	{ x = max_x - x - sprite->total_width;	flipx = !flipx; }
-			if (glob_flipy != 0)	{ y = max_y - y - sprite->total_height;	flipy = !flipy; }
+			if (glob_flipx != 0)	{ x = max_x - x - sprite.total_width;	flipx = !flipx; }
+			if (glob_flipy != 0)	{ y = max_y - y - sprite.total_height;	flipy = !flipy; }
 	
-			sprite->x				=	x;
-			sprite->y				=	y;
+			sprite.x				=	x;
+			sprite.y				=	y;
 	
-			if (flipx != 0)	sprite->flags |= SPRITE_FLIPX_CAVE;
-			if (flipy != 0)	sprite->flags |= SPRITE_FLIPY_CAVE;
+			if (flipx != 0)	sprite.flags |= SPRITE_FLIPX_CAVE;
+			if (flipy != 0)	sprite.flags |= SPRITE_FLIPY_CAVE;
 	
 			sprite++;
 		}
@@ -732,15 +732,15 @@ public class cave
 	
 	static int sprite_init_cave(void)
 	{
-		struct mame_bitmap *bitmap = Machine->scrbitmap;
+		struct mame_bitmap *bitmap = Machine.scrbitmap;
 	
-		screen_width = Machine->scrbitmap->width;
-		screen_height = Machine->scrbitmap->height;
+		screen_width = Machine.scrbitmap.width;
+		screen_height = Machine.scrbitmap.height;
 	
 		blit.origin_x = 0;
 		blit.origin_y = 0;
-		blit.baseaddr = bitmap->line[0];
-		blit.line_offset = ((UINT8 *)bitmap->line[1])-((UINT8 *)bitmap->line[0]);
+		blit.baseaddr = bitmap.line[0];
+		blit.line_offset = ((UINT8 *)bitmap.line[1])-((UINT8 *)bitmap.line[0]);
 	
 		if (cave_spritetype == 0 || cave_spritetype == 2)	// most of the games
 		{
@@ -753,9 +753,9 @@ public class cave
 			cave_spritetype2 = 0;
 		}
 	
-		if(!(sprite_zbuf = auto_bitmap_alloc_depth( Machine->drv->screen_width, Machine->drv->screen_height, 16 ))) return 1;
-		blit.baseaddr_zbuf = sprite_zbuf->line[0];
-		blit.line_offset_zbuf = ((UINT8 *)sprite_zbuf->line[1])-((UINT8 *)sprite_zbuf->line[0]);
+		if(!(sprite_zbuf = auto_bitmap_alloc_depth( Machine.drv.screen_width, Machine.drv.screen_height, 16 ))) return 1;
+		blit.baseaddr_zbuf = sprite_zbuf.line[0];
+		blit.line_offset_zbuf = ((UINT8 *)sprite_zbuf.line[1])-((UINT8 *)sprite_zbuf.line[0]);
 	
 		num_sprites = spriteram_size / 0x10 / 2;
 		if(!(sprite_cave = auto_malloc( num_sprites * sizeof(struct sprite_cave) ))) return 1;
@@ -771,10 +771,10 @@ public class cave
 	static void cave_sprite_check( const struct rectangle *clip )
 	{
 		{	/* set clip */
-			int left = clip->min_x;
-			int top = clip->min_y;
-			int right = clip->max_x+1;
-			int bottom = clip->max_y+1;
+			int left = clip.min_x;
+			int top = clip.min_y;
+			int right = clip.max_x+1;
+			int bottom = clip.max_y+1;
 	
 			blit.clip_left = left;
 			blit.clip_top = top;
@@ -790,17 +790,17 @@ public class cave
 			int spritetype = cave_spritetype2;
 			while( sprite<finish )
 			{
-				if( sprite->x + sprite->total_width  > blit.clip_left && sprite->x < blit.clip_right  &&
-					sprite->y + sprite->total_height > blit.clip_top  && sprite->y < blit.clip_bottom    )
+				if( sprite.x + sprite.total_width  > blit.clip_left && sprite.x < blit.clip_right  &&
+					sprite.y + sprite.total_height > blit.clip_top  && sprite.y < blit.clip_bottom    )
 				{
-					sprite_table[sprite->priority][i[sprite->priority]++] = sprite;
+					sprite_table[sprite.priority][i[sprite.priority]++] = sprite;
 	
 					if(!(spritetype&CAVE_SPRITETYPE_ZBUF))
 					{
-						if(priority_check > sprite->priority)
+						if(priority_check > sprite.priority)
 							spritetype |= CAVE_SPRITETYPE_ZBUF;
 						else
-							priority_check = sprite->priority;
+							priority_check = sprite.priority;
 					}
 				}
 				sprite++;
@@ -819,19 +819,19 @@ public class cave
 	
 				case CAVE_SPRITETYPE_ZOOM | CAVE_SPRITETYPE_ZBUF:
 					cave_sprite_draw = sprite_draw_cave_zbuf;
-					if(!mame_get_performance_info()->partial_updates_this_frame)
+					if(!mame_get_performance_info().partial_updates_this_frame)
 					{
 						if(!(sprite_zbuf_baseval += MAX_SPRITE_NUM))
-							fillbitmap(sprite_zbuf,0,&Machine->visible_area);
+							fillbitmap(sprite_zbuf,0,&Machine.visible_area);
 					}
 					break;
 	
 				case CAVE_SPRITETYPE_ZBUF:
 					cave_sprite_draw = sprite_draw_donpachi_zbuf;
-					if(!mame_get_performance_info()->partial_updates_this_frame)
+					if(!mame_get_performance_info().partial_updates_this_frame)
 					{
 						if(!(sprite_zbuf_baseval += MAX_SPRITE_NUM))
-							fillbitmap(sprite_zbuf,0,&Machine->visible_area);
+							fillbitmap(sprite_zbuf,0,&Machine.visible_area);
 					}
 					break;
 	
@@ -846,62 +846,62 @@ public class cave
 		/*	assumes SPRITE_LIST_RAW_DATA flag is set */
 	
 		int x1,x2, y1,y2, dx,dy;
-		int xcount0 = 0x10000 + sprite->xcount0, ycount0 = 0x10000 + sprite->ycount0;
+		int xcount0 = 0x10000 + sprite.xcount0, ycount0 = 0x10000 + sprite.ycount0;
 	
-		if( sprite->flags & SPRITE_FLIPX_CAVE ){
-			x2 = sprite->x;
-			x1 = x2+sprite->total_width;
+		if( sprite.flags & SPRITE_FLIPX_CAVE ){
+			x2 = sprite.x;
+			x1 = x2+sprite.total_width;
 			dx = -1;
 			if( x2<blit.clip_left ) x2 = blit.clip_left;
 			if( x1>blit.clip_right ){
-				xcount0 += (x1-blit.clip_right)* sprite->zoomx_re;
+				xcount0 += (x1-blit.clip_right)* sprite.zoomx_re;
 				x1 = blit.clip_right;
-				while((xcount0&0xffff)>=sprite->zoomx_re){xcount0 += sprite->zoomx_re; x1--;}
+				while((xcount0&0xffff)>=sprite.zoomx_re){xcount0 += sprite.zoomx_re; x1--;}
 			}
 			if( x2>=x1 ) return;
 			x1--; x2--;
 		}
 		else {
-			x1 = sprite->x;
-			x2 = x1+sprite->total_width;
+			x1 = sprite.x;
+			x2 = x1+sprite.total_width;
 			dx = 1;
 			if( x1<blit.clip_left ){
-				xcount0 += (blit.clip_left-x1)*sprite->zoomx_re;
+				xcount0 += (blit.clip_left-x1)*sprite.zoomx_re;
 				x1 = blit.clip_left;
-				while((xcount0&0xffff)>=sprite->zoomx_re){xcount0 += sprite->zoomx_re; x1++;}
+				while((xcount0&0xffff)>=sprite.zoomx_re){xcount0 += sprite.zoomx_re; x1++;}
 			}
 			if( x2>blit.clip_right ) x2 = blit.clip_right;
 			if( x1>=x2 ) return;
 		}
-		if( sprite->flags & SPRITE_FLIPY_CAVE ){
-			y2 = sprite->y;
-			y1 = y2+sprite->total_height;
+		if( sprite.flags & SPRITE_FLIPY_CAVE ){
+			y2 = sprite.y;
+			y1 = y2+sprite.total_height;
 			dy = -1;
 			if( y2<blit.clip_top ) y2 = blit.clip_top;
 			if( y1>blit.clip_bottom ){
-				ycount0 += (y1-blit.clip_bottom)*sprite->zoomy_re;
+				ycount0 += (y1-blit.clip_bottom)*sprite.zoomy_re;
 				y1 = blit.clip_bottom;
-				while((ycount0&0xffff)>=sprite->zoomy_re){ycount0 += sprite->zoomy_re; y1--;}
+				while((ycount0&0xffff)>=sprite.zoomy_re){ycount0 += sprite.zoomy_re; y1--;}
 			}
 			if( y2>=y1 ) return;
 			y1--; y2--;
 		}
 		else {
-			y1 = sprite->y;
-			y2 = y1+sprite->total_height;
+			y1 = sprite.y;
+			y2 = y1+sprite.total_height;
 			dy = 1;
 			if( y1<blit.clip_top ){
-				ycount0 += (blit.clip_top-y1)*sprite->zoomy_re;
+				ycount0 += (blit.clip_top-y1)*sprite.zoomy_re;
 				y1 = blit.clip_top;
-				while((ycount0&0xffff)>=sprite->zoomy_re){ycount0 += sprite->zoomy_re; y1++;}
+				while((ycount0&0xffff)>=sprite.zoomy_re){ycount0 += sprite.zoomy_re; y1++;}
 			}
 			if( y2>blit.clip_bottom ) y2 = blit.clip_bottom;
 			if( y1>=y2 ) return;
 		}
 	
 		{
-			const unsigned char *pen_data = sprite->pen_data -1 -sprite->line_offset;
-			const pen_t         *pal_data = sprite->pal_data;
+			const unsigned char *pen_data = sprite.pen_data -1 -sprite.line_offset;
+			const pen_t         *pal_data = sprite.pal_data;
 			int x,y;
 			unsigned char pen;
 			int pitch = blit.line_offset*dy/2;
@@ -914,7 +914,7 @@ public class cave
 	
 				if ((ycount & 0xffff0000) != 0){
 					xcount = xcount0;
-					pen_data+=sprite->line_offset*(ycount>>16);
+					pen_data+=sprite.line_offset*(ycount>>16);
 					ycount &= 0xffff;
 					source = pen_data;
 					for( x=x1; x!=x2; x+=dx ){
@@ -924,10 +924,10 @@ public class cave
 							pen = *source;
 							if (pen != 0) dest[x] = pal_data[pen];
 						}
-						xcount += sprite->zoomx_re;
+						xcount += sprite.zoomx_re;
 					}
 				}
-				ycount += sprite->zoomy_re;
+				ycount += sprite.zoomy_re;
 				dest += pitch;
 			}
 		}
@@ -938,62 +938,62 @@ public class cave
 		/*	assumes SPRITE_LIST_RAW_DATA flag is set */
 	
 		int x1,x2, y1,y2, dx,dy;
-		int xcount0 = 0x10000 + sprite->xcount0, ycount0 = 0x10000 + sprite->ycount0;
+		int xcount0 = 0x10000 + sprite.xcount0, ycount0 = 0x10000 + sprite.ycount0;
 	
-		if( sprite->flags & SPRITE_FLIPX_CAVE ){
-			x2 = sprite->x;
-			x1 = x2+sprite->total_width;
+		if( sprite.flags & SPRITE_FLIPX_CAVE ){
+			x2 = sprite.x;
+			x1 = x2+sprite.total_width;
 			dx = -1;
 			if( x2<blit.clip_left ) x2 = blit.clip_left;
 			if( x1>blit.clip_right ){
-				xcount0 += (x1-blit.clip_right)* sprite->zoomx_re;
+				xcount0 += (x1-blit.clip_right)* sprite.zoomx_re;
 				x1 = blit.clip_right;
-				while((xcount0&0xffff)>=sprite->zoomx_re){xcount0 += sprite->zoomx_re; x1--;}
+				while((xcount0&0xffff)>=sprite.zoomx_re){xcount0 += sprite.zoomx_re; x1--;}
 			}
 			if( x2>=x1 ) return;
 			x1--; x2--;
 		}
 		else {
-			x1 = sprite->x;
-			x2 = x1+sprite->total_width;
+			x1 = sprite.x;
+			x2 = x1+sprite.total_width;
 			dx = 1;
 			if( x1<blit.clip_left ){
-				xcount0 += (blit.clip_left-x1)*sprite->zoomx_re;
+				xcount0 += (blit.clip_left-x1)*sprite.zoomx_re;
 				x1 = blit.clip_left;
-				while((xcount0&0xffff)>=sprite->zoomx_re){xcount0 += sprite->zoomx_re; x1++;}
+				while((xcount0&0xffff)>=sprite.zoomx_re){xcount0 += sprite.zoomx_re; x1++;}
 			}
 			if( x2>blit.clip_right ) x2 = blit.clip_right;
 			if( x1>=x2 ) return;
 		}
-		if( sprite->flags & SPRITE_FLIPY_CAVE ){
-			y2 = sprite->y;
-			y1 = y2+sprite->total_height;
+		if( sprite.flags & SPRITE_FLIPY_CAVE ){
+			y2 = sprite.y;
+			y1 = y2+sprite.total_height;
 			dy = -1;
 			if( y2<blit.clip_top ) y2 = blit.clip_top;
 			if( y1>blit.clip_bottom ){
-				ycount0 += (y1-blit.clip_bottom)*sprite->zoomy_re;
+				ycount0 += (y1-blit.clip_bottom)*sprite.zoomy_re;
 				y1 = blit.clip_bottom;
-				while((ycount0&0xffff)>=sprite->zoomy_re){ycount0 += sprite->zoomy_re; y1--;}
+				while((ycount0&0xffff)>=sprite.zoomy_re){ycount0 += sprite.zoomy_re; y1--;}
 			}
 			if( y2>=y1 ) return;
 			y1--; y2--;
 		}
 		else {
-			y1 = sprite->y;
-			y2 = y1+sprite->total_height;
+			y1 = sprite.y;
+			y2 = y1+sprite.total_height;
 			dy = 1;
 			if( y1<blit.clip_top ){
-				ycount0 += (blit.clip_top-y1)*sprite->zoomy_re;
+				ycount0 += (blit.clip_top-y1)*sprite.zoomy_re;
 				y1 = blit.clip_top;
-				while((ycount0&0xffff)>=sprite->zoomy_re){ycount0 += sprite->zoomy_re; y1++;}
+				while((ycount0&0xffff)>=sprite.zoomy_re){ycount0 += sprite.zoomy_re; y1++;}
 			}
 			if( y2>blit.clip_bottom ) y2 = blit.clip_bottom;
 			if( y1>=y2 ) return;
 		}
 	
 		{
-			const unsigned char *pen_data = sprite->pen_data -1 -sprite->line_offset;
-			const pen_t         *pal_data = sprite->pal_data;
+			const unsigned char *pen_data = sprite.pen_data -1 -sprite.line_offset;
+			const pen_t         *pal_data = sprite.pal_data;
 			int x,y;
 			unsigned char pen;
 			int pitch = blit.line_offset*dy/2;
@@ -1009,7 +1009,7 @@ public class cave
 	
 				if ((ycount & 0xffff0000) != 0){
 					xcount = xcount0;
-					pen_data+=sprite->line_offset*(ycount>>16);
+					pen_data+=sprite.line_offset*(ycount>>16);
 					ycount &= 0xffff;
 					source = pen_data;
 					for( x=x1; x!=x2; x+=dx ){
@@ -1022,10 +1022,10 @@ public class cave
 								zbf[x] = pri_sp;
 							}
 						}
-						xcount += sprite->zoomx_re;
+						xcount += sprite.zoomx_re;
 					}
 				}
-				ycount += sprite->zoomy_re;
+				ycount += sprite.zoomy_re;
 				dest += pitch;
 				zbf += pitchz;
 			}
@@ -1038,9 +1038,9 @@ public class cave
 		int x1,x2, y1,y2, dx,dy;
 		int xcount0 = 0, ycount0 = 0;
 	
-		if( sprite->flags & SPRITE_FLIPX_CAVE ){
-			x2 = sprite->x;
-			x1 = x2+sprite->total_width;
+		if( sprite.flags & SPRITE_FLIPX_CAVE ){
+			x2 = sprite.x;
+			x1 = x2+sprite.total_width;
 			dx = -1;
 			if( x2<blit.clip_left ) x2 = blit.clip_left;
 			if( x1>blit.clip_right ){
@@ -1051,8 +1051,8 @@ public class cave
 			x1--; x2--;
 		}
 		else {
-			x1 = sprite->x;
-			x2 = x1+sprite->total_width;
+			x1 = sprite.x;
+			x2 = x1+sprite.total_width;
 			dx = 1;
 			if( x1<blit.clip_left ){
 				xcount0 = blit.clip_left-x1;
@@ -1061,9 +1061,9 @@ public class cave
 			if( x2>blit.clip_right ) x2 = blit.clip_right;
 			if( x1>=x2 ) return;
 		}
-		if( sprite->flags & SPRITE_FLIPY_CAVE ){
-			y2 = sprite->y;
-			y1 = y2+sprite->total_height;
+		if( sprite.flags & SPRITE_FLIPY_CAVE ){
+			y2 = sprite.y;
+			y1 = y2+sprite.total_height;
 			dy = -1;
 			if( y2<blit.clip_top ) y2 = blit.clip_top;
 			if( y1>blit.clip_bottom ){
@@ -1074,8 +1074,8 @@ public class cave
 			y1--; y2--;
 		}
 		else {
-			y1 = sprite->y;
-			y2 = y1+sprite->total_height;
+			y1 = sprite.y;
+			y2 = y1+sprite.total_height;
 			dy = 1;
 			if( y1<blit.clip_top ){
 				ycount0 = blit.clip_top-y1;
@@ -1086,14 +1086,14 @@ public class cave
 		}
 	
 		{
-			const unsigned char *pen_data = sprite->pen_data;
-			const pen_t         *pal_data = sprite->pal_data;
+			const unsigned char *pen_data = sprite.pen_data;
+			const pen_t         *pal_data = sprite.pal_data;
 			int x,y;
 			unsigned char pen;
 			int pitch = blit.line_offset*dy/2;
 			UINT16 *dest = (UINT16 *)(blit.baseaddr + blit.line_offset*y1);
 	
-			pen_data+=sprite->line_offset*ycount0+xcount0;
+			pen_data+=sprite.line_offset*ycount0+xcount0;
 			for( y=y1; y!=y2; y+=dy ){
 				const unsigned char *source;
 				source = pen_data;
@@ -1102,7 +1102,7 @@ public class cave
 					if (pen != 0) dest[x] = pal_data[pen];
 					source++;
 				}
-				pen_data += sprite->line_offset;
+				pen_data += sprite.line_offset;
 				dest += pitch;
 			}
 		}
@@ -1115,9 +1115,9 @@ public class cave
 		int x1,x2, y1,y2, dx,dy;
 		int xcount0 = 0, ycount0 = 0;
 	
-		if( sprite->flags & SPRITE_FLIPX_CAVE ){
-			x2 = sprite->x;
-			x1 = x2+sprite->total_width;
+		if( sprite.flags & SPRITE_FLIPX_CAVE ){
+			x2 = sprite.x;
+			x1 = x2+sprite.total_width;
 			dx = -1;
 			if( x2<blit.clip_left ) x2 = blit.clip_left;
 			if( x1>blit.clip_right ){
@@ -1128,8 +1128,8 @@ public class cave
 			x1--; x2--;
 		}
 		else {
-			x1 = sprite->x;
-			x2 = x1+sprite->total_width;
+			x1 = sprite.x;
+			x2 = x1+sprite.total_width;
 			dx = 1;
 			if( x1<blit.clip_left ){
 				xcount0 = blit.clip_left-x1;
@@ -1138,9 +1138,9 @@ public class cave
 			if( x2>blit.clip_right ) x2 = blit.clip_right;
 			if( x1>=x2 ) return;
 		}
-		if( sprite->flags & SPRITE_FLIPY_CAVE ){
-			y2 = sprite->y;
-			y1 = y2+sprite->total_height;
+		if( sprite.flags & SPRITE_FLIPY_CAVE ){
+			y2 = sprite.y;
+			y1 = y2+sprite.total_height;
 			dy = -1;
 			if( y2<blit.clip_top ) y2 = blit.clip_top;
 			if( y1>blit.clip_bottom ){
@@ -1151,8 +1151,8 @@ public class cave
 			y1--; y2--;
 		}
 		else {
-			y1 = sprite->y;
-			y2 = y1+sprite->total_height;
+			y1 = sprite.y;
+			y2 = y1+sprite.total_height;
 			dy = 1;
 			if( y1<blit.clip_top ){
 				ycount0 = blit.clip_top-y1;
@@ -1163,8 +1163,8 @@ public class cave
 		}
 	
 		{
-			const unsigned char *pen_data = sprite->pen_data;
-			const pen_t         *pal_data = sprite->pal_data;
+			const unsigned char *pen_data = sprite.pen_data;
+			const pen_t         *pal_data = sprite.pal_data;
 			int x,y;
 			unsigned char pen;
 			int pitch = blit.line_offset*dy/2;
@@ -1173,7 +1173,7 @@ public class cave
 			UINT16 *zbf = (UINT16 *)(blit.baseaddr_zbuf + blit.line_offset_zbuf*y1);
 			UINT16 pri_sp = (UINT16)(sprite - sprite_cave) + sprite_zbuf_baseval;
 	
-			pen_data+=sprite->line_offset*ycount0+xcount0;
+			pen_data+=sprite.line_offset*ycount0+xcount0;
 			for( y=y1; y!=y2; y+=dy ){
 				const unsigned char *source;
 				source = pen_data;
@@ -1186,7 +1186,7 @@ public class cave
 					}
 					source++;
 				}
-				pen_data += sprite->line_offset;
+				pen_data += sprite.line_offset;
 				dest += pitch;
 				zbf += pitchz;
 			}
@@ -1200,7 +1200,7 @@ public class cave
 		while(sprite_table[priority][i])
 		{
 			const struct sprite_cave *sprite = sprite_table[priority][i++];
-			if ((sprite->tile_width == sprite->total_width) && (sprite->tile_height == sprite->total_height))
+			if ((sprite.tile_width == sprite.total_width) && (sprite.tile_height == sprite.total_height))
 				do_blit_16_cave( sprite );
 			else
 				do_blit_zoom16_cave( sprite );
@@ -1213,7 +1213,7 @@ public class cave
 		while(sprite_table[priority][i])
 		{
 			const struct sprite_cave *sprite = sprite_table[priority][i++];
-			if ((sprite->tile_width == sprite->total_width) && (sprite->tile_height == sprite->total_height))
+			if ((sprite.tile_width == sprite.total_width) && (sprite.tile_height == sprite.total_height))
 				do_blit_16_cave_zb( sprite );
 			else
 				do_blit_zoom16_cave_zb( sprite );
@@ -1343,14 +1343,14 @@ public class cave
 						become vertical) there may be graphical glitches.
 			*/
 	
-			clip.min_x = cliprect->min_x;
-			clip.max_x = cliprect->max_x;
+			clip.min_x = cliprect.min_x;
+			clip.max_x = cliprect.max_x;
 	
-			for(startline = cliprect->min_y; startline <= cliprect->max_y;)
+			for(startline = cliprect.min_y; startline <= cliprect.max_y;)
 			{
 				/* Find the largest slice */
 				vramdata0 = (vramdata1 = VRAM[(0x1002+(((sy+offs_row+startline)*4)&0x7ff))/2]);
-				for(endline = startline + 1; endline <= cliprect->max_y + 1; endline++)
+				for(endline = startline + 1; endline <= cliprect.max_y + 1; endline++)
 					if((++vramdata1) != VRAM[(0x1002+(((sy+offs_row+endline)*4)&0x7ff))/2]) break;
 	
 				tilemap_set_scrolly(TILEMAP, 0, vramdata0 - startline);
@@ -1381,8 +1381,8 @@ public class cave
 	
 				if (flipy != 0)
 				{
-					clip.min_y = cliprect->max_y - (endline-1 - cliprect->min_y);
-					clip.max_y = cliprect->max_y - (startline - cliprect->min_y);
+					clip.min_y = cliprect.max_y - (endline-1 - cliprect.min_y);
+					clip.max_y = cliprect.max_y - (startline - cliprect.min_y);
 				}
 				else
 				{
@@ -1399,7 +1399,7 @@ public class cave
 		{
 			int line;
 			tilemap_set_scroll_rows(TILEMAP,512);
-			for(line = cliprect->min_y; line <= cliprect->max_y; line++)
+			for(line = cliprect.min_y; line <= cliprect.max_y; line++)
 				tilemap_set_scrollx(	TILEMAP,
 										(line + sy) & 511,
 										sx + VRAM[(0x1000+(((sy+offs_row+line)*4)&0x7ff))/2] );
@@ -1513,7 +1513,7 @@ public class cave
 	
 		cave_sprite_check(cliprect);
 	
-		fillbitmap(bitmap,Machine->remapped_colortable[background_color],cliprect);
+		fillbitmap(bitmap,Machine.remapped_colortable[background_color],cliprect);
 	
 		/*
 			Tiles and sprites are ordered by priority (0 back, 3 front) with

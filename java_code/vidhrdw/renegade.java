@@ -115,7 +115,7 @@ public class renegade
 				}
 	
 			    if ((attributes & 0x80) != 0){ /* big sprite */
-			        drawgfx(bitmap,Machine->gfx[sprite_bank],
+			        drawgfx(bitmap,Machine.gfx[sprite_bank],
 			            sprite_number+1,
 			            color,
 			            xflip,flip_screen,
@@ -126,7 +126,7 @@ public class renegade
 				{
 					sy += (flip_screen ? -16 : 16);
 			    }
-			    drawgfx(bitmap,Machine->gfx[sprite_bank],
+			    drawgfx(bitmap,Machine.gfx[sprite_bank],
 			        sprite_number,
 			        color,
 			        xflip,flip_screen,

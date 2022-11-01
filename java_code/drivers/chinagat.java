@@ -583,7 +583,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	
@@ -621,7 +621,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100)	/* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100)	/* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	
@@ -655,7 +655,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	

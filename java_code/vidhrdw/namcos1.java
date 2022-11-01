@@ -7,7 +7,7 @@ package vidhrdw;
 public class namcos1
 {
 	
-	#define get_gfx_pointer(gfxelement,c,line) (gfxelement->gfxdata + (c*gfxelement->height+line) * gfxelement->line_modulo)
+	#define get_gfx_pointer(gfxelement,c,line) (gfxelement.gfxdata + (c*gfxelement.height+line) * gfxelement.line_modulo)
 	
 	#define SPRITECOLORS 2048
 	#define TILECOLORS 1536
@@ -365,7 +365,7 @@ public class namcos1
 		int offs, flags;
 		unsigned primask;
 	
-		gfx = Machine->gfx[1];
+		gfx = Machine.gfx[1];
 	
 		/* the last 0x10 bytes are control registers, not a sprite */
 		for (offs=0x7e0; offs>=0; offs-=0x10)
@@ -405,10 +405,10 @@ public class namcos1
 			rect.min_y=sy;
 			rect.max_y=sy+(height-1);
 	
-			if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
-			if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
-			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
-			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
+			if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
+			if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
+			if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
+			if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
 	
 			if (flipx != 0) sx -= 32-width-left;
 			else sx -= left;
@@ -434,7 +434,7 @@ public class namcos1
 		int width,height,left,top;
 		int offs, flags;
 	
-		gfx = Machine->gfx[1];
+		gfx = Machine.gfx[1];
 	
 		/* the last 0x10 bytes are control registers, not a sprite */
 		for (offs = 0;offs < 0x800-0x10;offs += 0x10)
@@ -475,10 +475,10 @@ public class namcos1
 			rect.min_y=sy;
 			rect.max_y=sy+(height-1);
 	
-			if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
-			if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
-			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
-			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
+			if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
+			if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
+			if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
+			if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
 	
 			if (flipx != 0) sx -= 32-width-left;
 			else sx -= left;
@@ -539,7 +539,7 @@ public class namcos1
 	#endif
 	
 		/* background color */
-		fillbitmap(bitmap, Machine->pens[BACKGROUNDCOLOR], cliprect);
+		fillbitmap(bitmap, Machine.pens[BACKGROUNDCOLOR], cliprect);
 	
 		/* bit 0-2 priority */
 		/* bit 3   disable	*/
@@ -609,12 +609,12 @@ public class namcos1
 	
 		for (i = 0;i < TILECOLORS;i++)
 		{
-			palette_shadow_table[Machine->pens[i+SPRITECOLORS]] = Machine->pens[i+SPRITECOLORS+TILECOLORS];
+			palette_shadow_table[Machine.pens[i+SPRITECOLORS]] = Machine.pens[i+SPRITECOLORS+TILECOLORS];
 		}
 	
 		update_status = 0 | USE_SP_BUFFER;
 		idle_counter = 0;
-		idle_threshold = Machine->drv->frames_per_second / 2;
+		idle_threshold = Machine.drv.frames_per_second / 2;
 	
 		switch (namcos1_game_id) // custom settings
 		{
@@ -698,7 +698,7 @@ public class namcos1
 		if (update_status & UPDATE_TIED && update_status & USE_SP_BUFFER)
 			memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
 	
-		namcos1_draw_screen(Machine->scrbitmap, &Machine->visible_area);
+		namcos1_draw_screen(Machine.scrbitmap, &Machine.visible_area);
 	} };
 	
 	public static WriteHandlerPtr namcos1_sub_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -82,7 +82,7 @@ public class amspdwy
 	} };
 	
 	
-	/* logical (col,row) -> memory offset */
+	/* logical (col,row) . memory offset */
 	UINT32 tilemap_scan_cols_back( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
 		return col*num_rows + (num_rows - row - 1);
@@ -121,8 +121,8 @@ public class amspdwy
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
 		int i;
-		int max_x = Machine->drv->screen_width  - 1;
-		int max_y = Machine->drv->screen_height - 1;
+		int max_x = Machine.drv.screen_width  - 1;
+		int max_y = Machine.drv.screen_height - 1;
 	
 		for (i = 0; i < spriteram_size ; i += 4)
 		{
@@ -139,7 +139,7 @@ public class amspdwy
 				flipx = !flipx;	flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 	//				code + ((attr & 0x18)<<5),
 					code + ((attr & 0x08)<<5),
 					attr,

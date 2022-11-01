@@ -105,7 +105,7 @@ public class midwayic
 	
 	static void generate_serial_data(int upper)
 	{
-		int year = atoi(Machine->gamedrv->year), month = 12, day = 11;
+		int year = atoi(Machine.gamedrv.year), month = 12, day = 11;
 		UINT32 serial_number, temp;
 		UINT8 serial_digit[9];
 	
@@ -338,13 +338,13 @@ public class midwayic
 					/* stuff it into the data bytes */
 					pic.index = 0;
 					pic.total = 0;
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_sec);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_min);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_hour);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_wday + 1);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_mday);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_mon + 1);
-					pic.buffer[pic.total++] = make_bcd(exptime->tm_year - pic.yearoffs);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_sec);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_min);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_hour);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_wday + 1);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_mday);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_mon + 1);
+					pic.buffer[pic.total++] = make_bcd(exptime.tm_year - pic.yearoffs);
 					break;
 				}
 	

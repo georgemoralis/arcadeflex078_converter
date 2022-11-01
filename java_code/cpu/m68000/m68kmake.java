@@ -309,7 +309,7 @@ public class m68kmake
 		{"le", "LE"}, /* 1111 */
 	};
 	
-	/* size to index translator (0 -> 0, 8 and 16 -> 1, 32 -> 2) */
+	/* size to index translator (0 . 0, 8 and 16 . 1, 32 . 2) */
 	int g_size_select_table[33] =
 	{
 		0,												/* unsized */
@@ -605,41 +605,41 @@ public class m68kmake
 	/* Calculate the number of cycles an opcode requires */
 	int get_oper_cycles(opcode_struct* op, int ea_mode, int cpu_type)
 	{
-		int size = g_size_select_table[op->size];
+		int size = g_size_select_table[op.size];
 	
-		if(op->cpus[cpu_type] == '.')
+		if(op.cpus[cpu_type] == '.')
 			return 0;
 	
 		if(cpu_type < CPU_TYPE_020)
 		{
 			if(cpu_type == CPU_TYPE_010)
 			{
-				if(strcmp(op->name, "moves") == 0)
-					return op->cycles[cpu_type] + g_moves_cycle_table[ea_mode][size];
-				if(strcmp(op->name, "clr") == 0)
-					return op->cycles[cpu_type] + g_clr_cycle_table[ea_mode][size];
+				if(strcmp(op.name, "moves") == 0)
+					return op.cycles[cpu_type] + g_moves_cycle_table[ea_mode][size];
+				if(strcmp(op.name, "clr") == 0)
+					return op.cycles[cpu_type] + g_clr_cycle_table[ea_mode][size];
 			}
 	
 			/* ASG: added these cases -- immediate modes take 2 extra cycles here */
 			if(cpu_type == CPU_TYPE_000 && ea_mode == EA_MODE_I &&
-			   ((strcmp(op->name, "add") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-				strcmp(op->name, "adda")   == 0                                    ||
-				(strcmp(op->name, "and") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-				(strcmp(op->name, "or") == 0 && strcmp(op->spec_proc, "er") == 0)  ||
-				(strcmp(op->name, "sub") == 0 && strcmp(op->spec_proc, "er") == 0) ||
-				strcmp(op->name, "suba")   == 0))
-				return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size] + 2;
+			   ((strcmp(op.name, "add") == 0 && strcmp(op.spec_proc, "er") == 0) ||
+				strcmp(op.name, "adda")   == 0                                    ||
+				(strcmp(op.name, "and") == 0 && strcmp(op.spec_proc, "er") == 0) ||
+				(strcmp(op.name, "or") == 0 && strcmp(op.spec_proc, "er") == 0)  ||
+				(strcmp(op.name, "sub") == 0 && strcmp(op.spec_proc, "er") == 0) ||
+				strcmp(op.name, "suba")   == 0))
+				return op.cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size] + 2;
 	
-			if(strcmp(op->name, "jmp") == 0)
-				return op->cycles[cpu_type] + g_jmp_cycle_table[ea_mode];
-			if(strcmp(op->name, "jsr") == 0)
-				return op->cycles[cpu_type] + g_jsr_cycle_table[ea_mode];
-			if(strcmp(op->name, "lea") == 0)
-				return op->cycles[cpu_type] + g_lea_cycle_table[ea_mode];
-			if(strcmp(op->name, "pea") == 0)
-				return op->cycles[cpu_type] + g_pea_cycle_table[ea_mode];
+			if(strcmp(op.name, "jmp") == 0)
+				return op.cycles[cpu_type] + g_jmp_cycle_table[ea_mode];
+			if(strcmp(op.name, "jsr") == 0)
+				return op.cycles[cpu_type] + g_jsr_cycle_table[ea_mode];
+			if(strcmp(op.name, "lea") == 0)
+				return op.cycles[cpu_type] + g_lea_cycle_table[ea_mode];
+			if(strcmp(op.name, "pea") == 0)
+				return op.cycles[cpu_type] + g_pea_cycle_table[ea_mode];
 		}
-		return op->cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size];
+		return op.cycles[cpu_type] + g_ea_cycle_table[ea_mode][cpu_type][size];
 	}
 	
 	/* Find an opcode in the opcode handler list */
@@ -648,12 +648,12 @@ public class m68kmake
 		opcode_struct* op;
 	
 	
-		for(op = g_opcode_input_table;op->name != NULL;op++)
+		for(op = g_opcode_input_table;op.name != NULL;op++)
 		{
-			if(	strcmp(name, op->name) == 0 &&
-				(size == op->size) &&
-				strcmp(spec_proc, op->spec_proc) == 0 &&
-				strcmp(spec_ea, op->spec_ea) == 0)
+			if(	strcmp(name, op.name) == 0 &&
+				(size == op.size) &&
+				strcmp(spec_proc, op.spec_proc) == 0 &&
+				strcmp(spec_ea, op.spec_ea) == 0)
 					return op;
 		}
 		return NULL;
@@ -664,9 +664,9 @@ public class m68kmake
 	{
 		opcode_struct* op;
 	
-		for(op = g_opcode_input_table;op->name != NULL;op++)
+		for(op = g_opcode_input_table;op.name != NULL;op++)
 		{
-			if(strcmp(op->name, "illegal") == 0)
+			if(strcmp(op.name, "illegal") == 0)
 				return op;
 		}
 		return NULL;
@@ -710,11 +710,11 @@ public class m68kmake
 	/* Add a search/replace pair to a replace structure */
 	void add_replace_string(replace_struct* replace, const char* search_str, const char* replace_str)
 	{
-		if(replace->length >= MAX_REPLACE_LENGTH)
+		if(replace.length >= MAX_REPLACE_LENGTH)
 			error_exit("overflow in replace structure");
 	
-		strcpy(replace->replace[replace->length][0], search_str);
-		strcpy(replace->replace[replace->length++][1], replace_str);
+		strcpy(replace.replace[replace.length][0], search_str);
+		strcpy(replace.replace[replace.length++][1], replace_str);
 	}
 	
 	/* Write a function body while replacing any selected strings */
@@ -727,23 +727,23 @@ public class m68kmake
 		char temp_buff[MAX_LINE_LENGTH+1];
 		int found;
 	
-		for(i=0;i<body->length;i++)
+		for(i=0;i<body.length;i++)
 		{
-			strcpy(output, body->body[i]);
+			strcpy(output, body.body[i]);
 			/* Check for the base directive header */
 			if(strstr(output, ID_BASE) != NULL)
 			{
 				/* Search for any text we need to replace */
 				found = 0;
-				for(j=0;j<replace->length;j++)
+				for(j=0;j<replace.length;j++)
 				{
-					ptr = strstr(output, replace->replace[j][0]);
+					ptr = strstr(output, replace.replace[j][0]);
 					if (ptr != 0)
 					{
 						/* We found something to replace */
 						found = 1;
-						strcpy(temp_buff, ptr+strlen(replace->replace[j][0]));
-						strcpy(ptr, replace->replace[j][1]);
+						strcpy(temp_buff, ptr+strlen(replace.replace[j][0]));
+						strcpy(ptr, replace.replace[j][1]);
 						strcat(ptr, temp_buff);
 					}
 				}
@@ -759,13 +759,13 @@ public class m68kmake
 	/* Generate a base function name from an opcode struct */
 	void get_base_name(char* base_name, opcode_struct* op)
 	{
-		sprintf(base_name, "m68k_op_%s", op->name);
-		if(op->size > 0)
-			sprintf(base_name+strlen(base_name), "_%d", op->size);
-		if(strcmp(op->spec_proc, UNSPECIFIED) != 0)
-			sprintf(base_name+strlen(base_name), "_%s", op->spec_proc);
-		if(strcmp(op->spec_ea, UNSPECIFIED) != 0)
-			sprintf(base_name+strlen(base_name), "_%s", op->spec_ea);
+		sprintf(base_name, "m68k_op_%s", op.name);
+		if(op.size > 0)
+			sprintf(base_name+strlen(base_name), "_%d", op.size);
+		if(strcmp(op.spec_proc, UNSPECIFIED) != 0)
+			sprintf(base_name+strlen(base_name), "_%s", op.spec_proc);
+		if(strcmp(op.spec_ea, UNSPECIFIED) != 0)
+			sprintf(base_name+strlen(base_name), "_%s", op.spec_ea);
 	}
 	
 	/* Write the prototype of an opcode handler function */
@@ -789,8 +789,8 @@ public class m68kmake
 		ptr = g_opcode_output_table + g_opcode_output_table_length++;
 	
 		*ptr = *op;
-		strcpy(ptr->name, name);
-		ptr->bits = num_bits(ptr->op_mask);
+		strcpy(ptr.name, name);
+		ptr.bits = num_bits(ptr.op_mask);
 	}
 	
 	/*
@@ -801,11 +801,11 @@ public class m68kmake
 	static int DECL_SPEC compare_nof_true_bits(const void* aptr, const void* bptr)
 	{
 		const opcode_struct *a = aptr, *b = bptr;
-		if(a->bits != b->bits)
-			return a->bits - b->bits;
-		if(a->op_mask != b->op_mask)
-			return a->op_mask - b->op_mask;
-		return a->op_match - b->op_match;
+		if(a.bits != b.bits)
+			return a.bits - b.bits;
+		if(a.op_mask != b.op_mask)
+			return a.op_mask - b.op_mask;
+		return a.op_match - b.op_match;
 	}
 	
 	void print_opcode_output_table(FILE* filep)
@@ -823,11 +823,11 @@ public class m68kmake
 		int i;
 	
 		fprintf(filep, "\t{%-28s, 0x%04x, 0x%04x, {",
-			op->name, op->op_mask, op->op_match);
+			op.name, op.op_mask, op.op_match);
 	
 		for(i=0;i<NUM_CPUS;i++)
 		{
-			fprintf(filep, "%3d", op->cycles[i]);
+			fprintf(filep, "%3d", op.cycles[i]);
 			if(i < NUM_CPUS-1)
 				fprintf(filep, ", ");
 		}
@@ -843,11 +843,11 @@ public class m68kmake
 		*dst = *src;
 	
 		for(i=0;i<NUM_CPUS;i++)
-			dst->cycles[i] = get_oper_cycles(dst, ea_mode, i);
-		if(strcmp(dst->spec_ea, UNSPECIFIED) == 0 && ea_mode != EA_MODE_NONE)
-			sprintf(dst->spec_ea, "%s", g_ea_info_table[ea_mode].fname_add);
-		dst->op_mask |= g_ea_info_table[ea_mode].mask_add;
-		dst->op_match |= g_ea_info_table[ea_mode].match_add;
+			dst.cycles[i] = get_oper_cycles(dst, ea_mode, i);
+		if(strcmp(dst.spec_ea, UNSPECIFIED) == 0 && ea_mode != EA_MODE_NONE)
+			sprintf(dst.spec_ea, "%s", g_ea_info_table[ea_mode].fname_add);
+		dst.op_mask |= g_ea_info_table[ea_mode].mask_add;
+		dst.op_match |= g_ea_info_table[ea_mode].match_add;
 	}
 	
 	
@@ -890,56 +890,56 @@ public class m68kmake
 	/* Generate opcode variants based on available addressing modes */
 	void generate_opcode_ea_variants(FILE* filep, body_struct* body, replace_struct* replace, opcode_struct* op)
 	{
-		int old_length = replace->length;
+		int old_length = replace.length;
 	
 		/* No ea modes available for this opcode */
-		if(HAS_NO_EA_MODE(op->ea_allowed))
+		if(HAS_NO_EA_MODE(op.ea_allowed))
 		{
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_NONE);
 			return;
 		}
 	
 		/* Check for and create specific opcodes for each available addressing mode */
-		if(HAS_EA_AI(op->ea_allowed))
+		if(HAS_EA_AI(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_AI);
-		replace->length = old_length;
-		if(HAS_EA_PI(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_PI(op.ea_allowed))
 		{
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PI);
-			replace->length = old_length;
-			if(op->size == 8)
+			replace.length = old_length;
+			if(op.size == 8)
 				generate_opcode_handler(filep, body, replace, op, EA_MODE_PI7);
 		}
-		replace->length = old_length;
-		if(HAS_EA_PD(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_PD(op.ea_allowed))
 		{
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PD);
-			replace->length = old_length;
-			if(op->size == 8)
+			replace.length = old_length;
+			if(op.size == 8)
 				generate_opcode_handler(filep, body, replace, op, EA_MODE_PD7);
 		}
-		replace->length = old_length;
-		if(HAS_EA_DI(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_DI(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_DI);
-		replace->length = old_length;
-		if(HAS_EA_IX(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_IX(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_IX);
-		replace->length = old_length;
-		if(HAS_EA_AW(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_AW(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_AW);
-		replace->length = old_length;
-		if(HAS_EA_AL(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_AL(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_AL);
-		replace->length = old_length;
-		if(HAS_EA_PCDI(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_PCDI(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PCDI);
-		replace->length = old_length;
-		if(HAS_EA_PCIX(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_PCIX(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_PCIX);
-		replace->length = old_length;
-		if(HAS_EA_I(op->ea_allowed))
+		replace.length = old_length;
+		if(HAS_EA_I(op.ea_allowed))
 			generate_opcode_handler(filep, body, replace, op, EA_MODE_I);
-		replace->length = old_length;
+		replace.length = old_length;
 	}
 	
 	/* Generate variants of condition code opcodes */
@@ -948,12 +948,12 @@ public class m68kmake
 		char repl[20];
 		char replnot[20];
 		int i;
-		int old_length = replace->length;
+		int old_length = replace.length;
 		opcode_struct* op = malloc(sizeof(opcode_struct));
 	
 		*op = *op_in;
 	
-		op->op_mask |= 0x0f00;
+		op.op_mask |= 0x0f00;
 	
 		/* Do all condition codes except t and f */
 		for(i=2;i<16;i++)
@@ -966,14 +966,14 @@ public class m68kmake
 			add_replace_string(replace, ID_OPHANDLER_NOT_CC, replnot);
 	
 			/* Set the new opcode info */
-			strcpy(op->name+offset, g_cc_table[i][0]);
+			strcpy(op.name+offset, g_cc_table[i][0]);
 	
-			op->op_match = (op->op_match & 0xf0ff) | (i<<8);
+			op.op_match = (op.op_match & 0xf0ff) | (i<<8);
 	
 			/* Generate all opcode variants for this modified opcode */
 			generate_opcode_ea_variants(filep, body, replace, op);
 			/* Remove the above replace strings */
-			replace->length = old_length;
+			replace.length = old_length;
 		}
 		free(op);
 	}
@@ -1011,17 +1011,17 @@ public class m68kmake
 					error_exit("Premature end of file when getting function name");
 			}
 			/* Get the rest of the function */
-			for(body->length=0;;body->length++)
+			for(body.length=0;;body.length++)
 			{
-				if(body->length > MAX_BODY_LENGTH)
+				if(body.length > MAX_BODY_LENGTH)
 					error_exit("Function too long");
 	
-				if(fgetline(body->body[body->length], MAX_LINE_LENGTH, input_file) < 0)
+				if(fgetline(body.body[body.length], MAX_LINE_LENGTH, input_file) < 0)
 					error_exit("Premature end of file when getting function body");
 	
-				if(body->body[body->length][0] == '}')
+				if(body.body[body.length][0] == '}')
 				{
-					body->length++;
+					body.length++;
 					break;
 				}
 			}
@@ -1043,14 +1043,14 @@ public class m68kmake
 			else if(output_file == g_ops_dm_file && oper_name[0] > 'm')
 				output_file = g_ops_nz_file;
 	
-			replace->length = 0;
+			replace.length = 0;
 	
 			/* Generate opcode variants */
-			if(strcmp(opinfo->name, "bcc") == 0 || strcmp(opinfo->name, "scc") == 0)
+			if(strcmp(opinfo.name, "bcc") == 0 || strcmp(opinfo.name, "scc") == 0)
 				generate_opcode_cc_variants(output_file, body, replace, opinfo, 1);
-			else if(strcmp(opinfo->name, "dbcc") == 0)
+			else if(strcmp(opinfo.name, "dbcc") == 0)
 				generate_opcode_cc_variants(output_file, body, replace, opinfo, 2);
-			else if(strcmp(opinfo->name, "trapcc") == 0)
+			else if(strcmp(opinfo.name, "trapcc") == 0)
 				generate_opcode_cc_variants(output_file, body, replace, opinfo, 4);
 			else
 				generate_opcode_ea_variants(output_file, body, replace, opinfo);
@@ -1094,20 +1094,20 @@ public class m68kmake
 	
 			/* Name */
 			ptr += skip_spaces(ptr);
-			ptr += check_strsncpy(op->name, ptr, MAX_NAME_LENGTH);
+			ptr += check_strsncpy(op.name, ptr, MAX_NAME_LENGTH);
 	
 			/* Size */
 			ptr += skip_spaces(ptr);
 			ptr += check_atoi(ptr, &temp);
-			op->size = (unsigned char)temp;
+			op.size = (unsigned char)temp;
 	
 			/* Special processing */
 			ptr += skip_spaces(ptr);
-			ptr += check_strsncpy(op->spec_proc, ptr, MAX_SPEC_PROC_LENGTH);
+			ptr += check_strsncpy(op.spec_proc, ptr, MAX_SPEC_PROC_LENGTH);
 	
 			/* Specified EA Mode */
 			ptr += skip_spaces(ptr);
-			ptr += check_strsncpy(op->spec_ea, ptr, MAX_SPEC_EA_LENGTH);
+			ptr += check_strsncpy(op.spec_ea, ptr, MAX_SPEC_EA_LENGTH);
 	
 			/* Bit Pattern (more processing later) */
 			ptr += skip_spaces(ptr);
@@ -1115,13 +1115,13 @@ public class m68kmake
 	
 			/* Allowed Addressing Mode List */
 			ptr += skip_spaces(ptr);
-			ptr += check_strsncpy(op->ea_allowed, ptr, EA_ALLOWED_LENGTH);
+			ptr += check_strsncpy(op.ea_allowed, ptr, EA_ALLOWED_LENGTH);
 	
 			/* CPU operating mode (U = user or supervisor, S = supervisor only */
 			ptr += skip_spaces(ptr);
 			for(i=0;i<NUM_CPUS;i++)
 			{
-				op->cpu_mode[i] = *ptr++;
+				op.cpu_mode[i] = *ptr++;
 				ptr += skip_spaces(ptr);
 			}
 	
@@ -1131,29 +1131,29 @@ public class m68kmake
 				ptr += skip_spaces(ptr);
 				if(*ptr == UNSPECIFIED_CH)
 				{
-					op->cpus[i] = UNSPECIFIED_CH;
-					op->cycles[i] = 0;
+					op.cpus[i] = UNSPECIFIED_CH;
+					op.cycles[i] = 0;
 					ptr++;
 				}
 				else
 				{
-					op->cpus[i] = '0' + i;
+					op.cpus[i] = '0' + i;
 					ptr += check_atoi(ptr, &temp);
-					op->cycles[i] = (unsigned char)temp;
+					op.cycles[i] = (unsigned char)temp;
 				}
 			}
 	
 			/* generate mask and match from bitpattern */
-			op->op_mask = 0;
-			op->op_match = 0;
+			op.op_mask = 0;
+			op.op_match = 0;
 			for(i=0;i<16;i++)
 			{
-				op->op_mask |= (bitpattern[i] != '.') << (15-i);
-				op->op_match |= (bitpattern[i] == '1') << (15-i);
+				op.op_mask |= (bitpattern[i] != '.') << (15-i);
+				op.op_match |= (bitpattern[i] == '1') << (15-i);
 			}
 		}
 		/* Terminate the list */
-		op->name[0] = 0;
+		op.name[0] = 0;
 	}
 	
 	/* Read a header or footer insert from the input file */

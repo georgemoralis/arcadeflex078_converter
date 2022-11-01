@@ -168,7 +168,7 @@ public class tail2nos
 			flipx = spriteram16[offs + 2] & 0x1000;
 			flipy = spriteram16[offs + 2] & 0x0800;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					40 + color,
 					flipx,flipy,
@@ -209,7 +209,7 @@ public class tail2nos
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine->gfx[2],i,(UINT8 *)zoomdata,&tilelayout);
+					decodechar(Machine.gfx[2],i,(UINT8 *)zoomdata,&tilelayout);
 				}
 			}
 	
@@ -224,6 +224,6 @@ public class tail2nos
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		}
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	} };
 }

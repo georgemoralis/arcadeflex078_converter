@@ -93,7 +93,7 @@ public class jrpacman
 		memset(dirtybuffer,1,videoram_size);
 	
 		/* Jr. Pac Man has a virtual screen twice as large as the visible screen */
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,2*Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,2*Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -211,7 +211,7 @@ public class jrpacman
 							sy = 55 - sy;
 						}
 	
-						drawgfx(tmpbitmap,Machine->gfx[0],
+						drawgfx(tmpbitmap,Machine.gfx[0],
 								videoram.read(offs)+ 256 * *jrpacman_charbank,
 							/* color is set line by line */
 								(videoram.read(mx)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
@@ -232,7 +232,7 @@ public class jrpacman
 								sy = 55 - sy;
 							}
 	
-							drawgfx(tmpbitmap,Machine->gfx[0],
+							drawgfx(tmpbitmap,Machine.gfx[0],
 									videoram.read(offs),
 									(videoram.read(offs + 4*32)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 											+ 0x40 * (*jrpacman_palettebank & 1),
@@ -250,7 +250,7 @@ public class jrpacman
 								sy = 55 - sy;
 							}
 	
-							drawgfx(tmpbitmap,Machine->gfx[0],
+							drawgfx(tmpbitmap,Machine.gfx[0],
 									videoram.read(offs)+ 0x100 * (*jrpacman_charbank & 1),
 									(videoram.read(offs + 4*32)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 											+ 0x40 * (*jrpacman_palettebank & 1),
@@ -281,35 +281,35 @@ public class jrpacman
 		}
 	
 		if (*jrpacman_bgpriority & 1)
-			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		else
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		/* Draw the sprites. Note that it is important to draw them exactly in this */
 		/* order, to have the correct priorities. */
 		for (offs = spriteram_size - 2;offs > 2*2;offs -= 2)
 		{
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)>> 2) + 0x40 * (*jrpacman_spritebank & 1),
 					(spriteram.read(offs + 1)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					272 - spriteram_2[offs + 1],spriteram_2[offs]-31,
-					&Machine->visible_area,TRANSPARENCY_COLOR,0);
+					&Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 		/* the first two sprites must be offset one pixel to the left */
 		for (offs = 2*2;offs > 0;offs -= 2)
 		{
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)>> 2) + 0x40 * (*jrpacman_spritebank & 1),
 					(spriteram.read(offs + 1)& 0x1f) + 0x20 * (*jrpacman_colortablebank & 1)
 							+ 0x40 * (*jrpacman_palettebank & 1),
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
 					272 - spriteram_2[offs + 1],spriteram_2[offs]-30,
-					&Machine->visible_area,TRANSPARENCY_COLOR,0);
+					&Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 		if (*jrpacman_bgpriority & 1)
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine->visible_area,TRANSPARENCY_COLOR,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,36,scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,0);
 	} };
 }

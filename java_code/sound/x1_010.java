@@ -119,16 +119,16 @@ public class x1_010
 	
 		for( ch = 0; ch < SETA_NUM_CHANNELS; ch++ ) {
 			reg = (X1_010_CHANNEL *)&(x1_010_reg[ch*sizeof(X1_010_CHANNEL)]);
-			if( (reg->status&1) != 0 ) {							// Key On
+			if( (reg.status&1) != 0 ) {							// Key On
 				INT16 *bufL = buffer[0];
 				INT16 *bufR = buffer[1];
-				if( (reg->status&2) == 0 ) {						// PCM sampling
-					start    = (INT8 *)(reg->start      *0x1000+memory_region(REGION_SOUND1));
-					end      = (INT8 *)((0x100-reg->end)*0x1000+memory_region(REGION_SOUND1));
-					volL     = ((reg->volume>>4)&0xf)*VOL_BASE;
-					volR     = ((reg->volume>>0)&0xf)*VOL_BASE;
+				if( (reg.status&2) == 0 ) {						// PCM sampling
+					start    = (INT8 *)(reg.start      *0x1000+memory_region(REGION_SOUND1));
+					end      = (INT8 *)((0x100-reg.end)*0x1000+memory_region(REGION_SOUND1));
+					volL     = ((reg.volume>>4)&0xf)*VOL_BASE;
+					volR     = ((reg.volume>>0)&0xf)*VOL_BASE;
 					smp_offs = smp_offset[ch];
-					freq     = reg->frequency&0x1f;
+					freq     = reg.frequency&0x1f;
 					// Meta Fox does not write the frequency register. Ever
 					if( freq == 0 ) freq = 4;
 					smp_step = (UINT32)((float)base_clock/8192.0
@@ -143,7 +143,7 @@ public class x1_010
 						delta = smp_offs>>FREQ_BASE_BITS;
 						// sample ended?
 						if( start+delta >= end ) {
-							reg->status &= 0xfe;					// Key off
+							reg.status &= 0xfe;					// Key off
 							break;
 						}
 						data = *(start+delta);
@@ -153,27 +153,27 @@ public class x1_010
 					}
 					smp_offset[ch] = smp_offs;
 				} else {											// Wave form
-					start    = (INT8 *)&(x1_010_reg[reg->volume*128+0x1000]);
+					start    = (INT8 *)&(x1_010_reg[reg.volume*128+0x1000]);
 					smp_offs = smp_offset[ch];
-					freq     = (reg->pitch_hi<<8)+reg->frequency;
+					freq     = (reg.pitch_hi<<8)+reg.frequency;
 					smp_step = (UINT32)((float)base_clock/128.0/1024.0/4.0*freq*(1<<FREQ_BASE_BITS)/(float)rate);
 	
-					env      = (UINT8 *)&(x1_010_reg[reg->end*128]);
+					env      = (UINT8 *)&(x1_010_reg[reg.end*128]);
 					env_offs = env_offset[ch];
-					env_step = (UINT32)((float)base_clock/128.0/1024.0/4.0*reg->start*(1<<ENV_BASE_BITS)/(float)rate);
+					env_step = (UINT32)((float)base_clock/128.0/1024.0/4.0*reg.start*(1<<ENV_BASE_BITS)/(float)rate);
 	#if LOG_SOUND
 	/* Print some more debug info */
 					if( smp_offs == 0 ) {
 						logerror( "Play waveform %X, channel %X volume %X freq %4X step %X offset %X\n",
-							reg->volume, ch, reg->end, freq, smp_step, smp_offs );
+							reg.volume, ch, reg.end, freq, smp_step, smp_offs );
 					}
 	#endif
 					for( i = 0; i < length; i++ ) {
 						int vol;
 						delta = env_offs>>ENV_BASE_BITS;
 		 				// Envelope one shot mode
-						if( (reg->status&4) != 0 && delta >= 0x80 ) {
-							reg->status &= 0xfe;					// Key off
+						if( (reg.status&4) != 0 && delta >= 0x80 ) {
+							reg.status &= 0xfe;					// Key off
 							break;
 						}
 						vol = *(env+(delta&0x7f));
@@ -197,14 +197,14 @@ public class x1_010
 	int seta_sh_start( const struct MachineSound *msound )
 	{
 		int i,j;
-		struct x1_010_interface *intf = (struct x1_010_interface*)msound->sound_interface;
+		struct x1_010_interface *intf = (struct x1_010_interface*)msound.sound_interface;
 		char buf[2][40];
 		const char *name[2];
 		int mixed_vol,vol[2];
 	
-		base_clock	= intf->clock;
-		rate		= Machine->sample_rate;
-		address		= intf->adr;
+		base_clock	= intf.clock;
+		rate		= Machine.sample_rate;
+		address		= intf.adr;
 	
 		for( i = 0; i < SETA_NUM_CHANNELS; i++ ) {
 			smp_offset[i] = 0;
@@ -215,7 +215,7 @@ public class x1_010
 		logerror("masterclock = %d rate = %d\n", master_clock, rate );
 	#endif
 		/* get stream channels */
-		mixed_vol = intf->volume;
+		mixed_vol = intf.volume;
 		/* stream setup */
 		for (j = 0 ; j < 2 ; j++)
 		{

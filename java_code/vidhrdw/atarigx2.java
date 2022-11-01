@@ -246,37 +246,37 @@ public class atarigx2
 		/* copy the motion objects on top */
 		{
 			struct mame_bitmap *mo_bitmap = atarirle_get_vram(0, 0);
-			int left	= cliprect->min_x;
-			int top		= cliprect->min_y;
-			int right	= cliprect->max_x + 1;
-			int bottom	= cliprect->max_y + 1;
+			int left	= cliprect.min_x;
+			int top		= cliprect.min_y;
+			int right	= cliprect.max_x + 1;
+			int bottom	= cliprect.max_y + 1;
 			int x, y;
 	
 			/* adjust for orientation */
-			if (Machine->orientation & ORIENTATION_SWAP_XY)
+			if (Machine.orientation & ORIENTATION_SWAP_XY)
 			{
 				int temp = left; left = top; top = temp;
 				temp = right; right = bottom; bottom = temp;
 			}
-			if (Machine->orientation & ORIENTATION_FLIP_X)
+			if (Machine.orientation & ORIENTATION_FLIP_X)
 			{
 				int temp = left; left = right; right = temp;
-				left	= bitmap->width - left;
-				right	= bitmap->width - right;
+				left	= bitmap.width - left;
+				right	= bitmap.width - right;
 			}
-			if (Machine->orientation & ORIENTATION_FLIP_Y)
+			if (Machine.orientation & ORIENTATION_FLIP_Y)
 			{
 				int temp = top; top = bottom; bottom = temp;
-				top		= bitmap->height - top;
-				bottom	= bitmap->height - bottom;
+				top		= bitmap.height - top;
+				bottom	= bitmap.height - bottom;
 			}
 			
 			/* now blend with the playfield */
 			for (y = top; y < bottom; y++)
 			{
-				UINT16 *pf = (UINT16 *)bitmap->base + y * bitmap->rowpixels;
-				UINT16 *mo = (UINT16 *)mo_bitmap->base + y * mo_bitmap->rowpixels;
-				UINT8 *pri = (UINT8 *)priority_bitmap->base + y * priority_bitmap->rowpixels;
+				UINT16 *pf = (UINT16 *)bitmap.base + y * bitmap.rowpixels;
+				UINT16 *mo = (UINT16 *)mo_bitmap.base + y * mo_bitmap.rowpixels;
+				UINT8 *pri = (UINT8 *)priority_bitmap.base + y * priority_bitmap.rowpixels;
 				for (x = left; x < right; x++)
 					if (mo[x] && (mo[x] >> ATARIRLE_PRIORITY_SHIFT) >= pri[x])
 						pf[x] = mo[x] & ATARIRLE_DATA_MASK;

@@ -60,7 +60,7 @@ public class aquarium
 	
 				for (chain_pos = chain;chain_pos >= 0;chain_pos--)
 				{
-					pdrawgfx(bitmap, Machine->gfx[0],
+					pdrawgfx(bitmap, Machine.gfx[0],
 							code,
 							col,
 							flipx, flipy,

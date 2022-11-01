@@ -129,7 +129,7 @@ public class mjkjidai
 			sx += 16;
 			sy += 1;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,

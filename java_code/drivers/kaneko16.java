@@ -92,7 +92,7 @@ public class kaneko16
 	
 	/*
 		Sx = Sprites with priority x, x = tiles with priority x,
-		Sprites - Tiles Order (bottom -> top):
+		Sprites - Tiles Order (bottom . top):
 	
 		0	S0	1	2	3
 		0	1	S1	2	3
@@ -127,7 +127,7 @@ public class kaneko16
 	
 	/*
 		Sx = Sprites with priority x, x = tiles with priority x,
-		Sprites - Tiles Order (bottom -> top):
+		Sprites - Tiles Order (bottom . top):
 	
 		0	S0	1	2	3
 		0	1	S1	2	3
@@ -274,7 +274,7 @@ public class kaneko16
 			case 0x02:	// Read from NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,0)) != 0)
+				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,0)) != 0)
 				{
 					mame_fread(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -287,7 +287,7 @@ public class kaneko16
 			case 0x42:	// Write to NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,1)) != 0)
+				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,1)) != 0)
 				{
 					mame_fwrite(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -436,7 +436,7 @@ public class kaneko16
 			case 0x02:	// Read from NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,0)) != 0)
+				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,0)) != 0)
 				{
 					mame_fread(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -447,7 +447,7 @@ public class kaneko16
 			case 0x42:	// Write to NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,1)) != 0)
+				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,1)) != 0)
 				{
 					mame_fwrite(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -463,7 +463,7 @@ public class kaneko16
 	
 			case 0x04:	// TEST (2 versions)
 			{
-				if (Machine->gamedrv == &driver_gtmr)
+				if (Machine.gamedrv == &driver_gtmr)
 				{
 					/* MCU writes the string "MM0525-TOYBOX199" to shared ram */
 					mcu_ram[mcu_offset+0] = 0x4d4d;
@@ -475,9 +475,9 @@ public class kaneko16
 					mcu_ram[mcu_offset+6] = 0x5831;
 					mcu_ram[mcu_offset+7] = 0x3939;
 				}
-				else if ( (Machine->gamedrv == &driver_gtmre)  ||
-						  (Machine->gamedrv == &driver_gtmrusa) ||
-						  (Machine->gamedrv == &driver_gtmr2) )
+				else if ( (Machine.gamedrv == &driver_gtmre)  ||
+						  (Machine.gamedrv == &driver_gtmrusa) ||
+						  (Machine.gamedrv == &driver_gtmr2) )
 				{
 					/* MCU writes the string "USMM0713-TB1994 " to shared ram */
 					mcu_ram[mcu_offset+0] = 0x5553;
@@ -2653,21 +2653,21 @@ public class kaneko16
 	static struct OKIM6295interface okim6295_intf_12kHz =
 	{
 		1,
-		{ 12000000/6/165 }, /* 2MHz -> 6295 (mode A) */
+		{ 12000000/6/165 }, /* 2MHz . 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
 	static struct OKIM6295interface okim6295_intf_15kHz =
 	{
 		1,
-		{ 12000000/6/132 }, /* 2MHz -> 6295 (mode B) */
+		{ 12000000/6/132 }, /* 2MHz . 6295 (mode B) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
 	static struct OKIM6295interface okim6295_intf_18kHz =
 	{
 		1,
-		{ 12000000/4/165 }, /* 3MHz -> 6295 (mode A) */
+		{ 12000000/4/165 }, /* 3MHz . 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
@@ -2841,7 +2841,7 @@ public class kaneko16
 		gtmr interrupts:
 	
 		3] 476:			time, input ports, scroll registers
-		4] 466->258e:	set sprite ram
+		4] 466.258e:	set sprite ram
 		5] 438:			set sprite colors
 	
 		VIDEO_UPDATE_AFTER_VBLANK fixes the mangled/wrong colored sprites
@@ -3487,7 +3487,7 @@ public class kaneko16
 	
 	ROUTINES:
 	
-	dd6	print string: a2->scr ; a1->string ; d1.l = xpos.w<<6|ypos.w<<6
+	dd6	print string: a2.scr ; a1.string ; d1.l = xpos.w<<6|ypos.w<<6
 	
 	Trap #2 = 43a0 ; d0.w = routine index ; (where not specified: 43c0):
 	1:  43C4	2:  43F8	3:  448E	4:  44EE
@@ -3886,10 +3886,10 @@ public class kaneko16
 	---------------------------------------------------------------------------
 	
 	102e04-7	<- !b80004-7
-	102e18.w	-> $800000
-	102e1c.w	-> $800002 , $800006
-	102e1a.w	-> $800004
-	102e20.w	-> $800008
+	102e18.w	. $800000
+	102e1c.w	. $800002 , $800006
+	102e1a.w	. $800004
+	102e20.w	. $800008
 	
 	ROUTINES:
 	

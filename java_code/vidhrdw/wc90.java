@@ -167,7 +167,7 @@ public class wc90
 	***************************************************************************/
 	
 	#define WC90_DRAW_SPRITE( code, sx, sy ) \
-						drawgfx( bitmap, Machine->gfx[3], code, flags >> 4, \
+						drawgfx( bitmap, Machine.gfx[3], code, flags >> 4, \
 						bank&1, bank&2, sx, sy, cliprect, TRANSPARENCY_PEN, 0 )
 	
 	static char pos32x32[] = { 0, 1, 2, 3 };

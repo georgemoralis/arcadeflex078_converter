@@ -115,7 +115,7 @@ public class splash
 	
 		color = splash_pixelram[offset];
 	
-		plot_pixel(screen2, sx-9, sy, Machine->pens[0x300 + (color & 0xff)]);
+		plot_pixel(screen2, sx-9, sy, Machine.pens[0x300 + (color & 0xff)]);
 	}
 	
 	
@@ -174,7 +174,7 @@ public class splash
 	static void splash_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		for (i = 0; i < 0x400; i += 4){
 			int sx = splash_spriteram[i+2] & 0xff;

@@ -207,7 +207,7 @@ public class jaguar
 	
 	/*************************************
 	 *
-	 *	Jerry -> GPU interrupts
+	 *	Jerry . GPU interrupts
 	 *
 	 *************************************/
 	

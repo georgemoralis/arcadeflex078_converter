@@ -946,32 +946,32 @@ public class i8039
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8039_PC: sprintf(buffer[which], "PC:%04X", r->PC.w.l); break;
-			case CPU_INFO_REG+I8039_SP: sprintf(buffer[which], "SP:%02X", r->SP); break;
-			case CPU_INFO_REG+I8039_PSW: sprintf(buffer[which], "PSW:%02X", r->PSW); break;
-			case CPU_INFO_REG+I8039_A: sprintf(buffer[which], "A:%02X", r->A); break;
-			case CPU_INFO_REG+I8039_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
-			case CPU_INFO_REG+I8039_TC: sprintf(buffer[which], "TC:%02X", r->timer); break;
-			case CPU_INFO_REG+I8039_P1: sprintf(buffer[which], "P1:%02X", r->P1); break;
-			case CPU_INFO_REG+I8039_P2: sprintf(buffer[which], "P2:%02X", r->P2); break;
-			case CPU_INFO_REG+I8039_R0: sprintf(buffer[which], "R0:%02X", r->RAM[r->regPtr+0]); break;
-			case CPU_INFO_REG+I8039_R1: sprintf(buffer[which], "R1:%02X", r->RAM[r->regPtr+1]); break;
-			case CPU_INFO_REG+I8039_R2: sprintf(buffer[which], "R2:%02X", r->RAM[r->regPtr+2]); break;
-			case CPU_INFO_REG+I8039_R3: sprintf(buffer[which], "R3:%02X", r->RAM[r->regPtr+3]); break;
-			case CPU_INFO_REG+I8039_R4: sprintf(buffer[which], "R4:%02X", r->RAM[r->regPtr+4]); break;
-			case CPU_INFO_REG+I8039_R5: sprintf(buffer[which], "R5:%02X", r->RAM[r->regPtr+5]); break;
-			case CPU_INFO_REG+I8039_R6: sprintf(buffer[which], "R6:%02X", r->RAM[r->regPtr+6]); break;
-			case CPU_INFO_REG+I8039_R7: sprintf(buffer[which], "R7:%02X", r->RAM[r->regPtr+7]); break;
+			case CPU_INFO_REG+I8039_PC: sprintf(buffer[which], "PC:%04X", r.PC.w.l); break;
+			case CPU_INFO_REG+I8039_SP: sprintf(buffer[which], "SP:%02X", r.SP); break;
+			case CPU_INFO_REG+I8039_PSW: sprintf(buffer[which], "PSW:%02X", r.PSW); break;
+			case CPU_INFO_REG+I8039_A: sprintf(buffer[which], "A:%02X", r.A); break;
+			case CPU_INFO_REG+I8039_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
+			case CPU_INFO_REG+I8039_TC: sprintf(buffer[which], "TC:%02X", r.timer); break;
+			case CPU_INFO_REG+I8039_P1: sprintf(buffer[which], "P1:%02X", r.P1); break;
+			case CPU_INFO_REG+I8039_P2: sprintf(buffer[which], "P2:%02X", r.P2); break;
+			case CPU_INFO_REG+I8039_R0: sprintf(buffer[which], "R0:%02X", r.RAM[r.regPtr+0]); break;
+			case CPU_INFO_REG+I8039_R1: sprintf(buffer[which], "R1:%02X", r.RAM[r.regPtr+1]); break;
+			case CPU_INFO_REG+I8039_R2: sprintf(buffer[which], "R2:%02X", r.RAM[r.regPtr+2]); break;
+			case CPU_INFO_REG+I8039_R3: sprintf(buffer[which], "R3:%02X", r.RAM[r.regPtr+3]); break;
+			case CPU_INFO_REG+I8039_R4: sprintf(buffer[which], "R4:%02X", r.RAM[r.regPtr+4]); break;
+			case CPU_INFO_REG+I8039_R5: sprintf(buffer[which], "R5:%02X", r.RAM[r.regPtr+5]); break;
+			case CPU_INFO_REG+I8039_R6: sprintf(buffer[which], "R6:%02X", r.RAM[r.regPtr+6]); break;
+			case CPU_INFO_REG+I8039_R7: sprintf(buffer[which], "R7:%02X", r.RAM[r.regPtr+7]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->PSW & 0x80 ? 'C':'.',
-					r->PSW & 0x40 ? 'A':'.',
-					r->PSW & 0x20 ? 'F':'.',
-					r->PSW & 0x10 ? 'B':'.',
-					r->PSW & 0x08 ? '?':'.',
-					r->PSW & 0x04 ? '4':'.',
-					r->PSW & 0x02 ? '2':'.',
-					r->PSW & 0x01 ? '1':'.');
+					r.PSW & 0x80 ? 'C':'.',
+					r.PSW & 0x40 ? 'A':'.',
+					r.PSW & 0x20 ? 'F':'.',
+					r.PSW & 0x10 ? 'B':'.',
+					r.PSW & 0x08 ? '?':'.',
+					r.PSW & 0x04 ? '4':'.',
+					r.PSW & 0x02 ? '2':'.',
+					r.PSW & 0x01 ? '1':'.');
 				break;
 			case CPU_INFO_NAME: return "I8039";
 			case CPU_INFO_FAMILY: return "Intel 8039";

@@ -278,7 +278,7 @@ public class tbowl
 		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
+		PORT_START(); 	/* system inputs (0xfc07 . 0x80f9) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -288,7 +288,7 @@ public class tbowl
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
+		PORT_START(); 	/* DSW1 (0xfc08 . 0xffb4) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
@@ -332,7 +332,7 @@ public class tbowl
 		PORT_DIPSETTING (   0xf0, "0:25" );
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
+		PORT_START(); 	/* DSW2 (0xfc09 . 0xffb5) */
 		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
@@ -355,7 +355,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
+		PORT_START(); 	/* DSW3 (0xfc0a . 0xffb6) */
 		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );
@@ -384,7 +384,7 @@ public class tbowl
 		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
+		PORT_START(); 	/* system inputs (0xfc07 . 0x80f9) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -394,7 +394,7 @@ public class tbowl
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
+		PORT_START(); 	/* DSW1 (0xfc08 . 0xffb4) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
@@ -438,7 +438,7 @@ public class tbowl
 		PORT_DIPSETTING (   0xf0, "0:25" );
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
+		PORT_START(); 	/* DSW2 (0xfc09 . 0xffb5) */
 		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
@@ -461,7 +461,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
+		PORT_START(); 	/* DSW3 (0xfc0a . 0xffb6) */
 		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );

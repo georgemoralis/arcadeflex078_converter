@@ -310,7 +310,7 @@ public class m107
 	
 				for (i=0; i<y_multi; i++)
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							sprite + s_ptr,
 							colour,
 							fx,fy,
@@ -339,7 +339,7 @@ public class m107
 						if (!ffy) sprite+=y_multi-1;
 						for (i=0; i<y_multi; i++)
 						{
-							drawgfx(bitmap,Machine->gfx[1],
+							drawgfx(bitmap,Machine.gfx[1],
 									sprite+(ffy?i:-i),
 									colour,
 									ffx,ffy,
@@ -413,10 +413,10 @@ public class m107
 		tilemap_set_scrolly( pf3_layer,0, (m107_control[9]<<8)+m107_control[8] );
 		tilemap_set_scrolly( pf4_layer,0, (m107_control[13]<<8)+m107_control[12] );
 	
-	//	pf4_layer->scrolled=1;
-	//	pf3_layer->scrolled=1;
-	//	pf2_layer->scrolled=1;
-	//	pf1_layer->scrolled=1;
+	//	pf4_layer.scrolled=1;
+	//	pf3_layer.scrolled=1;
+	//	pf2_layer.scrolled=1;
+	//	pf1_layer.scrolled=1;
 	}
 	
 	/*****************************************************************************/
@@ -426,7 +426,7 @@ public class m107
 		if (pf4_enable != 0)
 			tilemap_draw(bitmap,cliprect,pf4_layer,0,0);
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf3_layer,0,0);
 		tilemap_draw(bitmap,cliprect,pf2_layer,0,0);
@@ -446,14 +446,14 @@ public class m107
 	{
 		struct rectangle clip;
 	
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
 		clip.min_y = start_line+128;
 		clip.max_y = end_line+128;
-		if (clip.min_y < Machine->visible_area.min_y)
-			clip.min_y = Machine->visible_area.min_y;
-		if (clip.max_y > Machine->visible_area.max_y)
-			clip.max_y = Machine->visible_area.max_y;
+		if (clip.min_y < Machine.visible_area.min_y)
+			clip.min_y = Machine.visible_area.min_y;
+		if (clip.max_y > Machine.visible_area.max_y)
+			clip.max_y = Machine.visible_area.max_y;
 	
 		if (clip.max_y > clip.min_y)
 		{

@@ -108,7 +108,7 @@ public class topspeed
 				zx = x + (((k+1)*zoomx)/8) - curx;
 				zy = y + (((j+1)*zoomy)/16) - cury;
 	
-				pdrawgfxzoom(bitmap,Machine->gfx[0],
+				pdrawgfxzoom(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -175,7 +175,7 @@ public class topspeed
 		layer[3] = 0;
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 	#ifdef MAME_DEBUG
 		if (dislayer[3]==0)

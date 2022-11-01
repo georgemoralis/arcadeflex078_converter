@@ -138,7 +138,7 @@ public class _74153
 		}
 	
 	
-		chips[which].output_cb = (intf ? intf->output_cb : 0);
+		chips[which].output_cb = (intf ? intf.output_cb : 0);
 		chips[which].a = 1;
 		chips[which].b = 1;
 		chips[which].enable[0] = 1;

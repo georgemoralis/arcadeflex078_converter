@@ -324,7 +324,7 @@ public class lasso
 			color = source[2] & 0x0f;
 	
 	
-	        drawgfx(bitmap, Machine->gfx[1],
+	        drawgfx(bitmap, Machine.gfx[1],
 					code | (gfxbank << 6),
 					color,
 					flipx, flipy,
@@ -340,7 +340,7 @@ public class lasso
 	{
 		const data8_t *source = lasso_bitmap_ram;
 		int x,y;
-		pen_t pen = Machine->pens[0x3f];
+		pen_t pen = Machine.pens[0x3f];
 	
 	
 		for (y = 0; y < 256; y++)
@@ -408,7 +408,7 @@ public class lasso
 		if (wwjgtin_track_enable != 0)
 			tilemap_draw(bitmap, cliprect, track_tilemap, 0, 0);
 		else
-			fillbitmap(bitmap, Machine->pens[0x40], cliprect);	// black
+			fillbitmap(bitmap, Machine.pens[0x40], cliprect);	// black
 	
 		draw_sprites(bitmap, cliprect, 1);	// reverse order
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);

@@ -86,16 +86,16 @@ public class c140
 	
 	static void init_voice( VOICE *v )
 	{
-		v->key=0;
-		v->ptoffset=0;
-		v->rvol=0;
-		v->lvol=0;
-		v->frequency=0;
-		v->bank=0;
-		v->mode=0;
-		v->sample_start=0;
-		v->sample_end=0;
-		v->sample_loop=0;
+		v.key=0;
+		v.ptoffset=0;
+		v.rvol=0;
+		v.lvol=0;
+		v.frequency=0;
+		v.bank=0;
+		v.mode=0;
+		v.sample_start=0;
+		v.sample_end=0;
+		v.sample_loop=0;
 	}
 	
 	public static ReadHandlerPtr C140_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -170,21 +170,21 @@ public class c140
 				if ((data & 0x80) != 0)
 				{
 					const struct voice_registers *vreg = (struct voice_registers *) &REG[offset&0x1f0];
-					v->key=1;
-					v->ptoffset=0;
-					v->pos=0;
-					v->lastdt=0;
-					v->prevdt=0;
-					v->dltdt=0;
-					v->bank = vreg->bank;
-					v->mode = data;
-					v->sample_loop = vreg->loop_msb*256 + vreg->loop_lsb;
-					v->sample_start = vreg->start_msb*256 + vreg->start_lsb;
-					v->sample_end = vreg->end_msb*256 + vreg->end_lsb;
+					v.key=1;
+					v.ptoffset=0;
+					v.pos=0;
+					v.lastdt=0;
+					v.prevdt=0;
+					v.dltdt=0;
+					v.bank = vreg.bank;
+					v.mode = data;
+					v.sample_loop = vreg.loop_msb*256 + vreg.loop_lsb;
+					v.sample_start = vreg.start_msb*256 + vreg.start_lsb;
+					v.sample_end = vreg.end_msb*256 + vreg.end_lsb;
 				}
 				else
 				{
-					v->key=0;
+					v.key=0;
 				}
 			}
 		}
@@ -226,9 +226,9 @@ public class c140
 			VOICE *v = &voi[i];
 			const struct voice_registers *vreg = (struct voice_registers *)&REG[i*16];
 	
-			if( v->key )
+			if( v.key )
 			{
-				frequency= vreg->frequency_msb*256 + vreg->frequency_lsb;
+				frequency= vreg.frequency_msb*256 + vreg.frequency_lsb;
 	
 				/* Abort voice if no frequency value set */
 				if(frequency==0) continue;
@@ -237,30 +237,30 @@ public class c140
 				delta=(long)((float)frequency * pbase);
 	
 				/* Calculate left/right channel volumes */
-				lvol=(vreg->volume_left*32)/MAX_VOICE; //32ch -> 24ch
-				rvol=(vreg->volume_right*32)/MAX_VOICE;
+				lvol=(vreg.volume_left*32)/MAX_VOICE; //32ch . 24ch
+				rvol=(vreg.volume_right*32)/MAX_VOICE;
 	
 				/* Set mixer buffer base pointers */
 				lmix = mixer_buffer_left;
 				rmix = mixer_buffer_right;
 	
 				/* Retrieve sample start/end and calculate size */
-				st=v->sample_start;
-				ed=v->sample_end;
+				st=v.sample_start;
+				ed=v.sample_end;
 				sz=ed-st;
 	
 				/* Retrieve base pointer to the sample data */
-				pSampleData=(signed char*)((unsigned long)pRom + find_sample(st,v->bank));
+				pSampleData=(signed char*)((unsigned long)pRom + find_sample(st,v.bank));
 	
 				/* Fetch back previous data pointers */
-				offset=v->ptoffset;
-				pos=v->pos;
-				lastdt=v->lastdt;
-				prevdt=v->prevdt;
-				dltdt=v->dltdt;
+				offset=v.ptoffset;
+				pos=v.pos;
+				lastdt=v.lastdt;
+				prevdt=v.prevdt;
+				dltdt=v.dltdt;
 	
 				/* Switch on data type */
-				if(v->mode&8)
+				if(v.mode&8)
 				{
 					//compressed PCM (maybe correct...)
 					/* Loop for enough to fill sample buffer as requested */
@@ -276,13 +276,13 @@ public class c140
 							if(pos >= sz)
 							{
 								/* Check if its a looping sample, either stop or loop */
-								if(v->mode&0x10)
+								if(v.mode&0x10)
 								{
-									pos = (v->sample_loop - st);
+									pos = (v.sample_loop - st);
 								}
 								else
 								{
-									v->key=0;
+									v.key=0;
 									break;
 								}
 							}
@@ -322,13 +322,13 @@ public class c140
 						if(pos >= sz)
 						{
 							/* Check if its a looping sample, either stop or loop */
-							if( v->mode&0x10 )
+							if( v.mode&0x10 )
 							{
-								pos = (v->sample_loop - st);
+								pos = (v.sample_loop - st);
 							}
 							else
 							{
-								v->key=0;
+								v.key=0;
 								break;
 							}
 						}
@@ -350,11 +350,11 @@ public class c140
 				}
 	
 				/* Save positional data for next callback */
-				v->ptoffset=offset;
-				v->pos=pos;
-				v->lastdt=lastdt;
-				v->prevdt=prevdt;
-				v->dltdt=dltdt;
+				v.ptoffset=offset;
+				v.pos=pos;
+				v.lastdt=lastdt;
+				v.prevdt=prevdt;
+				v.dltdt=dltdt;
 			}
 		}
 	
@@ -374,20 +374,20 @@ public class c140
 	
 	int C140_sh_start( const struct MachineSound *msound )
 	{
-		const struct C140interface *intf = msound->sound_interface;
+		const struct C140interface *intf = msound.sound_interface;
 		int vol[2];
 		const char *stereo_names[2] = { "C140 Left", "C140 Right" };
 	
-		vol[0] = MIXER(intf->mixing_level,MIXER_PAN_LEFT);
-		vol[1] = MIXER(intf->mixing_level,MIXER_PAN_RIGHT);
+		vol[0] = MIXER(intf.mixing_level,MIXER_PAN_LEFT);
+		vol[1] = MIXER(intf.mixing_level,MIXER_PAN_RIGHT);
 	
-		sample_rate=baserate=intf->frequency;
+		sample_rate=baserate=intf.frequency;
 	
-		banking_type = intf->banking_type;
+		banking_type = intf.banking_type;
 	
 		stream = stream_init_multi(2,stereo_names,vol,sample_rate,0,update_stereo);
 	
-		pRom=memory_region(intf->region);
+		pRom=memory_region(intf.region);
 	
 		/* make decompress pcm table */		//2000.06.26 CAB
 		{

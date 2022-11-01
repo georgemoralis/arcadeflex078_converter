@@ -307,46 +307,46 @@ public class winmain
 	
 		// find our man
 		for (i = 0; exception_table[i].code != 0; i++)
-			if (info->ExceptionRecord->ExceptionCode == exception_table[i].code)
+			if (info.ExceptionRecord.ExceptionCode == exception_table[i].code)
 				break;
 	
 		// print the exception type and address
 		fprintf(stderr, "\n-----------------------------------------------------\n");
-		fprintf(stderr, "Exception at EIP=%08X%s: %s\n", (UINT32)info->ExceptionRecord->ExceptionAddress,
-				lookup_symbol((UINT32)info->ExceptionRecord->ExceptionAddress), exception_table[i].string);
+		fprintf(stderr, "Exception at EIP=%08X%s: %s\n", (UINT32)info.ExceptionRecord.ExceptionAddress,
+				lookup_symbol((UINT32)info.ExceptionRecord.ExceptionAddress), exception_table[i].string);
 	
 		// for access violations, print more info
-		if (info->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+		if (info.ExceptionRecord.ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
 			fprintf(stderr, "While attempting to %s memory at %08X\n",
-					info->ExceptionRecord->ExceptionInformation[0] ? "write" : "read",
-					(UINT32)info->ExceptionRecord->ExceptionInformation[1]);
+					info.ExceptionRecord.ExceptionInformation[0] ? "write" : "read",
+					(UINT32)info.ExceptionRecord.ExceptionInformation[1]);
 	
 		// print the state of the CPU
 		fprintf(stderr, "-----------------------------------------------------\n");
 		fprintf(stderr, "EAX=%08X EBX=%08X ECX=%08X EDX=%08X\n",
-				(UINT32)info->ContextRecord->Eax,
-				(UINT32)info->ContextRecord->Ebx,
-				(UINT32)info->ContextRecord->Ecx,
-				(UINT32)info->ContextRecord->Edx);
+				(UINT32)info.ContextRecord.Eax,
+				(UINT32)info.ContextRecord.Ebx,
+				(UINT32)info.ContextRecord.Ecx,
+				(UINT32)info.ContextRecord.Edx);
 		fprintf(stderr, "ESI=%08X EDI=%08X EBP=%08X ESP=%08X\n",
-				(UINT32)info->ContextRecord->Esi,
-				(UINT32)info->ContextRecord->Edi,
-				(UINT32)info->ContextRecord->Ebp,
-				(UINT32)info->ContextRecord->Esp);
+				(UINT32)info.ContextRecord.Esi,
+				(UINT32)info.ContextRecord.Edi,
+				(UINT32)info.ContextRecord.Ebp,
+				(UINT32)info.ContextRecord.Esp);
 	
 		// crawl the stack for a while
 		if (get_code_base_size(&code_start, &code_size))
 		{
 			char prev_symbol[1024], curr_symbol[1024];
-			UINT32 last_call = (UINT32)info->ExceptionRecord->ExceptionAddress;
-			UINT32 esp_start = info->ContextRecord->Esp;
+			UINT32 last_call = (UINT32)info.ExceptionRecord.ExceptionAddress;
+			UINT32 esp_start = info.ContextRecord.Esp;
 			UINT32 esp_end = (esp_start | 0xffff) + 1;
 			UINT32 esp;
 	
 			// reprint the actual exception address
 			fprintf(stderr, "-----------------------------------------------------\n");
 			fprintf(stderr, "Stack crawl:\n");
-			fprintf(stderr, "exception-> %08X%s\n", last_call, strcpy(prev_symbol, lookup_symbol(last_call)));
+			fprintf(stderr, "exception. %08X%s\n", last_call, strcpy(prev_symbol, lookup_symbol(last_call)));
 	
 			// crawl the stack until we hit the next 64k boundary
 			for (esp = esp_start; esp < esp_end; esp += 4)
@@ -468,14 +468,14 @@ public class winmain
 	
 	static int CLIB_DECL compare_start(const void *item1, const void *item2)
 	{
-		return ((const struct map_entry *)item1)->start - ((const struct map_entry *)item2)->start;
+		return ((const struct map_entry *)item1).start - ((const struct map_entry *)item2).start;
 	}
 	
 	
 	#if ENABLE_PROFILER
 	static int compare_hits(const void *item1, const void *item2)
 	{
-		return ((const struct map_entry *)item2)->hits - ((const struct map_entry *)item1)->hits;
+		return ((const struct map_entry *)item2).hits - ((const struct map_entry *)item1).hits;
 	}
 	#endif
 	
@@ -562,8 +562,8 @@ public class winmain
 		qsort(symbol_map, map_entries, sizeof(symbol_map[0]), compare_hits);
 	
 		for (i = 0, entry = symbol_map; i < map_entries; i++, entry++)
-			if (entry->hits > 0)
-				fprintf(f, "%10d  %08X-%08X  %s\n", entry->hits, entry->start, entry->end, entry->name);
+			if (entry.hits > 0)
+				fprintf(f, "%10d  %08X-%08X  %s\n", entry.hits, entry.start, entry.end, entry.name);
 	}
 	
 	

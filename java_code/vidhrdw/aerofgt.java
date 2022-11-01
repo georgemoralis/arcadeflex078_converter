@@ -360,7 +360,7 @@ public class aerofgt
 						else
 							code = aerofgt_spriteram2[map_start & 0x1fff] & 0x1fff;
 	
-						drawgfxzoom(bitmap,Machine->gfx[sprite_gfx + (map_start >= 0x2000 ? 1 : 0)],
+						drawgfxzoom(bitmap,Machine.gfx[sprite_gfx + (map_start >= 0x2000 ? 1 : 0)],
 								code,
 								color,
 								flipx,flipy,
@@ -431,7 +431,7 @@ public class aerofgt
 					else
 						code = aerofgt_spriteram2[map_start % (aerofgt_spriteram2_size/2)];
 	
-					pdrawgfxzoom(bitmap,Machine->gfx[sprite_gfx + chip],
+					pdrawgfxzoom(bitmap,Machine.gfx[sprite_gfx + chip],
 							code,
 							color,
 							flipx,flipy,

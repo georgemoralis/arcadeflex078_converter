@@ -60,11 +60,11 @@ public class pengo
 	public static PaletteInitHandlerPtr palette_init_pacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -101,11 +101,11 @@ public class pengo
 	public static PaletteInitHandlerPtr palette_init_pengo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -249,12 +249,12 @@ public class pengo
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[gfx_bank*2],
+				drawgfx(tmpbitmap,Machine.gfx[gfx_bank*2],
 						videoram.read(offs),
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 	        }
 		}
 	
@@ -272,7 +272,7 @@ public class pengo
 				sx = 272 - spriteram_2[offs + 1];
 				sy = spriteram_2[offs] - 31;
 	
-				drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+				drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 						spriteram.read(offs)>> 2,
 						spriteram.read(offs + 1)& 0x1f,
 						spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -280,7 +280,7 @@ public class pengo
 						&spriteclip,TRANSPARENCY_COLOR,0);
 	
 				/* also plot the sprite with wraparound (tunnel in Crush Roller) */
-				drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+				drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 						spriteram.read(offs)>> 2,
 						spriteram.read(offs + 1)& 0x1f,
 						spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -297,7 +297,7 @@ public class pengo
 				sx = 272 - spriteram_2[offs + 1];
 				sy = spriteram_2[offs] - 31;
 	
-				drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+				drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 						spriteram.read(offs)>> 2,
 						spriteram.read(offs + 1)& 0x1f,
 						spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -305,7 +305,7 @@ public class pengo
 						&spriteclip,TRANSPARENCY_COLOR,0);
 	
 				/* also plot the sprite with wraparound (tunnel in Crush Roller) */
-				drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+				drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 						spriteram.read(offs)>> 2,
 						spriteram.read(offs + 1)& 0x1f,
 						spriteram.read(offs)& 2,spriteram.read(offs)& 1,
@@ -364,12 +364,12 @@ public class pengo
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[gfx_bank*2],
+				drawgfx(tmpbitmap,Machine.gfx[gfx_bank*2],
 						videoram.read(offs),
 						colorram[offs] & 0x1f,
 						flipscreen,flipscreen,
 						sx*8,sy*8,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 	        }
 		}
 	
@@ -385,7 +385,7 @@ public class pengo
 			sx = 272 - spriteram_2[offs + 1];
 			sy = spriteram_2[offs] - 31;
 	
-			drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+			drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 					spriteram.read(offs)>> 2,
 					spriteram.read(offs + 1)& 0x1f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -393,7 +393,7 @@ public class pengo
 					&spriteclip,TRANSPARENCY_PEN,0);
 	
 	        /* also plot the sprite with wraparound (tunnel in Crush Roller) */
-	        drawgfx(bitmap,Machine->gfx[gfx_bank*2+1],
+	        drawgfx(bitmap,Machine.gfx[gfx_bank*2+1],
 					spriteram.read(offs)>> 2,
 					spriteram.read(offs + 1)& 0x1f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -413,7 +413,7 @@ public class pengo
 		attr = colorram[tile_index & 0x1f];
 	
 		/* remove when we have proms dumps for it */
-		if (!strcmp(Machine->gamedrv->name, "8bpm"))
+		if (!strcmp(Machine.gamedrv.name, "8bpm"))
 		{
 			attr = 1;
 		}
@@ -481,7 +481,7 @@ public class pengo
 			sx = 255 - spriteram_2[offs + 1];
 			sy = spriteram_2[offs] - 15;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)>> 2) | ((sprite_bank[offs] & 3) << 6),
 					spriteram.read(offs + 1)& 0x1f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -498,7 +498,7 @@ public class pengo
 			sx = 255 - spriteram_2[offs + 1];
 			sy = spriteram_2[offs] - 15;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)>> 2) | ((sprite_bank[offs] & 3)<<6),
 					spriteram.read(offs + 1)& 0x1f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,

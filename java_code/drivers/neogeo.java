@@ -517,7 +517,7 @@ public class neogeo
 	
 		res = (readinputport(4) & ~(readinputport(5) & 0x20)) ^ (coinflip << 6) ^ (databit << 7);
 	
-		if (Machine->sample_rate)
+		if (Machine.sample_rate)
 		{
 			res |= result_code << 8;
 			if (pending_command != 0) res &= 0x7fff;

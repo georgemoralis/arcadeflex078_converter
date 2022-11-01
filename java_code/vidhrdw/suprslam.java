@@ -40,7 +40,7 @@ public class suprslam
 		*/
 	
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data16_t *source = suprslam_spriteram;
 		data16_t *source2 = suprslam_spriteram;
 		data16_t *finish = source + 0x2000/2;

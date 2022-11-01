@@ -49,7 +49,7 @@ public class suna16
 	{
 		if (ACCESSING_LSB != 0)
 		{
-			if (Machine->sample_rate != 0)
+			if (Machine.sample_rate != 0)
 				soundlatch_w( 0, data & 0xff );
 		}
 		if (data & ~0xff)	logerror("CPU#0 PC %06X - Sound latch unknown bits: %04X\n", activecpu_get_pc(), data);

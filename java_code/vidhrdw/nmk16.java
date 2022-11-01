@@ -30,13 +30,13 @@ public class nmk16
 	
 	static UINT32 bg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x0f) + ((col & 0xff) << 4) + ((row & 0x70) << 8);
 	}
 	
 	static UINT32 bg_scan_td2(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x0f) + ((col & 0x3ff) << 4) + ((row & 0x70) << 10);
 	}
 	
@@ -458,7 +458,7 @@ public class nmk16
 					xx = w;
 					do
 					{
-						drawgfx(bitmap,Machine->gfx[2],
+						drawgfx(bitmap,Machine.gfx[2],
 								code,
 								color,
 								flip_screen, flip_screen,
@@ -517,7 +517,7 @@ public class nmk16
 					xx = w;
 					do
 					{
-						drawgfx(bitmap,Machine->gfx[2],
+						drawgfx(bitmap,Machine.gfx[2],
 								code,
 								color,
 								flipx, flipy,
@@ -583,7 +583,7 @@ public class nmk16
 					int numtile = data&0xfff;
 					int color = (data&0xf000)>>12;
 	
-					drawgfx(background_bitmap,Machine->gfx[3],
+					drawgfx(background_bitmap,Machine.gfx[3],
 							numtile,
 							color,
 							0,0,   /* no flip */
@@ -593,7 +593,7 @@ public class nmk16
 					data = tilerom[offs+0x1000+bank];
 					numtile = data&0xfff;
 					color = (data&0xf000)>>12;
-					drawgfx(background_bitmap,Machine->gfx[3],
+					drawgfx(background_bitmap,Machine.gfx[3],
 							numtile,
 							color,
 							0,0,   /* no flip */

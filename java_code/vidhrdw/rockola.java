@@ -34,10 +34,10 @@ public class rockola
 	{
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, r, g, b;
 	
@@ -134,7 +134,7 @@ public class rockola
 			backcolor = data & 7;
 	
 			for (i = 0;i < 32;i += 4)
-				Machine->gfx[1]->colortable[i] = Machine->pens[4 * backcolor + 0x20];
+				Machine.gfx[1].colortable[i] = Machine.pens[4 * backcolor + 0x20];
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
@@ -188,8 +188,8 @@ public class rockola
 		int code = rockola_videoram2[tile_index];
 		int color = colorram[tile_index] & 0x07;
 	
-		decodechar(Machine->gfx[0], code, rockola_charram, 
-			Machine->drv->gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine.gfx[0], code, rockola_charram, 
+			Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}
@@ -215,8 +215,8 @@ public class rockola
 	
 	public static VideoUpdateHandlerPtr video_update_rockola  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 	
 	/* Satan of Saturn */
@@ -225,10 +225,10 @@ public class rockola
 	{
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, r, g, b;
 	
@@ -305,7 +305,7 @@ public class rockola
 			backcolor = data & 0x03;
 	
 			for (i = 0; i < 16; i += 4)
-				Machine->gfx[1]->colortable[i] = Machine->pens[backcolor + 0x10];
+				Machine.gfx[1].colortable[i] = Machine.pens[backcolor + 0x10];
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
@@ -324,8 +324,8 @@ public class rockola
 		int code = rockola_videoram2[tile_index];
 		int color = colorram[tile_index] & 0x03;
 	
-		decodechar(Machine->gfx[0], code, rockola_charram, 
-			Machine->drv->gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine.gfx[0], code, rockola_charram, 
+			Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}

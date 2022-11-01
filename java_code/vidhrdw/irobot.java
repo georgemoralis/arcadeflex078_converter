@@ -51,8 +51,8 @@ public class irobot
 	public static PaletteInitHandlerPtr palette_init_irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 		/* the palette will be initialized by the game. We just set it to some */
 		/* pre-cooked values so the startup copyright notice can be displayed. */
@@ -121,15 +121,15 @@ public class irobot
 	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Setup 2 bitmaps for the polygon generator */
-		if ((polybitmap1 = auto_malloc(BITMAP_WIDTH * Machine->drv->screen_height)) == 0)
+		if ((polybitmap1 = auto_malloc(BITMAP_WIDTH * Machine.drv.screen_height)) == 0)
 			return 1;
-		if ((polybitmap2 = auto_malloc(BITMAP_WIDTH * Machine->drv->screen_height)) == 0)
+		if ((polybitmap2 = auto_malloc(BITMAP_WIDTH * Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		/* Set clipping */
 		ir_xmin = ir_ymin = 0;
-		ir_xmax = Machine->drv->screen_width;
-		ir_ymax = Machine->drv->screen_height;
+		ir_xmax = Machine.drv.screen_width;
+		ir_ymax = Machine.drv.screen_height;
 	
 		return 0;
 	} };
@@ -179,7 +179,7 @@ public class irobot
 	void irobot_poly_clear(void)
 	{
 		UINT8 *bitmap_base = irobot_bufsel ? polybitmap2 : polybitmap1;
-		memset(bitmap_base, 0, BITMAP_WIDTH * Machine->drv->screen_height);
+		memset(bitmap_base, 0, BITMAP_WIDTH * Machine.drv.screen_height);
 	}
 	
 	#define draw_pixel(x,y,c)		polybitmap[(y) * BITMAP_WIDTH + (x)] = (c)
@@ -386,8 +386,8 @@ public class irobot
 		int x, y, offs;
 	
 		/* copy the polygon bitmap */
-		for (y = Machine->visible_area.min_y; y < Machine->visible_area.max_y; y++)
-			draw_scanline8(bitmap, 0, y, BITMAP_WIDTH, &bitmap_base[y * BITMAP_WIDTH], Machine->pens, -1);
+		for (y = Machine.visible_area.min_y; y < Machine.visible_area.max_y; y++)
+			draw_scanline8(bitmap, 0, y, BITMAP_WIDTH, &bitmap_base[y * BITMAP_WIDTH], Machine.pens, -1);
 	
 		/* redraw the non-zero characters in the alpha layer */
 		for (y = offs = 0; y < 32; y++)
@@ -398,11 +398,11 @@ public class irobot
 					int color = ((videoram.read(offs)& 0xC0) >> 6) | (irobot_alphamap >> 3);
 					int transp=color + 64;
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							code, color,
 							0,0,
 							8*x,8*y,
-							&Machine->visible_area,TRANSPARENCY_COLOR,transp);
+							&Machine.visible_area,TRANSPARENCY_COLOR,transp);
 				}
 	} };
 }

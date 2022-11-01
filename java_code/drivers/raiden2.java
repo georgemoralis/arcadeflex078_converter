@@ -39,7 +39,7 @@ public class raiden2
 		const UINT8 *source = spriteram+0x1000-8;
 		const UINT8 *finish = spriteram;
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		while( source>=finish ){
 			int tile_number = source[0];

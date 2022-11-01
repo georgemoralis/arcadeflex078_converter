@@ -110,7 +110,7 @@ public class buggychl
 		{
 			for (x = 0;x < 256;x++)
 			{
-				plot_pixel(bitmap,x,y,Machine->pens[128 + x/2]);
+				plot_pixel(bitmap,x,y,Machine.pens[128 + x/2]);
 			}
 		}
 	}
@@ -135,7 +135,7 @@ public class buggychl
 				if (flip_screen_x != 0) sx = 31 - sx;
 				if (flip_screen_y != 0) sy = 31 - sy;
 	
-				drawgfx(tmpbitmap1,Machine->gfx[0],
+				drawgfx(tmpbitmap1,Machine.gfx[0],
 						code,
 						2,
 						flip_screen_x,flip_screen_y,
@@ -154,7 +154,7 @@ public class buggychl
 		for (offs = 0;offs < 256;offs++)
 			scroll[offs] = -buggychl_scrollh[offs];
 	
-		copyscrollbitmap(bitmap,tmpbitmap2,256,scroll,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,32);
+		copyscrollbitmap(bitmap,tmpbitmap2,256,scroll,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,32);
 	}
 	
 	
@@ -175,12 +175,12 @@ public class buggychl
 			if (flip_screen_x != 0) sx = 31 - sx;
 			if (flip_screen_y != 0) sy = 31 - sy;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					0,
 					flip_screen_x,flip_screen_y,
 					8*sx,8*sy,
-					&Machine->visible_area,transp,0);
+					&Machine.visible_area,transp,0);
 		}
 	}
 	
@@ -229,7 +229,7 @@ public class buggychl
 						code = 8 * (lookup[pos] | ((lookup[pos+1] & 0x07) << 8));
 						realflipy = (lookup[pos+1] & 0x80) ? !flipy : flipy;
 						code += (realflipy ? (charline ^ 7) : charline);
-						pendata = Machine->gfx[1]->gfxdata + code*16;
+						pendata = Machine.gfx[1].gfxdata + code*16;
 	
 						for (x = 0;x < 16;x++)
 						{
@@ -240,7 +240,7 @@ public class buggychl
 							{
 								int dx = flip_screen_x ? (255 - sx - px) : (sx + px);
 								if ((dx & ~0xff) == 0)
-									plot_pixel(bitmap,dx,dy,Machine->pens[sprite_color_base+col]);
+									plot_pixel(bitmap,dx,dy,Machine.pens[sprite_color_base+col]);
 							}
 	
 							/* the following line is almost certainly wrong */
@@ -264,13 +264,13 @@ public class buggychl
 		if (sky_on != 0)
 			draw_sky(bitmap);
 		else
-			fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 		/* decode modified characters */
 		for (code = 0;code < 256;code++)
 		{
 			if (dirtychar[code])
-				decodechar(Machine->gfx[0],code,buggychl_character_ram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine.gfx[0],code,buggychl_character_ram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 		}
 	
 		if (bg_on != 0)

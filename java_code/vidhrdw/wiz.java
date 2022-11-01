@@ -74,7 +74,7 @@ public class wiz
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -84,15 +84,15 @@ public class wiz
 			bit2 = (color_prom[0] >> 2) & 0x01;
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -194,12 +194,12 @@ public class wiz
 			if (flipx != 0) sx = 31 - sx;
 	
 	
-			drawgfx(bitmap,Machine->gfx[bank],
+			drawgfx(bitmap,Machine.gfx[bank],
 				videoram.read(offs),
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -233,12 +233,12 @@ public class wiz
 			if (flipx != 0) sx = 31 - sx;
 	
 	
-			drawgfx(bitmap,Machine->gfx[char_bank[1]],
+			drawgfx(bitmap,Machine.gfx[char_bank[1]],
 				wiz_videoram2[offs],
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -260,7 +260,7 @@ public class wiz
 			if (flipx != 0) sx = 240 - sx;
 			if (!flipy) sy = 240 - sy;
 	
-			drawgfx(bitmap,Machine->gfx[bank],
+			drawgfx(bitmap,Machine.gfx[bank],
 					sprite_ram[offs + 1],
 					(sprite_ram[offs + 2] & 0x07) + 8 * palette_bank,
 					flipx,flipy,
@@ -279,11 +279,11 @@ public class wiz
 	
 	public static VideoUpdateHandlerPtr video_update_kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0] , 0);
 		draw_foreground(bitmap, 0);
-		draw_sprites(bitmap, spriteram_2, 4, &Machine->visible_area);
-		draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
+		draw_sprites(bitmap, spriteram_2, 4, &Machine.visible_area);
+		draw_sprites(bitmap, spriteram  , 5, &Machine.visible_area);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
@@ -291,7 +291,7 @@ public class wiz
 		int bank;
 		const struct rectangle* visible_area;
 	
-		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
 		draw_background(bitmap, 2 + ((char_bank[0] << 1) | char_bank[1]), 0);
 		draw_foreground(bitmap, 0);
 	
@@ -306,10 +306,10 @@ public class wiz
 	
 	public static VideoUpdateHandlerPtr video_update_stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[bgpen],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[bgpen],&Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0], 1);
 		draw_foreground(bitmap, 1);
-		draw_sprites(bitmap, spriteram_2, 4, &Machine->visible_area);
-		draw_sprites(bitmap, spriteram  , 5, &Machine->visible_area);
+		draw_sprites(bitmap, spriteram_2, 4, &Machine.visible_area);
+		draw_sprites(bitmap, spriteram  , 5, &Machine.visible_area);
 	} };
 }

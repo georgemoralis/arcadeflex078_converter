@@ -210,10 +210,10 @@ public class konamigx
 	void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy)
 	{
 		struct rectangle *cliprect = &K053936_cliprect[chip];
-		cliprect->min_x = minx;
-		cliprect->max_x = maxx;
-		cliprect->min_y = miny;
-		cliprect->max_y = maxy;
+		cliprect.min_x = minx;
+		cliprect.max_x = maxx;
+		cliprect.min_y = miny;
+		cliprect.max_y = maxy;
 	}
 	
 	#define BLEND32_MACRO {  \
@@ -272,36 +272,36 @@ public class konamigx
 	
 		if (src_cliprect && clip) // set source clip range to some extreme values when disabled
 		{
-			src_minx = src_cliprect->min_x;
-			src_maxx = src_cliprect->max_x;
-			src_miny = src_cliprect->min_y;
-			src_maxy = src_cliprect->max_y;
+			src_minx = src_cliprect.min_x;
+			src_maxx = src_cliprect.max_x;
+			src_miny = src_cliprect.min_y;
+			src_maxy = src_cliprect.max_y;
 		}
 		else { src_minx = src_miny = -0x10000; src_maxx = src_maxy = 0x10000; }
 	
 		if (dst_cliprect != 0) // set target clip range
 		{
-			sx = dst_cliprect->min_x;
-			tx = dst_cliprect->max_x - sx + 1;
-			sy = dst_cliprect->min_y;
-			ty = dst_cliprect->max_y - sy + 1;
+			sx = dst_cliprect.min_x;
+			tx = dst_cliprect.max_x - sx + 1;
+			sy = dst_cliprect.min_y;
+			ty = dst_cliprect.max_y - sy + 1;
 	
 			startx += sx * incxx + sy * incyx;
 			starty += sx * incxy + sy * incyy;
 		}
-		else { sx = sy = 0; tx = dst_bitmap->width; ty = dst_bitmap->height; }
+		else { sx = sy = 0; tx = dst_bitmap.width; ty = dst_bitmap.height; }
 	
 		// adjust entry points and other loop constants
-		dst_pitch = dst_bitmap->rowpixels;
-		dst_base = (UINT32*)dst_bitmap->base + sy * dst_pitch + sx + tx;
+		dst_pitch = dst_bitmap.rowpixels;
+		dst_base = (UINT32*)dst_bitmap.base + sy * dst_pitch + sx + tx;
 		ecx = tx = -tx;
 	
 		tilebpp = (tilebpp-1) & 7;
-		pal_base = Machine->remapped_colortable;
+		pal_base = Machine.remapped_colortable;
 		cmask = colormask[tilebpp];
 	
-		src_pitch = src_bitmap->rowpixels;
-		src_base = src_bitmap->base;
+		src_pitch = src_bitmap.rowpixels;
+		src_base = src_bitmap.base;
 	
 		src_miny *= src_pitch;
 		src_maxy *= src_pitch;
@@ -418,10 +418,10 @@ public class konamigx
 	
 		if (ctrl[0x07] & 0x0040)    /* "super" mode */
 		{
-			my_clip.min_x = cliprect->min_x;
-			my_clip.max_x = cliprect->max_x;
-			y = cliprect->min_y;
-			maxy = cliprect->max_y;
+			my_clip.min_x = cliprect.min_x;
+			my_clip.max_x = cliprect.max_x;
+			y = cliprect.min_y;
+			maxy = cliprect.max_y;
 	
 			while (y <= maxy)
 			{
@@ -539,7 +539,7 @@ public class konamigx
 		if (!scalex || !scaley) return;
 	
 		// find shadow pens and cull invisible shadows
-		granularity = shdpen = gfx->color_granularity;
+		granularity = shdpen = gfx.color_granularity;
 		shdpen--;
 	
 		if (zcode >= 0)
@@ -566,17 +566,17 @@ public class konamigx
 		src_pitch = 16;
 		src_fw    = 16;
 		src_fh    = 16;
-		src_base  = gfx->gfxdata + (code % gfx->total_elements) * gfx->char_modulo;
+		src_base  = gfx.gfxdata + (code % gfx.total_elements) * gfx.char_modulo;
 	
-		pal_base  = gfx->colortable + (color % gfx->total_colors) * granularity;
+		pal_base  = gfx.colortable + (color % gfx.total_colors) * granularity;
 		shd_base  = (UINT32 *)palette_shadow_table;
 	
-		dst_ptr   = bitmap->base;
+		dst_ptr   = bitmap.base;
 		dst_pitch = GX_BMPPW;
-		dst_minx  = cliprect->min_x;
-		dst_maxx  = cliprect->max_x;
-		dst_miny  = cliprect->min_y;
-		dst_maxy  = cliprect->max_y;
+		dst_minx  = cliprect.min_x;
+		dst_maxx  = cliprect.max_x;
+		dst_miny  = cliprect.min_y;
+		dst_maxy  = cliprect.max_y;
 		dst_x     = sx;
 		dst_y     = sy;
 	
@@ -1162,8 +1162,8 @@ public class konamigx
 		int w, h;
 		register int ecx;
 	
-		w = Machine->visible_area.max_x - Machine->visible_area.min_x + 1;
-		h = Machine->visible_area.max_y - Machine->visible_area.min_y + 1;
+		w = Machine.visible_area.max_x - Machine.visible_area.min_x + 1;
+		h = Machine.visible_area.max_y - Machine.visible_area.min_y + 1;
 	
 		zptr = gx_objzbuf;
 		ecx = h;
@@ -1234,7 +1234,7 @@ public class konamigx
 		gx_objdma = 0;
 		gx_primode = 0;
 	
-		gx_objzbuf = (UINT8 *)priority_bitmap->base;
+		gx_objzbuf = (UINT8 *)priority_bitmap.base;
 		if (!(gx_shdzbuf = auto_malloc(GX_ZBUFSIZE))) return(1);
 		if (!(gx_objpool = auto_malloc(sizeof(struct GX_OBJ) * (GX_MAX_OBJECTS)))) return(1);
 	
@@ -1431,9 +1431,9 @@ public class konamigx
 	
 			if (offs != -128)
 			{
-				objptr->order = layerpri[i]<<24;
-				objptr->code  = code;
-				objptr->offs = offs;
+				objptr.order = layerpri[i]<<24;
+				objptr.code  = code;
+				objptr.offs = offs;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1548,10 +1548,10 @@ public class konamigx
 			{
 				// add objects with solid or alpha pens
 				order = pri<<24 | zcode<<16 | offs<<(8-3) | temp2<<4;
-				objptr->order = order;
-				objptr->offs  = offs;
-				objptr->code  = code;
-				objptr->color = color;
+				objptr.order = order;
+				objptr.offs  = offs;
+				objptr.code  = code;
+				objptr.color = color;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1562,10 +1562,10 @@ public class konamigx
 			{
 				// add objects with shadows if enabled
 				order = spri<<24 | zcode<<16 | offs<<(8-3) | temp4<<4 | shadow;
-				objptr->order = order;
-				objptr->offs  = offs;
-				objptr->code  = code;
-				objptr->color = color;
+				objptr.order = order;
+				objptr.offs  = offs;
+				objptr.code  = code;
+				objptr.color = color;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1590,15 +1590,15 @@ public class konamigx
 		}
 	
 		// traverse draw list
-		screenwidth = Machine->drv->screen_width;
+		screenwidth = Machine.drv.screen_width;
 	
 		for (count=0; count<nobj; count++)
 		{
 			objptr = objpool + objbuf[count];
-			order  = objptr->order;
-			offs   = objptr->offs;
-			code   = objptr->code;
-			color  = objptr->color;
+			order  = objptr.order;
+			offs   = objptr.offs;
+			code   = objptr.code;
+			color  = objptr.color;
 	
 			if (offs >= 0)
 			{

@@ -25,17 +25,17 @@ public class markham
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = color_prom[0]*0x11;
-			int g = color_prom[Machine->drv->total_colors]*0x11;
-			int b = color_prom[2*Machine->drv->total_colors]*0x11;
+			int g = color_prom[Machine.drv.total_colors]*0x11;
+			int b = color_prom[2*Machine.drv.total_colors]*0x11;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 	
 		/* color_prom now points to the beginning of the lookup table */
 	
@@ -127,12 +127,12 @@ public class markham
 			if (px>248)
 				px = px-256;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 				chr,
 				col,
 				fx,fy,
 				px,py,
-				&Machine->visible_area,TRANSPARENCY_COLOR,0);
+				&Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	}
 	
@@ -148,7 +148,7 @@ public class markham
 				tilemap_set_scrollx(bg_tilemap, i, markham_xscroll[1]);
 		}
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		markham_draw_sprites(bitmap);
 	} };
 }

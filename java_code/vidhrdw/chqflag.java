@@ -88,7 +88,7 @@ public class chqflag
 	
 	public static VideoUpdateHandlerPtr video_update_chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		K051316_zoom_draw_1(bitmap,cliprect,TILEMAP_BACK,0);
 		K051960_sprites_draw(bitmap,cliprect,0,0);

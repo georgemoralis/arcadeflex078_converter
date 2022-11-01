@@ -1140,7 +1140,7 @@ public class m92
 	public static InterruptHandlerPtr m92_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (osd_skip_this_frame()==0)
-			m92_vh_raster_partial_refresh(Machine->scrbitmap,0,249);
+			m92_vh_raster_partial_refresh(Machine.scrbitmap,0,249);
 	
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_0); /* VBL */
 	} };
@@ -1153,7 +1153,7 @@ public class m92
 		/* Raster interrupt */
 		if (m92_raster_enable && line==m92_raster_irq_position) {
 			if (osd_skip_this_frame()==0)
-				m92_vh_raster_partial_refresh(Machine->scrbitmap,last_line,line+1);
+				m92_vh_raster_partial_refresh(Machine.scrbitmap,last_line,line+1);
 			last_line=line+1;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_2);
 		}
@@ -1161,7 +1161,7 @@ public class m92
 		/* Redraw screen, then set vblank and trigger the VBL interrupt */
 		else if (line==249) { /* 248 is last visible line */
 			if (osd_skip_this_frame()==0)
-				m92_vh_raster_partial_refresh(Machine->scrbitmap,last_line,249);
+				m92_vh_raster_partial_refresh(Machine.scrbitmap,last_line,249);
 			last_line=249;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_0);
 		}

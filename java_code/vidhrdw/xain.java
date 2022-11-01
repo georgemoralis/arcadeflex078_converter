@@ -28,7 +28,7 @@ public class xain
 	
 	static UINT32 back_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
@@ -189,13 +189,13 @@ public class xain
 	
 			if ((attr & 0x80) != 0)	/* double height */
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						numtile,
 						color,
 						flipx,flip_screen,
 						sx-1,flip_screen?sy+16:sy-16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						numtile+1,
 						color,
 						flipx,flip_screen,
@@ -204,7 +204,7 @@ public class xain
 			}
 			else
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						numtile,
 						color,
 						flipx,flip_screen,

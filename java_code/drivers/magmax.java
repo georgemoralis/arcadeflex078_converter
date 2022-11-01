@@ -54,7 +54,7 @@ public class magmax
 	
 	static void scanline_callback(int scanline)
 	{
-		/* bit 0 goes hi whenever line V6 from video part goes lo->hi */
+		/* bit 0 goes hi whenever line V6 from video part goes lo.hi */
 		/* that is when scanline is 64 and 192 accordingly */
 		if (LS74_clr != 0)
 			LS74_q = 1;

@@ -30,8 +30,8 @@ public class ddrible
 	public static PaletteInitHandlerPtr palette_init_ddrible  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		/* build the lookup table for sprites. Palette is dynamic. */
@@ -81,7 +81,7 @@ public class ddrible
 	
 	static UINT32 tilemap_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);	/* skip 0x400 */
 	}
 	
@@ -176,7 +176,7 @@ public class ddrible
 	
 	static void ddribble_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, unsigned char* source, int lenght, int gfxset, int flipscreen )
 	{
-		struct GfxElement *gfx = Machine->gfx[gfxset];
+		struct GfxElement *gfx = Machine.gfx[gfxset];
 		const unsigned char *finish = source + lenght;
 	
 		while( source < finish )

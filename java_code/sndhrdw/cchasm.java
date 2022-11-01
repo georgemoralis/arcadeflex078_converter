@@ -186,10 +186,10 @@ public class cchasm
 	    sound_flags = 0;
 	    output[0] = 0; output[1] = 0;
 	
-	    channel[0] = stream_init("CTC sound 1", 50, Machine->sample_rate, 0, tone_update);
-	    channel[1] = stream_init("CTC sound 2", 50, Machine->sample_rate, 1, tone_update);
+	    channel[0] = stream_init("CTC sound 1", 50, Machine.sample_rate, 0, tone_update);
+	    channel[1] = stream_init("CTC sound 2", 50, Machine.sample_rate, 1, tone_update);
 	
-		ctc_intf.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
 		z80ctc_init (&ctc_intf);
 	
 		return 0;

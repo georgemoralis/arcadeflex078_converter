@@ -157,10 +157,10 @@ public class taito_l
 	
 		for(i=0;i<512;i++)
 		{
-			decodechar(Machine->gfx[2], i, taitol_rambanks,
-					   Machine->drv->gfxdecodeinfo[2].gfxlayout);
-			decodechar(Machine->gfx[2], i+512, taitol_rambanks + 0x4000,
-					   Machine->drv->gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine.gfx[2], i, taitol_rambanks,
+					   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine.gfx[2], i+512, taitol_rambanks + 0x4000,
+					   Machine.drv.gfxdecodeinfo[2].gfxlayout);
 		}
 	}
 	
@@ -2863,7 +2863,7 @@ public class taito_l
 	static DRIVER_INIT( evilston )
 	{
 		unsigned char *ROM = memory_region(REGION_CPU2);
-		ROM[0x72]=0x45;	/* reti -> retn  ('dead' loop @ $1104 )*/
+		ROM[0x72]=0x45;	/* reti . retn  ('dead' loop @ $1104 )*/
 		install_mem_write_handler( 0, 0xa7fe, 0xa7fe, evilston_snd_w);
 	}
 	

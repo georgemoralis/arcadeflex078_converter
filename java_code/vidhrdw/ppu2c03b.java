@@ -205,16 +205,16 @@ public class ppu2c03b
 		intf = interface;
 	
 		/* safety check */
-		if ( intf->num <= 0 )
+		if ( intf.num <= 0 )
 			return -1;
 	
-		chips = auto_malloc( intf->num * sizeof( ppu2c03b_chip ) );
+		chips = auto_malloc( intf.num * sizeof( ppu2c03b_chip ) );
 	
 		if ( chips == 0 )
 			return -1;
 	
 		/* intialize our virtual chips */
-		for( i = 0; i < intf->num; i++ )
+		for( i = 0; i < intf.num; i++ )
 		{
 			/* initialize the scanline handling portion */
 			chips[i].scanline_timer = timer_alloc(scanline_callback);
@@ -240,13 +240,13 @@ public class ppu2c03b
 			memset( chips[i].dirtychar, 1, CHARGEN_NUM_CHARS );
 	
 			/* initialize the video ROM portion, if available */
-			if ( ( intf->vrom_region[i] != REGION_INVALID ) && ( memory_region( intf->vrom_region[i] ) != 0 ) )
+			if ( ( intf.vrom_region[i] != REGION_INVALID ) && ( memory_region( intf.vrom_region[i] ) != 0 ) )
 			{
 				/* mark that we have a videorom */
 				chips[i].has_videorom = 1;
 	
 				/* find out how many banks */
-				chips[i].videorom_banks = memory_region_length( intf->vrom_region[i] ) / 0x2000;
+				chips[i].videorom_banks = memory_region_length( intf.vrom_region[i] ) / 0x2000;
 	
 				/* tweak the layout accordingly */
 				ppu_charlayout.total = chips[i].videorom_banks * CHARGEN_NUM_CHARS;
@@ -261,20 +261,20 @@ public class ppu2c03b
 	
 			/* now create the gfx region */
 			{
-				UINT8 *src = chips[i].has_videorom ? memory_region( intf->vrom_region[i] ) : chips[i].videoram;
-				Machine->gfx[intf->gfx_layout_number[i]] = decodegfx( src, &ppu_charlayout );
+				UINT8 *src = chips[i].has_videorom ? memory_region( intf.vrom_region[i] ) : chips[i].videoram;
+				Machine.gfx[intf.gfx_layout_number[i]] = decodegfx( src, &ppu_charlayout );
 	
-				if ( Machine->gfx[intf->gfx_layout_number[i]] == 0 )
+				if ( Machine.gfx[intf.gfx_layout_number[i]] == 0 )
 					return -1;
 	
-				if ( Machine->remapped_colortable )
-					Machine->gfx[intf->gfx_layout_number[i]]->colortable = &Machine->remapped_colortable[intf->color_base[i]];
+				if ( Machine.remapped_colortable )
+					Machine.gfx[intf.gfx_layout_number[i]].colortable = &Machine.remapped_colortable[intf.color_base[i]];
 	
-				Machine->gfx[intf->gfx_layout_number[i]]->total_colors = 8;
+				Machine.gfx[intf.gfx_layout_number[i]].total_colors = 8;
 			}
 	
 			/* setup our videoram handlers based on mirroring */
-			ppu2c03b_set_mirroring( i, intf->mirroring[i] );
+			ppu2c03b_set_mirroring( i, intf.mirroring[i] );
 		}
 	
 		/* success */
@@ -288,13 +288,13 @@ public class ppu2c03b
 		const int *ppu_regs = &chips[num].regs[0];
 		const int scanline = chips[num].scanline;
 		const int refresh_data = chips[num].refresh_data;
-		const int gfx_bank = intf->gfx_layout_number[num];
-		const int total_elements = Machine->gfx[gfx_bank]->total_elements;
+		const int gfx_bank = intf.gfx_layout_number[num];
+		const int total_elements = Machine.gfx[gfx_bank].total_elements;
 		const int *nes_vram = &chips[num].nes_vram[0];
 		const int tile_page = chips[num].tile_page;
-		const int char_modulo = Machine->gfx[gfx_bank]->char_modulo;
-		const int line_modulo = Machine->gfx[gfx_bank]->line_modulo;
-		UINT8 *gfx_data = Machine->gfx[gfx_bank]->gfxdata;
+		const int char_modulo = Machine.gfx[gfx_bank].char_modulo;
+		const int line_modulo = Machine.gfx[gfx_bank].line_modulo;
+		UINT8 *gfx_data = Machine.gfx[gfx_bank].gfxdata;
 		UINT8 **ppu_page = chips[num].ppu_page;
 		int	start_x = ( chips[num].x_fine ^ 0x07 ) - 7;
 		UINT16 back_pen;
@@ -316,11 +316,11 @@ public class ppu2c03b
 		else
 		{
 			color_mask = 0xff;
-			color_table = Machine->gfx[gfx_bank]->colortable;
+			color_table = Machine.gfx[gfx_bank].colortable;
 		}
 	
 		/* cache the background pen */
-		back_pen = Machine->pens[(chips[num].back_color & color_mask)+intf->color_base[num]];
+		back_pen = Machine.pens[(chips[num].back_color & color_mask)+intf.color_base[num]];
 	
 		/* determine where in the nametable to start drawing from */
 		/* based on the current scanline and scroll regs */
@@ -334,7 +334,7 @@ public class ppu2c03b
 		tile_index = ( ( refresh_data & 0xc00 ) | 0x2000 ) + scroll_y_coarse * 32;
 	
 		/* set up dest */
-		dest = ((UINT16 *) bitmap->base) + (bitmap->rowpixels * scanline) + start_x;
+		dest = ((UINT16 *) bitmap.base) + (bitmap.rowpixels * scanline) + start_x;
 	
 		/* draw the 32 or 33 tiles that make up a line */
 		while ( start_x < VISIBLE_SCREEN_WIDTH )
@@ -405,7 +405,7 @@ public class ppu2c03b
 		/* if the left 8 pixels for the background are off, blank 'em */
 		if ( !( ppu_regs[PPU_CONTROL1] & PPU_CONTROL1_BACKGROUND_L8 ) )
 		{
-			dest = ((UINT16 *) bitmap->base) + (bitmap->rowpixels * scanline);
+			dest = ((UINT16 *) bitmap.base) + (bitmap.rowpixels * scanline);
 			for( i = 0; i < 8; i++ )
 				*(dest++) = back_pen;
 		}
@@ -418,14 +418,14 @@ public class ppu2c03b
 		/* cache some values locally */
 		struct mame_bitmap *bitmap = chips[num].bitmap;
 		const int scanline = chips[num].scanline;
-		const int gfx_bank = intf->gfx_layout_number[num];
-		const int total_elements = Machine->gfx[gfx_bank]->total_elements;
+		const int gfx_bank = intf.gfx_layout_number[num];
+		const int total_elements = Machine.gfx[gfx_bank].total_elements;
 		const int sprite_page = chips[num].sprite_page;
-		const int char_modulo = Machine->gfx[gfx_bank]->char_modulo;
-		const int line_modulo = Machine->gfx[gfx_bank]->line_modulo;
+		const int char_modulo = Machine.gfx[gfx_bank].char_modulo;
+		const int line_modulo = Machine.gfx[gfx_bank].line_modulo;
 		const UINT8 *sprites = chips[num].spriteram;
-		pen_t *color_table = Machine->gfx[gfx_bank]->colortable;
-		UINT8 *gfx_data = Machine->gfx[gfx_bank]->gfxdata;
+		pen_t *color_table = Machine.gfx[gfx_bank].colortable;
+		UINT8 *gfx_data = Machine.gfx[gfx_bank].gfxdata;
 		int *ppu_regs = &chips[num].regs[0];
 	
 		int x,y, i;
@@ -721,8 +721,8 @@ public class ppu2c03b
 		/* If NMI's are set to be triggered, go for it */
 		if ( ( scanline == NMI_SCANLINE ) && ( ppu_regs[PPU_CONTROL0] & PPU_CONTROL0_NMI ) )
 		{
-			if ( intf->nmi_handler[num] )
-				(*intf->nmi_handler[num])( num, ppu_regs );
+			if ( intf.nmi_handler[num] )
+				(*intf.nmi_handler[num])( num, ppu_regs );
 		}
 	}
 	
@@ -753,7 +753,7 @@ public class ppu2c03b
 			/* cache some values */
 			UINT8 *dirtyarray = chips[num].dirtychar;
 			UINT8 *vram = chips[num].videoram;
-			struct GfxElement *gfx = Machine->gfx[intf->gfx_layout_number[num]];
+			struct GfxElement *gfx = Machine.gfx[intf.gfx_layout_number[num]];
 	
 			/* then iterate and decode */
 			for( i = 0; i < CHARGEN_NUM_CHARS; i++ )
@@ -796,7 +796,7 @@ public class ppu2c03b
 		int i;
 	
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(reset): Attempting to access an unmapped chip\n" );
 			return;
@@ -835,15 +835,15 @@ public class ppu2c03b
 	
 		/* initialize the color tables */
 		{
-			int color_base = intf->color_base[num];
+			int color_base = intf.color_base[num];
 	
 			for( i = 0; i < ( sizeof( default_colortable_mono ) / sizeof( default_colortable_mono[0] ) ); i++ )
 			{
 				/* monochromatic table */
-				chips[num].colortable_mono[i] = Machine->pens[default_colortable_mono[i] + color_base];
+				chips[num].colortable_mono[i] = Machine.pens[default_colortable_mono[i] + color_base];
 	
 				/* color table */
-				Machine->gfx[intf->gfx_layout_number[num]]->colortable[i] = Machine->pens[default_colortable_mono[i] + color_base];
+				Machine.gfx[intf.gfx_layout_number[num]].colortable[i] = Machine.pens[default_colortable_mono[i] + color_base];
 			}
 		}
 	
@@ -866,7 +866,7 @@ public class ppu2c03b
 		int ret = 0;
 	
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU %d(r): Attempting to access an unmapped chip\n", num );
 			return 0;
@@ -929,7 +929,7 @@ public class ppu2c03b
 	{
 	
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(w): Attempting to access an unmapped chip\n" );
 			return;
@@ -1071,7 +1071,7 @@ public class ppu2c03b
 					/* attempt to write values > the number of colors so we must mask the data. */
 					if ( tempAddr >= 0x3f00 )
 					{
-						int color_base = intf->color_base[num];
+						int color_base = intf.color_base[num];
 	
 						/* store the data */
 						chips[num].videoram.write(tempAddr,data);
@@ -1080,8 +1080,8 @@ public class ppu2c03b
 	
 						if ((tempAddr & 0x03) != 0)
 						{
-							Machine->gfx[intf->gfx_layout_number[num]]->colortable[ tempAddr & 0x1f ] = Machine->pens[color_base+data];
-							chips[num].colortable_mono[tempAddr & 0x1f] = Machine->pens[color_base+(data & 0xf0)];
+							Machine.gfx[intf.gfx_layout_number[num]].colortable[ tempAddr & 0x1f ] = Machine.pens[color_base+data];
+							chips[num].colortable_mono[tempAddr & 0x1f] = Machine.pens[color_base+(data & 0xf0)];
 						}
 	
 						if ( ( tempAddr & 0x0f ) == 0 )
@@ -1091,8 +1091,8 @@ public class ppu2c03b
 							chips[num].back_color = data;
 							for( i = 0; i < 32; i += 4 )
 							{
-								Machine->gfx[intf->gfx_layout_number[num]]->colortable[ i ] = Machine->pens[color_base+data];
-								chips[num].colortable_mono[i] = Machine->pens[color_base+(data & 0xf0)];
+								Machine.gfx[intf.gfx_layout_number[num]].colortable[ i ] = Machine.pens[color_base+data];
+								chips[num].colortable_mono[i] = Machine.pens[color_base+(data & 0xf0)];
 							}
 						}
 	
@@ -1133,7 +1133,7 @@ public class ppu2c03b
 	void ppu2c03b_spriteram_dma( int num, const UINT8 *source )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(render): Attempting to access an unmapped chip\n" );
 			return;
@@ -1150,7 +1150,7 @@ public class ppu2c03b
 	void ppu2c03b_render( int num, struct mame_bitmap *bitmap, int flipx, int flipy, int sx, int sy )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(render): Attempting to access an unmapped chip\n" );
 			return;
@@ -1171,7 +1171,7 @@ public class ppu2c03b
 		int i;
 	
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(set vrom bank): Attempting to access an unmapped chip\n" );
 			return;
@@ -1193,7 +1193,7 @@ public class ppu2c03b
 			int count = num_pages * 0x400;
 			int rom_start = bank * bank_size * 16;
 	
-			memcpy( &chips[num].videoram.read(vram_start), &memory_region( intf->vrom_region[num] )[rom_start], count );
+			memcpy( &chips[num].videoram.read(vram_start), &memory_region( intf.vrom_region[num] )[rom_start], count );
 		}
 	}
 	
@@ -1205,7 +1205,7 @@ public class ppu2c03b
 	int ppu2c03b_get_pixel( int num, int x, int y )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(get_pixel): Attempting to access an unmapped chip\n" );
 			return 0;
@@ -1223,19 +1223,19 @@ public class ppu2c03b
 	int ppu2c03b_get_colorbase( int num )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(get_colorbase): Attempting to access an unmapped chip\n" );
 			return 0;
 		}
 	
-		return intf->color_base[num];
+		return intf.color_base[num];
 	}
 	
 	void ppu2c03b_set_mirroring( int num, int mirroring )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(get_colorbase): Attempting to access an unmapped chip\n" );
 			return;
@@ -1285,19 +1285,19 @@ public class ppu2c03b
 	void ppu2c03b_set_nmi_callback( int num, ppu2c03b_nmi_cb cb )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(set_nmi_callback): Attempting to access an unmapped chip\n" );
 			return;
 		}
 	
-		intf->nmi_handler[num] = cb;
+		intf.nmi_handler[num] = cb;
 	}
 	
 	void ppu2c03b_set_scanline_callback( int num, ppu2c03b_scanline_cb cb )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(set_scanline_callback): Attempting to access an unmapped chip\n" );
 			return;
@@ -1309,7 +1309,7 @@ public class ppu2c03b
 	void ppu2c03b_set_vidaccess_callback( int num, ppu2c03b_vidaccess_cb cb )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(set_vidaccess_callback): Attempting to access an unmapped chip\n" );
 			return;
@@ -1321,7 +1321,7 @@ public class ppu2c03b
 	void ppu2c03b_set_scanlines_per_frame( int num, int scanlines )
 	{
 		/* check bounds */
-		if ( num >= intf->num )
+		if ( num >= intf.num )
 		{
 			logerror( "PPU(set_scanlines_per_frame): Attempting to access an unmapped chip\n" );
 			return;

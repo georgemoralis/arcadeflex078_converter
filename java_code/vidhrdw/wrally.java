@@ -127,7 +127,7 @@ public class wrally
 	static void gaelco_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
 		int i, x, y, ex, ey;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		static int x_offset[2] = {0x0,0x2};
 		static int y_offset[2] = {0x0,0x1};
@@ -154,7 +154,7 @@ public class wrally
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							0x20 + color,xflip,yflip,
 							sx-0x0f+x*16,sy+y*16,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -174,7 +174,7 @@ public class wrally
 		tilemap_set_scrolly(pant[1], 0, wrally_vregs[2]);
 		tilemap_set_scrollx(pant[1], 0, wrally_vregs[3]);
 	
-		fillbitmap( bitmap, Machine->pens[0], cliprect );
+		fillbitmap( bitmap, Machine.pens[0], cliprect );
 	
 		tilemap_draw(bitmap,cliprect,pant[1],0,0);
 		tilemap_draw(bitmap,cliprect,pant[0],0,0);

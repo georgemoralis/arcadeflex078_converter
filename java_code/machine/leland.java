@@ -399,7 +399,7 @@ public class leland
 			cpu_setbank(3, &slave_base[0x10000]);
 	
 		/* if we have an I86 CPU, reset it */
-		if (Machine->drv->cpu[2].cpu_type == CPU_I186)
+		if (Machine.drv.cpu[2].cpu_type == CPU_I186)
 			leland_i186_sound_init();
 	}
 	
@@ -1054,7 +1054,7 @@ public class leland
 		{
 			/* only an error if the selected bit changes; read/write transitions are okay */
 			if ((new_state & 0x30) != (keycard_state & 0x30))
-				if (LOG_KEYCARDS != 0) logerror("ERROR: Caught keycard state transition %02X -> %02X\n", keycard_state, new_state);
+				if (LOG_KEYCARDS != 0) logerror("ERROR: Caught keycard state transition %02X . %02X\n", keycard_state, new_state);
 		}
 	
 		keycard_state = new_state;
@@ -1360,7 +1360,7 @@ public class leland
 	
 	public static WriteHandlerPtr leland_sound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		int gfx_banks = Machine->gfx[0]->total_elements / 0x400;
+		int gfx_banks = Machine.gfx[0].total_elements / 0x400;
 		int gfx_bank_mask = (gfx_banks - 1) << 4;
 		int diff = data ^ leland_gfx_control;
 	

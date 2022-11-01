@@ -437,10 +437,10 @@ public class victory
 	
 		The command register is actually broken down into bitfields as follows:
 	
-			D7    -> must be high for a program to continue execution; otherwise, it will stop
-			D4-D6 -> for non-vector commands, enables VRAM writes to the red, blue and green planes
-			D3    -> enable collision detection for commands 3,5,7
-			D0-D2 -> command
+			D7    . must be high for a program to continue execution; otherwise, it will stop
+			D4-D6 . for non-vector commands, enables VRAM writes to the red, blue and green planes
+			D3    . enable collision detection for commands 3,5,7
+			D0-D2 . command
 	
 		The microcode is actually a big state machine, driven by the 4 PROMs at 19B,19C,19D and 19E.
 		Below are some of the gory details of the state machine.
@@ -448,49 +448,49 @@ public class victory
 	***************************************************************************************************
 	
 		19E:
-			D7 -> inverter -> ZERO RAM [11C8, 13D8]
-			D6 -> select on the mux at 18F
-			D5 -> BUSY [4B6]
-			D4 -> D on flip flop at 16E
-			D3 -> D3 of alternate selection from mux at 18F
-			D2 -> D2 of alternate selection from mux at 18F
-			D1 -> D1 of alternate selection from mux at 18F
-			D0 -> D0 of alternate selection from mux at 18F
+			D7 . inverter . ZERO RAM [11C8, 13D8]
+			D6 . select on the mux at 18F
+			D5 . BUSY [4B6]
+			D4 . D on flip flop at 16E
+			D3 . D3 of alternate selection from mux at 18F
+			D2 . D2 of alternate selection from mux at 18F
+			D1 . D1 of alternate selection from mux at 18F
+			D0 . D0 of alternate selection from mux at 18F
 	
 		19B:
-			D7 -> S LOAD LH [11B8]
-			D6 -> INC I (AND with WRITE EA) [8A8]
-			D5 -> S INC Y (AND with WRITE EA) [8C8]
-			D4 -> SXFERY (AND with WRITE EA) [8C8]
-			D3 -> D on flip flop at 15E, output goes to SADDX [8C8]
-			D2 -> S LOAD PC [8B8]
-			D1 -> CPU0 [11C8, 13C7]
-			D0 -> INC X (AND with WRITE EA) [8C8]
+			D7 . S LOAD LH [11B8]
+			D6 . INC I (AND with WRITE EA) [8A8]
+			D5 . S INC Y (AND with WRITE EA) [8C8]
+			D4 . SXFERY (AND with WRITE EA) [8C8]
+			D3 . D on flip flop at 15E, output goes to SADDX [8C8]
+			D2 . S LOAD PC [8B8]
+			D1 . CPU0 [11C8, 13C7]
+			D0 . INC X (AND with WRITE EA) [8C8]
 	
 		19C:
-			D7 -> SXFERX/INC X (AND with WRITE EA) [8C8, 11B8, 12C8]
-			D6 -> see D5
-			D5 -> selects one of 4 with D6:
-					0 -> SEA VDATA
-					1 -> SEA BUFF
-					2 -> SEA SR 1
-					3 -> SEA SR 2
-			D4 -> ADD 128 [11C8, 12C8]
+			D7 . SXFERX/INC X (AND with WRITE EA) [8C8, 11B8, 12C8]
+			D6 . see D5
+			D5 . selects one of 4 with D6:
+					0 . SEA VDATA
+					1 . SEA BUFF
+					2 . SEA SR 1
+					3 . SEA SR 2
+			D4 . ADD 128 [11C8, 12C8]
 			      also: S ACC CLEAR (AND with WRITE EA) [10B8]
-			D3 -> S ACC CLK (AND with S SEQ CLK) [10B8]
-			D2 -> INC PC [8B8]
-			D1 -> INC L [11B8]
-			D0 -> INC H [11B8]
+			D3 . S ACC CLK (AND with S SEQ CLK) [10B8]
+			D2 . INC PC [8B8]
+			D1 . INC L [11B8]
+			D0 . INC H [11B8]
 	
 		19D:
-			D7 -> S W VRAM (AND with WRITE EA) [14A8]
-			D6 -> S WRITE BUSS1 (AND with WRITE EA) [7A8]
-			D5 -> S WRITE BUSS2 (AND with WRITE EA) [7A8]
-			D4 -> D2 of alternate selection from mux at 18E
-			D3 -> D1 of alternate selection from mux at 18E
-			D2 -> D0 of alternate selection from mux at 18E
-			D1 -> ASEL1 (AND with WRITE EA) [8D8]
-			D0 -> ASEL0 (AND with WRITE EA) [8D8]
+			D7 . S W VRAM (AND with WRITE EA) [14A8]
+			D6 . S WRITE BUSS1 (AND with WRITE EA) [7A8]
+			D5 . S WRITE BUSS2 (AND with WRITE EA) [7A8]
+			D4 . D2 of alternate selection from mux at 18E
+			D3 . D1 of alternate selection from mux at 18E
+			D2 . D0 of alternate selection from mux at 18E
+			D1 . ASEL1 (AND with WRITE EA) [8D8]
+			D0 . ASEL0 (AND with WRITE EA) [8D8]
 	
 	
 		Always on in non-zero states: BUSY, CPU0
@@ -524,48 +524,48 @@ public class victory
 	Registers:
 	
 		X' = 8-bit value = 2 x 4-bit counters at 11B/13B
-				SADDX  -> enables clock to count
-				LF/RT  -> controls direction of counting
-				SLDX   -> loads data from RED VRAM or D0-D7 into X'
-				OUT    -> to X
+				SADDX  . enables clock to count
+				LF/RT  . controls direction of counting
+				SLDX   . loads data from RED VRAM or D0-D7 into X'
+				OUT    . to X
 	
 		X  = 8-bit value = 2 x 4-bit counters at 12D/13D
-				SINCX  -> enables clock to count
-				SXFERX -> loads data from X' into X, with an XOR of 7
-				OUT    -> to X1-X128
+				SINCX  . enables clock to count
+				SXFERX . loads data from X' into X, with an XOR of 7
+				OUT    . to X1-X128
 	
 		Y' = 8-bit value = 8-bit latch
-				SLDY   -> loads data from BLUE VRAM or D0-D7 into Y'
-				OUT    -> to Y
+				SLDY   . loads data from BLUE VRAM or D0-D7 into Y'
+				OUT    . to Y
 	
 		Y  = 8-bit value = 2 x 4-bit counters at 10B/8B
-				SINCY  -> enables clock to count
-				SXFERY -> loads data from Y' into Y
-				OUT    -> to Y1-Y128
+				SINCY  . enables clock to count
+				SXFERY . loads data from Y' into Y
+				OUT    . to Y1-Y128
 	
 		I  = 16-bit value = 4 x 4-bit counters at 12C/11C/12B/14B
-				INCI   -> enables clock to count
-				SLDIH  -> loads data from BLUE VRAM or D0-D7 into upper 8 bits of I
-				SLDIL  -> loads data from RED VRAM or D0-D7 into lower 8 bits of I
-				OUT    -> to I1-I32000
+				INCI   . enables clock to count
+				SLDIH  . loads data from BLUE VRAM or D0-D7 into upper 8 bits of I
+				SLDIL  . loads data from RED VRAM or D0-D7 into lower 8 bits of I
+				OUT    . to I1-I32000
 	
 		PC = 9-bit value = 2 x 4-bit counters at 9B/7B plus JK flip-flop at 12E
-				INCPC  -> toggles flip-flop and increments
-				SLOADPC-> loads data from Y' into PC
+				INCPC  . toggles flip-flop and increments
+				SLOADPC. loads data from Y' into PC
 	
 		L  = 5-bit value = 2 x 4-bit counters at 3H/4H
-				INCL   -> enables clock to count
-				SLOADLH-> loads data from SEA
+				INCL   . enables clock to count
+				SLOADLH. loads data from SEA
 	
 		H  = 3-bit value = 1 x 4-bit counter at 5H
-				INCH   -> enables clock to count
-				SLOADLH-> loads data from SEA
+				INCH   . enables clock to count
+				SLOADLH. loads data from SEA
 	
 		14-bit VRAM address comes from one of several sources, depending on ASEL
-			ASEL0 -> I & 0x3fff
-			ASEL1 -> ((Y & 0xff) << 5) | ((X & 0xff) >> 3)
-			ASEL2 -> 0x2000 | (PC & 0x1ff)
-			ASEL3 -> ((L & 0xff) << 5) | ((E & 0xff) >> 3) 	[video refresh]
+			ASEL0 . I & 0x3fff
+			ASEL1 . ((Y & 0xff) << 5) | ((X & 0xff) >> 3)
+			ASEL2 . 0x2000 | (PC & 0x1ff)
+			ASEL3 . ((L & 0xff) << 5) | ((E & 0xff) >> 3) 	[video refresh]
 	
 	***************************************************************************************************/
 	
@@ -832,14 +832,14 @@ public class victory
 	
 					no carry			carry
 					--------			-----
-			case 0: 1011 -> X++, Y		1101 -> X++, Y--
-			case 1:	0101 -> X, Y--		1101 -> X++, Y--
-			case 2: 0101 -> X, Y--		1100 -> X--, Y--
-			case 3:	1010 -> X--, Y		1100 -> X--, Y--
-			case 4: 1010 -> X--, Y		1110 -> X--, Y++
-			case 5: 0111 -> X, Y++		1110 -> X--, Y++
-			case 6: 0111 -> X, Y++		1111 -> X++, Y++
-			case 7: 1011 -> X++, Y		1111 -> X++, Y++
+			case 0: 1011 . X++, Y		1101 . X++, Y--
+			case 1:	0101 . X, Y--		1101 . X++, Y--
+			case 2: 0101 . X, Y--		1100 . X--, Y--
+			case 3:	1010 . X--, Y		1100 . X--, Y--
+			case 4: 1010 . X--, Y		1110 . X--, Y++
+			case 5: 0111 . X, Y++		1110 . X--, Y++
+			case 6: 0111 . X, Y++		1111 . X++, Y++
+			case 7: 1011 . X++, Y		1111 . X++, Y++
 	
 	*/
 		static const INT8 inctable[8][4] =
@@ -1258,7 +1258,7 @@ public class victory
 			}
 	
 			/* draw the scanline */
-			draw_scanline8(bitmap, 0, y, 256, scanline, Machine->pens, -1);
+			draw_scanline8(bitmap, 0, y, 256, scanline, Machine.pens, -1);
 		}
 	
 		/* indicate that we already did collision detection */

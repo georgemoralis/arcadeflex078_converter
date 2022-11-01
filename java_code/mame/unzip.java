@@ -70,9 +70,9 @@ public class unzip
 	
 	/* Read ecd data in zip structure
 	   in:
-	     zip->fp, zip->length zip file
+	     zip.fp, zip.length zip file
 	   out:
-	     zip->ecd, zip->ecd_length ecd data
+	     zip.ecd, zip.ecd_length ecd data
 	*/
 	static int ecd_read(ZIP* zip) {
 		char* buf;
@@ -81,10 +81,10 @@ public class unzip
 		while (1) {
 			int offset;
 	
-			if (buf_length > zip->length)
-				buf_length = zip->length;
+			if (buf_length > zip.length)
+				buf_length = zip.length;
 	
-			if (osd_fseek(zip->fp, zip->length - buf_length, SEEK_SET) != 0) {
+			if (osd_fseek(zip.fp, zip.length - buf_length, SEEK_SET) != 0) {
 				return -1;
 			}
 	
@@ -94,21 +94,21 @@ public class unzip
 				return -1;
 			}
 	
-			if (osd_fread( zip->fp, buf, buf_length ) != buf_length) {
+			if (osd_fread( zip.fp, buf, buf_length ) != buf_length) {
 				free(buf);
 				return -1;
 			}
 	
 			if (ecd_find_sig(buf, buf_length, &offset)) {
-				zip->ecd_length = buf_length - offset;
+				zip.ecd_length = buf_length - offset;
 	
-				zip->ecd = (char*)malloc( zip->ecd_length );
-				if (!zip->ecd) {
+				zip.ecd = (char*)malloc( zip.ecd_length );
+				if (!zip.ecd) {
 					free(buf);
 					return -1;
 				}
 	
-				memcpy(zip->ecd, buf + offset, zip->ecd_length);
+				memcpy(zip.ecd, buf + offset, zip.ecd_length);
 	
 				free(buf);
 				return 0;
@@ -116,7 +116,7 @@ public class unzip
 	
 			free(buf);
 	
-			if (buf_length < zip->length) {
+			if (buf_length < zip.length) {
 				/* double buffer */
 				buf_length = 2*buf_length;
 	
@@ -188,32 +188,32 @@ public class unzip
 		}
 	
 		/* open */
-		zip->fp = osd_fopen(pathtype, pathindex, zipfile, "rb");
-		if (!zip->fp) {
+		zip.fp = osd_fopen(pathtype, pathindex, zipfile, "rb");
+		if (!zip.fp) {
 			errormsg ("Opening for reading", ERROR_FILESYSTEM, zipfile);
 			free(zip);
 			return 0;
 		}
 	
 		/* go to end */
-		if (osd_fseek(zip->fp, 0L, SEEK_END) != 0) {
+		if (osd_fseek(zip.fp, 0L, SEEK_END) != 0) {
 			errormsg ("Seeking to end", ERROR_FILESYSTEM, zipfile);
-			osd_fclose(zip->fp);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
 		/* get length */
-		zip->length = osd_ftell(zip->fp);
-		if (zip->length < 0) {
+		zip.length = osd_ftell(zip.fp);
+		if (zip.length < 0) {
 			errormsg ("Get file size", ERROR_FILESYSTEM, zipfile);
-			osd_fclose(zip->fp);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
-		if (zip->length == 0) {
+		if (zip.length == 0) {
 			errormsg ("Empty file", ERROR_CORRUPT, zipfile);
-			osd_fclose(zip->fp);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
@@ -221,77 +221,77 @@ public class unzip
 		/* read ecd data */
 		if (ecd_read(zip)!=0) {
 			errormsg ("Reading ECD (end of central directory)", ERROR_CORRUPT, zipfile);
-			osd_fclose(zip->fp);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
 		/* compile ecd info */
-		zip->end_of_cent_dir_sig = read_dword (zip->ecd+ZIPESIG);
-		zip->number_of_this_disk = read_word (zip->ecd+ZIPEDSK);
-		zip->number_of_disk_start_cent_dir = read_word (zip->ecd+ZIPECEN);
-		zip->total_entries_cent_dir_this_disk = read_word (zip->ecd+ZIPENUM);
-		zip->total_entries_cent_dir = read_word (zip->ecd+ZIPECENN);
-		zip->size_of_cent_dir = read_dword (zip->ecd+ZIPECSZ);
-		zip->offset_to_start_of_cent_dir = read_dword (zip->ecd+ZIPEOFST);
-		zip->zipfile_comment_length = read_word (zip->ecd+ZIPECOML);
-		zip->zipfile_comment = zip->ecd+ZIPECOM;
+		zip.end_of_cent_dir_sig = read_dword (zip.ecd+ZIPESIG);
+		zip.number_of_this_disk = read_word (zip.ecd+ZIPEDSK);
+		zip.number_of_disk_start_cent_dir = read_word (zip.ecd+ZIPECEN);
+		zip.total_entries_cent_dir_this_disk = read_word (zip.ecd+ZIPENUM);
+		zip.total_entries_cent_dir = read_word (zip.ecd+ZIPECENN);
+		zip.size_of_cent_dir = read_dword (zip.ecd+ZIPECSZ);
+		zip.offset_to_start_of_cent_dir = read_dword (zip.ecd+ZIPEOFST);
+		zip.zipfile_comment_length = read_word (zip.ecd+ZIPECOML);
+		zip.zipfile_comment = zip.ecd+ZIPECOM;
 	
 		/* verify that we can work with this zipfile (no disk spanning allowed) */
-		if ((zip->number_of_this_disk != zip->number_of_disk_start_cent_dir) ||
-			(zip->total_entries_cent_dir_this_disk != zip->total_entries_cent_dir) ||
-			(zip->total_entries_cent_dir < 1)) {
+		if ((zip.number_of_this_disk != zip.number_of_disk_start_cent_dir) ||
+			(zip.total_entries_cent_dir_this_disk != zip.total_entries_cent_dir) ||
+			(zip.total_entries_cent_dir < 1)) {
 			errormsg("Cannot span disks", ERROR_UNSUPPORTED, zipfile);
-			free(zip->ecd);
-			osd_fclose(zip->fp);
+			free(zip.ecd);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
-		if (osd_fseek(zip->fp, zip->offset_to_start_of_cent_dir, SEEK_SET)!=0) {
+		if (osd_fseek(zip.fp, zip.offset_to_start_of_cent_dir, SEEK_SET)!=0) {
 			errormsg ("Seeking to central directory", ERROR_CORRUPT, zipfile);
-			free(zip->ecd);
-			osd_fclose(zip->fp);
+			free(zip.ecd);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
 		/* read from start of central directory */
-		zip->cd = (char*)malloc( zip->size_of_cent_dir );
-		if (!zip->cd) {
-			free(zip->ecd);
-			osd_fclose(zip->fp);
+		zip.cd = (char*)malloc( zip.size_of_cent_dir );
+		if (!zip.cd) {
+			free(zip.ecd);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
-		if (osd_fread(zip->fp, zip->cd, zip->size_of_cent_dir)!=zip->size_of_cent_dir) {
+		if (osd_fread(zip.fp, zip.cd, zip.size_of_cent_dir)!=zip.size_of_cent_dir) {
 			errormsg ("Reading central directory", ERROR_CORRUPT, zipfile);
-			free(zip->cd);
-			free(zip->ecd);
-			osd_fclose(zip->fp);
+			free(zip.cd);
+			free(zip.ecd);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
 	
 		/* reset ent */
-		zip->ent.name = 0;
+		zip.ent.name = 0;
 	
 		/* rewind */
-		zip->cd_pos = 0;
+		zip.cd_pos = 0;
 	
 		/* file name */
-		zip->zip = (char*)malloc(strlen(zipfile)+1);
-		if (!zip->zip) {
-			free(zip->cd);
-			free(zip->ecd);
-			osd_fclose(zip->fp);
+		zip.zip = (char*)malloc(strlen(zipfile)+1);
+		if (!zip.zip) {
+			free(zip.cd);
+			free(zip.ecd);
+			osd_fclose(zip.fp);
 			free(zip);
 			return 0;
 		}
-		strcpy(zip->zip, zipfile);
-		zip->pathtype = pathtype;
-		zip->pathindex = pathindex;
+		strcpy(zip.zip, zipfile);
+		zip.pathtype = pathtype;
+		zip.pathindex = pathindex;
 	
 		return zip;
 	}
@@ -306,60 +306,60 @@ public class unzip
 	struct zipent* readzip(ZIP* zip) {
 	
 		/* end of directory */
-		if (zip->cd_pos >= zip->size_of_cent_dir)
+		if (zip.cd_pos >= zip.size_of_cent_dir)
 			return 0;
 	
 		/* compile zipent info */
-		zip->ent.cent_file_header_sig = read_dword (zip->cd+zip->cd_pos+ZIPCENSIG);
-		zip->ent.version_made_by = *(zip->cd+zip->cd_pos+ZIPCVER);
-		zip->ent.host_os = *(zip->cd+zip->cd_pos+ZIPCOS);
-		zip->ent.version_needed_to_extract = *(zip->cd+zip->cd_pos+ZIPCVXT);
-		zip->ent.os_needed_to_extract = *(zip->cd+zip->cd_pos+ZIPCEXOS);
-		zip->ent.general_purpose_bit_flag = read_word (zip->cd+zip->cd_pos+ZIPCFLG);
-		zip->ent.compression_method = read_word (zip->cd+zip->cd_pos+ZIPCMTHD);
-		zip->ent.last_mod_file_time = read_word (zip->cd+zip->cd_pos+ZIPCTIM);
-		zip->ent.last_mod_file_date = read_word (zip->cd+zip->cd_pos+ZIPCDAT);
-		zip->ent.crc32 = read_dword (zip->cd+zip->cd_pos+ZIPCCRC);
-		zip->ent.compressed_size = read_dword (zip->cd+zip->cd_pos+ZIPCSIZ);
-		zip->ent.uncompressed_size = read_dword (zip->cd+zip->cd_pos+ZIPCUNC);
-		zip->ent.filename_length = read_word (zip->cd+zip->cd_pos+ZIPCFNL);
-		zip->ent.extra_field_length = read_word (zip->cd+zip->cd_pos+ZIPCXTL);
-		zip->ent.file_comment_length = read_word (zip->cd+zip->cd_pos+ZIPCCML);
-		zip->ent.disk_number_start = read_word (zip->cd+zip->cd_pos+ZIPDSK);
-		zip->ent.internal_file_attrib = read_word (zip->cd+zip->cd_pos+ZIPINT);
-		zip->ent.external_file_attrib = read_dword (zip->cd+zip->cd_pos+ZIPEXT);
-		zip->ent.offset_lcl_hdr_frm_frst_disk = read_dword (zip->cd+zip->cd_pos+ZIPOFST);
+		zip.ent.cent_file_header_sig = read_dword (zip.cd+zip.cd_pos+ZIPCENSIG);
+		zip.ent.version_made_by = *(zip.cd+zip.cd_pos+ZIPCVER);
+		zip.ent.host_os = *(zip.cd+zip.cd_pos+ZIPCOS);
+		zip.ent.version_needed_to_extract = *(zip.cd+zip.cd_pos+ZIPCVXT);
+		zip.ent.os_needed_to_extract = *(zip.cd+zip.cd_pos+ZIPCEXOS);
+		zip.ent.general_purpose_bit_flag = read_word (zip.cd+zip.cd_pos+ZIPCFLG);
+		zip.ent.compression_method = read_word (zip.cd+zip.cd_pos+ZIPCMTHD);
+		zip.ent.last_mod_file_time = read_word (zip.cd+zip.cd_pos+ZIPCTIM);
+		zip.ent.last_mod_file_date = read_word (zip.cd+zip.cd_pos+ZIPCDAT);
+		zip.ent.crc32 = read_dword (zip.cd+zip.cd_pos+ZIPCCRC);
+		zip.ent.compressed_size = read_dword (zip.cd+zip.cd_pos+ZIPCSIZ);
+		zip.ent.uncompressed_size = read_dword (zip.cd+zip.cd_pos+ZIPCUNC);
+		zip.ent.filename_length = read_word (zip.cd+zip.cd_pos+ZIPCFNL);
+		zip.ent.extra_field_length = read_word (zip.cd+zip.cd_pos+ZIPCXTL);
+		zip.ent.file_comment_length = read_word (zip.cd+zip.cd_pos+ZIPCCML);
+		zip.ent.disk_number_start = read_word (zip.cd+zip.cd_pos+ZIPDSK);
+		zip.ent.internal_file_attrib = read_word (zip.cd+zip.cd_pos+ZIPINT);
+		zip.ent.external_file_attrib = read_dword (zip.cd+zip.cd_pos+ZIPEXT);
+		zip.ent.offset_lcl_hdr_frm_frst_disk = read_dword (zip.cd+zip.cd_pos+ZIPOFST);
 	
 	    /* check to see if filename length is illegally long (past the size of this directory
 	       entry) */
-	    if (zip->cd_pos + ZIPCFN + zip->ent.filename_length > zip->size_of_cent_dir)
+	    if (zip.cd_pos + ZIPCFN + zip.ent.filename_length > zip.size_of_cent_dir)
 	    {
-	        errormsg("Invalid filename length in directory", ERROR_CORRUPT,zip->zip);
+	        errormsg("Invalid filename length in directory", ERROR_CORRUPT,zip.zip);
 	        return 0;
 	    }
 	
 		/* copy filename */
-		free(zip->ent.name);
-		zip->ent.name = (char*)malloc(zip->ent.filename_length + 1);
-		memcpy(zip->ent.name, zip->cd+zip->cd_pos+ZIPCFN, zip->ent.filename_length);
-		zip->ent.name[zip->ent.filename_length] = 0;
+		free(zip.ent.name);
+		zip.ent.name = (char*)malloc(zip.ent.filename_length + 1);
+		memcpy(zip.ent.name, zip.cd+zip.cd_pos+ZIPCFN, zip.ent.filename_length);
+		zip.ent.name[zip.ent.filename_length] = 0;
 	
 		/* skip to next entry in central dir */
-		zip->cd_pos += ZIPCFN + zip->ent.filename_length + zip->ent.extra_field_length + zip->ent.file_comment_length;
+		zip.cd_pos += ZIPCFN + zip.ent.filename_length + zip.ent.extra_field_length + zip.ent.file_comment_length;
 	
-		return &zip->ent;
+		return &zip.ent;
 	}
 	
 	/* Closes a zip stream */
 	void closezip(ZIP* zip) {
 		/* release all */
-		free(zip->ent.name);
-		free(zip->cd);
-		free(zip->ecd);
+		free(zip.ent.name);
+		free(zip.cd);
+		free(zip.ecd);
 		/* only if not suspended */
-		if (zip->fp)
-			osd_fclose(zip->fp);
-		free(zip->zip);
+		if (zip.fp)
+			osd_fclose(zip.fp);
+		free(zip.zip);
 		free(zip);
 	}
 	
@@ -371,9 +371,9 @@ public class unzip
 	     readuncompressd() or readcompressed() functions
 	*/
 	void suspendzip(ZIP* zip) {
-		if (zip->fp) {
-			osd_fclose(zip->fp);
-			zip->fp = 0;
+		if (zip.fp) {
+			osd_fclose(zip.fp);
+			zip.fp = 0;
 		}
 	}
 	
@@ -385,9 +385,9 @@ public class unzip
 		==0 error (zip must be closed with closezip)
 	*/
 	static ZIP* revivezip(ZIP* zip) {
-		if (!zip->fp) {
-			zip->fp = osd_fopen(zip->pathtype, zip->pathindex, zip->zip, "rb");
-			if (!zip->fp) {
+		if (!zip.fp) {
+			zip.fp = osd_fopen(zip.pathtype, zip.pathindex, zip.zip, "rb");
+			if (!zip.fp) {
 				return 0;
 			}
 		}
@@ -402,10 +402,10 @@ public class unzip
 	     ZIP file must be opened and not suspended
 	*/
 	void rewindzip(ZIP* zip) {
-		zip->cd_pos = 0;
+		zip.cd_pos = 0;
 	}
 	
-	/* Seek zip->fp to compressed data
+	/* Seek zip.fp to compressed data
 	   return:
 		==0 success
 		<0 error
@@ -414,18 +414,18 @@ public class unzip
 		char buf[ZIPNAME];
 		long offset;
 	
-		if (!zip->fp) {
+		if (!zip.fp) {
 			if (!revivezip(zip))
 				return -1;
 		}
 	
-		if (osd_fseek(zip->fp, ent->offset_lcl_hdr_frm_frst_disk, SEEK_SET)!=0) {
-			errormsg ("Seeking to header", ERROR_CORRUPT, zip->zip);
+		if (osd_fseek(zip.fp, ent.offset_lcl_hdr_frm_frst_disk, SEEK_SET)!=0) {
+			errormsg ("Seeking to header", ERROR_CORRUPT, zip.zip);
 			return -1;
 		}
 	
-		if (osd_fread(zip->fp, buf, ZIPNAME)!=ZIPNAME) {
-			errormsg ("Reading header", ERROR_CORRUPT, zip->zip);
+		if (osd_fread(zip.fp, buf, ZIPNAME)!=ZIPNAME) {
+			errormsg ("Reading header", ERROR_CORRUPT, zip.zip);
 			return -1;
 		}
 	
@@ -434,10 +434,10 @@ public class unzip
 			UINT16 extra_field_length = read_word (buf+ZIPXTRALN);
 	
 			/* calculate offset to data and osd_fseek() there */
-			offset = ent->offset_lcl_hdr_frm_frst_disk + ZIPNAME + filename_length + extra_field_length;
+			offset = ent.offset_lcl_hdr_frm_frst_disk + ZIPNAME + filename_length + extra_field_length;
 	
-			if (osd_fseek(zip->fp, offset, SEEK_SET) != 0) {
-				errormsg ("Seeking to compressed data", ERROR_CORRUPT, zip->zip);
+			if (osd_fseek(zip.fp, offset, SEEK_SET) != 0) {
+				errormsg ("Seeking to compressed data", ERROR_CORRUPT, zip.zip);
 				return -1;
 			}
 	
@@ -545,8 +545,8 @@ public class unzip
 		if (err!=0)
 			return err;
 	
-		if (osd_fread(zip->fp, data, ent->compressed_size)!=ent->compressed_size) {
-			errormsg ("Reading compressed data", ERROR_CORRUPT, zip->zip);
+		if (osd_fread(zip.fp, data, ent.compressed_size)!=ent.compressed_size) {
+			errormsg ("Reading compressed data", ERROR_CORRUPT, zip.zip);
 			return -1;
 		}
 	
@@ -561,30 +561,30 @@ public class unzip
 		<0 error
 	*/
 	int readuncompresszip(ZIP* zip, struct zipent* ent, char* data) {
-		if (ent->compression_method == 0x0000) {
+		if (ent.compression_method == 0x0000) {
 			/* file is not compressed, simply stored */
 	
 			/* check if size are equal */
-			if (ent->compressed_size != ent->uncompressed_size) {
-				errormsg("Wrong uncompressed size in store compression", ERROR_CORRUPT,zip->zip);
+			if (ent.compressed_size != ent.uncompressed_size) {
+				errormsg("Wrong uncompressed size in store compression", ERROR_CORRUPT,zip.zip);
 				return -3;
 			}
 	
 			return readcompresszip(zip,ent,data);
-		} else if (ent->compression_method == 0x0008) {
+		} else if (ent.compression_method == 0x0008) {
 			/* file is compressed using "Deflate" method */
-			if (ent->version_needed_to_extract > 0x14) {
-				errormsg("Version too new", ERROR_UNSUPPORTED,zip->zip);
+			if (ent.version_needed_to_extract > 0x14) {
+				errormsg("Version too new", ERROR_UNSUPPORTED,zip.zip);
 				return -2;
 			}
 	
-			if (ent->os_needed_to_extract != 0x00) {
-				errormsg("OS not supported", ERROR_UNSUPPORTED,zip->zip);
+			if (ent.os_needed_to_extract != 0x00) {
+				errormsg("OS not supported", ERROR_UNSUPPORTED,zip.zip);
 				return -2;
 			}
 	
-			if (ent->disk_number_start != zip->number_of_this_disk) {
-				errormsg("Cannot span disks", ERROR_UNSUPPORTED,zip->zip);
+			if (ent.disk_number_start != zip.number_of_this_disk) {
+				errormsg("Cannot span disks", ERROR_UNSUPPORTED,zip.zip);
 				return -2;
 			}
 	
@@ -594,15 +594,15 @@ public class unzip
 			}
 	
 			/* configure inflate */
-			if (inflate_file( zip->fp, ent->compressed_size, (unsigned char*)data, ent->uncompressed_size))
+			if (inflate_file( zip.fp, ent.compressed_size, (unsigned char*)data, ent.uncompressed_size))
 			{
-				errormsg("Inflating compressed data", ERROR_CORRUPT, zip->zip);
+				errormsg("Inflating compressed data", ERROR_CORRUPT, zip.zip);
 				return -3;
 			}
 	
 			return 0;
 		} else {
-			errormsg("Compression method unsupported", ERROR_UNSUPPORTED, zip->zip);
+			errormsg("Compression method unsupported", ERROR_UNSUPPORTED, zip.zip);
 			return -2;
 		}
 	}
@@ -631,7 +631,7 @@ public class unzip
 	
 		/* search in the cache buffer */
 		for(i=0;i<ZIP_CACHE_MAX;++i) {
-			if (zip_cache_map[i] && zip_cache_map[i]->pathtype == pathtype && zip_cache_map[i]->pathindex == pathindex && strcmp(zip_cache_map[i]->zip,zipfile)==0) {
+			if (zip_cache_map[i] && zip_cache_map[i].pathtype == pathtype && zip_cache_map[i].pathindex == pathindex && strcmp(zip_cache_map[i].zip,zipfile)==0) {
 				/* found */
 				unsigned j;
 	
@@ -775,13 +775,13 @@ public class unzip
 			/* NS981003: support for "load by CRC" */
 			char crc[9];
 	
-			ent = &(zip->ent);
+			ent = &(zip.ent);
 	
-			sprintf(crc,"%08x",ent->crc32);
-			if (equal_filename(ent->name, filename) ||
-					(ent->crc32 && !strcmp(crc, filename)))
+			sprintf(crc,"%08x",ent.crc32);
+			if (equal_filename(ent.name, filename) ||
+					(ent.crc32 && !strcmp(crc, filename)))
 			{
-				*length = ent->uncompressed_size;
+				*length = ent.uncompressed_size;
 				*buf = (unsigned char*)malloc( *length );
 				if (!*buf) {
 					if (!gUnzipQuiet)
@@ -817,12 +817,12 @@ public class unzip
 			return -1;
 	
 		while (readzip(zip)) {
-			ent = &(zip->ent);
+			ent = &(zip.ent);
 	
-			if (equal_filename(ent->name, filename))
+			if (equal_filename(ent.name, filename))
 			{
-				*length = ent->uncompressed_size;
-				*sum = ent->crc32;
+				*length = ent.uncompressed_size;
+				*sum = ent.crc32;
 				cache_suspendzip(zip);
 				return 0;
 			}
@@ -836,12 +836,12 @@ public class unzip
 			return -1;
 	
 		while (readzip(zip)) {
-			ent = &(zip->ent);
+			ent = &(zip.ent);
 	
-			if (*sum && ent->crc32 == *sum)
+			if (*sum && ent.crc32 == *sum)
 			{
-				*length = ent->uncompressed_size;
-				*sum = ent->crc32;
+				*length = ent.uncompressed_size;
+				*sum = ent.crc32;
 				cache_suspendzip(zip);
 				return 0;
 			}

@@ -675,8 +675,8 @@ public class toaplan2
 		{
 			int code = offset/32;
 			COMBINE_DATA(&toaplan2_tx_gfxram16[offset]);
-			decodechar(Machine->gfx[2], code, toaplan2_tx_gfxram,
-						Machine->drv->gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine.gfx[2], code, toaplan2_tx_gfxram,
+						Machine.drv.gfxdecodeinfo[2].gfxlayout);
 	
 			tilemap_mark_all_tiles_dirty(tx_tilemap);
 		}
@@ -719,7 +719,7 @@ public class toaplan2
 	
 		/* Decode text characters */
 		for (code = 0; code < 1024; code++)
-			decodechar (Machine->gfx[2], code, raizing_tx_gfxram, Machine->drv->gfxdecodeinfo[2].gfxlayout);
+			decodechar (Machine.gfx[2], code, raizing_tx_gfxram, Machine.drv.gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(tx_tilemap);
 	}
 	
@@ -984,7 +984,7 @@ public class toaplan2
 						if ((toaplan2_sub_cpu == CPU_2_Z80) && (data == 3))
 						{
 							/* HACK! When tilted, sound CPU needs to be reset. */
-							if (Machine->drv->sound[0].sound_type == SOUND_YM3812)
+							if (Machine.drv.sound[0].sound_type == SOUND_YM3812)
 							{
 								cpu_set_reset_line(1,PULSE_LINE);
 								YM3812_sh_reset();
@@ -1152,10 +1152,10 @@ public class toaplan2
 			}
 	
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( sprite_voffs = 0; sprite_voffs < (TOAPLAN2_SPRITERAM_SIZE/2); sprite_voffs += 4 )
 			{
@@ -1191,10 +1191,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_TOP_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1216,10 +1216,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_FG_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1241,10 +1241,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_BG_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1274,10 +1274,10 @@ public class toaplan2
 		if (displog != 0)
 		{
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 		}
 	}
@@ -1291,7 +1291,7 @@ public class toaplan2
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int controller, int priority_to_display, int bank_sel )
 	{
-		const struct GfxElement *gfx = Machine->gfx[ ((controller*2)+1) ];
+		const struct GfxElement *gfx = Machine.gfx[ ((controller*2)+1) ];
 	
 		int offs;
 	
@@ -1464,7 +1464,7 @@ public class toaplan2
 		mark_sprite_priority(0);
 		mark_tile_priority(0);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (priority = 0; priority < 16; priority++)
 		{
@@ -1490,7 +1490,7 @@ public class toaplan2
 		mark_tile_priority(0);
 		mark_tile_priority(1);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (priority = 0; priority < 16; priority++)
 		{
@@ -1524,7 +1524,7 @@ public class toaplan2
 		mark_tile_priority(0);
 		mark_tile_priority(1);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (priority = 0; priority < 16; priority++)
 		{
@@ -1575,7 +1575,7 @@ public class toaplan2
 			objectbank_dirty = 0;
 		}
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (priority = 0; priority < 16; priority++)
 		{
@@ -1586,10 +1586,10 @@ public class toaplan2
 				draw_sprites(bitmap,cliprect,0,priority,1);	/* consider bank select */
 		}
 	
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 	
 		/* used for 'for use in' and '8ing' screen on bbakraid, raizing on batrider */
 		for (line = 0; line < 256;line++)
@@ -1613,7 +1613,7 @@ public class toaplan2
 		mark_sprite_priority(0);
 		mark_tile_priority(0);
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if (bg_tile_priority[0][0]) tilemap_draw(bitmap,cliprect,bg_tilemap[0],0,0);
 		if (fg_tile_priority[0][0]) tilemap_draw(bitmap,cliprect,fg_tilemap[0],0,0);

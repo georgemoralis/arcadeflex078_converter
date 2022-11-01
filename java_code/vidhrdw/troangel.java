@@ -37,8 +37,8 @@ public class troangel
 	public static PaletteInitHandlerPtr palette_init_troangel  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		/* character palette */
@@ -133,7 +133,7 @@ public class troangel
 	static void draw_background( struct mame_bitmap *bitmap )
 	{
 		int offs;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		for (offs = videoram_size - 2;offs >= 0;offs -= 2)
 		{
@@ -193,7 +193,7 @@ public class troangel
 				for (offs = 128;offs < 256;offs++) xscroll[offs] = -troangel_scroll[offs];
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -226,12 +226,12 @@ public class troangel
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1+bank],
+			drawgfx(bitmap,Machine.gfx[1+bank],
 				tile_number,
 				color,
 				flipx,flipy,
 				sx,sy,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	

@@ -604,13 +604,13 @@ public class slikshot
 		{
 			int px = xstart >> 16, py = ystart >> 16;
 	
-			if (px >= cliprect->min_x && px <= cliprect->max_x &&
-				py >= cliprect->min_y && py <= cliprect->max_y)
+			if (px >= cliprect.min_x && px <= cliprect.max_x &&
+				py >= cliprect.min_y && py <= cliprect.max_y)
 			{
-				if (bitmap->depth == 8)
-					((UINT8 *)bitmap->line[py])[px] = Machine->pens[256];
+				if (bitmap.depth == 8)
+					((UINT8 *)bitmap.line[py])[px] = Machine.pens[256];
 				else
-					((UINT16 *)bitmap->line[py])[px] = Machine->pens[256];
+					((UINT16 *)bitmap.line[py])[px] = Machine.pens[256];
 			}
 			xstart += dx;
 			ystart += dy;

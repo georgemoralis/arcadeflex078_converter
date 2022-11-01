@@ -95,7 +95,7 @@ public class coolpool
 	
 	void coolpool_dpyint_callback(int scanline)
 	{
-	//	if (scanline < Machine->visible_area.max_y)
+	//	if (scanline < Machine.visible_area.max_y)
 	//		force_partial_update(scanline - 1);
 	}
 	
@@ -105,10 +105,10 @@ public class coolpool
 		data16_t *base = &ram_base[TOWORD(0x800)];
 		int x, y;
 	
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			UINT8 scanline[320];
-			for (x = cliprect->min_x; x <= cliprect->max_x; x += 2)
+			for (x = cliprect.min_x; x <= cliprect.max_x; x += 2)
 			{
 				data16_t pixels = base[x / 4];
 	
@@ -118,7 +118,7 @@ public class coolpool
 				scanline[x+3] = (pixels >> 12) & 15;
 			}
 	
-			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, scanline, NULL, -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, scanline, NULL, -1);
 			base += TOWORD(0x800);
 		}
 	} };
@@ -130,7 +130,7 @@ public class coolpool
 	
 		/* due to timing issues, we sometimes set the DPYADR just before we get here;
 		   in order to avoid trouncing that value, we look for the last scanline */
-		if (dpyadrscan < Machine->visible_area.max_y)
+		if (dpyadrscan < Machine.visible_area.max_y)
 			dpyadr = ~tms34010_io_register_r(REG_DPYSTRT, 0) & 0xfffc;
 		dpyadrscan = 0;
 	
@@ -167,15 +167,15 @@ public class coolpool
 	}*/
 	
 		/* adjust for when DPYADR was written */
-		if (cliprect->min_y > dpyadrscan)
-			offset += (cliprect->min_y - dpyadrscan) * dudate;
-	//printf("DPYADR = %04X DPYTAP = %04X (%d-%d)\n", dpyadr, dpytap, cliprect->min_y, cliprect->max_y);
+		if (cliprect.min_y > dpyadrscan)
+			offset += (cliprect.min_y - dpyadrscan) * dudate;
+	//printf("DPYADR = %04X DPYTAP = %04X (%d-%d)\n", dpyadr, dpytap, cliprect.min_y, cliprect.max_y);
 	
 		/* render the visible section */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			UINT8 scanline[320];
-			for (x = cliprect->min_x; x <= cliprect->max_x; x += 2)
+			for (x = cliprect.min_x; x <= cliprect.max_x; x += 2)
 			{
 				data16_t pixels = ram_base[(offset & ~dumask & TOWORD(0x1fffff)) | ((offset + x/2) & dumask)];
 	
@@ -183,7 +183,7 @@ public class coolpool
 				scanline[x+1] = (pixels >> 8) & 0xff;
 			}
 	
-			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, scanline, NULL, -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, scanline, NULL, -1);
 			offset += dudate;
 		}
 	} };

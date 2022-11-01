@@ -256,7 +256,7 @@ public class gridlee
 	{
 		unsigned int cc;
 	
-		/* CPU runs at 1.25MHz, noise source at 100kHz --> multiply by 12.5 */
+		/* CPU runs at 1.25MHz, noise source at 100kHz -. multiply by 12.5 */
 		cc = activecpu_gettotalcycles();
 	
 		/* 12.5 = 8 + 4 + 0.5 */

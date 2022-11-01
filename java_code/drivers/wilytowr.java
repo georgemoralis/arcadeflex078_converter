@@ -195,11 +195,11 @@ public class wilytowr
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[2],
+			drawgfx(bitmap, Machine.gfx[2],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -211,9 +211,9 @@ public class wilytowr
 		for (col = 0; col < 32; col++)
 			tilemap_set_scrolly(bg_tilemap, col, wilytowr_scrollram[col * 8]);
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		wilytowr_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 	
 	

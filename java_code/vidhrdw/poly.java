@@ -80,23 +80,23 @@ public class poly
 		struct shiftclip;
 	
 		/* first sort by Y */
-		if (v2->y < v1->y) { tv = v1; v1 = v2; v2 = tv; }
-		if (v3->y < v2->y)
+		if (v2.y < v1.y) { tv = v1; v1 = v2; v2 = tv; }
+		if (v3.y < v2.y)
 		{
 			tv = v2; v2 = v3; v3 = tv;
-			if (v2->y < v1->y) { tv = v1; v1 = v2; v2 = tv; }
+			if (v2.y < v1.y) { tv = v1; v1 = v2; v2 = tv; }
 		}
 	
 		/* see if we're on-screen */
-		if (v1->y > cliprect->max_y || v3->y < cliprect->min_y)
+		if (v1.y > cliprect.max_y || v3.y < cliprect.min_y)
 			return NULL;
-		if ((v1->x < cliprect->min_x && v2->x < cliprect->min_x && v3->x < cliprect->min_x) ||
-			(v1->x > cliprect->max_x && v2->x > cliprect->max_x && v3->x > cliprect->max_x))
+		if ((v1.x < cliprect.min_x && v2.x < cliprect.min_x && v3.x < cliprect.min_x) ||
+			(v1.x > cliprect.max_x && v2.x > cliprect.max_x && v3.x > cliprect.max_x))
 			return NULL;
 	
 		/* set the final start/end Y values */
-		scanlines.sy = (v1->y < cliprect->min_y) ? cliprect->min_y : v1->y;
-		scanlines.ey = (v3->y > cliprect->max_y) ? cliprect->max_y : v3->y - 1;
+		scanlines.sy = (v1.y < cliprect.min_y) ? cliprect.min_y : v1.y;
+		scanlines.ey = (v3.y > cliprect.max_y) ? cliprect.max_y : v3.y - 1;
 	
 		/* imagine the triangle divided into two parts vertically, splitting at v2:
 	
@@ -108,15 +108,15 @@ public class poly
 		*/
 	
 		/* determine what portion of the triangle lives in the upper part (16.16) */
-		temp = v3->y - v1->y;
+		temp = v3.y - v1.y;
 		if (temp <= 0)
 			return NULL;
-		temp = ((v2->y - v1->y) << 16) / temp;
+		temp = ((v2.y - v1.y) << 16) / temp;
 	
 		/* compute the length of the longest scanline; this is the dx from v1 to v2 */
 		/* plus the fractional portion of the dx from v1 to v3 at the boundary between */
 		/* the two parts (16.16) */
-		longest_scanline = ((v1->x - v2->x) << 16) + temp * (v3->x - v1->x);
+		longest_scanline = ((v1.x - v2.x) << 16) + temp * (v3.x - v1.x);
 	
 		/* if the longest scanline is 0, early out */
 		if (longest_scanline == 0)
@@ -126,32 +126,32 @@ public class poly
 		/* surface of the triangle, so compute those up front (16.16) */
 		if (NUM_PARAMS >= 0)
 		{
-			INT64 value = ((INT64)(v1->p[0] - v2->p[0]) << 32) + (INT64)temp * ((INT64)(v3->p[0] - v1->p[0]) << 16);
+			INT64 value = ((INT64)(v1.p[0] - v2.p[0]) << 32) + (INT64)temp * ((INT64)(v3.p[0] - v1.p[0]) << 16);
 			scanlines.dp[0] = value / longest_scanline;
 		}
 		if (NUM_PARAMS >= 1)
 		{
-			INT64 value = ((INT64)(v1->p[1] - v2->p[1]) << 32) + (INT64)temp * ((INT64)(v3->p[1] - v1->p[1]) << 16);
+			INT64 value = ((INT64)(v1.p[1] - v2.p[1]) << 32) + (INT64)temp * ((INT64)(v3.p[1] - v1.p[1]) << 16);
 			scanlines.dp[1] = value / longest_scanline;
 		}
 		if (NUM_PARAMS >= 2)
 		{
-			INT64 value = ((INT64)(v1->p[2] - v2->p[2]) << 32) + (INT64)temp * ((INT64)(v3->p[2] - v1->p[2]) << 16);
+			INT64 value = ((INT64)(v1.p[2] - v2.p[2]) << 32) + (INT64)temp * ((INT64)(v3.p[2] - v1.p[2]) << 16);
 			scanlines.dp[2] = value / longest_scanline;
 		}
 		if (NUM_PARAMS >= 3)
 		{
-			INT64 value = ((INT64)(v1->p[3] - v2->p[3]) << 32) + (INT64)temp * ((INT64)(v3->p[3] - v1->p[3]) << 16);
+			INT64 value = ((INT64)(v1.p[3] - v2.p[3]) << 32) + (INT64)temp * ((INT64)(v3.p[3] - v1.p[3]) << 16);
 			scanlines.dp[3] = value / longest_scanline;
 		}
 		if (NUM_PARAMS >= 4)
 		{
-			INT64 value = ((INT64)(v1->p[4] - v2->p[4]) << 32) + (INT64)temp * ((INT64)(v3->p[4] - v1->p[4]) << 16);
+			INT64 value = ((INT64)(v1.p[4] - v2.p[4]) << 32) + (INT64)temp * ((INT64)(v3.p[4] - v1.p[4]) << 16);
 			scanlines.dp[4] = value / longest_scanline;
 		}
 		if (NUM_PARAMS >= 5)
 		{
-			INT64 value = ((INT64)(v1->p[5] - v2->p[5]) << 32) + (INT64)temp * ((INT64)(v3->p[5] - v1->p[5]) << 16);
+			INT64 value = ((INT64)(v1.p[5] - v2.p[5]) << 32) + (INT64)temp * ((INT64)(v3.p[5] - v1.p[5]) << 16);
 			scanlines.dp[5] = value / longest_scanline;
 		}
 	
@@ -162,26 +162,26 @@ public class poly
 			tv = v3;
 	
 			/* compute the height of the first part of the triangle */
-			dy = v2->y - v1->y;
+			dy = v2.y - v1.y;
 	
 			/* start the right hand counter at v1's X */
-			ex = v1->x;
+			ex = v1.x;
 	
 			/* if there's nothing to draw in part 1, move on to part 2 */
 			if (dy <= 0)
 			{
 				/* the new height is the height of part 2 */
-				dy = v3->y - v2->y;
+				dy = v3.y - v2.y;
 	
 				/* start the right hand counter at v2's X */
-				ex = v2->x;
+				ex = v2.x;
 	
 				/* and match up the last two vertices so that we come out all right in the end */
 				v2 = v3;
 			}
 	
 			/* compute the final parameters for the right hand slope */
-			edx = ((v2->x - ex) << 16) / dy;
+			edx = ((v2.x - ex) << 16) / dy;
 			ex = (ex << 16) | 0xffff;
 		}
 	
@@ -189,21 +189,21 @@ public class poly
 		else
 		{
 			/* start the right hand counter at v1's X */
-			ex = v1->x;
+			ex = v1.x;
 	
 			/* compute the final parameters for the right hand slope */
-			/* which is guaranteed to be v1->v3, unlike the case above */
-			edx = ((v3->x - ex) << 16) / (v3->y - v1->y);
+			/* which is guaranteed to be v1.v3, unlike the case above */
+			edx = ((v3.x - ex) << 16) / (v3.y - v1.y);
 			ex = (ex << 16) | 0xffff;
 	
 			/* compute the height of the first part of the triangle */
-			dy = v2->y - v1->y;
+			dy = v2.y - v1.y;
 	
 			/* if there's nothing to draw in part 1, move on to part 2 */
 			if (dy <= 0)
 			{
 				/* the new height is the height of part 2 */
-				dy = v3->y - v2->y;
+				dy = v3.y - v2.y;
 	
 				/* shuffle the remaining vertices to make it come out all right in the end */
 				v1 = v2;
@@ -215,56 +215,56 @@ public class poly
 		}
 	
 		/* compute the parameters for the left hand slope */
-		sx = v1->x;
-		temp = tv->y - v1->y;
-		sdx = ((tv->x - sx) << 16) / temp;
+		sx = v1.x;
+		temp = tv.y - v1.y;
+		sdx = ((tv.x - sx) << 16) / temp;
 		sx = (sx << 16) | 0xffff;
 	
 		/* set up the starting values and per-scanline deltas for the parameters */
 		if (NUM_PARAMS >= 0)
 		{
-			pstart[0] = ((INT64)v1->p[0] << 16) | 0x8000;
-			pdelta[0] = ((INT64)(tv->p[0] - v1->p[0]) << 16) / temp;
+			pstart[0] = ((INT64)v1.p[0] << 16) | 0x8000;
+			pdelta[0] = ((INT64)(tv.p[0] - v1.p[0]) << 16) / temp;
 		}
 		if (NUM_PARAMS >= 1)
 		{
-			pstart[1] = ((INT64)v1->p[1] << 16) | 0x8000;
-			pdelta[1] = ((INT64)(tv->p[1] - v1->p[1]) << 16) / temp;
+			pstart[1] = ((INT64)v1.p[1] << 16) | 0x8000;
+			pdelta[1] = ((INT64)(tv.p[1] - v1.p[1]) << 16) / temp;
 		}
 		if (NUM_PARAMS >= 2)
 		{
-			pstart[2] = ((INT64)v1->p[2] << 16) | 0x8000;
-			pdelta[2] = ((INT64)(tv->p[2] - v1->p[2]) << 16) / temp;
+			pstart[2] = ((INT64)v1.p[2] << 16) | 0x8000;
+			pdelta[2] = ((INT64)(tv.p[2] - v1.p[2]) << 16) / temp;
 		}
 		if (NUM_PARAMS >= 3)
 		{
-			pstart[3] = ((INT64)v1->p[3] << 16) | 0x8000;
-			pdelta[3] = ((INT64)(tv->p[3] - v1->p[3]) << 16) / temp;
+			pstart[3] = ((INT64)v1.p[3] << 16) | 0x8000;
+			pdelta[3] = ((INT64)(tv.p[3] - v1.p[3]) << 16) / temp;
 		}
 		if (NUM_PARAMS >= 4)
 		{
-			pstart[4] = ((INT64)v1->p[4] << 16) | 0x8000;
-			pdelta[4] = ((INT64)(tv->p[4] - v1->p[4]) << 16) / temp;
+			pstart[4] = ((INT64)v1.p[4] << 16) | 0x8000;
+			pdelta[4] = ((INT64)(tv.p[4] - v1.p[4]) << 16) / temp;
 		}
 		if (NUM_PARAMS >= 5)
 		{
-			pstart[5] = ((INT64)v1->p[5] << 16) | 0x8000;
-			pdelta[5] = ((INT64)(tv->p[5] - v1->p[5]) << 16) / temp;
+			pstart[5] = ((INT64)v1.p[5] << 16) | 0x8000;
+			pdelta[5] = ((INT64)(tv.p[5] - v1.p[5]) << 16) / temp;
 		}
 	
 		/* set up everything for the big loop */
 		scan = &scanlines.scanline[0];
-		y = v1->y;
-		ey = (v3->y < cliprect->max_y) ? v3->y : cliprect->max_y;
+		y = v1.y;
+		ey = (v3.y < cliprect.max_y) ? v3.y : cliprect.max_y;
 	
 		/* loop until finished */
 		while (1)
 		{
 			/* handle top clipping */
-			if (y < cliprect->min_y)
+			if (y < cliprect.min_y)
 			{
 				/* get the delta */
-				temp = cliprect->min_y - y;
+				temp = cliprect.min_y - y;
 	
 				/* limit to the number of scanlines */
 				if (temp > dy)
@@ -291,8 +291,8 @@ public class poly
 					break;
 	
 				/* set the X start/end points */
-				scan->sx = sx >> 16;
-				scan->ex = (ex >> 16) - 1;
+				scan.sx = sx >> 16;
+				scan.ex = (ex >> 16) - 1;
 	
 				/* compute the parameters only for non-zero scanlines */
 				temp = (ex >> 16) - (sx >> 16);
@@ -303,13 +303,13 @@ public class poly
 						/* in order to get accurate texturing, we need to account for the fractional */
 						/* pixel we just chopped off */
 						temp = ~sx & 0xffff;
-						scan->p[0] = pstart[0] + ((temp * scanlines.dp[0]) >> 16);
+						scan.p[0] = pstart[0] + ((temp * scanlines.dp[0]) >> 16);
 					}
-					if (NUM_PARAMS >= 1) scan->p[1] = pstart[1] + ((temp * scanlines.dp[1]) >> 16);
-					if (NUM_PARAMS >= 2) scan->p[2] = pstart[2] + ((temp * scanlines.dp[2]) >> 16);
-					if (NUM_PARAMS >= 3) scan->p[3] = pstart[3] + ((temp * scanlines.dp[3]) >> 16);
-					if (NUM_PARAMS >= 4) scan->p[4] = pstart[4] + ((temp * scanlines.dp[4]) >> 16);
-					if (NUM_PARAMS >= 5) scan->p[5] = pstart[5] + ((temp * scanlines.dp[5]) >> 16);
+					if (NUM_PARAMS >= 1) scan.p[1] = pstart[1] + ((temp * scanlines.dp[1]) >> 16);
+					if (NUM_PARAMS >= 2) scan.p[2] = pstart[2] + ((temp * scanlines.dp[2]) >> 16);
+					if (NUM_PARAMS >= 3) scan.p[3] = pstart[3] + ((temp * scanlines.dp[3]) >> 16);
+					if (NUM_PARAMS >= 4) scan.p[4] = pstart[4] + ((temp * scanlines.dp[4]) >> 16);
+					if (NUM_PARAMS >= 5) scan.p[5] = pstart[5] + ((temp * scanlines.dp[5]) >> 16);
 				}
 				scan++;
 	
@@ -330,7 +330,7 @@ public class poly
 				break;
 	
 			/* compute the height of part 2 */
-			dy = v3->y - y;
+			dy = v3.y - y;
 			if (dy <= 0)
 				break;
 	
@@ -338,8 +338,8 @@ public class poly
 			if (longest_scanline < 0)
 			{
 				/* compute the new right slope parameters */
-				ex = v2->x;
-				edx = ((v3->x - ex) << 16) / dy;
+				ex = v2.x;
+				edx = ((v3.x - ex) << 16) / dy;
 				ex = (ex << 16) | 0xffff;
 			}
 	
@@ -347,40 +347,40 @@ public class poly
 			else
 			{
 				/* compute the new left slope parameters */
-				sx = v2->x;
-				sdx = ((v3->x - sx) << 16) / dy;
+				sx = v2.x;
+				sdx = ((v3.x - sx) << 16) / dy;
 				sx = (sx << 16) | 0xffff;
 	
 				/* set up the starting values and per-scanline deltas for the parameters */
 				if (NUM_PARAMS >= 0)
 				{
-					pstart[0] = ((INT64)v2->p[0] << 16) | 0x8000;
-					pdelta[0] = ((INT64)(v3->p[0] - v2->p[0]) << 16) / dy;
+					pstart[0] = ((INT64)v2.p[0] << 16) | 0x8000;
+					pdelta[0] = ((INT64)(v3.p[0] - v2.p[0]) << 16) / dy;
 				}
 				if (NUM_PARAMS >= 1)
 				{
-					pstart[1] = ((INT64)v2->p[1] << 16) | 0x8000;
-					pdelta[1] = ((INT64)(v3->p[1] - v2->p[1]) << 16) / dy;
+					pstart[1] = ((INT64)v2.p[1] << 16) | 0x8000;
+					pdelta[1] = ((INT64)(v3.p[1] - v2.p[1]) << 16) / dy;
 				}
 				if (NUM_PARAMS >= 2)
 				{
-					pstart[2] = ((INT64)v2->p[2] << 16) | 0x8000;
-					pdelta[2] = ((INT64)(v3->p[2] - v2->p[2]) << 16) / dy;
+					pstart[2] = ((INT64)v2.p[2] << 16) | 0x8000;
+					pdelta[2] = ((INT64)(v3.p[2] - v2.p[2]) << 16) / dy;
 				}
 				if (NUM_PARAMS >= 3)
 				{
-					pstart[3] = ((INT64)v2->p[3] << 16) | 0x8000;
-					pdelta[3] = ((INT64)(v3->p[3] - v2->p[3]) << 16) / dy;
+					pstart[3] = ((INT64)v2.p[3] << 16) | 0x8000;
+					pdelta[3] = ((INT64)(v3.p[3] - v2.p[3]) << 16) / dy;
 				}
 				if (NUM_PARAMS >= 4)
 				{
-					pstart[4] = ((INT64)v2->p[4] << 16) | 0x8000;
-					pdelta[4] = ((INT64)(v3->p[4] - v2->p[4]) << 16) / dy;
+					pstart[4] = ((INT64)v2.p[4] << 16) | 0x8000;
+					pdelta[4] = ((INT64)(v3.p[4] - v2.p[4]) << 16) / dy;
 				}
 				if (NUM_PARAMS >= 5)
 				{
-					pstart[5] = ((INT64)v2->p[5] << 16) | 0x8000;
-					pdelta[5] = ((INT64)(v3->p[5] - v2->p[5]) << 16) / dy;
+					pstart[5] = ((INT64)v2.p[5] << 16) | 0x8000;
+					pdelta[5] = ((INT64)(v3.p[5] - v2.p[5]) << 16) / dy;
 				}
 			}
 		}
@@ -389,21 +389,21 @@ public class poly
 		while (--scan >= &scanlines.scanline[0])
 		{
 			/* left clip */
-			if (scan->sx < cliprect->min_x)
+			if (scan.sx < cliprect.min_x)
 			{
-				temp = cliprect->min_x - scan->sx;
-				scan->sx += temp;
-				if (NUM_PARAMS >= 0) scan->p[0] += scanlines.dp[0] * temp;
-				if (NUM_PARAMS >= 1) scan->p[1] += scanlines.dp[1] * temp;
-				if (NUM_PARAMS >= 2) scan->p[2] += scanlines.dp[2] * temp;
-				if (NUM_PARAMS >= 3) scan->p[3] += scanlines.dp[3] * temp;
-				if (NUM_PARAMS >= 4) scan->p[4] += scanlines.dp[4] * temp;
-				if (NUM_PARAMS >= 5) scan->p[5] += scanlines.dp[5] * temp;
+				temp = cliprect.min_x - scan.sx;
+				scan.sx += temp;
+				if (NUM_PARAMS >= 0) scan.p[0] += scanlines.dp[0] * temp;
+				if (NUM_PARAMS >= 1) scan.p[1] += scanlines.dp[1] * temp;
+				if (NUM_PARAMS >= 2) scan.p[2] += scanlines.dp[2] * temp;
+				if (NUM_PARAMS >= 3) scan.p[3] += scanlines.dp[3] * temp;
+				if (NUM_PARAMS >= 4) scan.p[4] += scanlines.dp[4] * temp;
+				if (NUM_PARAMS >= 5) scan.p[5] += scanlines.dp[5] * temp;
 			}
 	
 			/* right clip */
-			if (scan->ex > cliprect->max_x)
-				scan->ex = cliprect->max_x;
+			if (scan.ex > cliprect.max_x)
+				scan.ex = cliprect.max_x;
 		}
 	
 		return &scanlines;

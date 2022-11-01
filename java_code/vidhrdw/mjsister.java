@@ -52,8 +52,8 @@ public class mjsister
 		c1 = (data & 0x0f)        + colorbank * 0x20;
 		c2 = ((data & 0xf0) >> 4) + colorbank * 0x20;
 	
-		plot_pixel(mjsister_tmpbitmap0, x*2,   y, Machine->pens[c1] );
-		plot_pixel(mjsister_tmpbitmap0, x*2+1, y, Machine->pens[c2] );
+		plot_pixel(mjsister_tmpbitmap0, x*2,   y, Machine.pens[c1] );
+		plot_pixel(mjsister_tmpbitmap0, x*2+1, y, Machine.pens[c2] );
 	}
 	
 	void mjsister_plot1(int offset,unsigned char data)
@@ -71,8 +71,8 @@ public class mjsister
 		if (c2 != 0)
 			c2 += colorbank * 0x20 + 0x10;
 	
-		plot_pixel(mjsister_tmpbitmap1, x*2,   y, Machine->pens[c1] );
-		plot_pixel(mjsister_tmpbitmap1, x*2+1, y, Machine->pens[c2] );
+		plot_pixel(mjsister_tmpbitmap1, x*2,   y, Machine.pens[c1] );
+		plot_pixel(mjsister_tmpbitmap1, x*2+1, y, Machine.pens[c2] );
 	}
 	
 	public static WriteHandlerPtr mjsister_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -112,13 +112,13 @@ public class mjsister
 			for (i=0; i<256; i++)
 			{
 				for (j=0; j<4; j++)
-					plot_pixel(bitmap, 256+j, i, Machine->pens[colorbank * 0x20] );
+					plot_pixel(bitmap, 256+j, i, Machine.pens[colorbank * 0x20] );
 			}
 	
 			copybitmap(bitmap,mjsister_tmpbitmap0,f,f,0,0,cliprect,TRANSPARENCY_NONE,0);
 			copybitmap(bitmap,mjsister_tmpbitmap1,f,f,2,0,cliprect,TRANSPARENCY_PEN,0);
 		}
 		else
-			fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+			fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 	} };
 }

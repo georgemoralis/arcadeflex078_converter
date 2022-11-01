@@ -221,10 +221,10 @@ public class gaelco2
 	
 		The sprite's pens define the color adjustment:
 	
-		0x00 -> Transparent
-		0x01-0x07 -> Shadow level (0x01 = min, 0x07 = max)
-		0x08-0x0f -> Highlight level (0x08 = max, 0x0f = min)
-		0x10-0x1f -> not used?
+		0x00 . Transparent
+		0x01-0x07 . Shadow level (0x01 = min, 0x07 = max)
+		0x08-0x0f . Highlight level (0x08 = max, 0x0f = min)
+		0x10-0x1f . not used?
 	
 	***************************************************************************/
 	
@@ -390,18 +390,18 @@ public class gaelco2
 	static void gaelco2_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int mask, int xoffs)
 	{
 		int j, x, y, ex, ey, px, py;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		/* get sprite ram start and end offsets */
 		int start_offset = (gaelco2_vregs[1] & 0x10)*0x100;
 		int end_offset = start_offset + 0x1000;
 	
 		/* sprite offset is based on the visible area */
-		int spr_x_adjust = (Machine->visible_area.max_x - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
+		int spr_x_adjust = (Machine.visible_area.max_x - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 	
 	#ifndef ONE_MONITOR
 		if (dual_monitor != 0){
-			spr_x_adjust = ((Machine->visible_area.max_x/2) - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
+			spr_x_adjust = ((Machine.visible_area.max_x/2) - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 		}
 	#endif
 	
@@ -446,31 +446,31 @@ public class gaelco2
 						} else { /* last palette entry is reserved for shadows and highlights */
 	
 							/* get a pointer to the current sprite's gfx data */
-							UINT8 *gfx_src = gfx->gfxdata + (number % gfx->total_elements)*gfx->char_modulo;
+							UINT8 *gfx_src = gfx.gfxdata + (number % gfx.total_elements)*gfx.char_modulo;
 	
-							for (py = 0; py < gfx->height; py++){
+							for (py = 0; py < gfx.height; py++){
 								/* get a pointer to the current line in the screen bitmap */
 								int ypos = ((sy + ey*16 + py) & 0x1ff);
-								UINT16 *srcy = ((UINT16 *)bitmap->line[ypos]);
+								UINT16 *srcy = ((UINT16 *)bitmap.line[ypos]);
 	
-								int gfx_py = yflip ? (gfx->height - 1 - py) : py;
+								int gfx_py = yflip ? (gfx.height - 1 - py) : py;
 	
-								if ((ypos < cliprect->min_y) || (ypos > cliprect->max_y)) continue;
+								if ((ypos < cliprect.min_y) || (ypos > cliprect.max_y)) continue;
 	
-								for (px = 0; px < gfx->width; px++){
+								for (px = 0; px < gfx.width; px++){
 									/* get current pixel */
 									int xpos = (((sx + ex*16 + px) & 0x3ff) + spr_x_adjust) & 0x3ff;
 									UINT16 *pixel = srcy + xpos;
 									int src_color = *pixel;
 	
-									int gfx_px = xflip ? (gfx->width - 1 - px) : px;
+									int gfx_px = xflip ? (gfx.width - 1 - px) : px;
 	
 									/* get asociated pen for the current sprite pixel */
-									int gfx_pen = gfx_src[gfx->line_modulo*gfx_py + gfx_px];
+									int gfx_pen = gfx_src[gfx.line_modulo*gfx_py + gfx_px];
 	
 									if ((gfx_pen == 0) || (gfx_pen >= 16)) continue;
 	
-									if ((xpos < cliprect->min_x) || (xpos > cliprect->max_x)) continue;
+									if ((xpos < cliprect.min_x) || (xpos > cliprect.max_x)) continue;
 	
 									/* make background color darker or brighter */
 									*pixel = src_color + 4096*gfx_pen;
@@ -510,7 +510,7 @@ public class gaelco2
 		}
 	
 		/* draw screen */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, pant[1], 0, 0);
 		tilemap_draw(bitmap, cliprect, pant[0], 0, 0);
@@ -580,7 +580,7 @@ public class gaelco2
 	
 		/* read scroll values */
 		int scroll0x = gaelco2_videoram[0x2802/2] + 0x14;
-		int scroll1x = gaelco2_videoram[0x2806/2] + 0x10 - ((Machine->visible_area.max_x/2) + 1);
+		int scroll1x = gaelco2_videoram[0x2806/2] + 0x10 - ((Machine.visible_area.max_x/2) + 1);
 		int scroll0y = gaelco2_videoram[0x2800/2] + 0x01;
 		int scroll1y = gaelco2_videoram[0x2804/2] + 0x01;
 	
@@ -595,22 +595,22 @@ public class gaelco2
 		}
 	
 		/* draw screen */
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 		{
 			struct rectangle cliprect1, cliprect2;
 			cliprect1.min_x = 0;
-			cliprect1.max_x = Machine->visible_area.max_x/2;
+			cliprect1.max_x = Machine.visible_area.max_x/2;
 			cliprect1.min_y = 16;
 			cliprect1.max_y = 256-1;
 	
-			cliprect2.min_x = (Machine->visible_area.max_x/2) + 1;
-			cliprect2.max_x = Machine->visible_area.max_x;
+			cliprect2.min_x = (Machine.visible_area.max_x/2) + 1;
+			cliprect2.max_x = Machine.visible_area.max_x;
 			cliprect2.min_y = 16;
 			cliprect2.max_y = 256-1;
 	
 			/* monitor 2 output */
 			tilemap_draw(bitmap,&cliprect2,pant[1], 0, 0);
-			gaelco2_draw_sprites(bitmap,&cliprect2, 0x8000, (Machine->visible_area.max_x/2) + 1);
+			gaelco2_draw_sprites(bitmap,&cliprect2, 0x8000, (Machine.visible_area.max_x/2) + 1);
 	
 			/* monitor 1 output */
 			tilemap_draw(bitmap,&cliprect1,pant[0], 0, 0);

@@ -81,7 +81,7 @@ public class btime
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
 	
-		/* the encryption is a simple bit rotation: 76543210 -> 65342710, but */
+		/* the encryption is a simple bit rotation: 76543210 . 65342710, but */
 		/* with a catch: it is only applied if the previous instruction did a */
 		/* memory write. Also, only opcodes at addresses with this bit pattern: */
 		/* xxxx xxx1 xxxx x1xx are encrypted. */
@@ -98,7 +98,7 @@ public class btime
 		/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
 		if ((A & 0x0104) == 0x0104)
 		{
-			/* 76543210 -> 65342710 bit rotation */
+			/* 76543210 . 65342710 bit rotation */
 			rom[A + diff] = (rom[A] & 0x13) | ((rom[A] & 0x80) >> 5) | ((rom[A] & 0x64) << 1)
 				   | ((rom[A] & 0x08) << 2);
 		}

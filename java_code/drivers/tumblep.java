@@ -1313,7 +1313,7 @@ public class tumblep
 		HCROM[0x1e122/2] = 0x0244; // mask with 0x000f
 		HCROM[0x1e124/2] = 0x000f; //
 	
-		HCROM[0x1e126/2] = 0x3004; // d4 -> d0
+		HCROM[0x1e126/2] = 0x3004; // d4 . d0
 	
 		/* jump to character draw to draw first bit */
 		HCROM[0x1e128/2] = 0x4eb9;
@@ -1332,7 +1332,7 @@ public class tumblep
 		HCROM[0x1e136/2] = 0x0244; // mask with 0x000f
 		HCROM[0x1e138/2] = 0x000f; //
 	
-		HCROM[0x1e13a/2] = 0x3004; // d4 -> d0
+		HCROM[0x1e13a/2] = 0x3004; // d4 . d0
 	
 		/* jump to character draw to draw second bit */
 		HCROM[0x1e13c/2] = 0x4eb9;
@@ -1381,10 +1381,10 @@ public class tumblep
 	
 		/* DRAW CHARACTER SUBROUTINE, note, this won't restore a1,d1, don't other places! */
 	
-		/* move address into A0->A1 for use by this subroutine */
+		/* move address into A0.A1 for use by this subroutine */
 		HCROM[0x1e200/2] = 0x2248;
 	
-		/* move address into D0->D1 for top half of character */
+		/* move address into D0.D1 for top half of character */
 		HCROM[0x1e202/2] = 0x2200;
 	
 		/* add 0x30 to d1 to get the REAL tile code */
@@ -1397,17 +1397,17 @@ public class tumblep
 		HCROM[0x1e20c/2] = 0x0000;
 		HCROM[0x1e20e/2] = 0xf000;
 	
-		/* write d1 -> a1 for TOP half */
+		/* write d1 . a1 for TOP half */
 		HCROM[0x1e210/2] = 0x32c1; // not ideal .. we don't need to increase a1
 	
-		/* move address into A0->A1 for use by this subroutine */
+		/* move address into A0.A1 for use by this subroutine */
 		HCROM[0x1e212/2] = 0x2248;
 	
 		/* add 0x80 to the address so we have the bottom location */
 		HCROM[0x1e214/2] = 0xd2fc;
 		HCROM[0x1e216/2] = 0x0080;
 	
-		/* move address into D0->D1 for bottom  half of character */
+		/* move address into D0.D1 for bottom  half of character */
 		HCROM[0x1e218/2] = 0x2200;
 	
 		/* add 0x54 to d1 to get the REAL tile code for bottom half */
@@ -1420,7 +1420,7 @@ public class tumblep
 		HCROM[0x1e222/2] = 0x0000;
 		HCROM[0x1e224/2] = 0xf000;
 	
-		/* write d1 -> a1 for BOTTOM half */
+		/* write d1 . a1 for BOTTOM half */
 		HCROM[0x1e226/2] = 0x32c1; // not ideal .. we don't need to increase a1
 	
 	

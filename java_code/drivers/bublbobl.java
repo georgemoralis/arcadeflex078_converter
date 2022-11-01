@@ -14,35 +14,35 @@ CPU Board
 ---------
            | Taito  |Romstar | ?????  |Romstar |
            |        |        |missing |mode sel|
-17  CU1    | A78-01 |   ->   |   ->   |   ->   |   protection mcu
-49  PAL1   | A78-02 |   ->   |   ->   |   ->   |   address decoder
-43  PAL2   | A78-03 |   ->   |   ->   |   ->   |   address decoder
-12  PAL3   | A78-04 |   ->   |   ->   |   ->   |   address decoder
+17  CU1    | A78-01 |   .   |   .   |   .   |   protection mcu
+49  PAL1   | A78-02 |   .   |   .   |   .   |   address decoder
+43  PAL2   | A78-03 |   .   |   .   |   .   |   address decoder
+12  PAL3   | A78-04 |   .   |   .   |   .   |   address decoder
 53  empty  |        |        |        |        |   main prg
 52  ROM1   | A78-05 | A78-21 | A78-22 | A78-24 |   main prg
-51  ROM2   | A78-06 |   ->   | A78-23 | A78-25 |   main prg
-46  ROM4   | A78-07 |   ->   |   ->   |   ->   |   sound prg
-37  ROM3   | A78-08 |   ->   |   ->   |   ->   |   sub prg
+51  ROM2   | A78-06 |   .   | A78-23 | A78-25 |   main prg
+46  ROM4   | A78-07 |   .   |   .   |   .   |   sound prg
+37  ROM3   | A78-08 |   .   |   .   |   .   |   sub prg
 
 Video Board
 -----------
-12  ROM1   | A78-09 |   ->   |   ->   |   ->   |   gfx
-13  ROM2   | A78-10 |   ->   |   ->   |   ->   |   gfx
-14  ROM3   | A78-11 |   ->   |   ->   |   ->   |   gfx
-15  ROM4   | A78-12 |   ->   |   ->   |   ->   |   gfx
-16  ROM5   | A78-13 |   ->   |   ->   |   ->   |   gfx
-17  ROM6   | A78-14 |   ->   |   ->   |   ->   |   gfx
+12  ROM1   | A78-09 |   .   |   .   |   .   |   gfx
+13  ROM2   | A78-10 |   .   |   .   |   .   |   gfx
+14  ROM3   | A78-11 |   .   |   .   |   .   |   gfx
+15  ROM4   | A78-12 |   .   |   .   |   .   |   gfx
+16  ROM5   | A78-13 |   .   |   .   |   .   |   gfx
+17  ROM6   | A78-14 |   .   |   .   |   .   |   gfx
 18  empty  |        |        |        |        |   gfx
 19  empty  |        |        |        |        |   gfx
-30  ROM7   | A78-15 |   ->   |   ->   |   ->   |   gfx
-31  ROM8   | A78-16 |   ->   |   ->   |   ->   |   gfx
-32  ROM9   | A78-17 |   ->   |   ->   |   ->   |   gfx
-33  ROM10  | A78-18 |   ->   |   ->   |   ->   |   gfx
-34  ROM11  | A78-19 |   ->   |   ->   |   ->   |   gfx
-35  ROM12  | A78-20 |   ->   |   ->   |   ->   |   gfx
+30  ROM7   | A78-15 |   .   |   .   |   .   |   gfx
+31  ROM8   | A78-16 |   .   |   .   |   .   |   gfx
+32  ROM9   | A78-17 |   .   |   .   |   .   |   gfx
+33  ROM10  | A78-18 |   .   |   .   |   .   |   gfx
+34  ROM11  | A78-19 |   .   |   .   |   .   |   gfx
+35  ROM12  | A78-20 |   .   |   .   |   .   |   gfx
 36  empty  |        |        |        |        |   gfx
 37  empty  |        |        |        |        |   gfx
-41  ROM13  | A71-25 |   ->   |   ->   |   ->   |   video timing
+41  ROM13  | A71-25 |   .   |   .   |   .   |   video timing
 
 
 Bobble Bobble memory map

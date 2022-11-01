@@ -227,7 +227,7 @@ public class lwings
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						code,color,
 						flipx,flipy,
 						sx,sy,
@@ -276,7 +276,7 @@ public class lwings
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						code,color,
 						flipx,flipy,
 						sx,sy,

@@ -158,7 +158,7 @@ public class namcond1
 	        #if 0
 	            if( namcond1_shared_ram[offset] == 0x0000 &&
 	                data == 0x0001 )
-	              logerror( "changing 0$->$1 to $%x @$%x\n",
+	              logerror( "changing 0$.$1 to $%x @$%x\n",
 	                        offset<<1, activecpu_get_pc() );
 	        #endif
 	            COMBINE_DATA( namcond1_shared_ram + offset );

@@ -166,7 +166,7 @@ public class atarig42
 	
 		switch (offset)
 		{
-			/* standard 68000 -> 68eee -> (bank) addressing */
+			/* standard 68000 . 68eee . (bank) addressing */
 			case 0x68000/2:
 				sloop_state = 1;
 				break;

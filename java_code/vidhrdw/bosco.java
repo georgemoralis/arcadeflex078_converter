@@ -78,8 +78,8 @@ public class bosco
 	public static PaletteInitHandlerPtr palette_init_bosco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 32;i++)
@@ -167,8 +167,8 @@ public class bosco
 	
 				if (bit1 ^ bit2) generator |= 1;
 	
-				if (x >= Machine->visible_area.min_x &&
-						x <= Machine->visible_area.max_x &&
+				if (x >= Machine.visible_area.min_x &&
+						x <= Machine.visible_area.max_x &&
 						((~generator >> 16) & 1) &&
 						(generator & 0xff) == 0xff)
 				{
@@ -179,7 +179,7 @@ public class bosco
 					{
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
-						stars[total_stars].col = Machine->pens[color + STARS_COLOR_BASE];
+						stars[total_stars].col = Machine.pens[color + STARS_COLOR_BASE];
 						stars[total_stars].set = set;
 						if (++set > 3)
 							set = 0;
@@ -281,7 +281,7 @@ public class bosco
 					flipy = !flipy;
 				}
 	
-				drawgfx(tmpbitmap1,Machine->gfx[0],
+				drawgfx(tmpbitmap1,Machine.gfx[0],
 						bosco_videoram2[offs],
 						bosco_colorram2[offs] & 0x3f,
 						flipx,flipy,
@@ -312,7 +312,7 @@ public class bosco
 					flipy = !flipy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						colorram[offs] & 0x3f,
 						flipx,flipy,
@@ -322,7 +322,7 @@ public class bosco
 		}
 	
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 	
 		/* draw the sprites */
@@ -332,7 +332,7 @@ public class bosco
 	if (flipscreen != 0) sx += 32;
 			sy = 225 - spriteram_2[offs] - displacement;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)& 0xfc) >> 2,
 					spriteram_2[offs + 1] & 0x3f,
 					spriteram.read(offs)& 1,spriteram.read(offs)& 2,
@@ -357,7 +357,7 @@ public class bosco
 				scrolly = -(bosco_scrolly + 16);
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_COLOR,0);
+			copyscrollbitmap(bitmap,tmpbitmap1,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_COLOR,0);
 		}
 	
 	
@@ -382,12 +382,12 @@ public class bosco
 				y += 2;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					((bosco_radarattr[offs] & 0x0e) >> 1) ^ 0x07,
 					0,
 					flipscreen,flipscreen,
 					x,y,
-					&Machine->visible_area,TRANSPARENCY_PEN,3);
+					&Machine.visible_area,TRANSPARENCY_PEN,3);
 		}
 	
 	
@@ -396,7 +396,7 @@ public class bosco
 		{
 			int bpen;
 	
-			bpen = Machine->pens[0];
+			bpen = Machine.pens[0];
 			for (offs = 0;offs < total_stars;offs++)
 			{
 				int x,y;

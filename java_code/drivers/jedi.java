@@ -201,7 +201,7 @@ public class jedi
 	
 	/*************************************
 	 *
-	 *	Main CPU -> Sound CPU communications
+	 *	Main CPU . Sound CPU communications
 	 *
 	 *************************************/
 	
@@ -234,7 +234,7 @@ public class jedi
 	
 	/*************************************
 	 *
-	 *	Sound CPU -> Main CPU communications
+	 *	Sound CPU . Main CPU communications
 	 *
 	 *************************************/
 	

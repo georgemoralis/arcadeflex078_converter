@@ -41,7 +41,7 @@ public class leprechn
 	
 	public static VideoUpdateHandlerPtr video_update_leprechn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		videoram_size = Machine->drv->screen_width * Machine->drv->screen_height;
+		videoram_size = Machine.drv.screen_width * Machine.drv.screen_height;
 	
 		/* allocate our own dirty buffer */
 		videoram = auto_malloc(videoram_size);
@@ -71,7 +71,7 @@ public class leprechn
 	
 		if (pending != 0)
 		{
-			plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
+			plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
 	        videoram.write(y * Machine->drv->screen_width + x,color);
 	
 	        pending = 0;
@@ -118,11 +118,11 @@ public class leprechn
 	
 	        memset(videoram, data, videoram_size);
 	
-	        for (sx = 0; sx < Machine->drv->screen_width; sx++)
+	        for (sx = 0; sx < Machine.drv.screen_width; sx++)
 	        {
-		        for (sy = 0; sy < Machine->drv->screen_height; sy++)
+		        for (sy = 0; sy < Machine.drv.screen_height; sy++)
 		        {
-					plot_pixel(tmpbitmap, sx, sy, Machine->pens[data]);
+					plot_pixel(tmpbitmap, sx, sy, Machine.pens[data]);
 				}
 			}
 	

@@ -264,7 +264,7 @@ public class ssrj
 			int code;
 			code=ssrj_vram3[(i*5+k)*64+(31-j)*2]+256*ssrj_vram3[(i*5+k)*64+(31-j)*2+1];
 			drawgfx(bitmap,
-				Machine->gfx[0], 
+				Machine.gfx[0], 
 				code&1023,
 				((code>>12)&0x3)+8,
 				code&0x8000,

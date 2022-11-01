@@ -23,7 +23,7 @@ public class djmain
 		int offs, pri_code;
 		int sortedlist[NUM_SPRITES];
 	
-		Machine->gfx[0]->colortable = &Machine->remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
+		Machine.gfx[0].colortable = &Machine.remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
 	
 		for (offs = 0; offs < NUM_SPRITES; offs++)
 			sortedlist[offs] = -1;
@@ -101,7 +101,7 @@ public class djmain
 						int zh = oy + (((y + 1) * yscale + (1 << 11)) >> 12) - sy;
 	
 						drawgfxzoom(bitmap,
-						            Machine->gfx[0],
+						            Machine.gfx[0],
 						            c,
 						            color,
 						            flipx,
@@ -120,7 +120,7 @@ public class djmain
 						int sy = oy + (y << 4);
 	
 						drawgfx(bitmap,
-						        Machine->gfx[0],
+						        Machine.gfx[0],
 						        c,
 						        color,
 						        flipx,
@@ -183,7 +183,7 @@ public class djmain
 					order[j] = temp;
 				}
 	
-		fillbitmap(bitmap, Machine->remapped_colortable[0], cliprect);
+		fillbitmap(bitmap, Machine.remapped_colortable[0], cliprect);
 	
 		for (i = 0; i < NUM_LAYERS + 1; i++)
 		{

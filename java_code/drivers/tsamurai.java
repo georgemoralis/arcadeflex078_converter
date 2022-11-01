@@ -408,9 +408,9 @@ public class tsamurai
 	
 	public static ReadHandlerPtr vsgongf_a006_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* sound CPU busy? */
-		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0x80;
-		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x80;
-		if (!strcmp(Machine->gamedrv->name,"ringfgt2")) return 0xc0;
+		if (!strcmp(Machine.gamedrv.name,"vsgongf"))  return 0x80;
+		if (!strcmp(Machine.gamedrv.name,"ringfgt"))  return 0x80;
+		if (!strcmp(Machine.gamedrv.name,"ringfgt2")) return 0xc0;
 	
 		logerror ("unhandled read from a006\n");
 		return 0x00;
@@ -418,9 +418,9 @@ public class tsamurai
 	
 	public static ReadHandlerPtr vsgongf_a100_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* protection? */
-		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0xaa;
-		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x63;
-		if (!strcmp(Machine->gamedrv->name,"ringfgt2")) return 0x6a;
+		if (!strcmp(Machine.gamedrv.name,"vsgongf"))  return 0xaa;
+		if (!strcmp(Machine.gamedrv.name,"ringfgt"))  return 0x63;
+		if (!strcmp(Machine.gamedrv.name,"ringfgt2")) return 0x6a;
 	
 		logerror ("unhandled read from a100\n");
 		return 0x00;

@@ -34,7 +34,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 		The game only uses this scheme:
 
-		Back -> Front:	Layer 0, Sprites, Layer 1
+		Back . Front:	Layer 0, Sprites, Layer 1
 
 ***************************************************************************/
 
@@ -209,8 +209,8 @@ public class afega
 	{
 		int offs;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 16/2 )
 		{
@@ -249,7 +249,7 @@ public class afega
 			{
 				for (x = xstart; x != xend; x += xinc)
 				{
-					drawgfx( bitmap,Machine->gfx[0],
+					drawgfx( bitmap,Machine.gfx[0],
 									code++,
 									color,
 									flipx, flipy,
@@ -267,7 +267,7 @@ public class afega
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 		dt[0].x = sy;		dt[0].y = sx;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 	#endif
 		}

@@ -72,7 +72,7 @@ public class dday
 	
 		palette_set_shadow_factor(1.0/8);	/* this matches the previos version of the driver (>>3) */
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -84,16 +84,16 @@ public class dday
 			bit3 = (color_prom[i] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[i + 2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + 2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + 2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + 2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + 2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + 2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + 2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + 2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -249,7 +249,7 @@ public class dday
 		text_tilemap = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		sl_tilemap   = tilemap_create(get_sl_tile_info,  tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		main_bitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
+		main_bitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 	
 		if (!bg_tilemap || !fg_tilemap || !text_tilemap || !sl_tilemap || !main_bitmap)
 			return 1;
@@ -368,9 +368,9 @@ public class dday
 	
 			sl_bitmap = tilemap_get_pixmap(sl_tilemap);
 	
-			for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+			for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 			{
-				for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+				for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 				{
 					UINT32 src_pixel;
 	
@@ -379,7 +379,7 @@ public class dday
 	
 					if (read_pixel(sl_bitmap, x, y) == 255)
 					{
-						src_pixel += Machine->drv->total_colors;
+						src_pixel += Machine.drv.total_colors;
 					}
 	
 					plot_pixel(bitmap, x, y, src_pixel);

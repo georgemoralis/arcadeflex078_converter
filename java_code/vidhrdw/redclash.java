@@ -167,19 +167,19 @@ public class redclash
 						{
 							int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
-							drawgfx(bitmap,Machine->gfx[3],
+							drawgfx(bitmap,Machine.gfx[3],
 									code,
 									color,
 									0,0,
 									sx,sy - 16,
-									&Machine->visible_area,TRANSPARENCY_PEN,0);
+									&Machine.visible_area,TRANSPARENCY_PEN,0);
 							/* wraparound */
-							drawgfx(bitmap,Machine->gfx[3],
+							drawgfx(bitmap,Machine.gfx[3],
 									code,
 									color,
 									0,0,
 									sx - 256,sy - 16,
-									&Machine->visible_area,TRANSPARENCY_PEN,0);
+									&Machine.visible_area,TRANSPARENCY_PEN,0);
 							break;
 						}
 	
@@ -189,33 +189,33 @@ public class redclash
 								int code = ((spriteram.read(offs + i + 1)& 0xf8) >> 3) + ((gfxbank & 1) << 5);
 								int bank = (spriteram.read(offs + i + 1)& 0x02) >> 1;
 	
-								drawgfx(bitmap,Machine->gfx[4+bank],
+								drawgfx(bitmap,Machine.gfx[4+bank],
 										code,
 										color,
 										0,0,
 										sx,sy - 16,
-										&Machine->visible_area,TRANSPARENCY_PEN,0);
+										&Machine.visible_area,TRANSPARENCY_PEN,0);
 							}
 							else
 							{
 								int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
-								drawgfx(bitmap,Machine->gfx[2],
+								drawgfx(bitmap,Machine.gfx[2],
 										code,
 										color,
 										0,0,
 										sx,sy - 16,
-										&Machine->visible_area,TRANSPARENCY_PEN,0);
+										&Machine.visible_area,TRANSPARENCY_PEN,0);
 							}
 							break;
 	
 						case 1:	/* 8x8 */
-							drawgfx(bitmap,Machine->gfx[1],
+							drawgfx(bitmap,Machine.gfx[1],
 									spriteram.read(offs + i + 1),// + 4 * (spriteram.read(offs + i + 2)& 0x10),
 									color,
 									0,0,
 									sx,sy - 16,
-									&Machine->visible_area,TRANSPARENCY_PEN,0);
+									&Machine.visible_area,TRANSPARENCY_PEN,0);
 							break;
 	
 						case 0:
@@ -242,17 +242,17 @@ public class redclash
 				sx = 240 - sx;
 			}
 	
-			if (sx >= Machine->visible_area.min_x && sx <= Machine->visible_area.max_x &&
-					sy >= Machine->visible_area.min_y && sy <= Machine->visible_area.max_y)
-				plot_pixel(bitmap, sx, sy, Machine->pens[0x0e]);
+			if (sx >= Machine.visible_area.min_x && sx <= Machine.visible_area.max_x &&
+					sy >= Machine.visible_area.min_y && sy <= Machine.visible_area.max_y)
+				plot_pixel(bitmap, sx, sy, Machine.pens[0x0e]);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_redclash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 		redclash_draw_sprites(bitmap);
 		redclash_draw_bullets(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

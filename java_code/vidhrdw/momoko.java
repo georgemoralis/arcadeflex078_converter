@@ -98,7 +98,7 @@ public class momoko
 						else  py=7-sy + y;
 	
 					if (dot>=pri)
-						plot_pixel(bitmap, px, py, Machine->pens[col*16+dot+256]);
+						plot_pixel(bitmap, px, py, Machine.pens[col*16+dot+256]);
 					d0 = d0 << 1;
 					d1 = d1 << 1;
 				}
@@ -149,17 +149,17 @@ public class momoko
 						py = 248-(8*y+dy+9);
 					}
 	
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 						chr,
 						col,
 						flip,flip,
 						px,py,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 		}
 		else
-		fillbitmap(bitmap, Machine->pens[256], 0);
+		fillbitmap(bitmap, Machine.pens[256], 0);
 	
 	
 	/* draw sprites (momoko) */
@@ -184,12 +184,12 @@ public class momoko
 				py = y+1;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 				chr,
 				col,
 				!fx,fy,
 				px,py,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -248,12 +248,12 @@ public class momoko
 				px = 248-x;
 				py = y+1;
 			}
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 				chr,
 				col,
 				!fx,fy,
 				px,py,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -283,12 +283,12 @@ public class momoko
 					px = 248-x*8;
 					py = 255-y;
 				}
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					videoram.read((sy>>3)*32+x)*8+dy,
 					col,
 					flip,0,
 					px,py,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -318,12 +318,12 @@ public class momoko
 						px = 248-(8*x+dx-8);
 						py = 248-(8*y+dy+9);
 					}
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 						chr,
 						0, /* color */
 						flip,flip, /* flip */
 						px,py,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}

@@ -1000,11 +1000,11 @@ public class namcos1
 	static void namcos1_driver_init(const struct namcos1_specific *specific )
 	{
 		/* keychip id */
-		key_id_query = specific->key_id_query;
-		key_id       = specific->key_id;
+		key_id_query = specific.key_id_query;
+		key_id       = specific.key_id;
 	
 		/* build bank elements */
-		namcos1_build_banks(specific->key_r,specific->key_w);
+		namcos1_build_banks(specific.key_r,specific.key_w);
 	
 		/* sound cpu speedup optimize (auto detect) */
 		{
@@ -1032,12 +1032,12 @@ public class namcos1
 		/* all cpu's does not need synchronization to all timers */
 		cpu_set_full_synchronize(SYNC_NO_CPU);
 		{
-			const struct namcos1_slice_timer *slice = specific->slice_timer;
-			while(slice->sync_cpu != SYNC_NO_CPU)
+			const struct namcos1_slice_timer *slice = specific.slice_timer;
+			while(slice.sync_cpu != SYNC_NO_CPU)
 			{
 				/* start CPU slice timer */
-				cpu_start_extend_time_slice(slice->sync_cpu,
-					TIME_IN_HZ(slice->delayHz),TIME_IN_HZ(slice->sliceHz) );
+				cpu_start_extend_time_slice(slice.sync_cpu,
+					TIME_IN_HZ(slice.delayHz),TIME_IN_HZ(slice.sliceHz) );
 				slice++;
 			}
 		}

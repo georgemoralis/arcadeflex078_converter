@@ -44,7 +44,7 @@ public class pastelgl
 	{
 		int i;
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, bit3, r, g, b;
 	
@@ -58,10 +58,10 @@ public class pastelgl
 			bit2 = (color_prom[0] >> 6) & 0x01;
 			bit3 = (color_prom[0] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -158,14 +158,14 @@ public class pastelgl
 		int x, y;
 		unsigned char color1, color2;
 	
-		for (y = 0; y < Machine->drv->screen_height; y++)
+		for (y = 0; y < Machine.drv.screen_height; y++)
 		{
-			for (x = 0; x < Machine->drv->screen_width; x++)
+			for (x = 0; x < Machine.drv.screen_width; x++)
 			{
-				color1 = pastelgl_videoram[(y * Machine->drv->screen_width) + x];
-				color2 = pastelgl_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff)];
-				pastelgl_videoram[(y * Machine->drv->screen_width) + x] = color2;
-				pastelgl_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff)] = color1;
+				color1 = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
+				color2 = pastelgl_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0xff)];
+				pastelgl_videoram[(y * Machine.drv.screen_width) + x] = color2;
+				pastelgl_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0xff)] = color1;
 			}
 		}
 	}
@@ -273,8 +273,8 @@ public class pastelgl
 	
 				if (tflag != 0)
 				{
-					pastelgl_videoram[(dy * Machine->drv->screen_width) + dx] = drawcolor;
-					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine->pens[drawcolor]);
+					pastelgl_videoram[(dy * Machine.drv.screen_width) + dx] = drawcolor;
+					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine.pens[drawcolor]);
 				}
 	
 				nb1413m3_busyctr++;
@@ -290,10 +290,10 @@ public class pastelgl
 	******************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((pastelgl_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
-		if ((pastelgl_videoram = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char))) == 0) return 1;
+		if ((pastelgl_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
+		if ((pastelgl_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((pastelgl_paltbl = auto_malloc(0x10 * sizeof(char))) == 0) return 1;
-		memset(pastelgl_videoram, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
+		memset(pastelgl_videoram, 0x00, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char)));
 		return 0;
 	} };
 	
@@ -310,23 +310,23 @@ public class pastelgl
 		{
 			pastelgl_screen_refresh = 0;
 	
-			for (y = 0; y < Machine->drv->screen_height; y++)
+			for (y = 0; y < Machine.drv.screen_height; y++)
 			{
-				for (x = 0; x < Machine->drv->screen_width; x++)
+				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pastelgl_videoram[(y * Machine->drv->screen_width) + x];
-					plot_pixel(pastelgl_tmpbitmap, x, y, Machine->pens[color]);
+					color = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
 	
 		if (pastelgl_dispflag != 0)
 		{
-			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, &Machine->visible_area, TRANSPARENCY_NONE, 0);
+			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, &Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0x00], 0);
+			fillbitmap(bitmap, Machine.pens[0x00], 0);
 		}
 	} };
 }

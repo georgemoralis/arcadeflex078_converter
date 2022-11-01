@@ -4,7 +4,7 @@
 #define MAX_2151 2
 
 #ifndef YM3012_VOL
-/* YM2151interface->volume macro */
+/* YM2151interface.volume macro */
 #define YM3012_VOL(LVol,LPan,RVol,RPan) (MIXER(LVol,LPan)|(MIXER(RVol,RPan) << 16))
 #endif
 

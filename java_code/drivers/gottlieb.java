@@ -325,7 +325,7 @@ public class gottlieb
 				((data & 0x02) << 2) |
 				((data & 0x01) << 4);
 	
-	logerror("laserdisc command %02x -> %02x\n",data,cmd);
+	logerror("laserdisc command %02x . %02x\n",data,cmd);
 		if (lastcmd == 0x0b && (cmd & 0x10))	/* seek frame # */
 		{
 			current_frame = current_frame * 10 + (cmd & 0x0f);

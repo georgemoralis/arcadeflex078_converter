@@ -56,7 +56,7 @@ public class canyon
 			int y = canyon_videoram[0x3d0 + 2 * i + 0x8];
 			int c = canyon_videoram[0x3d0 + 2 * i + 0x9];
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				c >> 3,
 				i,
 				!(c & 0x80), 0,
@@ -84,10 +84,10 @@ public class canyon
 			rect.max_x = sx + 1;
 			rect.max_y = sy + 1;
 	
-			if (rect.min_x < cliprect->min_x) rect.min_x = cliprect->min_x;
-			if (rect.min_y < cliprect->min_y) rect.min_y = cliprect->min_y;
-			if (rect.max_x > cliprect->max_x) rect.max_x = cliprect->max_x;
-			if (rect.max_y > cliprect->max_y) rect.max_y = cliprect->max_y;
+			if (rect.min_x < cliprect.min_x) rect.min_x = cliprect.min_x;
+			if (rect.min_y < cliprect.min_y) rect.min_y = cliprect.min_y;
+			if (rect.max_x > cliprect.max_x) rect.max_x = cliprect.max_x;
+			if (rect.max_y > cliprect.max_y) rect.max_y = cliprect.max_y;
 	
 			fillbitmap(bitmap, i, &rect);
 		}

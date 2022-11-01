@@ -15,10 +15,10 @@
 	0x1700 - 0x17ff | Work RAM - contains hiscore table, coin count
 	0x1800 - 0x1fff | SAA 5050 video RAM
 
-  TODO - I/O ports (0x00 for sprite->background collisions)
+  TODO - I/O ports (0x00 for sprite.background collisions)
          sound (2x SN76477)
 		 playfield graphics may be banked, tiles above 0x1f are incorrect
-		 sprite->sprite collision aren't quite perfect
+		 sprite.sprite collision aren't quite perfect
 		   (you can often fly through flying missiles)
 
 */

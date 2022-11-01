@@ -26,7 +26,7 @@ Notes:
     at location 0x770-0x789.
 
 \-To enter into various Service Mode items,press button F2,reset and then toggle it(i.e
-  on->off).
+  on.off).
 \-To bypass the startup msg,toggle the "Reset" dip-sw or press F3.
 
 ******************************************************************************************/

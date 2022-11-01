@@ -211,7 +211,7 @@ public class mcr
 	MACHINE_INIT( mcr )
 	{
 		/* initialize the CTC */
-		ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
+		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	
 		/* reset cocktail flip */
@@ -248,7 +248,7 @@ public class mcr
 		}
 	
 		/* initialize the clock */
-		m6840_internal_counter_period = TIME_IN_HZ(Machine->drv->cpu[0].cpu_clock / 10);
+		m6840_internal_counter_period = TIME_IN_HZ(Machine.drv.cpu[0].cpu_clock / 10);
 	
 		/* reset cocktail flip */
 		mcr_cocktail_flip = 0;

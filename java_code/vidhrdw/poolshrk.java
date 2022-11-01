@@ -52,7 +52,7 @@ public class poolshrk
 	
 		tilemap_mark_all_tiles_dirty(tilemap);
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		/* draw sprites */
 	
@@ -61,7 +61,7 @@ public class poolshrk
 			int hpos = poolshrk_hpos_ram[i];
 			int vpos = poolshrk_vpos_ram[i];
 	
-			drawgfx(bitmap, Machine->gfx[0], i, (i == 0) ? 0 : 1, 0, 0,
+			drawgfx(bitmap, Machine.gfx[0], i, (i == 0) ? 0 : 1, 0, 0,
 				248 - hpos, vpos - 15, cliprect, TRANSPARENCY_PEN, 0);
 		}
 	

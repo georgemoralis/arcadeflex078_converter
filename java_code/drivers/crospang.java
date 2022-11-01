@@ -358,7 +358,7 @@ public class crospang
 	
 			for (ay=0; ay<dy; ay++)
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					sprite++,
 					color,(1-fx),fy,0x100-x, (0x100-(y - ay * 16)),
 					cliprect,TRANSPARENCY_PEN,0);

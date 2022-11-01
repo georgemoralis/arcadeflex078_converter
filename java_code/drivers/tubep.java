@@ -18,17 +18,17 @@ Nichibutsu 1984
 CPU
 84P0100B
 
-tp-b 6->1          19.968MHz
+tp-b 6.1          19.968MHz
 
                   tp-2 tp-1  2147 2147 2147 2147 2147 2147 2147 2147
 
                +------ daughter board ------+
-               tp-p 5->8 6116  6116 tp-p 4->1
+               tp-p 5.8 6116  6116 tp-p 4.1
                +----------------------------+
 
    z80a              z80a                     z80a
 
-                8910 8910 8910     6116  - tp-s 2->1
+                8910 8910 8910     6116  - tp-s 2.1
 
        16MHz
 
@@ -168,7 +168,7 @@ public class tubep
 					//screen_flip_w(offset,data&1);	/* bit 0 = screen flip, active high */
 					break;
 			case 6:
-					tubep_background_romselect_w(offset,data);	/* bit0 = 0->select roms: B1,B3,B5; bit0 = 1->select roms: B2,B4,B6 */
+					tubep_background_romselect_w(offset,data);	/* bit0 = 0.select roms: B1,B3,B5; bit0 = 1.select roms: B2,B4,B6 */
 					break;
 			case 7:
 					tubep_colorproms_A4_line_w(offset,data);	/* bit0 = line A4 (color proms address) state */
@@ -321,7 +321,7 @@ public class tubep
 	
 	static void scanline_callback(int scanline)
 	{
-		/* interrupt is generated whenever line V6 from video part goes lo->hi */
+		/* interrupt is generated whenever line V6 from video part goes lo.hi */
 		/* that is when scanline is 64 and 192 accordingly */
 	
 		cpu_set_irq_line(2,0,ASSERT_LINE);	/* sound cpu interrupt (music tempo) */

@@ -7,10 +7,10 @@ package vidhrdw;
 public class ninjakd2
 {
 	
-	#define COLORTABLE_START(gfxn,color)	Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + \
-						color * Machine->gfx[gfxn]->color_granularity
-	#define GFX_COLOR_CODES(gfxn) 		Machine->gfx[gfxn]->total_colors
-	#define GFX_ELEM_COLORS(gfxn) 		Machine->gfx[gfxn]->color_granularity
+	#define COLORTABLE_START(gfxn,color)	Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + \
+						color * Machine.gfx[gfxn].color_granularity
+	#define GFX_COLOR_CODES(gfxn) 		Machine.gfx[gfxn].total_colors
+	#define GFX_ELEM_COLORS(gfxn) 		Machine.gfx[gfxn].color_granularity
 	
 	unsigned char 	*ninjakd2_scrolly_ram;
 	unsigned char 	*ninjakd2_scrollx_ram;
@@ -33,10 +33,10 @@ public class ninjakd2
 		if ((bg_dirtybuffer = auto_malloc(1024)) == 0)
 			return 1;
 	
-		if ((bitmap_bg = auto_bitmap_alloc(Machine->drv->screen_width*2,Machine->drv->screen_height*2)) == 0)
+		if ((bitmap_bg = auto_bitmap_alloc(Machine.drv.screen_width*2,Machine.drv.screen_height*2)) == 0)
 			return 1;
 	
-		if ((bitmap_sp = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((bitmap_sp = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		memset(bg_dirtybuffer,1,1024);
@@ -68,7 +68,7 @@ public class ninjakd2
 			if (bg_enable != 0)
 			 memset(bg_dirtybuffer, 1, ninjakd2_backgroundram_size / 2);
 			else
-			 fillbitmap(bitmap_bg, Machine->pens[0],0);
+			 fillbitmap(bitmap_bg, Machine.pens[0],0);
 		}
 	} };
 	
@@ -77,7 +77,7 @@ public class ninjakd2
 		if (sp_overdraw!=data)
 		{
 			ninjakd2_spoverdraw_ram[offset] = data;
-			fillbitmap(bitmap_sp,15,&Machine->visible_area);
+			fillbitmap(bitmap_sp,15,&Machine.visible_area);
 			sp_overdraw = data;
 		}
 	} };
@@ -104,12 +104,12 @@ public class ninjakd2
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 							tile,
 							palette,
 							flipx,flipy,
 							sx,sy,
-							&Machine->visible_area,TRANSPARENCY_PEN, 15);
+							&Machine.visible_area,TRANSPARENCY_PEN, 15);
 			}
 	
 		}
@@ -140,7 +140,7 @@ public class ninjakd2
 				flipx = hi & 0x10;
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						  tile,
 						  palette,
 						  flipx,flipy,
@@ -170,12 +170,12 @@ public class ninjakd2
 				flipx = spriteram.read(offs+2)& 0x10;
 				flipy = spriteram.read(offs+2)& 0x20;
 				palette = spriteram.read(offs+4)& 0x0f;
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 							tile,
 							palette,
 							flipx,flipy,
 							sx,sy,
-							&Machine->visible_area,
+							&Machine.visible_area,
 							TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -203,12 +203,12 @@ public class ninjakd2
 		{
 			ninjakd2_draw_sprites(bitmap_sp);
 			ninjakd2_draw_foreground(bitmap_sp);
-			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
-			copybitmap(bitmap,bitmap_sp,0,0,0,0,&Machine->visible_area,TRANSPARENCY_PEN, 15);
+			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
+			copybitmap(bitmap,bitmap_sp,0,0,0,0,&Machine.visible_area,TRANSPARENCY_PEN, 15);
 		}
 		else 			/* normal sprite mode */
 		{
-			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			ninjakd2_draw_sprites(bitmap);
 			ninjakd2_draw_foreground(bitmap);
 		}

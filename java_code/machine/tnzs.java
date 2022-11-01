@@ -729,7 +729,7 @@ public class tnzs
 					/* bit 2 resets the mcu */
 					if ((data & 0x04) != 0)
 					{
-						if (Machine->drv->cpu[2].cpu_type == CPU_I8X41)
+						if (Machine.drv.cpu[2].cpu_type == CPU_I8X41)
 							cpu_set_reset_line(2,PULSE_LINE);
 					}
 					/* Coin count and lockout is handled by the i8742 */

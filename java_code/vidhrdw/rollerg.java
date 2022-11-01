@@ -78,7 +78,7 @@ public class rollerg
 	public static VideoUpdateHandlerPtr video_update_rollerg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[16 * bg_colorbase],cliprect);
+		fillbitmap(bitmap,Machine.pens[16 * bg_colorbase],cliprect);
 		K051316_zoom_draw_0(bitmap,cliprect,0,1);
 		K053245_sprites_draw(bitmap,cliprect);
 	} };

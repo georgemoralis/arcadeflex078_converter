@@ -31,7 +31,7 @@ public class ambush
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -95,12 +95,12 @@ public class ambush
 				scroll = ~scroll - 1;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					(col & 0x0f) | ((*ambush_colorbank & 0x03) << 4),
 					flip_screen,flip_screen,
 					8*sx, (8*sy + scroll) & 0xff,
-					&Machine->visible_area,transparency,0);
+					&Machine.visible_area,transparency,0);
 		}
 	}
 	
@@ -110,7 +110,7 @@ public class ambush
 		int offs;
 	
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 	
 		/* Draw the background priority characters */
@@ -174,11 +174,11 @@ public class ambush
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code, col | ((*ambush_colorbank & 0x03) << 4),
 					flipx, flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	

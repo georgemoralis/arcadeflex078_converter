@@ -153,12 +153,12 @@ public class contra
 		if (!bg_tilemap || !fg_tilemap || !tx_tilemap)
 			return 1;
 	
-		bg_clip = Machine->visible_area;
+		bg_clip = Machine.visible_area;
 		bg_clip.min_x += 40;
 		
 		fg_clip = bg_clip;
 		
-		tx_clip = Machine->visible_area;
+		tx_clip = Machine.visible_area;
 		tx_clip.max_x = 39;
 		tx_clip.min_x = 0;
 		

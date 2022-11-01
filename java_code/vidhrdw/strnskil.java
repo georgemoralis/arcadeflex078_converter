@@ -26,17 +26,17 @@ public class strnskil
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = color_prom[0]*0x11;
-			int g = color_prom[Machine->drv->total_colors]*0x11;
-			int b = color_prom[2*Machine->drv->total_colors]*0x11;
+			int g = color_prom[Machine.drv.total_colors]*0x11;
+			int b = color_prom[2*Machine.drv.total_colors]*0x11;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 	
 		/* color_prom now points to the beginning of the lookup table */
 	
@@ -128,11 +128,11 @@ public class strnskil
 			if (sx > 248)
 				sx = sx - 256;
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code, color,
 				flipx, flipy,
 				px, py,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
@@ -157,7 +157,7 @@ public class strnskil
 			}
 		}
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		strnskil_draw_sprites(bitmap);
 	} };
 }

@@ -57,7 +57,7 @@ public class rf5c68
 	
 	int RF5C68_sh_start( const struct MachineSound *msound )
 	{
-		struct RF5C68interface *intf = msound->sound_interface;
+		struct RF5C68interface *intf = msound.sound_interface;
 		const char *name[2];
 		int vol[2];
 	
@@ -66,17 +66,17 @@ public class rf5c68
 		if(!rpcm.ram)
 			return 1;
 	
-		rpcm.clock = intf->clock;
-		rpcm.ratio = (double)rpcm.clock/(8*Machine->sample_rate);
+		rpcm.clock = intf.clock;
+		rpcm.ratio = (double)rpcm.clock/(8*Machine.sample_rate);
 		memset(rpcm.regs, 0, sizeof(rpcm.regs));
 		rpcm.sel = 0;
 		rpcm.keyon = 0xff;
 	
 		name[0] = "RF5C58 L";
 		name[1] = "RF5C68 R";
-		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf->volume & 0xff);
-		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf->volume & 0xff);
-		rpcm.stream = stream_init_multi(2, name, vol, Machine->sample_rate, 0, RF5C68_update );
+		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf.volume & 0xff);
+		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf.volume & 0xff);
+		rpcm.stream = stream_init_multi(2, name, vol, Machine.sample_rate, 0, RF5C68_update );
 	
 		return 0;
 	

@@ -98,7 +98,7 @@ public class meadows
 			int bank = i;							/* that fixes it for now :-/ */
 			int flip = spriteram.read(i+8)>> 5;			/* bit #5 flip vertical flag */
 	
-			drawgfx(bitmap, Machine->gfx[bank + 1], code, 0, flip, 0, x, y, clip, TRANSPARENCY_PEN, 0);
+			drawgfx(bitmap, Machine.gfx[bank + 1], code, 0, flip, 0, x, y, clip, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class meadows
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	
 		/* draw the sprites */
-		if (Machine->gfx[1])
+		if (Machine.gfx[1])
 			draw_sprites(bitmap, cliprect);
 	} };
 }

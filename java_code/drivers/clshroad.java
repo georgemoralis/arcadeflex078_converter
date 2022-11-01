@@ -430,7 +430,7 @@ public class clshroad
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "rom05",       0x0000, 0x2000, CRC(21544cd6) SHA1(b9644ab3c4393cd2669d2b5b3c80d7a9f1c91ca6) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
 		ROM_LOAD( "prom3.bpr",   0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "prom2.bpr",   0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END
@@ -467,7 +467,7 @@ public class clshroad
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "clashr1.bin", 0x0000, 0x2000, CRC(0d0a8068) SHA1(529878d0c5f078590e07ec0fffc27b212843c0ad) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
 		ROM_LOAD( "clashrd.g8",  0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "clashrd.g7",  0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END

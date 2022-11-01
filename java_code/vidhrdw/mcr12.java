@@ -68,7 +68,7 @@ public class mcr12
 	
 	static int video_start_common(void)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		/* allocate a dirty buffer */
 		dirtybuffer = auto_malloc(videoram_size);
@@ -76,8 +76,8 @@ public class mcr12
 			return 1;
 	
 		/* allocate a temporary bitmap for the sprite rendering */
-		spritebitmap_width = Machine->drv->screen_width + 2 * 32;
-		spritebitmap_height = Machine->drv->screen_height + 2 * 32;
+		spritebitmap_width = Machine.drv.screen_width + 2 * 32;
+		spritebitmap_height = Machine.drv.screen_height + 2 * 32;
 		spritebitmap = auto_malloc(spritebitmap_width * spritebitmap_height);
 		if (!spritebitmap)
 			return 1;
@@ -85,26 +85,26 @@ public class mcr12
 	
 		/* if we're swapped in X/Y, the sprite data will be swapped */
 		/* but that's not what we want, so we swap it back here */
-		if (gfx && (Machine->orientation & ORIENTATION_SWAP_XY) && !(gfx->flags & GFX_SWAPXY))
+		if (gfx && (Machine.orientation & ORIENTATION_SWAP_XY) && !(gfx.flags & GFX_SWAPXY))
 		{
-			UINT8 *base = gfx->gfxdata;
+			UINT8 *base = gfx.gfxdata;
 			int c, x, y;
-			for (c = 0; c < gfx->total_elements; c++)
+			for (c = 0; c < gfx.total_elements; c++)
 			{
-				for (y = 0; y < gfx->height; y++)
-					for (x = y; x < gfx->width; x++)
+				for (y = 0; y < gfx.height; y++)
+					for (x = y; x < gfx.width; x++)
 					{
-						int temp = base[y * gfx->line_modulo + x];
-						base[y * gfx->line_modulo + x] = base[x * gfx->line_modulo + y];
-						base[x * gfx->line_modulo + y] = temp;
+						int temp = base[y * gfx.line_modulo + x];
+						base[y * gfx.line_modulo + x] = base[x * gfx.line_modulo + y];
+						base[x * gfx.line_modulo + y] = temp;
 					}
-				base += gfx->char_modulo;
+				base += gfx.char_modulo;
 			}
 		}
 	
 		/* compute tile counts */
-		xtiles = Machine->drv->screen_width / 16;
-		ytiles = Machine->drv->screen_height / 16;
+		xtiles = Machine.drv.screen_width / 16;
+		ytiles = Machine.drv.screen_height / 16;
 		return 0;
 	}
 	
@@ -226,8 +226,8 @@ public class mcr12
 	
 	static void render_one_sprite(int code, int sx, int sy, int hflip, int vflip)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
-		UINT8 *src = gfx->gfxdata + gfx->char_modulo * code;
+		const struct GfxElement *gfx = Machine.gfx[1];
+		UINT8 *src = gfx.gfxdata + gfx.char_modulo * code;
 		int y, x;
 		
 		/* offset for the extra top/left area */
@@ -236,7 +236,7 @@ public class mcr12
 	
 		/* adjust for vflip */
 		if (vflip != 0)
-			src += 31 * gfx->line_modulo;
+			src += 31 * gfx.line_modulo;
 	
 		/* loop over lines in the sprite */
 		for (y = 0; y < 32; y++, sy++)
@@ -259,7 +259,7 @@ public class mcr12
 	
 			/* adjust for vflip */
 			if (vflip != 0)
-				src -= 2 * gfx->line_modulo;
+				src -= 2 * gfx.line_modulo;
 		}
 	}
 	
@@ -303,9 +303,9 @@ public class mcr12
 				x += mcr12_sprite_xoffs;
 	
 			/* wrap and clip */
-			if (x > Machine->visible_area.max_x)
+			if (x > Machine.visible_area.max_x)
 				x -= 512;
-			if (y > Machine->visible_area.max_y)
+			if (y > Machine.visible_area.max_y)
 				y -= 512;
 			if (x <= -32 || y <= -32)
 				continue;
@@ -385,7 +385,7 @@ public class mcr12
 		for (offs = videoram_size - 1; offs >= 0; offs--)
 			if (dirtybuffer[offs])
 			{
-				render_sprite_tile(bitmap, &Machine->pens[16], offs);
+				render_sprite_tile(bitmap, &Machine.pens[16], offs);
 				dirtybuffer[offs] = 0;
 			}
 	}
@@ -416,7 +416,7 @@ public class mcr12
 	
 				/* lookup the attributes for the tile underneath to get the color */
 				attr = videoram.read((ty * 32 + tx) * 2 + 1);
-				render_sprite_tile(bitmap, &Machine->pens[(attr & 0xc0) >> 2], offs);
+				render_sprite_tile(bitmap, &Machine.pens[(attr & 0xc0) >> 2], offs);
 				dirtybuffer[offs] = 0;
 			}
 	}

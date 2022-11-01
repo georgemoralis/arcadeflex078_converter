@@ -150,7 +150,7 @@ public class cps2
 			cps1_output[0x50/2] = 0;
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 			cps2_set_sprite_priorities();
-			force_partial_update(16 - 10 + scancount);	/* Machine->visible_area.min_y - [first visible line?] + scancount */
+			force_partial_update(16 - 10 + scancount);	/* Machine.visible_area.min_y - [first visible line?] + scancount */
 			scancalls++;
 	//			usrintf_showmessage("IRQ4 scancounter = %04i",scancount);
 		}
@@ -161,7 +161,7 @@ public class cps2
 			cps1_output[0x52/2] = 0;
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 			cps2_set_sprite_priorities();
-			force_partial_update(16 - 10 + scancount);	/* Machine->visible_area.min_y - [first visible line?] + scancount */
+			force_partial_update(16 - 10 + scancount);	/* Machine.visible_area.min_y - [first visible line?] + scancount */
 			scancalls++;
 	//			usrintf_showmessage("IRQ4 scancounter = %04i",scancount);
 		}
@@ -246,7 +246,7 @@ public class cps2
 		coin_counter_w(0, data & 0x0001);
 		coin_counter_w(1, data & 0x0002);
 	
-		if(strncmp(Machine->gamedrv->name,"mmatrix",7)==0)		// Mars Matrix seems to require the coin lockout bit to be reversed
+		if(strncmp(Machine.gamedrv.name,"mmatrix",7)==0)		// Mars Matrix seems to require the coin lockout bit to be reversed
 		{
 			coin_lockout_w(0,data & 0x0010);
 			coin_lockout_w(1,data & 0x0020);
@@ -275,7 +275,7 @@ public class cps2
 		/* Network adapter (ssf2tb) present when bit 15 = 0 */
 		/* Only game known to use both these so far is SSF2TB */
 	
-		if(strcmp(Machine->gamedrv->name,"ssf2tb")==0)
+		if(strcmp(Machine.gamedrv.name,"ssf2tb")==0)
 			return 0x2021;
 		else
 			return 0xe021;

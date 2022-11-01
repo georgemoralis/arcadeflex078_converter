@@ -121,8 +121,8 @@ public class fuukifg3
 		tilemap_set_transparent_pen(tilemap_2,0x0f);	// 4 bits
 		tilemap_set_transparent_pen(tilemap_3,0x0f);	// 4 bits
 	
-		Machine->gfx[1]->color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
-		Machine->gfx[2]->color_granularity=16;
+		Machine.gfx[1].color_granularity=16; /* 256 colour tiles with palette selectable on 16 colour boundaries */
+		Machine.gfx[2].color_granularity=16;
 	
 		return 0;
 	} };
@@ -160,8 +160,8 @@ public class fuukifg3
 	{
 		int offs;
 	
-		int max_x		=	Machine->visible_area.max_x+1;
-		int max_y		=	Machine->visible_area.max_y+1;
+		int max_x		=	Machine.visible_area.max_x+1;
+		int max_y		=	Machine.visible_area.max_y+1;
 	
 		data32_t *src = buffered_spriteram32_2; /* Use spriteram buffered by 2 frames, need palette buffered by one frame? */
 	
@@ -230,7 +230,7 @@ public class fuukifg3
 				for (x = xstart; x != xend; x += xinc)
 				{
 					if (xzoom == (16*8) && yzoom == (16*8))
-						pdrawgfx(		bitmap,Machine->gfx[0],
+						pdrawgfx(		bitmap,Machine.gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -238,7 +238,7 @@ public class fuukifg3
 										cliprect,TRANSPARENCY_PEN,15,
 										pri_mask	);
 					else
-						pdrawgfxzoom(	bitmap,Machine->gfx[0],
+						pdrawgfxzoom(	bitmap,Machine.gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -258,7 +258,7 @@ public class fuukifg3
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 		dt[0].x = sx;		dt[0].y = sy;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -373,8 +373,8 @@ public class fuukifg3
 		fuuki32_draw_layer(bitmap,cliprect, tm_front,  0, 4);
 	
 		// don't do the rasters on the sprites . its very slow and the hw might not anyway.
-		if (cliprect->max_y == Machine->visible_area.max_y)
-			fuuki32_draw_sprites(bitmap,&Machine->visible_area);
+		if (cliprect.max_y == Machine.visible_area.max_y)
+			fuuki32_draw_sprites(bitmap,&Machine.visible_area);
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_fuuki32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)

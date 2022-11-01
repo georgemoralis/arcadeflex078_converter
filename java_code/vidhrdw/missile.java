@@ -50,7 +50,7 @@ public class missile
 		int bottom;
 		int color;
 	
-		/* The top 25 lines ($0000 -> $18ff) aren't used or drawn */
+		/* The top 25 lines ($0000 . $18ff) aren't used or drawn */
 		y = (offset >> 8) - 25;
 		x = offset & 0xff;
 		if( y < 231 - 32)
@@ -61,14 +61,14 @@ public class missile
 		/* cocktail mode */
 		if (flip_screen != 0)
 		{
-			y = tmpbitmap->height - 1 - y;
+			y = tmpbitmap.height - 1 - y;
 		}
 	
 		color = (missile_videoram[offset] >> 5);
 	
 		if (bottom != 0) color &= 0x06;
 	
-		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
+		plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
 	}
 	
 	/********************************************************************************************/
@@ -166,6 +166,6 @@ public class missile
 			for (offs = 0x1900; offs <= 0xffff; offs++)
 				missile_blit_w (offs);
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

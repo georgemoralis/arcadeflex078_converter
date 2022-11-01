@@ -33,7 +33,7 @@ public class citycon
 	
 	static UINT32 citycon_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x60) << 5);
 	}
 	
@@ -149,7 +149,7 @@ public class citycon
 				flipx = !flipx;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],
+			drawgfx(bitmap,Machine.gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],
 					spriteram.read(offs + 1)& 0x7f,
 					spriteram.read(offs + 2)& 0x0f,
 					flipx,flip_screen,

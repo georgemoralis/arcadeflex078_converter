@@ -49,20 +49,20 @@ public class sonson
 	public static PaletteInitHandlerPtr palette_init_sonson  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
 	
 			/* red component */
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
 			bit0 = (color_prom[i] >> 4) & 0x01;
@@ -80,7 +80,7 @@ public class sonson
 			palette_set_color(i,r,g,b);
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* characters use colors 0-15 */
@@ -172,18 +172,18 @@ public class sonson
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_sonson  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		sonson_draw_sprites(bitmap);
 	} };
 }

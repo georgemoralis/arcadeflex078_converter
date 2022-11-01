@@ -562,7 +562,7 @@ public class sega
 	
 	public static WriteHandlerPtr spacfury2_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (Machine->samples == 0) return;
+		if (Machine.samples == 0) return;
 	
 		data ^= 0xff;
 	

@@ -43,37 +43,37 @@ public class retofinv
 	public static PaletteInitHandlerPtr palette_init_retofinv  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[1*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[1*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[1*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[1*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[1*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[1*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[1*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[1*Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-			bit0 = (color_prom[0*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[0*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[0*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[0*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[0*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[0*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[0*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[0*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* foreground colors */
@@ -101,7 +101,7 @@ public class retofinv
 		if ((bg_dirtybuffer = auto_malloc(retofinv_videoram_size)) == 0)
 			return 1;
 	
-		if ((bitmap_bg = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((bitmap_bg = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		memset(bg_dirtybuffer,1,retofinv_videoram_size);
@@ -113,7 +113,7 @@ public class retofinv
 	{
 		flipscreen = data;
 		memset(bg_dirtybuffer,1,retofinv_videoram_size);
-		fillbitmap(bitmap_bg,Machine->pens[0],0);
+		fillbitmap(bitmap_bg,Machine.pens[0],0);
 	} };
 	
 	public static ReadHandlerPtr retofinv_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -208,46 +208,46 @@ public class retofinv
 						     could it be Z80 bug ? */
 					if (tile==0x98) tile--;
 	
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 								tile,
 								palette,
 								flipx,flipy,
 								sx,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((size & 4) != 0)
 				{
 					if ((size & 8) && (flipscreen)) sx-=16;
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 								tile+tileofs0,
 								palette,
 								flipx,flipy,
 								sx,sy+16,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 								tile+tileofs2,
 								palette,
 								flipx,flipy,
 								sx,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((size & 8) != 0)
 				{
 					if (flipscreen != 0) sx+=32;
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 								tile+tileofs1,
 								palette,
 								flipx,flipy,
 								sx-16,sy+16,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 								tile+tileofs3,
 								palette,
 								flipx,flipy,
 								sx-16,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -290,17 +290,17 @@ public class retofinv
 					tile = retofinv_bg_videoram[offs] + 256 * bg_bank;
 					palette = retofinv_bg_colorram[offs] & 0x3f;
 	
-					drawgfx(bitmap_bg,Machine->gfx[1],
+					drawgfx(bitmap_bg,Machine.gfx[1],
 							tile,
 							palette,
 							flipscreen,flipscreen,
 							8*sx+16,8*sy,
-							&Machine->visible_area,TRANSPARENCY_NONE,0);
+							&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 		}
 	
-		copybitmap(bitmap,bitmap_bg,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,bitmap_bg,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	
@@ -330,12 +330,12 @@ public class retofinv
 				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
 				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  &Machine->visible_area,TRANSPARENCY_NONE,0);
+							  &Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
@@ -359,12 +359,12 @@ public class retofinv
 				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
 				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  &Machine->visible_area,TRANSPARENCY_PEN,0);
+							  &Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -388,12 +388,12 @@ public class retofinv
 				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
 				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  &Machine->visible_area,TRANSPARENCY_NONE,0);
+							  &Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	}

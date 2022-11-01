@@ -131,7 +131,7 @@ public class mainsnk
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly )
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		const unsigned char *source, *finish;
 		source =  memory_region(REGION_CPU1)+0xe800;
 		finish =  source + 0x64;
@@ -162,7 +162,7 @@ public class mainsnk
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect,int dx,int off )
 	{
 		const unsigned char *base = memory_region(REGION_CPU1)+0xf000+off;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -193,10 +193,10 @@ public class mainsnk
 	VIDEO_UPDATE(mainsnk)
 	{
 		struct rectangle myclip;
-		myclip.min_x = cliprect->min_x+8;
-		myclip.max_x = cliprect->max_x-8;
-		myclip.min_y = cliprect->min_y;
-		myclip.max_y = cliprect->max_y;
+		myclip.min_x = cliprect.min_x+8;
+		myclip.max_x = cliprect.max_x-8;
+		myclip.min_y = cliprect.min_y;
+		myclip.max_y = cliprect.max_y;
 		tilemap_draw(bitmap,&myclip,me_bg_tilemap,0,0);
 		draw_sprites( bitmap,&myclip, 0,0 );
 		tilemap_draw(bitmap,&myclip,me_fg_tilemap,0,0);

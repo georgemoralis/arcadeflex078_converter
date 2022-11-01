@@ -220,7 +220,7 @@ public class blmbycar
 			x	=	(x & 0x1ff) - 0x10;
 			y	=	0xf0 - ((y & 0xff)  - (y & 0x100));
 	
-			pdrawgfx(	bitmap, Machine->gfx[0],
+			pdrawgfx(	bitmap, Machine.gfx[0],
 						code,
 						0x20 + (attr & 0xf),
 						flipx, flipy,
@@ -267,7 +267,7 @@ public class blmbycar
 		if ((layers_ctrl & 1) != 0)
 			for (i = 0; i <= 1; i++)
 				tilemap_draw(bitmap, cliprect, tilemap_0, i, i);
-		else	fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else	fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if ((layers_ctrl & 2) != 0)
 			for (i = 0; i <= 1; i++)

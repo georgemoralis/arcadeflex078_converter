@@ -141,7 +141,7 @@ public class shangkid
 			{
 				if( data == 0x01 )
 				{
-					/* 0->1 transition triggers interrupt on Sound CPU */
+					/* 0.1 transition triggers interrupt on Sound CPU */
 					cpu_set_irq_line( 2, 0, HOLD_LINE );
 				}
 			}

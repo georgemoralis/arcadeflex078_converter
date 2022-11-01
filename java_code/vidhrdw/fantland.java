@@ -88,13 +88,13 @@ public class fantland
 	
 			if (x >= 0x180)		x -= 0x200;
 	
-			drawgfx(bitmap,Machine->gfx[0], code,color, flipx,flipy, x,y, &Machine->visible_area,TRANSPARENCY_PEN,0);
+			drawgfx(bitmap,Machine.gfx[0], code,color, flipx,flipy, x,y, &Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_fantland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fantland_draw_sprites(bitmap,cliprect);
 	} };
 	

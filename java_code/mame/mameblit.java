@@ -1652,7 +1652,7 @@ static void blit_pens_raw_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t
 
 static void blit_color_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1667,7 +1667,7 @@ static void blit_color_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pP
 
 static void blit_color_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1685,7 +1685,7 @@ static void blit_color_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *p
 
 static void blit_color_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1703,7 +1703,7 @@ static void blit_color_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 
 static void blit_color_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1718,7 +1718,7 @@ static void blit_color_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *
 
 static void blit_color_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1736,7 +1736,7 @@ static void blit_color_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t 
 
 static void blit_color_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1754,7 +1754,7 @@ static void blit_color_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *p
 
 static void blit_color_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1769,7 +1769,7 @@ static void blit_color_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *
 
 static void blit_color_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1787,7 +1787,7 @@ static void blit_color_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t 
 
 static void blit_color_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>1];
@@ -1805,7 +1805,7 @@ static void blit_color_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *p
 
 static void blit_color_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1819,7 +1819,7 @@ static void blit_color_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pP
 
 static void blit_color_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1836,7 +1836,7 @@ static void blit_color_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *p
 
 static void blit_color_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1853,7 +1853,7 @@ static void blit_color_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPa
 
 static void blit_color_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1867,7 +1867,7 @@ static void blit_color_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *
 
 static void blit_color_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1884,7 +1884,7 @@ static void blit_color_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t 
 
 static void blit_color_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1901,7 +1901,7 @@ static void blit_color_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *p
 
 static void blit_color_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1915,7 +1915,7 @@ static void blit_color_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *
 
 static void blit_color_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -1932,7 +1932,7 @@ static void blit_color_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t 
 
 static void blit_color_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index];
@@ -6044,7 +6044,7 @@ static void blitzoom_pens_raw_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, p
 
 static void blitzoom_color_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6059,7 +6059,7 @@ static void blitzoom_color_from4bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t
 
 static void blitzoom_color_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6077,7 +6077,7 @@ static void blitzoom_color_from4bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_
 
 static void blitzoom_color_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6095,7 +6095,7 @@ static void blitzoom_color_from4bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t 
 
 static void blitzoom_color_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6110,7 +6110,7 @@ static void blitzoom_color_from4bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen
 
 static void blitzoom_color_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6128,7 +6128,7 @@ static void blitzoom_color_from4bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pe
 
 static void blitzoom_color_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6146,7 +6146,7 @@ static void blitzoom_color_from4bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_
 
 static void blitzoom_color_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6161,7 +6161,7 @@ static void blitzoom_color_from4bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen
 
 static void blitzoom_color_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6179,7 +6179,7 @@ static void blitzoom_color_from4bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pe
 
 static void blitzoom_color_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>17];
@@ -6197,7 +6197,7 @@ static void blitzoom_color_from4bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_
 
 static void blitzoom_color_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6211,7 +6211,7 @@ static void blitzoom_color_from8bpp_to8bpp_nobuf( UINT8 *pDst, void *pSrc, pen_t
 
 static void blitzoom_color_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6228,7 +6228,7 @@ static void blitzoom_color_from8bpp_to8bpp_pribuf( UINT8 *pDst, void *pSrc, pen_
 
 static void blitzoom_color_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6245,7 +6245,7 @@ static void blitzoom_color_from8bpp_to8bpp_zbuf( UINT8 *pDst, void *pSrc, pen_t 
 
 static void blitzoom_color_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6259,7 +6259,7 @@ static void blitzoom_color_from8bpp_to16bpp_nobuf( UINT16 *pDst, void *pSrc, pen
 
 static void blitzoom_color_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6276,7 +6276,7 @@ static void blitzoom_color_from8bpp_to16bpp_pribuf( UINT16 *pDst, void *pSrc, pe
 
 static void blitzoom_color_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6293,7 +6293,7 @@ static void blitzoom_color_from8bpp_to16bpp_zbuf( UINT16 *pDst, void *pSrc, pen_
 
 static void blitzoom_color_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6307,7 +6307,7 @@ static void blitzoom_color_from8bpp_to32bpp_nobuf( UINT32 *pDst, void *pSrc, pen
 
 static void blitzoom_color_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];
@@ -6324,7 +6324,7 @@ static void blitzoom_color_from8bpp_to32bpp_pribuf( UINT32 *pDst, void *pSrc, pe
 
 static void blitzoom_color_from8bpp_to32bpp_zbuf( UINT32 *pDst, void *pSrc, pen_t *pPal, int transp, void *pBuf, int sx, int ex, int x_index, int dx, int pri_code ){
 	int x;
-	transp = Machine->pens[transp];
+	transp = Machine.pens[transp];
 	for( x=sx; x<ex; x++ )
 	{
 		int data = ((UINT8 *)pSrc)[x_index>>16];

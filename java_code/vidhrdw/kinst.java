@@ -101,7 +101,7 @@ public class kinst
 		int y;
 	
 		/* loop over rows and copy to the destination */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
-			memcpy(bitmap->line[y], &vram_buffer[y * 320], 320 * sizeof(UINT16));
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
+			memcpy(bitmap.line[y], &vram_buffer[y * 320], 320 * sizeof(UINT16));
 	} };
 }

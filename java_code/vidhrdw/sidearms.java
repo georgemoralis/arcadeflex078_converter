@@ -166,7 +166,7 @@ public class sidearms
 	
 	INLINE UINT32 sidearms_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		int offset = ((row << 7) + col) << 1;
 	
 		/* swap bits 1-7 and 8-10 of the address to compensate for the funny layout of the ROM data */
@@ -215,8 +215,8 @@ public class sidearms
 	
 	void sidearms_draw_sprites_region( struct mame_bitmap *bitmap, int start_offset, int end_offset )
 	{
-		const struct GfxElement *gfx = Machine->gfx[2];
-		struct rectangle *cliprect = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[2];
+		struct rectangle *cliprect = &Machine.visible_area;
 		int offs, attr, color, code, x, y, flipx, flipy;
 	
 		flipy = flipx = flipon;
@@ -255,8 +255,8 @@ public class sidearms
 		int pixadv, lineadv;
 	
 		// clear starfield background
-		lineptr = (UINT16 *)bitmap->line[16] + 64;
-		lineadv = bitmap->rowpixels;
+		lineptr = (UINT16 *)bitmap.line[16] + 64;
+		lineadv = bitmap.rowpixels;
 	
 		for (i=224; i; i--) { memset(lineptr, 0, 768); lineptr += lineadv; }
 	
@@ -275,13 +275,13 @@ public class sidearms
 	#if 0 // old loop (for reference; easier to read)
 		if (!flipon)
 		{
-			lineptr = (UINT16 *)bitmap->line[0];
+			lineptr = (UINT16 *)bitmap.line[0];
 			pixadv  = 1;
 			lineadv = lineadv - 512;
 		}
 		else
 		{
-			lineptr = (UINT16 *)bitmap->line[255] + 512 - 1;
+			lineptr = (UINT16 *)bitmap.line[255] + 512 - 1;
 			pixadv  = -1;
 			lineadv = -lineadv + 512;
 		}
@@ -318,13 +318,13 @@ public class sidearms
 	#else // optimized loop
 		if (!flipon)
 		{
-			lineptr = (UINT16 *)bitmap->line[16] + 64;
+			lineptr = (UINT16 *)bitmap.line[16] + 64;
 			pixadv  = 1;
 			lineadv = lineadv - 384;
 		}
 		else
 		{
-			lineptr = (UINT16 *)bitmap->line[239] + 512 - 64 - 1;
+			lineptr = (UINT16 *)bitmap.line[239] + 512 - 64 - 1;
 			pixadv  = -1;
 			lineadv = -lineadv + 384;
 		}

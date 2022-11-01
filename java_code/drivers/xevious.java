@@ -42,10 +42,10 @@ A780-A7FF  |R/W| D D D D D D D D | 2k sprite RAM (PIC)
 B000-BFFF  |R/W| D D D D D D D D | 4k playfeild RAM ( ATTRIB)
 C000-CFFF  |R/W| D D D D D D D D | 4k playfeild RAM ( PIC )
 -----------+---+-----------------+-------------------------
-D000-D00F  | W | D D D D D D D D | A0->D8:background Y scroll position
-D010-D01F  | W | D D D D D D D D | A0->D8:font Y scroll position ??
-D020-D02F  | W | D D D D D D D D | A0->D8:background X scroll position ??
-D030-D03F  | W | D D D D D D D D | A0->D8:font X scroll position ?
+D000-D00F  | W | D D D D D D D D | A0.D8:background Y scroll position
+D010-D01F  | W | D D D D D D D D | A0.D8:font Y scroll position ??
+D020-D02F  | W | D D D D D D D D | A0.D8:background X scroll position ??
+D030-D03F  | W | D D D D D D D D | A0.D8:font X scroll position ?
 D070-D07F  | W |               D | display flip mode ?
 -----------+---+-----------------+-------------------------
 F000       | W | D D D D D D D D | planet map position low ?

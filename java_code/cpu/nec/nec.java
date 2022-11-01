@@ -1111,24 +1111,24 @@ public class nec
 	
 	    switch( regnum )
 	    {
-	        case CPU_INFO_REG+NEC_IP: sprintf(buffer[which], "IP:%04X", r->ip); break;
-	        case CPU_INFO_REG+NEC_SP: sprintf(buffer[which], "SP:%04X", r->regs.w[SP]); break;
+	        case CPU_INFO_REG+NEC_IP: sprintf(buffer[which], "IP:%04X", r.ip); break;
+	        case CPU_INFO_REG+NEC_SP: sprintf(buffer[which], "SP:%04X", r.regs.w[SP]); break;
 	        case CPU_INFO_REG+NEC_FLAGS: sprintf(buffer[which], "F:%04X", CompressFlags()); break;
-	        case CPU_INFO_REG+NEC_AW: sprintf(buffer[which], "AW:%04X", r->regs.w[AW]); break;
-	        case CPU_INFO_REG+NEC_CW: sprintf(buffer[which], "CW:%04X", r->regs.w[CW]); break;
-	        case CPU_INFO_REG+NEC_DW: sprintf(buffer[which], "DW:%04X", r->regs.w[DW]); break;
-	        case CPU_INFO_REG+NEC_BW: sprintf(buffer[which], "BW:%04X", r->regs.w[BW]); break;
-	        case CPU_INFO_REG+NEC_BP: sprintf(buffer[which], "BP:%04X", r->regs.w[BP]); break;
-	        case CPU_INFO_REG+NEC_IX: sprintf(buffer[which], "IX:%04X", r->regs.w[IX]); break;
-	        case CPU_INFO_REG+NEC_IY: sprintf(buffer[which], "IY:%04X", r->regs.w[IY]); break;
-	        case CPU_INFO_REG+NEC_ES: sprintf(buffer[which], "ES:%04X", r->sregs[ES]); break;
-	        case CPU_INFO_REG+NEC_CS: sprintf(buffer[which], "CS:%04X", r->sregs[CS]); break;
-	        case CPU_INFO_REG+NEC_SS: sprintf(buffer[which], "SS:%04X", r->sregs[SS]); break;
-	        case CPU_INFO_REG+NEC_DS: sprintf(buffer[which], "DS:%04X", r->sregs[DS]); break;
-	        case CPU_INFO_REG+NEC_VECTOR: sprintf(buffer[which], "V:%02X", r->int_vector); break;
-	        case CPU_INFO_REG+NEC_PENDING: sprintf(buffer[which], "P:%X", r->pending_irq); break;
-	        case CPU_INFO_REG+NEC_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
-	        case CPU_INFO_REG+NEC_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
+	        case CPU_INFO_REG+NEC_AW: sprintf(buffer[which], "AW:%04X", r.regs.w[AW]); break;
+	        case CPU_INFO_REG+NEC_CW: sprintf(buffer[which], "CW:%04X", r.regs.w[CW]); break;
+	        case CPU_INFO_REG+NEC_DW: sprintf(buffer[which], "DW:%04X", r.regs.w[DW]); break;
+	        case CPU_INFO_REG+NEC_BW: sprintf(buffer[which], "BW:%04X", r.regs.w[BW]); break;
+	        case CPU_INFO_REG+NEC_BP: sprintf(buffer[which], "BP:%04X", r.regs.w[BP]); break;
+	        case CPU_INFO_REG+NEC_IX: sprintf(buffer[which], "IX:%04X", r.regs.w[IX]); break;
+	        case CPU_INFO_REG+NEC_IY: sprintf(buffer[which], "IY:%04X", r.regs.w[IY]); break;
+	        case CPU_INFO_REG+NEC_ES: sprintf(buffer[which], "ES:%04X", r.sregs[ES]); break;
+	        case CPU_INFO_REG+NEC_CS: sprintf(buffer[which], "CS:%04X", r.sregs[CS]); break;
+	        case CPU_INFO_REG+NEC_SS: sprintf(buffer[which], "SS:%04X", r.sregs[SS]); break;
+	        case CPU_INFO_REG+NEC_DS: sprintf(buffer[which], "DS:%04X", r.sregs[DS]); break;
+	        case CPU_INFO_REG+NEC_VECTOR: sprintf(buffer[which], "V:%02X", r.int_vector); break;
+	        case CPU_INFO_REG+NEC_PENDING: sprintf(buffer[which], "P:%X", r.pending_irq); break;
+	        case CPU_INFO_REG+NEC_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
+	        case CPU_INFO_REG+NEC_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
 	        case CPU_INFO_FLAGS:
 	            flags = CompressFlags();
 	            sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",

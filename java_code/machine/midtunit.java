@@ -648,7 +648,7 @@ public class midtunit
 	{
 	/*	logerror("%08X:Sound status read\n", activecpu_get_pc());*/
 	
-		if (sound_type == SOUND_DCS && Machine->sample_rate)
+		if (sound_type == SOUND_DCS && Machine.sample_rate)
 			return dcs_control_r() >> 4;
 	
 		if (fake_sound_state != 0)
@@ -663,7 +663,7 @@ public class midtunit
 	{
 		logerror("%08X:Sound data read\n", activecpu_get_pc());
 	
-		if (sound_type == SOUND_DCS && Machine->sample_rate)
+		if (sound_type == SOUND_DCS && Machine.sample_rate)
 			return dcs_data_r() & 0xff;
 	
 		return ~0;

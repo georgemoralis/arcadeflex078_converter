@@ -159,7 +159,7 @@ public class blitgen
 								switch( transparency_mode )
 								{
 								case TRANSPARENCY_COLOR:
-	fprintf( f, "	transp = Machine->pens[transp];\n" );
+	fprintf( f, "	transp = Machine.pens[transp];\n" );
 									break;
 								case TRANSPARENCY_ALPHAONE:
 	fprintf( f, "	int alpha_pen = transp>>8;\n" );

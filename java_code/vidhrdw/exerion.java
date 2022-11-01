@@ -62,7 +62,7 @@ public class exerion
 	{
 		int i;
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, r, g, b;
 	
@@ -128,7 +128,7 @@ public class exerion
 		background_mixer = memory_region(REGION_PROMS) + 0x320;
 	
 		/* allocate memory to track the background latches */
-		background_latches = auto_malloc(Machine->drv->screen_height * 16);
+		background_latches = auto_malloc(Machine.drv.screen_height * 16);
 		if (!background_latches)
 			return 1;
 	
@@ -221,13 +221,13 @@ public class exerion
 	{
 		int ybeam = cpu_getscanline();
 	
-		if (ybeam >= Machine->drv->screen_height)
-			ybeam = Machine->drv->screen_height - 1;
+		if (ybeam >= Machine.drv.screen_height)
+			ybeam = Machine.drv.screen_height - 1;
 	
 		/* copy data up to and including the current scanline */
 		while (ybeam != last_scanline_update)
 		{
-			last_scanline_update = (last_scanline_update + 1) % Machine->drv->screen_height;
+			last_scanline_update = (last_scanline_update + 1) % Machine.drv.screen_height;
 			memcpy(&background_latches[last_scanline_update * 16], current_latches, 16);
 		}
 	
@@ -263,11 +263,11 @@ public class exerion
 	
 	void draw_background(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		UINT8 *latches = &background_latches[cliprect->min_y * 16];
+		UINT8 *latches = &background_latches[cliprect.min_y * 16];
 		int x, y;
 	
 		/* loop over all visible scanlines */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++, latches += 16)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++, latches += 16)
 		{
 			UINT16 *src0 = &background_gfx[0][latches[1] * 256];
 			UINT16 *src1 = &background_gfx[1][latches[3] * 256];
@@ -293,7 +293,7 @@ public class exerion
 			if (!exerion_cocktail_flip)
 			{
 				/* skip processing anything that's not visible */
-				for (x = BACKGROUND_X_START; x < cliprect->min_x; x++)
+				for (x = BACKGROUND_X_START; x < cliprect.min_x; x++)
 				{
 					if (!(++xoffs0 & 0x1f)) start0++, stop0++;
 					if (!(++xoffs1 & 0x1f)) start1++, stop1++;
@@ -302,7 +302,7 @@ public class exerion
 				}
 	
 				/* draw the rest of the scanline fully */
-				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				{
 					UINT16 combined = 0;
 					UINT8 lookupval;
@@ -330,7 +330,7 @@ public class exerion
 			else
 			{
 				/* skip processing anything that's not visible */
-				for (x = BACKGROUND_X_START; x < cliprect->min_x; x++)
+				for (x = BACKGROUND_X_START; x < cliprect.min_x; x++)
 				{
 					if (!(xoffs0-- & 0x1f)) start0++, stop0++;
 					if (!(xoffs1-- & 0x1f)) start1++, stop1++;
@@ -339,7 +339,7 @@ public class exerion
 				}
 	
 				/* draw the rest of the scanline fully */
-				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				{
 					UINT16 combined = 0;
 					UINT8 lookupval;
@@ -366,8 +366,8 @@ public class exerion
 			}
 	
 			/* draw the scanline */
-			pens = &Machine->remapped_colortable[0x200 + (latches[12] >> 4) * 16];
-			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], pens, -1);
+			pens = &Machine.remapped_colortable[0x200 + (latches[12] >> 4) * 16];
+			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], pens, -1);
 		}
 	}
 	
@@ -418,13 +418,13 @@ public class exerion
 			int code2 = code;
 	
 			int color = ((flags >> 1) & 0x03) | ((code >> 5) & 0x04) | (code & 0x08) | (sprite_palette * 16);
-			const struct GfxElement *gfx = doubled ? Machine->gfx[2] : Machine->gfx[1];
+			const struct GfxElement *gfx = doubled ? Machine.gfx[2] : Machine.gfx[1];
 	
 			if (exerion_cocktail_flip != 0)
 			{
-				x = 64*8 - gfx->width - x;
-				y = 32*8 - gfx->height - y;
-				if (wide != 0) y -= gfx->height;
+				x = 64*8 - gfx.width - x;
+				y = 32*8 - gfx.height - y;
+				if (wide != 0) y -= gfx.height;
 				xflip = !xflip;
 				yflip = !yflip;
 			}
@@ -436,7 +436,7 @@ public class exerion
 				else
 					code &= ~0x10, code2 |= 0x10;
 	
-				drawgfx(bitmap, gfx, code2, color, xflip, yflip, x, y + gfx->height,
+				drawgfx(bitmap, gfx, code2, color, xflip, yflip, x, y + gfx.height,
 				        cliprect, TRANSPARENCY_COLOR, 16);
 			}
 	
@@ -454,7 +454,7 @@ public class exerion
 				int y = exerion_cocktail_flip ? (31*8 - 8*sy) : 8*sy;
 	
 				offs = sx + sy * 64;
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 					videoram.read(offs)+ 256 * char_bank,
 					((videoram.read(offs)& 0xf0) >> 4) + char_palette * 16,
 					exerion_cocktail_flip, exerion_cocktail_flip, x, y,

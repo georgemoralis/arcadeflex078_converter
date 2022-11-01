@@ -58,7 +58,7 @@ public class deniam
 	
 	static UINT32 scan_pages(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x3f) + ((row & 0x1f) << 6) + ((col & 0x40) << 5) + ((row & 0x20) << 7);
 	}
 	
@@ -278,12 +278,12 @@ public class deniam
 						{
 							if (rom[i] & 0x0f)
 							{
-								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
-									y >= cliprect->min_y && y <= cliprect->max_y)
+								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
+									y >= cliprect.min_y && y <= cliprect.max_y)
 								{
-									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]&0x0f)]);
-									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]&0x0f)]);
+									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -298,12 +298,12 @@ public class deniam
 						{
 							if (rom[i] & 0xf0)
 							{
-								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
-									y >= cliprect->min_y && y <= cliprect->max_y)
+								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
+									y >= cliprect.min_y && y <= cliprect.max_y)
 								{
-									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]>>4)]);
-									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]>>4)]);
+									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -322,12 +322,12 @@ public class deniam
 						{
 							if (rom[i] & 0xf0)
 							{
-								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
-									y >= cliprect->min_y && y <= cliprect->max_y)
+								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
+									y >= cliprect.min_y && y <= cliprect.max_y)
 								{
-									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]>>4)]);
-									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]>>4)]);
+									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -342,12 +342,12 @@ public class deniam
 						{
 							if (rom[i] & 0x0f)
 							{
-								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
-									y >= cliprect->min_y && y <= cliprect->max_y)
+								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
+									y >= cliprect.min_y && y <= cliprect.max_y)
 								{
-									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]&0x0f)]);
-									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]&0x0f)]);
+									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
 								}
 							}
 							x++;

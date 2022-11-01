@@ -404,7 +404,7 @@ public class seta
 	static void find_offsets(void)
 	{
 		global_offsets = game_offsets;
-		while (global_offsets->gamename && strcmp(Machine->gamedrv->name,global_offsets->gamename))
+		while (global_offsets.gamename && strcmp(Machine.gamedrv.name,global_offsets.gamename))
 			global_offsets++;
 	}
 	
@@ -632,7 +632,7 @@ public class seta
 		int offs, col;
 		int xoffs, yoffs;
 	
-		int total_color_codes	=	Machine->drv->gfxdecodeinfo[0].total_color_codes;
+		int total_color_codes	=	Machine.drv.gfxdecodeinfo[0].total_color_codes;
 	
 		int ctrl	=	spriteram16[ 0x600/2 ];
 		int ctrl2	=	spriteram16[ 0x602/2 ];
@@ -710,7 +710,7 @@ public class seta
 				color	=	( color >> (16-5) ) % total_color_codes;
 				code	=	(code & 0x3fff) + (bank * 0x4000);
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						code,
 						color,
 						flipx, flipy,
@@ -729,7 +729,7 @@ public class seta
 		int offs;
 		int xoffs, yoffs;
 	
-		int total_color_codes	=	Machine->drv->gfxdecodeinfo[0].total_color_codes;
+		int total_color_codes	=	Machine.drv.gfxdecodeinfo[0].total_color_codes;
 	
 		int ctrl	=	spriteram16[ 0x600/2 ];
 		int ctrl2	=	spriteram16[ 0x602/2 ];
@@ -745,7 +745,7 @@ public class seta
 		seta_draw_sprites_map(bitmap,cliprect);
 	
 	
-		xoffs = global_offsets->sprite_offs[flip ? 1 : 0];
+		xoffs = global_offsets.sprite_offs[flip ? 1 : 0];
 		yoffs = -2;
 	
 		for ( offs = (0x400-2)/2 ; offs >= 0/2; offs -= 2/2 )
@@ -763,7 +763,7 @@ public class seta
 	
 			if (flip != 0)
 			{
-				y = (0x100 - Machine->drv->screen_height) + max_y - y;
+				y = (0x100 - Machine.drv.screen_height) + max_y - y;
 				flipx = !flipx;
 				flipy = !flipy;
 			}
@@ -772,7 +772,7 @@ public class seta
 	
 			y = max_y - y;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx, flipy,
@@ -809,7 +809,7 @@ public class seta
 	/* For games without tilemaps */
 	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		seta_draw_sprites(bitmap,cliprect);
 	} };
 	
@@ -823,7 +823,7 @@ public class seta
 		int order	= 	0;
 		int flip	=	(spriteram16[ 0x600/2 ] & 0x40) >> 6;
 	
-		int vis_dimy = Machine->visible_area.max_y - Machine->visible_area.min_y + 1;
+		int vis_dimy = Machine.visible_area.max_y - Machine.visible_area.min_y + 1;
 	
 		flip ^= tilemaps_flip;
 	
@@ -845,7 +845,7 @@ public class seta
 						fff0 0260 = -$10, $400-$190 -$10
 						ffe8 0272 = -$18, $400-$190 -$18 + $1a		*/
 	
-		x_0 += 0x10 - global_offsets->tilemap_offs[flip ? 1 : 0];
+		x_0 += 0x10 - global_offsets.tilemap_offs[flip ? 1 : 0];
 		y_0 -= (256 - vis_dimy)/2;
 		if (flip != 0)
 		{
@@ -867,7 +867,7 @@ public class seta
 			tilemap_set_enable(tilemap_2, (!(enab_1 & 0x0008)) /*&& (enab_1 & 0x0001)*/ );
 			tilemap_set_enable(tilemap_3, ( (enab_1 & 0x0008)) /*&& (enab_1 & 0x0001)*/ );
 	
-			x_1 += 0x10 - global_offsets->tilemap_offs[flip ? 1 : 0];
+			x_1 += 0x10 - global_offsets.tilemap_offs[flip ? 1 : 0];
 			y_1 -= (256 - vis_dimy)/2;
 			if (flip != 0)
 			{
@@ -897,7 +897,7 @@ public class seta
 	}
 	#endif
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if ((order & 1) != 0)	// swap the layers?
 		{
@@ -947,7 +947,7 @@ public class seta
 			}
 		}
 	
-		if (!(strcmp(Machine->gamedrv->name,"zombraid")))
+		if (!(strcmp(Machine.gamedrv.name,"zombraid")))
 		{
 			zombraid_drawcrosshairs(bitmap,cliprect);
 		}

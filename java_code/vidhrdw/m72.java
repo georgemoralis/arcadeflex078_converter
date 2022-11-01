@@ -152,7 +152,7 @@ public class m72
 	
 	static UINT32 majtitle_scan_rows( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return row*256 + col;
 	}
 	
@@ -567,7 +567,7 @@ public class m72
 					if (flipy != 0) c += h-1-y;
 					else c += y;
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 							c,
 							color,
 							flipx,flipy,
@@ -619,7 +619,7 @@ public class m72
 					if (flipy != 0) c += h-1-y;
 					else c += y;
 	
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 							c,
 							color,
 							flipx,flipy,
@@ -637,14 +637,14 @@ public class m72
 		/* use clip regions to split the screen */
 		struct rectangle clip;
 	
-		clip.min_x = cliprect->min_x;
-		clip.max_x = cliprect->max_x;
-		start = cliprect->min_y - 128;
+		clip.min_x = cliprect.min_x;
+		clip.max_x = cliprect.max_x;
+		start = cliprect.min_y - 128;
 		do
 		{
 			i = start;
 			while (scrollx[i+1] == scrollx[start] && scrolly[i+1] == scrolly[start]
-					&& i < Machine->visible_area.max_y - 128)
+					&& i < Machine.visible_area.max_y - 128)
 				i++;
 	
 			clip.min_y = start + 128;
@@ -655,7 +655,7 @@ public class m72
 			tilemap_draw(bitmap,&clip,tilemap,priority,0);
 	
 			start = i+1;
-		} while (start < cliprect->max_y - 128);
+		} while (start < cliprect.max_y - 128);
 	}
 	
 	static void draw_bg(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int priority)
@@ -673,7 +673,7 @@ public class m72
 	{
 		if (video_off != 0)
 		{
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 			return;
 		}
 	
@@ -691,7 +691,7 @@ public class m72
 	
 		if (video_off != 0)
 		{
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 			return;
 		}
 	

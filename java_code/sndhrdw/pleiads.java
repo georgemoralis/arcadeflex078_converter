@@ -336,7 +336,7 @@ public class pleiads
 			/* only discharge of poly bit is active */
 			if (polybit && level > VMIN)
 			{
-				/* discharge 10uF through 10k -> 0.1s */
+				/* discharge 10uF through 10k . 0.1s */
 				counter -= (int)((level - VMIN) / 0.1);
 				if( counter <= 0 )
 				{
@@ -401,7 +401,7 @@ public class pleiads
 	
 	static void pleiads_sound_update(int param, INT16 *buffer, int length)
 	{
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 	
 		while( length-- > 0 )
 		{
@@ -481,7 +481,7 @@ public class pleiads
 			poly18[i] = bits;
 		}
 	
-		channel = stream_init(name, 40, Machine->sample_rate, 0, pleiads_sound_update);
+		channel = stream_init(name, 40, Machine.sample_rate, 0, pleiads_sound_update);
 		if( channel == -1 )
 			return 1;
 	
@@ -494,16 +494,16 @@ public class pleiads
 		 * I took the ones from Naughty Boy / Pop Flamer
 		 */
 	
-		/* charge 10u?? (C??) through 330K?? (R??) -> 3.3s */
+		/* charge 10u?? (C??) through 330K?? (R??) . 3.3s */
 		pa5_charge_time = 3.3;
 	
-		/* discharge 10u?? (C??) through 220k?? (R??) -> 2.2s */
+		/* discharge 10u?? (C??) through 220k?? (R??) . 2.2s */
 		pa5_discharge_time = 2.2;
 	
-		/* charge 2.2uF?? through 330?? -> 0.000726s */
+		/* charge 2.2uF?? through 330?? . 0.000726s */
 		pa6_charge_time = 0.000726;
 	
-		/* discharge 2.2uF?? through 10k?? -> 0.22s */
+		/* discharge 2.2uF?? through 10k?? . 0.22s */
 		pa6_discharge_time = 0.022;
 	
 	    /* 10k and 10uF */
@@ -518,20 +518,20 @@ public class pleiads
 		 * time constant 1000 * 22e-6 = 0.022s */
 		pc4_discharge_time = 0.022;
 	
-		/* charge 10u?? through 330 -> 0.0033s */
+		/* charge 10u?? through 330 . 0.0033s */
 		pc5_charge_time = 0.0033;
 	
-		/* discharge 10u?? through ??k (R??) -> 0.1s */
+		/* discharge 10u?? through ??k (R??) . 0.1s */
 		pc5_discharge_time = 0.1;
 	
 		/* both in K */
 		pa5_resistor = 33;
 		pc5_resistor = 47;
 	
-		/* upper 556 upper half: Ra=10k??, Rb=200k??, C=0.01uF?? -> 351Hz */
+		/* upper 556 upper half: Ra=10k??, Rb=200k??, C=0.01uF?? . 351Hz */
 		tone2_max_freq = 351;
 	
-		/* upper 556 lower half: Ra=47k??, Rb=100k??, C=0.01uF?? -> 582Hz */
+		/* upper 556 lower half: Ra=47k??, Rb=100k??, C=0.01uF?? . 582Hz */
 		tone3_max_freq = 582;
 	
 		/* lower 556 upper half: Ra=33k??, Rb=100k??, C=0.0047uF??
@@ -551,16 +551,16 @@ public class pleiads
 	
 	int naughtyb_sh_start(const struct MachineSound *msound)
 	{
-		/* charge 10u??? through 330K (R??) -> 3.3s */
+		/* charge 10u??? through 330K (R??) . 3.3s */
 		pa5_charge_time = 3.3;
 	
-		/* discharge 10u through 220k (R??) -> 2.1s */
+		/* discharge 10u through 220k (R??) . 2.1s */
 		pa5_discharge_time = 2.2;
 	
-		/* charge 2.2uF through 330 -> 0.000726s */
+		/* charge 2.2uF through 330 . 0.000726s */
 		pa6_charge_time = 0.000726;
 	
-		/* discharge 2.2uF through 10K -> 0.022s */
+		/* discharge 2.2uF through 10K . 0.022s */
 		pa6_discharge_time = 0.022;
 	
 	    /* 10k and 10uF */
@@ -575,20 +575,20 @@ public class pleiads
 		 * time constant 2000 * 10e-6 = 0.02s */
 		pc4_discharge_time = 0.02 * 10;
 	
-		/* charge 10u through 330 -> 0.0033s */
+		/* charge 10u through 330 . 0.0033s */
 		pc5_charge_time = 0.0033;
 	
-		/* discharge 10u through ??k (R??) -> 0.1s */
+		/* discharge 10u through ??k (R??) . 0.1s */
 		pc5_discharge_time = 0.1;
 	
 		/* both in K */
 		pa5_resistor = 100;
 		pc5_resistor = 78;
 	
-		/* upper 556 upper half: 10k, 200k, 0.01uF -> 351Hz */
+		/* upper 556 upper half: 10k, 200k, 0.01uF . 351Hz */
 		tone2_max_freq = 351;
 	
-		/* upper 556 lower half: 47k, 200k, 0.01uF -> 322Hz */
+		/* upper 556 lower half: 47k, 200k, 0.01uF . 322Hz */
 		tone3_max_freq = 322;
 	
 		/* lower 556 upper half: Ra=33k, Rb=100k, C=0.0047uF
@@ -608,16 +608,16 @@ public class pleiads
 	
 	int popflame_sh_start(const struct MachineSound *msound)
 	{
-		/* charge 10u (C63 in Pop Flamer) through 330K -> 3.3s */
+		/* charge 10u (C63 in Pop Flamer) through 330K . 3.3s */
 		pa5_charge_time = 3.3;
 	
-		/* discharge 10u (C63 in Pop Flamer) through 220k -> 2.2s */
+		/* discharge 10u (C63 in Pop Flamer) through 220k . 2.2s */
 		pa5_discharge_time = 2.2;
 	
-		/* charge 2.2uF through 330 -> 0.000726s */
+		/* charge 2.2uF through 330 . 0.000726s */
 		pa6_charge_time = 0.000726;
 	
-		/* discharge 2.2uF through 10K -> 0.022s */
+		/* discharge 2.2uF through 10K . 0.022s */
 		pa6_discharge_time = 0.022;
 	
 	    /* 2k and 10uF */
@@ -632,20 +632,20 @@ public class pleiads
 		 * time constant 1000 * 22e-6 = 0.0022s */
 		pc4_discharge_time = 0.00022;
 	
-		/* charge 22u (C52 in Pop Flamer) through 10k -> 0.22s */
+		/* charge 22u (C52 in Pop Flamer) through 10k . 0.22s */
 		pc5_charge_time = 0.22;
 	
-		/* discharge 22u (C52 in Pop Flamer) through ??k (R??) -> 0.1s */
+		/* discharge 22u (C52 in Pop Flamer) through ??k (R??) . 0.1s */
 		pc5_discharge_time = 0.1;
 	
 		/* both in K */
 		pa5_resistor = 33;
 		pc5_resistor = 47;
 	
-		/* upper 556 upper half: Ra=10k, Rb=100k, C=0.01uF -> 1309Hz */
+		/* upper 556 upper half: Ra=10k, Rb=100k, C=0.01uF . 1309Hz */
 		tone2_max_freq = 1309;
 	
-		/* upper 556 lower half: Ra=10k??, Rb=120k??, C=0.01uF -> 1108Hz */
+		/* upper 556 lower half: Ra=10k??, Rb=120k??, C=0.01uF . 1108Hz */
 		tone3_max_freq = 1108;
 	
 		/* lower 556 upper half: Ra=33k, Rb=100k, C=0.0047uF

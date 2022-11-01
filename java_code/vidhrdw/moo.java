@@ -47,7 +47,7 @@ public class moo
 	{
 		int offsx, offsy;
 	
-		if (Machine->color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
+		if (Machine.color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
 	
 		alpha_enabled = 0;
 	
@@ -56,7 +56,7 @@ public class moo
 	
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_4, 1, NULL, moo_tile_callback)) return 1;
 	
-		if (!strcmp(Machine->gamedrv->name, "bucky") || !strcmp(Machine->gamedrv->name, "buckyua"))
+		if (!strcmp(Machine.gamedrv.name, "bucky") || !strcmp(Machine.gamedrv.name, "buckyua"))
 		{
 			// Bucky doesn't chain tilemaps
 			K056832_set_LayerAssociation(0);

@@ -19,7 +19,7 @@ public class pushman
 	
 	static UINT32 background_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return ((col & 0x7)) + ((7-(row & 0x7)) << 3) + ((col & 0x78) <<3) + ((0x38-(row&0x38))<<7);
 	}
 	
@@ -114,7 +114,7 @@ public class pushman
 			flipx=spriteram16[offs+1]&2;
 			flipy=spriteram16[offs+1]&1;	/* flip y untested */
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					sprite,
 	                color,flipx,flipy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);

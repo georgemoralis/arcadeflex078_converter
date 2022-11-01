@@ -92,18 +92,18 @@ public class dac
 	int DAC_sh_start(const struct MachineSound *msound)
 	{
 		int i;
-		const struct DACinterface *intf = msound->sound_interface;
+		const struct DACinterface *intf = msound.sound_interface;
 	
 	
 		DAC_build_voltable();
 	
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			char name[40];
 	
 	
 			sprintf(name,"DAC #%d",i);
-			channel[i] = stream_init(name,intf->mixing_level[i],Machine->sample_rate,
+			channel[i] = stream_init(name,intf.mixing_level[i],Machine.sample_rate,
 					i,DAC_update);
 	
 			if (channel[i] == -1)

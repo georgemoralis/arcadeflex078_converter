@@ -77,21 +77,21 @@ b-d                             *** score/10 (BCD 3 bytes) ***
 3a,3b,3c,3d             <-140021.b
 3a = accelerator   3b = ??   3c = steering   3d = table
 
-d2.w                    -> 108f24 fg y scroll
-112.w                   -> 108f26 bg y scroll
+d2.w                    . 108f24 fg y scroll
+112.w                   . 108f26 bg y scroll
 
 16c                             influences 140031.b
 174                             screen address
-180                             input port selection (->140003.b ->140021.b)
-181                     ->140005.b
-185                             bit 7 high -> must copy sprite data to 130000
-1dc+(1da).w             ->140001.b
+180                             input port selection (.140003.b .140021.b)
+181                     .140005.b
+185                             bit 7 high . must copy sprite data to 130000
+1dc+(1da).w             .140001.b
 
 40a.w,c.w               *** time (BCD) ***
 411                             EF if brake, 0 otherwise
 416                             ?
 419                             gear: 0=lo,1=hi
-41e.w                   speed related ->127880
+41e.w                   speed related .127880
 424.w                   speed BCD
 43c.w                   accel?
 440.w                   level?
@@ -133,19 +133,19 @@ c1a                     prints string (a1)
 6640                    print input port values ( 6698 = scr_disp.w,ip.b,bit.b[+/-] )
 
 819c                    prepares sprite data
-8526                    blitter: 42400->130000
+8526                    blitter: 42400.130000
 800c                    8580    sprites setup on map screen
 
 1833a                   cycle cols on hi-scores
 18514                   hiscores: main loop
 185e8                   hiscores: wheel selects letter
 
-TRAP#0                  prints string: A0-> addr.l, attr.w, (char.b)*, 0
+TRAP#0                  prints string: A0. addr.l, attr.w, (char.b)*, 0
 
 IRQs                    [1,3,6]  602
-IRQs                    [2,7]    1008->12dc      ORI.W    #$2700,(A7) RTE
-IRQs                    [4]      1004->124c
-IRQs                    [5]      106c->1222      calls sequence: $3d24 $1984 $28ca $36d2 $3e78
+IRQs                    [2,7]    1008.12dc      ORI.W    #$2700,(A7) RTE
+IRQs                    [4]      1004.124c
+IRQs                    [5]      106c.1222      calls sequence: $3d24 $1984 $28ca $36d2 $3e78
 
 
 					Interesting locations (sub cpu)
@@ -156,7 +156,7 @@ IRQs                    [5]      106c->1222      calls sequence: $3d24 $1984 $28
 
 1028    'wait for command' loop.
 1138    lev4 irq
-1192    copies E0*4 bytes: (a1)+ -> (a0)+
+1192    copies E0*4 bytes: (a1)+ . (a0)+
 
 
 ---------------------------------------------------------------------------
@@ -176,7 +176,7 @@ Self Test:
  0] pause,120002==55,pause,120002==AA,pause,120002==CC, (on error set bit d7.0)
  6] 60000-63fff(d7.1),40000-41fff(d7.2)
  8] 40000/2<-chksum 0-20000(e/o);40004/6<-chksum 20000-2ffff(e/o) (d7.3456)
- 9] chksums from sub cpu: even->40004   odd->(40006)    (d7.78)
+ 9] chksums from sub cpu: even.40004   odd.(40006)    (d7.78)
  A] 110000-111fff(even)(d7.9),102000-102fff(odd)(d7.a)
  C] 100000-100fff(odd)(d7.b),pause,pause,pause
 10] 120004==0(d7.c),120006==0(d7.d),130000-1307ff(first $A of every $10 bytes only)(d7.e),pause
@@ -369,7 +369,7 @@ public class wecleman
 			// logerror("CPU #0 - PC = %06X - $140005 <- %02X (old value: %02X)\n",activecpu_get_pc(), data&0xFF, old_data&0xFF);
 	
 			// Bit 0 : SUBINT
-			if ( (wecleman_irqctrl & 1) && (!(data & 1)) )	// 1->0 transition
+			if ( (wecleman_irqctrl & 1) && (!(data & 1)) )	// 1.0 transition
 				cpu_set_irq_line(1,4,HOLD_LINE);
 	
 			// Bit 1 : NSUBRST
@@ -710,12 +710,12 @@ public class wecleman
 	01      07      address step    (high byte, max 1)
 	02      08      sample address  (low  byte)
 	03      09      sample address  (mid  byte)
-	04      0a      sample address  (high byte, max 1 -> max rom size: $20000)
+	04      0a      sample address  (high byte, max 1 . max rom size: $20000)
 	05      0b      Reading this byte triggers the sample
 	
 	[Ch A & B]
 	0c              volume
-	0d              play sample once or looped (2 channels -> 2 bits (0&1))
+	0d              play sample once or looped (2 channels . 2 bits (0&1))
 	
 	** sample playing ends when a byte with bit 7 set is reached **/
 	
@@ -994,8 +994,8 @@ public class wecleman
 		PORT_DIPNAME( 0x20, 0x20, "Unknown 2-5" );// single
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		/* wheel <-> brake ; accel -> start */
-		PORT_DIPNAME( 0x40, 0x40, "Unknown 2-6" );// single (wheel<->brake)
+		/* wheel <. brake ; accel . start */
+		PORT_DIPNAME( 0x40, 0x40, "Unknown 2-6" );// single (wheel<.brake)
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x80, "Unknown 2-7" );// single

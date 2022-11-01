@@ -379,29 +379,29 @@ public class m6509
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M6509_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
-			case CPU_INFO_REG+M6509_S: sprintf(buffer[which], "S:%02X", r->sp.b.l); break;
-			case CPU_INFO_REG+M6509_P: sprintf(buffer[which], "P:%02X", r->p); break;
-			case CPU_INFO_REG+M6509_A: sprintf(buffer[which], "A:%02X", r->a); break;
-			case CPU_INFO_REG+M6509_X: sprintf(buffer[which], "X:%02X", r->x); break;
-			case CPU_INFO_REG+M6509_Y: sprintf(buffer[which], "Y:%02X", r->y); break;
-			case CPU_INFO_REG+M6509_PC_BANK: sprintf(buffer[which], "0:%01X", r->pc_bank.b.h2); break;
-			case CPU_INFO_REG+M6509_IND_BANK: sprintf(buffer[which], "1:%01X", r->ind_bank.b.h2); break;
-			case CPU_INFO_REG+M6509_EA: sprintf(buffer[which], "EA:%05X", r->ea.d); break;
-			case CPU_INFO_REG+M6509_ZP: sprintf(buffer[which], "ZP:%05X", r->zp.d); break;
-			case CPU_INFO_REG+M6509_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
-			case CPU_INFO_REG+M6509_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
-			case CPU_INFO_REG+M6509_SO_STATE: sprintf(buffer[which], "SO:%X", r->so_state); break;
+			case CPU_INFO_REG+M6509_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
+			case CPU_INFO_REG+M6509_S: sprintf(buffer[which], "S:%02X", r.sp.b.l); break;
+			case CPU_INFO_REG+M6509_P: sprintf(buffer[which], "P:%02X", r.p); break;
+			case CPU_INFO_REG+M6509_A: sprintf(buffer[which], "A:%02X", r.a); break;
+			case CPU_INFO_REG+M6509_X: sprintf(buffer[which], "X:%02X", r.x); break;
+			case CPU_INFO_REG+M6509_Y: sprintf(buffer[which], "Y:%02X", r.y); break;
+			case CPU_INFO_REG+M6509_PC_BANK: sprintf(buffer[which], "0:%01X", r.pc_bank.b.h2); break;
+			case CPU_INFO_REG+M6509_IND_BANK: sprintf(buffer[which], "1:%01X", r.ind_bank.b.h2); break;
+			case CPU_INFO_REG+M6509_EA: sprintf(buffer[which], "EA:%05X", r.ea.d); break;
+			case CPU_INFO_REG+M6509_ZP: sprintf(buffer[which], "ZP:%05X", r.zp.d); break;
+			case CPU_INFO_REG+M6509_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
+			case CPU_INFO_REG+M6509_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
+			case CPU_INFO_REG+M6509_SO_STATE: sprintf(buffer[which], "SO:%X", r.so_state); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->p & 0x80 ? 'N':'.',
-					r->p & 0x40 ? 'V':'.',
-					r->p & 0x20 ? 'R':'.',
-					r->p & 0x10 ? 'B':'.',
-					r->p & 0x08 ? 'D':'.',
-					r->p & 0x04 ? 'I':'.',
-					r->p & 0x02 ? 'Z':'.',
-					r->p & 0x01 ? 'C':'.');
+					r.p & 0x80 ? 'N':'.',
+					r.p & 0x40 ? 'V':'.',
+					r.p & 0x20 ? 'R':'.',
+					r.p & 0x10 ? 'B':'.',
+					r.p & 0x08 ? 'D':'.',
+					r.p & 0x04 ? 'I':'.',
+					r.p & 0x02 ? 'Z':'.',
+					r.p & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "M6509";
 			case CPU_INFO_FAMILY: return "MOS Technology 6509";

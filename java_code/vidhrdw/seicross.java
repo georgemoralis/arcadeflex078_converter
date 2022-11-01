@@ -40,7 +40,7 @@ public class seicross
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -118,37 +118,37 @@ public class seicross
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
 			int x = spriteram.read(offs + 3);
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram.read(offs)& 0x3f) + ((spriteram.read(offs + 1)& 0x10) << 2) + 128,
 					spriteram.read(offs + 1)& 0x0f,
 					spriteram.read(offs)& 0x40,spriteram.read(offs)& 0x80,
 					x,240-spriteram.read(offs + 2),
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 			if(x>0xf0)
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						(spriteram.read(offs)& 0x3f) + ((spriteram.read(offs + 1)& 0x10) << 2) + 128,
 						spriteram.read(offs + 1)& 0x0f,
 						spriteram.read(offs)& 0x40,spriteram.read(offs)& 0x80,
 						x-256,240-spriteram.read(offs + 2),
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 		for (offs = spriteram_2_size - 4;offs >= 0;offs -= 4)
 		{
 			int x = spriteram_2[offs + 3];
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					(spriteram_2[offs] & 0x3f) + ((spriteram_2[offs + 1] & 0x10) << 2),
 					spriteram_2[offs + 1] & 0x0f,
 					spriteram_2[offs] & 0x40,spriteram_2[offs] & 0x80,
 					x,240-spriteram_2[offs + 2],
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 			if(x>0xf0)
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						(spriteram_2[offs] & 0x3f) + ((spriteram_2[offs + 1] & 0x10) << 2),
 						spriteram_2[offs + 1] & 0x0f,
 						spriteram_2[offs] & 0x40,spriteram_2[offs] & 0x80,
 						x-256,240-spriteram_2[offs + 2],
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -161,7 +161,7 @@ public class seicross
 			tilemap_set_scrolly(bg_tilemap, col, seicross_row_scroll[col]);
 		}
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		seicross_draw_sprites(bitmap);
 	} };
 }

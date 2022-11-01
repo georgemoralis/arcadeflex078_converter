@@ -121,7 +121,7 @@
 				0x20000008 = 0x0172 (= 370)
 			 Rave Racer
 				hacked temporarily:
-				0x00018200 = 0x60 (-> BRA instruction) (RV2-B)
+				0x00018200 = 0x60 (. BRA instruction) (RV2-B)
 			 Cyber Cycles
 				0x20000002 = 0x0185 (= 389)
 			 Ace Driver Victory Lap
@@ -202,9 +202,9 @@
 	40000015	? (cyc1)
 	40000016	Watchdog timer reset
 	40000017
-	40000018	0 or 1 -> DSP control (reset?)
+	40000018	0 or 1 . DSP control (reset?)
 	40000019	sub cpu reset?
-	4000001a	0 or 1 or 0xff -> DSP control
+	4000001a	0 or 1 or 0xff . DSP control
 	4000001b	?
 	4000001c
 	4000001d
@@ -684,9 +684,9 @@ public class namcos22
 			40000015	? (cyc1)
 			40000016	Watchdog timer reset
 			40000017
-			40000018	0 or 1 -> DSP control (reset?)
+			40000018	0 or 1 . DSP control (reset?)
 			40000019	?
-			4000001a	0 or 1 or 0xff -> DSP control
+			4000001a	0 or 1 or 0xff . DSP control
 			4000001b	?
 			4000001c
 			4000001d

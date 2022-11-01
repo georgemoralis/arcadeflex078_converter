@@ -126,12 +126,12 @@ public class rohga
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine->gfx[3],
+				pdrawgfx(bitmap,Machine.gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine->visible_area,TRANSPARENCY_PEN,0,pri);
+						&Machine.visible_area,TRANSPARENCY_PEN,0,pri);
 	
 				multi--;
 			}
@@ -223,12 +223,12 @@ public class rohga
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[bank],
+				drawgfx(bitmap,Machine.gfx[bank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine->visible_area,trans,0);
+						&Machine.visible_area,trans,0);
 	
 				multi--;
 			}
@@ -412,12 +412,12 @@ public class rohga
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
+					deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine->visible_area,trans,0,tilemap_pri,sprite_pri);
+							&Machine.visible_area,trans,0,tilemap_pri,sprite_pri);
 				}
 			}
 	
@@ -436,7 +436,7 @@ public class rohga
 	
 		/* Draw playfields */
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[512],cliprect);
+		fillbitmap(bitmap,Machine.pens[512],cliprect);
 	
 		if (!keyboard_pressed(KEYCODE_Z))
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
@@ -459,7 +459,7 @@ public class rohga
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		/* Draw playfields - Palette of 2nd playfield chip visible if playfields turned off */
-		fillbitmap(bitmap,Machine->pens[512],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[512],&Machine.visible_area);
 	
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 		wizdfire_drawsprites(bitmap,buffered_spriteram16,4,3);
@@ -487,7 +487,7 @@ public class rohga
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		/* Draw playfields - Palette of 2nd playfield chip visible if playfields turned off */
-		fillbitmap(bitmap,Machine->pens[512],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[512],&Machine.visible_area);
 		fillbitmap(priority_bitmap,0,NULL);
 		deco16_clear_sprite_priority_bitmap(); 
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);

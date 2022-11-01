@@ -67,15 +67,15 @@ public class hyperspt
 	
 				/* find the dip switch which resets the high score table, and set it */
 				/* back to off. */
-				in = Machine->input_ports;
+				in = Machine.input_ports;
 	
-				while (in->type != IPT_END)
+				while (in.type != IPT_END)
 				{
-					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
-							strcmp(in->name,"World Records") == 0)
+					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
+							strcmp(in.name,"World Records") == 0)
 					{
-						if (in->default_value == 0)
-							in->default_value = in->mask;
+						if (in.default_value == 0)
+							in.default_value = in.mask;
 						break;
 					}
 	
@@ -98,16 +98,16 @@ public class hyperspt
 	
 	
 				/* find the dip switch which resets the high score table, and set it on */
-				in = Machine->input_ports;
+				in = Machine.input_ports;
 	
-				while (in->type != IPT_END)
+				while (in.type != IPT_END)
 				{
-					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
-							strcmp(in->name,"World Records") == 0)
+					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
+							strcmp(in.name,"World Records") == 0)
 					{
-						if (in->default_value == in->mask)
+						if (in.default_value == in.mask)
 						{
-							in->default_value = 0;
+							in.default_value = 0;
 							we_flipped_the_switch = 1;
 						}
 						break;

@@ -48,14 +48,14 @@ public class minivadr
 		x = (offset % 32) * 8;
 		y = (offset / 32);
 	
-		if (x >= Machine->visible_area.min_x &&
-				x <= Machine->visible_area.max_x &&
-				y >= Machine->visible_area.min_y &&
-				y <= Machine->visible_area.max_y)
+		if (x >= Machine.visible_area.min_x &&
+				x <= Machine.visible_area.max_x &&
+				y >= Machine.visible_area.min_y &&
+				y <= Machine.visible_area.max_y)
 		{
 			for (i = 0; i < 8; i++)
 			{
-				color = Machine->pens[((data >> i) & 0x01)];
+				color = Machine.pens[((data >> i) & 0x01)];
 	
 				plot_pixel(tmpbitmap, x + (7 - i), y, color);
 			}
@@ -74,6 +74,6 @@ public class minivadr
 			for (offs = 0; offs < videoram_size; offs++)
 				minivadr_videoram_w(offs,videoram.read(offs));
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

@@ -130,7 +130,7 @@ public class gotcha
 	
 			for (y = 0;y < height;y++)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code + (flipy ? height-1 - y : y),
 						color,
 						flipx,flipy,

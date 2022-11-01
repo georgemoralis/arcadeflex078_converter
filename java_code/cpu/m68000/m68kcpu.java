@@ -426,48 +426,48 @@ public class m68kcpu
 	
 		switch(regnum)
 		{
-			case M68K_REG_D0:	return cpu->dar[0];
-			case M68K_REG_D1:	return cpu->dar[1];
-			case M68K_REG_D2:	return cpu->dar[2];
-			case M68K_REG_D3:	return cpu->dar[3];
-			case M68K_REG_D4:	return cpu->dar[4];
-			case M68K_REG_D5:	return cpu->dar[5];
-			case M68K_REG_D6:	return cpu->dar[6];
-			case M68K_REG_D7:	return cpu->dar[7];
-			case M68K_REG_A0:	return cpu->dar[8];
-			case M68K_REG_A1:	return cpu->dar[9];
-			case M68K_REG_A2:	return cpu->dar[10];
-			case M68K_REG_A3:	return cpu->dar[11];
-			case M68K_REG_A4:	return cpu->dar[12];
-			case M68K_REG_A5:	return cpu->dar[13];
-			case M68K_REG_A6:	return cpu->dar[14];
-			case M68K_REG_A7:	return cpu->dar[15];
-			case M68K_REG_PC:	return MASK_OUT_ABOVE_32(cpu->pc);
-			case M68K_REG_SR:	return	cpu->t1_flag						|
-										cpu->t0_flag						|
-										(cpu->s_flag << 11)					|
-										(cpu->m_flag << 11)					|
-										cpu->int_mask						|
-										((cpu->x_flag & XFLAG_SET) >> 4)	|
-										((cpu->n_flag & NFLAG_SET) >> 4)	|
-										((!cpu->not_z_flag) << 2)			|
-										((cpu->v_flag & VFLAG_SET) >> 6)	|
-										((cpu->c_flag & CFLAG_SET) >> 8);
-			case M68K_REG_SP:	return cpu->dar[15];
-			case M68K_REG_USP:	return cpu->s_flag ? cpu->sp[0] : cpu->dar[15];
-			case M68K_REG_ISP:	return cpu->s_flag && !cpu->m_flag ? cpu->dar[15] : cpu->sp[4];
-			case M68K_REG_MSP:	return cpu->s_flag && cpu->m_flag ? cpu->dar[15] : cpu->sp[6];
-			case M68K_REG_SFC:	return cpu->sfc;
-			case M68K_REG_DFC:	return cpu->dfc;
-			case M68K_REG_VBR:	return cpu->vbr;
-			case M68K_REG_CACR:	return cpu->cacr;
-			case M68K_REG_CAAR:	return cpu->caar;
-			case M68K_REG_PREF_ADDR:	return cpu->pref_addr;
-			case M68K_REG_PREF_DATA:	return cpu->pref_data;
-			case M68K_REG_PPC:	return MASK_OUT_ABOVE_32(cpu->ppc);
-			case M68K_REG_IR:	return cpu->ir;
+			case M68K_REG_D0:	return cpu.dar[0];
+			case M68K_REG_D1:	return cpu.dar[1];
+			case M68K_REG_D2:	return cpu.dar[2];
+			case M68K_REG_D3:	return cpu.dar[3];
+			case M68K_REG_D4:	return cpu.dar[4];
+			case M68K_REG_D5:	return cpu.dar[5];
+			case M68K_REG_D6:	return cpu.dar[6];
+			case M68K_REG_D7:	return cpu.dar[7];
+			case M68K_REG_A0:	return cpu.dar[8];
+			case M68K_REG_A1:	return cpu.dar[9];
+			case M68K_REG_A2:	return cpu.dar[10];
+			case M68K_REG_A3:	return cpu.dar[11];
+			case M68K_REG_A4:	return cpu.dar[12];
+			case M68K_REG_A5:	return cpu.dar[13];
+			case M68K_REG_A6:	return cpu.dar[14];
+			case M68K_REG_A7:	return cpu.dar[15];
+			case M68K_REG_PC:	return MASK_OUT_ABOVE_32(cpu.pc);
+			case M68K_REG_SR:	return	cpu.t1_flag						|
+										cpu.t0_flag						|
+										(cpu.s_flag << 11)					|
+										(cpu.m_flag << 11)					|
+										cpu.int_mask						|
+										((cpu.x_flag & XFLAG_SET) >> 4)	|
+										((cpu.n_flag & NFLAG_SET) >> 4)	|
+										((!cpu.not_z_flag) << 2)			|
+										((cpu.v_flag & VFLAG_SET) >> 6)	|
+										((cpu.c_flag & CFLAG_SET) >> 8);
+			case M68K_REG_SP:	return cpu.dar[15];
+			case M68K_REG_USP:	return cpu.s_flag ? cpu.sp[0] : cpu.dar[15];
+			case M68K_REG_ISP:	return cpu.s_flag && !cpu.m_flag ? cpu.dar[15] : cpu.sp[4];
+			case M68K_REG_MSP:	return cpu.s_flag && cpu.m_flag ? cpu.dar[15] : cpu.sp[6];
+			case M68K_REG_SFC:	return cpu.sfc;
+			case M68K_REG_DFC:	return cpu.dfc;
+			case M68K_REG_VBR:	return cpu.vbr;
+			case M68K_REG_CACR:	return cpu.cacr;
+			case M68K_REG_CAAR:	return cpu.caar;
+			case M68K_REG_PREF_ADDR:	return cpu.pref_addr;
+			case M68K_REG_PREF_DATA:	return cpu.pref_data;
+			case M68K_REG_PPC:	return MASK_OUT_ABOVE_32(cpu.ppc);
+			case M68K_REG_IR:	return cpu.ir;
 			case M68K_REG_CPU_TYPE:
-				switch(cpu->cpu_type)
+				switch(cpu.cpu_type)
 				{
 					case CPU_TYPE_000:		return (unsigned int)M68K_CPU_TYPE_68000;
 					case CPU_TYPE_010:		return (unsigned int)M68K_CPU_TYPE_68010;

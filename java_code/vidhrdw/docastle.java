@@ -40,8 +40,8 @@ public class docastle
 			int priority)
 	{
 		int i,j;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 256;i++)
@@ -237,7 +237,7 @@ public class docastle
 		{
 			int sx,sy,flipx,flipy,code,color;
 	
-			if (Machine->gfx[1]->total_elements > 256)
+			if (Machine.gfx[1].total_elements > 256)
 			{
 				/* spriteram
 	
@@ -299,29 +299,29 @@ public class docastle
 			}
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap,Machine->gfx[1],
+			pdrawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_COLOR,256,
+					&Machine.visible_area,TRANSPARENCY_COLOR,256,
 					0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap,Machine->gfx[1],
+			pdrawgfx(bitmap,Machine.gfx[1],
 					code,
 					color + 32,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_COLOR,256,
+					&Machine.visible_area,TRANSPARENCY_COLOR,256,
 					0x02);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		docastle_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

@@ -30,8 +30,8 @@ public class magmax
 	
 	static void bhpl_8_nd(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b->line[y])[x]);
-		while(w-->0)
+		UINT8* lineadr = &(((UINT8*)b.line[y])[x]);
+		while(w-.0)
 		{
 			*lineadr++ = (UINT8)(*pens);
 			pens++;
@@ -39,8 +39,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fx(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b->line[y])[b->width-1-x]);
-		while(w-->0)
+		UINT8* lineadr = &(((UINT8*)b.line[y])[b.width-1-x]);
+		while(w-.0)
 		{
 			*lineadr-- = (UINT8)(*pens);
 			pens++;
@@ -48,8 +48,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b->line[b->height-1-y])[x]);
-		while(w-->0)
+		UINT8* lineadr = &(((UINT8*)b.line[b.height-1-y])[x]);
+		while(w-.0)
 		{
 			*lineadr++ = (UINT8)(*pens);
 			pens++;
@@ -57,8 +57,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fxy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b->line[b->height-1-y])[b->width-1-x]);
-		while(w-->0)
+		UINT8* lineadr = &(((UINT8*)b.line[b.height-1-y])[b.width-1-x]);
+		while(w-.0)
 		{
 			*lineadr-- = (UINT8)(*pens);
 			pens++;
@@ -66,45 +66,45 @@ public class magmax
 	}
 	static void bhpl_8_nd_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		while(w-->0)
+		while(w-.0)
 		{
-			((UINT8 *)b->line[x++])[y] = (UINT8)(*pens);
+			((UINT8 *)b.line[x++])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fx_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		y = b->width-1-y;
-		while(w-->0)
+		y = b.width-1-y;
+		while(w-.0)
 		{
-			((UINT8 *)b->line[x++])[y] = (UINT8)(*pens);
+			((UINT8 *)b.line[x++])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b->height-1-x;
-		while(w-->0)
+		x = b.height-1-x;
+		while(w-.0)
 		{
-			((UINT8 *)b->line[x--])[y] = (UINT8)(*pens);
+			((UINT8 *)b.line[x--])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b->height-1-x;
-		y = b->width-1-y;
-		while(w-->0)
+		x = b.height-1-x;
+		y = b.width-1-y;
+		while(w-.0)
 		{
-			((UINT8 *)b->line[x--])[y] = (UINT8)(*pens);
+			((UINT8 *)b.line[x--])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	
 	static void bhpl_16_nd(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b->line[y])[x]);
-		while(w-->0)
+		UINT16* lineadr = &(((UINT16*)b.line[y])[x]);
+		while(w-.0)
 		{
 			*lineadr++ = (UINT16)(*pens);
 			pens++;
@@ -112,8 +112,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fx(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b->line[y])[b->width-1-x]);
-		while(w-->0)
+		UINT16* lineadr = &(((UINT16*)b.line[y])[b.width-1-x]);
+		while(w-.0)
 		{
 			*lineadr-- = (UINT16)(*pens);
 			pens++;
@@ -121,8 +121,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b->line[b->height-1-y])[x]);
-		while(w-->0)
+		UINT16* lineadr = &(((UINT16*)b.line[b.height-1-y])[x]);
+		while(w-.0)
 		{
 			*lineadr++ = (UINT16)(*pens);
 			pens++;
@@ -130,8 +130,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fxy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b->line[b->height-1-y])[b->width-1-x]);
-		while(w-->0)
+		UINT16* lineadr = &(((UINT16*)b.line[b.height-1-y])[b.width-1-x]);
+		while(w-.0)
 		{
 			*lineadr-- = (UINT16)(*pens);
 			pens++;
@@ -139,37 +139,37 @@ public class magmax
 	}
 	static void bhpl_16_nd_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		while(w-->0)
+		while(w-.0)
 		{
-			((UINT16*)b->line[x++])[y] = (UINT16)(*pens);
+			((UINT16*)b.line[x++])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fx_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		y = b->width-1-y;
-		while(w-->0)
+		y = b.width-1-y;
+		while(w-.0)
 		{
-			((UINT16*)b->line[x++])[y] = (UINT16)(*pens);
+			((UINT16*)b.line[x++])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b->height-1-x;
-		while(w-->0)
+		x = b.height-1-x;
+		while(w-.0)
 		{
-			((UINT16*)b->line[x--])[y] = (UINT16)(*pens);
+			((UINT16*)b.line[x--])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b->height-1-x;
-		y = b->width-1-y;
-		while(w-->0)
+		x = b.height-1-x;
+		y = b.width-1-y;
+		while(w-.0)
 		{
-			((UINT16*)b->line[x--])[y] = (UINT16)(*pens);
+			((UINT16*)b.line[x--])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
@@ -184,13 +184,13 @@ public class magmax
 	
 	static void set_custom_blit(void)
 	{
-		if (Machine->color_depth == 8)
+		if (Machine.color_depth == 8)
 		{
-			blit_horiz_pixel_line = bhpls_8_nd[Machine->orientation];
+			blit_horiz_pixel_line = bhpls_8_nd[Machine.orientation];
 		}
 		else
 		{
-			blit_horiz_pixel_line = bhpls_16_nd[Machine->orientation];
+			blit_horiz_pixel_line = bhpls_16_nd[Machine.orientation];
 		}
 	}
 	
@@ -210,10 +210,10 @@ public class magmax
 	public static PaletteInitHandlerPtr palette_init_magmax  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn, offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn, offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, bit3, r, g, b;
 	
@@ -222,22 +222,22 @@ public class magmax
 			bit2 = (color_prom[0] >> 2) & 0x01;
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup tables */
 	
 		/* characters use colors 0-15 */
@@ -290,7 +290,7 @@ public class magmax
 		/* copy the background graphics */
 		if ((magmax_vreg & 0x40) != 0)		/* background disable */
 		{
-			fillbitmap(bitmap, Machine->pens[0], &Machine->visible_area);
+			fillbitmap(bitmap, Machine.pens[0], &Machine.visible_area);
 		}
 		else
 		{
@@ -300,7 +300,7 @@ public class magmax
 			UINT32 scroll_v = (*magmax_scroll_y) & 0xff;
 	
 			/*clear background-over-sprites bitmap*/
-			fillbitmap(tmpbitmap, 0, &Machine->visible_area);
+			fillbitmap(tmpbitmap, 0, &Machine.visible_area);
 	
 			for (v = 2*8; v < 30*8; v++) /*only for visible area*/
 			{
@@ -309,7 +309,7 @@ public class magmax
 				UINT32 rom15F_addr   = (((scroll_v + v) & 0x07)<<2) + (map_v_scr_100<<5);
 				UINT32 map_v_scr_1fe_6 =((scroll_v + v) & 0x1fe)<<6;
 	
-				pen_t *pens = &Machine->pens[2*16 + (map_v_scr_100>>1)];
+				pen_t *pens = &Machine.pens[2*16 + (map_v_scr_100>>1)];
 	
 				if (!map_v_scr_100)
 				{
@@ -497,17 +497,17 @@ public class magmax
 					code += (magmax_vreg & 0x30) * 0x8;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[1],
+				drawgfx(bitmap, Machine.gfx[1],
 						code,
 						color,
 						flipx, flipy,
 						sx, sy,
-						&Machine->visible_area, TRANSPARENCY_COLOR, 31);
+						&Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}
 		}
 		if (!(magmax_vreg & 0x40))		/* background disable */
 		{
-			copybitmap(bitmap, tmpbitmap, flipscreen,flipscreen,0,0, &Machine->visible_area, TRANSPARENCY_PEN, 0);
+			copybitmap(bitmap, tmpbitmap, flipscreen,flipscreen,0,0, &Machine.visible_area, TRANSPARENCY_PEN, 0);
 		}
 	
 	
@@ -529,12 +529,12 @@ public class magmax
 					sy = 31 - sy;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						code,
 						0,
 						flipscreen, flipscreen,
 						8 * sx, 8 * sy,
-						&Machine->visible_area, TRANSPARENCY_PEN, 15);
+						&Machine.visible_area, TRANSPARENCY_PEN, 15);
 			}
 		}
 	} };

@@ -122,7 +122,7 @@ public class mitchell
 		/* otherwise music doesn't work. */
 		if (cpu_getiloops() & 1) bit |= 0x01;
 		else bit |= 0x08;
-	if (Machine->gamedrv == &driver_mgakuen2)	/* hack... music doesn't work otherwise */
+	if (Machine.gamedrv == &driver_mgakuen2)	/* hack... music doesn't work otherwise */
 		bit ^= 0x08;
 	
 		return (input_port_0_r(0) & 0x76) | bit;

@@ -28,7 +28,7 @@ public class volfied
 	
 	public static VideoUpdateHandlerPtr video_update_volfied  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pixel_layer = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		pixel_layer = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		if (pixel_layer == NULL)
 			return 1;
 	
@@ -130,11 +130,11 @@ public class volfied
 			p += 0x20000;
 		}
 	
-		for (y = 0; y < Machine->drv->screen_height; y++)
+		for (y = 0; y < Machine.drv.screen_height; y++)
 		{
 			if (line_dirty[y])
 			{
-				for (x = 0; x < Machine->drv->screen_width; x++)
+				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					int color = (p[x] << 2) & 0x700;
 	
@@ -152,7 +152,7 @@ public class volfied
 						color |= p[x] & 0xf;
 					}
 	
-					plot_pixel(pixel_layer, x, y, Machine->pens[color]);
+					plot_pixel(pixel_layer, x, y, Machine.pens[color]);
 				}
 	
 				line_dirty[y] = 0;

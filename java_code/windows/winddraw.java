@@ -107,10 +107,10 @@ public class winddraw
 	
 	void win_ddraw_fullscreen_margins(DWORD desc_width, DWORD desc_height, RECT *margins)
 	{
-		margins->left = 0;
-		margins->top = 0;
-		margins->right = desc_width;
-		margins->bottom = desc_height;
+		margins.left = 0;
+		margins.top = 0;
+		margins.right = desc_width;
+		margins.bottom = desc_height;
 	
 		if (win_has_menu() != 0)
 		{
@@ -123,7 +123,7 @@ public class winddraw
 				AdjustWindowRect(&without_menu, WS_OVERLAPPED, FALSE);
 				height_with_menubar = (with_menu.bottom - with_menu.top) - (without_menu.bottom - without_menu.top);
 			}
-			margins->top = height_with_menubar;
+			margins.top = height_with_menubar;
 		}
 	}
 	
@@ -142,37 +142,37 @@ public class winddraw
 		blitfx.DUMMYUNIONNAMEN(5).dwFillColor = 0;
 	
 		// clear the left edge
-		if (inner->left > outer->left)
+		if (inner.left > outer.left)
 		{
 			clear = *outer;
-			clear.right = inner->left;
+			clear.right = inner.left;
 			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the right edge
-		if (inner->right < outer->right)
+		if (inner.right < outer.right)
 		{
 			clear = *outer;
-			clear.left = inner->right;
+			clear.left = inner.right;
 			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the top edge
-		if (inner->top > outer->top)
+		if (inner.top > outer.top)
 		{
 			clear = *outer;
-			clear.bottom = inner->top;
+			clear.bottom = inner.top;
 			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the bottom edge
-		if (inner->bottom < outer->bottom)
+		if (inner.bottom < outer.bottom)
 		{
 			clear = *outer;
-			clear.top = inner->bottom;
+			clear.top = inner.bottom;
 			if (surface != 0)
 				IDirectDrawSurface_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
@@ -217,8 +217,8 @@ public class winddraw
 		}
 		if (effect != 0)
 		{
-			effect_min_xscale = effect->min_xscale;
-			effect_min_yscale = effect->min_yscale;
+			effect_min_xscale = effect.min_xscale;
+			effect_min_yscale = effect.min_yscale;
 		}
 	
 		// now attempt to create it
@@ -319,19 +319,19 @@ public class winddraw
 	
 	static HRESULT WINAPI enum_callback(LPDDSURFACEDESC desc, LPVOID context)
 	{
-		int depth = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
+		int depth = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 		double score;
 	
 		// compute this mode's score
-		score = compute_mode_score(desc->dwWidth, desc->dwHeight, depth, 0);
+		score = compute_mode_score(desc.dwWidth, desc.dwHeight, depth, 0);
 	
 		// is it the best?
 		if (score > best_score)
 		{
 			// if so, remember it
 			best_score = score;
-			best_width = desc->dwWidth;
-			best_height = desc->dwHeight;
+			best_width = desc.dwWidth;
+			best_height = desc.dwHeight;
 			best_depth = depth;
 			best_refresh = 0;
 		}
@@ -346,20 +346,20 @@ public class winddraw
 	
 	static HRESULT WINAPI enum2_callback(LPDDSURFACEDESC2 desc, LPVOID context)
 	{
-		int refresh = (win_match_refresh || win_gfx_refresh) ? desc->DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
-		int depth = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
+		int refresh = (win_match_refresh || win_gfx_refresh) ? desc.DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
+		int depth = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 		double score;
 	
 		// compute this mode's score
-		score = compute_mode_score(desc->dwWidth, desc->dwHeight, depth, refresh);
+		score = compute_mode_score(desc.dwWidth, desc.dwHeight, depth, refresh);
 	
 		// is it the best?
 		if (score > best_score)
 		{
 			// if so, remember it
 			best_score = score;
-			best_width = desc->dwWidth;
-			best_height = desc->dwHeight;
+			best_width = desc.dwWidth;
+			best_height = desc.dwHeight;
 			best_depth = depth;
 			best_refresh = refresh;
 		}
@@ -453,14 +453,14 @@ public class winddraw
 			return 0.0;
 	
 		// finally, compute refresh score
-		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine->drv->frames_per_second));
+		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine.drv.frames_per_second));
 	
 		// if we're looking for a particular refresh, make sure it matches
 		if (win_gfx_refresh && refresh && refresh != win_gfx_refresh)
 			return 0.0;
 	
 		// if refresh is smaller than we'd like, it only scores up to 0.1
-		if ((double)refresh < Machine->drv->frames_per_second)
+		if ((double)refresh < Machine.drv.frames_per_second)
 			refresh_score *= 0.1;
 	
 		// weight size highest, followed by depth and refresh
@@ -923,13 +923,13 @@ public class winddraw
 	static void compute_color_masks(const DDSURFACEDESC *desc)
 	{
 		// 16bpp case
-		if (desc->ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
+		if (desc.ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
 		{
 			int temp;
 	
 			// red
 			win_color16_rdst_shift = win_color16_rsrc_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_rdst_shift++;
 			while (!(temp & 0x80))
@@ -937,7 +937,7 @@ public class winddraw
 	
 			// green
 			win_color16_gdst_shift = win_color16_gsrc_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_gdst_shift++;
 			while (!(temp & 0x80))
@@ -945,7 +945,7 @@ public class winddraw
 	
 			// blue
 			win_color16_bdst_shift = win_color16_bsrc_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_bdst_shift++;
 			while (!(temp & 0x80))
@@ -953,26 +953,26 @@ public class winddraw
 		}
 	
 		// 24/32bpp case
-		else if (desc->ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
-				 desc->ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
+		else if (desc.ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
+				 desc.ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
 		{
 			int temp;
 	
 			// red
 			win_color32_rdst_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_rdst_shift++;
 	
 			// green
 			win_color32_gdst_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_gdst_shift++;
 	
 			// blue
 			win_color32_bdst_shift = 0;
-			temp = desc->ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc.ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_bdst_shift++;
 		}
@@ -1038,8 +1038,8 @@ public class winddraw
 		// succeed, or else we will miss some areas
 		if (bounds != 0)
 		{
-			if (bounds->min_x != last_bounds.min_x || bounds->min_y != last_bounds.min_y ||
-				bounds->max_x != last_bounds.max_x || bounds->max_y != last_bounds.max_y)
+			if (bounds.min_x != last_bounds.min_x || bounds.min_y != last_bounds.min_y ||
+				bounds.max_x != last_bounds.max_x || bounds.max_y != last_bounds.max_y)
 				result = 1;
 			last_bounds = *bounds;
 		}
@@ -1094,9 +1094,9 @@ public class winddraw
 		params.dstyskip		= 0;
 		params.dsteffect	= win_determine_effect(&params);
 	
-		params.srcdata		= bitmap->base;
-		params.srcpitch		= bitmap->rowbytes;
-		params.srcdepth		= bitmap->depth;
+		params.srcdata		= bitmap.base;
+		params.srcpitch		= bitmap.rowbytes;
+		params.srcdepth		= bitmap.depth;
 		params.srclookup	= win_prepare_palette(&params);
 		params.srcxoffs		= win_visible_rect.left;
 		params.srcyoffs		= win_visible_rect.top;
@@ -1112,12 +1112,12 @@ public class winddraw
 		// adjust for more optimal bounds
 		if (bounds && !update && !vector_dirty_pixels)
 		{
-			params.dstxoffs += (bounds->min_x - win_visible_rect.left) * effect_min_xscale;
-			params.dstyoffs += (bounds->min_y - win_visible_rect.top) * effect_min_yscale;
-			params.srcxoffs += bounds->min_x - win_visible_rect.left;
-			params.srcyoffs += bounds->min_y - win_visible_rect.top;
-			params.srcwidth = bounds->max_x - bounds->min_x + 1;
-			params.srcheight = bounds->max_y - bounds->min_y + 1;
+			params.dstxoffs += (bounds.min_x - win_visible_rect.left) * effect_min_xscale;
+			params.dstyoffs += (bounds.min_y - win_visible_rect.top) * effect_min_yscale;
+			params.srcxoffs += bounds.min_x - win_visible_rect.left;
+			params.srcyoffs += bounds.min_y - win_visible_rect.top;
+			params.srcwidth = bounds.max_x - bounds.min_x + 1;
+			params.srcheight = bounds.max_y - bounds.min_y + 1;
 		}
 	
 		win_perform_blit(&params, 0);
@@ -1205,7 +1205,7 @@ public class winddraw
 		HRESULT result;
 	
 		// sync to VBLANK?
-		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info()->game_speed_percent > 95)
+		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info().game_speed_percent > 95)
 		{
 			BOOL is_vblank;
 	
@@ -1339,7 +1339,7 @@ public class winddraw
 	
 			// get the size of the clip list; bail if we don't get back just a single rect
 			result = IDirectDrawClipper_GetClipList(primary_clipper, &inner, clipdata, &clipsize);
-			IntersectRect(&temp, (RECT *)clipdata->Buffer, &inner);
+			IntersectRect(&temp, (RECT *)clipdata.Buffer, &inner);
 			if (result != DD_OK || !EqualRect(&temp, &inner))
 				return 0;
 		}
@@ -1379,9 +1379,9 @@ public class winddraw
 		params.dstyskip		= (!win_old_scanlines || ymult == 1) ? 0 : 1;
 		params.dsteffect	= win_determine_effect(&params);
 	
-		params.srcdata		= bitmap->base;
-		params.srcpitch		= bitmap->rowbytes;
-		params.srcdepth		= bitmap->depth;
+		params.srcdata		= bitmap.base;
+		params.srcpitch		= bitmap.rowbytes;
+		params.srcdepth		= bitmap.depth;
 		params.srclookup	= win_prepare_palette(&params);
 		params.srcxoffs		= win_visible_rect.left;
 		params.srcyoffs		= win_visible_rect.top;
@@ -1401,12 +1401,12 @@ public class winddraw
 		// adjust for more optimal bounds
 		if (bounds && !update && !vector_dirty_pixels)
 		{
-			params.dstxoffs += (bounds->min_x - win_visible_rect.left) * xmult;
-			params.dstyoffs += (bounds->min_y - win_visible_rect.top) * ymult;
-			params.srcxoffs += bounds->min_x - win_visible_rect.left;
-			params.srcyoffs += bounds->min_y - win_visible_rect.top;
-			params.srcwidth = bounds->max_x - bounds->min_x + 1;
-			params.srcheight = bounds->max_y - bounds->min_y + 1;
+			params.dstxoffs += (bounds.min_x - win_visible_rect.left) * xmult;
+			params.dstyoffs += (bounds.min_y - win_visible_rect.top) * ymult;
+			params.srcxoffs += bounds.min_x - win_visible_rect.left;
+			params.srcyoffs += bounds.min_y - win_visible_rect.top;
+			params.srcwidth = bounds.max_x - bounds.min_x + 1;
+			params.srcheight = bounds.max_y - bounds.min_y + 1;
 		}
 	
 		win_perform_blit(&params, update);

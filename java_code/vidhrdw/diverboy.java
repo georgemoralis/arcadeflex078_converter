@@ -41,7 +41,7 @@ public class diverboy
 	
 			if (!flash || (cpu_getcurrentframe() & 1))
 			{
-				drawgfx(bitmap,Machine->gfx[bank],
+				drawgfx(bitmap,Machine.gfx[bank],
 						number,
 						colr,
 						0,0,

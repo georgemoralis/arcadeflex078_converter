@@ -159,7 +159,7 @@ public class commando
 			}
 	
 			if (bank < 3)
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						buffered_spriteram[offs] + 256 * bank,
 						(attr & 0x30) >> 4,
 						flipx,flipy,

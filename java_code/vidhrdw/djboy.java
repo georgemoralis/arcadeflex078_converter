@@ -90,7 +90,7 @@ public class djboy
 					sy  = y;
 				}
 				drawgfx(
-					bitmap,Machine->gfx[1],
+					bitmap,Machine.gfx[1],
 					code,
 					attr >> 4,
 					flipx, flipy,

@@ -218,7 +218,7 @@ public class tms32025
 	/****************************************************************************
 	 *******  The following is the Status (Flag) register 0 definition.  ********
 	| 15 | 14 | 13 | 12 |  11 | 10 |   9  | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-	| <----ARP---> | OV | OVM |  1 | INTM | <--------------DP---------------> | */
+	| <----ARP--. | OV | OVM |  1 | INTM | <--------------DP--------------. | */
 	
 	#define ARP_REG		0xe000	/* ARP	(Auxiliary Register Pointer) */
 	#define OV_FLAG		0x1000	/* OV	(Overflow flag) 1 indicates an overflow */
@@ -230,11 +230,11 @@ public class tms32025
 	/***********************************************************************************
 	 *** The following is the Status (Flag) register 1 definition for TMS32025. ********
 	| 15 | 14 | 13 |  12  | 11 |  10 | 9 | 8 | 7 |  6 |  5  |  4 |  3 |  2  | 1 | 0  |
-	| <----ARB---> | CNF0 | TC | SXM | C | 1 | 1 | HM | FSM | XF | FO | TXM | <-PM-> | */
+	| <----ARB--. | CNF0 | TC | SXM | C | 1 | 1 | HM | FSM | XF | FO | TXM | <-PM. | */
 	
 	/*** The following is the Status (Flag) register 1 definition for TMS32026. ***********
 	| 15 | 14 | 13 |  12  | 11 |  10 | 9 | 8 |   7  |  6 |  5  |  4 |  3 |  2  | 1 | 0  |
-	| <----ARB---> | CNF0 | TC | SXM | C | 1 | CNF1 | HM | FSM | XF | FO | TXM | <-PM-> | */
+	| <----ARB--. | CNF0 | TC | SXM | C | 1 | CNF1 | HM | FSM | XF | FO | TXM | <-PM. | */
 	
 	#define ARB_REG		0xe000	/* ARB	(Auxiliary Register pointer Backup) */
 	#define CNF0_REG	0x1000	/* CNF0	(Onchip RAM CoNFiguration) 0 means B0=data memory, 1means B0=program memory */
@@ -2128,30 +2128,30 @@ public class tms32025
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+TMS32025_PC: sprintf(buffer[which], "PC:%04X",  r->PC); break;
-			case CPU_INFO_REG+TMS32025_STR0: sprintf(buffer[which], "STR0:%04X", r->STR0); break;
-			case CPU_INFO_REG+TMS32025_STR1: sprintf(buffer[which], "STR1:%04X", r->STR1); break;
-			case CPU_INFO_REG+TMS32025_IFR: sprintf(buffer[which], "IFR:%04X", r->IFR); break;
-			case CPU_INFO_REG+TMS32025_RPTC: sprintf(buffer[which], "RPTC:%02X", r->RPTC); break;
-			case CPU_INFO_REG+TMS32025_STK7: sprintf(buffer[which], "STK7:%04X", r->STACK[7]); break;
-			case CPU_INFO_REG+TMS32025_STK6: sprintf(buffer[which], "STK6:%04X", r->STACK[6]); break;
-			case CPU_INFO_REG+TMS32025_STK5: sprintf(buffer[which], "STK5:%04X", r->STACK[5]); break;
-			case CPU_INFO_REG+TMS32025_STK4: sprintf(buffer[which], "STK4:%04X", r->STACK[4]); break;
-			case CPU_INFO_REG+TMS32025_STK3: sprintf(buffer[which], "STK3:%04X", r->STACK[3]); break;
-			case CPU_INFO_REG+TMS32025_STK2: sprintf(buffer[which], "STK2:%04X", r->STACK[2]); break;
-			case CPU_INFO_REG+TMS32025_STK1: sprintf(buffer[which], "STK1:%04X", r->STACK[1]); break;
-			case CPU_INFO_REG+TMS32025_STK0: sprintf(buffer[which], "STK0:%04X", r->STACK[0]); break;
-			case CPU_INFO_REG+TMS32025_ACC: sprintf(buffer[which], "ACC:%08X", r->ACC.d); break;
-			case CPU_INFO_REG+TMS32025_PREG: sprintf(buffer[which], "P:%08X", r->Preg.d); break;
-			case CPU_INFO_REG+TMS32025_TREG: sprintf(buffer[which], "T:%04X", r->Treg); break;
-			case CPU_INFO_REG+TMS32025_AR0: sprintf(buffer[which], "AR0:%04X", r->AR[0]); break;
-			case CPU_INFO_REG+TMS32025_AR1: sprintf(buffer[which], "AR1:%04X", r->AR[1]); break;
-			case CPU_INFO_REG+TMS32025_AR2: sprintf(buffer[which], "AR2:%04X", r->AR[2]); break;
-			case CPU_INFO_REG+TMS32025_AR3: sprintf(buffer[which], "AR3:%04X", r->AR[3]); break;
-			case CPU_INFO_REG+TMS32025_AR4: sprintf(buffer[which], "AR4:%04X", r->AR[4]); break;
-			case CPU_INFO_REG+TMS32025_AR5: sprintf(buffer[which], "AR5:%04X", r->AR[5]); break;
-			case CPU_INFO_REG+TMS32025_AR6: sprintf(buffer[which], "AR6:%04X", r->AR[6]); break;
-			case CPU_INFO_REG+TMS32025_AR7: sprintf(buffer[which], "AR7:%04X", r->AR[7]); break;
+			case CPU_INFO_REG+TMS32025_PC: sprintf(buffer[which], "PC:%04X",  r.PC); break;
+			case CPU_INFO_REG+TMS32025_STR0: sprintf(buffer[which], "STR0:%04X", r.STR0); break;
+			case CPU_INFO_REG+TMS32025_STR1: sprintf(buffer[which], "STR1:%04X", r.STR1); break;
+			case CPU_INFO_REG+TMS32025_IFR: sprintf(buffer[which], "IFR:%04X", r.IFR); break;
+			case CPU_INFO_REG+TMS32025_RPTC: sprintf(buffer[which], "RPTC:%02X", r.RPTC); break;
+			case CPU_INFO_REG+TMS32025_STK7: sprintf(buffer[which], "STK7:%04X", r.STACK[7]); break;
+			case CPU_INFO_REG+TMS32025_STK6: sprintf(buffer[which], "STK6:%04X", r.STACK[6]); break;
+			case CPU_INFO_REG+TMS32025_STK5: sprintf(buffer[which], "STK5:%04X", r.STACK[5]); break;
+			case CPU_INFO_REG+TMS32025_STK4: sprintf(buffer[which], "STK4:%04X", r.STACK[4]); break;
+			case CPU_INFO_REG+TMS32025_STK3: sprintf(buffer[which], "STK3:%04X", r.STACK[3]); break;
+			case CPU_INFO_REG+TMS32025_STK2: sprintf(buffer[which], "STK2:%04X", r.STACK[2]); break;
+			case CPU_INFO_REG+TMS32025_STK1: sprintf(buffer[which], "STK1:%04X", r.STACK[1]); break;
+			case CPU_INFO_REG+TMS32025_STK0: sprintf(buffer[which], "STK0:%04X", r.STACK[0]); break;
+			case CPU_INFO_REG+TMS32025_ACC: sprintf(buffer[which], "ACC:%08X", r.ACC.d); break;
+			case CPU_INFO_REG+TMS32025_PREG: sprintf(buffer[which], "P:%08X", r.Preg.d); break;
+			case CPU_INFO_REG+TMS32025_TREG: sprintf(buffer[which], "T:%04X", r.Treg); break;
+			case CPU_INFO_REG+TMS32025_AR0: sprintf(buffer[which], "AR0:%04X", r.AR[0]); break;
+			case CPU_INFO_REG+TMS32025_AR1: sprintf(buffer[which], "AR1:%04X", r.AR[1]); break;
+			case CPU_INFO_REG+TMS32025_AR2: sprintf(buffer[which], "AR2:%04X", r.AR[2]); break;
+			case CPU_INFO_REG+TMS32025_AR3: sprintf(buffer[which], "AR3:%04X", r.AR[3]); break;
+			case CPU_INFO_REG+TMS32025_AR4: sprintf(buffer[which], "AR4:%04X", r.AR[4]); break;
+			case CPU_INFO_REG+TMS32025_AR5: sprintf(buffer[which], "AR5:%04X", r.AR[5]); break;
+			case CPU_INFO_REG+TMS32025_AR6: sprintf(buffer[which], "AR6:%04X", r.AR[6]); break;
+			case CPU_INFO_REG+TMS32025_AR7: sprintf(buffer[which], "AR7:%04X", r.AR[7]); break;
 			case CPU_INFO_REG+TMS32025_DRR: sprintf(buffer[which], "DRR:%04X", M_RDRAM(0)); break;
 			case CPU_INFO_REG+TMS32025_DXR: sprintf(buffer[which], "DXR:%04X", M_RDRAM(1)); break;
 			case CPU_INFO_REG+TMS32025_TIM: sprintf(buffer[which], "TIM:%04X", M_RDRAM(2)); break;
@@ -2160,26 +2160,26 @@ public class tms32025
 			case CPU_INFO_REG+TMS32025_GREG: sprintf(buffer[which], "GREG:%04X", M_RDRAM(5)); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "arp%d%c%c%c%cdp%03x  arb%d%c%c%c%c%c%c%c%c%c%c%cpm%d",
-					(r->STR0 & 0xe000) >> 13,
-					r->STR0 & 0x1000 ? 'O':'.',
-					r->STR0 & 0x0800 ? 'M':'.',
-					r->STR0 & 0x0400 ? '.':'?',
-					r->STR0 & 0x0200 ? 'I':'.',
-					(r->STR0 & 0x01ff),
+					(r.STR0 & 0xe000) >> 13,
+					r.STR0 & 0x1000 ? 'O':'.',
+					r.STR0 & 0x0800 ? 'M':'.',
+					r.STR0 & 0x0400 ? '.':'?',
+					r.STR0 & 0x0200 ? 'I':'.',
+					(r.STR0 & 0x01ff),
 	
-					(r->STR1 & 0xe000) >> 13,
-					r->STR1 & 0x1000 ? 'P':'D',
-					r->STR1 & 0x0800 ? 'T':'.',
-					r->STR1 & 0x0400 ? 'S':'.',
-					r->STR1 & 0x0200 ? 'C':'?',
-					r->STR0 & 0x0100 ? '.':'?',
-					r->STR1 & 0x0080 ? '.':'?',
-					r->STR1 & 0x0040 ? 'H':'.',
-					r->STR1 & 0x0020 ? 'F':'.',
-					r->STR1 & 0x0010 ? 'X':'.',
-					r->STR1 & 0x0008 ? 'f':'.',
-					r->STR1 & 0x0004 ? 'o':'i',
-					(r->STR1 & 0x0003) );
+					(r.STR1 & 0xe000) >> 13,
+					r.STR1 & 0x1000 ? 'P':'D',
+					r.STR1 & 0x0800 ? 'T':'.',
+					r.STR1 & 0x0400 ? 'S':'.',
+					r.STR1 & 0x0200 ? 'C':'?',
+					r.STR0 & 0x0100 ? '.':'?',
+					r.STR1 & 0x0080 ? '.':'?',
+					r.STR1 & 0x0040 ? 'H':'.',
+					r.STR1 & 0x0020 ? 'F':'.',
+					r.STR1 & 0x0010 ? 'X':'.',
+					r.STR1 & 0x0008 ? 'f':'.',
+					r.STR1 & 0x0004 ? 'o':'i',
+					(r.STR1 & 0x0003) );
 				break;
 			case CPU_INFO_NAME: return "TMS32025";
 			case CPU_INFO_FAMILY: return "Texas Instruments TMS320x25";

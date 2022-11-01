@@ -1174,7 +1174,7 @@ public class equites
 	
 		equites_8404rule(0x1298, 0x25f,-0x0c); // stage number?
 	
-		// game params. (180261-18027f)->(40060-4006f)
+		// game params. (180261-18027f).(40060-4006f)
 		equites_8404rule(0x12a0, 0x261, 0x0a); // max speed hi
 		equites_8404rule(0x12a0, 0x263, 0x00); // max speed lo
 		equites_8404rule(0x12a0, 0x265, 0x00); // accel hi

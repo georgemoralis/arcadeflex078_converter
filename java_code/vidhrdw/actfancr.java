@@ -21,13 +21,13 @@ public class actfancr
 	
 	static UINT32 actfancr_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0xf0) << 4);
 	}
 	
 	static UINT32 actfancr_scan2(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((row & 0x10) << 4) + ((col & 0x70) << 5);
 	}
 	
@@ -48,7 +48,7 @@ public class actfancr
 	
 	static UINT32 triothep_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((row & 0x10) << 4) + ((col & 0x10) << 5);
 	}
 	
@@ -228,7 +228,7 @@ public class actfancr
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -312,7 +312,7 @@ public class actfancr
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						sprite - multi * inc,
 						colour,
 						fx,fy,

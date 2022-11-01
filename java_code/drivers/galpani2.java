@@ -142,7 +142,7 @@ public class galpani2
 				mcu_size	=	(cpunum_read_byte(0, mcu_address + 8)<<8) +
 								(cpunum_read_byte(0, mcu_address + 9)<<0) ;
 	
-				logerror("CPU #0 PC %06X : MCU executes command $A, %04X %02X-> %04x\n",activecpu_get_pc(),mcu_src,mcu_size,mcu_dst);
+				logerror("CPU #0 PC %06X : MCU executes command $A, %04X %02X. %04x\n",activecpu_get_pc(),mcu_src,mcu_size,mcu_dst);
 	
 				for( ; mcu_size > 0 ; mcu_size-- )
 				{
@@ -207,7 +207,7 @@ public class galpani2
 		{
 			data8_t *ROM = memory_region(REGION_SOUND1);
 			logerror("CPU #0 PC %06X : OKI 0 bank %08X\n",activecpu_get_pc(),data);
-			if (Machine->sample_rate == 0)	return;
+			if (Machine.sample_rate == 0)	return;
 			memcpy(ROM + 0x30000, ROM + 0x40000 + 0x10000 * (~data & 0xf), 0x10000);
 		}
 	}
@@ -267,8 +267,8 @@ public class galpani2
 		{ 0x5c0000, 0x5c0001, MWA16_NOP								},	// ? 0 at startup only
 		{ 0x600000, 0x600001, MWA16_NOP								},	// Watchdog
 	//	{ 0x640000, 0x640001, MWA16_NOP								},	// ? 0 before resetting and at startup
-	//	{ 0x680000, 0x680001, MWA16_NOP								},	// ? 0 -> 1 -> 0 (lev 5) / 0 -> $10 -> 0
-	{ 0x680000, 0x680001, galpani2_mcu_nmi_w	},	// ? 0 -> 1 -> 0 (lev 5) / 0 -> $10 -> 0
+	//	{ 0x680000, 0x680001, MWA16_NOP								},	// ? 0 . 1 . 0 (lev 5) / 0 . $10 . 0
+	{ 0x680000, 0x680001, galpani2_mcu_nmi_w	},	// ? 0 . 1 . 0 (lev 5) / 0 . $10 . 0
 		{ 0x6c0000, 0x6c0001, galpani2_coin_lockout_w				},	// Coin + Card Lockout
 		{ 0xc00000, 0xc00001, OKIM6295_data_0_lsb_w					},	// 2 x OKIM6295
 		{ 0xc40000, 0xc40001, OKIM6295_data_1_lsb_w					},	//
@@ -317,7 +317,7 @@ public class galpani2
 		{ 0x680000, 0x680001, MWA16_NOP						},	// ? 0 at startup only
 		{ 0x6c0000, 0x6c0001, MWA16_NOP						},	// ? 0 at startup only
 		{ 0x700000, 0x700001, MWA16_NOP						},	// Watchdog
-		{ 0x780000, 0x780001, MWA16_NOP						},	// ? 0 -> 1 -> 0 (lev 5)
+		{ 0x780000, 0x780001, MWA16_NOP						},	// ? 0 . 1 . 0 (lev 5)
 		{ 0x7c0000, 0x7c0001, MWA16_RAM, &galpani2_rombank	},	// Rom Bank
 	MEMORY_END
 	

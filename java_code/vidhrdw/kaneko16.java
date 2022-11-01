@@ -155,8 +155,8 @@ public class kaneko16
 			return 1;
 	
 		{
-			int dx, xdim = Machine->drv->screen_width;
-			int dy, ydim = Machine->drv->screen_height;
+			int dx, xdim = Machine.drv.screen_width;
+			int dy, ydim = Machine.drv.screen_height;
 	
 			switch (xdim)
 			{
@@ -164,7 +164,7 @@ public class kaneko16
 				case 256:	dx = 0x5b;	break;
 				default:	dx = 0;
 			}
-			switch (Machine->visible_area.max_y - Machine->visible_area.min_y + 1)
+			switch (Machine.visible_area.max_y - Machine.visible_area.min_y + 1)
 			{
 				case 240- 8:	dy = +0x08;	break;	/* blazeon */
 				case 240-16:	dy = -0x08;	break;	/* berlwall, bakubrk */
@@ -200,8 +200,8 @@ public class kaneko16
 		if (	!kaneko16_tmap_2 || !kaneko16_tmap_3	)
 			return 1;
 		{
-			int dx, xdim = Machine->drv->screen_width;
-			int dy, ydim = Machine->drv->screen_height;
+			int dx, xdim = Machine.drv.screen_width;
+			int dy, ydim = Machine.drv.screen_height;
 	
 			switch (xdim)
 			{
@@ -209,7 +209,7 @@ public class kaneko16
 				case 256:	dx = 0x5b;	break;
 				default:	dx = 0;
 			}
-			switch (Machine->visible_area.max_y - Machine->visible_area.min_y + 1)
+			switch (Machine.visible_area.max_y - Machine.visible_area.min_y + 1)
 			{
 				case 240- 8:	dy = +0x08;	break;
 				case 240-16:	dy = -0x08;	break;
@@ -311,7 +311,7 @@ public class kaneko16
 	
 				plot_pixel( kaneko16_bg15_bitmap,
 							sx * 256 + x, y,
-							Machine->pens[2048 + ((g << 10) | (r << 5) | b)] );
+							Machine.pens[2048 + ((g << 10) | (r << 5) | b)] );
 		  }
 	
 		return video_start_kaneko16_1xVIEW2();
@@ -400,38 +400,38 @@ public class kaneko16
 		if (offs >= (spriteram_size/2))	return -1;
 	
 		attr			=		spriteram16[offs + 0];
-		s->code			=		spriteram16[offs + 1];
-		s->x			=		spriteram16[offs + 2];
-		s->y			=		spriteram16[offs + 3];
+		s.code			=		spriteram16[offs + 1];
+		s.x			=		spriteram16[offs + 2];
+		s.y			=		spriteram16[offs + 3];
 	
 		if (kaneko16_sprite_type == 1)
 		{
-		s->color		=		(attr & 0x003f);
-		s->priority		=		(attr & 0x00c0) >> 6;
-		s->flipy		=		(attr & 0x0100);
-		s->flipx		=		(attr & 0x0200);
-		s->code			+=		(s->y & 1) << 16;	// bloodwar
+		s.color		=		(attr & 0x003f);
+		s.priority		=		(attr & 0x00c0) >> 6;
+		s.flipy		=		(attr & 0x0100);
+		s.flipx		=		(attr & 0x0200);
+		s.code			+=		(s.y & 1) << 16;	// bloodwar
 		}
 		else
 		{
-		s->flipy		=		(attr & 0x0001);
-		s->flipx		=		(attr & 0x0002);
-		s->color		=		(attr & 0x00fc) >> 2;
-		s->priority		=		(attr & 0x0300) >> 8;
+		s.flipy		=		(attr & 0x0001);
+		s.flipx		=		(attr & 0x0002);
+		s.color		=		(attr & 0x00fc) >> 2;
+		s.priority		=		(attr & 0x0300) >> 8;
 		}
 		xoffs			=		(attr & 0x1800) >> 11;
-		s->yoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 1];
-		s->xoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 0];
+		s.yoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 1];
+		s.xoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 0];
 	
 	if (kaneko16_sprite_flipy != 0)
 	{
-		s->yoffs		-=		kaneko16_sprites_regs[0x2/2];
-		s->yoffs		-=		Machine->visible_area.min_y<<6;
+		s.yoffs		-=		kaneko16_sprites_regs[0x2/2];
+		s.yoffs		-=		Machine.visible_area.min_y<<6;
 	}
 	else
 	{
-		s->yoffs		-=		kaneko16_sprites_regs[0x2/2];
-		s->yoffs		+=		Machine->visible_area.min_y<<6;
+		s.yoffs		-=		kaneko16_sprites_regs[0x2/2];
+		s.yoffs		+=		Machine.visible_area.min_y<<6;
 	}
 	
 		return 					( (attr & 0x2000) ? USE_LATCHED_XY    : 0 ) |
@@ -449,23 +449,23 @@ public class kaneko16
 		if (offs >= (spriteram_size/2))	return -1;
 	
 		attr			=		(spriteram16[offs + 0x6/2] & 0xff);
-		s->x			=		(spriteram16[offs + 0x8/2] & 0xff);
-		s->y			=		(spriteram16[offs + 0xa/2] & 0xff);
-		s->code			=		(spriteram16[offs + 0xc/2] & 0xff) +
+		s.x			=		(spriteram16[offs + 0x8/2] & 0xff);
+		s.y			=		(spriteram16[offs + 0xa/2] & 0xff);
+		s.code			=		(spriteram16[offs + 0xc/2] & 0xff) +
 								(spriteram16[offs + 0xe/2] & 0xff) * 256;
 	
-		s->flipy		=		s->code & 0x4000;
-		s->flipx		=		s->code & 0x8000;
+		s.flipy		=		s.code & 0x4000;
+		s.flipx		=		s.code & 0x8000;
 	
-		s->priority		=		3;	// ?
-		s->xoffs		=		0;	// ?
-		s->yoffs		=		0;	// ?
+		s.priority		=		3;	// ?
+		s.xoffs		=		0;	// ?
+		s.yoffs		=		0;	// ?
 	
-		s->x			|=		(attr & 0x01) ? 0xff00 : 0;
-		s->y			|=		(attr & 0x02) ? 0xff00 : 0;
-		s->x			<<=		6;
-		s->y			<<=		6;
-		s->color		=		(attr & 0xf0) >> 4;
+		s.x			|=		(attr & 0x01) ? 0xff00 : 0;
+		s.y			|=		(attr & 0x02) ? 0xff00 : 0;
+		s.x			<<=		6;
+		s.y			<<=		6;
+		s.color		=		(attr & 0xf0) >> 4;
 	
 		return					(attr & 0x04) ? USE_LATCHED_XY : 0;
 	}
@@ -483,7 +483,7 @@ public class kaneko16
 		   in a temp buffer, then draw the buffer's contents from last
 		   to first. */
 	
-		int max	=	(Machine->drv->screen_width > 0x100) ? (0x200<<6) : (0x100<<6);
+		int max	=	(Machine.drv.screen_width > 0x100) ? (0x200<<6) : (0x100<<6);
 	
 		int i = 0;
 		struct tempsprite *s = spritelist.first_sprite;
@@ -516,51 +516,51 @@ public class kaneko16
 				break;
 	
 			if ((flags & USE_LATCHED_CODE) != 0)
-				s->code = ++code;	// Use the latched code + 1 ..
+				s.code = ++code;	// Use the latched code + 1 ..
 			else
-				code = s->code;		// .. or latch this value
+				code = s.code;		// .. or latch this value
 	
 			if ((flags & USE_LATCHED_COLOR) != 0)
 			{
-				s->color		=	color;
-				s->priority		=	priority;
-				s->xoffs		=	xoffs;
-				s->yoffs		=	yoffs;
-				s->flipx		=	flipx;
-				s->flipy		=	flipy;
+				s.color		=	color;
+				s.priority		=	priority;
+				s.xoffs		=	xoffs;
+				s.yoffs		=	yoffs;
+				s.flipx		=	flipx;
+				s.flipy		=	flipy;
 			}
 			else
 			{
-				color		=	s->color;
-				priority	=	s->priority;
-				xoffs		=	s->xoffs;
-				yoffs		=	s->yoffs;
-				flipx		=	s->flipx;
-				flipy		=	s->flipy;
+				color		=	s.color;
+				priority	=	s.priority;
+				xoffs		=	s.xoffs;
+				yoffs		=	s.yoffs;
+				flipx		=	s.flipx;
+				flipy		=	s.flipy;
 			}
 	
 			if ((flags & USE_LATCHED_XY) != 0)
 			{
-				s->x += x;
-				s->y += y;
+				s.x += x;
+				s.y += y;
 			}
 			// Always latch the latest result
-			x	=	s->x;
-			y	=	s->y;
+			x	=	s.x;
+			y	=	s.y;
 	
 			/* We can now buffer this sprite */
 	
-			s->x	=	s->xoffs + s->x;
-			s->y	=	s->yoffs + s->y;
+			s.x	=	s.xoffs + s.x;
+			s.y	=	s.yoffs + s.y;
 	
-			s->x	+=	kaneko16_sprite_xoffs;
-			s->y	+=	kaneko16_sprite_yoffs;
+			s.x	+=	kaneko16_sprite_xoffs;
+			s.y	+=	kaneko16_sprite_yoffs;
 	
-			if (kaneko16_sprite_flipx != 0)	{ s->x = max - s->x - (16<<6);	s->flipx = !s->flipx;	}
-			if (kaneko16_sprite_flipy != 0)	{ s->y = max - s->y - (16<<6);	s->flipy = !s->flipy;	}
+			if (kaneko16_sprite_flipx != 0)	{ s.x = max - s.x - (16<<6);	s.flipx = !s.flipx;	}
+			if (kaneko16_sprite_flipy != 0)	{ s.y = max - s.y - (16<<6);	s.flipy = !s.flipy;	}
 	
-			s->x		=		( (s->x & 0x7fc0) - (s->x & 0x8000) ) / 0x40;
-			s->y		=		( (s->y & 0x7fc0) - (s->y & 0x8000) ) / 0x40;
+			s.x		=		( (s.x & 0x7fc0) - (s.x & 0x8000) ) / 0x40;
+			s.y		=		( (s.y & 0x7fc0) - (s.y & 0x8000) ) / 0x40;
 	
 			i++;
 			s++;
@@ -572,18 +572,18 @@ public class kaneko16
 	
 		for (s--; s >= spritelist.first_sprite; s--)
 		{
-			int curr_pri = s->priority;
+			int curr_pri = s.priority;
 	
 			UINT32 primask = kaneko16_priority.sprite[curr_pri];
 	
 			/* You can choose which sprite priorities get displayed (for debug) */
 			if ( ((1 << curr_pri) & pri) == 0 )	continue;
 	
-			pdrawgfx(	bitmap,Machine->gfx[0],
-						s->code,
-						s->color,
-						s->flipx, s->flipy,
-						s->x, s->y,
+			pdrawgfx(	bitmap,Machine.gfx[0],
+						s.code,
+						s.color,
+						s.flipx, s.flipy,
+						s.x, s.y,
 						cliprect,TRANSPARENCY_PEN,0,
 						primask );
 	#ifdef MAME_DEBUG
@@ -591,11 +591,11 @@ public class kaneko16
 	if (keyboard_pressed(KEYCODE_Z))
 	{	/* Display some info on each sprite */
 		struct DisplayText dt[2];	char buf[10];
-		sprintf(buf, "%X",s->priority);
+		sprintf(buf, "%X",s.priority);
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
-		dt[0].x = s->x;		dt[0].y = s->y;
+		dt[0].x = s.x;		dt[0].y = s.y;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -934,7 +934,7 @@ public class kaneko16
 		   the times. To do it right, each pixel should be drawn with pen 0
 		   of the bottomost tile that covers it (which is pretty tricky to do) */
 	
-		if (flag!=0)	fillbitmap(bitmap,Machine->pens[0],cliprect);
+		if (flag!=0)	fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	

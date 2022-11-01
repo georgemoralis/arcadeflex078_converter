@@ -250,7 +250,7 @@ public class gcpinbal
 	
 				for (chain_pos = chain;chain_pos >= 0;chain_pos--)
 				{
-					pdrawgfx(bitmap, Machine->gfx[0],
+					pdrawgfx(bitmap, Machine.gfx[0],
 							code,
 							col,
 							flipx, flipy,
@@ -337,7 +337,7 @@ public class gcpinbal
 		}
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		layer[0] = 0;
 		layer[1] = 1;

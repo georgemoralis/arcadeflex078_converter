@@ -104,10 +104,10 @@ public class _6821pia
 	{
 		struct pia6821 *p = pia + which;
 		update_6821_interrupts(p);
-		if (p->intf->out_a_func && p->ddr_a) p->intf->out_a_func(0, p->out_a & p->ddr_a);
-		if (p->intf->out_b_func && p->ddr_b) p->intf->out_b_func(0, p->out_b & p->ddr_b);
-		if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, p->out_ca2);
-		if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, p->out_cb2);
+		if (p.intf.out_a_func && p.ddr_a) p.intf.out_a_func(0, p.out_a & p.ddr_a);
+		if (p.intf.out_b_func && p.ddr_b) p.intf.out_b_func(0, p.out_b & p.ddr_b);
+		if (p.intf.out_ca2_func) p.intf.out_ca2_func(0, p.out_ca2);
+		if (p.intf.out_cb2_func) p.intf.out_cb2_func(0, p.out_cb2);
 	}
 	
 	static void pia_postload_0(void)
@@ -211,18 +211,18 @@ public class _6821pia
 		// Ports A,CA1,CA2 default to 1
 		// Ports B,CB1,CB2 are three-state and undefined (set to 0)
 		pia[which].in_a = pia[which].in_ca1 = pia[which].in_ca2 = 0xff;
-		if ((intf->in_a_func) && ((FPTR)(intf->in_a_func) <= 0x100))
-			{ pia[which].in_a = ((FPTR)(intf->in_a_func) - 1); pia[which].in_set |= PIA_IN_SET_A; }
-		if ((intf->in_b_func) && ((FPTR)(intf->in_b_func) <= 0x100))
-			{ pia[which].in_b = ((FPTR)(intf->in_b_func) - 1); pia[which].in_set |= PIA_IN_SET_B; }
-		if ((intf->in_ca1_func) && ((FPTR)(intf->in_ca1_func) <= 0x100))
-			{ pia[which].in_ca1 = ((FPTR)(intf->in_ca1_func) - 1); pia[which].in_set |= PIA_IN_SET_CA1; }
-		if ((intf->in_ca2_func) && ((FPTR)(intf->in_ca2_func) <= 0x100))
-			{ pia[which].in_ca2 = ((FPTR)(intf->in_ca2_func) - 1); pia[which].in_set |= PIA_IN_SET_CA2; }
-		if ((intf->in_cb1_func) && ((FPTR)(intf->in_cb1_func) <= 0x100))
-			{ pia[which].in_cb1 = ((FPTR)(intf->in_cb1_func) - 1); pia[which].in_set |= PIA_IN_SET_CB1; }
-		if ((intf->in_cb2_func) && ((FPTR)(intf->in_cb2_func) <= 0x100))
-			{ pia[which].in_cb2 = ((FPTR)(intf->in_cb2_func) - 1); pia[which].in_set |= PIA_IN_SET_CB2; }
+		if ((intf.in_a_func) && ((FPTR)(intf.in_a_func) <= 0x100))
+			{ pia[which].in_a = ((FPTR)(intf.in_a_func) - 1); pia[which].in_set |= PIA_IN_SET_A; }
+		if ((intf.in_b_func) && ((FPTR)(intf.in_b_func) <= 0x100))
+			{ pia[which].in_b = ((FPTR)(intf.in_b_func) - 1); pia[which].in_set |= PIA_IN_SET_B; }
+		if ((intf.in_ca1_func) && ((FPTR)(intf.in_ca1_func) <= 0x100))
+			{ pia[which].in_ca1 = ((FPTR)(intf.in_ca1_func) - 1); pia[which].in_set |= PIA_IN_SET_CA1; }
+		if ((intf.in_ca2_func) && ((FPTR)(intf.in_ca2_func) <= 0x100))
+			{ pia[which].in_ca2 = ((FPTR)(intf.in_ca2_func) - 1); pia[which].in_set |= PIA_IN_SET_CA2; }
+		if ((intf.in_cb1_func) && ((FPTR)(intf.in_cb1_func) <= 0x100))
+			{ pia[which].in_cb1 = ((FPTR)(intf.in_cb1_func) - 1); pia[which].in_set |= PIA_IN_SET_CB1; }
+		if ((intf.in_cb2_func) && ((FPTR)(intf.in_cb2_func) <= 0x100))
+			{ pia[which].in_cb2 = ((FPTR)(intf.in_cb2_func) - 1); pia[which].in_set |= PIA_IN_SET_CB2; }
 	}
 	
 	
@@ -248,14 +248,14 @@ public class _6821pia
 			if (pia[i].intf)
 			{
 				/* check IRQ A */
-				if (pia[i].intf->irq_a_func == irq_func && pia[i].irq_a_state)
+				if (pia[i].intf.irq_a_func == irq_func && pia[i].irq_a_state)
 				{
 					(*irq_func)(1);
 					return;
 				}
 	
 				/* check IRQ B */
-				if (pia[i].intf->irq_b_func == irq_func && pia[i].irq_b_state)
+				if (pia[i].intf.irq_b_func == irq_func && pia[i].irq_b_state)
 				{
 					(*irq_func)(1);
 					return;
@@ -275,20 +275,20 @@ public class _6821pia
 	
 		/* start with IRQ A */
 		new_state = 0;
-		if ((p->irq_a1 && IRQ1_ENABLED(p->ctl_a)) || (p->irq_a2 && IRQ2_ENABLED(p->ctl_a))) new_state = 1;
-		if (new_state != p->irq_a_state)
+		if ((p.irq_a1 && IRQ1_ENABLED(p.ctl_a)) || (p.irq_a2 && IRQ2_ENABLED(p.ctl_a))) new_state = 1;
+		if (new_state != p.irq_a_state)
 		{
-			p->irq_a_state = new_state;
-			if (p->intf->irq_a_func) update_shared_irq_handler(p->intf->irq_a_func);
+			p.irq_a_state = new_state;
+			if (p.intf.irq_a_func) update_shared_irq_handler(p.intf.irq_a_func);
 		}
 	
 		/* then do IRQ B */
 		new_state = 0;
-		if ((p->irq_b1 && IRQ1_ENABLED(p->ctl_b)) || (p->irq_b2 && IRQ2_ENABLED(p->ctl_b))) new_state = 1;
-		if (new_state != p->irq_b_state)
+		if ((p.irq_b1 && IRQ1_ENABLED(p.ctl_b)) || (p.irq_b2 && IRQ2_ENABLED(p.ctl_b))) new_state = 1;
+		if (new_state != p.irq_b_state)
 		{
-			p->irq_b_state = new_state;
-			if (p->intf->irq_b_func) update_shared_irq_handler(p->intf->irq_b_func);
+			p.irq_b_state = new_state;
+			if (p.intf.irq_b_func) update_shared_irq_handler(p.intf.irq_b_func);
 		}
 	}
 	
@@ -302,7 +302,7 @@ public class _6821pia
 	
 		/* adjust offset for 16-bit and ordering */
 		offset &= 3;
-		if (p->addr & PIA_ALTERNATE_ORDERING) offset = swizzle_address[offset];
+		if (p.addr & PIA_ALTERNATE_ORDERING) offset = swizzle_address[offset];
 	
 		switch (offset)
 		{
@@ -310,39 +310,39 @@ public class _6821pia
 			case PIA_DDRA:
 	
 				/* read output register */
-				if (OUTPUT_SELECTED(p->ctl_a))
+				if (OUTPUT_SELECTED(p.ctl_a))
 				{
 					/* update the input */
-					if ((FPTR)(p->intf->in_a_func) > 0x100)
-						p->in_a = p->intf->in_a_func(0);
+					if ((FPTR)(p.intf.in_a_func) > 0x100)
+						p.in_a = p.intf.in_a_func(0);
 	#ifdef MAME_DEBUG
-					else if ((p->ddr_a ^ 0xff) && !(p->in_set & PIA_IN_SET_A)) {
+					else if ((p.ddr_a ^ 0xff) && !(p.in_set & PIA_IN_SET_A)) {
 						logerror("PIA%d: Warning! no port A read handler. Assuming pins %02x not connected\n",
-						         which, p->ddr_a ^ 0xff);
-						p->in_set |= PIA_IN_SET_A; // disable logging
+						         which, p.ddr_a ^ 0xff);
+						p.in_set |= PIA_IN_SET_A; // disable logging
 					}
 	#endif // MAME_DEBUG
 	
 					/* combine input and output values */
-					val = (p->out_a & p->ddr_a) + (p->in_a & ~p->ddr_a);
+					val = (p.out_a & p.ddr_a) + (p.in_a & ~p.ddr_a);
 	
 					/* IRQ flags implicitly cleared by a read */
-					p->irq_a1 = p->irq_a2 = 0;
+					p.irq_a1 = p.irq_a2 = 0;
 					update_6821_interrupts(p);
 	
 					/* CA2 is configured as output and in read strobe mode */
-					if (C2_OUTPUT(p->ctl_a) && C2_STROBE_MODE(p->ctl_a))
+					if (C2_OUTPUT(p.ctl_a) && C2_STROBE_MODE(p.ctl_a))
 					{
 						/* this will cause a transition low; call the output function if we're currently high */
-						if (p->out_ca2)
-							if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, 0);
-						p->out_ca2 = 0;
+						if (p.out_ca2)
+							if (p.intf.out_ca2_func) p.intf.out_ca2_func(0, 0);
+						p.out_ca2 = 0;
 	
 						/* if the CA2 strobe is cleared by the E, reset it right away */
-						if (STROBE_E_RESET(p->ctl_a))
+						if (STROBE_E_RESET(p.ctl_a))
 						{
-							if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, 1);
-							p->out_ca2 = 1;
+							if (p.intf.out_ca2_func) p.intf.out_ca2_func(0, 1);
+							p.out_ca2 = 1;
 						}
 					}
 	
@@ -352,7 +352,7 @@ public class _6821pia
 				/* read DDR register */
 				else
 				{
-					val = p->ddr_a;
+					val = p.ddr_a;
 					LOG(("%04x: PIA%d read DDR A = %02X\n", activecpu_get_previouspc(), which, val));
 				}
 				break;
@@ -361,24 +361,24 @@ public class _6821pia
 			case PIA_DDRB:
 	
 				/* read output register */
-				if (OUTPUT_SELECTED(p->ctl_b))
+				if (OUTPUT_SELECTED(p.ctl_b))
 				{
 					/* update the input */
-					if ((FPTR)(p->intf->in_b_func) > 0x100)
-						p->in_b = p->intf->in_b_func(0);
+					if ((FPTR)(p.intf.in_b_func) > 0x100)
+						p.in_b = p.intf.in_b_func(0);
 	#ifdef MAME_DEBUG
-					else if ((p->ddr_b ^ 0xff) && !(p->in_set & PIA_IN_SET_B)) {
+					else if ((p.ddr_b ^ 0xff) && !(p.in_set & PIA_IN_SET_B)) {
 						logerror("PIA%d: Error! no port B read handler. Three-state pins %02x are undefined\n",
-						         which, p->ddr_b ^ 0xff);
-						p->in_set |= PIA_IN_SET_B; // disable logging
+						         which, p.ddr_b ^ 0xff);
+						p.in_set |= PIA_IN_SET_B; // disable logging
 					}
 	#endif // MAME_DEBUG
 	
 					/* combine input and output values */
-					val = (p->out_b & p->ddr_b) + (p->in_b & ~p->ddr_b);
+					val = (p.out_b & p.ddr_b) + (p.in_b & ~p.ddr_b);
 	
 					/* IRQ flags implicitly cleared by a read */
-					p->irq_b1 = p->irq_b2 = 0;
+					p.irq_b1 = p.irq_b2 = 0;
 					update_6821_interrupts(p);
 	
 					LOG(("%04x: PIA%d read port B = %02X\n", activecpu_get_previouspc(), which, val));
@@ -387,7 +387,7 @@ public class _6821pia
 				/* read DDR register */
 				else
 				{
-					val = p->ddr_b;
+					val = p.ddr_b;
 					LOG(("%04x: PIA%d read DDR B = %02X\n", activecpu_get_previouspc(), which, val));
 				}
 				break;
@@ -396,29 +396,29 @@ public class _6821pia
 			case PIA_CTLA:
 	
 				/* Update CA1 & CA2 if callback exists, these in turn may update IRQ's */
-				if ((FPTR)(p->intf->in_ca1_func) > 0x100)
-					pia_set_input_ca1(which, p->intf->in_ca1_func(0));
+				if ((FPTR)(p.intf.in_ca1_func) > 0x100)
+					pia_set_input_ca1(which, p.intf.in_ca1_func(0));
 	#ifdef MAME_DEBUG
-				else if (!(p->in_set & PIA_IN_SET_CA1)) {
+				else if (!(p.in_set & PIA_IN_SET_CA1)) {
 					logerror("PIA%d: Warning! no CA1 read handler. Assuming pin not connected\n",which);
-					p->in_set |= PIA_IN_SET_CA1; // disable logging
+					p.in_set |= PIA_IN_SET_CA1; // disable logging
 				}
 	#endif // MAME_DEBUG
-				if ((FPTR)(p->intf->in_ca2_func) > 0x100)
-					pia_set_input_ca2(which, p->intf->in_ca2_func(0));
+				if ((FPTR)(p.intf.in_ca2_func) > 0x100)
+					pia_set_input_ca2(which, p.intf.in_ca2_func(0));
 	#ifdef MAME_DEBUG
-				else if (C2_INPUT(p->ctl_a) && !(p->in_set & PIA_IN_SET_CA2)) {
+				else if (C2_INPUT(p.ctl_a) && !(p.in_set & PIA_IN_SET_CA2)) {
 					logerror("PIA%d: Warning! no CA2 read handler. Assuming pin not connected\n",which);
-					p->in_set |= PIA_IN_SET_CA2; // disable logging
+					p.in_set |= PIA_IN_SET_CA2; // disable logging
 				}
 	#endif // MAME_DEBUG
 	
 				/* read control register */
-				val = p->ctl_a;
+				val = p.ctl_a;
 	
 				/* set the IRQ flags if we have pending IRQs */
-				if (p->irq_a1) val |= PIA_IRQ1;
-				if (p->irq_a2 && C2_INPUT(p->ctl_a)) val |= PIA_IRQ2;
+				if (p.irq_a1) val |= PIA_IRQ1;
+				if (p.irq_a2 && C2_INPUT(p.ctl_a)) val |= PIA_IRQ2;
 	
 				LOG(("%04x: PIA%d read control A = %02X\n", activecpu_get_previouspc(), which, val));
 				break;
@@ -427,29 +427,29 @@ public class _6821pia
 			case PIA_CTLB:
 	
 				/* Update CB1 & CB2 if callback exists, these in turn may update IRQ's */
-				if ((FPTR)(p->intf->in_cb1_func) > 0x100)
-					pia_set_input_cb1(which, p->intf->in_cb1_func(0));
+				if ((FPTR)(p.intf.in_cb1_func) > 0x100)
+					pia_set_input_cb1(which, p.intf.in_cb1_func(0));
 	#ifdef MAME_DEBUG
-				else if (!(p->in_set & PIA_IN_SET_CB1)) {
+				else if (!(p.in_set & PIA_IN_SET_CB1)) {
 					logerror("PIA%d: Error! no CB1 read handler. Three-state pin is undefined\n",which);
-					p->in_set |= PIA_IN_SET_CB1; // disable logging
+					p.in_set |= PIA_IN_SET_CB1; // disable logging
 				}
 	#endif // MAME_DEBUG
-				if ((FPTR)(p->intf->in_cb2_func) > 0x100)
-					pia_set_input_cb2(which, p->intf->in_cb2_func(0));
+				if ((FPTR)(p.intf.in_cb2_func) > 0x100)
+					pia_set_input_cb2(which, p.intf.in_cb2_func(0));
 	#ifdef MAME_DEBUG
-				else if (C2_INPUT(p->ctl_b) && !(p->in_set & PIA_IN_SET_CB2)) {
+				else if (C2_INPUT(p.ctl_b) && !(p.in_set & PIA_IN_SET_CB2)) {
 					logerror("PIA%d: Error! no CB2 read handler. Three-state pin is undefined\n",which);
-					p->in_set |= PIA_IN_SET_CB2; // disable logging
+					p.in_set |= PIA_IN_SET_CB2; // disable logging
 				}
 	#endif // MAME_DEBUG
 	
 				/* read control register */
-				val = p->ctl_b;
+				val = p.ctl_b;
 	
 				/* set the IRQ flags if we have pending IRQs */
-				if (p->irq_b1) val |= PIA_IRQ1;
-				if (p->irq_b2 && C2_INPUT(p->ctl_b)) val |= PIA_IRQ2;
+				if (p.irq_b1) val |= PIA_IRQ1;
+				if (p.irq_b2 && C2_INPUT(p.ctl_b)) val |= PIA_IRQ2;
 	
 				LOG(("%04x: PIA%d read control B = %02X\n", activecpu_get_previouspc(), which, val));
 				break;
@@ -467,7 +467,7 @@ public class _6821pia
 	
 		/* adjust offset for 16-bit and ordering */
 		offset &= 3;
-		if (p->addr & PIA_ALTERNATE_ORDERING) offset = swizzle_address[offset];
+		if (p.addr & PIA_ALTERNATE_ORDERING) offset = swizzle_address[offset];
 	
 		switch (offset)
 		{
@@ -475,15 +475,15 @@ public class _6821pia
 			case PIA_DDRA:
 	
 				/* write output register */
-				if (OUTPUT_SELECTED(p->ctl_a))
+				if (OUTPUT_SELECTED(p.ctl_a))
 				{
 					LOG(("%04x: PIA%d port A write = %02X\n", activecpu_get_previouspc(), which, data));
 	
 					/* update the output value */
-					p->out_a = data;/* & p->ddr_a; */	/* NS990130 - don't mask now, DDR could change later */
+					p.out_a = data;/* & p.ddr_a; */	/* NS990130 - don't mask now, DDR could change later */
 	
 					/* send it to the output function */
-					if (p->intf->out_a_func && p->ddr_a) p->intf->out_a_func(0, p->out_a & p->ddr_a);	/* NS990130 */
+					if (p.intf.out_a_func && p.ddr_a) p.intf.out_a_func(0, p.out_a & p.ddr_a);	/* NS990130 */
 				}
 	
 				/* write DDR register */
@@ -491,13 +491,13 @@ public class _6821pia
 				{
 					LOG(("%04x: PIA%d DDR A write = %02X\n", activecpu_get_previouspc(), which, data));
 	
-					if (p->ddr_a != data)
+					if (p.ddr_a != data)
 					{
 						/* NS990130 - if DDR changed, call the callback again */
-						p->ddr_a = data;
+						p.ddr_a = data;
 	
 						/* send it to the output function */
-						if (p->intf->out_a_func && p->ddr_a) p->intf->out_a_func(0, p->out_a & p->ddr_a);
+						if (p.intf.out_a_func && p.ddr_a) p.intf.out_a_func(0, p.out_a & p.ddr_a);
 					}
 				}
 				break;
@@ -506,29 +506,29 @@ public class _6821pia
 			case PIA_DDRB:
 	
 				/* write output register */
-				if (OUTPUT_SELECTED(p->ctl_b))
+				if (OUTPUT_SELECTED(p.ctl_b))
 				{
 					LOG(("%04x: PIA%d port B write = %02X\n", activecpu_get_previouspc(), which, data));
 	
 					/* update the output value */
-					p->out_b = data;/* & p->ddr_b */	/* NS990130 - don't mask now, DDR could change later */
+					p.out_b = data;/* & p.ddr_b */	/* NS990130 - don't mask now, DDR could change later */
 	
 					/* send it to the output function */
-					if (p->intf->out_b_func && p->ddr_b) p->intf->out_b_func(0, p->out_b & p->ddr_b);	/* NS990130 */
+					if (p.intf.out_b_func && p.ddr_b) p.intf.out_b_func(0, p.out_b & p.ddr_b);	/* NS990130 */
 	
 					/* CB2 is configured as output and in write strobe mode */
-					if (C2_OUTPUT(p->ctl_b) && C2_STROBE_MODE(p->ctl_b))
+					if (C2_OUTPUT(p.ctl_b) && C2_STROBE_MODE(p.ctl_b))
 					{
 						/* this will cause a transition low; call the output function if we're currently high */
-						if (p->out_cb2)
-							if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, 0);
-						p->out_cb2 = 0;
+						if (p.out_cb2)
+							if (p.intf.out_cb2_func) p.intf.out_cb2_func(0, 0);
+						p.out_cb2 = 0;
 	
 						/* if the CB2 strobe is cleared by the E, reset it right away */
-						if (STROBE_E_RESET(p->ctl_b))
+						if (STROBE_E_RESET(p.ctl_b))
 						{
-							if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, 1);
-							p->out_cb2 = 1;
+							if (p.intf.out_cb2_func) p.intf.out_cb2_func(0, 1);
+							p.out_cb2 = 1;
 						}
 					}
 				}
@@ -538,13 +538,13 @@ public class _6821pia
 				{
 					LOG(("%04x: PIA%d DDR B write = %02X\n", activecpu_get_previouspc(), which, data));
 	
-					if (p->ddr_b != data)
+					if (p.ddr_b != data)
 					{
 						/* NS990130 - if DDR changed, call the callback again */
-						p->ddr_b = data;
+						p.ddr_b = data;
 	
 						/* send it to the output function */
-						if (p->intf->out_b_func && p->ddr_b) p->intf->out_b_func(0, p->out_b & p->ddr_b);
+						if (p.intf.out_b_func && p.ddr_b) p.intf.out_b_func(0, p.out_b & p.ddr_b);
 					}
 				}
 				break;
@@ -568,15 +568,15 @@ public class _6821pia
 					int temp = SET_C2(data) ? 1 : 0;
 	
 					/* if this creates a transition, call the CA2 output function */
-					if (p->out_ca2 ^ temp)
-						if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, temp);
+					if (p.out_ca2 ^ temp)
+						if (p.intf.out_ca2_func) p.intf.out_ca2_func(0, temp);
 	
 					/* set the new value */
-					p->out_ca2 = temp;
+					p.out_ca2 = temp;
 				}
 	
 				/* update the control register */
-				p->ctl_a = data;
+				p.ctl_a = data;
 	
 				/* update externals */
 				update_6821_interrupts(p);
@@ -600,15 +600,15 @@ public class _6821pia
 					int temp = SET_C2(data) ? 1 : 0;
 	
 					/* if this creates a transition, call the CA2 output function */
-					if (p->out_cb2 ^ temp)
-						if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, temp);
+					if (p.out_cb2 ^ temp)
+						if (p.intf.out_cb2_func) p.intf.out_cb2_func(0, temp);
 	
 					/* set the new value */
-					p->out_cb2 = temp;
+					p.out_cb2 = temp;
 				}
 	
 				/* update the control register */
-				p->ctl_b = data;
+				p.ctl_b = data;
 	
 				/* update externals */
 				update_6821_interrupts(p);
@@ -624,8 +624,8 @@ public class _6821pia
 		struct pia6821 *p = pia + which;
 	
 		/* set the input, what could be easier? */
-		p->in_a = data;
-		p->in_set |= PIA_IN_SET_A;
+		p.in_a = data;
+		p.in_set |= PIA_IN_SET_A;
 	}
 	
 	
@@ -640,33 +640,33 @@ public class _6821pia
 		data = data ? 1 : 0;
 	
 		/* the new state has caused a transition */
-		if (p->in_ca1 ^ data)
+		if (p.in_ca1 ^ data)
 		{
 			/* handle the active transition */
-			if ((data && C1_LOW_TO_HIGH(p->ctl_a)) || (!data && C1_HIGH_TO_LOW(p->ctl_a)))
+			if ((data && C1_LOW_TO_HIGH(p.ctl_a)) || (!data && C1_HIGH_TO_LOW(p.ctl_a)))
 			{
 				/* mark the IRQ */
-				p->irq_a1 = 1;
+				p.irq_a1 = 1;
 	
 				/* update externals */
 				update_6821_interrupts(p);
 	
 				/* CA2 is configured as output and in read strobe mode and cleared by a CA1 transition */
-				if (C2_OUTPUT(p->ctl_a) && C2_STROBE_MODE(p->ctl_a) && STROBE_C1_RESET(p->ctl_a))
+				if (C2_OUTPUT(p.ctl_a) && C2_STROBE_MODE(p.ctl_a) && STROBE_C1_RESET(p.ctl_a))
 				{
 					/* call the CA2 output function */
-					if (!p->out_ca2)
-						if (p->intf->out_ca2_func) p->intf->out_ca2_func(0, 1);
+					if (!p.out_ca2)
+						if (p.intf.out_ca2_func) p.intf.out_ca2_func(0, 1);
 	
 					/* clear CA2 */
-					p->out_ca2 = 1;
+					p.out_ca2 = 1;
 				}
 			}
 		}
 	
 		/* set the new value for CA1 */
-		p->in_ca1 = data;
-		p->in_set |= PIA_IN_SET_CA1;
+		p.in_ca1 = data;
+		p.in_set |= PIA_IN_SET_CA1;
 	}
 	
 	
@@ -681,16 +681,16 @@ public class _6821pia
 		data = data ? 1 : 0;
 	
 		/* CA2 is in input mode */
-		if (C2_INPUT(p->ctl_a))
+		if (C2_INPUT(p.ctl_a))
 		{
 			/* the new state has caused a transition */
-			if (p->in_ca2 ^ data)
+			if (p.in_ca2 ^ data)
 			{
 				/* handle the active transition */
-				if ((data && C2_LOW_TO_HIGH(p->ctl_a)) || (!data && C2_HIGH_TO_LOW(p->ctl_a)))
+				if ((data && C2_LOW_TO_HIGH(p.ctl_a)) || (!data && C2_HIGH_TO_LOW(p.ctl_a)))
 				{
 					/* mark the IRQ */
-					p->irq_a2 = 1;
+					p.irq_a2 = 1;
 	
 					/* update externals */
 					update_6821_interrupts(p);
@@ -699,8 +699,8 @@ public class _6821pia
 		}
 	
 		/* set the new value for CA2 */
-		p->in_ca2 = data;
-		p->in_set |= PIA_IN_SET_CA2;
+		p.in_ca2 = data;
+		p.in_set |= PIA_IN_SET_CA2;
 	}
 	
 	
@@ -712,8 +712,8 @@ public class _6821pia
 		struct pia6821 *p = pia + which;
 	
 		/* set the input, what could be easier? */
-		p->in_b = data;
-	    p->in_set |= PIA_IN_SET_B;
+		p.in_b = data;
+	    p.in_set |= PIA_IN_SET_B;
 	}
 	
 	
@@ -728,37 +728,37 @@ public class _6821pia
 		data = data ? 1 : 0;
 	
 		/* the new state has caused a transition */
-		if (p->in_cb1 ^ data)
+		if (p.in_cb1 ^ data)
 		{
 			/* handle the active transition */
-			if ((data && C1_LOW_TO_HIGH(p->ctl_b)) || (!data && C1_HIGH_TO_LOW(p->ctl_b)))
+			if ((data && C1_LOW_TO_HIGH(p.ctl_b)) || (!data && C1_HIGH_TO_LOW(p.ctl_b)))
 			{
 				/* mark the IRQ */
-				p->irq_b1 = 1;
+				p.irq_b1 = 1;
 	
 				/* update externals */
 				update_6821_interrupts(p);
 	
 				/* CB2 is configured as output and in write strobe mode and cleared by a CA1 transition */
-				if (C2_OUTPUT(p->ctl_b) && C2_STROBE_MODE(p->ctl_b) && STROBE_C1_RESET(p->ctl_b))
+				if (C2_OUTPUT(p.ctl_b) && C2_STROBE_MODE(p.ctl_b) && STROBE_C1_RESET(p.ctl_b))
 				{
 					/* the IRQ1 flag must have also been cleared */
-					if (!p->irq_b1)
+					if (!p.irq_b1)
 					{
 						/* call the CB2 output function */
-						if (!p->out_cb2)
-							if (p->intf->out_cb2_func) p->intf->out_cb2_func(0, 1);
+						if (!p.out_cb2)
+							if (p.intf.out_cb2_func) p.intf.out_cb2_func(0, 1);
 	
 						/* clear CB2 */
-						p->out_cb2 = 1;
+						p.out_cb2 = 1;
 					}
 				}
 			}
 		}
 	
 		/* set the new value for CB1 */
-		p->in_cb1 = data;
-		p->in_set |= PIA_IN_SET_CB1;
+		p.in_cb1 = data;
+		p.in_set |= PIA_IN_SET_CB1;
 	}
 	
 	
@@ -773,16 +773,16 @@ public class _6821pia
 		data = data ? 1 : 0;
 	
 		/* CB2 is in input mode */
-		if (C2_INPUT(p->ctl_b))
+		if (C2_INPUT(p.ctl_b))
 		{
 			/* the new state has caused a transition */
-			if (p->in_cb2 ^ data)
+			if (p.in_cb2 ^ data)
 			{
 				/* handle the active transition */
-				if ((data && C2_LOW_TO_HIGH(p->ctl_b)) || (!data && C2_HIGH_TO_LOW(p->ctl_b)))
+				if ((data && C2_LOW_TO_HIGH(p.ctl_b)) || (!data && C2_HIGH_TO_LOW(p.ctl_b)))
 				{
 					/* mark the IRQ */
-					p->irq_b2 = 1;
+					p.irq_b2 = 1;
 	
 					/* update externals */
 					update_6821_interrupts(p);
@@ -791,8 +791,8 @@ public class _6821pia
 		}
 	
 		/* set the new value for CA2 */
-		p->in_cb2 = data;
-		p->in_set |= PIA_IN_SET_CB2;
+		p.in_cb2 = data;
+		p.in_set |= PIA_IN_SET_CB2;
 	}
 	
 	

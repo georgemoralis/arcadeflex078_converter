@@ -95,7 +95,7 @@ public class gradius3
 		/* re-decode the sprites because the ROMs are connected to the custom IC differently
 		   from how they are connected to the CPU. */
 		for (i = 0;i < TOTAL_SPRITES;i++)
-			decodechar(Machine->gfx[1],i,memory_region(REGION_GFX2),&spritelayout);
+			decodechar(Machine.gfx[1],i,memory_region(REGION_GFX2),&spritelayout);
 	
 		if (!(dirtychar = auto_malloc(TOTAL_CHARS)))
 			return 1;
@@ -176,7 +176,7 @@ public class gradius3
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine->gfx[0],i,(UINT8 *)gradius3_gfxram,&charlayout);
+					decodechar(Machine.gfx[0],i,(UINT8 *)gradius3_gfxram,&charlayout);
 				}
 			}
 	

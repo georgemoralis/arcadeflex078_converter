@@ -85,7 +85,7 @@ public class iremga20
 		unsigned long rate[4], pos[4], end[4], vol[4], play[4];
 		int edi, ebp, esi, eax, ebx, ecx, edx;
 	
-		if (!Machine->sample_rate) return;
+		if (!Machine.sample_rate) return;
 	
 		/* precache some values */
 		for (ecx=0; ecx<4; ecx++)
@@ -134,7 +134,7 @@ public class iremga20
 	
 		//logerror("GA20:  Offset %02x, data %04x\n",offset,data);
 	
-		if (!Machine->sample_rate)
+		if (!Machine.sample_rate)
 			return;
 	
 		stream_update(IremGA20_chip.channel, 0);
@@ -162,7 +162,7 @@ public class iremga20
 		break;
 	
 		case 8: //AT: frequencies are snapped to half-note boundaries
-			IremGA20_channel[channel].rate = sr_table[sr_xlat[data>>3]] / Machine->sample_rate;
+			IremGA20_channel[channel].rate = sr_table[sr_xlat[data>>3]] / Machine.sample_rate;
 		break;
 	
 		case 0xa: //AT: gain control
@@ -210,13 +210,13 @@ public class iremga20
 		int key_progress[14]={0,1,2,2,3,4,5,6,7,7,8,9,10,11};
 	//ZT
 	
-		if (!Machine->sample_rate) return 0;
+		if (!Machine.sample_rate) return 0;
 	
 		/* Initialize our chip structure */
-		IremGA20_chip.intf = msound->sound_interface;
+		IremGA20_chip.intf = msound.sound_interface;
 		IremGA20_chip.mode = 0;
-		IremGA20_chip.rom = memory_region(IremGA20_chip.intf->region);
-		IremGA20_chip.rom_size = memory_region_length(IremGA20_chip.intf->region);
+		IremGA20_chip.rom = memory_region(IremGA20_chip.intf.region);
+		IremGA20_chip.rom_size = memory_region_length(IremGA20_chip.intf.region);
 	
 	//AT
 		sr_table = auto_malloc(sizeof(float)*NUM_STEPS*NUM_OCTAVES*12);
@@ -258,7 +258,7 @@ public class iremga20
 		}
 	
 		IremGA20_chip.channel = stream_init_multi( 2, names,
-				IremGA20_chip.intf->mixing_level, Machine->sample_rate,
+				IremGA20_chip.intf.mixing_level, Machine.sample_rate,
 				0, IremGA20_update );
 	
 		state_save_register_UINT8("sound", 0, "IremGA20_channel", (UINT8*) IremGA20_channel, sizeof(IremGA20_channel));

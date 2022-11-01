@@ -99,7 +99,7 @@ public class superpac
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, struct rectangle *clip, int drawmode)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		int offs;
 	
 		for (offs = 0; offs < spriteram_size; offs += 2)
@@ -249,16 +249,16 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap, Machine->gfx[0], videoram.read(offs), colorram[offs],
+				drawgfx(tmpbitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
-						&Machine->visible_area, TRANSPARENCY_NONE, 0);
+						&Machine.visible_area, TRANSPARENCY_NONE, 0);
 			}
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, &Machine->visible_area, TRANSPARENCY_NONE, 0);
+		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, &Machine.visible_area, TRANSPARENCY_NONE, 0);
 	
 		/* Draw the sprites. */
-		draw_sprites(bitmap, &Machine->visible_area, TRANSPARENCY_COLOR);
+		draw_sprites(bitmap, &Machine.visible_area, TRANSPARENCY_COLOR);
 	
 		/* Draw the high priority characters */
 		for (offs = videoram_size - 1;offs >= 0;offs--)
@@ -291,12 +291,12 @@ public class superpac
 					sy = 27 - sy;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[0], videoram.read(offs), colorram[offs],
+				drawgfx(bitmap, Machine.gfx[0], videoram.read(offs), colorram[offs],
 						flip_screen, flip_screen, 8 * sx, 8 * sy,
-						&Machine->visible_area, TRANSPARENCY_COLOR, 31);
+						&Machine.visible_area, TRANSPARENCY_COLOR, 31);
 			}
 	
 		/* Color 31 still has priority over that (ghost eyes in Pac 'n Pal) */
-		draw_sprites(bitmap, &Machine->visible_area, TRANSPARENCY_PENS);
+		draw_sprites(bitmap, &Machine.visible_area, TRANSPARENCY_PENS);
 	} };
 }

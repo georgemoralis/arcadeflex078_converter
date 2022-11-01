@@ -180,7 +180,7 @@ public class tbowl
 					{
 						int sx = xpos + 8*(flipx?(sizex-1-x):x);
 						int sy = ypos + 8*(flipy?(sizey-1-y):y);
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -188,7 +188,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -196,7 +196,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -204,7 +204,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,

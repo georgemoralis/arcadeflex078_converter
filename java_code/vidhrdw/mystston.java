@@ -178,7 +178,7 @@ public class mystston
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[2],	code, color, flipx, flipy,
+				drawgfx(bitmap,Machine.gfx[2],	code, color, flipx, flipy,
 					sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}

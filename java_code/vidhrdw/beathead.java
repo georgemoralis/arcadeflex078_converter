@@ -225,17 +225,17 @@ public class beathead
 		int x, y;
 	
 		/* generate the final screen */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			offs_t src = scanline_offset[y] + cliprect->min_x;
+			offs_t src = scanline_offset[y] + cliprect.min_x;
 			UINT8 scanline[336];
 	
 			/* unswizzle the scanline first */
-			for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+			for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				scanline[x] = ((data8_t *)videoram32)[BYTE4_XOR_LE(src++)];
 	
 			/* then draw it */
-			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], &Machine->pens[scanline_palette[y] * 256], -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], &Machine.pens[scanline_palette[y] * 256], -1);
 		}
 	} };
 }

@@ -38,7 +38,7 @@ public class _40love
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -50,17 +50,17 @@ public class _40love
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			
 			palette_set_color(i,r,g,b);
@@ -89,8 +89,8 @@ public class _40love
 	{
 		int tile_number = videoram.read(tile_index);
 		int tile_attrib = colorram[(tile_index/64)*2];
-		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40->0x200 */
-		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10->0x80, 0x08->0x40 */
+		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40.0x200 */
+		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10.0x80, 0x08.0x40 */
 	
 		int code = tile_number;
 		if ((tile_attrib & 0x20) && (code >= 0xc0))
@@ -296,7 +296,7 @@ public class _40love
 			if (spriteram.read(offs+2)& 0xe0)
 				color = rand()&0xf;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -325,7 +325,7 @@ public class _40love
 			if (spriteram_2[offs+2] & 0xe0)
 				color = rand()&0xf;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,

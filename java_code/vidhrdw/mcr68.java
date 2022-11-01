@@ -37,7 +37,7 @@ public class mcr68
 		int code = (data & 0x3ff) | ((data >> 4) & 0xc00);
 		int color = (~data >> 12) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 10) & 3));
-		if (Machine->gfx[0]->total_elements < 0x1000)
+		if (Machine.gfx[0].total_elements < 0x1000)
 			tile_info.priority = (data >> 15) & 1;
 	}
 	
@@ -104,16 +104,16 @@ public class mcr68
 	public static PaletteInitHandlerPtr palette_init_zwackery  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		const UINT8 *colordatabase = (const UINT8 *)memory_region(REGION_GFX3);
-		struct GfxElement *gfx0 = Machine->gfx[0];
-		struct GfxElement *gfx2 = Machine->gfx[2];
+		struct GfxElement *gfx0 = Machine.gfx[0];
+		struct GfxElement *gfx2 = Machine.gfx[2];
 		int code, y, x;
 	
 		/* "colorize" each code */
-		for (code = 0; code < gfx0->total_elements; code++)
+		for (code = 0; code < gfx0.total_elements; code++)
 		{
 			const UINT8 *coldata = colordatabase + code * 32;
-			UINT8 *gfxdata0 = gfx0->gfxdata + code * gfx0->char_modulo;
-			UINT8 *gfxdata2 = gfx2->gfxdata + code * gfx2->char_modulo;
+			UINT8 *gfxdata0 = gfx0.gfxdata + code * gfx0.char_modulo;
+			UINT8 *gfxdata2 = gfx2.gfxdata + code * gfx2.char_modulo;
 	
 			/* assume 16 rows */
 			for (y = 0; y < 16; y++)
@@ -139,8 +139,8 @@ public class mcr68
 				}
 	
 				/* advance */
-				gfxdata0 += gfx0->line_modulo;
-				gfxdata2 += gfx2->line_modulo;
+				gfxdata0 += gfx0.line_modulo;
+				gfxdata2 += gfx2.line_modulo;
 			}
 		}
 	} };
@@ -233,7 +233,7 @@ public class mcr68
 	
 	static void mcr68_update_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int priority)
 	{
-		struct rectangle sprite_clip = Machine->visible_area;
+		struct rectangle sprite_clip = Machine.visible_area;
 		int offs;
 	
 		/* adjust for clipping */
@@ -273,11 +273,11 @@ public class mcr68
 				The color 8 is used to cover over other sprites. */
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
 					&sprite_clip, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
 					&sprite_clip, TRANSPARENCY_PENS, 0xfeff, 0x02);
 		}
 	}
@@ -329,11 +329,11 @@ public class mcr68
 				The color 8 is used to cover over other sprites. */
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
 					cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
 					cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 		}
 	}

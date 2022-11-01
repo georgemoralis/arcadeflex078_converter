@@ -80,7 +80,7 @@ public class supbtime
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -119,7 +119,7 @@ public class supbtime
 	
 	static UINT32 supbtime_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -184,7 +184,7 @@ public class supbtime
 		/* The filled bitmap is unusual for Data East, but without this the title screen
 		background colour is incorrect.  This also explains why the game initialises
 		the previously unused palette ram to zero */
-		fillbitmap(bitmap,Machine->pens[768],cliprect);
+		fillbitmap(bitmap,Machine.pens[768],cliprect);
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 		supbtime_drawsprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
@@ -206,7 +206,7 @@ public class supbtime
 		/* The filled bitmap is unusual for Data East, but without this the title screen
 		background colour is incorrect.  This also explains why the game initialises
 		the previously unused palette ram to zero */
-		fillbitmap(bitmap,Machine->pens[768],cliprect);
+		fillbitmap(bitmap,Machine.pens[768],cliprect);
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 		supbtime_drawsprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);

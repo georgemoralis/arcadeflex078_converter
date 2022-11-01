@@ -28,13 +28,13 @@ public class blktiger
 	
 	static UINT32 bg8x4_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x70) << 4) + ((row & 0x30) << 7);
 	}
 	
 	static UINT32 bg4x8_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x30) << 4) + ((row & 0x70) << 6);
 	}
 	
@@ -225,7 +225,7 @@ public class blktiger
 				flipx = !flipx;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					code,
 					color,
 					flipx,flip_screen,
@@ -236,7 +236,7 @@ public class blktiger
 	
 	public static VideoUpdateHandlerPtr video_update_blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[1023],cliprect);
+		fillbitmap(bitmap,Machine.pens[1023],cliprect);
 	
 		if (bgon != 0)
 			tilemap_draw(bitmap,cliprect,screen_layout ? bg_tilemap8x4 : bg_tilemap4x8,TILEMAP_BACK,0);

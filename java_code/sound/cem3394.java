@@ -151,19 +151,19 @@ public class cem3394
 	static void cem3394_update(int ch, INT16 *buffer, int length)
 	{
 		sound_chip *chip = &chip_list[ch];
-		int int_volume = (chip->volume * chip->mixer_internal) / 256;
-		int ext_volume = (chip->volume * chip->mixer_external) / 256;
-		UINT32 step = chip->step, position, end_position = 0;
+		int int_volume = (chip.volume * chip.mixer_internal) / 256;
+		int ext_volume = (chip.volume * chip.mixer_external) / 256;
+		UINT32 step = chip.step, position, end_position = 0;
 		INT16 *mix, *ext;
 		int i;
 	
 		/* external volume is effectively 0 if no external function */
-		if (!chip->external || !ENABLE_EXTERNAL)
+		if (!chip.external || !ENABLE_EXTERNAL)
 			ext_volume = 0;
 	
 		/* adjust the volume for the filter */
-		if (step > chip->filter_step)
-			int_volume /= step - chip->filter_step;
+		if (step > chip.filter_step)
+			int_volume /= step - chip.filter_step;
 	
 		/* bail if nothing's going on */
 		if (int_volume == 0 && ext_volume == 0)
@@ -175,22 +175,22 @@ public class cem3394
 		/* if there's external stuff, fetch and process it now */
 		if (ext_volume != 0)
 		{
-			UINT32 fposition = chip->filter_position, fstep = chip->filter_step, depth;
-			INT16 last_ext = chip->last_ext;
+			UINT32 fposition = chip.filter_position, fstep = chip.filter_step, depth;
+			INT16 last_ext = chip.last_ext;
 	
 			/* fetch the external data */
-			(*chip->external)(ch, length, external_buffer);
+			(*chip.external)(ch, length, external_buffer);
 	
 			/* compute the modulation depth, and adjust fstep to the maximum frequency */
 			/* we lop off 13 bits of depth so that we can multiply by stepadjust, below, */
 			/* which has 13 bits of precision */
-			depth = FRACTION_MULT(fstep, chip->modulation_depth);
+			depth = FRACTION_MULT(fstep, chip.modulation_depth);
 			fstep += depth;
 			depth >>= 13;
 	
 			/* "apply" the filter: note this is pretty cheesy; it basically just downsamples the
 			   external sample to filter_freq by allowing only 2 transitions for every cycle */
-			for (i = 0, ext = external_buffer, position = chip->position; i < length; i++, ext++)
+			for (i = 0, ext = external_buffer, position = chip.position; i < length; i++, ext++)
 			{
 				UINT32 newposition;
 				INT32 stepadjust;
@@ -212,22 +212,22 @@ public class cem3394
 			}
 	
 			/* update the final filter values */
-			chip->filter_position = fposition;
-			chip->last_ext = last_ext;
+			chip.filter_position = fposition;
+			chip.last_ext = last_ext;
 		}
 	
 		/* if there's internal stuff, generate it */
 		if (int_volume != 0)
 		{
-			if (chip->wave_select == 0 && !ext_volume)
-				logerror("%f V didn't cut it\n", chip->values[CEM3394_WAVE_SELECT]);
+			if (chip.wave_select == 0 && !ext_volume)
+				logerror("%f V didn't cut it\n", chip.values[CEM3394_WAVE_SELECT]);
 	
 			/* handle the pulse component; it maxes out at 0x1932, which is 27% smaller than */
 			/* the sawtooth (since the value is constant, this is the best place to have an */
 			/* odd value for volume) */
-			if (ENABLE_PULSE && (chip->wave_select & WAVE_PULSE))
+			if (ENABLE_PULSE && (chip.wave_select & WAVE_PULSE))
 			{
-				UINT32 pulse_width = chip->pulse_width;
+				UINT32 pulse_width = chip.pulse_width;
 	
 				/* this is a kludge; Snake Pit uses very small pulse widths in the tune during */
 				/* level 1; this makes the melody almost silent unless we enforce a minimum */
@@ -241,7 +241,7 @@ public class cem3394
 				/* if the width is wider than the step, we're guaranteed to hit it once per cycle */
 				if (pulse_width >= step)
 				{
-					for (i = 0, mix = mixer_buffer, position = chip->position; i < length; i++, mix++)
+					for (i = 0, mix = mixer_buffer, position = chip.position; i < length; i++, mix++)
 					{
 						if (position < pulse_width)
 							*mix = 0x1932;
@@ -255,7 +255,7 @@ public class cem3394
 				else
 				{
 					INT16 volume = 0x1932 * pulse_width / step;
-					for (i = 0, mix = mixer_buffer, position = chip->position; i < length; i++, mix++)
+					for (i = 0, mix = mixer_buffer, position = chip.position; i < length; i++, mix++)
 					{
 						UINT32 newposition = position + step;
 						if ((newposition ^ position) & ~FRACTION_MASK)
@@ -274,9 +274,9 @@ public class cem3394
 	
 			/* handle the sawtooth component; it maxes out at 0x2000, which is 27% larger */
 			/* than the pulse */
-			if (ENABLE_SAWTOOTH && (chip->wave_select & WAVE_SAWTOOTH))
+			if (ENABLE_SAWTOOTH && (chip.wave_select & WAVE_SAWTOOTH))
 			{
-				for (i = 0, mix = mixer_buffer, position = chip->position; i < length; i++, mix++)
+				for (i = 0, mix = mixer_buffer, position = chip.position; i < length; i++, mix++)
 				{
 					*mix += ((position >> (FRACTION_BITS - 14)) & 0x3fff) - 0x2000;
 					position += step;
@@ -287,9 +287,9 @@ public class cem3394
 			/* handle the triangle component; it maxes out at 0x2800, which is 25% larger */
 			/* than the sawtooth (should be 27% according to the specs, but 25% saves us */
 			/* a multiplication) */
-			if (ENABLE_TRIANGLE && (chip->wave_select & WAVE_TRIANGLE))
+			if (ENABLE_TRIANGLE && (chip.wave_select & WAVE_TRIANGLE))
 			{
-				for (i = 0, mix = mixer_buffer, position = chip->position; i < length; i++, mix++)
+				for (i = 0, mix = mixer_buffer, position = chip.position; i < length; i++, mix++)
 				{
 					INT16 value;
 					if (position & (1 << (FRACTION_BITS - 1)))
@@ -303,7 +303,7 @@ public class cem3394
 			}
 	
 			/* update the final position */
-			chip->position = end_position;
+			chip.position = end_position;
 		}
 	
 		/* mix it down */
@@ -334,28 +334,28 @@ public class cem3394
 	
 	int cem3394_sh_start(const struct MachineSound *msound)
 	{
-		const struct cem3394_interface *intf = msound->sound_interface;
+		const struct cem3394_interface *intf = msound.sound_interface;
 		int i;
 	
 		/* bag on a 0 sample_rate */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return 0;
 	
 		/* copy global parameters */
-		sample_rate = Machine->sample_rate;
+		sample_rate = Machine.sample_rate;
 		inv_sample_rate = 1.0 / (double)sample_rate;
 	
 		/* allocate stream channels, 1 per chip */
-		for (i = 0; i < intf->numchips; i++)
+		for (i = 0; i < intf.numchips; i++)
 		{
 			char name_buffer[100];
 	
 			memset(&chip_list[i], 0, sizeof(chip_list[i]));
 			sprintf(name_buffer, "CEM3394 #%d", i);
-			chip_list[i].stream = stream_init(name_buffer, intf->volume[i], sample_rate, i, cem3394_update);
-			chip_list[i].external = intf->external[i];
-			chip_list[i].vco_zero_freq = intf->vco_zero_freq[i];
-			chip_list[i].filter_zero_freq = intf->filter_zero_freq[i];
+			chip_list[i].stream = stream_init(name_buffer, intf.volume[i], sample_rate, i, cem3394_update);
+			chip_list[i].external = intf.external[i];
+			chip_list[i].vco_zero_freq = intf.vco_zero_freq[i];
+			chip_list[i].filter_zero_freq = intf.filter_zero_freq[i];
 		}
 	
 		/* allocate memory for a mixer buffer and external buffer (1 second should do it!) */
@@ -438,53 +438,53 @@ public class cem3394
 		double temp;
 	
 		/* don't do anything if no change */
-		if (voltage == chip->values[input])
+		if (voltage == chip.values[input])
 			return;
-		chip->values[input] = voltage;
+		chip.values[input] = voltage;
 	
 		/* update the stream first */
-		stream_update(chip->stream, 0);
+		stream_update(chip.stream, 0);
 	
 		/* switch off the input */
 		switch (input)
 		{
 			/* frequency varies from -4.0 to +4.0, at 0.75V/octave */
 			case CEM3394_VCO_FREQUENCY:
-				temp = chip->vco_zero_freq * pow(2.0, -voltage * (1.0 / 0.75));
-				chip->step = (UINT32)(temp * inv_sample_rate * FRACTION_ONE_D);
+				temp = chip.vco_zero_freq * pow(2.0, -voltage * (1.0 / 0.75));
+				chip.step = (UINT32)(temp * inv_sample_rate * FRACTION_ONE_D);
 				break;
 	
 			/* wave select determines triangle/sawtooth enable */
 			case CEM3394_WAVE_SELECT:
-				chip->wave_select &= ~(WAVE_TRIANGLE | WAVE_SAWTOOTH);
+				chip.wave_select &= ~(WAVE_TRIANGLE | WAVE_SAWTOOTH);
 				if (voltage >= -0.5 && voltage <= -0.2)
-					chip->wave_select |= WAVE_TRIANGLE;
+					chip.wave_select |= WAVE_TRIANGLE;
 				else if (voltage >=  0.9 && voltage <=  1.5)
-					chip->wave_select |= WAVE_TRIANGLE | WAVE_SAWTOOTH;
+					chip.wave_select |= WAVE_TRIANGLE | WAVE_SAWTOOTH;
 				else if (voltage >=  2.3 && voltage <=  3.9)
-					chip->wave_select |= WAVE_SAWTOOTH;
+					chip.wave_select |= WAVE_SAWTOOTH;
 				break;
 	
 			/* pulse width determines duty cycle; 0.0 means 0%, 2.0 means 100% */
 			case CEM3394_PULSE_WIDTH:
 				if (voltage < 0.0)
 				{
-					chip->pulse_width = 0;
-					chip->wave_select &= ~WAVE_PULSE;
+					chip.pulse_width = 0;
+					chip.wave_select &= ~WAVE_PULSE;
 				}
 				else
 				{
 					temp = voltage * 0.5;
 					if (LIMIT_WIDTH != 0)
 						temp = MINIMUM_WIDTH + (MAXIMUM_WIDTH - MINIMUM_WIDTH) * temp;
-					chip->pulse_width = (UINT32)(temp * FRACTION_ONE_D);
-					chip->wave_select |= WAVE_PULSE;
+					chip.pulse_width = (UINT32)(temp * FRACTION_ONE_D);
+					chip.wave_select |= WAVE_PULSE;
 				}
 				break;
 	
 			/* final gain is pretty self-explanatory; 0.0 means ~90dB, 4.0 means 0dB */
 			case CEM3394_FINAL_GAIN:
-				chip->volume = compute_db_volume(voltage);
+				chip.volume = compute_db_volume(voltage);
 				break;
 	
 			/* mixer balance is a pan between the external input and the internal input */
@@ -492,31 +492,31 @@ public class cem3394
 			case CEM3394_MIXER_BALANCE:
 				if (voltage >= 0.0)
 				{
-					chip->mixer_internal = compute_db_volume(3.55 - voltage);
-					chip->mixer_external = compute_db_volume(3.55 + 0.45 * (voltage * 0.25));
+					chip.mixer_internal = compute_db_volume(3.55 - voltage);
+					chip.mixer_external = compute_db_volume(3.55 + 0.45 * (voltage * 0.25));
 				}
 				else
 				{
-					chip->mixer_internal = compute_db_volume(3.55 - 0.45 * (voltage * 0.25));
-					chip->mixer_external = compute_db_volume(3.55 + voltage);
+					chip.mixer_internal = compute_db_volume(3.55 - 0.45 * (voltage * 0.25));
+					chip.mixer_external = compute_db_volume(3.55 + voltage);
 				}
 				break;
 	
 			/* filter frequency varies from -4.0 to +4.0, at 0.375V/octave */
 			case CEM3394_FILTER_FREQENCY:
-				temp = chip->filter_zero_freq * pow(2.0, -voltage * (1.0 / 0.375));
-				chip->filter_step = (UINT32)(temp * inv_sample_rate * FRACTION_ONE_D);
+				temp = chip.filter_zero_freq * pow(2.0, -voltage * (1.0 / 0.375));
+				chip.filter_step = (UINT32)(temp * inv_sample_rate * FRACTION_ONE_D);
 				break;
 	
 			/* modulation depth is 0.01 at 0V and 2.0 at 3.5V; how it grows from one to the other */
 			/* is still unclear at this point */
 			case CEM3394_MODULATION_AMOUNT:
 				if (voltage < 0.0)
-					chip->modulation_depth = (UINT32)(0.01 * FRACTION_ONE_D);
+					chip.modulation_depth = (UINT32)(0.01 * FRACTION_ONE_D);
 				else if (voltage > 3.5)
-					chip->modulation_depth = (UINT32)(2.00 * FRACTION_ONE_D);
+					chip.modulation_depth = (UINT32)(2.00 * FRACTION_ONE_D);
 				else
-					chip->modulation_depth = (UINT32)(((voltage * (1.0 / 3.5)) * 1.99 + 0.01) * FRACTION_ONE_D);
+					chip.modulation_depth = (UINT32)(((voltage * (1.0 / 3.5)) * 1.99 + 0.01) * FRACTION_ONE_D);
 				break;
 	
 			/* this is not yet implemented */
@@ -529,12 +529,12 @@ public class cem3394
 	double cem3394_get_parameter(int chipnum, int input)
 	{
 		sound_chip *chip = &chip_list[chipnum];
-		double voltage = chip->values[input];
+		double voltage = chip.values[input];
 	
 		switch (input)
 		{
 			case CEM3394_VCO_FREQUENCY:
-				return chip->vco_zero_freq * pow(2.0, -voltage * (1.0 / 0.75));
+				return chip.vco_zero_freq * pow(2.0, -voltage * (1.0 / 0.75));
 	
 			case CEM3394_WAVE_SELECT:
 				return voltage;
@@ -570,7 +570,7 @@ public class cem3394
 					return voltage * (1.0 / 2.5);
 	
 			case CEM3394_FILTER_FREQENCY:
-				return chip->filter_zero_freq * pow(2.0, -voltage * (1.0 / 0.375));
+				return chip.filter_zero_freq * pow(2.0, -voltage * (1.0 / 0.375));
 		}
 		return 0.0;
 	}

@@ -127,8 +127,8 @@ public class twin16
 					int sy = (flipy)?(ypos+height-1-y):(ypos+y);
 					if( sy>=16 && sy<256-16 )
 					{
-						UINT16 *dest = (UINT16 *)bitmap->line[sy];
-						UINT8 *pdest = (UINT8 *)priority_bitmap->line[sy];
+						UINT16 *dest = (UINT16 *)bitmap.line[sy];
+						UINT8 *pdest = (UINT8 *)priority_bitmap.line[sy];
 	
 						for( x=0; x<width; x++ )
 						{
@@ -224,7 +224,7 @@ public class twin16
 				int xpos = source[1];
 				int ypos = source[2];
 	
-				const pen_t *pal_data = Machine->pens+((attributes&0xf)+0x10)*16;
+				const pen_t *pal_data = Machine.pens+((attributes&0xf)+0x10)*16;
 				int height	= 16<<((attributes>>6)&0x3);
 				int width	= 16<<((attributes>>4)&0x3);
 				const UINT16 *pen_data = 0;
@@ -353,7 +353,7 @@ public class twin16
 				*/
 				const UINT16 *gfx_data = gfx_base + (code&0x7ff)*16 + bank_table[(code>>11)&0x3]*0x8000;
 				int color = (code>>13);
-				pen_t *pal_data = Machine->pens + 16*(0x20+color+8*palette);
+				pen_t *pal_data = Machine.pens + 16*(0x20+color+8*palette);
 	
 				{
 					int y;
@@ -367,8 +367,8 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									dest[7] = pal_data[(data>>4*3)&0xf];
@@ -397,8 +397,8 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									if (data != 0)
@@ -427,8 +427,8 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									*dest++ = pal_data[(data>>4*3)&0xf];
@@ -458,8 +458,8 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									if (data != 0)

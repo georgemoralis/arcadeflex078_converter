@@ -303,8 +303,8 @@ public class firetrk
 	
 	public static VideoUpdateHandlerPtr video_update_firetrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		helper1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
-		helper2 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
+		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper1 == NULL || helper2 == NULL)
 		{
@@ -385,9 +385,9 @@ public class firetrk
 				x = (i == 0) ? 24 : 16;
 			}
 	
-			for (y = 0; y < 256; y += Machine->gfx[0]->width)
+			for (y = 0; y < 256; y += Machine.gfx[0].width)
 			{
-				drawgfx(bitmap, Machine->gfx[0], *p++, 0, 0, 0,
+				drawgfx(bitmap, Machine.gfx[0], *p++, 0, 0, 0,
 					x, y, cliprect, TRANSPARENCY_NONE, 0);
 			}
 		}
@@ -410,7 +410,7 @@ public class firetrk
 			}
 	
 			drawgfx(bitmap,
-				Machine->gfx[car[i].layout],
+				Machine.gfx[car[i].layout],
 				car[i].number,
 				car[i].color,
 				car[i].flipx,
@@ -435,8 +435,8 @@ public class firetrk
 	
 		for (i = 1; i >= 0; i--)
 		{
-			int width = Machine->gfx[car[i].layout]->width;
-			int height = Machine->gfx[car[i].layout]->height;
+			int width = Machine.gfx[car[i].layout].width;
+			int height = Machine.gfx[car[i].layout].height;
 	
 			int x;
 			int y;
@@ -447,7 +447,7 @@ public class firetrk
 			}
 	
 			drawgfx(helper2,
-				Machine->gfx[car[i].layout],
+				Machine.gfx[car[i].layout],
 				car[i].number,
 				0,
 				car[i].flipx,

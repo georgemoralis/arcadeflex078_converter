@@ -125,10 +125,10 @@ public class deadang
 				if (fy != 0) fy=0; else fy=1;
 			}
 	
-			pdrawgfx(bitmap,Machine->gfx[1],
+			pdrawgfx(bitmap,Machine.gfx[1],
 					sprite,
 					color,fx,fy,x,y,
-					&Machine->visible_area,TRANSPARENCY_PEN,15,pri);
+					&Machine.visible_area,TRANSPARENCY_PEN,15,pri);
 		}
 	}
 	

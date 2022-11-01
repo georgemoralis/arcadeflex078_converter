@@ -63,7 +63,7 @@ public class thepit
 			palette_set_color(i,r,g,b);
 		}
 	
-		for (i = 0;i < Machine->drv->total_colors-8;i++)
+		for (i = 0;i < Machine.drv.total_colors-8;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -83,7 +83,7 @@ public class thepit
 			palette_set_color(i+8,r,g,b);
 		}
 	
-		for (i = 0;i < Machine->drv->color_table_len;i++)
+		for (i = 0;i < Machine.drv.color_table_len;i++)
 		{
 			colortable[i] = i + 8;
 		}
@@ -112,7 +112,7 @@ public class thepit
 			palette_set_color(i,r,g,b);
 		}
 	
-		for (i = 0;i < Machine->drv->total_colors-8;i++)
+		for (i = 0;i < Machine.drv.total_colors-8;i++)
 		{
 			int bit0,bit1,bit2,bit3,bit4,r,g,b;
 	
@@ -138,7 +138,7 @@ public class thepit
 			palette_set_color(i+8,r,g,b);
 		}
 	
-		for (i = 0;i < Machine->drv->color_table_len;i++)
+		for (i = 0;i < Machine.drv.color_table_len;i++)
 		{
 			colortable[i] = i + 8;
 		}
@@ -202,7 +202,7 @@ public class thepit
 		if (priority == 1)
 		{
 			/* find the space character */
-			while (Machine->gfx[0]->pen_usage[spacechar] & ~1) spacechar++;
+			while (Machine.gfx[0].pen_usage[spacechar] & ~1) spacechar++;
 		}
 	
 	
@@ -242,14 +242,14 @@ public class thepit
 				if (flip_screen_x != 0) sx = 31 - sx;
 				if (flip_screen_y != 0) sy = 248 - sy;
 	
-				color = colorram[offs] & (Machine->drv->gfxdecodeinfo[bank].total_color_codes - 1);
+				color = colorram[offs] & (Machine.drv.gfxdecodeinfo[bank].total_color_codes - 1);
 	
 				/* set up the background color */
-				Machine->gfx[bank]->
-						colortable[color * Machine->gfx[bank]->color_granularity] =
-						Machine->pens[bgcolor];
+				Machine.gfx[bank].
+						colortable[color * Machine.gfx[bank].color_granularity] =
+						Machine.pens[bgcolor];
 	
-				drawgfx(priority == 0 ? tmpbitmap : bitmap,Machine->gfx[bank],
+				drawgfx(priority == 0 ? tmpbitmap : bitmap,Machine.gfx[bank],
 						code,
 						color,
 						flip_screen_x,flip_screen_y,
@@ -281,7 +281,7 @@ public class thepit
 				}
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -325,7 +325,7 @@ public class thepit
 				/* Sprites 0-3 are drawn one pixel to the left */
 				if (offs <= 3*4) sy++;
 	
-				drawgfx(bitmap,Machine->gfx[graphics_bank | 1],
+				drawgfx(bitmap,Machine.gfx[graphics_bank | 1],
 						spriteram.read(offs + 1)& 0x3f,
 						spriteram.read(offs + 2)& 0x07,
 						flipx,flipy,

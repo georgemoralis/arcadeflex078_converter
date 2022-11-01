@@ -218,7 +218,7 @@ public class dogfgt
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						spriteram.read(offs+1)+ ((spriteram.read(offs)& 0x30) << 4),
 						(spriteram.read(offs)& 0x08) >> 3,
 						flipx,flipy,

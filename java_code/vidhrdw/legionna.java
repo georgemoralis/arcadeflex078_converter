@@ -240,7 +240,7 @@ public class legionna
 				for (ax=0; ax<dx; ax++)
 					for (ay=0; ay<dy; ay++)
 					{
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 						sprite++,
 						color,fx,fy,x+ax*16,y+ay*16,
 						cliprect,TRANSPARENCY_PEN,15);
@@ -251,7 +251,7 @@ public class legionna
 				for (ax=0; ax<dx; ax++)
 					for (ay=0; ay<dy; ay++)
 					{
-						drawgfx(bitmap,Machine->gfx[3],
+						drawgfx(bitmap,Machine.gfx[3],
 						sprite++,
 						color,fx,fy,x+(dx-ax-1)*16,y+ay*16,
 						cliprect,TRANSPARENCY_PEN,15);

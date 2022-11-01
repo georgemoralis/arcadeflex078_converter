@@ -103,17 +103,17 @@ public class ccpu
 	        CONTEXTCCPU context;
 	        ccpuRegs *Regs = dst;
 	        cGetContext (&context);
-	        Regs->accVal = context.accVal;
-	        Regs->cmpVal = context.cmpVal;
-	        Regs->pa0 = context.pa0;
-	        Regs->cFlag = context.cFlag;
-	        Regs->eRegPC = context.eRegPC;
-	        Regs->eRegA = context.eRegA;
-	        Regs->eRegB = context.eRegB;
-	        Regs->eRegI = context.eRegI;
-	        Regs->eRegJ = context.eRegJ;
-	        Regs->eRegP = context.eRegP;
-	        Regs->eCState = context.eCState;
+	        Regs.accVal = context.accVal;
+	        Regs.cmpVal = context.cmpVal;
+	        Regs.pa0 = context.pa0;
+	        Regs.cFlag = context.cFlag;
+	        Regs.eRegPC = context.eRegPC;
+	        Regs.eRegA = context.eRegA;
+	        Regs.eRegB = context.eRegB;
+	        Regs.eRegI = context.eRegI;
+	        Regs.eRegJ = context.eRegJ;
+	        Regs.eRegP = context.eRegP;
+	        Regs.eCState = context.eCState;
 	    }
 	    return sizeof(ccpuRegs);
 	}
@@ -125,17 +125,17 @@ public class ccpu
 		{
 			CONTEXTCCPU context;
 			ccpuRegs *Regs = src;
-			context.accVal = Regs->accVal;
-			context.cmpVal = Regs->cmpVal;
-			context.pa0 = Regs->pa0;
-			context.cFlag = Regs->cFlag;
-			context.eRegPC = Regs->eRegPC;
-			context.eRegA = Regs->eRegA;
-			context.eRegB = Regs->eRegB;
-			context.eRegI = Regs->eRegI;
-			context.eRegJ = Regs->eRegJ;
-			context.eRegP = Regs->eRegP;
-			context.eCState = (CINESTATE)Regs->eCState;
+			context.accVal = Regs.accVal;
+			context.cmpVal = Regs.cmpVal;
+			context.pa0 = Regs.pa0;
+			context.cFlag = Regs.cFlag;
+			context.eRegPC = Regs.eRegPC;
+			context.eRegA = Regs.eRegA;
+			context.eRegB = Regs.eRegB;
+			context.eRegI = Regs.eRegI;
+			context.eRegJ = Regs.eRegJ;
+			context.eRegP = Regs.eRegP;
+			context.eCState = (CINESTATE)Regs.eCState;
 			cSetContext (&context);
 		}
 	}
@@ -228,26 +228,26 @@ public class ccpu
 	
 	    switch( regnum )
 		{
-	        case CPU_INFO_REG+CCPU_PC: sprintf(buffer[which], "PC:%04X", r->eRegPC); break;
-			case CPU_INFO_REG+CCPU_CFLAG: sprintf(buffer[which], "C:%02X", r->cFlag); break;
-	        case CPU_INFO_REG+CCPU_CSTATE: sprintf(buffer[which], "S:%X", r->eCState); break;
-			case CPU_INFO_REG+CCPU_A: sprintf(buffer[which], "A:%03X", r->eRegA); break;
-			case CPU_INFO_REG+CCPU_B: sprintf(buffer[which], "B:%03X", r->eRegB); break;
-			case CPU_INFO_REG+CCPU_I: sprintf(buffer[which], "I:%03X", r->eRegI); break;
-	        case CPU_INFO_REG+CCPU_P: sprintf(buffer[which], "P:%X", r->eRegP); break;
-			case CPU_INFO_REG+CCPU_J: sprintf(buffer[which], "J:%03X", r->eRegJ); break;
-			case CPU_INFO_REG+CCPU_ACC: sprintf(buffer[which], "ACC:%03X", r->accVal); break;
-	        case CPU_INFO_REG+CCPU_CMP: sprintf(buffer[which], "CMP:%03X", r->cmpVal); break;
-	        case CPU_INFO_REG+CCPU_PA0: sprintf(buffer[which], "PA0:%02X", r->pa0); break;
+	        case CPU_INFO_REG+CCPU_PC: sprintf(buffer[which], "PC:%04X", r.eRegPC); break;
+			case CPU_INFO_REG+CCPU_CFLAG: sprintf(buffer[which], "C:%02X", r.cFlag); break;
+	        case CPU_INFO_REG+CCPU_CSTATE: sprintf(buffer[which], "S:%X", r.eCState); break;
+			case CPU_INFO_REG+CCPU_A: sprintf(buffer[which], "A:%03X", r.eRegA); break;
+			case CPU_INFO_REG+CCPU_B: sprintf(buffer[which], "B:%03X", r.eRegB); break;
+			case CPU_INFO_REG+CCPU_I: sprintf(buffer[which], "I:%03X", r.eRegI); break;
+	        case CPU_INFO_REG+CCPU_P: sprintf(buffer[which], "P:%X", r.eRegP); break;
+			case CPU_INFO_REG+CCPU_J: sprintf(buffer[which], "J:%03X", r.eRegJ); break;
+			case CPU_INFO_REG+CCPU_ACC: sprintf(buffer[which], "ACC:%03X", r.accVal); break;
+	        case CPU_INFO_REG+CCPU_CMP: sprintf(buffer[which], "CMP:%03X", r.cmpVal); break;
+	        case CPU_INFO_REG+CCPU_PA0: sprintf(buffer[which], "PA0:%02X", r.pa0); break;
 				break;
 			case CPU_INFO_FLAGS:
 				/* TODO: no idea how the flags should look like */
 				sprintf(buffer[which], "%c-%c%c%c%c",
-					(r->cFlag) ? 'C' : 'c',
-	                (r->eCState == state_A || r->eCState == state_AA) ? 'A':' ',
-	                (r->eCState == state_A) ? 'A':' ',
-	                (r->eCState == state_B || r->eCState == state_BB) ? 'B':' ',
-	                (r->eCState == state_B) ? 'B':' ');
+					(r.cFlag) ? 'C' : 'c',
+	                (r.eCState == state_A || r.eCState == state_AA) ? 'A':' ',
+	                (r.eCState == state_A) ? 'A':' ',
+	                (r.eCState == state_B || r.eCState == state_BB) ? 'B':' ',
+	                (r.eCState == state_B) ? 'B':' ');
 	            break;
 			case CPU_INFO_NAME: return "CCPU";
 			case CPU_INFO_FAMILY: return "Cinematronics CPU";
@@ -1512,7 +1512,7 @@ public class ccpu
 	{
 		/*
 		 * Arithmetic shift right of D (A+B) .. B is high (sign bits).
-		 * divide by 2, but leave the sign bit the same. (ie: 1010 -> 1001)
+		 * divide by 2, but leave the sign bit the same. (ie: 1010 . 1001)
 		 */
 		CINEWORD temp_word = 0x0EEE;
 		CINEWORD temp_word_2;
@@ -1616,7 +1616,7 @@ public class ccpu
 	
 	CINESTATE opLSLDf_B_AA (int opcode)
 	{
-		/* not 'the same' as the A->AA version above */
+		/* not 'the same' as the A.AA version above */
 	
 		CINEWORD temp_word = 0x0FFF;
 	
@@ -2337,31 +2337,31 @@ public class ccpu
 	
 	void cSetContext(CONTEXTCCPU *c)
 	{
-		cmp_old = c -> accVal;
-		cmp_new = c -> cmpVal;
-		SETA0 (c -> pa0);
-		flag_C = c -> cFlag;
-		register_PC = c -> eRegPC;
-		register_A = c -> eRegA;
-		register_B = c -> eRegB;
-		register_I = c -> eRegI;
-		register_J = c -> eRegJ;
-		register_P = c -> eRegP;
-		state = (CINESTATE)c -> eCState;
+		cmp_old = c . accVal;
+		cmp_new = c . cmpVal;
+		SETA0 (c . pa0);
+		flag_C = c . cFlag;
+		register_PC = c . eRegPC;
+		register_A = c . eRegA;
+		register_B = c . eRegB;
+		register_I = c . eRegI;
+		register_J = c . eRegJ;
+		register_P = c . eRegP;
+		state = (CINESTATE)c . eCState;
 	}
 	
 	void cGetContext(CONTEXTCCPU *c)
 	{
-		c -> accVal = cmp_old;
-		c -> cmpVal = cmp_new;
-		c -> pa0 = GETA0();
-		c -> cFlag = GETFC();
-		c -> eRegPC = register_PC;
-		c -> eRegA = register_A;
-		c -> eRegB = register_B;
-		c -> eRegI = register_I;
-		c -> eRegJ = register_J;
-		c -> eRegP = register_P;
-		c -> eCState = state;
+		c . accVal = cmp_old;
+		c . cmpVal = cmp_new;
+		c . pa0 = GETA0();
+		c . cFlag = GETFC();
+		c . eRegPC = register_PC;
+		c . eRegA = register_A;
+		c . eRegB = register_B;
+		c . eRegI = register_I;
+		c . eRegJ = register_J;
+		c . eRegP = register_P;
+		c . eCState = state;
 	}
 }

@@ -40,7 +40,7 @@ public class dynax
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int x =	(color_prom[i]<<8) + color_prom[0x200+i];
 			/* The bits are in reverse order! */
@@ -666,7 +666,7 @@ public class dynax
 			for (dy = 0; dy < 256; dy++)
 			{
 				UINT16 *dst;
-				UINT16 *dstbase = (UINT16 *)bitmap->base + ((dy - scrolly) & 0xff) * bitmap->rowpixels;
+				UINT16 *dstbase = (UINT16 *)bitmap.base + ((dy - scrolly) & 0xff) * bitmap.rowpixels;
 	
 				length = scrollx;
 				dst = dstbase + 2*(256 - length);
@@ -722,7 +722,7 @@ public class dynax
 			for (dy = 0; dy < 256; dy++)
 			{
 				UINT16 *dst;
-				UINT16 *dstbase = (UINT16 *)bitmap->base + ((dy - scrolly) & 0xff) * bitmap->rowpixels;
+				UINT16 *dstbase = (UINT16 *)bitmap.base + ((dy - scrolly) & 0xff) * bitmap.rowpixels;
 	
 				length = scrollx;
 				dst = dstbase + 256 - length;
@@ -774,13 +774,13 @@ public class dynax
 		dynax_blit_palbank  = (c >>  4) & 1;
 		dynax_blit_dest = 1;
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		memset(dynax_pixmap[0][0],0,sizeof(UINT8)*0x100*0x100);
 		memset(dynax_pixmap[0][1],0,sizeof(UINT8)*0x100*0x100);
 		hanamai_layer_half = 0;
-		sprtmtch_drawgfx(i, Machine->visible_area.min_x + Machine->visible_area.min_y*256, 0);
+		sprtmtch_drawgfx(i, Machine.visible_area.min_x + Machine.visible_area.min_y*256, 0);
 		hanamai_layer_half = 1;
-		sprtmtch_drawgfx(i, Machine->visible_area.min_x + Machine->visible_area.min_y*256, 0);
+		sprtmtch_drawgfx(i, Machine.visible_area.min_x + Machine.visible_area.min_y*256, 0);
 		hanamai_copylayer(bitmap, cliprect, 0);
 		usrintf_showmessage("%06X C%02X",i,c);
 	}
@@ -822,7 +822,7 @@ public class dynax
 	
 		fillbitmap(
 			bitmap,
-			Machine->pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
+			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
 			cliprect);
 	
 		/* bit 4 = display enable? */
@@ -862,7 +862,7 @@ public class dynax
 	
 		fillbitmap(
 			bitmap,
-			Machine->pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 0x0f) * 256],
+			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 0x0f) * 256],
 			cliprect);
 	
 		int pri = hanamai_priority >> 4;
@@ -896,7 +896,7 @@ public class dynax
 	
 		fillbitmap(
 			bitmap,
-			Machine->pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
+			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
 			cliprect);
 	
 		if ((layers_ctrl & 1) != 0)	hanamai_copylayer( bitmap, cliprect, 0 );
@@ -913,7 +913,7 @@ public class dynax
 	
 		fillbitmap(
 			bitmap,
-			Machine->pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
+			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
 			cliprect);
 	
 		if ((layers_ctrl & 1) != 0)	mjdialq2_copylayer( bitmap, cliprect, 0 );

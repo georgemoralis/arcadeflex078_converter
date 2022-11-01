@@ -101,7 +101,7 @@ public class atarifb
 	
 			if (!disable)
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					charcode, 0,
 					flipbit,flipbit,sx,sy,
 					&right_area,TRANSPARENCY_NONE,0);
@@ -126,7 +126,7 @@ public class atarifb
 	
 			if (!disable)
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					charcode, 0,
 					flipbit,flipbit,sx,sy,
 					&left_area,TRANSPARENCY_NONE,0);
@@ -164,7 +164,7 @@ public class atarifb
 				if (sx < 0) sx += 256;
 				if (sx > 255) sx -= 256;
 	
-				drawgfx(tmpbitmap,Machine->gfx[1],
+				drawgfx(tmpbitmap,Machine.gfx[1],
 						charcode, 0,
 						flipx,flipy,sx,sy,
 						0,TRANSPARENCY_NONE,0);
@@ -198,7 +198,7 @@ public class atarifb
 			{
 				shade = ((spriteram.read(obj*2+1 + 0x20)) & 0x07);
 	
-				drawgfx(bitmap,Machine->gfx[sprite_bank+1],
+				drawgfx(bitmap,Machine.gfx[sprite_bank+1],
 					charcode, shade,
 					flipx,flipy,sx,sy,
 					&bigfield_area,TRANSPARENCY_PEN,0);
@@ -206,7 +206,7 @@ public class atarifb
 				shade = ((spriteram.read(obj*2+1 + 0x20)) & 0x08) >> 3;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[sprite_bank],
+			drawgfx(bitmap,Machine.gfx[sprite_bank],
 					charcode, shade,
 					flipx,flipy,sx,sy,
 					&bigfield_area,TRANSPARENCY_PEN,0);
@@ -219,7 +219,7 @@ public class atarifb
 				if ((charcode == 0x11) && (sy == 0x07))
 				{
 					sy = 0xf1; /* When multiplexed, it's 0x10...why? */
-					drawgfx(bitmap,Machine->gfx[sprite_bank],
+					drawgfx(bitmap,Machine.gfx[sprite_bank],
 						charcode, 0,
 						flipx,flipy,sx,sy,
 						&bigfield_area,TRANSPARENCY_PEN,0);
@@ -361,10 +361,10 @@ public class atarifb
 				break;
 		}
 		for (x = 0;x < 20;x++)
-				drawgfx(bitmap,Machine->uifont,buf1[x],UI_COLOR_NORMAL,0,0,6*x + 24*8,0,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf1[x],UI_COLOR_NORMAL,0,0,6*x + 24*8,0,0,TRANSPARENCY_NONE,0);
 	
 		for (x = 0;x < 20;x++)
-				drawgfx(bitmap,Machine->uifont,buf2[x],UI_COLOR_NORMAL,0,0,6*x,0,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf2[x],UI_COLOR_NORMAL,0,0,6*x,0,0,TRANSPARENCY_NONE,0);
 	}
 	} };
 }

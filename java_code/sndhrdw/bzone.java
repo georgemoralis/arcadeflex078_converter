@@ -81,7 +81,7 @@ public class bzone
 			{
 				int clock;
 	
-				poly_counter += Machine->sample_rate;
+				poly_counter += Machine.sample_rate;
 				if( ((poly_shift & 0x0008) == 0) == ((poly_shift & 0x4000) == 0) )
 					poly_shift = (poly_shift << 1) | 1;
 				else
@@ -125,8 +125,8 @@ public class bzone
 					explosion_amp_counter -= (int)(32767 / (0.23*4));
 					if( explosion_amp_counter < 0 )
 					{
-						int n = (-explosion_amp_counter / Machine->sample_rate) + 1;
-						explosion_amp_counter += n * Machine->sample_rate;
+						int n = (-explosion_amp_counter / Machine.sample_rate) + 1;
+						explosion_amp_counter += n * Machine.sample_rate;
 						if( (explosion_amp -= n) < 0 )
 							explosion_amp = 0;
 					}
@@ -158,8 +158,8 @@ public class bzone
 					shell_amp_counter -= (int)(32767 / (0.1081*4));
 					if( shell_amp_counter < 0 )
 					{
-						int n = (-shell_amp_counter / Machine->sample_rate) + 1;
-						shell_amp_counter += n * Machine->sample_rate;
+						int n = (-shell_amp_counter / Machine.sample_rate) + 1;
+						shell_amp_counter += n * Machine.sample_rate;
 						if( (shell_amp -= n) < 0 )
 							shell_amp = 0;
 					}
@@ -194,14 +194,14 @@ public class bzone
 					motor_rate_counter -= (int)((240 - 184) / 0.25);
 					while( motor_rate_counter <= 0 )
 					{
-						motor_rate_counter += Machine->sample_rate;
+						motor_rate_counter += Machine.sample_rate;
 						motor_rate += (motor_rate < motor_rate_new) ? +1 : -1;
 					}
 				}
 				motor_counter -= motor_rate;
 				while( motor_counter <= 0 )
 				{
-					motor_counter += Machine->sample_rate;
+					motor_counter += Machine.sample_rate;
 	
 					r0 = 1.0/1e12;
 					r1 = 1.0/1e12;
@@ -245,8 +245,8 @@ public class bzone
 					motor_amp_counter -= motor_amp_step;
 					if( motor_amp_counter < 0 )
 					{
-						int n = (-motor_amp_counter / Machine->sample_rate) + 1;
-						motor_amp_counter += n * Machine->sample_rate;
+						int n = (-motor_amp_counter / Machine.sample_rate) + 1;
+						motor_amp_counter += n * Machine.sample_rate;
 						if( motor_amp > motor_amp_new )
 						{
 							motor_amp -= n;
@@ -282,7 +282,7 @@ public class bzone
 	    for( i = 0; i < 0x8000; i++ )
 			discharge[0x7fff-i] = (INT16) (0x7fff/exp(1.0*i/4096));
 	
-		channel = stream_init("Custom", 50, Machine->sample_rate, 0, bzone_sound_update);
+		channel = stream_init("Custom", 50, Machine.sample_rate, 0, bzone_sound_update);
 	    if( channel == -1 )
 	        return 1;
 	

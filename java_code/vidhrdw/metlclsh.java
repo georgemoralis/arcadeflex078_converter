@@ -123,7 +123,7 @@ public class metlclsh
 		Offset: 	Bits:			Value:
 	
 			0x000					Code
-			0x400	7--- ----		Priority (0/1 -> over/below sprites and background)
+			0x400	7--- ----		Priority (0/1 . over/below sprites and background)
 					-65- ----		Color
 					---- --10		Code
 	
@@ -185,14 +185,14 @@ public class metlclsh
 					---- ---0		Enable
 	
 			1						Code (low bits)
-			2						Y (bottom -> top)
-			3						X (right -> left)
+			2						Y (bottom . top)
+			3						X (right . left)
 	
 	***************************************************************************/
 	
 	static void metlclsh_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		struct GfxElement *gfx = Machine->gfx[0];
+		struct GfxElement *gfx = Machine.gfx[0];
 		int offs;
 	
 		for (offs = 0;offs < spriteram_size; offs += 4)
@@ -225,15 +225,15 @@ public class metlclsh
 				if (sizey != 0)
 				{
 					drawgfx(bitmap,gfx, code & ~1, color, flipx,flipy,
-							sx, sy + (flipy ? 0 : -16) + wrapy, &Machine->visible_area,TRANSPARENCY_PEN,0);
+							sx, sy + (flipy ? 0 : -16) + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 					drawgfx(bitmap,gfx, code |  1, color, flipx,flipy,
-							sx,sy + (flipy ? -16 : 0) + wrapy, &Machine->visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + (flipy ? -16 : 0) + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
 					drawgfx(bitmap,gfx, code, color, flipx,flipy,
-							sx,sy + wrapy, &Machine->visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + wrapy, &Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -255,7 +255,7 @@ public class metlclsh
 	
 	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[0x10],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x10],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,fg_tilemap,1,0);	// low priority tiles of foreground
 		if (metlclsh_scrollx[0] & 0x08)					// background (if enabled)

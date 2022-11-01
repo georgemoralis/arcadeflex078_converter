@@ -36,7 +36,7 @@ public class mugsmash
 	
 		const UINT16 *source = mugs_spriteram;
 		const UINT16 *finish = source+0x2000;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		while( source<finish )
 		{

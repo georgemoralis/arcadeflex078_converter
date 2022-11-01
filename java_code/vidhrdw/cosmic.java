@@ -105,10 +105,10 @@ public class cosmic
 	public static PaletteInitHandlerPtr palette_init_panic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = 0xff * ((i >> 0) & 1);
 			int g = 0xff * ((i >> 1) & 1);
@@ -142,10 +142,10 @@ public class cosmic
 	{
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r = 0xff * ((i >> 0) & 1);
 			int g = 0xff * ((i >> 1) & 1);
@@ -179,7 +179,7 @@ public class cosmic
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r,g,b;
 	
@@ -198,11 +198,11 @@ public class cosmic
 	public static PaletteInitHandlerPtr palette_init_magspot2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r,g,b;
 	
@@ -231,11 +231,11 @@ public class cosmic
 	public static PaletteInitHandlerPtr palette_init_nomnlnd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r,g,b;
 	
@@ -278,7 +278,7 @@ public class cosmic
 				UINT8 x = offs << 3;
 				UINT8 y = offs >> 5;
 	
-				pen_t pen = Machine->pens[map_color(x, y)];
+				pen_t pen = Machine.pens[map_color(x, y)];
 	
 	
 				for (i = 0; i < 8; i++)
@@ -322,21 +322,21 @@ public class cosmic
 	            {
 	                /* 16x16 sprite */
 	
-				    drawgfx(bitmap,Machine->gfx[0],
+				    drawgfx(bitmap,Machine.gfx[0],
 						    code, color,
 						    0, ~spriteram.read(offs)& 0x40,
 					    	256-spriteram.read(offs+2),spriteram.read(offs+1),
-					        &Machine->visible_area,TRANSPARENCY_PEN,0);
+					        &Machine.visible_area,TRANSPARENCY_PEN,0);
 	            }
 	            else
 	            {
 	                /* 32x32 sprite */
 	
-				    drawgfx(bitmap,Machine->gfx[1],
+				    drawgfx(bitmap,Machine.gfx[1],
 						    code >> 2, color,
 						    0, ~spriteram.read(offs)& 0x40,
 					    	256-spriteram.read(offs+2),spriteram.read(offs+1),
-					        &Machine->visible_area,TRANSPARENCY_PEN,0);
+					        &Machine.visible_area,TRANSPARENCY_PEN,0);
 	            }
 	        }
 		}
@@ -387,7 +387,7 @@ public class cosmic
 					/* RGB order is reversed -- bit 7=R, 6=G, 5=B */
 					int col = (map >> 7) | ((map >> 5) & 0x02) | ((map >> 3) & 0x04);
 	
-					plot_pixel(bitmap, x, y, Machine->pens[col]);
+					plot_pixel(bitmap, x, y, Machine.pens[col]);
 				}
 	
 	
@@ -450,7 +450,7 @@ public class cosmic
 				{
 					if (!(vert_data & horz_data & 0x80))	/* NAND gate */
 					{
-						pen_t pen = Machine->pens[4];	/* blue */
+						pen_t pen = Machine.pens[4];	/* blue */
 	
 						if (flip_screen != 0)
 							plot_pixel(bitmap, 255-x, 255-y, pen);
@@ -580,7 +580,7 @@ public class cosmic
 	
 				if (color != 0)
 				{
-					pen_t pen = Machine->pens[color];
+					pen_t pen = Machine.pens[color];
 	
 					if (flip_screen != 0)
 						plot_pixel(bitmap, 255-x, 255-y, pen);
@@ -609,7 +609,7 @@ public class cosmic
 	
 	public static VideoUpdateHandlerPtr video_update_cosmicg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	} };
@@ -617,7 +617,7 @@ public class cosmic
 	
 	public static VideoUpdateHandlerPtr video_update_panic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	
@@ -627,7 +627,7 @@ public class cosmic
 	
 	public static VideoUpdateHandlerPtr video_update_cosmica  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		cosmica_draw_starfield(bitmap);
 	
@@ -639,7 +639,7 @@ public class cosmic
 	
 	public static VideoUpdateHandlerPtr video_update_magspot2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	
@@ -649,7 +649,7 @@ public class cosmic
 	
 	public static VideoUpdateHandlerPtr video_update_devzone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 	    if (background_enable != 0)
 	    {
@@ -667,7 +667,7 @@ public class cosmic
 		/* according to the video summation logic on pg4, the trees and river
 		   have the highest priority */
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		draw_bitmap(bitmap);
 	

@@ -318,8 +318,8 @@ public class psikyo
 		unsigned char *TILES	=	memory_region(REGION_USER1);	// Sprites LUT
 		int TILES_LEN			=	memory_region_length(REGION_USER1);
 	
-		int width	=	Machine->drv->screen_width;
-		int height	=	Machine->drv->screen_height;
+		int width	=	Machine.drv.screen_width;
+		int height	=	Machine.drv.screen_height;
 	
 		/* Exit if sprites are disabled */
 		if ( spritelist[ BYTE_XOR_BE((0x800-2)/2) ] & 1 )	return;
@@ -397,7 +397,7 @@ public class psikyo
 					int addr	=	(code*2) & (TILES_LEN-1);
 	
 					if (zoomx == 32 && zoomy == 32)
-						pdrawgfx(bitmap,Machine->gfx[0],
+						pdrawgfx(bitmap,Machine.gfx[0],
 								TILES[addr+1] * 256 + TILES[addr],
 								attr >> 8,
 								flipx, flipy,
@@ -405,7 +405,7 @@ public class psikyo
 								cliprect,TRANSPARENCY_PEN,trans_pen,
 								(attr & 0xc0) ? 2 : 0);	// layer 0&1 have pri 0&1
 					else
-						pdrawgfxzoom(bitmap,Machine->gfx[0],
+						pdrawgfxzoom(bitmap,Machine.gfx[0],
 									TILES[addr+1] * 256 + TILES[addr],
 									attr >> 8,
 									flipx, flipy,

@@ -75,10 +75,10 @@ public class pbillian
 			col =(source[3]&0xf0)>>4;
 		  num=source[0]|((source[3]&0x0f)<<8); 
 		  
-		  drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x+8:x,flip_screen?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x:x+8,flip_screen?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x+8:x,flip_screen?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x:x+8,flip_screen?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
+		  drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x+8:x,flip_screen?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x:x+8,flip_screen?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x+8:x,flip_screen?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen,flip_screen,flip_screen?240-x:x+8,flip_screen?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
 	
 			source += 0x4;
 		}

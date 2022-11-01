@@ -61,8 +61,8 @@ public class matmania
 	public static PaletteInitHandlerPtr palette_init_matmania  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 64;i++)
@@ -144,11 +144,11 @@ public class matmania
 		memset(dirtybuffer2,1,matmania_videoram3_size);
 	
 		/* Mat Mania has a virtual screen twice as large as the visible screen */
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,2* Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,2* Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		/* Mat Mania has a virtual screen twice as large as the visible screen */
-		if ((tmpbitmap2 = auto_bitmap_alloc(Machine->drv->screen_width,2 * Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap2 = auto_bitmap_alloc(Machine.drv.screen_width,2 * Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -197,7 +197,7 @@ public class matmania
 				sx = 15 - offs / 32;
 				sy = offs % 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[1],
+				drawgfx(tmpbitmap,Machine.gfx[1],
 						videoram.read(offs)+ ((colorram[offs] & 0x08) << 5),
 						(colorram[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
@@ -219,7 +219,7 @@ public class matmania
 				sx = 15 - offs / 32;
 				sy = offs % 32;
 	
-				drawgfx(tmpbitmap2,Machine->gfx[1],
+				drawgfx(tmpbitmap2,Machine.gfx[1],
 						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x08) << 5),
 						(matmania_colorram3[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
@@ -236,9 +236,9 @@ public class matmania
 	
 			scrolly = -*matmania_scroll;
 			if (*matmania_pageselect)
-				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -247,12 +247,12 @@ public class matmania
 		{
 			if (spriteram.read(offs)& 0x01)
 			{
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						spriteram.read(offs+1)+ ((spriteram.read(offs)& 0xf0) << 4),
 						(spriteram.read(offs)& 0x08) >> 3,
 						spriteram.read(offs)& 0x04,spriteram.read(offs)& 0x02,
 						239 - spriteram.read(offs+3),(240 - spriteram.read(offs+2)) & 0xff,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -266,12 +266,12 @@ public class matmania
 			sx = 31 - offs / 32;
 			sy = offs % 32;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
 					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -293,7 +293,7 @@ public class matmania
 				sx = 15 - offs / 32;
 				sy = offs % 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[1],
+				drawgfx(tmpbitmap,Machine.gfx[1],
 						videoram.read(offs)+ ((colorram[offs] & 0x03) << 8),
 						(colorram[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
@@ -315,7 +315,7 @@ public class matmania
 				sx = 15 - offs / 32;
 				sy = offs % 32;
 	
-				drawgfx(tmpbitmap2,Machine->gfx[1],
+				drawgfx(tmpbitmap2,Machine.gfx[1],
 						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x03) << 8),
 						(matmania_colorram3[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
@@ -332,9 +332,9 @@ public class matmania
 	
 			scrolly = -*matmania_scroll;
 			if (*matmania_pageselect)
-				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap2,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmpbitmap,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -343,12 +343,12 @@ public class matmania
 		{
 			if (spriteram.read(offs)& 0x01)
 			{
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						spriteram.read(offs+1)+ ((spriteram.read(offs)& 0xf0) << 4),
 						(spriteram.read(offs)& 0x08) >> 3,
 						spriteram.read(offs)& 0x04,spriteram.read(offs)& 0x02,
 						239 - spriteram.read(offs+3),(240 - spriteram.read(offs+2)) & 0xff,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -362,12 +362,12 @@ public class matmania
 			sx = 31 - offs / 32;
 			sy = offs % 32;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
 					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 }

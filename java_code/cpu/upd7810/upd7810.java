@@ -1895,66 +1895,66 @@ public class upd7810
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+UPD7810_PC:	sprintf(buffer[which], "PC  :%04X", r->pc.w.l); break;
-			case CPU_INFO_REG+UPD7810_SP:	sprintf(buffer[which], "SP  :%04X", r->sp.w.l); break;
-			case CPU_INFO_REG+UPD7810_PSW:	sprintf(buffer[which], "PSW :%02X", r->psw); break;
-			case CPU_INFO_REG+UPD7810_A:	sprintf(buffer[which], "A   :%02X", r->va.b.l); break;
-			case CPU_INFO_REG+UPD7810_V:	sprintf(buffer[which], "V   :%02X", r->va.b.h); break;
-			case CPU_INFO_REG+UPD7810_EA:	sprintf(buffer[which], "EA  :%04X", r->ea.w.l); break;
-			case CPU_INFO_REG+UPD7810_BC:	sprintf(buffer[which], "BC  :%04X", r->bc.w.l); break;
-			case CPU_INFO_REG+UPD7810_DE:	sprintf(buffer[which], "DE  :%04X", r->de.w.l); break;
-			case CPU_INFO_REG+UPD7810_HL:	sprintf(buffer[which], "HL  :%04X", r->hl.w.l); break;
-			case CPU_INFO_REG+UPD7810_A2:	sprintf(buffer[which], "A'  :%02X", r->va2.b.l); break;
-			case CPU_INFO_REG+UPD7810_V2:	sprintf(buffer[which], "V'  :%02X", r->va2.b.h); break;
-			case CPU_INFO_REG+UPD7810_EA2:	sprintf(buffer[which], "EA' :%04X", r->ea2.w.l); break;
-			case CPU_INFO_REG+UPD7810_BC2:	sprintf(buffer[which], "BC' :%04X", r->bc2.w.l); break;
-			case CPU_INFO_REG+UPD7810_DE2:	sprintf(buffer[which], "DE' :%04X", r->de2.w.l); break;
-			case CPU_INFO_REG+UPD7810_HL2:	sprintf(buffer[which], "HL' :%04X", r->hl2.w.l); break;
-			case CPU_INFO_REG+UPD7810_CNT0: sprintf(buffer[which], "CNT0:%02X", r->cnt.b.l); break;
-			case CPU_INFO_REG+UPD7810_CNT1: sprintf(buffer[which], "CNT1:%02X", r->cnt.b.h); break;
-			case CPU_INFO_REG+UPD7810_TM0:	sprintf(buffer[which], "TM0 :%02X", r->tm.b.l); break;
-			case CPU_INFO_REG+UPD7810_TM1:	sprintf(buffer[which], "TM1 :%02X", r->tm.b.h); break;
-			case CPU_INFO_REG+UPD7810_ECNT: sprintf(buffer[which], "ECNT:%04X", r->ecnt.w.l); break;
-			case CPU_INFO_REG+UPD7810_ECPT: sprintf(buffer[which], "ECPT:%04X", r->ecnt.w.h); break;
-			case CPU_INFO_REG+UPD7810_ETM0: sprintf(buffer[which], "ETM0:%04X", r->etm.w.l); break;
-			case CPU_INFO_REG+UPD7810_ETM1: sprintf(buffer[which], "ETM1:%04X", r->etm.w.h); break;
-			case CPU_INFO_REG+UPD7810_MA:	sprintf(buffer[which], "MA  :%02X", r->ma); break;
-			case CPU_INFO_REG+UPD7810_MB:	sprintf(buffer[which], "MB  :%02X", r->mb); break;
-			case CPU_INFO_REG+UPD7810_MCC:	sprintf(buffer[which], "MCC :%02X", r->mcc); break;
-			case CPU_INFO_REG+UPD7810_MC:	sprintf(buffer[which], "MC  :%02X", r->mc); break;
-			case CPU_INFO_REG+UPD7810_MM:	sprintf(buffer[which], "MM  :%02X", r->mm); break;
-			case CPU_INFO_REG+UPD7810_MF:	sprintf(buffer[which], "MF  :%02X", r->mf); break;
-			case CPU_INFO_REG+UPD7810_TMM:	sprintf(buffer[which], "TMM :%02X", r->tmm); break;
-			case CPU_INFO_REG+UPD7810_ETMM: sprintf(buffer[which], "ETMM:%02X", r->etmm); break;
-			case CPU_INFO_REG+UPD7810_EOM:	sprintf(buffer[which], "EOM :%02X", r->eom); break;
-			case CPU_INFO_REG+UPD7810_SML:	sprintf(buffer[which], "SML :%02X", r->sml); break;
-			case CPU_INFO_REG+UPD7810_SMH:	sprintf(buffer[which], "SMH :%02X", r->smh); break;
-			case CPU_INFO_REG+UPD7810_ANM:	sprintf(buffer[which], "ANM :%02X", r->anm); break;
-			case CPU_INFO_REG+UPD7810_MKL:	sprintf(buffer[which], "MKL :%02X", r->mkl); break;
-			case CPU_INFO_REG+UPD7810_MKH:	sprintf(buffer[which], "MKH :%02X", r->mkh); break;
-			case CPU_INFO_REG+UPD7810_ZCM:	sprintf(buffer[which], "ZCM :%02X", r->zcm); break;
-			case CPU_INFO_REG+UPD7810_CR0:	sprintf(buffer[which], "CR0 :%02X", r->cr0); break;
-			case CPU_INFO_REG+UPD7810_CR1:	sprintf(buffer[which], "CR1 :%02X", r->cr1); break;
-			case CPU_INFO_REG+UPD7810_CR2:	sprintf(buffer[which], "CR2 :%02X", r->cr2); break;
-			case CPU_INFO_REG+UPD7810_CR3:	sprintf(buffer[which], "CR3 :%02X", r->cr3); break;
-			case CPU_INFO_REG+UPD7810_RXB:	sprintf(buffer[which], "RXB :%02X", r->rxb); break;
-			case CPU_INFO_REG+UPD7810_TXB:	sprintf(buffer[which], "TXB :%02X", r->txb); break;
-			case CPU_INFO_REG+UPD7810_TXD:	sprintf(buffer[which], "TXD :%d", r->txd); break;
-			case CPU_INFO_REG+UPD7810_RXD:	sprintf(buffer[which], "RXD :%d", r->rxd); break;
-			case CPU_INFO_REG+UPD7810_SCK:	sprintf(buffer[which], "SCK :%d", r->sck); break;
-			case CPU_INFO_REG+UPD7810_TI:	sprintf(buffer[which], "TI  :%d", r->ti); break;
-			case CPU_INFO_REG+UPD7810_TO:	sprintf(buffer[which], "TO  :%d", r->to); break;
-			case CPU_INFO_REG+UPD7810_CI:	sprintf(buffer[which], "CI  :%d", r->ci); break;
-			case CPU_INFO_REG+UPD7810_CO0:	sprintf(buffer[which], "CO0 :%d", r->co0 & 1); break;
-			case CPU_INFO_REG+UPD7810_CO1:	sprintf(buffer[which], "CO1 :%d", r->co1 & 1); break;
+			case CPU_INFO_REG+UPD7810_PC:	sprintf(buffer[which], "PC  :%04X", r.pc.w.l); break;
+			case CPU_INFO_REG+UPD7810_SP:	sprintf(buffer[which], "SP  :%04X", r.sp.w.l); break;
+			case CPU_INFO_REG+UPD7810_PSW:	sprintf(buffer[which], "PSW :%02X", r.psw); break;
+			case CPU_INFO_REG+UPD7810_A:	sprintf(buffer[which], "A   :%02X", r.va.b.l); break;
+			case CPU_INFO_REG+UPD7810_V:	sprintf(buffer[which], "V   :%02X", r.va.b.h); break;
+			case CPU_INFO_REG+UPD7810_EA:	sprintf(buffer[which], "EA  :%04X", r.ea.w.l); break;
+			case CPU_INFO_REG+UPD7810_BC:	sprintf(buffer[which], "BC  :%04X", r.bc.w.l); break;
+			case CPU_INFO_REG+UPD7810_DE:	sprintf(buffer[which], "DE  :%04X", r.de.w.l); break;
+			case CPU_INFO_REG+UPD7810_HL:	sprintf(buffer[which], "HL  :%04X", r.hl.w.l); break;
+			case CPU_INFO_REG+UPD7810_A2:	sprintf(buffer[which], "A'  :%02X", r.va2.b.l); break;
+			case CPU_INFO_REG+UPD7810_V2:	sprintf(buffer[which], "V'  :%02X", r.va2.b.h); break;
+			case CPU_INFO_REG+UPD7810_EA2:	sprintf(buffer[which], "EA' :%04X", r.ea2.w.l); break;
+			case CPU_INFO_REG+UPD7810_BC2:	sprintf(buffer[which], "BC' :%04X", r.bc2.w.l); break;
+			case CPU_INFO_REG+UPD7810_DE2:	sprintf(buffer[which], "DE' :%04X", r.de2.w.l); break;
+			case CPU_INFO_REG+UPD7810_HL2:	sprintf(buffer[which], "HL' :%04X", r.hl2.w.l); break;
+			case CPU_INFO_REG+UPD7810_CNT0: sprintf(buffer[which], "CNT0:%02X", r.cnt.b.l); break;
+			case CPU_INFO_REG+UPD7810_CNT1: sprintf(buffer[which], "CNT1:%02X", r.cnt.b.h); break;
+			case CPU_INFO_REG+UPD7810_TM0:	sprintf(buffer[which], "TM0 :%02X", r.tm.b.l); break;
+			case CPU_INFO_REG+UPD7810_TM1:	sprintf(buffer[which], "TM1 :%02X", r.tm.b.h); break;
+			case CPU_INFO_REG+UPD7810_ECNT: sprintf(buffer[which], "ECNT:%04X", r.ecnt.w.l); break;
+			case CPU_INFO_REG+UPD7810_ECPT: sprintf(buffer[which], "ECPT:%04X", r.ecnt.w.h); break;
+			case CPU_INFO_REG+UPD7810_ETM0: sprintf(buffer[which], "ETM0:%04X", r.etm.w.l); break;
+			case CPU_INFO_REG+UPD7810_ETM1: sprintf(buffer[which], "ETM1:%04X", r.etm.w.h); break;
+			case CPU_INFO_REG+UPD7810_MA:	sprintf(buffer[which], "MA  :%02X", r.ma); break;
+			case CPU_INFO_REG+UPD7810_MB:	sprintf(buffer[which], "MB  :%02X", r.mb); break;
+			case CPU_INFO_REG+UPD7810_MCC:	sprintf(buffer[which], "MCC :%02X", r.mcc); break;
+			case CPU_INFO_REG+UPD7810_MC:	sprintf(buffer[which], "MC  :%02X", r.mc); break;
+			case CPU_INFO_REG+UPD7810_MM:	sprintf(buffer[which], "MM  :%02X", r.mm); break;
+			case CPU_INFO_REG+UPD7810_MF:	sprintf(buffer[which], "MF  :%02X", r.mf); break;
+			case CPU_INFO_REG+UPD7810_TMM:	sprintf(buffer[which], "TMM :%02X", r.tmm); break;
+			case CPU_INFO_REG+UPD7810_ETMM: sprintf(buffer[which], "ETMM:%02X", r.etmm); break;
+			case CPU_INFO_REG+UPD7810_EOM:	sprintf(buffer[which], "EOM :%02X", r.eom); break;
+			case CPU_INFO_REG+UPD7810_SML:	sprintf(buffer[which], "SML :%02X", r.sml); break;
+			case CPU_INFO_REG+UPD7810_SMH:	sprintf(buffer[which], "SMH :%02X", r.smh); break;
+			case CPU_INFO_REG+UPD7810_ANM:	sprintf(buffer[which], "ANM :%02X", r.anm); break;
+			case CPU_INFO_REG+UPD7810_MKL:	sprintf(buffer[which], "MKL :%02X", r.mkl); break;
+			case CPU_INFO_REG+UPD7810_MKH:	sprintf(buffer[which], "MKH :%02X", r.mkh); break;
+			case CPU_INFO_REG+UPD7810_ZCM:	sprintf(buffer[which], "ZCM :%02X", r.zcm); break;
+			case CPU_INFO_REG+UPD7810_CR0:	sprintf(buffer[which], "CR0 :%02X", r.cr0); break;
+			case CPU_INFO_REG+UPD7810_CR1:	sprintf(buffer[which], "CR1 :%02X", r.cr1); break;
+			case CPU_INFO_REG+UPD7810_CR2:	sprintf(buffer[which], "CR2 :%02X", r.cr2); break;
+			case CPU_INFO_REG+UPD7810_CR3:	sprintf(buffer[which], "CR3 :%02X", r.cr3); break;
+			case CPU_INFO_REG+UPD7810_RXB:	sprintf(buffer[which], "RXB :%02X", r.rxb); break;
+			case CPU_INFO_REG+UPD7810_TXB:	sprintf(buffer[which], "TXB :%02X", r.txb); break;
+			case CPU_INFO_REG+UPD7810_TXD:	sprintf(buffer[which], "TXD :%d", r.txd); break;
+			case CPU_INFO_REG+UPD7810_RXD:	sprintf(buffer[which], "RXD :%d", r.rxd); break;
+			case CPU_INFO_REG+UPD7810_SCK:	sprintf(buffer[which], "SCK :%d", r.sck); break;
+			case CPU_INFO_REG+UPD7810_TI:	sprintf(buffer[which], "TI  :%d", r.ti); break;
+			case CPU_INFO_REG+UPD7810_TO:	sprintf(buffer[which], "TO  :%d", r.to); break;
+			case CPU_INFO_REG+UPD7810_CI:	sprintf(buffer[which], "CI  :%d", r.ci); break;
+			case CPU_INFO_REG+UPD7810_CO0:	sprintf(buffer[which], "CO0 :%d", r.co0 & 1); break;
+			case CPU_INFO_REG+UPD7810_CO1:	sprintf(buffer[which], "CO1 :%d", r.co1 & 1); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%s:%s:%s:%s:%s:%s",
-					r->psw & 0x40 ? "ZF":"--",
-					r->psw & 0x20 ? "SK":"--",
-					r->psw & 0x10 ? "HC":"--",
-					r->psw & 0x08 ? "L1":"--",
-					r->psw & 0x04 ? "L0":"--",
-					r->psw & 0x01 ? "CY":"--");
+					r.psw & 0x40 ? "ZF":"--",
+					r.psw & 0x20 ? "SK":"--",
+					r.psw & 0x10 ? "HC":"--",
+					r.psw & 0x08 ? "L1":"--",
+					r.psw & 0x04 ? "L0":"--",
+					r.psw & 0x01 ? "CY":"--");
 				break;
 			case CPU_INFO_NAME: return "uPD7810";
 			case CPU_INFO_FAMILY: return "NEC uPD7810";

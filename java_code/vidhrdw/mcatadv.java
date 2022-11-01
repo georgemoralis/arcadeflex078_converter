@@ -137,9 +137,9 @@ public class mcatadv
 				for (ycnt = ystart; ycnt != yend; ycnt += yinc) {
 					drawypos = y+ycnt-global_y;
 	
-					if ((drawypos >= cliprect->min_y) && (drawypos <= cliprect->max_y)) {
-						destline = (UINT16 *)(bitmap->line[drawypos]);
-						priline = (UINT8 *)(priority_bitmap->line[drawypos]);
+					if ((drawypos >= cliprect.min_y) && (drawypos <= cliprect.max_y)) {
+						destline = (UINT16 *)(bitmap.line[drawypos]);
+						priline = (UINT8 *)(priority_bitmap.line[drawypos]);
 	
 						for (xcnt = xstart; xcnt != xend; xcnt += xinc) {
 							drawxpos = x+xcnt-global_x;
@@ -150,7 +150,7 @@ public class mcatadv
 							if ((offset & 1) != 0)  pix = pix >> 4;
 							pix &= 0x0f;
 	
-							if ((drawxpos >= cliprect->min_x) && (drawxpos <= cliprect->max_x) && pix)
+							if ((drawxpos >= cliprect.min_x) && (drawxpos <= cliprect.max_x) && pix)
 								if((priline[drawxpos] < pri))
 									destline[drawxpos] = (pix + (pen<<4));
 	

@@ -50,7 +50,7 @@ public class nova2001
 		int i,j;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int intensity,r,g,b;
 	
@@ -203,19 +203,19 @@ public class nova2001
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2 + ((spriteram.read(offs+0)& 0x80) >> 7)],
+			drawgfx(bitmap,Machine.gfx[2 + ((spriteram.read(offs+0)& 0x80) >> 7)],
 				spriteram.read(offs+0)& 0x7f,
 				spriteram.read(offs+3)& 0x0f,
 				flipx,flipy,
 				sx,sy,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_nova2001  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		nova2001_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

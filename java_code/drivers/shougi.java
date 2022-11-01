@@ -110,12 +110,12 @@ public class shougi
 	
 	
 	  bit 0 -- 1000 ohm resistor--\
-	  bit 1 -- 470 ohm resistor --+--+--> RED
+	  bit 1 -- 470 ohm resistor --+--+-. RED
 	  bit 2 -- 220 ohm resistor --/  \---------------1000 ohm resistor---\
 	  bit 3 -- 1000 ohm resistor--\                                      |
-	  bit 4 -- 470 ohm resistor --+--+--> GREEN                          |
+	  bit 4 -- 470 ohm resistor --+--+-. GREEN                          |
 	  bit 5 -- 220 ohm resistor --/  \---------------1000 ohm resistor---+--- 1000 Ohm pullup resistor
-	  bit 6 -- 470 ohm resistor --+--+--> BLUE                           |
+	  bit 6 -- 470 ohm resistor --+--+-. BLUE                           |
 	  bit 7 -- 220 ohm resistor --/  \---------------1000 ohm resistor---/
 	
 	***************************************************************************/
@@ -134,7 +134,7 @@ public class shougi
 				3,	resistances_rg,	weights_g,	0,	1000+1000,
 				2,	resistances_b,	weights_b,	0,	1000+1000);
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -192,7 +192,7 @@ public class shougi
 			}
 		}
 		/* copy the character mapped graphics */
-		//copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		//copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	

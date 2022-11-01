@@ -167,7 +167,7 @@ public class grchamp
 	
 	static void draw_text( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		const UINT8 *source = videoram;
 		int bank = (grchamp_videoreg0&0x20)?256:0;
 		int offs;
@@ -223,7 +223,7 @@ public class grchamp
 	static void draw_player_car( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		drawgfx( bitmap,
-			Machine->gfx[2],
+			Machine.gfx[2],
 			grchamp_tile_number&0xf,
 			1, /* color = red */
 			0,0, /* flip */
@@ -235,9 +235,9 @@ public class grchamp
 	
 	static int collision_check( struct mame_bitmap *bitmap, int which )
 	{
-		int bgcolor = Machine->pens[0];
-		int sprite_transp = Machine->pens[0x24];
-		const struct rectangle *clip = &Machine->visible_area;
+		int bgcolor = Machine.pens[0];
+		int sprite_transp = Machine.pens[0x24];
+		const struct rectangle *clip = &Machine.visible_area;
 		int y0 = 240-grchamp_player_ypos;
 		int x0 = 256-grchamp_player_xpos;
 		int x,y;
@@ -246,7 +246,7 @@ public class grchamp
 		if( which==0 )
 		{
 			/* draw the current player sprite into a work bitmap */
-			drawgfx( work_bitmap, Machine->gfx[2],
+			drawgfx( work_bitmap, Machine.gfx[2],
 				grchamp_tile_number&0xf,
 				1, /* color */
 				0,0,
@@ -262,8 +262,8 @@ public class grchamp
 				if( read_pixel(work_bitmap,x,y) != sprite_transp ){
 					int sx = x+x0;
 					int sy = y+y0;
-					if( sx >= clip->min_x && sx <= clip->max_x &&
-						sy >= clip->min_y && sy <= clip->max_y )
+					if( sx >= clip.min_x && sx <= clip.max_x &&
+						sy >= clip.min_y && sy <= clip.max_y )
 					{
 						if( read_pixel(bitmap, sx, sy) != bgcolor )
 						{
@@ -281,7 +281,7 @@ public class grchamp
 	}
 	
 	static void draw_rain( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
-		const struct GfxElement *gfx = Machine->gfx[4];
+		const struct GfxElement *gfx = Machine.gfx[4];
 		int tile_number = grchamp_tile_number>>4;
 		if (tile_number != 0){
 			int scrollx = grchamp_rain_xpos;
@@ -303,7 +303,7 @@ public class grchamp
 	static void draw_fog( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bFog ){
 		int x0 = 256-grchamp_player_xpos-64;
 		int y0 = 240-grchamp_player_ypos-64;
-		int color = Machine->pens[bFog?0x40:0x00];
+		int color = Machine.pens[bFog?0x40:0x00];
 	
 		copybitmap(
 			headlight_bitmap, /* dest */
@@ -336,8 +336,8 @@ public class grchamp
 						if ((data & 0x80) != 0){
 							sx = x0+x+bit;
 							sy = y0+y;
-							if( sx>=cliprect->min_x && sy>=cliprect->min_y && 
-								sx<=cliprect->max_x && sy<=cliprect->max_y )
+							if( sx>=cliprect.min_x && sy>=cliprect.min_y && 
+								sx<=cliprect.max_x && sy<=cliprect.max_y )
 							{
 								color = read_pixel( headlight_bitmap, x+bit, y );
 								plot_pixel( bitmap, sx,sy, color );
@@ -352,7 +352,7 @@ public class grchamp
 	
 	static void draw_radar( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const UINT8 *source = grchamp_radar;
-		int color = Machine->pens[3];
+		int color = Machine.pens[3];
 		int offs;
 		for( offs=0; offs<0x400; offs++ ){
 			int data = source[offs];
@@ -362,8 +362,8 @@ public class grchamp
 				int bit;
 				for( bit=0; bit<8; bit++ ){
 					if ((data & 0x80) != 0) 
-						if ((x+bit) >= cliprect->min_x && (x+bit) <= cliprect->max_x &&
-							y >= cliprect->min_y && y <= cliprect->max_y)
+						if ((x+bit) >= cliprect.min_x && (x+bit) <= cliprect.max_x &&
+							y >= cliprect.min_y && y <= cliprect.max_y)
 							plot_pixel( bitmap, x+bit, y, color );
 					data <<= 1;
 				}
@@ -376,7 +376,7 @@ public class grchamp
 		int value = grchamp_vreg1[0x03]&0xf;
 		int i;
 		for( i=0; i<value; i++ ){
-			drawgfx( bitmap, Machine->uifont,
+			drawgfx( bitmap, Machine.uifont,
 				'*',
 				0,
 				0,0,
@@ -388,7 +388,7 @@ public class grchamp
 	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bFog ){
-		const struct GfxElement *gfx = Machine->gfx[3];
+		const struct GfxElement *gfx = Machine.gfx[3];
 		int bank = (grchamp_videoreg0&0x20)?0x40:0x00;
 		const UINT8 *source = spriteram;
 		const UINT8 *finish = source+0x40;

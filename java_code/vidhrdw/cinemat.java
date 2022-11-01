@@ -60,7 +60,7 @@ public class cinemat
 	
 	public static VideoUpdateHandlerPtr video_update_cinemat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		cinemat_screenh = Machine->visible_area.max_y - Machine->visible_area.min_y;
+		cinemat_screenh = Machine.visible_area.max_y - Machine.visible_area.min_y;
 		return video_start_vector();
 	} };
 	

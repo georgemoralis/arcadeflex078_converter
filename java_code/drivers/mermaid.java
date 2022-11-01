@@ -134,7 +134,7 @@ public class mermaid
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START(); 		/* Fake IN for debug features (0xf800 -> 0xc01a, cpl) */
+		PORT_START(); 		/* Fake IN for debug features (0xf800 . 0xc01a, cpl) */
 		PORT_DIPNAME( 0x01, 0x00, "0xf800 bit 0" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );

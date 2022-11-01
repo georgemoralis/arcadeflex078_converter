@@ -72,7 +72,7 @@ public class bagman
 				2,	resistances_b,	weights_b,	470,	0);
 	
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, r, g, b;
 	
@@ -106,7 +106,7 @@ public class bagman
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int gfxbank = (Machine->gfx[2] && (colorram[tile_index] & 0x10)) ? 2 : 0;
+		int gfxbank = (Machine.gfx[2] && (colorram[tile_index] & 0x10)) ? 2 : 0;
 		int code = videoram.read(tile_index)+ 8 * (colorram[tile_index] & 0x20);
 		int color = colorram[tile_index] & 0x0f;
 	
@@ -149,12 +149,12 @@ public class bagman
 			}
 	
 			if (spriteram.read(offs + 2)&& spriteram.read(offs + 3))
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						(spriteram.read(offs)& 0x3f) + 2 * (spriteram.read(offs + 1)& 0x20),
 						spriteram.read(offs + 1)& 0x1f,
 						flipx,flipy,
 						sx,sy+1,	/* compensate misplacement */
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -170,7 +170,7 @@ public class bagman
 		if (*bagman_video_enable == 0)
 			return;
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		bagman_draw_sprites(bitmap);
 	} };
 }

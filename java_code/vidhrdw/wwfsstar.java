@@ -139,7 +139,7 @@ public class wwfsstar
 	
 		**- End of Comments -*/
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data16_t *source = spriteram16;
 		data16_t *finish = source + 0x3ff/2;
 	

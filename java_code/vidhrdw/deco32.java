@@ -110,7 +110,7 @@ public class deco32
 	
 	WRITE32_HANDLER( deco32_palette_dma_w )
 	{
-		const int m=Machine->drv->total_colors;
+		const int m=Machine.drv.total_colors;
 		int r,g,b,i;
 	
 		for (i=0; i<m; i++) {
@@ -202,12 +202,12 @@ public class deco32
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					pdrawgfx(bitmap,Machine->gfx[gfxbank],
+					pdrawgfx(bitmap,Machine.gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine->visible_area,TRANSPARENCY_PEN,0,prival);
+							&Machine.visible_area,TRANSPARENCY_PEN,0,prival);
 				}
 			}
 		}
@@ -276,12 +276,12 @@ public class deco32
 	
 			while (multi >= 0)
 			{
-				deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
+				deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine->visible_area,trans,0,pri,1<<gfxbank);
+						&Machine.visible_area,trans,0,pri,1<<gfxbank);
 	
 				multi--;
 			}
@@ -307,33 +307,33 @@ public class deco32
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
 		if (clip != 0)
 		{
-			myclip.min_x = clip->min_x;
-			myclip.max_x = clip->max_x;
-			myclip.min_y = clip->min_y;
-			myclip.max_y = clip->max_y;
+			myclip.min_x = clip.min_x;
+			myclip.max_x = clip.max_x;
+			myclip.min_y = clip.min_y;
+			myclip.max_y = clip.max_y;
 	
 			if (myclip.min_x < 0) myclip.min_x = 0;
-			if (myclip.max_x >= dest_bmp->width) myclip.max_x = dest_bmp->width-1;
+			if (myclip.max_x >= dest_bmp.width) myclip.max_x = dest_bmp.width-1;
 			if (myclip.min_y < 0) myclip.min_y = 0;
-			if (myclip.max_y >= dest_bmp->height) myclip.max_y = dest_bmp->height-1;
+			if (myclip.max_y >= dest_bmp.height) myclip.max_y = dest_bmp.height-1;
 	
 			clip=&myclip;
 		}
 	
 		{
-			if( gfx && gfx->colortable )
+			if( gfx && gfx.colortable )
 			{
-				const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
-				int source_base = (code % gfx->total_elements) * gfx->height;
+				const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
+				int source_base = (code % gfx.total_elements) * gfx.height;
 	
-	//			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
-	//			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
+	//			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
+	//			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
 	
 				if (sprite_screen_width && sprite_screen_height)
 				{
 					/* compute sprite increment per screen pixel */
-					int dx = (gfx->width<<16)/sprite_screen_width;
-					int dy = (gfx->height<<16)/sprite_screen_height;
+					int dx = (gfx.width<<16)/sprite_screen_width;
+					int dy = (gfx.height<<16)/sprite_screen_height;
 	
 					int ex = sx+sprite_screen_width;
 					int ey = sy+sprite_screen_height;
@@ -363,27 +363,27 @@ public class deco32
 	
 					if (clip != 0)
 					{
-						if( sx < clip->min_x)
+						if( sx < clip.min_x)
 						{ /* clip left */
-							int pixels = clip->min_x-sx;
+							int pixels = clip.min_x-sx;
 							sx += pixels;
 							x_index_base += pixels*dx;
 						}
-						if( sy < clip->min_y )
+						if( sy < clip.min_y )
 						{ /* clip top */
-							int pixels = clip->min_y-sy;
+							int pixels = clip.min_y-sy;
 							sy += pixels;
 							y_index += pixels*dy;
 						}
 						/* NS 980211 - fixed incorrect clipping */
-						if( ex > clip->max_x+1 )
+						if( ex > clip.max_x+1 )
 						{ /* clip right */
-							int pixels = ex-clip->max_x-1;
+							int pixels = ex-clip.max_x-1;
 							ex -= pixels;
 						}
-						if( ey > clip->max_y+1 )
+						if( ey > clip.max_y+1 )
 						{ /* clip bottom */
-							int pixels = ey-clip->max_y-1;
+							int pixels = ey-clip.max_y-1;
 							ey -= pixels;
 						}
 					}
@@ -399,9 +399,9 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-									UINT8 *pri = pri_buffer->line[y];
+									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT8 *pri = pri_buffer.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -423,8 +423,8 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -446,9 +446,9 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-									UINT8 *pri = pri_buffer->line[y];
+									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT8 *pri = pri_buffer.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -470,8 +470,8 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -637,20 +637,20 @@ public class deco32
 					sprite&=0x7fff;
 	
 					if (zoomx!=0x10000 || zoomy!=0x10000)
-						dragngun_drawgfxzoom(bitmap,Machine->gfx[bank],
+						dragngun_drawgfxzoom(bitmap,Machine.gfx[bank],
 							sprite,
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							&Machine->visible_area,trans,15,zoomx,zoomy,NULL,0,
+							&Machine.visible_area,trans,15,zoomx,zoomy,NULL,0,
 							((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16) );
 					else
-						drawgfx(bitmap,Machine->gfx[bank],
+						drawgfx(bitmap,Machine.gfx[bank],
 							sprite,
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							&Machine->visible_area,trans,15);
+							&Machine.visible_area,trans,15);
 	
 					if (fx != 0)
 						xpos-=zoomx<<4;
@@ -669,7 +669,7 @@ public class deco32
 	
 	static UINT32 deco16_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -920,29 +920,29 @@ public class deco32
 	#if 0
 	static void print_debug_info()
 	{
-		struct mame_bitmap *bitmap = Machine->scrbitmap;
+		struct mame_bitmap *bitmap = Machine.scrbitmap;
 		int j,trueorientation;
 		char buf[64];
 	
-		trueorientation = Machine->orientation;
-		Machine->orientation = ROT0;
+		trueorientation = Machine.orientation;
+		Machine.orientation = ROT0;
 	
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf12_control[0]&0xffff,deco32_pf12_control[1]&0xffff,deco32_pf12_control[2]&0xffff,deco32_pf12_control[3]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf12_control[4]&0xffff,deco32_pf12_control[5]&0xffff,deco32_pf12_control[6]&0xffff,deco32_pf12_control[7]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
 	
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf34_control[0]&0xffff,deco32_pf34_control[1]&0xffff,deco32_pf34_control[2]&0xffff,deco32_pf34_control[3]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf34_control[4]&0xffff,deco32_pf34_control[5]&0xffff,deco32_pf34_control[6]&0xffff,deco32_pf34_control[7]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X",deco32_pri);
 		for (j = 0;j< 4;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
 	}
 	
 	#endif
@@ -953,8 +953,8 @@ public class deco32
 		struct rectangle clip;
 		int overflow=deco32_raster_display_position;
 	
-		clip.min_x = cliprect->min_x;
-		clip.max_x = cliprect->max_x;
+		clip.min_x = cliprect.min_x;
+		clip.max_x = cliprect.max_x;
 	
 		/* Finish list up to end of visible display */
 		deco32_raster_display_list[overflow++]=255;
@@ -1000,9 +1000,9 @@ public class deco32
 		for (y=8; y<248; y++) {
 			const int py=(y_src+y)&height_mask;
 	
-			bitmap0_y=bitmap0->line[py];
-			bitmap1_y=bitmap1->line[py];
-			bitmap2_y=bitmap->line[y];
+			bitmap0_y=bitmap0.line[py];
+			bitmap1_y=bitmap1.line[py];
+			bitmap2_y=bitmap.line[y];
 	
 			/* Todo:  Should add row enable, and col scroll, but never used as far as I can see */
 			x_src=(deco32_pf34_control[1] + deco32_pf3_rowscroll[py])&width_mask;
@@ -1012,7 +1012,7 @@ public class deco32
 				/* 0x200 is palette base for this tilemap */
 				p = 0x200 +((bitmap0_y[x_src]&0xf) | ((bitmap0_y[x_src]&0x30)<<4) | ((bitmap1_y[x_src]&0xf)<<4));
 	
-				bitmap2_y[x]=Machine->pens[p];
+				bitmap2_y[x]=Machine.pens[p];
 	
 				x_src=(x_src+1)&width_mask;
 			}
@@ -1174,8 +1174,8 @@ public class deco32
 			struct rectangle clip;
 			int overflow=deco32_raster_display_position;
 	
-			clip.min_x = cliprect->min_x;
-			clip.max_x = cliprect->max_x;
+			clip.min_x = cliprect.min_x;
+			clip.max_x = cliprect.max_x;
 	
 			/* Finish list up to end of visible display */
 			deco32_raster_display_list[overflow++]=255;
@@ -1245,7 +1245,7 @@ public class deco32
 		deco16_clear_sprite_priority_bitmap();
 		fillbitmap(priority_bitmap,0,cliprect);
 		if ((deco32_pf34_control[5]&0x8000)==0)
-			fillbitmap(bitmap,Machine->pens[0x200],cliprect);
+			fillbitmap(bitmap,Machine.pens[0x200],cliprect);
 	
 		/* Draw playfields & sprites */
 		if ((deco32_pri & 2) != 0) {
@@ -1301,7 +1301,7 @@ public class deco32
 		/* Draw screen */
 		fillbitmap(priority_bitmap,0,cliprect);
 		if ((deco32_pf34_control[5]&0x8000)==0)
-			fillbitmap(bitmap,Machine->pens[0x200],cliprect); //TODO - pf4 palette entry 0 is shown
+			fillbitmap(bitmap,Machine.pens[0x200],cliprect); //TODO - pf4 palette entry 0 is shown
 		else
 			tilemap_draw(bitmap,cliprect,pf4_tilemap,0,1);
 	if (!keyboard_pressed(KEYCODE_Q))	tilemap_draw(bitmap,cliprect,pf3_tilemap,0,2);

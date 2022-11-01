@@ -128,7 +128,7 @@ public class airbustr
 		if (flipscreen != 0)	{	xoffs = -0x06a;		yoffs = -0x1ff;}
 		else			{	xoffs = -0x094;		yoffs = -0x100;}
 	
-		switch (offset)		// offset 0 <-> port 4
+		switch (offset)		// offset 0 <. port 4
 		{
 			case 0x00:	fg_scrolly =  data;	break;	// low 8 bits
 			case 0x02:	fg_scrollx =  data;	break;
@@ -204,7 +204,7 @@ public class airbustr
 					flipx = !flipx;		flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,
 						attr >> 4,
 						flipx, flipy,

@@ -171,7 +171,7 @@ public class thoop2
 	static void gaelco_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri)
 	{
 		int j, x, y, ex, ey;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		static int x_offset[2] = {0x0,0x2};
 		static int y_offset[2] = {0x0,0x1};
@@ -207,7 +207,7 @@ public class thoop2
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							color,xflip,yflip,
 							sx-0x0f+x*8,sy+y*8,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -229,7 +229,7 @@ public class thoop2
 	
 		thoop2_sort_sprites();
 	
-		fillbitmap( bitmap, Machine->pens[0], cliprect );
+		fillbitmap( bitmap, Machine.pens[0], cliprect );
 	
 		tilemap_draw(bitmap,cliprect,pant[1],TILEMAP_BACK | 3,0);
 		tilemap_draw(bitmap,cliprect,pant[0],TILEMAP_BACK | 3,0);

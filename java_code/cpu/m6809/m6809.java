@@ -415,8 +415,8 @@ public class m6809
 	
 	INLINE void WM16( UINT32 Addr, PAIR *p )
 	{
-		WM( Addr, p->b.h );
-		WM( (Addr+1)&0xffff, p->b.l );
+		WM( Addr, p.b.h );
+		WM( (Addr+1)&0xffff, p.b.l );
 	}
 	
 	/****************************************************************************
@@ -634,27 +634,27 @@ public class m6809
 	
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->cc & 0x80 ? 'E':'.',
-					r->cc & 0x40 ? 'F':'.',
-	                r->cc & 0x20 ? 'H':'.',
-	                r->cc & 0x10 ? 'I':'.',
-	                r->cc & 0x08 ? 'N':'.',
-	                r->cc & 0x04 ? 'Z':'.',
-	                r->cc & 0x02 ? 'V':'.',
-	                r->cc & 0x01 ? 'C':'.');
+					r.cc & 0x80 ? 'E':'.',
+					r.cc & 0x40 ? 'F':'.',
+	                r.cc & 0x20 ? 'H':'.',
+	                r.cc & 0x10 ? 'I':'.',
+	                r.cc & 0x08 ? 'N':'.',
+	                r.cc & 0x04 ? 'Z':'.',
+	                r.cc & 0x02 ? 'V':'.',
+	                r.cc & 0x01 ? 'C':'.');
 	            break;
-			case CPU_INFO_REG+M6809_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
-			case CPU_INFO_REG+M6809_S: sprintf(buffer[which], "S:%04X", r->s.w.l); break;
-			case CPU_INFO_REG+M6809_CC: sprintf(buffer[which], "CC:%02X", r->cc); break;
-			case CPU_INFO_REG+M6809_U: sprintf(buffer[which], "U:%04X", r->u.w.l); break;
-			case CPU_INFO_REG+M6809_A: sprintf(buffer[which], "A:%02X", r->d.b.h); break;
-			case CPU_INFO_REG+M6809_B: sprintf(buffer[which], "B:%02X", r->d.b.l); break;
-			case CPU_INFO_REG+M6809_X: sprintf(buffer[which], "X:%04X", r->x.w.l); break;
-			case CPU_INFO_REG+M6809_Y: sprintf(buffer[which], "Y:%04X", r->y.w.l); break;
-			case CPU_INFO_REG+M6809_DP: sprintf(buffer[which], "DP:%02X", r->dp.b.h); break;
-			case CPU_INFO_REG+M6809_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
-			case CPU_INFO_REG+M6809_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state[M6809_IRQ_LINE]); break;
-			case CPU_INFO_REG+M6809_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r->irq_state[M6809_FIRQ_LINE]); break;
+			case CPU_INFO_REG+M6809_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
+			case CPU_INFO_REG+M6809_S: sprintf(buffer[which], "S:%04X", r.s.w.l); break;
+			case CPU_INFO_REG+M6809_CC: sprintf(buffer[which], "CC:%02X", r.cc); break;
+			case CPU_INFO_REG+M6809_U: sprintf(buffer[which], "U:%04X", r.u.w.l); break;
+			case CPU_INFO_REG+M6809_A: sprintf(buffer[which], "A:%02X", r.d.b.h); break;
+			case CPU_INFO_REG+M6809_B: sprintf(buffer[which], "B:%02X", r.d.b.l); break;
+			case CPU_INFO_REG+M6809_X: sprintf(buffer[which], "X:%04X", r.x.w.l); break;
+			case CPU_INFO_REG+M6809_Y: sprintf(buffer[which], "Y:%04X", r.y.w.l); break;
+			case CPU_INFO_REG+M6809_DP: sprintf(buffer[which], "DP:%02X", r.dp.b.h); break;
+			case CPU_INFO_REG+M6809_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
+			case CPU_INFO_REG+M6809_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state[M6809_IRQ_LINE]); break;
+			case CPU_INFO_REG+M6809_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r.irq_state[M6809_FIRQ_LINE]); break;
 		}
 		return buffer[which];
 	}

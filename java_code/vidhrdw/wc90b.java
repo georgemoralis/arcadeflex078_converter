@@ -142,7 +142,7 @@ public class wc90b
 					code <<= 2;
 					code += ( bank & 0x0f ) >> 2;
 	
-					drawgfx( bitmap,Machine->gfx[ 17 ], code,
+					drawgfx( bitmap,Machine.gfx[ 17 ], code,
 							flags >> 4, /* color */
 							bank&1, /* flipx */
 							bank&2, /* flipy */

@@ -25,10 +25,10 @@ public class gotya
 	{
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int bit0, bit1, bit2, r, g, b;
 	
@@ -147,12 +147,12 @@ public class gotya
 				sy = 31 - row;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 				gotya_videoram2[row * 32 + col],
 				gotya_videoram2[row * 32 + col + 0x10] & 0x0f,
 				flip_screen_x, flip_screen_y,
 				8 * sx, 8 * sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_NONE, 0);
 		}
 	}
@@ -173,11 +173,11 @@ public class gotya
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 				code, color,
 				flip_screen_x, flip_screen_y,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -195,7 +195,7 @@ public class gotya
 	public static VideoUpdateHandlerPtr video_update_gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, -(*gotya_scroll + (scroll_bit_8 * 256)) - 2 * 8);
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		gotya_draw_sprites(bitmap);
 		gotya_draw_status(bitmap);
 	} };

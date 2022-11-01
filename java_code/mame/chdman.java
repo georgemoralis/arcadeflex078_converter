@@ -206,7 +206,7 @@ public class chdman
 	{
 		/* set the input chd and logical bytes */
 		special_chd = chd;
-		special_original_logicalbytes = chd_get_header(chd)->logicalbytes;
+		special_original_logicalbytes = chd_get_header(chd).logicalbytes;
 		special_logicalbytes = logicalbytes ? logicalbytes : special_original_logicalbytes;
 	
 		/* init the checksums */
@@ -239,15 +239,15 @@ public class chdman
 		if (special_bytes_checksummed == special_original_logicalbytes)
 		{
 			/* check the MD5 */
-			if (memcmp(header->md5, empty_checksum, CHD_MD5_BYTES))
+			if (memcmp(header.md5, empty_checksum, CHD_MD5_BYTES))
 			{
-				if (memcmp(header->md5, final_md5, CHD_MD5_BYTES))
+				if (memcmp(header.md5, final_md5, CHD_MD5_BYTES))
 				{
 					printf("WARNING: expected input MD5 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-							header->md5[0], header->md5[1], header->md5[2], header->md5[3],
-							header->md5[4], header->md5[5], header->md5[6], header->md5[7],
-							header->md5[8], header->md5[9], header->md5[10], header->md5[11],
-							header->md5[12], header->md5[13], header->md5[14], header->md5[15]);
+							header.md5[0], header.md5[1], header.md5[2], header.md5[3],
+							header.md5[4], header.md5[5], header.md5[6], header.md5[7],
+							header.md5[8], header.md5[9], header.md5[10], header.md5[11],
+							header.md5[12], header.md5[13], header.md5[14], header.md5[15]);
 					printf("                 actual MD5 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
 							final_md5[0], final_md5[1], final_md5[2], final_md5[3],
 							final_md5[4], final_md5[5], final_md5[6], final_md5[7],
@@ -259,16 +259,16 @@ public class chdman
 			}
 	
 			/* check the SHA1 */
-			if (memcmp(header->sha1, empty_checksum, CHD_SHA1_BYTES))
+			if (memcmp(header.sha1, empty_checksum, CHD_SHA1_BYTES))
 			{
-				if (memcmp(header->sha1, final_sha1, CHD_SHA1_BYTES))
+				if (memcmp(header.sha1, final_sha1, CHD_SHA1_BYTES))
 				{
 					printf("WARNING: expected input SHA1 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-							header->sha1[0], header->sha1[1], header->sha1[2], header->sha1[3],
-							header->sha1[4], header->sha1[5], header->sha1[6], header->sha1[7],
-							header->sha1[8], header->sha1[9], header->sha1[10], header->sha1[11],
-							header->sha1[12], header->sha1[13], header->sha1[14], header->sha1[15],
-							header->sha1[16], header->sha1[17], header->sha1[18], header->sha1[19]);
+							header.sha1[0], header.sha1[1], header.sha1[2], header.sha1[3],
+							header.sha1[4], header.sha1[5], header.sha1[6], header.sha1[7],
+							header.sha1[8], header.sha1[9], header.sha1[10], header.sha1[11],
+							header.sha1[12], header.sha1[13], header.sha1[14], header.sha1[15],
+							header.sha1[16], header.sha1[17], header.sha1[18], header.sha1[19]);
 					printf("                 actual SHA1 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
 							final_sha1[0], final_sha1[1], final_sha1[2], final_sha1[3],
 							final_sha1[4], final_sha1[5], final_sha1[6], final_sha1[7],
@@ -803,8 +803,8 @@ public class chdman
 	static int handle_custom_chomp(const char *name, struct chd_file *chd, UINT32 *maxhunk)
 	{
 		const struct chd_header *header = chd_get_header(chd);
-		int sectors_per_hunk = (header->hunkbytes / IDE_SECTOR_SIZE);
-		UINT8 *temp = malloc(header->hunkbytes);
+		int sectors_per_hunk = (header.hunkbytes / IDE_SECTOR_SIZE);
+		UINT8 *temp = malloc(header.hunkbytes);
 		if (!temp)
 			return CHDERR_OUT_OF_MEMORY;
 	
@@ -832,10 +832,10 @@ public class chdman
 			}
 			*maxhunk = (maxsector + sectors_per_hunk - 1) / sectors_per_hunk;
 			printf("Maximum hunk: %d\n", *maxhunk);
-			if (*maxhunk >= header->totalhunks)
+			if (*maxhunk >= header.totalhunks)
 			{
 				printf("Warning: chomp will have no effect\n");
-				*maxhunk = header->totalhunks;
+				*maxhunk = header.totalhunks;
 			}
 		}
 	
@@ -846,9 +846,9 @@ public class chdman
 			UINT8 *data;
 			int i;
 	
-			if (!chd_read(chd, 0x200 / header->hunkbytes, 1, temp))
+			if (!chd_read(chd, 0x200 / header.hunkbytes, 1, temp))
 				goto error;
-			data = &temp[0x200 % header->hunkbytes];
+			data = &temp[0x200 % header.hunkbytes];
 	
 			if (data[0] != 0x0d || data[1] != 0xf0 || data[2] != 0xed || data[3] != 0xfe)
 				goto error;
@@ -858,10 +858,10 @@ public class chdman
 				goto error;
 			*maxhunk = (sectors[3] + (sectors[3] - sectors[2]) + sectors_per_hunk - 1) / sectors_per_hunk;
 			printf("Maximum hunk: %d\n", *maxhunk);
-			if (*maxhunk >= header->totalhunks)
+			if (*maxhunk >= header.totalhunks)
 			{
 				printf("Warning: chomp will have no effect\n");
-				*maxhunk = header->totalhunks;
+				*maxhunk = header.totalhunks;
 			}
 		}
 	
@@ -960,7 +960,7 @@ public class chdman
 	#endif
 	
 		/* create the new merged CHD */
-		err = chd_create(outputfile, inputheader->logicalbytes, inputheader->hunkbytes, CHDCOMPRESSION_ZLIB_PLUS, NULL);
+		err = chd_create(outputfile, inputheader.logicalbytes, inputheader.hunkbytes, CHDCOMPRESSION_ZLIB_PLUS, NULL);
 		if (err != CHDERR_NONE)
 		{
 			printf("Error creating CHD file: %s\n", error_string(err));
@@ -992,7 +992,7 @@ public class chdman
 		}
 	
 		/* do the compression; our interface will route reads for us */
-		special_chd_init(inputchd, (operation == OPERATION_CHOMP) ? ((UINT64)(maxhunk + 1) * (UINT64)inputheader->hunkbytes) : inputheader->logicalbytes);
+		special_chd_init(inputchd, (operation == OPERATION_CHOMP) ? ((UINT64)(maxhunk + 1) * (UINT64)inputheader.hunkbytes) : inputheader.logicalbytes);
 		err = chd_compress(outputchd, SPECIAL_CHD_NAME, 0, progress);
 		if (err != CHDERR_NONE)
 			printf("Error during compression: %s\n", error_string(err));
@@ -1344,12 +1344,12 @@ public class chdman
 			UINT32 result;
 	
 			/* validate the read: we can only handle block-aligned reads here */
-			if (offset % header->hunkbytes != 0)
+			if (offset % header.hunkbytes != 0)
 			{
 				printf("Error: chdman read from non-aligned offset %08X%08X\n", (UINT32)(offset >> 32), (UINT32)offset);
 				return 0;
 			}
-			if (count % header->hunkbytes != 0)
+			if (count % header.hunkbytes != 0)
 			{
 				printf("Error: chdman read non-aligned amount %08X\n", count);
 				return 0;
@@ -1360,7 +1360,7 @@ public class chdman
 				return 0;
 	
 			/* read the block(s) */
-			result = header->hunkbytes * chd_read(special_chd, offset / header->hunkbytes, count / header->hunkbytes, buffer);
+			result = header.hunkbytes * chd_read(special_chd, offset / header.hunkbytes, count / header.hunkbytes, buffer);
 	
 			/* count errors */
 			if (result != count && chd_get_last_error() != CHDERR_NONE)

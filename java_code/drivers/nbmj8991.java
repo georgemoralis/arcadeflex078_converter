@@ -187,7 +187,7 @@ public class nbmj8991
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 -> IM1
+		// Patch to IM2 . IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_GALKAIKA;
@@ -198,7 +198,7 @@ public class nbmj8991
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 -> IM1
+		// Patch to IM2 . IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKYOGAL;
@@ -209,7 +209,7 @@ public class nbmj8991
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 -> IM1
+		// Patch to IM2 . IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKIMBSJ;

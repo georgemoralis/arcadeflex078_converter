@@ -43,15 +43,15 @@ public class polepos
 	
 	
 		/* if we're not enabled, just fill with 0 */
-		if (!sample_enable || Machine->sample_rate == 0)
+		if (!sample_enable || Machine.sample_rate == 0)
 		{
 			memset(buffer, 0, length * sizeof(INT16));
 			return;
 		}
 	
 		/* determine the effective clock rate */
-		clock = (Machine->drv->cpu[0].cpu_clock / 64) * ((sample_msb + 1) * 64 + sample_lsb + 1) / (16*64);
-		step = (clock << 12) / Machine->sample_rate;
+		clock = (Machine.drv.cpu[0].cpu_clock / 64) * ((sample_msb + 1) * 64 + sample_lsb + 1) / (16*64);
+		step = (clock << 12) / Machine.sample_rate;
 	
 		/* determine the volume */
 		slot = (sample_msb >> 3) & 7;
@@ -130,7 +130,7 @@ public class polepos
 			sample_offsets[4] = 0x6000;		/* How is this triggered? */
 		}
 	
-		sound_stream = stream_init("Engine Sound", 50, Machine->sample_rate, 0, engine_sound_update);
+		sound_stream = stream_init("Engine Sound", 50, Machine.sample_rate, 0, engine_sound_update);
 		current_position = 0;
 		sample_msb = sample_lsb = 0;
 		sample_enable = 0;
@@ -178,7 +178,7 @@ public class polepos
 		int start = sample_offsets[sample];
 		int len = sample_offsets[sample + 1] - start;
 	
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
 	
 		mixer_play_sample(channel, speech + start * 16, len * 16, 4000*8, 0);

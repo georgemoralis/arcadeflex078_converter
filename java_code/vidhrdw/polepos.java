@@ -309,7 +309,7 @@ public class polepos
 	
 	static void draw_view(struct mame_bitmap *bitmap)
 	{
-		struct rectangle clip = Machine->visible_area;
+		struct rectangle clip = Machine.visible_area;
 		int x, y, offs;
 	
 		/* look for dirty tiles */
@@ -321,7 +321,7 @@ public class polepos
 					int code = (word & 0xff) | ((word >> 6) & 0x100);
 					int color = (word >> 8) & 0x3f;
 	
-					drawgfx(view_bitmap, Machine->gfx[1], code, color,
+					drawgfx(view_bitmap, Machine.gfx[1], code, color,
 							0, 0, 8*x, 8*y, NULL, TRANSPARENCY_NONE, 0);
 					view_dirty[offs] = 0;
 				}
@@ -351,7 +351,7 @@ public class polepos
 			roadpal = polepos_road16_memory[yoffs] & 15;
 	
 			/* this becomes the palette base for the scanline */
-			colortable = &Machine->remapped_colortable[0x1000 + (roadpal << 6)];
+			colortable = &Machine.remapped_colortable[0x1000 + (roadpal << 6)];
 	
 			/* now fetch the horizontal scroll offset for this scanline */
 			xoffs = polepos_road16_memory[0x380 + (y & 0x7f)] & 0x3ff;
@@ -412,7 +412,7 @@ public class polepos
 	
 		for (i = 0; i < 64; i++, posmem += 2, sizmem += 2)
 		{
-			const struct GfxElement *gfx = Machine->gfx[(sizmem[0] & 0x8000) ? 3 : 2];
+			const struct GfxElement *gfx = Machine.gfx[(sizmem[0] & 0x8000) ? 3 : 2];
 			int vpos = (~posmem[0] & 0x1ff) + 4;
 			int hpos = (posmem[1] & 0x3ff) - 0x40;
 			int vsize = ((sizmem[0] >> 8) & 0x3f) + 1;
@@ -424,7 +424,7 @@ public class polepos
 			if (vpos >= 128) color |= 0x40;
 			drawgfxzoom(bitmap, gfx,
 					 code, color, hflip, 0, hpos, vpos,
-					 &Machine->visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
+					 &Machine.visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
 		}
 	}
 	
@@ -440,9 +440,9 @@ public class polepos
 				int color = (word >> 8) & 0x3f; /* 6 bits color */
 	
 				if (y >= 16) color |= 0x40;
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						 code, color, 0, 0, 8*x, 8*y,
-						 &Machine->visible_area, TRANSPARENCY_COLOR, 0);
+						 &Machine.visible_area, TRANSPARENCY_COLOR, 0);
 			}
 	
 		/* Now draw the shift if selected on the fake dipswitch */
@@ -451,22 +451,22 @@ public class polepos
 		if ((in & 8) != 0) {
 			if ( ( in & 2 ) == 0 ) {
 				/* L */
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						 0x15, 0, 0, 0, 30*8-1, 29*8,
-						 &Machine->visible_area, TRANSPARENCY_PEN, 0);
+						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
 				/* O */
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						 0x18, 0, 0, 0, 31*8-1, 29*8,
-						 &Machine->visible_area, TRANSPARENCY_PEN, 0);
+						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
 			} else {
 				/* H */
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						 0x11, 0, 0, 0, 30*8-1, 29*8,
-						 &Machine->visible_area, TRANSPARENCY_PEN, 0);
+						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
 				/* I */
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 						 0x12, 0, 0, 0, 31*8-1, 29*8,
-						 &Machine->visible_area, TRANSPARENCY_PEN, 0);
+						 &Machine.visible_area, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}

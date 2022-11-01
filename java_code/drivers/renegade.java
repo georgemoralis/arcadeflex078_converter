@@ -213,7 +213,7 @@ public class renegade
 			mcu_buffer[0] = mcu_type;
 			break;
 	
-			case 0x26: /* sound code -> sound command */
+			case 0x26: /* sound code . sound command */
 			{
 				int sound_code = mcu_buffer[1];
 				static const UINT8 sound_command_table[256] = {
@@ -239,7 +239,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x33: /* joy bits -> joy dir */
+			case 0x33: /* joy bits . joy dir */
 			{
 				int joy_bits = mcu_buffer[2];
 				static const UINT8 joy_table[0x10] = {
@@ -250,7 +250,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x44: /* 0x44,0xff,DSW2,stage# -> difficulty */
+			case 0x44: /* 0x44,0xff,DSW2,stage# . difficulty */
 			{
 				int difficulty = mcu_buffer[2]&0x3;
 				int stage = mcu_buffer[3];
@@ -262,7 +262,7 @@ public class renegade
 				mcu_buffer[1] = result;
 			}
 	
-			case 0x55: /* 0x55,0x00,0x00,0x00,DSW2 -> timer */
+			case 0x55: /* 0x55,0x00,0x00,0x00,DSW2 . timer */
 			{
 				int difficulty = mcu_buffer[4]&0x3;
 				const UINT16 table[4] = {
@@ -275,7 +275,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x41: { /* 0x41,0x00,0x00,stage# -> ? */
+			case 0x41: { /* 0x41,0x00,0x00,stage# . ? */
 	//			int stage = mcu_buffer[3];
 				mcu_buffer[0] = 2;
 				mcu_buffer[1] = 0x20;
@@ -283,7 +283,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x40: /* 0x40,0x00,difficulty,enemy_type -> enemy health */
+			case 0x40: /* 0x40,0x00,difficulty,enemy_type . enemy health */
 			{
 				int difficulty = mcu_buffer[2];
 				int enemy_type = mcu_buffer[3];
@@ -291,13 +291,13 @@ public class renegade
 	
 				if( enemy_type<=4 || (enemy_type&1)==0 ) health = 0x18 + difficulty*8;
 				else health = 0x06 + difficulty*2;
-				logerror("e_type:0x%02x diff:0x%02x -> 0x%02x\n", enemy_type, difficulty, health );
+				logerror("e_type:0x%02x diff:0x%02x . 0x%02x\n", enemy_type, difficulty, health );
 				mcu_buffer[0] = 1;
 				mcu_buffer[1] = health;
 			}
 			break;
 	
-			case 0x42: /* 0x42,0x00,stage#,character# -> enemy_type */
+			case 0x42: /* 0x42,0x00,stage#,character# . enemy_type */
 			{
 				int stage = mcu_buffer[2]&0x3;
 				int indx = mcu_buffer[3];

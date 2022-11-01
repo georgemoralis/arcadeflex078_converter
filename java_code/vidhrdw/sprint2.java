@@ -31,7 +31,7 @@ public class sprint2
 	
 	public static VideoUpdateHandlerPtr video_update_sprint2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper == NULL)
 		{
@@ -87,9 +87,9 @@ public class sprint2
 		int x;
 		int y;
 	
-		for (y = rect->min_y; y <= rect->max_y; y++)
+		for (y = rect.min_y; y <= rect.max_y; y++)
 		{
-			for (x = rect->min_x; x <= rect->max_x; x++)
+			for (x = rect.min_x; x <= rect.max_x; x++)
 			{
 				pen_t a = read_pixel(helper, x, y);
 	
@@ -132,7 +132,7 @@ public class sprint2
 	
 		for (i = 0; i < 4; i++)
 		{
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				get_sprite_code(i),
 				i,
 				0, 0,
@@ -162,23 +162,23 @@ public class sprint2
 	
 			rect.min_x = get_sprite_x(i);
 			rect.min_y = get_sprite_y(i);
-			rect.max_x = get_sprite_x(i) + Machine->gfx[1]->width - 1;
-			rect.max_y = get_sprite_y(i) + Machine->gfx[1]->height - 1;
+			rect.max_x = get_sprite_x(i) + Machine.gfx[1].width - 1;
+			rect.max_y = get_sprite_y(i) + Machine.gfx[1].height - 1;
 	
-			if (rect.min_x < Machine->visible_area.min_x)
-				rect.min_x = Machine->visible_area.min_x;
-			if (rect.min_y < Machine->visible_area.min_y)
-				rect.min_y = Machine->visible_area.min_y;
-			if (rect.max_x > Machine->visible_area.max_x)
-				rect.max_x = Machine->visible_area.max_x;
-			if (rect.max_y > Machine->visible_area.max_y)
-				rect.max_y = Machine->visible_area.max_y;
+			if (rect.min_x < Machine.visible_area.min_x)
+				rect.min_x = Machine.visible_area.min_x;
+			if (rect.min_y < Machine.visible_area.min_y)
+				rect.min_y = Machine.visible_area.min_y;
+			if (rect.max_x > Machine.visible_area.max_x)
+				rect.max_x = Machine.visible_area.max_x;
+			if (rect.max_y > Machine.visible_area.max_y)
+				rect.max_y = Machine.visible_area.max_y;
 	
 			/* check for sprite-tilemap collisions */
 	
 			tilemap_draw(helper, &rect, tilemap, 0, 0);
 	
-			drawgfx(helper, Machine->gfx[1],
+			drawgfx(helper, Machine.gfx[1],
 				get_sprite_code(i),
 				0,
 				0, 0,
@@ -194,7 +194,7 @@ public class sprint2
 			{
 				if (j != i)
 				{
-					drawgfx(helper, Machine->gfx[1],
+					drawgfx(helper, Machine.gfx[1],
 						get_sprite_code(j),
 						1,
 						0, 0,
@@ -204,7 +204,7 @@ public class sprint2
 				}
 			}
 	
-			drawgfx(helper, Machine->gfx[1],
+			drawgfx(helper, Machine.gfx[1],
 				get_sprite_code(i),
 				0,
 				0, 0,

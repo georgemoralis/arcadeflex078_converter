@@ -42,24 +42,24 @@ public class _2413intf
 		int volume[2];
 	
 		int i;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 	
-		intf = msound->sound_interface;
-		if( intf->num > MAX_2413 ) return 1;
+		intf = msound.sound_interface;
+		if( intf.num > MAX_2413 ) return 1;
 	
 		if (options.use_filter)
-			rate = intf->baseclock/72;
+			rate = intf.baseclock/72;
 	
 	
 		/* emulator create */
-		if ( YM2413Init(intf->num, intf->baseclock, rate) != 0)
+		if ( YM2413Init(intf.num, intf.baseclock, rate) != 0)
 			return 1;
 	
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
 			/* stream setup */
 	
-			int vol = intf->mixing_level[i];
+			int vol = intf.mixing_level[i];
 	
 			name[0]=buf[0];
 			name[1]=buf[1];
@@ -89,7 +89,7 @@ public class _2413intf
 		int i, tst;
 		char name[40];
 	
-		num = intf->num;
+		num = intf.num;
 	
 		tst = YM3812_sh_start (msound);
 		if (tst != 0)
@@ -100,8 +100,8 @@ public class _2413intf
 			ym2413_reset (i);
 			sprintf(name,"YM-2413 DAC #%d",i);
 	
-			ym2413[i].DAC_stream = stream_init(name,intf->mixing_level[i],
-			                       Machine->sample_rate, i, YM2413DAC_update);
+			ym2413[i].DAC_stream = stream_init(name,intf.mixing_level[i],
+			                       Machine.sample_rate, i, YM2413DAC_update);
 	
 			if (ym2413[i].DAC_stream == -1)
 				return 1;
@@ -120,7 +120,7 @@ public class _2413intf
 	{
 		int i;
 	
-		for (i=0;i<intf->num;i++)
+		for (i=0;i<intf.num;i++)
 		{
 			YM2413ResetChip(i);
 		}

@@ -50,7 +50,7 @@ public class karnov
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -64,10 +64,10 @@ public class karnov
 			bit2 = (color_prom[0] >> 6) & 0x01;
 			bit3 = (color_prom[0] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -105,11 +105,11 @@ public class karnov
 			color = tile >> 12;
 			tile = tile&0x7ff;
 			if (flipscreen != 0)
-				drawgfx(bitmap_f,Machine->gfx[1],tile,
+				drawgfx(bitmap_f,Machine.gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
 			else
-				drawgfx(bitmap_f,Machine->gfx[1],tile,
+				drawgfx(bitmap_f,Machine.gfx[1],tile,
 					color, fx, fy, 16*mx,16*my,
 			 		0,TRANSPARENCY_NONE,0);
 		}
@@ -127,11 +127,11 @@ public class karnov
 			tile=tile&0x7ff;
 	
 			if (flipscreen != 0)
-				drawgfx(bitmap_f,Machine->gfx[1],tile,
+				drawgfx(bitmap_f,Machine.gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
 			else
-				drawgfx(bitmap_f,Machine->gfx[1],tile,
+				drawgfx(bitmap_f,Machine.gfx[1],tile,
 					color, fx, fy, 16*mx,16*my,
 			 		0,TRANSPARENCY_NONE,0);
 		}
@@ -189,14 +189,14 @@ public class karnov
 			}
 			else sprite2=sprite+1;
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					sprite,
 					colour,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
 	    	if (extra != 0)
-	    		drawgfx(bitmap,Machine->gfx[2],
+	    		drawgfx(bitmap,Machine.gfx[2],
 					sprite2,
 					colour,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);

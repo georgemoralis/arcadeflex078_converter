@@ -83,7 +83,7 @@ public class cclimber
 	
 	public static WriteHandlerPtr cclimber_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (data == 0 || Machine->sample_rate == 0)
+		if (data == 0 || Machine.sample_rate == 0)
 			return;
 	
 		cclimber_play_sample(32 * sample_num,sample_freq,sample_volume);

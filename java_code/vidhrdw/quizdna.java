@@ -192,7 +192,7 @@ public class quizdna
 			{
 				y &= 0x1ff;
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						code ^ i,
 						col,
 						fx,fy,
@@ -213,6 +213,6 @@ public class quizdna
 			tilemap_draw(bitmap, cliprect, quizdna_fg_tilemap, 0, 0);
 		}
 		else
-			fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+			fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 	} };
 }

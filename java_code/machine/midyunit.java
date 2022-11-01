@@ -141,7 +141,7 @@ public class midyunit
 			prot_sequence[2] = data;
 	
 			/* special case: sequence entry 1234 means Strike Force, which is different */
-			if (prot_data->reset_sequence[0] == 0x1234)
+			if (prot_data.reset_sequence[0] == 0x1234)
 			{
 				if (data == 0x500)
 				{
@@ -154,9 +154,9 @@ public class midyunit
 			else
 			{
 				/* look for a reset */
-				if (prot_sequence[0] == prot_data->reset_sequence[0] &&
-					prot_sequence[1] == prot_data->reset_sequence[1] &&
-					prot_sequence[2] == prot_data->reset_sequence[2])
+				if (prot_sequence[0] == prot_data.reset_sequence[0] &&
+					prot_sequence[1] == prot_data.reset_sequence[1] &&
+					prot_sequence[2] == prot_data.reset_sequence[2])
 				{
 					logerror("Protection reset\n");
 					prot_index = 0;
@@ -165,7 +165,7 @@ public class midyunit
 				/* look for a clock */
 				if ((prot_sequence[1] & 0x0800) != 0 && (prot_sequence[2] & 0x0800) == 0)
 				{
-					prot_result = prot_data->data_sequence[prot_index++];
+					prot_result = prot_data.data_sequence[prot_index++];
 					logerror("Protection clock (new data = %04X)\n", prot_result);
 				}
 			}

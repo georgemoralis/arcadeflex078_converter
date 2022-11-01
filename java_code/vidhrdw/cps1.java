@@ -425,12 +425,12 @@ public class cps1
 	
 	static MACHINE_INIT( cps )
 	{
-		const char *gamename = Machine->gamedrv->name;
+		const char *gamename = Machine.gamedrv.name;
 		struct CPS1config *pCFG=&cps1_config_table[0];
 	
-		while(pCFG->name)
+		while(pCFG.name)
 		{
-			if (strcmp(pCFG->name, gamename) == 0)
+			if (strcmp(pCFG.name, gamename) == 0)
 			{
 				break;
 			}
@@ -438,13 +438,13 @@ public class cps1
 		}
 		cps1_game_config=pCFG;
 	
-	    if (!cps1_game_config->name)
+	    if (!cps1_game_config.name)
 	    {
 	        gamename="cps2";
 	        pCFG=&cps1_config_table[0];
-	        while(pCFG->name)
+	        while(pCFG.name)
 	        {
-	            if (strcmp(pCFG->name, gamename) == 0)
+	            if (strcmp(pCFG.name, gamename) == 0)
 	            {
 	                break;
 	            }
@@ -519,21 +519,21 @@ public class cps1
 		/* Some games interrogate a couple of registers on bootup. */
 		/* These are CPS1 board B self test checks. They wander from game to */
 		/* game. */
-		if (offset && offset == cps1_game_config->cpsb_addr/2)
-			return cps1_game_config->cpsb_value;
+		if (offset && offset == cps1_game_config.cpsb_addr/2)
+			return cps1_game_config.cpsb_value;
 	
 		/* some games use as a protection check the ability to do 16-bit multiplies */
 		/* with a 32-bit result, by writing the factors to two ports and reading the */
 		/* result from two other ports. */
-		if (offset && offset == cps1_game_config->mult_result_lo/2)
-			return (cps1_output[cps1_game_config->mult_factor1/2] *
-					cps1_output[cps1_game_config->mult_factor2/2]) & 0xffff;
-		if (offset && offset == cps1_game_config->mult_result_hi/2)
-			return (cps1_output[cps1_game_config->mult_factor1/2] *
-					cps1_output[cps1_game_config->mult_factor2/2]) >> 16;
+		if (offset && offset == cps1_game_config.mult_result_lo/2)
+			return (cps1_output[cps1_game_config.mult_factor1/2] *
+					cps1_output[cps1_game_config.mult_factor2/2]) & 0xffff;
+		if (offset && offset == cps1_game_config.mult_result_hi/2)
+			return (cps1_output[cps1_game_config.mult_factor1/2] *
+					cps1_output[cps1_game_config.mult_factor2/2]) >> 16;
 	
 		/* Pang 3 EEPROM interface */
-		if (cps1_game_config->kludge == 5 && offset == 0x7a/2)
+		if (cps1_game_config.kludge == 5 && offset == 0x7a/2)
 			return cps1_eeprom_port_r(0,mem_mask);
 	
 		return cps1_output[offset];
@@ -542,7 +542,7 @@ public class cps1
 	WRITE16_HANDLER( cps1_output_w )
 	{
 		/* Pang 3 EEPROM interface */
-		if (cps1_game_config->kludge == 5 && offset == 0x7a/2)
+		if (cps1_game_config.kludge == 5 && offset == 0x7a/2)
 		{
 			cps1_eeprom_port_w(0,data,mem_mask);
 			return;
@@ -562,23 +562,23 @@ public class cps1
 	
 	
 	#ifdef MAME_DEBUG
-	if (cps1_game_config->control_reg && offset == cps1_game_config->control_reg/2 && data != 0x3f)
+	if (cps1_game_config.control_reg && offset == cps1_game_config.control_reg/2 && data != 0x3f)
 		logerror("control_reg = %04x",data);
 	#endif
 	#if VERBOSE
 	if (offset > 0x22/2 &&
-	        offset != cps1_game_config->layer_control/2 &&
-			offset != cps1_game_config->priority[0]/2 &&
-			offset != cps1_game_config->priority[1]/2 &&
-			offset != cps1_game_config->priority[2]/2 &&
-			offset != cps1_game_config->priority[3]/2 &&
-			offset != cps1_game_config->control_reg/2)
+	        offset != cps1_game_config.layer_control/2 &&
+			offset != cps1_game_config.priority[0]/2 &&
+			offset != cps1_game_config.priority[1]/2 &&
+			offset != cps1_game_config.priority[2]/2 &&
+			offset != cps1_game_config.priority[3]/2 &&
+			offset != cps1_game_config.control_reg/2)
 		logerror("PC %06x: write %02x to output port %02x\n",activecpu_get_pc(),data,offset*2);
 	
 	#ifdef MAME_DEBUG
 	if (offset == 0x22/2 && (data & ~0x8001) != 0x0e)
 		logerror("port 22 = %04x",data);
-	if (cps1_game_config->priority[0] && offset == cps1_game_config->priority[0]/2 && data != 0x00)
+	if (cps1_game_config.priority[0] && offset == cps1_game_config.priority[0]/2 && data != 0x00)
 		usrintf_showmessage("priority0 %04x",data);
 	#endif
 	#endif
@@ -879,7 +879,7 @@ public class cps1
 		}
 	
 		/* Some of the sf2 hacks use only sprite port 0x9100 and the scroll layers are offset */
-		if (cps1_game_config->kludge == 10)
+		if (cps1_game_config.kludge == 10)
 		{
 			cps1_output[CPS1_OBJ_BASE/2] = 0x9100;
 			cps1_obj=cps1_base(CPS1_OBJ_BASE, cps1_obj_size);
@@ -910,12 +910,12 @@ public class cps1
 		stars2y =cps1_port(CPS1_STARS2_SCROLLY);
 	
 		/* Get layer enable bits */
-		layercontrol=cps1_port(cps1_game_config->layer_control);
-		tilemap_set_enable(tilemap[0],layercontrol & cps1_game_config->layer_enable_mask[0]);
-		tilemap_set_enable(tilemap[1],layercontrol & cps1_game_config->layer_enable_mask[1]);
-		tilemap_set_enable(tilemap[2],layercontrol & cps1_game_config->layer_enable_mask[2]);
-		cps1_stars_enabled[0] = layercontrol & cps1_game_config->layer_enable_mask[3];
-		cps1_stars_enabled[1] = layercontrol & cps1_game_config->layer_enable_mask[4];
+		layercontrol=cps1_port(cps1_game_config.layer_control);
+		tilemap_set_enable(tilemap[0],layercontrol & cps1_game_config.layer_enable_mask[0]);
+		tilemap_set_enable(tilemap[1],layercontrol & cps1_game_config.layer_enable_mask[1]);
+		tilemap_set_enable(tilemap[2],layercontrol & cps1_game_config.layer_enable_mask[2]);
+		cps1_stars_enabled[0] = layercontrol & cps1_game_config.layer_enable_mask[3];
+		cps1_stars_enabled[1] = layercontrol & cps1_game_config.layer_enable_mask[4];
 	
 	
 	#ifdef MAME_DEBUG
@@ -944,12 +944,12 @@ public class cps1
 	#endif
 	
 		enablemask = 0;
-		if (cps1_game_config->layer_enable_mask[0] == cps1_game_config->layer_enable_mask[1])
-			enablemask = cps1_game_config->layer_enable_mask[0];
-		if (cps1_game_config->layer_enable_mask[0] == cps1_game_config->layer_enable_mask[2])
-			enablemask = cps1_game_config->layer_enable_mask[0];
-		if (cps1_game_config->layer_enable_mask[1] == cps1_game_config->layer_enable_mask[2])
-			enablemask = cps1_game_config->layer_enable_mask[1];
+		if (cps1_game_config.layer_enable_mask[0] == cps1_game_config.layer_enable_mask[1])
+			enablemask = cps1_game_config.layer_enable_mask[0];
+		if (cps1_game_config.layer_enable_mask[0] == cps1_game_config.layer_enable_mask[2])
+			enablemask = cps1_game_config.layer_enable_mask[0];
+		if (cps1_game_config.layer_enable_mask[1] == cps1_game_config.layer_enable_mask[2])
+			enablemask = cps1_game_config.layer_enable_mask[1];
 		if (enablemask != 0)
 		{
 			if (((layercontrol & enablemask) && (layercontrol & enablemask) != enablemask))
@@ -960,9 +960,9 @@ public class cps1
 	
 	{
 		int enablemask;
-		enablemask = cps1_game_config->layer_enable_mask[0] | cps1_game_config->layer_enable_mask[1]
-				| cps1_game_config->layer_enable_mask[2]
-				| cps1_game_config->layer_enable_mask[3] | cps1_game_config->layer_enable_mask[4];
+		enablemask = cps1_game_config.layer_enable_mask[0] | cps1_game_config.layer_enable_mask[1]
+				| cps1_game_config.layer_enable_mask[2]
+				| cps1_game_config.layer_enable_mask[3] | cps1_game_config.layer_enable_mask[4];
 		if (((layercontrol & ~enablemask) & 0xc03e) != 0)
 			usrintf_showmessage("layer %02x contact MAMEDEV",layercontrol&0xc03f);
 	}
@@ -997,19 +997,19 @@ public class cps1
 	
 	static UINT32 tilemap0_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x1f) + ((col & 0x3f) << 5) + ((row & 0x20) << 6);
 	}
 	
 	static UINT32 tilemap1_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x0f) + ((col & 0x3f) << 4) + ((row & 0x30) << 6);
 	}
 	
 	static UINT32 tilemap2_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x07) + ((col & 0x3f) << 3) + ((row & 0x38) << 6);
 	}
 	
@@ -1017,13 +1017,13 @@ public class cps1
 	
 	static void get_tile0_info(int tile_index)
 	{
-		int base = cps1_game_config->bank_scroll1 * 0x08000;
+		int base = cps1_game_config.bank_scroll1 * 0x08000;
 		int code = cps1_scroll1[2*tile_index];
 		int attr = cps1_scroll1[2*tile_index+1];
 	
 	
 		/* knights & msword */
-		if (cps1_game_config->kludge == 3)
+		if (cps1_game_config.kludge == 3)
 			if (code == 0xf020) code = 0x0020;
 	
 		SET_TILE_INFO(
@@ -1044,9 +1044,9 @@ public class cps1
 	
 	static void get_tile1_info(int tile_index)
 	{
-		int base = cps1_game_config->bank_scroll2 * 0x04000;
-		const int startcode = cps1_game_config->start_scroll2;
-		const int endcode   = cps1_game_config->end_scroll2;
+		int base = cps1_game_config.bank_scroll2 * 0x04000;
+		const int startcode = cps1_game_config.start_scroll2;
+		const int endcode   = cps1_game_config.end_scroll2;
 		int code = cps1_scroll2[2*tile_index];
 		int attr = cps1_scroll2[2*tile_index+1];
 	
@@ -1060,7 +1060,7 @@ public class cps1
 		/*
 		MERCS has an gap in the scroll 2 layout
 		(bad tiles at start of level 2)*/
-			|| (cps1_game_config->kludge == 4 && (code >= 0x1e00 && code < 0x5400))
+			|| (cps1_game_config.kludge == 4 && (code >= 0x1e00 && code < 0x5400))
 		)
 		{
 			tile_info.pen_data = empty_tile;
@@ -1070,21 +1070,21 @@ public class cps1
 	
 	static void get_tile2_info(int tile_index)
 	{
-		int base = cps1_game_config->bank_scroll3 * 0x1000;
-		const int startcode = cps1_game_config->start_scroll3;
-		const int endcode   = cps1_game_config->end_scroll3;
+		int base = cps1_game_config.bank_scroll3 * 0x1000;
+		const int startcode = cps1_game_config.start_scroll3;
+		const int endcode   = cps1_game_config.end_scroll3;
 		int code = cps1_scroll3[2*tile_index];
 		int attr = cps1_scroll3[2*tile_index+1];
 	
-		if (cps1_game_config->kludge == 2 && code < 0x0e00)
+		if (cps1_game_config.kludge == 2 && code < 0x0e00)
 		{
 			code += 0x1000;
 		}
-		if (cps1_game_config->kludge == 8 && code >= 0x5800)
+		if (cps1_game_config.kludge == 8 && code >= 0x5800)
 		{
 			code -= 0x4000;
 		}
-		if (cps1_game_config->kludge == 9 && code < 0x5600)
+		if (cps1_game_config.kludge == 9 && code < 0x5600)
 		{
 			code += 0x4000;
 		}
@@ -1113,8 +1113,8 @@ public class cps1
 			int mask;
 	
 			/* Get transparency registers */
-			if (cps1_game_config->priority[i])
-				mask = cps1_port(cps1_game_config->priority[i]) ^ 0xffff;
+			if (cps1_game_config.priority[i])
+				mask = cps1_port(cps1_game_config.priority[i]) ^ 0xffff;
 			else mask = 0xffff;	/* completely transparent if priority masks not defined (mercs, qad) */
 	
 			tilemap_set_transmask(tilemap[0],i,mask,0x8000);
@@ -1320,14 +1320,14 @@ public class cps1
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)					\
 	{																	\
 		if (flip_screen != 0)												\
-			pdrawgfx(bitmap,Machine->gfx[1],							\
+			pdrawgfx(bitmap,Machine.gfx[1],							\
 					CODE,												\
 					COLOR,												\
 					!(FLIPX),!(FLIPY),									\
 					511-16-(SX),255-16-(SY),							\
 					cliprect,TRANSPARENCY_PEN,15,0x02);					\
 		else															\
-			pdrawgfx(bitmap,Machine->gfx[1],							\
+			pdrawgfx(bitmap,Machine.gfx[1],							\
 					CODE,												\
 					COLOR,												\
 					FLIPX,FLIPY,										\
@@ -1340,7 +1340,7 @@ public class cps1
 		data16_t *base=cps1_buffered_obj;
 	
 		/* some sf2 hacks draw the sprites in reverse order */
-		if (cps1_game_config->kludge == 10)
+		if (cps1_game_config.kludge == 10)
 		{
 			base += cps1_last_sprite_offset;
 			baseadd = -4;
@@ -1361,20 +1361,20 @@ public class cps1
 	//		x-=0x20;
 	//		y+=0x20;
 	
-			if (cps1_game_config->kludge == 7)
+			if (cps1_game_config.kludge == 7)
 			{
 				code += 0x4000;
 			}
-			if (cps1_game_config->kludge == 1 && code >= 0x01000)
+			if (cps1_game_config.kludge == 1 && code >= 0x01000)
 			{
 				code += 0x4000;
 			}
-			if (cps1_game_config->kludge == 2 && code >= 0x02a00)
+			if (cps1_game_config.kludge == 2 && code >= 0x02a00)
 			{
 				code += 0x4000;
 			}
 	
-			if (code < Machine->gfx[1]->total_elements)
+			if (code < Machine.gfx[1].total_elements)
 			{
 				if ((colour & 0xff00) != 0)
 				{
@@ -1563,14 +1563,14 @@ public class cps1
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)									\
 	{																					\
 		if (flip_screen != 0)																\
-			pdrawgfx(bitmap,Machine->gfx[1],											\
+			pdrawgfx(bitmap,Machine.gfx[1],											\
 					CODE,																\
 					COLOR,																\
 					!(FLIPX),!(FLIPY),													\
 					511-16-(SX),255-16-(SY),											\
 					cliprect,TRANSPARENCY_PEN,15,primasks[priority]);					\
 		else																			\
-			pdrawgfx(bitmap,Machine->gfx[1],											\
+			pdrawgfx(bitmap,Machine.gfx[1],											\
 					CODE,																\
 					COLOR,																\
 					FLIPX,FLIPY,														\
@@ -1737,9 +1737,9 @@ public class cps1
 	
 					col = ((col & 0xe0) >> 1) + (cpu_getcurrentframe()/16 & 0x0f);
 	
-					if (sx >= cliprect->min_x && sx <= cliprect->max_x &&
-						sy >= cliprect->min_y && sy <= cliprect->max_y)
-						plot_pixel(bitmap,sx,sy,Machine->pens[0xa00+col]);
+					if (sx >= cliprect.min_x && sx <= cliprect.max_x &&
+						sy >= cliprect.min_y && sy <= cliprect.max_y)
+						plot_pixel(bitmap,sx,sy,Machine.pens[0xa00+col]);
 				}
 			}
 		}
@@ -1763,9 +1763,9 @@ public class cps1
 	
 					col = ((col & 0xe0) >> 1) + (cpu_getcurrentframe()/16 & 0x0f);
 	
-					if (sx >= cliprect->min_x && sx <= cliprect->max_x &&
-						sy >= cliprect->min_y && sy <= cliprect->max_y)
-						plot_pixel(bitmap,sx,sy,Machine->pens[0x800+col]);
+					if (sx >= cliprect.min_x && sx <= cliprect.max_x &&
+						sy >= cliprect.min_y && sy <= cliprect.max_y)
+						plot_pixel(bitmap,sx,sy,Machine.pens[0x800+col]);
 				}
 			}
 		}
@@ -1817,7 +1817,7 @@ public class cps1
 	
 		flip_screen_set(videocontrol & 0x8000);
 	
-		layercontrol = cps1_output[cps1_game_config->layer_control/2];
+		layercontrol = cps1_output[cps1_game_config.layer_control/2];
 	
 		/* Get video memory base registers */
 		cps1_get_video_base();
@@ -1859,7 +1859,7 @@ public class cps1
 	
 	
 		/* Blank screen */
-		fillbitmap(bitmap,Machine->pens[4095],cliprect);
+		fillbitmap(bitmap,Machine.pens[4095],cliprect);
 	
 		cps1_render_stars(bitmap,cliprect);
 	

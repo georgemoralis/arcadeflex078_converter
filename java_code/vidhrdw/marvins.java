@@ -191,7 +191,7 @@ public class marvins
 			return 1;
 	
 		{
-			tilemap_clip = Machine->visible_area;
+			tilemap_clip = Machine.visible_area;
 			if (snk_gamegroup != 1) // not Mad Crasher
 			{
 				tilemap_clip.max_x-=16;
@@ -260,7 +260,7 @@ public class marvins
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		const unsigned char *base = videoram+0x400;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -291,7 +291,7 @@ public class marvins
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly,
 			int priority, unsigned char sprite_partition )
 	{
-		const struct GfxElement *gfx = Machine->gfx[3];
+		const struct GfxElement *gfx = Machine.gfx[3];
 		const unsigned char *source, *finish;
 	
 		if( sprite_partition>0x64 ) sprite_partition = 0x64;

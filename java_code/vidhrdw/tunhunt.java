@@ -241,7 +241,7 @@ public class tunhunt
 		int color;
 		int count,pen;
 		const unsigned char *source;
-		struct rectangle clip = Machine->visible_area;
+		struct rectangle clip = Machine.visible_area;
 	
 		for( line=0; line<64; line++ )
 		{
@@ -255,14 +255,14 @@ public class tunhunt
 					span_data = source[span];
 					if( span_data == 0xff ) break;
 					pen = ((span_data>>6)&0x3)^0x3;
-					color = Machine->pens[pen];
+					color = Machine.pens[pen];
 					count = (span_data&0x1f)+1;
 					while( count-- )
 					{
 						plot_pixel( tmpbitmap, x++,line,color );
 					}
 				}
-				color = Machine->pens[0];
+				color = Machine.pens[0];
 				while( x<256 )
 				{
 					plot_pixel( tmpbitmap, x++,line,color );
@@ -295,7 +295,7 @@ public class tunhunt
 			scaley,/* incyy */
 			0, /* no wraparound */
 			&clip,
-			TRANSPARENCY_PEN,Machine->pens[0],
+			TRANSPARENCY_PEN,Machine.pens[0],
 			0 /* priority */
 		);
 	}
@@ -318,7 +318,7 @@ public class tunhunt
 			1480: 00 f0 00 		00	40 40 40 40 40 40 40 40		00 00	00 00		y0
 			1400: 00 00 00 		ff	ff ff ff ff ff ff ff ff		40 40	40 40		y1
 			1280: 07 03 00 		01	07 06 04 05 02 07 03 00		09 0a	0b 0c		palette select
-			->hue 06 02 ff 		60	06 05 03 04 01 06 02 ff		d2 00	c2 ff
+			.hue 06 02 ff 		60	06 05 03 04 01 06 02 ff		d2 00	c2 ff
 	*/
 		int span,x,y;
 		UINT8 *pMem;
@@ -347,7 +347,7 @@ public class tunhunt
 						z = x0; /* give priority to rightmost spans */
 					}
 				}
-				color = Machine->pens[pen];
+				color = Machine.pens[pen];
 				plot_pixel( bitmap, x, 0xff-y, color );
 			}
 		}
@@ -371,12 +371,12 @@ public class tunhunt
 			{
 				for( sy=0; sy<256; sy+=16 )
 				{
-					drawgfx( bitmap, Machine->gfx[1],
+					drawgfx( bitmap, Machine.gfx[1],
 						picture_code,
 						0, /* color */
 						0,0, /* flip */
 						sx,sy,
-						&Machine->visible_area,
+						&Machine.visible_area,
 						TRANSPARENCY_PEN,0 );
 				}
 			}
@@ -397,12 +397,12 @@ public class tunhunt
 				vstop		= 0x00
 	
 		*/
-		drawgfx( bitmap, Machine->gfx[1],
+		drawgfx( bitmap, Machine.gfx[1],
 				picture_code,
 				0, /* color */
 				0,0, /* flip */
 				255-hposition-16,vstart-32,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN,0 );
 	}
 	

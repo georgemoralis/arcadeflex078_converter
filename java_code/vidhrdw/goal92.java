@@ -138,7 +138,7 @@ public class goal92
 	
 			y = 256-(y+7);
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);

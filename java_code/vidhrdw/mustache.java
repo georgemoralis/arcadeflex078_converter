@@ -107,7 +107,7 @@ public class mustache
 	static void mustache_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		struct rectangle clip = *cliprect;
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		int offs;
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
@@ -123,12 +123,12 @@ public class mustache
 			code+=(attr&0x0c)<<6;
 	
 			if ((control_byte & 0xa))
-				clip.max_y = Machine->visible_area.max_y;
+				clip.max_y = Machine.visible_area.max_y;
 			else
 				if (flip_screen != 0)
-					clip.min_y = Machine->visible_area.min_y + 56;
+					clip.min_y = Machine.visible_area.min_y + 56;
 				else
-					clip.max_y = Machine->visible_area.max_y - 56;
+					clip.max_y = Machine.visible_area.max_y - 56;
 	
 			if (flip_screen != 0)
 			{

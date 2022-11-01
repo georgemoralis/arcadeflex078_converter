@@ -102,7 +102,7 @@ public class m90
 			y -= 16 * y_multi;
 	
 			for (i = 0;i < y_multi;i++)
-				pdrawgfx(bitmap,Machine->gfx[1],
+				pdrawgfx(bitmap,Machine.gfx[1],
 						sprite + (fy ? y_multi-1 - i : i),
 						colour,
 						fx,fy,
@@ -134,7 +134,7 @@ public class m90
 			fx=spriteram.read(offs+5)&1;
 			fy=0;//spriteram.read(offs+5)&2;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					sprite&0x1fff,
 					colour,
 					fx,fy,
@@ -240,7 +240,7 @@ public class m90
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		if (!pf2_enable)
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		if (pf2_enable != 0)
 		{

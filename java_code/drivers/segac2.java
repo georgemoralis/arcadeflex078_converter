@@ -1484,7 +1484,7 @@ public class segac2
 	{
 		int address = (z80_68000_latch) + (offset & 0x7fff);
 	
-		if (!z80running) logerror("undead Z80->68000 read!\n");
+		if (!z80running) logerror("undead Z80.68000 read!\n");
 	
 		if (z80_latch_bitcount != 0) logerror("reading whilst latch being set!\n");
 	
@@ -1501,7 +1501,7 @@ public class segac2
 	static WRITE16_HANDLER ( genesis_z80_ram_w )
 	{
 		if (z80running != 0) logerror("Z80 written whilst running!\n");
-		logerror("68000->z80 sound write, %x to %x\n", data, offset);
+		logerror("68000.z80 sound write, %x to %x\n", data, offset);
 	
 		if (ACCESSING_LSB != 0) genesis_z80_ram[(offset<<1)+1] = data & 0xff;
 		if (ACCESSING_MSB != 0) genesis_z80_ram[offset<<1] = (data >> 8) & 0xff;

@@ -243,7 +243,7 @@ INLINE void daa( void )
 	UINT16 t;
 	t = A;
 	if ((CC & CC_H) != 0) t+=0x06;
-	if ((t&0x0f)>9) t+=0x06;		/* ASG -- this code is broken! $66+$99=$FF -> DAA should = $65, we get $05! */
+	if ((t&0x0f)>9) t+=0x06;		/* ASG -- this code is broken! $66+$99=$FF . DAA should = $65, we get $05! */
 	if ((CC & CC_C) != 0) t+=0x60;
 	if ((t&0xf0)>0x90) t+=0x60;
 	if ((t & 0x100) != 0) SEC;

@@ -59,7 +59,7 @@ public class strnskil
 			default:		res = 0xff; break;
 		}
 	
-		logerror("%04x: protection_r -> %02x\n",activecpu_get_pc(),res);
+		logerror("%04x: protection_r . %02x\n",activecpu_get_pc(),res);
 		return res;
 	} };
 	

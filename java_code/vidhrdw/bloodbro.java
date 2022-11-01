@@ -188,7 +188,7 @@ public class bloodbro
 			{
 				for (y = 0;y <= height;y++)
 				{
-					pdrawgfx(bitmap,Machine->gfx[3],
+					pdrawgfx(bitmap,Machine.gfx[3],
 							tile_number++,
 							color,
 							flipx,flipy,
@@ -229,10 +229,10 @@ public class bloodbro
 	
 			if ((data0 & 0x8000) != 0) continue;	/* disabled */
 	
-			/* Remap code 0x800 <-> 0x1000 */
+			/* Remap code 0x800 <. 0x1000 */
 			code = (code&0x7ff) | ((code&0x800)<<1) | ((code&0x1000)>>1);
 	
-			pdrawgfx(bitmap,Machine->gfx[3],
+			pdrawgfx(bitmap,Machine.gfx[3],
 					code,
 					color,
 					flipx,flipy,

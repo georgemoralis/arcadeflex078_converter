@@ -39,7 +39,7 @@ public class _2612intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf->handler[n]) intf->handler[n](irq);
+		if(intf.handler[n]) intf.handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -98,22 +98,22 @@ public class _2612intf
 	int YM2612_sh_start(const struct MachineSound *msound)
 	{
 		int i,j;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 		char buf[YM2612_NUMBUF][40];
 		const char *name[YM2612_NUMBUF];
 	
-		intf = msound->sound_interface;
-		if( intf->num > MAX_2612 ) return 1;
+		intf = msound.sound_interface;
+		if( intf.num > MAX_2612 ) return 1;
 	
 		/* FM init */
 		/* Timer Handler set */
 		FMTimerInit();
 		/* stream system initialize */
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			int vol[YM2612_NUMBUF];
 			/* stream setup */
-			int mixed_vol = intf->mixing_level[i];
+			int mixed_vol = intf.mixing_level[i];
 			/* stream setup */
 			for (j = 0 ; j < YM2612_NUMBUF ; j++)
 			{
@@ -128,7 +128,7 @@ public class _2612intf
 		}
 	
 		/**** initialize YM2612 ****/
-		if (YM2612Init(intf->num,intf->baseclock,rate,TimerHandler,IRQHandler) == 0)
+		if (YM2612Init(intf.num,intf.baseclock,rate,TimerHandler,IRQHandler) == 0)
 		  return 0;
 		/* error */
 		return 1;
@@ -147,7 +147,7 @@ public class _2612intf
 	{
 		int i;
 	
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 			YM2612ResetChip(i);
 	}
 	

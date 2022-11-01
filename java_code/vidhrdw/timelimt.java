@@ -37,7 +37,7 @@ public class timelimt
 	public static PaletteInitHandlerPtr palette_init_timelimt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom) {
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -154,12 +154,12 @@ public class timelimt
 			code += ( attr & 0x80 ) ? 0x40 : 0x00;
 			code += ( attr & 0x40 ) ? 0x80 : 0x00;
 	
-			drawgfx( bitmap, Machine->gfx[2],
+			drawgfx( bitmap, Machine.gfx[2],
 					code,
 					attr & 7,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -175,10 +175,10 @@ public class timelimt
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly);
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 	
 		drawsprites( bitmap );
 	
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

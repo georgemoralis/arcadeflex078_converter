@@ -48,7 +48,7 @@ public class galpanic
 		sy = offset / 256;
 		sx = offset % 256;
 	
-		plot_pixel(tmpbitmap, sx, sy, Machine->pens[1024 + (data >> 1)]);
+		plot_pixel(tmpbitmap, sx, sy, Machine.pens[1024 + (data >> 1)]);
 	}
 	
 	WRITE16_HANDLER( galpanic_paletteram_w )
@@ -112,12 +112,12 @@ public class galpanic
 			flipx = attr2 & 0x80;
 			flipy = attr2 & 0x40;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy - 16,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -136,12 +136,12 @@ public class galpanic
 			flipx = spriteram16[offs] & 0x0002;
 			flipy = spriteram16[offs] & 0x0001;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -157,14 +157,14 @@ public class galpanic
 			sy = offs / 256;
 			color = galpanic_fgvideoram[offs];
 			if (color != 0)
-				plot_pixel(bitmap, sx, sy, Machine->pens[color]);
+				plot_pixel(bitmap, sx, sy, Machine.pens[color]);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_galpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the temporary bitmap to the screen */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		draw_fgbitmap(bitmap);
 	
@@ -174,7 +174,7 @@ public class galpanic
 	public static VideoUpdateHandlerPtr video_update_comad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* copy the temporary bitmap to the screen */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		draw_fgbitmap(bitmap);
 	

@@ -53,7 +53,7 @@ public class taotaido
 		int x,y;
 	
 		data16_t *source = &taotaido_spriteram_older[spriteno*4];
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 	
 		int yzoom = (source[0] & 0xf000) >> 12;
@@ -193,7 +193,7 @@ public class taotaido
 	
 	UINT32 taotaido_tilemap_scan_rows( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return row*0x40 + (col&0x3f) + ((col&0x40)<<6);
 	}
 	
@@ -220,10 +220,10 @@ public class taotaido
 		int line;
 		struct rectangle clip;
 	
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 	
 		for (line = 0; line < 224;line++)
 		{

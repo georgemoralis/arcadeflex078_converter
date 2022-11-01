@@ -412,7 +412,7 @@ public class jchan
 	
 		const UINT16 *source = jchan_spriteram;
 		const UINT16 *finish = source+0x2000;  // or whatever size ..
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		while( source<finish )
 		{

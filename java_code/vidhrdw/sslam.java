@@ -16,7 +16,7 @@ public class sslam
 	{
 		/* there are still some sprite problems .. */
 	
-		const struct GfxElement *gfx = Machine->gfx[3];
+		const struct GfxElement *gfx = Machine.gfx[3];
 		data16_t *source = sslam_spriteram;
 		data16_t *finish = source + 0x20000/2;
 	

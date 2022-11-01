@@ -211,7 +211,7 @@ public class dec0
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,

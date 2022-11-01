@@ -267,9 +267,9 @@ public class network
 		char cAck = 1; /* assuming false */
 	
 	    dprintf(("net_game_check (%d) as %s, Game('%s')\n",
-	        player, (is_client) ? "Client" : "Server", Machine->gamedrv->name))
+	        player, (is_client) ? "Client" : "Server", Machine.gamedrv.name))
 		/* Setup rom version info */
-		strcpy( szVerSelf, Machine->gamedrv->name );
+		strcpy( szVerSelf, Machine.gamedrv.name );
 		/* TODO: strcpy checksum info? */
 	
 		/* do comparisons */

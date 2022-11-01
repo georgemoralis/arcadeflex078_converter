@@ -1537,23 +1537,23 @@ public class spc700
 		if(!context)
 			r = &spc700i_cpu;
 	
-		p =  ((r->flag_nz & 0x80)			|
-				((r->flag_v & 0x80) >> 1)	|
-				r->flag_p>>3				|
-				r->flag_b					|
-				((r->flag_h&0x10) >> 1)		|
-				r->flag_i					|
-				((!r->flag_nz) << 1)		|
-				((r->flag_c >> 8)&1));
+		p =  ((r.flag_nz & 0x80)			|
+				((r.flag_v & 0x80) >> 1)	|
+				r.flag_p>>3				|
+				r.flag_b					|
+				((r.flag_h&0x10) >> 1)		|
+				r.flag_i					|
+				((!r.flag_nz) << 1)		|
+				((r.flag_c >> 8)&1));
 	
 		 switch(regnum)
 		{
-			case CPU_INFO_REG+SPC700_PC:		sprintf(buffer[which], "PC:%04X", r->pc); break;
-			case CPU_INFO_REG+SPC700_S:			sprintf(buffer[which], "S:%02X", r->s); break;
+			case CPU_INFO_REG+SPC700_PC:		sprintf(buffer[which], "PC:%04X", r.pc); break;
+			case CPU_INFO_REG+SPC700_S:			sprintf(buffer[which], "S:%02X", r.s); break;
 			case CPU_INFO_REG+SPC700_P:			sprintf(buffer[which], "P:%02X", p); break;
-			case CPU_INFO_REG+SPC700_A:			sprintf(buffer[which], "A:%02X", r->a); break;
-			case CPU_INFO_REG+SPC700_X:			sprintf(buffer[which], "X:%02X", r->x); break;
-			case CPU_INFO_REG+SPC700_Y:			sprintf(buffer[which], "Y:%02X", r->y); break;
+			case CPU_INFO_REG+SPC700_A:			sprintf(buffer[which], "A:%02X", r.a); break;
+			case CPU_INFO_REG+SPC700_X:			sprintf(buffer[which], "X:%02X", r.x); break;
+			case CPU_INFO_REG+SPC700_Y:			sprintf(buffer[which], "Y:%02X", r.y); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
 					p & 0x80 ? 'N':'.',
@@ -1774,7 +1774,7 @@ public class spc700
 				case 0xa7: OP_SBC   ( 6, DXI          ); break; /* SBC dxi       */
 				case 0xa8: OP_SBC   ( 2, IMM          ); break; /* SBC imm       */
 				case 0xa9: OP_SBCM  ( 6, DP, DP       ); break; /* SBC dp, dp    */
-				case 0xaa: OP_MOV1C ( 4               ); break; /* MOV1 bit->C   */
+				case 0xaa: OP_MOV1C ( 4               ); break; /* MOV1 bit.C   */
 				case 0xab: OP_INCM  ( 4, DP           ); break; /* INC dp        */
 				case 0xac: OP_INCM  ( 5, ABS          ); break; /* INC abs       */
 				case 0xad: OP_CMPR  ( 2, REG_Y, IMM   ); break; /* CMP Y, imm    */
@@ -1806,7 +1806,7 @@ public class spc700
 				case 0xc7: OP_MOVRM ( 7, REG_A, DXI   ); break; /* MOV dxi, A    */
 				case 0xc8: OP_CMPR  ( 2, REG_X, IMM   ); break; /* CMP X, imm    */
 				case 0xc9: OP_MOVRM ( 5, REG_X, ABS   ); break; /* MOV abs, X    */
-				case 0xca: OP_MOV1M ( 6               ); break; /* MOV1 C->bit   */
+				case 0xca: OP_MOV1M ( 6               ); break; /* MOV1 C.bit   */
 				case 0xcb: OP_MOVRM ( 4, REG_Y, DP    ); break; /* MOV dp, Y     */
 				case 0xcc: OP_MOVRM ( 5, REG_Y, ABS   ); break; /* MOV abs, Y    */
 				case 0xcd: OP_MOVMR ( 2, IMM, REG_X   ); break; /* MOV X, imm    */

@@ -499,7 +499,7 @@ public class jaguar
 		init_tables();
 	
 		if (config != 0)
-			jaguar.cpu_interrupt = config->cpu_int_callback;
+			jaguar.cpu_interrupt = config.cpu_int_callback;
 	
 		jaguar.b0 = jaguar.r;
 		jaguar.b1 = jaguar.a;
@@ -835,53 +835,53 @@ public class jaguar
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+JAGUAR_PC:  	sprintf(buffer[which], "PC: %08X", r->PC); break;
+			case CPU_INFO_REG+JAGUAR_PC:  	sprintf(buffer[which], "PC: %08X", r.PC); break;
 	
-			case CPU_INFO_REG+JAGUAR_R0:	sprintf(buffer[which], "R0: %08X", r->r[0]); break;
-			case CPU_INFO_REG+JAGUAR_R1:	sprintf(buffer[which], "R1: %08X", r->r[1]); break;
-			case CPU_INFO_REG+JAGUAR_R2:	sprintf(buffer[which], "R2: %08X", r->r[2]); break;
-			case CPU_INFO_REG+JAGUAR_R3:	sprintf(buffer[which], "R3: %08X", r->r[3]); break;
-			case CPU_INFO_REG+JAGUAR_R4:	sprintf(buffer[which], "R4: %08X", r->r[4]); break;
-			case CPU_INFO_REG+JAGUAR_R5:	sprintf(buffer[which], "R5: %08X", r->r[5]); break;
-			case CPU_INFO_REG+JAGUAR_R6:	sprintf(buffer[which], "R6: %08X", r->r[6]); break;
-			case CPU_INFO_REG+JAGUAR_R7:	sprintf(buffer[which], "R7: %08X", r->r[7]); break;
-			case CPU_INFO_REG+JAGUAR_R8:	sprintf(buffer[which], "R8: %08X", r->r[8]); break;
-			case CPU_INFO_REG+JAGUAR_R9:	sprintf(buffer[which], "R9: %08X", r->r[9]); break;
-			case CPU_INFO_REG+JAGUAR_R10:	sprintf(buffer[which], "R10:%08X", r->r[10]); break;
-			case CPU_INFO_REG+JAGUAR_R11:	sprintf(buffer[which], "R11:%08X", r->r[11]); break;
-			case CPU_INFO_REG+JAGUAR_R12:	sprintf(buffer[which], "R12:%08X", r->r[12]); break;
-			case CPU_INFO_REG+JAGUAR_R13:	sprintf(buffer[which], "R13:%08X", r->r[13]); break;
-			case CPU_INFO_REG+JAGUAR_R14:	sprintf(buffer[which], "R14:%08X", r->r[14]); break;
-			case CPU_INFO_REG+JAGUAR_R15:	sprintf(buffer[which], "R15:%08X", r->r[15]); break;
-			case CPU_INFO_REG+JAGUAR_R16:	sprintf(buffer[which], "R16:%08X", r->r[16]); break;
-			case CPU_INFO_REG+JAGUAR_R17:	sprintf(buffer[which], "R17:%08X", r->r[17]); break;
-			case CPU_INFO_REG+JAGUAR_R18:	sprintf(buffer[which], "R18:%08X", r->r[18]); break;
-			case CPU_INFO_REG+JAGUAR_R19:	sprintf(buffer[which], "R19:%08X", r->r[19]); break;
-			case CPU_INFO_REG+JAGUAR_R20:	sprintf(buffer[which], "R20:%08X", r->r[20]); break;
-			case CPU_INFO_REG+JAGUAR_R21:	sprintf(buffer[which], "R21:%08X", r->r[21]); break;
-			case CPU_INFO_REG+JAGUAR_R22:	sprintf(buffer[which], "R22:%08X", r->r[22]); break;
-			case CPU_INFO_REG+JAGUAR_R23:	sprintf(buffer[which], "R23:%08X", r->r[23]); break;
-			case CPU_INFO_REG+JAGUAR_R24:	sprintf(buffer[which], "R24:%08X", r->r[24]); break;
-			case CPU_INFO_REG+JAGUAR_R25:	sprintf(buffer[which], "R25:%08X", r->r[25]); break;
-			case CPU_INFO_REG+JAGUAR_R26:	sprintf(buffer[which], "R26:%08X", r->r[26]); break;
-			case CPU_INFO_REG+JAGUAR_R27:	sprintf(buffer[which], "R27:%08X", r->r[27]); break;
-			case CPU_INFO_REG+JAGUAR_R28:	sprintf(buffer[which], "R28:%08X", r->r[28]); break;
-			case CPU_INFO_REG+JAGUAR_R29:	sprintf(buffer[which], "R29:%08X", r->r[29]); break;
-			case CPU_INFO_REG+JAGUAR_R30:	sprintf(buffer[which], "R30:%08X", r->r[30]); break;
-			case CPU_INFO_REG+JAGUAR_R31:	sprintf(buffer[which], "R31:%08X", r->r[31]); break;
+			case CPU_INFO_REG+JAGUAR_R0:	sprintf(buffer[which], "R0: %08X", r.r[0]); break;
+			case CPU_INFO_REG+JAGUAR_R1:	sprintf(buffer[which], "R1: %08X", r.r[1]); break;
+			case CPU_INFO_REG+JAGUAR_R2:	sprintf(buffer[which], "R2: %08X", r.r[2]); break;
+			case CPU_INFO_REG+JAGUAR_R3:	sprintf(buffer[which], "R3: %08X", r.r[3]); break;
+			case CPU_INFO_REG+JAGUAR_R4:	sprintf(buffer[which], "R4: %08X", r.r[4]); break;
+			case CPU_INFO_REG+JAGUAR_R5:	sprintf(buffer[which], "R5: %08X", r.r[5]); break;
+			case CPU_INFO_REG+JAGUAR_R6:	sprintf(buffer[which], "R6: %08X", r.r[6]); break;
+			case CPU_INFO_REG+JAGUAR_R7:	sprintf(buffer[which], "R7: %08X", r.r[7]); break;
+			case CPU_INFO_REG+JAGUAR_R8:	sprintf(buffer[which], "R8: %08X", r.r[8]); break;
+			case CPU_INFO_REG+JAGUAR_R9:	sprintf(buffer[which], "R9: %08X", r.r[9]); break;
+			case CPU_INFO_REG+JAGUAR_R10:	sprintf(buffer[which], "R10:%08X", r.r[10]); break;
+			case CPU_INFO_REG+JAGUAR_R11:	sprintf(buffer[which], "R11:%08X", r.r[11]); break;
+			case CPU_INFO_REG+JAGUAR_R12:	sprintf(buffer[which], "R12:%08X", r.r[12]); break;
+			case CPU_INFO_REG+JAGUAR_R13:	sprintf(buffer[which], "R13:%08X", r.r[13]); break;
+			case CPU_INFO_REG+JAGUAR_R14:	sprintf(buffer[which], "R14:%08X", r.r[14]); break;
+			case CPU_INFO_REG+JAGUAR_R15:	sprintf(buffer[which], "R15:%08X", r.r[15]); break;
+			case CPU_INFO_REG+JAGUAR_R16:	sprintf(buffer[which], "R16:%08X", r.r[16]); break;
+			case CPU_INFO_REG+JAGUAR_R17:	sprintf(buffer[which], "R17:%08X", r.r[17]); break;
+			case CPU_INFO_REG+JAGUAR_R18:	sprintf(buffer[which], "R18:%08X", r.r[18]); break;
+			case CPU_INFO_REG+JAGUAR_R19:	sprintf(buffer[which], "R19:%08X", r.r[19]); break;
+			case CPU_INFO_REG+JAGUAR_R20:	sprintf(buffer[which], "R20:%08X", r.r[20]); break;
+			case CPU_INFO_REG+JAGUAR_R21:	sprintf(buffer[which], "R21:%08X", r.r[21]); break;
+			case CPU_INFO_REG+JAGUAR_R22:	sprintf(buffer[which], "R22:%08X", r.r[22]); break;
+			case CPU_INFO_REG+JAGUAR_R23:	sprintf(buffer[which], "R23:%08X", r.r[23]); break;
+			case CPU_INFO_REG+JAGUAR_R24:	sprintf(buffer[which], "R24:%08X", r.r[24]); break;
+			case CPU_INFO_REG+JAGUAR_R25:	sprintf(buffer[which], "R25:%08X", r.r[25]); break;
+			case CPU_INFO_REG+JAGUAR_R26:	sprintf(buffer[which], "R26:%08X", r.r[26]); break;
+			case CPU_INFO_REG+JAGUAR_R27:	sprintf(buffer[which], "R27:%08X", r.r[27]); break;
+			case CPU_INFO_REG+JAGUAR_R28:	sprintf(buffer[which], "R28:%08X", r.r[28]); break;
+			case CPU_INFO_REG+JAGUAR_R29:	sprintf(buffer[which], "R29:%08X", r.r[29]); break;
+			case CPU_INFO_REG+JAGUAR_R30:	sprintf(buffer[which], "R30:%08X", r.r[30]); break;
+			case CPU_INFO_REG+JAGUAR_R31:	sprintf(buffer[which], "R31:%08X", r.r[31]); break;
 	
 			case CPU_INFO_REG+JAGUAR_FLAGS:	sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c",
-													r->FLAGS & 0x8000 ? 'D':'.',
-													r->FLAGS & 0x4000 ? 'A':'.',
-													r->FLAGS & 0x0100 ? '4':'.',
-													r->FLAGS & 0x0080 ? '3':'.',
-													r->FLAGS & 0x0040 ? '2':'.',
-													r->FLAGS & 0x0020 ? '1':'.',
-													r->FLAGS & 0x0010 ? '0':'.',
-													r->FLAGS & 0x0008 ? 'I':'.',
-													r->FLAGS & 0x0004 ? 'N':'.',
-													r->FLAGS & 0x0002 ? 'C':'.',
-													r->FLAGS & 0x0001 ? 'Z':'.'); break;
+													r.FLAGS & 0x8000 ? 'D':'.',
+													r.FLAGS & 0x4000 ? 'A':'.',
+													r.FLAGS & 0x0100 ? '4':'.',
+													r.FLAGS & 0x0080 ? '3':'.',
+													r.FLAGS & 0x0040 ? '2':'.',
+													r.FLAGS & 0x0020 ? '1':'.',
+													r.FLAGS & 0x0010 ? '0':'.',
+													r.FLAGS & 0x0008 ? 'I':'.',
+													r.FLAGS & 0x0004 ? 'N':'.',
+													r.FLAGS & 0x0002 ? 'C':'.',
+													r.FLAGS & 0x0001 ? 'Z':'.'); break;
 	
 			case CPU_INFO_FAMILY: return "Jaguar";
 			case CPU_INFO_VERSION: return "1.0";

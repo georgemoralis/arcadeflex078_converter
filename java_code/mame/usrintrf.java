@@ -240,7 +240,7 @@ public class usrintrf
 	
 	INLINE void ui_markdirty(const struct rectangle *rect)
 	{
-		artwork_mark_ui_dirty(rect->min_x, rect->min_y, rect->max_x, rect->max_y);
+		artwork_mark_ui_dirty(rect.min_x, rect.min_y, rect.max_x, rect.max_y);
 		ui_dirty = 5;
 	}
 	
@@ -259,26 +259,26 @@ public class usrintrf
 		artwork_get_screensize(&w, &h);
 	
 		/* apply X flip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_X)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_X)
 		{
-			temp = w - rect->min_x - 1;
-			rect->min_x = w - rect->max_x - 1;
-			rect->max_x = temp;
+			temp = w - rect.min_x - 1;
+			rect.min_x = w - rect.max_x - 1;
+			rect.max_x = temp;
 		}
 	
 		/* apply Y flip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_Y)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_Y)
 		{
-			temp = h - rect->min_y - 1;
-			rect->min_y = h - rect->max_y - 1;
-			rect->max_y = temp;
+			temp = h - rect.min_y - 1;
+			rect.min_y = h - rect.max_y - 1;
+			rect.max_y = temp;
 		}
 	
 		/* apply X/Y swap first */
-		if (Machine->ui_orientation & ORIENTATION_SWAP_XY)
+		if (Machine.ui_orientation & ORIENTATION_SWAP_XY)
 		{
-			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
-			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
+			temp = rect.min_x; rect.min_x = rect.min_y; rect.min_y = temp;
+			temp = rect.max_x; rect.max_x = rect.max_y; rect.max_y = temp;
 		}
 	}
 	
@@ -297,26 +297,26 @@ public class usrintrf
 		artwork_get_screensize(&w, &h);
 	
 		/* apply X/Y swap first */
-		if (Machine->ui_orientation & ORIENTATION_SWAP_XY)
+		if (Machine.ui_orientation & ORIENTATION_SWAP_XY)
 		{
-			temp = rect->min_x; rect->min_x = rect->min_y; rect->min_y = temp;
-			temp = rect->max_x; rect->max_x = rect->max_y; rect->max_y = temp;
+			temp = rect.min_x; rect.min_x = rect.min_y; rect.min_y = temp;
+			temp = rect.max_x; rect.max_x = rect.max_y; rect.max_y = temp;
 		}
 	
 		/* apply X flip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_X)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_X)
 		{
-			temp = w - rect->min_x - 1;
-			rect->min_x = w - rect->max_x - 1;
-			rect->max_x = temp;
+			temp = w - rect.min_x - 1;
+			rect.min_x = w - rect.max_x - 1;
+			rect.max_x = temp;
 		}
 	
 		/* apply Y flip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_Y)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_Y)
 		{
-			temp = h - rect->min_y - 1;
-			rect->min_y = h - rect->max_y - 1;
-			rect->max_y = temp;
+			temp = h - rect.min_y - 1;
+			rect.min_y = h - rect.max_y - 1;
+			rect.max_y = temp;
 		}
 	}
 	
@@ -344,10 +344,10 @@ public class usrintrf
 		uirotheight = uirotbounds.max_y - uirotbounds.min_y + 1;
 	
 		/* remove me */
-		Machine->uiwidth = uirotbounds.max_x - uirotbounds.min_x + 1;
-		Machine->uiheight = uirotbounds.max_y - uirotbounds.min_y + 1;
-		Machine->uixmin = uirotbounds.min_x;
-		Machine->uiymin = uirotbounds.min_y;
+		Machine.uiwidth = uirotbounds.max_x - uirotbounds.min_x + 1;
+		Machine.uiheight = uirotbounds.max_y - uirotbounds.min_y + 1;
+		Machine.uixmin = uirotbounds.min_x;
+		Machine.uiymin = uirotbounds.min_y;
 	
 		/* rebuild the font */
 		builduifont();
@@ -384,15 +384,15 @@ public class usrintrf
 		int temp, i;
 	
 		/* free any existing fonts */
-		if (Machine->uifont)
-			freegfx(Machine->uifont);
+		if (Machine.uifont)
+			freegfx(Machine.uifont);
 		if (uirotfont != 0)
 			freegfx(uirotfont);
 	
 		/* first decode a straight on version for games */
-		Machine->uifont = font = decodegfx(uifontdata, &layout);
-		Machine->uifontwidth = layout.width;
-		Machine->uifontheight = layout.height;
+		Machine.uifont = font = decodegfx(uifontdata, &layout);
+		Machine.uifontwidth = layout.width;
+		Machine.uifontheight = layout.height;
 	
 		/* pixel double horizontally */
 		if (uirotwidth >= 420)
@@ -413,7 +413,7 @@ public class usrintrf
 		}
 	
 		/* apply swappage */
-		if (Machine->ui_orientation & ORIENTATION_SWAP_XY)
+		if (Machine.ui_orientation & ORIENTATION_SWAP_XY)
 		{
 			memcpy(tempoffset, layout.xoffset, sizeof(tempoffset));
 			memcpy(layout.xoffset, layout.yoffset, sizeof(layout.xoffset));
@@ -425,7 +425,7 @@ public class usrintrf
 		}
 	
 		/* apply xflip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_X)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_X)
 		{
 			memcpy(tempoffset, layout.xoffset, sizeof(tempoffset));
 			for (i = 0; i < layout.width; i++)
@@ -433,7 +433,7 @@ public class usrintrf
 		}
 	
 		/* apply yflip */
-		if (Machine->ui_orientation & ORIENTATION_FLIP_Y)
+		if (Machine.ui_orientation & ORIENTATION_FLIP_Y)
 		{
 			memcpy(tempoffset, layout.yoffset, sizeof(tempoffset));
 			for (i = 0; i < layout.height; i++)
@@ -446,8 +446,8 @@ public class usrintrf
 		/* set the raw and rotated character width/height */
 		uirawcharwidth = layout.width;
 		uirawcharheight = layout.height;
-		uirotcharwidth = (Machine->ui_orientation & ORIENTATION_SWAP_XY) ? layout.height : layout.width;
-		uirotcharheight = (Machine->ui_orientation & ORIENTATION_SWAP_XY) ? layout.width : layout.height;
+		uirotcharwidth = (Machine.ui_orientation & ORIENTATION_SWAP_XY) ? layout.height : layout.width;
+		uirotcharheight = (Machine.ui_orientation & ORIENTATION_SWAP_XY) ? layout.width : layout.height;
 	
 		/* set up the bogus colortable */
 		if (font != 0)
@@ -455,10 +455,10 @@ public class usrintrf
 			static pen_t colortable[2*2];
 	
 			/* colortable will be set at run time */
-			font->colortable = colortable;
-			font->total_colors = 2;
-			uirotfont->colortable = colortable;
-			uirotfont->total_colors = 2;
+			font.colortable = colortable;
+			font.total_colors = 2;
+			uirotfont.colortable = colortable;
+			uirotfont.total_colors = 2;
 		}
 	
 		return font;
@@ -527,9 +527,9 @@ public class usrintrf
 	void displaytext(struct mame_bitmap *bitmap, const struct DisplayText *dt)
 	{
 	   /* loop until we run out of descriptors */
-	   for ( ; dt->text; dt++)
+	   for ( ; dt.text; dt++)
 	   {
-	      ui_text_ex(bitmap, dt->text, dt->text + strlen(dt->text), dt->x, dt->y, dt->color);
+	      ui_text_ex(bitmap, dt.text, dt.text + strlen(dt.text), dt.x, dt.y, dt.color);
 	   }
 	}
 	
@@ -707,8 +707,8 @@ public class usrintrf
 		sect_rect(&bounds, &uirotbounds);
 	
 		/* pick colors from the colortable */
-		black = uirotfont->colortable[0];
-		white = uirotfont->colortable[1];
+		black = uirotfont.colortable[0];
+		white = uirotfont.colortable[1];
 	
 		/* top edge */
 		tbounds = bounds;
@@ -767,8 +767,8 @@ public class usrintrf
 		sect_rect(&bounds, &uirotbounds);
 	
 		/* pick colors from the colortable */
-		black = uirotfont->colortable[0];
-		white = uirotfont->colortable[1];
+		black = uirotfont.colortable[0];
+		white = uirotfont.colortable[1];
 	
 		/* draw the top default percentage marker */
 		tbounds = bounds;
@@ -1133,14 +1133,14 @@ public class usrintrf
 				{
 					if (bank == 0)	/* palette */
 					{
-						total_colors = Machine->drv->total_colors;
-						colortable = Machine->pens;
+						total_colors = Machine.drv.total_colors;
+						colortable = Machine.pens;
 						strcpy(buf,"PALETTE");
 					}
 					else if (bank == 1)	/* clut */
 					{
-						total_colors = Machine->drv->color_table_len;
-						colortable = Machine->remapped_colortable;
+						total_colors = Machine.drv.color_table_len;
+						colortable = Machine.remapped_colortable;
 						strcpy(buf,"CLUT");
 					}
 					else
@@ -1206,8 +1206,8 @@ public class usrintrf
 				}
 				case 1: /* characters */
 				{
-					int crotwidth = (Machine->ui_orientation & ORIENTATION_SWAP_XY) ? Machine->gfx[bank]->height : Machine->gfx[bank]->width;
-					int crotheight = (Machine->ui_orientation & ORIENTATION_SWAP_XY) ? Machine->gfx[bank]->width : Machine->gfx[bank]->height;
+					int crotwidth = (Machine.ui_orientation & ORIENTATION_SWAP_XY) ? Machine.gfx[bank].height : Machine.gfx[bank].width;
+					int crotheight = (Machine.ui_orientation & ORIENTATION_SWAP_XY) ? Machine.gfx[bank].width : Machine.gfx[bank].height;
 					cpx = uirotwidth / crotwidth;
 					if (cpx == 0) cpx = 1;
 					cpy = (uirotheight - uirotcharheight) / crotheight;
@@ -1221,16 +1221,16 @@ public class usrintrf
 						erase_screen(bitmap);
 	
 						/* validity check after char bank change */
-						if (firstdrawn >= Machine->gfx[bank]->total_elements)
+						if (firstdrawn >= Machine.gfx[bank].total_elements)
 						{
-							firstdrawn = Machine->gfx[bank]->total_elements - skip_chars;
+							firstdrawn = Machine.gfx[bank].total_elements - skip_chars;
 							if (firstdrawn < 0) firstdrawn = 0;
 						}
 	
 						flipx = 0;
 						flipy = 0;
 	
-						for (i = 0; i+firstdrawn < Machine->gfx[bank]->total_elements && i<cpx*cpy; i++)
+						for (i = 0; i+firstdrawn < Machine.gfx[bank].total_elements && i<cpx*cpy; i++)
 						{
 							struct rectangle bounds;
 							bounds.min_x = (i % cpx) * crotwidth + uirotbounds.min_x;
@@ -1239,10 +1239,10 @@ public class usrintrf
 							bounds.max_y = bounds.min_y + crotheight - 1;
 							ui_rot2raw_rect(&bounds);
 	
-							drawgfx(bitmap,Machine->gfx[bank],
+							drawgfx(bitmap,Machine.gfx[bank],
 									i+firstdrawn,color,  /*sprite num, color*/
 									flipx,flipy,bounds.min_x,bounds.min_y,
-									0,Machine->gfx[bank]->colortable ? TRANSPARENCY_NONE : TRANSPARENCY_NONE_RAW,0);
+									0,Machine.gfx[bank].colortable ? TRANSPARENCY_NONE : TRANSPARENCY_NONE_RAW,0);
 	
 							lastdrawn = i+firstdrawn;
 						}
@@ -1305,7 +1305,7 @@ public class usrintrf
 					switch (next_mode)
 					{
 						case 0:
-							if (next_bank == 2 || Machine->drv->color_table_len == 0)
+							if (next_bank == 2 || Machine.drv.color_table_len == 0)
 							{
 								jumped = 1;
 								next_mode++;
@@ -1313,7 +1313,7 @@ public class usrintrf
 							}
 							break;
 						case 1:
-							if (next_bank == MAX_GFX_ELEMENTS || !Machine->gfx[next_bank])
+							if (next_bank == MAX_GFX_ELEMENTS || !Machine.gfx[next_bank])
 							{
 								jumped = 1;
 								next_mode++;
@@ -1347,14 +1347,14 @@ public class usrintrf
 					switch (next_mode)
 					{
 						case 0:
-							if (Machine->drv->color_table_len == 0)
+							if (Machine.drv.color_table_len == 0)
 								next_bank = 0;
 							else
 								next_bank = 1;
 							break;
 						case 1:
 							next_bank = MAX_GFX_ELEMENTS-1;
-							while (next_bank >= 0 && !Machine->gfx[next_bank])
+							while (next_bank >= 0 && !Machine.gfx[next_bank])
 								next_bank--;
 							break;
 						case 2:
@@ -1386,7 +1386,7 @@ public class usrintrf
 					}
 					case 1:
 					{
-						if (firstdrawn + skip_chars < Machine->gfx[bank]->total_elements)
+						if (firstdrawn + skip_chars < Machine.gfx[bank].total_elements)
 						{
 							firstdrawn += skip_chars;
 							changed = 1;
@@ -1398,7 +1398,7 @@ public class usrintrf
 						if (skip_tmap != 0)
 							tilemap_ypos -= skip_tmap;
 						else
-							tilemap_ypos -= bitmap->height/4;
+							tilemap_ypos -= bitmap.height/4;
 						changed = 1;
 						break;
 					}
@@ -1430,7 +1430,7 @@ public class usrintrf
 						if (skip_tmap != 0)
 							tilemap_ypos += skip_tmap;
 						else
-							tilemap_ypos += bitmap->height/4;
+							tilemap_ypos += bitmap.height/4;
 						changed = 1;
 						break;
 					}
@@ -1446,7 +1446,7 @@ public class usrintrf
 						if (skip_tmap != 0)
 							tilemap_xpos -= skip_tmap;
 						else
-							tilemap_xpos -= bitmap->width/4;
+							tilemap_xpos -= bitmap.width/4;
 						changed = 1;
 						break;
 					}
@@ -1462,7 +1462,7 @@ public class usrintrf
 						if (skip_tmap != 0)
 							tilemap_xpos += skip_tmap;
 						else
-							tilemap_xpos += bitmap->width/4;
+							tilemap_xpos += bitmap.width/4;
 						changed = 1;
 						break;
 					}
@@ -1475,7 +1475,7 @@ public class usrintrf
 				{
 					case 1:
 					{
-						if (color < Machine->gfx[bank]->total_colors - 1)
+						if (color < Machine.gfx[bank].total_colors - 1)
 						{
 							color++;
 							changed = 1;
@@ -1527,14 +1527,14 @@ public class usrintrf
 		sel = selected - 1;
 	
 	
-		in = Machine->input_ports;
+		in = Machine.input_ports;
 	
 		total = 0;
-		while (in->type != IPT_END)
+		while (in.type != IPT_END)
 		{
-			if ((in->type & ~IPF_MASK) == switch_name && input_port_name(in) != 0 &&
-					(in->type & IPF_UNUSED) == 0 &&
-					!(!options.cheat && (in->type & IPF_CHEAT)))
+			if ((in.type & ~IPF_MASK) == switch_name && input_port_name(in) != 0 &&
+					(in.type & IPF_UNUSED) == 0 &&
+					!(!options.cheat && (in.type & IPF_CHEAT)))
 			{
 				entry[total] = in;
 				menu_item[total] = input_port_name(in);
@@ -1558,11 +1558,11 @@ public class usrintrf
 			if (i < total - 1)
 			{
 				in = entry[i] + 1;
-				while ((in->type & ~IPF_MASK) == switch_setting &&
-						in->default_value != entry[i]->default_value)
+				while ((in.type & ~IPF_MASK) == switch_setting &&
+						in.default_value != entry[i].default_value)
 					in++;
 	
-				if ((in->type & ~IPF_MASK) != switch_setting)
+				if ((in.type & ~IPF_MASK) != switch_setting)
 					menu_subitem[i] = ui_getstring (UI_INVALID);
 				else menu_subitem[i] = input_port_name(in);
 			}
@@ -1573,34 +1573,34 @@ public class usrintrf
 		if (sel < total - 1)
 		{
 			in = entry[sel] + 1;
-			while ((in->type & ~IPF_MASK) == switch_setting &&
-					in->default_value != entry[sel]->default_value)
+			while ((in.type & ~IPF_MASK) == switch_setting &&
+					in.default_value != entry[sel].default_value)
 				in++;
 	
-			if ((in->type & ~IPF_MASK) != switch_setting)
+			if ((in.type & ~IPF_MASK) != switch_setting)
 				/* invalid setting: revert to a valid one */
 				arrowize |= 1;
 			else
 			{
-				if (((in-1)->type & ~IPF_MASK) == switch_setting &&
-						!(!options.cheat && ((in-1)->type & IPF_CHEAT)))
+				if (((in-1).type & ~IPF_MASK) == switch_setting &&
+						!(!options.cheat && ((in-1).type & IPF_CHEAT)))
 					arrowize |= 1;
 			}
 		}
 		if (sel < total - 1)
 		{
 			in = entry[sel] + 1;
-			while ((in->type & ~IPF_MASK) == switch_setting &&
-					in->default_value != entry[sel]->default_value)
+			while ((in.type & ~IPF_MASK) == switch_setting &&
+					in.default_value != entry[sel].default_value)
 				in++;
 	
-			if ((in->type & ~IPF_MASK) != switch_setting)
+			if ((in.type & ~IPF_MASK) != switch_setting)
 				/* invalid setting: revert to a valid one */
 				arrowize |= 2;
 			else
 			{
-				if (((in+1)->type & ~IPF_MASK) == switch_setting &&
-						!(!options.cheat && ((in+1)->type & IPF_CHEAT)))
+				if (((in+1).type & ~IPF_MASK) == switch_setting &&
+						!(!options.cheat && ((in+1).type & IPF_CHEAT)))
 					arrowize |= 2;
 			}
 		}
@@ -1618,18 +1618,18 @@ public class usrintrf
 			if (sel < total - 1)
 			{
 				in = entry[sel] + 1;
-				while ((in->type & ~IPF_MASK) == switch_setting &&
-						in->default_value != entry[sel]->default_value)
+				while ((in.type & ~IPF_MASK) == switch_setting &&
+						in.default_value != entry[sel].default_value)
 					in++;
 	
-				if ((in->type & ~IPF_MASK) != switch_setting)
+				if ((in.type & ~IPF_MASK) != switch_setting)
 					/* invalid setting: revert to a valid one */
-					entry[sel]->default_value = (entry[sel]+1)->default_value & entry[sel]->mask;
+					entry[sel].default_value = (entry[sel]+1).default_value & entry[sel].mask;
 				else
 				{
-					if (((in+1)->type & ~IPF_MASK) == switch_setting &&
-							!(!options.cheat && ((in+1)->type & IPF_CHEAT)))
-						entry[sel]->default_value = (in+1)->default_value & entry[sel]->mask;
+					if (((in+1).type & ~IPF_MASK) == switch_setting &&
+							!(!options.cheat && ((in+1).type & IPF_CHEAT)))
+						entry[sel].default_value = (in+1).default_value & entry[sel].mask;
 				}
 	
 				/* tell updatescreen() to clean after us (in case the window changes size) */
@@ -1642,18 +1642,18 @@ public class usrintrf
 			if (sel < total - 1)
 			{
 				in = entry[sel] + 1;
-				while ((in->type & ~IPF_MASK) == switch_setting &&
-						in->default_value != entry[sel]->default_value)
+				while ((in.type & ~IPF_MASK) == switch_setting &&
+						in.default_value != entry[sel].default_value)
 					in++;
 	
-				if ((in->type & ~IPF_MASK) != switch_setting)
+				if ((in.type & ~IPF_MASK) != switch_setting)
 					/* invalid setting: revert to a valid one */
-					entry[sel]->default_value = (entry[sel]+1)->default_value & entry[sel]->mask;
+					entry[sel].default_value = (entry[sel]+1).default_value & entry[sel].mask;
 				else
 				{
-					if (((in-1)->type & ~IPF_MASK) == switch_setting &&
-							!(!options.cheat && ((in-1)->type & IPF_CHEAT)))
-						entry[sel]->default_value = (in-1)->default_value & entry[sel]->mask;
+					if (((in-1).type & ~IPF_MASK) == switch_setting &&
+							!(!options.cheat && ((in-1).type & IPF_CHEAT)))
+						entry[sel].default_value = (in-1).default_value & entry[sel].mask;
 				}
 	
 				/* tell updatescreen() to clean after us (in case the window changes size) */
@@ -1718,19 +1718,19 @@ public class usrintrf
 		sel = selected - 1;
 	
 	
-		if (Machine->input_ports == 0)
+		if (Machine.input_ports == 0)
 			return 0;
 	
 		in = inputport_defaults;
 	
 		total = 0;
-		while (in->type != IPT_END)
+		while (in.type != IPT_END)
 		{
-			if (in->name != 0  && (in->type & ~IPF_MASK) != IPT_UNKNOWN && (in->type & ~IPF_MASK) != IPT_OSD_RESERVED && (in->type & IPF_UNUSED) == 0
-				&& !(!options.cheat && (in->type & IPF_CHEAT)))
+			if (in.name != 0  && (in.type & ~IPF_MASK) != IPT_UNKNOWN && (in.type & ~IPF_MASK) != IPT_OSD_RESERVED && (in.type & IPF_UNUSED) == 0
+				&& !(!options.cheat && (in.type & IPF_CHEAT)))
 			{
 				entry[total] = in;
-				menu_item[total] = in->name;
+				menu_item[total] = in.name;
 	
 				total++;
 			}
@@ -1748,7 +1748,7 @@ public class usrintrf
 		{
 			if (i < total - 1)
 			{
-				seq_name(&entry[i]->seq,menu_subitem_buffer[i],sizeof(menu_subitem_buffer[0]));
+				seq_name(&entry[i].seq,menu_subitem_buffer[i],sizeof(menu_subitem_buffer[0]));
 				menu_subitem[i] = menu_subitem_buffer[i];
 			} else
 				menu_subitem[i] = 0;	/* no subitem */
@@ -1762,15 +1762,15 @@ public class usrintrf
 			menu_subitem[sel & SEL_MASK] = "    ";
 			ui_displaymenu(bitmap,menu_item,menu_subitem,flag,sel & SEL_MASK,3);
 	
-			ret = seq_read_async(&entry[sel & SEL_MASK]->seq,record_first_insert);
+			ret = seq_read_async(&entry[sel & SEL_MASK].seq,record_first_insert);
 	
 			if (ret >= 0)
 			{
 				sel &= SEL_MASK;
 	
-				if (ret > 0 || seq_get_1(&entry[sel]->seq) == CODE_NONE)
+				if (ret > 0 || seq_get_1(&entry[sel].seq) == CODE_NONE)
 				{
-					seq_set_1(&entry[sel]->seq,CODE_NONE);
+					seq_set_1(&entry[sel].seq,CODE_NONE);
 					ret = 1;
 				}
 	
@@ -1847,15 +1847,15 @@ public class usrintrf
 		sel = selected - 1;
 	
 	
-		if (Machine->input_ports == 0)
+		if (Machine.input_ports == 0)
 			return 0;
 	
-		in = Machine->input_ports;
+		in = Machine.input_ports;
 	
 		total = 0;
-		while (in->type != IPT_END)
+		while (in.type != IPT_END)
 		{
-			if (input_port_name(in) != 0 && seq_get_1(&in->seq) != CODE_NONE && (in->type & ~IPF_MASK) != IPT_UNKNOWN && (in->type & ~IPF_MASK) != IPT_OSD_RESERVED)
+			if (input_port_name(in) != 0 && seq_get_1(&in.seq) != CODE_NONE && (in.type & ~IPF_MASK) != IPT_UNKNOWN && (in.type & ~IPF_MASK) != IPT_OSD_RESERVED)
 			{
 				entry[total] = in;
 				menu_item[total] = input_port_name(in);
@@ -1880,7 +1880,7 @@ public class usrintrf
 				menu_subitem[i] = menu_subitem_buffer[i];
 	
 				/* If the key isn't the default, flag it */
-				if (seq_get_1(&entry[i]->seq) != CODE_DEFAULT)
+				if (seq_get_1(&entry[i].seq) != CODE_DEFAULT)
 					flag[i] = 1;
 				else
 					flag[i] = 0;
@@ -1896,15 +1896,15 @@ public class usrintrf
 			menu_subitem[sel & SEL_MASK] = "    ";
 			ui_displaymenu(bitmap,menu_item,menu_subitem,flag,sel & SEL_MASK,3);
 	
-			ret = seq_read_async(&entry[sel & SEL_MASK]->seq,record_first_insert);
+			ret = seq_read_async(&entry[sel & SEL_MASK].seq,record_first_insert);
 	
 			if (ret >= 0)
 			{
 				sel &= SEL_MASK;
 	
-				if (ret > 0 || seq_get_1(&entry[sel]->seq) == CODE_NONE)
+				if (ret > 0 || seq_get_1(&entry[sel].seq) == CODE_NONE)
 				{
-					seq_set_1(&entry[sel]->seq, CODE_DEFAULT);
+					seq_set_1(&entry[sel].seq, CODE_DEFAULT);
 					ret = 1;
 				}
 	
@@ -2040,17 +2040,17 @@ public class usrintrf
 		sel = selected - 1;
 	
 	
-		if (Machine->input_ports == 0)
+		if (Machine.input_ports == 0)
 			return 0;
 	
-		in = Machine->input_ports;
+		in = Machine.input_ports;
 	
 		/* Count the total number of analog controls */
 		total = 0;
-		while (in->type != IPT_END)
+		while (in.type != IPT_END)
 		{
-			if (((in->type & 0xff) > IPT_ANALOG_START) && ((in->type & 0xff) < IPT_ANALOG_END)
-					&& !(!options.cheat && (in->type & IPF_CHEAT)))
+			if (((in.type & 0xff) > IPT_ANALOG_START) && ((in.type & 0xff) < IPT_ANALOG_END)
+					&& !(!options.cheat && (in.type & IPF_CHEAT)))
 			{
 				entry[total] = in;
 				total++;
@@ -2083,7 +2083,7 @@ public class usrintrf
 				strcpy (label[i], input_port_name(entry[i/ENTRIES]));
 				sensitivity = IP_GET_SENSITIVITY(entry[i/ENTRIES]);
 				delta = IP_GET_DELTA(entry[i/ENTRIES]);
-				reverse = (entry[i/ENTRIES]->type & IPF_REVERSE);
+				reverse = (entry[i/ENTRIES].type & IPF_REVERSE);
 	
 				strcat (label[i], " ");
 				switch (i%ENTRIES)
@@ -2140,13 +2140,13 @@ public class usrintrf
 				else if ((sel % ENTRIES) == 1)
 				/* reverse */
 				{
-					int reverse = entry[sel/ENTRIES]->type & IPF_REVERSE;
+					int reverse = entry[sel/ENTRIES].type & IPF_REVERSE;
 					if (reverse != 0)
 						reverse=0;
 					else
 						reverse=IPF_REVERSE;
-					entry[sel/ENTRIES]->type &= ~IPF_REVERSE;
-					entry[sel/ENTRIES]->type |= reverse;
+					entry[sel/ENTRIES].type &= ~IPF_REVERSE;
+					entry[sel/ENTRIES].type |= reverse;
 				}
 				else if ((sel % ENTRIES) == 2)
 				/* sensitivity */
@@ -2176,13 +2176,13 @@ public class usrintrf
 				else if ((sel % ENTRIES) == 1)
 				/* reverse */
 				{
-					int reverse = entry[sel/ENTRIES]->type & IPF_REVERSE;
+					int reverse = entry[sel/ENTRIES].type & IPF_REVERSE;
 					if (reverse != 0)
 						reverse=0;
 					else
 						reverse=IPF_REVERSE;
-					entry[sel/ENTRIES]->type &= ~IPF_REVERSE;
-					entry[sel/ENTRIES]->type |= reverse;
+					entry[sel/ENTRIES].type &= ~IPF_REVERSE;
+					entry[sel/ENTRIES].type |= reverse;
 				}
 				else if ((sel % ENTRIES) == 2)
 				/* sensitivity */
@@ -2297,7 +2297,7 @@ public class usrintrf
 	
 		strcpy (buf, ui_getstring(UI_copyright1));
 		strcat (buf, "\n\n");
-		sprintf(buf2, ui_getstring(UI_copyright2), Machine->gamedrv->description);
+		sprintf(buf2, ui_getstring(UI_copyright2), Machine.gamedrv.description);
 		strcat (buf, buf2);
 		strcat (buf, "\n\n");
 		strcat (buf, ui_getstring(UI_copyright3));
@@ -2343,24 +2343,24 @@ public class usrintrf
 		sel = selected - 1;
 	
 	
-		sprintf(buf,"%s\n%s %s\n\n%s:\n",Machine->gamedrv->description,Machine->gamedrv->year,Machine->gamedrv->manufacturer,
+		sprintf(buf,"%s\n%s %s\n\n%s:\n",Machine.gamedrv.description,Machine.gamedrv.year,Machine.gamedrv.manufacturer,
 			ui_getstring (UI_cpu));
 		i = 0;
-		while (i < MAX_CPU && Machine->drv->cpu[i].cpu_type)
+		while (i < MAX_CPU && Machine.drv.cpu[i].cpu_type)
 		{
 	
-			if (Machine->drv->cpu[i].cpu_clock >= 1000000)
+			if (Machine.drv.cpu[i].cpu_clock >= 1000000)
 				sprintf(&buf[strlen(buf)],"%s %d.%06d MHz",
-						cputype_name(Machine->drv->cpu[i].cpu_type),
-						Machine->drv->cpu[i].cpu_clock / 1000000,
-						Machine->drv->cpu[i].cpu_clock % 1000000);
+						cputype_name(Machine.drv.cpu[i].cpu_type),
+						Machine.drv.cpu[i].cpu_clock / 1000000,
+						Machine.drv.cpu[i].cpu_clock % 1000000);
 			else
 				sprintf(&buf[strlen(buf)],"%s %d.%03d kHz",
-						cputype_name(Machine->drv->cpu[i].cpu_type),
-						Machine->drv->cpu[i].cpu_clock / 1000,
-						Machine->drv->cpu[i].cpu_clock % 1000);
+						cputype_name(Machine.drv.cpu[i].cpu_type),
+						Machine.drv.cpu[i].cpu_clock / 1000,
+						Machine.drv.cpu[i].cpu_clock % 1000);
 	
-			if (Machine->drv->cpu[i].cpu_flags & CPU_AUDIO_CPU)
+			if (Machine.drv.cpu[i].cpu_flags & CPU_AUDIO_CPU)
 			{
 				sprintf (buf2, " (%s)", ui_getstring (UI_sound_lc));
 				strcat(buf, buf2);
@@ -2373,28 +2373,28 @@ public class usrintrf
 	
 		sprintf (buf2, "\n%s", ui_getstring (UI_sound));
 		strcat (buf, buf2);
-		if (Machine->drv->sound_attributes & SOUND_SUPPORTS_STEREO)
+		if (Machine.drv.sound_attributes & SOUND_SUPPORTS_STEREO)
 			sprintf(&buf[strlen(buf)]," (%s)", ui_getstring (UI_stereo));
 		strcat(buf,":\n");
 	
 		i = 0;
-		while (i < MAX_SOUND && Machine->drv->sound[i].sound_type)
+		while (i < MAX_SOUND && Machine.drv.sound[i].sound_type)
 		{
-			if (sound_num(&Machine->drv->sound[i]))
-				sprintf(&buf[strlen(buf)],"%dx",sound_num(&Machine->drv->sound[i]));
+			if (sound_num(&Machine.drv.sound[i]))
+				sprintf(&buf[strlen(buf)],"%dx",sound_num(&Machine.drv.sound[i]));
 	
-			sprintf(&buf[strlen(buf)],"%s",sound_name(&Machine->drv->sound[i]));
+			sprintf(&buf[strlen(buf)],"%s",sound_name(&Machine.drv.sound[i]));
 	
-			if (sound_clock(&Machine->drv->sound[i]))
+			if (sound_clock(&Machine.drv.sound[i]))
 			{
-				if (sound_clock(&Machine->drv->sound[i]) >= 1000000)
+				if (sound_clock(&Machine.drv.sound[i]) >= 1000000)
 					sprintf(&buf[strlen(buf)]," %d.%06d MHz",
-							sound_clock(&Machine->drv->sound[i]) / 1000000,
-							sound_clock(&Machine->drv->sound[i]) % 1000000);
+							sound_clock(&Machine.drv.sound[i]) / 1000000,
+							sound_clock(&Machine.drv.sound[i]) % 1000000);
 				else
 					sprintf(&buf[strlen(buf)]," %d.%03d kHz",
-							sound_clock(&Machine->drv->sound[i]) / 1000,
-							sound_clock(&Machine->drv->sound[i]) % 1000);
+							sound_clock(&Machine.drv.sound[i]) / 1000,
+							sound_clock(&Machine.drv.sound[i]) % 1000);
 			}
 	
 			strcat(buf,"\n");
@@ -2402,22 +2402,22 @@ public class usrintrf
 			i++;
 		}
 	
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 			sprintf(&buf[strlen(buf)],"\n%s\n", ui_getstring (UI_vectorgame));
 		else
 		{
 			sprintf(&buf[strlen(buf)],"\n%s:\n", ui_getstring (UI_screenres));
 			sprintf(&buf[strlen(buf)],"%d x %d (%s) %f Hz\n",
-					Machine->visible_area.max_x - Machine->visible_area.min_x + 1,
-					Machine->visible_area.max_y - Machine->visible_area.min_y + 1,
-					(Machine->gamedrv->flags & ORIENTATION_SWAP_XY) ? "V" : "H",
-					Machine->drv->frames_per_second);
+					Machine.visible_area.max_x - Machine.visible_area.min_x + 1,
+					Machine.visible_area.max_y - Machine.visible_area.min_y + 1,
+					(Machine.gamedrv.flags & ORIENTATION_SWAP_XY) ? "V" : "H",
+					Machine.drv.frames_per_second);
 	#if 0
 			{
 				int pixelx,pixely,tmax,tmin,rem;
 	
-				pixelx = 4 * (Machine->visible_area.max_y - Machine->visible_area.min_y + 1);
-				pixely = 3 * (Machine->visible_area.max_x - Machine->visible_area.min_x + 1);
+				pixelx = 4 * (Machine.visible_area.max_y - Machine.visible_area.min_y + 1);
+				pixely = 3 * (Machine.visible_area.max_x - Machine.visible_area.min_x + 1);
 	
 				/* calculate MCD */
 				if (pixelx >= pixely)
@@ -2443,7 +2443,7 @@ public class usrintrf
 				sprintf(&buf[strlen(buf)],"pixel aspect ratio %d:%d\n",
 						pixelx,pixely);
 			}
-			sprintf(&buf[strlen(buf)],"%d colors ",Machine->drv->total_colors);
+			sprintf(&buf[strlen(buf)],"%d colors ",Machine.drv.total_colors);
 	#endif
 		}
 	
@@ -2501,7 +2501,7 @@ public class usrintrf
 		int i;
 		char buf[2048];
 	
-		if (Machine->gamedrv->flags &
+		if (Machine.gamedrv.flags &
 				(GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS | GAME_IMPERFECT_COLORS |
 				  GAME_NO_SOUND | GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL))
 		{
@@ -2511,7 +2511,7 @@ public class usrintrf
 			strcat(buf, "\n\n");
 	
 	#ifdef MESS
-			if (Machine->gamedrv->flags & GAME_COMPUTER)
+			if (Machine.gamedrv.flags & GAME_COMPUTER)
 			{
 				strcpy(buf, ui_getstring (UI_comp1));
 				strcat(buf, "\n\n");
@@ -2520,69 +2520,69 @@ public class usrintrf
 			}
 	#endif
 	
-			if (Machine->gamedrv->flags & GAME_IMPERFECT_COLORS)
+			if (Machine.gamedrv.flags & GAME_IMPERFECT_COLORS)
 			{
 				strcat(buf, ui_getstring (UI_imperfectcolors));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & GAME_WRONG_COLORS)
+			if (Machine.gamedrv.flags & GAME_WRONG_COLORS)
 			{
 				strcat(buf, ui_getstring (UI_wrongcolors));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & GAME_IMPERFECT_GRAPHICS)
+			if (Machine.gamedrv.flags & GAME_IMPERFECT_GRAPHICS)
 			{
 				strcat(buf, ui_getstring (UI_imperfectgraphics));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & GAME_IMPERFECT_SOUND)
+			if (Machine.gamedrv.flags & GAME_IMPERFECT_SOUND)
 			{
 				strcat(buf, ui_getstring (UI_imperfectsound));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & GAME_NO_SOUND)
+			if (Machine.gamedrv.flags & GAME_NO_SOUND)
 			{
 				strcat(buf, ui_getstring (UI_nosound));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & GAME_NO_COCKTAIL)
+			if (Machine.gamedrv.flags & GAME_NO_COCKTAIL)
 			{
 				strcat(buf, ui_getstring (UI_nococktail));
 				strcat(buf, "\n");
 			}
 	
-			if (Machine->gamedrv->flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION))
+			if (Machine.gamedrv.flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION))
 			{
 				const struct GameDriver *maindrv;
 				int foundworking;
 	
-				if (Machine->gamedrv->flags & GAME_NOT_WORKING)
+				if (Machine.gamedrv.flags & GAME_NOT_WORKING)
 				{
 					strcpy(buf, ui_getstring (UI_brokengame));
 					strcat(buf, "\n");
 				}
-				if (Machine->gamedrv->flags & GAME_UNEMULATED_PROTECTION)
+				if (Machine.gamedrv.flags & GAME_UNEMULATED_PROTECTION)
 				{
 					strcat(buf, ui_getstring (UI_brokenprotection));
 					strcat(buf, "\n");
 				}
 	
-				if (Machine->gamedrv->clone_of && !(Machine->gamedrv->clone_of->flags & NOT_A_DRIVER))
-					maindrv = Machine->gamedrv->clone_of;
-				else maindrv = Machine->gamedrv;
+				if (Machine.gamedrv.clone_of && !(Machine.gamedrv.clone_of.flags & NOT_A_DRIVER))
+					maindrv = Machine.gamedrv.clone_of;
+				else maindrv = Machine.gamedrv;
 	
 				foundworking = 0;
 				i = 0;
 				while (drivers[i])
 				{
-					if (drivers[i] == maindrv || drivers[i]->clone_of == maindrv)
+					if (drivers[i] == maindrv || drivers[i].clone_of == maindrv)
 					{
-						if ((drivers[i]->flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)) == 0)
+						if ((drivers[i].flags & (GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)) == 0)
 						{
 							if (foundworking == 0)
 							{
@@ -2592,7 +2592,7 @@ public class usrintrf
 							}
 							foundworking = 1;
 	
-							sprintf(&buf[strlen(buf)],"%s\n",drivers[i]->name);
+							sprintf(&buf[strlen(buf)],"%s\n",drivers[i].name);
 						}
 					}
 					i++;
@@ -2839,7 +2839,7 @@ public class usrintrf
 			if (buf != 0)
 			{
 				/* try to load entry */
-				if (load_driver_history (Machine->gamedrv, buf, bufsize) == 0)
+				if (load_driver_history (Machine.gamedrv, buf, bufsize) == 0)
 				{
 					scroll = 0;
 					wordwrap_text_buffer (buf, maxcols);
@@ -3101,13 +3101,13 @@ public class usrintrf
 			struct InputPort *in;
 			int num;
 	
-			in = Machine->input_ports;
+			in = Machine.input_ports;
 	
 			num = 0;
-			while (in->type != IPT_END)
+			while (in.type != IPT_END)
 			{
-				if ((in->type & ~IPF_MASK) == IPT_DIPSWITCH_NAME && input_port_name(in) != 0 &&
-						(in->type & IPF_UNUSED) == 0 &&	!(!options.cheat && (in->type & IPF_CHEAT)))
+				if ((in.type & ~IPF_MASK) == IPT_DIPSWITCH_NAME && input_port_name(in) != 0 &&
+						(in.type & IPF_UNUSED) == 0 &&	!(!options.cheat && (in.type & IPF_CHEAT)))
 					num++;
 				in++;
 			}
@@ -3134,13 +3134,13 @@ public class usrintrf
 			struct InputPort *in;
 			int num;
 	
-			in = Machine->input_ports;
+			in = Machine.input_ports;
 	
 			num = 0;
-			while (in->type != IPT_END)
+			while (in.type != IPT_END)
 			{
-				if (((in->type & 0xff) > IPT_ANALOG_START) && ((in->type & 0xff) < IPT_ANALOG_END)
-						&& !(!options.cheat && (in->type & IPF_CHEAT)))
+				if (((in.type & 0xff) > IPT_ANALOG_START) && ((in.type & 0xff) < IPT_ANALOG_END)
+						&& !(!options.cheat && (in.type & IPF_CHEAT)))
 					num++;
 				in++;
 			}
@@ -3179,9 +3179,9 @@ public class usrintrf
 	#ifndef TINY_COMPILE
 	#ifndef CPSMAME
 	#ifndef MMSND
-		if (Machine->gamedrv->clone_of == &driver_neogeo ||
-				(Machine->gamedrv->clone_of &&
-					Machine->gamedrv->clone_of->clone_of == &driver_neogeo))
+		if (Machine.gamedrv.clone_of == &driver_neogeo ||
+				(Machine.gamedrv.clone_of &&
+					Machine.gamedrv.clone_of.clone_of == &driver_neogeo))
 		{
 			menu_item[menu_total] = ui_getstring (UI_memorycard); menu_action[menu_total++] = UI_MEMCARD;
 		}
@@ -3498,9 +3498,9 @@ public class usrintrf
 				float ratio = 1.0;
 				int overflow = 0;
 	
-				if (driver != Machine->drv)
+				if (driver != Machine.drv)
 				{
-					driver = (void *)Machine->drv;
+					driver = (void *)Machine.drv;
 					for (ch = 0; ch < MIXER_MAX_CHANNELS; ch++)
 						old_vol[ch] = mixer_get_mixing_level(ch);
 				}
@@ -3691,7 +3691,7 @@ public class usrintrf
 	
 		item = 0;
 	
-		if (Machine->sample_rate)
+		if (Machine.sample_rate)
 		{
 			onscrd_fnc[item] = onscrd_volume;
 			onscrd_arg[item] = 0;
@@ -3712,13 +3712,13 @@ public class usrintrf
 			/* See if there is a discrete sound sub-system present */
 			for (soundnum = 0; soundnum < MAX_SOUND; soundnum++)
 			{
-				if (Machine->drv->sound[soundnum].sound_type == SOUND_DISCRETE)
+				if (Machine.drv.sound[soundnum].sound_type == SOUND_DISCRETE)
 				{
 					/* For each DISCRETE_ADJUST node then there is a slider, there can only be one SOUND_DISCRETE */
 					/* in the machinbe sound delcaration so this WONT trigger more than once                      */
 					{
 						int count;
-						count=discrete_sh_adjuster_count((struct discrete_sound_block*)Machine->drv->sound[soundnum].sound_interface);
+						count=discrete_sh_adjuster_count((struct discrete_sound_block*)Machine.drv.sound[soundnum].sound_interface);
 	
 						for(ch=0;ch<count;ch++)
 						{
@@ -3751,7 +3751,7 @@ public class usrintrf
 		onscrd_arg[item] = 0;
 		item++;
 	
-		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
 		{
 			onscrd_fnc[item] = onscrd_vector_flicker;
 			onscrd_arg[item] = 0;
@@ -3843,7 +3843,7 @@ public class usrintrf
 		va_start(arg,text);
 		vsprintf(messagetext,text,arg);
 		va_end(arg);
-		messagecounter = 2 * Machine->drv->frames_per_second;
+		messagecounter = 2 * Machine.drv.frames_per_second;
 	}
 	
 	void CLIB_DECL usrintf_showmessage_secs(int seconds, const char *text,...)
@@ -3852,7 +3852,7 @@ public class usrintrf
 		va_start(arg,text);
 		vsprintf(messagetext,text,arg);
 		va_end(arg);
-		messagecounter = seconds * Machine->drv->frames_per_second;
+		messagecounter = seconds * Machine.drv.frames_per_second;
 	}
 	
 	void do_loadsave(struct mame_bitmap *bitmap, int request_loadsave)
@@ -3912,7 +3912,7 @@ public class usrintrf
 	void ui_show_fps_temp(double seconds)
 	{
 		if (!showfps)
-			showfpstemp = (int)(seconds * Machine->drv->frames_per_second);
+			showfpstemp = (int)(seconds * Machine.drv.frames_per_second);
 	}
 	
 	void ui_show_fps_set(int show)

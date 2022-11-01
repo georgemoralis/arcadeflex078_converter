@@ -861,7 +861,7 @@ public class megasys1
 	interrupts:	1] 10eac:	disabled while b6c4=6 (10fb6 test)
 							if (8b1c != 0)	8b1c<-0
 								color cycle
-								copies 800 bytes 98da->8008
+								copies 800 bytes 98da.8008
 	
 				2] 10f28:	switch b6c4
 							0	RTE
@@ -875,8 +875,8 @@ public class megasys1
 							many routines...
 							b6c2<-0
 	
-	13ca	print a string: a7->screen disp.l(base=f0004),src.l
-	13ea	print a string: a1->(chars)*
+	13ca	print a string: a7.screen disp.l(base=f0004),src.l
+	13ea	print a string: a1.(chars)*
 	1253c	hw test (table of tests at 125c6)		*TRAP#D*
 	125f8	mem test (table of mem tests at 126d4)
 	1278e	input test (table of tests at 12808)
@@ -1611,9 +1611,9 @@ public class megasys1
 								move.w  #$ffff,		$60da8.l
 				4,5,6]	5928 +	move.w	#$ffff,		$60010.l
 	
-	89e			(a7)+ -> 44000.w & 6000e.w
-	8cc			(a7)+ -> 44204.w ; 4420c.w ; 4400c.w
-	fc0			(a7)+ -> 58000 (string)
+	89e			(a7)+ . 44000.w & 6000e.w
+	8cc			(a7)+ . 44204.w ; 4420c.w ; 4400c.w
+	fc0			(a7)+ . 58000 (string)
 	
 	616f4.w		*** lives ***
 	60d8a.w		*** level(1..) ***
@@ -2057,10 +2057,10 @@ public class megasys1
 	ROM_END
 	
 	static InputPortPtr input_ports_kickoff = new InputPortPtr(){ public void handler() { 
-		COINS						/* IN0 0x80001.b ->  !f0008/a.w  */
+		COINS						/* IN0 0x80001.b .  !f0008/a.w  */
 	//	shoot	pass
-		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b ->  !f000c/e.w  */
-		RESERVE						/* IN2 0x80004.b --> !f0010/11.w */
+		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b .  !f000c/e.w  */
+		RESERVE						/* IN2 0x80004.b -. !f0010/11.w */
 		JOY_2BUTTONS(IPF_PLAYER2)	/* IN3 0x80005.b /               */
 	
 		PORT_START(); 			/* IN4 0x80006.b */
@@ -2090,7 +2090,7 @@ public class megasys1
 		PORT_DIPSETTING(    0x00, "English" );// show "Japan Only" warning
 	
 		PORT_START(); 			/* IN5 0x80007.b */
-		PORT_DIPNAME( 0x03, 0x03, "Time" );// -> !f0082.w
+		PORT_DIPNAME( 0x03, 0x03, "Time" );// . !f0082.w
 		PORT_DIPSETTING(    0x03, "3'" );
 		PORT_DIPSETTING(    0x02, "4'" );
 		PORT_DIPSETTING(    0x01, "5'" );
@@ -2101,7 +2101,7 @@ public class megasys1
 		PORT_DIPNAME( 0x08, 0x08, "Unknown 2-3" );// unused?
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x30, 0x30, "?Difficulty?" );// -> !f0084.w
+		PORT_DIPNAME( 0x30, 0x30, "?Difficulty?" );// . !f0084.w
 		PORT_DIPSETTING(    0x30, "0" );
 		PORT_DIPSETTING(    0x20, "1" );
 		PORT_DIPSETTING(    0x10, "2" );
@@ -2217,7 +2217,7 @@ public class megasys1
 	interrupts:	1]	53e		2] 540
 	
 	517a		print word string: (a6)+,(a5)+$40. FFFF ends
-	5dbc		print string(s) to (a1)+$40: a6-> len.b,x.b,y.b,(chars.b)*
+	5dbc		print string(s) to (a1)+$40: a6. len.b,x.b,y.b,(chars.b)*
 	726a		prints screen
 	7300		ram test
 	7558		ip test
@@ -2422,8 +2422,8 @@ public class megasys1
 	0f8000-0f8001	???
 	
 	010000-010001	protection\watchdog;
-		fb -> fb
-		9x ->	0		watchdog reset?
+		fb . fb
+		9x .	0		watchdog reset?
 				else	samples bank?
 						$1ff010 = sample
 						$1ff014 = bank = sample - $22 (33DC: 1 1 2 3 4 5 6 6 6 6)
@@ -2433,8 +2433,8 @@ public class megasys1
 	000000-01ffff
 	020000-03ffff	banked
 	
-		51 -> paddle p1
-		52 -> paddle p2
+		51 . paddle p1
+		52 . paddle p2
 		4bba waits for 1f000a to go !0, then clears 1f000a (int 4)
 		4bca waits (100000) & FF == 3
 		sequence $81, $71, $67 written
@@ -2704,16 +2704,16 @@ public class megasys1
 								[ RodLand ]
 	
 	(World version)
-	interrupts:	1] 418->3864: rts	2] 420: move.w #-1,f0010; jsr 3866	3] rte
+	interrupts:	1] 418.3864: rts	2] 420: move.w #-1,f0010; jsr 3866	3] rte
 	
 	213da	print test error (20c12 = string address 0-4)
 	
-	f0018->84200	f0020->84208	f0028->84008
-	f001c->84202	f0024->8420a	f002c->8400a
-	f0012->84204	f0014->8420c	f0016->8400c
+	f0018.84200	f0020.84208	f0028.84008
+	f001c.84202	f0024.8420a	f002c.8400a
+	f0012.84204	f0014.8420c	f0016.8400c
 	
-	7fe		d0.w -> 84000.w & f000e.w
-	81a		d0/d1/d2 & $D -> 84204 / 8420c /8400c
+	7fe		d0.w . 84000.w & f000e.w
+	81a		d0/d1/d2 & $D . 84204 / 8420c /8400c
 	
 	***************************************************************************/
 	
@@ -3310,7 +3310,7 @@ public class megasys1
 		data8_t *buffer;
 		int i;
 	
-		/* data lines swap: 76543210 -> 64537210 */
+		/* data lines swap: 76543210 . 64537210 */
 		for (i = 0;i < size;i++)
 			rom[i] =   (rom[i] & 0x27)
 					| ((rom[i] & 0x80) >> 4)
@@ -3322,7 +3322,7 @@ public class megasys1
 	
 		memcpy(buffer,rom,size);
 	
-		/* address lines swap: ..dcba9876543210 -> ..acb8937654d210 */
+		/* address lines swap: ..dcba9876543210 . ..acb8937654d210 */
 		for (i = 0;i < size;i++)
 		{
 			int a =    (i &~0x2508)
@@ -3343,7 +3343,7 @@ public class megasys1
 		data8_t *buffer;
 		int i;
 	
-		/* data lines swap: 76543210 -> 43576210 */
+		/* data lines swap: 76543210 . 43576210 */
 		for (i = 0;i < size;i++)
 			rom[i] =   BITSWAP8(rom[i],0x4,0x3,0x5,0x7,0x6,0x2,0x1,0x0);
 	
@@ -3352,7 +3352,7 @@ public class megasys1
 	
 		memcpy(buffer,rom,size);
 	
-		/* address lines swap: fedcba9876543210 -> fe8cb39d7654a210 */
+		/* address lines swap: fedcba9876543210 . fe8cb39d7654a210 */
 		for (i = 0;i < size;i++)
 		{
 			int a = (i & ~0xffff) |

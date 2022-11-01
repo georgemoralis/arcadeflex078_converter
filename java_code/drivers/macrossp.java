@@ -271,7 +271,7 @@ public class macrossp
 	
 		toggle ^= 1;
 	
-		if (Machine->sample_rate == 0) return (rand()&2) | toggle;
+		if (Machine.sample_rate == 0) return (rand()&2) | toggle;
 	
 		return (sndpending << 1) | toggle;
 	}

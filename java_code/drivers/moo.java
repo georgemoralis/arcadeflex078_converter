@@ -225,7 +225,7 @@ public class moo
 		   these games are trickier than your usual konami stuff, they expect to
 		   read 0xff (meaning the z80 booted properly) then 0x80 (z80 busy) then
 		   the self-test result */
-		if (!Machine->sample_rate) {
+		if (!Machine.sample_rate) {
 			if (init_nosound_count < 10)
 			{
 				if (!init_nosound_count)
@@ -874,7 +874,7 @@ public class moo
 		state_save_register_INT32("Moo", 0, "control2", (INT32 *)&cur_control2, 1);
 		state_save_register_UINT16("Moo", 0, "protram", (UINT16 *)protram, 1);
 	
-		game_type = (!strcmp(Machine->gamedrv->name, "bucky") || !strcmp(Machine->gamedrv->name, "buckyua"));
+		game_type = (!strcmp(Machine.gamedrv.name, "bucky") || !strcmp(Machine.gamedrv.name, "buckyua"));
 	}
 	
 	ROM_START( moobl )

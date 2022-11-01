@@ -153,7 +153,7 @@ public class _7474
 		}
 	
 	
-		chips[which].output_cb = (intf ? intf->output_cb : 0);
+		chips[which].output_cb = (intf ? intf.output_cb : 0);
 	
 		/* all inputs are open first */
 	    chips[which].clear = 1;

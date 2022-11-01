@@ -286,7 +286,7 @@ public class nbmj8688
 	static void update_pixel(int x,int y)
 	{
 		int color = mjsikaku_videoram[(y * 512) + x];
-		plot_pixel(mjsikaku_tmpbitmap, x, y, Machine->pens[color]);
+		plot_pixel(mjsikaku_tmpbitmap, x, y, Machine.pens[color]);
 	}
 	
 	static void writeram_low(int x,int y,int color)
@@ -707,14 +707,14 @@ public class nbmj8688
 			if (mjsikaku_flipscreen != 0) scrolly =   mjsikaku_scrolly;
 			else                     scrolly = (-mjsikaku_scrolly) & 0xff;
 	
-			if (cliprect->min_y > 64)	// kludge to compensate for LCD on top of screen
+			if (cliprect.min_y > 64)	// kludge to compensate for LCD on top of screen
 				scrolly += 64;
 			copybitmap(bitmap, mjsikaku_tmpbitmap, 0, 0, 0, scrolly,       cliprect, TRANSPARENCY_NONE, 0);
 			copybitmap(bitmap, mjsikaku_tmpbitmap, 0, 0, 0, scrolly - 256, cliprect, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0], 0);
+			fillbitmap(bitmap, Machine.pens[0], 0);
 		}
 	} };
 	

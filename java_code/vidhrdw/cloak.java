@@ -83,12 +83,12 @@ public class cloak
 		{
 			if (bmap != 0)
 			{
-				fillbitmap(tmpbitmap, Machine->pens[16], &Machine->visible_area);
+				fillbitmap(tmpbitmap, Machine.pens[16], &Machine.visible_area);
 				memset(tmpvideoram, 0, 256*256);
 			}
 			else
 			{
-				fillbitmap(tmpbitmap2, Machine->pens[16], &Machine->visible_area);
+				fillbitmap(tmpbitmap2, Machine.pens[16], &Machine.visible_area);
 				memset(tmpvideoram2, 0, 256*256);
 			}
 		}
@@ -138,12 +138,12 @@ public class cloak
 	
 				if (bmap != 0)
 				{
-					plot_pixel(tmpbitmap, (x-6)&0xff, y, Machine->pens[16 + color]);
+					plot_pixel(tmpbitmap, (x-6)&0xff, y, Machine.pens[16 + color]);
 					tmpvideoram[y*256+x] = color;
 				}
 				else
 				{
-					plot_pixel(tmpbitmap2, (x-6)&0xff, y, Machine->pens[16 + color]);
+					plot_pixel(tmpbitmap2, (x-6)&0xff, y, Machine.pens[16 + color]);
 					tmpvideoram2[y*256+x] = color;
 				}
 	
@@ -181,10 +181,10 @@ public class cloak
 		if ( !bg_tilemap )
 			return 1;
 	
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		if ((tmpbitmap2 = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap2 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		if ((tmpvideoram = auto_malloc(256*256)) == 0)
@@ -205,8 +205,8 @@ public class cloak
 		{
 			for (lx = 0; lx < 256; lx++)
 			{
-				plot_pixel(tmpbitmap,  (lx-6)&0xff, ly, Machine->pens[16 + tmpvideoram[ly*256+lx]]);
-				plot_pixel(tmpbitmap2, (lx-6)&0xff, ly, Machine->pens[16 + tmpvideoram2[ly*256+lx]]);
+				plot_pixel(tmpbitmap,  (lx-6)&0xff, ly, Machine.pens[16 + tmpvideoram[ly*256+lx]]);
+				plot_pixel(tmpbitmap2, (lx-6)&0xff, ly, Machine.pens[16 + tmpvideoram2[ly*256+lx]]);
 			}
 		}
 	}
@@ -232,7 +232,7 @@ public class cloak
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1], code, 0, flipx, flipy,
+			drawgfx(bitmap, Machine.gfx[1], code, 0, flipx, flipy,
 				sx, sy,	cliprect, TRANSPARENCY_PEN, 0);
 		}
 	}

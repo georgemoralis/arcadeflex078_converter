@@ -222,7 +222,7 @@ public class nmk16
 		/* Note: this doesn't play correct samples, it plays drums and stuff.
 		   That's not quite right so I'm leaving it disabled */
 	#if 0
-		if (!strcmp(Machine->gamedrv->name,"gunnail")) {
+		if (!strcmp(Machine.gamedrv.name,"gunnail")) {
 			if (ACCESSING_LSB != 0) {
 				if ((data & 0xff) == 0x00) { /* unknown */
 					/* ?? */
@@ -256,7 +256,7 @@ public class nmk16
 		}
 	
 	
-		if (!strcmp(Machine->gamedrv->name,"macross")) {
+		if (!strcmp(Machine.gamedrv.name,"macross")) {
 			if (ACCESSING_LSB != 0) {
 				if ((data & 0xff) == 0xc4) { /* unknown */
 					/* ?? */
@@ -816,7 +816,7 @@ public class nmk16
 	static MEMORY_WRITE16_START( strahl_writemem )
 		{ 0x00000, 0x3ffff, MWA16_ROM },
 		{ 0x80014, 0x80015, nmk_flipscreen_w },
-		{ 0x8001e, 0x8001f, MWA16_NOP }, /* -> Sound cpu */
+		{ 0x8001e, 0x8001f, MWA16_NOP }, /* . Sound cpu */
 		{ 0x84000, 0x84007, nmk_scroll_w },
 		{ 0x88000, 0x88007, nmk_scroll_2_w },
 		{ 0x8c000, 0x8c7ff, paletteram16_RRRRGGGGBBBBxxxx_word_w, &paletteram16 },
@@ -1197,7 +1197,7 @@ public class nmk16
 		PORT_BIT( 0x4000, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x8000, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START(); 	/* DSW - 0x080004 -> 0x0f0036 */
+		PORT_START(); 	/* DSW - 0x080004 . 0x0f0036 */
 		PORT_DIPNAME( 0x0001, 0x0000, "Slot System" );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "On") );

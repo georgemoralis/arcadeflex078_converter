@@ -170,14 +170,14 @@ public class sp0250
 	
 	int sp0250_sh_start( const struct MachineSound *msound )
 	{
-		struct sp0250_interface *intf = msound->sound_interface;
+		struct sp0250_interface *intf = msound.sound_interface;
 		memset(&sp0250, 0, sizeof(sp0250));
 		sp0250.RNG = 1;
-		sp0250.drq = intf->drq_callback;
+		sp0250.drq = intf.drq_callback;
 		sp0250.drq(ASSERT_LINE);
 		timer_pulse(TIME_IN_HZ(MAIN_CLOCK), 0, sp0250_timer_tick);
 	
-		sp0250.stream = stream_init("SP0250", intf->volume, MAIN_CLOCK, 0, sp0250_update);
+		sp0250.stream = stream_init("SP0250", intf.volume, MAIN_CLOCK, 0, sp0250_update);
 	
 		return 0;
 	}

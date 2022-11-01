@@ -205,8 +205,8 @@ public class suna8
 		int i;
 		int mx = 0;	// multisprite x counter
 	
-		int max_x	=	Machine->drv->screen_width	- 8;
-		int max_y	=	Machine->drv->screen_height - 8;
+		int max_x	=	Machine.drv.screen_width	- 8;
+		int max_y	=	Machine.drv.screen_height - 8;
 	
 		for (i = 0x1d00; i < 0x2000; i += 4)
 		{
@@ -267,7 +267,7 @@ public class suna8
 					flipx = 0;
 					flipy = bank & 0x10;
 					srcy  = (((bank & 0x80)>>4) + (bank & 0x04) + ((~bank >> 4)&2)) * 2;
-					gfxbank = bank & 0x3;	// ??? brickzn: 06,a6,a2,b2->6. starfigh: 01->01,4->0
+					gfxbank = bank & 0x3;	// ??? brickzn: 06,a6,a2,b2.6. starfigh: 01.01,4.0
 					srcpg = (code >> 4) & 7;
 					break;
 				case 0x00:
@@ -317,7 +317,7 @@ public class suna8
 					{	sx = max_x - sx;	tile_flipx = !tile_flipx;
 						sy = max_y - sy;	tile_flipy = !tile_flipy;	}
 	
-					drawgfx(	bitmap,Machine->gfx[0],
+					drawgfx(	bitmap,Machine.gfx[0],
 								tile + (attr & 0x3)*0x100 + gfxbank,
 								(attr >> 2) & 0xf,
 								tile_flipx, tile_flipy,
@@ -333,8 +333,8 @@ public class suna8
 	{
 		int i;
 	
-		int max_x	=	Machine->drv->screen_width	- 8;
-		int max_y	=	Machine->drv->screen_height - 8;
+		int max_x	=	Machine.drv.screen_width	- 8;
+		int max_y	=	Machine.drv.screen_height - 8;
 	
 		/* Earlier games only */
 		if (!(suna8_text_dim > 0))	return;
@@ -382,7 +382,7 @@ public class suna8
 					{	sx = max_x - sx;	flipx = !flipx;
 						sy = max_y - sy;	flipy = !flipy;	}
 	
-					drawgfx(	bitmap,Machine->gfx[0],
+					drawgfx(	bitmap,Machine.gfx[0],
 								tile + (attr & 0x3)*0x100 + bank,
 								(attr >> 2) & 0xf,
 								flipx, flipy,
@@ -448,7 +448,7 @@ public class suna8
 	#endif
 	
 		/* see hardhead, hardhea2 test mode (press button 2 for both players) */
-		fillbitmap(bitmap,Machine->pens[0xff],cliprect);
+		fillbitmap(bitmap,Machine.pens[0xff],cliprect);
 	
 	#ifdef MAME_DEBUG
 	#if TILEMAPS

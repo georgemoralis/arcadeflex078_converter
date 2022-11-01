@@ -36,11 +36,11 @@ public class crbaloon
 	public static PaletteInitHandlerPtr palette_init_crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int intensity,r,g,b;
 	
@@ -111,7 +111,7 @@ public class crbaloon
 		if ( !bg_tilemap )
 			return 1;
 	
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -134,23 +134,23 @@ public class crbaloon
 			by += 32;
 		}
 	
-		drawgfx(bitmap,Machine->gfx[1],
+		drawgfx(bitmap,Machine.gfx[1],
 				spritectrl[0] & 0x0f,
 				15,
 				0,0,
 				bx,by,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 	    crbaloon_collision = 0;
 	
-		for (x = bx; x < bx + Machine->gfx[1]->width; x++)
+		for (x = bx; x < bx + Machine.gfx[1].width; x++)
 		{
-			for (y = by; y < by + Machine->gfx[1]->height; y++)
+			for (y = by; y < by + Machine.gfx[1].height; y++)
 	        {
-				if ((x < Machine->visible_area.min_x) ||
-				    (x > Machine->visible_area.max_x) ||
-				    (y < Machine->visible_area.min_y) ||
-				    (y > Machine->visible_area.max_y))
+				if ((x < Machine.visible_area.min_x) ||
+				    (x > Machine.visible_area.max_x) ||
+				    (y < Machine.visible_area.min_y) ||
+				    (y > Machine.visible_area.max_y))
 				{
 					continue;
 				}
@@ -166,17 +166,17 @@ public class crbaloon
 	
 		/* actually draw the balloon */
 	
-		drawgfx(bitmap,Machine->gfx[1],
+		drawgfx(bitmap,Machine.gfx[1],
 				spritectrl[0] & 0x0f,
 				(spritectrl[0] & 0xf0) >> 4,
 				0,0,
 				bx,by,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		crbaloon_draw_sprites(bitmap);
 	} };
 }

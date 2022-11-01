@@ -93,20 +93,20 @@ public class z80fmly
 	
 		memset (ctcs, 0, sizeof (ctcs));
 	
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
-			ctcs[i].clock = intf->baseclock[i];
-			ctcs[i].invclock16 = 16.0 / (double)intf->baseclock[i];
-			ctcs[i].invclock256 = 256.0 / (double)intf->baseclock[i];
-			ctcs[i].notimer = intf->notimer[i];
-			ctcs[i].intr = intf->intr[i];
+			ctcs[i].clock = intf.baseclock[i];
+			ctcs[i].invclock16 = 16.0 / (double)intf.baseclock[i];
+			ctcs[i].invclock256 = 256.0 / (double)intf.baseclock[i];
+			ctcs[i].notimer = intf.notimer[i];
+			ctcs[i].intr = intf.intr[i];
 			ctcs[i].timer[0] = timer_alloc(z80ctc_timercallback);
 			ctcs[i].timer[1] = timer_alloc(z80ctc_timercallback);
 			ctcs[i].timer[2] = timer_alloc(z80ctc_timercallback);
 			ctcs[i].timer[3] = timer_alloc(z80ctc_timercallback);
-			ctcs[i].zc[0] = intf->zc0[i];
-			ctcs[i].zc[1] = intf->zc1[i];
-			ctcs[i].zc[2] = intf->zc2[i];
+			ctcs[i].zc[0] = intf.zc0[i];
+			ctcs[i].zc[1] = intf.zc1[i];
+			ctcs[i].zc[2] = intf.zc2[i];
 			ctcs[i].zc[3] = 0;
 			z80ctc_reset (i);
 		}
@@ -121,7 +121,7 @@ public class z80fmly
 	
 		/* keep channel within range, and get the current mode */
 		ch &= 3;
-		mode = ctc->mode[ch];
+		mode = ctc.mode[ch];
 	
 		/* if reset active */
 		if( (mode & RESET) == RESET_ACTIVE) return 0;
@@ -133,8 +133,8 @@ public class z80fmly
 		}
 	
 		/* compute the period */
-		clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc->invclock16 : ctc->invclock256;
-		return clock * (double)ctc->tconst[ch];
+		clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc.invclock16 : ctc.invclock256;
+		return clock * (double)ctc.tconst[ch];
 	}
 	
 	/* interrupt request callback with daisy-chain circuit */
@@ -147,12 +147,12 @@ public class z80fmly
 		{
 			/* if IEO disable , same and lower IRQ is masking */
 	/* ASG: changed this line because this state could have an interrupt pending as well! */
-	/*		if( ctc->int_state[ch] & Z80_INT_IEO ) state  = Z80_INT_IEO;*/
-			if( ctc->int_state[ch] & Z80_INT_IEO ) state  = ctc->int_state[ch];
-			else                                   state |= ctc->int_state[ch];
+	/*		if( ctc.int_state[ch] & Z80_INT_IEO ) state  = Z80_INT_IEO;*/
+			if( ctc.int_state[ch] & Z80_INT_IEO ) state  = ctc.int_state[ch];
+			else                                   state |= ctc.int_state[ch];
 		}
 		/* change interrupt status */
-		if (ctc->intr) (*ctc->intr)(state);
+		if (ctc.intr) (*ctc.intr)(state);
 	}
 	
 	
@@ -164,10 +164,10 @@ public class z80fmly
 		/* set up defaults */
 		for (i = 0; i < 4; i++)
 		{
-			ctc->mode[i] = RESET_ACTIVE;
-			ctc->tconst[i] = 0x100;
-			timer_adjust(ctc->timer[i], TIME_NEVER, 0, 0);
-			ctc->int_state[i] = 0;
+			ctc.mode[i] = RESET_ACTIVE;
+			ctc.tconst[i] = 0x100;
+			timer_adjust(ctc.timer[i], TIME_NEVER, 0, 0);
+			ctc.int_state[i] = 0;
 		}
 		z80ctc_interrupt_check( ctc );
 	}
@@ -183,19 +183,19 @@ public class z80fmly
 	
 		/* keep channel within range, and get the current mode */
 		ch = offset & 3;
-		mode = ctc->mode[ch];
+		mode = ctc.mode[ch];
 	
 		/* if we're waiting for a time constant, this is it */
 		if ((mode & CONSTANT) == CONSTANT_LOAD)
 		{
-			/* set the time constant (0 -> 0x100) */
-			ctc->tconst[ch] = data ? data : 0x100;
+			/* set the time constant (0 . 0x100) */
+			ctc.tconst[ch] = data ? data : 0x100;
 	
 			/* clear the internal mode -- we're no longer waiting */
-			ctc->mode[ch] &= ~CONSTANT;
+			ctc.mode[ch] &= ~CONSTANT;
 	
 			/* also clear the reset, since the constant gets it going again */
-			ctc->mode[ch] &= ~RESET;
+			ctc.mode[ch] &= ~RESET;
 	
 			/* if we're in timer mode.... */
 			if ((mode & MODE) == MODE_TIMER)
@@ -203,20 +203,20 @@ public class z80fmly
 				/* if we're triggering on the time constant, reset the down counter now */
 				if ((mode & TRIGGER) == TRIGGER_AUTO)
 				{
-					double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc->invclock16 : ctc->invclock256;
-					if (!(ctc->notimer & (1<<ch)))
-						timer_adjust(ctc->timer[ch], clock * (double)ctc->tconst[ch], (which << 2) + ch, clock * (double)ctc->tconst[ch]);
+					double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc.invclock16 : ctc.invclock256;
+					if (!(ctc.notimer & (1<<ch)))
+						timer_adjust(ctc.timer[ch], clock * (double)ctc.tconst[ch], (which << 2) + ch, clock * (double)ctc.tconst[ch]);
 					else
-						timer_adjust(ctc->timer[ch], TIME_NEVER, 0, 0);
+						timer_adjust(ctc.timer[ch], TIME_NEVER, 0, 0);
 				}
 	
 				/* else set the bit indicating that we're waiting for the appropriate trigger */
 				else
-					ctc->mode[ch] |= WAITING_FOR_TRIG;
+					ctc.mode[ch] |= WAITING_FOR_TRIG;
 			}
 	
 			/* also set the down counter in case we're clocking externally */
-			ctc->down[ch] = ctc->tconst[ch];
+			ctc.down[ch] = ctc.tconst[ch];
 	
 			/* all done here */
 			return;
@@ -231,8 +231,8 @@ public class z80fmly
 		if ((data & CONTROL) == CONTROL_VECTOR && ch == 0)
 	#endif
 		{
-			ctc->vector = data & 0xf8;
-			logerror("CTC Vector = %02x\n", ctc->vector);
+			ctc.vector = data & 0xf8;
+			logerror("CTC Vector = %02x\n", ctc.vector);
 			return;
 		}
 	
@@ -240,18 +240,18 @@ public class z80fmly
 		if ((data & CONTROL) == CONTROL_WORD)
 		{
 			/* set the new mode */
-			ctc->mode[ch] = data;
+			ctc.mode[ch] = data;
 			logerror("CTC ch.%d mode = %02x\n", ch, data);
 	
 			/* if we're being reset, clear out any pending timers for this channel */
 			if ((data & RESET) == RESET_ACTIVE)
 			{
-				timer_adjust(ctc->timer[ch], TIME_NEVER, 0, 0);
+				timer_adjust(ctc.timer[ch], TIME_NEVER, 0, 0);
 	
-				if( ctc->int_state[ch] != 0 )
+				if( ctc.int_state[ch] != 0 )
 				{
 					/* clear interrupt service , request */
-					ctc->int_state[ch] = 0;
+					ctc.int_state[ch] = 0;
 					z80ctc_interrupt_check( ctc );
 				}
 			}
@@ -272,22 +272,22 @@ public class z80fmly
 	
 		/* keep channel within range */
 		ch &= 3;
-		mode = ctc->mode[ch];
+		mode = ctc.mode[ch];
 	
 		/* if we're in counter mode, just return the count */
 		if ((mode & MODE) == MODE_COUNTER)
-			return ctc->down[ch];
+			return ctc.down[ch];
 	
 		/* else compute the down counter value */
 		else
 		{
-			double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc->invclock16 : ctc->invclock256;
+			double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc.invclock16 : ctc.invclock256;
 	
 	logerror("CTC clock %f\n",1.0/clock);
 	
 	
-			if (ctc->timer[ch])
-				return ((int)(timer_timeleft (ctc->timer[ch]) / clock) + 1) & 0xff;
+			if (ctc.timer[ch])
+				return ((int)(timer_timeleft (ctc.timer[ch]) / clock) + 1) & 0xff;
 			else
 				return 0;
 		}
@@ -304,10 +304,10 @@ public class z80fmly
 	
 		for( ch = 0 ; ch < 4 ; ch++ )
 		{
-			if( ctc->int_state[ch] )
+			if( ctc.int_state[ch] )
 			{
-				if( ctc->int_state[ch] == Z80_INT_REQ)
-					ctc->int_state[ch] = Z80_INT_IEO;
+				if( ctc.int_state[ch] == Z80_INT_REQ)
+					ctc.int_state[ch] = Z80_INT_IEO;
 				break;
 			}
 		}
@@ -317,7 +317,7 @@ public class z80fmly
 			ch = 0;
 		}
 		z80ctc_interrupt_check( ctc );
-		return ctc->vector + ch * 2;
+		return ctc.vector + ch * 2;
 	}
 	
 	/* when operate RETI , soud be call this function for request pending interrupt */
@@ -328,11 +328,11 @@ public class z80fmly
 	
 		for( ch = 0 ; ch < 4 ; ch++ )
 		{
-			if( ctc->int_state[ch] & Z80_INT_IEO )
+			if( ctc.int_state[ch] & Z80_INT_IEO )
 			{
 				/* highest served interrupt found */
 				/* clear interrupt status */
-				ctc->int_state[ch] &= ~Z80_INT_IEO;
+				ctc.int_state[ch] &= ~Z80_INT_IEO;
 				/* search next interrupt */
 				break;
 			}
@@ -348,23 +348,23 @@ public class z80fmly
 		z80ctc *ctc = ctcs + which;
 	
 		/* down counter has reached zero - see if we should interrupt */
-		if ((ctc->mode[ch] & INTERRUPT) == INTERRUPT_ON)
+		if ((ctc.mode[ch] & INTERRUPT) == INTERRUPT_ON)
 		{
-			if( !(ctc->int_state[ch] & Z80_INT_REQ) )
+			if( !(ctc.int_state[ch] & Z80_INT_REQ) )
 			{
-				ctc->int_state[ch] |= Z80_INT_REQ;
+				ctc.int_state[ch] |= Z80_INT_REQ;
 				z80ctc_interrupt_check( ctc );
 			}
 		}
 		/* generate the clock pulse */
-		if (ctc->zc[ch])
+		if (ctc.zc[ch])
 		{
-			(*ctc->zc[ch])(0,1);
-			(*ctc->zc[ch])(0,0);
+			(*ctc.zc[ch])(0,1);
+			(*ctc.zc[ch])(0,0);
 		}
 	
 		/* reset the down counter */
-		ctc->down[ch] = ctc->tconst[ch];
+		ctc.down[ch] = ctc.tconst[ch];
 	}
 	
 	
@@ -375,12 +375,12 @@ public class z80fmly
 		int mode;
 	
 		data = data ? 1 : 0;
-		mode = ctc->mode[ch];
+		mode = ctc.mode[ch];
 	
 		/* see if the trigger value has changed */
-		if (data != ctc->extclk[ch])
+		if (data != ctc.extclk[ch])
 		{
-			ctc->extclk[ch] = data;
+			ctc.extclk[ch] = data;
 	
 			/* see if this is the active edge of the trigger */
 			if (((mode & EDGE) == EDGE_RISING && data) || ((mode & EDGE) == EDGE_FALLING && !data))
@@ -388,26 +388,26 @@ public class z80fmly
 				/* if we're waiting for a trigger, start the timer */
 				if ((mode & WAITING_FOR_TRIG) && (mode & MODE) == MODE_TIMER)
 				{
-					double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc->invclock16 : ctc->invclock256;
+					double clock = ((mode & PRESCALER) == PRESCALER_16) ? ctc.invclock16 : ctc.invclock256;
 	
 	logerror("CTC clock %f\n",1.0/clock);
 	
-					if (!(ctc->notimer & (1<<ch)))
-						timer_adjust(ctc->timer[ch], clock * (double)ctc->tconst[ch], (which << 2) + ch, clock * (double)ctc->tconst[ch]);
+					if (!(ctc.notimer & (1<<ch)))
+						timer_adjust(ctc.timer[ch], clock * (double)ctc.tconst[ch], (which << 2) + ch, clock * (double)ctc.tconst[ch]);
 					else
-						timer_adjust(ctc->timer[ch], TIME_NEVER, 0, 0);
+						timer_adjust(ctc.timer[ch], TIME_NEVER, 0, 0);
 				}
 	
 				/* we're no longer waiting */
-				ctc->mode[ch] &= ~WAITING_FOR_TRIG;
+				ctc.mode[ch] &= ~WAITING_FOR_TRIG;
 	
 				/* if we're clocking externally, decrement the count */
 				if ((mode & MODE) == MODE_COUNTER)
 				{
-					ctc->down[ch]--;
+					ctc.down[ch]--;
 	
 					/* if we hit zero, do the same thing as for a timer interrupt */
-					if (!ctc->down[ch])
+					if (!ctc.down[ch])
 						z80ctc_timercallback ((which << 2) + ch);
 				}
 			}
@@ -467,11 +467,11 @@ public class z80fmly
 	static void	z80pio_set_rdy(z80pio *pio, int ch, int state)
 	{
 		/* set state */
-		pio->rdy[ch] = state;
+		pio.rdy[ch] = state;
 	
 		/* call callback with state */
-		if (pio->rdyr[ch]!=0)
-			pio->rdyr[ch](pio->rdy[ch]);
+		if (pio.rdyr[ch]!=0)
+			pio.rdyr[ch](pio.rdy[ch]);
 	}
 	
 	/* initialize pio emurator */
@@ -481,11 +481,11 @@ public class z80fmly
 	
 		memset (pios, 0, sizeof (pios));
 	
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
-			pios[i].intr = intf->intr[i];
-			pios[i].rdyr[0] = intf->rdyA[i];
-			pios[i].rdyr[1] = intf->rdyB[i];
+			pios[i].intr = intf.intr[i];
+			pios[i].rdyr[0] = intf.rdyA[i];
+			pios[i].rdyr[1] = intf.rdyB[i];
 			z80pio_reset (i);
 		}
 	}
@@ -494,12 +494,12 @@ public class z80fmly
 	{
 		int state;
 	
-		if( pio->int_state[1] & Z80_INT_IEO ) state  = Z80_INT_IEO;
-		else                                  state  = pio->int_state[1];
-		if( pio->int_state[0] & Z80_INT_IEO ) state  = Z80_INT_IEO;
-		else                                  state |= pio->int_state[0];
+		if( pio.int_state[1] & Z80_INT_IEO ) state  = Z80_INT_IEO;
+		else                                  state  = pio.int_state[1];
+		if( pio.int_state[0] & Z80_INT_IEO ) state  = Z80_INT_IEO;
+		else                                  state |= pio.int_state[0];
 		/* change daisy chain status */
-		if (pio->intr) (*pio->intr)(state);
+		if (pio.intr) (*pio.intr)(state);
 	}
 	
 	static void z80pio_check_irq( z80pio *pio , int ch )
@@ -508,30 +508,30 @@ public class z80fmly
 		int data;
 		int old_state;
 	
-		if( pio->enable[ch] & PIO_INT_ENABLE )
+		if( pio.enable[ch] & PIO_INT_ENABLE )
 		{
-			if( pio->mode[ch] == PIO_MODE3 )
+			if( pio.mode[ch] == PIO_MODE3 )
 			{
-				data  =  pio->in[ch] & pio->dir[ch]; /* input data only */
-				data &= ~pio->mask[ch];              /* mask follow     */
-				if( !(pio->enable[ch]&PIO_INT_HIGH) )/* active level    */
-					data ^= pio->mask[ch];             /* active low  */
-				if( pio->enable[ch]&PIO_INT_AND )    /* logic      */
-				     { if( data == pio->mask[ch] ) irq = 1; }
+				data  =  pio.in[ch] & pio.dir[ch]; /* input data only */
+				data &= ~pio.mask[ch];              /* mask follow     */
+				if( !(pio.enable[ch]&PIO_INT_HIGH) )/* active level    */
+					data ^= pio.mask[ch];             /* active low  */
+				if( pio.enable[ch]&PIO_INT_AND )    /* logic      */
+				     { if( data == pio.mask[ch] ) irq = 1; }
 				else { if( data == 0             ) irq = 1; }
 				/* if portB , portA mode 2 check */
-				if( ch && (pio->mode[0]==PIO_MODE2) )
+				if( ch && (pio.mode[0]==PIO_MODE2) )
 				{
-					if( pio->rdy[ch] == 0 ) irq = 1;
+					if( pio.rdy[ch] == 0 ) irq = 1;
 				}
 			}
-			else if( pio->rdy[ch] == 0 ) irq = 1;
+			else if( pio.rdy[ch] == 0 ) irq = 1;
 		}
-		old_state = pio->int_state[ch];
-		if (irq != 0) pio->int_state[ch] |=  Z80_INT_REQ;
-		else      pio->int_state[ch] &= ~Z80_INT_REQ;
+		old_state = pio.int_state[ch];
+		if (irq != 0) pio.int_state[ch] |=  Z80_INT_REQ;
+		else      pio.int_state[ch] &= ~Z80_INT_REQ;
 	
-		if( old_state != pio->int_state[ch] )
+		if( old_state != pio.int_state[ch] )
 			z80pio_interrupt_check( pio );
 	}
 	
@@ -541,14 +541,14 @@ public class z80fmly
 		int i;
 	
 		for( i = 0 ; i <= 1 ; i++){
-			pio->mask[i]   = 0xff;	/* mask all on */
-			pio->enable[i] = 0x00;	/* disable     */
-			pio->mode[i]   = 0x01;	/* mode input  */
-			pio->dir[i]    = 0x01;	/* dir  input  */
+			pio.mask[i]   = 0xff;	/* mask all on */
+			pio.enable[i] = 0x00;	/* disable     */
+			pio.mode[i]   = 0x01;	/* mode input  */
+			pio.dir[i]    = 0x01;	/* dir  input  */
 			z80pio_set_rdy(pio,i,0);	/* RDY = low   */
-			pio->out[i]    = 0x00;	/* outdata = 0 */
-			pio->int_state[i] = 0;
-			pio->strobe[i] = 0;
+			pio.out[i]    = 0x00;	/* outdata = 0 */
+			pio.int_state[i] = 0;
+			pio.strobe[i] = 0;
 		}
 		z80pio_interrupt_check( pio );
 	}
@@ -559,8 +559,8 @@ public class z80fmly
 		z80pio *pio = pios + which;
 		if (ch != 0) ch = 1;
 	
-		pio->out[ch] = data;	/* latch out data */
-		switch( pio->mode[ch] ){
+		pio.out[ch] = data;	/* latch out data */
+		switch( pio.mode[ch] ){
 		case PIO_MODE0:			/* mode 0 output */
 		case PIO_MODE2:			/* mode 2 i/o */
 			z80pio_set_rdy(pio, ch,1); /* ready = H */
@@ -581,39 +581,39 @@ public class z80fmly
 		if (ch != 0) ch = 1;
 	
 		/* load direction phase ? */
-		if( pio->mode[ch] == 0x13 ){
-			pio->dir[ch] = data;
-			pio->mode[ch] = 0x03;
+		if( pio.mode[ch] == 0x13 ){
+			pio.dir[ch] = data;
+			pio.mode[ch] = 0x03;
 			return;
 		}
 		/* load mask folows phase ? */
-		if( pio->enable[ch] & PIO_INT_MASK ){	/* load mask folows */
-			pio->mask[ch] = data;
-			pio->enable[ch] &= ~PIO_INT_MASK;
+		if( pio.enable[ch] & PIO_INT_MASK ){	/* load mask folows */
+			pio.mask[ch] = data;
+			pio.enable[ch] &= ~PIO_INT_MASK;
 			logerror("PIO-%c interrupt mask %02x\n",'A'+ch,data );
 			return;
 		}
 		switch( data & 0x0f ){
 		case PIO_OP_MODE:	/* mode select 0=out,1=in,2=i/o,3=bit */
-			pio->mode[ch] = (data >> 6 );
-			if( pio->mode[ch] == 0x03 ) pio->mode[ch] = 0x13;
-			logerror("PIO-%c Mode %x\n",'A'+ch,pio->mode[ch] );
+			pio.mode[ch] = (data >> 6 );
+			if( pio.mode[ch] == 0x03 ) pio.mode[ch] = 0x13;
+			logerror("PIO-%c Mode %x\n",'A'+ch,pio.mode[ch] );
 			break;
 		case PIO_OP_INTC:		/* interrupt control */
-			pio->enable[ch] = data & 0xf0;
-			pio->mask[ch]   = 0x00;
+			pio.enable[ch] = data & 0xf0;
+			pio.mask[ch]   = 0x00;
 			/* when interrupt enable , set vector request flag */
 			logerror("PIO-%c Controll %02x\n",'A'+ch,data );
 			break;
 		case PIO_OP_INTE:		/* interrupt enable controll */
-			pio->enable[ch] &= ~PIO_INT_ENABLE;
-			pio->enable[ch] |= (data & PIO_INT_ENABLE);
+			pio.enable[ch] &= ~PIO_INT_ENABLE;
+			pio.enable[ch] |= (data & PIO_INT_ENABLE);
 			logerror("PIO-%c enable %02x\n",'A'+ch,data&0x80 );
 			break;
 		default:
 				if( !(data&1) )
 				{
-					pio->vector[ch] = data;
+					pio.vector[ch] = data;
 					logerror("PIO-%c vector %02x\n",'A'+ch,data);
 				}
 				else logerror("PIO-%c illegal command %02x\n",'A'+ch,data );
@@ -637,20 +637,20 @@ public class z80fmly
 		z80pio *pio = pios + which;
 		if (ch != 0) ch = 1;
 	
-		switch( pio->mode[ch] ){
+		switch( pio.mode[ch] ){
 		case PIO_MODE0:			/* mode 0 output */
-			return pio->out[ch];
+			return pio.out[ch];
 		case PIO_MODE1:			/* mode 1 intput */
 			z80pio_set_rdy(pio, ch, 1);	/* ready = H */
 			z80pio_check_irq( pio , ch );
-			return pio->in[ch];
+			return pio.in[ch];
 		case PIO_MODE2:			/* mode 2 i/o */
 			if (ch != 0) logerror("PIO-B mode 2 \n");
 			z80pio_set_rdy(pio, 1, 1); /* brdy = H */
 			z80pio_check_irq( pio , ch );
-			return pio->in[ch];
+			return pio.in[ch];
 		case PIO_MODE3:			/* mode 3 bit */
-			return (pio->in[ch]&pio->dir[ch])|(pio->out[ch]&~pio->dir[ch]);
+			return (pio.in[ch]&pio.dir[ch])|(pio.out[ch]&~pio.dir[ch]);
 		}
 		logerror("PIO-%c data read,bad mode\n",'A'+ch );
 		return 0;
@@ -662,16 +662,16 @@ public class z80fmly
 		int ch = 0;
 	
 		/* port A */
-		if( pio->int_state[0] == Z80_INT_REQ )
+		if( pio.int_state[0] == Z80_INT_REQ )
 		{
-			pio->int_state[0] |= Z80_INT_IEO;
-		} if( pio->int_state[0] == 0 )
+			pio.int_state[0] |= Z80_INT_IEO;
+		} if( pio.int_state[0] == 0 )
 		{
 			/* port B */
 			ch = 1;
-			if( pio->int_state[1] == Z80_INT_REQ )
+			if( pio.int_state[1] == Z80_INT_REQ )
 			{
-				pio->int_state[1] |= Z80_INT_IEO;
+				pio.int_state[1] |= Z80_INT_IEO;
 			}
 			else
 			{
@@ -680,19 +680,19 @@ public class z80fmly
 			}
 		}
 		z80pio_interrupt_check( pio );
-		return pio->vector[ch];
+		return pio.vector[ch];
 	}
 	
 	void z80pio_reti( int which )
 	{
 		z80pio *pio = pios + which;
 	
-		if( pio->int_state[0] & Z80_INT_IEO )
+		if( pio.int_state[0] & Z80_INT_IEO )
 		{
-			pio->int_state[0] &= ~Z80_INT_IEO;
-		} else if( pio->int_state[1] & Z80_INT_IEO )
+			pio.int_state[0] &= ~Z80_INT_IEO;
+		} else if( pio.int_state[1] & Z80_INT_IEO )
 		{
-			pio->int_state[1] &= ~Z80_INT_IEO;
+			pio.int_state[1] &= ~Z80_INT_IEO;
 		}
 		/* set next interrupt stattus */
 		z80pio_interrupt_check( pio );
@@ -705,8 +705,8 @@ public class z80fmly
 	
 		if (ch != 0) ch = 1;
 	
-		pio->in[ch]  = data;
-		switch( pio->mode[ch] ){
+		pio.in[ch]  = data;
+		switch( pio.mode[ch] ){
 		case PIO_MODE0:
 			logerror("PIO-%c OUTPUT mode and data write\n",'A'+ch );
 			break;
@@ -730,7 +730,7 @@ public class z80fmly
 	
 		if (ch != 0) ch = 1;
 	
-		switch( pio->mode[ch] ){
+		switch( pio.mode[ch] ){
 		case PIO_MODE2:		/* port A only */
 		case PIO_MODE0:
 			z80pio_set_rdy(pio, ch, 0);
@@ -741,9 +741,9 @@ public class z80fmly
 			break;
 		case PIO_MODE3:
 			/*     input bits                , output bits                */
-			return (pio->in[ch]&pio->dir[ch])|(pio->out[ch]&~pio->dir[ch]);
+			return (pio.in[ch]&pio.dir[ch])|(pio.out[ch]&~pio.dir[ch]);
 		}
-		return pio->out[ch];
+		return pio.out[ch];
 	}
 	
 	/* for mame interface */
@@ -772,7 +772,7 @@ public class z80fmly
 	
 		if (ch != 0) ch=1;
 	
-		switch (pio->mode[ch])
+		switch (pio.mode[ch])
 		{
 			/* output mode */
 			case PIO_MODE0:
@@ -781,7 +781,7 @@ public class z80fmly
 				state = state & 0x01;
 	
 				/* strobe changed state? */
-				if ((pio->strobe[ch]^state)!=0)
+				if ((pio.strobe[ch]^state)!=0)
 				{
 					/* yes */
 					if (state!=0)
@@ -792,16 +792,16 @@ public class z80fmly
 						z80pio_set_rdy(pio, ch, 0);
 	
 						/* int enabled? */
-						if (pio->enable[ch] & PIO_INT_ENABLE)
+						if (pio.enable[ch] & PIO_INT_ENABLE)
 						{
 							/* trigger an int request */
-							pio->int_state[ch] |= Z80_INT_REQ;
+							pio.int_state[ch] |= Z80_INT_REQ;
 						}
 					}
 				}
 	
 				/* store strobe state */
-				pio->strobe[ch] = state;
+				pio.strobe[ch] = state;
 	
 				/* check interrupt */
 				z80pio_interrupt_check( pio );

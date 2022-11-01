@@ -254,7 +254,7 @@ public class toki
 					flipy=1;
 				}
 	
-				drawgfx (bitmap,Machine->gfx[1],
+				drawgfx (bitmap,Machine.gfx[1],
 						tile,
 						color,
 						flipx,flipy,
@@ -293,7 +293,7 @@ public class toki
 				tile    = sprite_word[1] & 0x1fff;
 				color   = sprite_word[2] >> 12;
 	
-				drawgfx (bitmap,Machine->gfx[1],
+				drawgfx (bitmap,Machine.gfx[1],
 						tile,
 						color,
 						flipx,0,

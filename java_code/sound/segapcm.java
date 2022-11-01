@@ -71,16 +71,16 @@ public class segapcm
 	
 	int SEGAPCM_sh_start( const struct MachineSound *msound )
 	{
-		struct SEGAPCMinterface *intf = msound->sound_interface;
+		struct SEGAPCMinterface *intf = msound.sound_interface;
 		const char *name[2];
 		int vol[2];
 		int mask, rom_mask;
 		int i;
 	
-		spcm.rate = intf->mode == SEGAPCM_SAMPLE15K ? 4000000/256 : 4000000/128;
+		spcm.rate = intf.mode == SEGAPCM_SAMPLE15K ? 4000000/256 : 4000000/128;
 	
-		spcm.rom = (const UINT8 *)memory_region(intf->region);
-		spcm.rom_end = spcm.rom + memory_region_length(intf->region);
+		spcm.rom = (const UINT8 *)memory_region(intf.region);
+		spcm.rom_end = spcm.rom + memory_region_length(intf.region);
 		spcm.ram = auto_malloc(0x800);
 		spcm.step = auto_malloc(sizeof(UINT32)*256);
 	
@@ -88,25 +88,25 @@ public class segapcm
 			return 1;
 	
 		for(i=0; i<256; i++)
-			spcm.step[i] = i*spcm.rate*(double)(65536/128) / Machine->sample_rate;
+			spcm.step[i] = i*spcm.rate*(double)(65536/128) / Machine.sample_rate;
 	
 		memset(spcm.ram, 0xff, 0x800);
 	
-		spcm.bankshift = (UINT8)(intf->bank);
-		mask = intf->bank >> 16;
+		spcm.bankshift = (UINT8)(intf.bank);
+		mask = intf.bank >> 16;
 		if(!mask)
 			mask = BANK_MASK7>>16;
 	
-		for(rom_mask = 1; rom_mask < memory_region_length(intf->region); rom_mask *= 2);
+		for(rom_mask = 1; rom_mask < memory_region_length(intf.region); rom_mask *= 2);
 		rom_mask--;
 	
 		spcm.bankmask = mask & (rom_mask >> spcm.bankshift);
 	
 		name[0] = "SEGAPCM L";
 		name[1] = "SEGAPCM R";
-		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf->volume & 0xff);
-		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf->volume & 0xff);
-		stream_init_multi(2, name, vol, Machine->sample_rate, 0, SEGAPCM_update );
+		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf.volume & 0xff);
+		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf.volume & 0xff);
+		stream_init_multi(2, name, vol, Machine.sample_rate, 0, SEGAPCM_update );
 	
 		return 0;
 	}

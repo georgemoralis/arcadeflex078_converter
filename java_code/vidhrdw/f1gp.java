@@ -248,7 +248,7 @@ public class f1gp
 					else
 						code = f1gp_spr2cgram[map_start % (f1gp_spr2cgram_size/2)];
 	
-					pdrawgfxzoom(bitmap,Machine->gfx[1 + chip],
+					pdrawgfxzoom(bitmap,Machine.gfx[1 + chip],
 							code,
 							color,
 							flipx,flipy,
@@ -301,7 +301,7 @@ public class f1gp
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine->gfx[3],i,(UINT8 *)zoomdata,&tilelayout);
+					decodechar(Machine.gfx[3],i,(UINT8 *)zoomdata,&tilelayout);
 				}
 			}
 	
@@ -383,7 +383,7 @@ public class f1gp
 					map_start++;
 	
 					if (flipscreen != 0)
-						drawgfxzoom(bitmap,Machine->gfx[1],
+						drawgfxzoom(bitmap,Machine.gfx[1],
 								code,
 								color,
 								!flipx,!flipy,
@@ -391,7 +391,7 @@ public class f1gp
 								cliprect,TRANSPARENCY_PEN,15,
 								zoomx << 11,zoomy << 11);
 					else
-						drawgfxzoom(bitmap,Machine->gfx[1],
+						drawgfxzoom(bitmap,Machine.gfx[1],
 								code,
 								color,
 								flipx,flipy,

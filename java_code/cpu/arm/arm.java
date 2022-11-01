@@ -627,44 +627,44 @@ public class arm
 	
 		switch( regnum )
 		{
-		case CPU_INFO_REG + ARM32_R0: sprintf( buffer[which], "R0  :%08x", pRegs->sArmRegister[ 0] );  break;
-		case CPU_INFO_REG + ARM32_R1: sprintf( buffer[which], "R1  :%08x", pRegs->sArmRegister[ 1] );  break;
-		case CPU_INFO_REG + ARM32_R2: sprintf( buffer[which], "R2  :%08x", pRegs->sArmRegister[ 2] );  break;
-		case CPU_INFO_REG + ARM32_R3: sprintf( buffer[which], "R3  :%08x", pRegs->sArmRegister[ 3] );  break;
-		case CPU_INFO_REG + ARM32_R4: sprintf( buffer[which], "R4  :%08x", pRegs->sArmRegister[ 4] );  break;
-		case CPU_INFO_REG + ARM32_R5: sprintf( buffer[which], "R5  :%08x", pRegs->sArmRegister[ 5] );  break;
-		case CPU_INFO_REG + ARM32_R6: sprintf( buffer[which], "R6  :%08x", pRegs->sArmRegister[ 6] );  break;
-		case CPU_INFO_REG + ARM32_R7: sprintf( buffer[which], "R7  :%08x", pRegs->sArmRegister[ 7] );  break;
-		case CPU_INFO_REG + ARM32_R8: sprintf( buffer[which], "R8  :%08x", pRegs->sArmRegister[ 8] );  break;
-		case CPU_INFO_REG + ARM32_R9: sprintf( buffer[which], "R9  :%08x", pRegs->sArmRegister[ 9] );  break;
-		case CPU_INFO_REG + ARM32_R10:sprintf( buffer[which], "R10 :%08x", pRegs->sArmRegister[10] );  break;
-		case CPU_INFO_REG + ARM32_R11:sprintf( buffer[which], "R11 :%08x", pRegs->sArmRegister[11] );  break;
-		case CPU_INFO_REG + ARM32_R12:sprintf( buffer[which], "R12 :%08x", pRegs->sArmRegister[12] );  break;
-		case CPU_INFO_REG + ARM32_R13:sprintf( buffer[which], "R13 :%08x", pRegs->sArmRegister[13] );  break;
-		case CPU_INFO_REG + ARM32_R14:sprintf( buffer[which], "R14 :%08x", pRegs->sArmRegister[14] );  break;
-		case CPU_INFO_REG + ARM32_R15:sprintf( buffer[which], "R15 :%08x", pRegs->sArmRegister[15] );  break;
-		case CPU_INFO_REG + ARM32_FR8: sprintf( buffer[which], "FR8 :%08x", pRegs->sArmRegister[eR8_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR9: sprintf( buffer[which], "FR9 :%08x", pRegs->sArmRegister[eR9_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR10:sprintf( buffer[which], "FR10:%08x", pRegs->sArmRegister[eR10_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR11:sprintf( buffer[which], "FR11:%08x", pRegs->sArmRegister[eR11_FIQ]);  break;
-		case CPU_INFO_REG + ARM32_FR12:sprintf( buffer[which], "FR12:%08x", pRegs->sArmRegister[eR12_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR13:sprintf( buffer[which], "FR13:%08x", pRegs->sArmRegister[eR13_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR14:sprintf( buffer[which], "FR14:%08x", pRegs->sArmRegister[eR14_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_IR13:sprintf( buffer[which], "IR13:%08x", pRegs->sArmRegister[eR13_IRQ] );  break;
-		case CPU_INFO_REG + ARM32_IR14:sprintf( buffer[which], "IR14:%08x", pRegs->sArmRegister[eR14_IRQ] );  break;
-		case CPU_INFO_REG + ARM32_SR13:sprintf( buffer[which], "SR13:%08x", pRegs->sArmRegister[eR13_SVC] );  break;
-		case CPU_INFO_REG + ARM32_SR14:sprintf( buffer[which], "SR14:%08x", pRegs->sArmRegister[eR14_SVC] );  break;
+		case CPU_INFO_REG + ARM32_R0: sprintf( buffer[which], "R0  :%08x", pRegs.sArmRegister[ 0] );  break;
+		case CPU_INFO_REG + ARM32_R1: sprintf( buffer[which], "R1  :%08x", pRegs.sArmRegister[ 1] );  break;
+		case CPU_INFO_REG + ARM32_R2: sprintf( buffer[which], "R2  :%08x", pRegs.sArmRegister[ 2] );  break;
+		case CPU_INFO_REG + ARM32_R3: sprintf( buffer[which], "R3  :%08x", pRegs.sArmRegister[ 3] );  break;
+		case CPU_INFO_REG + ARM32_R4: sprintf( buffer[which], "R4  :%08x", pRegs.sArmRegister[ 4] );  break;
+		case CPU_INFO_REG + ARM32_R5: sprintf( buffer[which], "R5  :%08x", pRegs.sArmRegister[ 5] );  break;
+		case CPU_INFO_REG + ARM32_R6: sprintf( buffer[which], "R6  :%08x", pRegs.sArmRegister[ 6] );  break;
+		case CPU_INFO_REG + ARM32_R7: sprintf( buffer[which], "R7  :%08x", pRegs.sArmRegister[ 7] );  break;
+		case CPU_INFO_REG + ARM32_R8: sprintf( buffer[which], "R8  :%08x", pRegs.sArmRegister[ 8] );  break;
+		case CPU_INFO_REG + ARM32_R9: sprintf( buffer[which], "R9  :%08x", pRegs.sArmRegister[ 9] );  break;
+		case CPU_INFO_REG + ARM32_R10:sprintf( buffer[which], "R10 :%08x", pRegs.sArmRegister[10] );  break;
+		case CPU_INFO_REG + ARM32_R11:sprintf( buffer[which], "R11 :%08x", pRegs.sArmRegister[11] );  break;
+		case CPU_INFO_REG + ARM32_R12:sprintf( buffer[which], "R12 :%08x", pRegs.sArmRegister[12] );  break;
+		case CPU_INFO_REG + ARM32_R13:sprintf( buffer[which], "R13 :%08x", pRegs.sArmRegister[13] );  break;
+		case CPU_INFO_REG + ARM32_R14:sprintf( buffer[which], "R14 :%08x", pRegs.sArmRegister[14] );  break;
+		case CPU_INFO_REG + ARM32_R15:sprintf( buffer[which], "R15 :%08x", pRegs.sArmRegister[15] );  break;
+		case CPU_INFO_REG + ARM32_FR8: sprintf( buffer[which], "FR8 :%08x", pRegs.sArmRegister[eR8_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR9: sprintf( buffer[which], "FR9 :%08x", pRegs.sArmRegister[eR9_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR10:sprintf( buffer[which], "FR10:%08x", pRegs.sArmRegister[eR10_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR11:sprintf( buffer[which], "FR11:%08x", pRegs.sArmRegister[eR11_FIQ]);  break;
+		case CPU_INFO_REG + ARM32_FR12:sprintf( buffer[which], "FR12:%08x", pRegs.sArmRegister[eR12_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR13:sprintf( buffer[which], "FR13:%08x", pRegs.sArmRegister[eR13_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR14:sprintf( buffer[which], "FR14:%08x", pRegs.sArmRegister[eR14_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_IR13:sprintf( buffer[which], "IR13:%08x", pRegs.sArmRegister[eR13_IRQ] );  break;
+		case CPU_INFO_REG + ARM32_IR14:sprintf( buffer[which], "IR14:%08x", pRegs.sArmRegister[eR14_IRQ] );  break;
+		case CPU_INFO_REG + ARM32_SR13:sprintf( buffer[which], "SR13:%08x", pRegs.sArmRegister[eR13_SVC] );  break;
+		case CPU_INFO_REG + ARM32_SR14:sprintf( buffer[which], "SR14:%08x", pRegs.sArmRegister[eR14_SVC] );  break;
 	
 	
 		case CPU_INFO_FLAGS:
 			sprintf(buffer[which], "%c%c%c%c%c%c",
-				(pRegs->sArmRegister[15] & N_MASK) ? 'N' : '-',
-				(pRegs->sArmRegister[15] & Z_MASK) ? 'Z' : '-',
-				(pRegs->sArmRegister[15] & C_MASK) ? 'C' : '-',
-				(pRegs->sArmRegister[15] & V_MASK) ? 'V' : '-',
-				(pRegs->sArmRegister[15] & I_MASK) ? 'I' : '-',
-				(pRegs->sArmRegister[15] & F_MASK) ? 'F' : '-');
-			switch (pRegs->sArmRegister[15] & 3)
+				(pRegs.sArmRegister[15] & N_MASK) ? 'N' : '-',
+				(pRegs.sArmRegister[15] & Z_MASK) ? 'Z' : '-',
+				(pRegs.sArmRegister[15] & C_MASK) ? 'C' : '-',
+				(pRegs.sArmRegister[15] & V_MASK) ? 'V' : '-',
+				(pRegs.sArmRegister[15] & I_MASK) ? 'I' : '-',
+				(pRegs.sArmRegister[15] & F_MASK) ? 'F' : '-');
+			switch (pRegs.sArmRegister[15] & 3)
 			{
 			case 0:
 				strcat(buffer[which], " USER");

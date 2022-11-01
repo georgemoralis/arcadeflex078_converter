@@ -206,7 +206,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return 0x80;
 	}
 	
@@ -214,7 +214,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return offset ? 0xfe : 0x00;
 	}
 	
@@ -222,7 +222,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset) << 8;
+		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset) << 8;
 		else return 0;
 	}
 	
@@ -249,7 +249,7 @@ public class tmnt
 			else soundlatch2_w(0,data);
 	
 			/* If the sound CPU is not running, make the tests pass anyway */
-			if (offset == 0 && !Machine->sample_rate)
+			if (offset == 0 && !Machine.sample_rate)
 			{
 				if (data == 0xfe)	/* ROM & RAM test */
 					soundlatch3_w(0,0x0f);
@@ -276,7 +276,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return offset ? 0x00 : 0x80;
 	}
 	
@@ -308,19 +308,19 @@ public class tmnt
 		struct GameSamples *samples;
 	
 	
-		if ((Machine->samples = auto_malloc(sizeof(struct GameSamples))) == NULL)
+		if ((Machine.samples = auto_malloc(sizeof(struct GameSamples))) == NULL)
 			return 1;
 	
-		samples = Machine->samples;
+		samples = Machine.samples;
 	
-		if ((samples->sample[0] = auto_malloc(sizeof(struct GameSample) + (0x40000)*sizeof(short))) == NULL)
+		if ((samples.sample[0] = auto_malloc(sizeof(struct GameSample) + (0x40000)*sizeof(short))) == NULL)
 			return 1;
 	
-		samples->sample[0]->length = 0x40000*2;
-		samples->sample[0]->smpfreq = 20000;	/* 20 kHz */
-		samples->sample[0]->resolution = 16;
-		dest = (signed short *)samples->sample[0]->data;
-		samples->total = 1;
+		samples.sample[0].length = 0x40000*2;
+		samples.sample[0].smpfreq = 20000;	/* 20 kHz */
+		samples.sample[0].resolution = 16;
+		dest = (signed short *)samples.sample[0].data;
+		samples.total = 1;
 	
 		/*	Sound sample for TMNT.D05 is stored in the following mode (ym3012 format):
 		 *

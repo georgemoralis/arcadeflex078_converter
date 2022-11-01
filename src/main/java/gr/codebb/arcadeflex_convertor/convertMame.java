@@ -597,6 +597,14 @@ public class convertMame {
 
                     }
                     break;
+                case '-':
+                    char c3 = sUtil.getNextChar();
+                    if (c3 != '>') {
+                        break;
+                    }
+                    Convertor.outbuf[Convertor.outpos++] = '.';
+                    Convertor.inpos += 2;
+                    break;
             }
 
             Convertor.outbuf[Convertor.outpos++] = Convertor.inbuf[Convertor.inpos++];//grapse to inputbuffer sto output

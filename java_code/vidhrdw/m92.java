@@ -61,7 +61,7 @@ public class m92
 	int m92_game_kludge;
 	
 	/* This is a kludgey speedup that I consider to be pretty ugly..  But -
-	it gets a massive speed increase (~40fps -> ~65fps).  It works by avoiding
+	it gets a massive speed increase (~40fps . ~65fps).  It works by avoiding
 	the need to dirty the top playfield twice a frame */
 	#define RYPELEO_SPEEDUP m92_game_kludge==1
 	
@@ -568,14 +568,14 @@ public class m92
 						int ffx=fx,ffy=fy;
 						if (ffx != 0) ffx=0; else ffx=1;
 						if (ffy != 0) ffy=0; else ffy=1;
-						pdrawgfx(bitmap,Machine->gfx[1],
+						pdrawgfx(bitmap,Machine.gfx[1],
 								sprite + s_ptr,
 								colour,
 								ffx,ffy,
 								496-x,496-(y-i*16),
 								cliprect,TRANSPARENCY_PEN,0,pri);
 					} else {
-						pdrawgfx(bitmap,Machine->gfx[1],
+						pdrawgfx(bitmap,Machine.gfx[1],
 								sprite + s_ptr,
 								colour,
 								fx,fy,
@@ -697,7 +697,7 @@ public class m92
 			tilemap_draw(bitmap,cliprect,pf3_layer,TILEMAP_BACK,0);
 		}
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf2_layer,TILEMAP_BACK,0);
 		tilemap_draw(bitmap,cliprect,pf1_wide_layer,TILEMAP_BACK,0);
@@ -722,14 +722,14 @@ public class m92
 	{
 		struct rectangle clip;
 	
-		clip.min_x = 0;//Machine->visible_area.min_x;
-		clip.max_x = 511;//Machine->visible_area.max_x;
+		clip.min_x = 0;//Machine.visible_area.min_x;
+		clip.max_x = 511;//Machine.visible_area.max_x;
 		clip.min_y = start_line+128;
 		clip.max_y = end_line+128;
-		if (clip.min_y < Machine->visible_area.min_y)
-			clip.min_y = Machine->visible_area.min_y;
-		if (clip.max_y > Machine->visible_area.max_y)
-			clip.max_y = Machine->visible_area.max_y;
+		if (clip.min_y < Machine.visible_area.min_y)
+			clip.min_y = Machine.visible_area.min_y;
+		if (clip.max_y > Machine.visible_area.max_y)
+			clip.max_y = Machine.visible_area.max_y;
 	
 		if (clip.max_y > clip.min_y)
 		{

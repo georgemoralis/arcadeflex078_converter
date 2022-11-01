@@ -56,17 +56,17 @@ public class pkunwar
 				if (flipscreen[0]) sx = 31 - sx;
 				if (flipscreen[1]) sy = 31 - sy;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ ((colorram[offs] & 0x07) << 8),
 						(colorram[offs] & 0xf0) >> 4,
 						flipscreen[0],flipscreen[1],
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		/* Draw the sprites. */
@@ -90,12 +90,12 @@ public class pkunwar
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					((spriteram.read(offs)& 0xfc) >> 2) + ((spriteram.read(offs + 3)& 0x07) << 6),
 					(spriteram.read(offs + 3)& 0xf0) >> 4,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -112,12 +112,12 @@ public class pkunwar
 				if (flipscreen[0]) sx = 31 - sx;
 				if (flipscreen[1]) sy = 31 - sy;
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						videoram.read(offs)+ ((colorram[offs] & 0x07) << 8),
 						(colorram[offs] & 0xf0) >> 4,
 						flipscreen[0],flipscreen[1],
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	} };

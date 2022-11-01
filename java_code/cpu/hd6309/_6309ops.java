@@ -723,7 +723,7 @@ INLINE void lble( void )
 		default: if (promote != 0) dst16Reg = &W; else dst8Reg = &F; break;		\
 	}																		\
 
-/* $1030 addr_r r1 + r2 -> r2 */
+/* $1030 addr_r r1 + r2 . r2 */
 
 INLINE void addr_r( void )
 {
@@ -791,7 +791,7 @@ INLINE void adcr( void )
 	}
 }
 
-/* $1032 SUBR r1 - r2 -> r2 */
+/* $1032 SUBR r1 - r2 . r2 */
 INLINE void subr( void )
 {
 	UINT8	tb, z8 = 0;
@@ -824,7 +824,7 @@ INLINE void subr( void )
 	}
 }
 
-/* $1033 SBCR r1 - r2 - C -> r2 */
+/* $1033 SBCR r1 - r2 - C . r2 */
 INLINE void sbcr( void )
 {
 	UINT8	tb, z8 = 0;
@@ -857,7 +857,7 @@ INLINE void sbcr( void )
 	}
 }
 
-/* $1034 ANDR r1 & r2 -> r2 */
+/* $1034 ANDR r1 & r2 . r2 */
 INLINE void andr( void )
 {
 	UINT8	tb, z8 = 0;
@@ -890,7 +890,7 @@ INLINE void andr( void )
 	}
 }
 
-/* $1035 ORR r1 | r2 -> r2 */
+/* $1035 ORR r1 | r2 . r2 */
 INLINE void orr( void )
 {
 	UINT8	tb, z8 = 0;
@@ -923,7 +923,7 @@ INLINE void orr( void )
 	}
 }
 
-/* $1036 EORR r1 ^ r2 -> r2 */
+/* $1036 EORR r1 ^ r2 . r2 */
 INLINE void eorr( void )
 {
 	UINT8	tb, z8 = 0;

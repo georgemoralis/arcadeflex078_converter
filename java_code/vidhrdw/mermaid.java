@@ -57,8 +57,8 @@ public class mermaid
 	***************************************************************************/
 	public static PaletteInitHandlerPtr palette_init_mermaid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 		int i;
 	
@@ -129,7 +129,7 @@ public class mermaid
 			if (flip_screen_y != 0)
 				sy = 248 - sy;
 	
-			drawgfx(tmpbitmap,Machine->gfx[2],
+			drawgfx(tmpbitmap,Machine.gfx[2],
 					code,
 					(flip_screen_x ?
 					    ((sx <= 5*8) ? 0 : 1) :
@@ -153,7 +153,7 @@ public class mermaid
 			}
 	
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -185,12 +185,12 @@ public class mermaid
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					mermaid_foreground_colorram[offs] & 0x0f,
 					flipx,flipy,
 					8*sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -237,7 +237,7 @@ public class mermaid
 				sy = spriteram.read(offs + 1);
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					spriteram.read(offs + 2)& 0x0f,
 					flipx, flipy,

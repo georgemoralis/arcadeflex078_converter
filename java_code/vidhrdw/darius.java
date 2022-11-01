@@ -134,18 +134,18 @@ public class darius
 				if (curx > 900) curx -= 1024;
 	 			if (cury > 400) cury -= 512;
 	
-				sprite_ptr->code = code;
-				sprite_ptr->color = color;
-				sprite_ptr->flipx = flipx;
-				sprite_ptr->flipy = flipy;
-				sprite_ptr->x = curx;
-				sprite_ptr->y = cury;
+				sprite_ptr.code = code;
+				sprite_ptr.color = color;
+				sprite_ptr.flipx = flipx;
+				sprite_ptr.flipy = flipy;
+				sprite_ptr.x = curx;
+				sprite_ptr.y = cury;
 	
-				drawgfx(bitmap,Machine->gfx[0],
-						sprite_ptr->code,
-						sprite_ptr->color,
-						sprite_ptr->flipx,sprite_ptr->flipy,
-						sprite_ptr->x,sprite_ptr->y,
+				drawgfx(bitmap,Machine.gfx[0],
+						sprite_ptr.code,
+						sprite_ptr.color,
+						sprite_ptr.flipx,sprite_ptr.flipy,
+						sprite_ptr.x,sprite_ptr.y,
 						cliprect,TRANSPARENCY_PEN,0);
 			}
 		}

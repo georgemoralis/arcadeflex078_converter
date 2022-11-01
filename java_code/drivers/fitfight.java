@@ -431,7 +431,7 @@ public class fitfight
 	
 	static InputPortPtr input_ports_fitfight = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	// 0x200000.w
-		/* players inputs -> 0xe022cc.w */
+		/* players inputs . 0xe022cc.w */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 );
@@ -453,7 +453,7 @@ public class fitfight
 		PORT_BIT(  0xffff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 		PORT_START(); 	// 0x400000.w
-		/* LSB : system inputs -> 0xe022cf.b */
+		/* LSB : system inputs . 0xe022cf.b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -462,7 +462,7 @@ public class fitfight
 		PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_UNKNOWN );		// "Fault" (= "Tilt" ?)
 		PORT_BIT(  0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN );
-		/* MSB : SW2 -> 0xe04c26.b (cpl) */
+		/* MSB : SW2 . 0xe04c26.b (cpl) */
 		PORT_DIPNAME( 0xf800, 0xf800, "Time" );
 		PORT_DIPSETTING(      0xf000, "02" );
 		PORT_DIPSETTING(      0xe800, "05" );
@@ -507,7 +507,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0700, DEF_STR( "1C_1C") );
 	
 		PORT_START(); 	// 0x500000.w
-		/* MSB : SW3 -> 0xe04c24.b (cpl) */
+		/* MSB : SW3 . 0xe04c24.b (cpl) */
 		PORT_DIPNAME( 0xe000, 0xe000, "Next Credit" );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
 		PORT_DIPSETTING(      0x4000, DEF_STR( "2C_1C") );
@@ -530,7 +530,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0200, DEF_STR( "On") );
 		PORT_SERVICE( 0x0100, IP_ACTIVE_LOW );
-		/* LSB : SW1 -> 0xe04c25.b (cpl) */
+		/* LSB : SW1 . 0xe04c25.b (cpl) */
 		PORT_DIPNAME( 0x0080, 0x0080, DEF_STR( "Demo_Sounds") );	// To be confirmed
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0080, DEF_STR( "On") );
@@ -559,7 +559,7 @@ public class fitfight
 	
 	static InputPortPtr input_ports_histryma = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	// 0x200000.w
-		/* players inputs -> 0xe02cf2.w and 0xe02cf8.w */
+		/* players inputs . 0xe02cf2.w and 0xe02cf8.w */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 );
@@ -578,7 +578,7 @@ public class fitfight
 		PORT_BIT(  0x8000, IP_ACTIVE_LOW, IPT_START2 );
 	
 		PORT_START(); 	// 0x300000.w
-		/* LSB : players extra inputs -> 0xe02cf5.b and 0xe02cfb.b */
+		/* LSB : players extra inputs . 0xe02cf5.b and 0xe02cfb.b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_BUTTON6 | IPF_PLAYER1 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 );
@@ -591,7 +591,7 @@ public class fitfight
 		PORT_BIT(  0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 		PORT_START(); 	// 0x400000.w
-		/* LSB : system inputs -> 0xe02cf7.b and 0xe02cfd.b */
+		/* LSB : system inputs . 0xe02cf7.b and 0xe02cfd.b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON6 | IPF_PLAYER2 );
@@ -600,7 +600,7 @@ public class fitfight
 		PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_UNKNOWN );		// "Fault" (= "Tilt" ?)
 		PORT_BIT(  0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN );		// "Test" (duplicated)
-		/* MSB : SW2 -> 0xe05874.b (cpl) */
+		/* MSB : SW2 . 0xe05874.b (cpl) */
 		PORT_DIPNAME( 0xf800, 0x0000, "Time" );
 	//	PORT_DIPSETTING(      0xf800, "15" );			// duplicated setting
 	//	PORT_DIPSETTING(      0xf000, "15" );			// duplicated setting
@@ -645,7 +645,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0700, DEF_STR( "1C_1C") );
 	
 		PORT_START(); 	// 0x500000.w
-		/* MSB : SW3 -> 0xe05872.b (cpl) */
+		/* MSB : SW3 . 0xe05872.b (cpl) */
 		PORT_DIPNAME( 0xe000, 0xe000, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(      0xe000, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "3C_4C") );
@@ -668,7 +668,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0200, DEF_STR( "On") );
 		PORT_SERVICE( 0x0100, IP_ACTIVE_LOW );
-		/* LSB : SW1 -> 0xe05873.b (cpl) */
+		/* LSB : SW1 . 0xe05873.b (cpl) */
 		PORT_DIPNAME( 0x0080, 0x0080, DEF_STR( "Demo_Sounds") );	// To be confirmed
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0080, DEF_STR( "On") );
@@ -701,7 +701,7 @@ public class fitfight
 	   Dip Switch, the value always being set to "2/3") */
 	static InputPortPtr input_ports_bbprot = new InputPortPtr(){ public void handler() { 
 		PORT_START(); 	// 0x300000.w
-		/* players inputs -> 0xe0545e.w and 0xe05464.w */
+		/* players inputs . 0xe0545e.w and 0xe05464.w */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 );
@@ -720,7 +720,7 @@ public class fitfight
 		PORT_BIT(  0x8000, IP_ACTIVE_LOW, IPT_START2 );
 	
 		PORT_START(); 	// 0x380000.w
-		/* LSB : players extra inputs -> 0xe05461.b and 0xe05467.b */
+		/* LSB : players extra inputs . 0xe05461.b and 0xe05467.b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_BUTTON6 | IPF_PLAYER1 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 );
@@ -733,7 +733,7 @@ public class fitfight
 		PORT_BIT(  0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 		PORT_START(); 	// 0x400000.w
-		/* LSB : system inputs -> 0xe05463.b and 0xe05469.b */
+		/* LSB : system inputs . 0xe05463.b and 0xe05469.b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_BUTTON6 | IPF_PLAYER2 );
@@ -742,7 +742,7 @@ public class fitfight
 		PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_UNKNOWN );		// "Fault" (= "Tilt" ?)
 		PORT_BIT(  0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN );		// "Test" (duplicated)
-		/* MSB : SW2 -> 0xe07e84.b (cpl) */
+		/* MSB : SW2 . 0xe07e84.b (cpl) */
 		PORT_DIPNAME( 0xf800, 0x0000, "Time" );
 	//	PORT_DIPSETTING(      0xf800, "15" );			// duplicated setting
 	//	PORT_DIPSETTING(      0xf000, "15" );			// duplicated setting
@@ -787,7 +787,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0700, DEF_STR( "1C_1C") );
 	
 		PORT_START(); 	// 0x480000.w
-		/* MSB : SW3 -> 0xe07e82.b (cpl) */
+		/* MSB : SW3 . 0xe07e82.b (cpl) */
 		PORT_DIPNAME( 0xe000, 0xe000, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(      0xe000, DEF_STR( "1C_1C") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "3C_4C") );
@@ -810,7 +810,7 @@ public class fitfight
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0200, DEF_STR( "On") );
 		PORT_SERVICE( 0x0100, IP_ACTIVE_LOW );
-		/* LSB : SW1 -> 0xe07e83.b (cpl) */
+		/* LSB : SW1 . 0xe07e83.b (cpl) */
 		PORT_DIPNAME( 0x0080, 0x0080, DEF_STR( "Demo_Sounds") );	// To be confirmed
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0080, DEF_STR( "On") );

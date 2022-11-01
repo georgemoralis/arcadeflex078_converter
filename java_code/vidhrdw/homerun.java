@@ -86,7 +86,7 @@ public class homerun
 			color = (spriteram.read(offs+2)& 0x7)+8 ;
 			flipx=(spriteram.read(offs+2)& 0x40) ;
 			flipy=(spriteram.read(offs+2)& 0x80) ;
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,

@@ -45,7 +45,7 @@ public class tlc34076
 	
 	static void update_palette(int which)
 	{
-		int totalcolors = (Machine->drv->total_colors <= 256) ? Machine->drv->total_colors : 256;
+		int totalcolors = (Machine.drv.total_colors <= 256) ? Machine.drv.total_colors : 256;
 		int i, mask = regs[PIXEL_READ_MASK];
 	
 		for (i = 0; i < totalcolors; i++)

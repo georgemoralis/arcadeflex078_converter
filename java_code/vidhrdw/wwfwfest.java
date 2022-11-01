@@ -177,7 +177,7 @@ public class wwfwfest
 	
 		**- End of Comments -*/
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data16_t *source = buffered_spriteram16;
 		data16_t *finish = source + 0x2000/2;
 	

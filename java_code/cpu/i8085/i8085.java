@@ -1632,14 +1632,14 @@ public class i8085
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8085_AF: sprintf(buffer[which], "AF:%04X", r->AF.w.l); break;
-			case CPU_INFO_REG+I8085_BC: sprintf(buffer[which], "BC:%04X", r->BC.w.l); break;
-			case CPU_INFO_REG+I8085_DE: sprintf(buffer[which], "DE:%04X", r->DE.w.l); break;
-			case CPU_INFO_REG+I8085_HL: sprintf(buffer[which], "HL:%04X", r->HL.w.l); break;
-			case CPU_INFO_REG+I8085_SP: sprintf(buffer[which], "SP:%04X", r->SP.w.l); break;
-			case CPU_INFO_REG+I8085_PC: sprintf(buffer[which], "PC:%04X", r->PC.w.l); break;
-			case CPU_INFO_REG+I8085_IM: sprintf(buffer[which], "IM:%02X", r->IM); break;
-			case CPU_INFO_REG+I8085_HALT: sprintf(buffer[which], "HALT:%d", r->HALT); break;
+			case CPU_INFO_REG+I8085_AF: sprintf(buffer[which], "AF:%04X", r.AF.w.l); break;
+			case CPU_INFO_REG+I8085_BC: sprintf(buffer[which], "BC:%04X", r.BC.w.l); break;
+			case CPU_INFO_REG+I8085_DE: sprintf(buffer[which], "DE:%04X", r.DE.w.l); break;
+			case CPU_INFO_REG+I8085_HL: sprintf(buffer[which], "HL:%04X", r.HL.w.l); break;
+			case CPU_INFO_REG+I8085_SP: sprintf(buffer[which], "SP:%04X", r.SP.w.l); break;
+			case CPU_INFO_REG+I8085_PC: sprintf(buffer[which], "PC:%04X", r.PC.w.l); break;
+			case CPU_INFO_REG+I8085_IM: sprintf(buffer[which], "IM:%02X", r.IM); break;
+			case CPU_INFO_REG+I8085_HALT: sprintf(buffer[which], "HALT:%d", r.HALT); break;
 			case CPU_INFO_REG+I8085_IREQ: sprintf(buffer[which], "IREQ:%02X", I.IREQ); break;
 			case CPU_INFO_REG+I8085_ISRV: sprintf(buffer[which], "ISRV:%02X", I.ISRV); break;
 			case CPU_INFO_REG+I8085_VECTOR: sprintf(buffer[which], "VEC:%02X", I.INTR); break;
@@ -1650,14 +1650,14 @@ public class i8085
 			case CPU_INFO_REG+I8085_RST75_STATE: sprintf(buffer[which], "RST75:%X", I.irq_state[I8085_RST75_LINE]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->AF.b.l & 0x80 ? 'S':'.',
-					r->AF.b.l & 0x40 ? 'Z':'.',
-					r->AF.b.l & 0x20 ? '?':'.',
-					r->AF.b.l & 0x10 ? 'H':'.',
-					r->AF.b.l & 0x08 ? '?':'.',
-					r->AF.b.l & 0x04 ? 'P':'.',
-					r->AF.b.l & 0x02 ? 'N':'.',
-					r->AF.b.l & 0x01 ? 'C':'.');
+					r.AF.b.l & 0x80 ? 'S':'.',
+					r.AF.b.l & 0x40 ? 'Z':'.',
+					r.AF.b.l & 0x20 ? '?':'.',
+					r.AF.b.l & 0x10 ? 'H':'.',
+					r.AF.b.l & 0x08 ? '?':'.',
+					r.AF.b.l & 0x04 ? 'P':'.',
+					r.AF.b.l & 0x02 ? 'N':'.',
+					r.AF.b.l & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "8085A";
 			case CPU_INFO_FAMILY: return "Intel 8080";

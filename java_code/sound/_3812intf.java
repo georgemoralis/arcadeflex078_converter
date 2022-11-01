@@ -33,7 +33,7 @@ public class _3812intf
 	static const struct YM3812interface *intf_3812 = NULL;
 	static void IRQHandler_3812(int n,int irq)
 	{
-		if (intf_3812->handler[n]) (intf_3812->handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
+		if (intf_3812.handler[n]) (intf_3812.handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	static void timer_callback_3812(int param)
 	{
@@ -58,26 +58,26 @@ public class _3812intf
 	int YM3812_sh_start(const struct MachineSound *msound)
 	{
 		int i;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 	
-		intf_3812 = msound->sound_interface;
-		if( intf_3812->num > MAX_3812 ) return 1;
+		intf_3812 = msound.sound_interface;
+		if( intf_3812.num > MAX_3812 ) return 1;
 	
 		if (options.use_filter)
-			rate = intf_3812->baseclock/72;
+			rate = intf_3812.baseclock/72;
 	
 		/* Timer state clear */
 		memset(Timer_3812,0,sizeof(Timer_3812));
 	
 		/* stream system initialize */
-		if ( YM3812Init(intf_3812->num,intf_3812->baseclock,rate) != 0)
+		if ( YM3812Init(intf_3812.num,intf_3812.baseclock,rate) != 0)
 			return 1;
 	
-		for (i = 0;i < intf_3812->num;i++)
+		for (i = 0;i < intf_3812.num;i++)
 		{
 			/* stream setup */
 			char name[40];
-			int vol = intf_3812->mixing_level[i];
+			int vol = intf_3812.mixing_level[i];
 			/* emulator create */
 			/* stream setup */
 			sprintf(name,"%s #%d",sound_name(msound),i);
@@ -105,7 +105,7 @@ public class _3812intf
 	{
 		int i;
 	
-		for (i = 0;i < intf_3812->num;i++)
+		for (i = 0;i < intf_3812.num;i++)
 			YM3812ResetChip(i);
 	}
 	
@@ -148,7 +148,7 @@ public class _3812intf
 	/* IRQ Handler */
 	static void IRQHandler_3526(int n,int irq)
 	{
-		if (intf_3526->handler[n]) (intf_3526->handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
+		if (intf_3526.handler[n]) (intf_3526.handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	/* Timer overflow callback from timer.c */
 	static void timer_callback_3526(int param)
@@ -174,28 +174,28 @@ public class _3812intf
 	int YM3526_sh_start(const struct MachineSound *msound)
 	{
 		int i;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 	
 	
-		intf_3526 = msound->sound_interface;
-		if( intf_3526->num > MAX_3526 ) return 1;
+		intf_3526 = msound.sound_interface;
+		if( intf_3526.num > MAX_3526 ) return 1;
 	
 	
 		if (options.use_filter)
-			rate = intf_3526->baseclock/72;
+			rate = intf_3526.baseclock/72;
 	
 		/* Timer state clear */
 		memset(Timer_3526,0,sizeof(Timer_3526));
 	
 		/* stream system initialize */
-		if ( YM3526Init(intf_3526->num,intf_3526->baseclock,rate) != 0)
+		if ( YM3526Init(intf_3526.num,intf_3526.baseclock,rate) != 0)
 			return 1;
 	
-		for (i = 0;i < intf_3526->num;i++)
+		for (i = 0;i < intf_3526.num;i++)
 		{
 			/* stream setup */
 			char name[40];
-			int vol = intf_3526->mixing_level[i];
+			int vol = intf_3526.mixing_level[i];
 			/* emulator create */
 			/* stream setup */
 			sprintf(name,"%s #%d",sound_name(msound),i);
@@ -220,7 +220,7 @@ public class _3812intf
 	{
 		int i;
 	
-		for (i = 0;i < intf_3526->num;i++)
+		for (i = 0;i < intf_3526.num;i++)
 			YM3526ResetChip(i);
 	}
 	
@@ -262,7 +262,7 @@ public class _3812intf
 	static const struct Y8950interface  *intf_8950 = NULL;
 	static void IRQHandler_8950(int n,int irq)
 	{
-		if (intf_8950->handler[n]) (intf_8950->handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
+		if (intf_8950.handler[n]) (intf_8950.handler[n])(irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	static void timer_callback_8950(int param)
 	{
@@ -285,62 +285,62 @@ public class _3812intf
 	
 	static unsigned char Y8950PortHandler_r(int chip)
 	{
-		if (intf_8950->portread[chip])
-			return intf_8950->portread[chip](chip);
+		if (intf_8950.portread[chip])
+			return intf_8950.portread[chip](chip);
 		return 0;
 	}
 	
 	static void Y8950PortHandler_w(int chip,unsigned char data)
 	{
-		if (intf_8950->portwrite[chip])
-			intf_8950->portwrite[chip](chip,data);
+		if (intf_8950.portwrite[chip])
+			intf_8950.portwrite[chip](chip,data);
 	}
 	
 	static unsigned char Y8950KeyboardHandler_r(int chip)
 	{
-		if (intf_8950->keyboardread[chip])
-			return intf_8950->keyboardread[chip](chip);
+		if (intf_8950.keyboardread[chip])
+			return intf_8950.keyboardread[chip](chip);
 		return 0;
 	}
 	
 	static void Y8950KeyboardHandler_w(int chip,unsigned char data)
 	{
-		if (intf_8950->keyboardwrite[chip])
-			intf_8950->keyboardwrite[chip](chip,data);
+		if (intf_8950.keyboardwrite[chip])
+			intf_8950.keyboardwrite[chip](chip,data);
 	}
 	
 	int Y8950_sh_start(const struct MachineSound *msound)
 	{
 		int i;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 	
-		intf_8950 = msound->sound_interface;
-		if( intf_8950->num > MAX_8950 ) return 1;
+		intf_8950 = msound.sound_interface;
+		if( intf_8950.num > MAX_8950 ) return 1;
 	
 		if (options.use_filter)
-			rate = intf_8950->baseclock/72;
+			rate = intf_8950.baseclock/72;
 	
 	
 		/* Timer state clear */
 		memset(Timer_8950,0,sizeof(Timer_8950));
 	
 		/* stream system initialize */
-		if ( Y8950Init(intf_8950->num,intf_8950->baseclock,rate) != 0)
+		if ( Y8950Init(intf_8950.num,intf_8950.baseclock,rate) != 0)
 			return 1;
 	
-		for (i = 0;i < intf_8950->num;i++)
+		for (i = 0;i < intf_8950.num;i++)
 		{
 			/* stream setup */
 			char name[40];
-			int vol = intf_8950->mixing_level[i];
+			int vol = intf_8950.mixing_level[i];
 	
 			/* stream setup */
 			sprintf(name,"%s #%d",sound_name(msound),i);
 	
 			/* ADPCM ROM data */
 			Y8950SetDeltaTMemory(i,
-				(void *)(memory_region(intf_8950->rom_region[i])),
-					memory_region_length(intf_8950->rom_region[i]) );
+				(void *)(memory_region(intf_8950.rom_region[i])),
+					memory_region_length(intf_8950.rom_region[i]) );
 	
 			stream_8950[i] = stream_init(name,vol,rate,i,Y8950UpdateOne);
 	
@@ -368,7 +368,7 @@ public class _3812intf
 	{
 		int i;
 	
-		for (i = 0;i < intf_8950->num;i++)
+		for (i = 0;i < intf_8950.num;i++)
 			Y8950ResetChip(i);
 	}
 	

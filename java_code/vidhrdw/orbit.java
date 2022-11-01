@@ -110,7 +110,7 @@ public class orbit
 			hpos <<= 1;
 			vpos <<= 1;
 	
-			drawgfxzoom(bitmap, Machine->gfx[layout], code, 0, flip_x, flip_y,
+			drawgfxzoom(bitmap, Machine.gfx[layout], code, 0, flip_x, flip_y,
 				hpos, vpos, cliprect, TRANSPARENCY_PEN, 0, zoom_x, zoom_y);
 		}
 	}

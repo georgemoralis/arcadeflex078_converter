@@ -194,11 +194,11 @@ public class looping
 				sy = 240 - sy;
 			}
 	
-			drawgfx( bitmap, Machine->gfx[1],
+			drawgfx( bitmap, Machine.gfx[1],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN, 0 );
 	
 			source += 4;

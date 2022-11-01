@@ -60,8 +60,8 @@ public class namcos86
 		int totcolors,totlookup;
 	
 	
-		totcolors = Machine->drv->total_colors;
-		totlookup = Machine->drv->color_table_len;
+		totcolors = Machine.drv.total_colors;
+		totlookup = Machine.drv.color_table_len;
 	
 		for (i = 0;i < totcolors;i++)
 		{
@@ -330,7 +330,7 @@ public class namcos86
 					{
 						if (flipscreen != 0)
 						{
-							drawgfx( bitmap, Machine->gfx[GFX_SPRITES+sprite_bank],
+							drawgfx( bitmap, Machine.gfx[GFX_SPRITES+sprite_bank],
 								sprite_number+2*row+col,
 								color,
 								!flipx,!flipy,
@@ -341,7 +341,7 @@ public class namcos86
 						}
 						else
 						{
-							drawgfx( bitmap, Machine->gfx[GFX_SPRITES+sprite_bank],
+							drawgfx( bitmap, Machine.gfx[GFX_SPRITES+sprite_bank],
 								sprite_number+2*row+col,
 								color,
 								flipx,flipy,
@@ -368,7 +368,7 @@ public class namcos86
 	
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
-		fillbitmap(bitmap,Machine->gfx[0]->colortable[8*backcolor+7],cliprect);
+		fillbitmap(bitmap,Machine.gfx[0].colortable[8*backcolor+7],cliprect);
 	
 		for (layer = 0;layer < 8;layer++)
 		{

@@ -46,7 +46,7 @@ public class balsente
 		palettebank_vis = 0;
 		
 		/* allocate a bitmap */
-		tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		if (!tmpbitmap)
 			return 1;
 	
@@ -209,7 +209,7 @@ public class balsente
 		{
 			if (ypos >= finalclip.min_y && ypos <= finalclip.max_y)
 			{
-				UINT32 *pens = &Machine->pens[scanline_palette[y] * 256];
+				UINT32 *pens = &Machine.pens[scanline_palette[y] * 256];
 				UINT8 *old = &local_videoram[ypos * 256 + xpos];
 				int currx = xpos;
 	
@@ -290,7 +290,7 @@ public class balsente
 		for (y = 0; y < 240; y++)
 			if (scanline_dirty[y] || update_all)
 			{
-				pen_t *pens = &Machine->pens[scanline_palette[y] * 256];
+				pen_t *pens = &Machine.pens[scanline_palette[y] * 256];
 				draw_scanline8(tmpbitmap, 0, y, 256, &local_videoram[y * 256], pens, -1);
 				scanline_dirty[y] = 0;
 			}

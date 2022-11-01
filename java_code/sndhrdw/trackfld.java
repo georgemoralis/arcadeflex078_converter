@@ -74,7 +74,7 @@ public class trackfld
 	    {
 	        int changes = offset^last_addr;
 	        /* A7 = data enable for VLM5030 (don't care )          */
-	        /* A8 = STA pin (1->0 data data  , 0->1 start speech   */
+	        /* A8 = STA pin (1.0 data data  , 0.1 start speech   */
 	        /* A9 = RST pin 1=reset                                */
 	
 	        /* A8 VLM5030 ST pin */
@@ -98,7 +98,7 @@ public class trackfld
 	{
 	    int changes = offset^last_addr;
 	    /* A3 = data enable for VLM5030 (don't care )          */
-	    /* A4 = STA pin (1->0 data data  , 0->1 start speech   */
+	    /* A4 = STA pin (1.0 data data  , 0.1 start speech   */
 	    /* A5 = RST pin 1=reset                                */
 	    /* A6 = VLM5030    output disable (don't care ) */
 	    /* A7 = kONAMI DAC output disable (don't care ) */

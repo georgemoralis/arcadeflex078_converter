@@ -175,47 +175,47 @@ public class exidy
 	INLINE void sh6840_apply_clock(struct sh6840_timer_channel *t, int clocks)
 	{
 		/* dual 8-bit case */
-		if (t->cr & 0x04)
+		if (t.cr & 0x04)
 		{
 			/* handle full decrements */
-			while (clocks > t->counter.b.l)
+			while (clocks > t.counter.b.l)
 			{
-				clocks -= t->counter.b.l + 1;
-				t->counter.b.l = t->timer;
+				clocks -= t.counter.b.l + 1;
+				t.counter.b.l = t.timer;
 	
 				/* decrement MSB */
-				if (!t->counter.b.h--)
+				if (!t.counter.b.h--)
 				{
-					t->state = 0;
-					t->counter.w = t->timer;
+					t.state = 0;
+					t.counter.w = t.timer;
 				}
 	
 				/* state goes high when MSB is 0 */
-				else if (!t->counter.b.h)
+				else if (!t.counter.b.h)
 				{
-					t->state = 1;
-					t->clocks++;
+					t.state = 1;
+					t.clocks++;
 				}
 			}
 	
 			/* subtract off the remainder */
-			t->counter.b.l -= clocks;
+			t.counter.b.l -= clocks;
 		}
 	
 		/* 16-bit case */
 		else
 		{
 			/* handle full decrements */
-			while (clocks > t->counter.w)
+			while (clocks > t.counter.w)
 			{
-				clocks -= t->counter.w + 1;
-				t->state ^= 1;
-				t->clocks += t->state;
-				t->counter.w = t->timer;
+				clocks -= t.counter.w + 1;
+				t.state ^= 1;
+				t.clocks += t.state;
+				t.counter.w = t.timer;
 			}
 	
 			/* subtract off the remainder */
-			t->counter.w -= clocks;
+			t.counter.w -= clocks;
 		}
 	}
 	
@@ -239,7 +239,7 @@ public class exidy
 			/* keep a history of the last few noise samples */
 			history = (history << 1) | (rand() & 1);
 	
-			/* if we clocked 0->1, that will serve as an external clock */
+			/* if we clocked 0.1, that will serve as an external clock */
 			if ((history & 0x03) == 0x01)
 			{
 				sh6840_noise_state ^= 1;
@@ -289,72 +289,72 @@ public class exidy
 	
 				/* handle timer 0 if enabled */
 				t = &sh6840_timer[0];
-				chan0_clocks = t->clocks;
-				if (t->cr & 0x80)
+				chan0_clocks = t.clocks;
+				if (t.cr & 0x80)
 				{
-					int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+					int clocks = (t.cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 					sh6840_apply_clock(t, clocks);
-					if (t->state && !(exidy_sfxctrl & 0x02))
+					if (t.state && !(exidy_sfxctrl & 0x02))
 						sample += sh6840_volume[0];
 				}
 	
 				/* generate channel 0-clocked noise if necessary */
 				if (noisy && (exidy_sfxctrl & 0x01))
-					noise_clocks_this_sample = sh6840_update_noise(t->clocks - chan0_clocks);
+					noise_clocks_this_sample = sh6840_update_noise(t.clocks - chan0_clocks);
 	
 				/* handle timer 1 if enabled */
 				t = &sh6840_timer[1];
-				if (t->cr & 0x80)
+				if (t.cr & 0x80)
 				{
-					int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+					int clocks = (t.cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 					sh6840_apply_clock(t, clocks);
-					if (t->state)
+					if (t.state)
 						sample += sh6840_volume[1];
 				}
 	
 				/* handle timer 2 if enabled */
 				t = &sh6840_timer[2];
-				if (t->cr & 0x80)
+				if (t.cr & 0x80)
 				{
-					int clocks = (t->cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
+					int clocks = (t.cr & 0x02) ? clocks_this_sample : noise_clocks_this_sample;
 	
 					/* prescale */
-					if (t->cr & 0x01)
+					if (t.cr & 0x01)
 					{
-						clocks += t->leftovers;
-						t->leftovers = clocks % 8;
+						clocks += t.leftovers;
+						t.leftovers = clocks % 8;
 						clocks /= 8;
 					}
 					sh6840_apply_clock(t, clocks);
-					if (t->state)
+					if (t.state)
 						sample += sh6840_volume[2];
 				}
 			}
 	
 			/* music channel 0 */
 			c = &sh8253_timer[0];
-			if (c->enable)
+			if (c.enable)
 			{
-				c->fraction += c->step;
-				if (c->fraction & 0x0800000)
+				c.fraction += c.step;
+				if (c.fraction & 0x0800000)
 					sample += BASE_VOLUME;
 			}
 	
 			/* music channel 1 */
 			c = &sh8253_timer[1];
-			if (c->enable)
+			if (c.enable)
 			{
-				c->fraction += c->step;
-				if (c->fraction & 0x0800000)
+				c.fraction += c.step;
+				if (c.fraction & 0x0800000)
 					sample += BASE_VOLUME;
 			}
 	
 			/* music channel 2 */
 			c = &sh8253_timer[2];
-			if (c->enable)
+			if (c.enable)
 			{
-				c->fraction += c->step;
-				if (c->fraction & 0x0800000)
+				c.fraction += c.step;
+				if (c.fraction & 0x0800000)
 					sample += BASE_VOLUME;
 			}
 	
@@ -382,14 +382,14 @@ public class exidy
 		has_tms5220 = 0;
 		for (i = 0; i < MAX_SOUND; i++)
 		{
-			if (Machine->drv->sound[i].sound_type == SOUND_TMS5220)
+			if (Machine.drv.sound[i].sound_type == SOUND_TMS5220)
 				has_tms5220 = 1;
-			if (Machine->drv->sound[i].sound_type == SOUND_HC55516)
+			if (Machine.drv.sound[i].sound_type == SOUND_HC55516)
 				has_hc55516 = 1;
 		}
 	
 		/* allocate the stream */
-		exidy_stream = stream_init("Exidy custom", 100, Machine->sample_rate, 0, exidy_stream_update);
+		exidy_stream = stream_init("Exidy custom", 100, Machine.sample_rate, 0, exidy_stream_update);
 	
 		/* Init PIA */
 		pia_reset();
@@ -405,15 +405,15 @@ public class exidy
 	
 		/* Init 6840 */
 		memset(sh6840_timer, 0, sizeof(sh6840_timer));
-		if (Machine->sample_rate != 0)
-			sh6840_clocks_per_sample = (int)((double)SH6840_CLOCK / (double)Machine->sample_rate * (double)(1 << 24));
+		if (Machine.sample_rate != 0)
+			sh6840_clocks_per_sample = (int)((double)SH6840_CLOCK / (double)Machine.sample_rate * (double)(1 << 24));
 		sh6840_MSB = 0;
 		exidy_sfxctrl = 0;
 	
 		/* Init 8253 */
 		memset(sh8253_timer, 0, sizeof(sh8253_timer));
-		if (Machine->sample_rate != 0)
-			freq_to_step = (double)(1 << 24) / (double)Machine->sample_rate;
+		if (Machine.sample_rate != 0)
+			freq_to_step = (double)(1 << 24) / (double)Machine.sample_rate;
 	
 		return 0;
 	}

@@ -24,11 +24,11 @@
 	P2) MAME's MAX_PENS colors palette (the "pens")
 	P3) The OS specific hardware color registers (the "OS specific pens")
 
-	The array Machine->pens[] is a lookup table which maps game colors to OS
+	The array Machine.pens[] is a lookup table which maps game colors to OS
 	specific pens (P1 to P3). When you are working on bitmaps at the pixel level,
-	*always* use Machine->pens to map the color numbers. *Never* use constants.
+	*always* use Machine.pens to map the color numbers. *Never* use constants.
 	For example if you want to make pixel (x,y) of color 3, do:
-	bitmap->line[y][x] = Machine->pens[3];
+	bitmap.line[y][x] = Machine.pens[3];
 
 
 	Lookup table
@@ -43,13 +43,13 @@
 
 	The palette and the lookup table are initialized to default values by the
 	main core, but can be initialized by the driver using the function
-	MachineDriver->vh_init_palette(). For games using palette RAM, that
+	MachineDriver.vh_init_palette(). For games using palette RAM, that
 	function is usually not needed, and the lookup table can be set up by
 	properly initializing the color_codes_start and total_color_codes fields in
 	the GfxDecodeInfo array.
 	When vh_init_palette() initializes the lookup table, it maps gfx codes
 	to game colors (P1 above). The lookup table will be converted by the core to
-	map to OS specific pens (P3 above), and stored in Machine->remapped_colortable.
+	map to OS specific pens (P3 above), and stored in Machine.remapped_colortable.
 
 
 	Display modes
@@ -63,7 +63,7 @@
 		palette_set_color().
 	3) Direct mapped 16-bit or 32-bit color. This should only be used in special
 		cases, e.g. to support alpha blending.
-		MachineDriver->video_attributes must contain VIDEO_RGB_DIRECT.
+		MachineDriver.video_attributes must contain VIDEO_RGB_DIRECT.
 
 ******************************************************************************/
 

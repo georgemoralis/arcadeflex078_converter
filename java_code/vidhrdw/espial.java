@@ -52,7 +52,7 @@ public class espial
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -64,13 +64,13 @@ public class espial
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
 			bit0 = (color_prom[i] >> 3) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* blue component */
 			bit0 = 0;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 			palette_set_color(i,r,g,b);
@@ -221,12 +221,12 @@ public class espial
 			{
 				if (flipscreen != 0)
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,
 							flipx,flipy,
 							sx,sy + 16,
 							cliprect,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code + 1,
 							color,
 							flipx,flipy,
@@ -235,12 +235,12 @@ public class espial
 				}
 				else
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,
 							flipx,flipy,
 							sx,sy - 16,
 							cliprect,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code + 1,color,
 							flipx,flipy,
 							sx,sy,
@@ -249,7 +249,7 @@ public class espial
 			}
 			else
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,color,
 						flipx,flipy,
 						sx,sy,

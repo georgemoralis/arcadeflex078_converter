@@ -30,7 +30,7 @@
 	- Palettes
 	- Controls
 	- Priorities.  From the original board it appears they're fixed, in front to back order:
-	  (all the way in front) TTL text layer -> polygons -> PSAC2 (all the way in back)
+	  (all the way in front) TTL text layer . polygons . PSAC2 (all the way in back)
 
 Notes:
 

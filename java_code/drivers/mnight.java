@@ -344,7 +344,7 @@ public class mnight
 	static struct YM2203interface ym2203_interface =
 	{
 		2,	 /* 2 chips */
-		12000000/8, // lax 11/03/1999  (1250000 -> 1500000 ???)
+		12000000/8, // lax 11/03/1999  (1250000 . 1500000 ???)
 		{ YM2203_VOL(25,25), YM2203_VOL(25,25)},
 		{ 0 },
 		{ 0 },

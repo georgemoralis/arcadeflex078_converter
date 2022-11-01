@@ -113,7 +113,7 @@ The following are board layouts, and component locations.
  Q       81416                 Ribbon    =          |
  =       81416                 cable     =          ===  Wiring harness
  =       81416                 to sound  S          ===  connector
- |       81416                 board --> =          ===
+ |       81416                 board -. =          ===
  | 8MHz                                  =          |
  +--------------------------------------------------+
 
@@ -187,7 +187,7 @@ M4300048A
 2x m5m5517
 4x am93422 (2101)
 
-A17-15->18 6353 1024x4 prom
+A17-15.18 6353 1024x4 prom
 
 M4300049A (relabeled J1100004A/K1100010A)
 

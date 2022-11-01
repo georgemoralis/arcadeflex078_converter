@@ -89,8 +89,8 @@ public class sprint8
 	
 	public static VideoUpdateHandlerPtr video_update_sprint8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		helper1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
-		helper2 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
+		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper1 == NULL)
 		{
@@ -136,7 +136,7 @@ public class sprint8
 				x |= 0x100;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[2],
+			drawgfx(bitmap, Machine.gfx[2],
 				code ^ 7,
 				i,
 				!(code & 0x10), !(code & 0x08),
@@ -159,18 +159,18 @@ public class sprint8
 		int x;
 		int y;
 	
-		tilemap_draw(helper2, &Machine->visible_area, tilemap2, 0, 0);
+		tilemap_draw(helper2, &Machine.visible_area, tilemap2, 0, 0);
 	
-		fillbitmap(helper1, 16, &Machine->visible_area);
+		fillbitmap(helper1, 16, &Machine.visible_area);
 	
-		draw_sprites(helper1, &Machine->visible_area);
+		draw_sprites(helper1, &Machine.visible_area);
 	
-		for (y = Machine->visible_area.min_y; y <= Machine->visible_area.max_y; y++)
+		for (y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++)
 		{
-			const UINT16* p1 = (UINT16*) helper1->line[y];
-			const UINT16* p2 = (UINT16*) helper2->line[y];
+			const UINT16* p1 = (UINT16*) helper1.line[y];
+			const UINT16* p2 = (UINT16*) helper2.line[y];
 	
-			for (x = Machine->visible_area.min_x; x <= Machine->visible_area.max_x; x++)
+			for (x = Machine.visible_area.min_x; x <= Machine.visible_area.max_x; x++)
 			{
 				if (p1[x] != 16 && p2[x] != 16)
 				{

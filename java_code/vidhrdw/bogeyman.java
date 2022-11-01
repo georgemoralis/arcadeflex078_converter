@@ -153,20 +153,20 @@ public class bogeyman
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[2],
+				drawgfx(bitmap, Machine.gfx[2],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 	
 				if (multi != 0)
 				{
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 						code + 1, color,
 						flipx, flipy,
 						sx, sy + (flip_screen ? -16 : 16),
-						&Machine->visible_area,
+						&Machine.visible_area,
 						TRANSPARENCY_PEN, 0);
 				}
 			}
@@ -175,8 +175,8 @@ public class bogeyman
 	
 	public static VideoUpdateHandlerPtr video_update_bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		bogeyman_draw_sprites(bitmap);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 }

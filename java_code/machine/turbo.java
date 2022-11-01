@@ -53,10 +53,10 @@ public class turbo
 	static void turbo_update_samples(void)
 	{
 		/* accelerator sounds */
-		/* BSEL == 3 --> off */
-		/* BSEL == 2 --> standard */
-		/* BSEL == 1 --> tunnel */
-		/* BSEL == 0 --> ??? */
+		/* BSEL == 3 -. off */
+		/* BSEL == 2 -. standard */
+		/* BSEL == 1 -. tunnel */
+		/* BSEL == 0 -. ??? */
 		if (bsel == 3 && sample_playing(6))
 			sample_stop(6);
 		else if (bsel != 3 && !sample_playing(6))
@@ -398,7 +398,7 @@ public class turbo
 		coin_counter_w(0, data & 0x10);
 		coin_counter_w(1, data & 0x20);
 		set_led_status(0, data & 0x40);
-		// NOUSE = data & 0x80 -> body sonic???
+		// NOUSE = data & 0x80 . body sonic???
 	} };
 	
 	
@@ -641,7 +641,7 @@ public class turbo
 			{ 0x00,0x44,0x18,0x5c,0x14,0x50,0x0c,0x48,
 			  0x28,0x6c,0x30,0x74,0x3c,0x78,0x24,0x60,
 			  0x60,0x24,0x78,0x3c,0x74,0x30,0x6c,0x28,
-			  0x48,0x0c,0x50,0x14,0x5c,0x18,0x44,0x00 }, //0x00 --> 0x10 ?
+			  0x48,0x0c,0x50,0x14,0x5c,0x18,0x44,0x00 }, //0x00 -. 0x10 ?
 	
 			/* Table 2 */
 			/* 0x1000-0x13ff */

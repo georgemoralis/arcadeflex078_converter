@@ -28,7 +28,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 		[if we denote the three layers with 0-3 (0 being the backmost)
 		 and the sprite with S]
 
-		Sprite Priority			Order (back -> front)
+		Sprite Priority			Order (back . front)
 				0					S 0 1 2
 				1					0 S 1 2
 				2					0 1 S 2
@@ -275,7 +275,7 @@ public class unico
 	
 			for (x = startx ; x != endx ; x += incx)
 			{
-				pdrawgfx(	bitmap, Machine->gfx[0],
+				pdrawgfx(	bitmap, Machine.gfx[0],
 							code++,
 							attr & 0x1f,
 							flipx, flipy,
@@ -328,7 +328,7 @@ public class unico
 	
 			for (x = startx ; x != endx ; x += incx)
 			{
-				pdrawgfx(	bitmap, Machine->gfx[0],
+				pdrawgfx(	bitmap, Machine.gfx[0],
 							code++,
 							attr & 0x1f,
 							flipx, flipy,
@@ -375,7 +375,7 @@ public class unico
 	#endif
 	
 		/* The background color is the first of the last palette */
-		fillbitmap(bitmap,Machine->pens[0x1f00],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
@@ -425,7 +425,7 @@ public class unico
 	#endif
 	
 		/* The background color is the first of the last palette */
-		fillbitmap(bitmap,Machine->pens[0x1f00],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);

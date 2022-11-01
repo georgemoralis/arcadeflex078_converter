@@ -9,7 +9,7 @@
  *
  *	 HJB 08/31/98
  *	 modified to use an automatically selected oversampling factor
- *	 for the current Machine->sample_rate
+ *	 for the current Machine.sample_rate
  *
  *   Mish 21/7/99
  *   Updated to allow multiple OKI chips with different sample rates
@@ -138,13 +138,13 @@ public class adpcm
 	static void generate_adpcm(struct ADPCMVoice *voice, INT16 *buffer, int samples)
 	{
 		/* if this voice is active */
-		if (voice->playing)
+		if (voice.playing)
 		{
-			UINT8 *base = voice->base;
-			int sample = voice->sample;
-			int signal = voice->signal;
-			int count = voice->count;
-			int step = voice->step;
+			UINT8 *base = voice.base;
+			int sample = voice.sample;
+			int signal = voice.signal;
+			int count = voice.count;
+			int step = voice.step;
 			int val;
 	
 			/* loop while we still have samples to generate */
@@ -168,21 +168,21 @@ public class adpcm
 					step = 0;
 	
 				/* output to the buffer, scaling by the volume */
-				*buffer++ = signal * voice->volume / 16;
+				*buffer++ = signal * voice.volume / 16;
 				samples--;
 	
 				/* next! */
 				if (++sample >= count)
 				{
-					voice->playing = 0;
+					voice.playing = 0;
 					break;
 				}
 			}
 	
 			/* update the parameters */
-			voice->sample = sample;
-			voice->signal = signal;
-			voice->step = step;
+			voice.sample = sample;
+			voice.signal = signal;
+			voice.step = step;
 		}
 	
 		/* fill the rest with silence */
@@ -202,30 +202,30 @@ public class adpcm
 	{
 		struct ADPCMVoice *voice = &adpcm[num];
 		INT16 sample_data[MAX_SAMPLE_CHUNK], *curr_data = sample_data;
-		INT16 prev = voice->last_sample, curr = voice->curr_sample;
+		INT16 prev = voice.last_sample, curr = voice.curr_sample;
 		UINT32 final_pos;
 		UINT32 new_samples;
 	
 		/* finish off the current sample */
-		if (voice->source_pos > 0)
+		if (voice.source_pos > 0)
 		{
 			/* interpolate */
-			while (length > 0 && voice->source_pos < FRAC_ONE)
+			while (length > 0 && voice.source_pos < FRAC_ONE)
 			{
-				*buffer++ = (((INT32)prev * (FRAC_ONE - voice->source_pos)) + ((INT32)curr * voice->source_pos)) >> FRAC_BITS;
-				voice->source_pos += voice->source_step;
+				*buffer++ = (((INT32)prev * (FRAC_ONE - voice.source_pos)) + ((INT32)curr * voice.source_pos)) >> FRAC_BITS;
+				voice.source_pos += voice.source_step;
 				length--;
 			}
 	
 			/* if we're over, continue; otherwise, we're done */
-			if (voice->source_pos >= FRAC_ONE)
-				voice->source_pos -= FRAC_ONE;
+			if (voice.source_pos >= FRAC_ONE)
+				voice.source_pos -= FRAC_ONE;
 			else
 				return;
 		}
 	
 		/* compute how many new samples we need */
-		final_pos = voice->source_pos + length * voice->source_step;
+		final_pos = voice.source_pos + length * voice.source_step;
 		new_samples = (final_pos + FRAC_ONE - 1) >> FRAC_BITS;
 		if (new_samples > MAX_SAMPLE_CHUNK)
 			new_samples = MAX_SAMPLE_CHUNK;
@@ -239,25 +239,25 @@ public class adpcm
 		while (length > 0)
 		{
 			/* interpolate */
-			while (length > 0 && voice->source_pos < FRAC_ONE)
+			while (length > 0 && voice.source_pos < FRAC_ONE)
 			{
-				*buffer++ = (((INT32)prev * (FRAC_ONE - voice->source_pos)) + ((INT32)curr * voice->source_pos)) >> FRAC_BITS;
-				voice->source_pos += voice->source_step;
+				*buffer++ = (((INT32)prev * (FRAC_ONE - voice.source_pos)) + ((INT32)curr * voice.source_pos)) >> FRAC_BITS;
+				voice.source_pos += voice.source_step;
 				length--;
 			}
 	
 			/* if we're over, grab the next samples */
-			if (voice->source_pos >= FRAC_ONE)
+			if (voice.source_pos >= FRAC_ONE)
 			{
-				voice->source_pos -= FRAC_ONE;
+				voice.source_pos -= FRAC_ONE;
 				prev = curr;
 				curr = *curr_data++;
 			}
 		}
 	
 		/* remember the last samples */
-		voice->last_sample = prev;
-		voice->curr_sample = curr;
+		voice.last_sample = prev;
+		voice.curr_sample = curr;
 	}
 	
 	
@@ -277,7 +277,7 @@ public class adpcm
 		for (i=0; i<num_voices; i++)
 		{
 			voice = &adpcm[i];
-			voice_base_offset[i] = voice->base - voice->region_base;
+			voice_base_offset[i] = voice.base - voice.region_base;
 		}
 	}
 	
@@ -289,7 +289,7 @@ public class adpcm
 		for (i=0; i<num_voices; i++)
 		{
 			voice = &adpcm[i];
-			voice->base = &voice->region_base[ voice_base_offset[i] ];
+			voice.base = &voice.region_base[ voice_base_offset[i] ];
 		}
 	}
 	
@@ -306,18 +306,18 @@ public class adpcm
 		{
 			voice = &adpcm[i];
 	
-			state_save_register_UINT8  (buf, i, "playing", &voice->playing, 1);
+			state_save_register_UINT8  (buf, i, "playing", &voice.playing, 1);
 			state_save_register_UINT32 (buf, i, "base_offset" , &voice_base_offset[i],  1);
-			state_save_register_UINT32 (buf, i, "sample" , &voice->sample,  1);
-			state_save_register_UINT32 (buf, i, "count"  , &voice->count,   1);
-			state_save_register_UINT32 (buf, i, "signal" , &voice->signal,  1);
-			state_save_register_UINT32 (buf, i, "step"   , &voice->step,    1);
-			state_save_register_UINT32 (buf, i, "volume" , &voice->volume,  1);
+			state_save_register_UINT32 (buf, i, "sample" , &voice.sample,  1);
+			state_save_register_UINT32 (buf, i, "count"  , &voice.count,   1);
+			state_save_register_UINT32 (buf, i, "signal" , &voice.signal,  1);
+			state_save_register_UINT32 (buf, i, "step"   , &voice.step,    1);
+			state_save_register_UINT32 (buf, i, "volume" , &voice.volume,  1);
 	
-			state_save_register_INT16  (buf, i, "last_sample", &voice->last_sample, 1);
-			state_save_register_INT16  (buf, i, "curr_sample", &voice->curr_sample, 1);
-			state_save_register_UINT32 (buf, i, "source_step", &voice->source_step, 1);
-			state_save_register_UINT32 (buf, i, "source_pos" , &voice->source_pos,  1);
+			state_save_register_INT16  (buf, i, "last_sample", &voice.last_sample, 1);
+			state_save_register_INT16  (buf, i, "curr_sample", &voice.curr_sample, 1);
+			state_save_register_UINT32 (buf, i, "source_step", &voice.source_step, 1);
+			state_save_register_UINT32 (buf, i, "source_pos" , &voice.source_pos,  1);
 		}
 	
 		if (msm_voices == 0)
@@ -335,7 +335,7 @@ public class adpcm
 	
 	int ADPCM_sh_start(const struct MachineSound *msound)
 	{
-		const struct ADPCMinterface *intf = msound->sound_interface;
+		const struct ADPCMinterface *intf = msound.sound_interface;
 		char stream_name[40];
 		int i;
 	
@@ -343,7 +343,7 @@ public class adpcm
 		if (msm_voices > 0)
 		{
 			/* system has already been initalized by the MSM6295, do a smaller portion */
-			num_voices += intf->num;
+			num_voices += intf.num;
 	
 			#ifdef MAME_DEBUG
 			if (num_voices > MAX_ADPCM)
@@ -357,21 +357,21 @@ public class adpcm
 			{
 				/* generate the name and create the stream */
 				sprintf(stream_name, "%s #%d", sound_name(msound), i-msm_voices);
-				adpcm[i].stream = stream_init(stream_name, intf->mixing_level[i-msm_voices], Machine->sample_rate, i, adpcm_update);
+				adpcm[i].stream = stream_init(stream_name, intf.mixing_level[i-msm_voices], Machine.sample_rate, i, adpcm_update);
 				if (adpcm[i].stream == -1)
 					return 1;
 	
 				/* initialize the rest of the structure */
-				adpcm[i].region_base = memory_region(intf->region);
+				adpcm[i].region_base = memory_region(intf.region);
 				adpcm[i].volume = 255;
 				adpcm[i].signal = -2;
-				if (Machine->sample_rate)
-					adpcm[i].source_step = (UINT32)((double)intf->frequency * (double)FRAC_ONE / (double)Machine->sample_rate);
+				if (Machine.sample_rate)
+					adpcm[i].source_step = (UINT32)((double)intf.frequency * (double)FRAC_ONE / (double)Machine.sample_rate);
 			}
 		}
 		else
 		{
-			num_voices = intf->num;
+			num_voices = intf.num;
 			#ifdef MAME_DEBUG
 			if (num_voices > MAX_ADPCM)
 			{
@@ -387,16 +387,16 @@ public class adpcm
 			{
 				/* generate the name and create the stream */
 				sprintf(stream_name, "%s #%d", sound_name(msound), i);
-				adpcm[i].stream = stream_init(stream_name, intf->mixing_level[i], Machine->sample_rate, i, adpcm_update);
+				adpcm[i].stream = stream_init(stream_name, intf.mixing_level[i], Machine.sample_rate, i, adpcm_update);
 				if (adpcm[i].stream == -1)
 					return 1;
 	
 				/* initialize the rest of the structure */
-				adpcm[i].region_base = memory_region(intf->region);
+				adpcm[i].region_base = memory_region(intf.region);
 				adpcm[i].volume = 255;
 				adpcm[i].signal = -2;
-				if (Machine->sample_rate)
-					adpcm[i].source_step = (UINT32)((double)intf->frequency * (double)FRAC_ONE / (double)Machine->sample_rate);
+				if (Machine.sample_rate)
+					adpcm[i].source_step = (UINT32)((double)intf.frequency * (double)FRAC_ONE / (double)Machine.sample_rate);
 			}
 		}
 	
@@ -445,7 +445,7 @@ public class adpcm
 		struct ADPCMVoice *voice = &adpcm[num+msm_voices];
 	
 		/* bail if we're not playing anything */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
 	
 		/* range check the numbers */
@@ -456,17 +456,17 @@ public class adpcm
 		}
 	
 		/* update the ADPCM voice */
-		stream_update(voice->stream, 0);
+		stream_update(voice.stream, 0);
 	
 		/* set up the voice to play this sample */
-		voice->playing = 1;
-		voice->base = &voice->region_base[offset];
-		voice->sample = 0;
-		voice->count = length;
+		voice.playing = 1;
+		voice.base = &voice.region_base[offset];
+		voice.sample = 0;
+		voice.count = length;
 	
 		/* also reset the ADPCM parameters */
-		voice->signal = -2;
-		voice->step = 0;
+		voice.signal = -2;
+		voice.step = 0;
 	}
 	
 	
@@ -482,7 +482,7 @@ public class adpcm
 		struct ADPCMVoice *voice = &adpcm[num+msm_voices];
 	
 		/* bail if we're not playing anything */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
 	
 		/* range check the numbers */
@@ -493,10 +493,10 @@ public class adpcm
 		}
 	
 		/* update the ADPCM voice */
-		stream_update(voice->stream, 0);
+		stream_update(voice.stream, 0);
 	
 		/* stop playback */
-		voice->playing = 0;
+		voice.playing = 0;
 	}
 	
 	
@@ -512,7 +512,7 @@ public class adpcm
 		struct ADPCMVoice *voice = &adpcm[num+msm_voices];
 	
 		/* bail if we're not playing anything */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return;
 	
 		/* range check the numbers */
@@ -523,8 +523,8 @@ public class adpcm
 		}
 	
 		/* update the ADPCM voice */
-		stream_update(voice->stream, 0);
-		voice->volume = vol;
+		stream_update(voice.stream, 0);
+		voice.volume = vol;
 	}
 	
 	
@@ -540,7 +540,7 @@ public class adpcm
 		struct ADPCMVoice *voice = &adpcm[num+msm_voices];
 	
 		/* bail if we're not playing anything */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return 0;
 	
 		/* range check the numbers */
@@ -551,8 +551,8 @@ public class adpcm
 		}
 	
 		/* update the ADPCM voice */
-		stream_update(voice->stream, 0);
-		return voice->playing;
+		stream_update(voice.stream, 0);
+		return voice.playing;
 	}
 	
 	
@@ -619,7 +619,7 @@ public class adpcm
 	
 	int OKIM6295_sh_start(const struct MachineSound *msound)
 	{
-		const struct OKIM6295interface *intf = msound->sound_interface;
+		const struct OKIM6295interface *intf = msound.sound_interface;
 		char stream_name[40];
 		int i;
 	
@@ -633,7 +633,7 @@ public class adpcm
 		#endif
 	
 		/* reset the ADPCM system */
-		num_voices = intf->num * OKIM6295_VOICES;
+		num_voices = intf.num * OKIM6295_VOICES;
 		msm_voices = 0;
 		#ifdef MAME_DEBUG
 		if (num_voices > MAX_ADPCM)
@@ -657,16 +657,16 @@ public class adpcm
 	
 			/* generate the name and create the stream */
 			sprintf(stream_name, "%s #%d (voice %d)", sound_name(msound), chip, voice);
-			adpcm[i].stream = stream_init(stream_name, intf->mixing_level[chip], Machine->sample_rate, i, adpcm_update);
+			adpcm[i].stream = stream_init(stream_name, intf.mixing_level[chip], Machine.sample_rate, i, adpcm_update);
 			if (adpcm[i].stream == -1)
 				return 1;
 	
 			/* initialize the rest of the structure */
-			adpcm[i].region_base = memory_region(intf->region[chip]);
+			adpcm[i].region_base = memory_region(intf.region[chip]);
 			adpcm[i].volume = 255;
 			adpcm[i].signal = -2;
-			if (Machine->sample_rate)
-				adpcm[i].source_step = (UINT32)((double)intf->frequency[chip] * (double)FRAC_ONE / (double)Machine->sample_rate);
+			if (Machine.sample_rate)
+				adpcm[i].source_step = (UINT32)((double)intf.frequency[chip] * (double)FRAC_ONE / (double)Machine.sample_rate);
 		}
 	
 		okim6295_state_save_register();
@@ -719,7 +719,7 @@ public class adpcm
 			struct ADPCMVoice *voice = &adpcm[which * OKIM6295_VOICES + channel];
 	
 			/* update the stream and set the new base */
-			stream_update(voice->stream, 0);
+			stream_update(voice.stream, 0);
 			okim6295_base[which][channel] = base;
 		}
 	}
@@ -741,9 +741,9 @@ public class adpcm
 			struct ADPCMVoice *voice = &adpcm[which * OKIM6295_VOICES + channel];
 	
 			/* update the stream and set the new base */
-			stream_update(voice->stream, 0);
-			if (Machine->sample_rate)
-				voice->source_step = (UINT32)((double)frequency * (double)FRAC_ONE / (double)Machine->sample_rate);
+			stream_update(voice.stream, 0);
+			if (Machine.sample_rate)
+				voice.source_step = (UINT32)((double)frequency * (double)FRAC_ONE / (double)Machine.sample_rate);
 		}
 	}
 	
@@ -772,10 +772,10 @@ public class adpcm
 			struct ADPCMVoice *voice = &adpcm[num * OKIM6295_VOICES + i];
 	
 			/* update the stream */
-			stream_update(voice->stream, 0);
+			stream_update(voice.stream, 0);
 	
 			/* set the bit if it's playing */
-			if (voice->playing)
+			if (voice.playing)
 				result |= 1 << i;
 		}
 	
@@ -813,29 +813,29 @@ public class adpcm
 					struct ADPCMVoice *voice = &adpcm[num * OKIM6295_VOICES + i];
 	
 					/* update the stream */
-					stream_update(voice->stream, 0);
+					stream_update(voice.stream, 0);
 	
-					if (Machine->sample_rate == 0) return;
+					if (Machine.sample_rate == 0) return;
 	
 					/* determine the start/stop positions */
-					base = &voice->region_base[ okim6295_base[num][i] + okim6295_command[num] * 8];
+					base = &voice.region_base[ okim6295_base[num][i] + okim6295_command[num] * 8];
 					start = ((base[0] << 16) + (base[1] << 8) + base[2]) & 0x3ffff;
 					stop  = ((base[3] << 16) + (base[4] << 8) + base[5]) & 0x3ffff;
 	
 					/* set up the voice to play this sample */
 					if (start < stop)
 					{
-						if (!voice->playing) /* fixes Got-cha and Steel Force */
+						if (!voice.playing) /* fixes Got-cha and Steel Force */
 						{
-							voice->playing = 1;
-							voice->base = &voice->region_base[okim6295_base[num][i] + start];
-							voice->sample = 0;
-							voice->count = 2 * (stop - start + 1);
+							voice.playing = 1;
+							voice.base = &voice.region_base[okim6295_base[num][i] + start];
+							voice.sample = 0;
+							voice.count = 2 * (stop - start + 1);
 	
 							/* also reset the ADPCM parameters */
-							voice->signal = -2;
-							voice->step = 0;
-							voice->volume = volume_table[data & 0x0f];
+							voice.signal = -2;
+							voice.step = 0;
+							voice.volume = volume_table[data & 0x0f];
 						}
 						else
 						{
@@ -846,7 +846,7 @@ public class adpcm
 					else
 					{
 						logerror("OKIM6295:%d requested to play invalid sample %02x\n",num,okim6295_command[num]);
-						voice->playing = 0;
+						voice.playing = 0;
 					}
 				}
 			}
@@ -874,8 +874,8 @@ public class adpcm
 					struct ADPCMVoice *voice = &adpcm[num * OKIM6295_VOICES + i];
 	
 					/* update the stream, then turn it off */
-					stream_update(voice->stream, 0);
-					voice->playing = 0;
+					stream_update(voice.stream, 0);
+					voice.playing = 0;
 				}
 			}
 		}

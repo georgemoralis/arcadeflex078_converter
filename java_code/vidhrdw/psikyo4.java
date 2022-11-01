@@ -63,7 +63,7 @@ public class psikyo4
 	
 		**- End Sprite Format -*/
 	
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		data32_t *source = spriteram32;
 		data16_t *list = (data16_t *)spriteram32 + 0x2c00/2 + 0x04/2; /* 0x2c00/0x2c02 what are these for, pointers? one for each screen */
 		data16_t listlen=(0xc00/2 - 0x04/2), listcntr=0;
@@ -108,7 +108,7 @@ public class psikyo4
 	
 				if((!scr && flipscreen1) || (scr && flipscreen2))
 				{
-					ypos = Machine->visible_area.max_y+1 - ypos - high*16; /* Screen Height depends on game */
+					ypos = Machine.visible_area.max_y+1 - ypos - high*16; /* Screen Height depends on game */
 					xpos = 40*8 - xpos - wide*16;
 					flipx = !flipx;
 					flipy = !flipy;
@@ -145,18 +145,18 @@ public class psikyo4
 	
 			clip.min_x = 0;
 			clip.max_x = 40*8-1;
-			clip.min_y = Machine->visible_area.min_y;
-			clip.max_y = Machine->visible_area.max_y;
+			clip.min_y = Machine.visible_area.min_y;
+			clip.max_y = Machine.visible_area.max_y;
 	
-			fillbitmap(bitmap, Machine->pens[0x1000], &clip);
+			fillbitmap(bitmap, Machine.pens[0x1000], &clip);
 			psikyo4_drawsprites(bitmap, &clip, 0x0000);
 	
 			clip.min_x = 40*8;
 			clip.max_x = 80*8-1;
-			clip.min_y = Machine->visible_area.min_y;
-			clip.max_y = Machine->visible_area.max_y;
+			clip.min_y = Machine.visible_area.min_y;
+			clip.max_y = Machine.visible_area.max_y;
 	
-			fillbitmap(bitmap, Machine->pens[0x1001], &clip);
+			fillbitmap(bitmap, Machine.pens[0x1001], &clip);
 			psikyo4_drawsprites(bitmap, &clip, 0x2000);
 		}
 	#else
@@ -164,7 +164,7 @@ public class psikyo4
 			if (readinputport(9) & 1) screen = 0x0000; /* change screens from false dip, is this ok? */
 			else if (readinputport(9) & 2) screen = 0x2000;
 	
-			fillbitmap(bitmap, Machine->pens[(screen==0x0000)?0x1000:0x1001], cliprect);
+			fillbitmap(bitmap, Machine.pens[(screen==0x0000)?0x1000:0x1001], cliprect);
 			psikyo4_drawsprites(bitmap, cliprect, screen);
 		}
 	#endif
@@ -185,7 +185,7 @@ public class psikyo4
 	
 	public static VideoUpdateHandlerPtr video_update_psikyo4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		Machine->gfx[0]->color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
+		Machine.gfx[0].color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
 		screen = 0;
 		return 0;
 	} };

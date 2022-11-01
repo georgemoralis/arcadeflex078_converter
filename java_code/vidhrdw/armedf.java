@@ -248,7 +248,7 @@ public class armedf
 	
 			if (((buffered_spriteram16[offs+0] & 0x3000) >> 12) == priority)
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 					code & 0xfff,
 					color,
 	 				flipx,flipy,

@@ -161,7 +161,7 @@ public class raiden
 				if (fy != 0) fy=0; else fy=1;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);

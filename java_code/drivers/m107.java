@@ -469,7 +469,7 @@ public class m107
 	public static InterruptHandlerPtr m107_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		m107_vblank=0;
-		m107_vh_raster_partial_refresh(Machine->scrbitmap,0,248);
+		m107_vh_raster_partial_refresh(Machine.scrbitmap,0,248);
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_0); /* VBL */
 	} };
 	
@@ -489,7 +489,7 @@ public class m107
 		/* Raster interrupt */
 		if (raster_enable && line==m107_raster_irq_position) {
 			if (osd_skip_this_frame()==0)
-				m107_vh_raster_partial_refresh(Machine->scrbitmap,last_line,line);
+				m107_vh_raster_partial_refresh(Machine.scrbitmap,last_line,line);
 			last_line=line+1;
 	
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_2);
@@ -504,7 +504,7 @@ public class m107
 		/* Redraw screen, then set vblank and trigger the VBL interrupt */
 		else if (line==248) {
 			if (osd_skip_this_frame()==0)
-				m107_vh_raster_partial_refresh(Machine->scrbitmap,last_line,248);
+				m107_vh_raster_partial_refresh(Machine.scrbitmap,last_line,248);
 			last_line=0;
 			m107_vblank=1;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_0);

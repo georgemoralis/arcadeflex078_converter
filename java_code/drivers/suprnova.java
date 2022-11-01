@@ -717,8 +717,8 @@ public class suprnova
 				/* idle skip for vblokbrk/sarukani, i can't find a better place to put it :-( but i think it works ok unless its making the game too fast */
 				if (activecpu_get_pc()==0x04013B44)
 				{
-					if (!strcmp(Machine->gamedrv->name,"vblokbrk") ||
-						!strcmp(Machine->gamedrv->name,"sarukani"))
+					if (!strcmp(Machine.gamedrv.name,"vblokbrk") ||
+						!strcmp(Machine.gamedrv.name,"sarukani"))
 						cpu_spinuntil_int();
 				}
 	
@@ -747,30 +747,30 @@ public class suprnova
 		time(&tms);
 		tm = localtime(&tms);
 		// The clock is not y2k-compatible, wrap back 10 years, screw the leap years
-		//  tm->tm_year -= 10;
+		//  tm.tm_year -= 10;
 	
 		switch(offset) {
 		case 0:
-			value  = (tm->tm_sec % 10)<<24;
-			value |= (tm->tm_sec / 10)<<16;
-			value |= (tm->tm_min % 10)<<8;
-			value |= (tm->tm_min / 10);
+			value  = (tm.tm_sec % 10)<<24;
+			value |= (tm.tm_sec / 10)<<16;
+			value |= (tm.tm_min % 10)<<8;
+			value |= (tm.tm_min / 10);
 			break;
 		case 1:
-			value  = (tm->tm_hour % 10)<<24;
-			value |= ((tm->tm_hour / 10) /*| (tm->tm_hour >= 12 ? 4 : 0)*/)<<16;
-			value |= (tm->tm_mday % 10)<<8;
-			value |= (tm->tm_mday / 10);
+			value  = (tm.tm_hour % 10)<<24;
+			value |= ((tm.tm_hour / 10) /*| (tm.tm_hour >= 12 ? 4 : 0)*/)<<16;
+			value |= (tm.tm_mday % 10)<<8;
+			value |= (tm.tm_mday / 10);
 			break;
 		case 2:
-			value  = ((tm->tm_mon + 1) % 10)<<24;
-			value |= ((tm->tm_mon + 1) / 10)<<16;
-			value |= (tm->tm_year % 10)<<8;
-			value |= ((tm->tm_year / 10) % 10);
+			value  = ((tm.tm_mon + 1) % 10)<<24;
+			value |= ((tm.tm_mon + 1) / 10)<<16;
+			value |= (tm.tm_year % 10)<<8;
+			value |= ((tm.tm_year / 10) % 10);
 			break;
 		case 3:
 		default:
-			value  = (tm->tm_wday)<<24;
+			value  = (tm.tm_wday)<<24;
 			value |= (1)<<16;
 			value |= (6)<<8;
 			value |= (4);

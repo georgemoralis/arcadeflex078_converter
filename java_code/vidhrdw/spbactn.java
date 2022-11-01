@@ -26,33 +26,33 @@ public class spbactn
 		ox = sx;
 		oy = sy;
 	
-		ex = sx + src1->width - 1;
+		ex = sx + src1.width - 1;
 		if (sx < 0) sx = 0;
-		if (sx < clip->min_x) sx = clip->min_x;
-		if (ex >= dest->width) ex = dest->width - 1;
-		if (ex > clip->max_x) ex = clip->max_x;
+		if (sx < clip.min_x) sx = clip.min_x;
+		if (ex >= dest.width) ex = dest.width - 1;
+		if (ex > clip.max_x) ex = clip.max_x;
 		if (sx > ex) return;
 	
-		ey = sy + src1->height - 1;
+		ey = sy + src1.height - 1;
 		if (sy < 0) sy = 0;
-		if (sy < clip->min_y) sy = clip->min_y;
-		if (ey >= dest->height) ey = dest->height - 1;
-		if (ey > clip->max_y) ey = clip->max_y;
+		if (sy < clip.min_y) sy = clip.min_y;
+		if (ey >= dest.height) ey = dest.height - 1;
+		if (ey > clip.max_y) ey = clip.max_y;
 		if (sy > ey) return;
 	
 		{
-			pen_t *paldata = Machine->pens;
+			pen_t *paldata = Machine.pens;
 			UINT32 *end;
 	
-			UINT16 *sd1 = ((UINT16 *)src1->line[0]);								/* source data   */
-			UINT16 *sd2 = ((UINT16 *)src2->line[0]);
+			UINT16 *sd1 = ((UINT16 *)src1.line[0]);								/* source data   */
+			UINT16 *sd2 = ((UINT16 *)src2.line[0]);
 	
 			int sw = ex-sx+1;														/* source width  */
 			int sh = ey-sy+1;														/* source height */
-			int sm = ((UINT16 *)src1->line[1]) - ((UINT16 *)src1->line[0]);			/* source modulo */
+			int sm = ((UINT16 *)src1.line[1]) - ((UINT16 *)src1.line[0]);			/* source modulo */
 	
-			UINT32 *dd = ((UINT32 *)dest->line[sy]) + sx;							/* dest data     */
-			int dm = ((UINT32 *)dest->line[1]) - ((UINT32 *)dest->line[0]);			/* dest modulo   */
+			UINT32 *dd = ((UINT32 *)dest.line[sy]) + sx;							/* dest data     */
+			int dm = ((UINT32 *)dest.line[1]) - ((UINT32 *)dest.line[0]);			/* dest modulo   */
 	
 			sd1 += (sx-ox);
 			sd1 += sm * (sy-oy);
@@ -163,12 +163,12 @@ public class spbactn
 						int x = sx + 8 * (flipx ? (size - 1 - col) : col);
 						int y = sy + 8 * (flipy ? (size - 1 - row) : row);
 	
-						drawgfx(bitmap, Machine->gfx[2],
+						drawgfx(bitmap, Machine.gfx[2],
 							code + layout[row][col],
 							color,
 							flipx, flipy,
 							x, y,
-							&Machine->visible_area, TRANSPARENCY_PEN, 0);
+							&Machine.visible_area, TRANSPARENCY_PEN, 0);
 					}
 				}
 	
@@ -183,8 +183,8 @@ public class spbactn
 	public static VideoUpdateHandlerPtr video_update_spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* allocate bitmaps */
-		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine->drv->screen_width, Machine->drv->screen_height, 16);
-		tile_bitmap_fg = auto_bitmap_alloc_depth(Machine->drv->screen_width, Machine->drv->screen_height, 16);
+		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
+		tile_bitmap_fg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
 	
 		if (!tile_bitmap_bg || !tile_bitmap_fg)
 			return 1;
@@ -208,12 +208,12 @@ public class spbactn
 	
 			colour = ((attr & 0x00f0) >> 4) | 0x80;
 	
-			drawgfx(tile_bitmap_bg, Machine->gfx[1],
+			drawgfx(tile_bitmap_bg, Machine.gfx[1],
 						code,
 						colour,
 						0, 0,
 						16 * sx, 8 * sy,
-						&Machine->visible_area, TRANSPARENCY_NONE, 0);
+						&Machine.visible_area, TRANSPARENCY_NONE, 0);
 	
 			sx++;
 			if (sx > 63)
@@ -235,12 +235,12 @@ public class spbactn
 	
 				colour = ((attr & 0x00f0) >> 4) | 0x80;
 	
-				drawgfx(tile_bitmap_bg, Machine->gfx[1],
+				drawgfx(tile_bitmap_bg, Machine.gfx[1],
 						code,
 						colour,
 						0, 0,
 						16 * sx, 8 * sy,
-						&Machine->visible_area, TRANSPARENCY_PEN, 0);
+						&Machine.visible_area, TRANSPARENCY_PEN, 0);
 	
 				sx++;
 				if (sx > 63)
@@ -269,12 +269,12 @@ public class spbactn
 			else
 				colour |= 0x0080;
 	
-			drawgfx(tile_bitmap_fg, Machine->gfx[0],
+			drawgfx(tile_bitmap_fg, Machine.gfx[0],
 						code,
 						colour,
 						0, 0,
 						16 * sx, 8 * sy,
-						&Machine->visible_area,TRANSPARENCY_PEN, 0);
+						&Machine.visible_area,TRANSPARENCY_PEN, 0);
 	
 			sx++;
 			if (sx > 63)

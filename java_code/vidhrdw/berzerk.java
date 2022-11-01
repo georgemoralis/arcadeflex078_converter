@@ -45,15 +45,15 @@ public class berzerk
 		pen_t fore, back;
 	
 	
-		fore  = Machine->pens[col >> 4];
-		back  = Machine->pens[0];
+		fore  = Machine.pens[col >> 4];
+		back  = Machine.pens[0];
 	
 		plot_pixel(tmpbitmap, x  , y, (data & 0x80) ? fore : back);
 		plot_pixel(tmpbitmap, x+1, y, (data & 0x40) ? fore : back);
 		plot_pixel(tmpbitmap, x+2, y, (data & 0x20) ? fore : back);
 		plot_pixel(tmpbitmap, x+3, y, (data & 0x10) ? fore : back);
 	
-		fore  = Machine->pens[col & 0x0f];
+		fore  = Machine.pens[col & 0x0f];
 	
 		plot_pixel(tmpbitmap, x+4, y, (data & 0x08) ? fore : back);
 		plot_pixel(tmpbitmap, x+5, y, (data & 0x04) ? fore : back);

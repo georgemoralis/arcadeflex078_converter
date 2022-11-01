@@ -115,7 +115,7 @@ public class ladyfrog
 				sy = 240-ladyfrog_spriteram[offs+0];
 				flipx = ((ladyfrog_spriteram[offs+1]&0x40)>>6);
 				flipy = ((ladyfrog_spriteram[offs+1]&0x80)>>7);
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,
 						pal,
 						flipx,flipy,
@@ -125,7 +125,7 @@ public class ladyfrog
 				if(ladyfrog_spriteram[offs+3]>240)
 				{
 					sx = (ladyfrog_spriteram[offs+3]-256);
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 	        				code,
 					        pal,
 					        flipx,flipy,

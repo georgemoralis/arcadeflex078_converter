@@ -185,7 +185,7 @@ public class taitoair
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine -> gfx[0],
+							drawgfxzoom( bitmap, Machine . gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -270,7 +270,7 @@ public class taitoair
 					xx2 = view.x2;
 	
 				while(xx1 <= xx2) {
-					((UINT16 *)(bitmap->line[y1]))[xx1] = color;
+					((UINT16 *)(bitmap.line[y1]))[xx1] = color;
 					xx1++;
 				}
 			}
@@ -289,12 +289,12 @@ public class taitoair
 		INT32 sl1, sl2, cury, limy, x1, x2;
 		int pmin, pmax, i, ps1, ps2;
 		struct spoint p[POLY_MAX_PT*2];
-		int color = q->col;
-		int pcount = q->pcount;
+		int color = q.col;
+		int pcount = q.pcount;
 	
 		for(i=0; i<pcount; i++) {
-			p[i].x = p[i+pcount].x = q->p[i].x << FRAC_SHIFT;
-			p[i].y = p[i+pcount].y = q->p[i].y;
+			p[i].x = p[i+pcount].x = q.p[i].x << FRAC_SHIFT;
+			p[i].y = p[i+pcount].y = q.p[i].y;
 		}
 	
 		pmin = pmax = 0;
@@ -370,7 +370,7 @@ public class taitoair
 	{
 		TC0080VCO_tilemap_update();
 	
-		fillbitmap(bitmap, Machine->pens[0x41], cliprect);
+		fillbitmap(bitmap, Machine.pens[0x41], cliprect);
 	
 	#ifdef MAME_DEBUG
 		if ( !keyboard_pressed(KEYCODE_A) )
@@ -393,10 +393,10 @@ public class taitoair
 		if(taitoair_line_ram[0x3fff]) {
 			int adr = 0x3fff;
 			struct poly q;
-			view.x1 = cliprect->min_x;
-			view.y1 = cliprect->min_y;
-			view.x2 = cliprect->max_x;
-			view.y2 = cliprect->max_y;
+			view.x1 = cliprect.min_x;
+			view.y1 = cliprect.min_y;
+			view.x2 = cliprect.max_x;
+			view.y2 = cliprect.max_y;
 	
 			while(adr>=0 && taitoair_line_ram[adr] && taitoair_line_ram[adr] != 0x4000) {
 				int pcount;

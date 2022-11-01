@@ -307,7 +307,7 @@ static void PREFIXV30(_0fpre) (void)	/* Opcode 0x0f */
 		{
 			tmp = I.regs.w[Mod_RM.RM.w[ModRM]];
 			nec_ICount -= 5;
-			/* logerror("reg=%04x ->",tmp); */
+			/* logerror("reg=%04x .",tmp); */
 		}
 		else
 		{
@@ -316,7 +316,7 @@ static void PREFIXV30(_0fpre) (void)	/* Opcode 0x0f */
 			(*GetEA[ModRM]) ();			/* calculate EA */
 			tmp = ReadWord(EA);			/* read from EA */
 			nec_ICount = old - 14;
-			/* logerror("[%04x]=%04x ->",EA,tmp); */
+			/* logerror("[%04x]=%04x .",EA,tmp); */
 		}
 		tmp2 = FETCH;
 		tmp2 &= 0xF;

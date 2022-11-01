@@ -15,7 +15,7 @@ tilemap.h,tilemap.c
 - added tilemap_get_transparency_data() for transparency cache manipulation
 
 vidhrdw\konamiic.c
-- added preliminary K056832 tilemap<->linemap switching and tileline code
+- added preliminary K056832 tilemap<.linemap switching and tileline code
 
 drivers\gijoe.c
 - updated video settings, memory map and irq handler
@@ -187,7 +187,7 @@ public class gijoe
 		if (ACCESSING_LSB != 0) {
 			data &= 0xff;
 			soundlatch_w(0, data);
-			if(!Machine->sample_rate)
+			if(!Machine.sample_rate)
 				if(data == 0xfc || data == 0xfe)
 					soundlatch2_w(0, 0x7f);
 		}

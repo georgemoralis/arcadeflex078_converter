@@ -401,23 +401,23 @@ public class cyberbal
 	
 		/* draw the MOs -- note some kludging to get this to work correctly for 2 screens */
 		mooffset = screen ? SCREEN2_SCROLL_OFFSET : 0;
-		cliprect->min_x -= mooffset;
-		cliprect->max_x -= mooffset;
-		temp = Machine->visible_area.max_x;
+		cliprect.min_x -= mooffset;
+		cliprect.max_x -= mooffset;
+		temp = Machine.visible_area.max_x;
 		if (temp > SCREEN_WIDTH)
-			Machine->visible_area.max_x /= 2;
+			Machine.visible_area.max_x /= 2;
 		mobitmap = atarimo_render(screen, cliprect, &rectlist);
-		cliprect->min_x += mooffset;
-		cliprect->max_x += mooffset;
-		Machine->visible_area.max_x = temp;
+		cliprect.min_x += mooffset;
+		cliprect.max_x += mooffset;
+		Machine.visible_area.max_x = temp;
 	
 		/* draw and merge the MO */
 		for (r = 0; r < rectlist.numrects; r++, rectlist.rect++)
-			for (y = rectlist.rect->min_y; y <= rectlist.rect->max_y; y++)
+			for (y = rectlist.rect.min_y; y <= rectlist.rect.max_y; y++)
 			{
-				UINT16 *mo = (UINT16 *)mobitmap->base + mobitmap->rowpixels * y;
-				UINT16 *pf = (UINT16 *)bitmap->base + bitmap->rowpixels * y + mooffset;
-				for (x = rectlist.rect->min_x; x <= rectlist.rect->max_x; x++)
+				UINT16 *mo = (UINT16 *)mobitmap.base + mobitmap.rowpixels * y;
+				UINT16 *pf = (UINT16 *)bitmap.base + bitmap.rowpixels * y + mooffset;
+				for (x = rectlist.rect.min_x; x <= rectlist.rect.max_x; x++)
 					if (mo[x])
 					{
 						/* not verified: logic is all controlled in a PAL
@@ -439,14 +439,14 @@ public class cyberbal
 	#if (CYBERBALL_DUAL_MODE)
 		struct rectangle rect;
 		
-		if (cliprect->min_x < SCREEN_WIDTH)
+		if (cliprect.min_x < SCREEN_WIDTH)
 		{
 			rect = *cliprect;
 			if (rect.max_x >= SCREEN_WIDTH)
 				rect.max_x = SCREEN_WIDTH;
 			update_one_screen(0, bitmap, &rect);
 		}
-		if (cliprect->max_x >= SCREEN_WIDTH)
+		if (cliprect.max_x >= SCREEN_WIDTH)
 		{
 			rect = *cliprect;
 			if (rect.min_x < SCREEN_WIDTH)

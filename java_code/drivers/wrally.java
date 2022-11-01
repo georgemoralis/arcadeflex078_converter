@@ -26,34 +26,34 @@ CPUs related:
 * 1xOSC24MHz @ B20
 * 2xM27C4001 @ C22 & C23 (M68000 program ROMs)
 * 1xPAL20L8 @ B23 (handles 1st level M68000 memory map)
-	0 -> DTACK (M68000 data ack)
-	1 -> SELACT
-	2 -> Input/sound (see below)
-	3 -> ACTEXT
-	4 -> SELMOV
-	5 -> CSW
-	6 -> CSR
-	7 -> EXT
+	0 . DTACK (M68000 data ack)
+	1 . SELACT
+	2 . Input/sound (see below)
+	3 . ACTEXT
+	4 . SELMOV
+	5 . CSW
+	6 . CSR
+	7 . EXT
 
 * 1x74LS138 (3 to 8 line decoder) @ B13 (handles 2nd level M68000 memory map)
-	0 -> IN0	DIPSW #1 & #2
-	1 -> IN1	Joystick 1P & 2P, COINSW, STARTSW
-	2 -> IN2	Wheel input
-	3 -> -
-	4 -> IN4	TESTSW & SERVICESW
-	5 -> OUT (see below)
-	6 -> CSBAN	OKIM6295 bankswitch
-	7 -> CSSON	OKIM6295 R/W
+	0 . IN0	DIPSW #1 & #2
+	1 . IN1	Joystick 1P & 2P, COINSW, STARTSW
+	2 . IN2	Wheel input
+	3 . -
+	4 . IN4	TESTSW & SERVICESW
+	5 . OUT (see below)
+	6 . CSBAN	OKIM6295 bankswitch
+	7 . CSSON	OKIM6295 R/W
 
 * 1x74LS259 (8 bit addressable latches) @A7 (handles 3rd level M68000 memory map)
-	0 -> Coin lockout 1
-	1 -> Coin lockout 2
-	2 -> Coin counter 1
-	3 -> Coin counter 2
-	4 -> Sound muting
-	5 -> flip screen
-	6 -> ENA/D?
-	7 -> CKA/D?
+	0 . Coin lockout 1
+	1 . Coin lockout 2
+	2 . Coin counter 1
+	3 . Coin counter 2
+	4 . Sound muting
+	5 . flip screen
+	6 . ENA/D?
+	7 . CKA/D?
 
 Sound related:
 ==============

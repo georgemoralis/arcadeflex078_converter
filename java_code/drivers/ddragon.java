@@ -188,7 +188,7 @@ public class ddragon
 	
 				darktowr_mcu_ports[1]=bitSwappedData;
 	
-				logerror("MCU PORT 1 -> %04x (from %04x)\n",bitSwappedData,data);
+				logerror("MCU PORT 1 . %04x (from %04x)\n",bitSwappedData,data);
 				return;
 			}
 			return;
@@ -938,7 +938,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon)
 	
@@ -976,7 +976,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon)
 	
@@ -1011,7 +1011,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragonb)
 	
@@ -1046,7 +1046,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon2)
 	

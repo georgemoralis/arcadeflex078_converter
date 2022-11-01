@@ -36,7 +36,7 @@ WRITE_HANDLER(discrete_sound_w)
 	/* Update the node input value if allowed */
 	if(dss_input_map[offset])
 	{
-		dss_input_map[offset]->input[0]=data;
+		dss_input_map[offset].input[0]=data;
 	}
 }
 
@@ -50,7 +50,7 @@ READ_HANDLER(discrete_sound_r)
 	/* Update the node input value if allowed */
 	if(dss_input_map[offset])
 	{
-		data=dss_input_map[offset]->input[0];
+		data=dss_input_map[offset].input[0];
 	}
     return data;
 }
@@ -70,13 +70,13 @@ READ_HANDLER(discrete_sound_r)
 /************************************************************************/
 int dss_input_step(struct node_description *node)
 {
-	node->output=(node->input[0]*node->input[3])+node->input[4];
+	node.output=(node.input[0]*node.input[3])+node.input[4];
 	return 0;
 }
 
 int dss_input_reset(struct node_description *node)
 {
-	node->input[0]=node->input[5];
+	node.input[0]=node.input[5];
 	dss_input_step(node);
 	return 0;
 }
@@ -84,10 +84,10 @@ int dss_input_reset(struct node_description *node)
 int dss_input_pulse_step(struct node_description *node)
 {
 	/* Set a valid output */
-	node->output=(node->input[0]*node->input[3])+node->input[4];
+	node.output=(node.input[0]*node.input[3])+node.input[4];
 	/* Reset the input to default for the next cycle */
 	/* node order is now important */
-	node->input[0]=node->input[5];
+	node.input[0]=node.input[5];
 	return 0;
 }
 
@@ -102,8 +102,8 @@ int dss_input_init(struct node_description *node)
 	}
 
 	/* Initialise the input mapping array for this particular node */
-	addr=((int)node->input[1])&(DSS_INPUT_SPACE-1);
-	mask=((int)node->input[2])&(DSS_INPUT_SPACE-1);
+	addr=((int)node.input[1])&(DSS_INPUT_SPACE-1);
+	mask=((int)node.input[2])&(DSS_INPUT_SPACE-1);
 	for(loop=0;loop<DSS_INPUT_SPACE;loop++)
 	{
 		if((loop&mask)==addr) dss_input_map[loop]=node;
@@ -133,7 +133,7 @@ int dss_input_kill(struct node_description *node)
 /************************************************************************/
 int dss_constant_step(struct node_description *node)
 {
-	node->output=node->input[0];
+	node.output=node.input[0];
 	return 0;
 }
 
@@ -152,15 +152,15 @@ int dss_constant_step(struct node_description *node)
 /************************************************************************/
 int dss_adjustment_step(struct node_description *node)
 {
-	struct dss_adjustment_context *context=(struct dss_adjustment_context*)node->context;
-	node->output=context->value;
+	struct dss_adjustment_context *context=(struct dss_adjustment_context*)node.context;
+	node.output=context.value;
 	return 0;
 }
 
 int dss_adjustment_reset(struct node_description *node)
 {
-	struct dss_adjustment_context *context=(struct dss_adjustment_context*)node->context;
-	context->value=node->input[3];
+	struct dss_adjustment_context *context=(struct dss_adjustment_context*)node.context;
+	context.value=node.input[3];
 	dss_adjustment_step(node);
 	return 0;
 }
@@ -168,7 +168,7 @@ int dss_adjustment_reset(struct node_description *node)
 int dss_adjustment_init(struct node_description *node)
 {
 	/* Allocate memory for the context array and the node execution order array */
-	if((node->context=malloc(sizeof(struct dss_adjustment_context)))==NULL)
+	if((node.context=malloc(sizeof(struct dss_adjustment_context)))==NULL)
 	{
 		discrete_log("dss_adjustment_init() - Failed to allocate local context memory.");
 		return 1;
@@ -176,7 +176,7 @@ int dss_adjustment_init(struct node_description *node)
 	else
 	{
 		/* Initialise memory */
-		memset(node->context,0,sizeof(struct dss_adjustment_context));
+		memset(node.context,0,sizeof(struct dss_adjustment_context));
 	}
 
 	dss_adjustment_reset(node);
@@ -221,12 +221,12 @@ int  discrete_sh_adjuster_get(int arg,struct discrete_sh_adjuster *adjuster)
 	/* Sanity check */
 	if(node<0 || node>DISCRETE_MAX_NODES) return -1;
 
-	adjuster->name=node_list[node].name;
-	adjuster->initial=node_list[node].input[3];
-	adjuster->min=node_list[node].input[1];
-	adjuster->max=node_list[node].input[2];
-	adjuster->value=((struct dss_adjustment_context*)node_list[node].context)->value;
-	adjuster->islogscale=(int)node_list[node].input[4];
+	adjuster.name=node_list[node].name;
+	adjuster.initial=node_list[node].input[3];
+	adjuster.min=node_list[node].input[1];
+	adjuster.max=node_list[node].input[2];
+	adjuster.value=((struct dss_adjustment_context*)node_list[node].context).value;
+	adjuster.islogscale=(int)node_list[node].input[4];
 
 	return arg;
 }
@@ -245,12 +245,12 @@ int discrete_sh_adjuster_set(int arg,struct discrete_sh_adjuster *adjuster)
 	/* Only allow output value to be set */
 
    /* Only allow value to be set */
-/*	node_list[node].name=adjuster->name; */
-/*	node_list[node].input[3]=adjuster->initial; */
-/*	node_list[node].input[1]=adjuster->min; */
-/*	node_list[node].input[2]=adjuster->max; */
-/*	node_list[node].input[4]=adjuster->islogscale; */
-	((struct dss_adjustment_context*)node_list[node].context)->value=adjuster->value;
+/*	node_list[node].name=adjuster.name; */
+/*	node_list[node].input[3]=adjuster.initial; */
+/*	node_list[node].input[1]=adjuster.min; */
+/*	node_list[node].input[2]=adjuster.max; */
+/*	node_list[node].input[4]=adjuster.islogscale; */
+	((struct dss_adjustment_context*)node_list[node].context).value=adjuster.value;
 
 	return arg;
 }

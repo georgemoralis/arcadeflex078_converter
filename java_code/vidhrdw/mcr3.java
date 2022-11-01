@@ -68,7 +68,7 @@ public class mcr3
 	
 	static UINT32 spyhunt_bg_scan(UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (row & 0x0f) | ((col & 0x3f) << 4) | ((row & 0x10) << 6);
 	}
 	
@@ -228,21 +228,21 @@ public class mcr3
 			if (!mcr_cocktail_flip)
 			{
 				/* first draw the sprite, visible */
-				pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, sx, sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, sx, sy,
 						cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 				/* then draw the mask, behind the background but obscuring following sprites */
-				pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, sx, sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, sx, sy,
 						cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 			}
 			else
 			{
 				/* first draw the sprite, visible */
-				pdrawgfx(bitmap, Machine->gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 				/* then draw the mask, behind the background but obscuring following sprites */
-				pdrawgfx(bitmap, Machine->gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine.gfx[1], code, color, !flipx, !flipy, 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 			}
 		}

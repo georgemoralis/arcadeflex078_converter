@@ -155,7 +155,7 @@ public class prehisle
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[3], code, color, flipx, flipy, sx, sy,
+			drawgfx(bitmap, Machine.gfx[3], code, color, flipx, flipy, sx, sy,
 				cliprect, TRANSPARENCY_PEN, 15);
 		}
 	}

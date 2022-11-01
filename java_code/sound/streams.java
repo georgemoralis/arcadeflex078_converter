@@ -39,7 +39,7 @@ public class streams
 	/*
 	signal >--R1--+--R2--+
 	              |      |
-	              C      R3---> amp
+	              C      R3--. amp
 	              |      |
 	             GND    GND
 	*/
@@ -118,7 +118,7 @@ public class streams
 		int channel,i;
 	
 	
-		if (Machine->sample_rate == 0) return;
+		if (Machine.sample_rate == 0) return;
 	
 		/* update all the output buffers */
 		for (channel = 0;channel < MIXER_MAX_CHANNELS;channel += stream_joined_channels[channel])
@@ -255,7 +255,7 @@ public class streams
 		int buflen;
 	
 	
-		if (Machine->sample_rate == 0 || stream_buffer[channel] == 0)
+		if (Machine.sample_rate == 0 || stream_buffer[channel] == 0)
 			return;
 	
 		/* get current position based on the timer */

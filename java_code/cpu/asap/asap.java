@@ -52,19 +52,19 @@ public class asap
 	#define SET_VFLAG(val)		(asap.vflag = (val) << 31)
 	#define SET_CFLAG(val)		(asap.cflag = (val))
 	
-	#define GET_FLAGS(r)		((r)->cflag | \
-								 (((r)->vflag >> 30) & PS_VFLAG) | \
-								 (((r)->znflag == 0) << 2) | \
-								 (((r)->znflag >> 28) & PS_NFLAG) | \
-								 ((r)->iflag << 4) | \
-								 ((r)->pflag << 5))
+	#define GET_FLAGS(r)		((r).cflag | \
+								 (((r).vflag >> 30) & PS_VFLAG) | \
+								 (((r).znflag == 0) << 2) | \
+								 (((r).znflag >> 28) & PS_NFLAG) | \
+								 ((r).iflag << 4) | \
+								 ((r).pflag << 5))
 	
 	#define SET_FLAGS(r,v)		do { \
-									(r)->cflag = (v) & PS_CFLAG; \
-									(r)->vflag = ((v) & PS_VFLAG) << 30; \
-									(r)->znflag = ((v) & PS_ZFLAG) ? 0 : ((v) & PS_NFLAG) ? -1 : 1; \
-									(r)->iflag = ((v) & PS_IFLAG) >> 4; \
-									(r)->pflag = ((v) & PS_PFLAG) >> 5; \
+									(r).cflag = (v) & PS_CFLAG; \
+									(r).vflag = ((v) & PS_VFLAG) << 30; \
+									(r).znflag = ((v) & PS_ZFLAG) ? 0 : ((v) & PS_NFLAG) ? -1 : 1; \
+									(r).iflag = ((v) & PS_IFLAG) >> 4; \
+									(r).pflag = ((v) & PS_PFLAG) >> 5; \
 								} while (0);
 	
 	
@@ -726,7 +726,7 @@ public class asap
 		static char buffer[16][47+1];
 		static int which = 0;
 		asap_regs *r = context;
-		UINT32 *regbase = r->r;
+		UINT32 *regbase = r.r;
 	
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
@@ -739,7 +739,7 @@ public class asap
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+ASAP_PC:  sprintf(buffer[which], "PC: %08X", r->pc); break;
+			case CPU_INFO_REG+ASAP_PC:  sprintf(buffer[which], "PC: %08X", r.pc); break;
 			case CPU_INFO_REG+ASAP_PS:  sprintf(buffer[which], "PS: %08X", GET_FLAGS(r)); break;
 	
 			case CPU_INFO_REG+ASAP_R0:	sprintf(buffer[which], "R0: %08X", regbase[0]); break;

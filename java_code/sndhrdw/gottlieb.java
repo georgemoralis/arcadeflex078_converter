@@ -17,9 +17,9 @@ public class gottlieb
 	
 		if ((data&0x0f) != 0xf) /* interrupt trigered by four low bits (not all 1's) */
 		{
-			if (Machine->samples)
+			if (Machine.samples)
 			{
-				if (!strcmp(Machine->gamedrv->name,"reactor"))	/* reactor */
+				if (!strcmp(Machine.gamedrv.name,"reactor"))	/* reactor */
 				{
 					switch (data ^ 0x3f)
 					{
@@ -91,9 +91,9 @@ public class gottlieb
 	
 	void gottlieb_knocker(void)
 	{
-		if (Machine->samples)
+		if (Machine.samples)
 		{
-			if (!strcmp(Machine->gamedrv->name,"reactor"))	/* reactor */
+			if (!strcmp(Machine.gamedrv.name,"reactor"))	/* reactor */
 			{
 			}
 			else	/* qbert */

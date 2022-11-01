@@ -42,19 +42,19 @@ public class kickgoal
 	
 	static UINT32 tilemap_scan_kicksbg2( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return col*8 + (row & 0x7) + ((row & 0x3c) >> 3) * 0x200;
 	}
 	
 	static UINT32 tilemap_scan_kicksbg( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return col*16 + (row & 0xf) + ((row & 0x70) >> 4) * 0x400;
 	}
 	
 	static UINT32 tilemap_scan_kicksfg( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return col*32 + (row & 0x1f) + ((row & 0x20) >> 5) * 0x800;
 	}
 	
@@ -102,7 +102,7 @@ public class kickgoal
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		int offs;
 	
 		for (offs = 0;offs < spriteram_size/2;offs += 4)

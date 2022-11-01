@@ -38,7 +38,7 @@ public class sprint4
 	
 	public static VideoUpdateHandlerPtr video_update_sprint4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper == NULL)
 		{
@@ -87,7 +87,7 @@ public class sprint4
 				bank = 32;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[1],
+			drawgfx(bitmap, Machine.gfx[1],
 				(rot >> 3) | bank,
 				(col & 0x80) ? 4 : i,
 				0, 0,
@@ -120,17 +120,17 @@ public class sprint4
 	
 			rect.min_x = hrz - 15;
 			rect.min_y = vrt - 15;
-			rect.max_x = hrz - 15 + Machine->gfx[1]->width - 1;
-			rect.max_y = vrt - 15 + Machine->gfx[1]->height - 1;
+			rect.max_x = hrz - 15 + Machine.gfx[1].width - 1;
+			rect.max_y = vrt - 15 + Machine.gfx[1].height - 1;
 	
-			if (rect.min_x < Machine->visible_area.min_x)
-				rect.min_x = Machine->visible_area.min_x;
-			if (rect.min_y < Machine->visible_area.min_y)
-				rect.min_y = Machine->visible_area.min_y;
-			if (rect.max_x > Machine->visible_area.max_x)
-				rect.max_x = Machine->visible_area.max_x;
-			if (rect.max_y > Machine->visible_area.max_y)
-				rect.max_y = Machine->visible_area.max_y;
+			if (rect.min_x < Machine.visible_area.min_x)
+				rect.min_x = Machine.visible_area.min_x;
+			if (rect.min_y < Machine.visible_area.min_y)
+				rect.min_y = Machine.visible_area.min_y;
+			if (rect.max_x > Machine.visible_area.max_x)
+				rect.max_x = Machine.visible_area.max_x;
+			if (rect.max_y > Machine.visible_area.max_y)
+				rect.max_y = Machine.visible_area.max_y;
 	
 			tilemap_draw(helper, &rect, tilemap, 0, 0);
 	
@@ -139,7 +139,7 @@ public class sprint4
 				bank = 32;
 			}
 	
-			drawgfx(helper, Machine->gfx[1],
+			drawgfx(helper, Machine.gfx[1],
 				(rot >> 3) | bank,
 				4,
 				0, 0,

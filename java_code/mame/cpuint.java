@@ -211,7 +211,7 @@ public class cpuint
 		/* if the IRQ state is HOLD_LINE, clear it */
 		if (irq_line_state[cpunum][irqline] == HOLD_LINE)
 		{
-			LOG(("->set_irq_line(%d,%d,%d)\n", cpunum, irqline, CLEAR_LINE));
+			LOG((".set_irq_line(%d,%d,%d)\n", cpunum, irqline, CLEAR_LINE));
 			activecpu_set_irq_line(irqline, INTERNAL_CLEAR_LINE);
 			irq_line_state[cpunum][irqline] = CLEAR_LINE;
 		}
@@ -467,7 +467,7 @@ public class cpuint
 	
 	static void cpu_clearintcallback(int cpunum)
 	{
-		int irqcount = cputype_get_interface(Machine->drv->cpu[cpunum].cpu_type)->num_irqs;
+		int irqcount = cputype_get_interface(Machine.drv.cpu[cpunum].cpu_type).num_irqs;
 		int irqline;
 	
 		cpuintrf_push_context(cpunum);

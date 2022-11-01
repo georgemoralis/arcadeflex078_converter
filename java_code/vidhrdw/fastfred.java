@@ -59,7 +59,7 @@ public class fastfred
 		UINT8 r,g,b;
 		int bit0, bit1, bit2, bit3;
 	
-		pen_t total = Machine->drv->total_colors;
+		pen_t total = Machine.drv.total_colors;
 	
 		bit0 = (fastfred_color_prom[i + 0*total] >> 0) & 0x01;
 		bit1 = (fastfred_color_prom[i + 0*total] >> 1) & 0x01;
@@ -83,13 +83,13 @@ public class fastfred
 	public static PaletteInitHandlerPtr palette_init_fastfred  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		pen_t i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		fastfred_color_prom = color_prom;	/* we'll need this later */
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			set_color(i, i);
 		}
@@ -331,7 +331,7 @@ public class fastfred
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					colorbank | (fastfred_spriteram[offs + 2] & 0x07),
 					flipx,flipy,

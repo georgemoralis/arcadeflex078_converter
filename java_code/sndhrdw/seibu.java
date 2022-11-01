@@ -394,7 +394,7 @@ public class seibu
 		main2sub[0] = data&0xff;
 		main2sub[1] = data>>8;
 	
-	//	logerror("seibu_main_mustb_w: %x -> %x %x\n", data, main2sub[0], main2sub[1]);
+	//	logerror("seibu_main_mustb_w: %x . %x %x\n", data, main2sub[0], main2sub[1]);
 	
 		update_irq_lines(RST18_ASSERT);
 	}

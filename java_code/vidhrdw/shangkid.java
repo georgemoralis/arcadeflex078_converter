@@ -132,7 +132,7 @@ public class shangkid
 			transparent_pen = 7;
 		}
 	
-		gfx = Machine->gfx[1+bank_index];
+		gfx = Machine.gfx[1+bank_index];
 	
 		width = (xscale+1)*2;
 		height = (yscale+1)*2;
@@ -189,10 +189,10 @@ public class shangkid
 	public static PaletteInitHandlerPtr palette_init_dynamski  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int data = color_prom[i] + 256 * color_prom[i+32];
 			int r = (data >>  1) & 0x1f;
@@ -205,7 +205,7 @@ public class shangkid
 				(b << 3) | (b >> 2));
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* sprites */
@@ -262,7 +262,7 @@ public class shangkid
 				tile += ((attr>>5)&0x3)*256;
 				drawgfx(
 					bitmap,
-					Machine->gfx[0],
+					Machine.gfx[0],
 					tile,
 					attr & 0x0f,
 					0,0,//xflip,yflip,
@@ -294,7 +294,7 @@ public class shangkid
 	
 			drawgfx(
 					bitmap,
-					Machine->gfx[1],
+					Machine.gfx[1],
 					bank*0x40 + (tile&0x3f),
 					color,
 					tile&0x80,tile&0x40, /* flipx,flipy */

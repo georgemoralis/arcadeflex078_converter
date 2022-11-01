@@ -143,7 +143,7 @@ public class gladiatr
 				int color = 0x1F - (attributes>>3);
 				int tile_number = videoram.read(i)+ 256*(attributes&0x7) + tile_bank_select;
 	
-				drawgfx(tmpbitmap,Machine->gfx[1+(tile_number/512)],
+				drawgfx(tmpbitmap,Machine.gfx[1+(tile_number/512)],
 					tile_number%512,
 					color,
 					0,0, /* no flip */
@@ -158,13 +158,13 @@ public class gladiatr
 		copyscrollbitmap(bitmap,tmpbitmap,
 			1,&scrollx,
 			0,0,
-			&Machine->visible_area,TRANSPARENCY_NONE,0);
+			&Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	static void render_text( struct mame_bitmap *bitmap );
 	static void render_text( struct mame_bitmap *bitmap ){
-		const struct rectangle *clip = &Machine->visible_area;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct rectangle *clip = &Machine.visible_area;
+		const struct GfxElement *gfx = Machine.gfx[0];
 	
 		int tile_bank_offset = (video_attributes&3)*256;
 	
@@ -198,7 +198,7 @@ public class gladiatr
 	
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big );
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big ){
-		const struct rectangle *clip = &Machine->visible_area;
+		const struct rectangle *clip = &Machine.visible_area;
 	
 		static int tile_offset[4][4] = {
 			{0x0,0x1,0x4,0x5},
@@ -218,7 +218,7 @@ public class gladiatr
 	
 				int t = tile_offset[ey][ex] + tile_number;
 	
-				drawgfx(bitmap,Machine->gfx[1+8+((t/512)%12)],
+				drawgfx(bitmap,Machine.gfx[1+8+((t/512)%12)],
 					t%512,
 	
 					color,

@@ -110,7 +110,7 @@ public class lkage
 	{
 		const unsigned char *finish = spriteram;
 		const unsigned char *source = spriteram+0x60-4;
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		while( source>=finish )
 		{

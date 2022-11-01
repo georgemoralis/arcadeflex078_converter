@@ -80,11 +80,11 @@ public class memdbg
 		{
 			printf( "%p\tsize: %d\t file %s line %d\n",
 				MEMPTR_TO_PDATA(pMemPtr),
-				pMemPtr->numBytes,
-				pMemPtr->pModule,
-				pMemPtr->line );
+				pMemPtr.numBytes,
+				pMemPtr.pModule,
+				pMemPtr.line );
 	
-			pMemPtr = pMemPtr->pNextAllocation;
+			pMemPtr = pMemPtr.pNextAllocation;
 		}
 	
 		EndCriticalSection();
@@ -112,11 +112,11 @@ public class memdbg
 			}
 			else
 			{
-				pMemPtr->pNextAllocation = mpFirstAllocation;
+				pMemPtr.pNextAllocation = mpFirstAllocation;
 				mpFirstAllocation = pMemPtr;
-				pMemPtr->numBytes = numBytes;
-				pMemPtr->pModule = pModule;
-				pMemPtr->line = line;
+				pMemPtr.numBytes = numBytes;
+				pMemPtr.pModule = pModule;
+				pMemPtr.line = line;
 				pData = MEMPTR_TO_PDATA(pMemPtr);
 				memset( pData, MEM_UNINITIALIZED_VALUE, numBytes );
 				memcpy( numBytes+(char *)pData,mGuardData,sizeof(mGuardData) );
@@ -142,7 +142,7 @@ public class memdbg
 			const char *pErrorString = "attempt to memdbg_Free a bogus pointer";
 	
 			MemPtr *pMemPtr = PDATA_TO_MEMPTR(pData);
-			if( memcmp(pMemPtr->numBytes+(char *)pData, mGuardData, sizeof(mGuardData) )!=0 )
+			if( memcmp(pMemPtr.numBytes+(char *)pData, mGuardData, sizeof(mGuardData) )!=0 )
 			{
 				pErrorString = "corruption detected";
 			}
@@ -156,19 +156,19 @@ public class memdbg
 					{
 						if (pPrevAlloc != 0)
 						{
-							pPrevAlloc->pNextAllocation = pMemPtr->pNextAllocation;
+							pPrevAlloc.pNextAllocation = pMemPtr.pNextAllocation;
 						}
 						else
 						{
-							mpFirstAllocation = pMemPtr->pNextAllocation;
+							mpFirstAllocation = pMemPtr.pNextAllocation;
 						}
-						memset( pData, MEM_UNINITIALIZED_VALUE, pMemPtr->numBytes );
+						memset( pData, MEM_UNINITIALIZED_VALUE, pMemPtr.numBytes );
 						free( pMemPtr );
 						pErrorString = NULL;
 						break;
 					}
 					pPrevAlloc = pCurAlloc;
-					pCurAlloc = pCurAlloc->pNextAllocation;
+					pCurAlloc = pCurAlloc.pNextAllocation;
 				}
 			}
 			if (pErrorString != 0)
@@ -176,8 +176,8 @@ public class memdbg
 				printf( "ERROR!!! %s!: %p %s.%d\n",
 					pErrorString,
 					pData,
-					pMemPtr->pModule,
-					pMemPtr->line );
+					pMemPtr.pModule,
+					pMemPtr.line );
 	
 				assert(0);
 			}

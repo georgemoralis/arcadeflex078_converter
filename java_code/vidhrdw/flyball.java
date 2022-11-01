@@ -82,8 +82,8 @@ public class flyball
 	
 		/* draw pitcher */
 	
-		drawgfx(bitmap, Machine->gfx[1], flyball_pitcher_pic ^ 0xf,
-			0, 1, 0, pitcherx, pitchery, &Machine->visible_area, TRANSPARENCY_PEN, 1);
+		drawgfx(bitmap, Machine.gfx[1], flyball_pitcher_pic ^ 0xf,
+			0, 1, 0, pitcherx, pitchery, &Machine.visible_area, TRANSPARENCY_PEN, 1);
 	
 		/* draw ball */
 	
@@ -91,12 +91,12 @@ public class flyball
 		{
 			for (x = ballx; x < ballx + 2; x++)
 			{
-				if (x >= Machine->visible_area.min_x &&
-				    x <= Machine->visible_area.max_x &&
-				    y >= Machine->visible_area.min_y &&
-				    y <= Machine->visible_area.max_y)
+				if (x >= Machine.visible_area.min_x &&
+				    x <= Machine.visible_area.max_x &&
+				    y >= Machine.visible_area.min_y &&
+				    y <= Machine.visible_area.max_y)
 				{
-					plot_pixel(bitmap, x, y, Machine->pens[1]);
+					plot_pixel(bitmap, x, y, Machine.pens[1]);
 				}
 			}
 		}

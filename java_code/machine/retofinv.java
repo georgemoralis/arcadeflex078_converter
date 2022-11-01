@@ -87,8 +87,8 @@ public class retofinv
 	 *
 	 *  all bits are logical 1 when read (+5V pullup)
 	 *
-	 *  0   R  1 when pending command Z80->68705
-	 *  1   R  0 when pending command 68705->Z80
+	 *  0   R  1 when pending command Z80.68705
+	 *  1   R  0 when pending command 68705.Z80
 	 */
 	
 	static unsigned char portC_in,portC_out,ddrC;

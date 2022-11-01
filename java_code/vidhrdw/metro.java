@@ -112,7 +112,7 @@ public class metro
 	
 	UINT32 tilemap_scan_gstrik2( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		int val;
 	
 		val = (row&0x3f)*(256*2) + (col*2);
@@ -217,7 +217,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -255,7 +255,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -298,7 +298,7 @@ public class metro
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = &Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = &Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -606,8 +606,8 @@ public class metro
 		unsigned char *base_gfx	=	memory_region(region);
 		unsigned char *gfx_max	=	base_gfx + memory_region_length(region);
 	
-		int max_x				=	Machine->drv->screen_width;
-		int max_y				=	Machine->drv->screen_height;
+		int max_x				=	Machine.drv.screen_width;
+		int max_y				=	Machine.drv.screen_height;
 	
 		int max_sprites			=	spriteram_size / 8;
 		int sprites				=	metro_videoregs[0x00/2] % max_sprites;
@@ -670,7 +670,7 @@ public class metro
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 256;
-				gfx.colortable = Machine->remapped_colortable;
+				gfx.colortable = Machine.remapped_colortable;
 				gfx.total_colors = 0x20;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -698,7 +698,7 @@ public class metro
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 16;
-				gfx.colortable = Machine->remapped_colortable;
+				gfx.colortable = Machine.remapped_colortable;
 				gfx.total_colors = 0x200;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -725,7 +725,7 @@ public class metro
 		sprintf(buf, "%02X %02X",((src[ 0 ] & 0xf800) >> 11)^0x1f,((src[ 1 ] & 0xfc00) >> 10) );
 	    dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 	    dt[0].x = x;    dt[0].y = y;    dt[1].text = 0; /* terminate array */
-		displaytext(Machine->scrbitmap,dt);		}
+		displaytext(Machine.scrbitmap,dt);		}
 	#endif
 		}
 	}
@@ -777,17 +777,17 @@ public class metro
 			clip.max_x	=	clip.min_x + (WIN_NX-1)*8 - 1;
 			clip.max_y	=	clip.min_y + (WIN_NY-1)*8 - 1;
 	
-			if (clip.min_x > Machine->visible_area.max_x)	continue;
-			if (clip.min_y > Machine->visible_area.max_y)	continue;
+			if (clip.min_x > Machine.visible_area.max_x)	continue;
+			if (clip.min_y > Machine.visible_area.max_y)	continue;
 	
-			if (clip.max_x < Machine->visible_area.min_x)	continue;
-			if (clip.max_y < Machine->visible_area.min_y)	continue;
+			if (clip.max_x < Machine.visible_area.min_x)	continue;
+			if (clip.max_y < Machine.visible_area.min_y)	continue;
 	
-			if (clip.min_x < Machine->visible_area.min_x)	clip.min_x = Machine->visible_area.min_x;
-			if (clip.max_x > Machine->visible_area.max_x)	clip.max_x = Machine->visible_area.max_x;
+			if (clip.min_x < Machine.visible_area.min_x)	clip.min_x = Machine.visible_area.min_x;
+			if (clip.max_x > Machine.visible_area.max_x)	clip.max_x = Machine.visible_area.max_x;
 	
-			if (clip.min_y < Machine->visible_area.min_y)	clip.min_y = Machine->visible_area.min_y;
-			if (clip.max_y > Machine->visible_area.max_y)	clip.max_y = Machine->visible_area.max_y;
+			if (clip.min_y < Machine.visible_area.min_y)	clip.min_y = Machine.visible_area.min_y;
+			if (clip.max_y > Machine.visible_area.max_y)	clip.max_y = Machine.visible_area.max_y;
 	
 			/* The clip region's width must be a multiple of 8!
 			   This fact renderes the function useless, as far as
@@ -884,11 +884,11 @@ public class metro
 			free(dirtyindex);
 		}
 	
-		metro_sprite_xoffs	=	metro_videoregs[0x06/2] - Machine->drv->screen_width  / 2;
-		metro_sprite_yoffs	=	metro_videoregs[0x04/2] - Machine->drv->screen_height / 2;
+		metro_sprite_xoffs	=	metro_videoregs[0x06/2] - Machine.drv.screen_width  / 2;
+		metro_sprite_yoffs	=	metro_videoregs[0x04/2] - Machine.drv.screen_height / 2;
 	
 		/* The background color is selected by a register */
-		fillbitmap(bitmap,Machine->pens[((metro_videoregs[0x12/2] & 0x0fff) ^ 0x0ff) + 0x1000],cliprect);
+		fillbitmap(bitmap,Machine.pens[((metro_videoregs[0x12/2] & 0x0fff) ^ 0x0ff) + 0x1000],cliprect);
 	
 		/*	Screen Control Register:
 	

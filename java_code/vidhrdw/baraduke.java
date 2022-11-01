@@ -227,7 +227,7 @@ public class baraduke
 						{
 							if (flipscreen != 0)
 							{
-								drawgfx( bitmap, Machine->gfx[5],
+								drawgfx( bitmap, Machine.gfx[5],
 									sprite_number+2*row+col,
 									color,
 									!flipx,!flipy,
@@ -238,7 +238,7 @@ public class baraduke
 							}
 							else
 							{
-								drawgfx( bitmap, Machine->gfx[5],
+								drawgfx( bitmap, Machine.gfx[5],
 									sprite_number+2*row+col,
 									color,
 									flipx,flipy,
@@ -294,7 +294,7 @@ public class baraduke
 					sx = 35 - sx; sy = 27 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],	baraduke_textram[offs],
+			drawgfx(bitmap,Machine.gfx[0],	baraduke_textram[offs],
 					(baraduke_textram[offs+0x400] << 2) & 0x1ff,
 					flipscreen,flipscreen,sx*8,sy*8,
 					cliprect,TRANSPARENCY_PEN,3);
@@ -338,7 +338,7 @@ public class baraduke
 			{
 					sx = 35 - sx; sy = 27 - sy;
 			}
-			drawgfx(bitmap,Machine->gfx[0],	baraduke_textram[offs],
+			drawgfx(bitmap,Machine.gfx[0],	baraduke_textram[offs],
 					(baraduke_textram[offs+0x400] << 2) & 0x1ff,
 					flipscreen,flipscreen,sx*8,sy*8,
 					cliprect,TRANSPARENCY_PEN,3);

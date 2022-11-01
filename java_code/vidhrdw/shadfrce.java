@@ -133,7 +133,7 @@ public class shadfrce
 		   P = priority
 		*/
 	
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data16_t *finish = shadfrce_spvideoram_old;
 		data16_t *source = finish + 0x2000/2 - 8;
 		int hcount;

@@ -44,7 +44,7 @@ public class tugboat
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int r,g,b,brt;
 	
@@ -105,7 +105,7 @@ public class tugboat
 					rgn = gfx1;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[rgn],
+				drawgfx(bitmap,Machine.gfx[rgn],
 						code,
 						color,
 						0,0,

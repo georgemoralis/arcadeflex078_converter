@@ -357,17 +357,17 @@ public class tecmosys
 	
 	
 	
-		trueorientation = Machine->orientation;
-		Machine->orientation = ROT0;
+		trueorientation = Machine.orientation;
+		Machine.orientation = ROT0;
 	
 		sprintf(buf,"keys: Q,A and C");
 		for (j = 0;j < 16;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,10+6*j,20,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,10+6*j,20,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"command code: %2x", command_data);
 		for (j = 0;j < 16;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,10+6*j,40,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,10+6*j,40,0,TRANSPARENCY_NONE,0);
 	
-		Machine->orientation = trueorientation;
+		Machine.orientation = trueorientation;
 	
 	
 		if (keyboard_pressed_memory(KEYCODE_C))

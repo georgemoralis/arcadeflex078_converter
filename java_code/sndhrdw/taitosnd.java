@@ -33,8 +33,8 @@ public class taitosnd
 	
 	typedef struct TC0140SYT
 	{
-		unsigned char slavedata[4];	/* Data on master->slave port (4 nibbles) */
-		unsigned char masterdata[4];/* Data on slave->master port (4 nibbles) */
+		unsigned char slavedata[4];	/* Data on master.slave port (4 nibbles) */
+		unsigned char masterdata[4];/* Data on slave.master port (4 nibbles) */
 		unsigned char mainmode;		/* Access mode on master cpu side */
 		unsigned char submode;		/* Access mode on slave cpu side */
 		unsigned char status;		/* Status data */

@@ -40,12 +40,12 @@ public class gameplan
 	
 	public static VideoUpdateHandlerPtr video_update_gameplan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (strcmp(Machine->gamedrv->name, "kaos") == 0)
+		if (strcmp(Machine.gamedrv.name, "kaos") == 0)
 			gameplan_this_is_kaos = 1;
 		else
 			gameplan_this_is_kaos = 0;
 	
-		if (strcmp(Machine->gamedrv->name, "megatack") == 0)
+		if (strcmp(Machine.gamedrv.name, "megatack") == 0)
 			gameplan_this_is_megatack = 1;
 		else
 			gameplan_this_is_megatack = 0;
@@ -186,7 +186,7 @@ public class gameplan
 		static unsigned char xpos, ypos, colour = 7;
 	
 	#ifdef VERBOSE
-		logerror("VIA 1: PC %04x: %x -> reg%X\n", activecpu_get_pc(), data, offset);
+		logerror("VIA 1: PC %04x: %x . reg%X\n", activecpu_get_pc(), data, offset);
 	#endif
 	
 		if (offset == 0)			/* write to 2000 */
@@ -232,7 +232,7 @@ public class gameplan
 						xpos++;
 				}
 	
-				plot_pixel(tmpbitmap, xpos, ypos, Machine->pens[colour]);
+				plot_pixel(tmpbitmap, xpos, ypos, Machine.pens[colour]);
 			}
 			else if (r0 == 1)
 			{
@@ -345,7 +345,7 @@ public class gameplan
 		logerror("  clearing the screen to colour %d (%s)\n", clear_to_colour, colour_names[clear_to_colour]);
 	#endif
 	
-		fillbitmap(tmpbitmap, Machine->pens[clear_to_colour], 0);
+		fillbitmap(tmpbitmap, Machine.pens[clear_to_colour], 0);
 	
 		fix_clear_to_colour = -1;
 	}

@@ -77,54 +77,54 @@ public class scsp
 	*/
 	
 	//SLOT PARAMETERS
-	#define KEYONEX(slot)		((slot->udata.data[0x0]>>0x0)&0x1000)
-	#define KEYONB(slot)		((slot->udata.data[0x0]>>0x0)&0x0800)
-	#define SBCTL(slot)		((slot->udata.data[0x0]>>0x9)&0x0003)
-	#define SSCTL(slot)		((slot->udata.data[0x0]>>0x7)&0x0003)
-	#define LPCTL(slot)		((slot->udata.data[0x0]>>0x5)&0x0003)
-	#define PCM8B(slot)		((slot->udata.data[0x0]>>0x0)&0x0010)
+	#define KEYONEX(slot)		((slot.udata.data[0x0]>>0x0)&0x1000)
+	#define KEYONB(slot)		((slot.udata.data[0x0]>>0x0)&0x0800)
+	#define SBCTL(slot)		((slot.udata.data[0x0]>>0x9)&0x0003)
+	#define SSCTL(slot)		((slot.udata.data[0x0]>>0x7)&0x0003)
+	#define LPCTL(slot)		((slot.udata.data[0x0]>>0x5)&0x0003)
+	#define PCM8B(slot)		((slot.udata.data[0x0]>>0x0)&0x0010)
 	
-	#define SA(slot)		(((slot->udata.data[0x0]&0xF)<<16)|(slot->udata.data[0x1]))
+	#define SA(slot)		(((slot.udata.data[0x0]&0xF)<<16)|(slot.udata.data[0x1]))
 	
-	#define LSA(slot)		(slot->udata.data[0x2])
+	#define LSA(slot)		(slot.udata.data[0x2])
 	
-	#define LEA(slot)		(slot->udata.data[0x3])
+	#define LEA(slot)		(slot.udata.data[0x3])
 	
-	#define D2R(slot)		((slot->udata.data[0x4]>>0xB)&0x001F)
-	#define D1R(slot)		((slot->udata.data[0x4]>>0x6)&0x001F)
-	#define EGHOLD(slot)		((slot->udata.data[0x4]>>0x0)&0x0020)
-	#define AR(slot)		((slot->udata.data[0x4]>>0x0)&0x001F)
+	#define D2R(slot)		((slot.udata.data[0x4]>>0xB)&0x001F)
+	#define D1R(slot)		((slot.udata.data[0x4]>>0x6)&0x001F)
+	#define EGHOLD(slot)		((slot.udata.data[0x4]>>0x0)&0x0020)
+	#define AR(slot)		((slot.udata.data[0x4]>>0x0)&0x001F)
 	
-	#define LPSLNK(slot)		((slot->udata.data[0x5]>>0x0)&0x4000)
-	#define KRS(slot)		((slot->udata.data[0x5]>>0xA)&0x000F)
-	#define DL(slot)		((slot->udata.data[0x5]>>0x5)&0x001F)
-	#define RR(slot)		((slot->udata.data[0x5]>>0x0)&0x001F)
+	#define LPSLNK(slot)		((slot.udata.data[0x5]>>0x0)&0x4000)
+	#define KRS(slot)		((slot.udata.data[0x5]>>0xA)&0x000F)
+	#define DL(slot)		((slot.udata.data[0x5]>>0x5)&0x001F)
+	#define RR(slot)		((slot.udata.data[0x5]>>0x0)&0x001F)
 	
-	#define STWINH(slot)		((slot->udata.data[0x6]>>0x0)&0x0200)
-	#define SDIR(slot)		((slot->udata.data[0x6]>>0x0)&0x0100)
-	#define TL(slot)		((slot->udata.data[0x6]>>0x0)&0x00FF)
+	#define STWINH(slot)		((slot.udata.data[0x6]>>0x0)&0x0200)
+	#define SDIR(slot)		((slot.udata.data[0x6]>>0x0)&0x0100)
+	#define TL(slot)		((slot.udata.data[0x6]>>0x0)&0x00FF)
 	
-	#define MDL(slot)		((slot->udata.data[0x7]>>0xB)&0x0007)
-	#define MDXSL(slot)		((slot->udata.data[0x7]>>0x6)&0x003F)
-	#define MDYSL(slot)		((slot->udata.data[0x7]>>0x0)&0x003F)
+	#define MDL(slot)		((slot.udata.data[0x7]>>0xB)&0x0007)
+	#define MDXSL(slot)		((slot.udata.data[0x7]>>0x6)&0x003F)
+	#define MDYSL(slot)		((slot.udata.data[0x7]>>0x0)&0x003F)
 	
-	#define OCT(slot)		((slot->udata.data[0x8]>>0xB)&0x000F)
-	#define FNS(slot)		((slot->udata.data[0x8]>>0x0)&0x03FF)
+	#define OCT(slot)		((slot.udata.data[0x8]>>0xB)&0x000F)
+	#define FNS(slot)		((slot.udata.data[0x8]>>0x0)&0x03FF)
 	
-	#define LFORE(slot)		((slot->udata.data[0x9]>>0x0)&0x8000)
-	#define LFOF(slot)		((slot->udata.data[0x9]>>0xA)&0x001F)
-	#define PLFOWS(slot)		((slot->udata.data[0x9]>>0x8)&0x0003)
-	#define PLFOS(slot)		((slot->udata.data[0x9]>>0x5)&0x0007)
-	#define ALFOWS(slot)		((slot->udata.data[0x9]>>0x3)&0x0003)
-	#define ALFOS(slot)		((slot->udata.data[0x9]>>0x0)&0x0007)
+	#define LFORE(slot)		((slot.udata.data[0x9]>>0x0)&0x8000)
+	#define LFOF(slot)		((slot.udata.data[0x9]>>0xA)&0x001F)
+	#define PLFOWS(slot)		((slot.udata.data[0x9]>>0x8)&0x0003)
+	#define PLFOS(slot)		((slot.udata.data[0x9]>>0x5)&0x0007)
+	#define ALFOWS(slot)		((slot.udata.data[0x9]>>0x3)&0x0003)
+	#define ALFOS(slot)		((slot.udata.data[0x9]>>0x0)&0x0007)
 	
-	#define ISEL(slot)		((slot->udata.data[0xA]>>0x3)&0x000F)
-	#define IMXL(slot)		((slot->udata.data[0xA]>>0x0)&0x0007)
+	#define ISEL(slot)		((slot.udata.data[0xA]>>0x3)&0x000F)
+	#define IMXL(slot)		((slot.udata.data[0xA]>>0x0)&0x0007)
 	
-	#define DISDL(slot)		((slot->udata.data[0xB]>>0xD)&0x0007)
-	#define DIPAN(slot)		((slot->udata.data[0xB]>>0x8)&0x001F)
-	#define EFSDL(slot)		((slot->udata.data[0xB]>>0x5)&0x0007)
-	#define EFPAN(slot)		((slot->udata.data[0xB]>>0x0)&0x001F)
+	#define DISDL(slot)		((slot.udata.data[0xB]>>0xD)&0x0007)
+	#define DIPAN(slot)		((slot.udata.data[0xB]>>0x8)&0x001F)
+	#define EFSDL(slot)		((slot.udata.data[0xB]>>0x5)&0x0007)
+	#define EFPAN(slot)		((slot.udata.data[0xB]>>0x0)&0x001F)
 	
 	static int ARTABLE[64],DRTABLE[64];
 	static double BaseTimes2[32]={7000,6500,6222.95,4978.37,4148.66,3556.01,3111.47,2489.21,2074.33,1778.00,1555.74,1244.63,1037.19,889.02,
@@ -166,20 +166,20 @@ public class scsp
 	};
 	
 	
-	#define MEM4B(scsp)		((scsp->udata.data[0]>>0x0)&0x0200)
-	#define DAC18B(scsp)		((scsp->udata.data[0]>>0x0)&0x0100)
-	#define MVOL(scsp)		((scsp->udata.data[0]>>0x0)&0x000F)
-	#define RBL(scsp)		((scsp->udata.data[1]>>0x7)&0x0003)
-	#define RBP(scsp)		((scsp->udata.data[1]>>0x0)&0x003F)
-	#define MOFULL(scsp)   		((scsp->udata.data[2]>>0x0)&0x1000)
-	#define MOEMPTY(scsp)		((scsp->udata.data[2]>>0x0)&0x0800)
-	#define MIOVF(scsp)		((scsp->udata.data[2]>>0x0)&0x0400)
-	#define MIFULL(scsp)		((scsp->udata.data[2]>>0x0)&0x0200)
-	#define MIEMPTY(scsp)		((scsp->udata.data[2]>>0x0)&0x0100)
+	#define MEM4B(scsp)		((scsp.udata.data[0]>>0x0)&0x0200)
+	#define DAC18B(scsp)		((scsp.udata.data[0]>>0x0)&0x0100)
+	#define MVOL(scsp)		((scsp.udata.data[0]>>0x0)&0x000F)
+	#define RBL(scsp)		((scsp.udata.data[1]>>0x7)&0x0003)
+	#define RBP(scsp)		((scsp.udata.data[1]>>0x0)&0x003F)
+	#define MOFULL(scsp)   		((scsp.udata.data[2]>>0x0)&0x1000)
+	#define MOEMPTY(scsp)		((scsp.udata.data[2]>>0x0)&0x0800)
+	#define MIOVF(scsp)		((scsp.udata.data[2]>>0x0)&0x0400)
+	#define MIFULL(scsp)		((scsp.udata.data[2]>>0x0)&0x0200)
+	#define MIEMPTY(scsp)		((scsp.udata.data[2]>>0x0)&0x0100)
 	
-	#define SCILV0(scsp)    	((scsp->udata.data[0x24/2]>>0x0)&0xff)
-	#define SCILV1(scsp)    	((scsp->udata.data[0x26/2]>>0x0)&0xff)
-	#define SCILV2(scsp)    	((scsp->udata.data[0x28/2]>>0x0)&0xff)
+	#define SCILV0(scsp)    	((scsp.udata.data[0x24/2]>>0x0)&0xff)
+	#define SCILV1(scsp)    	((scsp.udata.data[0x26/2]>>0x0)&0xff)
+	#define SCILV2(scsp)    	((scsp.udata.data[0x28/2]>>0x0)&0xff)
 	
 	#define SCIEX0	0
 	#define SCIEX1	1
@@ -279,59 +279,59 @@ public class scsp
 		int rate;
 	
 		rate=0;
-		slot->EG.volume=0;
-		slot->EG.AR=Get_AR(rate,AR(slot));
-		slot->EG.D1R=Get_DR(rate,D1R(slot));
-		slot->EG.D2R=Get_DR(rate,D2R(slot));
-		slot->EG.RR=Get_RR(rate,RR(slot));
-		slot->EG.DL=0x1f-DL(slot);
-		slot->EG.EGHOLD=EGHOLD(slot);
+		slot.EG.volume=0;
+		slot.EG.AR=Get_AR(rate,AR(slot));
+		slot.EG.D1R=Get_DR(rate,D1R(slot));
+		slot.EG.D2R=Get_DR(rate,D2R(slot));
+		slot.EG.RR=Get_RR(rate,RR(slot));
+		slot.EG.DL=0x1f-DL(slot);
+		slot.EG.EGHOLD=EGHOLD(slot);
 	}
 	
 	static void SCSP_StopSlot(struct _SLOT *slot,int keyoff);
 	
 	static int EG_Update(struct _SLOT *slot)
 	{
-		switch(slot->EG.state)
+		switch(slot.EG.state)
 		{
 			case ATTACK:
-				slot->EG.volume+=slot->EG.AR;
-				if(slot->EG.volume>=(0x3ff<<EG_SHIFT))
+				slot.EG.volume+=slot.EG.AR;
+				if(slot.EG.volume>=(0x3ff<<EG_SHIFT))
 				{
-					slot->EG.state=DECAY1;
-					if(slot->EG.D1R>=(1024<<EG_SHIFT)) //Skip DECAY1, go directly to DECAY2
-						slot->EG.state=DECAY2;
-					slot->EG.volume=0x3ff<<EG_SHIFT;
+					slot.EG.state=DECAY1;
+					if(slot.EG.D1R>=(1024<<EG_SHIFT)) //Skip DECAY1, go directly to DECAY2
+						slot.EG.state=DECAY2;
+					slot.EG.volume=0x3ff<<EG_SHIFT;
 				}
-				if(slot->EG.EGHOLD)
+				if(slot.EG.EGHOLD)
 					return 0x3ff<<(SHIFT-10);
 				break;
 			case DECAY1:
-				slot->EG.volume-=slot->EG.D1R;
-				if(slot->EG.volume>>(EG_SHIFT+5)>=slot->EG.DL)
-					slot->EG.state=DECAY2;
+				slot.EG.volume-=slot.EG.D1R;
+				if(slot.EG.volume>>(EG_SHIFT+5)>=slot.EG.DL)
+					slot.EG.state=DECAY2;
 				break;
 			case DECAY2:
 				if(D2R(slot)==0)
-					return (slot->EG.volume>>EG_SHIFT)<<(SHIFT-10);
-				slot->EG.volume-=slot->EG.D2R;
-				if(slot->EG.volume<=0)
-					slot->EG.volume=0;
+					return (slot.EG.volume>>EG_SHIFT)<<(SHIFT-10);
+				slot.EG.volume-=slot.EG.D2R;
+				if(slot.EG.volume<=0)
+					slot.EG.volume=0;
 	
 				break;
 			case RELEASE:
-				slot->EG.volume-=slot->EG.RR;
-				if(slot->EG.volume<=0)
+				slot.EG.volume-=slot.EG.RR;
+				if(slot.EG.volume<=0)
 				{
 					SCSP_StopSlot(slot,0);
-					slot->EG.volume=0;
-					slot->EG.state=ATTACK;
+					slot.EG.volume=0;
+					slot.EG.state=ATTACK;
 				}
 				break;
 			default:
 				return 1<<SHIFT;
 		}
-		return (slot->EG.volume>>EG_SHIFT)<<(SHIFT-10);
+		return (slot.EG.volume>>EG_SHIFT)<<(SHIFT-10);
 	}
 	
 	static data32_t SCSP_Step(struct _SLOT *slot)
@@ -350,27 +350,27 @@ public class scsp
 	static void Compute_LFO(struct _SLOT *slot)
 	{
 		if(PLFOS(slot)!=0)
-			LFO_ComputeStep(&(slot->PLFO),LFOF(slot),PLFOWS(slot),PLFOS(slot),0);
+			LFO_ComputeStep(&(slot.PLFO),LFOF(slot),PLFOWS(slot),PLFOS(slot),0);
 		if(ALFOS(slot)!=0)
-			LFO_ComputeStep(&(slot->ALFO),LFOF(slot),ALFOWS(slot),ALFOS(slot),1);
+			LFO_ComputeStep(&(slot.ALFO),LFOF(slot),ALFOWS(slot),ALFOS(slot),1);
 	}
 	
 	static void SCSP_StartSlot(struct _SLOT *slot)
 	{
-		slot->active=1;
-		slot->base=SCSP->SCSPRAM+SA(slot);
-		slot->cur_addr=0;
-		slot->step=SCSP_Step(slot);
+		slot.active=1;
+		slot.base=SCSP.SCSPRAM+SA(slot);
+		slot.cur_addr=0;
+		slot.step=SCSP_Step(slot);
 		Compute_EG(slot);
-		slot->EG.state=ATTACK;
-		slot->EG.volume=0;
+		slot.EG.state=ATTACK;
+		slot.EG.volume=0;
 		Compute_LFO(slot);
 	}
 	
 	static void SCSP_StopSlot(struct _SLOT *slot,int keyoff)
 	{
-		slot->active=0;
-		slot->udata.data[0]&=~0x800;
+		slot.active=0;
+		slot.udata.data[0]&=~0x800;
 	}
 	
 	#define log2(n) (log((float) n)/log((float) 2))
@@ -391,14 +391,14 @@ public class scsp
 	
 			if (!i)
 			{
-				SCSP->Master=1;
+				SCSP.Master=1;
 			}
 			else
 			{
-				SCSP->Master=0;
+				SCSP.Master=0;
 			}
 	
-			SCSPs[i].SCSPRAM = memory_region(intf->region[i]);
+			SCSPs[i].SCSPRAM = memory_region(intf.region[i]);
 		}
 	
 		for(i=0;i<0x400;++i)
@@ -493,7 +493,7 @@ public class scsp
 	
 	static void SCSP_UpdateSlotReg(int s,int r)
 	{
-		struct _SLOT *slot=SCSP->Slots+s;
+		struct _SLOT *slot=SCSP.Slots+s;
 		int sl;
 		switch(r&0x3f)
 		{
@@ -503,29 +503,29 @@ public class scsp
 				{
 					for(sl=0;sl<32;++sl)
 					{
-						struct _SLOT *s2=SCSP->Slots+sl;
+						struct _SLOT *s2=SCSP.Slots+sl;
 						{
-							if(KEYONB(s2) && !s2->active)
+							if(KEYONB(s2) && !s2.active)
 							{
 								SCSP_StartSlot(s2);
 							}
-							if(!KEYONB(s2) && s2->active)
+							if(!KEYONB(s2) && s2.active)
 							{
 								SCSP_StopSlot(s2,1);
 							}
 						}
 					}
-					slot->udata.data[0]&=~0x1000;
+					slot.udata.data[0]&=~0x1000;
 				}
 				break;
 			case 0x10:
 			case 0x11:
-				slot->step=SCSP_Step(slot);
+				slot.step=SCSP_Step(slot);
 				break;
 			case 0xA:
 			case 0xB:
-				slot->EG.RR=Get_RR(0,RR(slot));
-				slot->EG.DL=0x1f-DL(slot);
+				slot.EG.RR=Get_RR(0,RR(slot));
+				slot.EG.DL=0x1f-DL(slot);
 				break;
 			case 0x12:
 			case 0x13:
@@ -540,7 +540,7 @@ public class scsp
 		{
 			case 0x6:
 			case 0x7:
-				SCSP_MidiIn(0, SCSP->udata.data[0x6/2]&0xff, 0);
+				SCSP_MidiIn(0, SCSP.udata.data[0x6/2]&0xff, 0);
 				break;
 			case 0x12:
 			case 0x13:
@@ -551,34 +551,34 @@ public class scsp
 				break;
 			case 0x18:
 			case 0x19:
-				if(SCSP->Master)
+				if(SCSP.Master)
 				{
-					TimPris[0]=1<<((SCSP->udata.data[0x18/2]>>8)&0x7);
-					TimCnt[0]=(SCSP->udata.data[0x18/2]&0xff)<<8;
+					TimPris[0]=1<<((SCSP.udata.data[0x18/2]>>8)&0x7);
+					TimCnt[0]=(SCSP.udata.data[0x18/2]&0xff)<<8;
 				}
 				break;
 			case 0x1a:
 			case 0x1b:
-				if(SCSP->Master)
+				if(SCSP.Master)
 				{
-					TimPris[1]=1<<((SCSP->udata.data[0x1A/2]>>8)&0x7);
-					TimCnt[1]=(SCSP->udata.data[0x1A/2]&0xff)<<8;
+					TimPris[1]=1<<((SCSP.udata.data[0x1A/2]>>8)&0x7);
+					TimCnt[1]=(SCSP.udata.data[0x1A/2]&0xff)<<8;
 				}
 				break;
 			case 0x1C:
 			case 0x1D:
-				if(SCSP->Master)
+				if(SCSP.Master)
 				{
-					TimPris[2]=1<<((SCSP->udata.data[0x1C/2]>>8)&0x7);
-					TimCnt[2]=(SCSP->udata.data[0x1C/2]&0xff)<<8;
+					TimPris[2]=1<<((SCSP.udata.data[0x1C/2]>>8)&0x7);
+					TimCnt[2]=(SCSP.udata.data[0x1C/2]&0xff)<<8;
 				}
 				break;
 			case 0x22:	//SCIRE
 			case 0x23:
 	
-				if(SCSP->Master)
+				if(SCSP.Master)
 				{
-					SCSP->udata.data[0x20/2]&=~SCSP->udata.data[0x22/2];
+					SCSP.udata.data[0x20/2]&=~SCSP.udata.data[0x22/2];
 					CheckPendingIRQ();
 				}
 				break;
@@ -588,7 +588,7 @@ public class scsp
 			case 0x27:
 			case 0x28:
 			case 0x29:
-				if(SCSP->Master)
+				if(SCSP.Master)
 				{
 					IrqTimA=DecodeSCI(SCITMA);
 					IrqTimBC=DecodeSCI(SCITMB);
@@ -610,7 +610,7 @@ public class scsp
 			case 4:
 			case 5:
 				{
-					unsigned short v=SCSP->udata.data[0x5/2];
+					unsigned short v=SCSP.udata.data[0x5/2];
 					v&=0xff00;
 					v|=MidiStack[MidiR];
 					if(MidiR!=MidiW)
@@ -618,16 +618,16 @@ public class scsp
 						++MidiR;
 						MidiR&=7;
 					}
-					SCSP->udata.data[0x5/2]=v;
+					SCSP.udata.data[0x5/2]=v;
 				}
 				break;
 			case 8:
 			case 9:
 				{
-					unsigned char slot=SCSP->udata.data[0x8/2]>>11;
-					unsigned int CA=SCSP->Slots[slot&0x1f].cur_addr>>(SHIFT+12);
-					SCSP->udata.data[0x8/2]&=~(0x780);
-					SCSP->udata.data[0x8/2]|=CA<<7;
+					unsigned char slot=SCSP.udata.data[0x8/2]>>11;
+					unsigned int CA=SCSP.Slots[slot&0x1f].cur_addr>>(SHIFT+12);
+					SCSP.udata.data[0x8/2]&=~(0x780);
+					SCSP.udata.data[0x8/2]|=CA<<7;
 				}
 				break;
 		}
@@ -640,16 +640,16 @@ public class scsp
 		{
 			int slot=addr/0x20;
 			addr&=0x1f;
-			*((unsigned short *) (SCSP->Slots[slot].udata.datab+(addr))) = val;
-			if (Machine->sample_rate > 0)
+			*((unsigned short *) (SCSP.Slots[slot].udata.datab+(addr))) = val;
+			if (Machine.sample_rate > 0)
 			{
 				SCSP_UpdateSlotReg(slot,addr&0x1f);
 			}
 		}
 		else if(addr<0x600)
 		{
-			*((unsigned short *) (SCSP->udata.datab+((addr&0xff)))) = val;
-			if (Machine->sample_rate > 0)
+			*((unsigned short *) (SCSP.udata.datab+((addr&0xff)))) = val;
+			if (Machine.sample_rate > 0)
 			{
 				SCSP_UpdateReg(addr&0xff);
 			}
@@ -664,19 +664,19 @@ public class scsp
 		{
 			int slot=addr/0x20;
 			addr&=0x1f;
-			if (Machine->sample_rate > 0)
+			if (Machine.sample_rate > 0)
 			{
 				SCSP_UpdateSlotRegR(slot,addr&0x1f);
 			}
-			v=*((unsigned short *) (SCSP->Slots[slot].udata.datab+(addr)));
+			v=*((unsigned short *) (SCSP.Slots[slot].udata.datab+(addr)));
 		}
 		else if(addr<0x600)
 		{
-			if (Machine->sample_rate > 0)
+			if (Machine.sample_rate > 0)
 			{
 				SCSP_UpdateRegR(addr&0xff);
 			}
-			v= *((unsigned short *) (SCSP->udata.datab+((addr&0xff))));
+			v= *((unsigned short *) (SCSP.udata.datab+((addr&0xff))));
 		}
 		return v;
 	}
@@ -735,32 +735,32 @@ public class scsp
 		data32_t addr;\
 		for(s=0;s<nsamples;++s)\
 		{\
-			int step=slot->step;\
-			if(!slot->active)\
+			int step=slot.step;\
+			if(!slot.active)\
 				return;\
 			if (lfo != 0) \
 			{\
-				step=step*PLFO_Step(&(slot->PLFO));\
+				step=step*PLFO_Step(&(slot.PLFO));\
 				step>>=SHIFT; \
 			}\
 			if (_8bit != 0)\
 			{\
-				signed char *p=(signed char *) (slot->base+(slot->cur_addr>>SHIFT));\
+				signed char *p=(signed char *) (slot.base+(slot.cur_addr>>SHIFT));\
 				int s2;\
 				signed int fpart;\
-				fpart=slot->cur_addr&((1<<SHIFT)-1);\
+				fpart=slot.cur_addr&((1<<SHIFT)-1);\
 				s2=(int) p[0]*((1<<SHIFT)-fpart)+(int) p[1]*fpart;\
 				sample=(s2>>SHIFT)<<8;\
 			}\
 			else\
 			{\
-				signed short *p=(signed short *) (slot->base+((slot->cur_addr>>(SHIFT-1))&(~1)));\
+				signed short *p=(signed short *) (slot.base+((slot.cur_addr>>(SHIFT-1))&(~1)));\
 				signed int fpart;\
-				fpart=slot->cur_addr&((1<<SHIFT)-1);\
+				fpart=slot.cur_addr&((1<<SHIFT)-1);\
 				sample=p[0];\
 			}\
-			slot->cur_addr+=step;\
-			addr=slot->cur_addr>>SHIFT;\
+			slot.cur_addr+=step;\
+			addr=slot.cur_addr>>SHIFT;\
 			if(loop==0)\
 			{\
 				if(addr>LEA(slot))\
@@ -771,34 +771,34 @@ public class scsp
 			if(loop==1)\
 			{\
 				if(addr>LEA(slot))\
-					slot->cur_addr=LSA(slot)<<SHIFT;\
+					slot.cur_addr=LSA(slot)<<SHIFT;\
 			}\
 			if(loop==2)\
 			{\
 				if(addr>LEA(slot))\
 				{\
-					slot->cur_addr=LEA(slot)<<SHIFT;\
-					slot->step=REVSIGN(slot->step);\
+					slot.cur_addr=LEA(slot)<<SHIFT;\
+					slot.step=REVSIGN(slot.step);\
 				}\
 				if(addr<LSA(slot) || (addr&0x80000000))\
-					slot->cur_addr=LEA(slot)<<SHIFT;\
+					slot.cur_addr=LEA(slot)<<SHIFT;\
 			}\
 			if(loop==3)\
 			{\
 				if(addr>LEA(slot)) /*reached end, reverse till start*/ \
 				{\
-					slot->cur_addr=LEA(slot)<<SHIFT;\
-					slot->step=REVSIGN(slot->step);\
+					slot.cur_addr=LEA(slot)<<SHIFT;\
+					slot.step=REVSIGN(slot.step);\
 				}\
 				if(addr<LSA(slot) || (addr&0x80000000)) /*reached start or negative*/\
 				{\
-					slot->cur_addr=LSA(slot)<<SHIFT;\
-					slot->step=REVSIGN(slot->step);\
+					slot.cur_addr=LSA(slot)<<SHIFT;\
+					slot.step=REVSIGN(slot.step);\
 				}\
 			}\
 			if (alfo != 0)\
 			{\
-				sample=sample*ALFO_Step(&(slot->ALFO));\
+				sample=sample*ALFO_Step(&(slot.ALFO));\
 				sample>>=SHIFT;\
 			}\
 			\
@@ -900,7 +900,7 @@ public class scsp
 	{
 		static UINT16 tmp_dma[2], *scsp_regs;
 	
-		scsp_regs = (UINT16 *)SCSP->udata.datab;
+		scsp_regs = (UINT16 *)SCSP.udata.datab;
 	
 		logerror("SCSP: DMA transfer START\n"
 				 "DMEA: %04x DRGA: %04x DTLG: %04x\n"
@@ -970,22 +970,22 @@ public class scsp
 		struct SCSPinterface *intf;
 		int i;
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
 		// init the emulation
 		SCSP_Init(MAX_SCSP, intf);
 	
 		// set up the IRQ callbacks
-		for (i = 0; i < intf->num; i++)
+		for (i = 0; i < intf.num; i++)
 		{
-			SCSPs[i].Int68kCB = intf->irq_callback[i];
+			SCSPs[i].Int68kCB = intf.irq_callback[i];
 	
 			sprintf(buf[0], "SCSP %d R", i);
 			sprintf(buf[1], "SCSP %d L", i);
 			name[0] = buf[0];
 			name[1] = buf[1];
-			vol[1]=intf->mixing_level[i] >> 16;
-			vol[0]=intf->mixing_level[i] & 0xffff;
+			vol[1]=intf.mixing_level[i] >> 16;
+			vol[0]=intf.mixing_level[i] & 0xffff;
 			SCSPs[i].stream = stream_init_multi(2, name, vol, 44100, i, SCSP_Update);
 		}
 	
@@ -1018,7 +1018,7 @@ public class scsp
 		COMBINE_DATA(&tmp);
 		SCSP_w16(offset*2, tmp);
 	
-		scsp_regs = (UINT16 *)SCSP->udata.datab;
+		scsp_regs = (UINT16 *)SCSP.udata.datab;
 	
 		// check DMA
 		switch(offset*2)
@@ -1038,7 +1038,7 @@ public class scsp
 			case 0x416:
 			/*DGATE[14]*/
 			/*DDIR[13]*/
-			/*if 0 sound_mem -> reg*/
+			/*if 0 sound_mem . reg*/
 			/*if 1 sound_mem <- reg*/
 			/*DEXE[12]*/
 			/*starting bit*/

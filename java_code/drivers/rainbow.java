@@ -176,11 +176,11 @@ a diamond of a specific color: It depends on its x position and
 direction. There is a cheat code at the top of each secret room
 that can be entered on the copyright screen:
 
-	L -> left
-	R -> right
-	J -> jump
-	B -> rainbow
-	S -> start
+	L . left
+	R . right
+	J . jump
+	B . rainbow
+	S . start
 
 				  |  regular   |  extra
 	--------------+------------+------------

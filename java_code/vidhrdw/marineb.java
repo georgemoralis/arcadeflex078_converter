@@ -92,7 +92,7 @@ public class marineb
 					flipx = !flipx;
 				}
 	
-				drawgfx(_tmpbitmap,Machine->gfx[0],
+				drawgfx(_tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)| ((colorram[offs] & 0xc0) << 2),
 						(colorram[offs] & 0x0f) + 16 * palbank,
 						flipx,flipy,
@@ -123,7 +123,7 @@ public class marineb
 				for (;offs < 32;offs++)
 					scroll[offs] = 0;
 			}
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -177,7 +177,7 @@ public class marineb
 	
 			if (!flip_screen_y)
 			{
-				sy = 256 - Machine->gfx[gfx]->width - sy;
+				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = !flipy;
 			}
 	
@@ -186,12 +186,12 @@ public class marineb
 				sx++;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -221,7 +221,7 @@ public class marineb
 	
 			if (!flip_screen_y)
 			{
-				sy = 256 - Machine->gfx[1]->width - sy;
+				sy = 256 - Machine.gfx[1].width - sy;
 				flipy = !flipy;
 			}
 	
@@ -230,12 +230,12 @@ public class marineb
 				sx++;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code >> 2,
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 		/* draw the big sprite */
@@ -249,7 +249,7 @@ public class marineb
 	
 		if (!flip_screen_y)
 		{
-			sy = 256 - Machine->gfx[2]->width - sy;
+			sy = 256 - Machine.gfx[2].width - sy;
 			flipy = !flipy;
 		}
 	
@@ -260,21 +260,21 @@ public class marineb
 	
 		code >>= 4;
 	
-		drawgfx(bitmap,Machine->gfx[2],
+		drawgfx(bitmap,Machine.gfx[2],
 				code,
 				col,
 				flipx,flipy,
 				sx,sy,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 		/* draw again for wrap around */
 	
-		drawgfx(bitmap,Machine->gfx[2],
+		drawgfx(bitmap,Machine.gfx[2],
 				code,
 				col,
 				flipx,flipy,
 				sx-256,sy,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	} };
 	
 	
@@ -321,7 +321,7 @@ public class marineb
 	
 			if (!flip_screen_y)
 			{
-				sy = 256 - Machine->gfx[gfx]->width - sy;
+				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = !flipy;
 			}
 	
@@ -330,12 +330,12 @@ public class marineb
 				sx--;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -366,22 +366,22 @@ public class marineb
 	
 			if (!flip_screen_y)
 			{
-				sy = 256 - Machine->gfx[1]->width - sy;
+				sy = 256 - Machine.gfx[1].width - sy;
 				flipy = !flipy;
 			}
 	
 			if (flip_screen_x != 0)
 			{
-				sx = 256 - Machine->gfx[1]->width - sx;
+				sx = 256 - Machine.gfx[1].width - sx;
 				flipx = !flipx;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code >> 2,
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
@@ -428,7 +428,7 @@ public class marineb
 	
 			if (!flip_screen_y)
 			{
-				sy = 256 - Machine->gfx[gfx]->width - sy;
+				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = !flipy;
 			}
 	
@@ -437,12 +437,12 @@ public class marineb
 				sx--;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					col,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 }

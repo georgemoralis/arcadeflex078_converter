@@ -706,7 +706,7 @@ public class _6309dasm
 	
 		pc += p;
 	
-		if( opcode != 0x1f &&	// reg <-> reg instructions
+		if( opcode != 0x1f &&	// reg <. reg instructions
 			opcode != 0x1e &&
 			opcode != 0x31 &&
 			opcode != 0x30 &&
@@ -938,7 +938,7 @@ public class _6309dasm
 			}
 			else
 			if( opcode == 0x1f || opcode == 0x1e || ( page == 1 && (opcode == 0x31 || opcode == 0x30 || opcode == 0x34 || opcode == 0x37 || opcode == 0x35 || opcode == 0x33 || opcode == 0x1e || opcode == 0x32 ) ) )
-			{	/* TFR/EXG + new 2nd page reg<->reg instructions*/
+			{	/* TFR/EXG + new 2nd page reg<.reg instructions*/
 				buffer += sprintf (buffer, "%s,%s", teregs[ (operandarray[0] >> 4) & 0xf], teregs[operandarray[0] & 0xf]);
 			}
 			else

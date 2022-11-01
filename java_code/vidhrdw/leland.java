@@ -162,12 +162,12 @@ public class leland
 		struct vram_state_data *state = vram_state + num;
 	
 		if (!offset)
-			state->addr = (state->addr & 0xfe00) | ((data << 1) & 0x01fe);
+			state.addr = (state.addr & 0xfe00) | ((data << 1) & 0x01fe);
 		else
-			state->addr = ((data << 9) & 0xfe00) | (state->addr & 0x01fe);
+			state.addr = ((data << 9) & 0xfe00) | (state.addr & 0x01fe);
 	
 		if (num == 0)
-			sync_next_write = (state->addr >= 0xf000);
+			sync_next_write = (state.addr >= 0xf000);
 	}
 	
 	
@@ -229,7 +229,7 @@ public class leland
 	static int leland_vram_port_r(int offset, int num)
 	{
 		struct vram_state_data *state = vram_state + num;
-		int addr = state->addr;
+		int addr = state.addr;
 		int inc = (offset >> 2) & 2;
 	    int ret;
 	
@@ -257,7 +257,7 @@ public class leland
 	            ret = 0;
 	            break;
 	    }
-	    state->addr = addr;
+	    state.addr = addr;
 	
 		if (LOG_COMM && addr >= 0xf000)
 			logerror("%04X:%s comm read %04X = %02X\n", activecpu_get_previouspc(), num ? "slave" : "master", addr, ret);
@@ -276,7 +276,7 @@ public class leland
 	static void leland_vram_port_w(int offset, int data, int num)
 	{
 		struct vram_state_data *state = vram_state + num;
-		int addr = state->addr;
+		int addr = state.addr;
 		int inc = (offset >> 2) & 2;
 		int trans = (offset >> 4) & num;
 	
@@ -297,14 +297,14 @@ public class leland
 	    switch (offset & 7)
 	    {
 	        case 1:	/* write hi = data, lo = latch */
-	        	leland_video_ram[addr & ~1] = state->latch[0];
+	        	leland_video_ram[addr & ~1] = state.latch[0];
 	        	leland_video_ram[addr |  1] = data;
 	        	addr += inc;
 	        	break;
 	
 	        case 2:	/* write hi = latch, lo = data */
 	        	leland_video_ram[addr & ~1] = data;
-	        	leland_video_ram[addr |  1] = state->latch[1];
+	        	leland_video_ram[addr |  1] = state.latch[1];
 	        	addr += inc;
 	        	break;
 	
@@ -320,7 +320,7 @@ public class leland
 	            break;
 	
 	        case 5:	/* write hi = data */
-	        	state->latch[1] = data;
+	        	state.latch[1] = data;
 	        	if (trans != 0)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr | 1] & 0xf0;
@@ -331,7 +331,7 @@ public class leland
 	            break;
 	
 	        case 6:	/* write lo = data */
-	        	state->latch[0] = data;
+	        	state.latch[0] = data;
 	        	if (trans != 0)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr & ~1] & 0xf0;
@@ -348,7 +348,7 @@ public class leland
 	    }
 	
 	    /* update the address and plane */
-	    state->addr = addr;
+	    state.addr = addr;
 	}
 	
 	
@@ -502,7 +502,7 @@ public class leland
 	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		const UINT8 *background_prom = memory_region(REGION_USER1);
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int char_bank = ((gfxbank >> 4) & 0x03) * 0x0400;
 		int prom_bank = ((gfxbank >> 3) & 0x01) * 0x2000;
 		int xcoarse = xscroll / 8;
@@ -512,10 +512,10 @@ public class leland
 		int x, y;
 	
 		/* update anything remaining */
-		update_for_scanline(cliprect->max_y);
+		update_for_scanline(cliprect.max_y);
 	
 		/* draw what's visible to the main bitmap */
-		for (y = cliprect->min_y / 8; y < cliprect->max_y / 8 + 2; y++)
+		for (y = cliprect.min_y / 8; y < cliprect.max_y / 8 + 2; y++)
 		{
 			int ysum = ycoarse + y;
 			for (x = 0; x < VIDEO_WIDTH + 1; x++)
@@ -552,7 +552,7 @@ public class leland
 	
 	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int xcoarse = xscroll / 8;
 		int ycoarse = yscroll / 8;
 		int xfine = xscroll % 8;
@@ -560,10 +560,10 @@ public class leland
 		int x, y;
 	
 		/* update anything remaining */
-		update_for_scanline(cliprect->max_y);
+		update_for_scanline(cliprect.max_y);
 	
 		/* draw what's visible to the main bitmap */
-		for (y = cliprect->min_y / 8; y < cliprect->max_y / 8 + 2; y++)
+		for (y = cliprect.min_y / 8; y < cliprect.max_y / 8 + 2; y++)
 		{
 			int ysum = ycoarse + y;
 			for (x = 0; x < VIDEO_WIDTH + 1; x++)

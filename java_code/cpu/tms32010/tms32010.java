@@ -928,36 +928,36 @@ public class tms32010
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+TMS32010_PC:   sprintf(buffer[which], "PC:%04X",   r->PC); break;
+			case CPU_INFO_REG+TMS32010_PC:   sprintf(buffer[which], "PC:%04X",   r.PC); break;
 			case CPU_INFO_REG+TMS32010_SP:   sprintf(buffer[which], "SP:%X", 0); /* fake stack pointer */ break;
-			case CPU_INFO_REG+TMS32010_STR:  sprintf(buffer[which], "STR:%04X",  r->STR); break;
-			case CPU_INFO_REG+TMS32010_ACC:  sprintf(buffer[which], "ACC:%08X",  r->ACC.d); break;
-			case CPU_INFO_REG+TMS32010_PREG: sprintf(buffer[which], "P:%08X",    r->Preg.d); break;
-			case CPU_INFO_REG+TMS32010_TREG: sprintf(buffer[which], "T:%04X",    r->Treg); break;
-			case CPU_INFO_REG+TMS32010_AR0:  sprintf(buffer[which], "AR0:%04X",  r->AR[0]); break;
-			case CPU_INFO_REG+TMS32010_AR1:  sprintf(buffer[which], "AR1:%04X",  r->AR[1]); break;
-			case CPU_INFO_REG+TMS32010_STK0: sprintf(buffer[which], "STK0:%04X", r->STACK[0]); break;
-			case CPU_INFO_REG+TMS32010_STK1: sprintf(buffer[which], "STK1:%04X", r->STACK[1]); break;
-			case CPU_INFO_REG+TMS32010_STK2: sprintf(buffer[which], "STK2:%04X", r->STACK[2]); break;
-			case CPU_INFO_REG+TMS32010_STK3: sprintf(buffer[which], "STK3:%04X", r->STACK[3]); break;
+			case CPU_INFO_REG+TMS32010_STR:  sprintf(buffer[which], "STR:%04X",  r.STR); break;
+			case CPU_INFO_REG+TMS32010_ACC:  sprintf(buffer[which], "ACC:%08X",  r.ACC.d); break;
+			case CPU_INFO_REG+TMS32010_PREG: sprintf(buffer[which], "P:%08X",    r.Preg.d); break;
+			case CPU_INFO_REG+TMS32010_TREG: sprintf(buffer[which], "T:%04X",    r.Treg); break;
+			case CPU_INFO_REG+TMS32010_AR0:  sprintf(buffer[which], "AR0:%04X",  r.AR[0]); break;
+			case CPU_INFO_REG+TMS32010_AR1:  sprintf(buffer[which], "AR1:%04X",  r.AR[1]); break;
+			case CPU_INFO_REG+TMS32010_STK0: sprintf(buffer[which], "STK0:%04X", r.STACK[0]); break;
+			case CPU_INFO_REG+TMS32010_STK1: sprintf(buffer[which], "STK1:%04X", r.STACK[1]); break;
+			case CPU_INFO_REG+TMS32010_STK2: sprintf(buffer[which], "STK2:%04X", r.STACK[2]); break;
+			case CPU_INFO_REG+TMS32010_STK3: sprintf(buffer[which], "STK3:%04X", r.STACK[3]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r->STR & 0x8000 ? 'O':'.',
-					r->STR & 0x4000 ? 'M':'.',
-					r->STR & 0x2000 ? 'I':'.',
-					r->STR & 0x1000 ? '.':'?',
-					r->STR & 0x0800 ? 'a':'?',
-					r->STR & 0x0400 ? 'r':'?',
-					r->STR & 0x0200 ? 'p':'?',
-					r->STR & 0x0100 ? '1':'0',
-					r->STR & 0x0080 ? '.':'?',
-					r->STR & 0x0040 ? '.':'?',
-					r->STR & 0x0020 ? '.':'?',
-					r->STR & 0x0010 ? '.':'?',
-					r->STR & 0x0008 ? '.':'?',
-					r->STR & 0x0004 ? 'd':'?',
-					r->STR & 0x0002 ? 'p':'?',
-					r->STR & 0x0001 ? '1':'0');
+					r.STR & 0x8000 ? 'O':'.',
+					r.STR & 0x4000 ? 'M':'.',
+					r.STR & 0x2000 ? 'I':'.',
+					r.STR & 0x1000 ? '.':'?',
+					r.STR & 0x0800 ? 'a':'?',
+					r.STR & 0x0400 ? 'r':'?',
+					r.STR & 0x0200 ? 'p':'?',
+					r.STR & 0x0100 ? '1':'0',
+					r.STR & 0x0080 ? '.':'?',
+					r.STR & 0x0040 ? '.':'?',
+					r.STR & 0x0020 ? '.':'?',
+					r.STR & 0x0010 ? '.':'?',
+					r.STR & 0x0008 ? '.':'?',
+					r.STR & 0x0004 ? 'd':'?',
+					r.STR & 0x0002 ? 'p':'?',
+					r.STR & 0x0001 ? '1':'0');
 				break;
 			case CPU_INFO_NAME: return "TMS32010";
 			case CPU_INFO_FAMILY: return "Texas Instruments TMS32010";

@@ -68,7 +68,7 @@ public class blockout
 	public static VideoUpdateHandlerPtr video_update_blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* Allocate temporary bitmaps */
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -82,10 +82,10 @@ public class blockout
 		int color;
 	
 	
-		if (x < Machine->visible_area.min_x ||
-				x > Machine->visible_area.max_x ||
-				y < Machine->visible_area.min_y ||
-				y > Machine->visible_area.max_y)
+		if (x < Machine.visible_area.min_x ||
+				x > Machine.visible_area.max_x ||
+				y < Machine.visible_area.min_y ||
+				y > Machine.visible_area.max_y)
 			return;
 	
 		front = blockout_videoram[y*256+x/2];
@@ -93,11 +93,11 @@ public class blockout
 	
 		if (front>>8) color = front>>8;
 		else color = (back>>8) + 256;
-		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
+		plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
 	
 		if ((front & 0xff) != 0) color = front&0xff;
 		else color = (back&0xff) + 256;
-		plot_pixel(tmpbitmap, x+1, y, Machine->pens[color]);
+		plot_pixel(tmpbitmap, x+1, y, Machine.pens[color]);
 	}
 	
 	
@@ -117,13 +117,13 @@ public class blockout
 	
 	public static VideoUpdateHandlerPtr video_update_blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		{
 			int x,y,color;
 	
 	
-			color = Machine->pens[512];
+			color = Machine.pens[512];
 	
 			for (y = 0;y < 256;y++)
 			{

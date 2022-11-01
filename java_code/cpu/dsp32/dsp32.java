@@ -377,7 +377,7 @@ public class dsp32
 	
 		/* copy in config data */
 		if (config != 0)
-			dsp32.output_pins_changed = config->output_pins_changed;
+			dsp32.output_pins_changed = config.output_pins_changed;
 	
 		/* reset goes to 0 */
 		dsp32.PC = 0;

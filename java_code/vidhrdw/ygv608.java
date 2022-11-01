@@ -159,7 +159,7 @@ public class ygv608
 			j += ( (int)ygv608.scroll_data_table[0][0xc0+page] << 10 );
 			j += ( ygv608.base_addr[0][base] << 8 );
 	
-			if( j >= Machine->drv->gfxdecodeinfo[set].gfxlayout->total )
+			if( j >= Machine.drv.gfxdecodeinfo[set].gfxlayout.total )
 			{
 				logerror( "A_8X8: tilemap=%d\n", j );
 				j = 0;
@@ -248,7 +248,7 @@ public class ygv608
 			j += ( (int)ygv608.scroll_data_table[1][0xc0+page] << 10 );
 			j += ( ygv608.base_addr[1][base] << 8 );
 	
-			if( j >= Machine->drv->gfxdecodeinfo[set].gfxlayout->total )
+			if( j >= Machine.drv.gfxdecodeinfo[set].gfxlayout.total )
 			{
 				logerror( "B_8X8: tilemap=%d\n", j );
 				j = 0;
@@ -330,7 +330,7 @@ public class ygv608
 	    j += ( (int)ygv608.scroll_data_table[0][0xc0+page] << 8 );
 	    j += ( ygv608.base_addr[0][base] << 8 );
 	
-	    if( j >= Machine->drv->gfxdecodeinfo[set].gfxlayout->total ) {
+	    if( j >= Machine.drv.gfxdecodeinfo[set].gfxlayout.total ) {
 		logerror( "A_16X16: tilemap=%d\n", j );
 	      j = 0;
 	    }
@@ -413,7 +413,7 @@ public class ygv608
 	    j += ( (int)ygv608.scroll_data_table[1][0xc0+page] << 8 );
 	    j += ( ygv608.base_addr[1][base] << 8 );
 	
-	    if( j >= Machine->drv->gfxdecodeinfo[set].gfxlayout->total ) {
+	    if( j >= Machine.drv.gfxdecodeinfo[set].gfxlayout.total ) {
 		logerror( "B_16X16: tilemap=%d\n", j );
 	      j = 0;
 	    }
@@ -486,10 +486,10 @@ public class ygv608
 	  {
 	    int code, color, sx, sy, size, attr, g_attr, spf;
 	
-	    color = (sa->attr >> 4) & 0x0f;
-	    sx = ( (int)(sa->attr & 0x02) << 7 ) | (int)sa->sx;
-	    sy = ( ( ( (int)(sa->attr & 0x01) << 8 ) | (int)sa->sy ) + 1 ) & 0x1ff;
-	    attr = (sa->attr & 0x0c) >> 2;
+	    color = (sa.attr >> 4) & 0x0f;
+	    sx = ( (int)(sa.attr & 0x02) << 7 ) | (int)sa.sx;
+	    sy = ( ( ( (int)(sa.attr & 0x01) << 8 ) | (int)sa.sy ) + 1 ) & 0x1ff;
+	    attr = (sa.attr & 0x0c) >> 2;
 	    g_attr = (ygv608.regs.s.r10 & r10_spa) >> 6;
 	    spf = (ygv608.regs.s.r12 & r12_spf) >> 6;
 	
@@ -509,14 +509,14 @@ public class ygv608
 	    switch( size ) {
 	
 	    case SZ_8X8 :
-	      code = ( (int)ygv608.regs.s.sba << 8 ) | (int)sa->sn;
+	      code = ( (int)ygv608.regs.s.sba << 8 ) | (int)sa.sn;
 	      if (spf != 0)
 		    color = ( code >> ( (spf - 1) * 2 ) ) & 0x0f;
-	      if( code >= Machine->drv->gfxdecodeinfo[GFX_8X8_4BIT].gfxlayout->total ) {
+	      if( code >= Machine.drv.gfxdecodeinfo[GFX_8X8_4BIT].gfxlayout.total ) {
 		    logerror( "SZ_8X8: sprite=%d\n", code );
 		    code = 0;
 	      }
-	      drawgfx( bitmap, Machine->gfx[GFX_8X8_4BIT],
+	      drawgfx( bitmap, Machine.gfx[GFX_8X8_4BIT],
 		       code+namcond1_gfxbank*0x10000,
 		       color,
 		       flipx,flipy,
@@ -524,14 +524,14 @@ public class ygv608
 		       &spriteClip,TRANSPARENCY_PEN,0x00);
 	      // redraw with wrap-around
 	      if( sx > 512-8 )
-	        drawgfx( bitmap, Machine->gfx[GFX_8X8_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_8X8_4BIT],
 		        code+namcond1_gfxbank*0x10000,
 		        color,
 		        flipx,flipy,
 		        sx-512,sy,
 		        &spriteClip,TRANSPARENCY_PEN,0x00);
 	      if( sy > 512-8 )
-	        drawgfx( bitmap, Machine->gfx[GFX_8X8_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_8X8_4BIT],
 		        code+namcond1_gfxbank*0x10000,
 		        color,
 		        flipx,flipy,
@@ -542,14 +542,14 @@ public class ygv608
 	      break;
 	
 	    case SZ_16X16 :
-	      code = ( ( (int)ygv608.regs.s.sba & 0xfc ) << 6 ) | (int)sa->sn;
+	      code = ( ( (int)ygv608.regs.s.sba & 0xfc ) << 6 ) | (int)sa.sn;
 	      if (spf != 0)
 		    color = ( code >> (spf * 2) ) & 0x0f;
-	      if( code >= Machine->drv->gfxdecodeinfo[GFX_16X16_4BIT].gfxlayout->total ) {
+	      if( code >= Machine.drv.gfxdecodeinfo[GFX_16X16_4BIT].gfxlayout.total ) {
 		    logerror( "SZ_8X8: sprite=%d\n", code );
 		    code = 0;
 	      }
-	      drawgfx( bitmap, Machine->gfx[GFX_16X16_4BIT],
+	      drawgfx( bitmap, Machine.gfx[GFX_16X16_4BIT],
 		       code+namcond1_gfxbank*0x4000,
 		       color,
 		       flipx,flipy,
@@ -557,14 +557,14 @@ public class ygv608
 		       &spriteClip,TRANSPARENCY_PEN,0x00);
 	      // redraw with wrap-around
 	      if( sx > 512-16 )
-	        drawgfx( bitmap, Machine->gfx[GFX_16X16_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_16X16_4BIT],
 		        code+namcond1_gfxbank*0x4000,
 		        color,
 		        flipx,flipy,
 		        sx-512,sy,
 		        &spriteClip,TRANSPARENCY_PEN,0x00);
 	      if( sy > 512-16 )
-	        drawgfx( bitmap, Machine->gfx[GFX_16X16_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_16X16_4BIT],
 		        code+namcond1_gfxbank*0x4000,
 		        color,
 		        flipx,flipy,
@@ -575,14 +575,14 @@ public class ygv608
 	      break;
 	
 	    case SZ_32X32 :
-	      code = ( ( (int)ygv608.regs.s.sba & 0xf0 ) << 4 ) | (int)sa->sn;
+	      code = ( ( (int)ygv608.regs.s.sba & 0xf0 ) << 4 ) | (int)sa.sn;
 	      if (spf != 0)
 		color = ( code >> ( (spf + 1) * 2 ) ) & 0x0f;
-	      if( code >= Machine->drv->gfxdecodeinfo[GFX_32X32_4BIT].gfxlayout->total ) {
+	      if( code >= Machine.drv.gfxdecodeinfo[GFX_32X32_4BIT].gfxlayout.total ) {
 		  logerror( "SZ_32X32: sprite=%d\n", code );
 		code = 0;
 	      }
-	      drawgfx( bitmap, Machine->gfx[GFX_32X32_4BIT],
+	      drawgfx( bitmap, Machine.gfx[GFX_32X32_4BIT],
 		       code+namcond1_gfxbank*0x1000,
 		       color,
 		       flipx,flipy,
@@ -590,14 +590,14 @@ public class ygv608
 		       &spriteClip,TRANSPARENCY_PEN,0x00);
 	      // redraw with wrap-around
 	      if( sx > 512-32 )
-	        drawgfx( bitmap, Machine->gfx[GFX_32X32_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_32X32_4BIT],
 		        code+namcond1_gfxbank*0x1000,
 		        color,
 		        flipx,flipy,
 		        sx-512,sy,
 		        &spriteClip,TRANSPARENCY_PEN,0x00);
 	      if( sy > 512-32 )
-	        drawgfx( bitmap, Machine->gfx[GFX_32X32_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_32X32_4BIT],
 		        code+namcond1_gfxbank*0x1000,
 		        color,
 		        flipx,flipy,
@@ -608,14 +608,14 @@ public class ygv608
 	      break;
 	
 	    case SZ_64X64 :
-	      code = ( ( (int)ygv608.regs.s.sba & 0xc0 ) << 2 ) | (int)sa->sn;
+	      code = ( ( (int)ygv608.regs.s.sba & 0xc0 ) << 2 ) | (int)sa.sn;
 	      if (spf != 0)
 		    color = ( code >> ( (spf + 1) * 2 ) ) & 0x0f;
-	      if( code >= Machine->drv->gfxdecodeinfo[GFX_64X64_4BIT].gfxlayout->total ) {
+	      if( code >= Machine.drv.gfxdecodeinfo[GFX_64X64_4BIT].gfxlayout.total ) {
 		    logerror( "SZ_64X64: sprite=%d\n", code );
 		    code = 0;
 	      }
-	      drawgfx( bitmap, Machine->gfx[GFX_64X64_4BIT],
+	      drawgfx( bitmap, Machine.gfx[GFX_64X64_4BIT],
 		       code+namcond1_gfxbank*0x400,
 		       color,
 		       flipx,flipy,
@@ -623,14 +623,14 @@ public class ygv608
 		       &spriteClip,TRANSPARENCY_PEN,0x00);
 	      // redraw with wrap-around
 	      if( sx > 512-64 )
-	        drawgfx( bitmap, Machine->gfx[GFX_64X64_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_64X64_4BIT],
 		        code+namcond1_gfxbank*0x400,
 		        color,
 		        flipx,flipy,
 		        sx-512,sy,
 		        &spriteClip,TRANSPARENCY_PEN,0x00);
 	      if( sy > 512-64 )
-	        drawgfx( bitmap, Machine->gfx[GFX_64X64_4BIT],
+	        drawgfx( bitmap, Machine.gfx[GFX_64X64_4BIT],
 		        code+namcond1_gfxbank*0x400,
 		        color,
 		        flipx,flipy,
@@ -671,9 +671,9 @@ public class ygv608
 	
 		// clip to the current bitmap
 		finalclip.min_x = 0;
-		finalclip.max_x = Machine->drv->screen_width - 1;
+		finalclip.max_x = Machine.drv.screen_width - 1;
 		finalclip.min_y = 0;
-		finalclip.max_y = Machine->drv->screen_height - 1;
+		finalclip.max_y = Machine.drv.screen_height - 1;
 		sect_rect(&finalclip, cliprect);
 		cliprect = &finalclip;
 	
@@ -696,9 +696,9 @@ public class ygv608
 	#ifdef _ENABLE_ROTATE_ZOOM
 			if (work_bitmap != 0)
 				bitmap_free( work_bitmap );
-			work_bitmap = bitmap_alloc_depth( Machine->drv->screen_width,
-											  Machine->drv->screen_height,
-											  Machine->color_depth );
+			work_bitmap = bitmap_alloc_depth( Machine.drv.screen_width,
+											  Machine.drv.screen_height,
+											  Machine.color_depth );
 	#else
 			work_bitmap = bitmap;
 	#endif
@@ -755,7 +755,7 @@ public class ygv608
 			tilemap_set_scroll_cols( tilemap_B, ygv608.page_x );
 	
 			// now clear the screen in case we change to 1-plane mode
-			fillbitmap( work_bitmap, Machine->pens[0], cliprect );
+			fillbitmap( work_bitmap, Machine.pens[0], cliprect );
 	
 			// reset resize flag
 			ygv608.tilemap_resize = 0;
@@ -808,8 +808,8 @@ public class ygv608
 		if ((ygv608.regs.s.r7 & r7_md) & MD_1PLANE)
 		{
 			// If the background tilemap is disabled, we need to clear the bitmap to black
-			fillbitmap (work_bitmap,Machine->pens[0],cliprect);
-	//		fillbitmap (work_bitmap,1,&Machine->visible_area);
+			fillbitmap (work_bitmap,Machine.pens[0],cliprect);
+	//		fillbitmap (work_bitmap,1,&Machine.visible_area);
 		}
 		else
 	#endif
@@ -830,10 +830,10 @@ public class ygv608
 	
 	  if( ygv608.regs.s.zron )
 	    copyrozbitmap( bitmap, work_bitmap,
-	                   ( Machine->visible_area.min_x << 16 ) +
+	                   ( Machine.visible_area.min_x << 16 ) +
 	                    ygv608.ax + 0x10000 * r *
 	                    ( -sin( alpha ) * cos_theta + cos( alpha ) * sin_theta ),
-	                   ( Machine->visible_area.min_y << 16 ) +
+	                   ( Machine.visible_area.min_y << 16 ) +
 	                    ygv608.ay + 0x10000 * r *
 	                    ( cos( alpha ) * cos_theta + sin( alpha ) * sin_theta ),
 	                   ygv608.dx, ygv608.dxy, ygv608.dyx, ygv608.dy, 0,
@@ -848,8 +848,8 @@ public class ygv608
 	  // so use a transparent but clear the work bitmap first
 	  // - look at why this is the case?!?
 	  fillbitmap( work_bitmap,
-	              Machine->pens[0],
-	              &Machine->visible_area );
+	              Machine.pens[0],
+	              &Machine.visible_area );
 	#endif
 	
 		if ((ygv608.regs.s.r11 & r11_prm) == PRM_ASBDEX ||
@@ -861,15 +861,15 @@ public class ygv608
 	#ifdef _ENABLE_ROTATE_ZOOM
 	  if( ygv608.regs.s.zron )
 	    copyrozbitmap( bitmap, work_bitmap,
-	                   ygv608.ax, // + ( Machine->visible_area.min_x << 16 ),
-	                   ygv608.ay, // + ( Machine->visible_area.min_y << 16 ),
+	                   ygv608.ax, // + ( Machine.visible_area.min_x << 16 ),
+	                   ygv608.ay, // + ( Machine.visible_area.min_y << 16 ),
 	                   ygv608.dx, ygv608.dxy, ygv608.dyx, ygv608.dy, 0,
 	                   cliprect,
-	                   TRANSPARENCY_PEN, Machine->pens[0], 0 );
+	                   TRANSPARENCY_PEN, Machine.pens[0], 0 );
 	  else
 	    copybitmap( bitmap, work_bitmap, 0, 0, 0, 0,
 	                cliprect,
-	                TRANSPARENCY_PEN, Machine->pens[0] );
+	                TRANSPARENCY_PEN, Machine.pens[0] );
 	#endif
 	
 		if ((ygv608.regs.s.r11 & r11_prm) == PRM_SABDEX ||
@@ -1271,7 +1271,7 @@ public class ygv608
 	  static unsigned char *sat = (unsigned char *)ygv608.sprite_attribute_table.b;
 	
 	  /* fudge copy from sprite data for now... */
-	  unsigned char *RAM = Machine->memory_region[0];
+	  unsigned char *RAM = Machine.memory_region[0];
 	  int i;
 	
 	  int src = ( ( (int)ygv608.regs.s.tb13 << 8 ) +

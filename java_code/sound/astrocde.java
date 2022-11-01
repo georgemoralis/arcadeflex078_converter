@@ -167,21 +167,21 @@ public class astrocde
 	{
 		int i;
 	
-		intf = msound->sound_interface;
+		intf = msound.sound_interface;
 	
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 		{
 			return 0;
 		}
 	
-		buffer_len = Machine->sample_rate / Machine->drv->frames_per_second;
+		buffer_len = Machine.sample_rate / Machine.drv.frames_per_second;
 	
-		emulation_rate = buffer_len * Machine->drv->frames_per_second;
-		div_by_N_factor = intf->baseclock/emulation_rate;
+		emulation_rate = buffer_len * Machine.drv.frames_per_second;
+		div_by_N_factor = intf.baseclock/emulation_rate;
 	
-		channel = mixer_allocate_channels(intf->num,intf->volume);
+		channel = mixer_allocate_channels(intf.num,intf.volume);
 		/* reserve buffer */
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			if ((astrocade_buffer[i] = malloc(sizeof(INT16)*buffer_len)) == 0)
 			{
@@ -208,7 +208,7 @@ public class astrocde
 	{
 		int i;
 	
-		for (i = 0;i < intf->num;i++){
+		for (i = 0;i < intf.num;i++){
 			free(astrocade_buffer[i]);
 		}
 	}
@@ -318,9 +318,9 @@ public class astrocde
 	{
 		int num;
 	
-		if (Machine->sample_rate == 0 ) return;
+		if (Machine.sample_rate == 0 ) return;
 	
-		for (num = 0;num < intf->num;num++)
+		for (num = 0;num < intf.num;num++)
 		{
 			astrocade_update(num, buffer_len);
 			/* reset position , step , count */

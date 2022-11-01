@@ -88,7 +88,7 @@ public class aliens
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[layer_colorbase[1] * 16],cliprect);
+		fillbitmap(bitmap,Machine.pens[layer_colorbase[1] * 16],cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,1);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],0,2);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,4);

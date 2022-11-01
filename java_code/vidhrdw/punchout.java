@@ -113,8 +113,8 @@ public class punchout
 	public static PaletteInitHandlerPtr palette_init_punchout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + (offs)])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
 	
 	
 		convert_palette(color_prom);
@@ -146,8 +146,8 @@ public class punchout
 	public static PaletteInitHandlerPtr palette_init_armwrest  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + (offs)])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
 	
 	
 		convert_palette(color_prom);
@@ -373,7 +373,7 @@ public class punchout
 				sx = offs/2 % 32;
 				sy = offs/2 / 32;
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+ 256 * (videoram.read(offs + 1)& 0x03),
 						((videoram.read(offs + 1)& 0x7c) >> 2) + 64 * top_palette_bank,
 						videoram.read(offs + 1)& 0x80,0,
@@ -395,7 +395,7 @@ public class punchout
 				sx = offs/2 % 64;
 				sy = offs/2 / 64;
 	
-				drawgfx(tmpbitmap,Machine->gfx[1],
+				drawgfx(tmpbitmap,Machine.gfx[1],
 						punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
 						((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
 						punchout_videoram2[offs + 1] & 0x80,0,
@@ -418,7 +418,7 @@ public class punchout
 				sx = offs/4 % 16;
 				sy = offs/4 / 16;
 	
-				drawgfx(bs1tmpbitmap,Machine->gfx[2],
+				drawgfx(bs1tmpbitmap,Machine.gfx[2],
 						punchout_bigsprite1ram[offs] + 256 * (punchout_bigsprite1ram[offs + 1] & 0x1f),
 						(punchout_bigsprite1ram[offs + 3] & 0x1f) + 32 * bottom_palette_bank,
 						punchout_bigsprite1ram[offs + 3] & 0x80,0,
@@ -441,7 +441,7 @@ public class punchout
 				sx = offs/4 % 16;
 				sy = offs/4 / 16;
 	
-				drawgfx(bs2tmpbitmap,Machine->gfx[3],
+				drawgfx(bs2tmpbitmap,Machine.gfx[3],
 						punchout_bigsprite2ram[offs] + 256 * (punchout_bigsprite2ram[offs + 1] & 0x0f),
 						(punchout_bigsprite2ram[offs + 3] & 0x3f) + 64 * bottom_palette_bank,
 						punchout_bigsprite2ram[offs + 3] & 0x80,0,
@@ -461,7 +461,7 @@ public class punchout
 			for (offs = 0;offs < BOTTOM_MONITOR_ROWS;offs++)
 				scroll[TOP_MONITOR_ROWS + offs] = -(58 + punchout_scroll[2*(offs+2)] + 256 * (punchout_scroll[2*(offs+2) + 1] & 0x01));
 	
-			copyscrollbitmap(bitmap,tmpbitmap,TOP_MONITOR_ROWS + BOTTOM_MONITOR_ROWS,scroll,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,TOP_MONITOR_ROWS + BOTTOM_MONITOR_ROWS,scroll,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 		/* copy the two big sprites */
@@ -491,7 +491,7 @@ public class punchout
 	
 				if (punchout_bigsprite1[6] & 1)	/* flip x */
 				{
-					startx = (bs1tmpbitmap->width << 16) - startx - 1;
+					startx = (bs1tmpbitmap.width << 16) - startx - 1;
 					incxx = -incxx;
 				}
 	
@@ -556,7 +556,7 @@ public class punchout
 				{
 					/* top screen */
 					sy -= 32;
-					drawgfx(tmpbitmap,Machine->gfx[0],
+					drawgfx(tmpbitmap,Machine.gfx[0],
 							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03) +
 									8 * (punchout_videoram2[offs + 1] & 0x80),
 							((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * top_palette_bank,
@@ -566,7 +566,7 @@ public class punchout
 				}
 				else
 					/* bottom screen background */
-					drawgfx(tmpbitmap,Machine->gfx[0],
+					drawgfx(tmpbitmap,Machine.gfx[0],
 							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
 							128 + ((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
 							punchout_videoram2[offs + 1] & 0x80,0,
@@ -594,7 +594,7 @@ public class punchout
 					sx += 16;
 				}
 	
-				drawgfx(bs1tmpbitmap,Machine->gfx[2],
+				drawgfx(bs1tmpbitmap,Machine.gfx[2],
 						punchout_bigsprite1ram[offs] + 256 * (punchout_bigsprite1ram[offs + 1] & 0x1f),
 						(punchout_bigsprite1ram[offs + 3] & 0x1f) + 32 * bottom_palette_bank,
 						punchout_bigsprite1ram[offs + 3] & 0x80,0,
@@ -617,7 +617,7 @@ public class punchout
 				sx = offs/4 % 16;
 				sy = offs/4 / 16;
 	
-				drawgfx(bs2tmpbitmap,Machine->gfx[3],
+				drawgfx(bs2tmpbitmap,Machine.gfx[3],
 						punchout_bigsprite2ram[offs] + 256 * (punchout_bigsprite2ram[offs + 1] & 0x0f),
 						(punchout_bigsprite2ram[offs + 3] & 0x3f) + 64 * bottom_palette_bank,
 						punchout_bigsprite2ram[offs + 3] & 0x80,0,
@@ -628,7 +628,7 @@ public class punchout
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		/* copy the two big sprites */
@@ -658,7 +658,7 @@ public class punchout
 	
 				if (punchout_bigsprite1[6] & 1)	/* flip x */
 				{
-					startx = (bs1tmpbitmap->width << 16) - startx - 1;
+					startx = (bs1tmpbitmap.width << 16) - startx - 1;
 					incxx = -incxx;
 				}
 	
@@ -710,7 +710,7 @@ public class punchout
 			sx = offs/2 % 32;
 			sy = offs/2 / 32;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					videoram.read(offs)+ 256 * (videoram.read(offs + 1)& 0x07),
 					((videoram.read(offs + 1)& 0xf8) >> 3) + 32 * bottom_palette_bank,
 					videoram.read(offs + 1)& 0x80,0,

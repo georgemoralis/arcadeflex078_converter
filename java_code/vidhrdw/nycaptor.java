@@ -162,7 +162,7 @@ public class nycaptor
 				flipx = ((nycaptor_spriteram[offs+1]&0x40)>>6);
 				flipy = ((nycaptor_spriteram[offs+1]&0x80)>>7);
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code,
 						pal,
 						flipx,flipy,
@@ -172,7 +172,7 @@ public class nycaptor
 				if(nycaptor_spriteram[offs+3]>240)
 				{
 					sx = (nycaptor_spriteram[offs+3]-256);
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 	        				code,
 					        pal,
 					        flipx,flipy,

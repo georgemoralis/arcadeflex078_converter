@@ -1069,36 +1069,36 @@ public class pic16c5x
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+PIC16C5x_PC:   sprintf(buffer[which], "PC:%03X",   r->PC); break;
-			case CPU_INFO_REG+PIC16C5x_W:    sprintf(buffer[which], "W:%02X",    r->W); break;
-			case CPU_INFO_REG+PIC16C5x_ALU:  sprintf(buffer[which], "ALU:%02X",  r->ALU); break;
-			case CPU_INFO_REG+PIC16C5x_STR:  sprintf(buffer[which], "STR:%02X",  r->STATUS); break;
-			case CPU_INFO_REG+PIC16C5x_TMR0: sprintf(buffer[which], "TMR:%02X",  r->TMR0); break;
-			case CPU_INFO_REG+PIC16C5x_WDT:  sprintf(buffer[which], "WDT:%04X",  r->WDT); break;
-			case CPU_INFO_REG+PIC16C5x_OPT:  sprintf(buffer[which], "OPT:%02X",  r->OPTION); break;
-			case CPU_INFO_REG+PIC16C5x_STK0: sprintf(buffer[which], "STK0:%03X", r->STACK[0]); break;
-			case CPU_INFO_REG+PIC16C5x_STK1: sprintf(buffer[which], "STK1:%03X", r->STACK[1]); break;
-			case CPU_INFO_REG+PIC16C5x_PRTA: sprintf(buffer[which], "PRTA:%01X", ((r->PORTA) & 0xf)); break;
-			case CPU_INFO_REG+PIC16C5x_PRTB: sprintf(buffer[which], "PRTB:%02X", r->PORTB); break;
-			case CPU_INFO_REG+PIC16C5x_PRTC: sprintf(buffer[which], "PRTC:%02X", r->PORTC); break;
-			case CPU_INFO_REG+PIC16C5x_TRSA: sprintf(buffer[which], "TRSA:%01X", ((r->TRISA) & 0xf)); break;
-			case CPU_INFO_REG+PIC16C5x_TRSB: sprintf(buffer[which], "TRSB:%02X", r->TRISB); break;
-			case CPU_INFO_REG+PIC16C5x_TRSC: sprintf(buffer[which], "TRSC:%02X", r->TRISC); break;
-			case CPU_INFO_REG+PIC16C5x_FSR:  sprintf(buffer[which], "FSR:%02X",  ((r->FSR) & picRAMmask)); break;
-			case CPU_INFO_REG+PIC16C5x_PSCL: sprintf(buffer[which], "PSCL:%c%02X", ((r->OPTION & 0x08) ? 'W':'T'), r->prescaler); break;
+			case CPU_INFO_REG+PIC16C5x_PC:   sprintf(buffer[which], "PC:%03X",   r.PC); break;
+			case CPU_INFO_REG+PIC16C5x_W:    sprintf(buffer[which], "W:%02X",    r.W); break;
+			case CPU_INFO_REG+PIC16C5x_ALU:  sprintf(buffer[which], "ALU:%02X",  r.ALU); break;
+			case CPU_INFO_REG+PIC16C5x_STR:  sprintf(buffer[which], "STR:%02X",  r.STATUS); break;
+			case CPU_INFO_REG+PIC16C5x_TMR0: sprintf(buffer[which], "TMR:%02X",  r.TMR0); break;
+			case CPU_INFO_REG+PIC16C5x_WDT:  sprintf(buffer[which], "WDT:%04X",  r.WDT); break;
+			case CPU_INFO_REG+PIC16C5x_OPT:  sprintf(buffer[which], "OPT:%02X",  r.OPTION); break;
+			case CPU_INFO_REG+PIC16C5x_STK0: sprintf(buffer[which], "STK0:%03X", r.STACK[0]); break;
+			case CPU_INFO_REG+PIC16C5x_STK1: sprintf(buffer[which], "STK1:%03X", r.STACK[1]); break;
+			case CPU_INFO_REG+PIC16C5x_PRTA: sprintf(buffer[which], "PRTA:%01X", ((r.PORTA) & 0xf)); break;
+			case CPU_INFO_REG+PIC16C5x_PRTB: sprintf(buffer[which], "PRTB:%02X", r.PORTB); break;
+			case CPU_INFO_REG+PIC16C5x_PRTC: sprintf(buffer[which], "PRTC:%02X", r.PORTC); break;
+			case CPU_INFO_REG+PIC16C5x_TRSA: sprintf(buffer[which], "TRSA:%01X", ((r.TRISA) & 0xf)); break;
+			case CPU_INFO_REG+PIC16C5x_TRSB: sprintf(buffer[which], "TRSB:%02X", r.TRISB); break;
+			case CPU_INFO_REG+PIC16C5x_TRSC: sprintf(buffer[which], "TRSC:%02X", r.TRISC); break;
+			case CPU_INFO_REG+PIC16C5x_FSR:  sprintf(buffer[which], "FSR:%02X",  ((r.FSR) & picRAMmask)); break;
+			case CPU_INFO_REG+PIC16C5x_PSCL: sprintf(buffer[which], "PSCL:%c%02X", ((r.OPTION & 0x08) ? 'W':'T'), r.prescaler); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%01x%c%c%c%c%c %c%c%c%03x",
-					(r->STATUS & 0xe0) >> 5,
-					r->STATUS & 0x10 ? '.':'O',		/* WDT Overflow */
-					r->STATUS & 0x08 ? 'P':'D',		/* Power/Down */
-					r->STATUS & 0x04 ? 'Z':'.',		/* Zero */
-					r->STATUS & 0x02 ? 'c':'b',		/* Nibble Carry/Borrow */
-					r->STATUS & 0x01 ? 'C':'B',		/* Carry/Borrow */
+					(r.STATUS & 0xe0) >> 5,
+					r.STATUS & 0x10 ? '.':'O',		/* WDT Overflow */
+					r.STATUS & 0x08 ? 'P':'D',		/* Power/Down */
+					r.STATUS & 0x04 ? 'Z':'.',		/* Zero */
+					r.STATUS & 0x02 ? 'c':'b',		/* Nibble Carry/Borrow */
+					r.STATUS & 0x01 ? 'C':'B',		/* Carry/Borrow */
 	
-					r->OPTION & 0x20 ? 'C':'T',		/* Counter/Timer */
-					r->OPTION & 0x10 ? 'N':'P',		/* Negative/Positive */
-					r->OPTION & 0x08 ? 'W':'T',		/* WatchDog/Timer */
-					r->OPTION & 0x08 ? (1<<(r->OPTION&7)) : (2<<(r->OPTION&7)) );
+					r.OPTION & 0x20 ? 'C':'T',		/* Counter/Timer */
+					r.OPTION & 0x10 ? 'N':'P',		/* Negative/Positive */
+					r.OPTION & 0x08 ? 'W':'T',		/* WatchDog/Timer */
+					r.OPTION & 0x08 ? (1<<(r.OPTION&7)) : (2<<(r.OPTION&7)) );
 				break;
 			case CPU_INFO_NAME: return "PIC16C5x";
 			case CPU_INFO_FAMILY: return "Microchip";

@@ -94,7 +94,7 @@ public class mameH
 		/* lookup table used to map gfx pen numbers to color numbers */
 		UINT16 *				game_colortable;
 	
-		/* the above, already remapped through Machine->pens */
+		/* the above, already remapped through Machine.pens */
 		pen_t *					remapped_colortable;
 	
 		/* video color depth: 16, 15 or 32 */

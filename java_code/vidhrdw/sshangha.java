@@ -44,10 +44,10 @@ public class sshangha
 	
 		for (y=0; y<240; y++) {
 			for (x=0; x<320; x++) {
-				p=(((UINT16*)bitmap0->line[y])[x])&0xf;
-				p|=((((UINT16*)bitmap1->line[y])[x])&0xf)<<4;
+				p=(((UINT16*)bitmap0.line[y])[x])&0xf;
+				p|=((((UINT16*)bitmap1.line[y])[x])&0xf)<<4;
 	
-				plot_pixel(bitmap, x, y, Machine->pens[p|0x300]);
+				plot_pixel(bitmap, x, y, Machine.pens[p|0x300]);
 			}
 		}
 	}
@@ -117,12 +117,12 @@ public class sshangha
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						&Machine->visible_area,TRANSPARENCY_PEN,0);
+						&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				multi--;
 			}
@@ -159,7 +159,7 @@ public class sshangha
 	#if 0
 	static UINT32 sshangha_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	#endif

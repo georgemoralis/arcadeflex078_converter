@@ -140,7 +140,7 @@ public class e132xs
 {
 	#endif
 	
-	//TODO: check -> nirq,dirq,mem,shift,bits,align
+	//TODO: check . nirq,dirq,mem,shift,bits,align
 	#if (HAS_E132XS)
 		CPU0(E132XS,   e132xs, 	 1,0,1.00, 32, 32bedw,	  0,32,BE,4, 6	),
 	#endif
@@ -1024,70 +1024,70 @@ public class e132xs
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+E132XS_PC:  sprintf(buffer[which], "PC:%08X",  r->global_regs[0]); break;
-			case CPU_INFO_REG+E132XS_SR:  sprintf(buffer[which], "SR:%08X",  r->global_regs[1]); break;
-			case CPU_INFO_REG+E132XS_FER: sprintf(buffer[which], "FER:%08X", r->global_regs[2]); break;
-			case CPU_INFO_REG+E132XS_SP:  sprintf(buffer[which], "SP:%08X",  r->global_regs[18]); break;
-			case CPU_INFO_REG+E132XS_UB:  sprintf(buffer[which], "UB:%08X",  r->global_regs[19]); break;
-			case CPU_INFO_REG+E132XS_BCR: sprintf(buffer[which], "BCR:%08X", r->global_regs[20]); break;
-			case CPU_INFO_REG+E132XS_TPR: sprintf(buffer[which], "TPR:%08X", r->global_regs[21]); break;
-			case CPU_INFO_REG+E132XS_TCR: sprintf(buffer[which], "TCR:%08X", r->global_regs[22]); break;
-			case CPU_INFO_REG+E132XS_TR:  sprintf(buffer[which], "TR:%08X",  r->global_regs[23]); break;
-			case CPU_INFO_REG+E132XS_WCR: sprintf(buffer[which], "WCR:%08X", r->global_regs[24]); break;
-			case CPU_INFO_REG+E132XS_ISR: sprintf(buffer[which], "ISR:%08X", r->global_regs[25]); break;
-			case CPU_INFO_REG+E132XS_FCR: sprintf(buffer[which], "FCR:%08X", r->global_regs[26]); break;
-			case CPU_INFO_REG+E132XS_MCR: sprintf(buffer[which], "MCR:%08X", r->global_regs[27]); break;
-			case CPU_INFO_REG+E132XS_G0:  sprintf(buffer[which], "G0 :%08X", r->global_regs[0]); break;
-			case CPU_INFO_REG+E132XS_G1:  sprintf(buffer[which], "G1 :%08X", r->global_regs[1]); break;
-			case CPU_INFO_REG+E132XS_G2:  sprintf(buffer[which], "G2 :%08X", r->global_regs[2]); break;
-			case CPU_INFO_REG+E132XS_G3:  sprintf(buffer[which], "G3 :%08X", r->global_regs[3]); break;
-			case CPU_INFO_REG+E132XS_G4:  sprintf(buffer[which], "G4 :%08X", r->global_regs[4]); break;
-			case CPU_INFO_REG+E132XS_G5:  sprintf(buffer[which], "G5 :%08X", r->global_regs[5]); break;
-			case CPU_INFO_REG+E132XS_G6:  sprintf(buffer[which], "G6 :%08X", r->global_regs[6]); break;
-			case CPU_INFO_REG+E132XS_G7:  sprintf(buffer[which], "G7 :%08X", r->global_regs[7]); break;
-			case CPU_INFO_REG+E132XS_G8:  sprintf(buffer[which], "G8 :%08X", r->global_regs[8]); break;
-			case CPU_INFO_REG+E132XS_G9:  sprintf(buffer[which], "G9 :%08X", r->global_regs[9]); break;
-			case CPU_INFO_REG+E132XS_G10: sprintf(buffer[which], "G10:%08X", r->global_regs[10]); break;
-			case CPU_INFO_REG+E132XS_G11: sprintf(buffer[which], "G11:%08X", r->global_regs[11]); break;
-			case CPU_INFO_REG+E132XS_G12: sprintf(buffer[which], "G12:%08X", r->global_regs[12]); break;
-			case CPU_INFO_REG+E132XS_G13: sprintf(buffer[which], "G13:%08X", r->global_regs[13]); break;
-			case CPU_INFO_REG+E132XS_G14: sprintf(buffer[which], "G14:%08X", r->global_regs[14]); break;
-			case CPU_INFO_REG+E132XS_G15: sprintf(buffer[which], "G15:%08X", r->global_regs[15]); break;
-			case CPU_INFO_REG+E132XS_L0:  sprintf(buffer[which], "L0 :%08X", r->local_regs[0]); break;
-			case CPU_INFO_REG+E132XS_L1:  sprintf(buffer[which], "L1 :%08X", r->local_regs[1]); break;
-			case CPU_INFO_REG+E132XS_L2:  sprintf(buffer[which], "L2 :%08X", r->local_regs[2]); break;
-			case CPU_INFO_REG+E132XS_L3:  sprintf(buffer[which], "L3 :%08X", r->local_regs[3]); break;
-			case CPU_INFO_REG+E132XS_L4:  sprintf(buffer[which], "L4 :%08X", r->local_regs[4]); break;
-			case CPU_INFO_REG+E132XS_L5:  sprintf(buffer[which], "L5 :%08X", r->local_regs[5]); break;
-			case CPU_INFO_REG+E132XS_L6:  sprintf(buffer[which], "L6 :%08X", r->local_regs[6]); break;
-			case CPU_INFO_REG+E132XS_L7:  sprintf(buffer[which], "L7 :%08X", r->local_regs[7]); break;
-			case CPU_INFO_REG+E132XS_L8:  sprintf(buffer[which], "L8 :%08X", r->local_regs[8]); break;
-			case CPU_INFO_REG+E132XS_L9:  sprintf(buffer[which], "L9 :%08X", r->local_regs[9]); break;
-			case CPU_INFO_REG+E132XS_L10: sprintf(buffer[which], "L10:%08X", r->local_regs[10]); break;
-			case CPU_INFO_REG+E132XS_L11: sprintf(buffer[which], "L11:%08X", r->local_regs[11]); break;
-			case CPU_INFO_REG+E132XS_L12: sprintf(buffer[which], "L12:%08X", r->local_regs[12]); break;
-			case CPU_INFO_REG+E132XS_L13: sprintf(buffer[which], "L13:%08X", r->local_regs[13]); break;
-			case CPU_INFO_REG+E132XS_L14: sprintf(buffer[which], "L14:%08X", r->local_regs[14]); break;
-			case CPU_INFO_REG+E132XS_L15: sprintf(buffer[which], "L15:%08X", r->local_regs[15]); break;
+			case CPU_INFO_REG+E132XS_PC:  sprintf(buffer[which], "PC:%08X",  r.global_regs[0]); break;
+			case CPU_INFO_REG+E132XS_SR:  sprintf(buffer[which], "SR:%08X",  r.global_regs[1]); break;
+			case CPU_INFO_REG+E132XS_FER: sprintf(buffer[which], "FER:%08X", r.global_regs[2]); break;
+			case CPU_INFO_REG+E132XS_SP:  sprintf(buffer[which], "SP:%08X",  r.global_regs[18]); break;
+			case CPU_INFO_REG+E132XS_UB:  sprintf(buffer[which], "UB:%08X",  r.global_regs[19]); break;
+			case CPU_INFO_REG+E132XS_BCR: sprintf(buffer[which], "BCR:%08X", r.global_regs[20]); break;
+			case CPU_INFO_REG+E132XS_TPR: sprintf(buffer[which], "TPR:%08X", r.global_regs[21]); break;
+			case CPU_INFO_REG+E132XS_TCR: sprintf(buffer[which], "TCR:%08X", r.global_regs[22]); break;
+			case CPU_INFO_REG+E132XS_TR:  sprintf(buffer[which], "TR:%08X",  r.global_regs[23]); break;
+			case CPU_INFO_REG+E132XS_WCR: sprintf(buffer[which], "WCR:%08X", r.global_regs[24]); break;
+			case CPU_INFO_REG+E132XS_ISR: sprintf(buffer[which], "ISR:%08X", r.global_regs[25]); break;
+			case CPU_INFO_REG+E132XS_FCR: sprintf(buffer[which], "FCR:%08X", r.global_regs[26]); break;
+			case CPU_INFO_REG+E132XS_MCR: sprintf(buffer[which], "MCR:%08X", r.global_regs[27]); break;
+			case CPU_INFO_REG+E132XS_G0:  sprintf(buffer[which], "G0 :%08X", r.global_regs[0]); break;
+			case CPU_INFO_REG+E132XS_G1:  sprintf(buffer[which], "G1 :%08X", r.global_regs[1]); break;
+			case CPU_INFO_REG+E132XS_G2:  sprintf(buffer[which], "G2 :%08X", r.global_regs[2]); break;
+			case CPU_INFO_REG+E132XS_G3:  sprintf(buffer[which], "G3 :%08X", r.global_regs[3]); break;
+			case CPU_INFO_REG+E132XS_G4:  sprintf(buffer[which], "G4 :%08X", r.global_regs[4]); break;
+			case CPU_INFO_REG+E132XS_G5:  sprintf(buffer[which], "G5 :%08X", r.global_regs[5]); break;
+			case CPU_INFO_REG+E132XS_G6:  sprintf(buffer[which], "G6 :%08X", r.global_regs[6]); break;
+			case CPU_INFO_REG+E132XS_G7:  sprintf(buffer[which], "G7 :%08X", r.global_regs[7]); break;
+			case CPU_INFO_REG+E132XS_G8:  sprintf(buffer[which], "G8 :%08X", r.global_regs[8]); break;
+			case CPU_INFO_REG+E132XS_G9:  sprintf(buffer[which], "G9 :%08X", r.global_regs[9]); break;
+			case CPU_INFO_REG+E132XS_G10: sprintf(buffer[which], "G10:%08X", r.global_regs[10]); break;
+			case CPU_INFO_REG+E132XS_G11: sprintf(buffer[which], "G11:%08X", r.global_regs[11]); break;
+			case CPU_INFO_REG+E132XS_G12: sprintf(buffer[which], "G12:%08X", r.global_regs[12]); break;
+			case CPU_INFO_REG+E132XS_G13: sprintf(buffer[which], "G13:%08X", r.global_regs[13]); break;
+			case CPU_INFO_REG+E132XS_G14: sprintf(buffer[which], "G14:%08X", r.global_regs[14]); break;
+			case CPU_INFO_REG+E132XS_G15: sprintf(buffer[which], "G15:%08X", r.global_regs[15]); break;
+			case CPU_INFO_REG+E132XS_L0:  sprintf(buffer[which], "L0 :%08X", r.local_regs[0]); break;
+			case CPU_INFO_REG+E132XS_L1:  sprintf(buffer[which], "L1 :%08X", r.local_regs[1]); break;
+			case CPU_INFO_REG+E132XS_L2:  sprintf(buffer[which], "L2 :%08X", r.local_regs[2]); break;
+			case CPU_INFO_REG+E132XS_L3:  sprintf(buffer[which], "L3 :%08X", r.local_regs[3]); break;
+			case CPU_INFO_REG+E132XS_L4:  sprintf(buffer[which], "L4 :%08X", r.local_regs[4]); break;
+			case CPU_INFO_REG+E132XS_L5:  sprintf(buffer[which], "L5 :%08X", r.local_regs[5]); break;
+			case CPU_INFO_REG+E132XS_L6:  sprintf(buffer[which], "L6 :%08X", r.local_regs[6]); break;
+			case CPU_INFO_REG+E132XS_L7:  sprintf(buffer[which], "L7 :%08X", r.local_regs[7]); break;
+			case CPU_INFO_REG+E132XS_L8:  sprintf(buffer[which], "L8 :%08X", r.local_regs[8]); break;
+			case CPU_INFO_REG+E132XS_L9:  sprintf(buffer[which], "L9 :%08X", r.local_regs[9]); break;
+			case CPU_INFO_REG+E132XS_L10: sprintf(buffer[which], "L10:%08X", r.local_regs[10]); break;
+			case CPU_INFO_REG+E132XS_L11: sprintf(buffer[which], "L11:%08X", r.local_regs[11]); break;
+			case CPU_INFO_REG+E132XS_L12: sprintf(buffer[which], "L12:%08X", r.local_regs[12]); break;
+			case CPU_INFO_REG+E132XS_L13: sprintf(buffer[which], "L13:%08X", r.local_regs[13]); break;
+			case CPU_INFO_REG+E132XS_L14: sprintf(buffer[which], "L14:%08X", r.local_regs[14]); break;
+			case CPU_INFO_REG+E132XS_L15: sprintf(buffer[which], "L15:%08X", r.local_regs[15]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c FTE:%x FRM:%x ILC:%x FL:%x FP:%x",
-					r->global_regs[1] & 0x40000 ? 'S':'.',
-					r->global_regs[1] & 0x20000 ? 'P':'.',
-					r->global_regs[1] & 0x10000 ? 'T':'.',
-					r->global_regs[1] & 0x80000 ? 'L':'.',
-					r->global_regs[1] & 0x00080 ? 'I':'.',
-					r->global_regs[1] & 0x00040 ? '?':'.',
-					r->global_regs[1] & 0x00020 ? 'H':'.',
-					r->global_regs[1] & 0x00010 ? 'M':'.',
-					r->global_regs[1] & 0x00008 ? 'V':'.',
-					r->global_regs[1] & 0x00004 ? 'N':'.',
-					r->global_regs[1] & 0x00002 ? 'Z':'.',
-					r->global_regs[1] & 0x00001 ? 'C':'.',
-					(r->global_regs[1] & 0x00001f00)>>8,
-					(r->global_regs[1] & 0x00006000)>>13,
-					(r->global_regs[1] & 0x00180000)>>19,
-					(r->global_regs[1] & 0x01e00000)>>21,
-					(r->global_regs[1] & 0xfe000000)>>25);
+					r.global_regs[1] & 0x40000 ? 'S':'.',
+					r.global_regs[1] & 0x20000 ? 'P':'.',
+					r.global_regs[1] & 0x10000 ? 'T':'.',
+					r.global_regs[1] & 0x80000 ? 'L':'.',
+					r.global_regs[1] & 0x00080 ? 'I':'.',
+					r.global_regs[1] & 0x00040 ? '?':'.',
+					r.global_regs[1] & 0x00020 ? 'H':'.',
+					r.global_regs[1] & 0x00010 ? 'M':'.',
+					r.global_regs[1] & 0x00008 ? 'V':'.',
+					r.global_regs[1] & 0x00004 ? 'N':'.',
+					r.global_regs[1] & 0x00002 ? 'Z':'.',
+					r.global_regs[1] & 0x00001 ? 'C':'.',
+					(r.global_regs[1] & 0x00001f00)>>8,
+					(r.global_regs[1] & 0x00006000)>>13,
+					(r.global_regs[1] & 0x00180000)>>19,
+					(r.global_regs[1] & 0x01e00000)>>21,
+					(r.global_regs[1] & 0xfe000000)>>25);
 				break;
 	
 			case CPU_INFO_NAME: return "E1-32XS";
@@ -1139,7 +1139,7 @@ public class e132xs
 	
 		//TODO: test it with Rs = PC and CHK, PC, PC
 	
-		//if CHK, L0, L0 -> NOP, only in the debugger, here it's the same
+		//if CHK, L0, L0 . NOP, only in the debugger, here it's the same
 		if( (!(S_CODE == SR_CODE && !S_BIT) && (val2 > val1)) || ((S_CODE == SR_CODE && !S_BIT) && (val2 == 0)) )
 		{
 			UINT32 addr = get_trap_addr(RANGE_ERROR);
@@ -1299,9 +1299,9 @@ public class e132xs
 	
 				if( divisor == 0 || dividend > 0xffffffff )
 				{
-					//Rd//Rdf -> undefined
-					//Z -> undefined
-					//N -> undefined
+					//Rd//Rdf . undefined
+					//Z . undefined
+					//N . undefined
 					UINT32 addr;
 					SET_V(1);
 					addr = get_trap_addr(RANGE_ERROR);
@@ -1370,9 +1370,9 @@ public class e132xs
 	
 				if( divisor == 0 || dividend > 0xffffffff || (dividend_high & 0x80000000) )
 				{
-					//Rd//Rdf -> undefined
-					//Z -> undefined
-					//N -> undefined
+					//Rd//Rdf . undefined
+					//Z . undefined
+					//N . undefined
 					UINT32 addr;
 					SET_V(1);
 					addr = get_trap_addr(RANGE_ERROR);
@@ -2638,8 +2638,8 @@ public class e132xs
 	
 		SET_Z((val == 0 ? 1: 0));
 		SET_N(SIGN_BIT(val));
-		//V -> undefined
-		//C -> undefined
+		//V . undefined
+		//C . undefined
 	
 		e132xs_ICount -= 1;
 	}
@@ -4546,7 +4546,7 @@ public class e132xs
 	{
 		INT32 const_val;
 	
-		//TODO: add -> bit 0 of const must be 0 ?
+		//TODO: add . bit 0 of const must be 0 ?
 		const_val = get_const();
 	
 		verboselog( 0, "Immediate value for CALL: %04x\n", const_val );

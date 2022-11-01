@@ -1120,7 +1120,7 @@ public class seta
 		max = (int)uPD71054.max[no]&0xffff;
 	
 		if( max != 0 ) {
-			duration = (double)Machine->drv->cpu[0].cpu_clock/16/max;
+			duration = (double)Machine.drv.cpu[0].cpu_clock/16/max;
 		}
 		if( duration != 0 ) {
 			timer_adjust( uPD71054.timer[no], TIME_IN_HZ(duration), no, 0 );
@@ -1357,17 +1357,17 @@ public class seta
 		coin_counter_w		(1, (( data) >> 1) & 1 );
 	
 		/* blandia, gundhara, kamenrid & zingzip haven't the coin lockout device */
-		if (Machine->gamedrv			==	&driver_blandia  ||
-			Machine->gamedrv->clone_of	==	&driver_blandia  ||
+		if (Machine.gamedrv			==	&driver_blandia  ||
+			Machine.gamedrv.clone_of	==	&driver_blandia  ||
 	
-			Machine->gamedrv			==	&driver_gundhara ||
-			Machine->gamedrv->clone_of	==	&driver_gundhara ||
+			Machine.gamedrv			==	&driver_gundhara ||
+			Machine.gamedrv.clone_of	==	&driver_gundhara ||
 	
-			Machine->gamedrv			==	&driver_kamenrid ||
-			Machine->gamedrv->clone_of	==	&driver_kamenrid ||
+			Machine.gamedrv			==	&driver_kamenrid ||
+			Machine.gamedrv.clone_of	==	&driver_kamenrid ||
 	
-			Machine->gamedrv			==	&driver_zingzip  ||
-			Machine->gamedrv->clone_of	==	&driver_zingzip     )
+			Machine.gamedrv			==	&driver_zingzip  ||
+			Machine.gamedrv.clone_of	==	&driver_zingzip     )
 			return;
 		coin_lockout_w		(0, ((~data) >> 2) & 1 );
 		coin_lockout_w		(1, ((~data) >> 3) & 1 );
@@ -2626,7 +2626,7 @@ public class seta
 	public static Memory_ReadAddress tndrcade_sub_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM				),	// RAM
-		new Memory_ReadAddress( 0x0800, 0x0800, ff_r					),	// ? (bits 0/1/2/3: 1 -> do test 0-ff/100-1e0/5001-57ff/banked rom)
+		new Memory_ReadAddress( 0x0800, 0x0800, ff_r					),	// ? (bits 0/1/2/3: 1 . do test 0-ff/100-1e0/5001-57ff/banked rom)
 	//	new Memory_ReadAddress( 0x0800, 0x0800, soundlatch_r			),	//
 	//	new Memory_ReadAddress( 0x0801, 0x0801, soundlatch2_r			),	//
 		new Memory_ReadAddress( 0x1000, 0x1000, input_port_0_r		),	// P1
@@ -6463,7 +6463,7 @@ public class seta
 	
 	/*
 		drgnunit,qzkklogy,stg:
-		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
 		lev 2 drives the game
 	*/
 	
@@ -6559,7 +6559,7 @@ public class seta
 	
 	/*
 		extdwnhl:
-		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
 		lev 2 drives the game
 	*/
 	static MACHINE_DRIVER_START( extdwnhl )
@@ -6654,7 +6654,7 @@ public class seta
 	***************************************************************************/
 	
 	/*
-		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
 		lev 2 drives the game
 	*/
 	static MACHINE_DRIVER_START( jjsquawk )
@@ -7135,7 +7135,7 @@ public class seta
 	***************************************************************************/
 	
 	/* zingzip lev 3 = lev 2 + lev 1 !
-	   SR = 2100 -> lev1 is ignored so we must supply int 3, since the routine
+	   SR = 2100 . lev1 is ignored so we must supply int 3, since the routine
 	   at int 1 is necessary: it plays the background music.
 	*/
 	

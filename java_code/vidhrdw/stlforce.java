@@ -114,7 +114,7 @@ public class stlforce
 	
 		const UINT16 *source = stlforce_spriteram+0x0;
 		const UINT16 *finish = stlforce_spriteram+0x800;
-		const struct GfxElement *gfx = Machine->gfx[2];
+		const struct GfxElement *gfx = Machine.gfx[2];
 	
 		while( source<finish )
 		{

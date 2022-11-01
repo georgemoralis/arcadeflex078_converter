@@ -290,14 +290,14 @@ public class window
 		HDC dc = GetDC(NULL);
 	
 		// reset the bounds to a reasonable default
-		bounds->top = bounds->left = 0;
-		bounds->right = 640;
-		bounds->bottom = 480;
+		bounds.top = bounds.left = 0;
+		bounds.right = 640;
+		bounds.bottom = 480;
 		if (dc != 0)
 		{
 			// get the bounds from the DC
-			bounds->right = GetDeviceCaps(dc, HORZRES);
-			bounds->bottom = GetDeviceCaps(dc, VERTRES);
+			bounds.right = GetDeviceCaps(dc, HORZRES);
+			bounds.bottom = GetDeviceCaps(dc, VERTRES);
 	
 			// release the DC
 			ReleaseDC(NULL, dc);
@@ -327,37 +327,37 @@ public class window
 		RECT clear;
 	
 		// clear the left edge
-		if (inner->left > outer->left)
+		if (inner.left > outer.left)
 		{
 			clear = *outer;
-			clear.right = inner->left;
+			clear.right = inner.left;
 			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
 		// clear the right edge
-		if (inner->right < outer->right)
+		if (inner.right < outer.right)
 		{
 			clear = *outer;
-			clear.left = inner->right;
+			clear.left = inner.right;
 			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
 		// clear the top edge
-		if (inner->top > outer->top)
+		if (inner.top > outer.top)
 		{
 			clear = *outer;
-			clear.bottom = inner->top;
+			clear.bottom = inner.top;
 			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
 	
 		// clear the bottom edge
-		if (inner->bottom < outer->bottom)
+		if (inner.bottom < outer.bottom)
 		{
 			clear = *outer;
-			clear.top = inner->bottom;
+			clear.top = inner.bottom;
 			if (dc != 0)
 				FillRect(dc, &clear, brush);
 		}
@@ -377,24 +377,24 @@ public class window
 		if (SystemParametersInfo(SPI_GETWORKAREA, 0, maximum, 0))
 		{
 			// clamp to the width specified
-			if (tempwidth && (maximum->right - maximum->left) > (tempwidth + wnd_extra_width()))
+			if (tempwidth && (maximum.right - maximum.left) > (tempwidth + wnd_extra_width()))
 			{
-				int diff = (maximum->right - maximum->left) - (tempwidth + wnd_extra_width());
+				int diff = (maximum.right - maximum.left) - (tempwidth + wnd_extra_width());
 				if (diff > 0)
 				{
-					maximum->left += diff / 2;
-					maximum->right -= diff - (diff / 2);
+					maximum.left += diff / 2;
+					maximum.right -= diff - (diff / 2);
 				}
 			}
 	
 			// clamp to the height specified
-			if (tempheight && (maximum->bottom - maximum->top) > (tempheight + wnd_extra_height()))
+			if (tempheight && (maximum.bottom - maximum.top) > (tempheight + wnd_extra_height()))
 			{
-				int diff = (maximum->bottom - maximum->top) - (tempheight + wnd_extra_height());
+				int diff = (maximum.bottom - maximum.top) - (tempheight + wnd_extra_height());
 				if (diff > 0)
 				{
-					maximum->top += diff / 2;
-					maximum->bottom -= diff - (diff / 2);
+					maximum.top += diff / 2;
+					maximum.bottom -= diff - (diff / 2);
 				}
 			}
 		}
@@ -450,7 +450,7 @@ public class window
 		}
 	
 		// make the window title
-		sprintf(title, APPNAME ": %s [%s]", Machine->gamedrv->description, Machine->gamedrv->name);
+		sprintf(title, APPNAME ": %s [%s]", Machine.gamedrv.description, Machine.gamedrv.name);
 	
 	#if HAS_WINDOW_MENU
 		if (win_create_menu(&menu))
@@ -509,22 +509,22 @@ public class window
 		win_update_video_window(NULL, NULL, NULL);
 	
 		// fill in the bitmap info header
-		video_dib_info->bmiHeader.biSize			= sizeof(video_dib_info->bmiHeader);
-		video_dib_info->bmiHeader.biPlanes			= 1;
-		video_dib_info->bmiHeader.biCompression		= BI_RGB;
-		video_dib_info->bmiHeader.biSizeImage		= 0;
-		video_dib_info->bmiHeader.biXPelsPerMeter	= 0;
-		video_dib_info->bmiHeader.biYPelsPerMeter	= 0;
-		video_dib_info->bmiHeader.biClrUsed			= 0;
-		video_dib_info->bmiHeader.biClrImportant	= 0;
+		video_dib_info.bmiHeader.biSize			= sizeof(video_dib_info.bmiHeader);
+		video_dib_info.bmiHeader.biPlanes			= 1;
+		video_dib_info.bmiHeader.biCompression		= BI_RGB;
+		video_dib_info.bmiHeader.biSizeImage		= 0;
+		video_dib_info.bmiHeader.biXPelsPerMeter	= 0;
+		video_dib_info.bmiHeader.biYPelsPerMeter	= 0;
+		video_dib_info.bmiHeader.biClrUsed			= 0;
+		video_dib_info.bmiHeader.biClrImportant	= 0;
 	
 		// initialize the palette to a gray ramp
 		for (i = 0; i < 255; i++)
 		{
-			video_dib_info->bmiColors[i].rgbRed			= i;
-			video_dib_info->bmiColors[i].rgbGreen		= i;
-			video_dib_info->bmiColors[i].rgbBlue		= i;
-			video_dib_info->bmiColors[i].rgbReserved	= i;
+			video_dib_info.bmiColors[i].rgbRed			= i;
+			video_dib_info.bmiColors[i].rgbGreen		= i;
+			video_dib_info.bmiColors[i].rgbBlue		= i;
+			video_dib_info.bmiColors[i].rgbReserved	= i;
 		}
 	
 		// copy that same data into the debug DIB info
@@ -795,8 +795,8 @@ public class window
 			case WM_GETMINMAXINFO:
 			{
 				MINMAXINFO *minmax = (MINMAXINFO *)lparam;
-				minmax->ptMinTrackSize.x = MIN_WINDOW_DIM;
-				minmax->ptMinTrackSize.y = MIN_WINDOW_DIM;
+				minmax.ptMinTrackSize.x = MIN_WINDOW_DIM;
+				minmax.ptMinTrackSize.y = MIN_WINDOW_DIM;
 				break;
 			}
 	
@@ -978,8 +978,8 @@ public class window
 		}
 	
 		// compute the adjustments we need to make
-		adjwidth = (reqwidth + extrawidth) - (rect->right - rect->left);
-		adjheight = (reqheight + extraheight) - (rect->bottom - rect->top);
+		adjwidth = (reqwidth + extrawidth) - (rect.right - rect.left);
+		adjheight = (reqheight + extraheight) - (rect.bottom - rect.top);
 	
 		// based on which corner we're adjusting, constrain in different ways
 		switch (adjustment)
@@ -987,25 +987,25 @@ public class window
 			case WMSZ_BOTTOM:
 			case WMSZ_BOTTOMRIGHT:
 			case WMSZ_RIGHT:
-				rect->right += adjwidth;
-				rect->bottom += adjheight;
+				rect.right += adjwidth;
+				rect.bottom += adjheight;
 				break;
 	
 			case WMSZ_BOTTOMLEFT:
-				rect->left -= adjwidth;
-				rect->bottom += adjheight;
+				rect.left -= adjwidth;
+				rect.bottom += adjheight;
 				break;
 	
 			case WMSZ_LEFT:
 			case WMSZ_TOPLEFT:
 			case WMSZ_TOP:
-				rect->left -= adjwidth;
-				rect->top -= adjheight;
+				rect.left -= adjwidth;
+				rect.top -= adjheight;
 				break;
 	
 			case WMSZ_TOPRIGHT:
-				rect->right += adjwidth;
-				rect->top -= adjheight;
+				rect.right += adjwidth;
+				rect.top -= adjheight;
 				break;
 		}
 	}
@@ -1489,8 +1489,8 @@ public class window
 	UINT32 *win_prepare_palette(struct win_blit_params *params)
 	{
 		// 16bpp source only needs a palette if RGB direct or modifiable
-		if (params->srcdepth == 15 || params->srcdepth == 16)
-			return (params->dstdepth == 16) ? palette_16bit_lookup : palette_32bit_lookup;
+		if (params.srcdepth == 15 || params.srcdepth == 16)
+			return (params.dstdepth == 16) ? palette_16bit_lookup : palette_32bit_lookup;
 	
 		// nobody else needs it
 		return NULL;
@@ -1504,7 +1504,7 @@ public class window
 	
 	static void dib_draw_window(HDC dc, struct mame_bitmap *bitmap, const struct rectangle *bounds, void *vector_dirty_pixels, int update)
 	{
-		int depth = (bitmap->depth == 15) ? 16 : bitmap->depth;
+		int depth = (bitmap.depth == 15) ? 16 : bitmap.depth;
 		struct win_blit_params params;
 		int xmult, ymult;
 		RECT client;
@@ -1525,9 +1525,9 @@ public class window
 		params.dstyskip		= (!win_old_scanlines || ymult == 1) ? 0 : 1;
 		params.dsteffect	= win_determine_effect(&params);
 	
-		params.srcdata		= bitmap->base;
-		params.srcpitch		= bitmap->rowbytes;
-		params.srcdepth		= bitmap->depth;
+		params.srcdata		= bitmap.base;
+		params.srcpitch		= bitmap.rowbytes;
+		params.srcdepth		= bitmap.depth;
 		params.srclookup	= win_prepare_palette(&params);
 		params.srcxoffs		= win_visible_rect.left;
 		params.srcyoffs		= win_visible_rect.top;
@@ -1543,20 +1543,20 @@ public class window
 		// adjust for more optimal bounds
 		if (bounds && !update && !vector_dirty_pixels)
 		{
-			params.dstxoffs += (bounds->min_x - win_visible_rect.left) * xmult;
-			params.dstyoffs += (bounds->min_y - win_visible_rect.top) * ymult;
-			params.srcxoffs += bounds->min_x - win_visible_rect.left;
-			params.srcyoffs += bounds->min_y - win_visible_rect.top;
-			params.srcwidth = bounds->max_x - bounds->min_x + 1;
-			params.srcheight = bounds->max_y - bounds->min_y + 1;
+			params.dstxoffs += (bounds.min_x - win_visible_rect.left) * xmult;
+			params.dstyoffs += (bounds.min_y - win_visible_rect.top) * ymult;
+			params.srcxoffs += bounds.min_x - win_visible_rect.left;
+			params.srcyoffs += bounds.min_y - win_visible_rect.top;
+			params.srcwidth = bounds.max_x - bounds.min_x + 1;
+			params.srcheight = bounds.max_y - bounds.min_y + 1;
 		}
 	
 		win_perform_blit(&params, update);
 	
 		// fill in bitmap-specific info
-		video_dib_info->bmiHeader.biWidth = params.dstpitch / (depth / 8);
-		video_dib_info->bmiHeader.biHeight = -win_visible_height * ymult;
-		video_dib_info->bmiHeader.biBitCount = depth;
+		video_dib_info.bmiHeader.biWidth = params.dstpitch / (depth / 8);
+		video_dib_info.bmiHeader.biHeight = -win_visible_height * ymult;
+		video_dib_info.bmiHeader.biBitCount = depth;
 	
 		// compute the center position
 		cx = client.left + ((client.right - client.left) - win_visible_width * xmult) / 2;
@@ -1610,10 +1610,10 @@ public class window
 		int result = effect_table[win_blit_effect].effect;
 	
 		// if we're out of range, revert to NONE
-		if (params->dstxscale < effect_table[win_blit_effect].min_xscale ||
-			params->dstxscale > effect_table[win_blit_effect].max_xscale ||
-			params->dstyscale < effect_table[win_blit_effect].min_yscale ||
-			params->dstyscale > effect_table[win_blit_effect].max_yscale)
+		if (params.dstxscale < effect_table[win_blit_effect].min_xscale ||
+			params.dstxscale > effect_table[win_blit_effect].max_xscale ||
+			params.dstyscale < effect_table[win_blit_effect].min_yscale ||
+			params.dstyscale > effect_table[win_blit_effect].max_yscale)
 			result = EFFECT_NONE;
 	
 		return result;
@@ -1628,8 +1628,8 @@ public class window
 	static void compute_multipliers_internal(const RECT *rect, int visible_width, int visible_height, int *xmult, int *ymult)
 	{
 		// first compute simply
-		*xmult = (rect->right - rect->left) / visible_width;
-		*ymult = (rect->bottom - rect->top) / visible_height;
+		*xmult = (rect.right - rect.left) / visible_width;
+		*ymult = (rect.bottom - rect.top) / visible_height;
 	
 		// clamp to the hardcoded max
 		if (*xmult > MAX_X_MULTIPLY)
@@ -1701,7 +1701,7 @@ public class window
 		RECT bounds, work_bounds;
 		TCHAR title[256];
 	
-		sprintf(title, "Debug: %s [%s]", Machine->gamedrv->description, Machine->gamedrv->name);
+		sprintf(title, "Debug: %s [%s]", Machine.gamedrv.description, Machine.gamedrv.name);
 	
 		// get the adjusted bounds
 		bounds.top = bounds.left = 0;
@@ -1763,7 +1763,7 @@ public class window
 			palette = last_palette;
 	
 		// if no bitmap, just fill
-		if (bitmap == NULL || palette == NULL || !debug_focus || bitmap->depth != 8)
+		if (bitmap == NULL || palette == NULL || !debug_focus || bitmap.depth != 8)
 		{
 			RECT fill;
 			GetClientRect(win_debug_window, &fill);
@@ -1780,20 +1780,20 @@ public class window
 		// for 8bpp bitmaps, update the debug colors
 		for (i = 0; i < DEBUGGER_TOTAL_COLORS; i++)
 		{
-			debug_dib_info->bmiColors[i].rgbRed		= RGB_RED(palette[i]);
-			debug_dib_info->bmiColors[i].rgbGreen	= RGB_GREEN(palette[i]);
-			debug_dib_info->bmiColors[i].rgbBlue	= RGB_BLUE(palette[i]);
+			debug_dib_info.bmiColors[i].rgbRed		= RGB_RED(palette[i]);
+			debug_dib_info.bmiColors[i].rgbGreen	= RGB_GREEN(palette[i]);
+			debug_dib_info.bmiColors[i].rgbBlue	= RGB_BLUE(palette[i]);
 		}
 	
 		// fill in bitmap-specific info
-		debug_dib_info->bmiHeader.biWidth = (((UINT8 *)bitmap->line[1]) - ((UINT8 *)bitmap->line[0])) / (bitmap->depth / 8);
-		debug_dib_info->bmiHeader.biHeight = -bitmap->height;
-		debug_dib_info->bmiHeader.biBitCount = bitmap->depth;
+		debug_dib_info.bmiHeader.biWidth = (((UINT8 *)bitmap.line[1]) - ((UINT8 *)bitmap.line[0])) / (bitmap.depth / 8);
+		debug_dib_info.bmiHeader.biHeight = -bitmap.height;
+		debug_dib_info.bmiHeader.biBitCount = bitmap.depth;
 	
 		// blit to the screen
-		StretchDIBits(dc, 0, 0, bitmap->width, bitmap->height,
-				0, 0, bitmap->width, bitmap->height,
-				bitmap->base, debug_dib_info, DIB_RGB_COLORS, SRCCOPY);
+		StretchDIBits(dc, 0, 0, bitmap.width, bitmap.height,
+				0, 0, bitmap.width, bitmap.height,
+				bitmap.base, debug_dib_info, DIB_RGB_COLORS, SRCCOPY);
 	}
 	
 	
@@ -1821,8 +1821,8 @@ public class window
 			case WM_GETMINMAXINFO:
 			{
 				MINMAXINFO *minmax = (MINMAXINFO *)lparam;
-				minmax->ptMinTrackSize.x = 640;
-				minmax->ptMinTrackSize.y = 480;
+				minmax.ptMinTrackSize.x = 640;
+				minmax.ptMinTrackSize.y = 480;
 				break;
 			}
 	

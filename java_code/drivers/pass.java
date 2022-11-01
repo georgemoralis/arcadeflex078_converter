@@ -47,16 +47,16 @@
    0x00124e : mask = 0x0300 (player 1 lives)
    0x001292 : mask = 0x0300 (player 2 lives)
 
-   0x0046ea : mask = 0x0001 (unknown effect - flip ? demo sounds ?) ->
+   0x0046ea : mask = 0x0001 (unknown effect - flip ? demo sounds ?) .
 
    0x004182 : mask = 0x1800 (time, difficulty)
 
 
  reads from 0x230200.w :
 
-   0x001000 : mask = 0xffff -> >>  0 in 0x080010
-   0x001000 : mask = 0x00f0 -> >>  4 in 0x080016 (player 1 directions)
-   0x001000 : mask = 0xf000 -> >> 12 in 0x080018 (player 2 directions)
+   0x001000 : mask = 0xffff . >>  0 in 0x080010
+   0x001000 : mask = 0x00f0 . >>  4 in 0x080016 (player 1 directions)
+   0x001000 : mask = 0xf000 . >> 12 in 0x080018 (player 2 directions)
 
 
  0x080010.w : inputs

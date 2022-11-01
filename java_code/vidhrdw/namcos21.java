@@ -173,9 +173,9 @@ public class namcos21
 					double y = (INT16)(pPointData[subAddr++]&0xffff);
 					double z = (INT16)(pPointData[subAddr++]&0xffff);
 					struct VerTex *pVertex = &vertex[count];
-					pVertex->x = M[0][0]*x + M[1][0]*y + M[2][0]*z + M[3][0];
-					pVertex->y = M[0][1]*x + M[1][1]*y + M[2][1]*z + M[3][1];
-					pVertex->z = M[0][2]*x + M[1][2]*y + M[2][2]*z + M[3][2];
+					pVertex.x = M[0][0]*x + M[1][0]*y + M[2][0]*z + M[3][0];
+					pVertex.y = M[0][1]*x + M[1][1]*y + M[2][1]*z + M[3][1];
+					pVertex.z = M[0][2]*x + M[1][2]*y + M[2][2]*z + M[3][2];
 				}
 				surfaceCount = pPointData[subAddr++]&0xff;
 				if( surfaceCount > MAX_SURFACE )
@@ -466,19 +466,19 @@ public class namcos21
 			for( i=0; i<4; i++ )
 			{
 				data = 0xf&(namcos21_polyattr0[i/4]>>(4*(3-(i&3))));
-				drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[data], 0,0,0,
+				drawgfx( bitmap, Machine.uifont, "0123456789abcdef"[data], 0,0,0,
 					i*12,16*0,cliprect,TRANSPARENCY_NONE,0 );
 			}
 			for( i=0; i<4; i++ )
 			{
 				data = 0xf&(namcos21_polyattr1[i/4]>>(4*(3-(i&3))));
-				drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[data], 0,0,0,
+				drawgfx( bitmap, Machine.uifont, "0123456789abcdef"[data], 0,0,0,
 					i*12,16*1,cliprect,TRANSPARENCY_NONE,0 );
 			}
 			for( i=0; i<4*8; i++ )
 			{
 				data = 0xf&(namcos21_objattr[i/4]>>(4*(3-(i&3))));
-				drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[data], 0,0,0,
+				drawgfx( bitmap, Machine.uifont, "0123456789abcdef"[data], 0,0,0,
 					i*12,16*2,cliprect,TRANSPARENCY_NONE,0 );
 			}
 		}

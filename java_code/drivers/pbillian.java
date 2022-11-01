@@ -95,8 +95,8 @@ DSW1 stored @ $f236
 		
 DSW2 stored @ $f237 
 ---4---- code @ $03b4, stored @ $f290  (3/4 lives ?)
-----32-- code @ $03d8, stored @ $f293 (3600/5400/2400/1200  -> bonus  ?)
-------10 code @ $03be, stored @ $f291/92 (8,8/0,12/16,6/24,4 -> difficulty ? )
+----32-- code @ $03d8, stored @ $f293 (3600/5400/2400/1200  . bonus  ?)
+------10 code @ $03be, stored @ $f291/92 (8,8/0,12/16,6/24,4 . difficulty ? )
 
 ******************************************************************************/
 /*
@@ -134,7 +134,7 @@ public class pbillian
 	{
 		/* 
 			Hot Smash
-			select_408=1 && bit 7==1 -> protection related ?
+			select_408=1 && bit 7==1 . protection related ?
 	 		Setting this bit to high cause win/lose/game over etc
 	 		(see below)
 	  */		

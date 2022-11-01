@@ -153,14 +153,14 @@ public class system32
 		src_fh    = sys32sprite_rom_height;
 	
 		idp_base  = sys32sprite_table;
-		pal_base  = Machine->gfx[0]->colortable;
+		pal_base  = Machine.gfx[0].colortable;
 	
-		dst_ptr   = bitmap->base;
-		dst_pitch = bitmap->rowpixels;
-		dst_minx  = cliprect->min_x;
-		dst_maxx  = cliprect->max_x;
-		dst_miny  = cliprect->min_y;
-		dst_maxy  = cliprect->max_y;
+		dst_ptr   = bitmap.base;
+		dst_pitch = bitmap.rowpixels;
+		dst_minx  = cliprect.min_x;
+		dst_maxx  = cliprect.max_x;
+		dst_miny  = cliprect.min_y;
+		dst_maxy  = cliprect.max_y;
 		dst_x     = sys32sprite_xpos;
 		dst_y     = sys32sprite_ypos;
 		dst_w     = sys32sprite_screen_width;
@@ -480,8 +480,8 @@ public class system32
 		UINT32 xsrc,ysrc;
 		UINT32 xdst,ydst;
 		/* um .. probably a better way to do this */
-		struct GfxElement *gfx=Machine->gfx[0];
-		const pen_t *paldata = &gfx->colortable[0];
+		struct GfxElement *gfx=Machine.gfx[0];
+		const pen_t *paldata = &gfx.colortable[0];
 	
 		/* if the gfx data is coming from RAM instead of ROM change the pointer */
 		if (sys32sprite_rambasedgfx != 0) {
@@ -499,15 +499,15 @@ public class system32
 	
 			if (!sys32sprite_yflip) {
 				drawypos = sys32sprite_ypos+ydst; // no flip
-				if (drawypos > cliprect->max_y) ysrc = sys32sprite_rom_height<<16; // quit drawing if we've gone off the right
+				if (drawypos > cliprect.max_y) ysrc = sys32sprite_rom_height<<16; // quit drawing if we've gone off the right
 			}
 			else {
 				drawypos = sys32sprite_ypos+((sys32sprite_screen_height-1)-ydst); // y flip
-				if (drawypos < cliprect->min_y) ysrc = sys32sprite_rom_height<<16; // quit drawing if we've gone off the left on a flipped sprite
+				if (drawypos < cliprect.min_y) ysrc = sys32sprite_rom_height<<16; // quit drawing if we've gone off the left on a flipped sprite
 			}
 	
-			if ((drawypos >= cliprect->min_y) && (drawypos <= cliprect->max_y)) {
-				UINT32 *destline = (bitmap->line[drawypos]);
+			if ((drawypos >= cliprect.min_y) && (drawypos <= cliprect.max_y)) {
+				UINT32 *destline = (bitmap.line[drawypos]);
 	
 				while ( xsrc < (sys32sprite_rom_width<<16) ) {
 	
@@ -515,14 +515,14 @@ public class system32
 	
 					if (!sys32sprite_xflip) {
 						drawxpos = sys32sprite_xpos+xdst; // no flip
-						if (drawxpos > cliprect->max_x) xsrc = sys32sprite_rom_width<<16; // quit drawing if we've gone off the right
+						if (drawxpos > cliprect.max_x) xsrc = sys32sprite_rom_width<<16; // quit drawing if we've gone off the right
 					}
 					else {
 						drawxpos = sys32sprite_xpos+((sys32sprite_screen_width-1)-xdst); // x flip
-						if (drawxpos < cliprect->min_x) xsrc = sys32sprite_rom_width<<16; // quit drawing if we've gone off the left on a flipped sprite
+						if (drawxpos < cliprect.min_x) xsrc = sys32sprite_rom_width<<16; // quit drawing if we've gone off the left on a flipped sprite
 					}
 	
-					if ((drawxpos >= cliprect->min_x) && (drawxpos <= cliprect->max_x)) {
+					if ((drawxpos >= cliprect.min_x) && (drawxpos <= cliprect.max_x)) {
 						int gfxdata;
 						int data;
 						int r,g,b;
@@ -780,7 +780,7 @@ public class system32
 		}
 	
 		sys32sprite_priority = system32_mixerregs[sys32sprite_monitor_select][sys32sprite_priority_lookup&sprite_priority_levels]&0xf;
-		if (sys32sprite_is_shadow && ((!strcmp(Machine->gamedrv->name,"f1en")) || (!strcmp(Machine->gamedrv->name,"f1lap")))) sys32sprite_is_shadow=0;  // f1en turns this flag on the car sprites?
+		if (sys32sprite_is_shadow && ((!strcmp(Machine.gamedrv.name,"f1en")) || (!strcmp(Machine.gamedrv.name,"f1lap")))) sys32sprite_is_shadow=0;  // f1en turns this flag on the car sprites?
 	
 		if (sys32sprite_use_yoffset != 0) sys32sprite_ypos += jump_y;
 		if (sys32sprite_use_xoffset != 0) sys32sprite_xpos += jump_x;
@@ -875,10 +875,10 @@ public class system32
 		struct rectangle clip;
 	
 		/* set clipping defaults */
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.max_x;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.max_x;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 	
 		processed = 0;
 		spritenum = 0;
@@ -912,14 +912,14 @@ public class system32
 						clip.min_x = spritedata_source[2]& 0x0fff;
 						clip.max_x = spritedata_source[3]& 0x0fff;
 	
-						if  (clip.max_y > Machine->visible_area.max_y) clip.max_y = Machine->visible_area.max_y;
-						if  (clip.max_x > Machine->visible_area.max_x) clip.max_x = Machine->visible_area.max_x;
+						if  (clip.max_y > Machine.visible_area.max_y) clip.max_y = Machine.visible_area.max_y;
+						if  (clip.max_x > Machine.visible_area.max_x) clip.max_x = Machine.visible_area.max_x;
 					}
 					else {
-						clip.min_x = Machine->visible_area.min_x;
-						clip.max_x = Machine->visible_area.max_x;
-						clip.min_y = Machine->visible_area.min_y;
-						clip.max_y = Machine->visible_area.max_y;
+						clip.min_x = Machine.visible_area.min_x;
+						clip.max_x = Machine.visible_area.max_x;
+						clip.min_y = Machine.visible_area.min_y;
+						clip.max_y = Machine.visible_area.max_y;
 					}
 	
 				}
@@ -1062,8 +1062,8 @@ public class system32
 		int tmaddress = (sys32_videoram[0x01ff5c/2] & 0x00f0) >> 4;
 	
 		int monitor_select, monitor_offset;
-		struct GfxElement *gfx = Machine->gfx[1];
-		struct GfxLayout *gfxlayout = Machine->drv->gfxdecodeinfo[1].gfxlayout;
+		struct GfxElement *gfx = Machine.gfx[1];
+		struct GfxLayout *gfxlayout = Machine.drv.gfxdecodeinfo[1].gfxlayout;
 		data8_t *txtile_gfxregion = memory_region(REGION_GFX3);
 		data16_t* tx_tilemapbase = sys32_videoram + ((0x10000+tmaddress*0x1000) /2);
 	
@@ -1316,22 +1316,22 @@ public class system32
 			rowselect = (sys32_videoram[0x01FF04/2] & 0x0008)>>3;
 		}
 	
-		// Switch to Machine->visible_area.max_x later
+		// Switch to Machine.visible_area.max_x later
 		monitor_res=system32_screen_mode?52*8:40*8;
 	
 		if (multi32 != 0) {
-			//			clip.min_x = Machine->visible_area.min_x;
-			//			clip.max_x = Machine->visible_area.max_x;
+			//			clip.min_x = Machine.visible_area.min_x;
+			//			clip.max_x = Machine.visible_area.max_x;
 			clip.min_x = (layer%2)*monitor_res;
 			clip.max_x = (layer%2+1)*monitor_res;
 			clip.min_y = 0;
 			clip.max_y = 28*8;
 		}
 		else {
-			clip.min_x = Machine->visible_area.min_x;
-			clip.max_x = Machine->visible_area.max_x;
-			clip.min_y = Machine->visible_area.min_y;
-			clip.max_y = Machine->visible_area.max_y;
+			clip.min_x = Machine.visible_area.min_x;
+			clip.max_x = Machine.visible_area.max_x;
+			clip.min_y = Machine.visible_area.min_y;
+			clip.max_y = Machine.visible_area.max_y;
 		}
 	
 		if (rowscroll || rowselect) {

@@ -155,15 +155,15 @@ public class k005289
 	{
 		const char *snd_name = "K005289";
 		k005289_sound_channel *voice=channel_list;
-		const struct k005289_interface *intf = msound->sound_interface;
+		const struct k005289_interface *intf = msound.sound_interface;
 	
 		/* get stream channels */
-		stream = stream_init(snd_name, intf->volume, Machine->sample_rate, 0, K005289_update);
-		mclock = intf->master_clock;
-		rate = Machine->sample_rate;
+		stream = stream_init(snd_name, intf.volume, Machine.sample_rate, 0, K005289_update);
+		mclock = intf.master_clock;
+		rate = Machine.sample_rate;
 	
 		/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
-		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine->sample_rate)) == 0)
+		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine.sample_rate)) == 0)
 			return 1;
 	
 		/* build the mixer table */
@@ -173,7 +173,7 @@ public class k005289
 			return 1;
 		}
 	
-		sound_prom = memory_region(intf->region);
+		sound_prom = memory_region(intf.region);
 	
 		/* reset all the voices */
 		voice[0].frequency = 0;

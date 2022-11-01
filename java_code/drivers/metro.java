@@ -328,7 +328,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundlatch_w )
 	{
-		if ( ACCESSING_LSB && (Machine->sample_rate != 0) )
+		if ( ACCESSING_LSB && (Machine.sample_rate != 0) )
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_nmi_line( 1, PULSE_LINE );
@@ -400,14 +400,14 @@ public class metro
 	if (!BIT(data,0) || !BIT(data,5))
 		logerror("%04x: daitorid_port_b_w %02x\n",activecpu_get_pc(),data);
 	
-		if (BIT(portb,7) && !BIT(data,7))	/* clock 1->0 */
+		if (BIT(portb,7) && !BIT(data,7))	/* clock 1.0 */
 		{
 	//		metro_soundstatus = porta;
 			metro_soundstatus = 0;	// ???
 	logerror("%04x: to_cpu = %02x\n",activecpu_get_pc(),porta);
 		}
 	
-		if (BIT(portb,6) && !BIT(data,6))	/* clock 1->0 */
+		if (BIT(portb,6) && !BIT(data,6))	/* clock 1.0 */
 		{
 			if (!BIT(data,2))
 			{
@@ -431,7 +431,7 @@ public class metro
 			}
 		}
 	
-		if (BIT(portb,4) && !BIT(data,4))	/* clock 1->0 */
+		if (BIT(portb,4) && !BIT(data,4))	/* clock 1.0 */
 		{
 			if (!BIT(data,2))
 			{
@@ -499,7 +499,7 @@ public class metro
 	#else
 	WRITE16_HANDLER( metro_soundlatch_w )
 	{
-		if ( ACCESSING_LSB && (Machine->sample_rate != 0) )
+		if ( ACCESSING_LSB && (Machine.sample_rate != 0) )
 		{
 	//		soundlatch_w(0,data & 0xff);
 		}

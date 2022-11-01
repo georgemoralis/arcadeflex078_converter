@@ -166,7 +166,7 @@ public class srumbler
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					code,
 					colour,
 					flip_screen,flipy,

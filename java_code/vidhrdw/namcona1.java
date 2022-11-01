@@ -222,8 +222,8 @@ public class namcona1
 				if( dirtychar[i] )
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine->gfx[0],i,(UINT8 *)cgram,&cg_layout);
-					decodechar(Machine->gfx[1],i,(UINT8 *)shaperam,&shape_layout);
+					decodechar(Machine.gfx[0],i,(UINT8 *)cgram,&cg_layout);
+					decodechar(Machine.gfx[1],i,(UINT8 *)shaperam,&shape_layout);
 				}
 			}
 			dirtygfx = 0;
@@ -258,13 +258,13 @@ public class namcona1
 			gfx1 = decodegfx( (UINT8 *)shaperam,&shape_layout );
 			if( gfx0 && gfx1 )
 			{
-				gfx0->colortable = Machine->remapped_colortable;
-				gfx0->total_colors = Machine->drv->total_colors/256;
-				Machine->gfx[0] = gfx0;
+				gfx0.colortable = Machine.remapped_colortable;
+				gfx0.total_colors = Machine.drv.total_colors/256;
+				Machine.gfx[0] = gfx0;
 	
-				gfx1->colortable = Machine->remapped_colortable;
-				gfx1->total_colors = Machine->drv->total_colors/2;
-				Machine->gfx[1] = gfx1;
+				gfx1.colortable = Machine.remapped_colortable;
+				gfx1.total_colors = Machine.drv.total_colors/2;
+				Machine.gfx[1] = gfx1;
 	
 				return 0;
 			}
@@ -291,19 +291,19 @@ public class namcona1
 		int mask_pitch;
 		int x,y,temp;
 	
-		if( Machine->orientation & ORIENTATION_SWAP_XY )
+		if( Machine.orientation & ORIENTATION_SWAP_XY )
 		{
 			temp = sx; sx = sy; sy = temp;
 			temp = flipx; flipx = flipy; flipy = temp;
 		}
-		if( Machine->orientation & ORIENTATION_FLIP_X )
+		if( Machine.orientation & ORIENTATION_FLIP_X )
 		{
-			sx = bitmap->width - 1 - sx;
+			sx = bitmap.width - 1 - sx;
 			flipx = !flipx;
 		}
-		if( Machine->orientation & ORIENTATION_FLIP_Y )
+		if( Machine.orientation & ORIENTATION_FLIP_Y )
 		{
-			sy = bitmap->height - 1 - sy;
+			sy = bitmap.height - 1 - sy;
 			flipy = !flipy;
 		}
 	
@@ -314,18 +314,18 @@ public class namcona1
 		 */
 		if( sx > -8 &&
 			sy > -8 &&
-			sx < bitmap->width &&
-			sy < bitmap->height ) /* all-or-nothing clip */
+			sx < bitmap.width &&
+			sy < bitmap.height ) /* all-or-nothing clip */
 		{
-			gfx = Machine->gfx[0];
-			mask = Machine->gfx[1];
-			code %= gfx->total_elements;
-			color %= gfx->total_colors;
-			paldata = &gfx->colortable[gfx->color_granularity * color];
-			gfx_addr = gfx->gfxdata + code * gfx->char_modulo;
-			gfx_pitch = gfx->line_modulo;
-			mask_addr = mask->gfxdata + code * mask->char_modulo;
-			mask_pitch = mask->line_modulo;
+			gfx = Machine.gfx[0];
+			mask = Machine.gfx[1];
+			code %= gfx.total_elements;
+			color %= gfx.total_colors;
+			paldata = &gfx.colortable[gfx.color_granularity * color];
+			gfx_addr = gfx.gfxdata + code * gfx.char_modulo;
+			gfx_pitch = gfx.line_modulo;
+			mask_addr = mask.gfxdata + code * mask.char_modulo;
+			mask_pitch = mask.line_modulo;
 	
 			/* The way we render shadows makes some Emeralda text invisible.
 			 * The relevant text is composed of sprites with the shadow bit set,
@@ -336,8 +336,8 @@ public class namcona1
 				for( y=0; y<8; y++ )
 				{
 					int ypos = sy+(flipy?7-y:y);
-					data8_t *pri = (data8_t *)priority_bitmap->line[ypos];
-					UINT16 *dest = (UINT16 *)bitmap->line[ypos];
+					data8_t *pri = (data8_t *)priority_bitmap.line[ypos];
+					UINT16 *dest = (UINT16 *)bitmap.line[ypos];
 					if (flipx != 0)
 					{
 						dest += sx+7;
@@ -378,8 +378,8 @@ public class namcona1
 				for( y=0; y<8; y++ )
 				{
 					int ypos = sy+(flipy?7-y:y);
-					data8_t *pri = (data8_t *)priority_bitmap->line[ypos];
-					UINT16 *dest = (UINT16 *)bitmap->line[ypos];
+					data8_t *pri = (data8_t *)priority_bitmap.line[ypos];
+					UINT16 *dest = (UINT16 *)bitmap.line[ypos];
 					if (flipx != 0)
 					{
 						dest += sx+7;
@@ -437,39 +437,39 @@ public class namcona1
 		data8_t *pri;
 		UINT16 *dest;
 	
-		if( Machine->orientation & ORIENTATION_SWAP_XY )
+		if( Machine.orientation & ORIENTATION_SWAP_XY )
 		{
 			temp = sx; sx = sy; sy = temp;
 			temp = flipx; flipx = flipy; flipy = temp;
 		}
-		if( Machine->orientation & ORIENTATION_FLIP_X )
+		if( Machine.orientation & ORIENTATION_FLIP_X )
 		{
-			sx = bitmap->width - 1 - sx;
+			sx = bitmap.width - 1 - sx;
 			flipx = !flipx;
 		}
-		if( Machine->orientation & ORIENTATION_FLIP_Y )
+		if( Machine.orientation & ORIENTATION_FLIP_Y )
 		{
-			sy = bitmap->height - 1 - sy;
+			sy = bitmap.height - 1 - sy;
 			flipy = !flipy;
 		}
 	
 		if( sx > -8 &&
 			sy > -8 &&
-			sx < bitmap->width &&
-			sy < bitmap->height ) /* all-or-nothing clip */
+			sx < bitmap.width &&
+			sy < bitmap.height ) /* all-or-nothing clip */
 		{
-			gfx = Machine->gfx[0];
-			code %= gfx->total_elements;
-			color %= gfx->total_colors;
-			paldata = &gfx->colortable[gfx->color_granularity * color];
-			gfx_addr = gfx->gfxdata + code * gfx->char_modulo;
-			gfx_pitch = gfx->line_modulo;
+			gfx = Machine.gfx[0];
+			code %= gfx.total_elements;
+			color %= gfx.total_colors;
+			paldata = &gfx.colortable[gfx.color_granularity * color];
+			gfx_addr = gfx.gfxdata + code * gfx.char_modulo;
+			gfx_pitch = gfx.line_modulo;
 	
 			for( y=0; y<8; y++ )
 			{
 				ypos = sy+(flipy?7-y:y);
-				pri = (data8_t *)priority_bitmap->line[ypos];
-				dest = (UINT16 *)bitmap->line[ypos];
+				pri = (data8_t *)priority_bitmap.line[ypos];
+				dest = (UINT16 *)bitmap.line[ypos];
 				if (flipx != 0)
 				{
 					dest += sx+7;
@@ -615,12 +615,12 @@ public class namcona1
 		const pen_t *paldata;
 		struct GfxElement *pGfx;
 	
-		pGfx = Machine->gfx[0];
-		paldata = &pGfx->colortable[pGfx->color_granularity * tilemap_palette_bank[which]];
+		pGfx = Machine.gfx[0];
+		paldata = &pGfx.colortable[pGfx.color_granularity * tilemap_palette_bank[which]];
 	
 		/* draw one scanline at a time */
-		clip.min_x = cliprect->min_x;
-		clip.max_x = cliprect->max_x;
+		clip.min_x = cliprect.min_x;
+		clip.max_x = cliprect.max_x;
 		scrollx = 0;
 		scrolly = 0;
 		for( line=0; line<256; line++ )
@@ -640,7 +640,7 @@ public class namcona1
 				scrolly = (ydata - line)&0x1ff;
 			}
 	
-			if (line >= cliprect->min_y && line <= cliprect->max_y)
+			if (line >= cliprect.min_y && line <= cliprect.max_y)
 			{
 				if( xdata == 0xc001 )
 				{
@@ -648,8 +648,8 @@ public class namcona1
 					 * feature, Numan Athletics.
 					 */
 					draw_pixel_line(
-						bitmap->line[line],
-						priority_bitmap->line[line],
+						bitmap.line[line],
+						priority_bitmap.line[line],
 						namcona1_sparevram + (ydata-0x4000) + 25,
 						paldata );
 				}

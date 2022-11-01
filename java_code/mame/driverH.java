@@ -114,119 +114,119 @@ public class driverH
 		cpu = machine_find_cpu(machine, tag);								\
 		if (cpu != 0)															\
 		{																	\
-			cpu->cpu_type = (CPU_##type);									\
-			cpu->cpu_clock = (clock);										\
+			cpu.cpu_type = (CPU_##type);									\
+			cpu.cpu_clock = (clock);										\
 		}																	\
 	
 	
 	/* CPU parameters */
 	#define MDRV_CPU_FLAGS(flags)											\
 		if (cpu != 0)															\
-			cpu->cpu_flags = (flags);										\
+			cpu.cpu_flags = (flags);										\
 	
 	#define MDRV_CPU_CONFIG(config)											\
 		if (cpu != 0)															\
-			cpu->reset_param = &(config);									\
+			cpu.reset_param = &(config);									\
 	
 	#define MDRV_CPU_MEMORY(readmem, writemem)								\
 		if (cpu != 0)															\
 		{																	\
-			cpu->memory_read = (readmem);									\
-			cpu->memory_write = (writemem);									\
+			cpu.memory_read = (readmem);									\
+			cpu.memory_write = (writemem);									\
 		}																	\
 	
 	#define MDRV_CPU_PORTS(readport, writeport)								\
 		if (cpu != 0)															\
 		{																	\
-			cpu->port_read = (readport);									\
-			cpu->port_write = (writeport);									\
+			cpu.port_read = (readport);									\
+			cpu.port_write = (writeport);									\
 		}																	\
 	
 	#define MDRV_CPU_VBLANK_INT(func, rate)									\
 		if (cpu != 0)															\
 		{																	\
-			cpu->vblank_interrupt = func;									\
-			cpu->vblank_interrupts_per_frame = (rate);						\
+			cpu.vblank_interrupt = func;									\
+			cpu.vblank_interrupts_per_frame = (rate);						\
 		}																	\
 	
 	#define MDRV_CPU_PERIODIC_INT(func, rate)								\
 		if (cpu != 0)															\
 		{																	\
-			cpu->timed_interrupt = func;									\
-			cpu->timed_interrupts_per_second = (rate);						\
+			cpu.timed_interrupt = func;									\
+			cpu.timed_interrupts_per_second = (rate);						\
 		}																	\
 	
 	
 	/* core parameters */
 	#define MDRV_FRAMES_PER_SECOND(rate)									\
-		machine->frames_per_second = (rate);								\
+		machine.frames_per_second = (rate);								\
 	
 	#define MDRV_VBLANK_DURATION(duration)									\
-		machine->vblank_duration = (duration);								\
+		machine.vblank_duration = (duration);								\
 	
 	#define MDRV_INTERLEAVE(interleave)										\
-		machine->cpu_slices_per_frame = (interleave);						\
+		machine.cpu_slices_per_frame = (interleave);						\
 	
 	
 	/* core functions */
 	#define MDRV_MACHINE_INIT(name)											\
-		machine->machine_init = machine_init_##name;						\
+		machine.machine_init = machine_init_##name;						\
 	
 	#define MDRV_MACHINE_STOP(name)											\
-		machine->machine_stop = machine_stop_##name;						\
+		machine.machine_stop = machine_stop_##name;						\
 	
 	#define MDRV_NVRAM_HANDLER(name)										\
-		machine->nvram_handler = nvram_handler_##name;						\
+		machine.nvram_handler = nvram_handler_##name;						\
 	
 	
 	/* core video parameters */
 	#define MDRV_VIDEO_ATTRIBUTES(flags)									\
-		machine->video_attributes = (flags);								\
+		machine.video_attributes = (flags);								\
 	
 	#define MDRV_ASPECT_RATIO(num, den)										\
-		machine->aspect_x = (num);											\
-		machine->aspect_y = (den);											\
+		machine.aspect_x = (num);											\
+		machine.aspect_y = (den);											\
 	
 	#define MDRV_SCREEN_SIZE(width, height)									\
-		machine->screen_width = (width);									\
-		machine->screen_height = (height);									\
+		machine.screen_width = (width);									\
+		machine.screen_height = (height);									\
 	
 	#define MDRV_VISIBLE_AREA(minx, maxx, miny, maxy)						\
-		machine->default_visible_area.min_x = (minx);						\
-		machine->default_visible_area.max_x = (maxx);						\
-		machine->default_visible_area.min_y = (miny);						\
-		machine->default_visible_area.max_y = (maxy);						\
+		machine.default_visible_area.min_x = (minx);						\
+		machine.default_visible_area.max_x = (maxx);						\
+		machine.default_visible_area.min_y = (miny);						\
+		machine.default_visible_area.max_y = (maxy);						\
 	
 	#define MDRV_GFXDECODE(gfx)												\
-		machine->gfxdecodeinfo = (gfx);										\
+		machine.gfxdecodeinfo = (gfx);										\
 	
 	#define MDRV_PALETTE_LENGTH(length)										\
-		machine->total_colors = (length);									\
+		machine.total_colors = (length);									\
 	
 	#define MDRV_COLORTABLE_LENGTH(length)									\
-		machine->color_table_len = (length);								\
+		machine.color_table_len = (length);								\
 	
 	
 	/* core video functions */
 	#define MDRV_PALETTE_INIT(name)											\
-		machine->init_palette = palette_init_##name;						\
+		machine.init_palette = palette_init_##name;						\
 	
 	#define MDRV_VIDEO_START(name)											\
-		machine->video_start = video_start_##name;							\
+		machine.video_start = video_start_##name;							\
 	
 	#define MDRV_VIDEO_STOP(name)											\
-		machine->video_stop = video_stop_##name;							\
+		machine.video_stop = video_stop_##name;							\
 	
 	#define MDRV_VIDEO_EOF(name)											\
-		machine->video_eof = video_eof_##name;								\
+		machine.video_eof = video_eof_##name;								\
 	
 	#define MDRV_VIDEO_UPDATE(name)											\
-		machine->video_update = video_update_##name;						\
+		machine.video_update = video_update_##name;						\
 	
 	
 	/* core sound parameters */
 	#define MDRV_SOUND_ATTRIBUTES(flags)									\
-		machine->sound_attributes = (flags);								\
+		machine.sound_attributes = (flags);								\
 	
 	
 	/* add/remove/replace sounds */
@@ -244,8 +244,8 @@ public class driverH
 			struct MachineSound *sound = machine_find_sound(machine, tag);	\
 			if (sound != 0)														\
 			{																\
-				sound->sound_type = SOUND_##type;							\
-				sound->sound_interface = &(interface);						\
+				sound.sound_type = SOUND_##type;							\
+				sound.sound_interface = &(interface);						\
 			}																\
 		}																	\
 	
@@ -394,7 +394,7 @@ public class driverH
 		void (*drv)(struct InternalMachineDriver *);
 		const struct InputPortTiny *input_ports;
 		void (*driver_init)(void);	/* optional function to be called during initialization */
-									/* This is called ONCE, unlike Machine->init_machine */
+									/* This is called ONCE, unlike Machine.init_machine */
 									/* which is called every time the game is reset. */
 	
 		const struct RomModule *rom;

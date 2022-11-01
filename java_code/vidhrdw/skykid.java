@@ -31,7 +31,7 @@ public class skykid
 	{
 		int i;
 		int bit0,bit1,bit2,bit3,r,g,b;
-		int totcolors = Machine->drv->total_colors;
+		int totcolors = Machine.drv.total_colors;
 	
 		for (i = 0; i < totcolors; i++)
 		{
@@ -209,7 +209,7 @@ public class skykid
 						ex = flipx ? (width-1-x) : x;
 						ey = flipy ? (height-1-y) : y;
 	
-						drawgfx(bitmap,Machine->gfx[2+(number >> 7)],
+						drawgfx(bitmap,Machine.gfx[2+(number >> 7)],
 							(number)+x_offset[ex]+y_offset[ey],
 							color,
 							flipx, flipy,
@@ -256,7 +256,7 @@ public class skykid
 					sy = 27 - sy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],	skykid_textram[offs] + (flipscreen << 8),
+				drawgfx(bitmap,Machine.gfx[0],	skykid_textram[offs] + (flipscreen << 8),
 						skykid_textram[offs+0x400] & 0x3f,
 						0,0,sx*8,sy*8,
 						cliprect,TRANSPARENCY_PEN,0);

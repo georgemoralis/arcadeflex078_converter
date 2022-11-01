@@ -50,7 +50,7 @@ public class btoads
 	
 	/*************************************
 	 *
-	 *	Main -> sound CPU communication
+	 *	Main . sound CPU communication
 	 *
 	 *************************************/
 	
@@ -94,7 +94,7 @@ public class btoads
 	
 	/*************************************
 	 *
-	 *	Sound -> main CPU communication
+	 *	Sound . main CPU communication
 	 *
 	 *************************************/
 	

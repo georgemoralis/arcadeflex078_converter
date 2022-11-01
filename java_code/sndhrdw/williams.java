@@ -363,10 +363,10 @@ public class williams
 	
 		/* find the number of banks in the ADPCM space */
 		for (i = 0; i < MAX_SOUND; i++)
-			if (Machine->drv->sound[i].sound_type == SOUND_OKIM6295)
+			if (Machine.drv.sound[i].sound_type == SOUND_OKIM6295)
 			{
-				struct OKIM6295interface *intf = (struct OKIM6295interface *)Machine->drv->sound[i].sound_interface;
-				adpcm_bank_count = memory_region_length(intf->region[0]) / 0x40000;
+				struct OKIM6295interface *intf = (struct OKIM6295interface *)Machine.drv.sound[i].sound_interface;
+				adpcm_bank_count = memory_region_length(intf.region[0]) / 0x40000;
 			}
 	}
 	

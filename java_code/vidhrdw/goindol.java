@@ -130,14 +130,14 @@ public class goindol
 				tile	+= tile;
 				palette	 = sprite_ram[offs+2] >> 3;
 	
-				drawgfx(bitmap,Machine->gfx[gfxbank],
+				drawgfx(bitmap,Machine.gfx[gfxbank],
 							tile,
 							palette,
 							flip_screen,flip_screen,
 							sx,sy,
 							cliprect,
 							TRANSPARENCY_PEN, 0);
-				drawgfx(bitmap,Machine->gfx[gfxbank],
+				drawgfx(bitmap,Machine.gfx[gfxbank],
 							tile+1,
 							palette,
 							flip_screen,flip_screen,

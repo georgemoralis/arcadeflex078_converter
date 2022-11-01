@@ -131,7 +131,7 @@ public class timer
 		if (!timer_free_head)
 			return NULL;
 		timer = timer_free_head;
-		timer_free_head = timer->next;
+		timer_free_head = timer.next;
 		if (!timer_free_head)
 			timer_free_tail = NULL;
 	
@@ -147,7 +147,7 @@ public class timer
 	
 	INLINE void timer_list_insert(mame_timer *timer)
 	{
-		double expire = timer->enabled ? timer->expire : TIME_NEVER;
+		double expire = timer.enabled ? timer.expire : TIME_NEVER;
 		mame_timer *t, *lt = NULL;
 	
 		/* sanity checks for the debug build */
@@ -156,7 +156,7 @@ public class timer
 			int tnum = 0;
 	
 			/* loop over the timer list */
-			for (t = timer_head; t; t = t->next, tnum++)
+			for (t = timer_head; t; t = t.next, tnum++)
 			{
 				if (t == timer)
 					printf("This timer is already inserted in the list!\n");
@@ -167,34 +167,34 @@ public class timer
 		#endif
 	
 		/* loop over the timer list */
-		for (t = timer_head; t; lt = t, t = t->next)
+		for (t = timer_head; t; lt = t, t = t.next)
 		{
 			/* if the current list entry expires after us, we should be inserted before it */
 			/* note that due to floating point rounding, we need to allow a bit of slop here */
 			/* because two equal entries -- within rounding precision -- need to sort in */
 			/* the order they were inserted into the list */
-			if ((t->expire - expire) > TIME_IN_NSEC(1))
+			if ((t.expire - expire) > TIME_IN_NSEC(1))
 			{
 				/* link the new guy in before the current list entry */
-				timer->prev = t->prev;
-				timer->next = t;
+				timer.prev = t.prev;
+				timer.next = t;
 	
-				if (t->prev)
-					t->prev->next = timer;
+				if (t.prev)
+					t.prev.next = timer;
 				else
 					timer_head = timer;
-				t->prev = timer;
+				t.prev = timer;
 				return;
 			}
 		}
 	
 		/* need to insert after the last one */
 		if (lt != 0)
-			lt->next = timer;
+			lt.next = timer;
 		else
 			timer_head = timer;
-		timer->prev = lt;
-		timer->next = NULL;
+		timer.prev = lt;
+		timer.next = NULL;
 	}
 	
 	
@@ -213,19 +213,19 @@ public class timer
 			int tnum = 0;
 	
 			/* loop over the timer list */
-			for (t = timer_head; t && t != timer; t = t->next, tnum++) ;
+			for (t = timer_head; t && t != timer; t = t.next, tnum++) ;
 			if (t == NULL)
 				printf ("timer not found in list");
 		}
 		#endif
 	
 		/* remove it from the list */
-		if (timer->prev)
-			timer->prev->next = timer->next;
+		if (timer.prev)
+			timer.prev.next = timer.next;
 		else
-			timer_head = timer->next;
-		if (timer->next)
-			timer->next->prev = timer->prev;
+			timer_head = timer.next;
+		if (timer.next)
+			timer.next.prev = timer.prev;
 	}
 	
 	
@@ -274,10 +274,10 @@ public class timer
 		for (timer = timer_head; timer != NULL; timer = next)
 		{
 			/* prefetch the next timer in case we remove this one */
-			next = timer->next;
+			next = timer.next;
 	
 			/* if this tag matches, remove it */
-			if (timer->tag == tag)
+			if (timer.tag == tag)
 				timer_remove(timer);
 		}
 	}
@@ -292,7 +292,7 @@ public class timer
 	double timer_time_until_next_timer(void)
 	{
 		double time = get_relative_time();
-		return timer_head->expire - time;
+		return timer_head.expire - time;
 	}
 	
 	
@@ -310,35 +310,35 @@ public class timer
 		global_offset += delta;
 	
 		/* scan the list and adjust the times */
-		for (timer = timer_head; timer != NULL; timer = timer->next)
+		for (timer = timer_head; timer != NULL; timer = timer.next)
 		{
-			timer->start -= delta;
-			timer->expire -= delta;
+			timer.start -= delta;
+			timer.expire -= delta;
 		}
 	
-		LOG(("timer_adjust_global_time: delta=%.9f head->expire=%.9f\n", delta, timer_head->expire));
+		LOG(("timer_adjust_global_time: delta=%.9f head.expire=%.9f\n", delta, timer_head.expire));
 	
 		/* now process any timers that are overdue */
-		while (timer_head->expire < TIME_IN_NSEC(1))
+		while (timer_head.expire < TIME_IN_NSEC(1))
 		{
-			int was_enabled = timer_head->enabled;
+			int was_enabled = timer_head.enabled;
 	
 			/* if this is a one-shot timer, disable it now */
 			timer = timer_head;
-			if (timer->period == 0)
-				timer->enabled = 0;
+			if (timer.period == 0)
+				timer.enabled = 0;
 	
 			/* set the global state of which callback we're in */
 			callback_timer_modified = 0;
 			callback_timer = timer;
-			callback_timer_expire_time = timer->expire;
+			callback_timer_expire_time = timer.expire;
 	
 			/* call the callback */
-			if (was_enabled && timer->callback)
+			if (was_enabled && timer.callback)
 			{
-				LOG(("Timer %08X fired (expire=%.9f)\n", (UINT32)timer, timer->expire));
+				LOG(("Timer %08X fired (expire=%.9f)\n", (UINT32)timer, timer.expire));
 				profiler_mark(PROFILER_TIMER_CALLBACK);
-				(*timer->callback)(timer->callback_param);
+				(*timer.callback)(timer.callback_param);
 				profiler_mark(PROFILER_END);
 			}
 	
@@ -349,14 +349,14 @@ public class timer
 			if (!callback_timer_modified)
 			{
 				/* if the timer is temporary, remove it now */
-				if (timer->temporary)
+				if (timer.temporary)
 					timer_remove(timer);
 	
 				/* otherwise, reschedule it */
 				else
 				{
-					timer->start = timer->expire;
-					timer->expire += timer->period;
+					timer.start = timer.expire;
+					timer.expire += timer.period;
 	
 					timer_list_remove(timer);
 					timer_list_insert(timer);
@@ -382,16 +382,16 @@ public class timer
 			return NULL;
 	
 		/* fill in the record */
-		timer->callback = callback;
-		timer->callback_param = 0;
-		timer->enabled = 0;
-		timer->temporary = 0;
-		timer->tag = get_resource_tag();
-		timer->period = 0;
+		timer.callback = callback;
+		timer.callback_param = 0;
+		timer.enabled = 0;
+		timer.temporary = 0;
+		timer.tag = get_resource_tag();
+		timer.period = 0;
 	
 		/* compute the time of the next firing and insert into the list */
-		timer->start = time;
-		timer->expire = TIME_NEVER;
+		timer.start = time;
+		timer.expire = TIME_NEVER;
 		timer_list_insert(timer);
 	
 		/* return a handle */
@@ -415,20 +415,20 @@ public class timer
 			callback_timer_modified = 1;
 	
 		/* compute the time of the next firing and insert into the list */
-		which->callback_param = param;
-		which->enabled = 1;
+		which.callback_param = param;
+		which.enabled = 1;
 	
 		/* set the start and expire times */
-		which->start = time;
-		which->expire = time + duration;
-		which->period = period;
+		which.start = time;
+		which.expire = time + duration;
+		which.period = period;
 	
 		/* remove and re-insert the timer in its new order */
 		timer_list_remove(which);
 		timer_list_insert(which);
 	
 		/* if this was inserted as the head, abort the current timeslice and resync */
-	LOG(("timer_adjust %08X to expire @ %.9f\n", (UINT32)which, which->expire));
+	LOG(("timer_adjust %08X to expire @ %.9f\n", (UINT32)which, which.expire));
 		if (which == timer_head && cpu_getexecutingcpu() >= 0)
 			activecpu_abort_timeslice();
 	}
@@ -469,7 +469,7 @@ public class timer
 			return;
 	
 		/* mark the timer temporary */
-		timer->temporary = 1;
+		timer.temporary = 1;
 	
 		/* adjust to our liking */
 		timer_adjust(timer, duration, param, 0);
@@ -484,7 +484,7 @@ public class timer
 	void timer_reset(mame_timer *which, double duration)
 	{
 		/* adjust the timer */
-		timer_adjust(which, duration, which->callback_param, which->period);
+		timer_adjust(which, duration, which.callback_param, which.period);
 	}
 	
 	
@@ -496,7 +496,7 @@ public class timer
 	void timer_remove(mame_timer *which)
 	{
 		/* error if this is an inactive timer */
-		if (which->tag == -1)
+		if (which.tag == -1)
 		{
 			logerror("timer_remove: removed an inactive timer!\n");
 			return;
@@ -506,14 +506,14 @@ public class timer
 		timer_list_remove(which);
 	
 		/* mark it as dead */
-		which->tag = -1;
+		which.tag = -1;
 	
 		/* free it up by adding it back to the free list */
 		if (timer_free_tail != 0)
-			timer_free_tail->next = which;
+			timer_free_tail.next = which;
 		else
 			timer_free_head = which;
-		which->next = NULL;
+		which.next = NULL;
 		timer_free_tail = which;
 	}
 	
@@ -528,8 +528,8 @@ public class timer
 		int old;
 	
 		/* set the enable flag */
-		old = which->enabled;
-		which->enabled = enable;
+		old = which.enabled;
+		which.enabled = enable;
 	
 		/* remove the timer and insert back into the list */
 		timer_list_remove(which);
@@ -548,7 +548,7 @@ public class timer
 	double timer_timeelapsed(mame_timer *which)
 	{
 		double time = get_relative_time();
-		return time - which->start;
+		return time - which.start;
 	}
 	
 	
@@ -561,7 +561,7 @@ public class timer
 	double timer_timeleft(mame_timer *which)
 	{
 		double time = get_relative_time();
-		return which->expire - time;
+		return which.expire - time;
 	}
 	
 	
@@ -584,7 +584,7 @@ public class timer
 	
 	double timer_starttime(mame_timer *which)
 	{
-		return global_offset + which->start;
+		return global_offset + which.start;
 	}
 	
 	
@@ -596,6 +596,6 @@ public class timer
 	
 	double timer_firetime(mame_timer *which)
 	{
-		return global_offset + which->expire;
+		return global_offset + which.expire;
 	}
 }

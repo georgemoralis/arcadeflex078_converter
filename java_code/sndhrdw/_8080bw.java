@@ -1001,12 +1001,12 @@ public class _8080bw
 	
 	public static WriteHandlerPtr helifire_sh_port4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		// 0 - P2.7 -      ->D0
+		// 0 - P2.7 -      .D0
 		// 1 - NC
-		// 2 - P2.6 -      ->INT
-		// 3 - P2.3 -      ->T0
-		// 4 - P2.4 -      ->T1
-		// 5 - P2.1 - GAME ->D3
+		// 2 - P2.6 -      .INT
+		// 3 - P2.3 -      .T0
+		// 4 - P2.4 -      .T1
+		// 5 - P2.1 - GAME .D3
 	
 		data ^= 0xff; /* negated on page 2 just before going to P2 */
 	
@@ -1024,12 +1024,12 @@ public class _8080bw
 	
 	public static WriteHandlerPtr helifire_sh_port5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		// 0 - P2.8  -     ->D1 (or D2 ?)
-		// 1 - P2.9  -     ->D2 (or D1 ?)
+		// 0 - P2.8  -     .D1 (or D2 ?)
+		// 1 - P2.9  -     .D2 (or D1 ?)
 		// 2 - P2.10 - 
 		// 3 - P2.11 - 
 		// 4 - P2.2  - 
-		// 5 - P2.12 -     ->PB4
+		// 5 - P2.12 -     .PB4
 	
 		data ^= 0xff; /* negated on page 2 just before going to P2 */
 	
@@ -1204,11 +1204,11 @@ public class _8080bw
 	 *
 	 *  The frequencies are (for the 8V signal):
 	 *
-	 *  19.968 MHz crystal / 2 (Qa of 74160 #10) -> 9.984MHz
-	 *					   / 2 (7474 #14) -> 4.992MHz
-	 *					   / 256+16 (74161 #5 and #8) -> 18352.94Hz
-	 *					   / 8 (8V) -> 2294.12 Hz
-	 * 					   / 2 the final freq. is 2 toggles -> 1147.06Hz
+	 *  19.968 MHz crystal / 2 (Qa of 74160 #10) . 9.984MHz
+	 *					   / 2 (7474 #14) . 4.992MHz
+	 *					   / 256+16 (74161 #5 and #8) . 18352.94Hz
+	 *					   / 8 (8V) . 2294.12 Hz
+	 * 					   / 2 the final freq. is 2 toggles . 1147.06Hz
 	 *
 	 *  for 4V, it's double at 2294.12Hz
 	 */

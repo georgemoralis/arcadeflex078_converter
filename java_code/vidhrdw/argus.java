@@ -1029,7 +1029,7 @@ public class argus
 				}
 	
 				if (priority != pri)
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1083,7 +1083,7 @@ public class argus
 					flipy ^= 0x20;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 							tile,
 							color,
 							flipx, flipy,
@@ -1118,7 +1118,7 @@ public class argus
 			{
 				if ( (offs >= 0x100 && offs < 0x300) || (offs >= 0x400 && offs < 0x580) )
 				{
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1136,7 +1136,7 @@ public class argus
 	
 						td = (flipx) ? (1 - i) : i;
 	
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 									tile + td,
 									color,
 									flipx, flipy,
@@ -1160,7 +1160,7 @@ public class argus
 							else
 								td = (flipx) ? ( (1 - i) * 2 ) + 1 - j : (1 - i) * 2 + j;
 	
-							drawgfx(bitmap,Machine->gfx[0],
+							drawgfx(bitmap,Machine.gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1185,7 +1185,7 @@ public class argus
 							else
 								td = (flipx) ? ( (3 - i) * 4 ) + 3 - j : (3 - i) * 4 + j;
 	
-							drawgfx(bitmap,Machine->gfx[0],
+							drawgfx(bitmap,Machine.gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1205,7 +1205,7 @@ public class argus
 	
 				if ( (offs >= 0x100 && offs < 0x300) || (offs >= 0x400 && offs < 0x580) )
 				{
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1223,7 +1223,7 @@ public class argus
 	
 						td = (flipx) ? i : (1 - i);
 	
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 									tile + td,
 									color,
 									flipx, flipy,
@@ -1247,7 +1247,7 @@ public class argus
 							else
 								td = (flipx) ? i * 2 + j : (i * 2) + 1 - j;
 	
-							drawgfx(bitmap,Machine->gfx[0],
+							drawgfx(bitmap,Machine.gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1272,7 +1272,7 @@ public class argus
 							else
 								td = (flipx) ? i * 4 + j : (i * 4) + 3 - j;
 	
-							drawgfx(bitmap,Machine->gfx[0],
+							drawgfx(bitmap,Machine.gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1344,7 +1344,7 @@ public class argus
 		/* scroll BG0 and render tile at proper position */
 		argus_bg0_scroll_handle();
 	
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg0_tilemap, 0, 0);
 		argus_draw_sprites(bitmap, cliprect, 0);
@@ -1355,7 +1355,7 @@ public class argus
 	
 	public static VideoUpdateHandlerPtr video_update_valtric  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);
 		valtric_draw_sprites(bitmap, cliprect);
@@ -1364,7 +1364,7 @@ public class argus
 	
 	public static VideoUpdateHandlerPtr video_update_butasan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap, Machine->pens[0], cliprect);
+		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, bg0_tilemap, 0, 0);

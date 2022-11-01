@@ -71,37 +71,37 @@ public class ultratnk
 			into a wall, or firing
 		*/
 		{
-			drawgfx( bitmap, Machine->gfx[1], /* tank */
+			drawgfx( bitmap, Machine.gfx[1], /* tank */
 				pMem[0x99]>>3,
 				0,
 				0,0, /* no flip */
 				pMem[0x90]-16,pMem[0x98]-16,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0 );
 	
-			drawgfx( bitmap, Machine->gfx[1], /* tank */
+			drawgfx( bitmap, Machine.gfx[1], /* tank */
 				pMem[0x9b]>>3,
 				1,
 				0,0, /* no flip */
 				pMem[0x92]-16,pMem[0x9a]-16,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0 );
 		}
 	
-		drawgfx( bitmap, Machine->gfx[1], /* bullet */
+		drawgfx( bitmap, Machine.gfx[1], /* bullet */
 			(pMem[0x9f]>>3)|0x20,
 			0,
 			0,0, /* no flip */
 			pMem[0x96]-16,pMem[0x9e]-16,
-			&Machine->visible_area,
+			&Machine.visible_area,
 			TRANSPARENCY_PEN, 0 );
 	
-		drawgfx( bitmap, Machine->gfx[1], /* bullet */
+		drawgfx( bitmap, Machine.gfx[1], /* bullet */
 			(pMem[0x9d]>>3)|0x20,
 			1,
 			0,0, /* no flip */
 			pMem[0x94]-16,pMem[0x9c]-16,
-			&Machine->visible_area,
+			&Machine.visible_area,
 			TRANSPARENCY_PEN, 0 );
 	}
 	
@@ -144,7 +144,7 @@ public class ultratnk
 	
 	public static VideoUpdateHandlerPtr video_update_ultratnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		ultratnk_draw_sprites(bitmap);
 	
 		/* Weird, but we have to update our sound registers here. */

@@ -98,12 +98,12 @@ public class carpolo
 	
 	
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		/* the -1 is for the fake score color */
-		for (i = 0; i < Machine->drv->total_colors - 1; i++)
+		for (i = 0; i < Machine.drv.total_colors - 1; i++)
 		{
 			UINT8 r,g,b;
 			int bit0,bit1,bit2;
@@ -218,7 +218,7 @@ public class carpolo
 			code = carpolo_alpharam[alpha_line * 32 + x] >> 2;
 			col  = carpolo_alpharam[alpha_line * 32 + x] & 0x03;
 	
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					code,col,
 					0,0,
 					x*8,video_line*8,
@@ -251,14 +251,14 @@ public class carpolo
 		x = 240 - x;
 		y = 240 - y;
 	
-		drawgfx(bitmap,Machine->gfx[0],
+		drawgfx(bitmap,Machine.gfx[0],
 				remapped_code, col,
 				0, flipy,
 				x, y,
 				cliprect,TRANSPARENCY_PEN,0);
 	
 		/* draw with wrap around */
-		drawgfx(bitmap,Machine->gfx[0],
+		drawgfx(bitmap,Machine.gfx[0],
 				remapped_code, col,
 				0, flipy,
 				(INT16)x - 256, y,
@@ -271,10 +271,10 @@ public class carpolo
 		/* draw the playfield elements, in the correct priority order */
 	
 		/* score area - position determined by bit 4 of the vertical timing PROM */
-		plot_box(bitmap,0,0,RIGHT_BORDER+1,TOP_BORDER,Machine->pens[BACKGROUND_COLOR]);
+		plot_box(bitmap,0,0,RIGHT_BORDER+1,TOP_BORDER,Machine.pens[BACKGROUND_COLOR]);
 	
 		/* field */
-		plot_box(bitmap,0,TOP_BORDER,RIGHT_BORDER+1,BOTTOM_BORDER-TOP_BORDER+1,Machine->pens[FIELD_COLOR]);
+		plot_box(bitmap,0,TOP_BORDER,RIGHT_BORDER+1,BOTTOM_BORDER-TOP_BORDER+1,Machine.pens[FIELD_COLOR]);
 	
 		/* car 1 */
 		draw_sprite(bitmap, cliprect,
@@ -282,10 +282,10 @@ public class carpolo
 					0, carpolo_spriteram[0x0c] & 0x0f, CAR1_COLOR);
 	
 		/* border - position determined by bit 4 and 7 of the vertical timing PROM */
-		plot_box(bitmap,0,TOP_BORDER,   RIGHT_BORDER+1,1,Machine->pens[LINE_COLOR]);
-		plot_box(bitmap,0,BOTTOM_BORDER,RIGHT_BORDER+1,1,Machine->pens[LINE_COLOR]);
-		plot_box(bitmap,LEFT_BORDER,TOP_BORDER, 1,BOTTOM_BORDER-TOP_BORDER+1,Machine->pens[LINE_COLOR]);
-		plot_box(bitmap,RIGHT_BORDER,TOP_BORDER,1,BOTTOM_BORDER-TOP_BORDER+1,Machine->pens[LINE_COLOR]);
+		plot_box(bitmap,0,TOP_BORDER,   RIGHT_BORDER+1,1,Machine.pens[LINE_COLOR]);
+		plot_box(bitmap,0,BOTTOM_BORDER,RIGHT_BORDER+1,1,Machine.pens[LINE_COLOR]);
+		plot_box(bitmap,LEFT_BORDER,TOP_BORDER, 1,BOTTOM_BORDER-TOP_BORDER+1,Machine.pens[LINE_COLOR]);
+		plot_box(bitmap,RIGHT_BORDER,TOP_BORDER,1,BOTTOM_BORDER-TOP_BORDER+1,Machine.pens[LINE_COLOR]);
 	
 		/* car 4 */
 		draw_sprite(bitmap, cliprect,
@@ -309,7 +309,7 @@ public class carpolo
 	
 		/* left goal - position determined by bit 6 of the
 		   horizontal and vertical timing PROMs */
-		drawgfxzoom(bitmap,Machine->gfx[1],
+		drawgfxzoom(bitmap,Machine.gfx[1],
 					0,0,
 					0,0,
 					LEFT_GOAL_X,GOAL_Y,
@@ -317,7 +317,7 @@ public class carpolo
 					0x20000,0x20000);
 	
 		/* right goal */
-		drawgfxzoom(bitmap,Machine->gfx[1],
+		drawgfxzoom(bitmap,Machine.gfx[1],
 					0,1,
 					1,0,
 					RIGHT_GOAL_X,GOAL_Y,
@@ -409,16 +409,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_sprite_collision_bitmap1, Machine->pens[0], 0);
-			fillbitmap(sprite_sprite_collision_bitmap2, Machine->pens[0], 0);
+			fillbitmap(sprite_sprite_collision_bitmap1, Machine.pens[0], 0);
+			fillbitmap(sprite_sprite_collision_bitmap2, Machine.pens[0], 0);
 	
-			drawgfx(sprite_sprite_collision_bitmap1,Machine->gfx[0],
+			drawgfx(sprite_sprite_collision_bitmap1,Machine.gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfx(sprite_sprite_collision_bitmap2,Machine->gfx[0],
+			drawgfx(sprite_sprite_collision_bitmap2,Machine.gfx[0],
 					code2,1,
 					0,flipy2,
 					x2,y2,
@@ -429,8 +429,8 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_sprite_collision_bitmap1, x, y) == Machine->pens[1]) &&
-					    (read_pixel(sprite_sprite_collision_bitmap2, x, y) == Machine->pens[1]))
+					if ((read_pixel(sprite_sprite_collision_bitmap1, x, y) == Machine.pens[1]) &&
+					    (read_pixel(sprite_sprite_collision_bitmap2, x, y) == Machine.pens[1]))
 					{
 						*col_x = (x1 + x) & 0x0f;
 						*col_y = (y1 + y) & 0x0f;
@@ -471,16 +471,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_goal_collision_bitmap1, Machine->pens[0], 0);
-			fillbitmap(sprite_goal_collision_bitmap2, Machine->pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap1, Machine.pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap2, Machine.pens[0], 0);
 	
-			drawgfx(sprite_goal_collision_bitmap1,Machine->gfx[0],
+			drawgfx(sprite_goal_collision_bitmap1,Machine.gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfxzoom(sprite_goal_collision_bitmap2,Machine->gfx[1],
+			drawgfxzoom(sprite_goal_collision_bitmap2,Machine.gfx[1],
 						0,0,
 						0,0,
 						x2,y2,
@@ -491,17 +491,17 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine->pens[1]))
+					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine.pens[1]))
 					{
 						pen_t pix = read_pixel(sprite_goal_collision_bitmap2, x, y);
 	
-						if (pix == Machine->pens[LEFT_GOAL_COLOR])
+						if (pix == Machine.pens[LEFT_GOAL_COLOR])
 						{
 							collided = 1;
 							break;
 						}
 	
-						if (!goalpost_only && (pix == Machine->pens[SCORE_COLOR]))
+						if (!goalpost_only && (pix == Machine.pens[SCORE_COLOR]))
 						{
 							collided = 2;
 							break;
@@ -537,16 +537,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_goal_collision_bitmap1, Machine->pens[0], 0);
-			fillbitmap(sprite_goal_collision_bitmap2, Machine->pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap1, Machine.pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap2, Machine.pens[0], 0);
 	
-			drawgfx(sprite_goal_collision_bitmap1,Machine->gfx[0],
+			drawgfx(sprite_goal_collision_bitmap1,Machine.gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfxzoom(sprite_goal_collision_bitmap2,Machine->gfx[1],
+			drawgfxzoom(sprite_goal_collision_bitmap2,Machine.gfx[1],
 						0,1,
 						1,0,
 						x2,y2,
@@ -557,17 +557,17 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine->pens[1]))
+					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine.pens[1]))
 					{
 						pen_t pix = read_pixel(sprite_goal_collision_bitmap2, x, y);
 	
-						if (pix == Machine->pens[RIGHT_GOAL_COLOR])
+						if (pix == Machine.pens[RIGHT_GOAL_COLOR])
 						{
 							collided = 1;
 							break;
 						}
 	
-						if (!goalpost_only && (pix == Machine->pens[SCORE_COLOR]))
+						if (!goalpost_only && (pix == Machine.pens[SCORE_COLOR]))
 						{
 							collided = 2;
 							break;
@@ -593,9 +593,9 @@ public class carpolo
 		y1 = 240 - y1;
 	
 	
-		fillbitmap(sprite_border_collision_bitmap, Machine->pens[0], 0);
+		fillbitmap(sprite_border_collision_bitmap, Machine.pens[0], 0);
 	
-		drawgfx(sprite_border_collision_bitmap,Machine->gfx[0],
+		drawgfx(sprite_border_collision_bitmap,Machine.gfx[0],
 				code1,1,
 				0,flipy1,
 				0,0,
@@ -605,7 +605,7 @@ public class carpolo
 		{
 			for (y = 0; y < SPRITE_HEIGHT; y++)
 			{
-				if ((read_pixel(sprite_border_collision_bitmap, x, y) == Machine->pens[1]))
+				if ((read_pixel(sprite_border_collision_bitmap, x, y) == Machine.pens[1]))
 				{
 					if (((data8_t)(x1 + x) == LEFT_BORDER) ||
 						((data8_t)(x1 + x) == RIGHT_BORDER))

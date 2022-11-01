@@ -22,7 +22,7 @@ public class popper
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -90,7 +90,7 @@ public class popper
 		popper_flipscreen = data;
 		tilemap_set_flip( ALL_TILEMAPS,popper_flipscreen?(TILEMAP_FLIPX|TILEMAP_FLIPY):0 );
 	
-		tilemap_clip = Machine->visible_area;
+		tilemap_clip = Machine.visible_area;
 	
 		if (popper_flipscreen != 0)
 			tilemap_clip.min_x=tilemap_clip.max_x-15;
@@ -191,7 +191,7 @@ public class popper
 		tilemap_set_transmask(popper_ol_p0_tilemap,  0,0x0f,0x0e);
 		tilemap_set_transmask(popper_ol_p0_tilemap,  1,0x0e,0x0f);
 	
-		tilemap_clip = Machine->visible_area;
+		tilemap_clip = Machine.visible_area;
 	
 		state_save_register_int ("video", 0, "flipscreen", &popper_flipscreen);
 	//	state_save_register_int ("video", 0, "e002",       &popper_e002);
@@ -232,7 +232,7 @@ public class popper
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						popper_spriteram[offs+1],
 						(popper_spriteram[offs+2]&0x0f),
 						flipx,flipy,

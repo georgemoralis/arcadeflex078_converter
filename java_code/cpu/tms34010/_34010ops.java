@@ -84,10 +84,10 @@ static void unimpl(void)
 	XY res;										\
 	XY  a =  R##REG_XY(R##SRCREG);				\
 	XY *b = &R##REG_XY(R##DSTREG);				\
-	res.x = b->x + a.x;							\
+	res.x = b.x + a.x;							\
 	   N_FLAG = !res.x;							\
 	   V_FLAG = res.x & 0x8000;					\
-	res.y = b->y + a.y;							\
+	res.y = b.y + a.y;							\
 	NOTZ_FLAG = res.y;							\
 	   C_FLAG = res.y & 0x8000;					\
   	*b = res;									\
@@ -100,12 +100,12 @@ static void add_xy_b(void) { ADD_XY(B); }
 {												\
 	XY  a =  R##REG_XY(R##SRCREG);				\
 	XY *b = &R##REG_XY(R##DSTREG);				\
-	   N_FLAG = (a.x == b->x);					\
-	   V_FLAG = (a.x >  b->x);					\
-	   C_FLAG = (a.y >  b->y);					\
-	NOTZ_FLAG = (a.y != b->y);					\
-	b->x -= a.x;								\
-	b->y -= a.y;								\
+	   N_FLAG = (a.x == b.x);					\
+	   V_FLAG = (a.x >  b.x);					\
+	   C_FLAG = (a.y >  b.y);					\
+	NOTZ_FLAG = (a.y != b.y);					\
+	b.x -= a.x;								\
+	b.y -= a.y;								\
   	COUNT_CYCLES(1);							\
 }
 static void sub_xy_a(void) { SUB_XY(A); }
@@ -1969,10 +1969,10 @@ New 34020 ops:
 	UINT32 a = PARAM_LONG();					\
 	XY *b = &R##REG_XY(R##DSTREG);				\
 	XY res;										\
-	res.x = b->x + (INT16)(a & 0xffff);			\
+	res.x = b.x + (INT16)(a & 0xffff);			\
 	   N_FLAG = !res.x;							\
 	   V_FLAG = res.x & 0x8000;					\
-	res.y = b->y + ((INT32)a >> 16);			\
+	res.y = b.y + ((INT32)a >> 16);			\
 	NOTZ_FLAG = res.y;							\
 	   C_FLAG = res.y & 0x8000;					\
   	*b = res;									\

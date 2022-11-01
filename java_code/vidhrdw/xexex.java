@@ -42,7 +42,7 @@ public class xexex
 	{
 		int region = REGION_GFX3;
 	
-		if (Machine->color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
+		if (Machine.color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
 	
 		cur_alpha = 0;
 	

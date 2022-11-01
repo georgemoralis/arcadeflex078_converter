@@ -198,7 +198,7 @@ INLINE void setst_c_lae(UINT16 to, UINT16 val)
 // - computes a+b
 // - sets L, A, E, Carry and Overflow in st
 //
-// a -> r3, b -> r4, st -> r5
+// a . r3, b . r4, st . r5
 // preserve r6-r12
 
 static INT32 asm setst_add_32_laeco(register INT32 a, register INT32 b, register INT16 st)
@@ -207,8 +207,8 @@ static INT32 asm setst_add_32_laeco(register INT32 a, register INT32 b, register
   mr r6,a           // save operand
 #endif
   addco. r3, b, a   // add, set CR0, and set CA and OV
-  clrlwi st, st, 21 // clear L, A, E, C, O flags (-> keep bits 21-31)
-  mcrxr cr1         // move XER (-> CA and CO bits) to CR1
+  clrlwi st, st, 21 // clear L, A, E, C, O flags (. keep bits 21-31)
+  mcrxr cr1         // move XER (. CA and CO bits) to CR1
 
   beq- null_result  // if EQ is set, jump to null_result.  No jump is more likely than a jump.
   bgt+ positive_result  // if GT is set, jump to positive_result.  A jump is more likely than no jump.
@@ -248,7 +248,7 @@ nocarry:
 // - computes a-b
 // - sets L, A, E, Carry and Overflow in ST
 //
-// a -> r3, b -> r4, st -> r5
+// a . r3, b . r4, st . r5
 // preserve r6-r12
 
 static INT32 asm setst_sub_32_laeco(register INT32 a, register INT32 b, register INT16 st)
@@ -257,8 +257,8 @@ static INT32 asm setst_sub_32_laeco(register INT32 a, register INT32 b, register
   mr r6,a           // save operand
 #endif
   subco. r3, a, b   // sub, set CR0, and set CA and OV
-  clrlwi st, st, 21 // clear L, A, E, C, O flags (-> keep bits 21-31)
-  mcrxr cr1         // move XER (-> CA and CO bits) to CR1
+  clrlwi st, st, 21 // clear L, A, E, C, O flags (. keep bits 21-31)
+  mcrxr cr1         // move XER (. CA and CO bits) to CR1
 
   beq- null_result  // if EQ is set, jump to null_result.  No jump is more likely than a jump.
   bgt+ positive_result  // if GT is set, jump to positive_result.  A jump is more likely than no jump.
@@ -298,7 +298,7 @@ nocarry:
 // Set laeco for add
 //
 static INT16 asm setst_add_laeco(register INT16 a, register INT16 b)
-{ // a -> r3, b -> r4
+{ // a . r3, b . r4
 //  lwz r6, I(RTOC)   // load pointer to I
   _asm_get_global(r6,I)
 
@@ -344,7 +344,7 @@ static INT16 asm setst_sub_laeco(register INT16 a, register INT16 b)
 // Set laecop for add (BYTE)
 //
 static INT8 asm setst_addbyte_laecop(register INT8 a, register INT8 b)
-{ // a -> r3, b -> r4
+{ // a . r3, b . r4
 //  lwz r6, I(RTOC)
   _asm_get_global(r6,I)
 
@@ -369,7 +369,7 @@ static INT8 asm setst_addbyte_laecop(register INT8 a, register INT8 b)
 // Set laecop for subtract (BYTE)
 //
 static INT8 asm setst_subbyte_laecop(register INT8 a, register INT8 b)
-{ // a -> r3, b -> r4
+{ // a . r3, b . r4
 //  lwz r6, I(RTOC)
   _asm_get_global(r6,I)
 

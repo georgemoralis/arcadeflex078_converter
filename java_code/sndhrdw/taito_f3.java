@@ -66,7 +66,7 @@ public class taito_f3
 		if (offset==0) latch=(data>>8)&0x7;
 		if (offset==1) channel[latch]=data>>8;
 	
-		if(Machine->sample_rate) {
+		if(Machine.sample_rate) {
 	//		if (channel[7]!=last_l) mixer_set_volume(0, (int)((float)channel[7]*1.58)); /* Left master volume */
 	//		if (channel[6]!=last_r) mixer_set_volume(1, (int)((float)channel[6]*1.58)); /* Right master volume */
 			last_l=channel[7];

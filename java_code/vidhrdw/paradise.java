@@ -172,7 +172,7 @@ public class paradise
 									TILEMAP_TRANSPARENT, 8,8, 0x20,0x20 );
 	
 		/* pixmap */
-		tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height);
+		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 	
 		/* paletteram and videoram (pixmap) are accessed through CPU ports, that don't
 		   get memory automatically allocated for them */
@@ -217,7 +217,7 @@ public class paradise
 			if (flip_screen != 0)	{	x = 0xf0 - x;	flipx = !flipx;
 									y = 0xf0 - y;	flipy = !flipy;	}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code + (attr << 8),
 					0,
 					flipx, flipy,

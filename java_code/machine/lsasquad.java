@@ -14,7 +14,7 @@ public class lsasquad
 	
 	/***************************************************************************
 	
-	 main <-> sound CPU communication
+	 main <. sound CPU communication
 	
 	***************************************************************************/
 	
@@ -116,8 +116,8 @@ public class lsasquad
 	 *
 	 *  all bits are logical 1 when read (+5V pullup)
 	 *
-	 *  1   W  when 1->0, enables latch which brings the command from main CPU (read from port A)
-	 *  2   W  when 0->1, copies port A to the latch for the main CPU
+	 *  1   W  when 1.0, enables latch which brings the command from main CPU (read from port A)
+	 *  2   W  when 0.1, copies port A to the latch for the main CPU
 	 */
 	
 	static unsigned char portB_in,portB_out,ddrB;

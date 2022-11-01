@@ -24,8 +24,8 @@ write 1004-1005
 read word 3f00 & 300e
 clear 1800-1eff
 
-chcksum 0-3fff even:	5ac4 -> [670]
-chcksum 0-3fff odd :	2c77 -> [672]
+chcksum 0-3fff even:	5ac4 . [670]
+chcksum 0-3fff odd :	2c77 . [672]
 
 added together (=873b), subtracted [f840] (=87d9)
 
@@ -671,15 +671,15 @@ public class spdbuggy
 	#if 0
 		unsigned char *RAM = memory_region( REGION_CPU1 );
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		for (i = 0; i < 0x1000; i+=2)
 		{
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					RAM[0x8000+i],
 					0,
 					0, 0,
 					((i/2)%FG_NX)*8,((i/2)/FG_NX)*8,
-					&Machine->drv->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.drv.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -704,7 +704,7 @@ public class spdbuggy
 	
 		/* Draw the background */
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap, cliprect, bg_tilemap,  0, 0);
-		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		/* Draw the sprites */
 		if ((layers_ctrl & 8) != 0)	draw_sprites(bitmap, cliprect);

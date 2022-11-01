@@ -38,7 +38,7 @@ public class plygonet
 	
 	static UINT32 ttl_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 	
 		return row*64 + col;
 	}
@@ -75,24 +75,24 @@ public class plygonet
 	
 		/* find first empty slot to decode gfx */
 		for (ttl_gfx_index = 0; ttl_gfx_index < MAX_GFX_ELEMENTS; ttl_gfx_index++)
-			if (Machine->gfx[ttl_gfx_index] == 0)
+			if (Machine.gfx[ttl_gfx_index] == 0)
 				break;
 	
 		if (ttl_gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
 	
 		// decode the ttl layer's gfx
-		Machine->gfx[ttl_gfx_index] = decodegfx(memory_region(REGION_GFX1), &charlayout);
+		Machine.gfx[ttl_gfx_index] = decodegfx(memory_region(REGION_GFX1), &charlayout);
 	
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-		        Machine->gfx[ttl_gfx_index]->colortable = Machine->remapped_colortable;
-		        Machine->gfx[ttl_gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+		        Machine.gfx[ttl_gfx_index].colortable = Machine.remapped_colortable;
+		        Machine.gfx[ttl_gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-		        Machine->gfx[ttl_gfx_index]->colortable = Machine->pens;
-		        Machine->gfx[ttl_gfx_index]->total_colors = Machine->drv->total_colors / 16;
+		        Machine.gfx[ttl_gfx_index].colortable = Machine.pens;
+		        Machine.gfx[ttl_gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 		// create the tilemap
@@ -108,7 +108,7 @@ public class plygonet
 	VIDEO_UPDATE(polygonet_vh_screenrefresh)
 	{
 		fillbitmap(priority_bitmap, 0, NULL);
-		fillbitmap(bitmap, get_black_pen(), &Machine->visible_area);
+		fillbitmap(bitmap, get_black_pen(), &Machine.visible_area);
 	
 		tilemap_draw(bitmap, cliprect, ttl_tilemap, 0, 1<<0);
 	}

@@ -380,7 +380,7 @@ public class marinedt
 	{
 		int i,r,b,g;
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			int bit0,bit1,bit2;
 	
@@ -414,7 +414,7 @@ public class marinedt
 	#if 0
 		int i=0,j=0;
 	#endif
-	fillbitmap(bitmap, Machine->pens[0], cliprect);
+	fillbitmap(bitmap, Machine.pens[0], cliprect);
 		for (offs = 0;offs < videoram_size;offs++)
 		{
 			sx = offs%32;
@@ -424,7 +424,7 @@ public class marinedt
 	
 	//logerror("%x\n",videoram.read(offs));
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					videoram.read(offs),
 					0,
 					flipx,flipy,
@@ -447,7 +447,7 @@ public class marinedt
 	
 	//logerror("%x\n",videoram.read(offs));
 	
-	//		drawgfx(bitmap,Machine->gfx[0],
+	//		drawgfx(bitmap,Machine.gfx[0],
 	//				0,
 	//				0,
 	//				flipx,flipy,
@@ -500,7 +500,7 @@ public class marinedt
 	if ((marinedt_pd & 0x01) != 0)
 	{
 	
-		drawgfx(bitmap,Machine->gfx[1],
+		drawgfx(bitmap,Machine.gfx[1],
 				((marinedt_obj1_a&0x04)<<1)+((marinedt_obj1_a&0x38)>>3),
 				marinedt_obj1_a&0x03,
 				1,marinedt_obj1_a&0x80,
@@ -510,14 +510,14 @@ public class marinedt
 		coll=0;cx=0;cyr=0;cyq=0;
 		for (i=0; (i<32) & (!coll); ++i)
 			for (j=0; (j<32) & (!coll); ++j)
-				if ((read_pixel(bitmap, 256+i, 32+j) != Machine->pens[0]) &&
-				    (read_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1) != Machine->pens[0]))
+				if ((read_pixel(bitmap, 256+i, 32+j) != Machine.pens[0]) &&
+				    (read_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1) != Machine.pens[0]))
 					coll=0x08;
 	
 	if (coll != 0)
 	{
 	--i;--j;
-	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine->pens[2]);
+	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[2]);
 	
 	//determine collision registers
 	{
@@ -535,7 +535,7 @@ public class marinedt
 	
 	//logerror("%x\n",videoram.read(offs));
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					0,
 					0,
 					flipx,flipy,
@@ -547,11 +547,11 @@ public class marinedt
 	
 	}
 	//{
-	//	plot_pixel(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine->pens[1]);
-	//			plot_pixel(bitmap, 256+i, 32+j,Machine->pens[1]);
+	//	plot_pixel(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine.pens[1]);
+	//			plot_pixel(bitmap, 256+i, 32+j,Machine.pens[1]);
 	//}
 	
-	//	drawgfx(bitmap,Machine->gfx[1],
+	//	drawgfx(bitmap,Machine.gfx[1],
 	//			((marinedt_obj1_a&0x04)<<1)+((marinedt_obj1_a&0x38)>>3),
 	//			marinedt_obj1_a&0x03,
 	//			1,marinedt_obj1_a&0x80,
@@ -559,14 +559,14 @@ public class marinedt
 	//			cliprect,TRANSPARENCY_PEN,0);
 	
 	//if (coll != 0)
-	//	drawgfx(bitmap,Machine->gfx[1],
+	//	drawgfx(bitmap,Machine.gfx[1],
 	//			1,
 	//			marinedt_obj1_a&0x03,
 	//			1,0,
 	//			256,96,
 	//			cliprect,TRANSPARENCY_NONE,0);
 	//else
-	//	drawgfx(bitmap,Machine->gfx[2],
+	//	drawgfx(bitmap,Machine.gfx[2],
 	//			1,
 	//			marinedt_obj1_a&0x03,
 	//			1,0,
@@ -583,7 +583,7 @@ public class marinedt
 	
 	//note the 22 mod in the code, possibly for flipped
 	if ((marinedt_pd & 0x02) != 0)
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 					((marinedt_obj2_a&0x04)<<1)+((marinedt_obj2_a&0x38)>>3),
 					marinedt_obj2_a&0x03,
 					1,marinedt_obj2_a&0x80,
@@ -595,7 +595,7 @@ public class marinedt
 	//at y-1 overlap is equal at 5 pixels on left and right
 	//at x overlap is 6 on left and 5 on right, x+1 may be correct
 	if ((marinedt_pd & 0x01) != 0)
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					((marinedt_obj1_a&0x04)<<1)+((marinedt_obj1_a&0x38)>>3),
 					marinedt_obj1_a&0x03,
 					1,marinedt_obj1_a&0x80,
@@ -605,7 +605,7 @@ public class marinedt
 	
 	
 	//if (coll != 0)
-	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine->pens[1]);
+	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[1]);
 	} };
 	
 	static MACHINE_DRIVER_START( marinedt )

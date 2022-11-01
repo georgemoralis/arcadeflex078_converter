@@ -209,7 +209,7 @@ public class niyanpai
 		{ 1 },			/* clock */
 		{ 0 },			/* timer disables */
 		{ ctc0_interrupt },	/* interrupt handler */
-		{ z80ctc_0_trg3_w },	/* ZC/TO0 callback ctc1.zc0 -> ctc1.trg3 */
+		{ z80ctc_0_trg3_w },	/* ZC/TO0 callback ctc1.zc0 . ctc1.trg3 */
 		{ 0 },			/* ZC/TO1 callback */
 		{ 0 },			/* ZC/TO2 callback */
 	};
@@ -226,7 +226,7 @@ public class niyanpai
 		}
 	
 		// initialize the CTC
-		ctc_intf.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	}
 	
@@ -240,14 +240,14 @@ public class niyanpai
 		unsigned char *MAINROM = memory_region(REGION_CPU1);
 		unsigned char *SNDROM = memory_region(REGION_CPU2);
 	
-		// main program patch (USR0 -> IRQ LEVEL1)
+		// main program patch (USR0 . IRQ LEVEL1)
 		MAINROM[(25 * 4) + 0] = MAINROM[(64 * 4) + 0];
 		MAINROM[(25 * 4) + 1] = MAINROM[(64 * 4) + 1];
 		MAINROM[(25 * 4) + 2] = MAINROM[(64 * 4) + 2];
 		MAINROM[(25 * 4) + 3] = MAINROM[(64 * 4) + 3];
 	
 		// sound program patch
-		SNDROM[0x0213] = 0x00;			// DI -> NOP
+		SNDROM[0x0213] = 0x00;			// DI . NOP
 	
 		// initialize TMPZ84C011 PIO and CTC
 		tmpz84c011_init();

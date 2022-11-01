@@ -1192,7 +1192,7 @@ public class halleys
 		if (!init_success) return(1);
 	
 		// abort on unsupported bit depths
-		if (Machine->scrbitmap->depth != 15 && Machine->scrbitmap->depth != 16) return(1);
+		if (Machine.scrbitmap.depth != 15 && Machine.scrbitmap.depth != 16) return(1);
 	
 		// create short cuts to scroll registers
 		scrolly0 = io_ram + HALLEYS_Y0;
@@ -1239,8 +1239,8 @@ public class halleys
 		if ((bch = CLIP_H - sy) < 0) bch = 0;
 	
 		esi = source + CLIP_SKIP + (sy << SCREEN_WIDTH_L2);
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
-		edx = bitmap->rowpixels;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
+		edx = bitmap.rowpixels;
 	
 		// draw top split
 		for (ecx=bch; ecx; ecx--) OPCOPY_COMMON
@@ -1293,8 +1293,8 @@ public class halleys
 		if ((bch = CLIP_H - sy) < 0) bch = 0;
 	
 		src_base = source + CLIP_SKIP + (sy << SCREEN_WIDTH_L2);
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
-		dst_adv = bitmap->rowpixels - CLIP_W;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
+		dst_adv = bitmap.rowpixels - CLIP_W;
 	
 		// draw top split
 		for (edx=bch; edx; edx--) YCOPY_COMMON
@@ -1315,9 +1315,9 @@ public class halleys
 		int ecx, edx;
 	
 		esi = source + CLIP_SKIP;
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
 		ecx = CLIP_H;
-		edx = bitmap->rowpixels;
+		edx = bitmap.rowpixels;
 	
 		do { memcpy(edi, esi, CLIP_W<<1); esi += SCREEN_WIDTH; edi += edx; } while (--ecx);
 	}
@@ -1330,8 +1330,8 @@ public class halleys
 		WORD ax, bx;
 	
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap->rowpixels;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap.rowpixels;
 		ecx = -CLIP_W;
 		edx = CLIP_H;
 	
@@ -1371,8 +1371,8 @@ public class halleys
 	
 		pal_ptr = internal_palette;
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap->rowpixels;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap.rowpixels;
 		ebx = alpha_table;
 		ecx = -CLIP_W;
 		i = CLIP_H;
@@ -1412,8 +1412,8 @@ public class halleys
 		WORD ax, bx;
 	
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap->rowpixels;
+		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap.rowpixels;
 		ecx = -CLIP_W;
 		edx = CLIP_H;
 	
@@ -1461,8 +1461,8 @@ public class halleys
 	
 		pal_ptr = internal_palette;
 		esi = mask | 0xffffff00;
-		edi = (DWORD*)((WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W);
-		dst_pitch = bitmap->rowpixels >> 1;
+		edi = (DWORD*)((WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W);
+		dst_pitch = bitmap.rowpixels >> 1;
 		ecx = -(CLIP_W>>1);
 		edx = CLIP_H;
 	
@@ -2018,7 +2018,7 @@ public class halleys
 		memset(io_ram, 0xff, io_ramsize);
 		memset(render_layer[0], 0, SCREEN_BYTESIZE * MAX_LAYERS);
 	
-		fillbitmap(Machine->scrbitmap, bgcolor, &Machine->visible_area);
+		fillbitmap(Machine.scrbitmap, bgcolor, &Machine.visible_area);
 	}
 	
 	

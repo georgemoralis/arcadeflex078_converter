@@ -79,9 +79,9 @@ public class input
 	{
 		const struct KeyboardInfo *keyinfo;
 		keyinfo = osd_get_key_list();
-		while (keyinfo->name)
+		while (keyinfo.name)
 		{
-			if (keyinfo->code == oscode)
+			if (keyinfo.code == oscode)
 				return keyinfo;
 			++keyinfo;
 		}
@@ -92,9 +92,9 @@ public class input
 	{
 		const struct JoystickInfo *joyinfo;
 		joyinfo = osd_get_joy_list();
-		while (joyinfo->name)
+		while (joyinfo.name)
 		{
-			if (joyinfo->code == oscode)
+			if (joyinfo.code == oscode)
 				return joyinfo;
 			++joyinfo;
 		}
@@ -118,13 +118,13 @@ public class input
 		{
 			case CODE_TYPE_KEYBOARD :
 				keyinfo = internal_oscode_find_keyboard(oscode);
-				if (keyinfo && keyinfo->standardcode != CODE_OTHER)
-					return keyinfo->standardcode;
+				if (keyinfo && keyinfo.standardcode != CODE_OTHER)
+					return keyinfo.standardcode;
 				break;
 			case CODE_TYPE_JOYSTICK :
 				joyinfo = internal_oscode_find_joystick(oscode);
-				if (joyinfo && joyinfo->standardcode != CODE_OTHER)
-					return joyinfo->standardcode;
+				if (joyinfo && joyinfo.standardcode != CODE_OTHER)
+					return joyinfo.standardcode;
 				break;
 		}
 	
@@ -159,16 +159,16 @@ public class input
 	
 		if (code < __code_max)
 		{
-			while (keyinfo->name)
+			while (keyinfo.name)
 			{
-				if (keyinfo->standardcode == code)
+				if (keyinfo.standardcode == code)
 					return keyinfo;
 				++keyinfo;
 			}
 		} else {
-			while (keyinfo->name)
+			while (keyinfo.name)
 			{
-				if (keyinfo->standardcode == CODE_OTHER && keyinfo->code == code_map[code].oscode)
+				if (keyinfo.standardcode == CODE_OTHER && keyinfo.code == code_map[code].oscode)
 					return keyinfo;
 		      		++keyinfo;
 			}
@@ -185,16 +185,16 @@ public class input
 	
 		if (code < __code_max)
 		{
-			while (joyinfo->name)
+			while (joyinfo.name)
 			{
-				if (joyinfo->standardcode == code)
+				if (joyinfo.standardcode == code)
 					return joyinfo;
 				++joyinfo;
 			}
 		} else {
-			while (joyinfo->name)
+			while (joyinfo.name)
 			{
-				if (joyinfo->standardcode == CODE_OTHER && joyinfo->code == code_map[code].oscode)
+				if (joyinfo.standardcode == CODE_OTHER && joyinfo.code == code_map[code].oscode)
 					return joyinfo;
 				++joyinfo;
 			}
@@ -217,12 +217,12 @@ public class input
 				case CODE_TYPE_KEYBOARD :
 					keyinfo = internal_code_find_keyboard(code);
 					if (keyinfo != 0)
-						return osd_is_key_pressed(keyinfo->code);
+						return osd_is_key_pressed(keyinfo.code);
 					break;
 				case CODE_TYPE_JOYSTICK :
 					joyinfo = internal_code_find_joystick(code);
 					if (joyinfo != 0)
-						return osd_is_joy_pressed(joyinfo->code);
+						return osd_is_joy_pressed(joyinfo.code);
 					break;
 			}
 		} else {
@@ -250,12 +250,12 @@ public class input
 			case CODE_TYPE_KEYBOARD :
 				keyinfo = internal_code_find_keyboard(code);
 				if (keyinfo != 0)
-					return keyinfo->name;
+					return keyinfo.name;
 				break;
 			case CODE_TYPE_JOYSTICK :
 				joyinfo = internal_code_find_joystick(code);
 				if (joyinfo != 0)
-					return joyinfo->name;
+					return joyinfo.name;
 				break;
 		}
 		return "n/a";
@@ -270,20 +270,20 @@ public class input
 		/* add only oscode because all standard codes are already present */
 	
 		keyinfo = osd_get_key_list();
-		while (keyinfo->name)
+		while (keyinfo.name)
 		{
-			if (keyinfo->standardcode == CODE_OTHER)
-				if (internal_oscode_find(keyinfo->code,CODE_TYPE_KEYBOARD) == CODE_NONE)
-					internal_oscode_add(keyinfo->code,CODE_TYPE_KEYBOARD);
+			if (keyinfo.standardcode == CODE_OTHER)
+				if (internal_oscode_find(keyinfo.code,CODE_TYPE_KEYBOARD) == CODE_NONE)
+					internal_oscode_add(keyinfo.code,CODE_TYPE_KEYBOARD);
 			++keyinfo;
 		}
 	
 		joyinfo = osd_get_joy_list();
-		while (joyinfo->name)
+		while (joyinfo.name)
 		{
-			if (joyinfo->standardcode == CODE_OTHER)
-	                        if (internal_oscode_find(joyinfo->code,CODE_TYPE_JOYSTICK)==CODE_NONE)
-					internal_oscode_add(joyinfo->code,CODE_TYPE_JOYSTICK);
+			if (joyinfo.standardcode == CODE_OTHER)
+	                        if (internal_oscode_find(joyinfo.code,CODE_TYPE_JOYSTICK)==CODE_NONE)
+					internal_oscode_add(joyinfo.code,CODE_TYPE_JOYSTICK);
 			++joyinfo;
 		}
 	}
@@ -470,7 +470,7 @@ public class input
 				keydelay = 3;
 				counter = 0;
 			}
-			else if (++counter > keydelay * speed * Machine->drv->frames_per_second / 60)
+			else if (++counter > keydelay * speed * Machine.drv.frames_per_second / 60)
 			{
 				keydelay = 1;
 				counter = 0;
@@ -853,7 +853,7 @@ public class input
 				inputdelay = 3;
 				counter = 0;
 			}
-			else if (++counter > inputdelay * speed * Machine->drv->frames_per_second / 60)
+			else if (++counter > inputdelay * speed * Machine.drv.frames_per_second / 60)
 			{
 				inputdelay = 1;
 				counter = 0;
@@ -879,7 +879,7 @@ public class input
 			{
 				joyinfo = internal_code_find_joystick(code);
 				if (joyinfo != 0)
-					return osd_is_joystick_axis_code(joyinfo->code);
+					return osd_is_joystick_axis_code(joyinfo.code);
 			}
 			else
 			{
@@ -902,7 +902,7 @@ public class input
 			{
 				joyinfo = internal_code_find_joystick(code);
 				if (joyinfo != 0)
-					return joyinfo->code;
+					return joyinfo.code;
 			}
 		} else {
 			if (code_map[code].type == CODE_TYPE_JOYSTICK)

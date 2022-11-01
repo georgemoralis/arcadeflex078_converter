@@ -68,7 +68,7 @@ public class speedspn
 	
 	static void speedspn_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		data8_t *source = speedspn_vidram+ 0x1000;
 		data8_t *finish = source + 0x1000;
 	

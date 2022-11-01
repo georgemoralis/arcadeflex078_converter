@@ -987,7 +987,7 @@ public class cojag
 	{
 		/* copy over the ROM */
 		memcpy(rom_base, memory_region(REGION_USER1), rom_size);
-		cojag_is_r3000 = (Machine->drv->cpu[0].cpu_type == CPU_R3000BE);
+		cojag_is_r3000 = (Machine.drv.cpu[0].cpu_type == CPU_R3000BE);
 		cojag_draw_crosshair = crosshair;
 	
 		/* install synchronization hooks for GPU */

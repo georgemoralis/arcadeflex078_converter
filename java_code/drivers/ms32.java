@@ -2298,7 +2298,7 @@ public class ms32
 	static DRIVER_INIT (f1superb)
 	{
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
-		pROM[0x19d04/4]=0x167a021a; // bne->br  : sprite Y offset table is always copied to RAM
+		pROM[0x19d04/4]=0x167a021a; // bne.br  : sprite Y offset table is always copied to RAM
 		init_ss92046_01();
 	}
 	

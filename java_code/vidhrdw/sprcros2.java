@@ -20,7 +20,7 @@ public class sprcros2
 	{
 		int i,bit0,bit1,bit2,r,g,b;
 	
-		for (i = 0;i < Machine->drv->total_colors; i++)
+		for (i = 0;i < Machine.drv.total_colors; i++)
 		{
 			/* red component */
 			bit0 = (color_prom[i] >> 0) & 0x01;
@@ -167,7 +167,7 @@ public class sprcros2
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 					sprcros2_spriteram[offs],
 					(sprcros2_spriteram[offs+1]&0x38)>>3,
 					flipx,flipy,

@@ -235,15 +235,15 @@ public class nbmj8991
 		int x, y;
 		unsigned char color1, color2;
 	
-		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
+		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine->drv->screen_width; x++)
+			for (x = 0; x < Machine.drv.screen_width; x++)
 			{
-				color1 = pstadium_videoram[(y * Machine->drv->screen_width) + x];
-				color2 = pstadium_videoram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)];
+				color1 = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+				color2 = pstadium_videoram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)];
 	
-				pstadium_videoram[(y * Machine->drv->screen_width) + x] = color2;
-				pstadium_videoram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)] = color1;
+				pstadium_videoram[(y * Machine.drv.screen_width) + x] = color2;
+				pstadium_videoram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)] = color1;
 			}
 		}
 	}
@@ -348,13 +348,13 @@ public class nbmj8991
 	
 				if (tflag1 != 0)
 				{
-					pstadium_videoram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
-					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine->pens[drawcolor1]);
+					pstadium_videoram[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
+					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine.pens[drawcolor1]);
 				}
 				if (tflag2 != 0)
 				{
-					pstadium_videoram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
-					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine->pens[drawcolor2]);
+					pstadium_videoram[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine.pens[drawcolor2]);
 				}
 			}
 		}
@@ -369,10 +369,10 @@ public class nbmj8991
 	******************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_pstadium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((pstadium_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
-		if ((pstadium_videoram = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char))) == 0) return 1;
+		if ((pstadium_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
+		if ((pstadium_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((pstadium_paltbl = auto_malloc(0x800 * sizeof(char))) == 0) return 1;
-		memset(pstadium_videoram, 0x00, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(char)));
+		memset(pstadium_videoram, 0x00, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char)));
 		return 0;
 	} };
 	
@@ -385,12 +385,12 @@ public class nbmj8991
 		{
 			pstadium_screen_refresh = 0;
 	
-			for (y = 0; y < Machine->drv->screen_height; y++)
+			for (y = 0; y < Machine.drv.screen_height; y++)
 			{
-				for (x = 0; x < Machine->drv->screen_width; x++)
+				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram[(y * Machine->drv->screen_width) + x];
-					plot_pixel(pstadium_tmpbitmap, x, y, Machine->pens[color]);
+					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
@@ -400,11 +400,11 @@ public class nbmj8991
 	
 		if ((nb1413m3_inputport & 0x20) != 0)
 		{
-			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine->visible_area, TRANSPARENCY_NONE, 0);
+			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0x00], 0);
+			fillbitmap(bitmap, Machine.pens[0x00], 0);
 		}
 	} };
 	
@@ -417,12 +417,12 @@ public class nbmj8991
 		{
 			pstadium_screen_refresh = 0;
 	
-			for (y = 0; y < Machine->drv->screen_height; y++)
+			for (y = 0; y < Machine.drv.screen_height; y++)
 			{
-				for (x = 0; x < Machine->drv->screen_width; x++)
+				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram[(y * Machine->drv->screen_width) + x];
-					plot_pixel(pstadium_tmpbitmap, x, y, Machine->pens[color]);
+					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
@@ -432,11 +432,11 @@ public class nbmj8991
 	
 		if (pstadium_dispflag != 0)
 		{
-			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine->visible_area, TRANSPARENCY_NONE, 0);
+			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, &Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0x00], 0);
+			fillbitmap(bitmap, Machine.pens[0x00], 0);
 		}
 	} };
 }

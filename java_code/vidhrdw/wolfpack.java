@@ -119,7 +119,7 @@ public class wolfpack
 			return 1;
 		}
 	
-		if ((helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == NULL)
+		if ((helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == NULL)
 		{
 			return 1;
 		}
@@ -165,7 +165,7 @@ public class wolfpack
 	
 		int chop = (scaler[wolfpack_ship_size] * wolfpack_ship_h_precess) >> 16;
 	
-		drawgfxzoom(bitmap, Machine->gfx[1],
+		drawgfxzoom(bitmap, Machine.gfx[1],
 			wolfpack_ship_pic,
 			0,
 			wolfpack_ship_reflect, 0,
@@ -184,7 +184,7 @@ public class wolfpack
 		int x;
 		int y;
 	
-		drawgfx(bitmap, Machine->gfx[3],
+		drawgfx(bitmap, Machine.gfx[3],
 			wolfpack_torpedo_pic,
 			0,
 			0, 0,
@@ -230,7 +230,7 @@ public class wolfpack
 			rect.max_x = 255;
 		}
 	
-		drawgfx(bitmap, Machine->gfx[2],
+		drawgfx(bitmap, Machine.gfx[2],
 			wolfpack_pt_pic,
 			0,
 			0, 0,
@@ -239,7 +239,7 @@ public class wolfpack
 			&rect,
 			TRANSPARENCY_PEN, 0);
 	
-		drawgfx(bitmap, Machine->gfx[2],
+		drawgfx(bitmap, Machine.gfx[2],
 			wolfpack_pt_pic,
 			0,
 			0, 0,
@@ -264,7 +264,7 @@ public class wolfpack
 	
 		for (y = rect.min_y; y <= rect.max_y; y++)
 		{
-			UINT16* p = bitmap->line[y];
+			UINT16* p = bitmap.line[y];
 	
 			for (x = rect.min_x; x <= rect.max_x; x++)
 			{
@@ -287,7 +287,7 @@ public class wolfpack
 			{
 				int code = wolfpack_alpha_num_ram[32 * i + j];
 	
-				drawgfx(bitmap, Machine->gfx[0],
+				drawgfx(bitmap, Machine.gfx[0],
 					code,
 					wolfpack_video_invert,
 					0, 0,
@@ -314,8 +314,8 @@ public class wolfpack
 	
 		rect.min_x = 0;
 		rect.min_y = 0;
-		rect.max_x = helper->width - 1;
-		rect.max_y = helper->height - 1;
+		rect.max_x = helper.width - 1;
+		rect.max_y = helper.height - 1;
 	
 		fillbitmap(helper, 0, &rect);
 	
@@ -328,9 +328,9 @@ public class wolfpack
 	
 			for (x = 2 * x1; x < 2 * x2; x++)
 			{
-				if (x < 0 || x >= helper->width)
+				if (x < 0 || x >= helper.width)
 					continue;
-				if (y < 0 || y >= helper->height)
+				if (y < 0 || y >= helper.height)
 					continue;
 	
 				if (read_pixel(helper, x, y))

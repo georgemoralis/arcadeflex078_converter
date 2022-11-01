@@ -130,10 +130,10 @@ $c800-$cfff  RAM(2K)
 Strangely the RAM hardware registers seem to be overlaid at $c800
 $00a6 routine here reads I/O ports and stores in, its not a straight
 copy, the data is mangled before storage:
-PSG1-E -> $c808
-PSG1-F -> $c80b
-PSG2-E -> $c809
-PSG2-F -> $c80a - DIP Switch Bank 2 (Test mode is here)
+PSG1-E . $c808
+PSG1-F . $c80b
+PSG2-E . $c809
+PSG2-F . $c80a - DIP Switch Bank 2 (Test mode is here)
 
 -------------------------------GET STAR------------------------------------
 		following info by Luca Elia (l.elia@tin.it)

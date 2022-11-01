@@ -137,7 +137,7 @@ public class leland
 		dac_bufout[0] = dac_bufout[1] = 0;
 	
 		/* skip if no sound */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return 0;
 	
 		/* allocate the stream */
@@ -335,15 +335,15 @@ public class leland
 		for (i = start; i < stop; i++)
 		{
 			struct dac_state *d = &dac[i];
-			int count = (d->bufin - d->bufout) & DAC_BUFFER_SIZE_MASK;
+			int count = (d.bufin - d.bufout) & DAC_BUFFER_SIZE_MASK;
 	
 			/* if we have data, process it */
 			if (count > 0)
 			{
-				INT16 *base = d->buffer;
-				int source = d->bufout;
-				int frac = d->fraction;
-				int step = d->step;
+				INT16 *base = d.buffer;
+				int source = d.bufout;
+				int frac = d.fraction;
+				int step = d.step;
 	
 				/* sample-rate convert to the output frequency */
 				for (j = 0; j < length && count > 0; j++)
@@ -360,12 +360,12 @@ public class leland
 					logerror("DAC #%d short by %d/%d samples\n", i, length - j, length);
 	
 				/* update the DAC state */
-				d->fraction = frac;
-				d->bufout = source;
+				d.fraction = frac;
+				d.bufout = source;
 			}
 	
 			/* update the clock status */
-			if (count < d->buftarget)
+			if (count < d.buftarget)
 			{
 				if (LOG_OPTIMIZATION != 0) logerror("  - trigger due to clock active in update\n");
 				cpu_trigger(CPU_RESUME_TRIGGER);
@@ -395,35 +395,35 @@ public class leland
 			struct dma_state *d = &i186.dma[i];
 	
 			/* check for enabled DMA */
-			if (d->control & 0x0002)
+			if (d.control & 0x0002)
 			{
 				/* make sure the parameters meet our expectations */
-				if ((d->control & 0xfe00) != 0x1600)
+				if ((d.control & 0xfe00) != 0x1600)
 				{
-					logerror("Unexpected DMA control %02X\n", d->control);
+					logerror("Unexpected DMA control %02X\n", d.control);
 				}
-				else if (!is_redline && ((d->dest & 1) || (d->dest & 0x3f) > 0x0b))
+				else if (!is_redline && ((d.dest & 1) || (d.dest & 0x3f) > 0x0b))
 				{
-					logerror("Unexpected DMA destination %02X\n", d->dest);
+					logerror("Unexpected DMA destination %02X\n", d.dest);
 				}
-				else if (is_redline && (d->dest & 0xf000) != 0x4000 && (d->dest & 0xf000) != 0x5000)
+				else if (is_redline && (d.dest & 0xf000) != 0x4000 && (d.dest & 0xf000) != 0x5000)
 				{
-					logerror("Unexpected DMA destination %02X\n", d->dest);
+					logerror("Unexpected DMA destination %02X\n", d.dest);
 				}
 	
 				/* otherwise, we're ready for liftoff */
 				else
 				{
 					UINT8 *base = memory_region(REGION_CPU3);
-					int source = d->source;
-					int count = d->count;
+					int source = d.source;
+					int count = d.count;
 					int which, frac, step, volume;
 	
 					/* adjust for redline racer */
 					if (!is_redline)
-						which = (d->dest & 0x3f) / 2;
+						which = (d.dest & 0x3f) / 2;
 					else
-						which = (d->dest >> 9) & 7;
+						which = (d.dest >> 9) & 7;
 	
 					frac = dac[which].fraction;
 					step = dac[which].step;
@@ -442,18 +442,18 @@ public class leland
 					/* update the DMA state */
 					if (count > 0)
 					{
-						d->source = source;
-						d->count = count;
+						d.source = source;
+						d.count = count;
 					}
 					else
 					{
 						/* let the timer callback actually mark the transfer finished */
-						d->source = source + count - 1;
-						d->count = 1;
-						d->finished = 1;
+						d.source = source + count - 1;
+						d.count = 1;
+						d.finished = 1;
 					}
 	
-					if (LOG_DMA != 0) logerror("DMA Generated %d samples - new count = %04X, source = %04X\n", j, d->count, d->source);
+					if (LOG_DMA != 0) logerror("DMA Generated %d samples - new count = %04X, source = %04X\n", j, d.count, d.source);
 	
 					/* update the DAC state */
 					dac[which].fraction = frac;
@@ -483,13 +483,13 @@ public class leland
 		if (count > 0 && ext_active)
 		{
 			int source = ext_start;
-			int frac = d->fraction;
-			int step = d->step;
+			int frac = d.fraction;
+			int step = d.step;
 	
 			/* sample-rate convert to the output frequency */
 			for (j = 0; j < length && count > 0; j++)
 			{
-				buffer[j] += ((INT16)ext_base[source] - 0x80) * d->volume;
+				buffer[j] += ((INT16)ext_base[source] - 0x80) * d.volume;
 				frac += step;
 				source += frac >> 24;
 				count -= frac >> 24;
@@ -497,7 +497,7 @@ public class leland
 			}
 	
 			/* update the DAC state */
-			d->fraction = frac;
+			d.fraction = frac;
 			ext_start = source;
 		}
 	}
@@ -518,24 +518,24 @@ public class leland
 		int i;
 	
 		/* bail if nothing to play */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return 0;
 	
 		/* determine which sound hardware is installed */
 		has_ym2151 = 0;
 		for (i = 0; i < MAX_SOUND; i++)
-			if (Machine->drv->sound[i].sound_type == SOUND_YM2151)
+			if (Machine.drv.sound[i].sound_type == SOUND_YM2151)
 				has_ym2151 = 1;
 	
 		/* allocate separate streams for the DMA and non-DMA DACs */
-		dma_stream = stream_init("80186 DMA-driven DACs", 100, Machine->sample_rate, 0, leland_i186_dma_update);
-		nondma_stream = stream_init("80186 manually-driven DACs", 100, Machine->sample_rate, 0, leland_i186_dac_update);
+		dma_stream = stream_init("80186 DMA-driven DACs", 100, Machine.sample_rate, 0, leland_i186_dma_update);
+		nondma_stream = stream_init("80186 manually-driven DACs", 100, Machine.sample_rate, 0, leland_i186_dac_update);
 	
 		/* if we have a 2151, install an externally driven DAC stream */
 		if (has_ym2151 != 0)
 		{
 			ext_base = memory_region(REGION_SOUND1);
-			extern_stream = stream_init("80186 externally-driven DACs", 100, Machine->sample_rate, 0, leland_i186_extern_update);
+			extern_stream = stream_init("80186 externally-driven DACs", 100, Machine.sample_rate, 0, leland_i186_extern_update);
 		}
 	
 		/* by default, we're not redline racer */
@@ -830,10 +830,10 @@ public class leland
 		if (LOG_TIMER != 0) logerror("Hit interrupt callback for timer %d\n", which);
 	
 		/* set the max count bit */
-		t->control |= 0x0020;
+		t.control |= 0x0020;
 	
 		/* request an interrupt */
-		if (t->control & 0x2000)
+		if (t.control & 0x2000)
 		{
 			i186.intr.status |= 0x01 << which;
 			update_interrupt_state();
@@ -841,14 +841,14 @@ public class leland
 		}
 	
 		/* if we're continuous, reset */
-		if (t->control & 0x0001)
+		if (t.control & 0x0001)
 		{
-			int count = t->maxA ? t->maxA : 0x10000;
-			timer_adjust(t->int_timer, (double)count * TIME_IN_HZ(2000000), which, 0);
+			int count = t.maxA ? t.maxA : 0x10000;
+			timer_adjust(t.int_timer, (double)count * TIME_IN_HZ(2000000), which, 0);
 			if (LOG_TIMER != 0) logerror("  Repriming interrupt\n");
 		}
 		else
-			timer_adjust(t->int_timer, TIME_NEVER, which, 0);
+			timer_adjust(t.int_timer, TIME_NEVER, which, 0);
 	}
 	
 	
@@ -857,21 +857,21 @@ public class leland
 		struct timer_state *t = &i186.timer[which];
 	
 		/* if we have a timing timer running, adjust the count */
-		if (t->time_timer_active)
+		if (t.time_timer_active)
 		{
-			double current_time = timer_timeelapsed(t->time_timer);
-			int net_clocks = (int)((current_time - t->last_time) * 2000000.);
-			t->last_time = current_time;
+			double current_time = timer_timeelapsed(t.time_timer);
+			int net_clocks = (int)((current_time - t.last_time) * 2000000.);
+			t.last_time = current_time;
 	
 			/* set the max count bit if we passed the max */
-			if ((int)t->count + net_clocks >= t->maxA)
-				t->control |= 0x0020;
+			if ((int)t.count + net_clocks >= t.maxA)
+				t.control |= 0x0020;
 	
 			/* set the new count */
-			if (t->maxA != 0)
-				t->count = (t->count + net_clocks) % t->maxA;
+			if (t.maxA != 0)
+				t.count = (t.count + net_clocks) % t.maxA;
 			else
-				t->count = t->count + net_clocks;
+				t.count = t.count + net_clocks;
 		}
 	}
 	
@@ -884,23 +884,23 @@ public class leland
 		/* if we have a new count and we're on, update things */
 		if (new_count != -1)
 		{
-			if (t->control & 0x8000)
+			if (t.control & 0x8000)
 			{
 				internal_timer_sync(which);
 				update_int_timer = 1;
 			}
-			t->count = new_count;
+			t.count = new_count;
 		}
 	
 		/* if we have a new max and we're on, update things */
-		if (new_maxA != -1 && new_maxA != t->maxA)
+		if (new_maxA != -1 && new_maxA != t.maxA)
 		{
-			if (t->control & 0x8000)
+			if (t.control & 0x8000)
 			{
 				internal_timer_sync(which);
 				update_int_timer = 1;
 			}
-			t->maxA = new_maxA;
+			t.maxA = new_maxA;
 			if (new_maxA == 0) new_maxA = 0x10000;
 	
 			/* redline racer controls nothing externally? */
@@ -917,14 +917,14 @@ public class leland
 		}
 	
 		/* if we have a new max and we're on, update things */
-		if (new_maxB != -1 && new_maxB != t->maxB)
+		if (new_maxB != -1 && new_maxB != t.maxB)
 		{
-			if (t->control & 0x8000)
+			if (t.control & 0x8000)
 			{
 				internal_timer_sync(which);
 				update_int_timer = 1;
 			}
-			t->maxB = new_maxB;
+			t.maxB = new_maxB;
 			if (new_maxB == 0) new_maxB = 0x10000;
 	
 			/* timer 1 controls the externally driven DAC on Indy Heat/WSF */
@@ -940,15 +940,15 @@ public class leland
 			int diff;
 	
 			/* merge back in the bits we don't modify */
-			new_control = (new_control & ~0x1fc0) | (t->control & 0x1fc0);
+			new_control = (new_control & ~0x1fc0) | (t.control & 0x1fc0);
 	
 			/* handle the /INH bit */
 			if (!(new_control & 0x4000))
-				new_control = (new_control & ~0x8000) | (t->control & 0x8000);
+				new_control = (new_control & ~0x8000) | (t.control & 0x8000);
 			new_control &= ~0x4000;
 	
 			/* check for control bits we don't handle */
-			diff = new_control ^ t->control;
+			diff = new_control ^ t.control;
 			if ((diff & 0x001c) != 0)
 				logerror("ERROR! - unsupported timer mode %04X\n", new_control);
 	
@@ -962,8 +962,8 @@ public class leland
 					internal_timer_sync(which);
 	
 					/* nuke the timer and force the interrupt timer to be recomputed */
-					timer_adjust(t->time_timer, TIME_NEVER, which, 0);
-					t->time_timer_active = 0;
+					timer_adjust(t.time_timer, TIME_NEVER, which, 0);
+					t.time_timer_active = 0;
 					update_int_timer = 1;
 				}
 	
@@ -971,8 +971,8 @@ public class leland
 				else if ((diff & 0x8000) && (new_control & 0x8000))
 				{
 					/* start the timing */
-					timer_adjust(t->time_timer, TIME_NEVER, which, 0);
-					t->time_timer_active = 1;
+					timer_adjust(t.time_timer, TIME_NEVER, which, 0);
+					t.time_timer_active = 1;
 					update_int_timer = 1;
 				}
 	
@@ -985,7 +985,7 @@ public class leland
 			}
 	
 			/* set the new control register */
-			t->control = new_control;
+			t.control = new_control;
 		}
 	
 		/* update the interrupt timer */
@@ -996,15 +996,15 @@ public class leland
 		if (!has_ym2151 || which != 1)
 			if (update_int_timer != 0)
 			{
-				if ((t->control & 0x8000) && (t->control & 0x2000))
+				if ((t.control & 0x8000) && (t.control & 0x2000))
 				{
-					int diff = t->maxA - t->count;
+					int diff = t.maxA - t.count;
 					if (diff <= 0) diff += 0x10000;
-					timer_adjust(t->int_timer, (double)diff * TIME_IN_HZ(2000000), which, 0);
+					timer_adjust(t.int_timer, (double)diff * TIME_IN_HZ(2000000), which, 0);
 					if (LOG_TIMER != 0) logerror("Set interrupt timer for %d\n", which);
 				}
 				else
-					timer_adjust(t->int_timer, TIME_NEVER, which, 0);
+					timer_adjust(t.int_timer, TIME_NEVER, which, 0);
 			}
 	}
 	
@@ -1024,14 +1024,14 @@ public class leland
 		stream_update(dma_stream, 0);
 	
 		/* complete the status update */
-		d->control &= ~0x0002;
-		d->source += d->count;
-		d->count = 0;
+		d.control &= ~0x0002;
+		d.source += d.count;
+		d.count = 0;
 	
 		/* check for interrupt generation */
-		if (d->control & 0x0100)
+		if (d.control & 0x0100)
 		{
-			if (LOG_DMA != 0) logerror("DMA%d timer callback - requesting interrupt: count = %04X, source = %04X\n", which, d->count, d->source);
+			if (LOG_DMA != 0) logerror("DMA%d timer callback - requesting interrupt: count = %04X, source = %04X\n", which, d.count, d.source);
 			i186.intr.request |= 0x04 << which;
 			update_interrupt_state();
 		}
@@ -1045,11 +1045,11 @@ public class leland
 	
 		/* handle the CHG bit */
 		if (!(new_control & 0x0004))
-			new_control = (new_control & ~0x0002) | (d->control & 0x0002);
+			new_control = (new_control & ~0x0002) | (d.control & 0x0002);
 		new_control &= ~0x0004;
 	
 		/* check for control bits we don't handle */
-		diff = new_control ^ d->control;
+		diff = new_control ^ d.control;
 		if ((diff & 0x6811) != 0)
 			logerror("ERROR! - unsupported DMA mode %04X\n", new_control);
 	
@@ -1061,39 +1061,39 @@ public class leland
 			{
 				logerror("Unexpected DMA control %02X\n", new_control);
 			}
-			else if (!is_redline && ((d->dest & 1) || (d->dest & 0x3f) > 0x0b))
+			else if (!is_redline && ((d.dest & 1) || (d.dest & 0x3f) > 0x0b))
 			{
-				logerror("Unexpected DMA destination %02X\n", d->dest);
+				logerror("Unexpected DMA destination %02X\n", d.dest);
 			}
-			else if (is_redline && (d->dest & 0xf000) != 0x4000 && (d->dest & 0xf000) != 0x5000)
+			else if (is_redline && (d.dest & 0xf000) != 0x4000 && (d.dest & 0xf000) != 0x5000)
 			{
-				logerror("Unexpected DMA destination %02X\n", d->dest);
+				logerror("Unexpected DMA destination %02X\n", d.dest);
 			}
 	
 			/* otherwise, set a timer */
 			else
 			{
-				int count = d->count;
+				int count = d.count;
 				int dacnum;
 	
 				/* adjust for redline racer */
 				if (!is_redline)
-					dacnum = (d->dest & 0x3f) / 2;
+					dacnum = (d.dest & 0x3f) / 2;
 				else
 				{
-					dacnum = (d->dest >> 9) & 7;
-					dac[dacnum].volume = (d->dest & 0x1fe) / 2 / DAC_VOLUME_SCALE;
+					dacnum = (d.dest >> 9) & 7;
+					dac[dacnum].volume = (d.dest & 0x1fe) / 2 / DAC_VOLUME_SCALE;
 				}
 	
-				if (LOG_DMA != 0) logerror("Initiated DMA %d - count = %04X, source = %04X, dest = %04X\n", which, d->count, d->source, d->dest);
+				if (LOG_DMA != 0) logerror("Initiated DMA %d - count = %04X, source = %04X, dest = %04X\n", which, d.count, d.source, d.dest);
 	
-				d->finished = 0;
-				timer_adjust(d->finish_timer, TIME_IN_HZ(dac[dacnum].frequency) * (double)count, which, 0);
+				d.finished = 0;
+				timer_adjust(d.finish_timer, TIME_IN_HZ(dac[dacnum].frequency) * (double)count, which, 0);
 			}
 		}
 	
 		/* set the new control register */
-		d->control = new_control;
+		d.control = new_control;
 	}
 	
 	
@@ -1621,38 +1621,38 @@ public class leland
 				ctr = &counter[which];
 	
 				/* write the LSB */
-				if (ctr->writebyte == 0)
+				if (ctr.writebyte == 0)
 				{
-					ctr->count = (ctr->count & 0xff00) | (data & 0x00ff);
-					ctr->writebyte = 1;
+					ctr.count = (ctr.count & 0xff00) | (data & 0x00ff);
+					ctr.writebyte = 1;
 				}
 	
 				/* write the MSB and reset the counter */
 				else
 				{
-					ctr->count = (ctr->count & 0x00ff) | ((data << 8) & 0xff00);
-					ctr->writebyte = 0;
+					ctr.count = (ctr.count & 0x00ff) | ((data << 8) & 0xff00);
+					ctr.writebyte = 0;
 	
 					/* treat 0 as $10000 */
-					if (ctr->count == 0) ctr->count = 0x10000;
+					if (ctr.count == 0) ctr.count = 0x10000;
 	
 					/* reset/start the timer */
-					timer_adjust(ctr->timer, TIME_NEVER, 0, 0);
+					timer_adjust(ctr.timer, TIME_NEVER, 0, 0);
 	
-					if (LOG_PIT != 0) logerror("PIT counter %d set to %d (%d Hz)\n", which, ctr->count, 4000000 / ctr->count);
+					if (LOG_PIT != 0) logerror("PIT counter %d set to %d (%d Hz)\n", which, ctr.count, 4000000 / ctr.count);
 	
 					/* set the frequency of the associated DAC */
 					if (!is_redline)
-						set_dac_frequency(which, 4000000 / ctr->count);
+						set_dac_frequency(which, 4000000 / ctr.count);
 					else
 					{
 						if (which < 5)
-							set_dac_frequency(which, 7000000 / ctr->count);
+							set_dac_frequency(which, 7000000 / ctr.count);
 						else if (which == 6)
 						{
-							set_dac_frequency(5, 7000000 / ctr->count);
-							set_dac_frequency(6, 7000000 / ctr->count);
-							set_dac_frequency(7, 7000000 / ctr->count);
+							set_dac_frequency(5, 7000000 / ctr.count);
+							set_dac_frequency(6, 7000000 / ctr.count);
+							set_dac_frequency(7, 7000000 / ctr.count);
 						}
 					}
 				}
@@ -1665,7 +1665,7 @@ public class leland
 				ctr = &counter[which];
 	
 				/* set the mode */
-				ctr->mode = (data >> 1) & 7;
+				ctr.mode = (data >> 1) & 7;
 				break;
 		}
 	} };
@@ -1813,7 +1813,7 @@ public class leland
 		if (LOG_COMM != 0) logerror("%04X:Read sound response latch = %02X\n", activecpu_get_previouspc(), sound_response);
 	
 		/* if sound is disabled, toggle between FF and 00 */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			return sound_response ^= 0xff;
 		else
 		{
@@ -1841,28 +1841,28 @@ public class leland
 	static void set_dac_frequency(int which, int frequency)
 	{
 		struct dac_state *d = &dac[which];
-		int count = (d->bufin - d->bufout) & DAC_BUFFER_SIZE_MASK;
+		int count = (d.bufin - d.bufout) & DAC_BUFFER_SIZE_MASK;
 	
 		/* set the frequency of the associated DAC */
-		d->frequency = frequency;
-		d->step = (int)((double)frequency * (double)(1 << 24) / (double)Machine->sample_rate);
+		d.frequency = frequency;
+		d.step = (int)((double)frequency * (double)(1 << 24) / (double)Machine.sample_rate);
 	
 		/* also determine the target buffer size */
-		d->buftarget = dac[which].frequency / 60 + 50;
-		if (d->buftarget > DAC_BUFFER_SIZE - 1)
-			d->buftarget = DAC_BUFFER_SIZE - 1;
+		d.buftarget = dac[which].frequency / 60 + 50;
+		if (d.buftarget > DAC_BUFFER_SIZE - 1)
+			d.buftarget = DAC_BUFFER_SIZE - 1;
 	
 		/* reevaluate the count */
-		if (count > d->buftarget)
+		if (count > d.buftarget)
 			clock_active &= ~(1 << which);
-		else if (count < d->buftarget)
+		else if (count < d.buftarget)
 		{
 			if (LOG_OPTIMIZATION != 0) logerror("  - trigger due to clock active in set_dac_frequency\n");
 			cpu_trigger(CPU_RESUME_TRIGGER);
 			clock_active |= 1 << which;
 		}
 	
-		if (LOG_DAC != 0) logerror("DAC %d frequency = %d, step = %08X\n", which, d->frequency, d->step);
+		if (LOG_DAC != 0) logerror("DAC %d frequency = %d, step = %08X\n", which, d.frequency, d.step);
 	}
 	
 	
@@ -1874,10 +1874,10 @@ public class leland
 		/* handle value changes */
 		if (!(offset & 1))
 		{
-			int count = (d->bufin - d->bufout) & DAC_BUFFER_SIZE_MASK;
+			int count = (d.bufin - d.bufout) & DAC_BUFFER_SIZE_MASK;
 	
 			/* set the new value */
-			d->value = (INT16)data - 0x80;
+			d.value = (INT16)data - 0x80;
 			if (LOG_DAC != 0) logerror("%05X:DAC %d value = %02X\n", activecpu_get_pc(), offset / 2, data);
 	
 			/* if we haven't overflowed the buffer, add the value value to it */
@@ -1888,11 +1888,11 @@ public class leland
 					stream_update(nondma_stream, 0);
 	
 				/* prescale by the volume */
-				d->buffer[d->bufin] = d->value * d->volume;
-				d->bufin = (d->bufin + 1) & DAC_BUFFER_SIZE_MASK;
+				d.buffer[d.bufin] = d.value * d.volume;
+				d.bufin = (d.bufin + 1) & DAC_BUFFER_SIZE_MASK;
 	
 				/* update the clock status */
-				if (++count > d->buftarget)
+				if (++count > d.buftarget)
 					clock_active &= ~(1 << which);
 			}
 		}
@@ -1900,7 +1900,7 @@ public class leland
 		/* handle volume changes */
 		else
 		{
-			d->volume = (data ^ 0x00) / DAC_VOLUME_SCALE;
+			d.volume = (data ^ 0x00) / DAC_VOLUME_SCALE;
 			if (LOG_DAC != 0) logerror("%05X:DAC %d volume = %02X\n", activecpu_get_pc(), offset / 2, data);
 		}
 	} };
@@ -1910,10 +1910,10 @@ public class leland
 	{
 		int which = offset / 0x200;
 		struct dac_state *d = &dac[which];
-		int count = (d->bufin - d->bufout) & DAC_BUFFER_SIZE_MASK;
+		int count = (d.bufin - d.bufout) & DAC_BUFFER_SIZE_MASK;
 	
 		/* set the new value */
-		d->value = (INT16)data - 0x80;
+		d.value = (INT16)data - 0x80;
 	
 		/* if we haven't overflowed the buffer, add the value value to it */
 		if (count < DAC_BUFFER_SIZE - 1)
@@ -1923,16 +1923,16 @@ public class leland
 				stream_update(nondma_stream, 0);
 	
 			/* prescale by the volume */
-			d->buffer[d->bufin] = d->value * d->volume;
-			d->bufin = (d->bufin + 1) & DAC_BUFFER_SIZE_MASK;
+			d.buffer[d.bufin] = d.value * d.volume;
+			d.bufin = (d.bufin + 1) & DAC_BUFFER_SIZE_MASK;
 	
 			/* update the clock status */
-			if (++count > d->buftarget)
+			if (++count > d.buftarget)
 				clock_active &= ~(1 << which);
 		}
 	
 		/* update the volume */
-		d->volume = (offset & 0x1fe) / 2 / DAC_VOLUME_SCALE;
+		d.volume = (offset & 0x1fe) / 2 / DAC_VOLUME_SCALE;
 		if (LOG_DAC != 0) logerror("%05X:DAC %d value = %02X, volume = %02X\n", activecpu_get_pc(), which, data, (offset & 0x1fe) / 2);
 	} };
 	
@@ -1941,7 +1941,7 @@ public class leland
 	{
 		static UINT8 even_byte;
 		struct dac_state *d = &dac[6];
-		int count = (d->bufin - d->bufout) & DAC_BUFFER_SIZE_MASK;
+		int count = (d.bufin - d.bufout) & DAC_BUFFER_SIZE_MASK;
 		int data16;
 	
 		/* warning: this assumes all port writes here are word-sized */
@@ -1954,7 +1954,7 @@ public class leland
 		data16 = (data << 8) | even_byte;
 	
 		/* set the new value */
-		d->value = (INT16)data16 - 0x200;
+		d.value = (INT16)data16 - 0x200;
 		if (LOG_DAC != 0) logerror("%05X:DAC 10-bit value = %02X\n", activecpu_get_pc(), data16);
 	
 		/* if we haven't overflowed the buffer, add the value value to it */
@@ -1965,11 +1965,11 @@ public class leland
 				stream_update(nondma_stream, 0);
 	
 			/* prescale by the volume */
-			d->buffer[d->bufin] = d->value * (0xff / DAC_VOLUME_SCALE / 2);
-			d->bufin = (d->bufin + 1) & DAC_BUFFER_SIZE_MASK;
+			d.buffer[d.bufin] = d.value * (0xff / DAC_VOLUME_SCALE / 2);
+			d.bufin = (d.bufin + 1) & DAC_BUFFER_SIZE_MASK;
 	
 			/* update the clock status */
-			if (++count > d->buftarget)
+			if (++count > d.buftarget)
 				clock_active &= ~0x40;
 		}
 	} };
@@ -2242,22 +2242,22 @@ public class leland
 	Memory configurations:
 	
 		Redline Racer:
-			FFDF7:80186 upper chip select = E03C		-> E0000-FFFFF, 128k long
-			FFDF7:80186 lower chip select = 00FC		-> 00000-00FFF, 4k long
-			FFDF7:80186 peripheral chip select = 013C	-> 01000, 01080, 01100, 01180, 01200, 01280, 01300
-			FFDF7:80186 middle chip select = 81FC		-> 80000-C0000, 64k chunks, 256k total
+			FFDF7:80186 upper chip select = E03C		. E0000-FFFFF, 128k long
+			FFDF7:80186 lower chip select = 00FC		. 00000-00FFF, 4k long
+			FFDF7:80186 peripheral chip select = 013C	. 01000, 01080, 01100, 01180, 01200, 01280, 01300
+			FFDF7:80186 middle chip select = 81FC		. 80000-C0000, 64k chunks, 256k total
 			FFDF7:80186 middle P chip select = A0FC
 	
 		Quarterback, Team Quarterback, AAFB, Super Offroad, Track Pack, Pigout, Viper:
-			FFDFA:80186 upper chip select = E03C		-> E0000-FFFFF, 128k long
-			FFDFA:80186 peripheral chip select = 203C	-> 20000, 20080, 20100, 20180, 20200, 20280, 20300
-			FFDFA:80186 middle chip select = 01FC		-> 00000-7FFFF, 128k chunks, 512k total
+			FFDFA:80186 upper chip select = E03C		. E0000-FFFFF, 128k long
+			FFDFA:80186 peripheral chip select = 203C	. 20000, 20080, 20100, 20180, 20200, 20280, 20300
+			FFDFA:80186 middle chip select = 01FC		. 00000-7FFFF, 128k chunks, 512k total
 			FFDFA:80186 middle P chip select = C0FC
 	
 		Ataxx, Indy Heat, World Soccer Finals:
-			FFD9D:80186 upper chip select = E03C		-> E0000-FFFFF, 128k long
-			FFD9D:80186 peripheral chip select = 043C	-> 04000, 04080, 04100, 04180, 04200, 04280, 04300
-			FFD9D:80186 middle chip select = 01FC		-> 00000-7FFFF, 128k chunks, 512k total
+			FFD9D:80186 upper chip select = E03C		. E0000-FFFFF, 128k long
+			FFD9D:80186 peripheral chip select = 043C	. 04000, 04080, 04100, 04180, 04200, 04280, 04300
+			FFD9D:80186 middle chip select = 01FC		. 00000-7FFFF, 128k chunks, 512k total
 			FFD9D:80186 middle P chip select = C0BC
 	
 	************************************************************************/

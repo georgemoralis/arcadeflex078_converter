@@ -297,7 +297,7 @@ public class thunderx
 		/* bit 1 = PMC-BK */
 		pmcbank = (data & 0x02) >> 1;
 	
-		/* bit 2 = do collision detection when 0->1 */
+		/* bit 2 = do collision detection when 0.1 */
 		if ((data & 4) && !(unknown_enable & 4))
 		{
 			calculate_collisions();

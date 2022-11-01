@@ -111,7 +111,7 @@ public class xmlroleH
 	#endif /* XML_DTD */
 	
 	#define XmlTokenRole(state, tok, ptr, end, enc) \
-	 (((state)->handler)(state, tok, ptr, end, enc))
+	 (((state).handler)(state, tok, ptr, end, enc))
 	
 	#ifdef __cplusplus
 	}

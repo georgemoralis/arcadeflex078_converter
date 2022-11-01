@@ -291,7 +291,7 @@ public class xexex
 	
 	static void ym_set_mixing(double left, double right)
 	{
-		if(Machine->sample_rate) {
+		if(Machine.sample_rate) {
 			int l = 71*left;
 			int r = 71*right;
 			int ch;
@@ -591,7 +591,7 @@ public class xexex
 	
 	static DRIVER_INIT( xexex )
 	{
-		if (!strcmp(Machine->gamedrv->name, "xexex"))
+		if (!strcmp(Machine.gamedrv.name, "xexex"))
 		{
 			// Invulnerability
 	//		*(data16_t *)(memory_region(REGION_CPU1) + 0x648d4) = 0x4a79;

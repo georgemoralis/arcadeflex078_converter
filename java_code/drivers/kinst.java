@@ -223,11 +223,11 @@ public class kinst
 	
 	static MEMORY_READ32_START( main_readmem )
 		{ 0x00000000, 0x00000fff, MRA32_BANK4 },
-		{ 0x00001000, 0x0007ffff, MRA32_BANK1 },	/* -> rambase1 + 0x1000 */
+		{ 0x00001000, 0x0007ffff, MRA32_BANK1 },	/* . rambase1 + 0x1000 */
 		{ 0x80000000, 0x8007ffff, MRA32_RAM },
 		{ 0x88000000, 0x887fffff, MRA32_RAM },
-		{ 0x9fc00000, 0x9fc7ffff, MRA32_BANK2 },	/* -> rombase */
-		{ 0xa0000000, 0xa007ffff, MRA32_BANK3 },	/* -> rambase1 */
+		{ 0x9fc00000, 0x9fc7ffff, MRA32_BANK2 },	/* . rombase */
+		{ 0xa0000000, 0xa007ffff, MRA32_BANK3 },	/* . rambase1 */
 		{ 0xb0000080, 0xb00000ff, kinst_control_r },
 		{ 0xb0000100, 0xb000013f, ide_controller_r },
 		{ 0xb0000170, 0xb0000173, ide_controller_extra_r },

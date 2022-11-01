@@ -459,7 +459,7 @@ public class namcos2
 	
 				if(scalex && scaley)
 				{
-					gfx = *Machine->gfx[spr_region];
+					gfx = *Machine.gfx[spr_region];
 	
 					if( (offset0&0x0200)==0 )
 					{
@@ -495,7 +495,7 @@ public class namcos2
 		 *	--x------------- bank
 		 *	----xxxxxxxxxxxx tile
 		 *
-		 * word#3				2->3 by N
+		 * word#3				2.3 by N
 		 *	xxxxxx---------- xsize
 		 *	------xxxxxxxxxx screenx
 		 *
@@ -563,10 +563,10 @@ public class namcos2
 				rect.min_y=sy;
 				rect.max_y=sy+(sizey-1);
 	
-				if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
-				if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
-				if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
-				if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
+				if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
+				if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
+				if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
+				if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
 	
 				if (bSmallSprite != 0)
 				{
@@ -588,7 +588,7 @@ public class namcos2
 					rect.max_y += (tile&2)?16:0;
 				}
 				drawgfxzoom(
-					bitmap,Machine->gfx[0],
+					bitmap,Machine.gfx[0],
 					sprn, color,
 					flipx,flipy,
 					sx,sy,
@@ -632,12 +632,12 @@ public class namcos2
 			return;
 		}
 	
-		beamx = readinputport(2+x1port)*bitmap->width/256;
-		beamy = readinputport(2+y1port)*bitmap->height/256;
+		beamx = readinputport(2+x1port)*bitmap.width/256;
+		beamy = readinputport(2+y1port)*bitmap.height/256;
 		draw_crosshair( bitmap, beamx, beamy, cliprect );
 	
-		beamx = readinputport(2+x2port)*bitmap->width/256;
-		beamy = readinputport(2+y2port)*bitmap->height/256;
+		beamx = readinputport(2+x2port)*bitmap.width/256;
+		beamy = readinputport(2+y2port)*bitmap.height/256;
 		draw_crosshair( bitmap, beamx, beamy, cliprect );
 	}
 	
@@ -700,7 +700,7 @@ public class namcos2
 	
 		UpdatePalette();
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for(pri=0;pri<16;pri++)
 		{
@@ -736,7 +736,7 @@ public class namcos2
 	
 		UpdatePalette();
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for(pri=0;pri<16;pri++)
 		{
@@ -769,7 +769,7 @@ public class namcos2
 	
 		UpdatePalette();
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for(pri=0;pri<16;pri++)
 		{
@@ -797,7 +797,7 @@ public class namcos2
 	
 		UpdatePalette();
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for(pri=0;pri<16;pri++)
 		{

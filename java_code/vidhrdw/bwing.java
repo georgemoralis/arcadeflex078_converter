@@ -172,9 +172,9 @@ public class bwing
 	
 	#define BW_SET_TILE_INFO(GFX, CODE, COLOR) { \
 		tile_info.tile_number = (CODE); \
-		tile_info.pen_data = GFX->gfxdata + (CODE) * GFX->char_modulo; \
-		tile_info.pal_data = &GFX->colortable[(COLOR) << 3]; \
-		tile_info.pen_usage = GFX->pen_usage[(CODE)]; }
+		tile_info.pen_data = GFX.gfxdata + (CODE) * GFX.char_modulo; \
+		tile_info.pal_data = &GFX.colortable[(COLOR) << 3]; \
+		tile_info.pen_usage = GFX.pen_usage[(CODE)]; }
 	
 	INLINE void get_fgtileinfo(int i)
 	{
@@ -222,10 +222,10 @@ public class bwing
 		for (i=0; i<4; i++) srbase[i] = fgdata + i * 0x2000;
 		for (i=0; i<8; i++) sreg[i] = 0;
 	
-		fgfx = Machine->gfx[2];
-		bgfx = Machine->gfx[3];
+		fgfx = Machine.gfx[2];
+		bgfx = Machine.gfx[3];
 	
-		if ((dwptr = fgfx->pen_usage))
+		if ((dwptr = fgfx.pen_usage))
 		{
 			dwptr[0] = 0;
 			for(i=1; i<BW_NTILES; i++) dwptr[i] = -1;
@@ -240,7 +240,7 @@ public class bwing
 	static void bwing_drawsprites(struct mame_bitmap *bmp, const struct rectangle *clip, data8_t *ram, int pri)
 	{
 		int attrib, fx, fy, code, x, y, color, i;
-		struct GfxElement *gfx = Machine->gfx[1];
+		struct GfxElement *gfx = Machine.gfx[1];
 	
 		for (i=0; i<0x200; i+=4)
 		{

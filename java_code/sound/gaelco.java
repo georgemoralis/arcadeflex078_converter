@@ -100,13 +100,13 @@ public class gaelco
 				struct gaelcosnd_channel *channel = &gaelcosnd.channel[ch];
 	
 				/* if the channel is playing */
-				if (channel->active == 1){
+				if (channel.active == 1){
 					int data, chunkNum = 0;
 					int base_offset, type, bank, vol_r, vol_l, end_pos;
 	
 					/* if the channel is looping, get current chunk to play */
-					if (channel->loop == 1){
-						chunkNum = channel->chunkNum;
+					if (channel.loop == 1){
+						chunkNum = channel.chunkNum;
 					}
 	
 					base_offset = ch*8 + chunkNum*4;
@@ -143,19 +143,19 @@ public class gaelco
 	#ifdef LOG_SOUND
 		logerror("(GAE1) Playing unknown sample format in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n", ch, type, bank, end_pos, gaelco_sndregs[base_offset + 3]);
 	#endif
-						channel->active = 0;
+						channel.active = 0;
 					}
 	
 					/* check if the current sample has finished playing */
 					if (gaelco_sndregs[base_offset + 3] == 0){
-						if (channel->loop == 0){	/* if no looping, we're done */
-							channel->active = 0;
+						if (channel.loop == 0){	/* if no looping, we're done */
+							channel.active = 0;
 						} else {					/* if we're looping, swap chunks */
-							channel->chunkNum = (channel->chunkNum + 1) & 0x01;
+							channel.chunkNum = (channel.chunkNum + 1) & 0x01;
 	
 							/* if the length of the next chunk is 0, we're done */
-							if (gaelco_sndregs[ch*8 + channel->chunkNum*4 + 3] == 0){
-								channel->active = 0;
+							if (gaelco_sndregs[ch*8 + channel.chunkNum*4 + 3] == 0){
+								channel.active = 0;
 							}
 						}
 					}
@@ -222,16 +222,16 @@ public class gaelco
 			case 0x03:
 				/* trigger sound */
 				if ((gaelco_sndregs[offset - 1] != 0) && (data != 0)){
-					if (!channel->active){
-						channel->active = 1;
-						channel->chunkNum = 0;
-						channel->loop = 0;
+					if (!channel.active){
+						channel.active = 1;
+						channel.chunkNum = 0;
+						channel.loop = 0;
 	#ifdef LOG_SOUND
 		logerror("(GAE1) Playing sample channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n", offset >> 3, (gaelco_sndregs[offset - 2] >> 4) & 0x0f, gaelco_sndregs[offset - 2] & 0x03, gaelco_sndregs[offset - 1] << 8, data);
 	#endif
 					}
 				} else {
-					channel->active = 0;
+					channel.active = 0;
 				}
 	
 				break;
@@ -241,9 +241,9 @@ public class gaelco
 	#ifdef LOG_SOUND
 		logerror("(GAE1) Looping in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n", offset >> 3, (gaelco_sndregs[offset - 2] >> 4) & 0x0f, gaelco_sndregs[offset - 2] & 0x03, gaelco_sndregs[offset - 1] << 8, data);
 	#endif
-					channel->loop = 1;
+					channel.loop = 1;
 				} else {
-					channel->loop = 0;
+					channel.loop = 0;
 				}
 	
 				break;
@@ -257,14 +257,14 @@ public class gaelco
 	int gaelcosnd_sh_start(const struct MachineSound *msound, int chip)
 	{
 		int j, vol;
-		const struct gaelcosnd_interface *intf = msound->sound_interface;
+		const struct gaelcosnd_interface *intf = msound.sound_interface;
 	
 		int volume[2];
 		char buf[2][64];
 		const char *name[2];
 	
 		/* bag on a 0 sample_rate */
-		if (Machine->sample_rate == 0)	return 0;
+		if (Machine.sample_rate == 0)	return 0;
 	
 		/* init chip state */
 		memset(&gaelcosnd, 0, sizeof(struct GAELCOSND));
@@ -273,15 +273,15 @@ public class gaelco
 		for (j = 0; j < 2; j++){
 			sprintf(buf[j], chip ? "CG-1V Channel #%d" : "GAE1 Channel #%d", j);
 			name[j] = buf[j];
-			volume[j] = MIXER(intf->volume[j], j ? MIXER_PAN_RIGHT : MIXER_PAN_LEFT);
+			volume[j] = MIXER(intf.volume[j], j ? MIXER_PAN_RIGHT : MIXER_PAN_LEFT);
 		}
 	
 		/* copy rom banks */
 		for (j = 0; j < 4; j++){
-			gaelcosnd.banks[j] = intf->banks[j];
+			gaelcosnd.banks[j] = intf.banks[j];
 		}
 		gaelcosnd.stream = stream_init_multi(2, name, volume, 8000, 0, gaelco_sh_update);
-		gaelcosnd.snd_data = (UINT8 *)memory_region(intf->region);
+		gaelcosnd.snd_data = (UINT8 *)memory_region(intf.region);
 	
 		/* init volume table */
 		for (vol = 0; vol < VOLUME_LEVELS; vol++){

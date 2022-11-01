@@ -43,7 +43,7 @@ public class m79amb
 	
 			for (i = 0; i < 8; i++)
 			{
-				plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? WHITE : BLACK]);
+				plot_pixel(tmpbitmap, x, y, Machine.pens[(data & 0x80) ? WHITE : BLACK]);
 	
 				x++;
 				data <<= 1;

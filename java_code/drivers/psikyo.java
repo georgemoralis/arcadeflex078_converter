@@ -103,7 +103,7 @@ public class psikyo
 			{
 						const int bit = 0x80;
 						int ret = ack_latch ? bit : 0;
-						if (Machine->sample_rate == 0)	ret = 0;
+						if (Machine.sample_rate == 0)	ret = 0;
 						return (((readinputport(1) & ~bit) | ret) << 16) | readinputport(3);
 			}
 			default:	logerror("PC %06X - Read input %02X !\n", activecpu_get_pc(), offset*2);
@@ -120,7 +120,7 @@ public class psikyo
 						const int bit = 0x80;
 						int ret = ack_latch ? bit : 0;
 	
-						if (Machine->sample_rate == 0)	ret = 0;
+						if (Machine.sample_rate == 0)	ret = 0;
 						return (readinputport(0) << 16) | (readinputport(1) & ~bit) | ret;
 			}
 			case 0x1:	return (readinputport(2) << 16) | readinputport(3);
@@ -134,7 +134,7 @@ public class psikyo
 	{
 		if (ACCESSING_LSB32 != 0)
 		{
-			if (Machine->sample_rate == 0)		return;
+			if (Machine.sample_rate == 0)		return;
 	
 			ack_latch = 1;
 			soundlatch_w(0, data & 0xff);
@@ -151,7 +151,7 @@ public class psikyo
 	{
 		if (!(mem_mask & 0x00ff0000))
 		{
-			if (Machine->sample_rate == 0)		return;
+			if (Machine.sample_rate == 0)		return;
 	
 			ack_latch = 1;
 			soundlatch_w(0, (data >> 16) & 0xff);
@@ -283,7 +283,7 @@ public class psikyo
 			{
 						const int bit = 0x04;
 						int ret = ack_latch ? bit : 0;
-						if (Machine->sample_rate == 0)	ret = 0;
+						if (Machine.sample_rate == 0)	ret = 0;
 						return (readinputport(0) << 16) | (readinputport(1) & ~bit) | ret;
 			}
 			case 0x1:	return (((readinputport(2) << 16) | readinputport(3)) & 0xffff000f) | s1945_mcu_r(offset-1, mem_mask);
@@ -1707,7 +1707,7 @@ public class psikyo
 	
 		/* Enable other regions */
 	#if 0
-		if (!strcmp(Machine->gamedrv->name,"sngkace"))
+		if (!strcmp(Machine.gamedrv.name,"sngkace"))
 		{
 			unsigned char *ROM	=	memory_region(REGION_CPU1);
 			ROM[0x995] = 0x4e;

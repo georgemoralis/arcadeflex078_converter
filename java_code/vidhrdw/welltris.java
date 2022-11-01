@@ -72,18 +72,18 @@ public class welltris
 			yzoom = 16 - zoomtable[yzoom] / 8;
 	
 			/* wrap around */
-			if (x > Machine->visible_area.max_x) x -= 0x200;
-			if (y > Machine->visible_area.max_y) y -= 0x200;
+			if (x > Machine.visible_area.max_x) x -= 0x200;
+			if (y > Machine.visible_area.max_y) y -= 0x200;
 	
 			/* normal case */
 			if (!xflip && !yflip) {
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
 						if (!zoomed)
-							drawgfx(bitmap, Machine->gfx[1], code, color, 0, 0,
+							drawgfx(bitmap, Machine.gfx[1], code, color, 0, 0,
 									x + xt * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
-							drawgfxzoom(bitmap, Machine->gfx[1], code, color, 0, 0,
+							drawgfxzoom(bitmap, Machine.gfx[1], code, color, 0, 0,
 									x + xt * xzoom, y + yt * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 									0x1000 * xzoom, 0x1000 * yzoom);
 					}
@@ -99,10 +99,10 @@ public class welltris
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
 						if (!zoomed)
-							drawgfx(bitmap, Machine->gfx[1], code, color, 1, 0,
+							drawgfx(bitmap, Machine.gfx[1], code, color, 1, 0,
 									x + (xtiles - 1 - xt) * 16, y + yt * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
-							drawgfxzoom(bitmap, Machine->gfx[1], code, color, 1, 0,
+							drawgfxzoom(bitmap, Machine.gfx[1], code, color, 1, 0,
 									x + (xtiles - 1 - xt) * xzoom, y + yt * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 									0x1000 * xzoom, 0x1000 * yzoom);
 					}
@@ -118,10 +118,10 @@ public class welltris
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
 						if (!zoomed)
-							drawgfx(bitmap, Machine->gfx[1], code, color, 0, 1,
+							drawgfx(bitmap, Machine.gfx[1], code, color, 0, 1,
 									x + xt * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
-							drawgfxzoom(bitmap, Machine->gfx[1], code, color, 0, 1,
+							drawgfxzoom(bitmap, Machine.gfx[1], code, color, 0, 1,
 									x + xt * xzoom, y + (ytiles - 1 - yt) * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 									0x1000 * xzoom, 0x1000 * yzoom);
 					}
@@ -137,10 +137,10 @@ public class welltris
 				for (yt = 0; yt < ytiles; yt++) {
 					for (xt = 0; xt < xtiles; xt++, code++) {
 						if (!zoomed)
-							drawgfx(bitmap, Machine->gfx[1], code, color, 1, 1,
+							drawgfx(bitmap, Machine.gfx[1], code, color, 1, 1,
 									x + (xtiles - 1 - xt) * 16, y + (ytiles - 1 - yt) * 16, cliprect, TRANSPARENCY_PEN, 15);
 						else
-							drawgfxzoom(bitmap, Machine->gfx[1], code, color, 1, 1,
+							drawgfxzoom(bitmap, Machine.gfx[1], code, color, 1, 1,
 									x + (xtiles - 1 - xt) * xzoom, y + (ytiles - 1 - yt) * yzoom, cliprect, TRANSPARENCY_PEN, 15,
 									0x1000 * xzoom, 0x1000 * yzoom);
 					}

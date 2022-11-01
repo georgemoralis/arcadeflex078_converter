@@ -171,7 +171,7 @@ public class cps1
 	#if 0
 	I have removed CPU_AUDIO_CPU from the Z(0 so this is no longer necessary
 		/* kludge to pass the sound board test with sound disabled */
-		if (Machine->sample_rate == 0)
+		if (Machine.sample_rate == 0)
 			qsound_sharedram1[0xfff] = 0x77;
 	#endif
 	

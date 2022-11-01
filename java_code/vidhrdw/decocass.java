@@ -90,13 +90,13 @@ public class decocass
 	
 	static UINT32 fgvideoram_scan_cols( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (num_cols - 1 - col) * num_rows + row;
 	}
 	
 	static UINT32 bgvideoram_scan_cols( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return tile_offset[col * num_rows + row];
 	}
 	
@@ -151,10 +151,10 @@ public class decocass
 		else
 			sx = 91 - (part_h_shift & 0x7f);
 	
-		drawgfx(bitmap, Machine->gfx[3], 0, color, 0, 0, sx + 64, sy, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine->gfx[3], 1, color, 0, 0, sx, sy, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine->gfx[3], 0, color, 0, 1, sx + 64, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine->gfx[3], 1, color, 0, 1, sx, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine.gfx[3], 0, color, 0, 0, sx + 64, sy, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine.gfx[3], 1, color, 0, 0, sx, sy, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine.gfx[3], 0, color, 0, 1, sx + 64, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine.gfx[3], 1, color, 0, 1, sx, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
 	}
 	
 	static void draw_center(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
@@ -175,12 +175,12 @@ public class decocass
 		sx = (center_h_shift_space >> 2) & 0x3c;
 	
 		for (y = 0; y < 4; y++)
-			if ((sy + y) >= cliprect->min_y && (sy + y) <= cliprect->max_y)
+			if ((sy + y) >= cliprect.min_y && (sy + y) <= cliprect.max_y)
 			{
 				if (((sy + y) & color_center_bot & 3) == (sy & color_center_bot & 3))
 					for (x = 0; x < 256; x++)
 						if (0 != (x & 16) || 0 != (center_h_shift_space & 1))
-							plot_pixel(bitmap, (sx + x) & 255, sy + y, Machine->pens[color]);
+							plot_pixel(bitmap, (sx + x) & 255, sy + y, Machine.pens[color]);
 			}
 	}
 	
@@ -192,7 +192,7 @@ public class decocass
 	{
 		/*
 		 * RGB output is inverted and A4 is inverted too
-		 * (ME/ input on 1st paletteram, inverter -> ME/ on 2nd)
+		 * (ME/ input on 1st paletteram, inverter . ME/ on 2nd)
 		 */
 		offset = (offset & 31) ^ 16;
 		paletteram_BBGGGRRR_w( offset, ~data );
@@ -469,7 +469,7 @@ public class decocass
 	
 			sy -= sprite_y_adjust;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					sprite_ram[offs + interleave],
 					color,
 					flipx,flipy,
@@ -479,7 +479,7 @@ public class decocass
 			sy += (flip_screen ? -256 : 256);
 	
 			// Wrap around
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					sprite_ram[offs + interleave],
 					color,
 					flipx,flipy,
@@ -509,7 +509,7 @@ public class decocass
 				sy = 240 - sy + missile_y_adjust_flip_screen;
 			}
 			sy -= missile_y_adjust;
-			drawgfx(bitmap,Machine->gfx[4],
+			drawgfx(bitmap,Machine.gfx[4],
 					0,32 + ((color_missiles >> 4) & 7), 0,0, sx,sy,
 					cliprect, TRANSPARENCY_PEN, 0);
 	
@@ -521,7 +521,7 @@ public class decocass
 				sy = 240 - sy + missile_y_adjust_flip_screen;
 			}
 			sy -= missile_y_adjust;
-			drawgfx(bitmap,Machine->gfx[4],
+			drawgfx(bitmap,Machine.gfx[4],
 					0,32 + (color_missiles & 7), 0,0, sx,sy,
 					cliprect, TRANSPARENCY_PEN, 0);
 		}
@@ -542,7 +542,7 @@ public class decocass
 			switch (char_dirty[code])
 			{
 			case 1:
-				decodechar(Machine->gfx[0],code,decocass_charram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine.gfx[0],code,decocass_charram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 				char_dirty[code] = 2;
 				/* fall through */
 			case 2:
@@ -569,7 +569,7 @@ public class decocass
 			{
 				sprite_dirty[code] = 0;
 	
-				decodechar(Machine->gfx[1],code,decocass_charram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
+				decodechar(Machine.gfx[1],code,decocass_charram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
 			}
 		}
 	
@@ -582,7 +582,7 @@ public class decocass
 			{
 				tile_dirty[code] = 0;
 	
-				decodechar(Machine->gfx[2],code,decocass_tileram,Machine->drv->gfxdecodeinfo[2].gfxlayout);
+				decodechar(Machine.gfx[2],code,decocass_tileram,Machine.drv.gfxdecodeinfo[2].gfxlayout);
 	
 				/* mark all visible tiles dirty */
 				for (i = offs; i < decocass_bgvideoram_size; i++)
@@ -594,8 +594,8 @@ public class decocass
 		/* decode object if it is dirty */
 		if (object_dirty != 0)
 		{
-			decodechar(Machine->gfx[3], 0, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
-			decodechar(Machine->gfx[3], 1, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
+			decodechar(Machine.gfx[3], 0, decocass_objectram, Machine.drv.gfxdecodeinfo[3].gfxlayout);
+			decodechar(Machine.gfx[3], 1, decocass_objectram, Machine.drv.gfxdecodeinfo[3].gfxlayout);
 			object_dirty = 0;
 		}
 	}
@@ -618,11 +618,11 @@ public class decocass
 		tilemap_set_transparent_pen( bg_tilemap_r, 0 );
 		tilemap_set_transparent_pen( fg_tilemap, 0 );
 	
-		bg_tilemap_l_clip = Machine->visible_area;
-		bg_tilemap_l_clip.max_y = Machine->drv->screen_height / 2;
+		bg_tilemap_l_clip = Machine.visible_area;
+		bg_tilemap_l_clip.max_y = Machine.drv.screen_height / 2;
 	
-		bg_tilemap_r_clip = Machine->visible_area;
-		bg_tilemap_r_clip.min_y = Machine->drv->screen_height / 2;
+		bg_tilemap_r_clip = Machine.visible_area;
+		bg_tilemap_r_clip.min_y = Machine.drv.screen_height / 2;
 	
 		/* background videroam bits D0-D3 are shared with the tileram */
 		decocass_bgvideoram = decocass_tileram;
@@ -693,7 +693,7 @@ public class decocass
 		}
 	#endif
 	
-		fillbitmap( bitmap, Machine->pens[0], cliprect );
+		fillbitmap( bitmap, Machine.pens[0], cliprect );
 	
 		decode_modified( decocass_fgvideoram, 0x20 );
 	

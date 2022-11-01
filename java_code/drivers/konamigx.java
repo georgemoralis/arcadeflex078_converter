@@ -58,7 +58,7 @@
  * d50000: K055555 8-bit-per-pixel priority encoder (PCUCS)
  * d52000: shared RAM with audio 68000      (SOUNDCS)
  * d56000: EEPROM comms, bit 7 is watchdog, bit 5 is frame?? (WRPOR1)
- * d56001: IRQ acknowledge (bits 0->3 = irq 1->4), IRQ enable in hi nibble (bits 4->7 = irq 1->4)
+ * d56001: IRQ acknowledge (bits 0.3 = irq 1.4), IRQ enable in hi nibble (bits 4.7 = irq 1.4)
  * d58000: control register (OBJCHA, 68000 enable/disable, probably more) (WRPOR2)
  * d5a000: dipswitch bank 1		    (RDPORT1)
  * d5a001: dipswitch bank 2
@@ -206,7 +206,7 @@ public class konamigx
 	
 	static int pri_comp(const void *s1, const void *s2)
 	{
-		return ((struct sprite_entry *)s1)->pri - ((struct sprite_entry *)s2)->pri;
+		return ((struct sprite_entry *)s1).pri - ((struct sprite_entry *)s2).pri;
 	}
 	
 	static void generate_sprites(UINT32 src, UINT32 spr, int count)
@@ -1009,7 +1009,7 @@ public class konamigx
 		RnG2's is used to generate the sprite list just like the ESC, among other tasks.  (RnG2 sends many commands per frame to the protection).
 	
 		Rushing Heroes is much simpler and uses only 1 command during gameplay.  They set up a giant table of pointers
-		at C10200->C102EF (see the routine at 2043CE.  C10001 contains which monitor they want to update (main or sub)
+		at C10200.C102EF (see the routine at 2043CE.  C10001 contains which monitor they want to update (main or sub)
 		and it changes the pointers accordingly).  This sets up the palettes, the sprite list, and the ROZ tilemap, from the looks of things.
 	
 		Here are the lists constructed by Rushing Heroes (I've reordered the original code so it's in linear address order).
@@ -3235,17 +3235,17 @@ public class konamigx
 		dmadelay_timer = timer_alloc(dmaend_callback);
 	
 		// running down the list is not a good idea but easier than maintaining individual drivers
-		if (!strcmp(Machine->gamedrv->name, "racinfrc"))
+		if (!strcmp(Machine.gamedrv.name, "racinfrc"))
 		{
 			konamigx_cfgport = 11;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "opengolf"))
+		else if (!strcmp(Machine.gamedrv.name, "opengolf"))
 		{
 			konamigx_cfgport = 11;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "le2") || !strcmp(Machine->gamedrv->name, "le2u"))
+		else if (!strcmp(Machine.gamedrv.name, "le2") || !strcmp(Machine.gamedrv.name, "le2u"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x2010f0, 0xc00000, 0xfe, 0x13f, -1, 0xff)
@@ -3255,7 +3255,7 @@ public class konamigx
 			konamigx_cfgport = 13;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "gokuparo") || !strcmp(Machine->gamedrv->name, "fantjour"))
+		else if (!strcmp(Machine.gamedrv.name, "gokuparo") || !strcmp(Machine.gamedrv.name, "fantjour"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x2a0a66, 0xc00000, 0xd400, 0xd400, 0, 0xffff0000)
@@ -3265,7 +3265,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "puzldama"))
+		else if (!strcmp(Machine.gamedrv.name, "puzldama"))
 		{
 			#if GX_SKIPIDLE
 			#endif
@@ -3275,7 +3275,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "tbyahhoo"))
+		else if (!strcmp(Machine.gamedrv.name, "tbyahhoo"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x297b9a, 0xc00000, 0xf800, 0xf800, 0, 0xffff0000)
@@ -3286,7 +3286,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "tkmmpzdm"))
+		else if (!strcmp(Machine.gamedrv.name, "tkmmpzdm"))
 		{
 			data32_t *rom = (data32_t*)memory_region(REGION_CPU1);
 	
@@ -3310,7 +3310,7 @@ public class konamigx
 			for (i=3; i<=7; i++) K054539_set_gain(1, i, 2.0);
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "dragoonj"))
+		else if (!strcmp(Machine.gamedrv.name, "dragoonj"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x202f48, 0xc00000, 0x1020, 0x1020, 0xff00, 0x0000ff00)
@@ -3327,7 +3327,7 @@ public class konamigx
 			}
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "sexyparo"))
+		else if (!strcmp(Machine.gamedrv.name, "sexyparo"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x289baa, 0xc00000, 0x10204, 0x10204, 0, 0xffff0000)
@@ -3338,7 +3338,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "daiskiss"))
+		else if (!strcmp(Machine.gamedrv.name, "daiskiss"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x28707e, 0xc00000, 0x8400, 0x8400, 0, 0xffff0000)
@@ -3349,7 +3349,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "tokkae"))
+		else if (!strcmp(Machine.gamedrv.name, "tokkae"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x206b94, 0xc00000, 0x142ac, 0x142ac, 0, 0xff000000)
@@ -3359,7 +3359,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "salmndr2"))
+		else if (!strcmp(Machine.gamedrv.name, "salmndr2"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x220070, 0xc00000, 0xbe8, 0xbe8, 0, 0x0000ffff)
@@ -3370,7 +3370,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "winspike"))
+		else if (!strcmp(Machine.gamedrv.name, "winspike"))
 		{
 			snd020_hack = 2;
 			konamigx_cfgport = 8;
@@ -3378,30 +3378,30 @@ public class konamigx
 			install_mem_write32_handler(0, 0xcc0000, 0xcc0007, type4_prot_w );
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "soccerss"))
+		else if (!strcmp(Machine.gamedrv.name, "soccerss"))
 		{
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "vsnetscr"))
+		else if (!strcmp(Machine.gamedrv.name, "vsnetscr"))
 		{
 			snd020_hack = 5;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "rungun2"))
+		else if (!strcmp(Machine.gamedrv.name, "rungun2"))
 		{
 			snd020_hack = 3;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "slamdnk2"))
+		else if (!strcmp(Machine.gamedrv.name, "slamdnk2"))
 		{
 			snd020_hack = 6;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine->gamedrv->name, "rushhero"))
+		else if (!strcmp(Machine.gamedrv.name, "rushhero"))
 		{
 			snd020_hack = 4;
 			konamigx_cfgport = 7;

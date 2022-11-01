@@ -27,7 +27,7 @@ public class cbuster
 	/* Function for all 16x16 1024 by 512 layers */
 	static UINT32 back_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -217,7 +217,7 @@ public class cbuster
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[4],
+				drawgfx(bitmap,Machine.gfx[4],
 						sprite - multi * inc,
 						colour,
 						fx,fy,

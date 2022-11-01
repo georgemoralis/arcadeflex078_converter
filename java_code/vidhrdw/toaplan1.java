@@ -101,11 +101,11 @@ Abnormalities:
  ***** Notes on the horizontal game scroll Y probs (Eg, Zero Wing) *****
 
  Scrolls    PF1-X  PF1-Y    PF2-X  PF2-Y    PF3-X  PF3-Y    PF4-X  PF4-Y
- ------>    #4180  #f880    #1240  #f880    #4380  #f880    #e380  #f880
- -flip->    #1500  #7f00    #e8c0  #7f00    #1300  #7f00    #bb00  #7f00
+ -----.    #4180  #f880    #1240  #f880    #4380  #f880    #e380  #f880
+ -flip.    #1500  #7f00    #e8c0  #7f00    #1300  #7f00    #bb00  #7f00
 
- ------>    #4100  #f880    #1200  #7880    #4300  #f880    #e380  #f880
- -flip->    #1500  #7f00    #e8c0  #8580??  #1300  #7f00    #bb00  #7f00
+ -----.    #4100  #f880    #1200  #7880    #4300  #f880    #e380  #f880
+ -flip.    #1500  #7f00    #e8c0  #8580??  #1300  #7f00    #bb00  #7f00
 									  |
 									  |
 									f880 = 1111 1000 1000 = 1f1 scroll
@@ -525,7 +525,7 @@ public class toaplan1
 				scrollx_offs3 = 0x011 - 2;
 				scrollx_offs4 = 0x011 - 0;
 				scrolly_offs  = 0xff;
-				if ((Machine->orientation & ORIENTATION_MASK) == ROT0)
+				if ((Machine.orientation & ORIENTATION_MASK) == ROT0)
 				{
 					scrolly_offs = 0x10f;
 				}
@@ -820,7 +820,7 @@ public class toaplan1
 				data16_t *size  = (data16_t *)(toaplan1_spritesizeram16);
 				data16_t *bsize = (data16_t *)(toaplan1_buffered_spritesizeram16);
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( sprite_voffs = 0; sprite_voffs < (spriteram_size/2); sprite_voffs += 4 )
 				{
 					bschar = buffered_spriteram16[sprite_voffs];
@@ -840,7 +840,7 @@ public class toaplan1
 			{
 				int schar,sattr,sxpos,sypos,bschar,bsattr,bsxpos,bsypos;
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( sprite_voffs = 0; sprite_voffs < (spriteram_size/2); sprite_voffs += 4 )
 				{
 					bschar = buffered_spriteram16[sprite_voffs];
@@ -867,7 +867,7 @@ public class toaplan1
 			if (toaplan1_spritesizeram16 != 0)			/* FCU controller */
 			{
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( offs = 0; offs < (TOAPLAN1_SPRITESIZERAM_SIZE/2); offs +=4 )
 				{
 					logerror("SizeOffs:%04x   now:%04x %04x %04x %04x    next: %04x %04x %04x %04x\n", offs,
@@ -885,7 +885,7 @@ public class toaplan1
 			int tchar[5], tattr[5];
 			while (keyboard_pressed(KEYCODE_N)) ;	/* BCU controller */
 			logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-			logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+			logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN1_TILEVRAM_SIZE/2); tile_voffs += 2 )
 			{
 				tchar[1] = pf1_tilevram16[tile_voffs + 1];
@@ -917,7 +917,7 @@ public class toaplan1
 		if (displog != 0)
 		{
 			logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-			logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+			logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 		}
 		if ( keyboard_pressed(KEYCODE_B) )
 		{
@@ -1082,7 +1082,7 @@ public class toaplan1
 				if (fcu_flipscreen != 0)
 				{
 					sx_base += 8;
-					if ((Machine->orientation & ORIENTATION_MASK) == ROT0)
+					if ((Machine.orientation & ORIENTATION_MASK) == ROT0)
 					{
 						sy_base -= 24;
 					}
@@ -1104,7 +1104,7 @@ public class toaplan1
 						if (fcu_flipscreen != 0) sx = sx_base - dim_x;
 						else                sx = sx_base + dim_x;
 	
-						drawgfx(bitmap,Machine->gfx[1],
+						drawgfx(bitmap,Machine.gfx[1],
 								sprite,
 								color,
 								fcu_flipscreen,fcu_flipscreen,
@@ -1140,7 +1140,7 @@ public class toaplan1
 					flipx = attrib & 0x100;
 					if (flipx != 0) sx -= 15;
 					flipy = attrib & 0x200;
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 						sprite,
 						color,
 						flipx,flipy,
@@ -1166,7 +1166,7 @@ public class toaplan1
 	
 		mark_rallybik_sprite_priority();
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,TILEMAP_IGNORE_TRANSPARENCY | 0,0);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,TILEMAP_IGNORE_TRANSPARENCY | 1,0);
@@ -1192,7 +1192,7 @@ public class toaplan1
 	
 		mark_toaplan1_sprite_priority();
 	
-		fillbitmap(bitmap,Machine->pens[0x120],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x120],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf4_tilemap,TILEMAP_IGNORE_TRANSPARENCY,0);
 		for (priority = 8; priority < 16; priority++)
@@ -1224,7 +1224,7 @@ public class toaplan1
 	
 		mark_toaplan1_sprite_priority();
 	
-		fillbitmap(bitmap,Machine->pens[0x120],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x120],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,TILEMAP_IGNORE_TRANSPARENCY | 0,0);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,TILEMAP_IGNORE_TRANSPARENCY | 1,0);

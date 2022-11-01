@@ -111,7 +111,7 @@ public class ohmygod
 			if (sy >= 32768) sy -= 65536;
 			flipx = sr[offs+3] & 0x8000;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,0,

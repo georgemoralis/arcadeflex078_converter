@@ -697,16 +697,16 @@ public class midyunit
 			UINT32 offset;
 	
 			/* autoerase the lines here */
-			starty = (last_update_scanline > Machine->visible_area.min_y) ? last_update_scanline : Machine->visible_area.min_y;
-			stopy = (scanline < Machine->visible_area.max_y) ? scanline : Machine->visible_area.max_y;
+			starty = (last_update_scanline > Machine.visible_area.min_y) ? last_update_scanline : Machine.visible_area.min_y;
+			stopy = (scanline < Machine.visible_area.max_y) ? scanline : Machine.visible_area.max_y;
 	
 			/* determine the base of the videoram */
 			offset = (~tms34010_get_DPYSTRT(0) & 0x1ff0) << 5;
-			offset += 512 * (starty - Machine->visible_area.min_y);
+			offset += 512 * (starty - Machine.visible_area.min_y);
 	
 			/* determine how many pixels to copy */
-			xoffs = Machine->visible_area.min_x;
-			width = Machine->visible_area.max_x - xoffs + 1;
+			xoffs = Machine.visible_area.min_x;
+			width = Machine.visible_area.max_x - xoffs + 1;
 			offset += xoffs;
 	
 			/* loop over rows */
@@ -779,7 +779,7 @@ public class midyunit
 	public static VideoUpdateHandlerPtr video_update_midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* finish updating/autoerasing, even if we skipped a frame */
-		update_partial(Machine->visible_area.max_y, 0);
+		update_partial(Machine.visible_area.max_y, 0);
 	} };
 	
 	
@@ -807,18 +807,18 @@ public class midyunit
 		cpuintrf_push_context(0);
 		heblnk = tms34010_io_register_r(REG_HEBLNK, 0);
 		hsblnk = tms34010_io_register_r(REG_HSBLNK, 0);
-		leftscroll = (Machine->visible_area.max_x + 1 - Machine->visible_area.min_x) - (hsblnk - heblnk) * 2;
+		leftscroll = (Machine.visible_area.max_x + 1 - Machine.visible_area.min_x) - (hsblnk - heblnk) * 2;
 		if (leftscroll < 0)
 			leftscroll = 0;
 		cpuintrf_pop_context();
 	
 		/* determine the base of the videoram */
 		offset = (~tms34010_get_DPYSTRT(0) & 0x1ff0) << 5;
-		offset += 512 * (cliprect->min_y - Machine->visible_area.min_y);
+		offset += 512 * (cliprect.min_y - Machine.visible_area.min_y);
 	
 		/* determine how many pixels to copy */
-		xoffs = cliprect->min_x;
-		width = cliprect->max_x - xoffs + 1;
+		xoffs = cliprect.min_x;
+		width = cliprect.max_x - xoffs + 1;
 		offset += xoffs;
 	
 		/* adjust for the left scroll hack */
@@ -826,7 +826,7 @@ public class midyunit
 		width -= leftscroll;
 	
 		/* loop over rows */
-		for (v = cliprect->min_y; v <= cliprect->max_y; v++)
+		for (v = cliprect.min_y; v <= cliprect.max_y; v++)
 		{
 			draw_scanline16(bitmap, xoffs, v, width, &local_videoram[offset & 0x3ffff], pen_map, -1);
 			offset += 512;

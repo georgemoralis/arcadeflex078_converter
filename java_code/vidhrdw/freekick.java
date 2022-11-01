@@ -63,7 +63,7 @@ public class freekick
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -98,7 +98,7 @@ public class freekick
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -134,7 +134,7 @@ public class freekick
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					code,
 					color,
 					flipx,flipy,

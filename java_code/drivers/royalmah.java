@@ -90,7 +90,7 @@ public class royalmah
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -121,7 +121,7 @@ public class royalmah
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int x =	(color_prom[i]<<8) + color_prom[0x200+i];
 			/* The bits are in reverse order! */
@@ -201,7 +201,7 @@ public class royalmah
 				royalmah_videoram_w(offs, videoram.read(offs));
 			}
 		}
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	
@@ -710,7 +710,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 -> 0x73b0) */
+		PORT_START(); 	/* DSW1 (inport $10 . 0x73b0) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -740,7 +740,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (inport $47 -> 0x73b1) */
+		PORT_START(); 	/* DSW3 (inport $47 . 0x73b1) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x0e6d
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x4e7d
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x4e4d
@@ -764,7 +764,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $46 -> 0x73b2) */
+		PORT_START(); 	/* DSW2 (inport $46 . 0x73b2) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -885,7 +885,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 -> 0x76fa) */
+		PORT_START(); 	/* DSW1 (inport $10 . 0x76fa) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -915,7 +915,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $62 -> 0x76fb) */
+		PORT_START(); 	/* DSW2 (inport $62 . 0x76fb) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x09cd
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x4b82
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x4b52
@@ -939,7 +939,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (inport $63 -> 0x76fc) */
+		PORT_START(); 	/* DSW3 (inport $63 . 0x76fc) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1060,7 +1060,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 -> 0x76fd) */
+		PORT_START(); 	/* DSW1 (inport $10 . 0x76fd) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -1090,7 +1090,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $00 (after out 0,$40) -> 0x76fa) */
+		PORT_START(); 	/* DSW2 (inport $00 (after out 0,$40) . 0x76fa) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x14e4
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x1539
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x1509
@@ -1115,7 +1115,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, "Black" );
 		PORT_DIPSETTING(    0x80, "Gray" );
 	
-		PORT_START(); 	/* DSW3 (inport $00 (after out 0,$00) -> 0x76fc) */
+		PORT_START(); 	/* DSW3 (inport $00 (after out 0,$00) . 0x76fc) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1141,7 +1141,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW4 (inport $00 (after out 0,$20) -> 0x76fb) */
+		PORT_START(); 	/* DSW4 (inport $00 (after out 0,$20) . 0x76fb) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Unknown") );		// stored at 0x702f - check code at 0x1713,
 		PORT_DIPSETTING(    0x00, "0" );			// 0x33d1, 0x3408, 0x3415, 0x347c, 0x3492, 0x350d,
 		PORT_DIPSETTING(    0x01, "1" );			// 0x4af9, 0x4b1f and 0x61f6

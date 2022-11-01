@@ -28,8 +28,8 @@ public class kncljoe
 	public static PaletteInitHandlerPtr palette_init_kncljoe  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 128;i++)
@@ -219,19 +219,19 @@ public class kncljoe
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		struct rectangle clip = *cliprect;
-		const struct GfxElement *gfx = Machine->gfx[1 + sprite_bank];
+		const struct GfxElement *gfx = Machine.gfx[1 + sprite_bank];
 		int i, j, pribase[4]={0x0180, 0x0080, 0x0100, 0x0000};
 	
 		/* score covers sprites */
 		if (flipscreen != 0)
 		{
-			if (clip.max_y > Machine->visible_area.max_y - 64)
-				clip.max_y = Machine->visible_area.max_y - 64;
+			if (clip.max_y > Machine.visible_area.max_y - 64)
+				clip.max_y = Machine.visible_area.max_y - 64;
 		}
 		else
 		{
-			if (clip.min_y < Machine->visible_area.min_y + 64)
-				clip.min_y = Machine->visible_area.min_y + 64;
+			if (clip.min_y < Machine.visible_area.min_y + 64)
+				clip.min_y = Machine.visible_area.min_y + 64;
 		}
 	
 		for (i=0; i<4; i++)

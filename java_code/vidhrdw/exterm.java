@@ -103,12 +103,12 @@ public class exterm
 		/* if the display is blanked, fill with black */
 		if (tms34010_io_display_blanked(0))
 		{
-			fillbitmap(bitmap, Machine->pens[0], cliprect);
+			fillbitmap(bitmap, Machine.pens[0], cliprect);
 			return;
 		}
 	
 		/* 16-bit case */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			data16_t *bgsrc = &exterm_master_videoram[256 * y];
 			UINT16 scanline[256];
@@ -152,7 +152,7 @@ public class exterm
 			}
 	
 			/* draw the scanline */
-			draw_scanline16(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x, &scanline[cliprect->min_x], Machine->pens, -1);
+			draw_scanline16(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x, &scanline[cliprect.min_x], Machine.pens, -1);
 		}
 	} };
 }

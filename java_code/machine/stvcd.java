@@ -241,52 +241,52 @@ public class stvcd
 		do{
 			cond = 0;
 	
-			if(f->mode & CDB_FILTMODE_RANGE){
+			if(f.mode & CDB_FILTMODE_RANGE){
 	
-				if((CD_cur_fad < f->fad) ||
-				   (CD_cur_fad >= (f->fad + f->range)))
+				if((CD_cur_fad < f.fad) ||
+				   (CD_cur_fad >= (f.fad + f.range)))
 					cond = 1;
 			}
 	
-			if(f->mode & CDB_FILTMODE_COD){
+			if(f.mode & CDB_FILTMODE_COD){
 	
 				logerror("ERROR: cod check required\n");
 				exit(1);
 			}
 	
-			if(f->mode & CDB_FILTMODE_SUB){
+			if(f.mode & CDB_FILTMODE_SUB){
 	
 				logerror("ERROR: sub check required\n");
 				exit(1);
 			}
 	
-			if(f->mode & CDB_FILTMODE_CHAN){
+			if(f.mode & CDB_FILTMODE_CHAN){
 	
 				logerror("ERROR: chan check required\n");
 				exit(1);
 			}
 	
-			if(f->mode & CDB_FILTMODE_FID){
+			if(f.mode & CDB_FILTMODE_FID){
 	
-				if(f->fid) // only if fid is valid
-					if(CD_cur_fid != f->fid) cond = 1;
+				if(f.fid) // only if fid is valid
+					if(CD_cur_fid != f.fid) cond = 1;
 			}
 	
 			if(cond == 0){
 	
 				// all checks passed, data is okay
 	
-				if(f->true == 0xff) // disconnected
+				if(f.true == 0xff) // disconnected
 					return(1); // discard data
 	
-				*pn = (UINT32)f->true;
+				*pn = (UINT32)f.true;
 				return(0);
 			}
 	
-			if(f->false != 0xff)
-				f = &CD_filt[f->false];
+			if(f.false != 0xff)
+				f = &CD_filt[f.false];
 	
-		}while(f->false != 0xff);
+		}while(f.false != 0xff);
 	
 		return(1);
 	}
@@ -859,7 +859,7 @@ public class stvcd
 	
 					// PEND ?
 	
-					logerror("BFUL -> PLAY\n");
+					logerror("BFUL . PLAY\n");
 	
 					CD_hirq &= ~HIRQ_BFUL;
 					CD_status = CDB_STAT_PLAY;
@@ -882,18 +882,18 @@ public class stvcd
 	
 						sn = cdb_make_room(pn);
 	
-						CD_part[pn].sect[sn]->size	= cdb_get_sect_size; // 2048, 2352
-						CD_part[pn].sect[sn]->fad	= CD_cur_fad;
-						CD_part[pn].sect[sn]->fid	= CD_cur_fid;
-						CD_part[pn].sect[sn]->chan	= 0;
-						CD_part[pn].sect[sn]->sub	= 0;
-						CD_part[pn].sect[sn]->cod	= 0;
+						CD_part[pn].sect[sn].size	= cdb_get_sect_size; // 2048, 2352
+						CD_part[pn].sect[sn].fad	= CD_cur_fad;
+						CD_part[pn].sect[sn].fid	= CD_cur_fid;
+						CD_part[pn].sect[sn].chan	= 0;
+						CD_part[pn].sect[sn].sub	= 0;
+						CD_part[pn].sect[sn].cod	= 0;
 	
-						logerror("PLAY CDROM : fad=%06x [%06x~%06x] track=%i ctrl=%x idx=%i -> pn=%i sn=%i\n",
+						logerror("PLAY CDROM : fad=%06x [%06x~%06x] track=%i ctrl=%x idx=%i . pn=%i sn=%i\n",
 						CD_cur_fad, CD_play_fad, CD_play_fad+CD_play_range,
 						CD_cur_track, CD_cur_ctrl, CD_cur_idx, pn, sn);
 	
-						if(iso_read_sector(1, CD_cur_fad, CD_part[pn].sect[sn]->data) == 0 &&
+						if(iso_read_sector(1, CD_cur_fad, CD_part[pn].sect[sn].data) == 0 &&
 						  2048 != 2048){
 	
 							#if 0
@@ -902,20 +902,20 @@ public class stvcd
 							// and EDC/ECC data. generate it! (FORM2 MODE1)
 	
 							// synch data (12 bytes)
-							memset(&CD_part[pn].sect[sn]->data[1], 0xff, 10);
-							CD_part[pn].sect[sn]->data[0] = 0x00;
-							CD_part[pn].sect[sn]->data[11] = 0x00;
+							memset(&CD_part[pn].sect[sn].data[1], 0xff, 10);
+							CD_part[pn].sect[sn].data[0] = 0x00;
+							CD_part[pn].sect[sn].data[11] = 0x00;
 	
 							// header (4 bytes)
-							CD_part[pn].sect[sn]->data[12] = FAD_TO_MIN(CD_cur_fad);	// min
-							CD_part[pn].sect[sn]->data[13] = FAD_TO_SEC(CD_cur_fad);	// sec
-							CD_part[pn].sect[sn]->data[14] = FAD_TO_FRA(CD_cur_fad);	// fra
-							CD_part[pn].sect[sn]->data[15] = 0;				// mode
+							CD_part[pn].sect[sn].data[12] = FAD_TO_MIN(CD_cur_fad);	// min
+							CD_part[pn].sect[sn].data[13] = FAD_TO_SEC(CD_cur_fad);	// sec
+							CD_part[pn].sect[sn].data[14] = FAD_TO_FRA(CD_cur_fad);	// fra
+							CD_part[pn].sect[sn].data[15] = 0;				// mode
 	
 							// subheader (8 bytes)
 	
 							// EDC/ECC
-							memset(&CD_part[pn].sect[sn]->data[2048+16+8], 0xff, 280);
+							memset(&CD_part[pn].sect[sn].data[2048+16+8], 0xff, 280);
 	
 							#endif
 						}

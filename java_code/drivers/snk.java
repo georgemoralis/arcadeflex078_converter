@@ -11,7 +11,7 @@ Bryan McPhail, 27/01/00:
   Fixed Gwar, Gwarj, both working properly now.
   Renamed Gwarjp to Gwarj.
   Added Gwara
-  Removed strcmp(drv->names) :)
+  Removed strcmp(drv.names) :)
   Made Gwara (the new clone) the main set, and old gwar to gwara.  This is
   because (what is now) gwara seemingly has a different graphics board.  Fix
   chars and scroll registers are in different locations, while gwar (new)
@@ -162,14 +162,14 @@ AT08XX03:
 		CPUA and B handshake through NMIs. They were implemented in
 		all SNK triple Z80 drivers as
 
-			ENABLE->SIGNAL->HOLDUP->MAKEUP->ACKNOWLEDGE
+			ENABLE.SIGNAL.HOLDUP.MAKEUP.ACKNOWLEDGE
 
 		but upon close examination of the games code no evidence of
 		any game relying on this behavior to function correctly was
 		found. Sometimes it even has adverse effects by triggering
 		extra NMI's therefore handshaking has been reduced to basic
 
-			SIGNAL->ACKNOWLEDGE
+			SIGNAL.ACKNOWLEDGE
 
 	4) Sound Latching
 
@@ -307,7 +307,7 @@ public class snk
 		/* 0xf0 isn't a valid direction, but avoids the "joystick error"
 		protection
 		** in Guerilla War which happens when direction changes directly from
-		** 0x50<->0x60 8 times.
+		** 0x50<.0x60 8 times.
 		*/
 		0x50,0x40,0x30,0x20,0x10,0x00
 		};
@@ -3970,7 +3970,7 @@ public class snk
 		snk_io = tdfever_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
-		snk_gamegroup = (!strcmp(Machine->gamedrv->name,"tdfeverj")) ? 5 : 3;
+		snk_gamegroup = (!strcmp(Machine.gamedrv.name,"tdfeverj")) ? 5 : 3;
 		snk_irq_delay = 1000;
 	}
 	
@@ -3979,7 +3979,7 @@ public class snk
 		snk_io = tdfever_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
-		snk_gamegroup = (!strcmp(Machine->gamedrv->name,"tdfeverj")) ? 5 : 3;
+		snk_gamegroup = (!strcmp(Machine.gamedrv.name,"tdfeverj")) ? 5 : 3;
 		snk_irq_delay = 1000;
 	}
 	

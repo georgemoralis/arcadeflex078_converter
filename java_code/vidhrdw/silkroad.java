@@ -17,7 +17,7 @@ public class silkroad
 	
 	static void silkroad_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri )
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
+		const struct GfxElement *gfx = Machine.gfx[0];
 		data32_t *source = silkroad_sprram;
 		data32_t *finish = source + 0x1000/4;
 		data32_t *maxspr = source;
@@ -160,7 +160,7 @@ public class silkroad
 	
 	VIDEO_UPDATE(silkroad)
 	{
-		fillbitmap(bitmap,0x7c0,&Machine->visible_area);
+		fillbitmap(bitmap,0x7c0,&Machine.visible_area);
 	
 		tilemap_set_scrollx( fg_tilemap, 0, ((silkroad_regs[0] & 0xffff0000) >> 16) );
 		tilemap_set_scrolly( fg_tilemap, 0, (silkroad_regs[0] & 0x0000ffff) >> 0 );

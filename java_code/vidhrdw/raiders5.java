@@ -117,7 +117,7 @@ public class raiders5
 				col = (col >> 4) & 0x0f;
 				chr = chr | b2*0x100;
 	
-				drawgfx(tmpbitmap,Machine->gfx[b1+3],
+				drawgfx(tmpbitmap,Machine.gfx[b1+3],
 					chr,
 					col,
 					flipscreen,flipscreen,
@@ -137,7 +137,7 @@ public class raiders5
 			sy = raiders5_yscroll;
 		}
 	
-		copyscrollbitmap(bitmap,tmpbitmap,1,&sx,1,&sy,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copyscrollbitmap(bitmap,tmpbitmap,1,&sx,1,&sy,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	/* draw sprites */
 	
@@ -169,20 +169,20 @@ public class raiders5
 				py = 240-y;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[b1],
+			drawgfx(bitmap,Machine.gfx[b1],
 				chr,
 				col,
 				fx,fy,
 				px,py,
-				&Machine->visible_area,TRANSPARENCY_PEN,0);
+				&Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 			if (px>0xf0)
-				drawgfx(bitmap,Machine->gfx[b1],
+				drawgfx(bitmap,Machine.gfx[b1],
 					chr,
 					col,
 					fx,fy,
 					px-0x100,py,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 	
@@ -207,12 +207,12 @@ public class raiders5
 					py = 248-8*y;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 					chr,
 					col,
 					flipscreen,flipscreen,
 					px,py,
-					&Machine->visible_area,TRANSPARENCY_PEN,0);
+					&Machine.visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	} };

@@ -253,25 +253,25 @@ public class equites
 	{
 		struct MRULELIST *listptr;
 	
-		mrulepool->pc = pc;
+		mrulepool.pc = pc;
 	
 		if (data >= 0)
-			mrulepool->data = data & 0xff;
+			mrulepool.data = data & 0xff;
 		else
 		{
 			data = -data;
 			if (data > 0x0f) data = (data>>4 & 0x0f) | MCU_RTNMSB;
-			mrulepool->mode = data;
+			mrulepool.mode = data;
 		}
 	
 		listptr = mrulemap + (offset>>1);
 	
-		if (!listptr->head)
-			listptr->head = mrulepool;
+		if (!listptr.head)
+			listptr.head = mrulepool;
 		else
-			listptr->tail->next = mrulepool;
+			listptr.tail.next = mrulepool;
 	
-		listptr->tail = mrulepool++;
+		listptr.tail = mrulepool++;
 	}
 	
 	/******************************************************************************/
@@ -291,10 +291,10 @@ public class equites
 			ruleptr = mrulemap[offset].head;
 			while (ruleptr)
 			{
-				if (pc == ruleptr->pc)
+				if (pc == ruleptr.pc)
 				{
-					mode = ruleptr->mode;
-					if (!mode) return (ruleptr->data);
+					mode = ruleptr.mode;
+					if (!mode) return (ruleptr.data);
 					switch (mode & 0xf)
 					{
 						case 1:
@@ -369,7 +369,7 @@ public class equites
 					if ((mode & MCU_RTNMSB) != 0) data >>= 8;
 					return (data & 0xff);
 				}
-				ruleptr = ruleptr->next;
+				ruleptr = ruleptr.next;
 			}
 		}
 		return (equites_8404ram[offset]);

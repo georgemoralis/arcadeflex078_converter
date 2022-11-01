@@ -131,8 +131,8 @@ public class cninja
 		struct rectangle clip;
 		int overflow=deco16_raster_display_position;
 	
-		clip.min_x = cliprect->min_x;
-		clip.max_x = cliprect->max_x;
+		clip.min_x = cliprect.min_x;
+		clip.max_x = cliprect.max_x;
 	
 		/* Finish list up to end of visible display */
 		deco16_raster_display_list[overflow++]=255;
@@ -227,7 +227,7 @@ public class cninja
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine->gfx[3],
+				pdrawgfx(bitmap,Machine.gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -295,7 +295,7 @@ public class cninja
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine->gfx[3],
+				pdrawgfx(bitmap,Machine.gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -400,12 +400,12 @@ public class cninja
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					pdrawgfx(bitmap,Machine->gfx[gfxbank],
+					pdrawgfx(bitmap,Machine.gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							&Machine->visible_area,trans,0,0);
+							&Machine.visible_area,trans,0,0);
 				}
 			}
 	
@@ -423,7 +423,7 @@ public class cninja
 	
 		/* Draw playfields */
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[512],cliprect);
+		fillbitmap(bitmap,Machine.pens[512],cliprect);
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
 		deco16_tilemap_3_draw(bitmap,cliprect,0,2);
 		deco16_tilemap_2_draw(bitmap,cliprect,TILEMAP_BACK,2);
@@ -439,7 +439,7 @@ public class cninja
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
 		if (deco16_raster_display_position != 0)
 			raster_pf3_draw(bitmap,cliprect,0,2);
@@ -470,7 +470,7 @@ public class cninja
 	
 		/* Draw playfields */
 		fillbitmap(priority_bitmap,0,cliprect);
-		fillbitmap(bitmap,Machine->pens[0x200],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x200],cliprect);
 		if ((deco16_priority&4)==0)
 			deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
 	
@@ -504,7 +504,7 @@ public class cninja
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
 	
 		/* Draw playfields */
-		fillbitmap(bitmap,Machine->pens[0x400],cliprect); /* Confirmed */
+		fillbitmap(bitmap,Machine.pens[0x400],cliprect); /* Confirmed */
 	
 		/* There is no priority prom on this board, but there is a
 		priority control word, the only values used in game appear

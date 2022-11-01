@@ -372,38 +372,38 @@ public class h6280
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+H6280_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
-	        case CPU_INFO_REG+H6280_S: sprintf(buffer[which], "S:%02X", r->sp.b.l); break;
-	        case CPU_INFO_REG+H6280_P: sprintf(buffer[which], "P:%02X", r->p); break;
-	        case CPU_INFO_REG+H6280_A: sprintf(buffer[which], "A:%02X", r->a); break;
-			case CPU_INFO_REG+H6280_X: sprintf(buffer[which], "X:%02X", r->x); break;
-			case CPU_INFO_REG+H6280_Y: sprintf(buffer[which], "Y:%02X", r->y); break;
-			case CPU_INFO_REG+H6280_IRQ_MASK: sprintf(buffer[which], "IM:%02X", r->irq_mask); break;
-			case CPU_INFO_REG+H6280_TIMER_STATE: sprintf(buffer[which], "TMR:%02X", r->timer_status); break;
-			case CPU_INFO_REG+H6280_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
-			case CPU_INFO_REG+H6280_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r->irq_state[0]); break;
-			case CPU_INFO_REG+H6280_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r->irq_state[1]); break;
-			case CPU_INFO_REG+H6280_IRQT_STATE: sprintf(buffer[which], "IRQT:%X", r->irq_state[2]); break;
+			case CPU_INFO_REG+H6280_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
+	        case CPU_INFO_REG+H6280_S: sprintf(buffer[which], "S:%02X", r.sp.b.l); break;
+	        case CPU_INFO_REG+H6280_P: sprintf(buffer[which], "P:%02X", r.p); break;
+	        case CPU_INFO_REG+H6280_A: sprintf(buffer[which], "A:%02X", r.a); break;
+			case CPU_INFO_REG+H6280_X: sprintf(buffer[which], "X:%02X", r.x); break;
+			case CPU_INFO_REG+H6280_Y: sprintf(buffer[which], "Y:%02X", r.y); break;
+			case CPU_INFO_REG+H6280_IRQ_MASK: sprintf(buffer[which], "IM:%02X", r.irq_mask); break;
+			case CPU_INFO_REG+H6280_TIMER_STATE: sprintf(buffer[which], "TMR:%02X", r.timer_status); break;
+			case CPU_INFO_REG+H6280_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
+			case CPU_INFO_REG+H6280_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r.irq_state[0]); break;
+			case CPU_INFO_REG+H6280_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r.irq_state[1]); break;
+			case CPU_INFO_REG+H6280_IRQT_STATE: sprintf(buffer[which], "IRQT:%X", r.irq_state[2]); break;
 	#ifdef MAME_DEBUG
-			case CPU_INFO_REG+H6280_M1: sprintf(buffer[which], "M1:%02X", r->mmr[0]); break;
-			case CPU_INFO_REG+H6280_M2: sprintf(buffer[which], "M2:%02X", r->mmr[1]); break;
-			case CPU_INFO_REG+H6280_M3: sprintf(buffer[which], "M3:%02X", r->mmr[2]); break;
-			case CPU_INFO_REG+H6280_M4: sprintf(buffer[which], "M4:%02X", r->mmr[3]); break;
-			case CPU_INFO_REG+H6280_M5: sprintf(buffer[which], "M5:%02X", r->mmr[4]); break;
-			case CPU_INFO_REG+H6280_M6: sprintf(buffer[which], "M6:%02X", r->mmr[5]); break;
-			case CPU_INFO_REG+H6280_M7: sprintf(buffer[which], "M7:%02X", r->mmr[6]); break;
-			case CPU_INFO_REG+H6280_M8: sprintf(buffer[which], "M8:%02X", r->mmr[7]); break;
+			case CPU_INFO_REG+H6280_M1: sprintf(buffer[which], "M1:%02X", r.mmr[0]); break;
+			case CPU_INFO_REG+H6280_M2: sprintf(buffer[which], "M2:%02X", r.mmr[1]); break;
+			case CPU_INFO_REG+H6280_M3: sprintf(buffer[which], "M3:%02X", r.mmr[2]); break;
+			case CPU_INFO_REG+H6280_M4: sprintf(buffer[which], "M4:%02X", r.mmr[3]); break;
+			case CPU_INFO_REG+H6280_M5: sprintf(buffer[which], "M5:%02X", r.mmr[4]); break;
+			case CPU_INFO_REG+H6280_M6: sprintf(buffer[which], "M6:%02X", r.mmr[5]); break;
+			case CPU_INFO_REG+H6280_M7: sprintf(buffer[which], "M7:%02X", r.mmr[6]); break;
+			case CPU_INFO_REG+H6280_M8: sprintf(buffer[which], "M8:%02X", r.mmr[7]); break;
 	#endif
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->p & 0x80 ? 'N':'.',
-					r->p & 0x40 ? 'V':'.',
-					r->p & 0x20 ? 'R':'.',
-					r->p & 0x10 ? 'B':'.',
-					r->p & 0x08 ? 'D':'.',
-					r->p & 0x04 ? 'I':'.',
-					r->p & 0x02 ? 'Z':'.',
-					r->p & 0x01 ? 'C':'.');
+					r.p & 0x80 ? 'N':'.',
+					r.p & 0x40 ? 'V':'.',
+					r.p & 0x20 ? 'R':'.',
+					r.p & 0x10 ? 'B':'.',
+					r.p & 0x08 ? 'D':'.',
+					r.p & 0x04 ? 'I':'.',
+					r.p & 0x02 ? 'Z':'.',
+					r.p & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "HuC6280";
 			case CPU_INFO_FAMILY: return "Hudsonsoft 6280";
@@ -486,7 +486,7 @@ public class h6280
 	
 			case 1: /* Counter enable */
 				if ((data & 1) != 0)
-				{	/* stop -> start causes reload */
+				{	/* stop . start causes reload */
 					if(h6280.timer_status==0) h6280.timer_value=h6280.timer_load;
 				}
 				h6280.timer_status=data&1;

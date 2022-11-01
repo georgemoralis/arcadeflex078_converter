@@ -76,7 +76,7 @@ public class segar
 	
 	       (All of the other G80 games overwrite the default colors on startup)
 		*/
-		for (i = 0;i < (Machine->drv->total_colors - 1);i++)
+		for (i = 0;i < (Machine.drv.total_colors - 1);i++)
 		{
 			int r = color_scale[((i & 0x30) >> 4)];
 			int g = color_scale[((i & 0x0C) >> 2)];
@@ -84,7 +84,7 @@ public class segar
 			palette_set_color(i+1,r,g,b);
 		}
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 			colortable[i] = i;
 	
 	} };
@@ -158,9 +158,9 @@ public class segar
 			palette_set_color(offset+1,r,g,b);
 	
 			if (data == 0)
-				Machine->gfx[0]->colortable[offset] = Machine->pens[0];
+				Machine.gfx[0].colortable[offset] = Machine.pens[0];
 			else
-				Machine->gfx[0]->colortable[offset] = Machine->pens[offset+1];
+				Machine.gfx[0].colortable[offset] = Machine.pens[offset+1];
 	
 			// refresh the screen if the color switched to or from black
 			if (sv.colorRAM[offset] != data)
@@ -257,15 +257,15 @@ public class segar
 				/* decode modified characters */
 				if (sv.dirtychar[charcode] == 1)
 				{
-					decodechar(Machine->gfx[0],charcode,segar_characterram,
-							Machine->drv->gfxdecodeinfo[0].gfxlayout);
+					decodechar(Machine.gfx[0],charcode,segar_characterram,
+							Machine.drv.gfxdecodeinfo[0].gfxlayout);
 					sv.dirtychar[charcode] = 2;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						charcode,charcode>>4,
 						sv.flip,sv.flip,sx,sy,
-						&Machine->visible_area,sprite_transparency,0);
+						&Machine.visible_area,sprite_transparency,0);
 	
 				dirtybuffer[offs] = 0;
 	
@@ -277,7 +277,7 @@ public class segar
 				sv.dirtychar[offs]=0;
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,copy_transparency,Machine->pens[0]);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,copy_transparency,Machine.pens[0]);
 	
 		sv.char_refresh=0;
 		sv.refresh=0;
@@ -316,10 +316,10 @@ public class segar
 		if (video_start_segar() != 0)
 			return 1;
 	
-		if ((sv.horizbackbitmap = auto_bitmap_alloc(4*Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
+		if ((sv.horizbackbitmap = auto_bitmap_alloc(4*Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		if ((sv.vertbackbitmap = auto_bitmap_alloc(Machine->drv->screen_width,4*Machine->drv->screen_height)) == 0)
+		if ((sv.vertbackbitmap = auto_bitmap_alloc(Machine.drv.screen_width,4*Machine.drv.screen_height)) == 0)
 			return 1;
 	
 		return 0;
@@ -466,14 +466,14 @@ public class segar
 	
 				if (vert_scene != 0)
 				{
-					drawgfx(sv.vertbackbitmap,Machine->gfx[1 + sv.back_charset],
+					drawgfx(sv.vertbackbitmap,Machine.gfx[1 + sv.back_charset],
 						  charcode,0,
 						  sv.bflip,sv.bflip,sx,sy,
 						  0,TRANSPARENCY_NONE,0);
 				}
 				else
 				{
-					drawgfx(sv.horizbackbitmap,Machine->gfx[1 + sv.back_charset],
+					drawgfx(sv.horizbackbitmap,Machine.gfx[1 + sv.back_charset],
 						  charcode,0,
 						  sv.bflip,sv.bflip,sx,sy,
 						  0,TRANSPARENCY_NONE,0);
@@ -492,7 +492,7 @@ public class segar
 				else
 					scrolly = -sv.backshift;
 	
-				copyscrollbitmap(bitmap,sv.vertbackbitmap,0,0,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,sv.vertbackbitmap,0,0,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 			else
 			{
@@ -503,13 +503,13 @@ public class segar
 	
 				scrolly = -32;
 	
-				copyscrollbitmap(bitmap,sv.horizbackbitmap,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,sv.horizbackbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 		if (sv.fill_background==1)
 		{
-			fillbitmap(bitmap,Machine->pens[sv.backfill],&Machine->visible_area);
+			fillbitmap(bitmap,Machine.pens[sv.backfill],&Machine.visible_area);
 		}
 	
 		/* Refresh the "standard" graphics */
@@ -612,10 +612,10 @@ public class segar
 	
 					charcode = back_charmap[offs + sv.back_scene];
 	
-					drawgfx(tmpbitmap,Machine->gfx[1 + sv.back_charset],
+					drawgfx(tmpbitmap,Machine.gfx[1 + sv.back_charset],
 						charcode,((charcode & 0xF0)>>4),
 						sv.flip,sv.flip,sx,sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 			sprite_transparency=TRANSPARENCY_PEN;
@@ -794,10 +794,10 @@ public class segar
 	
 					charcode = back_charmap[backoffs + back_scene];
 	
-					drawgfx(tmpbitmap,Machine->gfx[1 + sv.back_charset],
+					drawgfx(tmpbitmap,Machine.gfx[1 + sv.back_charset],
 						charcode,((charcode & 0xF0)>>4),
 						sv.flip,sv.flip,sx,sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 			sprite_transparency=TRANSPARENCY_PEN;

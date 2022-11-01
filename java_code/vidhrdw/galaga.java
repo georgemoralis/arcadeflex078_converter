@@ -59,8 +59,8 @@ public class galaga
 	public static PaletteInitHandlerPtr palette_init_galaga  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 32;i++)
@@ -165,7 +165,7 @@ public class galaga
 					{
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
-						stars[total_stars].col = Machine->pens[color + STARS_COLOR_BASE];
+						stars[total_stars].col = Machine.pens[color + STARS_COLOR_BASE];
 						stars[total_stars].set = set;
 						if (++set > 3)
 							set = 0;
@@ -241,17 +241,17 @@ public class galaga
 					sy = 27 - sy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs)+galaga_gfxbank*0x100,
 						colorram[offs],
 						flip_screen,flip_screen,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
 	
-		fillbitmap(bitmap,Machine->pens[0],&Machine->visible_area);
+		fillbitmap(bitmap,Machine.pens[0],&Machine.visible_area);
 	
 	
 		/* Draw the sprites. */
@@ -286,48 +286,48 @@ public class galaga
 	
 				if ((spriteram_3[offs] & 0x0c) == 0x0c)		/* double width, double height */
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code+2,color,flipx,flipy,sx+sfa,sy-sfa,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
-					drawgfx(bitmap,Machine->gfx[1],
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx+sfa,sy-sfb,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
 	
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code+3,color,flipx,flipy,sx+sfb,sy-sfa,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
-					drawgfx(bitmap,Machine->gfx[1],
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					drawgfx(bitmap,Machine.gfx[1],
 							code+1,color,flipx,flipy,sx+sfb,sy-sfb,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else if (spriteram_3[offs] & 8)	/* double width */
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code+2,color,flipx,flipy,sx,sy-sfa,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
-					drawgfx(bitmap,Machine->gfx[1],
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx,sy-sfb,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else if (spriteram_3[offs] & 4)	/* double height */
 				{
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx+sfa,sy,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
-					drawgfx(bitmap,Machine->gfx[1],
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
+					drawgfx(bitmap,Machine.gfx[1],
 							code+1,color,flipx,flipy,sx+sfb,sy,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
 				}
 				else	/* normal */
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code,color,flipx,flipy,sx,sy,
-							&Machine->visible_area,TRANSPARENCY_COLOR,0);
+							&Machine.visible_area,TRANSPARENCY_COLOR,0);
 			}
 		}
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_COLOR,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_COLOR,0);
 	
 	
 		/* draw the stars */
@@ -336,7 +336,7 @@ public class galaga
 			int bpen;
 	
 	
-			bpen = Machine->pens[0];
+			bpen = Machine.pens[0];
 			for (offs = 0;offs < total_stars;offs++)
 			{
 				int x,y;
@@ -350,8 +350,8 @@ public class galaga
 					x = ((stars[offs].x + stars_scroll) % 512) / 2 + 16;
 					y = (stars[offs].y + (stars_scroll + stars[offs].x) / 512) % 256;
 	
-					if (y >= Machine->visible_area.min_y &&
-						y <= Machine->visible_area.max_y)
+					if (y >= Machine.visible_area.min_y &&
+						y <= Machine.visible_area.max_y)
 					{
 						if (read_pixel(bitmap, x, y) == bpen)
 							plot_pixel(bitmap, x, y, stars[offs].col);

@@ -152,8 +152,8 @@ public class twin16
 			7	6	5	4	3	2	1	0
 				?							sprite protection disable
 					X						IRQ5 enable (CPUA)
-						X					0->1 trigger IRQ6 on CPUB
-							X				0->1 trigger IRQ on sound CPU
+						X					0.1 trigger IRQ6 on CPUB
+							X				0.1 trigger IRQ on sound CPU
 								x	x	x	coin counters
 		*/
 		UINT16 old = twin16_CPUA_register;
@@ -186,7 +186,7 @@ public class twin16
 			7	6	5	4	3	2	1	0
 								X			gfx bank select
 									X		IRQ5 enable
-										X	0->1 trigger IRQ6 on CPUA
+										X	0.1 trigger IRQ6 on CPUA
 		*/
 		UINT16 old = twin16_CPUB_register;
 		COMBINE_DATA(&twin16_CPUB_register);

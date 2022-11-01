@@ -102,16 +102,16 @@ public class wecleman
 	
 	static void sprite_init(void)
 	{
-		struct rectangle *clip = &Machine->visible_area;
-		struct mame_bitmap *bitmap = Machine->scrbitmap;
+		struct rectangle *clip = &Machine.visible_area;
+		struct mame_bitmap *bitmap = Machine.scrbitmap;
 	
-		screen_clip_left   = clip->min_x;
-		screen_clip_top    = clip->min_y;
-		screen_clip_right  = clip->max_x+1;
-		screen_clip_bottom = clip->max_y+1;
+		screen_clip_left   = clip.min_x;
+		screen_clip_top    = clip.min_y;
+		screen_clip_right  = clip.max_x+1;
+		screen_clip_bottom = clip.max_y+1;
 	
-		screen_baseaddr = bitmap->base;
-		screen_line_offset = bitmap->rowbytes;
+		screen_baseaddr = bitmap.base;
+		screen_line_offset = bitmap.rowbytes;
 	}
 	
 	static struct sprite *sprite_list_create(int num_sprites)
@@ -127,7 +127,7 @@ public class wecleman
 	
 	static void get_sprite_info(void)
 	{
-		pen_t *base_pal = Machine->remapped_colortable;
+		pen_t *base_pal = Machine.remapped_colortable;
 		UINT8 *base_gfx = memory_region(REGION_GFX1);
 		int gfx_max     = memory_region_length(REGION_GFX1);
 	
@@ -142,42 +142,42 @@ public class wecleman
 		{
 			if (source[0x00/2] == 0xffff) break;
 	
-			sprite->y = source[0x00/2] & 0xff;
-			sprite->total_height = (source[0x00/2] >> 8) - sprite->y;
-			if (sprite->total_height < 1) continue;
+			sprite.y = source[0x00/2] & 0xff;
+			sprite.total_height = (source[0x00/2] >> 8) - sprite.y;
+			if (sprite.total_height < 1) continue;
 	
-			sprite->x = source[0x02/2] & 0x1ff;
+			sprite.x = source[0x02/2] & 0x1ff;
 			bank = source[0x02/2] >> 10;
 			if (bank == 0x3f) continue;
 	
-			sprite->tile_width = source[0x04/2] & 0xff;
-			if (sprite->tile_width < 1) continue;
+			sprite.tile_width = source[0x04/2] & 0xff;
+			if (sprite.tile_width < 1) continue;
 	
-			sprite->shadow_mode = source[0x04/2] & 0x4000;
+			sprite.shadow_mode = source[0x04/2] & 0x4000;
 	
 			code = source[0x06/2];
 			zoom = source[0x08/2];
 	
-			sprite->pal_data = base_pal + ((source[0x0e/2] & 0xff) << 4);
+			sprite.pal_data = base_pal + ((source[0x0e/2] & 0xff) << 4);
 	
 			gfx = (wecleman_gfx_bank[bank] << 15) + (code & 0x7fff);
 	
-			sprite->flags = 0;
-			if ((code & 0x8000) != 0) { sprite->flags |= SPRITE_FLIPX; gfx += 1-sprite->tile_width; }
-			if (source[0x02/2] & 0x0200) sprite->flags |= SPRITE_FLIPY;
+			sprite.flags = 0;
+			if ((code & 0x8000) != 0) { sprite.flags |= SPRITE_FLIPX; gfx += 1-sprite.tile_width; }
+			if (source[0x02/2] & 0x0200) sprite.flags |= SPRITE_FLIPY;
 	
 			gfx <<= 3;
-			sprite->tile_width <<= 3;
-			sprite->tile_height = (sprite->total_height * 0x80) / (0x80 - (zoom >> 8));	// needs work
+			sprite.tile_width <<= 3;
+			sprite.tile_height = (sprite.total_height * 0x80) / (0x80 - (zoom >> 8));	// needs work
 	
-			if ((gfx + sprite->tile_width * sprite->tile_height - 1) >= gfx_max) continue;
+			if ((gfx + sprite.tile_width * sprite.tile_height - 1) >= gfx_max) continue;
 	
-			sprite->pen_data = base_gfx + gfx;
-			sprite->line_offset = sprite->tile_width;
-			sprite->total_width = sprite->tile_width - (sprite->tile_width * (zoom & 0xff)) / 0x80;
-			sprite->total_height += 1;
-			sprite->x += spr_offsx;
-			sprite->y += spr_offsy;
+			sprite.pen_data = base_gfx + gfx;
+			sprite.line_offset = sprite.tile_width;
+			sprite.total_width = sprite.tile_width - (sprite.tile_width * (zoom & 0xff)) / 0x80;
+			sprite.total_height += 1;
+			sprite.x += spr_offsx;
+			sprite.y += spr_offsy;
 	
 			if (gameid == 0)
 			{
@@ -233,10 +233,10 @@ public class wecleman
 		int x1, x2, y1, y2, dx, dy;
 		int xcount0=0, ycount0=0;
 	
-		if (sprite->flags & SPRITE_FLIPX)
+		if (sprite.flags & SPRITE_FLIPX)
 		{
-			x2 = sprite->x;
-			x1 = x2 + sprite->total_width;
+			x2 = sprite.x;
+			x1 = x2 + sprite.total_width;
 			dx = -1;
 			if (x2 < screen_clip_left) x2 = screen_clip_left;
 			if (x1 > screen_clip_right )
@@ -249,8 +249,8 @@ public class wecleman
 		}
 		else
 		{
-			x1 = sprite->x;
-			x2 = x1 + sprite->total_width;
+			x1 = sprite.x;
+			x2 = x1 + sprite.total_width;
 			dx = 1;
 			if (x1 < screen_clip_left )
 			{
@@ -261,10 +261,10 @@ public class wecleman
 			if (x1 >= x2) return;
 		}
 	
-		if (sprite->flags & SPRITE_FLIPY)
+		if (sprite.flags & SPRITE_FLIPY)
 		{
-			y2 = sprite->y;
-			y1 = y2 + sprite->total_height;
+			y2 = sprite.y;
+			y1 = y2 + sprite.total_height;
 			dy = -1;
 			if (y2 < screen_clip_top ) y2 = screen_clip_top;
 			if (y1 > screen_clip_bottom )
@@ -277,8 +277,8 @@ public class wecleman
 		}
 		else
 		{
-			y1 = sprite->y;
-			y2 = y1 + sprite->total_height;
+			y1 = sprite.y;
+			y2 = y1 + sprite.total_height;
 			dy = 1;
 			if (y1 < screen_clip_top )
 			{
@@ -289,27 +289,27 @@ public class wecleman
 			if (y1 >= y2) return;
 		}
 	
-		src_pitch = sprite->line_offset;
+		src_pitch = sprite.line_offset;
 		dst_pitch = (screen_line_offset * dy) >> 1;
 		dst_end = (UINT16 *)(screen_baseaddr + screen_line_offset * y2);
 	
 		// calculate entry point decimals
-		ebx = sprite->tile_height;
-		ecx = sprite->total_height;
+		ebx = sprite.tile_height;
+		ecx = sprite.total_height;
 		eax = (ebx<<PRECISION_Y) / ecx;
 		src_fdy = eax;
 		src_f0y = eax * ycount0 + FPY_HALF;
 	
-		ebx = sprite->tile_width;
-		ecx = sprite->total_width;
+		ebx = sprite.tile_width;
+		ecx = sprite.total_width;
 		eax = (ebx<<PRECISION_X) / ecx;
 		src_fdx = eax;
 		src_f0x = eax * xcount0;
 	
 		// pre-loop assignments and adjustments
 		dst_ptr = (UINT16 *)(screen_baseaddr + screen_line_offset * y1);
-		pal_base = sprite->pal_data;
-		src_base = sprite->pen_data;
+		pal_base = sprite.pal_data;
+		src_base = sprite.pen_data;
 		rgb_base = rgb_half;
 	
 		ebx = (src_f0y>>PRECISION_Y) * src_pitch;
@@ -318,7 +318,7 @@ public class wecleman
 		x2 -= dx;
 		ecx = x1;
 	
-		if (!sprite->shadow_mode)
+		if (!sprite.shadow_mode)
 		{
 			do
 			{
@@ -664,14 +664,14 @@ public class wecleman
 		int dst_pitch, scrollx, sy;
 		int mdy, tdy, edx, ebx, eax;
 	
-		dst_line = (UINT16**)bitmap->line;
-		rgb_ptr = Machine->remapped_colortable;
+		dst_line = (UINT16**)bitmap.line;
+		rgb_ptr = Machine.remapped_colortable;
 	
 		if (priority == 0x02)
 		{
 	
 		// draw sky; each scanline is assumed to be dword aligned
-		for (sy=cliprect->min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
+		for (sy=cliprect.min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
 		{
 			eax = wecleman_roadram[sy];
 			if ((eax>>8) != 0x02) continue;
@@ -705,16 +705,16 @@ public class wecleman
 			ebx = road_color[eax];
 			road_rgb[eax] = (ebx) ? rgb_ptr[ebx] : -1;
 		}
-		src_base = Machine->gfx[1]->gfxdata;
-		dst_pitch = bitmap->rowpixels;
+		src_base = Machine.gfx[1].gfxdata;
+		dst_pitch = bitmap.rowpixels;
 	
-		for (sy=cliprect->min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
+		for (sy=cliprect.min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
 		{
 			eax = wecleman_roadram[sy];
 			if ((eax>>8) != 0x04) continue;
 	
 			eax &= YMASK;
-			dst_base = bitmap->line[sy+BMP_PAD];
+			dst_base = bitmap.line[sy+BMP_PAD];
 			ebx = eax;
 			dst_base += BMP_PAD;
 			ebx <<= 9;
@@ -820,8 +820,8 @@ public class wecleman
 		tmmaskx = (1<<tmw_l2) - 1;
 		tmmasky = (1<<tmh_l2) - 1;
 	
-		tilew = gfx->width;
-		tileh = gfx->height;
+		tilew = gfx.width;
+		tileh = gfx.height;
 	
 		scrollx &= ((tilew<<tmw_l2) - 1);
 		scrolly &= ((tileh<<tmh_l2) - 1);
@@ -831,19 +831,19 @@ public class wecleman
 		tmskipy = scrolly / tileh;
 		dy = -(scrolly & (tileh-1));
 	
-		src_base = gfx->gfxdata;
-		src_advance = gfx->char_modulo;
+		src_base = gfx.gfxdata;
+		src_advance = gfx.char_modulo;
 		//src_advance_l2 = log2(src_advance);
 		src_advance_l2 = 6;	// hack to speed up multiplication
-		pal_advance = gfx->color_granularity;
+		pal_advance = gfx.color_granularity;
 		//pal_advance_l2 = log2(pal_advance);
 		pal_advance_l2 = 3;	// hack to speed up multiplication
 	
-		dst_pitch = bitmap->rowpixels;
-		dst_base = (UINT16 *)bitmap->base + (y0+dy)*dst_pitch + (x0+dx);
+		dst_pitch = bitmap.rowpixels;
+		dst_base = (UINT16 *)bitmap.base + (y0+dy)*dst_pitch + (x0+dx);
 		dst_advance = dst_pitch * tileh;
 	
-		pal_base = Machine->remapped_colortable;
+		pal_base = Machine.remapped_colortable;
 		alpha <<= 6;
 		pal_base += pal_offset << pal_advance_l2;
 	
@@ -1038,7 +1038,7 @@ public class wecleman
 		int sx, sy;
 	
 		/* Let's draw from the top to the bottom of the visible screen */
-		for (sy = Machine->visible_area.min_y;sy <= Machine->visible_area.max_y;sy++)
+		for (sy = Machine.visible_area.min_y;sy <= Machine.visible_area.max_y;sy++)
 		{
 			int code    = wecleman_roadram[sy*4/2+2/2] + (wecleman_roadram[sy*4/2+0/2] << 16);
 			int color   = ((code & 0x00f00000) >> 20) + 0x70;
@@ -1051,7 +1051,7 @@ public class wecleman
 	
 			for (sx=0; sx<2*XSIZE; sx+=64)
 			{
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						code++,
 						color,
 						0,0,
@@ -1146,7 +1146,7 @@ public class wecleman
 		UINT8 *buffer;
 		int i, j;
 	
-		if (Machine->color_depth > 16) return(1);
+		if (Machine.color_depth > 16) return(1);
 		if (!(buffer = auto_malloc(0x12c00))) return(1);	// working buffer for sprite operations
 	
 		gameid = 0;
@@ -1217,7 +1217,7 @@ public class wecleman
 		tilemap_set_scrolly(txt_tilemap, 0, -BMP_PAD );
 	
 		// patches out a mysterious pixel floating in the sky (tile decoding bug?)
-		*(Machine->gfx[0]->gfxdata + (Machine->gfx[0]->char_modulo*0xaca+7)) = 0;
+		*(Machine.gfx[0].gfxdata + (Machine.gfx[0].char_modulo*0xaca+7)) = 0;
 	
 		return 0;
 	} };
@@ -1292,7 +1292,7 @@ public class wecleman
 		int cloud_sx, cloud_sy;
 		int i, j, k;
 	
-		mrct = Machine->remapped_colortable;
+		mrct = Machine.remapped_colortable;
 	
 		video_on = wecleman_irqctrl & 0x40;
 	
@@ -1340,7 +1340,7 @@ public class wecleman
 	
 			if (video_on != 0) wecleman_draw_cloud(
 				bitmap,
-				Machine->gfx[0],
+				Machine.gfx[0],
 				wecleman_pageram+0x1800,
 				BMP_PAD, BMP_PAD,
 				41, 20,

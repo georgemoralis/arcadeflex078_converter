@@ -412,7 +412,7 @@ public class dec0
 			/*Used on the title screen only(???)*/
 			case 0x31e: i8751_return = 0x200;     break;
 	
-	/*  0x100-0x10d values are for club power meters(1W=0x100<<-->>PT=0x10d).    *
+	/*  0x100-0x10d values are for club power meters(1W=0x100<<-.>PT=0x10d).    *
 	 *  Returned value to i8751 doesn't matter,but send the result to 0x481.     *
 	 *  Lower the value,stronger is the power.                                   */
 			case 0x100: pwr = 0x30; 			break; /*1W*/
@@ -431,7 +431,7 @@ public class dec0
 			case 0x10d: pwr = 0x80; 			break; /*PT*/
 			case 0x481: i8751_return = pwr;     break; /*Power meter*/
 	
-	/*  0x200-0x20f values are for shot height(STRONG=0x200<<-->>WEAK=0x20f).    *
+	/*  0x200-0x20f values are for shot height(STRONG=0x200<<-.>WEAK=0x20f).    *
 	 *  Returned value to i8751 doesn't matter,but send the result to 0x534.     *
 	 *  Higher the value,stronger is the height.                                 */
 			case 0x200: hgt = 0x5c0;  			break; /*H*/

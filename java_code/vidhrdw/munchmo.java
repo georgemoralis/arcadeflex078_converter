@@ -21,7 +21,7 @@ public class munchmo
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -101,8 +101,8 @@ public class munchmo
 	
 	static void draw_status( struct mame_bitmap *bitmap )
 	{
-		struct rectangle clip = Machine->visible_area;
-		const struct GfxElement *gfx = Machine->gfx[0];
+		struct rectangle clip = Machine.visible_area;
+		const struct GfxElement *gfx = Machine.gfx[0];
 		int row;
 	
 		for( row=0; row<4; row++ )
@@ -134,7 +134,7 @@ public class munchmo
 		the tiles in ROM B2.2B
 	*/
 		unsigned char *tile_data = memory_region(REGION_GFX2);
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		int offs;
 	
 		for( offs=0; offs<0x100; offs++ )
@@ -167,18 +167,18 @@ public class munchmo
 	
 			copyscrollbitmap(bitmap,tmpbitmap,
 				1,&scrollx,1,&scrolly,
-				&Machine->visible_area,TRANSPARENCY_NONE,0);
+				&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap )
 	{
-		const struct rectangle *clip = &Machine->visible_area;
+		const struct rectangle *clip = &Machine.visible_area;
 		int scroll = mnchmobl_vreg[6];
 		int flags = mnchmobl_vreg[7];					/*   XB?????? */
 		int xadjust = - 128-16 - ((flags&0x80)?1:0);
 		int bank = (flags&0x40)?1:0;
-		const struct GfxElement *gfx = Machine->gfx[2+bank];
+		const struct GfxElement *gfx = Machine.gfx[2+bank];
 		int color_base = mnchmobl_palette_bank*4+3;
 		int i;
 		for( i=0; i<0x200; i++ )

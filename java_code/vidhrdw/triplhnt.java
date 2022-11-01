@@ -43,7 +43,7 @@ public class triplhnt
 	
 	public static VideoUpdateHandlerPtr video_update_triplhnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		helper = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper == NULL)
 			return 1;
@@ -100,18 +100,18 @@ public class triplhnt
 	
 			/* render sprite to auxiliary bitmap */
 	
-			drawgfx(helper, Machine->gfx[triplhnt_sprite_zoom],
+			drawgfx(helper, Machine.gfx[triplhnt_sprite_zoom],
 				2 * code + triplhnt_sprite_bank, 0, code & 8, 0,
 				rect.min_x, rect.min_y, cliprect, TRANSPARENCY_NONE, 0);
 	
-			if (rect.min_x < cliprect->min_x)
-				rect.min_x = cliprect->min_x;
-			if (rect.min_y < cliprect->min_y)
-				rect.min_y = cliprect->min_y;
-			if (rect.max_x > cliprect->max_x)
-				rect.max_x = cliprect->max_x;
-			if (rect.max_y > cliprect->max_y)
-				rect.max_y = cliprect->max_y;
+			if (rect.min_x < cliprect.min_x)
+				rect.min_x = cliprect.min_x;
+			if (rect.min_y < cliprect.min_y)
+				rect.min_y = cliprect.min_y;
+			if (rect.max_x > cliprect.max_x)
+				rect.max_x = cliprect.max_x;
+			if (rect.max_y > cliprect.max_y)
+				rect.max_y = cliprect.max_y;
 	
 			/* check for collisions and copy sprite */
 	

@@ -69,7 +69,7 @@ cases:
 * boolean/arithmetic ops (16+6)
 * transparency (on/off)
 * plane masking
-* directions (left->right/right->left, top->bottom/bottom->top)
+* directions (left.right/right.left, top.bottom/bottom.top)
 */
 
 static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *dst, int *dx, int *dy)
@@ -79,8 +79,8 @@ static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *d
 		return 0;
 	else
 	{
-		int sx = dst->x;
-		int sy = dst->y;
+		int sx = dst.x;
+		int sy = dst.y;
 		int ex = sx + *dx - 1;
 		int ey = sy + *dy - 1;
 		int diff, cycles = 3;
@@ -128,17 +128,17 @@ static int apply_window(const char *inst_name,int srcbpp, UINT32 *srcaddr, XY *d
 		/* compute cycles */
 		if (*dx != ex - sx + 1 || *dy != ey - sy + 1)
 		{
-			if (dst->x != sx || dst->y != sy)
+			if (dst.x != sx || dst.y != sy)
 				cycles += 11;
 			else
 				cycles += 3;
 		}
-		else if (dst->x != sx || dst->y != sy)
+		else if (dst.x != sx || dst.y != sy)
 			cycles += 7;
 
 		/* update the values */
-		dst->x = sx;
-		dst->y = sy;
+		dst.x = sx;
+		dst.y = sy;
 		*dx = ex - sx + 1;
 		*dy = ey - sy + 1;
 		return cycles;
@@ -206,16 +206,16 @@ int compute_pixblt_b_cycles(int left_partials, int right_partials, int full_word
 /* Shift register handling */
 static void shiftreg_w(offs_t offset,data16_t data)
 {
-	if (state.config->from_shiftreg)
-		(*state.config->from_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
+	if (state.config.from_shiftreg)
+		(*state.config.from_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
 	else
 		logerror("From ShiftReg function not set. PC = %08X\n", PC);
 }
 
 static data16_t shiftreg_r(offs_t offset)
 {
-	if (state.config->to_shiftreg)
-		(*state.config->to_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
+	if (state.config.to_shiftreg)
+		(*state.config.to_shiftreg)((UINT32)(offset << 3) & ~15, &state.shiftreg[0]);
 	else
 		logerror("To ShiftReg function not set. PC = %08X\n", PC);
 	return state.shiftreg[0];

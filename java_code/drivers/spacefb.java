@@ -31,7 +31,7 @@ Port 3 - Dipswitch
 
 OUT:
 Port 0 - RV,VREF and CREF
-Port 1 - Comms to the Sound card (-> 8212)
+Port 1 - Comms to the Sound card (. 8212)
     bit 0 = discrete sound
     bit 1 = INT to 8035
     bit 2 = T1 input to 8035

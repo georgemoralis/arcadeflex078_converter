@@ -911,14 +911,14 @@ static void process_object_list(struct mame_bitmap *bitmap, const struct rectang
 	int logit;
 
 	/* loop over all scanlines */
-	for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+	for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 	{
 		/* erase the scanline first */
 		for (x = 0; x < 336; x++)
 			scanline[x] = gpu_regs[BG];
 
 #if LOG_OBJECTS
-		logit = (y == cliprect->min_y);
+		logit = (y == cliprect.min_y);
 #else
 		logit = 0;
 #endif

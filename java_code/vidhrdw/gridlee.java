@@ -50,7 +50,7 @@ public class gridlee
 	{
 		int i;
 	
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 		{
 			int r = color_prom[0x0000] | (color_prom[0x0000] << 4);
 			int g = color_prom[0x0800] | (color_prom[0x0800] << 4);
@@ -142,11 +142,11 @@ public class gridlee
 	
 	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pen_t *pens = &Machine->pens[palettebank_vis * 32];
+		pen_t *pens = &Machine.pens[palettebank_vis * 32];
 		int x, y, i;
 	
 		/* draw scanlines from the VRAM directly */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			/* non-flipped: draw directly from the bitmap */
 			if (!gridlee_cocktail_flip)
@@ -189,7 +189,7 @@ public class gridlee
 					currxor = 0xff;
 				}
 	
-				if (ypos >= 16 && ypos >= cliprect->min_y && ypos <= cliprect->max_y)
+				if (ypos >= 16 && ypos >= cliprect.min_y && ypos <= cliprect.max_y)
 				{
 					int currx = xpos;
 	

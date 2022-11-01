@@ -74,7 +74,7 @@ public class redbaron
 			poly_counter -= 12000;
 			while( poly_counter <= 0 )
 			{
-				poly_counter += Machine->sample_rate;
+				poly_counter += Machine.sample_rate;
 				if( ((poly_shift & 0x0001) == 0) == ((poly_shift & 0x4000) == 0) )
 					poly_shift = (poly_shift << 1) | 1;
 				else
@@ -85,7 +85,7 @@ public class redbaron
 			filter_counter -= 330;
 			while( filter_counter <= 0 )
 			{
-				filter_counter += Machine->sample_rate;
+				filter_counter += Machine.sample_rate;
 				crash_amp = (poly_shift & 1) ? latch >> 4 : 0;
 			}
 			/* mix crash sound at 35% */
@@ -108,7 +108,7 @@ public class redbaron
 					shot_amp_counter -= C32_DISCHARGE_TIME;
 					while( shot_amp_counter <= 0 )
 					{
-						shot_amp_counter += Machine->sample_rate;
+						shot_amp_counter += Machine.sample_rate;
 						if( --shot_amp == 0 )
 							break;
 					}
@@ -131,7 +131,7 @@ public class redbaron
 					squeal_amp_counter -= C5_CHARGE_TIME;
 					while( squeal_amp_counter <= 0 )
 					{
-						squeal_amp_counter += Machine->sample_rate;
+						squeal_amp_counter += Machine.sample_rate;
 						if( ++squeal_amp == 32767 )
 							break;
 					}
@@ -147,7 +147,7 @@ public class redbaron
 					squeal_off_counter -= (1134 + 1134 * squeal_amp / 32767) / 3;
 					while( squeal_off_counter <= 0 )
 					{
-						squeal_off_counter += Machine->sample_rate;
+						squeal_off_counter += Machine.sample_rate;
 						squeal_out = 0;
 					}
 				}
@@ -156,7 +156,7 @@ public class redbaron
 					squeal_on_counter -= 1134;
 					while( squeal_on_counter <= 0 )
 					{
-						squeal_on_counter += Machine->sample_rate;
+						squeal_on_counter += Machine.sample_rate;
 						squeal_out = 1;
 	                }
 	            }
@@ -211,7 +211,7 @@ public class redbaron
 			vol_crash[i] = 32767 * r0 / (r0 + r1);
 	    }
 	
-		channel = stream_init("Custom", 50, Machine->sample_rate, 0, redbaron_sound_update);
+		channel = stream_init("Custom", 50, Machine.sample_rate, 0, redbaron_sound_update);
 	    if( channel == -1 )
 	        return 1;
 	

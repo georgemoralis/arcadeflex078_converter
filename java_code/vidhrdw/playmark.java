@@ -189,7 +189,7 @@ public class playmark
 	
 		color = bigtwin_bgvideoram[offset] & 0xff;
 	
-		plot_pixel(bgbitmap,sx,sy,Machine->pens[256 + color]);
+		plot_pixel(bgbitmap,sx,sy,Machine.pens[256 + color]);
 	}
 	
 	
@@ -240,8 +240,8 @@ public class playmark
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int codeshift)
 	{
 		int offs;
-		int height = Machine->gfx[0]->height;
-		int colordiv = Machine->gfx[0]->color_granularity / 16;
+		int height = Machine.gfx[0].height;
+		int colordiv = Machine.gfx[0].color_granularity / 16;
 	
 		for (offs = 4;offs < spriteram_size/2;offs += 4)
 		{
@@ -256,7 +256,7 @@ public class playmark
 			code = spriteram16[offs+2] >> codeshift;
 			color = (spriteram16[offs+1] & 0xfe00) >> 9;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color/colordiv,
 					flipx,0,

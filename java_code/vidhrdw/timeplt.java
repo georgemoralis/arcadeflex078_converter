@@ -49,23 +49,23 @@ public class timeplt
 	public static PaletteInitHandlerPtr palette_init_timeplt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,bit4,r,g,b;
 	
 	
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 4) & 0x01;
-			bit4 = (color_prom[i + Machine->drv->total_colors] >> 5) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 4) & 0x01;
+			bit4 = (color_prom[i + Machine.drv.total_colors] >> 5) & 0x01;
 			r = 0x19 * bit0 + 0x24 * bit1 + 0x35 * bit2 + 0x40 * bit3 + 0x4d * bit4;
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 6) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 7) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 6) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 7) & 0x01;
 			bit2 = (color_prom[i] >> 0) & 0x01;
 			bit3 = (color_prom[i] >> 1) & 0x01;
 			bit4 = (color_prom[i] >> 2) & 0x01;
@@ -80,7 +80,7 @@ public class timeplt
 			palette_set_color(i,r,g,b);
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 	
@@ -180,7 +180,7 @@ public class timeplt
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 		struct rectangle clip = *cliprect;
 		int offs;
 		int line;
@@ -188,7 +188,7 @@ public class timeplt
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= cliprect->min_y && line <= cliprect->max_y)
+			if (line >= cliprect.min_y && line <= cliprect.max_y)
 			{
 				unsigned char *sr,*sr2;
 	

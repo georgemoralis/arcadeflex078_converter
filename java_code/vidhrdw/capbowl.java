@@ -99,7 +99,7 @@ public class capbowl
 	
 	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		int halfwidth = (cliprect->max_x - cliprect->min_x + 1) / 2;
+		int halfwidth = (cliprect.max_x - cliprect.min_x + 1) / 2;
 		struct tms34061_display state;
 		int x, y;
 	
@@ -109,12 +109,12 @@ public class capbowl
 		/* if we're blanked, just fill with black */
 		if (state.blanked)
 		{
-			fillbitmap(bitmap, Machine->pens[0], cliprect);
+			fillbitmap(bitmap, Machine.pens[0], cliprect);
 			return;
 		}
 	
 		/* update the palette and color usage */
-		for (y = Machine->visible_area.min_y; y <= Machine->visible_area.max_y; y++)
+		for (y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y++)
 			if (state.dirty[y])
 			{
 				UINT8 *src = &state.vram[256 * y];
@@ -131,9 +131,9 @@ public class capbowl
 			}
 	
 		/* now regenerate the bitmap */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			UINT8 *src = &state.vram[256 * y + 32 + cliprect->min_x / 2];
+			UINT8 *src = &state.vram[256 * y + 32 + cliprect.min_x / 2];
 			UINT8 scanline[400];
 			UINT8 *dst = scanline;
 	
@@ -146,7 +146,7 @@ public class capbowl
 			}
 	
 			/* redraw the scanline and mark it no longer dirty */
-			draw_scanline8(bitmap, cliprect->min_x, y, halfwidth * 2, scanline, &Machine->pens[16 * y], -1);
+			draw_scanline8(bitmap, cliprect.min_x, y, halfwidth * 2, scanline, &Machine.pens[16 * y], -1);
 			state.dirty[y] = 0;
 		}
 	} };

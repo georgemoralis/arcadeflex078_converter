@@ -82,7 +82,7 @@ public class spy
 	
 		if (!spy_video_enable)
 		{
-			fillbitmap(bitmap,Machine->pens[16 * layer_colorbase[0]],cliprect);
+			fillbitmap(bitmap,Machine.pens[16 * layer_colorbase[0]],cliprect);
 			return;
 		}
 	

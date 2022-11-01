@@ -164,7 +164,7 @@ public class crshrace
 					map_start++;
 	
 					if (flipscreen != 0)
-						drawgfxzoom(bitmap,Machine->gfx[2],
+						drawgfxzoom(bitmap,Machine.gfx[2],
 								code,
 								color,
 								!flipx,!flipy,
@@ -172,7 +172,7 @@ public class crshrace
 								cliprect,TRANSPARENCY_PEN,15,
 								0x1000 * zoomx,0x1000 * zoomy);
 					else
-						drawgfxzoom(bitmap,Machine->gfx[2],
+						drawgfxzoom(bitmap,Machine.gfx[2],
 								code,
 								color,
 								flipx,flipy,
@@ -205,7 +205,7 @@ public class crshrace
 			return;
 		}
 	
-		fillbitmap(bitmap,Machine->pens[0x1ff],cliprect);
+		fillbitmap(bitmap,Machine.pens[0x1ff],cliprect);
 	
 		switch (gfxctrl & 0xfb)
 		{

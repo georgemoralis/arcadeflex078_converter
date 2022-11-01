@@ -173,8 +173,8 @@ public class skyfox
 	{
 		int offs;
 	
-		int width	=	Machine->drv->screen_width;
-		int height	=	Machine->drv->screen_height;
+		int width	=	Machine.drv.screen_width;
+		int height	=	Machine.drv.screen_height;
 	
 		/* The 32x32 tiles in the 80-ff range are bankswitched */
 		int shift	=	(skyfox_bg_ctrl & 0x80) ? (4-1) : 4;
@@ -204,12 +204,12 @@ public class skyfox
 			}
 	
 	#define DRAW_SPRITE(DX,DY,CODE) \
-			drawgfx(bitmap,Machine->gfx[0], \
+			drawgfx(bitmap,Machine.gfx[0], \
 					(CODE), \
 					0, \
 					flipx,flipy, \
 					x + (DX),y + (DY), \
-					&Machine->visible_area,TRANSPARENCY_PEN, 0xff); \
+					&Machine.visible_area,TRANSPARENCY_PEN, 0xff); \
 	
 			if ((skyfox_bg_ctrl & 1) != 0)	// flipscreen
 			{
@@ -277,7 +277,7 @@ public class skyfox
 				plot_pixel(	bitmap,
 							( (j&1)     + x ) % 512,
 							( ((j/2)&1) + y ) % 256,
-							Machine->pens[256+(pen&0x7f)] );
+							Machine.pens[256+(pen&0x7f)] );
 		}
 	}
 	
@@ -293,7 +293,7 @@ public class skyfox
 	
 	public static VideoUpdateHandlerPtr video_update_skyfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[255],&Machine->visible_area);	// the bg is black
+		fillbitmap(bitmap,Machine.pens[255],&Machine.visible_area);	// the bg is black
 		skyfox_draw_background(bitmap);
 		skyfox_draw_sprites(bitmap);
 	} };

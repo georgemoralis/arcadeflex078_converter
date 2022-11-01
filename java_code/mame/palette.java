@@ -154,9 +154,9 @@ public class palette
 		global_gamma = (options.gamma > .001) ? options.gamma : 1.0;
 	
 		/* determine the color mode */
-		if (Machine->color_depth == 15)
+		if (Machine.color_depth == 15)
 			colormode = DIRECT_15BIT;
-		else if (Machine->color_depth == 32)
+		else if (Machine.color_depth == 32)
 			colormode = DIRECT_32BIT;
 		else
 			colormode = PALETTIZED_16BIT;
@@ -164,19 +164,19 @@ public class palette
 		highlight_method = 0;
 	
 		/* ensure that RGB direct video modes don't have a colortable */
-		if ((Machine->drv->video_attributes & VIDEO_RGB_DIRECT) &&
-				Machine->drv->color_table_len)
+		if ((Machine.drv.video_attributes & VIDEO_RGB_DIRECT) &&
+				Machine.drv.color_table_len)
 		{
 			logerror("Error: VIDEO_RGB_DIRECT requires color_table_len to be 0.\n");
 			return 1;
 		}
 	
 		/* compute the total colors, including shadows and highlights */
-		total_colors = Machine->drv->total_colors;
-		if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS && !(colormode & DIRECT_RGB))
-			total_colors += Machine->drv->total_colors;
-		if (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS && !(colormode & DIRECT_RGB))
-			total_colors += Machine->drv->total_colors;
+		total_colors = Machine.drv.total_colors;
+		if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS && !(colormode & DIRECT_RGB))
+			total_colors += Machine.drv.total_colors;
+		if (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS && !(colormode & DIRECT_RGB))
+			total_colors += Machine.drv.total_colors;
 		total_colors_with_ui = total_colors;
 	
 		/* make sure we still fit in 16 bits */
@@ -192,7 +192,7 @@ public class palette
 	
 		/* set up save/restore of the palette */
 		state_save_register_UINT32("palette", 0, "colors", game_palette, total_colors);
-		state_save_register_UINT16("palette", 0, "brightness", pen_brightness, Machine->drv->total_colors);
+		state_save_register_UINT16("palette", 0, "brightness", pen_brightness, Machine.drv.total_colors);
 		state_save_register_func_postload(palette_reset);
 	
 		return 0;
@@ -534,57 +534,57 @@ public class palette
 			mark_pen_dirty(i);
 	
 		/* allocate memory for the pen table */
-		Machine->pens = auto_malloc(total_colors * sizeof(Machine->pens[0]));
-		if (!Machine->pens)
+		Machine.pens = auto_malloc(total_colors * sizeof(Machine.pens[0]));
+		if (!Machine.pens)
 			return 1;
 		for (i = 0; i < total_colors; i++)
-			Machine->pens[i] = i;
+			Machine.pens[i] = i;
 	
 		/* allocate memory for the per-entry brightness table */
-		pen_brightness = auto_malloc(Machine->drv->total_colors * sizeof(pen_brightness[0]));
+		pen_brightness = auto_malloc(Machine.drv.total_colors * sizeof(pen_brightness[0]));
 		if (!pen_brightness)
 			return 1;
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 			pen_brightness[i] = 1 << PEN_BRIGHTNESS_BITS;
 	
 		/* allocate memory for the colortables, if needed */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
 			/* first for the raw colortable */
-			Machine->game_colortable = auto_malloc(Machine->drv->color_table_len * sizeof(Machine->game_colortable[0]));
-			if (!Machine->game_colortable)
+			Machine.game_colortable = auto_malloc(Machine.drv.color_table_len * sizeof(Machine.game_colortable[0]));
+			if (!Machine.game_colortable)
 				return 1;
-			for (i = 0; i < Machine->drv->color_table_len; i++)
-				Machine->game_colortable[i] = i % total_colors;
+			for (i = 0; i < Machine.drv.color_table_len; i++)
+				Machine.game_colortable[i] = i % total_colors;
 	
 			/* then for the remapped colortable */
-			Machine->remapped_colortable = auto_malloc(Machine->drv->color_table_len * sizeof(Machine->remapped_colortable[0]));
-			if (!Machine->remapped_colortable)
+			Machine.remapped_colortable = auto_malloc(Machine.drv.color_table_len * sizeof(Machine.remapped_colortable[0]));
+			if (!Machine.remapped_colortable)
 				return 1;
 		}
 	
 		/* otherwise, keep the game_colortable NULL and point the remapped_colortable to the pens */
 		else
 		{
-			Machine->game_colortable = NULL;
-			Machine->remapped_colortable = Machine->pens;	/* straight 1:1 mapping from palette to colortable */
+			Machine.game_colortable = NULL;
+			Machine.remapped_colortable = Machine.pens;	/* straight 1:1 mapping from palette to colortable */
 		}
 	
 		/* allocate memory for the debugger pens */
-		Machine->debug_pens = auto_malloc(DEBUGGER_TOTAL_COLORS * sizeof(Machine->debug_pens[0]));
-		if (!Machine->debug_pens)
+		Machine.debug_pens = auto_malloc(DEBUGGER_TOTAL_COLORS * sizeof(Machine.debug_pens[0]));
+		if (!Machine.debug_pens)
 			return 1;
 		for (i = 0; i < DEBUGGER_TOTAL_COLORS; i++)
-			Machine->debug_pens[i] = i;
+			Machine.debug_pens[i] = i;
 	
 		/* allocate memory for the debugger colortable */
-		Machine->debug_remapped_colortable = auto_malloc(2 * DEBUGGER_TOTAL_COLORS * DEBUGGER_TOTAL_COLORS * sizeof(Machine->debug_remapped_colortable[0]));
-		if (!Machine->debug_remapped_colortable)
+		Machine.debug_remapped_colortable = auto_malloc(2 * DEBUGGER_TOTAL_COLORS * DEBUGGER_TOTAL_COLORS * sizeof(Machine.debug_remapped_colortable[0]));
+		if (!Machine.debug_remapped_colortable)
 			return 1;
 		for (i = 0; i < DEBUGGER_TOTAL_COLORS * DEBUGGER_TOTAL_COLORS; i++)
 		{
-			Machine->debug_remapped_colortable[2*i+0] = i / DEBUGGER_TOTAL_COLORS;
-			Machine->debug_remapped_colortable[2*i+1] = i % DEBUGGER_TOTAL_COLORS;
+			Machine.debug_remapped_colortable[2*i+0] = i / DEBUGGER_TOTAL_COLORS;
+			Machine.debug_remapped_colortable[2*i+1] = i % DEBUGGER_TOTAL_COLORS;
 		}
 	
 	#if 0 //* for reference, do not remove
@@ -594,7 +594,7 @@ public class palette
 		{
 			/* we allocate a full 65536 entries table, to prevent memory corruption
 			 * bugs should the tilemap contains pens >= total_colors
-			 * (e.g. Machine->uifont->colortable[0] as returned by get_black_pen())
+			 * (e.g. Machine.uifont.colortable[0] as returned by get_black_pen())
 			 */
 			palette_shadow_table = auto_malloc(65536 * sizeof(palette_shadow_table[0]));
 			if (!palette_shadow_table)
@@ -604,22 +604,22 @@ public class palette
 			for (i = 0; i < 65536; i++)
 			{
 				palette_shadow_table[i] = i;
-				if ((Machine->drv->video_attributes & VIDEO_HAS_SHADOWS) && i < Machine->drv->total_colors)
-					palette_shadow_table[i] += Machine->drv->total_colors;
+				if ((Machine.drv.video_attributes & VIDEO_HAS_SHADOWS) && i < Machine.drv.total_colors)
+					palette_shadow_table[i] += Machine.drv.total_colors;
 			}
 		}
 	#else
 		{
 			UINT16 *table_ptr16;
 			UINT32 *table_ptr32;
-			int c = Machine->drv->total_colors;
+			int c = Machine.drv.total_colors;
 			int cx2 = c << 1;
 	
 			for (i=0; i<MAX_SHADOW_PRESETS; i++) shadow_table_base[i] = NULL;
 	
 			if (!(colormode & DIRECT_RGB))
 			{
-				if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS)
+				if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)
 				{
 					if (!(table_ptr16 = auto_malloc(65536 * sizeof(UINT16)))) return 1;
 	
@@ -631,7 +631,7 @@ public class palette
 					internal_set_shadow_preset(0, PALETTE_DEFAULT_SHADOW_FACTOR32, 0, 0, 0, 0, 1, 1);
 				}
 	
-				if (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS)
+				if (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS)
 				{
 					if (!(table_ptr16 = auto_malloc(65536 * sizeof(UINT16)))) return 1;
 	
@@ -645,7 +645,7 @@ public class palette
 			}
 			else
 			{
-				if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS)
+				if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)
 				{
 					if (!(table_ptr32 = auto_malloc(65536 * sizeof(UINT32)))) return 1;
 	
@@ -655,7 +655,7 @@ public class palette
 					internal_set_shadow_preset(0, PALETTE_DEFAULT_SHADOW_FACTOR32, 0, 0, 0, 0, 1, 1);
 				}
 	
-				if (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS)
+				if (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS)
 				{
 					if (!(table_ptr32 = auto_malloc(65536 * sizeof(UINT32)))) return 1;
 	
@@ -687,8 +687,8 @@ public class palette
 		recompute_adjusted_palette(1);
 	
 		/* now let the driver modify the initial palette and colortable */
-		if (Machine->drv->init_palette)
-			(*Machine->drv->init_palette)(Machine->game_colortable, memory_region(REGION_PROMS));
+		if (Machine.drv.init_palette)
+			(*Machine.drv.init_palette)(Machine.game_colortable, memory_region(REGION_PROMS));
 	
 		/* switch off the color mode */
 		switch (colormode)
@@ -697,7 +697,7 @@ public class palette
 			case PALETTIZED_16BIT:
 			{
 				/* refresh the palette to support shadows in static palette games */
-				for (i = 0; i < Machine->drv->total_colors; i++)
+				for (i = 0; i < Machine.drv.total_colors; i++)
 					palette_set_color(i, RGB_RED(game_palette[i]), RGB_GREEN(game_palette[i]), RGB_BLUE(game_palette[i]));
 	
 				/* map the UI pens */
@@ -705,15 +705,15 @@ public class palette
 				{
 					game_palette[total_colors + 0] = adjusted_palette[total_colors + 0] = MAKE_RGB(0x00,0x00,0x00);
 					game_palette[total_colors + 1] = adjusted_palette[total_colors + 1] = MAKE_RGB(0xff,0xff,0xff);
-					Machine->uifont->colortable[0] = Machine->uifont->colortable[3] = total_colors_with_ui++;
-					Machine->uifont->colortable[1] = Machine->uifont->colortable[2] = total_colors_with_ui++;
+					Machine.uifont.colortable[0] = Machine.uifont.colortable[3] = total_colors_with_ui++;
+					Machine.uifont.colortable[1] = Machine.uifont.colortable[2] = total_colors_with_ui++;
 				}
 				else
 				{
 					game_palette[0] = adjusted_palette[0] = MAKE_RGB(0x00,0x00,0x00);
 					game_palette[65535] = adjusted_palette[65535] = MAKE_RGB(0xff,0xff,0xff);
-					Machine->uifont->colortable[0] = Machine->uifont->colortable[3] = 0;
-					Machine->uifont->colortable[1] = Machine->uifont->colortable[2] = 65535;
+					Machine.uifont.colortable[0] = Machine.uifont.colortable[3] = 0;
+					Machine.uifont.colortable[1] = Machine.uifont.colortable[2] = 65535;
 				}
 				break;
 			}
@@ -723,11 +723,11 @@ public class palette
 			{
 				/* remap the game palette into direct RGB pens */
 				for (i = 0; i < total_colors; i++)
-					Machine->pens[i] = rgb_to_direct15(game_palette[i]);
+					Machine.pens[i] = rgb_to_direct15(game_palette[i]);
 	
 				/* map the UI pens */
-				Machine->uifont->colortable[0] = Machine->uifont->colortable[3] = rgb_to_direct15(MAKE_RGB(0x00,0x00,0x00));
-				Machine->uifont->colortable[1] = Machine->uifont->colortable[2] = rgb_to_direct15(MAKE_RGB(0xff,0xff,0xff));
+				Machine.uifont.colortable[0] = Machine.uifont.colortable[3] = rgb_to_direct15(MAKE_RGB(0x00,0x00,0x00));
+				Machine.uifont.colortable[1] = Machine.uifont.colortable[2] = rgb_to_direct15(MAKE_RGB(0xff,0xff,0xff));
 				break;
 			}
 	
@@ -735,23 +735,23 @@ public class palette
 			{
 				/* remap the game palette into direct RGB pens */
 				for (i = 0; i < total_colors; i++)
-					Machine->pens[i] = rgb_to_direct32(game_palette[i]);
+					Machine.pens[i] = rgb_to_direct32(game_palette[i]);
 	
 				/* map the UI pens */
-				Machine->uifont->colortable[0] = Machine->uifont->colortable[3] = rgb_to_direct32(MAKE_RGB(0x00,0x00,0x00));
-				Machine->uifont->colortable[1] = Machine->uifont->colortable[2] = rgb_to_direct32(MAKE_RGB(0xff,0xff,0xff));
+				Machine.uifont.colortable[0] = Machine.uifont.colortable[3] = rgb_to_direct32(MAKE_RGB(0x00,0x00,0x00));
+				Machine.uifont.colortable[1] = Machine.uifont.colortable[2] = rgb_to_direct32(MAKE_RGB(0xff,0xff,0xff));
 				break;
 			}
 		}
 	
 		/* now compute the remapped_colortable */
-		for (i = 0; i < Machine->drv->color_table_len; i++)
+		for (i = 0; i < Machine.drv.color_table_len; i++)
 		{
-			pen_t color = Machine->game_colortable[i];
+			pen_t color = Machine.game_colortable[i];
 	
-			/* check for invalid colors set by Machine->drv->init_palette */
+			/* check for invalid colors set by Machine.drv.init_palette */
 			if (color < total_colors)
-				Machine->remapped_colortable[i] = Machine->pens[color];
+				Machine.remapped_colortable[i] = Machine.pens[color];
 			else
 				usrintf_showmessage("colortable[%d] (=%d) out of range (total_colors = %d)",
 						i,color,total_colors);
@@ -771,11 +771,11 @@ public class palette
 	
 	int palette_get_total_colors_with_ui(void)
 	{
-		int result = Machine->drv->total_colors;
-		if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS && !(colormode & DIRECT_RGB))
-			result += Machine->drv->total_colors;
-		if (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS && !(colormode & DIRECT_RGB))
-			result += Machine->drv->total_colors;
+		int result = Machine.drv.total_colors;
+		if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS && !(colormode & DIRECT_RGB))
+			result += Machine.drv.total_colors;
+		if (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS && !(colormode & DIRECT_RGB))
+			result += Machine.drv.total_colors;
 		if (result <= 65534)
 			result += 2;
 		return result;
@@ -793,31 +793,31 @@ public class palette
 		/* palettized case: point to the palette info */
 		if (colormode == PALETTIZED_16BIT)
 		{
-			display->game_palette = adjusted_palette;
-			display->game_palette_entries = total_colors_with_ui;
-			display->game_palette_dirty = dirty_palette;
+			display.game_palette = adjusted_palette;
+			display.game_palette_entries = total_colors_with_ui;
+			display.game_palette_dirty = dirty_palette;
 	
 			if (adjusted_palette_dirty != 0)
-				display->changed_flags |= GAME_PALETTE_CHANGED;
+				display.changed_flags |= GAME_PALETTE_CHANGED;
 		}
 	
 		/* direct case: no palette mucking */
 		else
 		{
-			display->game_palette = NULL;
-			display->game_palette_entries = 0;
-			display->game_palette_dirty = NULL;
+			display.game_palette = NULL;
+			display.game_palette_entries = 0;
+			display.game_palette_dirty = NULL;
 		}
 	
 		/* debugger always has a palette */
 	#ifdef MAME_DEBUG
-		display->debug_palette = debugger_palette;
-		display->debug_palette_entries = DEBUGGER_TOTAL_COLORS;
+		display.debug_palette = debugger_palette;
+		display.debug_palette_entries = DEBUGGER_TOTAL_COLORS;
 	#endif
 	
 		/* update the dirty state */
 		if (debug_palette_dirty != 0)
-			display->changed_flags |= DEBUG_PALETTE_CHANGED;
+			display.changed_flags |= DEBUG_PALETTE_CHANGED;
 	
 		/* clear the dirty flags */
 		adjusted_palette_dirty = 0;
@@ -858,13 +858,13 @@ public class palette
 					mark_pen_dirty(pen);
 					break;
 	
-				/* 15/32-bit direct: update the Machine->pens array */
+				/* 15/32-bit direct: update the Machine.pens array */
 				case DIRECT_15BIT:
-					Machine->pens[pen] = rgb_to_direct15(adjusted_color);
+					Machine.pens[pen] = rgb_to_direct15(adjusted_color);
 					break;
 	
 				case DIRECT_32BIT:
-					Machine->pens[pen] = rgb_to_direct32(adjusted_color);
+					Machine.pens[pen] = rgb_to_direct32(adjusted_color);
 					break;
 			}
 		}
@@ -887,12 +887,12 @@ public class palette
 		internal_modify_single_pen(pen, color, pen_bright);
 	
 		/* see if we need to handle shadow/highlight */
-		if (pen < Machine->drv->total_colors)
+		if (pen < Machine.drv.total_colors)
 		{
 			/* check for shadows */
-			if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS)
+			if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)
 			{
-				pen += Machine->drv->total_colors;
+				pen += Machine.drv.total_colors;
 	
 				if (shadow_factor > (1 << PEN_BRIGHTNESS_BITS) && highlight_method) // luminance > 1.0
 				{
@@ -935,9 +935,9 @@ public class palette
 			}
 	
 			/* check for highlights */
-			if (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS)
+			if (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS)
 			{
-				pen += Machine->drv->total_colors;
+				pen += Machine.drv.total_colors;
 	
 				if (highlight_factor > (1 << PEN_BRIGHTNESS_BITS) && highlight_method) // luminance > 1.0
 				{
@@ -1002,7 +1002,7 @@ public class palette
 			}
 	
 		/* now update all the palette entries */
-		for (i = 0; i < Machine->drv->total_colors; i++)
+		for (i = 0; i < Machine.drv.total_colors; i++)
 			internal_modify_pen(i, game_palette[i], pen_brightness[i]);
 	}
 	
@@ -1223,7 +1223,7 @@ public class palette
 	
 	pen_t get_black_pen(void)
 	{
-		return Machine->uifont->colortable[0];
+		return Machine.uifont.colortable[0];
 	}
 	
 	
@@ -1790,7 +1790,7 @@ public class palette
 	
 		palette_set_color(color,r,g,b);
 	
-		if (!(Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
+		if (!(Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
 			usrintf_showmessage("driver should use VIDEO_NEEDS_6BITS_PER_GUN flag");
 	}
 	
@@ -1816,7 +1816,7 @@ public class palette
 	
 		palette_set_color(color,r,g,b);
 	
-		if (!(Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
+		if (!(Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
 			usrintf_showmessage("driver should use VIDEO_NEEDS_6BITS_PER_GUN flag");
 	}
 	
@@ -1845,7 +1845,7 @@ public class palette
 	
 		palette_set_color(offset>>1, r, g, b);
 	
-		if (!(Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
+		if (!(Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
 			usrintf_showmessage("driver should use VIDEO_NEEDS_6BITS_PER_GUN flag");
 	}
 	
@@ -1868,7 +1868,7 @@ public class palette
 	
 		palette_set_color(offset>>1, r, g, b);
 	
-		if (!(Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
+		if (!(Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
 			usrintf_showmessage("driver should use VIDEO_NEEDS_6BITS_PER_GUN flag");
 	}
 	
@@ -1932,7 +1932,7 @@ public class palette
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -1943,16 +1943,16 @@ public class palette
 			bit3 = (color_prom[i] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[i + 2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + 2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + 2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + 2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + 2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + 2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + 2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + 2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);

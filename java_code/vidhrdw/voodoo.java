@@ -652,7 +652,7 @@ public class voodoo
 		
 	#if DISPLAY_STATISTICS
 	{
-		int screen_area = (Machine->visible_area.max_x - Machine->visible_area.min_x + 1) * (Machine->visible_area.max_y - Machine->visible_area.min_y + 1);
+		int screen_area = (Machine.visible_area.max_x - Machine.visible_area.min_x + 1) * (Machine.visible_area.max_y - Machine.visible_area.min_y + 1);
 		usrintf_showmessage("Polys:%d  Render:%d%%  FPS:%d",
 				polycount, pixelcount * 100 / screen_area, lastfps);
 		polycount = pixelcount = 0;
@@ -788,8 +788,8 @@ public class voodoo
 			palette_set_color(i - 1, r, g, b);
 			pen_lookup[i] = i - 1;
 		}
-		pen_lookup[0] = Machine->uifont->colortable[0];
-		pen_lookup[65535] = Machine->uifont->colortable[1];
+		pen_lookup[0] = Machine.uifont.colortable[0];
+		pen_lookup[65535] = Machine.uifont.colortable[1];
 		
 		/* allocate a vblank timer */
 		vblank_timer = timer_alloc(vblank_callback);
@@ -867,8 +867,8 @@ public class voodoo
 		lfb_flipy = 0;
 	
 		/* videoDimensions variables */
-		video_width = Machine->visible_area.max_x + 1;
-		video_height = Machine->visible_area.max_y + 1;
+		video_width = Machine.visible_area.max_x + 1;
+		video_height = Machine.visible_area.max_y + 1;
 	
 		/* fbiInit variables */
 		triple_buffer = 0;
@@ -950,34 +950,34 @@ public class voodoo
 	
 	#if DISPLAY_STATISTICS
 		totalframes++;
-		if (totalframes == (int)Machine->drv->frames_per_second)
+		if (totalframes == (int)Machine.drv.frames_per_second)
 		{
 			lastfps = framecount;
 			framecount = totalframes = 0;
 		}
 	#endif
 	
-		logerror("--- video update (%d-%d) ---\n", cliprect->min_y, cliprect->max_y);
+		logerror("--- video update (%d-%d) ---\n", cliprect.min_y, cliprect.max_y);
 	
 	#if (DISPLAY_DEPTHBUF)
 		if (keyboard_pressed(KEYCODE_D))
 		{
-			for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+			for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 			{
-				UINT16 *dest = (UINT16 *)bitmap->line[y];
+				UINT16 *dest = (UINT16 *)bitmap.line[y];
 				UINT16 *source = &depthbuf[1024 * y];
-				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 					*dest++ = pen_lookup[~*source++ & 0xf800];
 			}
 			return;
 		}
 	#endif
 	
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			UINT16 *dest = (UINT16 *)bitmap->line[y];
+			UINT16 *dest = (UINT16 *)bitmap.line[y];
 			UINT16 *source = &frontbuf[1024 * y];
-			for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+			for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				*dest++ = pen_lookup[*source++];
 		}
 	} };
@@ -2998,7 +2998,7 @@ public class voodoo
 			else
 				tbaseaddr += t * twidth + (s & 0xfc);
 	if (s == 0 && t == 0)	
-		logerror(" -> %06X = %08X\n", tbaseaddr, data);
+		logerror(" . %06X = %08X\n", tbaseaddr, data);
 			dest[BYTE4_XOR_LE(tbaseaddr + 0)] = (data >> 0) & 0xff;
 			dest[BYTE4_XOR_LE(tbaseaddr + 1)] = (data >> 8) & 0xff;
 			dest[BYTE4_XOR_LE(tbaseaddr + 2)] = (data >> 16) & 0xff;
@@ -3010,7 +3010,7 @@ public class voodoo
 			tbaseaddr /= 2;
 			tbaseaddr += t * twidth + s;
 	if (s == 0 && t == 0)	
-		logerror(" -> %06X = %08X\n", tbaseaddr*2, data);
+		logerror(" . %06X = %08X\n", tbaseaddr*2, data);
 			dest[BYTE_XOR_LE(tbaseaddr + 0)] = (data >> 0) & 0xffff;
 			dest[BYTE_XOR_LE(tbaseaddr + 1)] = (data >> 16) & 0xffff;
 		}

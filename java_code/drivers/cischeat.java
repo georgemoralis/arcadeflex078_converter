@@ -1048,7 +1048,7 @@ public class cischeat
 		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	// IN4 - DSW 1 & 2 - $80006.w -> !f000a.w(hi byte) !f0008.w(low byte)
+		PORT_START(); 	// IN4 - DSW 1 & 2 - $80006.w . !f000a.w(hi byte) !f0008.w(low byte)
 		COINAGE_6BITS_2
 		PORT_DIPNAME( 0x0040, 0x0040, DEF_STR( "Unknown") );	// unused?
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
@@ -1057,17 +1057,17 @@ public class cischeat
 		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		// DSW 2
-		PORT_DIPNAME( 0x0300, 0x0300, "Unit ID"			);	// -> !f0020 (ID of this unit, when linked)
+		PORT_DIPNAME( 0x0300, 0x0300, "Unit ID"			);	// . !f0020 (ID of this unit, when linked)
 		PORT_DIPSETTING(      0x0300, "0 (Red Car")); )
 		PORT_DIPSETTING(      0x0200, "1 (Blue Car"));
 		PORT_DIPSETTING(      0x0100, "2 (Yellow Car"));
 		PORT_DIPSETTING(      0x0000, "3 (Green Car"));
-		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// -> !f0026
+		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// . !f0026
 		PORT_DIPSETTING(      0x0000, "Easy"    );
 		PORT_DIPSETTING(      0x0c00, "Normal"  );
 		PORT_DIPSETTING(      0x0800, "Hard"    );
 		PORT_DIPSETTING(      0x0400, "Hardest" );
-		PORT_BITX(    0x1000, 0x1000, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Infinite Time", IP_KEY_NONE, IP_JOY_NONE );// -> !f0028
+		PORT_BITX(    0x1000, 0x1000, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Infinite Time", IP_KEY_NONE, IP_JOY_NONE );// . !f0028
 		PORT_DIPSETTING(      0x1000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Demo_Sounds") );
@@ -1076,13 +1076,13 @@ public class cischeat
 		PORT_DIPNAME( 0x4000, 0x4000, "Country" );
 		PORT_DIPSETTING(      0x4000, "Japan" );
 		PORT_DIPSETTING(      0x0000, "USA"   );
-		PORT_DIPNAME( 0x8000, 0x8000, "Allow Continue" );	// -> !f00c0
+		PORT_DIPNAME( 0x8000, 0x8000, "Allow Continue" );	// . !f00c0
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 	
 		PORT_START(); 	// IN5 - DSW 3 (4 bits, Cabinet Linking) - $82200.w
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2"));// -> f0020 (like DSW2 !!)
+		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2"));// . f0020 (like DSW2 !!)
 		PORT_DIPSETTING(    0x06, "Use other"      );
 		PORT_DIPSETTING(    0x00, "0 (Red Car")); )
 		PORT_DIPSETTING(    0x02, "1 (Blue Car"));
@@ -1120,7 +1120,7 @@ public class cischeat
 		England		English,  Mph , "steering shock", "(c)1992"
 		France		French,   Km/h, "steering shock", "(c)1992"	*/
 	
-		PORT_START(); 	// IN1 - DSW 1 & 2 - $80000.w	-> !f9012
+		PORT_START(); 	// IN1 - DSW 1 & 2 - $80000.w	. !f9012
 		// DSW 1 ( Coinage - it changes with Country: we use IN6 & IN7 )
 		PORT_DIPNAME( 0x0040, 0x0040, "Free Play (UK FR"));
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
@@ -1129,12 +1129,12 @@ public class cischeat
 		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		// DSW 2
-		PORT_DIPNAME( 0x0300, 0x0100, "Country"  );// -> !f901e
+		PORT_DIPNAME( 0x0300, 0x0100, "Country"  );// . !f901e
 		PORT_DIPSETTING(      0x0300, "Japan"   );
 		PORT_DIPSETTING(      0x0200, "USA"     );
 		PORT_DIPSETTING(      0x0100, "UK"      );
 		PORT_DIPSETTING(      0x0000, "France"  );
-		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// -> !f9026
+		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// . !f9026
 		PORT_DIPSETTING(      0x0000, "Easy"      );// 58 <- Initial Time (seconds, Germany)
 		PORT_DIPSETTING(      0x0c00, "Normal"    );// 51
 		PORT_DIPSETTING(      0x0800, "Hard"      );// 48
@@ -1145,21 +1145,21 @@ public class cischeat
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x2000, DEF_STR( "On") ); )
-		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR"));	// -> f0020
+		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR"));	// . f0020
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x4000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x8000, 0x8000, "Vibrations" );
 		PORT_DIPSETTING(      0x8000, "Torque" );
 		PORT_DIPSETTING(      0x0000, "Shake"  );
 	
-		PORT_START(); 	// IN2 - Controls - $80004.w -> !f9016
+		PORT_START(); 	// IN2 - Controls - $80004.w . !f9016
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_SERVICE1 );
-		PORT_BITX( 0x0008, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) // -> f0100 (called "Test")
+		PORT_BITX( 0x0008, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) // . f0100 (called "Test")
 		PORT_BIT(  0x0010, IP_ACTIVE_LOW, IPT_START1   );
-	//	PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_BUTTON4  );// Shift -> !f900e - We handle it with 2 buttons
-		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_BUTTON2  );// Brake -> !f9010
+	//	PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_BUTTON4  );// Shift . !f900e - We handle it with 2 buttons
+		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_BUTTON2  );// Brake . !f9010
 		PORT_BIT(  0x0080, IP_ACTIVE_LOW, IPT_START2   );// "Race Together"
 	
 		PORT_START(); 	// IN3 - ? Read at boot only - $80006.w
@@ -1186,11 +1186,11 @@ public class cischeat
 		ON-OFF					Blue-White Car
 		ON- ON					Blue Car, "equipped with communication link"	*/
 	
-		PORT_START(); 	// IN4 - DSW 3 (4 bits, Cabinet Linking) - $8000c.w -> !f9014
+		PORT_START(); 	// IN4 - DSW 3 (4 bits, Cabinet Linking) - $8000c.w . !f9014
 		PORT_DIPNAME( 0x01, 0x01, "This Unit Is" );
 		PORT_DIPSETTING(    0x01, "Slave" );
 		PORT_DIPSETTING(    0x00, "Master" );
-		PORT_DIPNAME( 0x06, 0x06, "Unit ID" );		// -> !f901c
+		PORT_DIPNAME( 0x06, 0x06, "Unit ID" );		// . !f901c
 		PORT_DIPSETTING(    0x06, "0 (Red-White Car"));
 		PORT_DIPSETTING(    0x04, "1 (Red Car"));
 		PORT_DIPSETTING(    0x02, "2 (Blue-White Car"));
@@ -1201,8 +1201,8 @@ public class cischeat
 		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-					// 		 Accelerator   - $80010.b ->  !f9004.w
-		PORT_START(); 	// IN5 - Driving Wheel - $80011.b ->  !f9008.w
+					// 		 Accelerator   - $80010.b .  !f9004.w
+		PORT_START(); 	// IN5 - Driving Wheel - $80011.b .  !f9008.w
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_CENTER, 30, 30, 0, 0xff);
 	
 		PORT_START(); 	// IN6 - Coinage Japan & USA (it changes with Country)

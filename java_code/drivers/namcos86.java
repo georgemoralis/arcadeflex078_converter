@@ -79,13 +79,13 @@ public class namcos86
 		size = sizeof( struct GameSamples ) + n * sizeof( struct GameSamples * );
 	
 		/* allocate */
-		if ( ( Machine->samples = auto_malloc( size ) ) == NULL )
+		if ( ( Machine.samples = auto_malloc( size ) ) == NULL )
 			return 1;
 	
-		samples = Machine->samples;
-		samples->total = n;
+		samples = Machine.samples;
+		samples.total = n;
 	
-		for ( n = 0; n < samples->total; n++ ) {
+		for ( n = 0; n < samples.total; n++ ) {
 			int indx, start, offs;
 	
 			if ( n < rt_totalsamples[0] ) {
@@ -138,16 +138,16 @@ public class namcos86
 			}
 	
 			/* allocate sample */
-			if ( ( samples->sample[n] = auto_malloc( sizeof( struct GameSample ) + size * sizeof( unsigned char ) ) ) == NULL )
+			if ( ( samples.sample[n] = auto_malloc( sizeof( struct GameSample ) + size * sizeof( unsigned char ) ) ) == NULL )
 				return 1;
 	
 			/* fill up the sample info */
-			samples->sample[n]->length = size;
-			samples->sample[n]->smpfreq = 6000;	/* 6 kHz */
-			samples->sample[n]->resolution = 8;	/* 8 bit */
+			samples.sample[n].length = size;
+			samples.sample[n].smpfreq = 6000;	/* 6 kHz */
+			samples.sample[n].resolution = 8;	/* 8 bit */
 	
 			/* unpack sample */
-			dest = (unsigned char *)samples->sample[n]->data;
+			dest = (unsigned char *)samples.sample[n].data;
 			scan = &src[start];
 	
 			while ( *scan != 0xff ) {

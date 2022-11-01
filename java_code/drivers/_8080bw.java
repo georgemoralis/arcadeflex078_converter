@@ -44,8 +44,8 @@
 /* Change Log                                                               */
 /*                                                                          */
 /* 26 May 2001 - Following were renamed                                     */
-/* galxwars -> galxwart - Galaxy Wars (c)1979 Taito, possible bootleg       */
-/* spaceatt -> spaceat2 - Space Attack Part II                              */
+/* galxwars . galxwart - Galaxy Wars (c)1979 Taito, possible bootleg       */
+/* spaceatt . spaceat2 - Space Attack Part II                              */
 /*                                                                          */
 /* 26 May 2001 - Following were added                                       */
 /* galxwars - Galaxy Wars (set 1) (c)1979 Universal                         */

@@ -217,7 +217,7 @@ public class itech8
 		if (blitter != -1) blitter_int = blitter;
 	
 		/* handle the 6809 case */
-		if (Machine->drv->cpu[0].cpu_type == CPU_M6809)
+		if (Machine.drv.cpu[0].cpu_type == CPU_M6809)
 		{
 			/* just modify lines that have changed */
 			if (periodic != -1) cpu_set_nmi_line(0, periodic ? ASSERT_LINE : CLEAR_LINE);
@@ -285,7 +285,7 @@ public class itech8
 	static MACHINE_INIT( itech8 )
 	{
 		/* make sure bank 0 is selected */
-		if (Machine->drv->cpu[0].cpu_type == CPU_M6809)
+		if (Machine.drv.cpu[0].cpu_type == CPU_M6809)
 			cpu_setbank(1, &memory_region(REGION_CPU1)[0x4000]);
 	
 		/* reset the PIA (if used) */

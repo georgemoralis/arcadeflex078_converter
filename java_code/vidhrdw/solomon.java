@@ -116,19 +116,19 @@ public class solomon
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap, Machine->gfx[2],
+			drawgfx(bitmap, Machine.gfx[2],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_solomon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 		solomon_draw_sprites(bitmap);
 	} };
 }

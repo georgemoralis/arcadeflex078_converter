@@ -913,7 +913,7 @@ public class cheat
 		"Get",
 		"Lose",
 		"Finish this",
-		"---> <ENTER> To Edit <---",
+		"--. <ENTER> To Edit <---",
 		"\0"
 	};
 	
@@ -1912,7 +1912,7 @@ public class cheat
 				{
 					SearchInfo	* search = GetCurrentSearch();
 	
-					if(search && search->backupValid)
+					if(search && search.backupValid)
 					{
 						RestoreSearchBackup(search);
 	
@@ -2116,18 +2116,18 @@ public class cheat
 	
 		sel =		selection - 1;
 	
-		action = &entry->actionList[0];
+		action = &entry.actionList[0];
 	
 		// if we're just entering, save the value
 		if (firstTime != 0)
 		{
-			UINT32	min = EXTRACT_FIELD(action->type, UserSelectMinimum);
-			UINT32	max = action->originalDataField + min;
+			UINT32	min = EXTRACT_FIELD(action.type, UserSelectMinimum);
+			UINT32	max = action.originalDataField + min;
 	
 			value = ReadData(action);
 	
 			// and check for valid BCD values
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				value = BCDToDecimal(value);
 				value = DecimalToBCD(value);
@@ -2138,32 +2138,32 @@ public class cheat
 			if(value > max)
 				value = min;
 	
-			action->data = value;
+			action.data = value;
 			firstTime = 0;
 		}
 	
 		displayValue = value;
 	
 		// if the minimum display value is one, add one to the display value
-		if(TEST_FIELD(action->type, UserSelectMinimumDisplay))
+		if(TEST_FIELD(action.type, UserSelectMinimumDisplay))
 		{
-			// bcd -> dec
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			// bcd . dec
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				displayValue = BCDToDecimal(displayValue);
 			}
 	
 			displayValue++;
 	
-			// dec -> bcd
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			// dec . bcd
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				displayValue = DecimalToBCD(displayValue);
 			}
 		}
 	
 		// print it
-		if(TEST_FIELD(action->type, UserSelectBCD))
+		if(TEST_FIELD(action.type, UserSelectBCD))
 		{
 			sprintf(buf, "\t%s\n\t%.2X\n", ui_getstring(UI_search_select_value), displayValue);
 		}
@@ -2202,13 +2202,13 @@ public class cheat
 				int	i;
 	
 				// copy data field to all user select cheats
-				for(i = 0; i < entry->actionListLength; i++)
+				for(i = 0; i < entry.actionListLength; i++)
 				{
-					CheatAction	* traverse = &entry->actionList[0];
+					CheatAction	* traverse = &entry.actionList[0];
 	
-					if(TEST_FIELD(traverse->type, UserSelectEnable))
+					if(TEST_FIELD(traverse.type, UserSelectEnable))
 					{
-						traverse->data = value;
+						traverse.data = value;
 					}
 				}
 	
@@ -2240,7 +2240,7 @@ public class cheat
 		if(keyValue != -1)
 		{
 			// add it
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				if(value < 10)
 				{
@@ -2264,17 +2264,17 @@ public class cheat
 		// ### this is a really bad way to do this
 		if(delta || forceUpdate)
 		{
-			INT32	min = EXTRACT_FIELD(action->type, UserSelectMinimum);
-			INT32	max = action->originalDataField + min;
+			INT32	min = EXTRACT_FIELD(action.type, UserSelectMinimum);
+			INT32	max = action.originalDataField + min;
 	
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				value = BCDToDecimal(value);
 			}
 	
 			value += delta;
 	
-			if(TEST_FIELD(action->type, UserSelectBCD))
+			if(TEST_FIELD(action.type, UserSelectBCD))
 			{
 				value = DecimalToBCD(value);
 			}
@@ -2305,8 +2305,8 @@ public class cheat
 		sel = selection - 1;
 	
 		// create fake menu strings
-		if(entry->comment && entry->comment[0])
-			comment = entry->comment;
+		if(entry.comment && entry.comment[0])
+			comment = entry.comment;
 		else
 			comment = "(none)";
 	
@@ -2394,9 +2394,9 @@ public class cheat
 		{
 			CheatEntry	* traverse = &cheatList[i];
 	
-			if(traverse->name)
+			if(traverse.name)
 			{
-				menu_item[total] = traverse->name;
+				menu_item[total] = traverse.name;
 			}
 			else
 			{
@@ -2405,16 +2405,16 @@ public class cheat
 	
 			menu_subitem[total] = NULL;
 	
-			if(traverse->flags & kCheatFlag_Select)
+			if(traverse.flags & kCheatFlag_Select)
 			{
-				if((traverse->flags & kCheatFlag_OneShot) && !traverse->selection)
+				if((traverse.flags & kCheatFlag_OneShot) && !traverse.selection)
 				{
-					traverse->selection = 1;
+					traverse.selection = 1;
 				}
 	
-				if(traverse->selection && (traverse->selection < traverse->actionListLength))
+				if(traverse.selection && (traverse.selection < traverse.actionListLength))
 				{
-					menu_subitem[total] = traverse->actionList[traverse->selection].optionalName;
+					menu_subitem[total] = traverse.actionList[traverse.selection].optionalName;
 				}
 				else
 				{
@@ -2424,15 +2424,15 @@ public class cheat
 			else
 			{
 				// add submenu options for all cheats that are not comments
-				if(!(traverse->flags & kCheatFlag_Null))
+				if(!(traverse.flags & kCheatFlag_Null))
 				{
-					if(traverse->flags & kCheatFlag_OneShot)
+					if(traverse.flags & kCheatFlag_OneShot)
 					{
 						menu_subitem[total] = ui_getstring(UI_set);
 					}
 					else
 					{
-						if(traverse->flags & kCheatFlag_Active)
+						if(traverse.flags & kCheatFlag_Active)
 						{
 							menu_subitem[total] = ui_getstring(UI_on);
 						}
@@ -2444,7 +2444,7 @@ public class cheat
 				}
 			}
 	
-			if(traverse->comment && traverse->comment[0])
+			if(traverse.comment && traverse.comment[0])
 				flagBuf[total] = 1;
 			else
 				flagBuf[total] = 0;
@@ -2569,21 +2569,21 @@ public class cheat
 		{
 			if((sel < (total - 1)) && entry)
 			{
-				if(entry->flags & kCheatFlag_Select)
+				if(entry.flags & kCheatFlag_Select)
 				{
-					entry->selection--;
+					entry.selection--;
 	
-					if(entry->flags & kCheatFlag_OneShot)
+					if(entry.flags & kCheatFlag_OneShot)
 					{
-						if(entry->selection <= 0)
-							entry->selection = entry->actionListLength - 1;
+						if(entry.selection <= 0)
+							entry.selection = entry.actionListLength - 1;
 					}
 					else
 					{
-						if(entry->selection < 0)
-							entry->selection = entry->actionListLength - 1;
+						if(entry.selection < 0)
+							entry.selection = entry.actionListLength - 1;
 	
-						if(entry->selection == 0)
+						if(entry.selection == 0)
 						{
 							DeactivateCheat(entry);
 						}
@@ -2595,15 +2595,15 @@ public class cheat
 				}
 				else
 				{
-					if(	!(entry->flags & kCheatFlag_Null) &&
-						!(entry->flags & kCheatFlag_OneShot))
+					if(	!(entry.flags & kCheatFlag_Null) &&
+						!(entry.flags & kCheatFlag_OneShot))
 					{
-						int active = entry->flags & kCheatFlag_Active;
+						int active = entry.flags & kCheatFlag_Active;
 	
 						active ^= 0x01;
 	
 						/* get the user's selected value if needed */
-						if((entry->flags & kCheatFlag_UserSelect) && active)
+						if((entry.flags & kCheatFlag_UserSelect) && active)
 						{
 							submenu_id = 2;
 							submenu_choice = 1;
@@ -2625,25 +2625,25 @@ public class cheat
 		{
 			if((sel < (total - 1)) && entry)
 			{
-				if(entry->flags & kCheatFlag_Select)
+				if(entry.flags & kCheatFlag_Select)
 				{
-					entry->selection++;
+					entry.selection++;
 	
-					if(entry->flags & kCheatFlag_OneShot)
+					if(entry.flags & kCheatFlag_OneShot)
 					{
-						if(entry->selection >= entry->actionListLength)
+						if(entry.selection >= entry.actionListLength)
 						{
-							entry->selection = 1;
+							entry.selection = 1;
 	
-							if(entry->selection >= entry->actionListLength)
-								entry->selection = 0;
+							if(entry.selection >= entry.actionListLength)
+								entry.selection = 0;
 						}
 					}
 					else
 					{
-						if(entry->selection >= entry->actionListLength)
+						if(entry.selection >= entry.actionListLength)
 						{
-							entry->selection = 0;
+							entry.selection = 0;
 	
 							DeactivateCheat(entry);
 						}
@@ -2655,15 +2655,15 @@ public class cheat
 				}
 				else
 				{
-					if(	!(entry->flags & kCheatFlag_Null) &&
-						!(entry->flags & kCheatFlag_OneShot))
+					if(	!(entry.flags & kCheatFlag_Null) &&
+						!(entry.flags & kCheatFlag_OneShot))
 					{
-						int active = entry->flags & kCheatFlag_Active;
+						int active = entry.flags & kCheatFlag_Active;
 	
 						active ^= 0x01;
 	
 						/* get the user's selected value if needed */
-						if((entry->flags & kCheatFlag_UserSelect) && active)
+						if((entry.flags & kCheatFlag_UserSelect) && active)
 						{
 							submenu_id = 2;
 							submenu_choice = 1;
@@ -2709,7 +2709,7 @@ public class cheat
 				}
 				else
 				{
-					if(entry->flags & kCheatFlag_UserSelect)
+					if(entry.flags & kCheatFlag_UserSelect)
 					{
 						submenu_id = 2;
 						submenu_choice = 1;
@@ -3037,41 +3037,41 @@ public class cheat
 		if(!entry)
 			return 0;
 	
-		if(menuItemInfoLength < (kType_Max * entry->actionListLength) + 2)
+		if(menuItemInfoLength < (kType_Max * entry.actionListLength) + 2)
 		{
-			menuItemInfoLength = (kType_Max * entry->actionListLength) + 2;
+			menuItemInfoLength = (kType_Max * entry.actionListLength) + 2;
 	
 			menuItemInfo = realloc(menuItemInfo, menuItemInfoLength * sizeof(MenuItemInfoStruct));
 		}
 	
-		RequestStrings((kType_Max * entry->actionListLength) + 2, 7 * entry->actionListLength, 24, 0);
+		RequestStrings((kType_Max * entry.actionListLength) + 2, 7 * entry.actionListLength, 24, 0);
 	
 		menuItem =			menuStrings.mainList;
 		menuSubItem =		menuStrings.subList;
 		flagBuf =			menuStrings.flagList;
-		extendDataBuf =		&menuStrings.mainStrings[entry->actionListLength * 0];
-		addressBuf =		&menuStrings.mainStrings[entry->actionListLength * 1];
-		dataBuf =			&menuStrings.mainStrings[entry->actionListLength * 2];
-		watchSizeBuf =		&menuStrings.mainStrings[entry->actionListLength * 3];	// these fields are wasteful
-		watchSkipBuf =		&menuStrings.mainStrings[entry->actionListLength * 4];	// but the alternative is even more ugly
-		watchPerLineBuf =	&menuStrings.mainStrings[entry->actionListLength * 5];
-		watchAddValueBuf =	&menuStrings.mainStrings[entry->actionListLength * 6];
+		extendDataBuf =		&menuStrings.mainStrings[entry.actionListLength * 0];
+		addressBuf =		&menuStrings.mainStrings[entry.actionListLength * 1];
+		dataBuf =			&menuStrings.mainStrings[entry.actionListLength * 2];
+		watchSizeBuf =		&menuStrings.mainStrings[entry.actionListLength * 3];	// these fields are wasteful
+		watchSkipBuf =		&menuStrings.mainStrings[entry.actionListLength * 4];	// but the alternative is even more ugly
+		watchPerLineBuf =	&menuStrings.mainStrings[entry.actionListLength * 5];
+		watchAddValueBuf =	&menuStrings.mainStrings[entry.actionListLength * 6];
 	
 		sel = selection - 1;
 	
-		memset(flagBuf, 0, (kType_Max * entry->actionListLength) + 2);
+		memset(flagBuf, 0, (kType_Max * entry.actionListLength) + 2);
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			CheatAction	* traverse = &entry->actionList[i];
+			CheatAction	* traverse = &entry.actionList[i];
 	
-			UINT32		type =					EXTRACT_FIELD(traverse->type, Type);
-			UINT32		typeParameter =			EXTRACT_FIELD(traverse->type, TypeParameter);
-			UINT32		operation =				EXTRACT_FIELD(traverse->type, Operation) |
-												EXTRACT_FIELD(traverse->type, OperationExtend) << 2;
-			UINT32		operationParameter =	EXTRACT_FIELD(traverse->type, OperationParameter);
-			UINT32		locationType =			EXTRACT_FIELD(traverse->type, LocationType);
-			UINT32		locationParameter =		EXTRACT_FIELD(traverse->type, LocationParameter);
+			UINT32		type =					EXTRACT_FIELD(traverse.type, Type);
+			UINT32		typeParameter =			EXTRACT_FIELD(traverse.type, TypeParameter);
+			UINT32		operation =				EXTRACT_FIELD(traverse.type, Operation) |
+												EXTRACT_FIELD(traverse.type, OperationExtend) << 2;
+			UINT32		operationParameter =	EXTRACT_FIELD(traverse.type, OperationParameter);
+			UINT32		locationType =			EXTRACT_FIELD(traverse.type, LocationType);
+			UINT32		locationParameter =		EXTRACT_FIELD(traverse.type, LocationParameter);
 	
 			UINT8		wasCommentOrSelect =	0;
 	
@@ -3083,8 +3083,8 @@ public class cheat
 				menuItemInfo[total].fieldType = kType_ExtendName;
 				menuItem[total] = "Name";
 	
-				if(traverse->optionalName)
-					menuSubItem[total] = traverse->optionalName;
+				if(traverse.optionalName)
+					menuSubItem[total] = traverse.optionalName;
 				else
 					menuSubItem[total] = "(none)";
 	
@@ -3100,8 +3100,8 @@ public class cheat
 					menuItemInfo[total].fieldType = kType_Name;
 					menuItem[total] = "Name";
 	
-					if(entry->name)
-						menuSubItem[total] = entry->name;
+					if(entry.name)
+						menuSubItem[total] = entry.name;
 					else
 						menuSubItem[total] = "(none)";
 	
@@ -3115,8 +3115,8 @@ public class cheat
 					menuItemInfo[total].fieldType = kType_Comment;
 					menuItem[total] = "Comment";
 	
-					if(entry->comment)
-						menuSubItem[total] = entry->comment;
+					if(entry.comment)
+						menuSubItem[total] = entry.comment;
 					else
 						menuSubItem[total] = "(none)";
 	
@@ -3130,14 +3130,14 @@ public class cheat
 					menuItemInfo[total].fieldType = kType_ActivationKey;
 					menuItem[total] = "Activation Key";
 	
-					if(entry->activationKey < __code_key_first)
-						entry->activationKey = __code_key_last;
-					if(entry->activationKey > __code_key_last)
-						entry->activationKey = __code_key_first;
+					if(entry.activationKey < __code_key_first)
+						entry.activationKey = __code_key_last;
+					if(entry.activationKey > __code_key_last)
+						entry.activationKey = __code_key_first;
 	
-					if(	(entry->flags & kCheatFlag_HasActivationKey))
+					if(	(entry.flags & kCheatFlag_HasActivationKey))
 					{
-						menuSubItem[total] = kKeycodeNames[entry->activationKey - __code_key_first];
+						menuSubItem[total] = kKeycodeNames[entry.activationKey - __code_key_first];
 					}
 					else
 					{
@@ -3198,7 +3198,7 @@ public class cheat
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_OneShot;
 						menuItem[total] = "One Shot";
-						menuSubItem[total] = ui_getstring(TEST_FIELD(traverse->type, OneShot) ? UI_on : UI_off);
+						menuSubItem[total] = ui_getstring(TEST_FIELD(traverse.type, OneShot) ? UI_on : UI_off);
 	
 						total++;
 					}
@@ -3209,7 +3209,7 @@ public class cheat
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_RestorePreviousValue;
 						menuItem[total] = "Restore Previous Value";
-						menuSubItem[total] = ui_getstring(TEST_FIELD(traverse->type, RestorePreviousValue) ? UI_on : UI_off);
+						menuSubItem[total] = ui_getstring(TEST_FIELD(traverse.type, RestorePreviousValue) ? UI_on : UI_off);
 	
 						total++;
 					}
@@ -3244,7 +3244,7 @@ public class cheat
 					{
 						// do watch size field
 	
-						sprintf(watchSizeBuf[i], "%d", (traverse->originalDataField & 0xFF) + 1);
+						sprintf(watchSizeBuf[i], "%d", (traverse.originalDataField & 0xFF) + 1);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_WatchSize;
@@ -3257,7 +3257,7 @@ public class cheat
 					{
 						// do watch skip field
 	
-						sprintf(watchSkipBuf[i], "%d", (traverse->data >> 8) & 0xFF);
+						sprintf(watchSkipBuf[i], "%d", (traverse.data >> 8) & 0xFF);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_WatchSkip;
@@ -3270,7 +3270,7 @@ public class cheat
 					{
 						// do watch per line field
 	
-						sprintf(watchPerLineBuf[i], "%d", (traverse->data >> 16) & 0xFF);
+						sprintf(watchPerLineBuf[i], "%d", (traverse.data >> 16) & 0xFF);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_WatchPerLine;
@@ -3284,7 +3284,7 @@ public class cheat
 						// do watch add value field
 	
 						{
-							INT8	temp = (traverse->data >> 24) & 0xFF;
+							INT8	temp = (traverse.data >> 24) & 0xFF;
 	
 							if(temp < 0)
 								sprintf(watchAddValueBuf[i], "-%.2X", -temp);
@@ -3340,18 +3340,18 @@ public class cheat
 	
 					int	numChars;
 	
-					if(traverse->flags & kActionFlag_IgnoreMask)
+					if(traverse.flags & kActionFlag_IgnoreMask)
 					{
 						menuItemInfo[total].extraData = 0xFFFFFFFF;
 						numChars = 8;
 					}
 					else
 					{
-						menuItemInfo[total].extraData = kCheatSizeMaskTable[EXTRACT_FIELD(traverse->type, BytesUsed)];
-						numChars = kCheatSizeDigitsTable[EXTRACT_FIELD(traverse->type, BytesUsed)];
+						menuItemInfo[total].extraData = kCheatSizeMaskTable[EXTRACT_FIELD(traverse.type, BytesUsed)];
+						numChars = kCheatSizeDigitsTable[EXTRACT_FIELD(traverse.type, BytesUsed)];
 					}
 	
-					sprintf(extendDataBuf[i], "%.*X", numChars, traverse->extendData);
+					sprintf(extendDataBuf[i], "%.*X", numChars, traverse.extendData);
 	
 					menuItemInfo[total].subcheat = i;
 					menuItemInfo[total].fieldType = kType_WriteMask;
@@ -3380,7 +3380,7 @@ public class cheat
 						{
 							// do subtract minimum field
 	
-							sprintf(extendDataBuf[i], "%.8X", traverse->extendData);
+							sprintf(extendDataBuf[i], "%.8X", traverse.extendData);
 	
 							menuItemInfo[total].subcheat = i;
 							menuItemInfo[total].fieldType = kType_SubtractMinimum;
@@ -3393,7 +3393,7 @@ public class cheat
 						{
 							// do add maximum field
 	
-							sprintf(extendDataBuf[i], "%.8X", traverse->extendData);
+							sprintf(extendDataBuf[i], "%.8X", traverse.extendData);
 	
 							menuItemInfo[total].subcheat = i;
 							menuItemInfo[total].fieldType = kType_AddMaximum;
@@ -3410,7 +3410,7 @@ public class cheat
 					{
 						// do range minimum field
 	
-						sprintf(extendDataBuf[i], "%.2X", (traverse->extendData >> 8) & 0xFF);
+						sprintf(extendDataBuf[i], "%.2X", (traverse.extendData >> 8) & 0xFF);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_RangeMinimum;
@@ -3423,7 +3423,7 @@ public class cheat
 					{
 						// do range maximum field
 	
-						sprintf(extendDataBuf[i] + 3, "%.2X", (traverse->extendData >> 0) & 0xFF);
+						sprintf(extendDataBuf[i] + 3, "%.2X", (traverse.extendData >> 0) & 0xFF);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_RangeMaximum;
@@ -3448,15 +3448,15 @@ public class cheat
 	
 				if((operation != kOperation_None) || (type == kType_Watch))
 				{
-					UINT32	userSelect =		TEST_FIELD(traverse->type, UserSelectEnable);
-					UINT32	bytesUsed =			EXTRACT_FIELD(traverse->type, BytesUsed);
+					UINT32	userSelect =		TEST_FIELD(traverse.type, UserSelectEnable);
+					UINT32	bytesUsed =			EXTRACT_FIELD(traverse.type, BytesUsed);
 	
 					if(type != kType_Watch)
 					{
 						{
 							// do data field
 	
-							sprintf(dataBuf[i], "%.*X (%d)", (int)kCheatSizeDigitsTable[bytesUsed], traverse->originalDataField, traverse->originalDataField);
+							sprintf(dataBuf[i], "%.*X (%d)", (int)kCheatSizeDigitsTable[bytesUsed], traverse.originalDataField, traverse.originalDataField);
 	
 							menuItemInfo[total].subcheat = i;
 							menuItemInfo[total].fieldType = kType_Data;
@@ -3486,7 +3486,7 @@ public class cheat
 								menuItemInfo[total].subcheat = i;
 								menuItemInfo[total].fieldType = kType_UserSelectMinimumDisp;
 								menuItem[total] = "Minimum Displayed Value";
-								menuSubItem[total] = kNumbersTable[EXTRACT_FIELD(traverse->type, UserSelectMinimumDisplay)];
+								menuSubItem[total] = kNumbersTable[EXTRACT_FIELD(traverse.type, UserSelectMinimumDisplay)];
 	
 								total++;
 							}
@@ -3497,7 +3497,7 @@ public class cheat
 								menuItemInfo[total].subcheat = i;
 								menuItemInfo[total].fieldType = kType_UserSelectMinimum;
 								menuItem[total] = "Minimum Value";
-								menuSubItem[total] = kNumbersTable[EXTRACT_FIELD(traverse->type, UserSelectMinimum)];
+								menuSubItem[total] = kNumbersTable[EXTRACT_FIELD(traverse.type, UserSelectMinimum)];
 	
 								total++;
 							}
@@ -3508,7 +3508,7 @@ public class cheat
 								menuItemInfo[total].subcheat = i;
 								menuItemInfo[total].fieldType = kType_UserSelectBCD;
 								menuItem[total] = "BCD";
-								menuSubItem[total] = ui_getstring(TEST_FIELD(traverse->type, UserSelectBCD) ? UI_on : UI_off);
+								menuSubItem[total] = ui_getstring(TEST_FIELD(traverse.type, UserSelectBCD) ? UI_on : UI_off);
 	
 								total++;
 							}
@@ -3519,7 +3519,7 @@ public class cheat
 								menuItemInfo[total].subcheat = i;
 								menuItemInfo[total].fieldType = kType_Prefill;
 								menuItem[total] = "Prefill";
-								menuSubItem[total] = kPrefillNames[EXTRACT_FIELD(traverse->type, Prefill)];
+								menuSubItem[total] = kPrefillNames[EXTRACT_FIELD(traverse.type, Prefill)];
 	
 								total++;
 							}
@@ -3532,7 +3532,7 @@ public class cheat
 							menuItemInfo[total].subcheat = i;
 							menuItemInfo[total].fieldType = kType_CopyPrevious;
 							menuItem[total] = "Copy Previous Value";
-							menuSubItem[total] = ui_getstring(TEST_FIELD(traverse->type, LinkCopyPreviousValue) ? UI_on : UI_off);
+							menuSubItem[total] = ui_getstring(TEST_FIELD(traverse.type, LinkCopyPreviousValue) ? UI_on : UI_off);
 	
 							total++;
 						}
@@ -3556,7 +3556,7 @@ public class cheat
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_Endianness;
 						menuItem[total] = "Endianness";
-						menuSubItem[total] = kEndiannessNames[EXTRACT_FIELD(traverse->type, Endianness)];
+						menuSubItem[total] = kEndiannessNames[EXTRACT_FIELD(traverse.type, Endianness)];
 	
 						total++;
 					}
@@ -3628,9 +3628,9 @@ public class cheat
 							// do address index field
 	
 							// swap if negative
-							if(traverse->extendData & 0x80000000)
+							if(traverse.extendData & 0x80000000)
 							{
-								int	temp = traverse->extendData;
+								int	temp = traverse.extendData;
 	
 								temp = -temp;
 	
@@ -3638,7 +3638,7 @@ public class cheat
 							}
 							else
 							{
-								sprintf(extendDataBuf[i], "%.8X", traverse->extendData);
+								sprintf(extendDataBuf[i], "%.8X", traverse.extendData);
 							}
 	
 							menuItemInfo[total].subcheat = i;
@@ -3655,24 +3655,24 @@ public class cheat
 	
 						int	charsToPrint = 8;
 	
-						switch(EXTRACT_FIELD(traverse->type, LocationType))
+						switch(EXTRACT_FIELD(traverse.type, LocationType))
 						{
 							case kLocation_Standard:
 							case kLocation_HandlerMemory:
 							{
-								CPUInfo	* cpuInfo = &cpuInfoList[EXTRACT_FIELD(traverse->type, LocationParameter)];
+								CPUInfo	* cpuInfo = &cpuInfoList[EXTRACT_FIELD(traverse.type, LocationParameter)];
 	
-								charsToPrint = cpuInfo->addressCharsNeeded;
-								menuItemInfo[total].extraData = cpuInfo->addressMask;
+								charsToPrint = cpuInfo.addressCharsNeeded;
+								menuItemInfo[total].extraData = cpuInfo.addressMask;
 							}
 							break;
 	
 							case kLocation_IndirectIndexed:
 							{
-								CPUInfo	* cpuInfo = &cpuInfoList[(EXTRACT_FIELD(traverse->type, LocationParameter) >> 2) & 7];
+								CPUInfo	* cpuInfo = &cpuInfoList[(EXTRACT_FIELD(traverse.type, LocationParameter) >> 2) & 7];
 	
-								charsToPrint = cpuInfo->addressCharsNeeded;
-								menuItemInfo[total].extraData = cpuInfo->addressMask;
+								charsToPrint = cpuInfo.addressCharsNeeded;
+								menuItemInfo[total].extraData = cpuInfo.addressMask;
 							}
 							break;
 	
@@ -3680,7 +3680,7 @@ public class cheat
 								menuItemInfo[total].extraData = 0xFFFFFFFF;
 						}
 	
-						sprintf(addressBuf[i], "%.*X", charsToPrint, traverse->address);
+						sprintf(addressBuf[i], "%.*X", charsToPrint, traverse.address);
 	
 						menuItemInfo[total].subcheat = i;
 						menuItemInfo[total].fieldType = kType_Address;
@@ -3692,7 +3692,7 @@ public class cheat
 				}
 			}
 	
-			if(i < (entry->actionListLength - 1))
+			if(i < (entry.actionListLength - 1))
 			{
 				menuItemInfo[total].subcheat = i;
 				menuItemInfo[total].fieldType = kType_Divider;
@@ -3720,7 +3720,7 @@ public class cheat
 			sel = total - 1;
 	
 		info = &menuItemInfo[sel];
-		action = &entry->actionList[info->subcheat];
+		action = &entry.actionList[info.subcheat];
 	
 		if (editActive != 0)
 			flagBuf[sel] = 1;
@@ -3739,7 +3739,7 @@ public class cheat
 			editActive = 0;
 			dirty = 1;
 	
-			switch(info->fieldType)
+			switch(info.fieldType)
 			{
 				case kType_Name:
 					currentNameTemplate--;
@@ -3754,46 +3754,46 @@ public class cheat
 						}
 					}
 	
-					entry->name = realloc(entry->name, strlen(kCheatNameTemplates[currentNameTemplate]) + 1);
-					strcpy(entry->name, kCheatNameTemplates[currentNameTemplate]);
+					entry.name = realloc(entry.name, strlen(kCheatNameTemplates[currentNameTemplate]) + 1);
+					strcpy(entry.name, kCheatNameTemplates[currentNameTemplate]);
 					break;
 	
 				case kType_ActivationKey:
-					entry->activationKey--;
+					entry.activationKey--;
 	
-					if(entry->activationKey < __code_key_first)
-						entry->activationKey = __code_key_last;
-					if(entry->activationKey > __code_key_last)
-						entry->activationKey = __code_key_first;
+					if(entry.activationKey < __code_key_first)
+						entry.activationKey = __code_key_last;
+					if(entry.activationKey > __code_key_last)
+						entry.activationKey = __code_key_first;
 	
-					entry->flags |= kCheatFlag_HasActivationKey;
+					entry.flags |= kCheatFlag_HasActivationKey;
 					break;
 	
 				case kType_Type:
 				{
 					UINT8	handled = 0;
 	
-					CLEAR_MASK_FIELD(action->type, OperationExtend);
+					CLEAR_MASK_FIELD(action.type, OperationExtend);
 	
-					if(EXTRACT_FIELD(action->type, LocationType) == kLocation_Custom)
+					if(EXTRACT_FIELD(action.type, LocationType) == kLocation_Custom)
 					{
-						UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+						UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 						if(locationParameter == kCustomLocation_Comment)
 						{
-							SET_FIELD(action->type, LocationParameter, 0);
-							SET_FIELD(action->type, LocationType, kLocation_Standard);
-							SET_FIELD(action->type, Type, kType_Watch);
-							SET_FIELD(action->type, Operation, kOperation_None);
-							SET_MASK_FIELD(action->type, OperationExtend);
+							SET_FIELD(action.type, LocationParameter, 0);
+							SET_FIELD(action.type, LocationType, kLocation_Standard);
+							SET_FIELD(action.type, Type, kType_Watch);
+							SET_FIELD(action.type, Operation, kOperation_None);
+							SET_MASK_FIELD(action.type, OperationExtend);
 	
 							handled = 1;
 						}
 						else if(locationParameter == kCustomLocation_Select)
 						{
-							SET_FIELD(action->type, LocationParameter, kCustomLocation_Comment);
-							SET_FIELD(action->type, LocationType, kLocation_Custom);
-							SET_FIELD(action->type, Type, 0);
+							SET_FIELD(action.type, LocationParameter, kCustomLocation_Comment);
+							SET_FIELD(action.type, LocationType, kLocation_Custom);
+							SET_FIELD(action.type, Type, 0);
 	
 							handled = 1;
 						}
@@ -3801,172 +3801,172 @@ public class cheat
 	
 					if(!handled)
 					{
-						UINT32	type = EXTRACT_FIELD(action->type, Type);
+						UINT32	type = EXTRACT_FIELD(action.type, Type);
 	
 						if(type == kType_NormalOrDelay)
 						{
-							SET_FIELD(action->type, LocationParameter, kCustomLocation_Select);
-							SET_FIELD(action->type, LocationType, kLocation_Custom);
-							SET_FIELD(action->type, Type, 0);
+							SET_FIELD(action.type, LocationParameter, kCustomLocation_Select);
+							SET_FIELD(action.type, LocationType, kLocation_Custom);
+							SET_FIELD(action.type, Type, 0);
 						}
 						else
 						{
-							SET_FIELD(action->type, Type, type - 1);
+							SET_FIELD(action.type, Type, type - 1);
 						}
 					}
 				}
 				break;
 	
 				case kType_OneShot:
-					TOGGLE_MASK_FIELD(action->type, OneShot);
+					TOGGLE_MASK_FIELD(action.type, OneShot);
 					break;
 	
 				case kType_RestorePreviousValue:
-					TOGGLE_MASK_FIELD(action->type, RestorePreviousValue);
+					TOGGLE_MASK_FIELD(action.type, RestorePreviousValue);
 					break;
 	
 				case kType_Delay:
 				case kType_IgnoreDecrementBy:
 				{
-					UINT32	delay = (EXTRACT_FIELD(action->type, TypeParameter) - 1) & 7;
+					UINT32	delay = (EXTRACT_FIELD(action.type, TypeParameter) - 1) & 7;
 	
-					SET_FIELD(action->type, TypeParameter, delay);
+					SET_FIELD(action.type, TypeParameter, delay);
 				}
 				break;
 	
 				case kType_WatchSize:
-					action->originalDataField = (action->originalDataField & 0xFFFFFF00) | ((action->originalDataField - 0x00000001) & 0x000000FF);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFFFF00) | ((action.originalDataField - 0x00000001) & 0x000000FF);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchSkip:
-					action->originalDataField = (action->originalDataField & 0xFFFF00FF) | ((action->originalDataField - 0x00000100) & 0x0000FF00);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFF00FF) | ((action.originalDataField - 0x00000100) & 0x0000FF00);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchPerLine:
-					action->originalDataField = (action->originalDataField & 0xFF00FFFF) | ((action->originalDataField - 0x00010000) & 0x00FF0000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFF00FFFF) | ((action.originalDataField - 0x00010000) & 0x00FF0000);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchAddValue:
-					action->originalDataField = (action->originalDataField & 0x00FFFFFF) | ((action->originalDataField - 0x01000000) & 0xFF000000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0x00FFFFFF) | ((action.originalDataField - 0x01000000) & 0xFF000000);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchFormat:
 				{
-					UINT32	typeParameter = EXTRACT_FIELD(action->type, TypeParameter);
+					UINT32	typeParameter = EXTRACT_FIELD(action.type, TypeParameter);
 	
 					typeParameter = (typeParameter & 0xFFFFFFFC) | ((typeParameter - 0x00000001) & 0x0000003);
-					SET_FIELD(action->type, TypeParameter, typeParameter);
+					SET_FIELD(action.type, TypeParameter, typeParameter);
 				}
 				break;
 	
 				case kType_WatchLabel:
-					SET_FIELD(action->type, TypeParameter, EXTRACT_FIELD(action->type, TypeParameter) ^ 0x00000004);
+					SET_FIELD(action.type, TypeParameter, EXTRACT_FIELD(action.type, TypeParameter) ^ 0x00000004);
 					break;
 	
 				case kType_Operation:
 				{
-					UINT32	operation = (EXTRACT_FIELD(action->type, Operation) - 1) & 7;
+					UINT32	operation = (EXTRACT_FIELD(action.type, Operation) - 1) & 7;
 	
-					CLEAR_MASK_FIELD(action->type, OperationExtend);
-					SET_FIELD(action->type, Operation, operation);
+					CLEAR_MASK_FIELD(action.type, OperationExtend);
+					SET_FIELD(action.type, Operation, operation);
 				}
 				break;
 	
 				case kType_WriteMask:
-					action->extendData -= increment;
-					action->extendData &= info->extraData;
+					action.extendData -= increment;
+					action.extendData &= info.extraData;
 					break;
 	
 				case kType_RangeMinimum:
-					action->extendData = (action->extendData & 0xFFFF00FF) | ((action->extendData - 0x00000100) & 0x0000FF00);
+					action.extendData = (action.extendData & 0xFFFF00FF) | ((action.extendData - 0x00000100) & 0x0000FF00);
 					break;
 	
 				case kType_RangeMaximum:
-					action->extendData = (action->extendData & 0xFFFFFF00) | ((action->extendData - 0x00000001) & 0x000000FF);
+					action.extendData = (action.extendData & 0xFFFFFF00) | ((action.extendData - 0x00000001) & 0x000000FF);
 					break;
 	
 				case kType_AddressIndex:
 				case kType_SubtractMinimum:
 				case kType_AddMaximum:
-					action->extendData -= increment;
+					action.extendData -= increment;
 					break;
 	
 				case kType_AddSubtract:
 				case kType_SetClear:
-					TOGGLE_MASK_FIELD(action->type, OperationParameter);
+					TOGGLE_MASK_FIELD(action.type, OperationParameter);
 					break;
 	
 				case kType_Data:
-					action->originalDataField -= increment;
-					action->originalDataField &= info->extraData;
-					action->data = action->originalDataField;
+					action.originalDataField -= increment;
+					action.originalDataField &= info.extraData;
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_UserSelect:
-					TOGGLE_MASK_FIELD(action->type, UserSelectEnable);
+					TOGGLE_MASK_FIELD(action.type, UserSelectEnable);
 					break;
 	
 				case kType_UserSelectMinimumDisp:
-					TOGGLE_MASK_FIELD(action->type, UserSelectMinimumDisplay);
+					TOGGLE_MASK_FIELD(action.type, UserSelectMinimumDisplay);
 					break;
 	
 				case kType_UserSelectMinimum:
-					TOGGLE_MASK_FIELD(action->type, UserSelectMinimum);
+					TOGGLE_MASK_FIELD(action.type, UserSelectMinimum);
 					break;
 	
 				case kType_UserSelectBCD:
-					TOGGLE_MASK_FIELD(action->type, UserSelectBCD);
+					TOGGLE_MASK_FIELD(action.type, UserSelectBCD);
 					break;
 	
 				case kType_Prefill:
-					TOGGLE_MASK_FIELD(action->type, Prefill);
+					TOGGLE_MASK_FIELD(action.type, Prefill);
 					break;
 	
 				case kType_CopyPrevious:
-					TOGGLE_MASK_FIELD(action->type, LinkCopyPreviousValue);
+					TOGGLE_MASK_FIELD(action.type, LinkCopyPreviousValue);
 					break;
 	
 				case kType_ByteLength:
 				{
-					UINT32	length = (EXTRACT_FIELD(action->type, BytesUsed) - 1) & 3;
+					UINT32	length = (EXTRACT_FIELD(action.type, BytesUsed) - 1) & 3;
 	
-					SET_FIELD(action->type, BytesUsed, length);
+					SET_FIELD(action.type, BytesUsed, length);
 				}
 				break;
 	
 				case kType_Endianness:
-					TOGGLE_MASK_FIELD(action->type, Endianness);
+					TOGGLE_MASK_FIELD(action.type, Endianness);
 					break;
 	
 				case kType_LocationType:
 				{
-					UINT32	locationType = EXTRACT_FIELD(action->type, LocationType);
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationType = EXTRACT_FIELD(action.type, LocationType);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					if(locationType == kLocation_Standard)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_IndirectIndexed);
-						SET_FIELD(action->type, LocationParameter, (locationParameter << 2) & 0x1C);
+						SET_FIELD(action.type, LocationType, kLocation_IndirectIndexed);
+						SET_FIELD(action.type, LocationParameter, (locationParameter << 2) & 0x1C);
 					}
 					else if(locationType == kLocation_Custom)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_HandlerMemory);
-						SET_FIELD(action->type, LocationParameter, 0);
+						SET_FIELD(action.type, LocationType, kLocation_HandlerMemory);
+						SET_FIELD(action.type, LocationParameter, 0);
 					}
 					else if(locationType == kLocation_IndirectIndexed)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_Custom);
-						SET_FIELD(action->type, LocationParameter, kCustomLocation_EEPROM);
+						SET_FIELD(action.type, LocationType, kLocation_Custom);
+						SET_FIELD(action.type, LocationParameter, kCustomLocation_EEPROM);
 					}
 					else
 					{
 						locationType--;
 	
-						SET_FIELD(action->type, LocationType, locationType);
+						SET_FIELD(action.type, LocationType, locationType);
 					}
 				}
 				break;
@@ -3974,37 +3974,37 @@ public class cheat
 				case kType_CPU:
 				case kType_Region:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = (locationParameter - 1) & 31;
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_PackedCPU:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = ((locationParameter - 0x04) & 0x1C) | (locationParameter & 0x03);
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_PackedSize:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = ((locationParameter - 0x01) & 0x03) | (locationParameter & 0x1C);
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_Address:
-					action->address -= increment;
-					action->address &= info->extraData;
+					action.address -= increment;
+					action.address &= info.extraData;
 					break;
 	
 				case kType_Return:
@@ -4018,7 +4018,7 @@ public class cheat
 			editActive = 0;
 			dirty = 1;
 	
-			switch(info->fieldType)
+			switch(info.fieldType)
 			{
 				case kType_Name:
 					currentNameTemplate++;
@@ -4028,19 +4028,19 @@ public class cheat
 						currentNameTemplate = 0;
 					}
 	
-					entry->name = realloc(entry->name, strlen(kCheatNameTemplates[currentNameTemplate]) + 1);
-					strcpy(entry->name, kCheatNameTemplates[currentNameTemplate]);
+					entry.name = realloc(entry.name, strlen(kCheatNameTemplates[currentNameTemplate]) + 1);
+					strcpy(entry.name, kCheatNameTemplates[currentNameTemplate]);
 					break;
 	
 				case kType_ActivationKey:
-					entry->activationKey++;
+					entry.activationKey++;
 	
-					if(entry->activationKey < __code_key_first)
-						entry->activationKey = __code_key_last;
-					if(entry->activationKey > __code_key_last)
-						entry->activationKey = __code_key_first;
+					if(entry.activationKey < __code_key_first)
+						entry.activationKey = __code_key_last;
+					if(entry.activationKey > __code_key_last)
+						entry.activationKey = __code_key_first;
 	
-					entry->flags |= kCheatFlag_HasActivationKey;
+					entry.flags |= kCheatFlag_HasActivationKey;
 	
 					break;
 	
@@ -4048,25 +4048,25 @@ public class cheat
 				{
 					UINT8	handled = 0;
 	
-					CLEAR_MASK_FIELD(action->type, OperationExtend);
+					CLEAR_MASK_FIELD(action.type, OperationExtend);
 	
-					if(EXTRACT_FIELD(action->type, LocationType) == kLocation_Custom)
+					if(EXTRACT_FIELD(action.type, LocationType) == kLocation_Custom)
 					{
-						UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+						UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 						if(locationParameter == kCustomLocation_Comment)
 						{
-							SET_FIELD(action->type, LocationParameter, kCustomLocation_Select);
-							SET_FIELD(action->type, LocationType, kLocation_Custom);
-							SET_FIELD(action->type, Type, 0);
+							SET_FIELD(action.type, LocationParameter, kCustomLocation_Select);
+							SET_FIELD(action.type, LocationType, kLocation_Custom);
+							SET_FIELD(action.type, Type, 0);
 	
 							handled = 1;
 						}
 						else if(locationParameter == kCustomLocation_Select)
 						{
-							SET_FIELD(action->type, LocationParameter, 0);
-							SET_FIELD(action->type, LocationType, kLocation_Standard);
-							SET_FIELD(action->type, Type, 0);
+							SET_FIELD(action.type, LocationParameter, 0);
+							SET_FIELD(action.type, LocationType, kLocation_Standard);
+							SET_FIELD(action.type, Type, 0);
 	
 							handled = 1;
 						}
@@ -4074,22 +4074,22 @@ public class cheat
 	
 					if(!handled)
 					{
-						UINT32	type = EXTRACT_FIELD(action->type, Type);
+						UINT32	type = EXTRACT_FIELD(action.type, Type);
 	
 						if(type == kType_Watch)
 						{
-							SET_FIELD(action->type, LocationParameter, kCustomLocation_Comment);
-							SET_FIELD(action->type, LocationType, kLocation_Custom);
-							SET_FIELD(action->type, Type, 0);
+							SET_FIELD(action.type, LocationParameter, kCustomLocation_Comment);
+							SET_FIELD(action.type, LocationType, kLocation_Custom);
+							SET_FIELD(action.type, Type, 0);
 						}
 						else
 						{
-							SET_FIELD(action->type, Type, type + 1);
+							SET_FIELD(action.type, Type, type + 1);
 	
 							if((type + 1) == kType_Watch)
 							{
-								SET_FIELD(action->type, Operation, kOperation_None);
-								SET_MASK_FIELD(action->type, OperationExtend);
+								SET_FIELD(action.type, Operation, kOperation_None);
+								SET_MASK_FIELD(action.type, OperationExtend);
 							}
 						}
 					}
@@ -4097,155 +4097,155 @@ public class cheat
 				break;
 	
 				case kType_OneShot:
-					TOGGLE_MASK_FIELD(action->type, OneShot);
+					TOGGLE_MASK_FIELD(action.type, OneShot);
 					break;
 	
 				case kType_RestorePreviousValue:
-					TOGGLE_MASK_FIELD(action->type, RestorePreviousValue);
+					TOGGLE_MASK_FIELD(action.type, RestorePreviousValue);
 					break;
 	
 				case kType_Delay:
 				case kType_IgnoreDecrementBy:
 				{
-					UINT32	delay = (EXTRACT_FIELD(action->type, TypeParameter) + 1) & 7;
+					UINT32	delay = (EXTRACT_FIELD(action.type, TypeParameter) + 1) & 7;
 	
-					SET_FIELD(action->type, TypeParameter, delay);
+					SET_FIELD(action.type, TypeParameter, delay);
 				}
 				break;
 	
 				case kType_WatchSize:
-					action->originalDataField = (action->originalDataField & 0xFFFFFF00) | ((action->originalDataField + 0x00000001) & 0x000000FF);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFFFF00) | ((action.originalDataField + 0x00000001) & 0x000000FF);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchSkip:
-					action->originalDataField = (action->originalDataField & 0xFFFF00FF) | ((action->originalDataField + 0x00000100) & 0x0000FF00);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFF00FF) | ((action.originalDataField + 0x00000100) & 0x0000FF00);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchPerLine:
-					action->originalDataField = (action->originalDataField & 0xFF00FFFF) | ((action->originalDataField + 0x00010000) & 0x00FF0000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFF00FFFF) | ((action.originalDataField + 0x00010000) & 0x00FF0000);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchAddValue:
-					action->originalDataField = (action->originalDataField & 0x00FFFFFF) | ((action->originalDataField + 0x01000000) & 0xFF000000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0x00FFFFFF) | ((action.originalDataField + 0x01000000) & 0xFF000000);
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_WatchFormat:
 				{
-					UINT32	typeParameter = EXTRACT_FIELD(action->type, TypeParameter);
+					UINT32	typeParameter = EXTRACT_FIELD(action.type, TypeParameter);
 	
 					typeParameter = (typeParameter & 0xFFFFFFFC) | ((typeParameter + 0x00000001) & 0x0000003);
-					SET_FIELD(action->type, TypeParameter, typeParameter);
+					SET_FIELD(action.type, TypeParameter, typeParameter);
 				}
 				break;
 	
 				case kType_WatchLabel:
-					SET_FIELD(action->type, TypeParameter, EXTRACT_FIELD(action->type, TypeParameter) ^ 0x00000004);
+					SET_FIELD(action.type, TypeParameter, EXTRACT_FIELD(action.type, TypeParameter) ^ 0x00000004);
 					break;
 	
 				case kType_Operation:
 				{
-					UINT32	operation = (EXTRACT_FIELD(action->type, Operation) + 1) & 7;
+					UINT32	operation = (EXTRACT_FIELD(action.type, Operation) + 1) & 7;
 	
-					CLEAR_MASK_FIELD(action->type, OperationExtend);
-					SET_FIELD(action->type, Operation, operation);
+					CLEAR_MASK_FIELD(action.type, OperationExtend);
+					SET_FIELD(action.type, Operation, operation);
 				}
 				break;
 	
 				case kType_WriteMask:
-					action->extendData += increment;
-					action->extendData &= info->extraData;
+					action.extendData += increment;
+					action.extendData &= info.extraData;
 					break;
 	
 				case kType_RangeMinimum:
-					action->extendData = (action->extendData & 0xFFFF00FF) | ((action->extendData + 0x00000100) & 0x0000FF00);
+					action.extendData = (action.extendData & 0xFFFF00FF) | ((action.extendData + 0x00000100) & 0x0000FF00);
 					break;
 	
 				case kType_RangeMaximum:
-					action->extendData = (action->extendData & 0xFFFFFF00) | ((action->extendData + 0x00000001) & 0x000000FF);
+					action.extendData = (action.extendData & 0xFFFFFF00) | ((action.extendData + 0x00000001) & 0x000000FF);
 					break;
 	
 				case kType_AddressIndex:
 				case kType_SubtractMinimum:
 				case kType_AddMaximum:
-					action->extendData += increment;
+					action.extendData += increment;
 					break;
 	
 				case kType_AddSubtract:
 				case kType_SetClear:
-					TOGGLE_MASK_FIELD(action->type, OperationParameter);
+					TOGGLE_MASK_FIELD(action.type, OperationParameter);
 					break;
 	
 				case kType_Data:
-					action->originalDataField += increment;
-					action->originalDataField &= info->extraData;
-					action->data = action->originalDataField;
+					action.originalDataField += increment;
+					action.originalDataField &= info.extraData;
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_UserSelect:
-					TOGGLE_MASK_FIELD(action->type, UserSelectEnable);
+					TOGGLE_MASK_FIELD(action.type, UserSelectEnable);
 					break;
 	
 				case kType_UserSelectMinimumDisp:
-					TOGGLE_MASK_FIELD(action->type, UserSelectMinimumDisplay);
+					TOGGLE_MASK_FIELD(action.type, UserSelectMinimumDisplay);
 					break;
 	
 				case kType_UserSelectMinimum:
-					TOGGLE_MASK_FIELD(action->type, UserSelectMinimum);
+					TOGGLE_MASK_FIELD(action.type, UserSelectMinimum);
 					break;
 	
 				case kType_UserSelectBCD:
-					TOGGLE_MASK_FIELD(action->type, UserSelectBCD);
+					TOGGLE_MASK_FIELD(action.type, UserSelectBCD);
 					break;
 	
 				case kType_Prefill:
-					TOGGLE_MASK_FIELD(action->type, Prefill);
+					TOGGLE_MASK_FIELD(action.type, Prefill);
 					break;
 	
 				case kType_CopyPrevious:
-					TOGGLE_MASK_FIELD(action->type, LinkCopyPreviousValue);
+					TOGGLE_MASK_FIELD(action.type, LinkCopyPreviousValue);
 					break;
 	
 				case kType_ByteLength:
 				{
-					UINT32	length = (EXTRACT_FIELD(action->type, BytesUsed) + 1) & 3;
+					UINT32	length = (EXTRACT_FIELD(action.type, BytesUsed) + 1) & 3;
 	
-					SET_FIELD(action->type, BytesUsed, length);
+					SET_FIELD(action.type, BytesUsed, length);
 				}
 				break;
 	
 				case kType_Endianness:
-					TOGGLE_MASK_FIELD(action->type, Endianness);
+					TOGGLE_MASK_FIELD(action.type, Endianness);
 					break;
 	
 				case kType_LocationType:
 				{
-					UINT32	locationType = EXTRACT_FIELD(action->type, LocationType);
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationType = EXTRACT_FIELD(action.type, LocationType);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					if(locationType == kLocation_IndirectIndexed)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_Standard);
-						SET_FIELD(action->type, LocationParameter, (locationParameter >> 2) & 7);
+						SET_FIELD(action.type, LocationType, kLocation_Standard);
+						SET_FIELD(action.type, LocationParameter, (locationParameter >> 2) & 7);
 					}
 					else if(locationType == kLocation_Custom)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_IndirectIndexed);
-						SET_FIELD(action->type, LocationParameter, 0);
+						SET_FIELD(action.type, LocationType, kLocation_IndirectIndexed);
+						SET_FIELD(action.type, LocationParameter, 0);
 					}
 					else if(locationType == kLocation_HandlerMemory)
 					{
-						SET_FIELD(action->type, LocationType, kLocation_Custom);
-						SET_FIELD(action->type, LocationParameter, kCustomLocation_EEPROM);
+						SET_FIELD(action.type, LocationType, kLocation_Custom);
+						SET_FIELD(action.type, LocationParameter, kCustomLocation_EEPROM);
 					}
 					else
 					{
 						locationType++;
 	
-						SET_FIELD(action->type, LocationType, locationType);
+						SET_FIELD(action.type, LocationType, locationType);
 					}
 				}
 				break;
@@ -4253,37 +4253,37 @@ public class cheat
 				case kType_CPU:
 				case kType_Region:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = (locationParameter + 1) & 31;
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_PackedCPU:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = ((locationParameter + 0x04) & 0x1C) | (locationParameter & 0x03);
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_PackedSize:
 				{
-					UINT32	locationParameter = EXTRACT_FIELD(action->type, LocationParameter);
+					UINT32	locationParameter = EXTRACT_FIELD(action.type, LocationParameter);
 	
 					locationParameter = ((locationParameter + 0x01) & 0x03) | (locationParameter & 0x1C);
 	
-					SET_FIELD(action->type, LocationParameter, locationParameter);
+					SET_FIELD(action.type, LocationParameter, locationParameter);
 				}
 				break;
 	
 				case kType_Address:
-					action->address += increment;
-					action->address &= info->extraData;
+					action.address += increment;
+					action.address &= info.extraData;
 					break;
 	
 				case kType_Return:
@@ -4340,7 +4340,7 @@ public class cheat
 			}
 			else
 			{
-				switch(info->fieldType)
+				switch(info.fieldType)
 				{
 					case kType_Name:
 					case kType_ExtendName:
@@ -4375,26 +4375,26 @@ public class cheat
 	
 			dirty = 1;
 	
-			switch(info->fieldType)
+			switch(info.fieldType)
 			{
 				case kType_Name:
-					entry->name = DoDynamicEditTextField(entry->name);
+					entry.name = DoDynamicEditTextField(entry.name);
 					break;
 	
 				case kType_ExtendName:
-					action->optionalName = DoDynamicEditTextField(action->optionalName);
+					action.optionalName = DoDynamicEditTextField(action.optionalName);
 					break;
 	
 				case kType_Comment:
-					entry->comment = DoDynamicEditTextField(entry->comment);
+					entry.comment = DoDynamicEditTextField(entry.comment);
 					break;
 	
 				case kType_ActivationKey:
 				{
 					if(input_ui_pressed(IPT_UI_CANCEL))
 					{
-						entry->activationKey = 0;
-						entry->flags &= ~kCheatFlag_HasActivationKey;
+						entry.activationKey = 0;
+						entry.flags &= ~kCheatFlag_HasActivationKey;
 	
 						editActive = 0;
 					}
@@ -4404,16 +4404,16 @@ public class cheat
 	
 						if(code == KEYCODE_ESC)
 						{
-							entry->activationKey = 0;
-							entry->flags &= ~kCheatFlag_HasActivationKey;
+							entry.activationKey = 0;
+							entry.flags &= ~kCheatFlag_HasActivationKey;
 	
 							editActive = 0;
 						}
 						else if(	(code != CODE_NONE) &&
 									!input_ui_pressed(IPT_UI_SELECT))
 						{
-							entry->activationKey = code;
-							entry->flags |= kCheatFlag_HasActivationKey;
+							entry.activationKey = code;
+							entry.flags |= kCheatFlag_HasActivationKey;
 	
 							editActive = 0;
 						}
@@ -4423,69 +4423,69 @@ public class cheat
 	
 				case kType_WatchSize:
 				{
-					UINT32	temp = (action->originalDataField >> 0) & 0xFF;
+					UINT32	temp = (action.originalDataField >> 0) & 0xFF;
 	
 					temp++;
 					temp = DoEditHexField(temp) & 0xFF;
 					temp--;
 	
-					action->originalDataField = (action->originalDataField & 0xFFFFFF00) | ((temp << 0) & 0x000000FF);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFFFF00) | ((temp << 0) & 0x000000FF);
+					action.data = action.originalDataField;
 				}
 				break;
 	
 				case kType_WatchSkip:
 				{
-					UINT32	temp = (action->originalDataField >> 8) & 0xFF;
+					UINT32	temp = (action.originalDataField >> 8) & 0xFF;
 	
 					temp = DoEditHexField(temp) & 0xFF;
 	
-					action->originalDataField = (action->originalDataField & 0xFFFF00FF) | ((temp << 8) & 0x0000FF00);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFFFF00FF) | ((temp << 8) & 0x0000FF00);
+					action.data = action.originalDataField;
 				}
 				break;
 	
 				case kType_WatchPerLine:
 				{
-					UINT32	temp = (action->originalDataField >> 16) & 0xFF;
+					UINT32	temp = (action.originalDataField >> 16) & 0xFF;
 	
 					temp = DoEditHexField(temp) & 0xFF;
 	
-					action->originalDataField = (action->originalDataField & 0xFF00FFFF) | ((temp << 16) & 0x00FF0000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0xFF00FFFF) | ((temp << 16) & 0x00FF0000);
+					action.data = action.originalDataField;
 				}
 				break;
 	
 				case kType_WatchAddValue:
 				{
-					UINT32	temp = (action->originalDataField >> 24) & 0xFF;
+					UINT32	temp = (action.originalDataField >> 24) & 0xFF;
 	
 					temp = DoEditHexFieldSigned(temp, 0xFFFFFF80) & 0xFF;
 	
-					action->originalDataField = (action->originalDataField & 0x00FFFFFF) | ((temp << 24) & 0xFF000000);
-					action->data = action->originalDataField;
+					action.originalDataField = (action.originalDataField & 0x00FFFFFF) | ((temp << 24) & 0xFF000000);
+					action.data = action.originalDataField;
 				}
 				break;
 	
 				case kType_WriteMask:
-					action->extendData = DoEditHexField(action->extendData);
-					action->extendData &= info->extraData;
+					action.extendData = DoEditHexField(action.extendData);
+					action.extendData &= info.extraData;
 					break;
 	
 				case kType_AddMaximum:
 				case kType_SubtractMinimum:
-					action->extendData = DoEditHexField(action->extendData);
+					action.extendData = DoEditHexField(action.extendData);
 					break;
 	
 				case kType_RangeMinimum:
 				{
 					UINT32	temp;
 	
-					temp = (action->extendData >> 8) & 0xFF;
+					temp = (action.extendData >> 8) & 0xFF;
 	
 					temp = DoEditHexField(temp) & 0xFF;
 	
-					action->extendData = (action->extendData & 0x00FF) | ((temp << 8) & 0xFF00);
+					action.extendData = (action.extendData & 0x00FF) | ((temp << 8) & 0xFF00);
 				}
 				break;
 	
@@ -4493,23 +4493,23 @@ public class cheat
 				{
 					UINT32	temp;
 	
-					temp = action->extendData & 0xFF;
+					temp = action.extendData & 0xFF;
 	
 					temp = DoEditHexField(temp) & 0xFF;
 	
-					action->extendData = (action->extendData & 0xFF00) | (temp & 0x00FF);
+					action.extendData = (action.extendData & 0xFF00) | (temp & 0x00FF);
 				}
 				break;
 	
 				case kType_Data:
-					action->originalDataField = DoEditHexField(action->originalDataField);
-					action->originalDataField &= info->extraData;
-					action->data = action->originalDataField;
+					action.originalDataField = DoEditHexField(action.originalDataField);
+					action.originalDataField &= info.extraData;
+					action.data = action.originalDataField;
 					break;
 	
 				case kType_Address:
-					action->address = DoEditHexField(action->address);
-					action->address &= info->extraData;
+					action.address = DoEditHexField(action.address);
+					action.address &= info.extraData;
 					break;
 			}
 	
@@ -4532,12 +4532,12 @@ public class cheat
 	
 			if(input_ui_pressed(IPT_UI_ADD_CHEAT))
 			{
-				AddActionBefore(entry, info->subcheat);
+				AddActionBefore(entry, info.subcheat);
 			}
 	
 			if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 			{
-				DeleteActionAt(entry, info->subcheat);
+				DeleteActionAt(entry, info.subcheat);
 			}
 		}
 	
@@ -4565,7 +4565,7 @@ public class cheat
 		{
 			UpdateCheatInfo(entry, 0);
 	
-			entry->flags |= kCheatFlag_Dirty;
+			entry.flags |= kCheatFlag_Dirty;
 		}
 	
 		return sel + 1;
@@ -4621,22 +4621,22 @@ public class cheat
 	
 		sel = lastPos;
 	
-		sprintf(cpuBuffer, "%d", search->targetIdx);
+		sprintf(cpuBuffer, "%d", search.targetIdx);
 		menu_item[kMenu_CPU] =			ui_getstring(UI_cpu);
 		menu_subitem[kMenu_CPU] =		cpuBuffer;
 	
-		if(search->sign && (search->oldOptions.value & kSearchByteSignBitTable[search->bytes]))
+		if(search.sign && (search.oldOptions.value & kSearchByteSignBitTable[search.bytes]))
 		{
 			UINT32	tempValue;
 	
-			tempValue = ~search->oldOptions.value + 1;
-			tempValue &= kSearchByteUnsignedMaskTable[search->bytes];
+			tempValue = ~search.oldOptions.value + 1;
+			tempValue &= kSearchByteUnsignedMaskTable[search.bytes];
 	
-			sprintf(valueBuffer, "-%.*X (-%d)", kSearchByteDigitsTable[search->bytes], tempValue, tempValue);
+			sprintf(valueBuffer, "-%.*X (-%d)", kSearchByteDigitsTable[search.bytes], tempValue, tempValue);
 		}
 		else
 		{
-			sprintf(valueBuffer, "%.*X (%d)", kSearchByteDigitsTable[search->bytes], search->oldOptions.value & kSearchByteMaskTable[search->bytes], search->oldOptions.value & kSearchByteMaskTable[search->bytes]);
+			sprintf(valueBuffer, "%.*X (%d)", kSearchByteDigitsTable[search.bytes], search.oldOptions.value & kSearchByteMaskTable[search.bytes], search.oldOptions.value & kSearchByteMaskTable[search.bytes]);
 		}
 	
 		menu_item[kMenu_Value] =		ui_getstring(UI_search_lives);
@@ -4662,24 +4662,24 @@ public class cheat
 	
 		if(!startNew)
 		{
-			if(search->oldOptions.delta & kSearchByteSignBitTable[search->bytes])
+			if(search.oldOptions.delta & kSearchByteSignBitTable[search.bytes])
 			{
 				UINT32	tempValue;
 	
-				tempValue = ~search->oldOptions.delta + 1;
-				tempValue &= kSearchByteUnsignedMaskTable[search->bytes];
+				tempValue = ~search.oldOptions.delta + 1;
+				tempValue &= kSearchByteUnsignedMaskTable[search.bytes];
 	
-				sprintf(valueSignedBuffer, "-%.*X (-%d)", kSearchByteDigitsTable[search->bytes], tempValue, tempValue);
+				sprintf(valueSignedBuffer, "-%.*X (-%d)", kSearchByteDigitsTable[search.bytes], tempValue, tempValue);
 			}
 			else
 			{
-				sprintf(valueSignedBuffer, "%.*X (%d)", kSearchByteDigitsTable[search->bytes], search->oldOptions.delta & kSearchByteMaskTable[search->bytes], search->oldOptions.delta & kSearchByteMaskTable[search->bytes]);
+				sprintf(valueSignedBuffer, "%.*X (%d)", kSearchByteDigitsTable[search.bytes], search.oldOptions.delta & kSearchByteMaskTable[search.bytes], search.oldOptions.delta & kSearchByteMaskTable[search.bytes]);
 			}
 	
 			menu_subitem[kMenu_Time] =		valueSignedBuffer;
-			menu_subitem[kMenu_Energy] =	energyStrings[search->oldOptions.energy];
-			menu_subitem[kMenu_Bit] =		bitStrings[search->oldOptions.status];
-			menu_subitem[kMenu_Slow] =		bitStrings[search->oldOptions.slow];
+			menu_subitem[kMenu_Energy] =	energyStrings[search.oldOptions.energy];
+			menu_subitem[kMenu_Bit] =		bitStrings[search.oldOptions.status];
+			menu_subitem[kMenu_Slow] =		bitStrings[search.oldOptions.slow];
 		}
 	
 		ui_displaymenu(bitmap, menu_item, menu_subitem, 0, sel, 0);
@@ -4728,9 +4728,9 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_CPU:
-					if(search->targetIdx > 0)
+					if(search.targetIdx > 0)
 					{
-						search->targetIdx--;
+						search.targetIdx--;
 	
 						BuildSearchRegions(search);
 						AllocateSearchRegions(search);
@@ -4738,30 +4738,30 @@ public class cheat
 					break;
 	
 				case kMenu_Value:
-					search->oldOptions.value -= increment;
+					search.oldOptions.value -= increment;
 	
-					search->oldOptions.value &= kSearchByteMaskTable[search->bytes];
+					search.oldOptions.value &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Time:
-					search->oldOptions.delta -= increment;
+					search.oldOptions.delta -= increment;
 	
-					search->oldOptions.delta &= kSearchByteMaskTable[search->bytes];
+					search.oldOptions.delta &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Energy:
-					if(search->oldOptions.energy < kEnergy_Max)
-						search->oldOptions.energy++;
+					if(search.oldOptions.energy < kEnergy_Max)
+						search.oldOptions.energy++;
 					else
-						search->oldOptions.energy = kEnergy_Equals;
+						search.oldOptions.energy = kEnergy_Equals;
 					break;
 	
 				case kMenu_Bit:
-					search->oldOptions.status ^= 1;
+					search.oldOptions.status ^= 1;
 					break;
 	
 				case kMenu_Slow:
-					search->oldOptions.slow ^= 1;
+					search.oldOptions.slow ^= 1;
 					break;
 			}
 		}
@@ -4771,9 +4771,9 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_CPU:
-					if(search->targetIdx < cpu_gettotalcpu() - 1)
+					if(search.targetIdx < cpu_gettotalcpu() - 1)
 					{
-						search->targetIdx++;
+						search.targetIdx++;
 	
 						BuildSearchRegions(search);
 						AllocateSearchRegions(search);
@@ -4781,30 +4781,30 @@ public class cheat
 					break;
 	
 				case kMenu_Value:
-					search->oldOptions.value += increment;
+					search.oldOptions.value += increment;
 	
-					search->oldOptions.value &= kSearchByteMaskTable[search->bytes];
+					search.oldOptions.value &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Time:
-					search->oldOptions.delta += increment;
+					search.oldOptions.delta += increment;
 	
-					search->oldOptions.delta &= kSearchByteMaskTable[search->bytes];
+					search.oldOptions.delta &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Energy:
-					if(search->oldOptions.energy > kEnergy_Equals)
-						search->oldOptions.energy--;
+					if(search.oldOptions.energy > kEnergy_Equals)
+						search.oldOptions.energy--;
 					else
-						search->oldOptions.energy = kEnergy_Max;
+						search.oldOptions.energy = kEnergy_Max;
 					break;
 	
 				case kMenu_Bit:
-					search->oldOptions.status ^= 1;
+					search.oldOptions.status ^= 1;
 					break;
 	
 				case kMenu_Slow:
-					search->oldOptions.slow ^= 1;
+					search.oldOptions.slow ^= 1;
 					break;
 			}
 		}
@@ -4814,49 +4814,49 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Value:
-					search->bytes =			kSearchSize_8Bit;
-					search->lhs =			kSearchOperand_Current;
-					search->rhs =			kSearchOperand_Value;
-					search->comparison =	kSearchComparison_NearTo;
-					search->value =			search->oldOptions.value;
+					search.bytes =			kSearchSize_8Bit;
+					search.lhs =			kSearchOperand_Current;
+					search.rhs =			kSearchOperand_Value;
+					search.comparison =	kSearchComparison_NearTo;
+					search.value =			search.oldOptions.value;
 	
 					doSearch = 1;
 					willHaveResults = 1;
 					break;
 	
 				case kMenu_Time:
-					search->bytes =			kSearchSize_8Bit;
-					search->lhs =			kSearchOperand_Current;
-					search->rhs =			kSearchOperand_Previous;
-					search->comparison =	kSearchComparison_IncreasedBy;
-					search->value =			search->oldOptions.delta;
+					search.bytes =			kSearchSize_8Bit;
+					search.lhs =			kSearchOperand_Current;
+					search.rhs =			kSearchOperand_Previous;
+					search.comparison =	kSearchComparison_IncreasedBy;
+					search.value =			search.oldOptions.delta;
 	
 					doSearch = 1;
 					break;
 	
 				case kMenu_Energy:
-					search->bytes =			kSearchSize_8Bit;
-					search->lhs =			kSearchOperand_Current;
-					search->rhs =			kSearchOperand_Previous;
-					search->comparison =	kOldEnergyComparisonTable[search->oldOptions.energy];
+					search.bytes =			kSearchSize_8Bit;
+					search.lhs =			kSearchOperand_Current;
+					search.rhs =			kSearchOperand_Previous;
+					search.comparison =	kOldEnergyComparisonTable[search.oldOptions.energy];
 	
 					doSearch = 1;
 					break;
 	
 				case kMenu_Bit:
-					search->bytes =			kSearchSize_1Bit;
-					search->lhs =			kSearchOperand_Current;
-					search->rhs =			kSearchOperand_Previous;
-					search->comparison =	kOldStatusComparisonTable[search->oldOptions.status];
+					search.bytes =			kSearchSize_1Bit;
+					search.lhs =			kSearchOperand_Current;
+					search.rhs =			kSearchOperand_Previous;
+					search.comparison =	kOldStatusComparisonTable[search.oldOptions.status];
 	
 					doSearch = 1;
 					break;
 	
 				case kMenu_Slow:
-					search->bytes =			kSearchSize_8Bit;
-					search->lhs =			kSearchOperand_Current;
-					search->rhs =			kSearchOperand_First;
-					search->comparison =	kOldStatusComparisonTable[search->oldOptions.slow];
+					search.bytes =			kSearchSize_8Bit;
+					search.lhs =			kSearchOperand_Current;
+					search.rhs =			kSearchOperand_First;
+					search.comparison =	kOldStatusComparisonTable[search.oldOptions.slow];
 	
 					doSearch = 1;
 					break;
@@ -4874,7 +4874,7 @@ public class cheat
 				InitializeNewSearch(search);
 			}
 	
-			if(	(!kSearchOperandNeedsInit[search->lhs] && !kSearchOperandNeedsInit[search->rhs]) ||
+			if(	(!kSearchOperandNeedsInit[search.lhs] && !kSearchOperandNeedsInit[search.rhs]) ||
 				willHaveResults ||
 				!startNew)
 			{
@@ -4886,11 +4886,11 @@ public class cheat
 			UpdateSearch(search);
 	
 			if(willHaveResults || !startNew)
-				usrintf_showmessage("%d results found", search->numResults);
+				usrintf_showmessage("%d results found", search.numResults);
 			else
 				usrintf_showmessage("saved all memory regions");
 	
-			if(search->numResults == 1)
+			if(search.numResults == 1)
 			{
 				AddCheatFromFirstResult(search);
 	
@@ -4905,15 +4905,15 @@ public class cheat
 	
 		if(sel == kMenu_Value)
 		{
-			search->oldOptions.value = DoEditHexField(search->oldOptions.value);
+			search.oldOptions.value = DoEditHexField(search.oldOptions.value);
 	
-			search->oldOptions.value &= kSearchByteMaskTable[search->bytes];
+			search.oldOptions.value &= kSearchByteMaskTable[search.bytes];
 		}
 		else if(sel == kMenu_Time)
 		{
-			search->oldOptions.delta = DoEditHexField(search->oldOptions.delta);
+			search.oldOptions.delta = DoEditHexField(search.oldOptions.delta);
 	
-			search->oldOptions.delta &= kSearchByteMaskTable[search->bytes];
+			search.oldOptions.delta &= kSearchByteMaskTable[search.bytes];
 		}
 	
 		if(	(sel == -1) ||
@@ -4966,32 +4966,32 @@ public class cheat
 	
 		sel = lastSel;
 	
-		if(	(search->sign || search->comparison == kSearchComparison_IncreasedBy) &&
-			(search->value & kSearchByteSignBitTable[search->bytes]))
+		if(	(search.sign || search.comparison == kSearchComparison_IncreasedBy) &&
+			(search.value & kSearchByteSignBitTable[search.bytes]))
 		{
 			UINT32	tempValue;
 	
-			tempValue = ~search->value + 1;
-			tempValue &= kSearchByteUnsignedMaskTable[search->bytes];
+			tempValue = ~search.value + 1;
+			tempValue &= kSearchByteUnsignedMaskTable[search.bytes];
 	
-			sprintf(valueBuffer, "-%.*X", kSearchByteDigitsTable[search->bytes], tempValue);
+			sprintf(valueBuffer, "-%.*X", kSearchByteDigitsTable[search.bytes], tempValue);
 		}
 		else
 		{
-			sprintf(valueBuffer, "%.*X", kSearchByteDigitsTable[search->bytes], search->value & kSearchByteMaskTable[search->bytes]);
+			sprintf(valueBuffer, "%.*X", kSearchByteDigitsTable[search.bytes], search.value & kSearchByteMaskTable[search.bytes]);
 		}
 	
 		if (dontPrintNewLabels != 0)
 		{
-			menu_item[total] = kOperandNameTable[search->lhs];
+			menu_item[total] = kOperandNameTable[search.lhs];
 			menu_subitem[total] = NULL;
 			total++;
 	
-			menu_item[total] = kComparisonNameTable[search->comparison];
+			menu_item[total] = kComparisonNameTable[search.comparison];
 			menu_subitem[total] = NULL;
 			total++;
 	
-			menu_item[total] = kOperandNameTable[search->rhs];
+			menu_item[total] = kOperandNameTable[search.rhs];
 			menu_subitem[total] = NULL;
 			total++;
 	
@@ -5002,15 +5002,15 @@ public class cheat
 		else
 		{
 			menu_item[total] = "LHS";
-			menu_subitem[total] = kOperandNameTable[search->lhs];
+			menu_subitem[total] = kOperandNameTable[search.lhs];
 			total++;
 	
 			menu_item[total] = "Comparison";
-			menu_subitem[total] = kComparisonNameTable[search->comparison];
+			menu_subitem[total] = kComparisonNameTable[search.comparison];
 			total++;
 	
 			menu_item[total] = "RHS";
-			menu_subitem[total] = kOperandNameTable[search->rhs];
+			menu_subitem[total] = kOperandNameTable[search.rhs];
 			total++;
 	
 			menu_item[total] = "Value";
@@ -5023,25 +5023,25 @@ public class cheat
 		total++;
 	
 		menu_item[total] = "Size";
-		menu_subitem[total] = kSearchByteNameTable[search->bytes];
+		menu_subitem[total] = kSearchByteNameTable[search.bytes];
 		total++;
 	
 		menu_item[total] = "Swap";
-		menu_subitem[total] = ui_getstring(search->swap ? UI_on : UI_off);
+		menu_subitem[total] = ui_getstring(search.swap ? UI_on : UI_off);
 		total++;
 	
 		menu_item[total] = "Signed";
-		menu_subitem[total] = ui_getstring(search->sign ? UI_on : UI_off);
+		menu_subitem[total] = ui_getstring(search.sign ? UI_on : UI_off);
 		total++;
 	
-		sprintf(cpuBuffer, "%d", search->targetIdx);
+		sprintf(cpuBuffer, "%d", search.targetIdx);
 		menu_item[total] = "CPU";
 		menu_subitem[total] = cpuBuffer;
 		total++;
 	
 		menu_item[total] = "Name";
-		if(search->name)
-			menu_subitem[total] = search->name;
+		if(search.name)
+			menu_subitem[total] = search.name;
 		else
 			menu_subitem[total] = "(none)";
 		total++;
@@ -5119,51 +5119,51 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Value:
-					search->value -= increment;
+					search.value -= increment;
 	
-					search->value &= kSearchByteMaskTable[search->bytes];
+					search.value &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_LHS:
-					search->lhs--;
+					search.lhs--;
 	
-					if(search->lhs < kSearchOperand_Current)
-						search->lhs = kSearchOperand_Max;
+					if(search.lhs < kSearchOperand_Current)
+						search.lhs = kSearchOperand_Max;
 					break;
 	
 				case kMenu_RHS:
-					search->rhs--;
+					search.rhs--;
 	
-					if(search->rhs < kSearchOperand_Current)
-						search->rhs = kSearchOperand_Max;
+					if(search.rhs < kSearchOperand_Current)
+						search.rhs = kSearchOperand_Max;
 					break;
 	
 				case kMenu_Comparison:
-					search->comparison--;
+					search.comparison--;
 	
-					if(search->comparison < kSearchComparison_LessThan)
-						search->comparison = kSearchComparison_Max;
+					if(search.comparison < kSearchComparison_LessThan)
+						search.comparison = kSearchComparison_Max;
 					break;
 	
 				case kMenu_Size:
-					search->bytes--;
+					search.bytes--;
 	
-					if(search->bytes < kSearchSize_8Bit)
-						search->bytes = kSearchSize_Max;
+					if(search.bytes < kSearchSize_8Bit)
+						search.bytes = kSearchSize_Max;
 					break;
 	
 				case kMenu_Swap:
-					search->swap ^= 1;
+					search.swap ^= 1;
 					break;
 	
 				case kMenu_Sign:
-					search->sign ^= 1;
+					search.sign ^= 1;
 					break;
 	
 				case kMenu_CPU:
-					if(search->targetIdx > 0)
+					if(search.targetIdx > 0)
 					{
-						search->targetIdx--;
+						search.targetIdx--;
 	
 						BuildSearchRegions(search);
 						AllocateSearchRegions(search);
@@ -5177,51 +5177,51 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Value:
-					search->value += increment;
+					search.value += increment;
 	
-					search->value &= kSearchByteMaskTable[search->bytes];
+					search.value &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Size:
-					search->bytes++;
+					search.bytes++;
 	
-					if(search->bytes > kSearchSize_Max)
-						search->bytes = kSearchSize_8Bit;
+					if(search.bytes > kSearchSize_Max)
+						search.bytes = kSearchSize_8Bit;
 					break;
 	
 				case kMenu_LHS:
-					search->lhs++;
+					search.lhs++;
 	
-					if(search->lhs > kSearchOperand_Max)
-						search->lhs = kSearchOperand_Current;
+					if(search.lhs > kSearchOperand_Max)
+						search.lhs = kSearchOperand_Current;
 					break;
 	
 				case kMenu_RHS:
-					search->rhs++;
+					search.rhs++;
 	
-					if(search->rhs > kSearchOperand_Max)
-						search->rhs = kSearchOperand_Current;
+					if(search.rhs > kSearchOperand_Max)
+						search.rhs = kSearchOperand_Current;
 					break;
 	
 				case kMenu_Comparison:
-					search->comparison++;
+					search.comparison++;
 	
-					if(search->comparison > kSearchComparison_Max)
-						search->comparison = kSearchComparison_LessThan;
+					if(search.comparison > kSearchComparison_Max)
+						search.comparison = kSearchComparison_LessThan;
 					break;
 	
 				case kMenu_Swap:
-					search->swap ^= 1;
+					search.swap ^= 1;
 					break;
 	
 				case kMenu_Sign:
-					search->sign ^= 1;
+					search.sign ^= 1;
 					break;
 	
 				case kMenu_CPU:
-					if(search->targetIdx < cpu_gettotalcpu() - 1)
+					if(search.targetIdx < cpu_gettotalcpu() - 1)
 					{
-						search->targetIdx++;
+						search.targetIdx++;
 	
 						BuildSearchRegions(search);
 						AllocateSearchRegions(search);
@@ -5256,7 +5256,7 @@ public class cheat
 							InitializeNewSearch(search);
 						}
 	
-						if(	(!kSearchOperandNeedsInit[search->lhs] && !kSearchOperandNeedsInit[search->rhs]) ||
+						if(	(!kSearchOperandNeedsInit[search.lhs] && !kSearchOperandNeedsInit[search.rhs]) ||
 							!startNew)
 						{
 							BackupSearch(search);
@@ -5266,9 +5266,9 @@ public class cheat
 	
 						UpdateSearch(search);
 	
-						usrintf_showmessage("%d results found", search->numResults);
+						usrintf_showmessage("%d results found", search.numResults);
 	
-						if(search->numResults == 1)
+						if(search.numResults == 1)
 						{
 							AddCheatFromFirstResult(search);
 	
@@ -5295,13 +5295,13 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Value:
-					search->value = DoEditHexField(search->value);
+					search.value = DoEditHexField(search.value);
 	
-					search->value &= kSearchByteMaskTable[search->bytes];
+					search.value &= kSearchByteMaskTable[search.bytes];
 					break;
 	
 				case kMenu_Name:
-					search->name = DoDynamicEditTextField(search->name);
+					search.name = DoDynamicEditTextField(search.name);
 					break;
 			}
 		}
@@ -5353,8 +5353,8 @@ public class cheat
 		{
 			CheatEntry	* traverse = &cheatList[i];
 	
-			if(traverse->name)
-				menu_item[total] = traverse->name;
+			if(traverse.name)
+				menu_item[total] = traverse.name;
 			else
 				menu_item[total] = "(none)";
 	
@@ -5515,68 +5515,68 @@ public class cheat
 	
 		if (firstTime != 0)
 		{
-			search->currentRegionIdx = 0;
-			search->currentResultsPage = 0;
+			search.currentRegionIdx = 0;
+			search.currentResultsPage = 0;
 	
-			for(traverse = 0; traverse < search->regionListLength; traverse++)
+			for(traverse = 0; traverse < search.regionListLength; traverse++)
 			{
-				region = &search->regionList[traverse];
+				region = &search.regionList[traverse];
 	
-				if(region->numResults)
+				if(region.numResults)
 				{
-					search->currentRegionIdx = traverse;
+					search.currentRegionIdx = traverse;
 					break;
 				}
 			}
 		}
 	
-		if(search->currentRegionIdx >= search->regionListLength)
-			search->currentRegionIdx = search->regionListLength - 1;
-		if(search->currentRegionIdx < 0)
-			search->currentRegionIdx = 0;
+		if(search.currentRegionIdx >= search.regionListLength)
+			search.currentRegionIdx = search.regionListLength - 1;
+		if(search.currentRegionIdx < 0)
+			search.currentRegionIdx = 0;
 	
-		region = &search->regionList[search->currentRegionIdx];
+		region = &search.regionList[search.currentRegionIdx];
 	
 		resultsPerPage = fullMenuPageHeight - 3;
 	
 		if(resultsPerPage <= 0)
 			resultsPerPage = 1;
 	
-		if(region->flags & kRegionFlag_Enabled)
-			numPages = (region->numResults / kSearchByteIncrementTable[search->bytes] + resultsPerPage - 1) / resultsPerPage;
+		if(region.flags & kRegionFlag_Enabled)
+			numPages = (region.numResults / kSearchByteIncrementTable[search.bytes] + resultsPerPage - 1) / resultsPerPage;
 		else
 			numPages = 0;
 	
-		if(search->currentResultsPage >= numPages)
-			search->currentResultsPage = numPages - 1;
-		if(search->currentResultsPage < 0)
-			search->currentResultsPage = 0;
+		if(search.currentResultsPage >= numPages)
+			search.currentResultsPage = numPages - 1;
+		if(search.currentResultsPage < 0)
+			search.currentResultsPage = 0;
 	
-		numToSkip = resultsPerPage * search->currentResultsPage;
+		numToSkip = resultsPerPage * search.currentResultsPage;
 	
-		sprintf(header, "%s %d/%d", region->name, search->currentResultsPage + 1, numPages);
+		sprintf(header, "%s %d/%d", region.name, search.currentResultsPage + 1, numPages);
 	
 		menu_item[total] = header;
 		total++;
 	
 		traverse = 0;
 	
-		if(	(region->length < kSearchByteIncrementTable[search->bytes]) ||
-			!(region->flags & kRegionFlag_Enabled))
+		if(	(region.length < kSearchByteIncrementTable[search.bytes]) ||
+			!(region.flags & kRegionFlag_Enabled))
 		{
 			// no results...
 		}
 		else
 		{
-			for(i = 0; (i < resultsPerPage) && (traverse < region->length) && (resultsFound < region->numResults);)
+			for(i = 0; (i < resultsPerPage) && (traverse < region.length) && (resultsFound < region.numResults);)
 			{
 				while(	!IsRegionOffsetValid(search, region, traverse) &&
-						(traverse < region->length))
+						(traverse < region.length))
 				{
-					traverse += kSearchByteIncrementTable[search->bytes];
+					traverse += kSearchByteIncrementTable[search.bytes];
 				}
 	
-				if(traverse < region->length)
+				if(traverse < region.length)
 				{
 					if(numToSkip > 0)
 					{
@@ -5586,20 +5586,20 @@ public class cheat
 					{
 						if(total == sel)
 						{
-							selectedAddress =		region->address + traverse;
+							selectedAddress =		region.address + traverse;
 							selectedOffset =		traverse;
 							selectedAddressGood =	1;
 						}
 	
 						sprintf(	buf[total],
 									"%.8X (%.*X %.*X %.*X)",
-									region->address + traverse,
-									kSearchByteDigitsTable[search->bytes],
-									ReadSearchOperand(kSearchOperand_First, search, region, region->address + traverse),
-									kSearchByteDigitsTable[search->bytes],
-									ReadSearchOperand(kSearchOperand_Previous, search, region, region->address + traverse),
-									kSearchByteDigitsTable[search->bytes],
-									ReadSearchOperand(kSearchOperand_Current, search, region, region->address + traverse));
+									region.address + traverse,
+									kSearchByteDigitsTable[search.bytes],
+									ReadSearchOperand(kSearchOperand_First, search, region, region.address + traverse),
+									kSearchByteDigitsTable[search.bytes],
+									ReadSearchOperand(kSearchOperand_Previous, search, region, region.address + traverse),
+									kSearchByteDigitsTable[search.bytes],
+									ReadSearchOperand(kSearchOperand_Current, search, region, region.address + traverse));
 	
 						menu_item[total] = buf[total];
 						total++;
@@ -5607,7 +5607,7 @@ public class cheat
 						i++;
 					}
 	
-					traverse += kSearchByteIncrementTable[search->bytes];
+					traverse += kSearchByteIncrementTable[search.bytes];
 					resultsFound++;
 					hadResults = 1;
 				}
@@ -5616,7 +5616,7 @@ public class cheat
 	
 		if(!hadResults)
 		{
-			if(search->numResults)
+			if(search.numResults)
 				menu_item[total] = "no results for this region";
 			else
 				menu_item[total] = "no results found";
@@ -5638,12 +5638,12 @@ public class cheat
 	
 		if(code_pressed_memory(KEYCODE_END))
 		{
-			search->currentResultsPage = numPages - 1;
+			search.currentResultsPage = numPages - 1;
 		}
 	
 		if(code_pressed_memory(KEYCODE_HOME))
 		{
-			search->currentResultsPage = 0;
+			search.currentResultsPage = 0;
 		}
 	
 		if(UIPressedRepeatThrottle(IPT_UI_DOWN, kVerticalKeyRepeatRate))
@@ -5682,23 +5682,23 @@ public class cheat
 	
 		if (goToNextPage != 0)
 		{
-			search->currentResultsPage++;
+			search.currentResultsPage++;
 	
-			if(search->currentResultsPage >= numPages)
+			if(search.currentResultsPage >= numPages)
 			{
-				search->currentResultsPage = 0;
-				search->currentRegionIdx++;
+				search.currentResultsPage = 0;
+				search.currentRegionIdx++;
 	
-				if(search->currentRegionIdx >= search->regionListLength)
+				if(search.currentRegionIdx >= search.regionListLength)
 				{
-					search->currentRegionIdx = 0;
+					search.currentRegionIdx = 0;
 				}
 	
-				for(traverse = search->currentRegionIdx; traverse < search->regionListLength; traverse++)
+				for(traverse = search.currentRegionIdx; traverse < search.regionListLength; traverse++)
 				{
-					if(search->regionList[traverse].numResults)
+					if(search.regionList[traverse].numResults)
 					{
-						search->currentRegionIdx = traverse;
+						search.currentRegionIdx = traverse;
 						break;
 					}
 				}
@@ -5707,53 +5707,53 @@ public class cheat
 	
 		if (goToPrevPage != 0)
 		{
-			search->currentResultsPage--;
+			search.currentResultsPage--;
 	
-			if(search->currentResultsPage < 0)
+			if(search.currentResultsPage < 0)
 			{
-				search->currentResultsPage = 0;
-				search->currentRegionIdx--;
+				search.currentResultsPage = 0;
+				search.currentRegionIdx--;
 	
-				if(search->currentRegionIdx < 0)
+				if(search.currentRegionIdx < 0)
 				{
-					search->currentRegionIdx = search->regionListLength - 1;
+					search.currentRegionIdx = search.regionListLength - 1;
 				}
 	
-				for(i = search->currentRegionIdx; i >= 0; i--)
+				for(i = search.currentRegionIdx; i >= 0; i--)
 				{
-					if(search->regionList[i].numResults)
+					if(search.regionList[i].numResults)
 					{
-						search->currentRegionIdx = i;
+						search.currentRegionIdx = i;
 						break;
 					}
 				}
 	
 				{
-					SearchRegion	* newRegion = &search->regionList[search->currentRegionIdx];
-					UINT32			nextNumPages = (newRegion->numResults / kSearchByteIncrementTable[search->bytes] + resultsPerPage - 1) / resultsPerPage;
+					SearchRegion	* newRegion = &search.regionList[search.currentRegionIdx];
+					UINT32			nextNumPages = (newRegion.numResults / kSearchByteIncrementTable[search.bytes] + resultsPerPage - 1) / resultsPerPage;
 	
 					if(nextNumPages <= 0)
 						nextNumPages = 1;
 	
-					search->currentResultsPage = nextNumPages - 1;
+					search.currentResultsPage = nextNumPages - 1;
 				}
 			}
 		}
 	
 		if(UIPressedRepeatThrottle(IPT_UI_PAN_LEFT, kVerticalKeyRepeatRate))
 		{
-			search->currentRegionIdx--;
+			search.currentRegionIdx--;
 	
-			if(search->currentRegionIdx < 0)
-				search->currentRegionIdx = search->regionListLength - 1;
+			if(search.currentRegionIdx < 0)
+				search.currentRegionIdx = search.regionListLength - 1;
 		}
 	
 		if(UIPressedRepeatThrottle(IPT_UI_PAN_RIGHT, kVerticalKeyRepeatRate))
 		{
-			search->currentRegionIdx++;
+			search.currentRegionIdx++;
 	
-			if(search->currentRegionIdx >= search->regionListLength)
-				search->currentRegionIdx = 0;
+			if(search.currentRegionIdx >= search.regionListLength)
+				search.currentRegionIdx = 0;
 		}
 	
 		if (selectedAddressGood != 0)
@@ -5776,8 +5776,8 @@ public class cheat
 			if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 			{
 				InvalidateRegionOffset(search, region, selectedOffset);
-				search->numResults--;
-				region->numResults--;
+				search.numResults--;
+				region.numResults--;
 			}
 		}
 	
@@ -5789,7 +5789,7 @@ public class cheat
 				{
 					InvalidateEntireRegion(search, region);
 	
-					usrintf_showmessage_secs(1, "region invalidated - %d results remain", search->numResults);
+					usrintf_showmessage_secs(1, "region invalidated - %d results remain", search.numResults);
 				}
 			}
 		}
@@ -5849,7 +5849,7 @@ public class cheat
 		{
 			WatchInfo	* traverse = &watchList[i];
 	
-			sprintf(buf[i], "%d:%.*X (%d)", traverse->cpu, cpuInfoList[traverse->cpu].addressCharsNeeded, traverse->address, traverse->numElements);
+			sprintf(buf[i], "%d:%.*X (%d)", traverse.cpu, cpuInfoList[traverse.cpu].addressCharsNeeded, traverse.address, traverse.numElements);
 	
 			menuItem[total] = buf[i];
 			total++;
@@ -5963,7 +5963,7 @@ public class cheat
 				{
 					if (watch != 0)
 					{
-						watch->numElements = 0;
+						watch.numElements = 0;
 					}
 				}
 			}
@@ -6057,33 +6057,33 @@ public class cheat
 	
 		sel = selection - 1;
 	
-		sprintf(buf[total], "%.*X", cpuInfoList[entry->cpu].addressCharsNeeded, entry->address >> entry->addressShift);
+		sprintf(buf[total], "%.*X", cpuInfoList[entry.cpu].addressCharsNeeded, entry.address >> entry.addressShift);
 		menuItem[total] = "Address";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->cpu);
+		sprintf(buf[total], "%d", entry.cpu);
 		menuItem[total] = "CPU";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->numElements);
+		sprintf(buf[total], "%d", entry.numElements);
 		menuItem[total] = "Length";
 		menuSubItem[total] = buf[total];
 		total++;
 	
 		menuItem[total] = "Element Size";
-		menuSubItem[total] = kWatchSizeStringList[entry->elementBytes];
+		menuSubItem[total] = kWatchSizeStringList[entry.elementBytes];
 		total++;
 	
 		menuItem[total] = "Label Type";
-		menuSubItem[total] = kWatchLabelStringList[entry->labelType];
+		menuSubItem[total] = kWatchLabelStringList[entry.labelType];
 		total++;
 	
 		menuItem[total] = "Text Label";
-		if(entry->label[0])
+		if(entry.label[0])
 		{
-			menuSubItem[total] = entry->label;
+			menuSubItem[total] = entry.label;
 		}
 		else
 		{
@@ -6092,51 +6092,51 @@ public class cheat
 		total++;
 	
 		menuItem[total] = "Display Type";
-		menuSubItem[total] = kWatchDisplayTypeStringList[entry->displayType];
+		menuSubItem[total] = kWatchDisplayTypeStringList[entry.displayType];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->x);
+		sprintf(buf[total], "%d", entry.x);
 		menuItem[total] = "X";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->y);
+		sprintf(buf[total], "%d", entry.y);
 		menuItem[total] = "Y";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->skip);
+		sprintf(buf[total], "%d", entry.skip);
 		menuItem[total] = "Skip Bytes";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->elementsPerLine);
+		sprintf(buf[total], "%d", entry.elementsPerLine);
 		menuItem[total] = "Elements Per Line";
 		menuSubItem[total] = buf[total];
 		total++;
 	
 		{
-			if(entry->addValue < 0)
-				sprintf(buf[total], "-%.2X", -entry->addValue);
+			if(entry.addValue < 0)
+				sprintf(buf[total], "-%.2X", -entry.addValue);
 			else
-				sprintf(buf[total], "%.2X", entry->addValue);
+				sprintf(buf[total], "%.2X", entry.addValue);
 	
 			menuItem[total] = "Add Value";
 			menuSubItem[total] = buf[total];
 			total++;
 		}
 	
-		sprintf(buf[total], "%d", entry->addressShift);
+		sprintf(buf[total], "%d", entry.addressShift);
 		menuItem[total] = "Address Shift";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%d", entry->dataShift);
+		sprintf(buf[total], "%d", entry.dataShift);
 		menuItem[total] = "Data Shift";
 		menuSubItem[total] = buf[total];
 		total++;
 	
-		sprintf(buf[total], "%.*X", kSearchByteDigitsTable[kWatchSizeConversionTable[entry->elementBytes]], entry->xor);
+		sprintf(buf[total], "%.*X", kSearchByteDigitsTable[kWatchSizeConversionTable[entry.elementBytes]], entry.xor);
 		menuItem[total] = "XOR";
 		menuSubItem[total] = buf[total];
 		total++;
@@ -6172,93 +6172,93 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Address:
-					entry->address = DoShift(entry->address, entry->addressShift);
-					entry->address -= increment;
-					entry->address = DoShift(entry->address, -entry->addressShift);
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.address = DoShift(entry.address, entry.addressShift);
+					entry.address -= increment;
+					entry.address = DoShift(entry.address, -entry.addressShift);
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_CPU:
-					entry->cpu--;
+					entry.cpu--;
 	
-					if(entry->cpu >= cpu_gettotalcpu())
-						entry->cpu = cpu_gettotalcpu() - 1;
+					if(entry.cpu >= cpu_gettotalcpu())
+						entry.cpu = cpu_gettotalcpu() - 1;
 	
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_NumElements:
-					if(entry->numElements > 0)
-						entry->numElements--;
+					if(entry.numElements > 0)
+						entry.numElements--;
 					else
-						entry->numElements = 0;
+						entry.numElements = 0;
 					break;
 	
 				case kMenu_ElementSize:
-					if(entry->elementBytes > 0)
-						entry->elementBytes--;
+					if(entry.elementBytes > 0)
+						entry.elementBytes--;
 					else
-						entry->elementBytes = 0;
+						entry.elementBytes = 0;
 	
-					entry->xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry->elementBytes]];
+					entry.xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry.elementBytes]];
 					break;
 	
 				case kMenu_LabelType:
-					if(entry->labelType > 0)
-						entry->labelType--;
+					if(entry.labelType > 0)
+						entry.labelType--;
 					else
-						entry->labelType = 0;
+						entry.labelType = 0;
 					break;
 	
 				case kMenu_TextLabel:
 					break;
 	
 				case kMenu_DisplayType:
-					if(entry->displayType > 0)
-						entry->displayType--;
+					if(entry.displayType > 0)
+						entry.displayType--;
 					else
-						entry->displayType = 0;
+						entry.displayType = 0;
 					break;
 	
 				case kMenu_XPosition:
-					entry->x--;
+					entry.x--;
 					break;
 	
 				case kMenu_YPosition:
-					entry->y--;
+					entry.y--;
 					break;
 	
 				case kMenu_Skip:
-					if(entry->skip > 0)
-						entry->skip--;
+					if(entry.skip > 0)
+						entry.skip--;
 					break;
 	
 				case kMenu_ElementsPerLine:
-					if(entry->elementsPerLine > 0)
-						entry->elementsPerLine--;
+					if(entry.elementsPerLine > 0)
+						entry.elementsPerLine--;
 					break;
 	
 				case kMenu_AddValue:
-					entry->addValue = (entry->addValue - 1) & 0xFF;
+					entry.addValue = (entry.addValue - 1) & 0xFF;
 					break;
 	
 				case kMenu_AddressShift:
-					if(entry->addressShift > -31)
-						entry->addressShift--;
+					if(entry.addressShift > -31)
+						entry.addressShift--;
 					else
-						entry->addressShift = 31;
+						entry.addressShift = 31;
 					break;
 	
 				case kMenu_DataShift:
-					if(entry->dataShift > -31)
-						entry->dataShift--;
+					if(entry.dataShift > -31)
+						entry.dataShift--;
 					else
-						entry->dataShift = 31;
+						entry.dataShift = 31;
 					break;
 	
 				case kMenu_XOR:
-					entry->xor -= increment;
-					entry->xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry->elementBytes]];
+					entry.xor -= increment;
+					entry.xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry.elementBytes]];
 					break;
 			}
 		}
@@ -6270,88 +6270,88 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Address:
-					entry->address = DoShift(entry->address, entry->addressShift);
-					entry->address += increment;
-					entry->address = DoShift(entry->address, -entry->addressShift);
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.address = DoShift(entry.address, entry.addressShift);
+					entry.address += increment;
+					entry.address = DoShift(entry.address, -entry.addressShift);
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_CPU:
-					entry->cpu++;
+					entry.cpu++;
 	
-					if(entry->cpu >= cpu_gettotalcpu())
-						entry->cpu = 0;
+					if(entry.cpu >= cpu_gettotalcpu())
+						entry.cpu = 0;
 	
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_NumElements:
-					entry->numElements++;
+					entry.numElements++;
 					break;
 	
 				case kMenu_ElementSize:
-					if(entry->elementBytes < kSearchSize_32Bit)
-						entry->elementBytes++;
+					if(entry.elementBytes < kSearchSize_32Bit)
+						entry.elementBytes++;
 					else
-						entry->elementBytes = kSearchSize_32Bit;
+						entry.elementBytes = kSearchSize_32Bit;
 	
-					entry->xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry->elementBytes]];
+					entry.xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry.elementBytes]];
 					break;
 	
 				case kMenu_LabelType:
-					if(entry->labelType < kWatchLabel_MaxPlusOne - 1)
-						entry->labelType++;
+					if(entry.labelType < kWatchLabel_MaxPlusOne - 1)
+						entry.labelType++;
 					else
-						entry->labelType = kWatchLabel_MaxPlusOne - 1;
+						entry.labelType = kWatchLabel_MaxPlusOne - 1;
 					break;
 	
 				case kMenu_TextLabel:
 					break;
 	
 				case kMenu_DisplayType:
-					if(entry->displayType < kWatchDisplayType_MaxPlusOne - 1)
-						entry->displayType++;
+					if(entry.displayType < kWatchDisplayType_MaxPlusOne - 1)
+						entry.displayType++;
 					else
-						entry->displayType = kWatchDisplayType_MaxPlusOne - 1;
+						entry.displayType = kWatchDisplayType_MaxPlusOne - 1;
 					break;
 	
 				case kMenu_XPosition:
-					entry->x += increment;
+					entry.x += increment;
 					break;
 	
 				case kMenu_YPosition:
-					entry->y += increment;
+					entry.y += increment;
 					break;
 	
 				case kMenu_Skip:
-					entry->skip++;
+					entry.skip++;
 					break;
 	
 				case kMenu_ElementsPerLine:
-					entry->elementsPerLine++;
+					entry.elementsPerLine++;
 					break;
 	
 				case kMenu_AddValue:
-					entry->addValue = (entry->addValue + 1) & 0xFF;
+					entry.addValue = (entry.addValue + 1) & 0xFF;
 					break;
 	
 				case kMenu_AddressShift:
-					if(entry->addressShift < 31)
-						entry->addressShift++;
+					if(entry.addressShift < 31)
+						entry.addressShift++;
 					else
-						entry->addressShift = -31;
+						entry.addressShift = -31;
 					break;
 	
 				case kMenu_DataShift:
-					if(entry->dataShift < 31)
-						entry->dataShift++;
+					if(entry.dataShift < 31)
+						entry.dataShift++;
 					else
-						entry->dataShift = -31;
+						entry.dataShift = -31;
 					break;
 	
 				case kMenu_XOR:
-					entry->xor += increment;
-					entry->xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry->elementBytes]];
+					entry.xor += increment;
+					entry.xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry.elementBytes]];
 					break;
 			}
 		}
@@ -6431,48 +6431,48 @@ public class cheat
 			switch(sel)
 			{
 				case kMenu_Address:
-					entry->address = DoShift(entry->address, entry->addressShift);
-					entry->address = DoEditHexField(entry->address);
-					entry->address = DoShift(entry->address, -entry->addressShift);
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.address = DoShift(entry.address, entry.addressShift);
+					entry.address = DoEditHexField(entry.address);
+					entry.address = DoShift(entry.address, -entry.addressShift);
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_CPU:
-					entry->cpu = DoEditDecField(entry->cpu, 0, cpu_gettotalcpu() - 1);
-					entry->address &= cpuInfoList[entry->cpu].addressMask;
+					entry.cpu = DoEditDecField(entry.cpu, 0, cpu_gettotalcpu() - 1);
+					entry.address &= cpuInfoList[entry.cpu].addressMask;
 					break;
 	
 				case kMenu_NumElements:
-					entry->numElements = DoEditDecField(entry->numElements, 0, 99);
+					entry.numElements = DoEditDecField(entry.numElements, 0, 99);
 					break;
 	
 				case kMenu_TextLabel:
-					DoStaticEditTextField(entry->label, 255);
+					DoStaticEditTextField(entry.label, 255);
 					break;
 	
 				case kMenu_XPosition:
-					entry->x = DoEditDecField(entry->x, -1000, 1000);
+					entry.x = DoEditDecField(entry.x, -1000, 1000);
 					break;
 	
 				case kMenu_YPosition:
-					entry->y = DoEditDecField(entry->y, -1000, 1000);
+					entry.y = DoEditDecField(entry.y, -1000, 1000);
 					break;
 	
 				case kMenu_AddValue:
-					entry->addValue = DoEditHexFieldSigned(entry->addValue, 0xFFFFFF80) & 0xFF;
+					entry.addValue = DoEditHexFieldSigned(entry.addValue, 0xFFFFFF80) & 0xFF;
 					break;
 	
 				case kMenu_AddressShift:
-					entry->addressShift = DoEditDecField(entry->addressShift, -31, 31);
+					entry.addressShift = DoEditDecField(entry.addressShift, -31, 31);
 					break;
 	
 				case kMenu_DataShift:
-					entry->dataShift = DoEditDecField(entry->dataShift, -31, 31);
+					entry.dataShift = DoEditDecField(entry.dataShift, -31, 31);
 					break;
 	
 				case kMenu_XOR:
-					entry->xor = DoEditHexField(entry->xor);
-					entry->xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry->elementBytes]];
+					entry.xor = DoEditHexField(entry.xor);
+					entry.xor &= kSearchByteMaskTable[kWatchSizeConversionTable[entry.elementBytes]];
 					break;
 			}
 	
@@ -6488,7 +6488,7 @@ public class cheat
 	
 			if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 			{
-				entry->numElements = 0;
+				entry.numElements = 0;
 			}
 	
 			if(input_ui_pressed(IPT_UI_SAVE_CHEAT))
@@ -6538,22 +6538,22 @@ public class cheat
 	
 		sel = selection - 1;
 	
-		RequestStrings(search->regionListLength + 3, 0, 0, 0);
+		RequestStrings(search.regionListLength + 3, 0, 0, 0);
 	
 		menuItem =		menuStrings.mainList;
 		menuSubItem =	menuStrings.subList;
 	
-		for(i = 0; i < search->regionListLength; i++)
+		for(i = 0; i < search.regionListLength; i++)
 		{
-			SearchRegion	* traverse = &search->regionList[i];
+			SearchRegion	* traverse = &search.regionList[i];
 	
-			menuItem[total] = traverse->name;
-			menuSubItem[total] = ui_getstring((traverse->flags & kRegionFlag_Enabled) ? UI_on : UI_off);
+			menuItem[total] = traverse.name;
+			menuSubItem[total] = ui_getstring((traverse.flags & kRegionFlag_Enabled) ? UI_on : UI_off);
 			total++;
 		}
 	
 		menuItem[total] = "Search Speed";
-		menuSubItem[total] = kSearchSpeedList[search->searchSpeed];
+		menuSubItem[total] = kSearchSpeedList[search.searchSpeed];
 		total++;
 	
 		menuItem[total] = ui_getstring(UI_returntoprior);
@@ -6568,8 +6568,8 @@ public class cheat
 		if(sel > (total - 1))
 			sel = total - 1;
 	
-		if(sel < search->regionListLength)
-			region = &search->regionList[sel];
+		if(sel < search.regionListLength)
+			region = &search.regionList[sel];
 		else
 			region = NULL;
 	
@@ -6609,19 +6609,19 @@ public class cheat
 	
 		if(UIPressedRepeatThrottle(IPT_UI_LEFT, kHorizontalSlowKeyRepeatRate))
 		{
-			if(sel < search->regionListLength)
+			if(sel < search.regionListLength)
 			{
-				search->regionList[sel].flags ^= kRegionFlag_Enabled;
+				search.regionList[sel].flags ^= kRegionFlag_Enabled;
 	
 				AllocateSearchRegions(search);
 			}
 	
-			if(sel == search->regionListLength)	// set search speed
+			if(sel == search.regionListLength)	// set search speed
 			{
-				if(search->searchSpeed > kSearchSpeed_Fast)
-					search->searchSpeed--;
+				if(search.searchSpeed > kSearchSpeed_Fast)
+					search.searchSpeed--;
 				else
-					search->searchSpeed = kSearchSpeed_Max;
+					search.searchSpeed = kSearchSpeed_Max;
 	
 				BuildSearchRegions(search);
 				AllocateSearchRegions(search);
@@ -6630,19 +6630,19 @@ public class cheat
 	
 		if(UIPressedRepeatThrottle(IPT_UI_RIGHT, kHorizontalSlowKeyRepeatRate))
 		{
-			if(sel < search->regionListLength)
+			if(sel < search.regionListLength)
 			{
-				search->regionList[sel].flags ^= kRegionFlag_Enabled;
+				search.regionList[sel].flags ^= kRegionFlag_Enabled;
 	
 				AllocateSearchRegions(search);
 			}
 	
-			if(sel == search->regionListLength)	// set search speed
+			if(sel == search.regionListLength)	// set search speed
 			{
-				if(search->searchSpeed < kSearchSpeed_Max)
-					search->searchSpeed++;
+				if(search.searchSpeed < kSearchSpeed_Max)
+					search.searchSpeed++;
 				else
-					search->searchSpeed = kSearchSpeed_Fast;
+					search.searchSpeed = kSearchSpeed_Fast;
 	
 				BuildSearchRegions(search);
 				AllocateSearchRegions(search);
@@ -6657,7 +6657,7 @@ public class cheat
 				{
 					InvalidateEntireRegion(search, region);
 	
-					usrintf_showmessage_secs(1, "region invalidated - %d results remain", search->numResults);
+					usrintf_showmessage_secs(1, "region invalidated - %d results remain", search.numResults);
 				}
 			}
 		}
@@ -6704,9 +6704,9 @@ public class cheat
 	
 			if(i == currentSearchIdx)
 			{
-				if(info->name)
+				if(info.name)
 				{
-					sprintf(buf[total], "[#%d: %s]", i, info->name);
+					sprintf(buf[total], "[#%d: %s]", i, info.name);
 				}
 				else
 				{
@@ -6715,9 +6715,9 @@ public class cheat
 			}
 			else
 			{
-				if(info->name)
+				if(info.name)
 				{
-					sprintf(buf[total], "#%d: %s", i, info->name);
+					sprintf(buf[total], "#%d: %s", i, info.name);
 				}
 				else
 				{
@@ -7133,40 +7133,40 @@ public class cheat
 			int			j;
 			WatchInfo	* info = &watchList[i];
 			char		buf[1024];
-			UINT32		address = info->address;
+			UINT32		address = info.address;
 			int			xOffset = 0, yOffset = 0;
 			int			numChars;
 			int			lineElements = 0;
 	
-			if(info->numElements)
+			if(info.numElements)
 			{
-				switch(info->labelType)
+				switch(info.labelType)
 				{
 					case kWatchLabel_Address:
-						numChars = sprintf(buf, "%.8X: ", info->address);
+						numChars = sprintf(buf, "%.8X: ", info.address);
 	
-						ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+						ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 						xOffset += numChars;
 						break;
 	
 					case kWatchLabel_String:
-						numChars = sprintf(buf, "%s: ", info->label);
+						numChars = sprintf(buf, "%s: ", info.label);
 	
-						ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+						ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 						xOffset += numChars;
 						break;
 				}
 	
-				for(j = 0; j < info->numElements; j++)
+				for(j = 0; j < info.numElements; j++)
 				{
 					UINT32	data;
 	
-					data = (DoCPURead(info->cpu, address, kSearchByteIncrementTable[info->elementBytes], CPUNeedsSwap(info->cpu)) + info->addValue) & kSearchByteMaskTable[info->elementBytes];
-					data = DoShift(data, info->dataShift);
-					data ^= info->xor;
+					data = (DoCPURead(info.cpu, address, kSearchByteIncrementTable[info.elementBytes], CPUNeedsSwap(info.cpu)) + info.addValue) & kSearchByteMaskTable[info.elementBytes];
+					data = DoShift(data, info.dataShift);
+					data ^= info.xor;
 	
-					if(	(lineElements >= info->elementsPerLine) &&
-						info->elementsPerLine)
+					if(	(lineElements >= info.elementsPerLine) &&
+						info.elementsPerLine)
 					{
 						lineElements = 0;
 	
@@ -7174,41 +7174,41 @@ public class cheat
 						yOffset++;
 					}
 	
-					switch(info->displayType)
+					switch(info.displayType)
 					{
 						case kWatchDisplayType_Hex:
-							numChars = sprintf(buf, "%.*X", kSearchByteDigitsTable[info->elementBytes], data);
+							numChars = sprintf(buf, "%.*X", kSearchByteDigitsTable[info.elementBytes], data);
 	
-							ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+							ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 							xOffset += numChars;
 							xOffset++;
 							break;
 	
 						case kWatchDisplayType_Decimal:
-							numChars = sprintf(buf, "%.*d", kSearchByteDecDigitsTable[info->elementBytes], data);
+							numChars = sprintf(buf, "%.*d", kSearchByteDecDigitsTable[info.elementBytes], data);
 	
-							ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+							ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 							xOffset += numChars;
 							xOffset++;
 							break;
 	
 						case kWatchDisplayType_Binary:
-							numChars = PrintBinary(buf, data, kSearchByteMaskTable[info->elementBytes]);
+							numChars = PrintBinary(buf, data, kSearchByteMaskTable[info.elementBytes]);
 	
-							ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+							ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 							xOffset += numChars;
 							xOffset++;
 							break;
 	
 						case kWatchDisplayType_ASCII:
-							numChars = PrintASCII(buf, data, info->elementBytes);
+							numChars = PrintASCII(buf, data, info.elementBytes);
 	
-							ui_text(bitmap, buf, xOffset * uirotcharwidth + info->x, yOffset * uirotcharheight + info->y);
+							ui_text(bitmap, buf, xOffset * uirotcharwidth + info.x, yOffset * uirotcharheight + info.y);
 							xOffset += numChars;
 							break;
 					}
 	
-					address += kSearchByteIncrementTable[info->elementBytes] + info->skip;
+					address += kSearchByteIncrementTable[info.elementBytes] + info.skip;
 					lineElements++;
 				}
 			}
@@ -7341,17 +7341,17 @@ public class cheat
 		{
 			int	i;
 	
-			free(entry->name);
-			free(entry->comment);
+			free(entry.name);
+			free(entry.comment);
 	
-			for(i = 0; i < entry->actionListLength; i++)
+			for(i = 0; i < entry.actionListLength; i++)
 			{
-				CheatAction	* action = &entry->actionList[i];
+				CheatAction	* action = &entry.actionList[i];
 	
 				DisposeAction(action);
 			}
 	
-			free(entry->actionList);
+			free(entry.actionList);
 	
 			memset(entry, 0, sizeof(CheatEntry));
 		}
@@ -7366,93 +7366,93 @@ public class cheat
 	
 	static void ResizeCheatActionList(CheatEntry * entry, UINT32 newLength)
 	{
-		if(newLength != entry->actionListLength)
+		if(newLength != entry.actionListLength)
 		{
-			if(newLength < entry->actionListLength)
+			if(newLength < entry.actionListLength)
 			{
 				int	i;
 	
-				for(i = newLength; i < entry->actionListLength; i++)
-					DisposeAction(&entry->actionList[i]);
+				for(i = newLength; i < entry.actionListLength; i++)
+					DisposeAction(&entry.actionList[i]);
 			}
 	
-			entry->actionList = realloc(entry->actionList, newLength * sizeof(CheatAction));
-			if(!entry->actionList && (newLength != 0))
+			entry.actionList = realloc(entry.actionList, newLength * sizeof(CheatAction));
+			if(!entry.actionList && (newLength != 0))
 			{
 				logerror("ResizeCheatActionList: out of memory resizing cheat action list\n");
 				usrintf_showmessage_secs(2, "out of memory while loading cheat database");
 	
-				entry->actionListLength = 0;
+				entry.actionListLength = 0;
 	
 				return;
 			}
 	
-			if(newLength > entry->actionListLength)
+			if(newLength > entry.actionListLength)
 			{
-				memset(&entry->actionList[entry->actionListLength], 0, (newLength - entry->actionListLength) * sizeof(CheatAction));
+				memset(&entry.actionList[entry.actionListLength], 0, (newLength - entry.actionListLength) * sizeof(CheatAction));
 			}
 	
-			entry->actionListLength = newLength;
+			entry.actionListLength = newLength;
 		}
 	}
 	
 	static void ResizeCheatActionListNoDispose(CheatEntry * entry, UINT32 newLength)
 	{
-		if(newLength != entry->actionListLength)
+		if(newLength != entry.actionListLength)
 		{
-			entry->actionList = realloc(entry->actionList, newLength * sizeof(CheatAction));
-			if(!entry->actionList && (newLength != 0))
+			entry.actionList = realloc(entry.actionList, newLength * sizeof(CheatAction));
+			if(!entry.actionList && (newLength != 0))
 			{
 				logerror("ResizeCheatActionList: out of memory resizing cheat action list\n");
 				usrintf_showmessage_secs(2, "out of memory while loading cheat database");
 	
-				entry->actionListLength = 0;
+				entry.actionListLength = 0;
 	
 				return;
 			}
 	
-			if(newLength > entry->actionListLength)
+			if(newLength > entry.actionListLength)
 			{
-				memset(&entry->actionList[entry->actionListLength], 0, (newLength - entry->actionListLength) * sizeof(CheatAction));
+				memset(&entry.actionList[entry.actionListLength], 0, (newLength - entry.actionListLength) * sizeof(CheatAction));
 			}
 	
-			entry->actionListLength = newLength;
+			entry.actionListLength = newLength;
 		}
 	}
 	
 	static void AddActionBefore(CheatEntry * entry, UINT32 idx)
 	{
-		ResizeCheatActionList(entry, entry->actionListLength + 1);
+		ResizeCheatActionList(entry, entry.actionListLength + 1);
 	
-		if(idx < (entry->actionListLength - 1))
-			memmove(&entry->actionList[idx + 1], &entry->actionList[idx], sizeof(CheatAction) * (entry->actionListLength - 1 - idx));
+		if(idx < (entry.actionListLength - 1))
+			memmove(&entry.actionList[idx + 1], &entry.actionList[idx], sizeof(CheatAction) * (entry.actionListLength - 1 - idx));
 	
-		if(idx >= entry->actionListLength)
-			idx = entry->actionListLength - 1;
+		if(idx >= entry.actionListLength)
+			idx = entry.actionListLength - 1;
 	
-		memset(&entry->actionList[idx], 0, sizeof(CheatAction));
+		memset(&entry.actionList[idx], 0, sizeof(CheatAction));
 	}
 	
 	static void DeleteActionAt(CheatEntry * entry, UINT32 idx)
 	{
-		if(idx >= entry->actionListLength)
+		if(idx >= entry.actionListLength)
 			return;
 	
-		DisposeAction(&entry->actionList[idx]);
+		DisposeAction(&entry.actionList[idx]);
 	
-		if(idx < (entry->actionListLength - 1))
+		if(idx < (entry.actionListLength - 1))
 		{
-			memmove(&entry->actionList[idx], &entry->actionList[idx + 1], sizeof(CheatAction) * (entry->actionListLength - 1 - idx));
+			memmove(&entry.actionList[idx], &entry.actionList[idx + 1], sizeof(CheatAction) * (entry.actionListLength - 1 - idx));
 		}
 	
-		ResizeCheatActionListNoDispose(entry, entry->actionListLength - 1);
+		ResizeCheatActionListNoDispose(entry, entry.actionListLength - 1);
 	}
 	
 	static void DisposeAction(CheatAction * action)
 	{
 		if (action != 0)
 		{
-			free(action->optionalName);
+			free(action.optionalName);
 	
 			memset(action, 0, sizeof(CheatAction));
 		}
@@ -7461,9 +7461,9 @@ public class cheat
 	static void InitWatch(WatchInfo * info, UINT32 idx)
 	{
 		if(idx > 0)
-			info->y = watchList[idx - 1].y + uirotcharheight;
+			info.y = watchList[idx - 1].y + uirotcharheight;
 		else
-			info->y = 0;
+			info.y = 0;
 	}
 	
 	static void ResizeWatchList(UINT32 newLength)
@@ -7584,7 +7584,7 @@ public class cheat
 		{
 			info = &watchList[i];
 	
-			if(info->numElements == 0)
+			if(info.numElements == 0)
 			{
 				theWatch = info;
 	
@@ -7607,22 +7607,22 @@ public class cheat
 		if (watch != 0)
 		{
 			CheatEntry	* entry = GetNewCheat();
-			CheatAction	* action = &entry->actionList[0];
+			CheatAction	* action = &entry.actionList[0];
 			char		tempString[1024];
 			int			tempStringLength;
-			UINT32		data = DoCPURead(watch->cpu, watch->address, kSearchByteIncrementTable[watch->elementBytes], 0);
+			UINT32		data = DoCPURead(watch.cpu, watch.address, kSearchByteIncrementTable[watch.elementBytes], 0);
 	
-			tempStringLength = sprintf(tempString, "%.8X (%d) = %.*X", watch->address, watch->cpu, kSearchByteDigitsTable[watch->elementBytes], data);
+			tempStringLength = sprintf(tempString, "%.8X (%d) = %.*X", watch.address, watch.cpu, kSearchByteDigitsTable[watch.elementBytes], data);
 	
-			entry->name = realloc(entry->name, tempStringLength + 1);
-			memcpy(entry->name, tempString, tempStringLength + 1);
+			entry.name = realloc(entry.name, tempStringLength + 1);
+			memcpy(entry.name, tempString, tempStringLength + 1);
 	
-			SET_FIELD(action->type, LocationParameter, watch->cpu);
-			SET_FIELD(action->type, BytesUsed, kSearchByteIncrementTable[watch->elementBytes] - 1);
-			action->address = watch->address;
-			action->data = data;
-			action->extendData = 0xFFFFFFFF;
-			action->originalDataField = data;
+			SET_FIELD(action.type, LocationParameter, watch.cpu);
+			SET_FIELD(action.type, BytesUsed, kSearchByteIncrementTable[watch.elementBytes] - 1);
+			action.address = watch.address;
+			action.data = data;
+			action.extendData = 0xFFFFFFFF;
+			action.originalDataField = data;
 	
 			UpdateCheatInfo(entry, 0);
 		}
@@ -7630,7 +7630,7 @@ public class cheat
 	
 	static void SetupCheatFromWatchAsWatch(CheatEntry * entry, WatchInfo * watch)
 	{
-		if(watch && entry && watch->numElements)
+		if(watch && entry && watch.numElements)
 		{
 			CheatAction	* action;
 			char		tempString[1024];
@@ -7639,30 +7639,30 @@ public class cheat
 			DisposeCheat(entry);
 			ResizeCheatActionList(entry, 1);
 	
-			action = &entry->actionList[0];
+			action = &entry.actionList[0];
 	
-			tempStringLength = sprintf(tempString, "Watch %.8X (%d)", watch->address, watch->cpu);
+			tempStringLength = sprintf(tempString, "Watch %.8X (%d)", watch.address, watch.cpu);
 	
-			entry->name = realloc(entry->name, tempStringLength + 1);
-			memcpy(entry->name, tempString, tempStringLength + 1);
+			entry.name = realloc(entry.name, tempStringLength + 1);
+			memcpy(entry.name, tempString, tempStringLength + 1);
 	
-			action->type = 0;
-			SET_FIELD(action->type, LocationParameter, watch->cpu);
-			SET_FIELD(action->type, Type, kType_Watch);
-			SET_FIELD(action->type, BytesUsed, kSearchByteIncrementTable[watch->elementBytes] - 1);
-			SET_FIELD(action->type, TypeParameter, watch->displayType | ((watch->labelType == kWatchLabel_String) ? 0x04 : 0));
+			action.type = 0;
+			SET_FIELD(action.type, LocationParameter, watch.cpu);
+			SET_FIELD(action.type, Type, kType_Watch);
+			SET_FIELD(action.type, BytesUsed, kSearchByteIncrementTable[watch.elementBytes] - 1);
+			SET_FIELD(action.type, TypeParameter, watch.displayType | ((watch.labelType == kWatchLabel_String) ? 0x04 : 0));
 	
-			action->address = watch->address;
-			action->data  =	((watch->numElements - 1) & 0xFF) |
-							((watch->skip & 0xFF) << 8) |
-							((watch->elementsPerLine & 0xFF) << 16) |
-							((watch->addValue & 0xFF) << 24);
-			action->originalDataField = action->data;
-			action->extendData = 0xFFFFFFFF;
+			action.address = watch.address;
+			action.data  =	((watch.numElements - 1) & 0xFF) |
+							((watch.skip & 0xFF) << 8) |
+							((watch.elementsPerLine & 0xFF) << 16) |
+							((watch.addValue & 0xFF) << 24);
+			action.originalDataField = action.data;
+			action.extendData = 0xFFFFFFFF;
 	
-			tempStringLength = strlen(watch->label);
-			entry->comment = realloc(entry->comment, tempStringLength + 1);
-			memcpy(entry->comment, watch->label, tempStringLength + 1);
+			tempStringLength = strlen(watch.label);
+			entry.comment = realloc(entry.comment, tempStringLength + 1);
+			memcpy(entry.comment, watch.label, tempStringLength + 1);
 	
 			UpdateCheatInfo(entry, 0);
 		}
@@ -7764,33 +7764,33 @@ public class cheat
 	{
 		if (info != 0)
 		{
-			info->searchSpeed = kSearchSpeed_Medium;
+			info.searchSpeed = kSearchSpeed_Medium;
 		}
 	}
 	
 	static void DisposeSearchRegions(SearchInfo * info)
 	{
-		if(info->regionList)
+		if(info.regionList)
 		{
 			int	i;
 	
-			for(i = 0; i < info->regionListLength; i++)
+			for(i = 0; i < info.regionListLength; i++)
 			{
-				SearchRegion	* region = &info->regionList[i];
+				SearchRegion	* region = &info.regionList[i];
 	
-				free(region->first);
-				free(region->last);
-				free(region->status);
-				free(region->backupLast);
-				free(region->backupStatus);
+				free(region.first);
+				free(region.last);
+				free(region.status);
+				free(region.backupLast);
+				free(region.backupStatus);
 			}
 	
-			free(info->regionList);
+			free(info.regionList);
 	
-			info->regionList = NULL;
+			info.regionList = NULL;
 		}
 	
-		info->regionListLength = 0;
+		info.regionListLength = 0;
 	}
 	
 	static void DisposeSearch(UINT32 idx)
@@ -7804,8 +7804,8 @@ public class cheat
 	
 		DisposeSearchRegions(info);
 	
-		free(info->name);
-		info->name = NULL;
+		free(info.name);
+		info.name = NULL;
 	}
 	
 	static SearchInfo *	GetCurrentSearch(void)
@@ -7824,7 +7824,7 @@ public class cheat
 	
 		// ### optimize if needed
 	
-		for(offset = 0; offset < region->length; offset++)
+		for(offset = 0; offset < region.length; offset++)
 		{
 			buf[offset] = ReadRegionData(region, offset, 1, 0);
 		}
@@ -7832,16 +7832,16 @@ public class cheat
 	
 	static UINT32 ReadRegionData(SearchRegion * region, UINT32 offset, UINT8 size, UINT8 swap)
 	{
-		UINT32	address = region->address + offset;
+		UINT32	address = region.address + offset;
 	
-		switch(region->targetType)
+		switch(region.targetType)
 		{
 			case kRegionType_CPU:
-				return DoCPURead(region->targetIdx, address, size, CPUNeedsSwap(region->targetIdx) ^ swap);
+				return DoCPURead(region.targetIdx, address, size, CPUNeedsSwap(region.targetIdx) ^ swap);
 	
 			case kRegionType_Memory:
-				if(region->cachedPointer)
-					return DoMemoryRead(region->cachedPointer, address, size, swap, &rawCPUInfo);
+				if(region.cachedPointer)
+					return DoMemoryRead(region.cachedPointer, address, size, swap, &rawCPUInfo);
 				else
 					return 0;
 		}
@@ -7853,62 +7853,62 @@ public class cheat
 	{
 		int	i;
 	
-		for(i = 0; i < info->regionListLength; i++)
-			BackupRegion(&info->regionList[i]);
+		for(i = 0; i < info.regionListLength; i++)
+			BackupRegion(&info.regionList[i]);
 	
-		info->oldNumResults = info->numResults;
-		info->backupValid = 1;
+		info.oldNumResults = info.numResults;
+		info.backupValid = 1;
 	}
 	
 	static void RestoreSearchBackup(SearchInfo * info)
 	{
 		int	i;
 	
-		if(!info->backupValid)
+		if(!info.backupValid)
 			return;
 	
-		for(i = 0; i < info->regionListLength; i++)
-			RestoreRegionBackup(&info->regionList[i]);
+		for(i = 0; i < info.regionListLength; i++)
+			RestoreRegionBackup(&info.regionList[i]);
 	
-		info->numResults = info->oldNumResults;
-		info->backupValid = 0;
+		info.numResults = info.oldNumResults;
+		info.backupValid = 0;
 	}
 	
 	static void BackupRegion(SearchRegion * region)
 	{
-		if(region->flags & kRegionFlag_Enabled)
+		if(region.flags & kRegionFlag_Enabled)
 		{
-			memcpy(region->backupLast,		region->last,	region->length);
-			memcpy(region->backupStatus,	region->status,	region->length);
-			region->oldNumResults =			region->numResults;
+			memcpy(region.backupLast,		region.last,	region.length);
+			memcpy(region.backupStatus,	region.status,	region.length);
+			region.oldNumResults =			region.numResults;
 		}
 	}
 	
 	static void RestoreRegionBackup(SearchRegion * region)
 	{
-		if(region->flags & kRegionFlag_Enabled)
+		if(region.flags & kRegionFlag_Enabled)
 		{
-			memcpy(region->last,	region->backupLast,		region->length);
-			memcpy(region->status,	region->backupStatus,	region->length);
-			region->numResults =	region->oldNumResults;
+			memcpy(region.last,	region.backupLast,		region.length);
+			memcpy(region.status,	region.backupStatus,	region.length);
+			region.numResults =	region.oldNumResults;
 		}
 	}
 	
 	static UINT8 DefaultEnableRegion(SearchRegion * region, SearchInfo * info)
 	{
-		mem_write_handler	handler = region->writeHandler->handler;
+		mem_write_handler	handler = region.writeHandler.handler;
 		UINT32				handlerAddress = (UINT32)handler;
 	
-		switch(info->searchSpeed)
+		switch(info.searchSpeed)
 		{
 			case kSearchSpeed_Fast:
 	
 	#if HAS_SH2
-				if(Machine->drv->cpu[0].cpu_type == CPU_SH2)
+				if(Machine.drv.cpu[0].cpu_type == CPU_SH2)
 				{
-					if(	(info->targetType == kRegionType_CPU) &&
-						(info->targetIdx == 0) &&
-						(region->address == 0x06000000))
+					if(	(info.targetType == kRegionType_CPU) &&
+						(info.targetIdx == 0) &&
+						(region.address == 0x06000000))
 						return 1;
 	
 					return 0;
@@ -7916,7 +7916,7 @@ public class cheat
 	#endif
 	
 				if(	(handler == MWA_RAM) &&
-					(!region->writeHandler->base))
+					(!region.writeHandler.base))
 					return 1;
 	
 	#ifndef MESS
@@ -7926,9 +7926,9 @@ public class cheat
 				{
 					
 					// for neogeo, search bank one
-					if(	(Machine->gamedrv->clone_of == &driver_neogeo) &&
-						(info->targetType == kRegionType_CPU) &&
-						(info->targetIdx == 0) &&
+					if(	(Machine.gamedrv.clone_of == &driver_neogeo) &&
+						(info.targetType == kRegionType_CPU) &&
+						(info.targetIdx == 0) &&
 						(handler == MWA_BANK1))
 						return 1;
 				}
@@ -7940,16 +7940,16 @@ public class cheat
 	#if HAS_TMS34010
 	
 				// for exterminator, search bank one
-				if(	(Machine->drv->cpu[1].cpu_type == CPU_TMS34010) &&
-					(info->targetType == kRegionType_CPU) &&
-					(info->targetIdx == 1) &&
+				if(	(Machine.drv.cpu[1].cpu_type == CPU_TMS34010) &&
+					(info.targetType == kRegionType_CPU) &&
+					(info.targetIdx == 1) &&
 					(handler == MWA_BANK1))
 					return 1;
 	
 				// for smashtv, search bank two
-				if(	(Machine->drv->cpu[0].cpu_type == CPU_TMS34010) &&
-					(info->targetType == kRegionType_CPU) &&
-					(info->targetIdx == 0) &&
+				if(	(Machine.drv.cpu[0].cpu_type == CPU_TMS34010) &&
+					(info.targetType == kRegionType_CPU) &&
+					(info.targetIdx == 0) &&
 					(handler == MWA_BANK2))
 					return 1;
 	
@@ -7973,7 +7973,7 @@ public class cheat
 					return 0;
 	
 				if(	(handlerAddress > STATIC_COUNT) &&
-					(!region->writeHandler->base))
+					(!region.writeHandler.base))
 					return 0;
 	
 				return 1;
@@ -7991,15 +7991,15 @@ public class cheat
 	
 	static void SetSearchRegionDefaultName(SearchRegion * region)
 	{
-		switch(region->targetType)
+		switch(region.targetType)
 		{
 			case kRegionType_CPU:
 			{
 				char	desc[16];
 	
-				if(region->writeHandler)
+				if(region.writeHandler)
 				{
-					mem_write_handler	handler = region->writeHandler->handler;
+					mem_write_handler	handler = region.writeHandler.handler;
 					UINT32				handlerAddress = (UINT32)handler;
 	
 					if(	(handlerAddress >= ((UINT32)MWA_BANK1)) &&
@@ -8021,24 +8021,24 @@ public class cheat
 				}
 				else
 				{
-					sprintf(desc, "CPU%.2d ", region->targetIdx);
+					sprintf(desc, "CPU%.2d ", region.targetIdx);
 				}
 	
-				sprintf(region->name,	"%.*X-%.*X %s",
-										cpuInfoList[region->targetIdx].addressCharsNeeded,
-										region->address,
-										cpuInfoList[region->targetIdx].addressCharsNeeded,
-										region->address + region->length - 1,
+				sprintf(region.name,	"%.*X-%.*X %s",
+										cpuInfoList[region.targetIdx].addressCharsNeeded,
+										region.address,
+										cpuInfoList[region.targetIdx].addressCharsNeeded,
+										region.address + region.length - 1,
 										desc);
 			}
 			break;
 	
 			case kRegionType_Memory:
-				sprintf(region->name, "%.8X-%.8X MEMORY", region->address, region->address + region->length - 1);
+				sprintf(region.name, "%.8X-%.8X MEMORY", region.address, region.address + region.length - 1);
 				break;
 	
 			default:
-				sprintf(region->name, "UNKNOWN");
+				sprintf(region.name, "UNKNOWN");
 				break;
 		}
 	}
@@ -8047,107 +8047,107 @@ public class cheat
 	{
 		int	i;
 	
-		info->backupValid = 0;
-		info->numResults = 0;
+		info.backupValid = 0;
+		info.numResults = 0;
 	
-		for(i = 0; i < info->regionListLength; i++)
+		for(i = 0; i < info.regionListLength; i++)
 		{
 			SearchRegion	* region;
 	
-			region = &info->regionList[i];
+			region = &info.regionList[i];
 	
-			region->numResults = 0;
+			region.numResults = 0;
 	
-			free(region->first);
-			free(region->last);
-			free(region->status);
-			free(region->backupLast);
-			free(region->backupStatus);
+			free(region.first);
+			free(region.last);
+			free(region.status);
+			free(region.backupLast);
+			free(region.backupStatus);
 	
-			if(region->flags & kRegionFlag_Enabled)
+			if(region.flags & kRegionFlag_Enabled)
 			{
-				region->first =			malloc(region->length);
-				region->last =			malloc(region->length);
-				region->status =		malloc(region->length);
-				region->backupLast =	malloc(region->length);
-				region->backupStatus =	malloc(region->length);
+				region.first =			malloc(region.length);
+				region.last =			malloc(region.length);
+				region.status =		malloc(region.length);
+				region.backupLast =	malloc(region.length);
+				region.backupStatus =	malloc(region.length);
 	
-				if(	!region->first ||
-					!region->last ||
-					!region->status ||
-					!region->backupLast ||
-					!region->backupStatus)
+				if(	!region.first ||
+					!region.last ||
+					!region.status ||
+					!region.backupLast ||
+					!region.backupStatus)
 				{
-					free(region->first);
-					free(region->last);
-					free(region->status);
-					free(region->backupLast);
-					free(region->backupStatus);
+					free(region.first);
+					free(region.last);
+					free(region.status);
+					free(region.backupLast);
+					free(region.backupStatus);
 	
-					region->first =			NULL;
-					region->last =			NULL;
-					region->status =		NULL;
-					region->backupLast =	NULL;
-					region->backupStatus =	NULL;
+					region.first =			NULL;
+					region.last =			NULL;
+					region.status =		NULL;
+					region.backupLast =	NULL;
+					region.backupStatus =	NULL;
 	
-					region->flags &= ~kRegionFlag_Enabled;
+					region.flags &= ~kRegionFlag_Enabled;
 				}
 			}
 			else
 			{
-				region->first =			NULL;
-				region->last =			NULL;
-				region->status =		NULL;
-				region->backupLast =	NULL;
-				region->backupStatus =	NULL;
+				region.first =			NULL;
+				region.last =			NULL;
+				region.status =		NULL;
+				region.backupLast =	NULL;
+				region.backupStatus =	NULL;
 			}
 		}
 	}
 	
 	static void BuildSearchRegions(SearchInfo * info)
 	{
-		info->comparison = kSearchComparison_EqualTo;
+		info.comparison = kSearchComparison_EqualTo;
 	
 		DisposeSearchRegions(info);
 	
-		switch(info->targetType)
+		switch(info.targetType)
 		{
 			case kRegionType_CPU:
 			{
-				if(info->searchSpeed == kSearchSpeed_AllMemory)
+				if(info.searchSpeed == kSearchSpeed_AllMemory)
 				{
-					UINT32			length = cpuInfoList[info->targetIdx].addressMask + 1;
+					UINT32			length = cpuInfoList[info.targetIdx].addressMask + 1;
 					SearchRegion	* region;
 	
-					info->regionList = calloc(sizeof(SearchRegion), 1);
-					info->regionListLength = 1;
-					region = info->regionList;
+					info.regionList = calloc(sizeof(SearchRegion), 1);
+					info.regionListLength = 1;
+					region = info.regionList;
 	
-					region->address = 0;
-					region->length = length;
+					region.address = 0;
+					region.length = length;
 	
-					region->targetIdx = info->targetIdx;
-					region->targetType = info->targetType;
-					region->writeHandler = NULL;
+					region.targetIdx = info.targetIdx;
+					region.targetType = info.targetType;
+					region.writeHandler = NULL;
 	
-					region->first = NULL;
-					region->last = NULL;
-					region->status = NULL;
+					region.first = NULL;
+					region.last = NULL;
+					region.status = NULL;
 	
-					region->backupLast = NULL;
-					region->backupStatus = NULL;
+					region.backupLast = NULL;
+					region.backupStatus = NULL;
 	
-					region->flags = kRegionFlag_Enabled;
+					region.flags = kRegionFlag_Enabled;
 	
 					SetSearchRegionDefaultName(region);
 				}
-				else if(info->targetIdx < cpu_gettotalcpu())
+				else if(info.targetIdx < cpu_gettotalcpu())
 				{
 					const struct Memory_WriteAddress	* mwa = NULL;
 					SearchRegion						* traverse;
 					int									count = 0;
 	
-					mwa = Machine->drv->cpu[info->targetIdx].memory_write;
+					mwa = Machine.drv.cpu[info.targetIdx].memory_write;
 	
 					while(!IS_MEMPORT_END(mwa))
 					{
@@ -8159,33 +8159,33 @@ public class cheat
 						mwa++;
 					}
 	
-					info->regionList = calloc(sizeof(SearchRegion), count);
-					info->regionListLength = count;
-					traverse = info->regionList;
+					info.regionList = calloc(sizeof(SearchRegion), count);
+					info.regionListLength = count;
+					traverse = info.regionList;
 	
-					mwa = Machine->drv->cpu[info->targetIdx].memory_write;
+					mwa = Machine.drv.cpu[info.targetIdx].memory_write;
 	
 					while(!IS_MEMPORT_END(mwa))
 					{
 						if(!IS_MEMPORT_MARKER(mwa))
 						{
-							UINT32	length = (mwa->end - mwa->start) + 1;
+							UINT32	length = (mwa.end - mwa.start) + 1;
 	
-							traverse->address = mwa->start;
-							traverse->length = length;
+							traverse.address = mwa.start;
+							traverse.length = length;
 	
-							traverse->targetIdx = info->targetIdx;
-							traverse->targetType = info->targetType;
-							traverse->writeHandler = mwa;
+							traverse.targetIdx = info.targetIdx;
+							traverse.targetType = info.targetType;
+							traverse.writeHandler = mwa;
 	
-							traverse->first = NULL;
-							traverse->last = NULL;
-							traverse->status = NULL;
+							traverse.first = NULL;
+							traverse.last = NULL;
+							traverse.status = NULL;
 	
-							traverse->backupLast = NULL;
-							traverse->backupStatus = NULL;
+							traverse.backupLast = NULL;
+							traverse.backupStatus = NULL;
 	
-							traverse->flags = DefaultEnableRegion(traverse, info) ? kRegionFlag_Enabled : 0;
+							traverse.flags = DefaultEnableRegion(traverse, info) ? kRegionFlag_Enabled : 0;
 	
 							SetSearchRegionDefaultName(traverse);
 	
@@ -8305,9 +8305,9 @@ public class cheat
 		}
 	
 		// look up code
-		while(traverse->oldCode >= 0)
+		while(traverse.oldCode >= 0)
 		{
-			if(code == traverse->oldCode)
+			if(code == traverse.oldCode)
 			{
 				goto foundCode;
 			}
@@ -8323,20 +8323,20 @@ public class cheat
 	
 		foundCode:
 	
-		newCode = traverse->newCode;
+		newCode = traverse.newCode;
 	
 		// add in the CPU field
-		if(!(traverse->customField & kCustomField_DontApplyCPUField))
+		if(!(traverse.customField & kCustomField_DontApplyCPUField))
 		{
 			newCode = (newCode & ~0x1F000000) | ((cpu << 24) & 0x1F000000);
 		}
 	
 		// hack-ish, subtract one from data field for x5 user select
-		if(traverse->customField & kCustomField_SubtractOne)
+		if(traverse.customField & kCustomField_SubtractOne)
 			(*data)--;	// yaay for C operator precedence
 	
 		//	set up the extend data
-		if(traverse->customField & kCustomField_BitMask)
+		if(traverse.customField & kCustomField_BitMask)
 		{
 			*extendData = *data;
 		}
@@ -8345,7 +8345,7 @@ public class cheat
 			*extendData = 0xFFFFFFFF;
 		}
 	
-		if(traverse->customField & kCustomField_ClearBit)
+		if(traverse.customField & kCustomField_ClearBit)
 		{
 			*data = 0;
 		}
@@ -8408,8 +8408,8 @@ public class cheat
 						{
 							CheatEntry	* entry = &cheatList[address];
 	
-							entry->activationKey = data;
-							entry->flags |= kCheatFlag_HasActivationKey;
+							entry.activationKey = data;
+							entry.flags |= kCheatFlag_HasActivationKey;
 						}
 					}
 					break;
@@ -8459,11 +8459,11 @@ public class cheat
 	
 		// make the format strings
 	#ifdef MESS
-		sprintf(formatString, ":%s:%s", Machine->gamedrv->name, "%x:%x:%x:%x:%x:%[^:\n\r]:%[^:\n\r]");
-		sprintf(oldFormatString, "%s:%s", Machine->gamedrv->name, "%x:%d:%x:%x:%d:%[^:\n\r]:%[^:\n\r]");
+		sprintf(formatString, ":%s:%s", Machine.gamedrv.name, "%x:%x:%x:%x:%x:%[^:\n\r]:%[^:\n\r]");
+		sprintf(oldFormatString, "%s:%s", Machine.gamedrv.name, "%x:%d:%x:%x:%d:%[^:\n\r]:%[^:\n\r]");
 	#else
-		sprintf(formatString, ":%s:%s", Machine->gamedrv->name, "%x:%x:%x:%x:%[^:\n\r]:%[^:\n\r]");
-		sprintf(oldFormatString, "%s:%s", Machine->gamedrv->name, "%d:%x:%x:%d:%[^:\n\r]:%[^:\n\r]");
+		sprintf(formatString, ":%s:%s", Machine.gamedrv.name, "%x:%x:%x:%x:%[^:\n\r]:%[^:\n\r]");
+		sprintf(oldFormatString, "%s:%s", Machine.gamedrv.name, "%d:%x:%x:%d:%[^:\n\r]:%[^:\n\r]");
 	#endif
 	
 		while(mame_fgets(buf, 2048, theFile))
@@ -8572,12 +8572,12 @@ public class cheat
 	
 					entry = &cheatList[cheatListLength - 1];
 	
-					entry->name = CreateStringCopy(name);
+					entry.name = CreateStringCopy(name);
 	
 					// copy the description if we got it
 					if(argumentsMatched == 6)
 					{
-						entry->comment = CreateStringCopy(description);
+						entry.comment = CreateStringCopy(description);
 					}
 	
 					recordNames = 0;
@@ -8589,26 +8589,26 @@ public class cheat
 					}
 				}
 	
-				ResizeCheatActionList(&cheatList[cheatListLength - 1], entry->actionListLength + 1);
+				ResizeCheatActionList(&cheatList[cheatListLength - 1], entry.actionListLength + 1);
 	
-				if(entry->actionListLength == 0)
+				if(entry.actionListLength == 0)
 				{
 					logerror("LoadCheatFile: action list resize failed; bailing\n");
 	
 					goto bail;
 				}
 	
-				action = &entry->actionList[entry->actionListLength - 1];
+				action = &entry.actionList[entry.actionListLength - 1];
 	
-				action->type = type;
-				action->address = address;
-				action->data = data;
-				action->originalDataField = data;
-				action->extendData = extendData;
+				action.type = type;
+				action.address = address;
+				action.data = data;
+				action.originalDataField = data;
+				action.extendData = extendData;
 	
 				if (recordNames != 0)
 				{
-					action->optionalName = CreateStringCopy(name);
+					action.optionalName = CreateStringCopy(name);
 				}
 			}
 		}
@@ -8694,7 +8694,7 @@ public class cheat
 		UINT32	i;
 		char	buf[4096];
 	
-		if(!entry || !entry->actionList)
+		if(!entry || !entry.actionList)
 			return;
 	
 		theFile = mame_fopen(NULL, mainDatabaseName, FILETYPE_CHEAT, 1);
@@ -8704,11 +8704,11 @@ public class cheat
 	
 		mame_fseek(theFile, 0, SEEK_END);
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			CheatAction	* action = &entry->actionList[i];
-			char		* name = entry->name;
-			UINT32		type = action->type;
+			CheatAction	* action = &entry.actionList[i];
+			char		* name = entry.name;
+			UINT32		type = action.type;
 			char		* bufTraverse = buf;
 			int			addressLength = 8;
 	
@@ -8716,9 +8716,9 @@ public class cheat
 			{
 				SET_MASK_FIELD(type, LinkEnable);
 	
-				if(entry->flags & kCheatFlag_Select)
+				if(entry.flags & kCheatFlag_Select)
 				{
-					name = action->optionalName;
+					name = action.optionalName;
 				}
 			}
 	
@@ -8744,22 +8744,22 @@ public class cheat
 			}
 	
 	#ifdef MESS
-			bufTraverse += sprintf(bufTraverse, ":%s:%.8X:%.8X:%.*X:%.8X:%.8X", Machine->gamedrv->name, thisGameCRC, type, addressLength, action->address, action->originalDataField, action->extendData);
+			bufTraverse += sprintf(bufTraverse, ":%s:%.8X:%.8X:%.*X:%.8X:%.8X", Machine.gamedrv.name, thisGameCRC, type, addressLength, action.address, action.originalDataField, action.extendData);
 	#else
-			bufTraverse += sprintf(bufTraverse, ":%s:%.8X:%.*X:%.8X:%.8X", Machine->gamedrv->name, type, addressLength, action->address, action->originalDataField, action->extendData);
+			bufTraverse += sprintf(bufTraverse, ":%s:%.8X:%.*X:%.8X:%.8X", Machine.gamedrv.name, type, addressLength, action.address, action.originalDataField, action.extendData);
 	#endif
 	
 			if (name != 0)
 			{
 				bufTraverse += sprintf(bufTraverse, ":%s", name);
 	
-				if((i == 0) && (entry->comment))
-					bufTraverse += sprintf(bufTraverse, ":%s", entry->comment);
+				if((i == 0) && (entry.comment))
+					bufTraverse += sprintf(bufTraverse, ":%s", entry.comment);
 			}
 			else
 			{
-				if((i == 0) && (entry->comment))
-					bufTraverse += sprintf(bufTraverse, ":(none):%s", entry->comment);
+				if((i == 0) && (entry.comment))
+					bufTraverse += sprintf(bufTraverse, ":(none):%s", entry.comment);
 			}
 	
 			bufTraverse += sprintf(bufTraverse, "\n");
@@ -8769,7 +8769,7 @@ public class cheat
 	
 		mame_fclose(theFile);
 	
-		entry->flags &= ~kCheatFlag_Dirty;
+		entry.flags &= ~kCheatFlag_Dirty;
 	}
 	
 	static void DoAutoSaveCheats(void)
@@ -8780,7 +8780,7 @@ public class cheat
 		{
 			CheatEntry	* entry = &cheatList[i];
 	
-			if(entry->flags & kCheatFlag_Dirty)
+			if(entry.flags & kCheatFlag_Dirty)
 			{
 				SaveCheat(entry);
 			}
@@ -8789,25 +8789,25 @@ public class cheat
 	
 	static void AddCheatFromResult(SearchInfo * search, SearchRegion * region, UINT32 address)
 	{
-		if(region->targetType == kRegionType_CPU)
+		if(region.targetType == kRegionType_CPU)
 		{
 			CheatEntry	* entry = GetNewCheat();
-			CheatAction	* action = &entry->actionList[0];
+			CheatAction	* action = &entry.actionList[0];
 			char		tempString[1024];
 			int			tempStringLength;
 			UINT32		data = ReadSearchOperand(kSearchOperand_First, search, region, address);
 	
-			tempStringLength = sprintf(tempString, "%.8X (%d) = %.*X", address, region->targetIdx, kSearchByteDigitsTable[search->bytes], data);
+			tempStringLength = sprintf(tempString, "%.8X (%d) = %.*X", address, region.targetIdx, kSearchByteDigitsTable[search.bytes], data);
 	
-			entry->name = realloc(entry->name, tempStringLength + 1);
-			memcpy(entry->name, tempString, tempStringLength + 1);
+			entry.name = realloc(entry.name, tempStringLength + 1);
+			memcpy(entry.name, tempString, tempStringLength + 1);
 	
-			SET_FIELD(action->type, LocationParameter, region->targetIdx);
-			SET_FIELD(action->type, BytesUsed, kSearchByteIncrementTable[search->bytes] - 1);
-			action->address = address;
-			action->data = data;
-			action->extendData = 0xFFFFFFFF;
-			action->originalDataField = data;
+			SET_FIELD(action.type, LocationParameter, region.targetIdx);
+			SET_FIELD(action.type, BytesUsed, kSearchByteIncrementTable[search.bytes] - 1);
+			action.address = address;
+			action.data = data;
+			action.extendData = 0xFFFFFFFF;
+			action.originalDataField = data;
 	
 			UpdateCheatInfo(entry, 0);
 		}
@@ -8817,17 +8817,17 @@ public class cheat
 	{
 		int	i;
 	
-		for(i = 0; i < search->regionListLength; i++)
+		for(i = 0; i < search.regionListLength; i++)
 		{
-			SearchRegion	* region = &search->regionList[i];
+			SearchRegion	* region = &search.regionList[i];
 	
-			if(region->numResults)
+			if(region.numResults)
 			{
 				UINT32	traverse;
 	
-				for(traverse = 0; traverse < region->length; traverse++)
+				for(traverse = 0; traverse < region.length; traverse++)
 				{
-					UINT32	address = region->address + traverse;
+					UINT32	address = region.address + traverse;
 	
 					if(IsRegionOffsetValid(search, region, traverse))
 					{
@@ -8842,33 +8842,33 @@ public class cheat
 	
 	static void AddWatchFromResult(SearchInfo * search, SearchRegion * region, UINT32 address)
 	{
-		if(region->targetType == kRegionType_CPU)
+		if(region.targetType == kRegionType_CPU)
 		{
 			WatchInfo	* info = GetUnusedWatch();
 	
-			info->address =			address;
-			info->cpu =				region->targetIdx;
-			info->numElements =		1;
-			info->elementBytes =	kWatchSizeConversionTable[search->bytes];
-			info->labelType =		kWatchLabel_None;
-			info->displayType =		kWatchDisplayType_Hex;
-			info->skip =			0;
-			info->elementsPerLine =	0;
-			info->addValue =		0;
+			info.address =			address;
+			info.cpu =				region.targetIdx;
+			info.numElements =		1;
+			info.elementBytes =	kWatchSizeConversionTable[search.bytes];
+			info.labelType =		kWatchLabel_None;
+			info.displayType =		kWatchDisplayType_Hex;
+			info.skip =			0;
+			info.elementsPerLine =	0;
+			info.addValue =		0;
 	
-			info->linkedCheat =		NULL;
+			info.linkedCheat =		NULL;
 	
-			info->label[0] =		0;
+			info.label[0] =		0;
 		}
 	}
 	
 	static UINT32 SearchSignExtend(SearchInfo * search, UINT32 value)
 	{
-		if(search->sign)
+		if(search.sign)
 		{
-			if(value & kSearchByteSignBitTable[search->bytes])
+			if(value & kSearchByteSignBitTable[search.bytes])
 			{
-				value |= ~kSearchByteUnsignedMaskTable[search->bytes];
+				value |= ~kSearchByteUnsignedMaskTable[search.bytes];
 			}
 		}
 	
@@ -8882,19 +8882,19 @@ public class cheat
 		switch(type)
 		{
 			case kSearchOperand_Current:
-				value = ReadRegionData(region, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap);
+				value = ReadRegionData(region, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap);
 				break;
 	
 			case kSearchOperand_Previous:
-				value = DoMemoryRead(region->last, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap, NULL);
+				value = DoMemoryRead(region.last, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap, NULL);
 				break;
 	
 			case kSearchOperand_First:
-				value = DoMemoryRead(region->first, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap, NULL);
+				value = DoMemoryRead(region.first, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap, NULL);
 				break;
 	
 			case kSearchOperand_Value:
-				value = search->value;
+				value = search.value;
 				break;
 		}
 	
@@ -8910,19 +8910,19 @@ public class cheat
 		switch(type)
 		{
 			case kSearchOperand_Current:
-				value = ReadRegionData(region, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap);
+				value = ReadRegionData(region, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap);
 				break;
 	
 			case kSearchOperand_Previous:
-				value = DoMemoryRead(region->last, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap, NULL);
+				value = DoMemoryRead(region.last, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap, NULL);
 				break;
 	
 			case kSearchOperand_First:
-				value = DoMemoryRead(region->first, address - region->address, kSearchByteIncrementTable[search->bytes], search->swap, NULL);
+				value = DoMemoryRead(region.first, address - region.address, kSearchByteIncrementTable[search.bytes], search.swap, NULL);
 				break;
 	
 			case kSearchOperand_Value:
-				if(search->value)
+				if(search.value)
 					value = 0xFFFFFFFF;
 				else
 					value = 0x00000000;
@@ -8938,14 +8938,14 @@ public class cheat
 	{
 		INT32	svalue;
 	
-		if(search->sign)
+		if(search.sign)
 		{
 			INT32	slhs, srhs;
 	
 			slhs = lhs;
 			srhs = rhs;
 	
-			switch(search->comparison)
+			switch(search.comparison)
 			{
 				case kSearchComparison_LessThan:
 					return slhs < srhs;
@@ -8966,9 +8966,9 @@ public class cheat
 					return slhs != srhs;
 	
 				case kSearchComparison_IncreasedBy:
-					svalue = search->value;
-					if(search->value & kSearchByteSignBitTable[search->bytes])
-						svalue |= ~kSearchByteUnsignedMaskTable[search->bytes];
+					svalue = search.value;
+					if(search.value & kSearchByteSignBitTable[search.bytes])
+						svalue |= ~kSearchByteUnsignedMaskTable[search.bytes];
 	
 					return slhs == (srhs + svalue);
 	
@@ -8978,7 +8978,7 @@ public class cheat
 		}
 		else
 		{
-			switch(search->comparison)
+			switch(search.comparison)
 			{
 				case kSearchComparison_LessThan:
 					return lhs < rhs;
@@ -8999,9 +8999,9 @@ public class cheat
 					return lhs != rhs;
 	
 				case kSearchComparison_IncreasedBy:
-					svalue = search->value;
-					if(search->value & kSearchByteSignBitTable[search->bytes])
-						svalue |= ~kSearchByteUnsignedMaskTable[search->bytes];
+					svalue = search.value;
+					if(search.value & kSearchByteSignBitTable[search.bytes])
+						svalue |= ~kSearchByteUnsignedMaskTable[search.bytes];
 	
 					return lhs == (rhs + svalue);
 	
@@ -9015,7 +9015,7 @@ public class cheat
 	
 	static UINT32 DoSearchComparisonBit(SearchInfo * search, UINT32 lhs, UINT32 rhs)
 	{
-		switch(search->comparison)
+		switch(search.comparison)
 		{
 			case kSearchComparison_LessThan:
 			case kSearchComparison_NotEqual:
@@ -9036,18 +9036,18 @@ public class cheat
 	/*
 	static UINT8 IsRegionOffsetValid(SearchInfo * search, SearchRegion * region, UINT32 offset)
 	{
-		switch(kSearchByteIncrementTable[search->bytes])
+		switch(kSearchByteIncrementTable[search.bytes])
 		{
 			case 1:
-				return *((UINT8  *)&region->status[offset]) == 0xFF;
+				return *((UINT8  *)&region.status[offset]) == 0xFF;
 				break;
 	
 			case 2:
-				return *((UINT16 *)&region->status[offset]) == 0xFFFF;
+				return *((UINT16 *)&region.status[offset]) == 0xFFFF;
 				break;
 	
 			case 4:
-				return *((UINT32 *)&region->status[offset]) == 0xFFFFFFFF;
+				return *((UINT32 *)&region.status[offset]) == 0xFFFFFFFF;
 				break;
 		}
 	
@@ -9057,18 +9057,18 @@ public class cheat
 	
 	static UINT8 IsRegionOffsetValidBit(SearchInfo * search, SearchRegion * region, UINT32 offset)
 	{
-		switch(kSearchByteIncrementTable[search->bytes])
+		switch(kSearchByteIncrementTable[search.bytes])
 		{
 			case 1:
-				return *((UINT8  *)&region->status[offset]) != 0;
+				return *((UINT8  *)&region.status[offset]) != 0;
 				break;
 	
 			case 2:
-				return *((UINT16 *)&region->status[offset]) != 0;
+				return *((UINT16 *)&region.status[offset]) != 0;
 				break;
 	
 			case 4:
-				return *((UINT32 *)&region->status[offset]) != 0;
+				return *((UINT32 *)&region.status[offset]) != 0;
 				break;
 		}
 	
@@ -9077,67 +9077,67 @@ public class cheat
 	
 	static void InvalidateRegionOffset(SearchInfo * search, SearchRegion * region, UINT32 offset)
 	{
-		switch(kSearchByteIncrementTable[search->bytes])
+		switch(kSearchByteIncrementTable[search.bytes])
 		{
 			case 1:
-				*((UINT8  *)&region->status[offset]) = 0;
+				*((UINT8  *)&region.status[offset]) = 0;
 				break;
 	
 			case 2:
-				*((UINT16 *)&region->status[offset]) = 0;
+				*((UINT16 *)&region.status[offset]) = 0;
 				break;
 	
 			case 4:
-				*((UINT32 *)&region->status[offset]) = 0;
+				*((UINT32 *)&region.status[offset]) = 0;
 				break;
 		}
 	}
 	
 	static void InvalidateRegionOffsetBit(SearchInfo * search, SearchRegion * region, UINT32 offset, UINT32 invalidate)
 	{
-		switch(kSearchByteIncrementTable[search->bytes])
+		switch(kSearchByteIncrementTable[search.bytes])
 		{
 			case 1:
-				*((UINT8  *)&region->status[offset]) &= ~invalidate;
+				*((UINT8  *)&region.status[offset]) &= ~invalidate;
 				break;
 	
 			case 2:
-				*((UINT16 *)&region->status[offset]) &= ~invalidate;
+				*((UINT16 *)&region.status[offset]) &= ~invalidate;
 				break;
 	
 			case 4:
-				*((UINT32 *)&region->status[offset]) &= ~invalidate;
+				*((UINT32 *)&region.status[offset]) &= ~invalidate;
 				break;
 		}
 	}
 	
 	static void InvalidateEntireRegion(SearchInfo * search, SearchRegion * region)
 	{
-		memset(region->status, 0, region->length);
+		memset(region.status, 0, region.length);
 	
-		search->numResults -= region->numResults;
-		region->numResults = 0;
+		search.numResults -= region.numResults;
+		region.numResults = 0;
 	}
 	
 	static void InitializeNewSearch(SearchInfo * search)
 	{
 		int	i;
 	
-		search->numResults = 0;
+		search.numResults = 0;
 	
-		for(i = 0; i < search->regionListLength; i++)
+		for(i = 0; i < search.regionListLength; i++)
 		{
-			SearchRegion	* region = &search->regionList[i];
+			SearchRegion	* region = &search.regionList[i];
 	
-			if(region->flags & kRegionFlag_Enabled)
+			if(region.flags & kRegionFlag_Enabled)
 			{
-				region->numResults = 0;
+				region.numResults = 0;
 	
-				memset(region->status, 0xFF, region->length);
+				memset(region.status, 0xFF, region.length);
 	
-				FillBufferFromRegion(region, region->first);
+				FillBufferFromRegion(region, region.first);
 	
-				memcpy(region->last, region->first, region->length);
+				memcpy(region.last, region.first, region.length);
 			}
 		}
 	}
@@ -9146,13 +9146,13 @@ public class cheat
 	{
 		int	i;
 	
-		for(i = 0; i < search->regionListLength; i++)
+		for(i = 0; i < search.regionListLength; i++)
 		{
-			SearchRegion	* region = &search->regionList[i];
+			SearchRegion	* region = &search.regionList[i];
 	
-			if(region->flags & kRegionFlag_Enabled)
+			if(region.flags & kRegionFlag_Enabled)
 			{
-				FillBufferFromRegion(region, region->last);
+				FillBufferFromRegion(region, region.last);
 			}
 		}
 	}
@@ -9161,20 +9161,20 @@ public class cheat
 	{
 		int	i, j;
 	
-		search->numResults = 0;
+		search.numResults = 0;
 	
-		if(search->bytes == kSearchSize_1Bit)
+		if(search.bytes == kSearchSize_1Bit)
 		{
-			for(i = 0; i < search->regionListLength; i++)
+			for(i = 0; i < search.regionListLength; i++)
 			{
-				SearchRegion	* region = &search->regionList[i];
-				UINT32			lastAddress = region->length - kSearchByteIncrementTable[search->bytes] + 1;
-				UINT32			increment = kSearchByteIncrementTable[search->bytes];
+				SearchRegion	* region = &search.regionList[i];
+				UINT32			lastAddress = region.length - kSearchByteIncrementTable[search.bytes] + 1;
+				UINT32			increment = kSearchByteIncrementTable[search.bytes];
 	
-				region->numResults = 0;
+				region.numResults = 0;
 	
-				if(	(region->length < kSearchByteIncrementTable[search->bytes]) ||
-					!region->flags & kRegionFlag_Enabled)
+				if(	(region.length < kSearchByteIncrementTable[search.bytes]) ||
+					!region.flags & kRegionFlag_Enabled)
 				{
 					continue;
 				}
@@ -9184,14 +9184,14 @@ public class cheat
 					UINT32	address;
 					UINT32	lhs, rhs;
 	
-					address = region->address + j;
+					address = region.address + j;
 	
 					if(IsRegionOffsetValidBit(search, region, j))
 					{
 						UINT32	validBits;
 	
-						lhs = ReadSearchOperandBit(search->lhs, search, region, address);
-						rhs = ReadSearchOperandBit(search->rhs, search, region, address);
+						lhs = ReadSearchOperandBit(search.lhs, search, region, address);
+						rhs = ReadSearchOperandBit(search.rhs, search, region, address);
 	
 						validBits = DoSearchComparisonBit(search, lhs, rhs);
 	
@@ -9199,8 +9199,8 @@ public class cheat
 	
 						if(IsRegionOffsetValidBit(search, region, j))
 						{
-							search->numResults++;
-							region->numResults++;
+							search.numResults++;
+							region.numResults++;
 						}
 					}
 				}
@@ -9208,16 +9208,16 @@ public class cheat
 		}
 		else
 		{
-			for(i = 0; i < search->regionListLength; i++)
+			for(i = 0; i < search.regionListLength; i++)
 			{
-				SearchRegion	* region = &search->regionList[i];
-				UINT32			lastAddress = region->length - kSearchByteIncrementTable[search->bytes] + 1;
-				UINT32			increment = kSearchByteIncrementTable[search->bytes];
+				SearchRegion	* region = &search.regionList[i];
+				UINT32			lastAddress = region.length - kSearchByteIncrementTable[search.bytes] + 1;
+				UINT32			increment = kSearchByteIncrementTable[search.bytes];
 	
-				region->numResults = 0;
+				region.numResults = 0;
 	
-				if(	(region->length < kSearchByteIncrementTable[search->bytes]) ||
-					!region->flags & kRegionFlag_Enabled)
+				if(	(region.length < kSearchByteIncrementTable[search.bytes]) ||
+					!region.flags & kRegionFlag_Enabled)
 				{
 					continue;
 				}
@@ -9227,12 +9227,12 @@ public class cheat
 					UINT32	address;
 					UINT32	lhs, rhs;
 	
-					address = region->address + j;
+					address = region.address + j;
 	
 					if(IsRegionOffsetValid(search, region, j))
 					{
-						lhs = ReadSearchOperand(search->lhs, search, region, address);
-						rhs = ReadSearchOperand(search->rhs, search, region, address);
+						lhs = ReadSearchOperand(search.lhs, search, region, address);
+						rhs = ReadSearchOperand(search.rhs, search, region, address);
 	
 						if(!DoSearchComparison(search, lhs, rhs))
 						{
@@ -9240,8 +9240,8 @@ public class cheat
 						}
 						else
 						{
-							search->numResults++;
-							region->numResults++;
+							search.numResults++;
+							region.numResults++;
 						}
 					}
 				}
@@ -9251,19 +9251,19 @@ public class cheat
 	
 	static UINT8 ** LookupHandlerMemory(UINT8 cpu, UINT32 address, UINT32 * outRelativeAddress)
 	{
-		const struct Memory_WriteAddress	* mwa = Machine->drv->cpu[cpu].memory_write;
+		const struct Memory_WriteAddress	* mwa = Machine.drv.cpu[cpu].memory_write;
 	
 		while(!IS_MEMPORT_END(mwa))
 		{
 			if(!IS_MEMPORT_MARKER(mwa))
 			{
-				if(	(address >= mwa->start) &&
-					(address <= mwa->end))
+				if(	(address >= mwa.start) &&
+					(address <= mwa.end))
 				{
 					if (outRelativeAddress != 0)
-						*outRelativeAddress = address - mwa->start;
+						*outRelativeAddress = address - mwa.start;
 	
-					return mwa->base;
+					return mwa.base;
 				}
 			}
 	
@@ -9518,7 +9518,7 @@ public class cheat
 		CPUInfo	* temp = GetRegionCPUInfo(region);
 	
 		if (temp != 0)
-			return temp->endianness ^ 1;
+			return temp.endianness ^ 1;
 	
 		return 0;
 	}
@@ -9539,16 +9539,16 @@ public class cheat
 	
 	static UINT32 SwapAddress(UINT32 address, UINT8 dataSize, CPUInfo * info)
 	{
-		switch(info->dataBits)
+		switch(info.dataBits)
 		{
 			case 16:
-				if(info->endianness == CPU_IS_BE)
+				if(info.endianness == CPU_IS_BE)
 					return BYTE_XOR_BE(address);
 				else
 					return BYTE_XOR_LE(address);
 	
 			case 32:
-				if(info->endianness == CPU_IS_BE)
+				if(info.endianness == CPU_IS_BE)
 					return BYTE4_XOR_BE(address);
 				else
 					return BYTE4_XOR_LE(address);
@@ -9559,15 +9559,15 @@ public class cheat
 	
 	static UINT32 ReadData(CheatAction * action)
 	{
-		UINT8	parameter = EXTRACT_FIELD(action->type, LocationParameter);
-		UINT8	bytes = EXTRACT_FIELD(action->type, BytesUsed) + 1;
-		UINT8	swapBytes = EXTRACT_FIELD(action->type, Endianness);
+		UINT8	parameter = EXTRACT_FIELD(action.type, LocationParameter);
+		UINT8	bytes = EXTRACT_FIELD(action.type, BytesUsed) + 1;
+		UINT8	swapBytes = EXTRACT_FIELD(action.type, Endianness);
 	
-		switch(EXTRACT_FIELD(action->type, LocationType))
+		switch(EXTRACT_FIELD(action.type, LocationType))
 		{
 			case kLocation_Standard:
 			{
-				return DoCPURead(parameter, action->address, bytes, CPUNeedsSwap(parameter) ^ swapBytes);
+				return DoCPURead(parameter, action.address, bytes, CPUNeedsSwap(parameter) ^ swapBytes);
 			}
 			break;
 	
@@ -9580,7 +9580,7 @@ public class cheat
 				{
 					if(IsAddressInRange(action, memory_region_length(region)))
 					{
-						return DoMemoryRead(buf, action->address, bytes, RegionNeedsSwap(region) ^ swapBytes, GetRegionCPUInfo(region));
+						return DoMemoryRead(buf, action.address, bytes, RegionNeedsSwap(region) ^ swapBytes, GetRegionCPUInfo(region));
 					}
 				}
 			}
@@ -9591,13 +9591,13 @@ public class cheat
 				UINT32	relativeAddress;
 				UINT8	** buf;
 	
-				if(!action->cachedPointer)
+				if(!action.cachedPointer)
 				{
-					action->cachedPointer = LookupHandlerMemory(parameter, action->address, &action->cachedOffset);
+					action.cachedPointer = LookupHandlerMemory(parameter, action.address, &action.cachedOffset);
 				}
 	
-				buf = action->cachedPointer;
-				relativeAddress = action->cachedOffset;
+				buf = action.cachedPointer;
+				relativeAddress = action.cachedOffset;
 	
 				if(buf && *buf)
 				{
@@ -9609,14 +9609,14 @@ public class cheat
 			case kLocation_IndirectIndexed:
 			{
 				UINT32	address;
-				INT32	offset = action->extendData;
+				INT32	offset = action.extendData;
 				UINT8	cpu = (parameter >> 2) & 0x7;
 				UINT8	addressBytes = (parameter & 0x3) + 1;
 				CPUInfo	* info = GetCPUInfo(cpu);
 	
-				address = DoCPURead(cpu, action->address, addressBytes, CPUNeedsSwap(parameter) ^ swapBytes);
+				address = DoCPURead(cpu, action.address, addressBytes, CPUNeedsSwap(parameter) ^ swapBytes);
 				if (info != 0)
-					address = DoShift(address, info->addressShift);
+					address = DoShift(address, info.addressShift);
 				address += offset;
 	
 				return DoCPURead(cpu, address, bytes, CPUNeedsSwap(parameter) ^ swapBytes);
@@ -9638,7 +9638,7 @@ public class cheat
 						buf = EEPROM_get_data_pointer(&length);
 	
 						if(IsAddressInRange(action, length))
-							return DoMemoryRead(buf, action->address, bytes, swapBytes, &rawCPUInfo);
+							return DoMemoryRead(buf, action.address, bytes, swapBytes, &rawCPUInfo);
 					}
 					break;
 				}
@@ -9654,15 +9654,15 @@ public class cheat
 	
 	static void WriteData(CheatAction * action, UINT32 data)
 	{
-		UINT8	parameter = EXTRACT_FIELD(action->type, LocationParameter);
-		UINT8	bytes = EXTRACT_FIELD(action->type, BytesUsed) + 1;
-		UINT8	swapBytes = EXTRACT_FIELD(action->type, Endianness);
+		UINT8	parameter = EXTRACT_FIELD(action.type, LocationParameter);
+		UINT8	bytes = EXTRACT_FIELD(action.type, BytesUsed) + 1;
+		UINT8	swapBytes = EXTRACT_FIELD(action.type, Endianness);
 	
-		switch(EXTRACT_FIELD(action->type, LocationType))
+		switch(EXTRACT_FIELD(action.type, LocationType))
 		{
 			case kLocation_Standard:
 			{
-				DoCPUWrite(data, parameter, action->address, bytes, CPUNeedsSwap(parameter) ^ swapBytes);
+				DoCPUWrite(data, parameter, action.address, bytes, CPUNeedsSwap(parameter) ^ swapBytes);
 			}
 			break;
 	
@@ -9675,7 +9675,7 @@ public class cheat
 				{
 					if(IsAddressInRange(action, memory_region_length(region)))
 					{
-						DoMemoryWrite(data, buf, action->address, bytes, RegionNeedsSwap(region) ^ swapBytes, GetRegionCPUInfo(region));
+						DoMemoryWrite(data, buf, action.address, bytes, RegionNeedsSwap(region) ^ swapBytes, GetRegionCPUInfo(region));
 					}
 				}
 			}
@@ -9686,13 +9686,13 @@ public class cheat
 				UINT32	relativeAddress;
 				UINT8	** buf;
 	
-				if(!action->cachedPointer)
+				if(!action.cachedPointer)
 				{
-					action->cachedPointer = LookupHandlerMemory(parameter, action->address, &action->cachedOffset);
+					action.cachedPointer = LookupHandlerMemory(parameter, action.address, &action.cachedOffset);
 				}
 	
-				buf = action->cachedPointer;
-				relativeAddress = action->cachedOffset;
+				buf = action.cachedPointer;
+				relativeAddress = action.cachedOffset;
 	
 				if(buf && *buf)
 				{
@@ -9704,14 +9704,14 @@ public class cheat
 			case kLocation_IndirectIndexed:
 			{
 				UINT32	address;
-				INT32	offset = action->extendData;
+				INT32	offset = action.extendData;
 				UINT8	cpu = (parameter >> 2) & 0x7;
 				UINT8	addressBytes = (parameter & 0x3) + 1;
 				CPUInfo	* info = GetCPUInfo(cpu);
 	
-				address = DoCPURead(cpu, action->address, addressBytes, CPUNeedsSwap(cpu) ^ swapBytes);
+				address = DoCPURead(cpu, action.address, addressBytes, CPUNeedsSwap(cpu) ^ swapBytes);
 				if (info != 0)
-					address = DoShift(address, info->addressShift);
+					address = DoShift(address, info.addressShift);
 				address += offset;
 	
 				DoCPUWrite(data, cpu, address, bytes, CPUNeedsSwap(cpu) ^ swapBytes);
@@ -9733,7 +9733,7 @@ public class cheat
 						buf = EEPROM_get_data_pointer(&length);
 	
 						if(IsAddressInRange(action, length))
-							DoMemoryWrite(data, buf, action->address, bytes, swapBytes, &rawCPUInfo);
+							DoMemoryWrite(data, buf, action.address, bytes, swapBytes, &rawCPUInfo);
 					}
 					break;
 				}
@@ -9756,56 +9756,56 @@ public class cheat
 		if(!entry)
 			return;
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			AddActionWatch(&entry->actionList[i], associateEntry);
+			AddActionWatch(&entry.actionList[i], associateEntry);
 		}
 	}
 	
 	static void AddActionWatch(CheatAction * action, CheatEntry * entry)
 	{
-		if(EXTRACT_FIELD(action->type, LocationType) == kLocation_Standard)
+		if(EXTRACT_FIELD(action.type, LocationType) == kLocation_Standard)
 		{
 			WatchInfo	* info = GetUnusedWatch();
 	
-			info->address =			action->address;
-			info->cpu =				EXTRACT_FIELD(action->type, LocationParameter);
-			info->displayType =		kWatchDisplayType_Hex;
-			info->elementBytes =	kByteConversionTable[EXTRACT_FIELD(action->type, BytesUsed)];
-			info->label[0] =		0;
-			info->labelType =		kWatchLabel_None;
-			info->linkedCheat =		entry;
-			info->numElements =		1;
-			info->skip =			0;
-			info->linkedCheat =		entry;
+			info.address =			action.address;
+			info.cpu =				EXTRACT_FIELD(action.type, LocationParameter);
+			info.displayType =		kWatchDisplayType_Hex;
+			info.elementBytes =	kByteConversionTable[EXTRACT_FIELD(action.type, BytesUsed)];
+			info.label[0] =		0;
+			info.labelType =		kWatchLabel_None;
+			info.linkedCheat =		entry;
+			info.numElements =		1;
+			info.skip =			0;
+			info.linkedCheat =		entry;
 	
-			if(EXTRACT_FIELD(action->type, Type) == kType_Watch)
+			if(EXTRACT_FIELD(action.type, Type) == kType_Watch)
 			{
-				UINT32	typeParameter = EXTRACT_FIELD(action->type, TypeParameter);
+				UINT32	typeParameter = EXTRACT_FIELD(action.type, TypeParameter);
 	
-				info->numElements = (action->data & 0xFF) + 1;
+				info.numElements = (action.data & 0xFF) + 1;
 	
-				info->skip = (action->data >> 8) & 0xFF;
-				info->elementsPerLine = (action->data >> 16) & 0xFF;
-				info->addValue = (action->data >> 24) & 0xFF;
-				if(info->addValue & 0x80)
-					info->addValue |= ~0xFF;
+				info.skip = (action.data >> 8) & 0xFF;
+				info.elementsPerLine = (action.data >> 16) & 0xFF;
+				info.addValue = (action.data >> 24) & 0xFF;
+				if(info.addValue & 0x80)
+					info.addValue |= ~0xFF;
 	
-				if(action->extendData != 0xFFFFFFFF)
+				if(action.extendData != 0xFFFFFFFF)
 				{
-					info->x += (action->extendData >> 16) & 0xFFFF;
-					info->y += (action->extendData >>  0) & 0xFFFF;
+					info.x += (action.extendData >> 16) & 0xFFFF;
+					info.y += (action.extendData >>  0) & 0xFFFF;
 				}
 	
 				if(	(typeParameter & 0x04) &&
-					(entry->comment) &&
-					(strlen(entry->comment) < 256))
+					(entry.comment) &&
+					(strlen(entry.comment) < 256))
 				{
-					info->labelType = kWatchLabel_String;
-					strcpy(info->label, entry->comment);
+					info.labelType = kWatchLabel_String;
+					strcpy(info.label, entry.comment);
 				}
 	
-				info->displayType = typeParameter & 0x03;
+				info.displayType = typeParameter & 0x03;
 			}
 		}
 	}
@@ -9818,34 +9818,34 @@ public class cheat
 		{
 			WatchInfo	* info = &watchList[i];
 	
-			if(info->linkedCheat == entry)
+			if(info.linkedCheat == entry)
 				DeleteWatchAt(i);
 		}
 	}
 	
 	static void ResetAction(CheatAction * action)
 	{
-		action->frameTimer = 0;
-		action->lastValue = ReadData(action);
-		action->flags &= ~kActionFlag_StateMask;
-		action->flags |= kActionFlag_LastValueGood;
+		action.frameTimer = 0;
+		action.lastValue = ReadData(action);
+		action.flags &= ~kActionFlag_StateMask;
+		action.flags |= kActionFlag_LastValueGood;
 	}
 	
 	static void ActivateCheat(CheatEntry * entry)
 	{
 		int	i;
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			CheatAction	* action = &entry->actionList[i];
+			CheatAction	* action = &entry.actionList[i];
 	
 			ResetAction(action);
 	
-			if(EXTRACT_FIELD(action->type, Type) == kType_Watch)
+			if(EXTRACT_FIELD(action.type, Type) == kType_Watch)
 				AddActionWatch(action, entry);
 		}
 	
-		entry->flags |= kCheatFlag_Active;
+		entry.flags |= kCheatFlag_Active;
 	
 		he_did_cheat = 1;
 	}
@@ -9854,38 +9854,38 @@ public class cheat
 	{
 		int	i;
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			CheatAction	* action = &entry->actionList[i];
+			CheatAction	* action = &entry.actionList[i];
 	
-			if(	EXTRACT_FIELD(action->type, RestorePreviousValue) &&
-				(action->flags & kActionFlag_LastValueGood))
+			if(	EXTRACT_FIELD(action.type, RestorePreviousValue) &&
+				(action.flags & kActionFlag_LastValueGood))
 			{
-				WriteData(action, action->lastValue);
+				WriteData(action, action.lastValue);
 	
-				action->flags &= ~kActionFlag_LastValueGood;
+				action.flags &= ~kActionFlag_LastValueGood;
 			}
 		}
 	
 		RemoveAssociatedWatches(entry);
 	
-		entry->flags &= ~kCheatFlag_StateMask;
+		entry.flags &= ~kCheatFlag_StateMask;
 	}
 	
 	static void TempDeactivateCheat(CheatEntry * entry)
 	{
-		if(entry->flags & kCheatFlag_Active)
+		if(entry.flags & kCheatFlag_Active)
 		{
 			int	i;
 	
-			for(i = 0; i < entry->actionListLength; i++)
+			for(i = 0; i < entry.actionListLength; i++)
 			{
-				CheatAction	* action = &entry->actionList[i];
+				CheatAction	* action = &entry.actionList[i];
 	
-				if(	EXTRACT_FIELD(action->type, RestorePreviousValue) &&
-					(action->flags & kActionFlag_LastValueGood))
+				if(	EXTRACT_FIELD(action.type, RestorePreviousValue) &&
+					(action.flags & kActionFlag_LastValueGood))
 				{
-					WriteData(action, action->lastValue);
+					WriteData(action, action.lastValue);
 				}
 			}
 		}
@@ -9893,8 +9893,8 @@ public class cheat
 	
 	static void DoCheatOperation(CheatAction * action)
 	{
-		UINT8	operation =	EXTRACT_FIELD(action->type, Operation) |
-							(EXTRACT_FIELD(action->type, OperationExtend) << 2);
+		UINT8	operation =	EXTRACT_FIELD(action.type, Operation) |
+							(EXTRACT_FIELD(action.type, OperationExtend) << 2);
 	
 		switch(operation)
 		{
@@ -9902,15 +9902,15 @@ public class cheat
 			{
 				UINT32	temp;
 	
-				if(action->flags & kActionFlag_IgnoreMask)
+				if(action.flags & kActionFlag_IgnoreMask)
 				{
-					WriteData(action, action->data);
+					WriteData(action, action.data);
 				}
 				else
 				{
 					temp = ReadData(action);
 	
-					temp = (action->data & action->extendData) | (temp & ~action->extendData);
+					temp = (action.data & action.extendData) | (temp & ~action.extendData);
 	
 					WriteData(action, temp);
 				}
@@ -9921,29 +9921,29 @@ public class cheat
 			{
 				INT32	temp, bound;
 	
-				if(action->flags & kActionFlag_IgnoreMask)
+				if(action.flags & kActionFlag_IgnoreMask)
 					return;
 	
 				temp = ReadData(action);
 	
 				// OperationParameter field stores add/subtract
-				if(TEST_FIELD(action->type, OperationParameter))
+				if(TEST_FIELD(action.type, OperationParameter))
 				{
 					// subtract
 	
-					bound = action->extendData + action->data;
+					bound = action.extendData + action.data;
 	
 					if(temp > bound)
-						temp -= action->data;
+						temp -= action.data;
 				}
 				else
 				{
 					// add
 	
-					bound = action->extendData - action->data;
+					bound = action.extendData - action.data;
 	
 					if(temp < bound)
-						temp += action->data;
+						temp += action.data;
 				}
 	
 				WriteData(action, temp);
@@ -9954,15 +9954,15 @@ public class cheat
 			{
 				UINT32	temp;
 	
-				if(action->flags & kActionFlag_IgnoreMask)
+				if(action.flags & kActionFlag_IgnoreMask)
 					return;
 	
 				temp = ReadData(action);
 	
-				if(	(temp < ((action->extendData >> 8) & 0xFF)) ||
-					(temp > ((action->extendData >> 0) & 0xFF)))
+				if(	(temp < ((action.extendData >> 8) & 0xFF)) ||
+					(temp > ((action.extendData >> 0) & 0xFF)))
 				{
-					temp = action->data;
+					temp = action.data;
 	
 					WriteData(action, temp);
 				}
@@ -9975,17 +9975,17 @@ public class cheat
 	
 				temp = ReadData(action);
 	
-				if(TEST_FIELD(action->type, OperationParameter))
+				if(TEST_FIELD(action.type, OperationParameter))
 				{
 					// clear
 	
-					temp &= ~action->data;
+					temp &= ~action.data;
 				}
 				else
 				{
 					// set
 	
-					temp |= action->data;
+					temp |= action.data;
 				}
 	
 				WriteData(action, temp);
@@ -10002,21 +10002,21 @@ public class cheat
 	
 	static void DoCheatAction(CheatAction * action)
 	{
-		UINT8	parameter = EXTRACT_FIELD(action->type, TypeParameter);
+		UINT8	parameter = EXTRACT_FIELD(action.type, TypeParameter);
 	
-		if(action->flags & kActionFlag_OperationDone)
+		if(action.flags & kActionFlag_OperationDone)
 			return;
 	
-		if(	TEST_FIELD(action->type, Prefill) &&
-			(!(action->flags & kActionFlag_PrefillDone)))
+		if(	TEST_FIELD(action.type, Prefill) &&
+			(!(action.flags & kActionFlag_PrefillDone)))
 		{
-			UINT32	prefillValue = kPrefillValueTable[EXTRACT_FIELD(action->type, Prefill)];
+			UINT32	prefillValue = kPrefillValueTable[EXTRACT_FIELD(action.type, Prefill)];
 	
-			if(!(action->flags & kActionFlag_PrefillWritten))
+			if(!(action.flags & kActionFlag_PrefillWritten))
 			{
 				WriteData(action, prefillValue);
 	
-				action->flags |= kActionFlag_PrefillWritten;
+				action.flags |= kActionFlag_PrefillWritten;
 	
 				return;
 			}
@@ -10025,66 +10025,66 @@ public class cheat
 				if(ReadData(action) == prefillValue)
 					return;
 	
-				action->flags |= kActionFlag_PrefillDone;
+				action.flags |= kActionFlag_PrefillDone;
 			}
 		}
 	
-		switch(EXTRACT_FIELD(action->type, Type))
+		switch(EXTRACT_FIELD(action.type, Type))
 		{
 			case kType_NormalOrDelay:
 			{
-				if(action->frameTimer >= (parameter * Machine->drv->frames_per_second))
+				if(action.frameTimer >= (parameter * Machine.drv.frames_per_second))
 				{
-					action->frameTimer = 0;
+					action.frameTimer = 0;
 	
 					DoCheatOperation(action);
 	
-					if(TEST_FIELD(action->type, OneShot))
+					if(TEST_FIELD(action.type, OneShot))
 					{
-						action->flags |= kActionFlag_OperationDone;
+						action.flags |= kActionFlag_OperationDone;
 					}
 				}
 				else
 				{
-					action->frameTimer++;
+					action.frameTimer++;
 				}
 			}
 			break;
 	
 			case kType_WaitForModification:
 			{
-				if(action->flags & kActionFlag_WasModified)
+				if(action.flags & kActionFlag_WasModified)
 				{
-					if(action->frameTimer <= 0)
+					if(action.frameTimer <= 0)
 					{
 						DoCheatOperation(action);
 	
-						action->flags &= ~kActionFlag_WasModified;
+						action.flags &= ~kActionFlag_WasModified;
 	
-						if(TEST_FIELD(action->type, OneShot))
+						if(TEST_FIELD(action.type, OneShot))
 						{
-							action->flags |= kActionFlag_OperationDone;
+							action.flags |= kActionFlag_OperationDone;
 						}
 					}
 					else
 					{
-						action->frameTimer--;
+						action.frameTimer--;
 					}
 	
-					action->lastValue = ReadData(action);
+					action.lastValue = ReadData(action);
 				}
 				else
 				{
 					UINT8	currentValue = ReadData(action);
 	
-					if(currentValue != action->lastValue)
+					if(currentValue != action.lastValue)
 					{
-						action->frameTimer = parameter * Machine->drv->frames_per_second;
+						action.frameTimer = parameter * Machine.drv.frames_per_second;
 	
-						action->flags |= kActionFlag_WasModified;
+						action.flags |= kActionFlag_WasModified;
 					}
 	
-					action->lastValue = currentValue;
+					action.lastValue = currentValue;
 				}
 			}
 			break;
@@ -10093,17 +10093,17 @@ public class cheat
 			{
 				UINT8	currentValue = ReadData(action);
 	
-				if(currentValue != (action->lastValue - parameter))
+				if(currentValue != (action.lastValue - parameter))
 				{
 					DoCheatOperation(action);
 	
-					if(TEST_FIELD(action->type, OneShot))
+					if(TEST_FIELD(action.type, OneShot))
 					{
-						action->flags |= kActionFlag_OperationDone;
+						action.flags |= kActionFlag_OperationDone;
 					}
 				}
 	
-				action->lastValue = currentValue;
+				action.lastValue = currentValue;
 			}
 			break;
 	
@@ -10118,31 +10118,31 @@ public class cheat
 		int	i;
 	
 		// special handling for select cheats
-		if(entry->flags & kCheatFlag_Select)
+		if(entry.flags & kCheatFlag_Select)
 		{
-			if(entry->flags & kCheatFlag_HasActivationKey)
+			if(entry.flags & kCheatFlag_HasActivationKey)
 			{
-				if(code_pressed(entry->activationKey))
+				if(code_pressed(entry.activationKey))
 				{
-					if(!(entry->flags & kCheatFlag_ActivationKeyPressed))
+					if(!(entry.flags & kCheatFlag_ActivationKeyPressed))
 					{
-						entry->selection++;
+						entry.selection++;
 	
-						if(entry->flags & kCheatFlag_OneShot)
+						if(entry.flags & kCheatFlag_OneShot)
 						{
-							if(entry->selection >= entry->actionListLength)
+							if(entry.selection >= entry.actionListLength)
 							{
-								entry->selection = 1;
+								entry.selection = 1;
 	
-								if(entry->selection >= entry->actionListLength)
-									entry->selection = 0;
+								if(entry.selection >= entry.actionListLength)
+									entry.selection = 0;
 							}
 						}
 						else
 						{
-							if(entry->selection >= entry->actionListLength)
+							if(entry.selection >= entry.actionListLength)
 							{
-								entry->selection = 0;
+								entry.selection = 0;
 	
 								DeactivateCheat(entry);
 							}
@@ -10152,37 +10152,37 @@ public class cheat
 							}
 						}
 	
-						entry->flags |= kCheatFlag_ActivationKeyPressed;
+						entry.flags |= kCheatFlag_ActivationKeyPressed;
 					}
 				}
 				else
 				{
-					entry->flags &= ~kCheatFlag_ActivationKeyPressed;
+					entry.flags &= ~kCheatFlag_ActivationKeyPressed;
 				}
 			}
 	
 			// if a subcheat is selected and it's a legal index, handle it
-			if(entry->selection && (entry->selection < entry->actionListLength))
+			if(entry.selection && (entry.selection < entry.actionListLength))
 			{
-				DoCheatAction(&entry->actionList[entry->selection]);
+				DoCheatAction(&entry.actionList[entry.selection]);
 			}
 		}
 		else
 		{
-			if(	(entry->flags & kCheatFlag_HasActivationKey) &&
-				!(entry->flags & kCheatFlag_UserSelect))
+			if(	(entry.flags & kCheatFlag_HasActivationKey) &&
+				!(entry.flags & kCheatFlag_UserSelect))
 			{
-				if(code_pressed(entry->activationKey))
+				if(code_pressed(entry.activationKey))
 				{
-					if(!(entry->flags & kCheatFlag_ActivationKeyPressed))
+					if(!(entry.flags & kCheatFlag_ActivationKeyPressed))
 					{
-						if(entry->flags & kCheatFlag_OneShot)
+						if(entry.flags & kCheatFlag_OneShot)
 						{
 							ActivateCheat(entry);
 						}
 						else
 						{
-							if(entry->flags & kCheatFlag_Active)
+							if(entry.flags & kCheatFlag_Active)
 							{
 								DeactivateCheat(entry);
 							}
@@ -10192,30 +10192,30 @@ public class cheat
 							}
 						}
 	
-						entry->flags |= kCheatFlag_ActivationKeyPressed;
+						entry.flags |= kCheatFlag_ActivationKeyPressed;
 					}
 				}
 				else
 				{
-					entry->flags &= ~kCheatFlag_ActivationKeyPressed;
+					entry.flags &= ~kCheatFlag_ActivationKeyPressed;
 				}
 			}
 	
-			if(!(entry->flags & kCheatFlag_Active))
+			if(!(entry.flags & kCheatFlag_Active))
 				return;
 	
 			// update all actions
-			for(i = 0; i < entry->actionListLength; i++)
+			for(i = 0; i < entry.actionListLength; i++)
 			{
-				DoCheatAction(&entry->actionList[i]);
+				DoCheatAction(&entry.actionList[i]);
 			}
 	
 			// if all actions are done, deactivate the cheat
 			{
 				UINT8	done = 1;
 	
-				for(i = 0; (i < entry->actionListLength) && done; i++)
-					if(!(entry->actionList[i].flags & kActionFlag_OperationDone))
+				for(i = 0; (i < entry.actionListLength) && done; i++)
+					if(!(entry.actionList[i].flags & kActionFlag_OperationDone))
 						done = 0;
 	
 				if (done != 0)
@@ -10243,25 +10243,25 @@ public class cheat
 		int		flags =		0;
 		int		i;
 	
-		flags = entry->flags & kCheatFlag_PersistentMask;
+		flags = entry.flags & kCheatFlag_PersistentMask;
 	
-		if(	(EXTRACT_FIELD(entry->actionList[0].type, LocationType) == kLocation_Custom) &&
-			(EXTRACT_FIELD(entry->actionList[0].type, LocationParameter) == kCustomLocation_Select))
+		if(	(EXTRACT_FIELD(entry.actionList[0].type, LocationType) == kLocation_Custom) &&
+			(EXTRACT_FIELD(entry.actionList[0].type, LocationParameter) == kCustomLocation_Select))
 			flags |= kCheatFlag_Select;
 	
-		for(i = 0; i < entry->actionListLength; i++)
+		for(i = 0; i < entry.actionListLength; i++)
 		{
-			CheatAction	* action =		&entry->actionList[i];
+			CheatAction	* action =		&entry.actionList[i];
 			int			isActionNull =	0;
 			UINT32		size;
 			UINT32		operation;
-			UINT32		actionFlags = action->flags & kActionFlag_PersistentMask;
+			UINT32		actionFlags = action.flags & kActionFlag_PersistentMask;
 	
-			size = EXTRACT_FIELD(action->type, BytesUsed);
-			operation = EXTRACT_FIELD(action->type, Operation) | EXTRACT_FIELD(action->type, OperationExtend) << 2;
+			size = EXTRACT_FIELD(action.type, BytesUsed);
+			operation = EXTRACT_FIELD(action.type, Operation) | EXTRACT_FIELD(action.type, OperationExtend) << 2;
 	
-			if(	(EXTRACT_FIELD(action->type, LocationType) == kLocation_Custom) &&
-				(EXTRACT_FIELD(action->type, LocationParameter) == kCustomLocation_Comment))
+			if(	(EXTRACT_FIELD(action.type, LocationType) == kLocation_Custom) &&
+				(EXTRACT_FIELD(action.type, LocationParameter) == kCustomLocation_Comment))
 			{
 				isActionNull = 1;
 			}
@@ -10270,13 +10270,13 @@ public class cheat
 				isNull = 0;
 			}
 	
-			if(!TEST_FIELD(action->type, OneShot))
+			if(!TEST_FIELD(action.type, OneShot))
 				isOneShot = 0;
 	
-			if(TEST_FIELD(action->type, UserSelectEnable))
+			if(TEST_FIELD(action.type, UserSelectEnable))
 				flags |= kCheatFlag_UserSelect;
 	
-			if(EXTRACT_FIELD(action->type, LocationType) == kLocation_IndirectIndexed)
+			if(EXTRACT_FIELD(action.type, LocationType) == kLocation_IndirectIndexed)
 			{
 				actionFlags |= kActionFlag_IgnoreMask;
 			}
@@ -10286,14 +10286,14 @@ public class cheat
 				{
 					// check for mask == 0, fix
 					if(	(operation == kOperation_WriteMask) &&
-						(action->extendData == 0))
+						(action.extendData == 0))
 					{
-						action->extendData = ~0;
+						action.extendData = ~0;
 					}
 				}
 			}
 	
-			action->flags = actionFlags;
+			action.flags = actionFlags;
 		}
 	
 		if (isOneShot != 0)
@@ -10301,17 +10301,17 @@ public class cheat
 		if (isNull != 0)
 			flags |= kCheatFlag_Null;
 	
-		entry->flags = (flags & kCheatFlag_InfoMask) | (entry->flags & ~kCheatFlag_InfoMask);
+		entry.flags = (flags & kCheatFlag_InfoMask) | (entry.flags & ~kCheatFlag_InfoMask);
 	
 		if (isLoadTime != 0)
-			entry->flags &= ~kCheatFlag_Dirty;
+			entry.flags &= ~kCheatFlag_Dirty;
 	}
 	
 	static int IsAddressInRange(CheatAction * action, UINT32 length)
 	{
-		UINT8	bytes = EXTRACT_FIELD(action->type, BytesUsed) + 1;
+		UINT8	bytes = EXTRACT_FIELD(action.type, BytesUsed) + 1;
 	
-		return ((action->address + bytes) <= length);
+		return ((action.address + bytes) <= length);
 	}
 	
 	static void BuildCPUInfoList(void)
@@ -10320,7 +10320,7 @@ public class cheat
 	
 		// do regions
 		{
-			const struct RomModule *	traverse = rom_first_region(Machine->gamedrv);
+			const struct RomModule *	traverse = rom_first_region(Machine.gamedrv);
 	
 			memset(regionInfoList, 0, sizeof(CPUInfo) * kRegionListLength);
 	
@@ -10338,11 +10338,11 @@ public class cheat
 						UINT32	length = memory_region_length(regionType);
 						int		bitState = 0;
 	
-						info->type = regionType;
-						info->dataBits = ROMREGION_GETWIDTH(traverse);
+						info.type = regionType;
+						info.dataBits = ROMREGION_GETWIDTH(traverse);
 	
-						info->addressBits = 0;
-						info->addressMask = length;
+						info.addressBits = 0;
+						info.addressMask = length;
 	
 						// build address mask
 						for(i = 0; i < 32; i++)
@@ -10351,23 +10351,23 @@ public class cheat
 	
 							if (bitState != 0)
 							{
-								info->addressMask |= mask;
+								info.addressMask |= mask;
 							}
 							else
 							{
-								if(info->addressMask & mask)
+								if(info.addressMask & mask)
 								{
-									info->addressBits = 32 - i;
+									info.addressBits = 32 - i;
 									bitState = 1;
 								}
 							}
 						}
 	
-						info->addressCharsNeeded = info->addressBits >> 2;
-						if(info->addressBits & 3)
-							info->addressCharsNeeded++;
+						info.addressCharsNeeded = info.addressBits >> 2;
+						if(info.addressBits & 3)
+							info.addressCharsNeeded++;
 	
-						info->endianness = ROMREGION_ISBIGENDIAN(traverse);
+						info.endianness = ROMREGION_ISBIGENDIAN(traverse);
 					}
 				}
 	
@@ -10384,33 +10384,33 @@ public class cheat
 				CPUInfo	* info = &cpuInfoList[i];
 				CPUInfo	* regionInfo = &regionInfoList[REGION_CPU1 + i - REGION_INVALID];
 	
-				int		type = Machine->drv->cpu[i].cpu_type;
+				int		type = Machine.drv.cpu[i].cpu_type;
 	
-				info->type = type;
-				info->dataBits = cputype_databus_width(type);
-				info->addressBits = cputype_address_bits(type);
-				info->addressMask = 0xFFFFFFFF >> (32 - cputype_address_bits(type));
+				info.type = type;
+				info.dataBits = cputype_databus_width(type);
+				info.addressBits = cputype_address_bits(type);
+				info.addressMask = 0xFFFFFFFF >> (32 - cputype_address_bits(type));
 	
-				info->addressCharsNeeded = info->addressBits >> 2;
-				if(info->addressBits & 0x3)
-					info->addressCharsNeeded++;
+				info.addressCharsNeeded = info.addressBits >> 2;
+				if(info.addressBits & 0x3)
+					info.addressCharsNeeded++;
 	
-				info->endianness = (cputype_endianess(type) == CPU_IS_BE);
+				info.endianness = (cputype_endianess(type) == CPU_IS_BE);
 	
 				switch(type)
 				{
 	#if HAS_TMS34010
 					case CPU_TMS34010:
-						info->addressShift = 3;
+						info.addressShift = 3;
 						break;
 	#endif
 	#if HAS_TMS34020
 					case HAS_TMS34020:
-						info->addressShift = 3;
+						info.addressShift = 3;
 						break;
 	#endif
 					default:
-						info->addressShift = 0;
+						info.addressShift = 0;
 						break;
 				}
 	

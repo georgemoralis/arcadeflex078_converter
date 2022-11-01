@@ -214,12 +214,12 @@ public class tnzs
 	
 		size = sizeof(struct GameSamples) + MAX_SAMPLES * sizeof(struct GameSamples *);
 	
-		if ((Machine->samples = auto_malloc(size)) == NULL) return 1;
+		if ((Machine.samples = auto_malloc(size)) == NULL) return 1;
 	
-		samples = Machine->samples;
-		samples->total = MAX_SAMPLES;
+		samples = Machine.samples;
+		samples.total = MAX_SAMPLES;
 	
-		for (i = 0; i < samples->total; i++)
+		for (i = 0; i < samples.total; i++)
 		{
 			src = memory_region(REGION_SOUND1) + 0x0090;
 			start = (src[(i * 2) + 1] * 256) + src[(i * 2)];
@@ -236,16 +236,16 @@ public class tnzs
 					size++;
 				}
 			}
-			if ((samples->sample[i] = auto_malloc(sizeof(struct GameSample) + size * sizeof(unsigned char))) == NULL) return 1;
+			if ((samples.sample[i] = auto_malloc(sizeof(struct GameSample) + size * sizeof(unsigned char))) == NULL) return 1;
 	
 			if (start < 0x100) start = size = 0;
 	
-			samples->sample[i]->smpfreq = 7000;	/* 7 KHz??? */
-			samples->sample[i]->resolution = 8;	/* 8 bit */
-			samples->sample[i]->length = size;
+			samples.sample[i].smpfreq = 7000;	/* 7 KHz??? */
+			samples.sample[i].resolution = 8;	/* 8 bit */
+			samples.sample[i].length = size;
 	
 			// signed 8-bit sample to unsigned 8-bit sample convert
-			dest = (unsigned char *)samples->sample[i]->data;
+			dest = (unsigned char *)samples.sample[i].data;
 			scan = &src[start];
 			for (n = 0; n < size; n++)
 			{

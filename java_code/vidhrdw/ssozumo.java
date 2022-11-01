@@ -21,8 +21,8 @@ public class ssozumo
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	#define TOTAL_COLORS(gfxn)	(Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-	#define COLOR(gfxn,offs)	(colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+	#define TOTAL_COLORS(gfxn)	(Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+	#define COLOR(gfxn,offs)	(colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	/**************************************************************************/
 	
@@ -192,11 +192,11 @@ public class ssozumo
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap, Machine->gfx[2],
+				drawgfx(bitmap, Machine.gfx[2],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 			}
 		}
@@ -204,8 +204,8 @@ public class ssozumo
 	
 	public static VideoUpdateHandlerPtr video_update_ssozumo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
-		tilemap_draw(bitmap, &Machine->visible_area, fg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, fg_tilemap, 0, 0);
 		ssozumo_draw_sprites(bitmap);
 	} };
 }

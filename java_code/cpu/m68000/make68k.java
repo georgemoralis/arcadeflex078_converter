@@ -52,8 +52,8 @@
  *                68010 commands almost complete
  *                more compression on jump table (16k smaller)
  *                Some optimising
- *					 	  shl reg,1 -> add reg,reg
- *                  or ecx,ecx:jz -> jecxz
+ *					 	  shl reg,1 . add reg,reg
+ *                  or ecx,ecx:jz . jecxz
  * 22.08.99 DEO	- SBCD/ABCD sets N flag same as carry
  * 19.10.99 MJC	- Change DOS memory routines
  *                Change DOS Clobber flags (ESI no longer safe)
@@ -3479,7 +3479,7 @@ public class make68k
 	
 		for (Opcode = 0x60;Opcode < 0x70;Opcode++)
 		{
-			/* Displacement = 0 -> 16 Bit displacement */
+			/* Displacement = 0 . 16 Bit displacement */
 	
 			BaseCode = Opcode * 0x100;
 			OpcodeArray[BaseCode] = BaseCode;
@@ -4243,11 +4243,11 @@ public class make68k
 						fprintf(fp, "\t\t test  ecx,0x0800\n");					// signed/unsigned?
 						fprintf(fp, "\t\t jz    short %s\n",Label);				// skip if unsigned
 	
-						fprintf(fp, "\t\t imul   dword [%s+EBX*4]\n",REG_DAT);	// signed 32x32->64
+						fprintf(fp, "\t\t imul   dword [%s+EBX*4]\n",REG_DAT);	// signed 32x32.64
 						fprintf(fp, "\t\t jmp   short %s_1\n",Label);			// skip
 	
 					fprintf(fp, "%s:\n",Label);
-						fprintf(fp, "\t\t mul  dword [%s+EBX*4]\n",REG_DAT);	// unsigned 32x32->64
+						fprintf(fp, "\t\t mul  dword [%s+EBX*4]\n",REG_DAT);	// unsigned 32x32.64
 	
 					fprintf(fp, "%s_1:\n",Label);
 						fprintf(fp, "\t\t mov   [%s+EBX*4],eax\n",REG_DAT);		// store Dl back

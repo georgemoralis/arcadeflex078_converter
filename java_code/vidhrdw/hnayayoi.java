@@ -45,12 +45,12 @@ public class hnayayoi
 	
 	public static VideoUpdateHandlerPtr video_update_hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		return common_vh_start(4);	/* 4 bitmaps -> 2 layers */
+		return common_vh_start(4);	/* 4 bitmaps . 2 layers */
 	} };
 	
 	public static VideoUpdateHandlerPtr video_update_untoucha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		return common_vh_start(8);	/* 8 bitmaps -> 4 layers */
+		return common_vh_start(8);	/* 8 bitmaps . 4 layers */
 	} };
 	
 	
@@ -229,12 +229,12 @@ public class hnayayoi
 		int county,countx,pen,offs;
 		UINT8 *src1 = pixmap[left_pixmap];
 		UINT8 *src2 = pixmap[right_pixmap];
-		UINT16 *dstbase = (UINT16 *)bitmap->base;
+		UINT16 *dstbase = (UINT16 *)bitmap.base;
 	
 		palbase *= 16;
 		offs = 0;
 	
-		for (county = 255; county >= 0; county--, dstbase += bitmap->rowpixels)
+		for (county = 255; county >= 0; county--, dstbase += bitmap.rowpixels)
 		{
 			UINT16 *dst = dstbase;
 	

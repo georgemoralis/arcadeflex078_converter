@@ -377,8 +377,8 @@ public class r3000
 		struct r3000_config *config = param;
 	
 		/* allocate memory */
-		r3000.icache = malloc(config->icache);
-		r3000.dcache = malloc(config->dcache);
+		r3000.icache = malloc(config.icache);
+		r3000.dcache = malloc(config.dcache);
 		if (!r3000.icache || !r3000.dcache)
 		{
 			fprintf(stderr, "error: couldn't allocate cache for r3000!\n");
@@ -407,9 +407,9 @@ public class r3000
 		}
 	
 		/* initialize the rest of the config */
-		r3000.hasfpu = config->hasfpu;
-		r3000.icache_size = config->icache;
-		r3000.dcache_size = config->dcache;
+		r3000.hasfpu = config.hasfpu;
+		r3000.icache_size = config.icache;
+		r3000.dcache_size = config.dcache;
 		r3000.cur = *r3000.memory_hand;
 		r3000.cache = r3000.dcache;
 		r3000.cache_size = r3000.dcache_size;
@@ -1144,44 +1144,44 @@ public class r3000
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+R3000_PC:  	sprintf(buffer[which], "PC: %08X", r->pc); break;
-			case CPU_INFO_REG+R3000_SR:  	sprintf(buffer[which], "SR: %08X", r->cpr[0][COP0_Status]); break;
+			case CPU_INFO_REG+R3000_PC:  	sprintf(buffer[which], "PC: %08X", r.pc); break;
+			case CPU_INFO_REG+R3000_SR:  	sprintf(buffer[which], "SR: %08X", r.cpr[0][COP0_Status]); break;
 	
-			case CPU_INFO_REG+R3000_R0:		sprintf(buffer[which], "R0: %08X", r->r[0]); break;
-			case CPU_INFO_REG+R3000_R1:		sprintf(buffer[which], "R1: %08X", r->r[1]); break;
-			case CPU_INFO_REG+R3000_R2:		sprintf(buffer[which], "R2: %08X", r->r[2]); break;
-			case CPU_INFO_REG+R3000_R3:		sprintf(buffer[which], "R3: %08X", r->r[3]); break;
-			case CPU_INFO_REG+R3000_R4:		sprintf(buffer[which], "R4: %08X", r->r[4]); break;
-			case CPU_INFO_REG+R3000_R5:		sprintf(buffer[which], "R5: %08X", r->r[5]); break;
-			case CPU_INFO_REG+R3000_R6:		sprintf(buffer[which], "R6: %08X", r->r[6]); break;
-			case CPU_INFO_REG+R3000_R7:		sprintf(buffer[which], "R7: %08X", r->r[7]); break;
-			case CPU_INFO_REG+R3000_R8:		sprintf(buffer[which], "R8: %08X", r->r[8]); break;
-			case CPU_INFO_REG+R3000_R9:		sprintf(buffer[which], "R9: %08X", r->r[9]); break;
-			case CPU_INFO_REG+R3000_R10:	sprintf(buffer[which], "R10:%08X", r->r[10]); break;
-			case CPU_INFO_REG+R3000_R11:	sprintf(buffer[which], "R11:%08X", r->r[11]); break;
-			case CPU_INFO_REG+R3000_R12:	sprintf(buffer[which], "R12:%08X", r->r[12]); break;
-			case CPU_INFO_REG+R3000_R13:	sprintf(buffer[which], "R13:%08X", r->r[13]); break;
-			case CPU_INFO_REG+R3000_R14:	sprintf(buffer[which], "R14:%08X", r->r[14]); break;
-			case CPU_INFO_REG+R3000_R15:	sprintf(buffer[which], "R15:%08X", r->r[15]); break;
-			case CPU_INFO_REG+R3000_R16:	sprintf(buffer[which], "R16:%08X", r->r[16]); break;
-			case CPU_INFO_REG+R3000_R17:	sprintf(buffer[which], "R17:%08X", r->r[17]); break;
-			case CPU_INFO_REG+R3000_R18:	sprintf(buffer[which], "R18:%08X", r->r[18]); break;
-			case CPU_INFO_REG+R3000_R19:	sprintf(buffer[which], "R19:%08X", r->r[19]); break;
-			case CPU_INFO_REG+R3000_R20:	sprintf(buffer[which], "R20:%08X", r->r[20]); break;
-			case CPU_INFO_REG+R3000_R21:	sprintf(buffer[which], "R21:%08X", r->r[21]); break;
-			case CPU_INFO_REG+R3000_R22:	sprintf(buffer[which], "R22:%08X", r->r[22]); break;
-			case CPU_INFO_REG+R3000_R23:	sprintf(buffer[which], "R23:%08X", r->r[23]); break;
-			case CPU_INFO_REG+R3000_R24:	sprintf(buffer[which], "R24:%08X", r->r[24]); break;
-			case CPU_INFO_REG+R3000_R25:	sprintf(buffer[which], "R25:%08X", r->r[25]); break;
-			case CPU_INFO_REG+R3000_R26:	sprintf(buffer[which], "R26:%08X", r->r[26]); break;
-			case CPU_INFO_REG+R3000_R27:	sprintf(buffer[which], "R27:%08X", r->r[27]); break;
-			case CPU_INFO_REG+R3000_R28:	sprintf(buffer[which], "R28:%08X", r->r[28]); break;
-			case CPU_INFO_REG+R3000_R29:	sprintf(buffer[which], "R29:%08X", r->r[29]); break;
-			case CPU_INFO_REG+R3000_R30:	sprintf(buffer[which], "R30:%08X", r->r[30]); break;
-			case CPU_INFO_REG+R3000_R31:	sprintf(buffer[which], "R31:%08X", r->r[31]); break;
+			case CPU_INFO_REG+R3000_R0:		sprintf(buffer[which], "R0: %08X", r.r[0]); break;
+			case CPU_INFO_REG+R3000_R1:		sprintf(buffer[which], "R1: %08X", r.r[1]); break;
+			case CPU_INFO_REG+R3000_R2:		sprintf(buffer[which], "R2: %08X", r.r[2]); break;
+			case CPU_INFO_REG+R3000_R3:		sprintf(buffer[which], "R3: %08X", r.r[3]); break;
+			case CPU_INFO_REG+R3000_R4:		sprintf(buffer[which], "R4: %08X", r.r[4]); break;
+			case CPU_INFO_REG+R3000_R5:		sprintf(buffer[which], "R5: %08X", r.r[5]); break;
+			case CPU_INFO_REG+R3000_R6:		sprintf(buffer[which], "R6: %08X", r.r[6]); break;
+			case CPU_INFO_REG+R3000_R7:		sprintf(buffer[which], "R7: %08X", r.r[7]); break;
+			case CPU_INFO_REG+R3000_R8:		sprintf(buffer[which], "R8: %08X", r.r[8]); break;
+			case CPU_INFO_REG+R3000_R9:		sprintf(buffer[which], "R9: %08X", r.r[9]); break;
+			case CPU_INFO_REG+R3000_R10:	sprintf(buffer[which], "R10:%08X", r.r[10]); break;
+			case CPU_INFO_REG+R3000_R11:	sprintf(buffer[which], "R11:%08X", r.r[11]); break;
+			case CPU_INFO_REG+R3000_R12:	sprintf(buffer[which], "R12:%08X", r.r[12]); break;
+			case CPU_INFO_REG+R3000_R13:	sprintf(buffer[which], "R13:%08X", r.r[13]); break;
+			case CPU_INFO_REG+R3000_R14:	sprintf(buffer[which], "R14:%08X", r.r[14]); break;
+			case CPU_INFO_REG+R3000_R15:	sprintf(buffer[which], "R15:%08X", r.r[15]); break;
+			case CPU_INFO_REG+R3000_R16:	sprintf(buffer[which], "R16:%08X", r.r[16]); break;
+			case CPU_INFO_REG+R3000_R17:	sprintf(buffer[which], "R17:%08X", r.r[17]); break;
+			case CPU_INFO_REG+R3000_R18:	sprintf(buffer[which], "R18:%08X", r.r[18]); break;
+			case CPU_INFO_REG+R3000_R19:	sprintf(buffer[which], "R19:%08X", r.r[19]); break;
+			case CPU_INFO_REG+R3000_R20:	sprintf(buffer[which], "R20:%08X", r.r[20]); break;
+			case CPU_INFO_REG+R3000_R21:	sprintf(buffer[which], "R21:%08X", r.r[21]); break;
+			case CPU_INFO_REG+R3000_R22:	sprintf(buffer[which], "R22:%08X", r.r[22]); break;
+			case CPU_INFO_REG+R3000_R23:	sprintf(buffer[which], "R23:%08X", r.r[23]); break;
+			case CPU_INFO_REG+R3000_R24:	sprintf(buffer[which], "R24:%08X", r.r[24]); break;
+			case CPU_INFO_REG+R3000_R25:	sprintf(buffer[which], "R25:%08X", r.r[25]); break;
+			case CPU_INFO_REG+R3000_R26:	sprintf(buffer[which], "R26:%08X", r.r[26]); break;
+			case CPU_INFO_REG+R3000_R27:	sprintf(buffer[which], "R27:%08X", r.r[27]); break;
+			case CPU_INFO_REG+R3000_R28:	sprintf(buffer[which], "R28:%08X", r.r[28]); break;
+			case CPU_INFO_REG+R3000_R29:	sprintf(buffer[which], "R29:%08X", r.r[29]); break;
+			case CPU_INFO_REG+R3000_R30:	sprintf(buffer[which], "R30:%08X", r.r[30]); break;
+			case CPU_INFO_REG+R3000_R31:	sprintf(buffer[which], "R31:%08X", r.r[31]); break;
 	
 			case CPU_INFO_NAME: return "R3000";
-			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R3000 (big-endian)" : "MIPS R3000 (little-endian)";
+			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R3000 (big-endian)" : "MIPS R3000 (little-endian)";
 			case CPU_INFO_VERSION: return "1.0";
 			case CPU_INFO_FILE: return __FILE__;
 			case CPU_INFO_CREDITS: return "Copyright (C) Aaron Giles 2000-2002";

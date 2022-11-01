@@ -225,7 +225,7 @@ public class hash
 	{
 		hash_function_desc* info = hash_get_function_desc(function);
 	
-		return info->name;
+		return info.name;
 	}
 	
 	int hash_data_has_checksum(const char* data, unsigned int function)
@@ -234,7 +234,7 @@ public class hash
 		char str[3];
 		const char* res;
 	
-		str[0] = info->code; 
+		str[0] = info.code; 
 		str[1] = ':'; 
 		str[2] = '\0';
 	
@@ -254,10 +254,10 @@ public class hash
 		char* start = d;
 		unsigned i;
 		
-		*d++ = desc->code;
+		*d++ = desc.code;
 		*d++ = ':';
 	
-		for (i=0;i<desc->size;i++)
+		for (i=0;i<desc.size;i++)
 		{
 			UINT8 c = *checksum++;
 	
@@ -320,7 +320,7 @@ public class hash
 				{
 					hash_function_desc* info = hash_get_function_desc(i);
 	
-					if (!hash_compare_checksum(d1+offs1, d2+offs2, info->size))
+					if (!hash_compare_checksum(d1+offs1, d2+offs2, info.size))
 						return 0;
 	
 					ok = 1;
@@ -361,36 +361,36 @@ public class hash
 	
 		// Return the number of required bytes
 		if (!checksum)
-			return info->size*2+1;
+			return info.size*2+1;
 	
 		// If the terminator is not found at the right position,
 		//  return a full-zero checksum and warn about it. This is mainly
 		//  for developers putting checksums of '0' or '1' to ask MAME
 		//  to compute the correct values for them.
-		if (data[info->size*2] != '#')
+		if (data[info.size*2] != '#')
 		{
-			memset(checksum, '0', info->size*2);
-			checksum[info->size*2] = '\0';
+			memset(checksum, '0', info.size*2);
+			checksum[info.size*2] = '\0';
 			return 2;
 		}
 	
 		// If it contains invalid hexadecimal characters,
 		//  treat the checksum as zero and return warning
-		for (i=0;i<info->size*2;i++)
+		for (i=0;i<info.size*2;i++)
 			if (!(data[i]>='0' && data[i]<='9') &&
 				!(data[i]>='a' && data[i]<='f') &&
 				!(data[i]>='A' && data[i]<='F'))
 			{
-				memset(checksum, '0', info->size*2);
-				checksum[info->size*2] = '\0';
+				memset(checksum, '0', info.size*2);
+				checksum[info.size*2] = '\0';
 				return 2;
 			}
 		
 		// Copy the checksum (and make it lowercase)
-		for (i=0;i<info->size*2;i++)
+		for (i=0;i<info.size*2;i++)
 			checksum[i] = tolower(data[i]);
 	
-		checksum[info->size*2] = '\0';
+		checksum[info.size*2] = '\0';
 	
 		return 1;
 	}
@@ -414,23 +414,23 @@ public class hash
 	
 		// Return the number of required bytes
 		if (!checksum)
-			return info->size;
+			return info.size;
 	
 		// Clear the checksum array
-		memset(checksum, 0, info->size);
+		memset(checksum, 0, info.size);
 	
 		// If the terminator is not found at the right position,
 		//  return a full-zero checksum and warn about it. This is mainly
 		//  for developers putting checksums of '0' or '1' to ask MAME
 		//  to compute the correct values for them.
-		if (data[info->size*2] != '#')
+		if (data[info.size*2] != '#')
 		{
-			memset(checksum, '\0', info->size);
+			memset(checksum, '\0', info.size);
 			return 2;
 		}
 		
 		// Convert hex string into binary
-		for (i=0;i<info->size*2;i++)
+		for (i=0;i<info.size*2;i++)
 		{
 			char c = tolower(*data++);
 			
@@ -444,7 +444,7 @@ public class hash
 			{
 				// Invalid character: the checksum is treated as zero,
 				//  and a warning is returned
-				memset(checksum, '\0', info->size);
+				memset(checksum, '\0', info.size);
 				return 2;
 			}
 	
@@ -540,9 +540,9 @@ public class hash
 				hash_function_desc* desc = hash_get_function_desc(func);
 				UINT8 chksum[256];
 	
-				desc->calculate_begin();
-				desc->calculate_buffer(data, length);
-				desc->calculate_end(chksum);
+				desc.calculate_begin();
+				desc.calculate_buffer(data, length);
+				desc.calculate_end(chksum);
 	
 				dst += hash_data_add_binary_checksum(dst, func, chksum);
 			}

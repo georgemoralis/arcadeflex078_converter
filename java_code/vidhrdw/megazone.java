@@ -51,11 +51,11 @@ public class megazone
 	public static PaletteInitHandlerPtr palette_init_megazone  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -149,7 +149,7 @@ public class megazone
 					flipy = !flipy;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						((int)videoram.read(offs)) + ((colorram[offs] & (1<<7) ? 256 : 0) ),
 						(colorram[offs] & 0x0f) + 0x10,
 						flipx,flipy,
@@ -175,7 +175,7 @@ public class megazone
 			}
 	
 	
-			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine->visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,1,&scrollx,1,&scrolly,&Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
 	
@@ -194,12 +194,12 @@ public class megazone
 				flipx = ~spriteram.read(offs+0)& 0x40;
 				flipy = spriteram.read(offs+0)& 0x80;
 	
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						spriteram.read(offs + 2),
 						spriteram.read(offs + 0)& 0x0f,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_COLOR,0);
+						&Machine.visible_area,TRANSPARENCY_COLOR,0);
 			}
 		}
 	
@@ -227,7 +227,7 @@ public class megazone
 	
 	
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 						((int)megazone_videoram2[offs]) + ((megazone_colorram2[offs] & (1<<7) ? 256 : 0) ),
 						(megazone_colorram2[offs] & 0x0f) + 0x10,
 						flipx,flipy,

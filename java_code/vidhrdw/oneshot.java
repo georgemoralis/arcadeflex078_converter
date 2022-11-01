@@ -127,7 +127,7 @@ public class oneshot
 	{
 		const UINT16 *source = oneshot_sprites;
 		const UINT16 *finish = source+(0x1000/2);
-		const struct GfxElement *gfx = Machine->gfx[1];
+		const struct GfxElement *gfx = Machine.gfx[1];
 	
 		int xpos,ypos;
 	

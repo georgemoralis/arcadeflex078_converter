@@ -241,11 +241,11 @@ public class qix
 	
 	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		pen_t *pens = &Machine->pens[qix_palettebank * 256];
+		pen_t *pens = &Machine.pens[qix_palettebank * 256];
 		int y;
 	
 		/* draw the bitmap */
-		for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 			draw_scanline8(bitmap, 0, y, 256, &videoram.read(y * 256), pens, -1);
 	} };
 }

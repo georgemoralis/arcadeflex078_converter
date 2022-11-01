@@ -1270,11 +1270,11 @@ public class konamiic
 	 * compatibility mode with an older custom IC. It is not known how this
 	 * alternate layout is selected.
 	 *
-	 * 0 -> e
-	 * 1 -> f
-	 * 2 -> 6
-	 * 3 -> 4
-	 * 4 -> 8
+	 * 0 . e
+	 * 1 . f
+	 * 2 . 6
+	 * 3 . 4
+	 * 4 . 8
 	 *
 	 */
 	
@@ -1282,7 +1282,7 @@ public class konamiic
 			const unsigned char *source,int base_color,int global_x_offset,int bank_base,
 			UINT32 pri_mask)
 	{
-		const struct GfxElement *gfx = Machine->gfx[chip];
+		const struct GfxElement *gfx = Machine.gfx[chip];
 		int flipscreen = K007121_flipscreen[chip];
 		int i,num,inc,offs[5],trans;
 		int is_flakatck = K007121_ctrlram[chip][0x06] & 0x04;	/* WRONG!!!! */
@@ -1466,7 +1466,7 @@ public class konamiic
 	
 	static UINT32 K007342_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -1679,7 +1679,7 @@ public class konamiic
 	
 	int K007420_vh_start(int gfxnum, void (*callback)(int *code,int *color))
 	{
-		K007420_gfx = Machine->gfx[gfxnum];
+		K007420_gfx = Machine.gfx[gfxnum];
 		K007420_callback = callback;
 		K007420_ram = auto_malloc(0x200);
 		if (!K007420_ram) return 1;
@@ -1973,7 +1973,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -1986,20 +1986,20 @@ public class konamiic
 		charlayout.planeoffset[3] = plane0 * 8;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 		K052109_memory_region = gfx_memory_region;
@@ -2437,7 +2437,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -2450,24 +2450,24 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane3 * 8;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
@@ -2478,7 +2478,7 @@ public class konamiic
 		gfx_drawmode_table[15] = DRAWMODE_SHADOW;
 	
 		K051960_memory_region = gfx_memory_region;
-		K051960_gfx = Machine->gfx[gfx_index];
+		K051960_gfx = Machine.gfx[gfx_index];
 		K051960_callback = callback;
 		K051960_ram = auto_malloc(0x400);
 		if (!K051960_ram) return 1;
@@ -2921,7 +2921,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -2934,24 +2934,24 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane0 * 8;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
@@ -2962,7 +2962,7 @@ public class konamiic
 		gfx_drawmode_table[15] = DRAWMODE_SHADOW;
 		K05324x_z_rejection = -1;
 		K053245_memory_region = gfx_memory_region;
-		K053245_gfx = Machine->gfx[gfx_index];
+		K053245_gfx = Machine.gfx[gfx_index];
 		K053245_callback = callback;
 		K053244_rombank = 0;
 		K053245_ramsize = 0x800;
@@ -3401,7 +3401,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -3414,31 +3414,31 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane3;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (Machine->color_depth == 32)
+		if (Machine.color_depth == 32)
 		{
-			if ((Machine->drv->video_attributes & (VIDEO_HAS_SHADOWS|VIDEO_HAS_HIGHLIGHTS)) != VIDEO_HAS_SHADOWS+VIDEO_HAS_HIGHLIGHTS)
+			if ((Machine.drv.video_attributes & (VIDEO_HAS_SHADOWS|VIDEO_HAS_HIGHLIGHTS)) != VIDEO_HAS_SHADOWS+VIDEO_HAS_HIGHLIGHTS)
 				usrintf_showmessage("driver missing SHADOWS or HIGHLIGHTS flag");
 		}
 		else
 		{
-			if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+			if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 				usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 		}
 	#endif
@@ -3454,7 +3454,7 @@ public class konamiic
 		K053247_wraparound = 1;
 		K05324x_z_rejection = -1;
 		K053247_memory_region = gfx_memory_region;
-		K053247_gfx = Machine->gfx[gfx_index];
+		K053247_gfx = Machine.gfx[gfx_index];
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
@@ -3526,7 +3526,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -3552,7 +3552,7 @@ public class konamiic
 				*d++ = *s2++;
 			}
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout);
+			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout);
 			break;
 		}
 		case K055673_LAYOUT_RNG:
@@ -3560,46 +3560,46 @@ public class konamiic
 			spritelayout2.total = memory_region_length(gfx_memory_region) / (16*16/2);
 	
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout2);
+			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout2);
 			break;
 		case K055673_LAYOUT_LE2:
 			K055673_rom = (data16_t *)memory_region(gfx_memory_region);
 			spritelayout3.total = memory_region_length(gfx_memory_region) / (16*16);
 	
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout3);
+			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout3);
 			break;
 		case K055673_LAYOUT_GX6:
 			K055673_rom = (data16_t *)memory_region(gfx_memory_region);
 			spritelayout4.total = memory_region_length(gfx_memory_region) / (16*16*6/8);
 	
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout4);
+			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout4);
 			break;
 		}
 	
-		if (!Machine->gfx[gfx_index])
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
 		/* prepare shadow draw table */
-		c = Machine->gfx[gfx_index]->color_granularity-1;
+		c = Machine.gfx[gfx_index].color_granularity-1;
 		gfx_drawmode_table[0] = DRAWMODE_NONE;
 		for (i = 1;i < c;i++)
 			gfx_drawmode_table[i] = DRAWMODE_SOURCE;
@@ -3610,7 +3610,7 @@ public class konamiic
 		K053247_wraparound = 1;
 		K05324x_z_rejection = -1;
 		K053247_memory_region = gfx_memory_region;
-		K053247_gfx = Machine->gfx[gfx_index];
+		K053247_gfx = Machine.gfx[gfx_index];
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
@@ -3899,17 +3899,17 @@ public class konamiic
 		int offx = (short)((K053246_regs[0] << 8) | K053246_regs[1]);
 		int offy = (short)((K053246_regs[2] << 8) | K053246_regs[3]);
 	
-		int solidpens = K053247_gfx->color_granularity - 1;
-		int screen_width = Machine->drv->screen_width;
+		int solidpens = K053247_gfx.color_granularity - 1;
+		int screen_width = Machine.drv.screen_width;
 	
 		/*
 			safeguard older drivers missing any of the following video attributes:
 	
 			VIDEO_NEEDS_6BITS_PER_GUN | VIDEO_RGB_DIRECT | VIDEO_HAS_SHADOWS | VIDEO_HAS_HIGHLIGHTS
 		*/
-		if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS)
+		if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)
 		{
-			if (Machine->color_depth == 32 && (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS))
+			if (Machine.color_depth == 32 && (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS))
 				shdmask = 3; // enable all shadows and highlights
 			else
 				shdmask = 0; // enable default shadows
@@ -4309,7 +4309,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -4334,7 +4334,7 @@ public class konamiic
 			charlayout.total = memory_region_length(gfx_memory_region) / 128;
 	
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+			Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
 		}
 		else if (bpp == 7 || bpp == 8)
 		{
@@ -4360,7 +4360,7 @@ public class konamiic
 			else for (i = 0;i < 8;i++) charlayout.planeoffset[i] = i;
 	
 			/* decode the graphics */
-			Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+			Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
 		}
 		else
 		{
@@ -4368,19 +4368,19 @@ public class konamiic
 			return 1;
 		}
 	
-		if (!Machine->gfx[gfx_index])
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / (1 << bpp);
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / (1 << bpp);
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / (1 << bpp);
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / (1 << bpp);
 		}
 	
 		K051316_memory_region[chip] = gfx_memory_region;
@@ -4630,25 +4630,25 @@ public class konamiic
 			{
 				my_clip.min_x = ctrl[0x08] + K053936_offset[chip][0]+2;
 				my_clip.max_x = ctrl[0x09] + K053936_offset[chip][0]+2 - 1;
-				if (my_clip.min_x < cliprect->min_x)
-					my_clip.min_x = cliprect->min_x;
-				if (my_clip.max_x > cliprect->max_x)
-					my_clip.max_x = cliprect->max_x;
+				if (my_clip.min_x < cliprect.min_x)
+					my_clip.min_x = cliprect.min_x;
+				if (my_clip.max_x > cliprect.max_x)
+					my_clip.max_x = cliprect.max_x;
 	
 				y = ctrl[0x0a] + K053936_offset[chip][1]-2;
-				if (y < cliprect->min_y)
-					y = cliprect->min_y;
+				if (y < cliprect.min_y)
+					y = cliprect.min_y;
 				maxy = ctrl[0x0b] + K053936_offset[chip][1]-2 - 1;
-				if (maxy > cliprect->max_y)
-					maxy = cliprect->max_y;
+				if (maxy > cliprect.max_y)
+					maxy = cliprect.max_y;
 			}
 			else
 			{
-				my_clip.min_x = cliprect->min_x;
-				my_clip.max_x = cliprect->max_x;
+				my_clip.min_x = cliprect.min_x;
+				my_clip.max_x = cliprect.max_x;
 	
-				y = cliprect->min_y;
-				maxy = cliprect->max_y;
+				y = cliprect.min_y;
+				maxy = cliprect.max_y;
 			}
 	
 			while (y <= maxy)
@@ -5255,7 +5255,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine->gfx[gfx_index] == 0)
+			if (Machine.gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -5268,20 +5268,20 @@ public class konamiic
 		charlayout.planeoffset[3] = plane3;
 	
 		/* decode the graphics */
-		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout);
-		if (!Machine->gfx[gfx_index])
+		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout);
+		if (!Machine.gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 		K054157_memory_region = gfx_memory_region;
@@ -5569,8 +5569,8 @@ public class konamiic
 	static int K056832_LSRAMPage[4][2];
 	static int K056832_X[4];	// 0..3 left
 	static int K056832_Y[4];	// 0..3 top
-	static int K056832_W[4];	// 0..3 width  -> 1..4 pages
-	static int K056832_H[4];	// 0..3 height -> 1..4 pages
+	static int K056832_W[4];	// 0..3 width  . 1..4 pages
+	static int K056832_H[4];	// 0..3 height . 1..4 pages
 	static int K056832_dx[4];	// scroll
 	static int K056832_dy[4];	// scroll
 	static UINT32 K056832_LineDirty[K056832_PAGE_COUNT][8];
@@ -5664,7 +5664,7 @@ public class konamiic
 				for (c=0; c<colspan; c++)
 				{
 					pageIndex = (((rowstart + r) & 3) << 2) + ((colstart + c) & 3);
-	if (stricmp(Machine->gamedrv->source_file+12, "djmain.c") || K056832_LayerAssociatedWithPage[pageIndex] == -1) //*
+	if (stricmp(Machine.gamedrv.source_file+12, "djmain.c") || K056832_LayerAssociatedWithPage[pageIndex] == -1) //*
 						K056832_LayerAssociatedWithPage[pageIndex] = setlayer;
 				}
 			}
@@ -5712,8 +5712,8 @@ public class konamiic
 		// normalize the flip/palette flags
 		// see the tables on pages 4 and 10 of the Pt. 2-3 "VRAM" manual
 		// for a description of these bits "FBIT0" and "FBIT1"
-		flip &= attr>>smptr->flips & 3;
-		attr  = (attr & smptr->palm1) | (attr>>smptr->pals2 & smptr->palm2);
+		flip &= attr>>smptr.flips & 3;
+		attr  = (attr & smptr.palm1) | (attr>>smptr.pals2 & smptr.palm2);
 		tile_info.flags = TILE_FLIPYX(flip);
 	
 		(*K056832_callback)(layer, &code, &attr);
@@ -5818,7 +5818,7 @@ public class konamiic
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
 		{
-			if (Machine->gfx[gfx_index] == 0) break;
+			if (Machine.gfx[gfx_index] == 0) break;
 		}
 		if (gfx_index == MAX_GFX_ELEMENTS) return 1;
 	
@@ -5831,7 +5831,7 @@ public class konamiic
 				charlayout4.total = memory_region_length(gfx_memory_region) / (i*4);
 	
 				/* decode the graphics */
-				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4);
+				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4);
 				break;
 	
 			case K056832_BPP_5:
@@ -5839,7 +5839,7 @@ public class konamiic
 				charlayout5.total = memory_region_length(gfx_memory_region) / (i*5);
 	
 				/* decode the graphics */
-				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout5);
+				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout5);
 				break;
 	
 			case K056832_BPP_6:
@@ -5847,7 +5847,7 @@ public class konamiic
 				charlayout6.total = memory_region_length(gfx_memory_region) / (i*6);
 	
 				/* decode the graphics */
-				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout6);
+				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout6);
 				break;
 	
 			case K056832_BPP_8:
@@ -5855,32 +5855,32 @@ public class konamiic
 				charlayout8.total = memory_region_length(gfx_memory_region) / (i*8);
 	
 				/* decode the graphics */
-				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout8);
+				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout8);
 				break;
 	
 			case K056832_BPP_4dj:
 				charlayout4dj.total = memory_region_length(gfx_memory_region) / (i*4);
 	
 				/* decode the graphics */
-				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4dj);
+				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4dj);
 				break;
 		}
 	
 		/* make sure the decode went OK */
-		if (!Machine->gfx[gfx_index]) return 1;
+		if (!Machine.gfx[gfx_index]) return 1;
 	
 		/* set the color information */
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[gfx_index]->colortable = Machine->pens;
-			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[gfx_index].colortable = Machine.pens;
+			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
-		Machine->gfx[gfx_index]->color_granularity = 16; /* override */
+		Machine.gfx[gfx_index].color_granularity = 16; /* override */
 	
 		K056832_memory_region = gfx_memory_region;
 		K056832_gfxnum = gfx_index;
@@ -6382,14 +6382,14 @@ public class konamiic
 			if (!(dirty[0]|dirty[1]|dirty[2]|dirty[3]|dirty[4]|dirty[5]|dirty[6]|dirty[7])) return(0);
 		}
 	
-		pal_ptr    = Machine->remapped_colortable;
-		src_gfx    = Machine->gfx[K056832_gfxnum];
-		src_base   = src_gfx->gfxdata;
-		src_pitch  = src_gfx->line_modulo;
-		src_modulo = src_gfx->char_modulo;
-		xpr_ptr    = (UINT8*)xprmap->base + LINE_WIDTH;
-		dst_ptr    = (UINT16*)pixmap->base + LINE_WIDTH;
-		dst_pitch  = pixmap->rowpixels;
+		pal_ptr    = Machine.remapped_colortable;
+		src_gfx    = Machine.gfx[K056832_gfxnum];
+		src_base   = src_gfx.gfxdata;
+		src_pitch  = src_gfx.line_modulo;
+		src_modulo = src_gfx.char_modulo;
+		xpr_ptr    = (UINT8*)xprmap.base + LINE_WIDTH;
+		dst_ptr    = (UINT16*)pixmap.base + LINE_WIDTH;
+		dst_pitch  = pixmap.rowpixels;
 	
 		for (line=0; line<256; xpr_ptr+=dst_pitch, dst_ptr+=dst_pitch, line++)
 		{
@@ -6459,10 +6459,10 @@ public class konamiic
 		height = rowspan * K056832_PAGE_HEIGHT;
 		width  = colspan * K056832_PAGE_WIDTH;
 	
-		cminx = cliprect->min_x;
-		cmaxx = cliprect->max_x;
-		cminy = cliprect->min_y;
-		cmaxy = cliprect->max_y;
+		cminx = cliprect.min_x;
+		cmaxx = cliprect.max_x;
+		cminy = cliprect.min_y;
+		cmaxy = cliprect.max_y;
 	
 		// flip correction registers
 		if ((flipy = K056832_regs[0] & 0x20))
@@ -6735,10 +6735,10 @@ public class konamiic
 		height = rowspan * K056832_PAGE_HEIGHT;
 		width  = colspan * K056832_PAGE_WIDTH;
 	
-		cminx = cliprect->min_x;
-		cmaxx = cliprect->max_x;
-		cminy = cliprect->min_y;
-		cmaxy = cliprect->max_y;
+		cminx = cliprect.min_x;
+		cmaxx = cliprect.max_x;
+		cminy = cliprect.min_y;
+		cmaxy = cliprect.max_y;
 	
 		// flip correction registers
 		if ((flipy = K056832_regs[0] & 0x20))
@@ -7173,11 +7173,11 @@ public class konamiic
 		bgcolor |= K054338_read_register(K338_REG_BGC_GB);
 	
 		/* and fill the screen with it */
-		for (y = 0; y < bitmap->height; y++)
+		for (y = 0; y < bitmap.height; y++)
 		{
-			pLine = (UINT32 *)bitmap->base;
-			pLine += ((bitmap->rowbytes / 4)*y);
-			for (x = 0; x < bitmap->width; x++)
+			pLine = (UINT32 *)bitmap.base;
+			pLine += ((bitmap.rowbytes / 4)*y);
+			for (x = 0; x < bitmap.width; x++)
 				*pLine++ = bgcolor;
 		}
 	}
@@ -7190,13 +7190,13 @@ public class konamiic
 		UINT32 *dst_ptr, *pal_ptr;
 		register int bgcolor;
 	
-		clipx = Machine->visible_area.min_x & ~3;
-		clipy = Machine->visible_area.min_y;
-		clipw = (Machine->visible_area.max_x - clipx + 4) & ~3;
-		cliph = Machine->visible_area.max_y - clipy + 1;
+		clipx = Machine.visible_area.min_x & ~3;
+		clipy = Machine.visible_area.min_y;
+		clipw = (Machine.visible_area.max_x - clipx + 4) & ~3;
+		cliph = Machine.visible_area.max_y - clipy + 1;
 	
-		dst_ptr = (UINT32 *)bitmap->line[clipy];
-		dst_pitch = bitmap->rowpixels;
+		dst_ptr = (UINT32 *)bitmap.line[clipy];
+		dst_pitch = bitmap.rowpixels;
 		dst_ptr += clipx;
 	
 		BGC_SET = 0;
@@ -7361,13 +7361,13 @@ public class konamiic
 		chip_ptr = &K053250_info.chip[chip];
 	
 		current_frame = cpu_getcurrentframe();
-		last_frame = chip_ptr->frame;
+		last_frame = chip_ptr.frame;
 	
 		if (limiter && current_frame == last_frame) return; // make sure we only do DMA transfer once per frame
 	
-		chip_ptr->frame = current_frame;
-		memcpy(chip_ptr->buffer[chip_ptr->page[chip]], chip_ptr->ram, 0x1000);
-		chip_ptr->page[chip] ^= 1;
+		chip_ptr.frame = current_frame;
+		memcpy(chip_ptr.buffer[chip_ptr.page[chip]], chip_ptr.ram, 0x1000);
+		chip_ptr.page[chip] ^= 1;
 	} };
 	
 	// Pixel data of the K053250 is nibble packed. It's preferable to be unpacked into byte format.
@@ -7488,10 +7488,10 @@ public class konamiic
 	
 	// old code (for reference; do not remove)
 	#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-		int dy = ((type *)bitmap->line[1]) - ((type *)bitmap->line[0]);			\
-		int dyp = ((UINT8 *)bitmapp->line[1]) - ((UINT8 *)bitmapp->line[0]);	\
-		type *dsti = (type *)bitmapi->line[0] + y * dy + x;						\
-		UINT8 *dstp = (UINT8 *)bitmapp->line[0] + y * dyp + x;					\
+		int dy = ((type *)bitmap.line[1]) - ((type *)bitmap.line[0]);			\
+		int dyp = ((UINT8 *)bitmapp.line[1]) - ((UINT8 *)bitmapp.line[0]);	\
+		type *dsti = (type *)bitmapi.line[0] + y * dy + x;						\
+		UINT8 *dstp = (UINT8 *)bitmapp.line[0] + y * dyp + x;					\
 		int xadv = 1;															\
 		if (orientation != 0)														\
 		{																		\
@@ -7503,17 +7503,17 @@ public class konamiic
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_X)								\
 			{																	\
-				tx = bitmap->width - 1 - tx;									\
+				tx = bitmap.width - 1 - tx;									\
 				if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_Y)								\
 			{																	\
-				ty = bitmap->height - 1 - ty;									\
+				ty = bitmap.height - 1 - ty;									\
 				if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 			}																	\
 			/* can't lookup line because it may be negative! */					\
-			dsti = ((type *)bitmapi->line[0]) + dy * ty + tx;					\
-			dstp = ((UINT8 *)bitmapp->line[0]) + dyp * ty + tx;					\
+			dsti = ((type *)bitmapi.line[0]) + dy * ty + tx;					\
+			dstp = ((UINT8 *)bitmapp.line[0]) + dyp * ty + tx;					\
 		}
 	
 	static void K053250_pdraw_scanline8(
@@ -7521,7 +7521,7 @@ public class konamiic
 			const UINT8 *src,pen_t *pens,int transparent_pen,UINT32 orient,int pri)
 	{
 		/* 8bpp destination */
-		if (bitmap->depth == 8)
+		if (bitmap.depth == 8)
 		{
 			/* adjust in case we're oddly oriented */
 			ADJUST_FOR_ORIENTATION(UINT8, orient, bitmap, priority_bitmap, x, y);
@@ -7578,7 +7578,7 @@ public class konamiic
 		}
 	
 		/* 16bpp destination */
-		else if(bitmap->depth == 15 || bitmap->depth == 16)
+		else if(bitmap.depth == 15 || bitmap.depth == 16)
 		{
 			/* adjust in case we're oddly oriented */
 			ADJUST_FOR_ORIENTATION(UINT16, orient, bitmap, priority_bitmap, x, y);
@@ -7695,7 +7695,7 @@ public class konamiic
 		static int pmode[2] = {-1,-1};
 		static int kc=-1, kk=0, kxx=-105, kyy=0;
 	
-		const struct rectangle area = Machine->visible_area;
+		const struct rectangle area = Machine.visible_area;
 		data16_t *line;
 		int delta, dim1, dim1_max, dim2_max;
 		UINT32 mask1, mask2;
@@ -7880,11 +7880,11 @@ public class konamiic
 			}
 			if ((orientation & ORIENTATION_SWAP_XY) != 0)
 				K053250_pdraw_scanline8(bitmap, area.min_y, area.min_x+dim1, dim2_max, scanline,
-								Machine->pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
+								Machine.pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
 								0, orientation, pri);
 			else
 				K053250_pdraw_scanline8(bitmap, area.min_x, area.min_y+dim1, dim2_max, scanline,
-								Machine->pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
+								Machine.pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
 								0, orientation, pri);
 		}
 	}
@@ -7917,14 +7917,14 @@ public class konamiic
 		if (!(orientation & ORIENTATION_SWAP_XY))
 		{
 			flip = orientation & ORIENTATION_FLIP_X;
-			dst_min = cliprect->min_x;
-			dst_max = cliprect->max_x;
+			dst_min = cliprect.min_x;
+			dst_max = cliprect.max_x;
 		}
 		else
 		{
 			flip = orientation & ORIENTATION_FLIP_Y;
-			dst_min = cliprect->min_y;
-			dst_max = cliprect->max_y;
+			dst_min = cliprect.min_y;
+			dst_max = cliprect.max_y;
 		}
 	
 		if (clipmask != 0)
@@ -7998,16 +7998,16 @@ public class konamiic
 			// calculate target increment for horizontal scanlines which is exactly one
 			dst_adv = 1;
 			dst_offset = dst_length;
-			pri_base = (UINT8 *)priority_bitmap->line[linepos] + dst_start + dst_offset;
-			dst_base = (UINT32 *)bitmap->line[linepos] + dst_start + dst_length;
+			pri_base = (UINT8 *)priority_bitmap.line[linepos] + dst_start + dst_offset;
+			dst_base = (UINT32 *)bitmap.line[linepos] + dst_start + dst_length;
 		}
 		else
 		{
 			// calculate target increment for vertical scanlines which is the bitmap's pitch value
-			dst_adv = bitmap->rowpixels;
+			dst_adv = bitmap.rowpixels;
 			dst_offset= dst_length * dst_adv;
-			pri_base = (UINT8 *)priority_bitmap->line[dst_start] + linepos + dst_offset;
-			dst_base = (UINT32 *)bitmap->line[dst_start] + linepos + dst_offset;
+			pri_base = (UINT8 *)priority_bitmap.line[dst_start] + linepos + dst_offset;
+			dst_base = (UINT32 *)bitmap.line[dst_start] + linepos + dst_offset;
 		}
 	
 	#if 0
@@ -8132,22 +8132,22 @@ public class konamiic
 		int color, offset, zoom, scroll, passes, i, dst_height;
 	
 		chip_ptr = &K053250_info.chip[chip];				// pointer to chip parameters
-		line_ram = chip_ptr->buffer[chip_ptr->page[chip]];	// pointer to physical line RAM
-		pix_base = chip_ptr->base;							// pointer to source pixel ROM
-		rommask  = chip_ptr->rommask;						// source ROM limit
-		regs     = chip_ptr->regs;							// pointer to registers group
+		line_ram = chip_ptr.buffer[chip_ptr.page[chip]];	// pointer to physical line RAM
+		pix_base = chip_ptr.base;							// pointer to source pixel ROM
+		rommask  = chip_ptr.rommask;						// source ROM limit
+		regs     = chip_ptr.regs;							// pointer to registers group
 	
 		map_scrollx = (short)(regs[0]<<8 | regs[1]);		// signed horizontal scroll value
 		map_scrolly = (short)(regs[2]<<8 | regs[3]);		// signed vertical scroll value
-		map_scrollx -= chip_ptr->offsx;						// add user X offset to horizontal scroll
-		map_scrolly -= chip_ptr->offsy;						// add user Y offset to vertical scroll
+		map_scrollx -= chip_ptr.offsx;						// add user X offset to horizontal scroll
+		map_scrolly -= chip_ptr.offsy;						// add user Y offset to vertical scroll
 		ctrl = regs[4];										// register four is the main control register
 	
 		// copy visible boundary values to more accessible locations
-		dst_minx  = cliprect->min_x;
-		dst_maxx  = cliprect->max_x;
-		dst_miny  = cliprect->min_y;
-		dst_maxy  = cliprect->max_y;
+		dst_minx  = cliprect.min_x;
+		dst_maxx  = cliprect.max_x;
+		dst_miny  = cliprect.min_y;
+		dst_maxy  = cliprect.max_y;
 	
 		orientation  = 0;	// orientation defaults to no swapping and no flipping
 		dst_height   = 512;	// virtual bitmap height defaults to five hundred and twelve pixels
@@ -8217,7 +8217,7 @@ public class konamiic
 				if ((orientation & ORIENTATION_FLIP_Y) != 0)
 				{
 					linedata_adv = -linedata_adv;			// traverse line RAM backward in Y flipped scenarioes
-					linedata_offs += bitmap->height - 1;	// and get info for the first line from the bottom
+					linedata_offs += bitmap.height - 1;	// and get info for the first line from the bottom
 				}
 	
 				dst_wrapmask = ~0;	// scanlines don't seem to wrap horizontally in normal orientation
@@ -8244,7 +8244,7 @@ public class konamiic
 				if ((orientation & ORIENTATION_FLIP_X) != 0)
 				{
 					linedata_adv = -linedata_adv;		// traverse line RAM backward in X flipped scenarioes
-					linedata_offs += bitmap->width - 1;	// and get info for the first line from the bottom
+					linedata_offs += bitmap.width - 1;	// and get info for the first line from the bottom
 				}
 	
 				if (src_clipmask != 0)
@@ -8267,7 +8267,7 @@ public class konamiic
 		linedata_offs += line_start * linedata_adv;		// pre-advance line info offset for the clipped region
 	
 		// load physical palette base
-		pal_base = Machine->remapped_colortable + (colorbase << 4) % Machine->drv->total_colors;
+		pal_base = Machine.remapped_colortable + (colorbase << 4) % Machine.drv.total_colors;
 	
 		// walk the target bitmap within the visible area vertically or horizontally, one line at a time
 		for (line_pos=line_start; line_pos<=line_end; linedata_offs+=linedata_adv, line_pos++)

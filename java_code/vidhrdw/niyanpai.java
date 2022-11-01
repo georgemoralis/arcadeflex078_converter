@@ -247,14 +247,14 @@ public class niyanpai
 				break;
 		}
 	
-		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
+		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine->drv->screen_width; x++)
+			for (x = 0; x < Machine.drv.screen_width; x++)
 			{
-				color1 = vidram[(y * Machine->drv->screen_width) + x];
-				color2 = vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)];
-				vidram[(y * Machine->drv->screen_width) + x] = color2;
-				vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)] = color1;
+				color1 = vidram[(y * Machine.drv.screen_width) + x];
+				color2 = vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)];
+				vidram[(y * Machine.drv.screen_width) + x] = color2;
+				vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)] = color1;
 			}
 		}
 	}
@@ -306,9 +306,9 @@ public class niyanpai
 	
 		gfxaddr = ((niyanpai_radr[vram] + 2) & 0x00ffffff);
 	
-		Machine->pens[0x0ff] = 0;	/* palette_transparent_pen */
-		Machine->pens[0x1ff] = 0;	/* palette_transparent_pen */
-		Machine->pens[0x2ff] = 0;	/* palette_transparent_pen */
+		Machine.pens[0x0ff] = 0;	/* palette_transparent_pen */
+		Machine.pens[0x1ff] = 0;	/* palette_transparent_pen */
+		Machine.pens[0x2ff] = 0;	/* palette_transparent_pen */
 	
 		for (y = starty, ctry = sizey; ctry > 0; y += skipy, ctry--)
 		{
@@ -384,39 +384,39 @@ public class niyanpai
 				{
 					if (tflag1 != 0)
 					{
-						niyanpai_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
-						plot_pixel(niyanpai_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
+						niyanpai_videoram0[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
+						plot_pixel(niyanpai_tmpbitmap0, dx1, dy, Machine.pens[drawcolor1]);
 					}
 					if (tflag2 != 0)
 					{
-						niyanpai_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
-						plot_pixel(niyanpai_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
+						niyanpai_videoram0[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+						plot_pixel(niyanpai_tmpbitmap0, dx2, dy, Machine.pens[drawcolor2]);
 					}
 				}
 				else if (vram == 1)
 				{
 					if (tflag1 != 0)
 					{
-						niyanpai_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
-						plot_pixel(niyanpai_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
+						niyanpai_videoram1[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
+						plot_pixel(niyanpai_tmpbitmap1, dx1, dy, Machine.pens[drawcolor1]);
 					}
 					if (tflag2 != 0)
 					{
-						niyanpai_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
-						plot_pixel(niyanpai_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
+						niyanpai_videoram1[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+						plot_pixel(niyanpai_tmpbitmap1, dx2, dy, Machine.pens[drawcolor2]);
 					}
 				}
 				else
 				{
 					if (tflag1 != 0)
 					{
-						niyanpai_videoram2[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
-						plot_pixel(niyanpai_tmpbitmap2, dx1, dy, Machine->pens[drawcolor1]);
+						niyanpai_videoram2[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
+						plot_pixel(niyanpai_tmpbitmap2, dx1, dy, Machine.pens[drawcolor1]);
 					}
 					if (tflag2 != 0)
 					{
-						niyanpai_videoram2[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
-						plot_pixel(niyanpai_tmpbitmap2, dx2, dy, Machine->pens[drawcolor2]);
+						niyanpai_videoram2[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+						plot_pixel(niyanpai_tmpbitmap2, dx2, dy, Machine.pens[drawcolor2]);
 					}
 				}
 			}
@@ -467,19 +467,19 @@ public class niyanpai
 	******************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_niyanpai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if ((niyanpai_tmpbitmap0 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
-		if ((niyanpai_tmpbitmap1 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
-		if ((niyanpai_tmpbitmap2 = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height)) == 0) return 1;
-		if ((niyanpai_videoram0 = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short))) == 0) return 1;
-		if ((niyanpai_videoram1 = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short))) == 0) return 1;
-		if ((niyanpai_videoram2 = auto_malloc(Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short))) == 0) return 1;
+		if ((niyanpai_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
+		if ((niyanpai_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
+		if ((niyanpai_tmpbitmap2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
+		if ((niyanpai_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
+		if ((niyanpai_videoram1 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
+		if ((niyanpai_videoram2 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
 		if ((niyanpai_palette = auto_malloc(0x480 * sizeof(short))) == 0) return 1;
 		if ((niyanpai_paltbl0 = auto_malloc(0x1000 * sizeof(char))) == 0) return 1;
 		if ((niyanpai_paltbl1 = auto_malloc(0x1000 * sizeof(char))) == 0) return 1;
 		if ((niyanpai_paltbl2 = auto_malloc(0x1000 * sizeof(char))) == 0) return 1;
-		memset(niyanpai_videoram0, 0x0000, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short)));
-		memset(niyanpai_videoram1, 0x0000, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short)));
-		memset(niyanpai_videoram2, 0x0000, (Machine->drv->screen_width * Machine->drv->screen_height * sizeof(short)));
+		memset(niyanpai_videoram0, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
+		memset(niyanpai_videoram1, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
+		memset(niyanpai_videoram2, 0x0000, (Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short)));
 		return 0;
 	} };
 	
@@ -496,43 +496,43 @@ public class niyanpai
 		{
 			niyanpai_screen_refresh = 0;
 	
-			Machine->pens[0x0ff] = 0;	/* palette_transparent_pen */
-			Machine->pens[0x1ff] = 0;	/* palette_transparent_pen */
-			Machine->pens[0x2ff] = 0;	/* palette_transparent_pen */
+			Machine.pens[0x0ff] = 0;	/* palette_transparent_pen */
+			Machine.pens[0x1ff] = 0;	/* palette_transparent_pen */
+			Machine.pens[0x2ff] = 0;	/* palette_transparent_pen */
 	
-			for (y = 0; y < Machine->drv->screen_height; y++)
+			for (y = 0; y < Machine.drv.screen_height; y++)
 			{
-				for (x = 0; x < Machine->drv->screen_width; x++)
+				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = niyanpai_videoram0[(y * Machine->drv->screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap0, x, y, Machine->pens[color]);
+					color = niyanpai_videoram0[(y * Machine.drv.screen_width) + x];
+					plot_pixel(niyanpai_tmpbitmap0, x, y, Machine.pens[color]);
 	
-					color = niyanpai_videoram1[(y * Machine->drv->screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap1, x, y, Machine->pens[color]);
+					color = niyanpai_videoram1[(y * Machine.drv.screen_width) + x];
+					plot_pixel(niyanpai_tmpbitmap1, x, y, Machine.pens[color]);
 	
-					color = niyanpai_videoram2[(y * Machine->drv->screen_width) + x];
-					plot_pixel(niyanpai_tmpbitmap2, x, y, Machine->pens[color]);
+					color = niyanpai_videoram2[(y * Machine.drv.screen_width) + x];
+					plot_pixel(niyanpai_tmpbitmap2, x, y, Machine.pens[color]);
 				}
 			}
 		}
 	
 		if (niyanpai_dispflag[0])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap0, 1, &niyanpai_scrollx[0], 1, &niyanpai_scrolly[0], &Machine->visible_area, TRANSPARENCY_NONE, 0);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap0, 1, &niyanpai_scrollx[0], 1, &niyanpai_scrolly[0], &Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
 		else
 		{
-			fillbitmap(bitmap, Machine->pens[0x00ff], 0);
+			fillbitmap(bitmap, Machine.pens[0x00ff], 0);
 		}
 	
 		if (niyanpai_dispflag[1])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap1, 1, &niyanpai_scrollx[1], 1, &niyanpai_scrolly[1], &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0x01ff]);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap1, 1, &niyanpai_scrollx[1], 1, &niyanpai_scrolly[1], &Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x01ff]);
 		}
 	
 		if (niyanpai_dispflag[2])
 		{
-			copyscrollbitmap(bitmap, niyanpai_tmpbitmap2, 1, &niyanpai_scrollx[2], 1, &niyanpai_scrolly[2], &Machine->visible_area, TRANSPARENCY_PEN, Machine->pens[0x02ff]);
+			copyscrollbitmap(bitmap, niyanpai_tmpbitmap2, 1, &niyanpai_scrollx[2], 1, &niyanpai_scrolly[2], &Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0x02ff]);
 		}
 	} };
 }

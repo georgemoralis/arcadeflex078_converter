@@ -2234,19 +2234,19 @@ public class i8x41
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8X41_PC: sprintf(buffer[which], "PC:%04X", r->pc); break;
-			case CPU_INFO_REG+I8X41_SP: sprintf(buffer[which], "S:%X", r->psw & SP); break;
-			case CPU_INFO_REG+I8X41_PSW:sprintf(buffer[which], "PSW:%02X", r->psw); break;
-			case CPU_INFO_REG+I8X41_A:	sprintf(buffer[which], "A:%02X", r->a); break;
-			case CPU_INFO_REG+I8X41_T:	sprintf(buffer[which], "T:%02X.%02X", r->timer, (r->prescaler & 0x1f) ); break;
-			case CPU_INFO_REG+I8X41_R0: sprintf(buffer[which], "R0:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 0]); break;
-			case CPU_INFO_REG+I8X41_R1: sprintf(buffer[which], "R1:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 1]); break;
-			case CPU_INFO_REG+I8X41_R2: sprintf(buffer[which], "R2:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 2]); break;
-			case CPU_INFO_REG+I8X41_R3: sprintf(buffer[which], "R3:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 3]); break;
-			case CPU_INFO_REG+I8X41_R4: sprintf(buffer[which], "R4:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 4]); break;
-			case CPU_INFO_REG+I8X41_R5: sprintf(buffer[which], "R5:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 5]); break;
-			case CPU_INFO_REG+I8X41_R6: sprintf(buffer[which], "R6:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 6]); break;
-			case CPU_INFO_REG+I8X41_R7: sprintf(buffer[which], "R7:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 7]); break;
+			case CPU_INFO_REG+I8X41_PC: sprintf(buffer[which], "PC:%04X", r.pc); break;
+			case CPU_INFO_REG+I8X41_SP: sprintf(buffer[which], "S:%X", r.psw & SP); break;
+			case CPU_INFO_REG+I8X41_PSW:sprintf(buffer[which], "PSW:%02X", r.psw); break;
+			case CPU_INFO_REG+I8X41_A:	sprintf(buffer[which], "A:%02X", r.a); break;
+			case CPU_INFO_REG+I8X41_T:	sprintf(buffer[which], "T:%02X.%02X", r.timer, (r.prescaler & 0x1f) ); break;
+			case CPU_INFO_REG+I8X41_R0: sprintf(buffer[which], "R0:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 0]); break;
+			case CPU_INFO_REG+I8X41_R1: sprintf(buffer[which], "R1:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 1]); break;
+			case CPU_INFO_REG+I8X41_R2: sprintf(buffer[which], "R2:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 2]); break;
+			case CPU_INFO_REG+I8X41_R3: sprintf(buffer[which], "R3:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 3]); break;
+			case CPU_INFO_REG+I8X41_R4: sprintf(buffer[which], "R4:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 4]); break;
+			case CPU_INFO_REG+I8X41_R5: sprintf(buffer[which], "R5:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 5]); break;
+			case CPU_INFO_REG+I8X41_R6: sprintf(buffer[which], "R6:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 6]); break;
+			case CPU_INFO_REG+I8X41_R7: sprintf(buffer[which], "R7:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 7]); break;
 			case CPU_INFO_REG+I8X41_P1: sprintf(buffer[which], "P1:%02X", i8x41.p1); break;
 			case CPU_INFO_REG+I8X41_P2: sprintf(buffer[which], "P2:%02X", i8x41.p2); break;
 			case CPU_INFO_REG+I8X41_DATA_DASM:sprintf(buffer[which], "DBBI:%02X", i8x41.dbbi); break;
@@ -2254,14 +2254,14 @@ public class i8x41
 			case CPU_INFO_REG+I8X41_STAT:sprintf(buffer[which], "STAT:%02X", i8x41.state); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r->psw & 0x80 ? 'C':'.',
-					r->psw & 0x40 ? 'A':'.',
-					r->psw & 0x20 ? '0':'.',
-					r->psw & 0x10 ? 'B':'.',
-					r->psw & 0x08 ? '?':'.',
-					r->psw & 0x04 ? 's':'.',
-					r->psw & 0x02 ? 's':'.',
-					r->psw & 0x01 ? 's':'.');
+					r.psw & 0x80 ? 'C':'.',
+					r.psw & 0x40 ? 'A':'.',
+					r.psw & 0x20 ? '0':'.',
+					r.psw & 0x10 ? 'B':'.',
+					r.psw & 0x08 ? '?':'.',
+					r.psw & 0x04 ? 's':'.',
+					r.psw & 0x02 ? 's':'.',
+					r.psw & 0x01 ? 's':'.');
 				break;
 			case CPU_INFO_NAME: return "I8X41";
 			case CPU_INFO_FAMILY: return "Intel 8x41";

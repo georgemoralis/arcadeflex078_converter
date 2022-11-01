@@ -42,8 +42,8 @@ public class snk
 	{
 		const char *digit = "0123456789abcdef";
 	
-		drawgfx( bitmap,Machine->uifont,digit[(num>>4)&0xf],0,0,0,24,row*8+8,0,TRANSPARENCY_NONE,0);
-		drawgfx( bitmap,Machine->uifont,digit[num&0xf],     0,0,0,32,row*8+8,0,TRANSPARENCY_NONE,0);
+		drawgfx( bitmap,Machine.uifont,digit[(num>>4)&0xf],0,0,0,24,row*8+8,0,TRANSPARENCY_NONE,0);
+		drawgfx( bitmap,Machine.uifont,digit[num&0xf],     0,0,0,32,row*8+8,0,TRANSPARENCY_NONE,0);
 	}
 	
 	public static PaletteInitHandlerPtr palette_init_snk_3bpp_shadow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
@@ -51,7 +51,7 @@ public class snk
 		int i;
 		palette_init_RRRR_GGGG_BBBB(colortable, color_prom);
 	
-		if(!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+		if(!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	
 		/* prepare shadow draw table */
@@ -66,7 +66,7 @@ public class snk
 		int i;
 		palette_init_RRRR_GGGG_BBBB(colortable, color_prom);
 	
-		if(!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
+		if(!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	
 		/* prepare shadow draw table */
@@ -96,8 +96,8 @@ public class snk
 	static void tnk3_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly,
 						int x_size, int y_size, int bg_type )
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[1];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs, x, y;
@@ -140,8 +140,8 @@ public class snk
 	
 	void tnk3_draw_text( struct mame_bitmap *bitmap, int bank, unsigned char *source )
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[0];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int x, y;
@@ -167,8 +167,8 @@ public class snk
 	
 	void tnk3_draw_status_main( struct mame_bitmap *bitmap, int bank, unsigned char *source, int start )
 	{
-		const struct GfxElement *gfx = Machine->gfx[0];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[0];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int x, y;
@@ -199,8 +199,8 @@ public class snk
 	
 	void tnk3_draw_sprites( struct mame_bitmap *bitmap, int xscroll, int yscroll )
 	{
-		const struct GfxElement *gfx = Machine->gfx[2];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[2];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs;
@@ -284,8 +284,8 @@ public class snk
 	
 	static void sgladiat_draw_background( struct mame_bitmap *bitmap, int scrollx, int scrolly )
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[1];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, color, sx, sy;
 		int offs, x, y;
@@ -336,8 +336,8 @@ public class snk
 	static void ikari_draw_sprites( struct mame_bitmap *bitmap, int start, int xscroll, int yscroll,
 					unsigned char *source, int mode )
 	{
-		struct rectangle *clip = &Machine->visible_area;
-		struct GfxElement *gfx = Machine->gfx[mode];
+		struct rectangle *clip = &Machine.visible_area;
+		struct GfxElement *gfx = Machine.gfx[mode];
 		int tile_number, attributes, color, sx, sy;
 		int which, finish;
 	
@@ -406,8 +406,8 @@ public class snk
 	static void tdfever_draw_bg( struct mame_bitmap *bitmap, int xscroll, int yscroll )
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[0xd000];
-		const struct GfxElement *gfx = Machine->gfx[1];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[1];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_number, attributes, color, sx, sy;
 		int offs, x, y;
@@ -429,8 +429,8 @@ public class snk
 				sy = y << 4;
 	
 				// intercept overflown tile indices
-				if(tile_number >= gfx->total_elements)
-					plot_box(tmpbitmap, sx, sy, gfx->width, gfx->height, get_black_pen());
+				if(tile_number >= gfx.total_elements)
+					plot_box(tmpbitmap, sx, sy, gfx.width, gfx.height, get_black_pen());
 				else
 					drawgfx(tmpbitmap,gfx,tile_number,color,0,0,sx,sy,0,TRANSPARENCY_NONE,0);
 			}
@@ -465,8 +465,8 @@ public class snk
 	static void tdfever_draw_sp( struct mame_bitmap *bitmap, int xscroll, int yscroll, int mode )
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[(mode==2)?0xe800:0xe000];
-		const struct GfxElement *gfx = Machine->gfx[(mode==1)?3:2];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[(mode==1)?3:2];
+		struct rectangle *clip = &Machine.visible_area;
 		int tile_number, attributes, sx, sy, color, pen_mode;
 		int which, finish, sp_size;
 	
@@ -520,8 +520,8 @@ public class snk
 	static void tdfever_draw_tx( struct mame_bitmap *bitmap, int attributes, int dx, int dy, int base )
 	{
 		const unsigned char *source = &memory_region(REGION_CPU1)[base];
-		const struct GfxElement *gfx = Machine->gfx[0];
-		struct rectangle *clip = &Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[0];
+		struct rectangle *clip = &Machine.visible_area;
 	
 		int tile_high = (attributes & 0xf0) << 4;
 		int color = attributes & 0xf;

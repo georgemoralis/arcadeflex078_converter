@@ -58,11 +58,11 @@ public class tp84
 	public static PaletteInitHandlerPtr palette_init_tp84  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -73,16 +73,16 @@ public class tp84
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x42 * bit2 + 0x90 * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -90,7 +90,7 @@ public class tp84
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 	
@@ -253,15 +253,15 @@ public class tp84
 	
 	static void tp84_draw_sprites(struct mame_bitmap *bitmap)
 	{
-		const struct GfxElement *gfx = Machine->gfx[1];
-		struct rectangle clip = Machine->visible_area;
+		const struct GfxElement *gfx = Machine.gfx[1];
+		struct rectangle clip = Machine.visible_area;
 		int offs;
 		int line;
 		int coloffset = ((col0&0x07) << 4);
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= Machine->visible_area.min_y && line <= Machine->visible_area.max_y)
+			if (line >= Machine.visible_area.min_y && line <= Machine.visible_area.max_y)
 			{
 				UINT8 *sr;
 	
@@ -298,23 +298,23 @@ public class tp84
 	{
 		struct rectangle clip;
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		tp84_draw_sprites(bitmap);
 	
 		/* draw top fg_tilemap status layer part */
-		clip.min_x = Machine->visible_area.min_x;
-		clip.max_x = Machine->visible_area.min_x+15;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_x = Machine.visible_area.min_x;
+		clip.max_x = Machine.visible_area.min_x+15;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 		tilemap_draw(bitmap, &clip, fg_tilemap, 0, 0);
 	
 		/* the middle part of fg_tilemap seems to be used as normal ram and is skipped */
 	
 		/* draw bottom fg_tilemap status layer part */
-		clip.min_x = Machine->visible_area.max_x-15;
-		clip.max_x = Machine->visible_area.max_x;
-		clip.min_y = Machine->visible_area.min_y;
-		clip.max_y = Machine->visible_area.max_y;
+		clip.min_x = Machine.visible_area.max_x-15;
+		clip.max_x = Machine.visible_area.max_x;
+		clip.min_y = Machine.visible_area.min_y;
+		clip.max_y = Machine.visible_area.max_y;
 		tilemap_draw(bitmap, &clip, fg_tilemap, 0, 0);
 	} };
 	

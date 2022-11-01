@@ -50,12 +50,12 @@ public class warpwarp
 		{
 			/*
 			 * R85(?) is 10k, Rb is 0, C92 is 1uF
-			 * charge time t1 = 0.693 * (R24 + Rb) * C57 -> 0.22176s
-			 * discharge time t2 = 0.693 * (Rb) * C57 -> 0
+			 * charge time t1 = 0.693 * (R24 + Rb) * C57 . 0.22176s
+			 * discharge time t2 = 0.693 * (Rb) * C57 . 0
 			 * C90(?) is only charged via D17 (1N914), no discharge!
 			 * Decay:
 			 * discharge C90(?) (1uF) through R13||R14 (22k||47k)
-			 * 0.639 * 15k * 1uF -> 0.9585s
+			 * 0.639 * 15k * 1uF . 0.9585s
 			 */
 			timer_adjust(sound_volume_timer, TIME_IN_HZ(32768/0.9585), 0, TIME_IN_HZ(32768/0.9585));
 		}
@@ -64,7 +64,7 @@ public class warpwarp
 			/*
 			 * discharge only after R93 (100k) and through the 10k
 			 * potentiometerin the amplifier section.
-			 * 0.639 * 110k * 1uF -> 7.0290s
+			 * 0.639 * 110k * 1uF . 7.0290s
 			 * ...but this is not very realistic for the game sound :(
 			 * maybe there _is_ a discharge through the diode D17?
 			 */
@@ -95,12 +95,12 @@ public class warpwarp
 		{
 			/*
 			 * Ra (R83?) is 10k, Rb is 0, C92 is 1uF
-			 * charge time t1 = 0.693 * (Ra + Rb) * C -> 0.22176s
+			 * charge time t1 = 0.693 * (Ra + Rb) * C . 0.22176s
 			 * discharge time is (nearly) zero, because Rb is zero
 			 * C95(?) is only charged via D17, not discharged!
 			 * Decay:
 			 * discharge C95(?) (10uF) through R13||R14 (22k||47k)
-			 * 0.639 * 15k * 10uF -> 9.585s
+			 * 0.639 * 15k * 10uF . 9.585s
 			 * ...I'm sure this is off by one number of magnitude :/
 			 */
 	//		timer_adjust(music_volume_timer, TIME_IN_HZ(32768/9.585), 0, TIME_IN_HZ(32768/9.585));
@@ -111,7 +111,7 @@ public class warpwarp
 			/*
 			 * discharge through R14 (47k),
 			 * discharge C95(?) (10uF) through R14 (47k)
-			 * 0.639 * 47k * 10uF -> 30.033s
+			 * 0.639 * 47k * 10uF . 30.033s
 			 */
 	//		timer_adjust(music_volume_timer, TIME_IN_HZ(32768/30.033), 0, TIME_IN_HZ(32768/30.033));
 			timer_adjust(music_volume_timer, TIME_IN_HZ(32768/3.0033), 0, TIME_IN_HZ(32768/3.0033));
@@ -134,19 +134,19 @@ public class warpwarp
 			 * The music signal is selected at a rate of 2H (1.536MHz) from the
 			 * four bits of a 4 bit binary counter which is clocked with 16H,
 			 * which is 192kHz, and is divided by 4 times (64 - music1_latch).
-			 *	0 = 256 steps -> 750 Hz
-			 *	1 = 252 steps -> 761.9 Hz
+			 *	0 = 256 steps . 750 Hz
+			 *	1 = 252 steps . 761.9 Hz
 			 * ...
-			 * 32 = 128 steps -> 1500 Hz
+			 * 32 = 128 steps . 1500 Hz
 			 * ...
-			 * 48 =  64 steps -> 3000 Hz
+			 * 48 =  64 steps . 3000 Hz
 			 * ...
-			 * 63 =   4 steps -> 48 kHz
+			 * 63 =   4 steps . 48 kHz
 			 */
 			mcarry -= CLOCK_16H / (4 * (64 - music1_latch));
 			while( mcarry < 0 )
 			{
-				mcarry += Machine->sample_rate;
+				mcarry += Machine.sample_rate;
 				mcount++;
 				music_signal = (mcount & ~music2_latch & 15) ? decay[music_volume] : 0;
 				/* override by noise gate? */
@@ -158,7 +158,7 @@ public class warpwarp
 			vcarry -= CLOCK_1V;
 	        while (vcarry < 0)
 	        {
-	            vcarry += Machine->sample_rate;
+	            vcarry += Machine.sample_rate;
 	            vcount++;
 	
 	            /* noise is clocked with raising edge of 2V */
@@ -214,7 +214,7 @@ public class warpwarp
 	    for( i = 0; i < 0x8000; i++ )
 			decay[0x7fff-i] = (INT16) (0x7fff/exp(1.0*i/4096));
 	
-		channel = stream_init("WarpWarp", 100, Machine->sample_rate, 0, warpwarp_sound_update);
+		channel = stream_init("WarpWarp", 100, Machine.sample_rate, 0, warpwarp_sound_update);
 	
 		sound_volume_timer = timer_alloc(sound_volume_decay);
 		music_volume_timer = timer_alloc(music_volume_decay);

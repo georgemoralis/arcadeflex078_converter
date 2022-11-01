@@ -116,8 +116,8 @@ public class playch10
 	
 	public static VideoUpdateHandlerPtr video_update_playch10  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		struct rectangle top_monitor = Machine->visible_area;
-		struct rectangle bottom_monitor = Machine->visible_area;
+		struct rectangle top_monitor = Machine.visible_area;
+		struct rectangle bottom_monitor = Machine.visible_area;
 	
 		top_monitor.max_y = ( top_monitor.max_y - top_monitor.min_y ) / 2;
 		bottom_monitor.min_y = ( bottom_monitor.max_y - bottom_monitor.min_y ) / 2;

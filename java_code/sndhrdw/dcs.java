@@ -324,7 +324,7 @@ public class dcs
 	{
 		data8_t *src = (data8_t *)(memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_SIZE);
 		data32_t *dst = (data32_t *)(memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_PGM_OFFSET);
-		switch (Machine->drv->cpu[dcs_cpunum].cpu_type)
+		switch (Machine.drv.cpu[dcs_cpunum].cpu_type)
 		{
 			case CPU_ADSP2104:
 				adsp2104_load_boot_data(src + 0x2000 * ((dcs.control_regs[SYSCONTROL_REG] >> 6) & 7), dst);
@@ -474,7 +474,7 @@ public class dcs
 	static int dcs_custom_start(const struct MachineSound *msound)
 	{
 		/* allocate a DAC stream */
-		dcs.stream = stream_init("DCS DAC", 100, Machine->sample_rate, 0, dcs_dac_update);
+		dcs.stream = stream_init("DCS DAC", 100, Machine.sample_rate, 0, dcs_dac_update);
 	
 		/* allocate memory for our buffer */
 		dcs.buffer = auto_malloc(DCS_BUFFER_SIZE * sizeof(INT16));
@@ -492,7 +492,7 @@ public class dcs
 		int vols[] = { MIXER(100, MIXER_PAN_RIGHT), MIXER(100, MIXER_PAN_LEFT) };
 	
 		/* allocate a DAC stream */
-		dcs.stream = stream_init_multi(2, names, vols, Machine->sample_rate, 0, dcs2_dac_update);
+		dcs.stream = stream_init_multi(2, names, vols, Machine.sample_rate, 0, dcs2_dac_update);
 	
 		/* allocate memory for our buffer */
 		dcs.buffer = auto_malloc(DCS_BUFFER_SIZE * sizeof(INT16));
@@ -1104,7 +1104,7 @@ public class dcs
 				/* calculate how long until we generate an interrupt */
 	
 				/* frequency in Hz per each bit sent */
-				sample_rate = Machine->drv->cpu[dcs_cpunum].cpu_clock / (2 * (dcs.control_regs[S1_SCLKDIV_REG] + 1));
+				sample_rate = Machine.drv.cpu[dcs_cpunum].cpu_clock / (2 * (dcs.control_regs[S1_SCLKDIV_REG] + 1));
 	
 				/* now put it down to samples, so we know what the channel frequency has to be */
 				sample_rate /= 16;
@@ -1118,7 +1118,7 @@ public class dcs
 					timer_adjust(dcs.reg_timer, TIME_IN_HZ(sample_rate) * (dcs.size / (4 * dcs.incs)), 0, TIME_IN_HZ(sample_rate) * (dcs.size / (4 * dcs.incs)));
 	
 				/* configure the DAC generator */
-				dcs.sample_step = (int)(sample_rate * 65536.0 / (double)Machine->sample_rate);
+				dcs.sample_step = (int)(sample_rate * 65536.0 / (double)Machine.sample_rate);
 				dcs.sample_position = 0;
 				dcs.buffer_in = 0;
 	

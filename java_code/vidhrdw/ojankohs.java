@@ -40,24 +40,24 @@ public class ojankohs
 		int i;
 		int bit0, bit1, bit2, bit3, bit4, r, g, b;
 	
-		for (i = 0; i < Machine->drv->total_colors; i++) {
+		for (i = 0; i < Machine.drv.total_colors; i++) {
 			bit0 = (color_prom[0] >> 2) & 0x01;
 			bit1 = (color_prom[0] >> 3) & 0x01;
 			bit2 = (color_prom[0] >> 4) & 0x01;
 			bit3 = (color_prom[0] >> 5) & 0x01;
 			bit4 = (color_prom[0] >> 6) & 0x01;
 			r = 0x08 * bit0 + 0x11 * bit1 + 0x21 * bit2 + 0x43 * bit3 + 0x82 * bit4;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 5) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 6) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 7) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 5) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 6) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 7) & 0x01;
 			bit3 = (color_prom[0] >> 0) & 0x01;
 			bit4 = (color_prom[0] >> 1) & 0x01;
 			g = 0x08 * bit0 + 0x11 * bit1 + 0x21 * bit2 + 0x43 * bit3 + 0x82 * bit4;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
-			bit4 = (color_prom[Machine->drv->total_colors] >> 4) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
+			bit4 = (color_prom[Machine.drv.total_colors] >> 4) & 0x01;
 			b = 0x08 * bit0 + 0x11 * bit1 + 0x21 * bit2 + 0x43 * bit3 + 0x82 * bit4;
 	
 			palette_set_color(i, r, g, b);
@@ -281,7 +281,7 @@ public class ojankohs
 			px = x + (i ^ xx);
 			py = y;
 	
-			plot_pixel(ojankoc_tmpbitmap, px, py, Machine->pens[color]);
+			plot_pixel(ojankoc_tmpbitmap, px, py, Machine.pens[color]);
 	
 			color1 >>= 1;
 			color2 >>= 1;
@@ -321,7 +321,7 @@ public class ojankohs
 	
 	public static VideoUpdateHandlerPtr video_update_ojankoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		ojankoc_tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width, Machine->drv->screen_height);
+		ojankoc_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		ojankohs_videoram = auto_malloc(0x8000);
 		ojankohs_paletteram = auto_malloc(0x20);
 	

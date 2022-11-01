@@ -903,9 +903,9 @@ public class _6502dasm
 	
 		op = OPCODE(pc++);
 	
-		opc = this->opcode[op*3];
-		arg = this->opcode[op*3+1];
-		access = this->opcode[op*3+2];
+		opc = this.opcode[op*3];
+		arg = this.opcode[op*3+1];
+		access = this.opcode[op*3+2];
 	
 		dst += sprintf(dst, "%-5s", token[opc]);
 		if( opc == bbr || opc == bbs || opc == rmb || opc == smb )
@@ -931,7 +931,7 @@ public class _6502dasm
 			break;
 	
 		case rw2:
-			offset16 = this->argword(pc)-1;
+			offset16 = this.argword(pc)-1;
 			pc += 2;
 			symbol = set_ea_info( 0, pc, offset16, access );
 	#if 0
@@ -969,54 +969,54 @@ public class _6502dasm
 	
 		case zpx:
 			addr = ARGBYTE(pc++);
-			ea = (addr + this->get_reg(M6502_X)) & 0xff;
+			ea = (addr + this.get_reg(M6502_X)) & 0xff;
 			symbol = set_ea_info( 0, ea, EA_UINT8, access );
 			dst += sprintf(dst,"$%02X,x", addr);
 			break;
 	
 		case zpy:
 			addr = ARGBYTE(pc++);
-			ea = (addr + this->get_reg(M6502_Y)) & 0xff;
+			ea = (addr + this.get_reg(M6502_Y)) & 0xff;
 			symbol = set_ea_info( 0, ea, EA_UINT8, access );
 			dst += sprintf(dst,"$%02X,y", addr);
 			break;
 	
 		case idx:
 			addr = ARGBYTE(pc++);
-			ea = (addr + this->get_reg(M6502_X)) & 0xff;
-			ea = this->readmem(ea) + (this->readmem((ea+1) & 0xff) << 8);
+			ea = (addr + this.get_reg(M6502_X)) & 0xff;
+			ea = this.readmem(ea) + (this.readmem((ea+1) & 0xff) << 8);
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%02X,x)", addr);
 			break;
 	
 		case idy:
 			addr = ARGBYTE(pc++);
-			ea = (this->readmem(addr) + (this->readmem((addr+1) & 0xff) << 8)
-				  + this->get_reg(M6502_Y)) & 0xffff;
+			ea = (this.readmem(addr) + (this.readmem((addr+1) & 0xff) << 8)
+				  + this.get_reg(M6502_Y)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%02X),y", addr);
 			break;
 	
 		case idz:
 			addr = ARGBYTE(pc++);
-			ea = (this->readmem(addr) + (this->readmem((addr+1) & 0xff) << 8)
-				  + this->get_reg(M6502_Y)) & 0xffff;
+			ea = (this.readmem(addr) + (this.readmem((addr+1) & 0xff) << 8)
+				  + this.get_reg(M6502_Y)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%02X),z", addr);
 			break;
 	
 		case isy:
 			op = ARGBYTE(pc++);
-			addr = op+this->get_reg(M6502_S);
-			ea = (this->readmem(addr)+(this->readmem(addr+1) << 8)+
-				   this->get_reg(M6502_Y)) & 0xffff;
+			addr = op+this.get_reg(M6502_S);
+			ea = (this.readmem(addr)+(this.readmem(addr+1) << 8)+
+				   this.get_reg(M6502_Y)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"(s,$%02X),y", addr);
 			break;
 	
 		case zpi:
 			addr = ARGBYTE(pc++);
-			ea = this->readmem(addr) + (this->readmem((addr+1) & 0xff) << 8);
+			ea = this.readmem(addr) + (this.readmem((addr+1) & 0xff) << 8);
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%02X)", addr);
 			break;
@@ -1031,7 +1031,7 @@ public class _6502dasm
 			break;
 	
 		case adr:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
 			symbol = set_ea_info( 0, addr, EA_UINT16, access );
 	#if 0
@@ -1042,7 +1042,7 @@ public class _6502dasm
 			break;
 	
 		case aba:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
 			symbol = set_ea_info( 0, addr, EA_UINT16, access );
 	#if 0
@@ -1053,33 +1053,33 @@ public class _6502dasm
 			break;
 	
 		case abx:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
-			ea = (addr + this->get_reg(M6502_X)) & 0xffff;
+			ea = (addr + this.get_reg(M6502_X)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"$%04X,x", addr);
 			break;
 	
 		case aby:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
-			ea = (addr + this->get_reg(M6502_Y)) & 0xffff;
+			ea = (addr + this.get_reg(M6502_Y)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"$%04X,y", addr);
 			break;
 	
 		case ind:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
-			ea = this->argword(addr);
+			ea = this.argword(addr);
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%04X)", addr);
 			break;
 	
 		case iax:
-			addr = this->argword(pc);
+			addr = this.argword(pc);
 			pc += 2;
-			ea = (this->argword(addr) + this->get_reg(M6502_X)) & 0xffff;
+			ea = (this.argword(addr) + this.get_reg(M6502_X)) & 0xffff;
 			symbol = set_ea_info( 0, ea, EA_UINT16, access );
 			dst += sprintf(dst,"($%04X),X", addr);
 			break;

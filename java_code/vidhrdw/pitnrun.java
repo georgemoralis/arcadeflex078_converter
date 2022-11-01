@@ -220,7 +220,7 @@ public class pitnrun
 				flipy = !flipy;
 			}
 			
-			drawgfx(bitmap,Machine->gfx[2],
+			drawgfx(bitmap,Machine.gfx[2],
 	 			(spriteram.read(offs+1)&0x3f)+((spriteram.read(offs+2)&0x80)>>1)+((spriteram.read(offs+2)&0x40)<<1),
 				pal,
 				flipx,flipy,
@@ -276,11 +276,11 @@ public class pitnrun
 			myclip.max_y=dy+127;	
 		
 			
-			if(myclip.min_y<cliprect->min_y)myclip.min_y=cliprect->min_y;
-			if(myclip.min_x<cliprect->min_x)myclip.min_x=cliprect->min_x;
+			if(myclip.min_y<cliprect.min_y)myclip.min_y=cliprect.min_y;
+			if(myclip.min_x<cliprect.min_x)myclip.min_x=cliprect.min_x;
 			
-			if(myclip.max_y>cliprect->max_y)myclip.max_y=cliprect->max_y;
-			if(myclip.max_x>cliprect->max_x)myclip.max_x=cliprect->max_x;
+			if(myclip.max_y>cliprect.max_y)myclip.max_y=cliprect.max_y;
+			if(myclip.max_x>cliprect.max_x)myclip.max_x=cliprect.max_x;
 			
 			tilemap_draw(bitmap,&myclip,bg, 0,0);
 		}

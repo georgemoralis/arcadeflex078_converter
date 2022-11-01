@@ -33,10 +33,10 @@ public class gsword
 						0xD5,0x7A,0x85,0x8D,0x27,0x1A,0x03,0x0F };
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -48,23 +48,23 @@ public class gsword
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 			/* blue component */
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the sprite lookup table */
 	
 		/* characters */
@@ -84,20 +84,20 @@ public class gsword
 						0xD5,0x7A,0x85,0x8D,0x27,0x1A,0x03,0x0F };
 		int i;
 	
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
 			/* red component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 1;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 1;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 1;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 1;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 1;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 1;
 			r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 			/* green component */
-			bit0 = (color_prom[Machine->drv->total_colors] >> 3) & 1;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 3) & 1;
 			bit1 = (color_prom[0] >> 0) & 1;
 			bit2 = (color_prom[0] >> 1) & 1;
 			g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
@@ -111,7 +111,7 @@ public class gsword
 			color_prom++;
 		}
 	
-		color_prom += Machine->drv->total_colors;
+		color_prom += Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the sprite lookup table */
 	
 		/* characters */
@@ -226,19 +226,19 @@ public class gsword
 					flipx = !flipx;
 					flipy = !flipy;
 				}
-				drawgfx(bitmap,Machine->gfx[1+spritebank],
+				drawgfx(bitmap,Machine.gfx[1+spritebank],
 						tile,
 						gsword_spritetile_ram[offs+1] & 0x3f,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,TRANSPARENCY_COLOR, 15);
+						&Machine.visible_area,TRANSPARENCY_COLOR, 15);
 			}
 		}
 	}
 	
 	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		gsword_draw_sprites(bitmap);
 	} };
 }

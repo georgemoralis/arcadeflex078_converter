@@ -54,7 +54,7 @@ public class firetrap
 		int i;
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -69,10 +69,10 @@ public class firetrap
 			bit2 = (color_prom[i] >> 6) & 0x01;
 			bit3 = (color_prom[i] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -251,13 +251,13 @@ public class firetrap
 			{
 				if (flip_screen != 0) sy -= 16;
 	
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code & ~1,
 						color,
 						flipx,flipy,
 						sx,flipy ? sy : sy + 16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code | 1,
 						color,
 						flipx,flipy,
@@ -265,13 +265,13 @@ public class firetrap
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code & ~1,
 						color,
 						flipx,flipy,
 						sx - 256,flipy ? sy : sy + 16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code | 1,
 						color,
 						flipx,flipy,
@@ -280,7 +280,7 @@ public class firetrap
 			}
 			else
 			{
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code,
 						color,
 						flipx,flipy,
@@ -288,7 +288,7 @@ public class firetrap
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine->gfx[3],
+				drawgfx(bitmap,Machine.gfx[3],
 						code,
 						color,
 						flipx,flipy,

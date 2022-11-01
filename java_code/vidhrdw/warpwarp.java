@@ -46,11 +46,11 @@ public class warpwarp
 	public static PaletteInitHandlerPtr palette_init_warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,r,g,b;
 	
@@ -122,12 +122,12 @@ public class warpwarp
 					sy = my;
 				}
 	
-				drawgfx(tmpbitmap,Machine->gfx[0],
+				drawgfx(tmpbitmap,Machine.gfx[0],
 						videoram.read(offs),
 						colorram[offs],
 						0,0,
 						8*sx,8*sy,
-						&Machine->visible_area,TRANSPARENCY_NONE,0);
+						&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 				dirtybuffer[offs] = 0;
 			}
@@ -135,7 +135,7 @@ public class warpwarp
 	
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,flip_screen,flip_screen,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,flip_screen,flip_screen,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 	
 		if (warpwarp_bulletsram[0] > 1)
@@ -145,14 +145,14 @@ public class warpwarp
 	
 			x = 260 - warpwarp_bulletsram[0];
 			y = 252 - warpwarp_bulletsram[1];
-			if (x >= Machine->visible_area.min_x && x+3 <= Machine->visible_area.max_x &&
-				y >= Machine->visible_area.min_y && y+3 <= Machine->visible_area.max_y)
+			if (x >= Machine.visible_area.min_x && x+3 <= Machine.visible_area.max_x &&
+				y >= Machine.visible_area.min_y && y+3 <= Machine.visible_area.max_y)
 			{
 				int colour;
 				int i,j;
 	
 	
-				colour = Machine->pens[0xf6];	/* white */
+				colour = Machine.pens[0xf6];	/* white */
 	
 				for (i = 0;i < 4;i++)
 				{

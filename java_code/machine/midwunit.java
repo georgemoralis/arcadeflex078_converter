@@ -677,7 +677,7 @@ public class midwunit
 	{
 		logerror("%08X:Sound read\n", activecpu_get_pc());
 	
-		if (Machine->sample_rate)
+		if (Machine.sample_rate)
 			return dcs_data_r() & 0xff;
 		return 0x0000;
 	}
@@ -685,7 +685,7 @@ public class midwunit
 	
 	READ16_HANDLER( midwunit_sound_state_r )
 	{
-		if (Machine->sample_rate)
+		if (Machine.sample_rate)
 			return dcs_control_r();
 		return 0x0800;
 	}

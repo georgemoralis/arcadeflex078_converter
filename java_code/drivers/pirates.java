@@ -488,7 +488,7 @@ public class pirates
 		pirates_decrypt_oki();
 	
 		/* patch out protection check */
-		rom[0x62c0/2] = 0x6006; // beq -> bra
+		rom[0x62c0/2] = 0x6006; // beq . bra
 	}
 	
 	static READ16_HANDLER( genix_prot_r ) {	if(!offset)	return 0x0004; else	return 0x0000; }

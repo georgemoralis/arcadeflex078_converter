@@ -104,7 +104,7 @@ public class crgolf
 	
 	/*************************************
 	 *
-	 *	Main->Sound CPU communications
+	 *	Main.Sound CPU communications
 	 *
 	 *************************************/
 	
@@ -131,7 +131,7 @@ public class crgolf
 	
 	/*************************************
 	 *
-	 *	Sound->Main CPU communications
+	 *	Sound.Main CPU communications
 	 *
 	 *************************************/
 	

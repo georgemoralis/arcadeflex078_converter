@@ -568,17 +568,17 @@ void z8000_init(void)
 	}
 
     /* now decompose the initialization table */
-	for (init = table; init->size; init++)
+	for (init = table; init.size; init++)
 	{
-		for (i = init->beg; i <= init->end; i += init->step)
+		for (i = init.beg; i <= init.end; i += init.step)
 		{
 			if (z8000_exec[i].opcode != zinvalid)
 				logerror("Z8000 opcode %04x clash '%s'\n", i, z8000_exec[i].dasm);
 
-			z8000_exec[i].opcode = init->opcode;
-			z8000_exec[i].cycles = init->cycles;
-			z8000_exec[i].size	 = init->size;
-			z8000_exec[i].dasm	 = init->dasm;
+			z8000_exec[i].opcode = init.opcode;
+			z8000_exec[i].cycles = init.cycles;
+			z8000_exec[i].size	 = init.size;
+			z8000_exec[i].dasm	 = init.dasm;
 		}
 	}
 }

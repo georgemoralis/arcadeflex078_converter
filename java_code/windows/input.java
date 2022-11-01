@@ -455,7 +455,7 @@ public class input
 			goto out_of_keyboards;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &keyboard_device[keyboard_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &keyboard_device[keyboard_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -512,7 +512,7 @@ public class input
 			goto out_of_mice;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &mouse_device[mouse_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &mouse_device[mouse_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -588,7 +588,7 @@ public class input
 			goto out_of_joysticks;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &joystick_device[joystick_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &joystick_device[joystick_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -1560,7 +1560,7 @@ public class input
 				point.x=point.y=0;
 			}
 	
-			// Map absolute pixel values into -128 -> 128 range
+			// Map absolute pixel values into -128 . 128 range
 			*deltax = (point.x * 256 + win_physical_width/2) / (win_physical_width-1) - 128;
 			*deltay = (point.y * 256 + win_physical_height/2) / (win_physical_height-1) - 128;
 		}
@@ -1576,7 +1576,7 @@ public class input
 			//
 			GetCursorPos(&point);
 	
-			// Map absolute pixel values into -128 -> 128 range
+			// Map absolute pixel values into -128 . 128 range
 			*deltax = (point.x * 256 + win_physical_width/2) / (win_physical_width-1) - 128;
 			*deltay = (point.y * 256 + win_physical_height/2) / (win_physical_height-1) - 128;
 		}
@@ -1702,12 +1702,12 @@ public class input
 	void process_ctrlr_game(struct rc_struct *iptrc, const char *ctype, const struct GameDriver *drv)
 	{
 		// recursive call to process parents first
-		if (drv->clone_of)
-			process_ctrlr_game (iptrc, ctype, drv->clone_of);
+		if (drv.clone_of)
+			process_ctrlr_game (iptrc, ctype, drv.clone_of);
 	
 		// now process this game
-		if (drv->name && *(drv->name) != 0)
-			process_ctrlr_file (iptrc, ctype, drv->name);
+		if (drv.name && *(drv.name) != 0)
+			process_ctrlr_file (iptrc, ctype, drv.name);
 	}
 	
 	// nice hack: load source_file.ini (omit if referenced later any)
@@ -1716,14 +1716,14 @@ public class input
 		char buffer[128];
 		const struct GameDriver *tmp_gd;
 	
-		sprintf(buffer, "%s", drv->source_file+12);
+		sprintf(buffer, "%s", drv.source_file+12);
 		buffer[strlen(buffer) - 2] = 0;
 	
 		tmp_gd = drv;
 		while (tmp_gd != NULL)
 		{
-			if (strcmp(tmp_gd->name, buffer) == 0) break;
-			tmp_gd = tmp_gd->clone_of;
+			if (strcmp(tmp_gd.name, buffer) == 0) break;
+			tmp_gd = tmp_gd.clone_of;
 		}
 	
 		// not referenced later, so load it here
@@ -1734,7 +1734,7 @@ public class input
 	
 	static int ipdef_custom_rc_func(struct rc_option *option, const char *arg, int priority)
 	{
-		struct ik *pinput_keywords = (struct ik *)option->dest;
+		struct ik *pinput_keywords = (struct ik *)option.dest;
 		struct ipd *idef = ipddef_ptr;
 	
 		// only process the default definitions if the input port definitions
@@ -1742,7 +1742,7 @@ public class input
 		if (idef != 0)
 		{
 			// if a keycode was re-assigned
-			if (pinput_keywords->type == IKT_STD)
+			if (pinput_keywords.type == IKT_STD)
 			{
 				InputSeq is;
 	
@@ -1752,11 +1752,11 @@ public class input
 				// was a sequence was assigned to a keycode? - not valid!
 				if (is[1] != CODE_NONE)
 				{
-					fprintf(stderr, "error: can't map \"%s\" to \"%s\"\n",pinput_keywords->name,arg);
+					fprintf(stderr, "error: can't map \"%s\" to \"%s\"\n",pinput_keywords.name,arg);
 				}
 	
 				// for all definitions
-				while (idef->type != IPT_END)
+				while (idef.type != IPT_END)
 				{
 					int j;
 	
@@ -1764,10 +1764,10 @@ public class input
 					for (j = 0; j < SEQ_MAX; j++)
 					{
 						// if the keystroke matches
-						if (idef->seq[j] == pinput_keywords->val)
+						if (idef.seq[j] == pinput_keywords.val)
 						{
 							// re-assign
-							idef->seq[j] = is[0];
+							idef.seq[j] = is[0];
 						}
 					}
 					// move to the next definition
@@ -1776,18 +1776,18 @@ public class input
 			}
 	
 			// if an input definition was re-defined
-			else if (pinput_keywords->type == IKT_IPT ||
-	                 pinput_keywords->type == IKT_IPT_EXT)
+			else if (pinput_keywords.type == IKT_IPT ||
+	                 pinput_keywords.type == IKT_IPT_EXT)
 			{
 				// loop through all definitions
-				while (idef->type != IPT_END)
+				while (idef.type != IPT_END)
 				{
 					// if the definition matches
-					if (idef->type == pinput_keywords->val)
+					if (idef.type == pinput_keywords.val)
 					{
-	                    if (pinput_keywords->type == IKT_IPT_EXT)
+	                    if (pinput_keywords.type == IKT_IPT_EXT)
 	                        idef++;
-						seq_set_string(&idef->seq, arg);
+						seq_set_string(&idef.seq, arg);
 						// and abort (there shouldn't be duplicate definitions)
 						break;
 					}
@@ -1810,28 +1810,28 @@ public class input
 		int i;
 	
 		// loop over all the defaults
-		while (idef->type != IPT_END)
+		while (idef.type != IPT_END)
 		{
 			// if the type is OSD reserved
-			if (idef->type == IPT_OSD_RESERVED)
+			if (idef.type == IPT_OSD_RESERVED)
 			{
 				// process the next reserved entry
 				switch (next_reserved)
 				{
 					// OSD_1 is alt-enter for fullscreen
 					case IPT_OSD_1:
-						idef->type = next_reserved;
-						idef->name = "Toggle fullscreen";
-						seq_set_2 (&idef->seq, KEYCODE_LALT, KEYCODE_ENTER);
+						idef.type = next_reserved;
+						idef.name = "Toggle fullscreen";
+						seq_set_2 (&idef.seq, KEYCODE_LALT, KEYCODE_ENTER);
 					break;
 	
 	#ifdef MESS
 					case IPT_OSD_2:
 						if (options.disable_normal_ui)
 						{
-							idef->type = next_reserved;
-							idef->name = "Toggle menubar";
-							seq_set_1 (&idef->seq, KEYCODE_SCRLOCK);
+							idef.type = next_reserved;
+							idef.name = "Toggle menubar";
+							seq_set_1 (&idef.seq, KEYCODE_SCRLOCK);
 						}
 					break;
 	#endif /* MESS */
@@ -1844,16 +1844,16 @@ public class input
 	
 			// disable the config menu if the ALT key is down
 			// (allows ALT-TAB to switch between windows apps)
-			if (idef->type == IPT_UI_CONFIGURE)
+			if (idef.type == IPT_UI_CONFIGURE)
 			{
-				seq_copy(&idef->seq, &no_alt_tab_seq);
+				seq_copy(&idef.seq, &no_alt_tab_seq);
 			}
 	
 	#ifdef MESS
-			if (idef->type == IPT_UI_THROTTLE)
+			if (idef.type == IPT_UI_THROTTLE)
 			{
 				static InputSeq empty_seq = SEQ_DEF_0;
-				seq_copy(&idef->seq, &empty_seq);
+				seq_copy(&idef.seq, &empty_seq);
 			}
 	#endif /* MESS */
 	
@@ -1864,14 +1864,14 @@ public class input
 				static InputSeq p2b1 = SEQ_DEF_5(KEYCODE_A, CODE_OR, JOYCODE_2_BUTTON1, CODE_OR, JOYCODE_MOUSE_1_BUTTON3);
 				static InputSeq p2b2 = SEQ_DEF_3(KEYCODE_S, CODE_OR, JOYCODE_2_BUTTON2);
 	
-				if (idef->type == (IPT_BUTTON2 | IPF_PLAYER1))
-					seq_copy(&idef->seq, &p1b2);
-				if (idef->type == (IPT_BUTTON3 | IPF_PLAYER1))
-					seq_copy(&idef->seq, &p1b3);
-				if (idef->type == (IPT_BUTTON1 | IPF_PLAYER2))
-					seq_copy(&idef->seq, &p2b1);
-				if (idef->type == (IPT_BUTTON2 | IPF_PLAYER2))
-					seq_copy(&idef->seq, &p2b2);
+				if (idef.type == (IPT_BUTTON2 | IPF_PLAYER1))
+					seq_copy(&idef.seq, &p1b2);
+				if (idef.type == (IPT_BUTTON3 | IPF_PLAYER1))
+					seq_copy(&idef.seq, &p1b3);
+				if (idef.type == (IPT_BUTTON1 | IPF_PLAYER2))
+					seq_copy(&idef.seq, &p2b1);
+				if (idef.type == (IPT_BUTTON2 | IPF_PLAYER2))
+					seq_copy(&idef.seq, &p2b2);
 			}
 	
 			// find the next one
@@ -1947,22 +1947,22 @@ public class input
 		// if a custom controller has been selected
 		if (ctrlrtype && *ctrlrtype != 0 && (stricmp(ctrlrtype,"Standard") != 0))
 		{
-			const struct InputPortTiny* input = Machine->gamedrv->input_ports;
+			const struct InputPortTiny* input = Machine.gamedrv.input_ports;
 			int paddle = 0, dial = 0, trackball = 0, adstick = 0, pedal = 0, lightgun = 0;
 	
 			// process the controller-specific default file
 			process_ctrlr_file (rc, ctrlrtype, "default");
 	
 			// process the system-specific files for this controller
-			process_ctrlr_system (rc, ctrlrtype, Machine->gamedrv);
+			process_ctrlr_system (rc, ctrlrtype, Machine.gamedrv);
 	
 			// process the game-specific files for this controller
-			process_ctrlr_game (rc, ctrlrtype, Machine->gamedrv);
+			process_ctrlr_game (rc, ctrlrtype, Machine.gamedrv);
 	
 	
-			while ((input->type & ~IPF_MASK) != IPT_END)
+			while ((input.type & ~IPF_MASK) != IPT_END)
 			{
-				switch (input->type & ~IPF_MASK)
+				switch (input.type & ~IPF_MASK)
 				{
 					case IPT_PADDLE:
 					case IPT_PADDLE_V:

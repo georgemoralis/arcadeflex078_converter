@@ -86,7 +86,7 @@ public class rpunch
 	{
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 		if (param != 0)
-			timer_adjust(crtc_timer, TIME_IN_HZ(Machine->drv->frames_per_second * param), 0, TIME_IN_HZ(Machine->drv->frames_per_second * param));
+			timer_adjust(crtc_timer, TIME_IN_HZ(Machine.drv.frames_per_second * param), 0, TIME_IN_HZ(Machine.drv.frames_per_second * param));
 	}
 	
 	
@@ -214,7 +214,7 @@ public class rpunch
 			{
 				/* only register we know about.... */
 				case 0x0b:
-					timer_adjust(crtc_timer, cpu_getscanlinetime(Machine->visible_area.max_y + 1), (data == 0xc0) ? 2 : 1, 0);
+					timer_adjust(crtc_timer, cpu_getscanlinetime(Machine.visible_area.max_y + 1), (data == 0xc0) ? 2 : 1, 0);
 					break;
 	
 				default:
@@ -282,7 +282,7 @@ public class rpunch
 				if (x >= BITMAP_WIDTH) x -= 512;
 				if (y >= BITMAP_HEIGHT) y -= 512;
 	
-				drawgfx(bitmap, Machine->gfx[2],
+				drawgfx(bitmap, Machine.gfx[2],
 						code, color + (rpunch_sprite_palette / 16), xflip, yflip, x, y, cliprect, TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -297,12 +297,12 @@ public class rpunch
 	
 	static void draw_bitmap(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		pen_t *pens = &Machine->pens[512 + (videoflags & 15) * 16];
+		pen_t *pens = &Machine.pens[512 + (videoflags & 15) * 16];
 		int x, y;
 	
 		/* draw any non-transparent scanlines from the VRAM directly */
 		for (y = 0; y < BITMAP_HEIGHT; y++)
-			if (y >= cliprect->min_y && y <= cliprect->max_y)
+			if (y >= cliprect.min_y && y <= cliprect.max_y)
 				if (rpunch_bitmapsum[y] != (BITMAP_WIDTH/4) * 0xffff)
 				{
 					data16_t *src = &rpunch_bitmapram[y * 128 + BITMAP_XOFFSET/4];

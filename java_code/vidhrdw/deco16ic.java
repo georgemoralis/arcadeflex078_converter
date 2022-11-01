@@ -201,7 +201,7 @@ public class deco16ic
 	
 	WRITE16_HANDLER( deco16_palette_dma_w )
 	{
-		const int m=Machine->drv->total_colors;
+		const int m=Machine.drv.total_colors;
 		int r,g,b,i;
 	
 		for (i=0; i<m; i++) {
@@ -234,7 +234,7 @@ public class deco16ic
 	
 	static UINT32 deco16_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) << 6);
 	}
 	
@@ -518,7 +518,7 @@ public class deco16ic
 		pf1_tilemap_16x16 =	tilemap_create(get_pf1_tile_info,   deco16_scan_rows, TILEMAP_TRANSPARENT,16,16,64,32);
 		pf2_tilemap_8x8 =	tilemap_create(get_pf2_tile_info_b, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		pf1_tilemap_8x8 =	tilemap_create(get_pf1_tile_info_b, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
-		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine->scrbitmap->width, Machine->scrbitmap->height, -8 );
+		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine.scrbitmap.width, Machine.scrbitmap.height, -8 );
 	
 		dirty_palette = auto_malloc(4096);
 		deco16_raster_display_list=auto_malloc(20 * 256);
@@ -565,7 +565,7 @@ public class deco16ic
 		pf1_tilemap_16x16 =	tilemap_create(get_pf1_tile_info,   deco16_scan_rows, TILEMAP_TRANSPARENT,16,16,64,32);
 		pf2_tilemap_8x8 =	tilemap_create(get_pf2_tile_info_b, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		pf1_tilemap_8x8 =	tilemap_create(get_pf1_tile_info_b, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
-		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine->scrbitmap->width, Machine->scrbitmap->height, -8 );
+		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine.scrbitmap.width, Machine.scrbitmap.height, -8 );
 	
 		dirty_palette = auto_malloc(4096);
 		deco16_raster_display_list=auto_malloc(20 * 256);
@@ -606,7 +606,7 @@ public class deco16ic
 	int deco_allocate_sprite_bitmap(void)
 	{
 		/* Allow sprite bitmap to be used by Deco32 games as well */
-		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine->scrbitmap->width, Machine->scrbitmap->height, -8 );
+		sprite_priority_bitmap = auto_bitmap_alloc_depth( Machine.scrbitmap.width, Machine.scrbitmap.height, -8 );
 	
 		return (sprite_priority_bitmap!=0);
 	}
@@ -796,7 +796,7 @@ public class deco16ic
 	
 	void deco16_print_debug_info(void)
 	{
-		struct mame_bitmap *bitmap = Machine->scrbitmap;
+		struct mame_bitmap *bitmap = Machine.scrbitmap;
 		char buf[64];
 		int j;
 	
@@ -806,22 +806,22 @@ public class deco16ic
 		if (deco16_pf12_control != 0) {
 			sprintf(buf,"%04X %04X %04X %04X",deco16_pf12_control[0],deco16_pf12_control[1],deco16_pf12_control[2],deco16_pf12_control[3]);
 			for (j = 0;j< 16+3;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
 			sprintf(buf,"%04X %04X %04X %04X",deco16_pf12_control[4],deco16_pf12_control[5],deco16_pf12_control[6],deco16_pf12_control[7]);
 			for (j = 0;j< 16+3;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
 		}
 		if (deco16_pf34_control != 0) {
 			sprintf(buf,"%04X %04X %04X %04X",deco16_pf34_control[0],deco16_pf34_control[1],deco16_pf34_control[2],deco16_pf34_control[3]);
 			for (j = 0;j< 16+3;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
 			sprintf(buf,"%04X %04X %04X %04X",deco16_pf34_control[4],deco16_pf34_control[5],deco16_pf34_control[6],deco16_pf34_control[7]);
 			for (j = 0;j< 16+3;j++)
-				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
 		}
 		sprintf(buf,"%04X",deco16_priority);
 		for (j = 0;j< 4;j++)
-			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
 	}
 	
 	/*****************************************************************************************/
@@ -840,8 +840,8 @@ public class deco16ic
 		int ox,oy,cx,cy;
 		int x_index,y_index,x,y;
 	
-		const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)];
-		int source_base = (code % gfx->total_elements) * gfx->height;
+		const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)];
+		int source_base = (code % gfx.total_elements) * gfx.height;
 	
 		/* check bounds */
 		ox = sx;
@@ -861,10 +861,10 @@ public class deco16ic
 	
 		for( y=0; y<16-cy; y++ )
 		{
-			UINT8 *source = gfx->gfxdata + ((source_base+y_index) * gfx->line_modulo);
-			UINT32 *destb = (UINT32 *)dest->line[sy];
-			UINT8 *pri = priority_bitmap->line[sy];
-			UINT8 *spri = sprite_priority_bitmap->line[sy];
+			UINT8 *source = gfx.gfxdata + ((source_base+y_index) * gfx.line_modulo);
+			UINT32 *destb = (UINT32 *)dest.line[sy];
+			UINT8 *pri = priority_bitmap.line[sy];
+			UINT8 *spri = sprite_priority_bitmap.line[sy];
 	
 			if (flipx != 0) { source+=15-(sx-ox); x_index=-1; } else { x_index=1; source+=(sx-ox); }
 	

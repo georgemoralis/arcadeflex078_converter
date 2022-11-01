@@ -55,7 +55,7 @@ public class skychut
 		if (get_vh_global_attribute_changed() != 0)
 			memset (dirtybuffer, 1, videoram_size);
 	
-		fillbitmap(bitmap,Machine->pens[7],cliprect);
+		fillbitmap(bitmap,Machine.pens[7],cliprect);
 	
 		for (offs = 0;offs < 0x400;offs++)
 		{
@@ -72,8 +72,8 @@ public class skychut
 				case 3: x = 6*8;  col = 5; break;
 			}
 	
-			if (x >= cliprect->min_x && x+7 <= cliprect->max_x
-					&& y >= cliprect->min_y && y <= cliprect->max_y)
+			if (x >= cliprect.min_x && x+7 <= cliprect.max_x
+					&& y >= cliprect.min_y && y <= cliprect.max_y)
 			{
 				if ((mask & 0x80) != 0) plot_pixel(bitmap,x+0,y,col);
 				if ((mask & 0x40) != 0) plot_pixel(bitmap,x+1,y,col);
@@ -90,7 +90,7 @@ public class skychut
 		{
 			int y;
 	
-			for (y = cliprect->min_y;y <= cliprect->max_y;y++)
+			for (y = cliprect.min_y;y <= cliprect.max_y;y++)
 			{
 				plot_pixel(bitmap,16,y,0);
 			}
@@ -106,7 +106,7 @@ public class skychut
 			sx = 31 - offs / 32;
 			sy = offs % 32;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					videoram.read(offs),
 					colorram[offs],
 					0,0,
@@ -162,13 +162,13 @@ public class skychut
 	
 				iremm15_drawgfx(tmpbitmap,
 								videoram.read(offs),
-								Machine->pens[colorram[offs] & 7],
-								Machine->pens[7], // space beam not color 0
+								Machine.pens[colorram[offs] & 7],
+								Machine.pens[7], // space beam not color 0
 								8*sx,8*sy);
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 }

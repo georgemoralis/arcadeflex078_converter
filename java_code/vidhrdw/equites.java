@@ -54,11 +54,11 @@ public class equites
 		pen_t *colortable;
 		int i;
 	
-		colortable = Machine->remapped_colortable;
+		colortable = Machine.remapped_colortable;
 	
 		// set defaults
 		maskwidth = 8;
-		maskheight = Machine->visible_area.max_y - Machine->visible_area.min_y + 1;
+		maskheight = Machine.visible_area.max_y - Machine.visible_area.min_y + 1;
 		maskcolor = get_black_pen();
 		scrollx = scrolly = 0;
 		for (i=0; i<4; i++) bgcolor[i] = 0;
@@ -204,7 +204,7 @@ public class equites
 		double DA, DB, DC, D0, D1, Dsum;
 		int i, dst_vish;
 	
-		dst_vish = dst_clip->max_y - dst_clip->min_y;
+		dst_vish = dst_clip.max_y - dst_clip.min_y;
 	
 		DA = (double)(src_w << FP_PRECISION) * dst_vish;
 		DB = dst_endw - dst_startw;
@@ -238,9 +238,9 @@ public class equites
 		unsigned char *buf8ptr;
 		int i;
 	
-		if (Machine->color_depth > 16) return(-1);
+		if (Machine.color_depth > 16) return(-1);
 	
-		halfclip = Machine->visible_area;
+		halfclip = Machine.visible_area;
 		i = halfclip.max_y - halfclip.min_y + 1;
 		halfclip.max_y = halfclip.min_y + (i >> 1) - 1;
 	
@@ -264,7 +264,7 @@ public class equites
 		memset(dirtybuf, 1, 0x800);
 	
 		if ((prestep = (struct PRESTEP_TYPE *)auto_malloc(i * sizeof(struct PRESTEP_TYPE))) == NULL) return(-1);
-		splndrbt_prestep(prestep, &Machine->visible_area, BMW, 434, 96, 480);
+		splndrbt_prestep(prestep, &Machine.visible_area, BMW, 434, 96, 480);
 	
 		defcharram = videoram16 + videoram_size / 2;
 	
@@ -288,7 +288,7 @@ public class equites
 		pen_t *colortable;
 		int i, c;
 	
-		colortable = Machine->remapped_colortable;
+		colortable = Machine.remapped_colortable;
 		c = *bgcolor;
 	
 		for (i=0x80; i<0x100; i+=0x08) colortable[i] = c;
@@ -332,7 +332,7 @@ public class equites
 			y = skipy - dispy + BMPAD;
 	
 			drawgfx( bitmap,
-				 Machine->gfx[bank],
+				 Machine.gfx[bank],
 				 tile, color,
 				 fx, fy,
 				 x, y,
@@ -362,7 +362,7 @@ public class equites
 			if (encode != 0)
 			{
 				bank = (encode>>8 & 0x01) + SPRITE_BANKBASE;
-				gfx = Machine->gfx[bank];
+				gfx = Machine.gfx[bank];
 				tile = encode & 0xff;
 				fxy = encode & 0x800;
 				encode = ~encode & 0xf600;
@@ -396,8 +396,8 @@ public class equites
 		equites_update_clut();
 		equites_draw_scroll(bitmap);
 		equites_draw_sprites(bitmap);
-		plot_box(bitmap, cliprect->min_x, cliprect->min_y, maskwidth, maskheight, maskcolor);
-		plot_box(bitmap, cliprect->max_x-maskwidth+1, cliprect->min_y, maskwidth, maskheight, maskcolor);
+		plot_box(bitmap, cliprect.min_x, cliprect.min_y, maskwidth, maskheight, maskcolor);
+		plot_box(bitmap, cliprect.max_x-maskwidth+1, cliprect.min_y, maskwidth, maskheight, maskcolor);
 		tilemap_draw(bitmap, cliprect, charmap0, 0, 0);
 	} };
 	
@@ -407,7 +407,7 @@ public class equites
 		pen_t *colortable;
 		int c;
 	
-		colortable = Machine->remapped_colortable;
+		colortable = Machine.remapped_colortable;
 		c = *bgcolor;
 	
 		switch(equites_id)
@@ -441,7 +441,7 @@ public class equites
 			fy = data & 2;
 	
 			drawgfx(bitmap,
-				Machine->gfx[bank],
+				Machine.gfx[bank],
 				tile, color,
 				fx, fy,
 				x, y,
@@ -466,16 +466,16 @@ public class equites
 		int src_pitch, dst_pitch, dst_wdiff, dst_visw, dst_vish;
 		int dst_curline, dst_xend, src_fsx, src_fdx, eax, ebx, ecx, edx;
 	
-		src_base = (data16_t*)src_bitmap->base;
-		src_pitch = src_bitmap->rowpixels;
+		src_base = (data16_t*)src_bitmap.base;
+		src_pitch = src_bitmap.rowpixels;
 		ebx = ((src_x + (src_w>>1)) & WARP) << FP_PRECISION;
 	
-		eax = dst_clip->min_x;
-		edx = dst_clip->min_y;
-		dst_visw = dst_clip->max_x - eax + 1;
-		dst_vish = dst_clip->max_y - edx;
-		dst_pitch = dst_bitmap->rowpixels;
-		dst_ptr = (data16_t*)dst_bitmap->base + edx * dst_pitch + eax + (dst_visw >> 1);
+		eax = dst_clip.min_x;
+		edx = dst_clip.min_y;
+		dst_visw = dst_clip.max_x - eax + 1;
+		dst_vish = dst_clip.max_y - edx;
+		dst_pitch = dst_bitmap.rowpixels;
+		dst_ptr = (data16_t*)dst_bitmap.base + edx * dst_pitch + eax + (dst_visw >> 1);
 	
 		dst_wdiff = dst_endw - dst_startw;
 		dst_curline = 0;
@@ -525,7 +525,7 @@ public class equites
 		data16_t *data_ptr;
 		int data, sprite, fx, fy, absx, absy, sx, sy, adjy, scalex, scaley, color, i;
 	
-		gfx = Machine->gfx[SPRITE_BANKBASE];
+		gfx = Machine.gfx[SPRITE_BANKBASE];
 		data_ptr = spriteram16 + 1;
 	
 		for (i=0; i<0x7e; i+=2)

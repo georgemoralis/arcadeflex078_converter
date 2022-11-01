@@ -88,10 +88,10 @@ public class aztarac
 	
 	public static VideoUpdateHandlerPtr video_update_aztarac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		int xmin = Machine->visible_area.min_x;
-		int ymin = Machine->visible_area.min_y;
-		int xmax = Machine->visible_area.max_x;
-		int ymax = Machine->visible_area.max_y;
+		int xmin = Machine.visible_area.min_x;
+		int ymin = Machine.visible_area.min_y;
+		int xmax = Machine.visible_area.max_x;
+		int ymax = Machine.visible_area.max_y;
 	
 		xcenter=((xmax + xmin) / 2) << 16;
 		ycenter=((ymax + ymin) / 2) << 16;

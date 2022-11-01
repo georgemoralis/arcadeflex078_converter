@@ -120,7 +120,7 @@ public class mhavoc
 	
 	/*************************************
 	 *
-	 *	Alpha -> gamma communications
+	 *	Alpha . gamma communications
 	 *
 	 *************************************/
 	
@@ -158,7 +158,7 @@ public class mhavoc
 	
 	/*************************************
 	 *
-	 *	Gamma -> alpha communications
+	 *	Gamma . alpha communications
 	 *
 	 *************************************/
 	

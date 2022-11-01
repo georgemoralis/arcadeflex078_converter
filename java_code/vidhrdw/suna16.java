@@ -32,10 +32,10 @@
 
 	$10000.w	fedc ba98 ---- ----
 				---- ---- 76-- ---- 	Sprite Size:
-										00 -> 16 x 16	(2x2  tiles)
-										01 -> 32 x 32	(4x4  tiles)
-										10 -> 16 x 256	(2x32 tiles)
-										11 -> 32 x 256	(4x32 tiles)
+										00 . 16 x 16	(2x2  tiles)
+										01 . 32 x 32	(4x4  tiles)
+										10 . 16 x 256	(2x32 tiles)
+										11 . 32 x 256	(4x32 tiles)
 				---- ---- --54 ----		? (Bit 4 used by uballoon)
 				---- ---- ---- 3210 	Source Row
 
@@ -124,8 +124,8 @@ public class suna16
 	{
 		int offs;
 	
-		int max_x	=	Machine->drv->screen_width	- 8;
-		int max_y	=	Machine->drv->screen_height - 8;
+		int max_x	=	Machine.drv.screen_width	- 8;
+		int max_y	=	Machine.drv.screen_height - 8;
 	
 		for ( offs = 0xfc00/2; offs < 0x10000/2 ; offs += 4/2 )
 		{
@@ -194,12 +194,12 @@ public class suna16
 						tile_flipy = !tile_flipy;
 					}
 	
-					drawgfx(	bitmap, Machine->gfx[0],
+					drawgfx(	bitmap, Machine.gfx[0],
 								(tile & 0x3fff) + bank*0x4000,
 								attr + (color_bank ? 0x10 : 0),
 								tile_flipx, tile_flipy,
 								sx, sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,15	);
+								&Machine.visible_area,TRANSPARENCY_PEN,15	);
 	
 					tile_x += tile_xinc;
 				}
@@ -223,7 +223,7 @@ public class suna16
 	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* I believe background is black */
-		fillbitmap(bitmap,get_black_pen(),&Machine->visible_area);
+		fillbitmap(bitmap,get_black_pen(),&Machine.visible_area);
 		suna16_draw_sprites(bitmap);
 	} };
 }

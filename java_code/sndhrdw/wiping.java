@@ -104,14 +104,14 @@ public class wiping
 		/* loop over each voice and add its contribution */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			int f = 16*voice->frequency;
-			int v = voice->volume;
+			int f = 16*voice.frequency;
+			int v = voice.volume;
 	
 			/* only update if we have non-zero volume and frequency */
 			if (v && f)
 			{
-				const unsigned char *w = voice->wave;
-				int c = voice->counter;
+				const unsigned char *w = voice.wave;
+				int c = voice.counter;
 	
 				mix = mixer_buffer;
 	
@@ -122,17 +122,17 @@ public class wiping
 	
 					c += f;
 	
-					if (voice->oneshot)
+					if (voice.oneshot)
 					{
-						if (voice->oneshotplaying)
+						if (voice.oneshotplaying)
 						{
 							offs = (c >> 15);
 							if (w[offs>>1] == 0xff)
 							{
-								voice->oneshotplaying = 0;
+								voice.oneshotplaying = 0;
 							}
 	
-							if (voice->oneshotplaying)
+							if (voice.oneshotplaying)
 							{
 								/* use full byte, first the high 4 bits, then the low 4 bits */
 								if ((offs & 1) != 0)
@@ -155,7 +155,7 @@ public class wiping
 				}
 	
 				/* update the counter for this voice */
-				voice->counter = c;
+				voice.counter = c;
 			}
 		}
 	
@@ -173,7 +173,7 @@ public class wiping
 		sound_channel *voice;
 	
 		/* get stream channels */
-		stream = stream_init(mono_name,100/*intf->volume*/, samplerate, 0, wiping_update_mono);
+		stream = stream_init(mono_name,100/*intf.volume*/, samplerate, 0, wiping_update_mono);
 	
 		/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
 		if ((mixer_buffer = auto_malloc(2 * sizeof(short) * samplerate)) == 0)
@@ -197,10 +197,10 @@ public class wiping
 		/* reset all the voices */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			voice->frequency = 0;
-			voice->volume = 0;
-			voice->wave = &sound_prom[0];
-			voice->counter = 0;
+			voice.frequency = 0;
+			voice.volume = 0;
+			voice.wave = &sound_prom[0];
+			voice.counter = 0;
 		}
 	
 		return 0;
@@ -230,32 +230,32 @@ public class wiping
 		{
 			for (base = 0, voice = channel_list; voice < last_channel; voice++, base += 8)
 			{
-				voice->frequency = wiping_soundregs[0x02 + base] & 0x0f;
-				voice->frequency = voice->frequency * 16 + ((wiping_soundregs[0x01 + base]) & 0x0f);
-				voice->frequency = voice->frequency * 16 + ((wiping_soundregs[0x00 + base]) & 0x0f);
+				voice.frequency = wiping_soundregs[0x02 + base] & 0x0f;
+				voice.frequency = voice.frequency * 16 + ((wiping_soundregs[0x01 + base]) & 0x0f);
+				voice.frequency = voice.frequency * 16 + ((wiping_soundregs[0x00 + base]) & 0x0f);
 	
-				voice->volume = wiping_soundregs[0x07 + base] & 0x0f;
+				voice.volume = wiping_soundregs[0x07 + base] & 0x0f;
 				if (wiping_soundregs[0x5 + base] & 0x0f)
 				{
-					voice->wave = &sound_rom[128 * (16 * (wiping_soundregs[0x5 + base] & 0x0f)
+					voice.wave = &sound_rom[128 * (16 * (wiping_soundregs[0x5 + base] & 0x0f)
 							+ (wiping_soundregs[0x2005 + base] & 0x0f))];
-					voice->oneshot = 1;
+					voice.oneshot = 1;
 				}
 				else
 				{
-					voice->wave = &sound_rom[16 * (wiping_soundregs[0x3 + base] & 0x0f)];
-					voice->oneshot = 0;
-					voice->oneshotplaying = 0;
+					voice.wave = &sound_rom[16 * (wiping_soundregs[0x3 + base] & 0x0f)];
+					voice.oneshot = 0;
+					voice.oneshotplaying = 0;
 				}
 			}
 		}
 		else if (offset >= 0x2000)
 		{
 			voice = &channel_list[(offset & 0x3f)/8];
-			if (voice->oneshot)
+			if (voice.oneshot)
 			{
-				voice->counter = 0;
-				voice->oneshotplaying = 1;
+				voice.counter = 0;
+				voice.oneshotplaying = 1;
 			}
 		}
 	} };

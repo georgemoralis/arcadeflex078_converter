@@ -183,7 +183,7 @@ public class slapfght
 					sx = buffered_spriteram[offs+1] + 3;
 					sy = buffered_spriteram[offs+3] - 1;
 				}
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 					buffered_spriteram[offs],
 					((buffered_spriteram[offs+2] >> 1) & 3)
 						+ ((buffered_spriteram[offs+2] << 2) & 4)
@@ -215,7 +215,7 @@ public class slapfght
 			tilemap_set_scrollx( pf1_tilemap ,0 , -16 );
 		}
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		perfrman_draw_sprites(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
@@ -251,14 +251,14 @@ public class slapfght
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
 			if (flipscreen != 0)
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 					buffered_spriteram[offs] + ((buffered_spriteram[offs+2] & 0xc0) << 2),
 					(buffered_spriteram[offs+2] & 0x1e) >> 1,
 					1,1,
 					288-(buffered_spriteram[offs+1] + ((buffered_spriteram[offs+2] & 0x01) << 8)) +18,240-buffered_spriteram[offs+3],
 					cliprect,TRANSPARENCY_PEN,0);
 			else
-				drawgfx(bitmap,Machine->gfx[2],
+				drawgfx(bitmap,Machine.gfx[2],
 					buffered_spriteram[offs] + ((buffered_spriteram[offs+2] & 0xc0) << 2),
 					(buffered_spriteram[offs+2] & 0x1e) >> 1,
 					0,0,

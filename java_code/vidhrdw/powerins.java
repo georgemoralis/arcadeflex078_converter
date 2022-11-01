@@ -288,8 +288,8 @@ public class powerins
 		data16_t *source = spriteram16 + 0x8000/2;
 		data16_t *finish = spriteram16 + 0x9000/2;
 	
-		int screen_w	=	Machine->drv->screen_width;
-		int screen_h	=	Machine->drv->screen_height;
+		int screen_w	=	Machine.drv.screen_width;
+		int screen_h	=	Machine.drv.screen_height;
 	
 		for ( ; source < finish; source += 16/2 )
 		{
@@ -328,7 +328,7 @@ public class powerins
 			{
 				for (y = 0 ; y < dimy ; y++)
 				{
-					drawgfx(bitmap,Machine->gfx[2],
+					drawgfx(bitmap,Machine.gfx[2],
 							code,
 							color,
 							flipx, flipy,
@@ -383,7 +383,7 @@ public class powerins
 	#endif
 	
 		if ((layers_ctrl & 1) != 0)		tilemap_draw(bitmap,cliprect, tilemap_0, 0, 0);
-		else					fillbitmap(bitmap,Machine->pens[0],cliprect);
+		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 		if ((layers_ctrl & 8) != 0)		powerins_draw_sprites(bitmap,cliprect);
 		if ((layers_ctrl & 2) != 0)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
 	} };

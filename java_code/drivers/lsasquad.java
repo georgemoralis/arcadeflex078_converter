@@ -353,7 +353,7 @@ public class lsasquad
 		MDRV_VBLANK_DURATION(DEFAULT_60HZ_VBLANK_DURATION)
 		MDRV_INTERLEAVE(500)	/* 500 CPU slices per frame - an high value to ensure proper */
 								/* synchronization of the CPUs */
-								/* main<->sound synchronization depends on this */
+								/* main<.sound synchronization depends on this */
 	
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER)

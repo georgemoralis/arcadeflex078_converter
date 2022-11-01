@@ -10,7 +10,7 @@ struct cem3394_interface
 	int volume[MAX_CEM3394];						/* playback volume */
 	double vco_zero_freq[MAX_CEM3394];				/* frequency at 0V for VCO */
 	double filter_zero_freq[MAX_CEM3394];			/* frequency at 0V for filter */
-	void (*external[MAX_CEM3394])(int, int, short *);/* external input source (at Machine->sample_rate) */
+	void (*external[MAX_CEM3394])(int, int, short *);/* external input source (at Machine.sample_rate) */
 };
 
 /* inputs */

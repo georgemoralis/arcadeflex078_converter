@@ -36,7 +36,7 @@ public class _2610intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf->handler[n]) intf->handler[n](irq);
+		if(intf.handler[n]) intf.handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -84,15 +84,15 @@ public class _2610intf
 	int YM2610_sh_start(const struct MachineSound *msound)
 	{
 		int i,j;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 		char buf[YM2610_NUMBUF][40];
 		const char *name[YM2610_NUMBUF];
 		int mixed_vol,vol[YM2610_NUMBUF];
 		void *pcmbufa[YM2610_NUMBUF],*pcmbufb[YM2610_NUMBUF];
 		int  pcmsizea[YM2610_NUMBUF],pcmsizeb[YM2610_NUMBUF];
 	
-		intf = msound->sound_interface;
-		if( intf->num > MAX_2610 ) return 1;
+		intf = msound.sound_interface;
+		if( intf.num > MAX_2610 ) return 1;
 	
 		if (AY8910_sh_start(msound)) return 1;
 	
@@ -100,10 +100,10 @@ public class _2610intf
 		FMTimerInit();
 	
 		/* stream system initialize */
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			/* stream setup */
-			mixed_vol = intf->volumeFM[i];
+			mixed_vol = intf.volumeFM[i];
 			/* stream setup */
 			for (j = 0 ; j < YM2610_NUMBUF ; j++)
 			{
@@ -114,14 +114,14 @@ public class _2610intf
 			}
 			stream[i] = stream_init_multi(YM2610_NUMBUF,name,vol,rate,i,YM2610UpdateOne);
 			/* setup adpcm buffers */
-			pcmbufa[i]  = (void *)(memory_region(intf->pcmroma[i]));
-			pcmsizea[i] = memory_region_length(intf->pcmroma[i]);
-			pcmbufb[i]  = (void *)(memory_region(intf->pcmromb[i]));
-			pcmsizeb[i] = memory_region_length(intf->pcmromb[i]);
+			pcmbufa[i]  = (void *)(memory_region(intf.pcmroma[i]));
+			pcmsizea[i] = memory_region_length(intf.pcmroma[i]);
+			pcmbufb[i]  = (void *)(memory_region(intf.pcmromb[i]));
+			pcmsizeb[i] = memory_region_length(intf.pcmromb[i]);
 		}
 	
 		/**** initialize YM2610 ****/
-		if (YM2610Init(intf->num,intf->baseclock,rate,
+		if (YM2610Init(intf.num,intf.baseclock,rate,
 			           pcmbufa,pcmsizea,pcmbufb,pcmsizeb,
 			           TimerHandler,IRQHandler) == 0)
 			return 0;
@@ -134,15 +134,15 @@ public class _2610intf
 	int YM2610B_sh_start(const struct MachineSound *msound)
 	{
 		int i,j;
-		int rate = Machine->sample_rate;
+		int rate = Machine.sample_rate;
 		char buf[YM2610_NUMBUF][40];
 		const char *name[YM2610_NUMBUF];
 		int mixed_vol,vol[YM2610_NUMBUF];
 		void *pcmbufa[YM2610_NUMBUF],*pcmbufb[YM2610_NUMBUF];
 		int  pcmsizea[YM2610_NUMBUF],pcmsizeb[YM2610_NUMBUF];
 	
-		intf = msound->sound_interface;
-		if( intf->num > MAX_2610 ) return 1;
+		intf = msound.sound_interface;
+		if( intf.num > MAX_2610 ) return 1;
 	
 		if (AY8910_sh_start_ym(msound)) return 1;
 	
@@ -150,10 +150,10 @@ public class _2610intf
 		FMTimerInit();
 	
 		/* stream system initialize */
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 		{
 			/* stream setup */
-			mixed_vol = intf->volumeFM[i];
+			mixed_vol = intf.volumeFM[i];
 			/* stream setup */
 			for (j = 0 ; j < YM2610_NUMBUF ; j++)
 			{
@@ -164,14 +164,14 @@ public class _2610intf
 			}
 			stream[i] = stream_init_multi(YM2610_NUMBUF,name,vol,rate,i,YM2610BUpdateOne);
 			/* setup adpcm buffers */
-			pcmbufa[i]  = (void *)(memory_region(intf->pcmroma[i]));
-			pcmsizea[i] = memory_region_length(intf->pcmroma[i]);
-			pcmbufb[i]  = (void *)(memory_region(intf->pcmromb[i]));
-			pcmsizeb[i] = memory_region_length(intf->pcmromb[i]);
+			pcmbufa[i]  = (void *)(memory_region(intf.pcmroma[i]));
+			pcmsizea[i] = memory_region_length(intf.pcmroma[i]);
+			pcmbufb[i]  = (void *)(memory_region(intf.pcmromb[i]));
+			pcmsizeb[i] = memory_region_length(intf.pcmromb[i]);
 		}
 	
 		/**** initialize YM2610 ****/
-		if (YM2610Init(intf->num,intf->baseclock,rate,
+		if (YM2610Init(intf.num,intf.baseclock,rate,
 			           pcmbufa,pcmsizea,pcmbufb,pcmsizeb,
 			           TimerHandler,IRQHandler) == 0)
 			return 0;
@@ -195,7 +195,7 @@ public class _2610intf
 	{
 		int i;
 	
-		for (i = 0;i < intf->num;i++)
+		for (i = 0;i < intf.num;i++)
 			YM2610ResetChip(i);
 	}
 	

@@ -91,7 +91,7 @@ public class atarijsa
 		has_tms5220 = has_oki6295 = has_pokey = has_ym2151 = 0;
 		for (i = 0; i < MAX_SOUND; i++)
 		{
-			switch (Machine->drv->sound[i].sound_type)
+			switch (Machine.drv.sound[i].sound_type)
 			{
 				case SOUND_TMS5220:
 					has_tms5220 = 1;

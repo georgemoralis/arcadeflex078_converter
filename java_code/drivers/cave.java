@@ -108,15 +108,15 @@ public class cave
 	
 	/*	Level 1 irq routines:
 	
-		Game		|first read	| bit==0->routine +	|
+		Game		|first read	| bit==0.routine +	|
 					|offset:	| read this offset	|
 	
-		ddonpach	4,0			0 -> vblank + 4		1 -> rte	2 -> like 0		read sound
-		dfeveron	0			0 -> vblank + 4		1 -> + 6	-				read sound
-		uopoko		0			0 -> vblank + 4		1 -> + 6	-				read sound
-		esprade		0			0 -> vblank + 4		1 -> rte	2 must be 0		read sound
-		guwange		0			0 -> vblank + 6,4	1 -> + 6,4	2 must be 0		read sound
-		mazinger	0			0 -> vblank + 4		rest -> scroll + 6
+		ddonpach	4,0			0 . vblank + 4		1 . rte	2 . like 0		read sound
+		dfeveron	0			0 . vblank + 4		1 . + 6	-				read sound
+		uopoko		0			0 . vblank + 4		1 . + 6	-				read sound
+		esprade		0			0 . vblank + 4		1 . rte	2 must be 0		read sound
+		guwange		0			0 . vblank + 6,4	1 . + 6,4	2 must be 0		read sound
+		mazinger	0			0 . vblank + 4		rest . scroll + 6
 	*/
 	
 	
@@ -135,7 +135,7 @@ public class cave
 		update_irq_state();
 	
 	/*
-		sailormn and agallet wait for bit 2 of $b80001 to go 1 -> 0.
+		sailormn and agallet wait for bit 2 of $b80001 to go 1 . 0.
 		It must happen once per frame as agallet uses this to show
 		the copyright notice screen for ~8.5s
 	*/
@@ -530,7 +530,7 @@ public class cave
 	
 	static WRITE16_HANDLER( nmk_oki6295_bankswitch_w )
 	{
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 	
 		if (ACCESSING_LSB != 0)
 		{
@@ -1068,7 +1068,7 @@ public class cave
 		data8_t *RAM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0x3;
 		int bank2 = (data >> 4) & 0x3;
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1178,7 +1178,7 @@ public class cave
 		data8_t *ROM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0x7;
 		int bank2 = (data >> 4) & 0x7;
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 		memcpy(ROM + 0x20000 * 0, ROM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(ROM + 0x20000 * 1, ROM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1188,7 +1188,7 @@ public class cave
 		data8_t *ROM = memory_region(REGION_SOUND2);
 		int bank1 = (data >> 0) & 0x7;
 		int bank2 = (data >> 4) & 0x7;
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 		memcpy(ROM + 0x20000 * 0, ROM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(ROM + 0x20000 * 1, ROM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1253,7 +1253,7 @@ public class cave
 	
 		int bankaddr		=	data * BANKSIZE;
 	
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 	
 		if (bankaddr >= size)
 		{
@@ -1350,7 +1350,7 @@ public class cave
 		data8_t *RAM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0xf;
 		int bank2 = (data >> 4) & 0xf;
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1360,7 +1360,7 @@ public class cave
 		data8_t *RAM = memory_region(REGION_SOUND2);
 		int bank1 = (data >> 0) & 0xf;
 		int bank2 = (data >> 4) & 0xf;
-		if (Machine->sample_rate == 0)	return;
+		if (Machine.sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1419,8 +1419,8 @@ public class cave
 	
 	/*
 		dfeveron config menu:
-		101624.w -> 8,a6	preferences
-		101626.w -> c,a6	(1:coin<<4|credit) <<8 | (2:coin<<4|credit)
+		101624.w . 8,a6	preferences
+		101626.w . c,a6	(1:coin<<4|credit) <<8 | (2:coin<<4|credit)
 	*/
 	
 	/* Most games use this */
@@ -2516,7 +2516,7 @@ public class cave
 	
 	***************************************************************************/
 	
-	/* 4 bits -> 8 bits. Even and odd pixels are swapped */
+	/* 4 bits . 8 bits. Even and odd pixels are swapped */
 	static void unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -2534,7 +2534,7 @@ public class cave
 	}
 	
 	
-	/* 4 bits -> 8 bits. Even and odd pixels and even and odd words, are swapped */
+	/* 4 bits . 8 bits. Even and odd pixels and even and odd words, are swapped */
 	static void ddonpach_unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -2559,7 +2559,7 @@ public class cave
 	}
 	
 	
-	/* 2 pages of 4 bits -> 8 bits */
+	/* 2 pages of 4 bits . 8 bits */
 	static void esprade_unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -3599,7 +3599,7 @@ public class cave
 	#if 0		//ROM PATCH
 		{
 			UINT16 *rom = (UINT16 *)memory_region(REGION_CPU1);
-			rom[0x118A/2] = 0x4e71;			//palette fix	118A: 5548				SUBQ.W	#2,A0		--> NOP
+			rom[0x118A/2] = 0x4e71;			//palette fix	118A: 5548				SUBQ.W	#2,A0		-. NOP
 		}
 	#endif
 	}
@@ -3713,7 +3713,7 @@ public class cave
 	#if 1		//ROM PATCH
 		{
 			UINT16 *rom = (UINT16 *)memory_region(REGION_CPU1);
-			rom[0xD46C/2] = 0xD482;			// kurara dash fix  0xd400 -> 0xd482
+			rom[0xD46C/2] = 0xD482;			// kurara dash fix  0xd400 . 0xd482
 		}
 	#endif
 	}

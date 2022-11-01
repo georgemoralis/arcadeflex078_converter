@@ -209,7 +209,7 @@ public class vector
 		old_index = 0;
 		vector_runs = 0;
 	
-		switch(Machine->color_depth)
+		switch(Machine.color_depth)
 		{
 		case 15:
 			vector_draw_aa_pixel = vector_draw_aa_pixel_15;
@@ -255,12 +255,12 @@ public class vector
 		vector_pixel_t coords;
 		int i;
 	
-		if (Machine->color_depth == 32)
+		if (Machine.color_depth == 32)
 		{
 			for (i=p_index-1; i>=0; i--)
 			{
 				coords = pixel[i];
-				((UINT32 *)vecbitmap->line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
+				((UINT32 *)vecbitmap.line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
 			}
 		}
 		else
@@ -268,7 +268,7 @@ public class vector
 			for (i=p_index-1; i>=0; i--)
 			{
 				coords = pixel[i];
-				((UINT16 *)vecbitmap->line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
+				((UINT16 *)vecbitmap.line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
 			}
 		}
 		p_index=0;
@@ -290,8 +290,8 @@ public class vector
 		if (y < ymin || y >= ymax)
 			return;
 	
-		dst = ((UINT16 *)vecbitmap->line[y])[x];
-		((UINT16 *)vecbitmap->line[y])[x] = LIMIT5((RGB_BLUE(col) >> 3) + (dst & 0x1f))
+		dst = ((UINT16 *)vecbitmap.line[y])[x];
+		((UINT16 *)vecbitmap.line[y])[x] = LIMIT5((RGB_BLUE(col) >> 3) + (dst & 0x1f))
 			| (LIMIT5((RGB_GREEN(col) >> 3) + ((dst >> 5) & 0x1f)) << 5)
 			| (LIMIT5((RGB_RED(col) >> 3) + (dst >> 10)) << 10);
 	
@@ -314,8 +314,8 @@ public class vector
 		if (y < ymin || y >= ymax)
 			return;
 	
-		dst = ((UINT32 *)vecbitmap->line[y])[x];
-		((UINT32 *)vecbitmap->line[y])[x] = LIMIT8(RGB_BLUE(col) + (dst & 0xff))
+		dst = ((UINT32 *)vecbitmap.line[y])[x];
+		((UINT32 *)vecbitmap.line[y])[x] = LIMIT8(RGB_BLUE(col) + (dst & 0xff))
 			| (LIMIT8(RGB_GREEN(col) + ((dst >> 8) & 0xff)) << 8)
 			| (LIMIT8(RGB_RED(col) + (dst >> 16)) << 16);
 	
@@ -510,12 +510,12 @@ public class vector
 				intensity = 0xff;
 		}
 		newpoint = &new_list[new_index];
-		newpoint->x = x;
-		newpoint->y = y;
-		newpoint->col = color;
-		newpoint->intensity = intensity;
-		newpoint->callback = 0;
-		newpoint->status = VDIRTY; /* mark identical lines as clean later */
+		newpoint.x = x;
+		newpoint.y = y;
+		newpoint.col = color;
+		newpoint.intensity = intensity;
+		newpoint.callback = 0;
+		newpoint.status = VDIRTY; /* mark identical lines as clean later */
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -542,12 +542,12 @@ public class vector
 				intensity = 0xff;
 		}
 		newpoint = &new_list[new_index];
-		newpoint->x = x;
-		newpoint->y = y;
-		newpoint->col = 1;
-		newpoint->intensity = intensity;
-		newpoint->callback = color_callback;
-		newpoint->status = VDIRTY; /* mark identical lines as clean later */
+		newpoint.x = x;
+		newpoint.y = y;
+		newpoint.col = 1;
+		newpoint.intensity = intensity;
+		newpoint.callback = color_callback;
+		newpoint.status = VDIRTY; /* mark identical lines as clean later */
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -565,11 +565,11 @@ public class vector
 		point *newpoint;
 	
 		newpoint = &new_list[new_index];
-		newpoint->x = x1;
-		newpoint->y = yy1;
-		newpoint->arg1 = x2;
-		newpoint->arg2 = y2;
-		newpoint->status = VCLIP;
+		newpoint.x = x1;
+		newpoint.y = yy1;
+		newpoint.arg1 = x2;
+		newpoint.arg2 = y2;
+		newpoint.status = VCLIP;
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -660,29 +660,29 @@ public class vector
 		for (i = min_index; i > 0; i--, old++, new++)
 		{
 			/* If this is a clip, we need to determine if the clip regions still match */
-			if (old->status == VCLIP || new->status == VCLIP)
+			if (old.status == VCLIP || new.status == VCLIP)
 			{
-				if (old->status == VCLIP)
+				if (old.status == VCLIP)
 					oldclip = *old;
-				if (new->status == VCLIP)
+				if (new.status == VCLIP)
 					newclip = *new;
 				clips_match = (newclip.x == oldclip.x) && (newclip.y == oldclip.y) && (newclip.arg1 == oldclip.arg1) && (newclip.arg2 == oldclip.arg2);
 				if (!clips_match)
 					last_match = 0;
 	
 				/* fall through to erase the old line if this is not a clip */
-				if (old->status == VCLIP)
+				if (old.status == VCLIP)
 					continue;
 			}
 	
 			/* If the clips match and the vectors match, update */
-			else if (clips_match && (new->x == old->x) && (new->y == old->y) &&
-				(new->col == old->col) && (new->intensity == old->intensity) &&
-				(!new->callback && !old->callback))
+			else if (clips_match && (new.x == old.x) && (new.y == old.y) &&
+				(new.col == old.col) && (new.intensity == old.intensity) &&
+				(!new.callback && !old.callback))
 			{
 				if (last_match != 0)
 				{
-					new->status = VCLEAN;
+					new.status = VCLEAN;
 					continue;
 				}
 				last_match = 1;
@@ -693,10 +693,10 @@ public class vector
 				last_match = 0;
 	
 			/* mark the pixels of the old vector dirty */
-			if (dirty_index + old->arg2 - old->arg1 < MAX_DIRTY_PIXELS)
+			if (dirty_index + old.arg2 - old.arg1 < MAX_DIRTY_PIXELS)
 			{
-				memcpy(&vector_dirty_list[dirty_index], &pixel[old->arg1], (old->arg2 - old->arg1) * sizeof(pixel[0]));
-				dirty_index += old->arg2 - old->arg1;
+				memcpy(&vector_dirty_list[dirty_index], &pixel[old.arg1], (old.arg2 - old.arg1) * sizeof(pixel[0]));
+				dirty_index += old.arg2 - old.arg1;
 			}
 		}
 	
@@ -705,14 +705,14 @@ public class vector
 		for (i = (old_index-min_index); i > 0; i--, old++)
 		{
 			/* skip old clips */
-			if (old->status == VCLIP)
+			if (old.status == VCLIP)
 				continue;
 	
 			/* mark the pixels of the old vector dirty */
-			if (dirty_index + old->arg2 - old->arg1 < MAX_DIRTY_PIXELS)
+			if (dirty_index + old.arg2 - old.arg1 < MAX_DIRTY_PIXELS)
 			{
-				memcpy(&vector_dirty_list[dirty_index], &pixel[old->arg1], (old->arg2 - old->arg1) * sizeof(pixel[0]));
-				dirty_index += old->arg2 - old->arg1;
+				memcpy(&vector_dirty_list[dirty_index], &pixel[old.arg1], (old.arg2 - old.arg1) * sizeof(pixel[0]));
+				dirty_index += old.arg2 - old.arg1;
 			}
 		}
 	}
@@ -738,8 +738,8 @@ public class vector
 	
 		/* copy parameters */
 		vecbitmap = bitmap;
-		vecwidth  = bitmap->width;
-		vecheight = bitmap->height;
+		vecwidth  = bitmap.width;
+		vecheight = bitmap.height;
 	
 		/* reset clipping area */
 		xmin = 0;
@@ -748,15 +748,15 @@ public class vector
 		ymax = vecheight;
 	
 		/* setup scaling */
-		vector_scale_x = ((float)vecwidth)/(Machine->visible_area.max_x - Machine->visible_area.min_x);
-		vector_scale_y = ((float)vecheight)/(Machine->visible_area.max_y - Machine->visible_area.min_y);
+		vector_scale_x = ((float)vecwidth)/(Machine.visible_area.max_x - Machine.visible_area.min_x);
+		vector_scale_y = ((float)vecheight)/(Machine.visible_area.max_y - Machine.visible_area.min_y);
 	
 		/* next call to vector_clear_list() is allowed to swap the lists */
 		vector_runs = 0;
 	
 		/* mark pixels which are not idential in newlist and oldlist dirty */
 		/* the old pixels which get removed are marked dirty immediately,  */
-		/* new pixels are recognized by setting new->dirty */
+		/* new pixels are recognized by setting new.dirty */
 		dirty_index = 0;
 		clever_mark_dirty();
 	
@@ -764,21 +764,21 @@ public class vector
 		vector_clear_pixels();
 	
 		/* Draw ALL lines into the hidden map. Mark only those lines with */
-		/* new->dirty = 1 as dirty. Remember the pixel start/end indices  */
+		/* new.dirty = 1 as dirty. Remember the pixel start/end indices  */
 		curpoint = new_list;
 	
 		for (i = 0; i < new_index; i++)
 		{
-			if (curpoint->status == VCLIP)
+			if (curpoint.status == VCLIP)
 			{
-				vector_set_clip(curpoint->x, curpoint->y, curpoint->arg1, curpoint->arg2);
+				vector_set_clip(curpoint.x, curpoint.y, curpoint.arg1, curpoint.arg2);
 			}
 			else
 			{
-				curpoint->arg1 = p_index;
-				vector_draw_to(curpoint->x, curpoint->y, curpoint->col, Tgamma[curpoint->intensity], curpoint->status, curpoint->callback);
+				curpoint.arg1 = p_index;
+				vector_draw_to(curpoint.x, curpoint.y, curpoint.col, Tgamma[curpoint.intensity], curpoint.status, curpoint.callback);
 	
-				curpoint->arg2 = p_index;
+				curpoint.arg2 = p_index;
 			}
 			curpoint++;
 		}

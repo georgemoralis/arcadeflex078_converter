@@ -252,10 +252,10 @@ public class exidy440
 		/* channels 2 and 3 are half-rate samples */
 		if ((ch & 2) != 0)
 		{
-			srcdata = &channel->base[channel->offset >> 1];
+			srcdata = &channel.base[channel.offset >> 1];
 	
 			/* handle the edge case */
-			if (channel->offset & 1)
+			if (channel.offset & 1)
 			{
 				*dest++ += *srcdata++ * volume / 256;
 				samples--;
@@ -273,7 +273,7 @@ public class exidy440
 		/* channels 0 and 1 are full-rate samples */
 		else
 		{
-			srcdata = &channel->base[channel->offset];
+			srcdata = &channel.base[channel.offset];
 			for (i = 0; i < samples; i++)
 				*dest++ += *srcdata++ * volume / 256;
 		}
@@ -330,11 +330,11 @@ public class exidy440
 			int effective_offset;
 	
 			/* if we're not active, bail */
-			if (channel->remaining <= 0)
+			if (channel.remaining <= 0)
 				continue;
 	
 			/* see how many samples to copy */
-			samples = (left > channel->remaining) ? channel->remaining : left;
+			samples = (left > channel.remaining) ? channel.remaining : left;
 	
 			/* get a pointer to the sample data and copy to the left */
 			volume = exidy440_sound_volume[2 * ch + 0];
@@ -347,12 +347,12 @@ public class exidy440
 				add_and_scale_samples(ch, mixer_buffer_right, samples, volume);
 	
 			/* update our counters */
-			channel->offset += samples;
-			channel->remaining -= samples;
+			channel.offset += samples;
+			channel.remaining -= samples;
 			left -= samples;
 	
 			/* update the MC6844 */
-			effective_offset = (ch & 2) ? channel->offset / 2 : channel->offset;
+			effective_offset = (ch & 2) ? channel.offset / 2 : channel.offset;
 			m6844_channel[ch].address = m6844_channel[ch].start_address + effective_offset / 8;
 			m6844_channel[ch].counter = m6844_channel[ch].start_counter - effective_offset / 8;
 			if (m6844_channel[ch].counter <= 0)
@@ -437,15 +437,15 @@ public class exidy440
 		m6844_channel_data *channel = &m6844_channel[ch];
 	
 		/* mark us inactive */
-		channel->active = 0;
+		channel.active = 0;
 	
 		/* set the final address and counter */
-		channel->counter = 0;
-		channel->address = channel->start_address + channel->start_counter;
+		channel.counter = 0;
+		channel.address = channel.start_address + channel.start_counter;
 	
 		/* clear the DMA busy bit and set the DMA end bit */
-		channel->control &= ~0x40;
-		channel->control |= 0x80;
+		channel.control &= ~0x40;
+		channel.control |= 0x80;
 	}
 	
 	
@@ -665,15 +665,15 @@ public class exidy440
 		}
 	
 		/* fill in this entry */
-		current->next = sound_cache_end;
-		current->address = address;
-		current->length = length;
-		current->bits = bits;
-		current->frequency = frequency;
+		current.next = sound_cache_end;
+		current.address = address;
+		current.length = length;
+		current.bits = bits;
+		current.frequency = frequency;
 	
 		/* decode the data into the cache */
-		decode_and_filter_cvsd(input, length, bits, frequency, current->data);
-		return current->data;
+		decode_and_filter_cvsd(input, length, bits, frequency, current.data);
+		return current.data;
 	}
 	
 	
@@ -681,9 +681,9 @@ public class exidy440
 	{
 		sound_cache_entry *current;
 	
-		for (current = sound_cache; current < sound_cache_end; current = current->next)
-			if (current->address == address && current->length == length && current->bits == bits && current->frequency == frequency)
-				return current->data;
+		for (current = sound_cache; current < sound_cache_end; current = current.next)
+			if (current.address == address && current.length == length && current.bits == bits && current.frequency == frequency)
+				return current.data;
 	
 		return add_to_sound_cache(&memory_region(REGION_SOUND1)[address], address, length, bits, frequency);
 	}
@@ -721,9 +721,9 @@ public class exidy440
 		/* if the length is 0 or 1, just do an immediate end */
 		if (length <= 3)
 		{
-			channel->base = base;
-			channel->offset = length;
-			channel->remaining = 0;
+			channel.base = base;
+			channel.offset = length;
+			channel.remaining = 0;
 			m6844_finished(ch);
 			return;
 		}
@@ -734,12 +734,12 @@ public class exidy440
 					m6844_channel[ch].counter, exidy440_sound_volume[ch * 2], exidy440_sound_volume[ch * 2 + 1]);
 	
 		/* set the pointer and count */
-		channel->base = base;
-		channel->offset = 0;
-		channel->remaining = length * 8;
+		channel.base = base;
+		channel.offset = 0;
+		channel.remaining = length * 8;
 	
 		/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
-		if ((ch & 2) != 0) channel->remaining *= 2;
+		if ((ch & 2) != 0) channel.remaining *= 2;
 	}
 	
 	

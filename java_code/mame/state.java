@@ -102,14 +102,14 @@ public class state
 	
 		// Pass 1 : compute size
 	
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
-			size += strlen(m->name) + 1;
+			size += strlen(m.name) + 1;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
 				size++;
-				for(e = m->instances[i]; e; e=e->next)
-					size += strlen(e->name) + 1 + 1 + 4;
+				for(e = m.instances[i]; e; e=e.next)
+					size += strlen(e.name) + 1 + 1 + 4;
 			}
 		}
 	
@@ -117,21 +117,21 @@ public class state
 	
 		// Pass 2 : write signature info
 	
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
-			strcpy(info+pos, m->name);
-			pos += strlen(m->name) + 1;
+			strcpy(info+pos, m.name);
+			pos += strlen(m.name) + 1;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
 				info[pos++] = i;
-				for(e = m->instances[i]; e; e=e->next) {
-					strcpy(info+pos, e->name);
-					pos += strlen(e->name) + 1;
-					info[pos++] = e->type;
-					info[pos++] = e->size;
-					info[pos++] = e->size >> 8;
-					info[pos++] = e->size >> 16;
-					info[pos++] = e->size >> 24;
+				for(e = m.instances[i]; e; e=e.next) {
+					strcpy(info+pos, e.name);
+					pos += strlen(e.name) + 1;
+					info[pos++] = e.type;
+					info[pos++] = e.size;
+					info[pos++] = e.size >> 8;
+					info[pos++] = e.size >> 16;
+					info[pos++] = e.size >> 24;
 				}
 			}
 		}
@@ -148,25 +148,25 @@ public class state
 		ss_func *f;
 		ss_module *m = ss_registry;
 		while(m) {
-			ss_module *mn = m->next;
+			ss_module *mn = m.next;
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
-				ss_entry *e = m->instances[i];
+				ss_entry *e = m.instances[i];
 				while(e) {
-					ss_entry *en = e->next;
-					free(e->name);
+					ss_entry *en = e.next;
+					free(e.name);
 					free(e);
 					e = en;
 				}
 			}
-			free(m->name);
+			free(m.name);
 			m = mn;
 		}
 		ss_registry = 0;
 	
 		f = ss_prefunc_reg;
 		while(f) {
-			ss_func *fn = f->next;
+			ss_func *fn = f.next;
 			free(f);
 			f = fn;
 		}
@@ -174,7 +174,7 @@ public class state
 	
 		f = ss_postfunc_reg;
 		while(f) {
-			ss_func *fn = f->next;
+			ss_func *fn = f.next;
 			free(f);
 			f = fn;
 		}
@@ -192,50 +192,50 @@ public class state
 		ss_module **mp = &ss_registry;
 		ss_module *m;
 		while((m = *mp) != 0) {
-			int pos = strcmp(m->name, name);
+			int pos = strcmp(m.name, name);
 			if(!pos)
 				return m;
 			if(pos>0)
 				break;
-			mp = &((*mp)->next);
+			mp = &((*mp).next);
 		}
 		*mp = malloc(sizeof(ss_module));
 		if (*mp == NULL) return NULL;
-		(*mp)->name = malloc (strlen (name) + 1);
-		if ((*mp)->name == NULL) return NULL;
-		strcpy ((*mp)->name, name);
-		(*mp)->next = m;
+		(*mp).name = malloc (strlen (name) + 1);
+		if ((*mp).name == NULL) return NULL;
+		strcpy ((*mp).name, name);
+		(*mp).next = m;
 		for(i=0; i<MAX_INSTANCES; i++)
-			(*mp)->instances[i] = 0;
+			(*mp).instances[i] = 0;
 		return *mp;
 	}
 	
 	static ss_entry *ss_register_entry(const char *module, int instance, const char *name, int type, void *data, unsigned size)
 	{
 		ss_module *m = ss_get_module(module);
-		ss_entry **ep = &(m->instances[instance]);
+		ss_entry **ep = &(m.instances[instance]);
 		ss_entry *e = *ep;
 		while((e = *ep) != 0) {
-			int pos = strcmp(e->name, name);
+			int pos = strcmp(e.name, name);
 			if(!pos) {
 				logerror("Duplicate save state registration entry (%s, %d, %s)\n", module, instance, name);
 				return NULL;
 			}
 			if(pos>0)
 				break;
-			ep = &((*ep)->next);
+			ep = &((*ep).next);
 		}
 		*ep = malloc(sizeof(ss_entry));
 		if (*ep == NULL) return NULL;
-		(*ep)->name = malloc (strlen (name) + 1);
-		if ((*ep)->name == NULL) return NULL;
-		strcpy ((*ep)->name, name);
-		(*ep)->next   = e;
-		(*ep)->type   = type;
-		(*ep)->data   = data;
-		(*ep)->size   = size;
-		(*ep)->offset = 0;
-		(*ep)->tag	  = ss_current_tag;
+		(*ep).name = malloc (strlen (name) + 1);
+		if ((*ep).name == NULL) return NULL;
+		strcpy ((*ep).name, name);
+		(*ep).next   = e;
+		(*ep).type   = type;
+		(*ep).data   = data;
+		(*ep).size   = size;
+		(*ep).offset = 0;
+		(*ep).tag	  = ss_current_tag;
 		return *ep;
 	}
 	
@@ -300,12 +300,12 @@ public class state
 		ss_func *next = *root;
 		while (next)
 		{
-			if (next->func == func && next->tag == ss_current_tag)
+			if (next.func == func && next.tag == ss_current_tag)
 			{
 				logerror("Duplicate save state function (%d, 0x%x)\n", ss_current_tag, (int)func);
 				exit(1);
 			}
-			next = next->next;
+			next = next.next;
 		}
 		next = *root;
 		*root = malloc(sizeof(ss_func));
@@ -314,9 +314,9 @@ public class state
 			logerror ("malloc failed in ss_register_func\n");
 			return;
 		}
-		(*root)->next = next;
-		(*root)->func = func;
-		(*root)->tag  = ss_current_tag;
+		(*root).next = next;
+		(*root).func = func;
+		(*root).tag  = ss_current_tag;
 	}
 	
 	void state_save_register_func_presave(void (*func)(void))
@@ -389,13 +389,13 @@ public class state
 		TRACE(logerror("Beginning save\n"));
 		ss_dump_size = 0x18;
 		ss_dump_file = file;
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
-				for(e = m->instances[i]; e; e=e->next) {
-					e->offset = ss_dump_size;
-					ss_dump_size += ss_size[e->type]*e->size;
+				for(e = m.instances[i]; e; e=e.next) {
+					e.offset = ss_dump_size;
+					ss_dump_size += ss_size[e.type]*e.size;
 				}
 			}
 		}
@@ -417,30 +417,30 @@ public class state
 		TRACE(logerror("  calling pre-save functions\n"));
 		f = ss_prefunc_reg;
 		while(f) {
-			if(f->tag == ss_current_tag) {
+			if(f.tag == ss_current_tag) {
 				count++;
-				(f->func)();
+				(f.func)();
 			}
-			f = f->next;
+			f = f.next;
 		}
 		TRACE(logerror("    %d functions called\n", count));
 		TRACE(logerror("  copying data\n"));
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
-				for(e = m->instances[i]; e; e=e->next)
-					if(e->tag == ss_current_tag) {
-						if(e->type == SS_INT) {
-							int v = *(int *)(e->data);
-							ss_dump_array[e->offset]   = v ;
-							ss_dump_array[e->offset+1] = v >> 8;
-							ss_dump_array[e->offset+2] = v >> 16;
-							ss_dump_array[e->offset+3] = v >> 24;
-							TRACE(logerror("    %s.%d.%s: %x..%x\n", m->name, i, e->name, e->offset, e->offset+3));
+				for(e = m.instances[i]; e; e=e.next)
+					if(e.tag == ss_current_tag) {
+						if(e.type == SS_INT) {
+							int v = *(int *)(e.data);
+							ss_dump_array[e.offset]   = v ;
+							ss_dump_array[e.offset+1] = v >> 8;
+							ss_dump_array[e.offset+2] = v >> 16;
+							ss_dump_array[e.offset+3] = v >> 24;
+							TRACE(logerror("    %s.%d.%s: %x..%x\n", m.name, i, e.name, e.offset, e.offset+3));
 						} else {
-							memcpy(ss_dump_array + e->offset, e->data, ss_size[e->type]*e->size);
-							TRACE(logerror("    %s.%d.%s: %x..%x\n", m->name, i, e->name, e->offset, e->offset+ss_size[e->type]*e->size-1));
+							memcpy(ss_dump_array + e.offset, e.data, ss_size[e.type]*e.size);
+							TRACE(logerror("    %s.%d.%s: %x..%x\n", m.name, i, e.name, e.offset, e.offset+ss_size[e.type]*e.size-1));
 						}
 					}
 			}
@@ -455,7 +455,7 @@ public class state
 		TRACE(logerror("Finishing save\n"));
 	
 		signature = ss_get_signature();
-		if(!Machine->sample_rate)
+		if(!Machine.sample_rate)
 			flags |= SS_NO_SOUND;
 	
 	#ifndef LSB_FIRST
@@ -466,7 +466,7 @@ public class state
 		ss_dump_array[8] = 1;
 		ss_dump_array[9] = flags;
 		memset(ss_dump_array+0xa, 0, 10);
-		strcpy((char *)ss_dump_array+0xa, Machine->gamedrv->name);
+		strcpy((char *)ss_dump_array+0xa, Machine.gamedrv.name);
 	
 		ss_dump_array[0x14] = signature;
 		ss_dump_array[0x15] = signature >> 8;
@@ -519,23 +519,23 @@ public class state
 	
 		if(ss_dump_array[9] & SS_NO_SOUND)
 		{
-			if(Machine->sample_rate)
+			if(Machine.sample_rate)
 				usrintf_showmessage("Warning: Game was saved with sound off, but sound is on.  Result may be interesting.");
 		}
 		else
 		{
-			if(!Machine->sample_rate)
+			if(!Machine.sample_rate)
 				usrintf_showmessage("Warning: Game was saved with sound on, but sound is off.  Result may be interesting.");
 		}
 	
 		offset = 0x18;
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
-				for(e = m->instances[i]; e; e=e->next) {
-					e->offset = offset;
-					offset += ss_size[e->type]*e->size;
+				for(e = m.instances[i]; e; e=e.next) {
+					e.offset = offset;
+					offset += ss_size[e.type]*e.size;
 				}
 			}
 		}
@@ -561,25 +561,25 @@ public class state
 	
 		TRACE(logerror("Loading tag %d\n", ss_current_tag));
 		TRACE(logerror("  copying data\n"));
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
-				for(e = m->instances[i]; e; e=e->next)
-					if(e->tag == ss_current_tag) {
-						if(e->type == SS_INT) {
+				for(e = m.instances[i]; e; e=e.next)
+					if(e.tag == ss_current_tag) {
+						if(e.type == SS_INT) {
 							int v;
-							v = ss_dump_array[e->offset]
-								| (ss_dump_array[e->offset+1] << 8)
-								| (ss_dump_array[e->offset+2] << 16)
-								| (ss_dump_array[e->offset+3] << 24);
-							TRACE(logerror("    %s.%d.%s: %x..%x\n", m->name, i, e->name, e->offset, e->offset+3));
-							*(int *)(e->data) = v;
+							v = ss_dump_array[e.offset]
+								| (ss_dump_array[e.offset+1] << 8)
+								| (ss_dump_array[e.offset+2] << 16)
+								| (ss_dump_array[e.offset+3] << 24);
+							TRACE(logerror("    %s.%d.%s: %x..%x\n", m.name, i, e.name, e.offset, e.offset+3));
+							*(int *)(e.data) = v;
 						} else {
-							memcpy(e->data, ss_dump_array + e->offset, ss_size[e->type]*e->size);
-							if (need_convert && ss_conv[e->type])
-								ss_conv[e->type](e->data, e->size);
-							TRACE(logerror("    %s.%d.%s: %x..%x\n", m->name, i, e->name, e->offset, e->offset+ss_size[e->type]*e->size-1));
+							memcpy(e.data, ss_dump_array + e.offset, ss_size[e.type]*e.size);
+							if (need_convert && ss_conv[e.type])
+								ss_conv[e.type](e.data, e.size);
+							TRACE(logerror("    %s.%d.%s: %x..%x\n", m.name, i, e.name, e.offset, e.offset+ss_size[e.type]*e.size-1));
 						}
 					}
 			}
@@ -587,11 +587,11 @@ public class state
 		TRACE(logerror("  calling post-load functions\n"));
 		f = ss_postfunc_reg;
 		while(f) {
-			if(f->tag == ss_current_tag) {
+			if(f.tag == ss_current_tag) {
 				count++;
-				(f->func)();
+				(f.func)();
 			}
-			f = f->next;
+			f = f.next;
 		}
 		TRACE(logerror("    %d functions called\n", count));
 	}
@@ -609,12 +609,12 @@ public class state
 	{
 	#ifdef VERBOSE
 		ss_module *m;
-		for(m = ss_registry; m; m=m->next) {
+		for(m = ss_registry; m; m=m.next) {
 			int i;
 			for(i=0; i<MAX_INSTANCES; i++) {
 				ss_entry *e;
-				for(e = m->instances[i]; e; e=e->next)
-					logerror("%d %s.%d.%s: %s, %x\n", e->tag, m->name, i, e->name, ss_type[e->type], e->size);
+				for(e = m.instances[i]; e; e=e.next)
+					logerror("%d %s.%d.%s: %s, %x\n", e.tag, m.name, i, e.name, ss_type[e.type], e.size);
 			}
 		}
 	#endif

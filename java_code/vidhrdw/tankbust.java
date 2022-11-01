@@ -239,7 +239,7 @@ public class tankbust
 			if ((spriteram.read(offs+1)!=4))	//otherwise - ghost sprites
 			{
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					code, color,
 					flipx,flipy,
 					sx,sy,

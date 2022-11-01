@@ -127,17 +127,17 @@ public class sha1
 	sha1_init(struct sha1_ctx *ctx)
 	{
 	  /* Set the h-vars to their initial values */
-	  ctx->digest[ 0 ] = h0init;
-	  ctx->digest[ 1 ] = h1init;
-	  ctx->digest[ 2 ] = h2init;
-	  ctx->digest[ 3 ] = h3init;
-	  ctx->digest[ 4 ] = h4init;
+	  ctx.digest[ 0 ] = h0init;
+	  ctx.digest[ 1 ] = h1init;
+	  ctx.digest[ 2 ] = h2init;
+	  ctx.digest[ 3 ] = h3init;
+	  ctx.digest[ 4 ] = h4init;
 	
 	  /* Initialize bit count */
-	  ctx->count_low = ctx->count_high = 0;
+	  ctx.count_low = ctx.count_high = 0;
 	  
 	  /* Initialize buffer */
-	  ctx->index = 0;
+	  ctx.index = 0;
 	}
 	
 	/* Perform the SHA transformation.  Note that this code, like MD5, seems to
@@ -259,33 +259,33 @@ public class sha1
 	  int i;
 	
 	  /* Update block count */
-	  if (!++ctx->count_low)
-	    ++ctx->count_high;
+	  if (!++ctx.count_low)
+	    ++ctx.count_high;
 	
 	  /* Endian independent conversion */
 	  for (i = 0; i<SHA1_DATA_LENGTH; i++, block += 4)
 	    data[i] = READ_UINT32(block);
 	
-	  sha1_transform(ctx->digest, data);
+	  sha1_transform(ctx.digest, data);
 	}
 	
 	void
 	sha1_update(struct sha1_ctx *ctx,
 		    unsigned length, const uint8_t *buffer)
 	{
-	  if (ctx->index)
+	  if (ctx.index)
 	    { /* Try to fill partial block */
-	      unsigned left = SHA1_DATA_SIZE - ctx->index;
+	      unsigned left = SHA1_DATA_SIZE - ctx.index;
 	      if (length < left)
 		{
-		  memcpy(ctx->block + ctx->index, buffer, length);
-		  ctx->index += length;
+		  memcpy(ctx.block + ctx.index, buffer, length);
+		  ctx.index += length;
 		  return; /* Finished */
 		}
 	      else
 		{
-		  memcpy(ctx->block + ctx->index, buffer, left);
-		  sha1_block(ctx, ctx->block);
+		  memcpy(ctx.block + ctx.index, buffer, left);
+		  sha1_block(ctx, ctx.block);
 		  buffer += left;
 		  length -= left;
 		}
@@ -296,9 +296,9 @@ public class sha1
 	      buffer += SHA1_DATA_SIZE;
 	      length -= SHA1_DATA_SIZE;
 	    }
-	  if ((ctx->index = length))     /* This assignment is intended */
+	  if ((ctx.index = length))     /* This assignment is intended */
 	    /* Buffer leftovers */
-	    memcpy(ctx->block, buffer, length);
+	    memcpy(ctx.block, buffer, length);
 	}
 		  
 	/* Final wrapup - pad to SHA1_DATA_SIZE-byte boundary with the bit pattern
@@ -311,29 +311,29 @@ public class sha1
 	  int i;
 	  int words;
 	
-	  i = ctx->index;
+	  i = ctx.index;
 	  
 	  /* Set the first char of padding to 0x80.  This is safe since there is
 	     always at least one byte free */
 	
 	  assert(i < SHA1_DATA_SIZE);
-	  ctx->block[i++] = 0x80;
+	  ctx.block[i++] = 0x80;
 	
 	  /* Fill rest of word */
 	  for( ; i & 3; i++)
-	    ctx->block[i] = 0;
+	    ctx.block[i] = 0;
 	
 	  /* i is now a multiple of the word size 4 */
 	  words = i >> 2;
 	  for (i = 0; i < words; i++)
-	    data[i] = READ_UINT32(ctx->block + 4*i);
+	    data[i] = READ_UINT32(ctx.block + 4*i);
 	  
 	  if (words > (SHA1_DATA_LENGTH-2))
 	    { /* No room for length in this block. Process it and
 	       * pad with another one */
 	      for (i = words ; i < SHA1_DATA_LENGTH; i++)
 		data[i] = 0;
-	      sha1_transform(ctx->digest, data);
+	      sha1_transform(ctx.digest, data);
 	      for (i = 0; i < (SHA1_DATA_LENGTH-2); i++)
 		data[i] = 0;
 	    }
@@ -342,9 +342,9 @@ public class sha1
 	      data[i] = 0;
 	
 	  /* There are 512 = 2^9 bits in one block */
-	  data[SHA1_DATA_LENGTH-2] = (ctx->count_high << 9) | (ctx->count_low >> 23);
-	  data[SHA1_DATA_LENGTH-1] = (ctx->count_low << 9) | (ctx->index << 3);
-	  sha1_transform(ctx->digest, data);
+	  data[SHA1_DATA_LENGTH-2] = (ctx.count_high << 9) | (ctx.count_low >> 23);
+	  data[SHA1_DATA_LENGTH-1] = (ctx.count_low << 9) | (ctx.index << 3);
+	  sha1_transform(ctx.digest, data);
 	}
 	
 	void
@@ -362,7 +362,7 @@ public class sha1
 	  leftover = length % 4;
 	
 	  for (i = 0; i < words; i++, digest += 4)
-	    WRITE_UINT32(digest, ctx->digest[i]);
+	    WRITE_UINT32(digest, ctx.digest[i]);
 	
 	  if (leftover != 0)
 	    {
@@ -371,7 +371,7 @@ public class sha1
 	      
 	      assert(i < _SHA1_DIGEST_LENGTH);
 	      
-	      word = ctx->digest[i];
+	      word = ctx.digest[i];
 	      
 	      switch (leftover)
 		{

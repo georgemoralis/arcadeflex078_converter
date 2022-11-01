@@ -123,7 +123,7 @@ public class gng
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine->gfx[2];
+		const struct GfxElement *gfx = Machine.gfx[2];
 		int offs;
 	
 	

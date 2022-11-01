@@ -228,8 +228,8 @@ public class realbrk
 	{
 		int offs;
 	
-		int max_x		=	Machine->drv->screen_width;
-		int max_y		=	Machine->drv->screen_height;
+		int max_x		=	Machine.drv.screen_width;
+		int max_y		=	Machine.drv.screen_height;
 	
 		for ( offs = 0x3000/2; offs < 0x3600/2; offs += 2/2 )
 		{
@@ -286,7 +286,7 @@ public class realbrk
 					int scalex = (sx + (x + 1) * xdim) / 0x10000 - currx;
 					int scaley = (sy + (y + 1) * ydim) / 0x10000 - curry;
 	
-					drawgfxzoom(	bitmap,Machine->gfx[gfx],
+					drawgfxzoom(	bitmap,Machine.gfx[gfx],
 									code++,
 									color,
 									flipx, flipy,
@@ -363,7 +363,7 @@ public class realbrk
 			return;
 		}
 		else
-			fillbitmap(bitmap,Machine->pens[realbrk_vregs[0xc/2] & 0x7fff],cliprect);
+			fillbitmap(bitmap,Machine.pens[realbrk_vregs[0xc/2] & 0x7fff],cliprect);
 	
 		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
 		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);

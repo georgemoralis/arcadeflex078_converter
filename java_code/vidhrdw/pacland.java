@@ -49,8 +49,8 @@ public class pacland
 	public static PaletteInitHandlerPtr palette_init_pacland  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		pacland_color_prom = color_prom;	/* we'll need this later */
@@ -225,7 +225,7 @@ public class pacland
 	} };
 	
 	#define DRAW_SPRITE( code, sx, sy ) \
-			{ drawgfx( bitmap, Machine->gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
+			{ drawgfx( bitmap, Machine.gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
 			&spritevisiblearea, TRANSPARENCY_COLOR,0xff); }
 	
 	static void pacland_draw_sprites( struct mame_bitmap *bitmap,int priority)

@@ -130,7 +130,7 @@ public class psikyosh
 	
 		if ( BG_TYPE(layer) == BG_SCROLL_0D ) scrollx += 0x08; /* quick kludge until using rowscroll */
 	
-		gfx = BG_DEPTH_8BPP(layer) ? Machine->gfx[1] : Machine->gfx[0];
+		gfx = BG_DEPTH_8BPP(layer) ? Machine.gfx[1] : Machine.gfx[0];
 		size = BG_LARGE(layer) ? 32 : 16;
 		width = BG_LARGE(layer) ? 0x200 : 0x100;
 	
@@ -179,7 +179,7 @@ public class psikyosh
 	
 		scrollbank = BG_TYPE(layer); /* Scroll bank appears to be same as layer type */
 	
-		gfx = BG_DEPTH_8BPP(layer) ? Machine->gfx[1] : Machine->gfx[0];
+		gfx = BG_DEPTH_8BPP(layer) ? Machine.gfx[1] : Machine.gfx[0];
 		size = BG_LARGE(layer) ? 32 : 16;
 		width = BG_LARGE(layer) ? 0x200 : 0x100;
 	
@@ -255,7 +255,7 @@ public class psikyosh
 		scrollx =(psikyosh_bgram[(scrollbank*0x800)/4 - 0x4000/4] & 0x000001ff) >> 0;
 		scrolly = 0; // ColumnZoom is combined with ColumnScroll values :(
 	
-		gfx = BG_DEPTH_8BPP(layer) ? Machine->gfx[1] : Machine->gfx[0];
+		gfx = BG_DEPTH_8BPP(layer) ? Machine.gfx[1] : Machine.gfx[0];
 		size = BG_LARGE(layer) ? 32 : 16;
 		width = BG_LARGE(layer) ? 0x200 : 0x100;
 	
@@ -375,7 +375,7 @@ public class psikyosh
 	/* code is index of first tile and incremented across rows then down columns (adjusting for flip obviously) */
 	/* sx and sy is top-left of entire sprite regardless of flip */
 	/* Note that Level 5-4 of sbomberb boss is perfect! (Alpha blended zoomed) as well as S1945II logo */
-	/* pixel is only plotted if z is >= priority_buffer->line[y][x] */
+	/* pixel is only plotted if z is >= priority_buffer.line[y][x] */
 	void psikyosh_drawgfxzoom( struct mame_bitmap *dest_bmp,const struct GfxElement *gfx,
 			unsigned int code,unsigned int color,int flipx,int flipy,int offsx,int offsy,
 			const struct rectangle *clip,int transparency,int transparent_color,
@@ -397,9 +397,9 @@ public class psikyosh
 			return;
 		}
 	
-		if (dest_bmp->depth != 32)
+		if (dest_bmp.depth != 32)
 		{
-			usrintf_showmessage("psikyosh_drawgfxzoom unsupported depth %d",dest_bmp->depth);
+			usrintf_showmessage("psikyosh_drawgfxzoom unsupported depth %d",dest_bmp.depth);
 			return;
 		}
 	
@@ -411,15 +411,15 @@ public class psikyosh
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
 		if (clip != 0)
 		{
-			myclip.min_x = clip->min_x;
-			myclip.max_x = clip->max_x;
-			myclip.min_y = clip->min_y;
-			myclip.max_y = clip->max_y;
+			myclip.min_x = clip.min_x;
+			myclip.max_x = clip.max_x;
+			myclip.min_y = clip.min_y;
+			myclip.max_y = clip.max_y;
 	
 			if (myclip.min_x < 0) myclip.min_x = 0;
-			if (myclip.max_x >= dest_bmp->width) myclip.max_x = dest_bmp->width-1;
+			if (myclip.max_x >= dest_bmp.width) myclip.max_x = dest_bmp.width-1;
 			if (myclip.min_y < 0) myclip.min_y = 0;
-			if (myclip.max_y >= dest_bmp->height) myclip.max_y = dest_bmp->height-1;
+			if (myclip.max_y >= dest_bmp.height) myclip.max_y = dest_bmp.height-1;
 	
 			clip=&myclip;
 		}
@@ -436,54 +436,54 @@ public class psikyosh
 			else		{ ystart = 0;      yend = high; yinc = +1; }
 	
 			/* Start drawing */
-			if( gfx && gfx->colortable )
+			if( gfx && gfx.colortable )
 			{
 				for (ytile = ystart; ytile != yend; ytile += yinc )
 				{
 					for (xtile = xstart; xtile != xend; xtile += xinc )
 					{
-						const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
-						int source_base = ((code + code_offset++) % gfx->total_elements) * gfx->height;
+						const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
+						int source_base = ((code + code_offset++) % gfx.total_elements) * gfx.height;
 	
 						int x_index_base, y_index, sx, sy, ex, ey;
 	
-						if (flipx != 0)	{ x_index_base = gfx->width-1; }
+						if (flipx != 0)	{ x_index_base = gfx.width-1; }
 						else		{ x_index_base = 0; }
 	
-						if (flipy != 0)	{ y_index = gfx->height-1; }
+						if (flipy != 0)	{ y_index = gfx.height-1; }
 						else		{ y_index = 0; }
 	
 						/* start coordinates */
-						sx = offsx + xtile*gfx->width;
-						sy = offsy + ytile*gfx->height;
+						sx = offsx + xtile*gfx.width;
+						sy = offsy + ytile*gfx.height;
 	
 						/* end coordinates */
-						ex = sx + gfx->width;
-						ey = sy + gfx->height;
+						ex = sx + gfx.width;
+						ey = sy + gfx.height;
 	
 						if (clip != 0)
 						{
-							if( sx < clip->min_x)
+							if( sx < clip.min_x)
 							{ /* clip left */
-								int pixels = clip->min_x-sx;
+								int pixels = clip.min_x-sx;
 								sx += pixels;
 								x_index_base += xinc*pixels;
 							}
-							if( sy < clip->min_y )
+							if( sy < clip.min_y )
 							{ /* clip top */
-								int pixels = clip->min_y-sy;
+								int pixels = clip.min_y-sy;
 								sy += pixels;
 								y_index += yinc*pixels;
 							}
 							/* NS 980211 - fixed incorrect clipping */
-							if( ex > clip->max_x+1 )
+							if( ex > clip.max_x+1 )
 							{ /* clip right */
-								int pixels = ex-clip->max_x-1;
+								int pixels = ex-clip.max_x-1;
 								ex -= pixels;
 							}
-							if( ey > clip->max_y+1 )
+							if( ey > clip.max_y+1 )
 							{ /* clip bottom */
-								int pixels = ey-clip->max_y-1;
+								int pixels = ey-clip.max_y-1;
 								ey -= pixels;
 							}
 						}
@@ -497,11 +497,11 @@ public class psikyosh
 							{
 								if( z > 0 )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									UINT16 *pri = (UINT16 *)z_bitmap->base + sy*z_bitmap->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									UINT16 *pri = (UINT16 *)z_bitmap.base + sy*z_bitmap.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -528,10 +528,10 @@ public class psikyosh
 								}
 								else
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -555,11 +555,11 @@ public class psikyosh
 							{
 								if ( z > 0 )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									UINT16 *pri = (UINT16 *)z_bitmap->base + sy*z_bitmap->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									UINT16 *pri = (UINT16 *)z_bitmap.base + sy*z_bitmap.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -586,10 +586,10 @@ public class psikyosh
 								}
 								else
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -614,11 +614,11 @@ public class psikyosh
 							{
 								if ( z > 0 )
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									UINT16 *pri = (UINT16 *)z_bitmap->base + sy*z_bitmap->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									UINT16 *pri = (UINT16 *)z_bitmap.base + sy*z_bitmap.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -649,10 +649,10 @@ public class psikyosh
 								}
 								else
 								{
-									UINT8 *source = gfx->gfxdata + (source_base + y_index)*gfx->line_modulo + x_index_base;
-									UINT32 *dest = (UINT32 *)dest_bmp->base + sy*dest_bmp->rowpixels + sx;
-									int src_modulo = yinc*gfx->line_modulo - xinc*(ex-sx);
-									int dst_modulo = dest_bmp->rowpixels - (ex-sx);
+									UINT8 *source = gfx.gfxdata + (source_base + y_index)*gfx.line_modulo + x_index_base;
+									UINT32 *dest = (UINT32 *)dest_bmp.base + sy*dest_bmp.rowpixels + sx;
+									int src_modulo = yinc*gfx.line_modulo - xinc*(ex-sx);
+									int dst_modulo = dest_bmp.rowpixels - (ex-sx);
 	
 									for( y=sy; y<ey; y++ )
 									{
@@ -689,27 +689,27 @@ public class psikyosh
 			{
 				for(xtile=0; xtile<wide; xtile++)
 				{
-					int source_base = ((code + code_offset++) % gfx->total_elements) * gfx->height;
-					for( ypixel=0; ypixel<gfx->height; ypixel++ )
+					int source_base = ((code + code_offset++) % gfx.total_elements) * gfx.height;
+					for( ypixel=0; ypixel<gfx.height; ypixel++ )
 					{
-						UINT8 *source = gfx->gfxdata + (source_base+ypixel) * gfx->line_modulo;
-						UINT8 *dest = (UINT8 *)zoom_bitmap->line[ypixel + ytile*gfx->height];
+						UINT8 *source = gfx.gfxdata + (source_base+ypixel) * gfx.line_modulo;
+						UINT8 *dest = (UINT8 *)zoom_bitmap.line[ypixel + ytile*gfx.height];
 	
-						for( xpixel=0; xpixel<gfx->width; xpixel++ )
+						for( xpixel=0; xpixel<gfx.width; xpixel++ )
 						{
-							dest[xpixel + xtile*gfx->width] = source[xpixel];
+							dest[xpixel + xtile*gfx.width] = source[xpixel];
 						}
 					}
 				}
 			}
 	
 			/* Start drawing */
-			if( gfx && gfx->colortable )
+			if( gfx && gfx.colortable )
 			{
-				const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
+				const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
 	
-				int sprite_screen_height = ((high*gfx->height*(0x400*0x400))/zoomy + 0x200)>>10; /* Round up to nearest pixel */
-				int sprite_screen_width = ((wide*gfx->width*(0x400*0x400))/zoomx + 0x200)>>10;
+				int sprite_screen_height = ((high*gfx.height*(0x400*0x400))/zoomy + 0x200)>>10; /* Round up to nearest pixel */
+				int sprite_screen_width = ((wide*gfx.width*(0x400*0x400))/zoomx + 0x200)>>10;
 	
 				if (sprite_screen_width && sprite_screen_height)
 				{
@@ -734,27 +734,27 @@ public class psikyosh
 	
 					if (clip != 0)
 					{
-						if( sx < clip->min_x)
+						if( sx < clip.min_x)
 						{ /* clip left */
-							int pixels = clip->min_x-sx;
+							int pixels = clip.min_x-sx;
 							sx += pixels;
 							x_index_base += pixels*dx;
 						}
-						if( sy < clip->min_y )
+						if( sy < clip.min_y )
 						{ /* clip top */
-							int pixels = clip->min_y-sy;
+							int pixels = clip.min_y-sy;
 							sy += pixels;
 							y_index += pixels*dy;
 						}
 						/* NS 980211 - fixed incorrect clipping */
-						if( ex > clip->max_x+1 )
+						if( ex > clip.max_x+1 )
 						{ /* clip right */
-							int pixels = ex-clip->max_x-1;
+							int pixels = ex-clip.max_x-1;
 							ex -= pixels;
 						}
-						if( ey > clip->max_y+1 )
+						if( ey > clip.max_y+1 )
 						{ /* clip bottom */
-							int pixels = ey-clip->max_y-1;
+							int pixels = ey-clip.max_y-1;
 							ey -= pixels;
 						}
 					}
@@ -771,9 +771,9 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-									UINT16 *pri = (UINT16 *)z_bitmap->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT16 *pri = (UINT16 *)z_bitmap.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -797,8 +797,8 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -820,9 +820,9 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-									UINT16 *pri = (UINT16 *)z_bitmap->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT16 *pri = (UINT16 *)z_bitmap.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -846,8 +846,8 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -869,9 +869,9 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
-									UINT16 *pri = (UINT16 *)z_bitmap->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT16 *pri = (UINT16 *)z_bitmap.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -899,8 +899,8 @@ public class psikyosh
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = (UINT8 *)zoom_bitmap->line[y_index>>10];
-									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *source = (UINT8 *)zoom_bitmap.line[y_index>>10];
+									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -1005,7 +1005,7 @@ public class psikyosh
 				alphamap = (alpha_table[BYTE4_XOR_BE(alpha)] & 0x80)? 1:0;
 				alpha = alpha_table[BYTE4_XOR_BE(alpha)] & 0x3f;
 	
-				gfx = dpth ? Machine->gfx[1] : Machine->gfx[0];
+				gfx = dpth ? Machine.gfx[1] : Machine.gfx[0];
 	
 				if (alphamap != 0) { /* alpha values are per-pen */
 					trans = TRANSPARENCY_ALPHARANGE;
@@ -1033,16 +1033,16 @@ public class psikyosh
 						sprintf(buf, "%X",xdim/16); /* Display Zoom in 16.16 */
 						dt[0].text = buf;
 						dt[0].color = (((xscale==0x10000)&&(yscale==0x10000)) ? UI_COLOR_INVERSE : UI_COLOR_NORMAL);
-						if (Machine->gamedrv->flags & ORIENTATION_SWAP_XY) {
+						if (Machine.gamedrv.flags & ORIENTATION_SWAP_XY) {
 							dt[0].x = ypos;
-							dt[0].y = Machine->visible_area.max_x - xpos; /* ORIENTATION_FLIP_Y */
+							dt[0].y = Machine.visible_area.max_x - xpos; /* ORIENTATION_FLIP_Y */
 						}
 						else {
 							dt[0].x = xpos;
 							dt[0].y = ypos;
 						}
 						dt[1].text = 0;	/* terminate array */
-						displaytext(Machine->scrbitmap,dt);
+						displaytext(Machine.scrbitmap,dt);
 					}
 	#endif
 	#endif
@@ -1061,10 +1061,10 @@ public class psikyosh
 			return 1;
 	
 		/* Need 16-bit z-buffer */
-		if ((z_bitmap = auto_bitmap_alloc_depth(Machine->scrbitmap->width, Machine->scrbitmap->height, 16)) == 0)
+		if ((z_bitmap = auto_bitmap_alloc_depth(Machine.scrbitmap.width, Machine.scrbitmap.height, 16)) == 0)
 			return 1;
 	
-		Machine->gfx[1]->color_granularity=16; /* 256 colour sprites with palette selectable on 16 colour boundaries */
+		Machine.gfx[1].color_granularity=16; /* 256 colour sprites with palette selectable on 16 colour boundaries */
 	
 		{ /* Pens 0xc0-0xff have a gradient of alpha values associated with them */
 			int i;
@@ -1089,19 +1089,19 @@ public class psikyosh
 		data32_t *linefill = psikyosh_bgram; /* Per row */
 		int x,y;
 	
-		if (bitmap->depth != 32)
+		if (bitmap.depth != 32)
 		{
 			usrintf_showmessage("psikyosh_prelineblend needs 32-bit depth");
 			return;
 		}
 	
 		profiler_mark(PROFILER_USER1);
-		for (y = cliprect->min_y; y <= cliprect->max_y; y += 1) {
+		for (y = cliprect.min_y; y <= cliprect.max_y; y += 1) {
 	
-			dstline = (UINT32 *)(bitmap->line[y]);
+			dstline = (UINT32 *)(bitmap.line[y]);
 	
 			if(linefill[y]&0xff) /* Row */
-				for (x = cliprect->min_x; x <= cliprect->max_x; x += 1)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x += 1)
 						dstline[x] = linefill[y]>>8;
 		}
 		profiler_mark(PROFILER_END);
@@ -1109,7 +1109,7 @@ public class psikyosh
 	
 	static void psikyosh_postlineblend( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		if (bitmap->depth != 32)
+		if (bitmap.depth != 32)
 		{
 			usrintf_showmessage("psikyosh_postlineblend needs 32-bit depth");
 			return;
@@ -1123,18 +1123,18 @@ public class psikyosh
 		int x,y;
 	
 		profiler_mark(PROFILER_USER2);
-		for (y = cliprect->min_y; y <= cliprect->max_y; y += 1) {
+		for (y = cliprect.min_y; y <= cliprect.max_y; y += 1) {
 	
-			dstline = (UINT32 *)(bitmap->line[y]);
+			dstline = (UINT32 *)(bitmap.line[y]);
 	
 			if(lineblend[y]&0x80) /* Row */
 			{
-				for (x = cliprect->min_x; x <= cliprect->max_x; x += 1)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x += 1)
 					dstline[x] = lineblend[y]>>8;
 			}
 			else if(lineblend[y]&0x7f) /* Row */
 			{
-				for (x = cliprect->min_x; x <= cliprect->max_x; x += 1)
+				for (x = cliprect.min_x; x <= cliprect.max_x; x += 1)
 					dstline[x] = alpha_blend_r32(dstline[x], lineblend[y]>>8, 2*(lineblend[y]&0x7f));
 			}
 		}

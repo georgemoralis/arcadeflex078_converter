@@ -88,7 +88,7 @@ public class stvvdp1
 	
 		/* our colour calculation is broken .. must fix it */
 		shienryu_sprite_kludge = 0;
-		if (!strcmp(Machine->gamedrv->name,"shienryu"))	shienryu_sprite_kludge = 1;
+		if (!strcmp(Machine.gamedrv.name,"shienryu"))	shienryu_sprite_kludge = 1;
 	
 		return 0;
 	}
@@ -351,10 +351,10 @@ public class stvvdp1
 								INT32 v1, INT32 v2, INT32 slv1, INT32 slv2, INT32 *nv1, INT32 *nv2,
 								INT32 _y1, INT32 y2)
 	{
-		if(_y1 > cliprect->max_y)
+		if(_y1 > cliprect.max_y)
 			return;
 	
-		if(y2 <= cliprect->min_y) {
+		if(y2 <= cliprect.min_y) {
 			int delta = y2-_y1;
 			*nx1 = x1+delta*sl1;
 			*nu1 = u1+delta*slu1;
@@ -365,18 +365,18 @@ public class stvvdp1
 			return;
 		}
 	
-		if(y2 > cliprect->max_y)
-			y2 = cliprect->max_y+1;
+		if(y2 > cliprect.max_y)
+			y2 = cliprect.max_y+1;
 	
-		if(_y1 < cliprect->min_y) {
-			int delta = cliprect->min_y - _y1;
+		if(_y1 < cliprect.min_y) {
+			int delta = cliprect.min_y - _y1;
 			x1 += delta*sl1;
 			u1 += delta*slu1;
 			v1 += delta*slv1;
 			x2 += delta*sl2;
 			u2 += delta*slu2;
 			v2 += delta*slv2;
-			_y1 = cliprect->min_y;
+			_y1 = cliprect.min_y;
 		}
 	
 		if(x1 > x2 || (x1==x2 && sl1 > sl2)) {
@@ -413,7 +413,7 @@ public class stvvdp1
 		}
 	
 		while(_y1 < y2) {
-			if(_y1 >= cliprect->min_y) {
+			if(_y1 >= cliprect.min_y) {
 				INT32 slux = 0, slvx = 0;
 				int xx1 = x1>>FRAC_SHIFT;
 				int xx2 = x2>>FRAC_SHIFT;
@@ -424,18 +424,18 @@ public class stvvdp1
 					slux = (u2-u1)/delta;
 					slvx = (v2-v1)/delta;
 				}
-				if(xx1 <= cliprect->max_x || xx2 >= cliprect->min_x) {
-					if(xx1 < cliprect->min_x) {
-						int delta = cliprect->min_x-xx1;
+				if(xx1 <= cliprect.max_x || xx2 >= cliprect.min_x) {
+					if(xx1 < cliprect.min_x) {
+						int delta = cliprect.min_x-xx1;
 						u += slux*delta;
 						v += slvx*delta;
-						xx1 = cliprect->min_x;
+						xx1 = cliprect.min_x;
 					}
-					if(xx2 > cliprect->max_x)
-						xx2 = cliprect->max_x;
+					if(xx2 > cliprect.max_x)
+						xx2 = cliprect.max_x;
 	
 					while(xx1 <= xx2) {
-						drawpixel(((UINT16 *)(bitmap->line[_y1]))+xx1,
+						drawpixel(((UINT16 *)(bitmap.line[_y1]))+xx1,
 								  patterndata,
 								  (v>>FRAC_SHIFT)*xsize+(u>>FRAC_SHIFT));
 						xx1++;
@@ -467,10 +467,10 @@ public class stvvdp1
 		int xx1 = x1>>FRAC_SHIFT;
 		int xx2 = x2>>FRAC_SHIFT;
 	
-		if(y > cliprect->max_y || y < cliprect->min_y)
+		if(y > cliprect.max_y || y < cliprect.min_y)
 			return;
 	
-		if(xx1 <= cliprect->max_x || xx2 >= cliprect->min_x) {
+		if(xx1 <= cliprect.max_x || xx2 >= cliprect.min_x) {
 			INT32 slux = 0, slvx = 0;
 			INT32 u = u1;
 			INT32 v = v1;
@@ -479,17 +479,17 @@ public class stvvdp1
 				slux = (u2-u1)/delta;
 				slvx = (v2-v1)/delta;
 			}
-			if(xx1 < cliprect->min_x) {
-				int delta = cliprect->min_x-xx1;
+			if(xx1 < cliprect.min_x) {
+				int delta = cliprect.min_x-xx1;
 				u += slux*delta;
 				v += slvx*delta;
-				xx1 = cliprect->min_x;
+				xx1 = cliprect.min_x;
 			}
-			if(xx2 > cliprect->max_x)
-				xx2 = cliprect->max_x;
+			if(xx2 > cliprect.max_x)
+				xx2 = cliprect.max_x;
 	
 			while(xx1 <= xx2) {
-				drawpixel(((UINT16 *)(bitmap->line[y]))+xx1,
+				drawpixel(((UINT16 *)(bitmap.line[y]))+xx1,
 						  patterndata,
 						  (v>>FRAC_SHIFT)*xsize+(u>>FRAC_SHIFT));
 				xx1++;
@@ -543,13 +543,13 @@ public class stvvdp1
 			return;
 		}
 	
-		if(cury > cliprect->max_y)
+		if(cury > cliprect.max_y)
 			return;
-		if(limy <= cliprect->min_y)
+		if(limy <= cliprect.min_y)
 			return;
 	
-		if(limy > cliprect->max_y)
-			limy = cliprect->max_y;
+		if(limy > cliprect.max_y)
+			limy = cliprect.max_y;
 	
 		ps1 = pmin+4;
 		ps2 = pmin;
@@ -864,9 +864,9 @@ public class stvvdp1
 				drawypos = y+ycnt;
 			}
 	
-			if ((drawypos >= cliprect->min_y) && (drawypos <= cliprect->max_y))
+			if ((drawypos >= cliprect.min_y) && (drawypos <= cliprect.max_y))
 			{
-				destline = (UINT16 *)(bitmap->line[drawypos]);
+				destline = (UINT16 *)(bitmap.line[drawypos]);
 	
 				for (xcnt = 0; xcnt != xsize; xcnt ++)
 				{
@@ -878,7 +878,7 @@ public class stvvdp1
 					{
 						drawxpos = x+xcnt;
 					}
-					if ((drawxpos >= cliprect->min_x) && (drawxpos <= cliprect->max_x))
+					if ((drawxpos >= cliprect.min_x) && (drawxpos <= cliprect.max_x))
 					{
 						int offsetcnt;
 	

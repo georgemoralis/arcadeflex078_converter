@@ -54,22 +54,22 @@ public class phoenix
 	public static PaletteInitHandlerPtr palette_init_phoenix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,r,g,b;
 	
 	
 			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
 			r = 0x55 * bit0 + 0xaa * bit1;
 			bit0 = (color_prom[0] >> 2) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
 			g = 0x55 * bit0 + 0xaa * bit1;
 			bit0 = (color_prom[0] >> 1) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
 			b = 0x55 * bit0 + 0xaa * bit1;
 	
 			palette_set_color(i,r,g,b);
@@ -93,23 +93,23 @@ public class phoenix
 	public static PaletteInitHandlerPtr palette_init_pleiads  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,r,g,b;
 	
 	
 			bit0 = (color_prom[0] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
 			r = 0x55 * bit0 + 0xaa * bit1;
 			bit0 = (color_prom[0] >> 2) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
 			g = 0x55 * bit0 + 0xaa * bit1;
 			bit0 = (color_prom[0] >> 1) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
 			b = 0x55 * bit0 + 0xaa * bit1;
 	
 			palette_set_color(i,r,g,b);

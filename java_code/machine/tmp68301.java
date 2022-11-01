@@ -95,7 +95,7 @@ public class tmp68301
 			{
 				int scale = (TCR & 0x3c00)>>10;			// P4..1
 				if (scale > 8) scale = 8;
-				duration = Machine->drv->cpu[0].cpu_clock;
+				duration = Machine.drv.cpu[0].cpu_clock;
 				duration /= 1 << scale;
 				duration /= max;
 			}

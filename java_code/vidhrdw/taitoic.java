@@ -561,12 +561,12 @@ public class taitoic
 	
 	#undef ADJUST_FOR_ORIENTATION
 	#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-		type *dsti = &((type *)bitmapi->line[y])[x];							\
-		UINT8 *dstp = &((UINT8 *)bitmapp->line[y])[x];							\
+		type *dsti = &((type *)bitmapi.line[y])[x];							\
+		UINT8 *dstp = &((UINT8 *)bitmapp.line[y])[x];							\
 		int xadv = 1;															\
 		if (orientation != 0)														\
 		{																		\
-			int dy = (type *)bitmap->line[1] - (type *)bitmap->line[0];			\
+			int dy = (type *)bitmap.line[1] - (type *)bitmap.line[0];			\
 			int tx = x, ty = y, temp;											\
 			if ((orientation) & ORIENTATION_SWAP_XY)							\
 			{																	\
@@ -575,29 +575,29 @@ public class taitoic
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_X)								\
 			{																	\
-				tx = bitmap->width - 1 - tx;									\
+				tx = bitmap.width - 1 - tx;									\
 				if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_Y)								\
 			{																	\
-				ty = bitmap->height - 1 - ty;									\
+				ty = bitmap.height - 1 - ty;									\
 				if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 			}																	\
 			/* can't lookup line because it may be negative! */					\
-			dsti = (type *)((type *)bitmapi->line[0] + dy * ty) + tx;			\
-			dstp = (UINT8 *)((UINT8 *)bitmapp->line[0] + dy * ty / sizeof(type)) + tx;	\
+			dsti = (type *)((type *)bitmapi.line[0] + dy * ty) + tx;			\
+			dstp = (UINT8 *)((UINT8 *)bitmapp.line[0] + dy * ty / sizeof(type)) + tx;	\
 		}
 	
 	INLINE void taitoic_drawscanline(
 			struct mame_bitmap *bitmap,int x,int y,
 			const UINT16 *src,int transparent,UINT32 orient,int pri, const struct rectangle *cliprect)
 	{
-		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
+		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation ^ orient, bitmap, priority_bitmap, x, y);
 		{
-			int length=cliprect->max_x - cliprect->min_x + 1;
-			src+=cliprect->min_x;
-			dsti+=xadv * cliprect->min_x;
-			dstp+=xadv * cliprect->min_x;
+			int length=cliprect.max_x - cliprect.min_x + 1;
+			src+=cliprect.min_x;
+			dsti+=xadv * cliprect.min_x;
+			dstp+=xadv * cliprect.min_x;
 			if (transparent != 0) {
 				while (length--) {
 					UINT32 spixel = *src++;
@@ -636,44 +636,44 @@ public class taitoic
 	
 		/* scan the memory handlers and see how many TC0100SCN are used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if ((mwa->handler == TC0100SCN_word_0_w) ||
-						(mwa->handler == TC0100SCN_dual_screen_w) ||
-						(mwa->handler == TC0100SCN_triple_screen_w))
+					if ((mwa.handler == TC0100SCN_word_0_w) ||
+						(mwa.handler == TC0100SCN_dual_screen_w) ||
+						(mwa.handler == TC0100SCN_triple_screen_w))
 					has_chip[0] = 1;
 				}
 				mwa++;
 			}
 		}
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0100SCN_word_1_w)
+					if (mwa.handler == TC0100SCN_word_1_w)
 						has_chip[1] = 1;
 				}
 				mwa++;
 			}
 		}
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0100SCN_word_2_w)
+					if (mwa.handler == TC0100SCN_word_2_w)
 						has_chip[2] = 1;
 				}
 				mwa++;
@@ -699,15 +699,15 @@ public class taitoic
 	
 		/* scan the memory handlers and see if the TC0110PCR is used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if ((mwa->handler == TC0110PCR_word_w) || (mwa->handler == TC0110PCR_step1_word_w) ||
-						(mwa->handler == TC0110PCR_step1_rbswap_word_w) || (mwa->handler == TC0110PCR_step1_4bpg_word_w))
+					if ((mwa.handler == TC0110PCR_word_w) || (mwa.handler == TC0110PCR_step1_word_w) ||
+						(mwa.handler == TC0110PCR_step1_rbswap_word_w) || (mwa.handler == TC0110PCR_step1_4bpg_word_w))
 						return 1;
 				}
 				mwa++;
@@ -723,14 +723,14 @@ public class taitoic
 	
 		/* scan the memory handlers and see if a second TC0110PCR is used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0110PCR_step1_word_1_w)
+					if (mwa.handler == TC0110PCR_step1_word_1_w)
 						return 1;
 				}
 				mwa++;
@@ -746,14 +746,14 @@ public class taitoic
 	
 		/* scan the memory handlers and see if a third TC0110PCR is used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0110PCR_step1_word_2_w)
+					if (mwa.handler == TC0110PCR_step1_word_2_w)
 						return 1;
 				}
 				mwa++;
@@ -770,42 +770,42 @@ public class taitoic
 	
 		/* scan the memory handlers for cpus 0-2 and see if the TC0150ROD is used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0150ROD_word_w)
+					if (mwa.handler == TC0150ROD_word_w)
 						return 1;
 				}
 				mwa++;
 			}
 		}
 	
-		mwa = Machine->drv->cpu[1].memory_write;
+		mwa = Machine.drv.cpu[1].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0150ROD_word_w)
+					if (mwa.handler == TC0150ROD_word_w)
 						return 1;
 				}
 				mwa++;
 			}
 		}
 	
-		mwa = Machine->drv->cpu[2].memory_write;	/* needed if Z80 sandwiched between 68Ks */
+		mwa = Machine.drv.cpu[2].memory_write;	/* needed if Z80 sandwiched between 68Ks */
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0150ROD_word_w)
+					if (mwa.handler == TC0150ROD_word_w)
 						return 1;
 				}
 				mwa++;
@@ -821,14 +821,14 @@ public class taitoic
 		const struct Memory_WriteAddress16 *mwa;
 	
 		/* scan the memory handlers and see if the TC0280GRD is used */
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0280GRD_word_w)
+					if (mwa.handler == TC0280GRD_word_w)
 						return 1;
 				}
 				mwa++;
@@ -844,15 +844,15 @@ public class taitoic
 		const struct Memory_WriteAddress16 *mwa;
 	
 		/* scan the memory handlers and see if the TC0360PRI is used */
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if ((mwa->handler == TC0360PRI_halfword_w) ||
-							(mwa->handler == TC0360PRI_halfword_swap_w))
+					if ((mwa.handler == TC0360PRI_halfword_w) ||
+							(mwa.handler == TC0360PRI_halfword_swap_w))
 						return 1;
 				}
 				mwa++;
@@ -868,14 +868,14 @@ public class taitoic
 		const struct Memory_WriteAddress16 *mwa;
 	
 		/* scan the memory handlers and see if the TC0430GRW is used */
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0430GRW_word_w)
+					if (mwa.handler == TC0430GRW_word_w)
 						return 1;
 				}
 				mwa++;
@@ -892,14 +892,14 @@ public class taitoic
 	
 		/* scan the memory handlers and see if the TC0480SCP is used */
 	
-		mwa = Machine->drv->cpu[0].memory_write;
+		mwa = Machine.drv.cpu[0].memory_write;
 		if (mwa != 0)
 		{
 			while (!IS_MEMPORT_END(mwa))
 			{
 				if (!IS_MEMPORT_MARKER(mwa))
 				{
-					if (mwa->handler == TC0480SCP_word_w)
+					if (mwa.handler == TC0480SCP_word_w)
 						return 1;
 				}
 				mwa++;
@@ -1357,13 +1357,13 @@ public class taitoic
 		int i,y,y_index,src_y_index,row_index;
 	
 		int flip = 0;
-		int rot=Machine->orientation;
+		int rot=Machine.orientation;
 		int machine_flip = 0;	/* for  ROT 180 ? */
 	
-		int min_x = cliprect->min_x;
-		int max_x = cliprect->max_x;
-		int min_y = cliprect->min_y;
-		int max_y = cliprect->max_y;
+		int min_x = cliprect.min_x;
+		int max_x = cliprect.max_x;
+		int min_y = cliprect.min_y;
+		int max_y = cliprect.max_y;
 		int screen_width = max_x - min_x + 1;
 		int width_mask = 0x1ff;	/* underlying tilemap */
 	
@@ -1395,8 +1395,8 @@ public class taitoic
 				x_index = sx + (PC080SN_bgscroll_ram[chip][layer][row_index]);
 			}
 	
-			src16 = (UINT16 *)srcbitmap->line[src_y_index];
-			tsrc  = (UINT8 *)transbitmap->line[src_y_index];
+			src16 = (UINT16 *)srcbitmap.line[src_y_index];
+			tsrc  = (UINT8 *)transbitmap.line[src_y_index];
 			dst16 = scanline;
 	
 			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
@@ -1598,7 +1598,7 @@ public class taitoic
 			x += PC090OJ_xoffs;
 			y += PC090OJ_yoffs;
 	
-			pdrawgfx(bitmap,Machine->gfx[PC090OJ_gfxnum],
+			pdrawgfx(bitmap,Machine.gfx[PC090OJ_gfxnum],
 					code,
 					color,
 					flipx,flipy,
@@ -1843,19 +1843,19 @@ public class taitoic
 	
 		 	/* find first empty slot to decode gfx */
 			for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-				if (Machine->gfx[gfx_index] == 0)
+				if (Machine.gfx[gfx_index] == 0)
 					break;
 			if (gfx_index == MAX_GFX_ELEMENTS)
 				return 1;
 	
 			/* create the char set (gfx will then be updated dynamically from RAM) */
-			Machine->gfx[gfx_index] = decodegfx((UINT8 *)TC0080VCO_char_ram,&TC0080VCO_charlayout);
-			if (!Machine->gfx[gfx_index])
+			Machine.gfx[gfx_index] = decodegfx((UINT8 *)TC0080VCO_char_ram,&TC0080VCO_charlayout);
+			if (!Machine.gfx[gfx_index])
 				return 1;
 	
 			/* set the color information */
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = 64;	// is this correct ?
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = 64;	// is this correct ?
 			TC0080VCO_tx_gfx = gfx_index;
 	
 			tilemap_set_scrolldx(TC0080VCO_tilemap[2],0,0);
@@ -2036,7 +2036,7 @@ public class taitoic
 			for (j = 0;j < TC0080VCO_TOTAL_CHARS;j++)
 			{
 				if (TC0080VCO_char_dirty[j])
-					decodechar(Machine->gfx[TC0080VCO_tx_gfx],j,
+					decodechar(Machine.gfx[TC0080VCO_tx_gfx],j,
 						(UINT8 *)TC0080VCO_char_ram,&TC0080VCO_charlayout);
 				TC0080VCO_char_dirty[j] = 0;
 			}
@@ -2073,13 +2073,13 @@ public class taitoic
 			int x_index,x_step;
 	
 			int flip = TC0080VCO_flipscreen;
-			int rot=Machine->orientation;
+			int rot=Machine.orientation;
 			int machine_flip = 0;	/* for  ROT 180 ? */
 	
-			int min_x = cliprect->min_x;
-			int max_x = cliprect->max_x;
-			int min_y = cliprect->min_y;
-			int max_y = cliprect->max_y;
+			int min_x = cliprect.min_x;
+			int max_x = cliprect.max_x;
+			int min_y = cliprect.min_y;
+			int max_y = cliprect.max_y;
 			int screen_width = max_x - min_x + 1;
 			int width_mask=0x3ff;	/* underlying tilemap */
 	
@@ -2156,8 +2156,8 @@ public class taitoic
 					x_index = sx + ((TC0080VCO_bgscroll_ram[row_index] << 16));
 				}
 	
-				src16 = (UINT16 *)srcbitmap->line[src_y_index];
-				tsrc  = (UINT8 *)transbitmap->line[src_y_index];
+				src16 = (UINT16 *)srcbitmap.line[src_y_index];
+				tsrc  = (UINT8 *)transbitmap.line[src_y_index];
 				dst16 = scanline;
 	
 				x_step = zoomx;
@@ -2217,10 +2217,10 @@ public class taitoic
 	{
 		UINT8 layer=1;
 		UINT16 zoom = TC0080VCO_scroll_ram[6+layer];
-		int min_x = cliprect->min_x;
-		int max_x = cliprect->max_x;
-		int min_y = cliprect->min_y;
-		int max_y = cliprect->max_y;
+		int min_x = cliprect.min_x;
+		int max_x = cliprect.max_x;
+		int min_y = cliprect.min_y;
+		int max_y = cliprect.max_y;
 		int zoomx, zoomy;
 	
 		zoomx = (zoom & 0xff00) >> 8;
@@ -2283,7 +2283,7 @@ public class taitoic
 				sx, sy,
 				zx, 0, 0, zy,
 				0,					/* why no wraparound ?? */
-				&Machine->visible_area,
+				&Machine.visible_area,
 				TRANSPARENCY_COLOR, 0, priority);
 		}
 	}
@@ -2686,7 +2686,7 @@ public class taitoic
 			   Thundfox is the only one of those with two chips, and
 			   we're safe as it uses single width tilemaps. */
 	
-			myclip = Machine->visible_area;
+			myclip = Machine.visible_area;
 	
 			if (chips==2 && multiscrn_xoffs!=TC0100SCN_SINGLE_VDU)	/* Dual screen */
 			{
@@ -2736,19 +2736,19 @@ public class taitoic
 	
 			/* find first empty slot to decode gfx */
 			for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-				if (Machine->gfx[gfx_index] == 0)
+				if (Machine.gfx[gfx_index] == 0)
 					break;
 			if (gfx_index == MAX_GFX_ELEMENTS)
 				return 1;
 	
 			/* create the char set (gfx will then be updated dynamically from RAM) */
-			Machine->gfx[gfx_index] = decodegfx((UINT8 *)TC0100SCN_char_ram[i],&TC0100SCN_charlayout);
-			if (!Machine->gfx[gfx_index])
+			Machine.gfx[gfx_index] = decodegfx((UINT8 *)TC0100SCN_char_ram[i],&TC0100SCN_charlayout);
+			if (!Machine.gfx[gfx_index])
 				return 1;
 	
 			/* set the color information */
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = 64;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = 64;
 	
 			TC0100SCN_tx_gfx[i] = gfx_index;
 	
@@ -2822,14 +2822,14 @@ public class taitoic
 		TC0100SCN_bg_col_mult = 1;	/* multiplier for when bg gfx != 4bpp */
 		TC0100SCN_tx_col_mult = 1;	/* multiplier needed when bg gfx is 6bpp */
 	
-		if (Machine->gfx[gfxnum]->color_granularity == 2)	/* Yuyugogo, Yesnoj */
+		if (Machine.gfx[gfxnum].color_granularity == 2)	/* Yuyugogo, Yesnoj */
 			TC0100SCN_bg_col_mult = 8;
 	
-		if (Machine->gfx[gfxnum]->color_granularity == 0x40)	/* Undrfire */
+		if (Machine.gfx[gfxnum].color_granularity == 0x40)	/* Undrfire */
 			TC0100SCN_tx_col_mult = 4;
 	
 	//logerror("TC0100SCN bg gfx granularity %04x: multiplier %04x\n",
-	//Machine->gfx[gfxnum]->color_granularity,TC0100SCN_tx_col_mult);
+	//Machine.gfx[gfxnum].color_granularity,TC0100SCN_tx_col_mult);
 	
 		TC0100SCN_set_colbanks(0,0,0);	/* standard values, only Wgp changes them */
 	
@@ -3093,7 +3093,7 @@ public class taitoic
 				for (j = 0;j < TC0100SCN_TOTAL_CHARS;j++)
 				{
 					if (TC0100SCN_char_dirty[chip][j])
-						decodechar(Machine->gfx[TC0100SCN_tx_gfx[chip]],j,
+						decodechar(Machine.gfx[TC0100SCN_tx_gfx[chip]],j,
 						(UINT8 *)TC0100SCN_char_ram[chip],&TC0100SCN_charlayout);
 					TC0100SCN_char_dirty[chip][j] = 0;
 				}
@@ -3587,19 +3587,19 @@ public class taitoic
 	
 			/* find first empty slot to decode gfx */
 			for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-				if (Machine->gfx[gfx_index] == 0)
+				if (Machine.gfx[gfx_index] == 0)
 					break;
 			if (gfx_index == MAX_GFX_ELEMENTS)
 				return 1;
 	
 			/* create the char set (gfx will then be updated dynamically from RAM) */
-			Machine->gfx[gfx_index] = decodegfx((UINT8 *)TC0480SCP_char_ram,&TC0480SCP_charlayout);
-			if (!Machine->gfx[gfx_index])
+			Machine.gfx[gfx_index] = decodegfx((UINT8 *)TC0480SCP_char_ram,&TC0480SCP_charlayout);
+			if (!Machine.gfx[gfx_index])
 				return 1;
 	
 			/* set the color information */
-			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[gfx_index]->total_colors = 64;
+			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[gfx_index].total_colors = 64;
 	
 			TC0480SCP_tx_gfx = gfx_index;
 	
@@ -3947,7 +3947,7 @@ public class taitoic
 			for (j = 0;j < TC0480SCP_TOTAL_CHARS;j++)
 			{
 				if (TC0480SCP_char_dirty[j])
-					decodechar(Machine->gfx[TC0480SCP_tx_gfx],j,
+					decodechar(Machine.gfx[TC0480SCP_tx_gfx],j,
 						(UINT8 *)TC0480SCP_char_ram,&TC0480SCP_charlayout);
 				TC0480SCP_char_dirty[j] = 0;
 			}
@@ -4018,12 +4018,12 @@ public class taitoic
 			int flip = TC0480SCP_pri_reg & 0x40;
 			int i,y,y_index,src_y_index,row_index;
 			int x_index,x_step;
-			int rot=Machine->orientation;
+			int rot=Machine.orientation;
 			int machine_flip = 0;	/* for  ROT 180 ? */
 	
-			UINT16 screen_width = 512; //cliprect->max_x - cliprect->min_x + 1;
-			UINT16 min_y = cliprect->min_y;
-			UINT16 max_y = cliprect->max_y;
+			UINT16 screen_width = 512; //cliprect.max_x - cliprect.min_x + 1;
+			UINT16 min_y = cliprect.min_y;
+			UINT16 max_y = cliprect.max_y;
 	
 			int width_mask=0x1ff;
 			if (TC0480SCP_dblwidth != 0)	width_mask=0x3ff;
@@ -4078,8 +4078,8 @@ public class taitoic
 						+ ((TC0480SCP_bgscroll_ram[layer][row_index+0x800] << 8) &0xffff);
 				}
 	
-				src16 = (UINT16 *)srcbitmap->line[src_y_index];
-				tsrc  = (UINT8 *)transbitmap->line[src_y_index];
+				src16 = (UINT16 *)srcbitmap.line[src_y_index];
+				tsrc  = (UINT8 *)transbitmap.line[src_y_index];
 				dst16 = scanline;
 	
 				x_step = zoomx;
@@ -4168,14 +4168,14 @@ public class taitoic
 		UINT8 *tsrc;
 		int i,y,y_index,src_y_index,row_index,row_zoom;
 		int sx,x_index,x_step;
-		UINT32 zoomx,zoomy,rot=Machine->orientation;
+		UINT32 zoomx,zoomy,rot=Machine.orientation;
 		UINT16 scanline[512];
 		int flipscreen = TC0480SCP_pri_reg & 0x40;
 		int machine_flip = 0;	/* for  ROT 180 ? */
 	
-		UINT16 screen_width = 512; //cliprect->max_x - cliprect->min_x + 1;
-		UINT16 min_y = cliprect->min_y;
-		UINT16 max_y = cliprect->max_y;
+		UINT16 screen_width = 512; //cliprect.max_x - cliprect.min_x + 1;
+		UINT16 min_y = cliprect.min_y;
+		UINT16 max_y = cliprect.max_y;
 	
 		int width_mask=0x1ff;
 		if (TC0480SCP_dblwidth != 0)	width_mask=0x3ff;
@@ -4269,8 +4269,8 @@ public class taitoic
 				}
 			}
 	
-			src16 = (UINT16 *)srcbitmap->line[src_y_index];
-			tsrc  = (UINT8 *)transbitmap->line[src_y_index];
+			src16 = (UINT16 *)srcbitmap.line[src_y_index];
+			tsrc  = (UINT8 *)transbitmap.line[src_y_index];
 			dst16 = scanline;
 	
 			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
@@ -4574,11 +4574,11 @@ public class taitoic
 		int left_edge,right_edge,begin,end,right_over,left_over;
 		int line_needs_drawing,draw_top_road_line,background_only;
 	
-		int rot=Machine->orientation;
-		int min_x = cliprect->min_x;
-		int max_x = cliprect->max_x;
-		int min_y = cliprect->min_y;
-		int max_y = cliprect->max_y;
+		int rot=Machine.orientation;
+		int min_x = cliprect.min_x;
+		int max_x = cliprect.max_x;
+		int min_y = cliprect.min_y;
+		int max_y = cliprect.max_y;
 		int screen_width = max_x - min_x + 1;
 	
 		int y = min_y;

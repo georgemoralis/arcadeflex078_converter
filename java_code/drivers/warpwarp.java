@@ -24,12 +24,12 @@ C005	  Test Mode
 C006	  Cabinet type
 C007	  Coin Slot 2
 C010	  Joystick (read like an analog one, but it's digital)
-		  0->23 = DOWN
-		  24->63 = UP
-		  64->111 = LEFT
-		  112->167 = RIGHT
-		  168->255 = NEUTRAL
-C020-C027 Dipswitch 1->8 in bit 0
+		  0.23 = DOWN
+		  24.63 = UP
+		  64.111 = LEFT
+		  112.167 = RIGHT
+		  168.255 = NEUTRAL
+C020-C027 Dipswitch 1.8 in bit 0
 
 write:
 C000-C001 bullet x/y pos

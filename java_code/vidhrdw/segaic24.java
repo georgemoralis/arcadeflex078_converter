@@ -45,7 +45,7 @@ public class segaic24
 			g = 0.6*g;
 			b = 0.6*b;
 		}
-		palette_set_color (color+Machine->drv->total_colors/2, r, g, b);
+		palette_set_color (color+Machine.drv.total_colors/2, r, g, b);
 	}
 	
 	// 315-5242
@@ -144,7 +144,7 @@ public class segaic24
 		sys24_tile_mask = tile_mask;
 	
 		for(sys24_char_gfx_index = 0; sys24_char_gfx_index < MAX_GFX_ELEMENTS; sys24_char_gfx_index++)
-			if (Machine->gfx[sys24_char_gfx_index] == 0)
+			if (Machine.gfx[sys24_char_gfx_index] == 0)
 				break;
 		if(sys24_char_gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -187,24 +187,24 @@ public class segaic24
 		memset(sys24_tile_ram, 0, 0x10000);
 		memset(sys24_char_dirtymap, 0, SYS24_TILES);
 	
-		Machine->gfx[sys24_char_gfx_index] = decodegfx((unsigned char *)sys24_char_ram, &sys24_char_layout);
+		Machine.gfx[sys24_char_gfx_index] = decodegfx((unsigned char *)sys24_char_ram, &sys24_char_layout);
 	
-		if(!Machine->gfx[sys24_char_gfx_index]) {
+		if(!Machine.gfx[sys24_char_gfx_index]) {
 			free(sys24_char_dirtymap);
 			free(sys24_tile_ram);
 			free(sys24_char_ram);
 			return 1;
 		}
 	
-		if (Machine->drv->color_table_len)
+		if (Machine.drv.color_table_len)
 		{
-			Machine->gfx[sys24_char_gfx_index]->colortable = Machine->remapped_colortable;
-			Machine->gfx[sys24_char_gfx_index]->total_colors = Machine->drv->color_table_len / 16;
+			Machine.gfx[sys24_char_gfx_index].colortable = Machine.remapped_colortable;
+			Machine.gfx[sys24_char_gfx_index].total_colors = Machine.drv.color_table_len / 16;
 		}
 		else
 		{
-			Machine->gfx[sys24_char_gfx_index]->colortable = Machine->pens;
-			Machine->gfx[sys24_char_gfx_index]->total_colors = Machine->drv->total_colors / 16;
+			Machine.gfx[sys24_char_gfx_index].colortable = Machine.pens;
+			Machine.gfx[sys24_char_gfx_index].total_colors = Machine.drv.total_colors / 16;
 		}
 	
 		state_save_register_UINT16("system24 tile", 0, "tile ram", sys24_tile_ram, 0x8000);
@@ -221,7 +221,7 @@ public class segaic24
 			for(i=0; i<SYS24_TILES; i++) {
 				if(sys24_char_dirtymap[i]) {
 					sys24_char_dirtymap[i] = 0;
-					decodechar(Machine->gfx[sys24_char_gfx_index], i, (unsigned char *)sys24_char_ram, &sys24_char_layout);
+					decodechar(Machine.gfx[sys24_char_gfx_index], i, (unsigned char *)sys24_char_ram, &sys24_char_layout);
 				}
 			}
 			tilemap_mark_all_tiles_dirty(sys24_tile_layer[0]);
@@ -236,15 +236,15 @@ public class segaic24
 									 UINT16 tpri, UINT8 lpri, int win, int sx, int sy, int xx1, int yy1, int xx2, int yy2)
 	{
 		int y;
-		const UINT16 *source  = ((UINT16 *)bm->base) + sx + sy*bm->rowpixels;
-		const UINT8  *trans = ((UINT8 *) tm->base) + sx + sy*tm->rowpixels;
-		UINT8        *prib = priority_bitmap->base;
-		UINT16       *dest = dm->base;
+		const UINT16 *source  = ((UINT16 *)bm.base) + sx + sy*bm.rowpixels;
+		const UINT8  *trans = ((UINT8 *) tm.base) + sx + sy*tm.rowpixels;
+		UINT8        *prib = priority_bitmap.base;
+		UINT16       *dest = dm.base;
 	
 		tpri |= TILE_FLAG_FG_OPAQUE;
 	
-		dest += yy1*dm->rowpixels + xx1;
-		prib += yy1*priority_bitmap->rowpixels + xx1;
+		dest += yy1*dm.rowpixels + xx1;
+		prib += yy1*priority_bitmap.rowpixels + xx1;
 		mask += yy1*4;
 		yy2 -= yy1;
 	
@@ -353,10 +353,10 @@ public class segaic24
 				llx -= 128;
 				cur_x = 0;
 			}
-			source += bm->rowpixels;
-			trans  += tm->rowpixels;
-			dest   += dm->rowpixels;
-			prib   += priority_bitmap->rowpixels;
+			source += bm.rowpixels;
+			trans  += tm.rowpixels;
+			dest   += dm.rowpixels;
+			prib   += priority_bitmap.rowpixels;
 			mask   += 4;
 		}
 	}
@@ -370,14 +370,14 @@ public class segaic24
 										 UINT16 tpri, UINT8 lpri, int win, int sx, int sy, int xx1, int yy1, int xx2, int yy2)
 	{
 		int y;
-		const UINT16 *source  = ((UINT16 *)bm->base) + sx + sy*bm->rowpixels;
-		const UINT8  *trans = ((UINT8 *) tm->base) + sx + sy*tm->rowpixels;
-		UINT16       *dest = dm->base;
-		pen_t        *pens   = Machine->pens;
+		const UINT16 *source  = ((UINT16 *)bm.base) + sx + sy*bm.rowpixels;
+		const UINT8  *trans = ((UINT8 *) tm.base) + sx + sy*tm.rowpixels;
+		UINT16       *dest = dm.base;
+		pen_t        *pens   = Machine.pens;
 	
 		tpri |= TILE_FLAG_FG_OPAQUE;
 	
-		dest += yy1*dm->rowpixels + xx1;
+		dest += yy1*dm.rowpixels + xx1;
 		mask += yy1*4;
 		yy2 -= yy1;
 	
@@ -471,9 +471,9 @@ public class segaic24
 				llx -= 128;
 				cur_x = 0;
 			}
-			source += bm->rowpixels;
-			trans  += tm->rowpixels;
-			dest   += dm->rowpixels;
+			source += bm.rowpixels;
+			trans  += tm.rowpixels;
+			dest   += dm.rowpixels;
 			mask   += 4;
 		}
 	}
@@ -557,7 +557,7 @@ public class segaic24
 						 UINT16, UINT8, int, int, int, int, int, int, int);
 			int win = layer & 1;
 	
-			if(Machine->drv->video_attributes & VIDEO_RGB_DIRECT)
+			if(Machine.drv.video_attributes & VIDEO_RGB_DIRECT)
 				draw = sys24_tile_draw_rect_rgb;
 			else
 				draw = sys24_tile_draw_rect;
@@ -751,14 +751,14 @@ public class segaic24
 			}
 	
 	
-			if(min_x < cliprect->min_x)
-				min_x = cliprect->min_x;
-			if(min_y < cliprect->min_y)
-				min_y = cliprect->min_y;
-			if(max_x > cliprect->max_x)
-				max_x = cliprect->max_x;
-			if(max_y > cliprect->max_y)
-				max_y = cliprect->max_y;
+			if(min_x < cliprect.min_x)
+				min_x = cliprect.min_x;
+			if(min_y < cliprect.min_y)
+				min_y = cliprect.min_y;
+			if(max_x > cliprect.max_x)
+				max_x = cliprect.max_x;
+			if(max_y > cliprect.max_y)
+				max_y = cliprect.max_y;
 	
 			if(!(source[0] & 0x2000))
 				zoomx = zoomy = source[1] & 0xff;
@@ -833,11 +833,11 @@ public class segaic24
 										if(xpos2 >= min_x && xpos2 <= max_x) {
 											int zx1 = flipx ? 7-zx : zx;
 											int c = (pix1[zx1>>2] >> (((~zx1) & 3) << 2)) & 0xf;
-											UINT8 *pri = ((UINT8 *)priority_bitmap->line[ypos1]) + xpos2;
+											UINT8 *pri = ((UINT8 *)priority_bitmap.line[ypos1]) + xpos2;
 											if(!(*pri & pm[c])) {
 												c = colors[c];
 												if (c != 0) {
-													UINT16 *dst = ((UINT16 *)bitmap->line[ypos1]) + xpos2;
+													UINT16 *dst = ((UINT16 *)bitmap.line[ypos1]) + xpos2;
 													if(c==1)
 														*dst = (*dst) | 0x2000;
 													else

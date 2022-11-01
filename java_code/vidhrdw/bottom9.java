@@ -94,7 +94,7 @@ public class bottom9
 		K052109_tilemap_update();
 	
 		/* note: FIX layer is not used */
-		fillbitmap(bitmap,Machine->pens[layer_colorbase[1]],cliprect);
+		fillbitmap(bitmap,Machine.pens[layer_colorbase[1]],cliprect);
 	//	if (bottom9_video_enable != 0)
 		{
 			K051960_sprites_draw(bitmap,cliprect,1,1);

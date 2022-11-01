@@ -38,8 +38,8 @@ public class lethalj
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = ((readinputport(2 + player * 2) & 0xff) * Machine->drv->screen_width) / 255;
-		*y = ((readinputport(3 + player * 2) & 0xff) * Machine->drv->screen_height) / 255;
+		*x = ((readinputport(2 + player * 2) & 0xff) * Machine.drv.screen_width) / 255;
+		*y = ((readinputport(3 + player * 2) & 0xff) * Machine.drv.screen_height) / 255;
 	}
 	
 	
@@ -209,11 +209,11 @@ public class lethalj
 		else
 		{
 			int x, y;
-			for (y = cliprect->min_y; y <= cliprect->max_y; y++)
+			for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 			{
-				UINT16 *source = screenram + y * BLITTER_DEST_WIDTH + cliprect->min_x;
-				UINT16 *dest = (UINT16 *)bitmap->base + y * bitmap->rowpixels + cliprect->min_x;
-				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				UINT16 *source = screenram + y * BLITTER_DEST_WIDTH + cliprect.min_x;
+				UINT16 *dest = (UINT16 *)bitmap.base + y * bitmap.rowpixels + cliprect.min_x;
+				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 					*dest++ = *source++ & 0x7fff;
 			}
 		}
@@ -226,7 +226,7 @@ public class lethalj
 		get_crosshair_xy(1, &beamx, &beamy);
 		draw_crosshair(bitmap, beamx, beamy, cliprect);
 	
-		if (cliprect->max_y == Machine->visible_area.max_y)
+		if (cliprect.max_y == Machine.visible_area.max_y)
 			blank_palette = 0;
 	} };
 }

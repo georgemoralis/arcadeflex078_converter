@@ -103,11 +103,11 @@ public class berzerk
 	
 		berzerknoisemulate = 1;
 	
-		if (Machine->samples)
+		if (Machine.samples)
 		{
 			for (i = 0;i < 5;i++)
 			{
-				if (Machine->samples->sample[i])
+				if (Machine.samples.sample[i])
 					berzerknoisemulate = 0;
 			}
 		}

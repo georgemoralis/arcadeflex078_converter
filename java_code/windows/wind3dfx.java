@@ -185,7 +185,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_scan(struct rc_option *option, const char *arg, int priority)
 	{
-		option->priority = priority;
+		option.priority = priority;
 	
 		if (priority_use_scanlines <= priority)
 		{
@@ -207,7 +207,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_feedback(struct rc_option *option, const char *arg, int priority)
 	{
-		option->priority = priority;
+		option.priority = priority;
 	
 		if (priority_use_feedback <= priority)
 		{
@@ -228,7 +228,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_prescale(struct rc_option *option, const char *arg, int priority)
 	{
-		option->priority = priority;
+		option.priority = priority;
 	
 		if (priority_use_prescale <= priority)
 		{
@@ -273,7 +273,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_rotate(struct rc_option *option, const char *arg, int priority)
 	{
-		option->priority = priority;
+		option.priority = priority;
 	
 		if (priority_use_rotate <= priority)
 		{
@@ -293,7 +293,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_custom(struct rc_option *option, const char *arg, int priority)
 	{
-		option->priority = priority;
+		option.priority = priority;
 	
 		if (priority_use_effect_preset <= priority)
 		{
@@ -322,7 +322,7 @@ public class wind3dfx
 		int i;
 	
 		// ensure .ini settings will still be processed
-		option->priority = 0;
+		option.priority = 0;
 	
 		// no effects
 		if (!strcmp(arg, "none"))
@@ -371,7 +371,7 @@ public class wind3dfx
 	static int win_d3d_decode_expert(struct rc_option *option, const char *arg, int priority)
 	{
 		// ensure .ini settings will still be processed
-		option->priority = 0;
+		option.priority = 0;
 	
 		// extra interface for normal settings (takes a floating point value)
 	
@@ -913,30 +913,30 @@ public class wind3dfx
 		// first convert the 24-bit colour to the format of the surface
 	
 		// red
-		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour <<  8) >> shift) & mask;
 	
 		// green
-		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour << 16) >> shift) & mask;
 	
 		// blue
-		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour << 24) >> shift) & mask;
 	
 		// now write the colour value
-		switch (surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount >> 3)
+		switch (surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount >> 3)
 		{
 			// 16-bit
 			case 2:
 			{
-				((UINT16 *)((char *)surface_desc->lpSurface + y * surface_desc->DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT16)dest_colour;
+				((UINT16 *)((char *)surface_desc.lpSurface + y * surface_desc.DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT16)dest_colour;
 				 break;
 			}
 			// 32-bit
 			case 4:
 			{
-				((UINT32 *)((char *)surface_desc->lpSurface + y * surface_desc->DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT32)dest_colour;
+				((UINT32 *)((char *)surface_desc.lpSurface + y * surface_desc.DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT32)dest_colour;
 				break;
 			}
 		}

@@ -121,7 +121,7 @@ write:
 *************
 I8741 communication data
 
-reg: 0->1 (main->2nd) /     : (1->0) 2nd->main :
+reg: 0.1 (main.2nd) /     : (1.0) 2nd.main :
  0 : DSW.2 (port)           : DSW.1(port)
  1 : DSW.1                  : DSW.2
  2 : IN0 / sound error code :

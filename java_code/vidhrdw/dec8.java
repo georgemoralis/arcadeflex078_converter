@@ -86,7 +86,7 @@ public class dec8
 	{
 		int i;
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -100,10 +100,10 @@ public class dec8
 			bit2 = (color_prom[i] >> 6) & 0x01;
 			bit3 = (color_prom[i] >> 7) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[i + Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[i + Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[i + Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[i + Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[i + Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[i + Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[i + Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[i + Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
@@ -295,14 +295,14 @@ public class dec8
 			else
 				sprite2=sprite+1;
 	
-			drawgfx(bitmap,Machine->gfx[1],
+			drawgfx(bitmap,Machine.gfx[1],
 					sprite,
 					colour,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
 	    	if (extra != 0)
-	    		drawgfx(bitmap,Machine->gfx[1],
+	    		drawgfx(bitmap,Machine.gfx[1],
 					sprite2,
 					colour,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);
@@ -362,7 +362,7 @@ public class dec8
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -405,14 +405,14 @@ public class dec8
 			}
 			else sy2=sy+16;
 	
-	    	drawgfx(bitmap,Machine->gfx[1],
+	    	drawgfx(bitmap,Machine.gfx[1],
 	        		code,
 					color,
 					fx,flip_screen,
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
 	        if (multi != 0)
-	    		drawgfx(bitmap,Machine->gfx[1],
+	    		drawgfx(bitmap,Machine.gfx[1],
 					code+1,
 					color,
 					fx,flip_screen,
@@ -436,7 +436,7 @@ public class dec8
 			mx = (offs/2) % 32;
 			my = (offs/2) / 32;
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					tile,color,0,0,8*mx,8*my,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
@@ -494,7 +494,7 @@ public class dec8
 	
 	static UINT32 bac0_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 5) + ((row & 0x10) << 4);
 	}
 	
@@ -651,7 +651,7 @@ public class dec8
 	
 	static UINT32 lastmiss_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) -> memory offset */
+		/* logical (col,row) . memory offset */
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	

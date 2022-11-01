@@ -96,11 +96,11 @@ public class battlane
 		{
 			if (data & 1 << i)
 			{
-				((UINT8 *)screen_bitmap->line[offset % 0x100])[(offset / 0x100) * 8 + i] |= orval;
+				((UINT8 *)screen_bitmap.line[offset % 0x100])[(offset / 0x100) * 8 + i] |= orval;
 			}
 			else
 			{
-				((UINT8 *)screen_bitmap->line[offset % 0x100])[(offset / 0x100) * 8 + i] &= ~orval;
+				((UINT8 *)screen_bitmap.line[offset % 0x100])[(offset / 0x100) * 8 + i] &= ~orval;
 			}
 		}
 	} };
@@ -207,24 +207,24 @@ public class battlane
 					flipy = !flipy;
 				}
 	
-				drawgfx(bitmap,Machine->gfx[0],
+				drawgfx(bitmap,Machine.gfx[0],
 					code,
 					color,
 					flipx, flipy,
 					sx, sy,
-					&Machine->visible_area,
+					&Machine.visible_area,
 					TRANSPARENCY_PEN, 0);
 	
 				if ((attr & 0x10) != 0)  /* Double Y direction */
 				{
 					dy = flipy ? 16 : -16;
 	
-					drawgfx(bitmap,Machine->gfx[0],
+					drawgfx(bitmap,Machine.gfx[0],
 						code + 1,
 						color,
 						flipx, flipy,
 						sx, sy + dy,
-						&Machine->visible_area,
+						&Machine.visible_area,
 						TRANSPARENCY_PEN, 0);
 				}
 			}
@@ -239,17 +239,17 @@ public class battlane
 		{
 			for (x = 0; x < 32 * 8; x++)
 			{
-				data = ((UINT8 *)screen_bitmap->line[y])[x];
+				data = ((UINT8 *)screen_bitmap.line[y])[x];
 	
 				if (data != 0)
 				{
 					if (flip_screen != 0)
 					{
-						plot_pixel(bitmap, 255 - x, 255 - y, Machine->pens[data]);
+						plot_pixel(bitmap, 255 - x, 255 - y, Machine.pens[data]);
 					}
 					else
 					{
-						plot_pixel(bitmap, x, y, Machine->pens[data]);
+						plot_pixel(bitmap, x, y, Machine.pens[data]);
 					}
 				}
 			}
@@ -260,7 +260,7 @@ public class battlane
 	{
 		tilemap_mark_all_tiles_dirty(bg_tilemap); // HACK
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		battlane_draw_sprites(bitmap);
 		battlane_draw_fg_bitmap(bitmap);
 	} };

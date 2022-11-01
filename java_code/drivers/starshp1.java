@@ -2,8 +2,8 @@
 
 Atari Starship 1 driver
 
-  "starshp1" -> regular version, bonus time for 3500 points
-  "starshpp" -> possible prototype, bonus time for 2700 points
+  "starshp1" . regular version, bonus time for 3500 points
+  "starshpp" . possible prototype, bonus time for 2700 points
 
 ***************************************************************************/
 

@@ -95,7 +95,7 @@ public class wallc
 				2,	resistances_rg,	weights_g,	330,	0,
 				3,	resistances_b,	weights_b,	330,	655+220);
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit7,r,g,b;
 	
@@ -149,7 +149,7 @@ public class wallc
 	
 	public static VideoUpdateHandlerPtr video_update_wallc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 	} };
 	
 	static int wcb0=-1;

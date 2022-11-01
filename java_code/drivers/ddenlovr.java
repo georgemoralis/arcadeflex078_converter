@@ -96,7 +96,7 @@ public class ddenlovr
 		for (i = 0; i < 8; i++)
 			if (!(pixmap[i] = auto_malloc(512*512)))	return 1;
 	
-		if (!(framebuffer = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height))) return 1;
+		if (!(framebuffer = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height))) return 1;
 	
 		extra_layers = 0;
 		return 0;
@@ -685,14 +685,14 @@ public class ddenlovr
 	
 		if (((dynax_layer_enable2 << 4) | dynax_layer_enable) & (1 << layer))
 		{
-			for (y = cliprect->min_y;y <= cliprect->max_y;y++)
+			for (y = cliprect.min_y;y <= cliprect.max_y;y++)
 			{
-				for (x = cliprect->min_x;x <= cliprect->max_x;x++)
+				for (x = cliprect.min_x;x <= cliprect.max_x;x++)
 				{
 					int pen = pixmap[layer][512 * ((y + scrolly) & 0x1ff) + ((x + scrollx) & 0x1ff)];
 					if ((pen & 0x0f) != 0)
 					{
-						((UINT16 *)bitmap->line[y])[x] = pen | palbase;
+						((UINT16 *)bitmap.line[y])[x] = pen | palbase;
 					}
 				}
 			}
@@ -747,16 +747,16 @@ public class ddenlovr
 				usrintf_showmessage("priority = %02x",pri);
 				pri = 0;
 			}
-			fillbitmap(framebuffer,dynax_bgcolor,&Machine->visible_area);
+			fillbitmap(framebuffer,dynax_bgcolor,&Machine.visible_area);
 	
 	//if (!keyboard_pressed(KEYCODE_Q))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][0]);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][0]);
 	//if (!keyboard_pressed(KEYCODE_W))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][1]);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][1]);
 	//if (!keyboard_pressed(KEYCODE_E))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][2]);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][2]);
 	//if (!keyboard_pressed(KEYCODE_R))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][3]);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][3]);
 	
 			if (extra_layers != 0)
 			{
@@ -768,13 +768,13 @@ public class ddenlovr
 				pri = 0;
 			}
 	//if (!keyboard_pressed(KEYCODE_A))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][0]+4);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][0]+4);
 	//if (!keyboard_pressed(KEYCODE_S))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][1]+4);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][1]+4);
 	//if (!keyboard_pressed(KEYCODE_D))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][2]+4);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][2]+4);
 	//if (!keyboard_pressed(KEYCODE_F))
-			copylayer(framebuffer,&Machine->visible_area,order[pri][3]+4);
+			copylayer(framebuffer,&Machine.visible_area,order[pri][3]+4);
 			}
 		}
 	}
@@ -893,19 +893,19 @@ public class ddenlovr
 	
 		switch (offset)
 		{
-			case 0x0: return today->tm_sec%10;
-			case 0x1: return today->tm_sec/10;
-			case 0x2: return today->tm_min%10;
-			case 0x3: return today->tm_min/10;
-			case 0x4: return today->tm_hour%10;
-			case 0x5: return today->tm_hour/10;
-			case 0x6: return today->tm_mday%10;
-			case 0x7: return today->tm_mday/10;
-			case 0x8: return (today->tm_mon+1)%10;
-			case 0x9: return (today->tm_mon+1)/10;
-			case 0xa: return today->tm_year%10;
-			case 0xb: return (today->tm_year%100)/10;
-			case 0xc: return today->tm_wday%10;
+			case 0x0: return today.tm_sec%10;
+			case 0x1: return today.tm_sec/10;
+			case 0x2: return today.tm_min%10;
+			case 0x3: return today.tm_min/10;
+			case 0x4: return today.tm_hour%10;
+			case 0x5: return today.tm_hour/10;
+			case 0x6: return today.tm_mday%10;
+			case 0x7: return today.tm_mday/10;
+			case 0x8: return (today.tm_mon+1)%10;
+			case 0x9: return (today.tm_mon+1)/10;
+			case 0xa: return today.tm_year%10;
+			case 0xb: return (today.tm_year%100)/10;
+			case 0xc: return today.tm_wday%10;
 			default: return 0;
 		}
 	} };

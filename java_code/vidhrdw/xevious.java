@@ -42,8 +42,8 @@ public class xevious
 	public static PaletteInitHandlerPtr palette_init_xevious  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 128;i++)
@@ -115,8 +115,8 @@ public class xevious
 	public static PaletteInitHandlerPtr palette_init_battles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 128;i++)
@@ -281,7 +281,7 @@ public class xevious
 	public static WriteHandlerPtr xevious_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int reg;
-		int scroll = data + ((offset&0x01)<<8);   /* A0 -> D8 */
+		int scroll = data + ((offset&0x01)<<8);   /* A0 . D8 */
 	
 		reg = (offset&0xf0)>>4;
 	
@@ -328,29 +328,29 @@ public class xevious
 	
 	seet 8A
 											2	  +-------+
-	COL0,1 --------------------------------------->|backg. |
+	COL0,1 --------------------------------------.|backg. |
 											1	  |color  |
-	PP7------------------------------------------->|replace|
+	PP7------------------------------------------.|replace|
 											4	  | ROM   |  6
-	AN0-3 ---------------------------------------->|  4H   |-----> color code 6 bit
+	AN0-3 ---------------------------------------.|  4H   |----. color code 6 bit
 			1  +-----------+	  +--------+	   |  4F   |
-	COL0  ---->|B8   ROM 3C| 16   |custom  |  2	|	   |
-			8  |		   |----->|shifter |------>|	   |
-	PP0-7 ---->|B0-7 ROM 3D|	  |16->2*8 |	   |	   |
+	COL0  ---.|B8   ROM 3C| 16   |custom  |  2	|	   |
+			8  |		   |----.|shifter |-----.|	   |
+	PP0-7 ---.|B0-7 ROM 3D|	  |16.2*8 |	   |	   |
 			   +-----------+	  +--------+	   +-------+
 	
 	font rom controller
 		   1  +--------+	 +--------+
-	ANF   --->| ROM	|  8  |shift   |  1
-		   8  | 3B	 |---->|reg	 |-----> font data
-	PP0-7 --->|		|	 |8->1*8  |
+	ANF   --.| ROM	|  8  |shift   |  1
+		   8  | 3B	 |---.|reg	 |----. font data
+	PP0-7 --.|		|	 |8.1*8  |
 			  +--------+	 +--------+
 	
 	font color ( not use color map )
 			2  |
-	COL0-1 --->|  color code 6 bit
+	COL0-1 --.|  color code 6 bit
 			4  |
-	AN0-3  --->|
+	AN0-3  --.|
 	
 	sprite
 	
@@ -407,21 +407,21 @@ public class xevious
 					if (spriteram_3[offs] & 1)  /* double width, double height */
 					{
 						code &= 0x7c;
-						drawgfx(bitmap,Machine->gfx[bank],
+						drawgfx(bitmap,Machine.gfx[bank],
 								code+3,color,flipx,flipy,
 								flipx ? sx : sx+16,flipy ? sy-16 : sy,
 								cliprect,TRANSPARENCY_COLOR,0x80);
-						drawgfx(bitmap,Machine->gfx[bank],
+						drawgfx(bitmap,Machine.gfx[bank],
 								code+1,color,flipx,flipy,
 								flipx ? sx : sx+16,flipy ? sy : sy-16,
 								cliprect,TRANSPARENCY_COLOR,0x80);
 					}
 					code &= 0x7d;
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							code+2,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							code,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy : sy-16,
 							cliprect,TRANSPARENCY_COLOR,0x80);
@@ -429,18 +429,18 @@ public class xevious
 				else if (spriteram_3[offs] & 1) /* double width */
 				{
 					code &= 0x7e;
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							code,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							code+1,color,flipx,flipy,
 							flipx ? sx : sx+16,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
 				}
 				else	/* normal */
 				{
-					drawgfx(bitmap,Machine->gfx[bank],
+					drawgfx(bitmap,Machine.gfx[bank],
 							code,color,flipx,flipy,sx,sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
 				}

@@ -618,7 +618,7 @@ public class cischeat
 		int min_priority, max_priority;
 	
 		struct rectangle rect		=	*cliprect;
-		struct GfxElement *gfx		=	Machine->gfx[(road_num & 1)?5:4];
+		struct GfxElement *gfx		=	Machine.gfx[(road_num & 1)?5:4];
 	
 		data16_t *roadram			=	cischeat_roadram[road_num & 1];
 	
@@ -709,7 +709,7 @@ public class cischeat
 		int min_priority, max_priority;
 	
 		struct rectangle rect		=	*cliprect;
-		struct GfxElement *gfx		=	Machine->gfx[(road_num & 1)?5:4];
+		struct GfxElement *gfx		=	Machine.gfx[(road_num & 1)?5:4];
 	
 		data16_t *roadram			=	cischeat_roadram[road_num & 1];
 	
@@ -917,7 +917,7 @@ public class cischeat
 			{
 				for (x = xstart; x != xend; x += xinc)
 				{
-					drawgfxzoom(bitmap,Machine->gfx[3],
+					drawgfxzoom(bitmap,Machine.gfx[3],
 								code++,
 								color,
 								flipx,flipy,
@@ -1074,7 +1074,7 @@ public class cischeat
 			{
 				for (x = xstart; x != xend; x += xinc)
 				{
-					drawgfxzoom(bitmap,Machine->gfx[3],
+					drawgfxzoom(bitmap,Machine.gfx[3],
 								code++,
 								color,
 								flipx,flipy,
@@ -1163,7 +1163,7 @@ public class cischeat
 		cischeat_tmap_SET_SCROLL(1)
 		cischeat_tmap_SET_SCROLL(2)
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		for (i = 7; i >= 4; i--)
 		{											/* bitmap, road, min_priority, max_priority, transparency */
@@ -1215,7 +1215,7 @@ public class cischeat
 		cischeat_tmap_SET_SCROLL(1)
 		cischeat_tmap_SET_SCROLL(2)
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 											/* bitmap, road, priority, transparency */
 		if ((megasys1_active_layers & 0x10) != 0)	cischeat_draw_road(bitmap,cliprect,0,7,5,TRANSPARENCY_NONE);
@@ -1223,7 +1223,7 @@ public class cischeat
 	
 		flag = 0;
 		cischeat_tmap_DRAW(0)
-	//	else fillbitmap(bitmap,Machine->pens[0],cliprect);
+	//	else fillbitmap(bitmap,Machine.pens[0],cliprect);
 		cischeat_tmap_DRAW(1)
 	
 		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,15,3);
@@ -1270,7 +1270,7 @@ public class cischeat
 		cischeat_tmap_SET_SCROLL(1)
 		cischeat_tmap_SET_SCROLL(2)
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 	/*	1: clouds 5, grad 7, road 0		2: clouds 5, grad 7, road 0, tunnel roof 0 */
 	
@@ -1280,7 +1280,7 @@ public class cischeat
 	
 		flag = 0;
 		cischeat_tmap_DRAW(0)
-	//	else fillbitmap(bitmap,Machine->pens[0],cliprect);
+	//	else fillbitmap(bitmap,Machine.pens[0],cliprect);
 		cischeat_tmap_DRAW(1)
 	
 		/* road 1!! 0!! */					/* bitmap, road, min_priority, max_priority, transparency */
@@ -1347,11 +1347,11 @@ public class cischeat
 	//	cischeat_tmap_SET_SCROLL(1)
 		cischeat_tmap_SET_SCROLL(2)
 	
-		fillbitmap(bitmap,Machine->pens[0],cliprect);
+		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		flag = 0;
 		cischeat_tmap_DRAW(0)
-	//	else fillbitmap(bitmap,Machine->pens[0],cliprect);
+	//	else fillbitmap(bitmap,Machine.pens[0],cliprect);
 	//	cischeat_tmap_DRAW(1)
 		if ((megasys1_active_layers & 0x08) != 0)	cischeat_draw_sprites(bitmap,cliprect,0,15);
 		cischeat_tmap_DRAW(2)

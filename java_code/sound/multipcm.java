@@ -146,25 +146,25 @@ public class multipcm
 			vptr = &mpcm[chip].Voices[j];
 	
 			// is voice playing?
-			if ((vptr->active) || (vptr->relstage))
+			if ((vptr.active) || (vptr.relstage))
 			{	// only calculate volume once per voice per update cycle
-				rvol = pantbl[vptr->pan];
-				lvol = pantbl[15-vptr->pan];
+				rvol = pantbl[vptr.pan];
+				lvol = pantbl[15-vptr.pan];
 	
-				mrvol = rvol = (rvol * vptr->vol)>>8;
-				mlvol = lvol = (lvol * vptr->vol)>>8;
+				mrvol = rvol = (rvol * vptr.vol)>>8;
+				mlvol = lvol = (lvol * vptr.vol)>>8;
 	
 				decTemp = 1.0f;
 	
 				// copy our "working set" into locals
-				ptsum = vptr->ptsum;
-				ptoffset = vptr->ptoffset;
-				ptdelta = vptr->ptdelta;
-				end = vptr->end;
-				pSamp = vptr->pSamp;
-				relstage = vptr->relstage;
-				relcount = vptr->relcount;
-				relamt = vptr->relamt;
+				ptsum = vptr.ptsum;
+				ptoffset = vptr.ptoffset;
+				ptdelta = vptr.ptdelta;
+				end = vptr.end;
+				pSamp = vptr.pSamp;
+				relstage = vptr.relstage;
+				relcount = vptr.relcount;
+				relamt = vptr.relamt;
 				invrelamt = 1.f / (float)relamt;
 	
 				for (i = 0; i < length; i++)
@@ -175,13 +175,13 @@ public class multipcm
 	
 					if (ptoffset >= end)
 					{
-						if (vptr->loop)
+						if (vptr.loop)
 						{
-							ptoffset = vptr->loopst;
+							ptoffset = vptr.loopst;
 						}
 						else
 						{
-							vptr->active = 0;
+							vptr.active = 0;
 							i = length;
 							continue;
 						}
@@ -193,7 +193,7 @@ public class multipcm
 						if (relcount > relamt)
 						{
 							relstage = 0;
-							vptr->relstage = 0;
+							vptr.relstage = 0;
 						}
 	
 						decTemp = 1.0f - (relcount * invrelamt);
@@ -209,9 +209,9 @@ public class multipcm
 				}
 	
 				// copy back the working values we need to keep
-				vptr->ptsum = ptsum;
-				vptr->ptoffset = ptoffset;
-				vptr->relcount = relcount;
+				vptr.ptsum = ptsum;
+				vptr.ptoffset = ptoffset;
+				vptr.relcount = relcount;
 			}
 		}
 	}
@@ -226,7 +226,7 @@ public class multipcm
 		char buf[2][40];
 		const char *name[2];
 		int vol[2];
-		struct MultiPCM_interface *intf = msound->sound_interface;
+		struct MultiPCM_interface *intf = msound.sound_interface;
 	
 		// make volume table
 		double	max=255.0;
@@ -245,16 +245,16 @@ public class multipcm
 			pantbl[i]=(long)( (255/sqrt(15)) * sqrt(i));
 		}
 	
-		for (chip = 0; chip < intf->chips; chip++)
+		for (chip = 0; chip < intf.chips; chip++)
 		{
-			mpcm[chip].type = intf->type[chip];
-			mpcm[chip].banksize = intf->banksize[chip];
+			mpcm[chip].type = intf.type[chip];
+			mpcm[chip].banksize = intf.banksize[chip];
 	
 			mpcm[chip].curreg = mpcm[chip].curvoice = 0;
 	
-			mpcm[chip].romptr = (signed char *)memory_region(intf->region[chip]);
+			mpcm[chip].romptr = (signed char *)memory_region(intf.region[chip]);
 	
-			mpcm[chip].freq_ratio = ((float)intf->clock[chip] / (float)MULTIPCM_CLOCKDIV) / (float)Machine->sample_rate;
+			mpcm[chip].freq_ratio = ((float)intf.clock[chip] / (float)MULTIPCM_CLOCKDIV) / (float)Machine.sample_rate;
 	
 			for (i = 0; i < 28; i++)
 			{
@@ -275,9 +275,9 @@ public class multipcm
 			sprintf(buf[1], "%s %d R", sound_name(msound), chip);
 			name[0] = buf[0];
 			name[1] = buf[1];
-			vol[0]=intf->mixing_level[chip] >> 16;
-			vol[1]=intf->mixing_level[chip] & 0xffff;
-			stream_init_multi(2, name, vol, Machine->sample_rate, chip, MultiPCM_update);
+			vol[0]=intf.mixing_level[chip] >> 16;
+			vol[1]=intf.mixing_level[chip] & 0xffff;
+			stream_init_multi(2, name, vol, Machine.sample_rate, chip, MultiPCM_update);
 	
 			// make pitch delta table (1 octave)
 			for(i=0; i<0x1001; i++)
@@ -375,26 +375,26 @@ public class multipcm
 		switch (offset)
 		{
 			case 0:	      	// data / status
-				if ((cptr->curvoice > 27) || (cptr->curvoice < 0))
+				if ((cptr.curvoice > 27) || (cptr.curvoice < 0))
 				{
 					//logerror("MPCM: unknown write to voice > 28\n");
 					return;
 				}
 	
 				vnum = mpcm[chip].curvoice;
-				cptr->registers[vnum][cptr->curreg] = data;
+				cptr.registers[vnum][cptr.curreg] = data;
 	
 				vptr = &mpcm[chip].Voices[vnum];
 	
-				switch (cptr->curreg)
+				switch (cptr.curreg)
 				{
 				 	case 0:	// panning
-						ppp = (cptr->registers[vnum][0]>>4)&0xf;
+						ppp = (cptr.registers[vnum][0]>>4)&0xf;
 						if (ppp >= 8)
 						{
 							ppp = -(16-ppp);
 						}
-						vptr->pan = ppp + 8;
+						vptr.pan = ppp + 8;
 						break;
 	
 					case 1:	// sample
@@ -404,103 +404,103 @@ public class multipcm
 					// MUST fall through to update pitch also!
 					case 3: // pitch MSB
 						// compute frequency divisor
-						pitch = (cptr->registers[vnum][3]<<8) + cptr->registers[vnum][2];
+						pitch = (cptr.registers[vnum][3]<<8) + cptr.registers[vnum][2];
 						pt_abs = (double)abs(pitch);
 						pt_oct = pt_abs>>12;
 						if(pitch < 0)
 						{
-							vptr->ptdelta = cptr->dlttbl[0x1000 - (pt_abs&0xfff)];
-							vptr->ptdelta >>= (pt_oct+1);
+							vptr.ptdelta = cptr.dlttbl[0x1000 - (pt_abs&0xfff)];
+							vptr.ptdelta >>= (pt_oct+1);
 						}
 						else
 						{
-							vptr->ptdelta = cptr->dlttbl[pt_abs&0xfff];
-							vptr->ptdelta <<= pt_oct;
+							vptr.ptdelta = cptr.dlttbl[pt_abs&0xfff];
+							vptr.ptdelta <<= pt_oct;
 						}
 						break;
 	
 					case 4:	// key on/off
 						if ((data & 0x80) != 0)
 						{
-							inum = cptr->registers[vnum][1];
+							inum = cptr.registers[vnum][1];
 	
 							// calc decay amount
-							vptr->relamt = decaytbl[(0x0f - cptr->samples[inum].env[2])];
+							vptr.relamt = decaytbl[(0x0f - cptr.samples[inum].env[2])];
 	
 							// compute start and end pointers
-							st = cptr->samples[inum].st;
+							st = cptr.samples[inum].st;
 	
 							// perform banking
 							if (st >= 0x100000)
 							{
-								if (cptr->type == 1)	// multiPCM
+								if (cptr.type == 1)	// multiPCM
 								{
 	/*								logerror("MPCM: key on chip %d voice %d\n", chip, vnum);
-									logerror("regs %02x %02x %02x %02x %02x %02x %02x %02x\n", cptr->registers[vnum][0],
-										cptr->registers[vnum][1],cptr->registers[vnum][2],cptr->registers[vnum][3],
-										cptr->registers[vnum][4],cptr->registers[vnum][5],
-										cptr->registers[vnum][6],cptr->registers[vnum][7]);*/
+									logerror("regs %02x %02x %02x %02x %02x %02x %02x %02x\n", cptr.registers[vnum][0],
+										cptr.registers[vnum][1],cptr.registers[vnum][2],cptr.registers[vnum][3],
+										cptr.registers[vnum][4],cptr.registers[vnum][5],
+										cptr.registers[vnum][6],cptr.registers[vnum][7]);*/
 	
-									if (vptr->pan < 8)
+									if (vptr.pan < 8)
 									{
-										st = (st & 0xfffff) + cptr->banksize * cptr->bankL;
+										st = (st & 0xfffff) + cptr.banksize * cptr.bankL;
 									}
 									else
 									{
-										st = (st & 0xfffff) + cptr->banksize * cptr->bankR;
+										st = (st & 0xfffff) + cptr.banksize * cptr.bankR;
 									}
 								}
 								else	// model 1
 								{
-									st = (st & 0xfffff) + cptr->banksize * cptr->bankL;
+									st = (st & 0xfffff) + cptr.banksize * cptr.bankL;
 								}
 							}
 	
-							vptr->pSamp = &cptr->romptr[st];
-							vptr->end = cptr->samples[inum].size;
-							vptr->loopst = cptr->samples[inum].loop;
+							vptr.pSamp = &cptr.romptr[st];
+							vptr.end = cptr.samples[inum].size;
+							vptr.loopst = cptr.samples[inum].loop;
 	
-							vptr->ptoffset = 0;
-							vptr->ptsum = 0;
-							vptr->active = 1;
-							vptr->relstage = 0;
+							vptr.ptoffset = 0;
+							vptr.ptsum = 0;
+							vptr.active = 1;
+							vptr.relstage = 0;
 						}
 						else
 						{
 	//						logerror("MPCM: key off chip %d voice %d\n", chip, vnum);
-							vptr->active = 0;
-							vptr->relcount = 0;
-							if ((vptr->loop) && (vptr->pSamp))
+							vptr.active = 0;
+							vptr.relcount = 0;
+							if ((vptr.loop) && (vptr.pSamp))
 							{
-								vptr->relstage = 1;
+								vptr.relstage = 1;
 							}
 						}
 					 	break;
 	
 					case 5:	// volume/loop
-						vptr->vol = voltbl[(cptr->registers[vnum][5]>>1)&0x7f];
-						vptr->loop = (cptr->registers[vnum][5]&0x1) || !vptr->loopst;
+						vptr.vol = voltbl[(cptr.registers[vnum][5]>>1)&0x7f];
+						vptr.loop = (cptr.registers[vnum][5]&0x1) || !vptr.loopst;
 						break;
 	
 					case 6: // ??? LFO? reverb?
 					case 7:
-	//					logerror("write %x to reg %d, voice %d\n", data, cptr->curreg, vnum);
+	//					logerror("write %x to reg %d, voice %d\n", data, cptr.curreg, vnum);
 						break;
 	
 					default:
-	//					logerror("write %x to reg %d, voice %d\n", data, cptr->curreg, vnum);
+	//					logerror("write %x to reg %d, voice %d\n", data, cptr.curreg, vnum);
 						break;
 				}
 				break;
 	
 			case 1:		// voice select
-				cptr->curvoice = ctbl[data&0x1f];
+				cptr.curvoice = ctbl[data&0x1f];
 				break;
 	
 			case 2:		// register select
-				cptr->curreg = data;
-				if (cptr->curreg > 7)
-					cptr->curreg = 7;
+				cptr.curreg = data;
+				if (cptr.curreg > 7)
+					cptr.curreg = 7;
 				break;
 		}
 	}

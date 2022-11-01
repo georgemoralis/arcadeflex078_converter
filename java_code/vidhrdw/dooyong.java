@@ -106,21 +106,21 @@ public class dooyong
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,transparency,15);
+					&Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
-				drawgfx(bitmap,Machine->gfx[gfx],
+				drawgfx(bitmap,Machine.gfx[gfx],
 						code,
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine->visible_area,transparency,15);
+						&Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -154,21 +154,21 @@ public class dooyong
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,transparency,15);
+					&Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
-				drawgfx(bitmap,Machine->gfx[gfx],
+				drawgfx(bitmap,Machine.gfx[gfx],
 						code,
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine->visible_area,transparency,15);
+						&Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -202,21 +202,21 @@ public class dooyong
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,transparency,15);
+					&Machine.visible_area,transparency,15);
 			/* wraparound */
 			if ((scrolly & 0x1f) != 0)
 			{
-				drawgfx(bitmap,Machine->gfx[gfx],
+				drawgfx(bitmap,Machine.gfx[gfx],
 						code,
 						color,
 						flipx,flipy,
 						sx,((sy + 0x20) & 0xff) - 0x20,
-						&Machine->visible_area,transparency,15);
+						&Machine.visible_area,transparency,15);
 			}
 		}
 	}
@@ -252,12 +252,12 @@ public class dooyong
 				flipy = !flipy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[gfx],
+			drawgfx(bitmap,Machine.gfx[gfx],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					&Machine->visible_area,transparency,15);
+					&Machine.visible_area,transparency,15);
 		}
 	}
 	
@@ -278,12 +278,12 @@ public class dooyong
 				sy = 31 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					lastday_txvideoram[offs] | ((attr & 0x0f) << 8),
 					(attr & 0xf0) >> 4,
 					flip_screen,flip_screen,
 					8*sx,8*(sy + yoffset),
-					&Machine->visible_area,TRANSPARENCY_PEN,15);
+					&Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
@@ -304,12 +304,12 @@ public class dooyong
 				sy = 31 - sy;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[0],
+			drawgfx(bitmap,Machine.gfx[0],
 					lastday_txvideoram[offs] | ((attr & 0x0f) << 8),
 					(attr & 0xf0) >> 4,
 					flip_screen,flip_screen,
 					8*sx,8*sy,
-					&Machine->visible_area,TRANSPARENCY_PEN,15);
+					&Machine.visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
@@ -357,12 +357,12 @@ public class dooyong
 	
 			for (y = 0;y <= height;y++)
 			{
-				drawgfx(bitmap,Machine->gfx[1],
+				drawgfx(bitmap,Machine.gfx[1],
 						code+y,
 						color,
 						flipx,flipy,
 						sx,flipy ? sy + 16*(height-y) : sy + 16*y,
-						&Machine->visible_area,TRANSPARENCY_PEN,15);
+						&Machine.visible_area,TRANSPARENCY_PEN,15);
 			}
 		}
 	}
@@ -397,13 +397,13 @@ public class dooyong
 				{
 					for (x = 0;x <= width;x++)
 					{
-						drawgfx(bitmap,Machine->gfx[0],
+						drawgfx(bitmap,Machine.gfx[0],
 								code,
 								color,
 								flipx,flipy,
 								flipx ? sx + 16*(width-x) : sx + 16*x,
 								flipy ? sy + 16*(height-y) : sy + 16*y,
-								&Machine->visible_area,TRANSPARENCY_PEN,15);
+								&Machine.visible_area,TRANSPARENCY_PEN,15);
 	
 						code++;
 					}

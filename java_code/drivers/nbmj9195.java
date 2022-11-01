@@ -231,9 +231,9 @@ public class nbmj9195
 	{
 		int portdata;
 	
-		if ((!strcmp(Machine->gamedrv->name, "mscoutm")) ||
-		    (!strcmp(Machine->gamedrv->name, "imekura")) ||
-		    (!strcmp(Machine->gamedrv->name, "mjegolf")))
+		if ((!strcmp(Machine.gamedrv.name, "mscoutm")) ||
+		    (!strcmp(Machine.gamedrv.name, "imekura")) ||
+		    (!strcmp(Machine.gamedrv.name, "mjegolf")))
 		{
 			switch (offset)
 			{
@@ -369,9 +369,9 @@ public class nbmj9195
 	
 	static void tmpz84c011_pio_w(int offset, int data)
 	{
-		if ((!strcmp(Machine->gamedrv->name, "imekura")) ||
-		    (!strcmp(Machine->gamedrv->name, "mscoutm")) ||
-		    (!strcmp(Machine->gamedrv->name, "mjegolf")))
+		if ((!strcmp(Machine.gamedrv.name, "imekura")) ||
+		    (!strcmp(Machine.gamedrv.name, "mscoutm")) ||
+		    (!strcmp(Machine.gamedrv.name, "mjegolf")))
 		{
 			switch (offset)
 			{
@@ -542,7 +542,7 @@ public class nbmj9195
 		{ 0, 1 },		/* clock */
 		{ 0, 0 },		/* timer disables */
 		{ ctc0_interrupt, ctc1_interrupt },	/* interrupt handler */
-		{ 0, z80ctc_1_trg3_w },	/* ZC/TO0 callback ctc1.zc0 -> ctc1.trg3 */
+		{ 0, z80ctc_1_trg3_w },	/* ZC/TO0 callback ctc1.zc0 . ctc1.trg3 */
 		{ 0, 0 },		/* ZC/TO1 callback */
 		{ 0, 0 },		/* ZC/TO2 callback */
 	};
@@ -559,8 +559,8 @@ public class nbmj9195
 		}
 	
 		// initialize the CTC
-		ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
-		ctc_intf.baseclock[1] = Machine->drv->cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
+		ctc_intf.baseclock[1] = Machine.drv.cpu[1].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	}
 	
@@ -574,7 +574,7 @@ public class nbmj9195
 		unsigned char *ROM = memory_region(REGION_CPU2);
 	
 		// sound program patch
-		ROM[0x0213] = 0x00;			// DI -> NOP
+		ROM[0x0213] = 0x00;			// DI . NOP
 	
 		// initialize TMPZ84C011 PIO and CTC
 		tmpz84c011_init();

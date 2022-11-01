@@ -102,14 +102,14 @@ public class flower
 		/* loop over each voice and add its contribution */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			int f = 256*voice->frequency;
-			int v = voice->volume;
+			int f = 256*voice.frequency;
+			int v = voice.volume;
 	
 			/* only update if we have non-zero volume and frequency */
 			if (v && f)
 			{
-				const UINT8 *w = voice->wave;
-				int c = voice->counter;
+				const UINT8 *w = voice.wave;
+				int c = voice.counter;
 	
 				mix = mixer_buffer;
 	
@@ -120,17 +120,17 @@ public class flower
 	
 					c += f;
 	
-					if (voice->oneshot)
+					if (voice.oneshot)
 					{
-						if (voice->oneshotplaying)
+						if (voice.oneshotplaying)
 						{
 							offs = (c >> 15);
 							if (w[offs] == 0xff)
 							{
-								voice->oneshotplaying = 0;
+								voice.oneshotplaying = 0;
 							}
 	
-							if (voice->oneshotplaying)
+							if (voice.oneshotplaying)
 							{
 	//							*mix++ += ((w[offs] - 0x80) * v) / 16;
 	*mix++ += sound_rom2[v*256 + w[offs]] - 0x80;
@@ -147,7 +147,7 @@ public class flower
 				}
 	
 				/* update the counter for this voice */
-				voice->counter = c;
+				voice.counter = c;
 			}
 		}
 	
@@ -165,7 +165,7 @@ public class flower
 		sound_channel *voice;
 	
 		/* get stream channels */
-		stream = stream_init(mono_name,100/*intf->volume*/, samplerate, 0, flower_update_mono);
+		stream = stream_init(mono_name,100/*intf.volume*/, samplerate, 0, flower_update_mono);
 	
 		/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
 		if ((mixer_buffer = auto_malloc(2 * sizeof(short) * samplerate)) == 0)
@@ -189,10 +189,10 @@ public class flower
 		/* reset all the voices */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			voice->frequency = 0;
-			voice->volume = 0;
-			voice->wave = &sound_rom1[0];
-			voice->counter = 0;
+			voice.frequency = 0;
+			voice.volume = 0;
+			voice.wave = &sound_rom1[0];
+			voice.counter = 0;
 		}
 	
 		return 0;
@@ -220,24 +220,24 @@ public class flower
 		/* recompute all the voice parameters */
 		for (base = 0, voice = channel_list; voice < last_channel; voice++, base += 8)
 		{
-			voice->frequency = flower_soundregs1[2 + base] & 0x0f;
-			voice->frequency = voice->frequency * 16 + ((flower_soundregs1[3 + base]) & 0x0f);
-			voice->frequency = voice->frequency * 16 + ((flower_soundregs1[0 + base]) & 0x0f);
-			voice->frequency = voice->frequency * 16 + ((flower_soundregs1[1 + base]) & 0x0f);
+			voice.frequency = flower_soundregs1[2 + base] & 0x0f;
+			voice.frequency = voice.frequency * 16 + ((flower_soundregs1[3 + base]) & 0x0f);
+			voice.frequency = voice.frequency * 16 + ((flower_soundregs1[0 + base]) & 0x0f);
+			voice.frequency = voice.frequency * 16 + ((flower_soundregs1[1 + base]) & 0x0f);
 	
-			voice->volume = (flower_soundregs1[7 + base] >> 4) | ((flower_soundregs2[7 + base] & 0x03) << 4);
+			voice.volume = (flower_soundregs1[7 + base] >> 4) | ((flower_soundregs2[7 + base] & 0x03) << 4);
 	// the following would fix the hanging notes...
 	//if ((flower_soundregs2[7 + base] & 0x01) == 0)
-	//	voice->volume = 0;
+	//	voice.volume = 0;
 	
 			if (flower_soundregs1[4 + base] & 0x10)
 			{
-				voice->oneshot = 0;
-				voice->oneshotplaying = 0;
+				voice.oneshot = 0;
+				voice.oneshotplaying = 0;
 			}
 			else
 			{
-				voice->oneshot = 1;
+				voice.oneshot = 1;
 			}
 		}
 	} };
@@ -268,7 +268,7 @@ public class flower
 	
 		/* recompute all the voice parameters */
 		voice = &channel_list[offset/8];
-		if (voice->oneshot)
+		if (voice.oneshot)
 		{
 			int start;
 	
@@ -279,10 +279,10 @@ public class flower
 			start = start * 16 + ((flower_soundregs2[1 + base]) & 0x0f);
 			start = start * 16 + ((flower_soundregs2[0 + base]) & 0x0f);
 	
-			voice->wave = &sound_rom1[(start >> 7) & 0x7fff];
+			voice.wave = &sound_rom1[(start >> 7) & 0x7fff];
 	
-			voice->counter = 0;
-			voice->oneshotplaying = 1;
+			voice.counter = 0;
+			voice.oneshotplaying = 1;
 		}
 		else
 		{
@@ -291,9 +291,9 @@ public class flower
 			start = flower_soundregs2[5 + base] & 0x0f;
 			start = start * 16 + ((flower_soundregs2[4 + base]) & 0x0f);
 	
-			voice->wave = &sound_rom1[(start << 9) & 0x7fff];	// ???
-			voice->oneshot = 0;
-			voice->oneshotplaying = 0;
+			voice.wave = &sound_rom1[(start << 9) & 0x7fff];	// ???
+			voice.oneshot = 0;
+			voice.oneshotplaying = 0;
 		}
 	} };
 }

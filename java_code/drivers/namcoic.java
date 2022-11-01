@@ -158,19 +158,19 @@ public class namcoic
 		case NAMCOS21_SOLVALOU: /* hack */
 			hpos -= 0x80;
 			vpos -= 0x40;
-			clip = Machine->visible_area;
+			clip = Machine.visible_area;
 			break;
 	
 		case NAMCOS21_CYBERSLED: /* hack */
 			hpos -= 0x110;
 			vpos -= 2+32;
-			clip = Machine->visible_area;
+			clip = Machine.visible_area;
 			break;
 	
 		case NAMCOS21_AIRCOMBAT: /* hack */
 			vpos -= 0x22;
 			hpos -= 0x02;
-			clip = Machine->visible_area;
+			clip = Machine.visible_area;
 			break;
 	
 		case NAMCOS21_STARBLADE: /* hack */
@@ -179,7 +179,7 @@ public class namcoic
 				hpos -= 0x80;
 				vpos -= 0x20;
 			}
-			clip = Machine->visible_area;
+			clip = Machine.visible_area;
 			break;
 	
 		case NAMCONB1_NEBULRAY:
@@ -213,10 +213,10 @@ public class namcoic
 				clip.max_x = pWinAttr[1] - 0x26 - dh;
 				clip.min_y = pWinAttr[2] - 0x19 - dv;
 				clip.max_y = pWinAttr[3] - 0x19 - dv;
-				if( clip.min_x < cliprect->min_x ) clip.min_x = cliprect->min_x;
-				if( clip.min_y < cliprect->min_y ) clip.min_y = cliprect->min_y;
-				if( clip.max_x > cliprect->max_x ) clip.max_x = cliprect->max_x;
-				if( clip.max_y > cliprect->max_y ) clip.max_y = cliprect->max_y;
+				if( clip.min_x < cliprect.min_x ) clip.min_x = cliprect.min_x;
+				if( clip.min_y < cliprect.min_y ) clip.min_y = cliprect.min_y;
+				if( clip.max_x > cliprect.max_x ) clip.max_x = cliprect.max_x;
+				if( clip.max_y > cliprect.max_y ) clip.max_y = cliprect.max_y;
 			}
 			break;
 		}
@@ -286,7 +286,7 @@ public class namcoic
 				tile = spritetile16[tile_index++];
 				if( (tile&0x8000)==0 )
 				{
-					/*z*/drawgfxzoom(bitmap,Machine->gfx[mGfxC355],
+					/*z*/drawgfxzoom(bitmap,Machine.gfx[mGfxC355],
 						mpCodeToTile(tile) + offset,
 						color,
 						flipx,flipy,
@@ -861,7 +861,7 @@ public class namcoic
 				if( mpRoadDirty[i] )
 				{
 					decodechar(
-						Machine->gfx[mRoadGfxBank],
+						Machine.gfx[mRoadGfxBank],
 						i,
 						0x10000+(UINT8 *)mpRoadRAM,
 						&RoadTileLayout );
@@ -896,10 +896,10 @@ public class namcoic
 				struct GfxElement *pGfx = decodegfx( 0x10000+(UINT8 *)mpRoadRAM, &RoadTileLayout );
 				if (pGfx != 0)
 				{
-					pGfx->colortable = &Machine->remapped_colortable[0xf00];
-					pGfx->total_colors = 0x3f;
+					pGfx.colortable = &Machine.remapped_colortable[0xf00];
+					pGfx.total_colors = 0x3f;
 	
-					Machine->gfx[gfxbank] = pGfx;
+					Machine.gfx[gfxbank] = pGfx;
 					mpRoadTilemap = tilemap_create(
 						get_road_info,tilemap_scan_rows,
 						TILEMAP_OPAQUE,
@@ -939,9 +939,9 @@ public class namcoic
 		pSourceBitmap = tilemap_get_pixmap(mpRoadTilemap);
 		yscroll = mpRoadRAM[0x1fdfe/2];
 	
-		for( i=cliprect->min_y; i<=cliprect->max_y; i++ )
+		for( i=cliprect.min_y; i<=cliprect.max_y; i++ )
 		{
-			UINT16 *pDest = bitmap->line[i];
+			UINT16 *pDest = bitmap.line[i];
 			int screenx	= mpRoadRAM[0x1fa00/2+i+15];
 	
 			if( pri == ((screenx&0xe000)>>13) )
@@ -950,7 +950,7 @@ public class namcoic
 				if (zoomx != 0)
 				{
 					unsigned sourcey = mpRoadRAM[0x1fc00/2+i+15]+yscroll;
-					const UINT16 *pSourceGfx = pSourceBitmap->line[sourcey&(ROAD_TILEMAP_HEIGHT-1)];
+					const UINT16 *pSourceGfx = pSourceBitmap.line[sourcey&(ROAD_TILEMAP_HEIGHT-1)];
 					unsigned dsourcex = (ROAD_TILEMAP_WIDTH<<16)/zoomx;
 					unsigned sourcex = 0;
 					int numpixels = (44*ROAD_TILE_SIZE<<16)/dsourcex;
@@ -973,9 +973,9 @@ public class namcoic
 						screenx = 0;
 					}
 	
-					if( screenx + numpixels > bitmap->width )
+					if( screenx + numpixels > bitmap.width )
 					{ /* crop right */
-						numpixels = bitmap->width - screenx;
+						numpixels = bitmap.width - screenx;
 					}
 	
 					/* BUT: support transparent color for Thunder Ceptor */

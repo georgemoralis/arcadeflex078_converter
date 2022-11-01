@@ -72,15 +72,15 @@ Notes:
 //   +-------------------------------------------------------+
 //
 //  ***  Dump ROMs  ***
-//     1) ROM1 (17C)  32Pin 1Mbit UV-EPROM          -> save "975r01" file
-//     2) ROM2 ( 5F)  28Pin 512Kbit One-Time PROM   -> save "975f02" file
-//     3) ROM3 ( 1D)  40Pin 4Mbit MASK ROM          -> save "975c03" file
-//     4) ROM4 ( 3K)  42Pin 8Mbit MASK ROM          -> save "975c04" file
-//     5) ROM5 ( 8L)  42Pin 8Mbit MASK ROM          -> save "975c05" file
-//     6) ROM6 (12M)  42Pin 8Mbit MASK ROM          -> save "975c06" file
-//     7) ROM7 (16K)  42Pin 8Mbit MASK ROM          -> save "975c07" file
-//     8) ROM8 (16I)  40Pin 4Mbit MASK ROM          -> save "975c08" file
-//     9) ROM9 (18I)  40Pin 4Mbit MASK ROM          -> save "975c09" file
+//     1) ROM1 (17C)  32Pin 1Mbit UV-EPROM          . save "975r01" file
+//     2) ROM2 ( 5F)  28Pin 512Kbit One-Time PROM   . save "975f02" file
+//     3) ROM3 ( 1D)  40Pin 4Mbit MASK ROM          . save "975c03" file
+//     4) ROM4 ( 3K)  42Pin 8Mbit MASK ROM          . save "975c04" file
+//     5) ROM5 ( 8L)  42Pin 8Mbit MASK ROM          . save "975c05" file
+//     6) ROM6 (12M)  42Pin 8Mbit MASK ROM          . save "975c06" file
+//     7) ROM7 (16K)  42Pin 8Mbit MASK ROM          . save "975c07" file
+//     8) ROM8 (16I)  40Pin 4Mbit MASK ROM          . save "975c08" file
+//     9) ROM9 (18I)  40Pin 4Mbit MASK ROM          . save "975c09" file
 //                                                        vvvvvvvvvvvv
 //                                                        esckidsj.zip
 
@@ -191,7 +191,7 @@ public class vendetta
 	public static WriteHandlerPtr vendetta_K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		// *************************************************************************************
 		// *  Escape Kids uses 052109's mirrored Tilemap ROM bank selector, but only during    *
-		// *  Tilemap MASK-ROM Test       (0x1d80<->0x3d80, 0x1e00<->0x3e00, 0x1f00<->0x3f00)  *
+		// *  Tilemap MASK-ROM Test       (0x1d80<.0x3d80, 0x1e00<.0x3e00, 0x1f00<.0x3f00)  *
 		// *************************************************************************************
 		if ( ( offset == 0x1d80 ) || ( offset == 0x1e00 ) || ( offset == 0x1f00 ) )		K052109_w( offset, data );
 		K052109_w( offset + 0x2000, data );
@@ -259,7 +259,7 @@ public class vendetta
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else
 		{
 			static int res = 0x00;

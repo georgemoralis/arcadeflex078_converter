@@ -269,7 +269,7 @@ public class omegaf
 			return 1;
 		memset( omegaf_bg2_videoram, 0x00, size );
 	
-		if ( (bitmap_sp = auto_bitmap_alloc (Machine -> drv -> screen_width, Machine -> drv -> screen_height ) ) == NULL )
+		if ( (bitmap_sp = auto_bitmap_alloc (Machine . drv . screen_width, Machine . drv . screen_height ) ) == NULL )
 			return 1;
 	
 		return 0;
@@ -549,7 +549,7 @@ public class omegaf
 		if (sprite_overdraw_enabled != (data & 1))
 		{
 			sprite_overdraw_enabled = data & 1;
-			fillbitmap(bitmap_sp, 15, &Machine -> visible_area);
+			fillbitmap(bitmap_sp, 15, &Machine . visible_area);
 		}
 	} };
 	
@@ -588,12 +588,12 @@ public class omegaf
 				flipy = spriteram.read(offs + 2)& 0x20;
 				color = spriteram.read(offs + 4)& 0x0f;
 	
-				drawgfx(bitmap,Machine->gfx[(big) ? 4 : 3],
+				drawgfx(bitmap,Machine.gfx[(big) ? 4 : 3],
 						tile,
 						color,
 						flipx,flipy,
 						sx,sy,
-						&Machine->visible_area,
+						&Machine.visible_area,
 						TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -601,7 +601,7 @@ public class omegaf
 	
 	public static VideoUpdateHandlerPtr video_update_omegaf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		fillbitmap(bitmap,Machine->pens[15],cliprect);	// ??
+		fillbitmap(bitmap,Machine.pens[15],cliprect);	// ??
 	
 		if (bg0_enabled != 0)	tilemap_draw(bitmap,cliprect, bg0_tilemap, 0, 0);
 		if (bg1_enabled != 0)	tilemap_draw(bitmap,cliprect, bg1_tilemap, 0, 0);

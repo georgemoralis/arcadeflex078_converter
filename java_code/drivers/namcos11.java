@@ -621,7 +621,7 @@ public class namcos11
 		n_game = 0;
 		while( namcos11_config_table[ n_game ].s_name != NULL )
 		{
-			if( strcmp( Machine->gamedrv->name, namcos11_config_table[ n_game ].s_name ) == 0 )
+			if( strcmp( Machine.gamedrv.name, namcos11_config_table[ n_game ].s_name ) == 0 )
 			{
 				if( namcos11_config_table[ n_game ].keycus_r != NULL )
 				{

@@ -502,16 +502,16 @@ public class turbo
 			UINT8 *sprite_base = spriteram + 16 * i;
 	
 			/* snarf all the data */
-			data->base = sprite_expanded_data + (i & 7) * 0x8000;
-			data->enable = sprite_expanded_enable + (i & 7) * 0x8000;
-			data->offset = (sprite_base[6] + 256 * sprite_base[7]) & sprite_mask;
-			data->rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]);
-			data->miny = sprite_base[0];
-			data->maxy = sprite_base[1];
-			data->xscale = ((5 * 256 - 4 * sprite_base[2]) << 16) / (5 * 256);
-			data->yscale = (4 << 16) / (sprite_base[3] + 4);
-			data->xoffs = -1;
-			data->flip = 0;
+			data.base = sprite_expanded_data + (i & 7) * 0x8000;
+			data.enable = sprite_expanded_enable + (i & 7) * 0x8000;
+			data.offset = (sprite_base[6] + 256 * sprite_base[7]) & sprite_mask;
+			data.rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]);
+			data.miny = sprite_base[0];
+			data.maxy = sprite_base[1];
+			data.xscale = ((5 * 256 - 4 * sprite_base[2]) << 16) / (5 * 256);
+			data.yscale = (4 << 16) / (sprite_base[3] + 4);
+			data.xoffs = -1;
+			data.flip = 0;
 		}
 	
 		/* now find the X positions */
@@ -541,16 +541,16 @@ public class turbo
 			UINT8 *sprite_base = spriteram + 8 * i;
 	
 			/* snarf all the data */
-			data->base = sprite_expanded_data + (i & 7) * 0x10000;
-			data->enable = sprite_expanded_enable + (i & 7) * 0x10000;
-			data->offset = ((sprite_base[6] + 256 * sprite_base[7]) * 2) & sprite_mask;
-			data->rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]) * 2;
-			data->miny = sprite_base[0] ^ 0xff;
-			data->maxy = (sprite_base[1] ^ 0xff) - 1;
-			data->xscale = 65536.0 * (1.0 - 0.004 * (double)(sprite_base[2] - 0x40));
-			data->yscale = (4 << 16) / (sprite_base[3] + 4);
-			data->xoffs = -1;
-			data->flip = sprite_base[7]>>7;
+			data.base = sprite_expanded_data + (i & 7) * 0x10000;
+			data.enable = sprite_expanded_enable + (i & 7) * 0x10000;
+			data.offset = ((sprite_base[6] + 256 * sprite_base[7]) * 2) & sprite_mask;
+			data.rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]) * 2;
+			data.miny = sprite_base[0] ^ 0xff;
+			data.maxy = (sprite_base[1] ^ 0xff) - 1;
+			data.xscale = 65536.0 * (1.0 - 0.004 * (double)(sprite_base[2] - 0x40));
+			data.yscale = (4 << 16) / (sprite_base[3] + 4);
+			data.xoffs = -1;
+			data.flip = sprite_base[7]>>7;
 		}
 	
 		/* now find the X positions */
@@ -578,19 +578,19 @@ public class turbo
 	
 	static void draw_one_sprite(const struct sprite_params_data *data, UINT32 *dest, UINT8 *edest, int xclip, int scanline)
 	{
-		int xstep = data->flip ? -data->xscale : data->xscale;
-		int xoffs = data->xoffs;
+		int xstep = data.flip ? -data.xscale : data.xscale;
+		int xoffs = data.xoffs;
 		UINT32 xcurr;
 		UINT32 *src;
 		UINT8 *esrc;
 		int offset;
 	
 		/* xoffs of -1 means don't draw */
-		if (xoffs == -1 || data->xscale <= 0) return;
+		if (xoffs == -1 || data.xscale <= 0) return;
 	
 		/* compute the current data offset */
-		scanline = ((scanline - data->miny) * data->yscale) >> 16;
-		offset = data->offset + (scanline + 1) * data->rowbytes;
+		scanline = ((scanline - data.miny) * data.yscale) >> 16;
+		offset = data.offset + (scanline + 1) * data.rowbytes;
 	
 		/* clip to the road */
 		xcurr = offset << 16;
@@ -602,8 +602,8 @@ public class turbo
 		}
 	
 		/* determine the bitmap location */
-		src = data->base;
-		esrc = data->enable;
+		src = data.base;
+		esrc = data.enable;
 	
 		/* two cases: easy case is with xstep <= 0x10000 */
 		if (xstep >= -0x10000 && xstep <= 0x10000)
@@ -669,12 +669,12 @@ public class turbo
 			{
 				/* if the sprite intersects this scanline, draw it */
 				data = &sprite_params[i];
-				if (scanline >= data->miny && scanline < data->maxy)
+				if (scanline >= data.miny && scanline < data.maxy)
 					draw_one_sprite(data, dest, edest, xclip, scanline);
 	
 				/* if the sprite intersects this scanline, draw it */
 				data = &sprite_params[8 + i];
-				if (scanline >= data->miny && scanline < data->maxy)
+				if (scanline >= data.miny && scanline < data.maxy)
 					draw_one_sprite(data, dest, edest, xclip, scanline);
 			}
 		}
@@ -701,7 +701,7 @@ public class turbo
 		turbo_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = &Machine->pens[(turbo_fbcol & 6) << 6];
+		colortable = &Machine.pens[(turbo_fbcol & 6) << 6];
 	
 		/* loop over rows */
 		for (y = 4; y < VIEW_HEIGHT - 4; y++)
@@ -831,7 +831,7 @@ public class turbo
 		subroc3d_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = &Machine->pens[(subroc3d_col & 15) << 5];
+		colortable = &Machine.pens[(subroc3d_col & 15) << 5];
 	
 		/* loop over rows */
 		for (y = 0; y < VIEW_HEIGHT; y++)
@@ -950,7 +950,7 @@ public class turbo
 			}
 	
 			/* render the scanline */
-			draw_scanline16(bitmap, 0, y, VIEW_WIDTH, scanline, Machine->pens, -1);
+			draw_scanline16(bitmap, 0, y, VIEW_WIDTH, scanline, Machine.pens, -1);
 		}
 	}
 	

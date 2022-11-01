@@ -40,7 +40,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *dest = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *dest = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		dest[0] = (dest[0] & ~0x01) | ((data >> 7) & 0x01);
 		dest[1] = (dest[1] & ~0x01) | ((data >> 6) & 0x01);
@@ -58,7 +58,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *dest = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *dest = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		dest[0] = (dest[0] & ~0x02) | ((data >> 6) & 0x02);
 		dest[1] = (dest[1] & ~0x02) | ((data >> 5) & 0x02);
@@ -76,7 +76,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *dest = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *dest = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		dest[0] = (dest[0] & ~0x04) | ((data >> 5) & 0x04);
 		dest[1] = (dest[1] & ~0x04) | ((data >> 4) & 0x04);
@@ -101,7 +101,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *source = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *source = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		return	((source[0] & 0x01) << 7) |
 				((source[1] & 0x01) << 6) |
@@ -119,7 +119,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *source = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *source = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		return	((source[0] & 0x02) << 6) |
 				((source[1] & 0x02) << 5) |
@@ -137,7 +137,7 @@ public class crgolf
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
 		int y = offset / 32;
-		UINT16 *source = (UINT16 *)screen->base + screen->rowpixels * y + x;
+		UINT16 *source = (UINT16 *)screen.base + screen.rowpixels * y + x;
 	
 		return	((source[0] & 0x04) << 5) |
 				((source[1] & 0x04) << 4) |

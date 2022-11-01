@@ -192,7 +192,7 @@ public class dynduke
 				if (fy != 0) fy=0; else fy=1;
 			}
 	
-			drawgfx(bitmap,Machine->gfx[3],
+			drawgfx(bitmap,Machine.gfx[3],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);
@@ -212,7 +212,7 @@ public class dynduke
 		if (back_enable != 0)
 			tilemap_draw(bitmap,cliprect,bg_layer,TILEMAP_BACK,0);
 		else
-			fillbitmap(bitmap,Machine->pens[0],cliprect);
+			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		draw_sprites(bitmap,cliprect,0); /* Untested: does anything use it? Could be behind background */
 		draw_sprites(bitmap,cliprect,1);

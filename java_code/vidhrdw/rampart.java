@@ -115,11 +115,11 @@ public class rampart
 		/* draw and merge the MO */
 		mobitmap = atarimo_render(0, cliprect, &rectlist);
 		for (r = 0; r < rectlist.numrects; r++, rectlist.rect++)
-			for (y = rectlist.rect->min_y; y <= rectlist.rect->max_y; y++)
+			for (y = rectlist.rect.min_y; y <= rectlist.rect.max_y; y++)
 			{
-				UINT16 *mo = (UINT16 *)mobitmap->base + mobitmap->rowpixels * y;
-				UINT16 *pf = (UINT16 *)bitmap->base + bitmap->rowpixels * y;
-				for (x = rectlist.rect->min_x; x <= rectlist.rect->max_x; x++)
+				UINT16 *mo = (UINT16 *)mobitmap.base + mobitmap.rowpixels * y;
+				UINT16 *pf = (UINT16 *)bitmap.base + bitmap.rowpixels * y;
+				for (x = rectlist.rect.min_x; x <= rectlist.rect.max_x; x++)
 					if (mo[x])
 					{
 						/* not yet verified
@@ -216,7 +216,7 @@ public class rampart
 				pfdirty[y] = 0;
 	
 				/* draw it */
-				draw_scanline8(pfbitmap, 0, y, xdim, scanline, Machine->pens, -1);
+				draw_scanline8(pfbitmap, 0, y, xdim, scanline, Machine.pens, -1);
 			}
 	
 		/* copy the cached bitmap */

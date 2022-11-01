@@ -31,7 +31,7 @@ public class spiders
 	{
 		int loop;
 	
-		if ((tmpbitmap = auto_bitmap_alloc(Machine->drv->screen_width,Machine->drv->screen_height)) == 0) return 1;
+		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0) return 1;
 	
 		for(loop=0;loop<256;loop++)
 		{
@@ -118,7 +118,7 @@ public class spiders
 					x=((loop%0x20)<<3)+i;
 					col=((data2&0x01)<<2)+((data1&0x01)<<1)+(data0&0x01);
 	
-					plot_pixel(tmpbitmap, x, y, Machine->pens[col]);
+					plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
 	
 					data0 >>= 1;
 					data1 >>= 1;
@@ -131,6 +131,6 @@ public class spiders
 		}
 	
 		/* Now copy the temp bitmap to the screen */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine->visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,&Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

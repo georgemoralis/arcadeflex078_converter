@@ -166,19 +166,19 @@ public class pgm
 					break;
 	
 				case 0:
-					CalVal=bcd(today->tm_wday); //??
+					CalVal=bcd(today.tm_wday); //??
 					break;
 	
 				case 2:  //Hours
-					CalVal=bcd(today->tm_hour);
+					CalVal=bcd(today.tm_hour);
 					break;
 	
 				case 4:  //Seconds
-					CalVal=bcd(today->tm_sec);
+					CalVal=bcd(today.tm_sec);
 					break;
 	
 				case 6:  //Month
-					CalVal=bcd(today->tm_mon + 1); //?? not bcd in MVS
+					CalVal=bcd(today.tm_mon + 1); //?? not bcd in MVS
 					break;
 	
 				case 8:
@@ -186,15 +186,15 @@ public class pgm
 					break;
 	
 				case 0xa: //Day
-					CalVal=bcd(today->tm_mday);
+					CalVal=bcd(today.tm_mday);
 					break;
 	
 				case 0xc: //Minute
-					CalVal=bcd(today->tm_min);
+					CalVal=bcd(today.tm_min);
 					break;
 	
 				case 0xe:  //Year
-					CalVal=bcd(today->tm_year % 100);
+					CalVal=bcd(today.tm_year % 100);
 					break;
 	
 				case 0xf:  //Load Date

@@ -38,11 +38,11 @@ public class ironhors
 	public static PaletteInitHandlerPtr palette_init_ironhors  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 	{
 		int i;
-		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
-		for (i = 0;i < Machine->drv->total_colors;i++)
+		for (i = 0;i < Machine.drv.total_colors;i++)
 		{
 			int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -52,22 +52,22 @@ public class ironhors
 			bit2 = (color_prom[0] >> 2) & 0x01;
 			bit3 = (color_prom[0] >> 3) & 0x01;
 			r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[Machine.drv.total_colors] >> 3) & 0x01;
 			g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
-			bit0 = (color_prom[2*Machine->drv->total_colors] >> 0) & 0x01;
-			bit1 = (color_prom[2*Machine->drv->total_colors] >> 1) & 0x01;
-			bit2 = (color_prom[2*Machine->drv->total_colors] >> 2) & 0x01;
-			bit3 = (color_prom[2*Machine->drv->total_colors] >> 3) & 0x01;
+			bit0 = (color_prom[2*Machine.drv.total_colors] >> 0) & 0x01;
+			bit1 = (color_prom[2*Machine.drv.total_colors] >> 1) & 0x01;
+			bit2 = (color_prom[2*Machine.drv.total_colors] >> 2) & 0x01;
+			bit3 = (color_prom[2*Machine.drv.total_colors] >> 3) & 0x01;
 			b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
 		}
 	
-		color_prom += 2*Machine->drv->total_colors;
+		color_prom += 2*Machine.drv.total_colors;
 		/* color_prom now points to the beginning of the character lookup table */
 	
 	
@@ -209,58 +209,58 @@ public class ironhors
 			switch (sr[offs+4] & 0x0c)
 			{
 				case 0x00:	/* 16x16 */
-					drawgfx(bitmap,Machine->gfx[1],
+					drawgfx(bitmap,Machine.gfx[1],
 							code/4,
 							color,
 							flipx,flipy,
 							sx,sy,
-							&Machine->visible_area,TRANSPARENCY_PEN,0);
+							&Machine.visible_area,TRANSPARENCY_PEN,0);
 					break;
 	
 				case 0x04:	/* 16x8 */
 					{
 						if (flip_screen != 0) sy += 8; // this fixes the train wheels' position
 	
-						drawgfx(bitmap,Machine->gfx[2],
+						drawgfx(bitmap,Machine.gfx[2],
 								code & ~1,
 								color,
 								flipx,flipy,
 								flipx?sx+8:sx,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
-						drawgfx(bitmap,Machine->gfx[2],
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
+						drawgfx(bitmap,Machine.gfx[2],
 								code | 1,
 								color,
 								flipx,flipy,
 								flipx?sx:sx+8,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 	
 				case 0x08:	/* 8x16 */
 					{
-						drawgfx(bitmap,Machine->gfx[2],
+						drawgfx(bitmap,Machine.gfx[2],
 								code & ~2,
 								color,
 								flipx,flipy,
 								sx,flipy?sy+8:sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
-						drawgfx(bitmap,Machine->gfx[2],
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
+						drawgfx(bitmap,Machine.gfx[2],
 								code | 2,
 								color,
 								flipx,flipy,
 								sx,flipy?sy:sy+8,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 	
 				case 0x0c:	/* 8x8 */
 					{
-						drawgfx(bitmap,Machine->gfx[2],
+						drawgfx(bitmap,Machine.gfx[2],
 								code,
 								color,
 								flipx,flipy,
 								sx,sy,
-								&Machine->visible_area,TRANSPARENCY_PEN,0);
+								&Machine.visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 			}
@@ -274,7 +274,7 @@ public class ironhors
 		for (row = 0; row < 32; row++)
 			tilemap_set_scrollx(bg_tilemap, row, ironhors_scroll[row]);
 	
-		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
+		tilemap_draw(bitmap, &Machine.visible_area, bg_tilemap, 0, 0);
 		ironhors_draw_sprites(bitmap);
 	} };
 }
