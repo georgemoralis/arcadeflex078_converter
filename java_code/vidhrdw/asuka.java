@@ -20,7 +20,7 @@ public class asuka
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,x_offs,0,0,0,0,0,0))
 			return 1;
 	
-		if (TC0110PCR_vh_start())
+		if (TC0110PCR_vh_start() != 0)
 			return 1;
 	
 		return 0;

@@ -179,7 +179,7 @@ public class ssv
 	
 	public static InterruptHandlerPtr ssv_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 		{
 			if (interrupt_ultrax != 0)
 			{

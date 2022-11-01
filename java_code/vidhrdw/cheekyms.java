@@ -130,7 +130,7 @@ public class cheekyms
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			memset(dirtybuffer, 1, videoram_size);
 		}

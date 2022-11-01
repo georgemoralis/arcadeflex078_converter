@@ -153,13 +153,13 @@ public class overdriv
 	
 	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops()) cpu_set_irq_line(0, 5, HOLD_LINE);
+		if (cpu_getiloops() != 0) cpu_set_irq_line(0, 5, HOLD_LINE);
 		else cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
 	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K053246_is_IRQ_enabled()) cpu_set_irq_line(1, 4, HOLD_LINE);
+		if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(1, 4, HOLD_LINE);
 	} };
 	
 	

@@ -528,7 +528,7 @@ public class toaplan2
 		{
 			return 1;
 		}
-		if (truxton2_create_tilemaps_0())
+		if (truxton2_create_tilemaps_0() != 0)
 		{
 			return 1;
 		}
@@ -542,7 +542,7 @@ public class toaplan2
 		{
 			return 1;
 		}
-		if (truxton2_create_tilemaps_0())
+		if (truxton2_create_tilemaps_0() != 0)
 		{
 			return 1;
 		}
@@ -560,7 +560,7 @@ public class toaplan2
 			return 1;
 		spriteram16_n[0] = spriteram16_new[0];
 	
-		if (batrider_create_tilemaps_0())
+		if (batrider_create_tilemaps_0() != 0)
 			return 1;
 	
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);

@@ -361,9 +361,9 @@ public class toaplan1
 	
 	public static VideoUpdateHandlerPtr video_update_rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (toaplan1_create_tilemaps())  return 1;
-		if (toaplan1_paletteram_alloc()) return 1;
-		if (toaplan1_vram_alloc())       return 1;
+		if (toaplan1_create_tilemaps() != 0)  return 1;
+		if (toaplan1_paletteram_alloc() != 0) return 1;
+		if (toaplan1_vram_alloc() != 0)       return 1;
 	
 		scrollx_offs1 = 0x0d + 6;
 		scrollx_offs2 = 0x0d + 4;
@@ -406,10 +406,10 @@ public class toaplan1
 	
 	public static VideoUpdateHandlerPtr video_update_toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (toaplan1_create_tilemaps())  return 1;
-		if (toaplan1_paletteram_alloc()) return 1;
-		if (toaplan1_vram_alloc())       return 1;
-		if (toaplan1_spritevram_alloc()) return 1;
+		if (toaplan1_create_tilemaps() != 0)  return 1;
+		if (toaplan1_paletteram_alloc() != 0) return 1;
+		if (toaplan1_vram_alloc() != 0)       return 1;
+		if (toaplan1_spritevram_alloc() != 0) return 1;
 	
 		scrollx_offs1 = 0x1ef + 6;
 		scrollx_offs2 = 0x1ef + 4;

@@ -653,11 +653,11 @@ public class wind3dfx
 	int win_d3d_effects_init_surfaces(void)
 	{
 		if (win_d3d_background_surface != 0)
-			if (effects_rgb_init())
+			if (effects_rgb_init() != 0)
 				return 1;
 	
 		if (win_d3d_scanline_surface[0] && win_d3d_scanline_surface[1])
-			if (effects_scanline_init())
+			if (effects_scanline_init() != 0)
 				return 1;
 	
 		return 0;

@@ -173,7 +173,7 @@ public class moo
 	
 	static INTERRUPT_GEN(moo_interrupt)
 	{
-		if (K053246_is_IRQ_enabled())
+		if (K053246_is_IRQ_enabled() != 0)
 		{
 			moo_objdma(game_type);
 	

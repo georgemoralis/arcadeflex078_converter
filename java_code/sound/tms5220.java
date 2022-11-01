@@ -334,7 +334,7 @@ public class tms5220
 		int answer;
 	
 	
-		if (tms5220_ready_read())
+		if (tms5220_ready_read() != 0)
 			answer = 0;
 		else
 		{

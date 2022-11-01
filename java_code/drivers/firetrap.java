@@ -559,7 +559,7 @@ public class firetrap
 		static int coin_command_pending=0;
 	
 		/* Check for coin IRQ */
-		if (cpu_getiloops()) {
+		if (cpu_getiloops() != 0) {
 			if ((readinputport(5) & 0x7) != 0x7 && !latch) {
 				coin_command_pending=~readinputport(5);
 				latch=1;

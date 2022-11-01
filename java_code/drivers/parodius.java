@@ -24,7 +24,7 @@ public class parodius
 	
 	public static InterruptHandlerPtr parodius_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K052109_is_IRQ_enabled()) cpu_set_irq_line(0, 0, HOLD_LINE);
+		if (K052109_is_IRQ_enabled() != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)

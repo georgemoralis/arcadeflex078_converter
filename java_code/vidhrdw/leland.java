@@ -81,7 +81,7 @@ public class leland
 	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* first do the standard stuff */
-		if (video_start_leland())
+		if (video_start_leland() != 0)
 			return 1;
 	
 		/* allocate memory */

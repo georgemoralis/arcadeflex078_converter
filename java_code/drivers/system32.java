@@ -1070,7 +1070,7 @@ public class system32
 	
 	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if(cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			irq_raise(1);
 		else
 			irq_raise(0);

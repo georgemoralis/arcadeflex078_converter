@@ -225,7 +225,7 @@ public class equites
 	// Equites Hardware
 	public static InterruptHandlerPtr equites_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 1, HOLD_LINE);
@@ -234,7 +234,7 @@ public class equites
 	// Splendor Blast Hareware
 	public static InterruptHandlerPtr splndrbt_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 1, HOLD_LINE);

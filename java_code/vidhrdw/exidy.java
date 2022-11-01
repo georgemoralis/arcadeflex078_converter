@@ -158,7 +158,7 @@ public class exidy
 	
 	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (video_start_generic())
+	    if (video_start_generic() != 0)
 	        return 1;
 	
 		motion_object_1_vid = auto_bitmap_alloc(16, 16);
@@ -384,7 +384,7 @@ public class exidy
 		update_complete = 0;
 	
 		/* draw sprite 1 */
-		if (sprite_1_enabled())
+		if (sprite_1_enabled() != 0)
 		{
 			org_1_x = 236 - *exidy_sprite1_xpos - 4;
 			org_1_y = 244 - *exidy_sprite1_ypos - 4;
@@ -396,7 +396,7 @@ public class exidy
 			fillbitmap(motion_object_1_vid, pen0, &clip);
 	
 		/* draw sprite 2 */
-		if (sprite_2_enabled())
+		if (sprite_2_enabled() != 0)
 		{
 			org_2_x = 236 - *exidy_sprite2_xpos - 4;
 			org_2_y = 244 - *exidy_sprite2_ypos - 4;
@@ -465,7 +465,7 @@ public class exidy
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 	
 		/* draw sprite 2 first */
-		if (sprite_2_enabled())
+		if (sprite_2_enabled() != 0)
 		{
 			sx = 236 - *exidy_sprite2_xpos - 4;
 			sy = 244 - *exidy_sprite2_ypos - 4;
@@ -476,7 +476,7 @@ public class exidy
 		}
 	
 		/* draw sprite 1 next */
-		if (sprite_1_enabled())
+		if (sprite_1_enabled() != 0)
 		{
 			UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	

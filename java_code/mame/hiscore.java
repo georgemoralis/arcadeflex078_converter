@@ -323,7 +323,7 @@ public class hiscore
 		{
 			if (!state.hiscores_have_been_loaded)
 			{
-				if (safe_to_load()) hs_load();
+				if (safe_to_load() != 0) hs_load();
 			}
 		}
 	}

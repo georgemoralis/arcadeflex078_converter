@@ -187,7 +187,7 @@ public class palette
 		}
 	
 		/* allocate all the data structures */
-		if (palette_alloc())
+		if (palette_alloc() != 0)
 			return 1;
 	
 		/* set up save/restore of the palette */

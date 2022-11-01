@@ -53,7 +53,7 @@ public class atarifb
 	
 	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_generic())
+		if (video_start_generic() != 0)
 			return 1;
 	
 		memset(dirtybuffer, 1, videoram_size);
@@ -74,7 +74,7 @@ public class atarifb
 		int offs,obj;
 		int sprite_bank;
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset(dirtybuffer,1,videoram_size);
 	
 		/* Soccer uses a different graphics set for sprites */

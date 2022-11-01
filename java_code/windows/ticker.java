@@ -119,7 +119,7 @@ public class ticker
 			logerror("using performance counter for timing ... ");
 			cycles_per_sec = frequency.QuadPart;
 	
-			if (has_rdtsc())
+			if (has_rdtsc() != 0)
 			{
 				ticks_counter = rdtsc_cycle_counter;
 			}
@@ -130,7 +130,7 @@ public class ticker
 		}
 		else
 		{
-			if (has_rdtsc())
+			if (has_rdtsc() != 0)
 			{
 				// if the RDTSC instruction is available use it because
 				// it is more precise and has less overhead than timeGetTime()

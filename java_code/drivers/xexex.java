@@ -329,7 +329,7 @@ public class xexex
 			break;
 	
 			case 1:
-				if (K053246_is_IRQ_enabled())
+				if (K053246_is_IRQ_enabled() != 0)
 				{
 					// OBJDMA starts at the beginning of V-blank
 					xexex_objdma(0);

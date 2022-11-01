@@ -219,7 +219,7 @@ public class ajax
 	
 	public static InterruptHandlerPtr ajax_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K051960_is_IRQ_enabled())
+		if (K051960_is_IRQ_enabled() != 0)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 }

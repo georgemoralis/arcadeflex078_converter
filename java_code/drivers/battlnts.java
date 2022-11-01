@@ -20,7 +20,7 @@ public class battlnts
 	
 	public static InterruptHandlerPtr battlnts_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K007342_is_INT_enabled())
+		if (K007342_is_INT_enabled() != 0)
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	

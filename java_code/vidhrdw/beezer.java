@@ -23,7 +23,7 @@ public class beezer
 	{
 		int x, y;
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			for (y = Machine->visible_area.min_y; y <= Machine->visible_area.max_y; y+=2)
 			{
 				for (x = Machine->visible_area.min_x; x <= Machine->visible_area.max_x; x++)

@@ -558,7 +558,7 @@ public class _8080bw
 	
 	static public static VideoUpdateHandlerPtr video_update_8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			int offs;
 	
@@ -689,7 +689,7 @@ public class _8080bw
 		int sea_level = 116 + readinputport(6); /* 116 is a guess */
 		int wave_height = readinputport(7);
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			int offs;
 	

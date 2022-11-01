@@ -466,7 +466,7 @@ public class window
 	
 		// possibly create the debug window, but don't show it yet
 		if (options.mame_debug)
-			if (create_debug_window())
+			if (create_debug_window() != 0)
 				return 1;
 	
 		// update system menu
@@ -597,7 +597,7 @@ public class window
 		}
 		else
 		{
-			if (win_d3d_effects_in_use())
+			if (win_d3d_effects_in_use() != 0)
 				fprintf(stderr, "Warning: hardware-accelerated blitting-effects selected, but currently disabled\n         use the -direct3d option to enable hardware acceleration\n");
 		}
 	
@@ -785,7 +785,7 @@ public class window
 				HDC hdc = BeginPaint(wnd, &pstruct);
 	 			if (win_video_window != 0)
 	  				draw_video_contents(hdc, NULL, NULL, NULL, 1);
-	 			if (win_has_menu())
+	 			if (win_has_menu() != 0)
 	 				DrawMenuBar(win_video_window);
 				EndPaint(wnd, &pstruct);
 				break;

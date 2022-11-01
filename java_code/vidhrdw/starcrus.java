@@ -554,23 +554,23 @@ public class starcrus
 	    collision_reg = 0x00;
 	
 		/* Check for collisions between ship1 and ship2 */
-	    if (starcrus_collision_check_s1s2())
+	    if (starcrus_collision_check_s1s2() != 0)
 	    {
 	        collision_reg |= 0x08;
 	    }
 		/* Check for collisions between ship1 and projectiles */
-	    if (starcrus_collision_check_s1p1p2())
+	    if (starcrus_collision_check_s1p1p2() != 0)
 	    {
 	        collision_reg |= 0x02;
 	    }
 	    /* Check for collisions between ship1 and projectiles */
-	    if (starcrus_collision_check_s2p1p2())
+	    if (starcrus_collision_check_s2p1p2() != 0)
 	    {
 	        collision_reg |= 0x01;
 	    }
 	    /* Check for collisions between ship1 and projectiles */
 	    /* Note: I don't think this is used by the game */
-	    if (starcrus_collision_check_p1p2())
+	    if (starcrus_collision_check_p1p2() != 0)
 	    {
 	        collision_reg |= 0x04;
 	    }

@@ -259,7 +259,7 @@ public class mystwarr
 			break;
 	
 			case 39:
-				if (K053246_is_IRQ_enabled()) cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
+				if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
 			break;
 		}
 	}
@@ -273,7 +273,7 @@ public class mystwarr
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (K053246_is_IRQ_enabled()) cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
+				if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
 			break;
 	
 			case 1:

@@ -83,7 +83,7 @@ public class ddrible
 	public static ReadHandlerPtr ddrible_vlm5030_busy_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return rand(); /* patch */
-		if (VLM5030_BSY()) return 1;
+		if (VLM5030_BSY() != 0) return 1;
 		else return 0;
 	} };
 	

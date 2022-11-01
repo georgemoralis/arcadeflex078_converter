@@ -290,7 +290,7 @@ public class segar
 	
 	public static VideoUpdateHandlerPtr video_update_segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			sv.refresh = 1;
 	
 		segar_common_screenrefresh(bitmap, TRANSPARENCY_NONE, TRANSPARENCY_NONE);
@@ -313,7 +313,7 @@ public class segar
 	
 	public static VideoUpdateHandlerPtr video_update_spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_segar())
+		if (video_start_segar() != 0)
 			return 1;
 	
 		if ((sv.horizbackbitmap = auto_bitmap_alloc(4*Machine->drv->screen_width,Machine->drv->screen_height)) == 0)
@@ -419,7 +419,7 @@ public class segar
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			sv.refresh = 1;
 	
 		// scenes 0,1 are horiz.  scenes 2,3 are vert.
@@ -525,7 +525,7 @@ public class segar
 	
 	public static VideoUpdateHandlerPtr video_update_monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_segar())
+		if (video_start_segar() != 0)
 			return 1;
 	
 		sv.has_bcolorRAM = 1;
@@ -581,7 +581,7 @@ public class segar
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			sv.refresh = 1;
 	
 		sprite_transparency=TRANSPARENCY_NONE;
@@ -758,7 +758,7 @@ public class segar
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			sv.refresh = 1;
 	
 		sprite_transparency=TRANSPARENCY_NONE;

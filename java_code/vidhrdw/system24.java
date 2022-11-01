@@ -12,10 +12,10 @@ public class system24
 		if(sys24_tile_vh_start(0xfff))
 			return 1;
 	
-		if(sys24_sprite_vh_start())
+		if (sys24_sprite_vh_start() != 0)
 			return 1;
 	
-		if(sys24_mixer_vh_start())
+		if (sys24_mixer_vh_start() != 0)
 			return 1;
 	
 		return 0;

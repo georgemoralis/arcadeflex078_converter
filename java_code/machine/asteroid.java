@@ -201,7 +201,7 @@ public class asteroid
 	
 		res = readinputport(0);
 	
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			res |= 0x01;
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x40;

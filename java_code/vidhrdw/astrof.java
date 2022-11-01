@@ -88,7 +88,7 @@ public class astrof
 	{
 		if ((colorram = auto_malloc(videoram_size)) == 0)
 			return 1;
-		if (video_start_generic())
+		if (video_start_generic() != 0)
 			return 1;
 	
 		do_modify_palette = 0;
@@ -240,7 +240,7 @@ public class astrof
 			do_modify_palette = 0;
 		}
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			int offs;
 	

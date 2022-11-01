@@ -147,7 +147,7 @@ public class deco32
 			Bit 6:	Lightgun IRQ (on Lock N Load only)
 			Bit 7:
 			*/
-			if (cpu_getvblank())
+			if (cpu_getvblank() != 0)
 				return 0xffffff80 | 0x1 | 0x10; /* Assume VBL takes priority over possible raster/lightgun irq */
 	
 			return 0xffffff80 | cpu_getvblank() | (cpu_getiloops() ? 0x40 : 0x20);

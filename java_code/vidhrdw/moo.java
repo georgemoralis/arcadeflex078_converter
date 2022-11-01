@@ -114,7 +114,7 @@ public class moo
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI0);
 		layer_colorbase[0] = 0x70;
 	
-		if (K056832_get_LayerAssociation())
+		if (K056832_get_LayerAssociation() != 0)
 		{
 			for (plane=1; plane<4; plane++)
 			{

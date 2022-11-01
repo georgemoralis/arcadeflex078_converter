@@ -1004,7 +1004,7 @@ public class input
 	{
 	#if 0
 		if (flush != 0) clear_keybuf();
-		if (keypressed())
+		if (keypressed() != 0)
 			return ureadkey(NULL);
 		else
 			return 0;

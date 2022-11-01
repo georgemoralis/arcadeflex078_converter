@@ -131,7 +131,7 @@ public class starwars
 			x |= 0x80;
 	
 		/* set the AVG done flag */
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			x |= 0x40;
 		else
 			x &= ~0x40;

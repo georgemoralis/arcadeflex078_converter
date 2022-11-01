@@ -144,7 +144,7 @@ public class plygonet
 	
 	static INTERRUPT_GEN(polygonet_interrupt)
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, MC68000_IRQ_3, HOLD_LINE);

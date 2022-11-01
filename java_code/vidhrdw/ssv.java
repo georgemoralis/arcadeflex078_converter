@@ -248,7 +248,7 @@ public class ssv
 	
 	READ16_HANDLER( ssv_vblank_r )
 	{
-		if (cpu_getvblank())
+		if (cpu_getvblank() != 0)
 			return 0x2000 | 0x1000;
 		else
 			return 0x0000;

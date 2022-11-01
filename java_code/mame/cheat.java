@@ -1280,7 +1280,7 @@ public class cheat
 			}
 			else if((code >= KEYCODE_A) && (code <= KEYCODE_Z))
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return 'A' + (code - KEYCODE_A);
 				}
@@ -1291,7 +1291,7 @@ public class cheat
 			}
 			else if((code >= KEYCODE_0) && (code <= KEYCODE_9))
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return ")!@#$%^&*("[code - KEYCODE_0];
 				}
@@ -1306,7 +1306,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_TILDE)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '~';
 				}
@@ -1317,7 +1317,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_MINUS)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '_';
 				}
@@ -1328,7 +1328,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_EQUALS)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '+';
 				}
@@ -1343,7 +1343,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_OPENBRACE)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '{';
 				}
@@ -1354,7 +1354,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_CLOSEBRACE)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '}';
 				}
@@ -1365,7 +1365,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_COLON)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return ':';
 				}
@@ -1376,7 +1376,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_QUOTE)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '\"';
 				}
@@ -1387,7 +1387,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_BACKSLASH)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '|';
 				}
@@ -1398,7 +1398,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_COMMA)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '<';
 				}
@@ -1409,7 +1409,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_STOP)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '>';
 				}
@@ -1420,7 +1420,7 @@ public class cheat
 			}
 			else if(code == KEYCODE_SLASH)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					return '?';
 				}
@@ -2691,7 +2691,7 @@ public class cheat
 			}
 			else if((sel < (total - 1)) && entry)
 			{
-				if(ShiftKeyPressed())
+				if (ShiftKeyPressed() != 0)
 				{
 					if(cheatList[sel].comment && cheatList[sel].comment[0])
 					{
@@ -2731,7 +2731,7 @@ public class cheat
 			WatchCheatEntry(entry, 0);
 		}
 	
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 		{
 			if(input_ui_pressed(IPT_UI_SAVE_CHEAT))
 			{
@@ -3727,11 +3727,11 @@ public class cheat
 	
 		ui_displaymenu(bitmap, menuItem, menuSubItem, flagBuf, sel, 0);
 	
-		if(AltKeyPressed())
+		if (AltKeyPressed() != 0)
 			increment <<= 4;
-		if(ControlKeyPressed())
+		if (ControlKeyPressed() != 0)
 			increment <<= 8;
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 			increment <<= 16;
 	
 		if(UIPressedRepeatThrottle(IPT_UI_LEFT, kHorizontalSlowKeyRepeatRate))
@@ -4684,11 +4684,11 @@ public class cheat
 	
 		ui_displaymenu(bitmap, menu_item, menu_subitem, 0, sel, 0);
 	
-		if(AltKeyPressed())
+		if (AltKeyPressed() != 0)
 			increment <<= 4;
-		if(ControlKeyPressed())
+		if (ControlKeyPressed() != 0)
 			increment <<= 8;
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 			increment <<= 16;
 	
 		if(UIPressedRepeatThrottle(IPT_UI_DOWN, kVerticalKeyRepeatRate))
@@ -5075,11 +5075,11 @@ public class cheat
 	
 		ui_displaymenu(bitmap, menu_item, menu_subitem, flagBuf, sel, 0);
 	
-		if(AltKeyPressed())
+		if (AltKeyPressed() != 0)
 			increment <<= 4;
-		if(ControlKeyPressed())
+		if (ControlKeyPressed() != 0)
 			increment <<= 8;
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 			increment <<= 16;
 	
 		if(UIPressedRepeatThrottle(IPT_UI_DOWN, kVerticalKeyRepeatRate))
@@ -5412,7 +5412,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_SAVE_CHEAT))
 		{
-			if(ShiftKeyPressed())
+			if (ShiftKeyPressed() != 0)
 			{
 				for(i = 0; i < cheatListLength; i++)
 					SaveCheat(&cheatList[i]);
@@ -5783,7 +5783,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 		{
-			if(ShiftKeyPressed())
+			if (ShiftKeyPressed() != 0)
 			{
 				if(region && search)
 				{
@@ -5904,7 +5904,7 @@ public class cheat
 				sel = total - 1;
 		}
 	
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 		{
 			if(input_ui_pressed(IPT_UI_ADD_CHEAT))
 			{
@@ -5936,7 +5936,7 @@ public class cheat
 			{
 				if (watch != 0)
 				{
-					if(ShiftKeyPressed())
+					if (ShiftKeyPressed() != 0)
 					{
 						CheatEntry	* entry = GetNewCheat();
 	
@@ -5952,7 +5952,7 @@ public class cheat
 	
 			if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 			{
-				if(ControlKeyPressed())
+				if (ControlKeyPressed() != 0)
 				{
 					for(i = 0; i < watchListLength; i++)
 					{
@@ -6158,11 +6158,11 @@ public class cheat
 	
 		ui_displaymenu(bitmap, menuItem, menuSubItem, flagBuf, sel, 0);
 	
-		if(AltKeyPressed())
+		if (AltKeyPressed() != 0)
 			increment <<= 4;
-		if(ControlKeyPressed())
+		if (ControlKeyPressed() != 0)
 			increment <<= 8;
-		if(ShiftKeyPressed())
+		if (ShiftKeyPressed() != 0)
 			increment <<= 16;
 	
 		if(UIPressedRepeatThrottle(IPT_UI_LEFT, kHorizontalSlowKeyRepeatRate))
@@ -6651,7 +6651,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_DELETE_CHEAT))
 		{
-			if(ShiftKeyPressed())
+			if (ShiftKeyPressed() != 0)
 			{
 				if(region && search)
 				{
@@ -7034,7 +7034,7 @@ public class cheat
 	
 		if(input_ui_pressed(IPT_UI_TOGGLE_CHEAT))
 		{
-			if(ShiftKeyPressed())
+			if (ShiftKeyPressed() != 0)
 			{
 				watchesDisabled ^= 1;
 	

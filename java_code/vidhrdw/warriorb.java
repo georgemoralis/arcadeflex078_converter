@@ -40,12 +40,12 @@ public class warriorb
 		if (TC0100SCN_vh_start(chips,TC0100SCN_GFX_NUM,x_offs,0,0,0,0,0,multiscrn_xoffs))
 			return 1;
 	
-		if (has_TC0110PCR())
-			if (TC0110PCR_vh_start())
+		if (has_TC0110PCR() != 0)
+			if (TC0110PCR_vh_start() != 0)
 				return 1;
 	
-		if (has_second_TC0110PCR())
-			if (TC0110PCR_1_vh_start())
+		if (has_second_TC0110PCR() != 0)
+			if (TC0110PCR_1_vh_start() != 0)
 				return 1;
 	
 		/* Ensure palette from correct TC0110PCR used for each screen */

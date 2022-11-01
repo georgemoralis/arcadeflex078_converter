@@ -247,7 +247,7 @@ public class taito_b
 	
 	public static VideoUpdateHandlerPtr video_update_hitice  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	  if (video_start_taitob_color_order0())
+	  if (video_start_taitob_color_order0() != 0)
 	    return 1;
 	
 	  pixel_bitmap = auto_bitmap_alloc(1024,512);

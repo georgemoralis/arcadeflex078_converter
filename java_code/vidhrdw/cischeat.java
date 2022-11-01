@@ -151,7 +151,7 @@ public class cischeat
 	/* 32 colour codes for the tiles */
 	public static VideoUpdateHandlerPtr video_update_cischeat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_megasys1())	return 1;
+		if (video_start_megasys1() != 0)	return 1;
 	
 	 	megasys1_bits_per_color_code = 5;
 	
@@ -167,7 +167,7 @@ public class cischeat
 	/* 16 colour codes for the tiles */
 	public static VideoUpdateHandlerPtr video_update_f1gpstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_cischeat())	return 1;
+		if (video_start_cischeat() != 0)	return 1;
 	
 	 	megasys1_bits_per_color_code = 4;
 	

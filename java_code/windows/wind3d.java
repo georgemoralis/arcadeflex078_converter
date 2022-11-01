@@ -646,11 +646,11 @@ public class wind3d
 	
 		// full screen mode: set the resolution
 		changed_resolutions = 0;
-		if (set_resolution())
+		if (set_resolution() != 0)
 			goto error_handling;
 	
 		// create the screen surfaces
-		if (create_surfaces())
+		if (create_surfaces() != 0)
 			goto error_handling;
 	
 		result = IDirect3D7_CreateDevice(d3d7, &IID_IDirect3DHALDevice, back_surface, &d3d_device7);
@@ -663,22 +663,22 @@ public class wind3d
 		// get device caps
 		result = IDirect3DDevice7_GetCaps(d3d_device7, &d3d_device_desc);
 	
-		if (win_d3d_test_hardware_caps())
+		if (win_d3d_test_hardware_caps() != 0)
 			goto error_handling;
 	
 		// create the blit surfaces
-		if (create_blit_surface())
+		if (create_blit_surface() != 0)
 			goto error_handling;
 	
 		// create the effects surfaces
-		if (create_effects_surfaces())
+		if (create_effects_surfaces() != 0)
 			goto error_handling;
 	
 		// erase all the surfaces we created
 		erase_surfaces();
 	
 		// init the surfaces used for the effects
-		if (win_d3d_effects_init_surfaces())
+		if (win_d3d_effects_init_surfaces() != 0)
 			goto error_handling;
 	
 		// attempt to get the current display mode
@@ -1123,7 +1123,7 @@ public class wind3d
 		// create a clipper for windowed mode
 		if (win_window_mode != 0)
 		{
-			if (create_clipper())
+			if (create_clipper() != 0)
 				goto error_handling;
 		}
 	

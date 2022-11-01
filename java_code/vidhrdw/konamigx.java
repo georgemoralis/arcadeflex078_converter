@@ -197,7 +197,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninit()) return 1;
+		if (_gxcommoninit() != 0) return 1;
 	
 		/* here are some hand tuned per game scroll offsets to go with the per game visible areas,
 		   i see no better way of doing this for now... */
@@ -244,7 +244,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites()) return 1;
+		if (_gxcommoninitnosprites() != 0) return 1;
 	
 		return 0;
 	}
@@ -261,7 +261,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites()) return 1;
+		if (_gxcommoninitnosprites() != 0) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);
@@ -283,7 +283,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites()) return 1;
+		if (_gxcommoninitnosprites() != 0) return 1;
 	
 		gx_invertlayersBC = 1;
 		konamigx_mixer_primode(-1); // swapped layer B and C priorities?
@@ -298,7 +298,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninit()) return 1;
+		if (_gxcommoninit() != 0) return 1;
 	
 		if (!strcmp(Machine->gamedrv->name,"tokkae") || !strcmp(Machine->gamedrv->name,"tkmmpzdm"))
 		{
@@ -316,7 +316,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninit()) return 1;
+		if (_gxcommoninit() != 0) return 1;
 	
 		gx_psac_tilemap = tilemap_create(get_gx_psac3_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 256, 1024);
 		gx_rozenable = 1;
@@ -334,7 +334,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninit()) return 1;
+		if (_gxcommoninit() != 0) return 1;
 	
 		gx_psac_tilemap = tilemap_create(get_gx_psac_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 128, 128);
 		gx_rozenable = 1;
@@ -359,11 +359,11 @@ public class konamigx
 				return 1;
 			}
 	
-			if (_gxcommoninitnosprites()) return 1;
+			if (_gxcommoninitnosprites() != 0) return 1;
 		}
 		else
 		{
-			if (_gxcommoninit()) return 1;
+			if (_gxcommoninit() != 0) return 1;
 		}
 	
 		return 0;
@@ -381,7 +381,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites()) return 1;
+		if (_gxcommoninitnosprites() != 0) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);
@@ -410,7 +410,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites()) return 1;
+		if (_gxcommoninitnosprites() != 0) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);

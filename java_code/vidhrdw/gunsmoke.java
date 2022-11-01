@@ -168,7 +168,7 @@ public class gunsmoke
 		int top,left;
 	
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset (bgmap, 0xff, sizeof (bgmap));
 	
 	

@@ -231,7 +231,7 @@ public class senjyo
 			return;
 		}
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			pen = 0;
 			count = 0;

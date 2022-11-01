@@ -166,7 +166,7 @@ public class sound
 		if (Machine->sample_rate != 0)
 		{
 			// attempt to initialize directsound
-			if (dsound_init())
+			if (dsound_init() != 0)
 				return 1;
 	
 			// set the startup volume
@@ -502,7 +502,7 @@ public class sound
 	#endif
 	
 		// create the buffers
-		if (dsound_create_buffers())
+		if (dsound_create_buffers() != 0)
 			goto cant_create_buffers;
 	
 		// start playing

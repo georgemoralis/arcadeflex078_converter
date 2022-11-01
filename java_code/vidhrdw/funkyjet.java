@@ -17,7 +17,7 @@ public class funkyjet
 	
 	public static VideoUpdateHandlerPtr video_update_funkyjet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (deco16_1_video_init())
+		if (deco16_1_video_init() != 0)
 			return 1;
 	
 		return 0;

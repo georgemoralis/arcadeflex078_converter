@@ -292,7 +292,7 @@ public class hexion
 	public static InterruptHandlerPtr hexion_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		/* NMI handles start and coin inputs, origin unknown */
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);

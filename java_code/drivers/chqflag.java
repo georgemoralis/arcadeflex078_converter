@@ -30,12 +30,12 @@ public class chqflag
 	{
 		if (cpu_getiloops() == 0)
 		{
-			if (K051960_is_IRQ_enabled())
+			if (K051960_is_IRQ_enabled() != 0)
 				cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2)
 		{
-			if (K051960_is_NMI_enabled())
+			if (K051960_is_NMI_enabled() != 0)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };

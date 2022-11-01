@@ -390,7 +390,7 @@ public class liberatr
 	
 	public static VideoUpdateHandlerPtr video_update_liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			UINT8 liberatr_y_save = *liberatr_y;
 			UINT8 liberatr_x_save = *liberatr_x;

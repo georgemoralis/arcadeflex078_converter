@@ -276,7 +276,7 @@ public class gauntlet
 	
 		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x80;
 		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x40;
-		if (tms5220_ready_r()) temp ^= 0x20;
+		if (tms5220_ready_r() != 0) temp ^= 0x20;
 		if (!(readinputport(4) & 0x0008)) temp ^= 0x10;
 	
 		return temp;

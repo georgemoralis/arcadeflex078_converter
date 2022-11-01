@@ -169,7 +169,7 @@ public class gijoe
 		// global interrupt masking (*this game only)
 		if (!K056832_is_IRQ_enabled(0)) return;
 	
-		if (K053246_is_IRQ_enabled())
+		if (K053246_is_IRQ_enabled() != 0)
 		{
 			gijoe_objdma();
 	

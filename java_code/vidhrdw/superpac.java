@@ -206,7 +206,7 @@ public class superpac
 	{
 		int offs;
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset(dirtybuffer, 1, videoram_size);
 	
 		/* for every character in the Video RAM, check if it has been modified */

@@ -243,7 +243,7 @@ public class bzone
 		else
 			res &= ~IN0_3KHZ;
 	
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			res |= IN0_VG_HALT;
 		else
 			res &= ~IN0_VG_HALT;

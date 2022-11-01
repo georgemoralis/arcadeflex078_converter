@@ -249,7 +249,7 @@ public class williams
 	public static VideoUpdateHandlerPtr video_update_williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* standard initialization */
-		if (video_start_williams())
+		if (video_start_williams() != 0)
 			return 1;
 	
 		/* override the blitters */
@@ -469,7 +469,7 @@ public class williams
 		int i, j;
 	
 		/* standard startup first */
-		if (video_start_williams())
+		if (video_start_williams() != 0)
 			return 1;
 	
 		/* expand the lookup table so that we do one lookup per byte */

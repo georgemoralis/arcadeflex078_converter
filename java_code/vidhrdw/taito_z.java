@@ -18,7 +18,7 @@ public class taito_z
 	
 	static int taitoz_core_vh_start (int x_offs)
 	{
-		if (has_TC0480SCP())	/* it's Dblaxle, a tc0480scp game */
+		if (has_TC0480SCP() != 0)	/* it's Dblaxle, a tc0480scp game */
 		{
 			if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,x_offs,0x21,0x08,4,0,0,0,0))
 				return 1;
@@ -29,12 +29,12 @@ public class taito_z
 				return 1;
 		}
 	
-		if (has_TC0150ROD())
-			if (TC0150ROD_vh_start())
+		if (has_TC0150ROD() != 0)
+			if (TC0150ROD_vh_start() != 0)
 				return 1;
 	
-		if (has_TC0110PCR())
-			if (TC0110PCR_vh_start())
+		if (has_TC0110PCR() != 0)
+			if (TC0110PCR_vh_start() != 0)
 				return 1;
 	
 		return 0;

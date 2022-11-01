@@ -48,7 +48,7 @@ public class slapshot
 		if (!spriteram_delayed || !spriteram_buffered || !spritelist)
 			return 1;
 	
-		if (has_TC0480SCP())	/* it's a tc0480scp game */
+		if (has_TC0480SCP() != 0)	/* it's a tc0480scp game */
 		{
 			if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,taito_hide_pixels,30,9,-1,1,0,2,256))
 				return 1;

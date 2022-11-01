@@ -72,8 +72,8 @@ public class wgp
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,x_offs,y_offs,0,0,0,0,0))
 			return 1;
 	
-		if (has_TC0110PCR())
-			if (TC0110PCR_vh_start())
+		if (has_TC0110PCR() != 0)
+			if (TC0110PCR_vh_start() != 0)
 				return 1;
 	
 		wgp_piv_xoffs = piv_xoffs;

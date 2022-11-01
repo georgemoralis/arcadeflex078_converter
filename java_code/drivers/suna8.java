@@ -2080,7 +2080,7 @@ public class suna8
 	
 	public static InterruptHandlerPtr brickzn_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops()) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if (cpu_getiloops() != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else				 cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -2132,7 +2132,7 @@ public class suna8
 	
 	public static InterruptHandlerPtr hardhea2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 		{
 			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
@@ -2243,7 +2243,7 @@ public class suna8
 	
 	public static InterruptHandlerPtr sparkman_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 		{
 			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}

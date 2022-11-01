@@ -243,7 +243,7 @@ public class cpuexec
 		int cpunum;
 		
 		/* initialize the interfaces first */
-		if (cpuintrf_init())
+		if (cpuintrf_init() != 0)
 			return 1;
 	
 		/* loop over all our CPUs */
@@ -280,7 +280,7 @@ public class cpuexec
 		state_save_register_INT32("cpu", 0, "watchdog count", &watchdog_counter, 1);
 	
 		/* reset the IRQ lines and save those */
-		if (cpuint_init())
+		if (cpuint_init() != 0)
 			return 1;
 	
 		return 0;

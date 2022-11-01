@@ -309,7 +309,7 @@ public class deadang
 	
 	public static InterruptHandlerPtr deadang_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 			cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 		else
 			cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc4/4);	/* VBL */

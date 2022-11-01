@@ -496,7 +496,7 @@ public class metro
 	
 	public static VideoUpdateHandlerPtr video_update_blzntrnd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_metro_14220())
+		if (video_start_metro_14220() != 0)
 			return 1;
 	
 		has_zoom = 1;
@@ -519,7 +519,7 @@ public class metro
 	
 	public static VideoUpdateHandlerPtr video_update_gstrik2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_metro_14220())
+		if (video_start_metro_14220() != 0)
 			return 1;
 	
 		has_zoom = 1;

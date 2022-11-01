@@ -355,7 +355,7 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore())
+		if (init_fore() != 0)
 			return 1;
 	
 		/* allocate the expanded road palette */
@@ -400,7 +400,7 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore())
+		if (init_fore() != 0)
 			return 1;
 	
 		/* allocate the expanded sprite priority map */
@@ -448,7 +448,7 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore())
+		if (init_fore() != 0)
 			return 1;
 	
 		/* allocate the expanded sprite priority map */

@@ -487,7 +487,7 @@ public class exidy440
 	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		/* if we need a full refresh, mark all scanlines dirty */
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset(scanline_dirty, 1, 256);
 	
 		/* if we're Top Secret, do our refresh here; others are done in the update function above */

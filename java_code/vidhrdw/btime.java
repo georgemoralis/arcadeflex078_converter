@@ -536,7 +536,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    if ((bnj_scroll1 & 0x10) != 0)
@@ -575,7 +575,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    drawchars(tmpbitmap, TRANSPARENCY_NONE, 0, -1);
@@ -589,7 +589,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    drawchars(tmpbitmap, TRANSPARENCY_NONE, 0, -1);
@@ -603,7 +603,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    if ((bnj_scroll1 & 0x04) != 0)
@@ -628,7 +628,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	    {
 	        memset(dirtybuffer,1,videoram_size);
 	        memset(dirtybuffer2,1,bnj_backgroundram_size);
@@ -697,7 +697,7 @@ public class btime
 	    int offs;
 	
 	
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    /*
@@ -733,7 +733,7 @@ public class btime
 	
 	public static VideoUpdateHandlerPtr video_update_disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-	    if (get_vh_global_attribute_changed())
+	    if (get_vh_global_attribute_changed() != 0)
 	        memset(dirtybuffer,1,videoram_size);
 	
 	    decode_modified(spriteram, 1);

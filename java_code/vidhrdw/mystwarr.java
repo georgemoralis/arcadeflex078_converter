@@ -492,7 +492,7 @@ public class mystwarr
 			rozmode = GXSUB_8BPP;
 		}
 	
-		if (K056832_get_LayerAssociation())
+		if (K056832_get_LayerAssociation() != 0)
 		{
 			for (i=0; i<4; i++)
 			{

@@ -354,7 +354,7 @@ public class thedeep
 	
 	public static InterruptHandlerPtr thedeep_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops())
+		if (cpu_getiloops() != 0)
 		{
 			if (protection_command != 0x59)
 			{

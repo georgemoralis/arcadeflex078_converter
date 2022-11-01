@@ -44,7 +44,7 @@ public class wiz
 	
 	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_generic())
+		if (video_start_generic() != 0)
 			return 1;
 	
 		state_save_register_UINT8("wiz", 0, "char_bank",   char_bank,   2);

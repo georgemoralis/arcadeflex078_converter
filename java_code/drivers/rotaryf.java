@@ -28,7 +28,7 @@ public class rotaryf
 	
 	public static InterruptHandlerPtr rotaryf_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if(cpu_getvblank())
+		if (cpu_getvblank() != 0)
 			cpu_set_irq_line(0,I8085_RST55_LINE,HOLD_LINE);
 		else
 			cpu_set_irq_line(0,I8085_RST75_LINE,HOLD_LINE);

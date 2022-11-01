@@ -443,7 +443,7 @@ public class cave
 				return 1;
 		}
 	
-		if (sprite_init_cave())	return 1;
+		if (sprite_init_cave() != 0)	return 1;
 	
 		cave_layers_offs_x = 0x13;
 		cave_layers_offs_y = -0x12;

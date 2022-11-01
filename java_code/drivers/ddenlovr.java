@@ -104,7 +104,7 @@ public class ddenlovr
 	
 	VIDEO_START(mmpanic)
 	{
-		if (video_start_ddenlovr())
+		if (video_start_ddenlovr() != 0)
 			return 1;
 	
 		extra_layers = 1;

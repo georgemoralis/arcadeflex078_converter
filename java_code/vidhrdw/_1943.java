@@ -124,7 +124,7 @@ public class _1943
 		if ((sc1bitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
 	
-		if (video_start_generic())
+		if (video_start_generic() != 0)
 			return 1;
 	
 		memset (sc2map, 0xff, sizeof (sc2map));

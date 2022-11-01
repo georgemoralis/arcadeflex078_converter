@@ -28,7 +28,7 @@ public class thunderx
 	
 	public static InterruptHandlerPtr scontra_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K052109_is_IRQ_enabled())
+		if (K052109_is_IRQ_enabled() != 0)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	

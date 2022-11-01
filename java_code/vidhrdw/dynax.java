@@ -587,7 +587,7 @@ public class dynax
 	
 	public static VideoUpdateHandlerPtr video_update_mcnpshnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_hnoridur())	return 1;
+		if (video_start_hnoridur() != 0)	return 1;
 		priority_table = priority_mcnpshnt;
 		return 0;
 	} };

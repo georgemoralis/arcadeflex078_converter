@@ -88,7 +88,7 @@ public class dbz2
 				break;
 	
 			case 1:
-				if (K053246_is_IRQ_enabled())
+				if (K053246_is_IRQ_enabled() != 0)
 					cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 				break;
 		}

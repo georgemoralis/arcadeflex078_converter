@@ -238,7 +238,7 @@ public class mhavoc
 			res |= 0x02;
 	
 		/* Bit 0 = Vector generator halt flag */
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			res |= 0x01;
 	
 		return res;
@@ -255,7 +255,7 @@ public class mhavoc
 			res |= 0x02;
 	
 		/* Bit 0 = Vector generator halt flag */
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			res |= 0x01;
 	
 		return res;

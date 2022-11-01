@@ -297,7 +297,7 @@ public class simpsons
 	
 	public static InterruptHandlerPtr simpsons_irq = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K053246_is_IRQ_enabled())
+		if (K053246_is_IRQ_enabled() != 0)
 		{
 			simpsons_objdma();
 	
@@ -305,7 +305,7 @@ public class simpsons
 			timer_set(TIME_IN_USEC(30), 0, dmaend_callback);
 		}
 	
-		if (K052109_is_IRQ_enabled())
+		if (K052109_is_IRQ_enabled() != 0)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	

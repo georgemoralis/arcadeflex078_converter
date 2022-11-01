@@ -362,7 +362,7 @@ public class harddriv
 			0x8000 = SW1 #1
 		*/
 		int temp = readinputport(0);
-		if (atarigen_get_hblank()) temp ^= 0x0002;
+		if (atarigen_get_hblank() != 0) temp ^= 0x0002;
 		temp ^= 0x0018;		/* both EOCs always high for now */
 		return temp;
 	}

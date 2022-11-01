@@ -118,7 +118,7 @@ public class asterix
 	
 	public static InterruptHandlerPtr asterix_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K054157_is_IRQ_enabled())
+		if (K054157_is_IRQ_enabled() != 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE); /* ??? All irqs have the same vector, and the
 	                                              mask used is 0 or 7 */
 	} };

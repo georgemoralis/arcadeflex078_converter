@@ -68,7 +68,7 @@ public class tutankhm
 	***************************************************************************/
 	public static VideoUpdateHandlerPtr video_update_tutankhm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			int offs;
 	

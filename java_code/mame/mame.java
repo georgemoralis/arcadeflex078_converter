@@ -274,10 +274,10 @@ public class mame
 	
 	#ifdef MAME_DEBUG
 		/* validity checks -- debug build only */
-		if (validitychecks())
+		if (validitychecks() != 0)
 			return 1;
 		#ifdef MESS
-		if (messvaliditychecks()) return 1;
+		if (messvaliditychecks() != 0) return 1;
 		#endif
 	#endif
 	
@@ -290,7 +290,7 @@ public class mame
 		Machine->drv = &internal_drv;
 	
 		/* initialize the game options */
-		if (init_game_options())
+		if (init_game_options() != 0)
 			return 1;
 	
 		/* if we're coming in with a savegame request, process it now */
@@ -303,19 +303,19 @@ public class mame
 		bailing = 0;
 	
 		/* let the OSD layer start up first */
-		if (osd_init())
+		if (osd_init() != 0)
 			bail_and_print("Unable to initialize system");
 		else
 		{
 			begin_resource_tracking();
 	
 			/* then finish setting up our local machine */
-			if (init_machine())
+			if (init_machine() != 0)
 				bail_and_print("Unable to initialize machine emulation");
 			else
 			{
 				/* then run it */
-				if (run_machine())
+				if (run_machine() != 0)
 					bail_and_print("Unable to start machine emulation");
 				else
 					err = 0;
@@ -457,7 +457,7 @@ public class mame
 		int res = 1;
 	
 		/* start the video hardware */
-		if (vh_open())
+		if (vh_open() != 0)
 			bail_and_print("Unable to start video emulation");
 		else
 		{
@@ -470,7 +470,7 @@ public class mame
 			else
 			{
 				/* start the audio system */
-				if (sound_start())
+				if (sound_start() != 0)
 					bail_and_print("Unable to start audio emulation");
 				else
 				{
@@ -659,7 +659,7 @@ public class mame
 		int bmheight = Machine->drv->screen_height;
 	
 		/* first allocate the necessary palette structures */
-		if (palette_start())
+		if (palette_start() != 0)
 			goto cant_start_palette;
 	
 		/* convert the gfx ROMs into character sets. This is done BEFORE calling the driver's */
@@ -721,7 +721,7 @@ public class mame
 	
 		/* create spriteram buffers if necessary */
 		if (Machine->drv->video_attributes & VIDEO_BUFFERS_SPRITERAM)
-			if (init_buffered_spriteram())
+			if (init_buffered_spriteram() != 0)
 				goto cant_init_buffered_spriteram;
 	
 		/* build our private user interface font */
@@ -752,7 +752,7 @@ public class mame
 	#endif
 	
 		/* initialize the palette - must be done after osd_create_display() */
-		if (palette_init())
+		if (palette_init() != 0)
 			goto cant_init_palette;
 	
 		/* force the first update to be full */
@@ -1127,7 +1127,7 @@ public class mame
 		struct rectangle clip = Machine->visible_area;
 	
 		/* if skipping this frame, bail */
-		if (osd_skip_this_frame())
+		if (osd_skip_this_frame() != 0)
 			return;
 	
 		/* skip if less than the lowest so far */
@@ -1364,10 +1364,10 @@ public class mame
 		/* disable high score when playing network game */
 		/* (this forces all networked machines to start from the same state!) */
 	#ifdef MAME_NET
-		if (net_active())
+		if (net_active() != 0)
 			return 0;
 	#elif defined XMAME_NET
-		if (osd_net_active())
+		if (osd_net_active() != 0)
 			return 0;
 	#endif
 	

@@ -194,7 +194,7 @@ public class tempest
 	{
 		int res = readinputport(0);
 	
-		if (avgdvg_done())
+		if (avgdvg_done() != 0)
 			res |= 0x40;
 	
 		/* Emulate the 3kHz source on bit 7 (divide 1.5MHz by 512) */

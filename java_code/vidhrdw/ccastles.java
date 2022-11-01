@@ -274,7 +274,7 @@ public class ccastles
 		int scrollx,scrolly;
 	
 	
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 		{
 			redraw_bitmap();
 		}

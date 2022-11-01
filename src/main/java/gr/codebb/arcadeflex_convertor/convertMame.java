@@ -214,8 +214,8 @@ public class convertMame {
                                 continue;
                             }
                         }
-                    } 
-                    Convertor.inpos=i;
+                    }
+                    Convertor.inpos = i;
                     break;
                 }
                 case 'W': {
@@ -454,7 +454,7 @@ public class convertMame {
                     }
                     break;
                 case 'i':
-                    i= Convertor.inpos;
+                    i = Convertor.inpos;
                     if (sUtil.getToken("if")) {
                         sUtil.skipSpace();
                         if (sUtil.parseChar() != '(') {
@@ -470,6 +470,15 @@ public class convertMame {
                             Convertor.token[1] = sUtil.parseToken();
                             sUtil.skipSpace();
                             Convertor.token[0] = (new StringBuilder()).append("(").append(Convertor.token[0]).append(" & ").append(Convertor.token[1]).append(")").toString();
+                        }
+                        if (sUtil.getChar() == '(') {
+                            Convertor.inpos++;
+                            if (sUtil.getChar() == ')') {
+                                if (sUtil.getChar() == ')') {
+                                    Convertor.inpos++;
+                                    Convertor.token[0] = (new StringBuilder()).append(Convertor.token[0]).append("(").append(")").toString();
+                                }
+                            }
                         }
                         if (sUtil.parseChar() != ')') {
                             Convertor.inpos = i;

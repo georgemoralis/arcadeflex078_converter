@@ -396,7 +396,7 @@ public class segasyse
 	
 		UINT8* dest;
 	
-		if (osd_skip_this_frame())
+		if (osd_skip_this_frame() != 0)
 			return;
 	
 		dest = cache_bitmap + (16+256+16) * line;

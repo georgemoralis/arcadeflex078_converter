@@ -99,7 +99,7 @@ public class taito_f2
 		if (chips < 0)	/* we have an erroneous TC0100SCN configuration */
 			return 1;
 	
-		if (has_TC0480SCP())	/* it's a tc0480scp game */
+		if (has_TC0480SCP() != 0)	/* it's a tc0480scp game */
 		{
 			if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,f2_hide_pixels,f2_tilemap_xoffs,
 			   f2_tilemap_yoffs,f2_text_xoffs,0,-1,0,f2_tilemap_col_base))
@@ -112,19 +112,19 @@ public class taito_f2
 				return 1;
 		}
 	
-		if (has_TC0110PCR())
-			if (TC0110PCR_vh_start())
+		if (has_TC0110PCR() != 0)
+			if (TC0110PCR_vh_start() != 0)
 				return 1;
 	
-		if (has_TC0280GRD())
+		if (has_TC0280GRD() != 0)
 			if (TC0280GRD_vh_start(TC0280GRD_GFX_NUM))
 				return 1;
 	
-		if (has_TC0430GRW())
+		if (has_TC0430GRW() != 0)
 			if (TC0430GRW_vh_start(TC0430GRW_GFX_NUM))
 				return 1;
 	
-		if (has_TC0360PRI())
+		if (has_TC0360PRI() != 0)
 			TC0360PRI_vh_start();	/* Purely for save-state purposes */
 	
 		for (i = 0; i < 8; i ++)
@@ -1004,10 +1004,10 @@ public class taito_f2
 	
 	static void draw_roz_layer(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		if (has_TC0280GRD())
+		if (has_TC0280GRD() != 0)
 			TC0280GRD_zoom_draw(bitmap,cliprect,f2_pivot_xdisp,f2_pivot_ydisp,8);
 	
-		if (has_TC0430GRW())
+		if (has_TC0430GRW() != 0)
 			TC0430GRW_zoom_draw(bitmap,cliprect,f2_pivot_xdisp,f2_pivot_ydisp,8);
 	}
 	
@@ -1025,10 +1025,10 @@ public class taito_f2
 	
 		taitof2_handle_sprite_buffering();
 	
-		if (has_TC0280GRD())
+		if (has_TC0280GRD() != 0)
 			TC0280GRD_tilemap_update(roz_base_color);
 	
-		if (has_TC0430GRW())
+		if (has_TC0430GRW() != 0)
 			TC0430GRW_tilemap_update(roz_base_color);
 	
 		TC0100SCN_tilemap_update();

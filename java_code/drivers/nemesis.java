@@ -327,7 +327,7 @@ public class nemesis
 	
 		res |= 0xd0;
 	
-		if (VLM5030_BSY())
+		if (VLM5030_BSY() != 0)
 			res |= 0x20;
 	
 		return res;

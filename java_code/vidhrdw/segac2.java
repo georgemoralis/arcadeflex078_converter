@@ -313,7 +313,7 @@ public class segac2
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2())
+		if (video_start_segac2() != 0)
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
@@ -330,14 +330,14 @@ public class segac2
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2())
+		if (video_start_segac2() != 0)
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
 		display_enable = 1;
 	
 	
-		if (start_megatech_video_normal())
+		if (start_megatech_video_normal() != 0)
 			return 1;
 		scanbase = 192;
 	
@@ -348,7 +348,7 @@ public class segac2
 	{
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2())
+		if (video_start_segac2() != 0)
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
@@ -356,7 +356,7 @@ public class segac2
 	
 		scanbase = 0;
 	
-		if (start_megatech_video_normal())
+		if (start_megatech_video_normal() != 0)
 			return 1;
 	
 		return 0;

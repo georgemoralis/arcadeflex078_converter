@@ -24,7 +24,7 @@ public class bottom9
 	
 	public static InterruptHandlerPtr bottom9_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K052109_is_IRQ_enabled())
+		if (K052109_is_IRQ_enabled() != 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	

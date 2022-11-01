@@ -433,7 +433,7 @@ public class taito_f3
 	
 	public static InterruptHandlerPtr f3_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (cpu_getiloops()) cpu_set_irq_line(0, 3, HOLD_LINE);
+		if (cpu_getiloops() != 0) cpu_set_irq_line(0, 3, HOLD_LINE);
 		else cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
 	

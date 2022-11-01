@@ -112,7 +112,7 @@ public class winddraw
 		margins->right = desc_width;
 		margins->bottom = desc_height;
 	
-		if (win_has_menu())
+		if (win_has_menu() != 0)
 		{
 			static int height_with_menubar = 0;
 			if (height_with_menubar == 0)
@@ -261,11 +261,11 @@ public class winddraw
 	
 		// full screen mode: set the resolution
 		changed_resolutions = 0;
-		if (set_resolution())
+		if (set_resolution() != 0)
 			goto cant_set_resolution;
 	
 		// create the surfaces
-		if (create_surfaces())
+		if (create_surfaces() != 0)
 			goto cant_create_surfaces;
 	
 		// force some updates
@@ -635,14 +635,14 @@ public class winddraw
 		// stretch mode: create a blit surface
 		if (win_dd_hw_stretch != 0)
 		{
-			if (create_blit_surface())
+			if (create_blit_surface() != 0)
 				goto cant_create_blit;
 		}
 	
 		// create a clipper for windowed mode
 		if (win_window_mode != 0)
 		{
-			if (create_clipper())
+			if (create_clipper() != 0)
 				goto cant_init_clipper;
 		}
 	
@@ -1002,7 +1002,7 @@ public class winddraw
 		if (!primary_surface)
 		{
 			release_surfaces();
-			if (create_surfaces())
+			if (create_surfaces() != 0)
 				return 0;
 		}
 	

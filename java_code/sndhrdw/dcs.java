@@ -629,9 +629,9 @@ public class dcs
 	static READ16_HANDLER( latch_status_r )
 	{
 		int result = 0;
-		if (IS_INPUT_FULL())
+		if (IS_INPUT_FULL() != 0)
 			result |= 0x80;
-		if (IS_OUTPUT_EMPTY())
+		if (IS_OUTPUT_EMPTY() != 0)
 			result |= 0x40;
 		if (dcs.fifo_status_r)
 			result |= (*dcs.fifo_status_r)() & 0x38;

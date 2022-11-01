@@ -52,7 +52,7 @@ public class skychut
 	public static VideoUpdateHandlerPtr video_update_skychut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset (dirtybuffer, 1, videoram_size);
 	
 		fillbitmap(bitmap,Machine->pens[7],cliprect);
@@ -145,7 +145,7 @@ public class skychut
 	public static VideoUpdateHandlerPtr video_update_iremm15  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
 		int offs;
-		if (get_vh_global_attribute_changed())
+		if (get_vh_global_attribute_changed() != 0)
 			memset (dirtybuffer, 1, videoram_size);
 	
 		for (offs = videoram_size - 1;offs >= 0;offs--)

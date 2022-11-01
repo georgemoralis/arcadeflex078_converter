@@ -3245,7 +3245,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_8(*compare, dest, res);
 			FLAG_C = CFLAG_8(res);
 	
-			if(COND_NE())
+			if (COND_NE() != 0)
 				*compare = MASK_OUT_BELOW_8(*compare) | dest;
 			else
 			{
@@ -3274,7 +3274,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_16(*compare, dest, res);
 			FLAG_C = CFLAG_16(res);
 	
-			if(COND_NE())
+			if (COND_NE() != 0)
 				*compare = MASK_OUT_BELOW_16(*compare) | dest;
 			else
 			{
@@ -3303,7 +3303,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_32(*compare, dest, res);
 			FLAG_C = CFLAG_SUB_32(*compare, dest, res);
 	
-			if(COND_NE())
+			if (COND_NE() != 0)
 				*compare = dest;
 			else
 			{
@@ -3336,7 +3336,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_16(*compare1, dest1, res1);
 			FLAG_C = CFLAG_16(res1);
 	
-			if(COND_EQ())
+			if (COND_EQ() != 0)
 			{
 				res2 = dest2 - MASK_OUT_ABOVE_16(*compare2);
 	
@@ -3345,7 +3345,7 @@ public class m68k_in
 				FLAG_V = VFLAG_SUB_16(*compare2, dest2, res2);
 				FLAG_C = CFLAG_16(res2);
 	
-				if(COND_EQ())
+				if (COND_EQ() != 0)
 				{
 					USE_CYCLES(3);
 					m68ki_write_16(ea1, REG_D[(word2 >> 22) & 7]);
@@ -3381,7 +3381,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_32(*compare1, dest1, res1);
 			FLAG_C = CFLAG_SUB_32(*compare1, dest1, res1);
 	
-			if(COND_EQ())
+			if (COND_EQ() != 0)
 			{
 				res2 = dest2 - *compare2;
 	
@@ -3390,7 +3390,7 @@ public class m68k_in
 				FLAG_V = VFLAG_SUB_32(*compare2, dest2, res2);
 				FLAG_C = CFLAG_SUB_32(*compare2, dest2, res2);
 	
-				if(COND_EQ())
+				if (COND_EQ() != 0)
 				{
 					USE_CYCLES(3);
 					m68ki_write_32(ea1, REG_D[(word2 >> 22) & 7]);
@@ -3503,7 +3503,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3534,7 +3534,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3565,7 +3565,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3597,7 +3597,7 @@ public class m68k_in
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3633,7 +3633,7 @@ public class m68k_in
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3670,7 +3670,7 @@ public class m68k_in
 	
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3703,7 +3703,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3733,7 +3733,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3763,7 +3763,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if(COND_CS())
+			if (COND_CS() != 0)
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -10021,7 +10021,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(trapv, 0, ., .)
 	{
-		if(COND_VC())
+		if (COND_VC() != 0)
 		{
 			return;
 		}

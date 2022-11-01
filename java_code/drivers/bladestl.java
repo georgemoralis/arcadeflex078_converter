@@ -40,7 +40,7 @@ public class bladestl
 	public static InterruptHandlerPtr bladestl_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
 		if (cpu_getiloops() == 0){
-			if (K007342_is_INT_enabled())
+			if (K007342_is_INT_enabled() != 0)
 				cpu_set_irq_line(0, HD6309_FIRQ_LINE, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2){

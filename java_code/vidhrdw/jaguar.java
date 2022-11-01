@@ -745,7 +745,7 @@ public class jaguar
 	
 	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (jagobj_init())
+		if (jagobj_init() != 0)
 			return 1;
 	
 		pen_table = auto_malloc(65536 * sizeof(pen_t));

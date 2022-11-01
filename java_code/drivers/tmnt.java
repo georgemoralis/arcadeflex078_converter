@@ -184,13 +184,13 @@ public class tmnt
 	
 	public static InterruptHandlerPtr punkshot_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K052109_is_IRQ_enabled()) irq4_line_hold();
+		if (K052109_is_IRQ_enabled() != 0) irq4_line_hold();
 	
 	} };
 	
 	public static InterruptHandlerPtr lgtnfght_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
-		if (K052109_is_IRQ_enabled()) irq5_line_hold();
+		if (K052109_is_IRQ_enabled() != 0) irq5_line_hold();
 	
 	} };
 	

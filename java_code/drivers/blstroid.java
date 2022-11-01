@@ -72,7 +72,7 @@ public class blstroid
 	{
 		int temp = readinputport(2 + (offset & 1));
 		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0040;
-		if (atarigen_get_hblank()) temp ^= 0x0010;
+		if (atarigen_get_hblank() != 0) temp ^= 0x0010;
 		return temp;
 	}
 	

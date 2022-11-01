@@ -527,7 +527,7 @@ public class seta
 	
 	public static VideoUpdateHandlerPtr video_update_oisipuzl_2_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	{
-		if (video_start_seta_2_layers())
+		if (video_start_seta_2_layers() != 0)
 			return 1;
 		tilemaps_flip = 1;
 		return 0;
