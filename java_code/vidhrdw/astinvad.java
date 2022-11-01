@@ -24,10 +24,10 @@ public class astinvad
 	}
 	
 	
-	WRITE_HANDLER( spaceint_color_w )
+	public static WriteHandlerPtr spaceint_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spaceint_color = data & 15;
-	}
+	} };
 	
 	
 	static void plot_byte(int x, int y, int data, int col)
@@ -83,21 +83,21 @@ public class astinvad
 	}
 	
 	
-	WRITE_HANDLER( spaceint_videoram_w )
+	public static WriteHandlerPtr spaceint_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		colorram[offset] = spaceint_color;
 	
 		spaceint_refresh(offset);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astinvad_videoram_w )
+	public static WriteHandlerPtr astinvad_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 	
 		astinvad_refresh(offset);
-	}
+	} };
 	
 	
 	VIDEO_START( astinvad )

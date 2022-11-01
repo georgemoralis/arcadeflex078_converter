@@ -64,29 +64,29 @@ public class raiden2
 	
 	/* VIDEO RELATED WRITE HANDLERS (move to vidhrdw file) */
 	
-	WRITE_HANDLER ( raiden2_background_w )
+	public static WriteHandlerPtr raiden2_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		back_data[offset]=data;
 		tilemap_mark_tile_dirty( background_layer,offset/2 );
-	}
+	} };
 	
-	WRITE_HANDLER ( raiden2_midground_w )
+	public static WriteHandlerPtr raiden2_midground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mid_data[offset]=data;
 		tilemap_mark_tile_dirty( midground_layer,offset/2 );
-	}
+	} };
 	
-	WRITE_HANDLER ( raiden2_foreground_w )
+	public static WriteHandlerPtr raiden2_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fore_data[offset]=data;
 		tilemap_mark_tile_dirty( foreground_layer,offset/2 );
-	}
+	} };
 	
-	WRITE_HANDLER ( raiden2_text_w )
+	public static WriteHandlerPtr raiden2_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset]=data;
 		tilemap_mark_tile_dirty( text_layer,offset/2 );
-	}
+	} };
 	
 	/* TILEMAP RELATED (move to vidhrdw file) */
 	
@@ -163,10 +163,10 @@ public class raiden2
 	
 	/* MISC READ HANDLERS */
 	
-	static READ_HANDLER ( raiden2_kludge_r )
+	static public static ReadHandlerPtr raiden2_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	/* MEMORY MAPS */
 	

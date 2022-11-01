@@ -101,7 +101,7 @@ public class tlc34076
 	 *
 	 *************************************/
 	
-	READ_HANDLER( tlc34076_r )
+	public static ReadHandlerPtr tlc34076_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 result;
 	
@@ -129,7 +129,7 @@ public class tlc34076
 		}
 	
 		return result;
-	}
+	} };
 	
 	
 	
@@ -139,7 +139,7 @@ public class tlc34076
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( tlc34076_w )
+	public static WriteHandlerPtr tlc34076_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 oldval;
 	
@@ -234,7 +234,7 @@ public class tlc34076
 				tlc34076_reset(dacbits);
 				break;
 		}
-	}
+	} };
 	
 	
 	

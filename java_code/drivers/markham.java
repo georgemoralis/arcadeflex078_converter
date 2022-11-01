@@ -24,20 +24,20 @@ public class markham
 	/****************************************************************************/
 	
 	
-	WRITE_HANDLER( markham_sharedram_w )
+	public static WriteHandlerPtr markham_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		markham_sharedram[offset] = data;
-	}
+	} };
 	
-	READ_HANDLER( markham_sharedram_r )
+	public static ReadHandlerPtr markham_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return markham_sharedram[offset];
-	}
+	} };
 	
-	READ_HANDLER( markham_e004_r )
+	public static ReadHandlerPtr markham_e004_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0;
-	}
+	} };
 	
 	/****************************************************************************/
 	

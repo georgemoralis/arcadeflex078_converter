@@ -85,12 +85,12 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	READ_HANDLER( aeroboto_in0_r )
+	public static ReadHandlerPtr aeroboto_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(flip_screen ? 1 : 0);
-	}
+	} };
 	
-	WRITE_HANDLER( aeroboto_3000_w )
+	public static WriteHandlerPtr aeroboto_3000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 selects both flip screen and player1/player2 controls */
 		flip_screen_set(data & 0x01);
@@ -104,25 +104,25 @@ public class aeroboto
 	
 		/* bit 2 = disable star field? */
 		aeroboto_starsoff = data & 0x4;
-	}
+	} };
 	
-	WRITE_HANDLER( aeroboto_videoram_w )
+	public static WriteHandlerPtr aeroboto_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (aeroboto_videoram[offset] != data)
 		{
 			aeroboto_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( aeroboto_tilecolor_w )
+	public static WriteHandlerPtr aeroboto_tilecolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (aeroboto_tilecolor[offset] != data)
 		{
 			aeroboto_tilecolor[offset] = data;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	
 	

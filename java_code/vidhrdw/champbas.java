@@ -83,41 +83,41 @@ public class champbas
 			COLOR(0,i) = (*(color_prom++) & 0x0f);
 	}
 	
-	WRITE_HANDLER( champbas_videoram_w )
+	public static WriteHandlerPtr champbas_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( champbas_colorram_w )
+	public static WriteHandlerPtr champbas_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( champbas_gfxbank_w )
+	public static WriteHandlerPtr champbas_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfxbank != (data & 0x01))
 		{
 			gfxbank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( champbas_flipscreen_w )
+	public static WriteHandlerPtr champbas_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != data)
 		{
 			flip_screen_set(data);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

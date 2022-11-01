@@ -39,17 +39,17 @@ public class mayumi
 		return 0;
 	}
 	
-	WRITE_HANDLER( mayumi_videoram_w )
+	public static WriteHandlerPtr mayumi_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mayumi_videoram[offset] = data;
 	
 		tilemap_mark_tile_dirty(mayumi_tilemap, offset & 0x7ff );
-	}
+	} };
 	
-	READ_HANDLER( mayumi_videoram_r )
+	public static ReadHandlerPtr mayumi_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mayumi_videoram[offset];
-	}
+	} };
 	
 	VIDEO_UPDATE( mayumi )
 	{

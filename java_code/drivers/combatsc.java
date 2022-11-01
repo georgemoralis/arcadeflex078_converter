@@ -222,7 +222,7 @@ public class combatsc
 	
 	static mame_timer *combasc_interleave_timer;
 	
-	static READ_HANDLER ( combasc_YM2203_status_port_0_r )
+	static public static ReadHandlerPtr combasc_YM2203_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int boost = 1;
 		int status = YM2203Read(0,0);
@@ -242,7 +242,7 @@ public class combatsc
 		}
 	
 		return(status);
-	}
+	} };
 	
 	/****************************************************************************/
 	

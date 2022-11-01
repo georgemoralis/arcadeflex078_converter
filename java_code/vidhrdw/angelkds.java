@@ -36,16 +36,16 @@ public class angelkds
 		SET_TILE_INFO(0,tileno,0,0)
 	}
 	
-	WRITE_HANDLER( angelkds_txvideoram_w )
+	public static WriteHandlerPtr angelkds_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (angelkds_txvideoram[offset] != data)
 		{
 			angelkds_txvideoram[offset] = data;
 			tilemap_mark_tile_dirty(tx_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( angelkds_txbank_write )
+	public static WriteHandlerPtr angelkds_txbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	if (angelkds_txbank != data)
@@ -54,7 +54,7 @@ public class angelkds
 		tilemap_mark_all_tiles_dirty (tx_tilemap);
 		};
 	
-	}
+	} };
 	
 	/*** Top Half Background Tilemap
 	
@@ -73,16 +73,16 @@ public class angelkds
 		SET_TILE_INFO(1,tileno,0,0)
 	}
 	
-	WRITE_HANDLER( angelkds_bgtopvideoram_w )
+	public static WriteHandlerPtr angelkds_bgtopvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (angelkds_bgtopvideoram[offset] != data)
 		{
 			angelkds_bgtopvideoram[offset] = data;
 			tilemap_mark_tile_dirty(bgtop_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( angelkds_bgtopbank_write )
+	public static WriteHandlerPtr angelkds_bgtopbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	if (angelkds_bgtopbank != data)
@@ -91,12 +91,12 @@ public class angelkds
 		tilemap_mark_all_tiles_dirty (bgtop_tilemap);
 		};
 	
-	}
+	} };
 	
-	WRITE_HANDLER( angelkds_bgtopscroll_write )
+	public static WriteHandlerPtr angelkds_bgtopscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bgtop_tilemap, 0, data );
-	}
+	} };
 	
 	/*** Bottom Half Background Tilemap
 	
@@ -114,17 +114,17 @@ public class angelkds
 		SET_TILE_INFO(1,tileno,1,0)
 	}
 	
-	WRITE_HANDLER( angelkds_bgbotvideoram_w )
+	public static WriteHandlerPtr angelkds_bgbotvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (angelkds_bgbotvideoram[offset] != data)
 		{
 			angelkds_bgbotvideoram[offset] = data;
 			tilemap_mark_tile_dirty(bgbot_tilemap,offset);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( angelkds_bgbotbank_write )
+	public static WriteHandlerPtr angelkds_bgbotbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	if (angelkds_bgbotbank != data)
@@ -133,19 +133,19 @@ public class angelkds
 		tilemap_mark_all_tiles_dirty (bgbot_tilemap);
 		};
 	
-	}
+	} };
 	
-	WRITE_HANDLER( angelkds_bgbotscroll_write )
+	public static WriteHandlerPtr angelkds_bgbotscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bgbot_tilemap, 0, data );
-	}
+	} };
 	
 	UINT8 angelkds_layer_ctrl;
 	
-	WRITE_HANDLER( angelkds_layer_ctrl_write )
+	public static WriteHandlerPtr angelkds_layer_ctrl_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		angelkds_layer_ctrl = data;
-	}
+	} };
 	
 	/*** Sprites
 	
@@ -261,7 +261,7 @@ public class angelkds
 	
 	*/
 	
-	WRITE_HANDLER( angelkds_paletteram_w )
+	public static WriteHandlerPtr angelkds_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int no, r,g,b;
 	
@@ -277,7 +277,7 @@ public class angelkds
 		b = (paletteram[no+0x100] & 0x0f) << 4;
 	
 		palette_set_color(no,r,g,b);
-	}
+	} };
 	
 	/*** Video Start & Update
 	

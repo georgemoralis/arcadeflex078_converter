@@ -38,14 +38,14 @@ public class tbowl
 		SET_TILE_INFO(0,tileno,col,0)
 	}
 	
-	WRITE_HANDLER( tbowl_txvideoram_w )
+	public static WriteHandlerPtr tbowl_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tbowl_txvideoram[offset] != data)
 		{
 			tbowl_txvideoram[offset] = data;
 			tilemap_mark_tile_dirty(tx_tilemap,offset & 0x7ff);
 		}
-	}
+	} };
 	
 	/* Bottom BG Layer (bg) Tilemap */
 	
@@ -60,14 +60,14 @@ public class tbowl
 		SET_TILE_INFO(1,tileno,col,0)
 	}
 	
-	WRITE_HANDLER( tbowl_bg2videoram_w )
+	public static WriteHandlerPtr tbowl_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tbowl_bg2videoram[offset] != data)
 		{
 			tbowl_bg2videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg2_tilemap,offset & 0xfff);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER (tbowl_bgxscroll_lo)
 	{
@@ -107,14 +107,14 @@ public class tbowl
 		SET_TILE_INFO(2,tileno,col,0)
 	}
 	
-	WRITE_HANDLER( tbowl_bgvideoram_w )
+	public static WriteHandlerPtr tbowl_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tbowl_bgvideoram[offset] != data)
 		{
 			tbowl_bgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset & 0xfff);
 		}
-	}
+	} };
 	
 	WRITE_HANDLER (tbowl_bg2xscroll_lo)
 	{

@@ -113,7 +113,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( horshoes_bankg_w )
+	public static WriteHandlerPtr horshoes_bankg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (horshoes_gfxbank != data)
 		{
@@ -122,9 +122,9 @@ public class taito_l
 			tilemap_mark_all_tiles_dirty(bg18_tilemap);
 			tilemap_mark_all_tiles_dirty(bg19_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( taitol_bankc_w )
+	public static WriteHandlerPtr taitol_bankc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bankc[offset] != data)
 		{
@@ -134,15 +134,15 @@ public class taito_l
 			tilemap_mark_all_tiles_dirty(bg18_tilemap);
 			tilemap_mark_all_tiles_dirty(bg19_tilemap);
 		}
-	}
+	} };
 	
-	READ_HANDLER( taitol_bankc_r )
+	public static ReadHandlerPtr taitol_bankc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return bankc[offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( taitol_control_w )
+	public static WriteHandlerPtr taitol_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("Control Write %02x (%04x)\n", data, activecpu_get_pc());
 	
@@ -160,13 +160,13 @@ public class taito_l
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
 		/* bit 5 display enable - handled in vh_screenrefresh() */
-	}
+	} };
 	
-	READ_HANDLER( taitol_control_r )
+	public static ReadHandlerPtr taitol_control_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//	logerror("Control Read %02x (%04x)\n", cur_ctrl, activecpu_get_pc());
 		return cur_ctrl;
-	}
+	} };
 	
 	void taitol_chardef14_m(int offset)
 	{

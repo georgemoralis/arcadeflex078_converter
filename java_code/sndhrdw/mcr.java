@@ -198,15 +198,15 @@ public class mcr
 	} };
 	
 	/********* external interfaces ***********/
-	WRITE_HANDLER( ssio_data_w )
+	public static WriteHandlerPtr ssio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, (offset << 8) | (data & 0xff), ssio_delayed_data_w);
-	}
+	} };
 	
-	READ_HANDLER( ssio_status_r )
+	public static ReadHandlerPtr ssio_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ssio_status;
-	}
+	} };
 	
 	void ssio_reset_w(int state)
 	{
@@ -311,10 +311,10 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	WRITE_HANDLER( csdeluxe_data_w )
+	public static WriteHandlerPtr csdeluxe_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, csdeluxe_delayed_data_w);
-	}
+	} };
 	
 	void csdeluxe_reset_w(int state)
 	{
@@ -405,15 +405,15 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	WRITE_HANDLER( soundsgood_data_w )
+	public static WriteHandlerPtr soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, soundsgood_delayed_data_w);
-	}
+	} };
 	
-	READ_HANDLER( soundsgood_status_r )
+	public static ReadHandlerPtr soundsgood_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return soundsgood_status;
-	}
+	} };
 	
 	void soundsgood_reset_w(int state)
 	{
@@ -501,15 +501,15 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	WRITE_HANDLER( turbocs_data_w )
+	public static WriteHandlerPtr turbocs_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, turbocs_delayed_data_w);
-	}
+	} };
 	
-	READ_HANDLER( turbocs_status_r )
+	public static ReadHandlerPtr turbocs_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return turbocs_status;
-	}
+	} };
 	
 	void turbocs_reset_w(int state)
 	{
@@ -623,10 +623,10 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	WRITE_HANDLER( squawkntalk_data_w )
+	public static WriteHandlerPtr squawkntalk_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, squawkntalk_delayed_data_w);
-	}
+	} };
 	
 	void squawkntalk_reset_w(int state)
 	{

@@ -239,49 +239,49 @@ public class mpatrol
 	
 	
 	
-	WRITE_HANDLER( mpatrol_scroll_w )
+	public static WriteHandlerPtr mpatrol_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scrollreg[offset] = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_bg1xpos_w )
+	public static WriteHandlerPtr mpatrol_bg1xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg1xpos = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_bg1ypos_w )
+	public static WriteHandlerPtr mpatrol_bg1ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg1ypos = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_bg2xpos_w )
+	public static WriteHandlerPtr mpatrol_bg2xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg2xpos = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_bg2ypos_w )
+	public static WriteHandlerPtr mpatrol_bg2ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg2ypos = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_bgcontrol_w )
+	public static WriteHandlerPtr mpatrol_bgcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bgcontrol = data;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mpatrol_flipscreen_w )
+	public static WriteHandlerPtr mpatrol_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
@@ -289,10 +289,10 @@ public class mpatrol
 	
 		coin_counter_w(0,data & 0x02);
 		coin_counter_w(1,data & 0x20);
-	}
+	} };
 	
 	
-	READ_HANDLER( mpatrol_input_port_3_r )
+	public static ReadHandlerPtr mpatrol_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = input_port_3_r(0);
 	
@@ -309,7 +309,7 @@ public class mpatrol
 		}
 	
 		return ret;
-	}
+	} };
 	
 	
 	

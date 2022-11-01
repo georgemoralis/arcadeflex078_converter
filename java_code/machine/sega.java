@@ -26,7 +26,7 @@ public class sega
 	static UINT16 result;
 	static UINT8 ioSwitch; /* determines whether we're reading the spinner or the buttons */
 	
-	WRITE_HANDLER( sega_w )
+	public static WriteHandlerPtr sega_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int pc,off;
 	
@@ -60,7 +60,7 @@ public class sega
 		{
 			sega_mem[off]=data;
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr sega_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -70,36 +70,36 @@ public class sega
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	WRITE_HANDLER( sega_mult1_w )
+	public static WriteHandlerPtr sega_mult1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mult1 = data;
-	}
+	} };
 	
-	WRITE_HANDLER( sega_mult2_w )
+	public static WriteHandlerPtr sega_mult2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Curiously, the multiply is _only_ calculated by writes to this port. */
 		result = mult1 * data;
-	}
+	} };
 	
-	WRITE_HANDLER( sega_switch_w )
+	public static WriteHandlerPtr sega_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ioSwitch = data;
 	/*	logerror("ioSwitch: %02x\n",ioSwitch); */
-	}
+	} };
 	
-	WRITE_HANDLER( sega_coin_counter_w )
+	public static WriteHandlerPtr sega_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(offset,data);
-	}
+	} };
 	
-	READ_HANDLER( sega_mult_r )
+	public static ReadHandlerPtr sega_mult_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int c;
 	
 		c = result & 0xff;
 		result >>= 8;
 		return (c);
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -117,7 +117,7 @@ public class sega
 	  Port 7 - 2-1, 2-2, 2-3, 2-4, 2-5, 2-6, 2-7, 2-8
 	***************************************************************************/
 	
-	READ_HANDLER( sega_ports_r )
+	public static ReadHandlerPtr sega_ports_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int dip1, dip2;
 	
@@ -141,10 +141,10 @@ public class sega
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
-	READ_HANDLER( sega_IN4_r ) {
+	public static ReadHandlerPtr sega_IN4_r  = new ReadHandlerPtr() { public int handler(int offset) {
 	
 	/*
 	 * The values returned are always increasing.  That is, regardless of whether
@@ -172,9 +172,9 @@ public class sega
 			spinner += delta;
 		}
 		return (~((spinner<<1) | sign));
-	}
+	} };
 	
-	READ_HANDLER( elim4_IN4_r )
+	public static ReadHandlerPtr elim4_IN4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* If the ioPort ($f8) is 0x1f, we're reading the 4 coin inputs.    */
 		/* If the ioPort ($f8) is 0x1e, we're reading player 3 & 4 controls.*/
@@ -184,6 +184,6 @@ public class sega
 		if (ioSwitch == 0x1f)
 			return readinputport (8);
 		return (0);
-	}
+	} };
 	
 }

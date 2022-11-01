@@ -227,16 +227,16 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams_videoram_w )
+	public static WriteHandlerPtr williams_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		williams_videoram[offset] = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( williams_video_counter_r )
+	public static ReadHandlerPtr williams_video_counter_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_getscanline() & 0xfc;
-	}
+	} };
 	
 	
 	
@@ -376,7 +376,7 @@ public class williams
 	}
 	
 	
-	WRITE_HANDLER( williams2_fg_select_w )
+	public static WriteHandlerPtr williams2_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned int i, palindex;
 	
@@ -389,10 +389,10 @@ public class williams
 		palindex = williams2_fg_color * 16;
 		for (i = 0; i < 16; i++)
 			williams2_modify_color(i, palindex++);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( williams2_bg_select_w )
+	public static WriteHandlerPtr williams2_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned int i, palindex;
 	
@@ -423,7 +423,7 @@ public class williams
 			for (i = 32; i < 48; i++)
 				williams2_modify_color(i, palindex++);
 		}
-	}
+	} };
 	
 	
 	
@@ -433,7 +433,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams2_videoram_w )
+	public static WriteHandlerPtr williams2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bank 3 doesn't touch the screen */
 		if ((williams2_bank & 0x03) == 0x03)
@@ -454,7 +454,7 @@ public class williams
 	
 		/* everyone else talks to the screen */
 		williams_videoram[offset] = data;
-	}
+	} };
 	
 	
 	
@@ -493,13 +493,13 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( blaster_remap_select_w )
+	public static WriteHandlerPtr blaster_remap_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		blaster_remap = blaster_remap_lookup + data * 256;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( blaster_palette_0_w )
+	public static WriteHandlerPtr blaster_palette_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		blaster_color_zero_table[offset] = data;
 		data ^= 0xff;
@@ -514,7 +514,7 @@ public class williams
 			b = (b << 6) | (b << 4) | (b << 2) | b;
 			palette_set_color(16 + offset - Machine->visible_area.min_y, r, g, b);
 		}
-	}
+	} };
 	
 	
 	
@@ -582,7 +582,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams_blitter_w )
+	public static WriteHandlerPtr williams_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int sstart, dstart, w, h, count;
 	
@@ -623,7 +623,7 @@ public class williams
 		logerror("Dest   : %02X %02X\n",williams_blitterram[4],williams_blitterram[5]);
 		logerror("W H    : %02X %02X (%d,%d)\n",williams_blitterram[6],williams_blitterram[7],williams_blitterram[6]^4,williams_blitterram[7]^4);
 		logerror("Mask   : %02X\n",williams_blitterram[1]);
-	}
+	} };
 	
 	
 	

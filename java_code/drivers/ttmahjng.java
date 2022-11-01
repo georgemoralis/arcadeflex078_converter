@@ -16,12 +16,12 @@ public class ttmahjng
 	
 	
 	static int psel;
-	WRITE_HANDLER( input_port_matrix_w )
+	public static WriteHandlerPtr input_port_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		psel = data;
-	}
+	} };
 	
-	READ_HANDLER( input_port_matrix_r )
+	public static ReadHandlerPtr input_port_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int	cdata;
 	
@@ -44,7 +44,7 @@ public class ttmahjng
 				break;
 		}
 		return cdata;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress cpu1_readmem[]={

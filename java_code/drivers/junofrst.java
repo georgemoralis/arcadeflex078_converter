@@ -96,14 +96,14 @@ public class junofrst
 	
 	
 	
-	WRITE_HANDLER( junofrst_bankselect_w )
+	public static WriteHandlerPtr junofrst_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		bankaddress = 0x10000 + (data & 0x0f) * 0x1000;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	public static ReadHandlerPtr junofrst_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
@@ -139,7 +139,7 @@ public class junofrst
 		}
 	} };
 	
-	WRITE_HANDLER( junofrst_sh_irqtrigger_w )
+	public static WriteHandlerPtr junofrst_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 	
@@ -151,12 +151,12 @@ public class junofrst
 		}
 	
 		last = data;
-	}
+	} };
 	
-	WRITE_HANDLER( junofrst_i8039_irq_w )
+	public static WriteHandlerPtr junofrst_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(2, 0, ASSERT_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

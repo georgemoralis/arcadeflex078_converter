@@ -890,20 +890,20 @@ public class adpcm
 	
 	***********************************************************************************************/
 	
-	READ_HANDLER( OKIM6295_status_0_r )
+	public static ReadHandlerPtr OKIM6295_status_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return OKIM6295_status_r(0);
-	}
+	} };
 	
-	READ_HANDLER( OKIM6295_status_1_r )
+	public static ReadHandlerPtr OKIM6295_status_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return OKIM6295_status_r(1);
-	}
+	} };
 	
-	READ_HANDLER( OKIM6295_status_2_r )
+	public static ReadHandlerPtr OKIM6295_status_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return OKIM6295_status_r(2);
-	}
+	} };
 	
 	READ16_HANDLER( OKIM6295_status_0_lsb_r )
 	{
@@ -944,20 +944,20 @@ public class adpcm
 	
 	***********************************************************************************************/
 	
-	WRITE_HANDLER( OKIM6295_data_0_w )
+	public static WriteHandlerPtr OKIM6295_data_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		OKIM6295_data_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( OKIM6295_data_1_w )
+	public static WriteHandlerPtr OKIM6295_data_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		OKIM6295_data_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( OKIM6295_data_2_w )
+	public static WriteHandlerPtr OKIM6295_data_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		OKIM6295_data_w(2, data);
-	}
+	} };
 	
 	WRITE16_HANDLER( OKIM6295_data_0_lsb_w )
 	{

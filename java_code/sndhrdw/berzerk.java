@@ -114,7 +114,7 @@ public class berzerk
 		return 0;
 	}
 	
-	WRITE_HANDLER( berzerk_sound_control_a_w )
+	public static WriteHandlerPtr berzerk_sound_control_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int noise = 0;
 		int voice = 0;
@@ -291,12 +291,12 @@ public class berzerk
 				}
 			}
 		} /* End of berzerknoisemulate */
-	}
+	} };
 	
-	WRITE_HANDLER( berzerk_sound_control_b_w )
+	public static WriteHandlerPtr berzerk_sound_control_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("B Data value %d and offset %d at %d\n", data, offset, lastfreq);
-	}
+	} };
 	
 	static void berzerk_sh_update(void)
 	{
@@ -306,13 +306,13 @@ public class berzerk
 	}
 	
 	
-	READ_HANDLER( berzerk_voiceboard_r )
+	public static ReadHandlerPtr berzerk_voiceboard_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	   if (!voice_playing)
 	      return 0x00;
 	   else
 	      return 0x40;
-	}
+	} };
 	
 	
 	struct Samplesinterface berzerk_samples_interface =

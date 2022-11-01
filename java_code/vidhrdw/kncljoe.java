@@ -141,16 +141,16 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( kncljoe_videoram_w )
+	public static WriteHandlerPtr kncljoe_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kncljoe_control_w )
+	public static WriteHandlerPtr kncljoe_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 	
@@ -194,9 +194,9 @@ public class kncljoe
 				// ???
 			break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kncljoe_scroll_w )
+	public static WriteHandlerPtr kncljoe_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrollx;
 	
@@ -206,7 +206,7 @@ public class kncljoe
 		tilemap_set_scrollx(bg_tilemap,1,scrollx);
 		tilemap_set_scrollx(bg_tilemap,2,scrollx);
 		tilemap_set_scrollx(bg_tilemap,3,0);
-	}
+	} };
 	
 	
 	

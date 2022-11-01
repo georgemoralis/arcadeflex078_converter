@@ -26,61 +26,61 @@ public class tehkanwc
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( tehkanwc_videoram_w )
+	public static WriteHandlerPtr tehkanwc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_colorram_w )
+	public static WriteHandlerPtr tehkanwc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_videoram2_w )
+	public static WriteHandlerPtr tehkanwc_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tehkanwc_videoram2[offset] != data)
 		{
 			tehkanwc_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_scroll_x_w )
+	public static WriteHandlerPtr tehkanwc_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll_x[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_scroll_y_w )
+	public static WriteHandlerPtr tehkanwc_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_flipscreen_x_w )
+	public static WriteHandlerPtr tehkanwc_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_x_set(data & 0x40);
-	}
+	} };
 	
-	WRITE_HANDLER( tehkanwc_flipscreen_y_w )
+	public static WriteHandlerPtr tehkanwc_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_y_set(data & 0x40);
-	}
+	} };
 	
-	WRITE_HANDLER( gridiron_led0_w )
+	public static WriteHandlerPtr gridiron_led0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		led0 = data;
-	}
-	WRITE_HANDLER( gridiron_led1_w )
+	} };
+	public static WriteHandlerPtr gridiron_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		led1 = data;
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

@@ -966,34 +966,34 @@ public class pokey
 	    return data;
 	}
 	
-	READ_HANDLER( pokey1_r )
+	public static ReadHandlerPtr pokey1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pokey_register_r(0, offset);
-	}
+	} };
 	
-	READ_HANDLER( pokey2_r )
+	public static ReadHandlerPtr pokey2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pokey_register_r(1, offset);
-	}
+	} };
 	
-	READ_HANDLER( pokey3_r )
+	public static ReadHandlerPtr pokey3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pokey_register_r(2, offset);
-	}
+	} };
 	
-	READ_HANDLER( pokey4_r )
+	public static ReadHandlerPtr pokey4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pokey_register_r(3, offset);
-	}
+	} };
 	
-	READ_HANDLER( quad_pokey_r )
+	public static ReadHandlerPtr quad_pokey_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int pokey_num = (offset >> 3) & ~0x04;
 		int control = (offset & 0x20) >> 2;
 		int pokey_reg = (offset % 8) | control;
 	
 		return pokey_register_r(pokey_num, pokey_reg);
-	}
+	} };
 	
 	
 	void pokey_register_w(int chip, int offs, int data)
@@ -1379,34 +1379,34 @@ public class pokey
 	    }
 	}
 	
-	WRITE_HANDLER( pokey1_w )
+	public static WriteHandlerPtr pokey1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pokey_register_w(0,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( pokey2_w )
+	public static WriteHandlerPtr pokey2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    pokey_register_w(1,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( pokey3_w )
+	public static WriteHandlerPtr pokey3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    pokey_register_w(2,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( pokey4_w )
+	public static WriteHandlerPtr pokey4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    pokey_register_w(3,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( quad_pokey_w )
+	public static WriteHandlerPtr quad_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int pokey_num = (offset >> 3) & ~0x04;
 	    int control = (offset & 0x20) >> 2;
 	    int pokey_reg = (offset % 8) | control;
 	
 	    pokey_register_w(pokey_num, pokey_reg, data);
-	}
+	} };
 	
 	void pokey1_serin_ready(int after)
 	{

@@ -421,7 +421,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	READ_HANDLER( slikz80_port_r )
+	public static ReadHandlerPtr slikz80_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = 0;
 	
@@ -441,7 +441,7 @@ public class slikshot
 		result |= z80_clear_to_send << 7;
 	
 		return result;
-	}
+	} };
 	
 	
 	
@@ -451,11 +451,11 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( slikz80_port_w )
+	public static WriteHandlerPtr slikz80_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		z80_port_val = data;
 		z80_clear_to_send = 0;
-	}
+	} };
 	
 	
 	
@@ -465,14 +465,14 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	READ_HANDLER( slikshot_z80_r )
+	public static ReadHandlerPtr slikshot_z80_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* allow the Z80 to send us stuff now */
 		z80_clear_to_send = 1;
 		timer_set(TIME_NOW, 0, NULL);
 	
 		return z80_port_val;
-	}
+	} };
 	
 	
 	
@@ -482,10 +482,10 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	READ_HANDLER( slikshot_z80_control_r )
+	public static ReadHandlerPtr slikshot_z80_control_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return z80_ctrl;
-	}
+	} };
 	
 	
 	
@@ -495,7 +495,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( slikshot_z80_control_w )
+	public static WriteHandlerPtr slikshot_z80_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 delta = z80_ctrl ^ data;
 		z80_ctrl = data;
@@ -530,7 +530,7 @@ public class slikshot
 		{
 	//		logerror("%15f: Clock edge high\n", timer_get_time());
 		}
-	}
+	} };
 	
 	
 	

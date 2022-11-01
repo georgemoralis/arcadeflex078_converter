@@ -16,7 +16,7 @@ public class astrocde
 {
 	
 	
-	READ_HANDLER( gorf_timer_r )
+	public static ReadHandlerPtr gorf_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int Skip=0;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -39,7 +39,7 @@ public class astrocde
 			return RAM[0xD0A5];
 		}
 	
-	}
+	} };
 	
 	
 	/****************************************************************************
@@ -66,28 +66,28 @@ public class astrocde
 		36 , 37 , 39 , 38 , 34 , 35 , 33 , 32
 	};
 	
-	READ_HANDLER( seawolf2_controller1_r )
+	public static ReadHandlerPtr seawolf2_controller1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (input_port_0_r(0) & 0xc0) + ControllerTable[input_port_0_r(0) & 0x3f];
-	}
+	} };
 	
-	READ_HANDLER( seawolf2_controller2_r )
+	public static ReadHandlerPtr seawolf2_controller2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (input_port_1_r(0) & 0xc0) + ControllerTable[input_port_1_r(0) & 0x3f];
-	}
+	} };
 	
 	
 	static int ebases_trackball_select = 0;
 	
-	WRITE_HANDLER( ebases_trackball_select_w )
+	public static WriteHandlerPtr ebases_trackball_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ebases_trackball_select = data;
-	}
+	} };
 	
-	READ_HANDLER( ebases_trackball_r )
+	public static ReadHandlerPtr ebases_trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = readinputport(3 + ebases_trackball_select);
 		logerror("Port %d = %d\n", ebases_trackball_select, ret);
 		return ret;
-	}
+	} };
 }

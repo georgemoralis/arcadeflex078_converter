@@ -19,7 +19,7 @@ public class segar
 	
 	
 	
-	WRITE_HANDLER( segar_w )
+	public static WriteHandlerPtr segar_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int pc,op,page,off;
 		unsigned int bad;
@@ -85,7 +85,7 @@ public class segar
 		{
 			logerror("unmapped write at %04X:%02X\n",off,data);
 		}
-	}
+	} };
 	
 	
 	/****************************************************************************/

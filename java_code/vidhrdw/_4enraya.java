@@ -17,12 +17,12 @@ public class _4enraya
 	
 	static struct tilemap *tilemap;
 	
-	WRITE_HANDLER( fenraya_videoram_w )
+	public static WriteHandlerPtr fenraya_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[(offset&0x3ff)*2]=data;
 		videoram[(offset&0x3ff)*2+1]=(offset&0xc00)>>10;
 		tilemap_mark_tile_dirty(tilemap,offset&0x3ff);
-	}
+	} };
 	
 	static void get_tile_info(int tile_index)
 	{

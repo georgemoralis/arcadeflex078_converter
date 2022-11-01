@@ -273,12 +273,12 @@ public class ninjakd2
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 	} };
 	
-	READ_HANDLER( ninjakd2_bankselect_r )
+	public static ReadHandlerPtr ninjakd2_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ninjakd2_bank_latch;
-	}
+	} };
 	
-	WRITE_HANDLER( ninjakd2_bankselect_w )
+	public static WriteHandlerPtr ninjakd2_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -290,9 +290,9 @@ public class ninjakd2
 			bankaddress = 0x10000 + ((data & 0x7) * 0x4000);
 			cpu_setbank(1,&RAM[bankaddress]);	 /* Select 8 banks of 16k */
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ninjakd2_pcm_play_w )
+	public static WriteHandlerPtr ninjakd2_pcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		int sample_no[9] = { 0x00,0x0A,0x27,0x3E,0x53,0x5E,0x68,0x76,0xF0 };
@@ -304,7 +304,7 @@ public class ninjakd2
 			sample_stop(0);
 		else
 			sample_start(0,i,0);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

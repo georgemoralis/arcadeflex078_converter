@@ -167,7 +167,7 @@ public class snes
 	
 	/* Handle reading of Mode 20 SRAM */
 	/* 0x700000 - 0x77ffff */
-	READ_HANDLER( snes_r_sram )
+	public static ReadHandlerPtr snes_r_sram  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 value = 0xff;
 	
@@ -177,10 +177,10 @@ public class snes
 		}
 	
 		return value;
-	}
+	} };
 	
 	/* 0x000000 - 0x2fffff */
-	READ_HANDLER( snes_r_bank1 )
+	public static ReadHandlerPtr snes_r_bank1  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT16 address = offset & 0xffff;
 	
@@ -199,10 +199,10 @@ public class snes
 		}
 	
 		return 0xff;
-	}
+	} };
 	
 	/* 0x300000 - 0x3fffff */
-	READ_HANDLER( snes_r_bank2 )
+	public static ReadHandlerPtr snes_r_bank2  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT16 address = offset & 0xffff;
 	
@@ -226,10 +226,10 @@ public class snes
 		}
 	
 		return 0xff;
-	}
+	} };
 	
 	/* 0x400000 - 0x5fffff */
-	READ_HANDLER( snes_r_bank3 )
+	public static ReadHandlerPtr snes_r_bank3  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT16 address = offset & 0xffff;
 	
@@ -246,10 +246,10 @@ public class snes
 		}
 	
 		return 0xff;
-	}
+	} };
 	
 	/* 0x800000 - 0xffffff */
-	READ_HANDLER( snes_r_bank4 )
+	public static ReadHandlerPtr snes_r_bank4  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if( cart.mode == SNES_MODE_20 )
 		{
@@ -267,10 +267,10 @@ public class snes
 		}
 	
 		return 0xff;
-	}
+	} };
 	
 	/* 0x000000 - 0x2fffff */
-	WRITE_HANDLER( snes_w_bank1 )
+	public static WriteHandlerPtr snes_w_bank1 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT16 address = offset & 0xffff;
 	
@@ -282,10 +282,10 @@ public class snes
 			logerror( "Attempt to write to reserved address: %X\n", offset );
 		else
 			logerror( "Attempt to write to ROM address: %X\n", offset );
-	}
+	} };
 	
 	/* 0x300000 - 0x3fffff */
-	WRITE_HANDLER( snes_w_bank2 )
+	public static WriteHandlerPtr snes_w_bank2 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT16 address = offset & 0xffff;
 	
@@ -302,10 +302,10 @@ public class snes
 		}
 		else
 			logerror( "Attempt to write to ROM address: %X\n", offset );
-	}
+	} };
 	
 	/* 0x800000 - 0xffffff */
-	WRITE_HANDLER( snes_w_bank4 )
+	public static WriteHandlerPtr snes_w_bank4 = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( cart.mode == SNES_MODE_20 )
 		{
@@ -323,7 +323,7 @@ public class snes
 			else
 				logerror( "Attempt to write to ROM address: %X\n", offset );
 		}
-	}
+	} };
 	
 	/*
 	 * DR   - Double read : address is read twice to return a 16bit value.
@@ -331,7 +331,7 @@ public class snes
 	 * mid  - This is the middle byte of a 24 bit value
 	 * high - This is the high byte of a 16 or 24 bit value
 	 */
-	READ_HANDLER( snes_r_io )
+	public static ReadHandlerPtr snes_r_io  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 value = 0;
 	
@@ -634,7 +634,7 @@ public class snes
 	
 		/* Unsupported reads return 0xff */
 		return 0xff;
-	}
+	} };
 	
 	/*
 	 * DW   - Double write : address is written twice to set a 16bit value.
@@ -642,7 +642,7 @@ public class snes
 	 * mid  - This is the middle byte of a 24 bit value
 	 * high - This is the high byte of a 16 or 24 bit value
 	 */
-	WRITE_HANDLER( snes_w_io )
+	public static WriteHandlerPtr snes_w_io = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* offset is from 0x000000 */
 		switch( offset )
@@ -1126,7 +1126,7 @@ public class snes
 		}
 	
 		snes_ram[offset] = data;
-	}
+	} };
 	
 	/* This function checks everything is in a valid range and returns how
 	 * 'valid' this section is as an information block. */

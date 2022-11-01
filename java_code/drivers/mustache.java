@@ -78,15 +78,15 @@ package drivers;
 public class mustache
 {
 	
-	WRITE_HANDLER ( mustache_video_control_w);
+	public static WriteHandlerPtr mustache_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
 	
 	static int read_coins=0;
 	
-	READ_HANDLER ( mustache_coin_hack_r )
+	public static ReadHandlerPtr mustache_coin_hack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (read_coins)?((offset&1	)?(input_port_5_r(0)<<5)|(input_port_5_r(0)<<7):(input_port_5_r(0)<<4)):0;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

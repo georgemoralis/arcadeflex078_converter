@@ -110,38 +110,38 @@ public class _262intf
 	}
 	
 	/* chip #0 */
-	READ_HANDLER( YMF262_status_0_r ) {
+	public static ReadHandlerPtr YMF262_status_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YMF262Read(0, 0);
-	}
-	WRITE_HANDLER( YMF262_register_A_0_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_register_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(0, 0, data);
-	}
-	WRITE_HANDLER( YMF262_data_A_0_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_data_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(0, 1, data);
-	}
-	WRITE_HANDLER( YMF262_register_B_0_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_register_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(0, 2, data);
-	}
-	WRITE_HANDLER( YMF262_data_B_0_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_data_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(0, 3, data);
-	}
+	} };
 	
 	/* chip #1 */
-	READ_HANDLER( YMF262_status_1_r ) {
+	public static ReadHandlerPtr YMF262_status_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YMF262Read(1, 0);
-	}
-	WRITE_HANDLER( YMF262_register_A_1_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_register_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(1, 0, data);
-	}
-	WRITE_HANDLER( YMF262_data_A_1_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_data_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(1, 1, data);
-	}
-	WRITE_HANDLER( YMF262_register_B_1_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_register_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(1, 2, data);
-	}
-	WRITE_HANDLER( YMF262_data_B_1_w ) {
+	} };
+	public static WriteHandlerPtr YMF262_data_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YMF262Write(1, 3, data);
-	}
+	} };
 	
 	#endif
 	

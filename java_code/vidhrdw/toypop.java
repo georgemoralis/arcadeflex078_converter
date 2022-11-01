@@ -67,13 +67,13 @@ public class toypop
 		}
 	}
 	
-	WRITE_HANDLER( toypop_palettebank_w )
+	public static WriteHandlerPtr toypop_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset)
 			palettebank = 1;
 		else
 			palettebank = 0;
-	}
+	} };
 	
 	WRITE16_HANDLER( toypop_flipscreen_w )
 	{

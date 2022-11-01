@@ -58,11 +58,11 @@ public class hitme
 	
 	*/
 	
-	WRITE_HANDLER( hitme_vidram_w )
+	public static WriteHandlerPtr hitme_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hitme_vidram[offset] = data;
 		tilemap_mark_tile_dirty(hitme_tilemap,offset);
-	}
+	} };
 	
 	/* Video Start / Update */
 	

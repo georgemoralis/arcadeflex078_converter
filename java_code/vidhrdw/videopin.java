@@ -114,14 +114,14 @@ public class videopin
 	}
 	
 	
-	WRITE_HANDLER( videopin_ball_w )
+	public static WriteHandlerPtr videopin_ball_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ball_x = data & 15;
 		ball_y = data >> 4;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( videopin_video_ram_w )
+	public static WriteHandlerPtr videopin_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videopin_video_ram[offset] != data)
 		{
@@ -129,5 +129,5 @@ public class videopin
 		}
 	
 		videopin_video_ram[offset] = data;
-	}
+	} };
 }

@@ -77,49 +77,49 @@ public class triplhnt
 	}
 	
 	
-	WRITE_HANDLER( triplhnt_misc_w )
+	public static WriteHandlerPtr triplhnt_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		triplhnt_update_misc(offset);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( triplhnt_zeropage_w )
+	public static WriteHandlerPtr triplhnt_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( triplhnt_zeropage_r )
+	public static ReadHandlerPtr triplhnt_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_CPU1)[offset & 0xff];
-	}
+	} };
 	
 	
-	READ_HANDLER( triplhnt_cmos_r )
+	public static ReadHandlerPtr triplhnt_cmos_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		triplhnt_cmos_latch = offset;
 	
 		return triplhnt_cmos[triplhnt_cmos_latch] ^ 15;
-	}
+	} };
 	
 	
-	READ_HANDLER( triplhnt_input_port_4_r )
+	public static ReadHandlerPtr triplhnt_input_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		watchdog_reset_w(0, 0);
 	
 		return readinputport(4);
-	}
+	} };
 	
 	
-	READ_HANDLER( triplhnt_misc_r )
+	public static ReadHandlerPtr triplhnt_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		triplhnt_update_misc(offset);
 	
 		return readinputport(7) | triplhnt_hit_code;
-	}
+	} };
 	
 	
-	READ_HANDLER( triplhnt_da_latch_r )
+	public static ReadHandlerPtr triplhnt_da_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int cross_x = readinputport(8);
 		int cross_y = readinputport(9);
@@ -129,7 +129,7 @@ public class triplhnt
 		/* the following is a slight simplification */
 	
 		return (offset & 1) ? cross_x : cross_y;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress triplhnt_readmem[]={

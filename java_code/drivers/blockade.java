@@ -120,15 +120,15 @@ public class blockade
 		}
 	} };
 	
-	READ_HANDLER( blockade_input_port_0_r )
+	public static ReadHandlerPtr blockade_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    /* coin latch is bit 7 */
 	
 	    int temp = (input_port_0_r(0)&0x7f);
 	    return (coin_latch<<7) | (temp);
-	}
+	} };
 	
-	WRITE_HANDLER( blockade_coin_latch_w )
+	public static WriteHandlerPtr blockade_coin_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if (data & 0x80)
 	    {
@@ -158,32 +158,32 @@ public class blockade
 	    }
 	
 	    return;
-	}
+	} };
 	
-	WRITE_HANDLER( blockade_sound_freq_w )
+	public static WriteHandlerPtr blockade_sound_freq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef BLOCKADE_LOG
 	    printf("Sound Freq Write: %d\n",data);
 	#endif
 	    return;
-	}
+	} };
 	
-	WRITE_HANDLER( blockade_env_on_w )
+	public static WriteHandlerPtr blockade_env_on_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef BLOCKADE_LOG
 	    printf("Boom Start\n");
 	#endif
 	    sample_start(0,0,0);
 	    return;
-	}
+	} };
 	
-	WRITE_HANDLER( blockade_env_off_w )
+	public static WriteHandlerPtr blockade_env_off_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef BLOCKADE_LOG
 	    printf("Boom End\n");
 	#endif
 	    return;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

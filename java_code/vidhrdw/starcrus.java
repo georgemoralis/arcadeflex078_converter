@@ -50,14 +50,14 @@ public class starcrus
 	int starcrus_launch1_sound_playing = 0;
 	int starcrus_launch2_sound_playing = 0;
 	
-	WRITE_HANDLER( starcrus_s1_x_w ) { s1_x = data^0xff; }
-	WRITE_HANDLER( starcrus_s1_y_w ) { s1_y = data^0xff; }
-	WRITE_HANDLER( starcrus_s2_x_w ) { s2_x = data^0xff; }
-	WRITE_HANDLER( starcrus_s2_y_w ) { s2_y = data^0xff; }
-	WRITE_HANDLER( starcrus_p1_x_w ) { p1_x = data^0xff; }
-	WRITE_HANDLER( starcrus_p1_y_w ) { p1_y = data^0xff; }
-	WRITE_HANDLER( starcrus_p2_x_w ) { p2_x = data^0xff; }
-	WRITE_HANDLER( starcrus_p2_y_w ) { p2_y = data^0xff; }
+	public static WriteHandlerPtr starcrus_s1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s1_x = data^0xff; } };
+	public static WriteHandlerPtr starcrus_s1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s1_y = data^0xff; } };
+	public static WriteHandlerPtr starcrus_s2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s2_x = data^0xff; } };
+	public static WriteHandlerPtr starcrus_s2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s2_y = data^0xff; } };
+	public static WriteHandlerPtr starcrus_p1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p1_x = data^0xff; } };
+	public static WriteHandlerPtr starcrus_p1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p1_y = data^0xff; } };
+	public static WriteHandlerPtr starcrus_p2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_x = data^0xff; } };
+	public static WriteHandlerPtr starcrus_p2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_y = data^0xff; } };
 	
 	VIDEO_START( starcrus )
 	{
@@ -76,7 +76,7 @@ public class starcrus
 		return 0;
 	}
 	
-	WRITE_HANDLER( starcrus_ship_parm_1_w )
+	public static WriteHandlerPtr starcrus_ship_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    s1_sprite = data&0x1f;
 	    engine1_on = ((data&0x20)>>5)^0x01;
@@ -98,9 +98,9 @@ public class starcrus
 				sample_stop(0);
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( starcrus_ship_parm_2_w )
+	public static WriteHandlerPtr starcrus_ship_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    s2_sprite = data&0x1f;
 	    set_led_status(2,~data & 0x80); 		/* game over lamp */
@@ -124,9 +124,9 @@ public class starcrus
 			}
 		}
 	
-	}
+	} };
 	
-	WRITE_HANDLER( starcrus_proj_parm_1_w )
+	public static WriteHandlerPtr starcrus_proj_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    p1_sprite = data&0x0f;
 	    launch1_on = ((data&0x20)>>5)^0x01;
@@ -161,9 +161,9 @@ public class starcrus
 		{
 			starcrus_launch1_sound_playing = 0;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( starcrus_proj_parm_2_w )
+	public static WriteHandlerPtr starcrus_proj_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    p2_sprite = data&0x0f;
 	    launch2_on = ((data&0x20)>>5)^0x01;
@@ -198,7 +198,7 @@ public class starcrus
 		{
 			starcrus_launch2_sound_playing = 0;
 		}
-	}
+	} };
 	
 	int starcrus_collision_check_s1s2(void)
 	{
@@ -577,8 +577,8 @@ public class starcrus
 	
 	}
 	
-	READ_HANDLER( starcrus_coll_det_r )
+	public static ReadHandlerPtr starcrus_coll_det_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return collision_reg ^ 0xff;
-	}
+	} };
 }

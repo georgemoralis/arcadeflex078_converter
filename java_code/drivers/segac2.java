@@ -1388,7 +1388,7 @@ public class segac2
 	
 	
 	
-	static WRITE_HANDLER ( genesis_bank_select_w ) /* note value will be meaningless unless all bits are correctly set in */
+	static public static WriteHandlerPtr genesis_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* note value will be meaningless unless all bits are correctly set in */
 	{
 		if (offset !=0 ) return;
 	//	if (!z80running) logerror("undead Z80 latch write!\n");
@@ -1402,9 +1402,9 @@ public class segac2
 			z80_latch_bitcount = 0;
 			logerror("latch set, value %x\n", z80_68000_latch);
 		}
-	}
+	} };
 	
-	static READ_HANDLER ( genesis_z80_r )
+	static public static ReadHandlerPtr genesis_z80_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset += 0x4000;
 	
@@ -1439,9 +1439,9 @@ public class segac2
 		}
 	
 		return 0x00;
-	}
+	} };
 	
-	static WRITE_HANDLER ( genesis_z80_w )
+	static public static WriteHandlerPtr genesis_z80_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset += 0x4000;
 	
@@ -1478,9 +1478,9 @@ public class segac2
 		{
 	
 		}
-	}
+	} };
 	
-	static READ_HANDLER ( genesis_z80_bank_r )
+	static public static ReadHandlerPtr genesis_z80_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int address = (z80_68000_latch) + (offset & 0x7fff);
 	
@@ -1496,7 +1496,7 @@ public class segac2
 	// 	else if (address > 0xff0000) return genesis_68k_ram[BYTE_XOR(offset)];
 	
 		return -1;
-	}
+	} };
 	
 	static WRITE16_HANDLER ( genesis_z80_ram_w )
 	{
@@ -1616,13 +1616,13 @@ public class segac2
 		}
 	} };
 	
-	static WRITE_HANDLER ( bank_w )
+	static public static WriteHandlerPtr bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(game_banksel == 0x142) // Genesis I/O
 			genesis_io_w((offset/2) & 0x1f, data, 0xffff);
 		else
 			logerror("Write to bank region %i\n",game_banksel);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr megaplay_bios_6402_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -4503,7 +4503,7 @@ public class segac2
 	
 	/* Mega Play - needs kludge to boot, 68k side of things not working yet, communication not complete. */
 	
-	static READ_HANDLER ( megaplay_kludge_r) { return 0xff; }
+	static public static ReadHandlerPtr megaplay_kludge_r  = new ReadHandlerPtr() { public int handler(int offset) { return 0xff; } };
 	static DRIVER_INIT (megaplay)
 	{
 		UINT8 *src = memory_region(REGION_CPU3);

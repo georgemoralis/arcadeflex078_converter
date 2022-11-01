@@ -216,26 +216,26 @@ public class qsound
 	#endif
 	}
 	
-	WRITE_HANDLER( qsound_data_h_w )
+	public static WriteHandlerPtr qsound_data_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		qsound_data=(qsound_data&0xff)|(data<<8);
-	}
+	} };
 	
-	WRITE_HANDLER( qsound_data_l_w )
+	public static WriteHandlerPtr qsound_data_l_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		qsound_data=(qsound_data&0xff00)|data;
-	}
+	} };
 	
-	WRITE_HANDLER( qsound_cmd_w )
+	public static WriteHandlerPtr qsound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		qsound_set_command(data, qsound_data);
-	}
+	} };
 	
-	READ_HANDLER( qsound_status_r )
+	public static ReadHandlerPtr qsound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Port ready bit (0x80 if ready) */
 		return 0x80;
-	}
+	} };
 	
 	void qsound_set_command(int data, int value)
 	{

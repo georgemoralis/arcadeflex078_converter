@@ -97,23 +97,23 @@ public class zaxxon
 			COLOR(0,i) = i;
 	}
 	
-	WRITE_HANDLER( zaxxon_videoram_w )
+	public static WriteHandlerPtr zaxxon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( congo_colorram_w )
+	public static WriteHandlerPtr congo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void copy_pixel(struct mame_bitmap *dst_bm, int dx, int dy,
 						   struct mame_bitmap *src_bm, int sx, int sy)

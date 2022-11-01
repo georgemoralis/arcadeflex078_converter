@@ -80,28 +80,28 @@ public class redclash
 		}
 	}
 	
-	WRITE_HANDLER( redclash_videoram_w )
+	public static WriteHandlerPtr redclash_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( redclash_gfxbank_w )
+	public static WriteHandlerPtr redclash_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfxbank != (data & 0x01))
 		{
 			gfxbank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( redclash_flipscreen_w )
+	public static WriteHandlerPtr redclash_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x01);
-	}
+	} };
 	
 	/*
 	star_speed:
@@ -114,10 +114,10 @@ public class redclash
 	6 = backwards medium
 	7 = backwards fast
 	*/
-	WRITE_HANDLER( redclash_star0_w ) { star_speed = (star_speed & ~1) | ((data & 1) << 0); }
-	WRITE_HANDLER( redclash_star1_w ) { star_speed = (star_speed & ~2) | ((data & 1) << 1); }
-	WRITE_HANDLER( redclash_star2_w ) { star_speed = (star_speed & ~4) | ((data & 1) << 2); }
-	WRITE_HANDLER( redclash_star_reset_w ) { }
+	public static WriteHandlerPtr redclash_star0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~1) | ((data & 1) << 0); } };
+	public static WriteHandlerPtr redclash_star1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~2) | ((data & 1) << 1); } };
+	public static WriteHandlerPtr redclash_star2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~4) | ((data & 1) << 2); } };
+	public static WriteHandlerPtr redclash_star_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data) { } };
 	
 	static void get_fg_tile_info(int tile_index)
 	{

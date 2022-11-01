@@ -28,76 +28,76 @@ public class sspeedr
 	static unsigned track_ice;
 	
 	
-	WRITE_HANDLER( sspeedr_driver_horz_w )
+	public static WriteHandlerPtr sspeedr_driver_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		driver_horz = (driver_horz & 0x100) | data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_driver_horz_2_w )
+	public static WriteHandlerPtr sspeedr_driver_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		driver_horz = (driver_horz & 0xff) | ((data & 1) << 8);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_driver_vert_w )
+	public static WriteHandlerPtr sspeedr_driver_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		driver_vert = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_driver_pic_w )
+	public static WriteHandlerPtr sspeedr_driver_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		driver_pic = data & 0x1f;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_drones_horz_w )
+	public static WriteHandlerPtr sspeedr_drones_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		drones_horz = (drones_horz & 0x100) | data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_drones_horz_2_w )
+	public static WriteHandlerPtr sspeedr_drones_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		drones_horz = (drones_horz & 0xff) | ((data & 1) << 8);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_drones_mask_w )
+	public static WriteHandlerPtr sspeedr_drones_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		drones_mask = data & 0x3f;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_drones_vert_w )
+	public static WriteHandlerPtr sspeedr_drones_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		drones_vert[offset] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_track_horz_w )
+	public static WriteHandlerPtr sspeedr_track_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		track_horz = (track_horz & 0x100) | data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_track_horz_2_w )
+	public static WriteHandlerPtr sspeedr_track_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		track_horz = (track_horz & 0xff) | ((data & 1) << 8);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_track_vert_w )
+	public static WriteHandlerPtr sspeedr_track_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		track_vert[offset] = data & 0x7f;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sspeedr_track_ice_w )
+	public static WriteHandlerPtr sspeedr_track_ice_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		track_ice = data & 0x07;
-	}
+	} };
 	
 	
 	static void draw_track(struct mame_bitmap* bitmap)

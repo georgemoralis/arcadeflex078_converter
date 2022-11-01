@@ -24,10 +24,10 @@ public class battlnts
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	WRITE_HANDLER( battlnts_sh_irqtrigger_w )
+	public static WriteHandlerPtr battlnts_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
-	}
+	} };
 	
 	public static WriteHandlerPtr battlnts_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

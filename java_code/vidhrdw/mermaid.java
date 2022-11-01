@@ -37,15 +37,15 @@ public class mermaid
 	};
 	
 	
-	WRITE_HANDLER( mermaid_flip_screen_x_w )
+	public static WriteHandlerPtr mermaid_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_x_set(data & 0x01);
-	}
+	} };
 	
-	WRITE_HANDLER( mermaid_flip_screen_y_w )
+	public static WriteHandlerPtr mermaid_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_y_set(data & 0x01);
-	}
+	} };
 	
 	
 	/***************************************************************************

@@ -49,28 +49,28 @@ public class markham
 	
 	}
 	
-	WRITE_HANDLER( markham_videoram_w )
+	public static WriteHandlerPtr markham_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( markham_scroll_x_w )
+	public static WriteHandlerPtr markham_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		markham_xscroll[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( markham_flipscreen_w )
+	public static WriteHandlerPtr markham_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

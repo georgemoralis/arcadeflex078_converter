@@ -101,7 +101,7 @@ public class hnayayoi
 	static UINT16 blit_dest;
 	static UINT32 blit_src;
 	
-	WRITE_HANDLER( dynax_blitter_rev1_param_w )
+	public static WriteHandlerPtr dynax_blitter_rev1_param_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -112,7 +112,7 @@ public class hnayayoi
 			case 4: blit_src = (blit_src & 0xff00ff) | (data << 8); break;
 			case 5: blit_src = (blit_src & 0x00ffff) | (data <<16); break;
 		}
-	}
+	} };
 	
 	static void copy_pixel(int x,int y,int pen)
 	{
@@ -128,7 +128,7 @@ public class hnayayoi
 		}
 	}
 	
-	WRITE_HANDLER( dynax_blitter_rev1_start_w )
+	public static WriteHandlerPtr dynax_blitter_rev1_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_GFX1);
 		int romlen = memory_region_length(REGION_GFX1);
@@ -201,9 +201,9 @@ public class hnayayoi
 		}
 	
 		usrintf_showmessage("GFXROM OVER %06x",blit_src);
-	}
+	} };
 	
-	WRITE_HANDLER( dynax_blitter_rev1_clear_w )
+	public static WriteHandlerPtr dynax_blitter_rev1_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int pen = data >> 4;
 		int i;
@@ -213,14 +213,14 @@ public class hnayayoi
 			if ((~blit_layer & (1 << i)) && (pixmap[i]))
 				memset(pixmap[i] + blit_dest, pen, 0x10000 - blit_dest);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( hnayayoi_palbank_w )
+	public static WriteHandlerPtr hnayayoi_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset *= 8;
 		palbank = (palbank & (0xff00 >> offset)) | (data << offset);
-	}
+	} };
 	
 	
 	static void draw_layer_interleaved(struct mame_bitmap *bitmap, const struct rectangle *cliprect,

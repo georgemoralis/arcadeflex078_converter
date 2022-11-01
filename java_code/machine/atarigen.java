@@ -563,18 +563,18 @@ public class atarigen
 		sound processor. Both reads and writes can be used.
 	---------------------------------------------------------------*/
 	
-	READ_HANDLER( atarigen_6502_irq_ack_r )
+	public static ReadHandlerPtr atarigen_6502_irq_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		timed_int = 0;
 		update_6502_irq();
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( atarigen_6502_irq_ack_w )
+	public static WriteHandlerPtr atarigen_6502_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timed_int = 0;
 		update_6502_irq();
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------
@@ -671,10 +671,10 @@ public class atarigen
 		CPU to the main CPU.
 	---------------------------------------------------------------*/
 	
-	WRITE_HANDLER( atarigen_6502_sound_w )
+	public static WriteHandlerPtr atarigen_6502_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, delayed_6502_sound_w);
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------
@@ -682,12 +682,12 @@ public class atarigen
 		from the main CPU to the sound CPU.
 	---------------------------------------------------------------*/
 	
-	READ_HANDLER( atarigen_6502_sound_r )
+	public static ReadHandlerPtr atarigen_6502_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		atarigen_cpu_to_sound_ready = 0;
 		cpu_set_nmi_line(sound_cpu_num, CLEAR_LINE);
 		return atarigen_cpu_to_sound;
-	}
+	} };
 	
 	
 	/*---------------------------------------------------------------

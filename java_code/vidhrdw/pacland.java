@@ -92,25 +92,25 @@ public class pacland
 		}
 	}
 	
-	WRITE_HANDLER( pacland_videoram_w )
+	public static WriteHandlerPtr pacland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pacland_videoram2_w )
+	public static WriteHandlerPtr pacland_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pacland_videoram2[offset] != data)
 		{
 			pacland_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pacland_scroll0_w )
+	public static WriteHandlerPtr pacland_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int row;
 	
@@ -118,14 +118,14 @@ public class pacland
 		{
 			tilemap_set_scrollx(fg_tilemap, row, data + 256 * offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pacland_scroll1_w )
+	public static WriteHandlerPtr pacland_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data + 256 * offset);
-	}
+	} };
 	
-	WRITE_HANDLER( pacland_bankswitch_w )
+	public static WriteHandlerPtr pacland_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		UINT8 *RAM = memory_region(REGION_CPU1);
@@ -169,12 +169,12 @@ public class pacland
 				palette_set_color(i,r,g,b);
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pacland_flipscreen_w )
+	public static WriteHandlerPtr pacland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(~data & 0xa0);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

@@ -77,17 +77,17 @@ public class mosaic
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( mosaic_fgvideoram_w )
+	public static WriteHandlerPtr mosaic_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mosaic_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( mosaic_bgvideoram_w )
+	public static WriteHandlerPtr mosaic_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mosaic_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset/2);
-	}
+	} };
 	
 	
 	

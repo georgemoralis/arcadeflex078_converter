@@ -32,11 +32,11 @@ public class freekick
 	
 	
 	
-	WRITE_HANDLER( freek_videoram_w )
+	public static WriteHandlerPtr freek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		freek_videoram[offset] = data;
 		tilemap_mark_tile_dirty(freek_tilemap,offset&0x3ff);
-	}
+	} };
 	
 	static void gigas_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{

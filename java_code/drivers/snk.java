@@ -247,11 +247,11 @@ public class snk
 	} };
 	
 	// NMI handshakes between CPUs are determined to be much simpler
-	READ_HANDLER ( snk_cpuA_nmi_trigger_r ) { cpu_set_nmi_line(0, ASSERT_LINE); return 0; }
-	WRITE_HANDLER( snk_cpuA_nmi_ack_w ) { cpu_set_nmi_line(0, CLEAR_LINE); }
+	public static ReadHandlerPtr snk_cpuA_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) { cpu_set_nmi_line(0, ASSERT_LINE); return 0; } };
+	public static WriteHandlerPtr snk_cpuA_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(0, CLEAR_LINE); } };
 	
-	READ_HANDLER ( snk_cpuB_nmi_trigger_r ) { cpu_set_nmi_line(1, ASSERT_LINE); return 0; }
-	WRITE_HANDLER( snk_cpuB_nmi_ack_w ) { cpu_set_nmi_line(1, CLEAR_LINE); }
+	public static ReadHandlerPtr snk_cpuB_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) { cpu_set_nmi_line(1, ASSERT_LINE); return 0; } };
+	public static WriteHandlerPtr snk_cpuB_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(1, CLEAR_LINE); } };
 	
 	/*********************************************************************/
 	

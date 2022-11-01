@@ -87,47 +87,47 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( msisaac_fg_scrolly_w )
+	public static WriteHandlerPtr msisaac_fg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly( foreground, 0, data );
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_fg_scrollx_w )
+	public static WriteHandlerPtr msisaac_fg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx( foreground, 0, 9+data );
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg2_scrolly_w )
+	public static WriteHandlerPtr msisaac_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly( background2, 0, data );
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg2_scrollx_w )
+	public static WriteHandlerPtr msisaac_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx( background2, 0, 9+2+data );
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg_scrolly_w )
+	public static WriteHandlerPtr msisaac_bg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly( background, 0, data );
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg_scrollx_w )
+	public static WriteHandlerPtr msisaac_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx( background, 0, 9+4+data );
-	}
+	} };
 	
 	
-	WRITE_HANDLER( msisaac_textbank1_w )
+	public static WriteHandlerPtr msisaac_textbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( textbank1!=data )
 		{
 			textbank1 = data;
 			tilemap_mark_all_tiles_dirty( foreground );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg2_textbank_w )
+	public static WriteHandlerPtr msisaac_bg2_textbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( bg2_textbank != data )
 		{
@@ -140,34 +140,34 @@ public class msisaac
 				logerror("bg2 control=%2x\n",data);
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg_videoram_w )
+	public static WriteHandlerPtr msisaac_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( msisaac_videoram[offset]!=data )
 		{
 			msisaac_videoram[offset]=data;
 			tilemap_mark_tile_dirty(background,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_bg2_videoram_w )
+	public static WriteHandlerPtr msisaac_bg2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( msisaac_videoram2[offset]!=data )
 		{
 			msisaac_videoram2[offset]=data;
 			tilemap_mark_tile_dirty(background2,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( msisaac_fg_videoram_w )
+	public static WriteHandlerPtr msisaac_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset]!=data )
 		{
 			videoram[offset]=data;
 			tilemap_mark_tile_dirty(foreground,offset);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

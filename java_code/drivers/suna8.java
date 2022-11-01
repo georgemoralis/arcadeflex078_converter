@@ -1147,13 +1147,13 @@ public class suna8
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown flipscreen bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	WRITE_HANDLER( hardhea2_leds_w )
+	public static WriteHandlerPtr hardhea2_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, data & 0x01);
 		set_led_status(1, data & 0x02);
 		coin_counter_w(0, data & 0x04);
 		if (data & ~0x07)	logerror("CPU#0  - PC %06X: unknown leds bits: %02X\n",activecpu_get_pc(),data);
-	}
+	} };
 	
 	/*
 		7654 32--
@@ -1309,13 +1309,13 @@ public class suna8
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown flipscreen bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	WRITE_HANDLER( sparkman_leds_w )
+	public static WriteHandlerPtr sparkman_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, data & 0x01);
 		set_led_status(1, data & 0x02);
 		coin_counter_w(0, data & 0x04);
 		if (data & ~0x07)	logerror("CPU#0  - PC %06X: unknown leds bits: %02X\n",activecpu_get_pc(),data);
-	}
+	} };
 	
 	/*
 		7654 32--

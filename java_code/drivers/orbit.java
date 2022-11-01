@@ -73,30 +73,30 @@ public class orbit
 	}
 	
 	
-	WRITE_HANDLER( orbit_note_w )
+	public static WriteHandlerPtr orbit_note_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(0, (~data) & 0xff);
-	}
+	} };
 	
-	WRITE_HANDLER( orbit_note_amp_w )
+	public static WriteHandlerPtr orbit_note_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(1, data & 0x0f);
 		discrete_sound_w(2, (data >> 4) & 0x0f);
-	}
+	} };
 	
-	WRITE_HANDLER( orbit_noise_amp_w )
+	public static WriteHandlerPtr orbit_noise_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(3, data & 0x0f);
 		discrete_sound_w(4, (data & 0xf0) >> 4);
-	}
+	} };
 	
-	WRITE_HANDLER( orbit_noise_rst_w )
+	public static WriteHandlerPtr orbit_noise_rst_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(6, 0);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( orbit_misc_w )
+	public static WriteHandlerPtr orbit_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 bit = offset >> 1;
 	
@@ -108,19 +108,19 @@ public class orbit
 		{
 			update_misc_flags(orbit_misc_flags & ~(1 << bit));
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( orbit_zeropage_w )
+	public static WriteHandlerPtr orbit_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( orbit_zeropage_r )
+	public static ReadHandlerPtr orbit_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return memory_region(REGION_CPU1)[offset & 0xff];
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress orbit_readmem[]={

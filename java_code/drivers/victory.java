@@ -157,27 +157,27 @@ public class victory
 	} };
 	
 	
-	WRITE_HANDLER( victory_sound_response_w )
+	public static WriteHandlerPtr victory_sound_response_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_response = data;
 		if (LOG_SOUND) logerror("%04X:!!!! Sound response = %02X\n", activecpu_get_previouspc(), data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( victory_sound_irq_clear_w )
+	public static WriteHandlerPtr victory_sound_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (LOG_SOUND) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
 		if (!data) pia_0_ca1_w(0, 1);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( victory_main_ack_w )
+	public static WriteHandlerPtr victory_main_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (LOG_SOUND) logerror("%04X:!!!! Sound ack = %02X\n", activecpu_get_previouspc(), data);
 		if (sound_response_ack_clk && !data)
 			pia_0_cb1_w(0, 1);
 		sound_response_ack_clk = data;
-	}
+	} };
 	
 	
 	

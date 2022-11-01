@@ -54,21 +54,21 @@ public class trackfld
 	    the no of cycles by 4 to undo the 14.318/4 operation
 	*/
 	
-	READ_HANDLER( trackfld_sh_timer_r )
+	public static ReadHandlerPtr trackfld_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int clock = activecpu_gettotalcycles() / TIMER_RATE;
 	
 	    return clock & 0xF;
-	}
+	} };
 	
-	READ_HANDLER( trackfld_speech_r )
+	public static ReadHandlerPtr trackfld_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return VLM5030_BSY() ? 0x10 : 0;
-	}
+	} };
 	
 	static int last_addr = 0;
 	
-	WRITE_HANDLER( trackfld_sound_w )
+	public static WriteHandlerPtr trackfld_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if( (offset & 0x07) == 0x03 )
 	    {
@@ -85,16 +85,16 @@ public class trackfld
 	            VLM5030_RST( offset&0x200 );
 	    }
 	    last_addr = offset;
-	}
+	} };
 	
-	READ_HANDLER( hyperspt_sh_timer_r )
+	public static ReadHandlerPtr hyperspt_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int clock = activecpu_gettotalcycles() / TIMER_RATE;
 	
 	    return (clock & 0x3) | (VLM5030_BSY()? 0x04 : 0);
-	}
+	} };
 	
-	WRITE_HANDLER( hyperspt_sound_w )
+	public static WriteHandlerPtr hyperspt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int changes = offset^last_addr;
 	    /* A3 = data enable for VLM5030 (don't care )          */
@@ -112,11 +112,11 @@ public class trackfld
 	        VLM5030_RST( offset&0x20 );
 	
 	    last_addr = offset;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( konami_sh_irqtrigger_w )
+	public static WriteHandlerPtr konami_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    static int last;
 	
@@ -127,29 +127,29 @@ public class trackfld
 	    }
 	
 	    last = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( konami_SN76496_latch_w )
+	public static WriteHandlerPtr konami_SN76496_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    SN76496_latch = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( konami_SN76496_0_w )
+	public static WriteHandlerPtr konami_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    SN76496_0_w(offset, SN76496_latch);
-	}
+	} };
 	
 	
 	
 	
-	READ_HANDLER( hyprolyb_speech_r )
+	public static ReadHandlerPtr hyprolyb_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return ADPCM_playing(0) ? 0x10 : 0x00;
-	}
+	} };
 	
-	WRITE_HANDLER( hyprolyb_ADPCM_data_w )
+	public static WriteHandlerPtr hyprolyb_ADPCM_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int cmd,start,end;
 	    unsigned char *RAM = memory_region(REGION_CPU3);
@@ -161,5 +161,5 @@ public class trackfld
 	    end = RAM[cmd + 3] + 256 * RAM[cmd + 2];
 	    if (end > start)
 	        ADPCM_play(0,start,(end - start)*2);
-	}
+	} };
 }

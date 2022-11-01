@@ -94,12 +94,12 @@ public class stfight
 	
 	// It's entirely possible that this bank is never switched out
 	// - in fact I don't even know how/where it's switched in!
-	WRITE_HANDLER( stfight_bank_w )
+	public static WriteHandlerPtr stfight_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char   *ROM2 = memory_region(REGION_CPU1) + 0x10000;
 	
 		cpu_setbank( 1, &ROM2[data<<14] );
-	}
+	} };
 	
 	public static InterruptHandlerPtr stfight_vb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -122,15 +122,15 @@ public class stfight
 	 */
 	
 	// Perhaps define dipswitches as active low?
-	READ_HANDLER( stfight_dsw_r )
+	public static ReadHandlerPtr stfight_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return( ~readinputport( 3+offset ) );
-	}
+	} };
 	
 	static int stfight_coin_mech_query_active = 0;
 	static int stfight_coin_mech_query;
 	
-	READ_HANDLER( stfight_coin_r )
+	public static ReadHandlerPtr stfight_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    static int coin_mech_latch[2] = { 0x02, 0x01 };
 	
@@ -163,14 +163,14 @@ public class stfight
 	    }
 	
 	    return( coin_mech_data );
-	}
+	} };
 	
-	WRITE_HANDLER( stfight_coin_w )
+	public static WriteHandlerPtr stfight_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    // interrogate coin mech
 	    stfight_coin_mech_query_active = 1;
 	    stfight_coin_mech_query = data;
-	}
+	} };
 	
 	/*
 	 *      Machine hardware for MSM5205 ADPCM sound control
@@ -212,7 +212,7 @@ public class stfight
 		toggle ^= 1;
 	}
 	
-	WRITE_HANDLER( stfight_adpcm_control_w )
+	public static WriteHandlerPtr stfight_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if( data < 0x08 )
 	    {
@@ -221,11 +221,11 @@ public class stfight
 	    }
 	
 	    MSM5205_reset_w( 0, data & 0x08 ? 1 : 0 );
-	}
+	} };
 	
-	WRITE_HANDLER( stfight_e800_w )
+	public static WriteHandlerPtr stfight_e800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	/*
 	 *      Machine hardware for YM2303 fm sound control
@@ -233,13 +233,13 @@ public class stfight
 	
 	static unsigned char fm_data;
 	
-	WRITE_HANDLER( stfight_fm_w )
+	public static WriteHandlerPtr stfight_fm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    // the sound cpu ignores any fm data without bit 7 set
 	    fm_data = 0x80 | data;
-	}
+	} };
 	
-	READ_HANDLER( stfight_fm_r )
+	public static ReadHandlerPtr stfight_fm_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int data = fm_data;
 	
@@ -247,5 +247,5 @@ public class stfight
 	    fm_data &= 0x7f;
 	
 	    return( data );
-	}
+	} };
 }

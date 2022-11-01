@@ -63,11 +63,11 @@ public class aeroboto
 		return(0xff);
 	} };
 	
-	static WRITE_HANDLER ( aeroboto_1a2_w )
+	static public static WriteHandlerPtr aeroboto_1a2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		aeroboto_mainram[0x01a2] = data;
 		if (data) disable_irq = 1;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

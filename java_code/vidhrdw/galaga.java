@@ -31,11 +31,11 @@ public class galaga
 	static int total_stars;
 	static int galaga_gfxbank; // used by catsbee
 	
-	WRITE_HANDLER ( gatsbee_bank_w )
+	public static WriteHandlerPtr gatsbee_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		galaga_gfxbank = data & 0x1;
 		memset (dirtybuffer, 1, videoram_size);
-	}
+	} };
 	
 	/***************************************************************************
 	

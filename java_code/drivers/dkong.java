@@ -183,15 +183,15 @@ public class dkong
 	#define ACTIVELOW_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | ((D ^ 1) << A))
 	
 	
-	WRITE_HANDLER( dkong_sh_sound3_w )     { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); }
-	WRITE_HANDLER( dkong_sh_sound4_w )    { t[1] = ~data & 1; }
-	WRITE_HANDLER( dkong_sh_sound5_w )    { t[0] = ~data & 1; }
-	WRITE_HANDLER( dkong_sh_tuneselect_w ) { soundlatch_w(offset,data ^ 0x0f); }
+	public static WriteHandlerPtr dkong_sh_sound3_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
+	public static WriteHandlerPtr dkong_sh_sound4_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[1] = ~data & 1; } };
+	public static WriteHandlerPtr dkong_sh_sound5_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[0] = ~data & 1; } };
+	public static WriteHandlerPtr dkong_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data ^ 0x0f); } };
 	
-	WRITE_HANDLER( dkongjr_sh_test6_w )      { p[2] = ACTIVELOW_PORT_BIT(p[2],6,data); }
-	WRITE_HANDLER( dkongjr_sh_test5_w )      { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); }
-	WRITE_HANDLER( dkongjr_sh_test4_w )      { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); }
-	WRITE_HANDLER( dkongjr_sh_tuneselect_w ) { soundlatch_w(offset,data); }
+	public static WriteHandlerPtr dkongjr_sh_test6_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],6,data); } };
+	public static WriteHandlerPtr dkongjr_sh_test5_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
+	public static WriteHandlerPtr dkongjr_sh_test4_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); } };
+	public static WriteHandlerPtr dkongjr_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data); } };
 	
 	
 	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
@@ -410,12 +410,12 @@ public class dkong
 	
 	int hunchloopback;
 	
-	WRITE_HANDLER( hunchbkd_data_w )
+	public static WriteHandlerPtr hunchbkd_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hunchloopback=data;
-	}
+	} };
 	
-	READ_HANDLER( hunchbkd_port0_r )
+	public static ReadHandlerPtr hunchbkd_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		logerror("port 0 : pc = %4x\n",activecpu_get_pc());
 	
@@ -426,14 +426,14 @@ public class dkong
 		}
 	
 	    return 0;
-	}
+	} };
 	
-	READ_HANDLER( hunchbkd_port1_r )
+	public static ReadHandlerPtr hunchbkd_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return hunchloopback;
-	}
+	} };
 	
-	READ_HANDLER( herbiedk_port1_r )
+	public static ReadHandlerPtr herbiedk_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (activecpu_get_pc())
 		{
@@ -442,9 +442,9 @@ public class dkong
 		}
 	
 	    return 1;
-	}
+	} };
 	
-	READ_HANDLER( spclforc_port0_r )
+	public static ReadHandlerPtr spclforc_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (activecpu_get_pc())
 		{
@@ -454,9 +454,9 @@ public class dkong
 		}
 	
 	    return 0;
-	}
+	} };
 	
-	READ_HANDLER( eightact_port1_r )
+	public static ReadHandlerPtr eightact_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (activecpu_get_pc())
 		{
@@ -465,9 +465,9 @@ public class dkong
 		}
 	
 	    return 1;
-	}
+	} };
 	
-	READ_HANDLER( shootgal_port0_r )
+	public static ReadHandlerPtr shootgal_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (activecpu_get_pc())
 		{
@@ -476,7 +476,7 @@ public class dkong
 		}
 	
 	    return 0;
-	}
+	} };
 	
 	public static IO_WritePort hunchbkd_writeport[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -625,7 +625,7 @@ public class dkong
 	};
 	
 	
-	WRITE_HANDLER( dkong3_2a03_reset_w )
+	public static WriteHandlerPtr dkong3_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 1)
 		{
@@ -637,7 +637,7 @@ public class dkong
 			cpu_set_reset_line(1,ASSERT_LINE);
 			cpu_set_reset_line(2,ASSERT_LINE);
 		}
-	}
+	} };
 	
 	public static Memory_WriteAddress dkong3_writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

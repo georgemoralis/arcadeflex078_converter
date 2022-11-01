@@ -92,25 +92,25 @@ public class sonson
 			COLOR(1,i) = (*(color_prom++) & 0x0f) + 0x10;
 	}
 	
-	WRITE_HANDLER( sonson_videoram_w )
+	public static WriteHandlerPtr sonson_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sonson_colorram_w )
+	public static WriteHandlerPtr sonson_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sonson_scroll_w )
+	public static WriteHandlerPtr sonson_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int row;
 	
@@ -118,16 +118,16 @@ public class sonson
 		{
 			tilemap_set_scrollx(bg_tilemap, row, data);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sonson_flipscreen_w )
+	public static WriteHandlerPtr sonson_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

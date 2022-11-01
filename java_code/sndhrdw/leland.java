@@ -1678,7 +1678,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( leland_i86_control_w )
+	public static WriteHandlerPtr leland_i86_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* see if anything changed */
 		int diff = (last_control ^ data) & 0xf8;
@@ -1732,7 +1732,7 @@ public class leland
 			leland_i186_reset();
 	
 		update_interrupt_state();
-	}
+	} };
 	
 	
 	
@@ -1749,17 +1749,17 @@ public class leland
 	}
 	
 	
-	WRITE_HANDLER( leland_i86_command_lo_w )
+	public static WriteHandlerPtr leland_i86_command_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, command_lo_sync);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( leland_i86_command_hi_w )
+	public static WriteHandlerPtr leland_i86_command_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (LOG_COMM) logerror("%04X:Write sound command latch hi = %02X\n", activecpu_get_previouspc(), data);
 		sound_command[1] = data;
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr main_to_sound_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
@@ -1808,7 +1808,7 @@ public class leland
 	}
 	
 	
-	READ_HANDLER( leland_i86_response_r )
+	public static ReadHandlerPtr leland_i86_response_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (LOG_COMM) logerror("%04X:Read sound response latch = %02X\n", activecpu_get_previouspc(), sound_response);
 	
@@ -1821,7 +1821,7 @@ public class leland
 			timer_set(TIME_NOW, activecpu_get_previouspc() + 2, delayed_response_r);
 			return sound_response;
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr sound_to_main_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -2179,7 +2179,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( ataxx_i86_control_w )
+	public static WriteHandlerPtr ataxx_i86_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* compute the bit-shuffled variants of the bits and then write them */
 		int modified = 	((data & 0x01) << 7) |
@@ -2187,7 +2187,7 @@ public class leland
 						((data & 0x04) << 3) |
 						((data & 0x08) << 1);
 		leland_i86_control_w(offset, modified);
-	}
+	} };
 	
 	
 	

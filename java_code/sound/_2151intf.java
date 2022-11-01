@@ -209,7 +209,7 @@ public class _2151intf
 	
 	static int lastreg0,lastreg1,lastreg2;
 	
-	READ_HANDLER( YM2151_status_port_0_r )
+	public static ReadHandlerPtr YM2151_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(FMMode)
 		{
@@ -223,9 +223,9 @@ public class _2151intf
 	#endif
 		}
 		return 0;
-	}
+	} };
 	
-	READ_HANDLER( YM2151_status_port_1_r )
+	public static ReadHandlerPtr YM2151_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(FMMode)
 		{
@@ -239,9 +239,9 @@ public class _2151intf
 	#endif
 		}
 		return 0;
-	}
+	} };
 	
-	READ_HANDLER( YM2151_status_port_2_r )
+	public static ReadHandlerPtr YM2151_status_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(FMMode)
 		{
@@ -255,22 +255,22 @@ public class _2151intf
 	#endif
 		}
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_register_port_0_w )
+	public static WriteHandlerPtr YM2151_register_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lastreg0 = data;
-	}
-	WRITE_HANDLER( YM2151_register_port_1_w )
+	} };
+	public static WriteHandlerPtr YM2151_register_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lastreg1 = data;
-	}
-	WRITE_HANDLER( YM2151_register_port_2_w )
+	} };
+	public static WriteHandlerPtr YM2151_register_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lastreg2 = data;
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_data_port_0_w )
+	public static WriteHandlerPtr YM2151_data_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(FMMode)
 		{
@@ -287,9 +287,9 @@ public class _2151intf
 			break;
 	#endif
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_data_port_1_w )
+	public static WriteHandlerPtr YM2151_data_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(FMMode)
 		{
@@ -306,9 +306,9 @@ public class _2151intf
 			break;
 	#endif
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_data_port_2_w )
+	public static WriteHandlerPtr YM2151_data_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch(FMMode)
 		{
@@ -325,23 +325,23 @@ public class _2151intf
 			break;
 	#endif
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_word_0_w )
+	public static WriteHandlerPtr YM2151_word_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset)
 			YM2151_data_port_0_w(0,data);
 		else
 			YM2151_register_port_0_w(0,data);
-	}
+	} };
 	
-	WRITE_HANDLER( YM2151_word_1_w )
+	public static WriteHandlerPtr YM2151_word_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset)
 			YM2151_data_port_1_w(0,data);
 		else
 			YM2151_register_port_1_w(0,data);
-	}
+	} };
 	
 	READ16_HANDLER( YM2151_status_port_0_lsb_r )
 	{

@@ -35,7 +35,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( crgolf_videoram_bit0_w )
+	public static WriteHandlerPtr crgolf_videoram_bit0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -50,10 +50,10 @@ public class crgolf
 		dest[5] = (dest[5] & ~0x01) | ((data >> 2) & 0x01);
 		dest[6] = (dest[6] & ~0x01) | ((data >> 1) & 0x01);
 		dest[7] = (dest[7] & ~0x01) | ((data >> 0) & 0x01);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( crgolf_videoram_bit1_w )
+	public static WriteHandlerPtr crgolf_videoram_bit1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -68,10 +68,10 @@ public class crgolf
 		dest[5] = (dest[5] & ~0x02) | ((data >> 1) & 0x02);
 		dest[6] = (dest[6] & ~0x02) | ((data >> 0) & 0x02);
 		dest[7] = (dest[7] & ~0x02) | ((data << 1) & 0x02);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( crgolf_videoram_bit2_w )
+	public static WriteHandlerPtr crgolf_videoram_bit2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -86,7 +86,7 @@ public class crgolf
 		dest[5] = (dest[5] & ~0x04) | ((data >> 0) & 0x04);
 		dest[6] = (dest[6] & ~0x04) | ((data << 1) & 0x04);
 		dest[7] = (dest[7] & ~0x04) | ((data << 2) & 0x04);
-	}
+	} };
 	
 	
 	
@@ -96,7 +96,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	READ_HANDLER( crgolf_videoram_bit0_r )
+	public static ReadHandlerPtr crgolf_videoram_bit0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -111,10 +111,10 @@ public class crgolf
 				((source[5] & 0x01) << 2) |
 				((source[6] & 0x01) << 1) |
 				((source[7] & 0x01) << 0);
-	}
+	} };
 	
 	
-	READ_HANDLER( crgolf_videoram_bit1_r )
+	public static ReadHandlerPtr crgolf_videoram_bit1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -129,10 +129,10 @@ public class crgolf
 				((source[5] & 0x02) << 1) |
 				((source[6] & 0x02) << 0) |
 				((source[7] & 0x02) >> 1);
-	}
+	} };
 	
 	
-	READ_HANDLER( crgolf_videoram_bit2_r )
+	public static ReadHandlerPtr crgolf_videoram_bit2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		struct mame_bitmap *screen = (*crgolf_screen_select & 1) ? screenb : screena;
 		int x = (offset % 32) * 8;
@@ -147,7 +147,7 @@ public class crgolf
 				((source[5] & 0x04) << 0) |
 				((source[6] & 0x04) >> 1) |
 				((source[7] & 0x04) >> 2);
-	}
+	} };
 	
 	
 	

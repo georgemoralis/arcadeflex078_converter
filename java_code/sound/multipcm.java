@@ -527,27 +527,27 @@ public class multipcm
 	
 	/* MAME/M1 access functions */
 	
-	READ_HANDLER( MultiPCM_reg_0_r )
+	public static ReadHandlerPtr MultiPCM_reg_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return MultiPCM_reg_r(0, offset);
-	}
+	} };
 	
-	WRITE_HANDLER( MultiPCM_reg_0_w )
+	public static WriteHandlerPtr MultiPCM_reg_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		MultiPCM_reg_w(0, offset, data);
-	}
+	} };
 	
-	READ_HANDLER( MultiPCM_reg_1_r )
+	public static ReadHandlerPtr MultiPCM_reg_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return MultiPCM_reg_r(1, offset);
-	}
+	} };
 	
-	WRITE_HANDLER( MultiPCM_reg_1_w )
+	public static WriteHandlerPtr MultiPCM_reg_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		MultiPCM_reg_w(1, offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( MultiPCM_bank_0_w )
+	public static WriteHandlerPtr MultiPCM_bank_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (mpcm[0].type == MULTIPCM_MODE_STADCROSS)	// multi32 with mono bankswitching GAL
 		{
@@ -562,9 +562,9 @@ public class multipcm
 		{
 			mpcm[0].bankL = data&0x1f;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( MultiPCM_bank_1_w )
+	public static WriteHandlerPtr MultiPCM_bank_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (mpcm[1].type == MULTIPCM_MODE_STADCROSS)	// multi32 with mono bankswitching GAL
 		{
@@ -579,6 +579,6 @@ public class multipcm
 		{
 			mpcm[1].bankL = data&0x1f;
 		}
-	}
+	} };
 	
 }

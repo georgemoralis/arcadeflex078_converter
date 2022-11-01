@@ -54,7 +54,7 @@ public class taitosnd
 		}
 	}
 	
-	WRITE_HANDLER( taitosound_port_w )
+	public static WriteHandlerPtr taitosound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 0x0f;
 	
@@ -64,9 +64,9 @@ public class taitosnd
 		{
 			logerror("tc0140syt : error Master entering unknown mode[%02x]\n", data);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( taitosound_comm_w )
+	public static WriteHandlerPtr taitosound_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 		data &= 0x0f;	/*this is important, otherwise ballbros won't work*/
@@ -115,9 +115,9 @@ public class taitosnd
 				logerror("taitosnd: Master cpu written in mode [%02x] data[%02x]\n",tc0140syt.mainmode, data);
 		}
 	
-	}
+	} };
 	
-	READ_HANDLER( taitosound_comm_r )
+	public static ReadHandlerPtr taitosound_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch( tc0140syt.mainmode )
 		{
@@ -152,20 +152,20 @@ public class taitosnd
 				logerror("tc0140syt : Master cpu read in mode [%02x]\n", tc0140syt.mainmode);
 				return 0;
 		}
-	}
+	} };
 	
 	//SLAVE SIDE
 	
-	WRITE_HANDLER( taitosound_slave_port_w )
+	public static WriteHandlerPtr taitosound_slave_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 0x0f;
 		tc0140syt.submode = data;
 		//logerror("taitosnd: Slave cpu mode [%02x]\n", data);
 		if (data > 6)
 			logerror("tc0140syt error : Slave cpu unknown mode[%02x]\n", data);
-	}
+	} };
 	
-	WRITE_HANDLER( taitosound_slave_comm_w )
+	public static WriteHandlerPtr taitosound_slave_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 0x0f;
 	
@@ -214,9 +214,9 @@ public class taitosnd
 	
 		Interrupt_Controller();
 	
-	}
+	} };
 	
-	READ_HANDLER( taitosound_slave_comm_r )
+	public static ReadHandlerPtr taitosound_slave_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char res = 0;
 	
@@ -257,7 +257,7 @@ public class taitosnd
 		Interrupt_Controller();
 	
 	    return res;
-	}
+	} };
 	
 	
 	

@@ -82,33 +82,33 @@ public class gomoku
 				TILE_FLIPYX(flipyx))
 	}
 	
-	WRITE_HANDLER( gomoku_videoram_w )
+	public static WriteHandlerPtr gomoku_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gomoku_videoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( gomoku_colorram_w )
+	public static WriteHandlerPtr gomoku_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gomoku_colorram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( gomoku_bgram_w )
+	public static WriteHandlerPtr gomoku_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gomoku_bgram[offset] = data;
 		gomoku_bg_dirty[offset] = 1;
-	}
+	} };
 	
-	WRITE_HANDLER( gomoku_flipscreen_w )
+	public static WriteHandlerPtr gomoku_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gomoku_flipscreen = (data & 0x02) ? 0 : 1;
-	}
+	} };
 	
-	WRITE_HANDLER( gomoku_bg_dispsw_w )
+	public static WriteHandlerPtr gomoku_bg_dispsw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gomoku_bg_dispsw = (data & 0x02) ? 0 : 1;
-	}
+	} };
 	
 	/******************************************************************************
 	

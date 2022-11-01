@@ -95,7 +95,7 @@ public class system1
 		inport23_step = data;
 	} };
 	
-	WRITE_HANDLER( hvymetal_videomode_w )
+	public static WriteHandlerPtr hvymetal_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -109,9 +109,9 @@ public class system1
 		cpu_setbank(1,&rom[bankaddress]);
 	
 		system1_videomode_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( brain_videomode_w )
+	public static WriteHandlerPtr brain_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -120,9 +120,9 @@ public class system1
 		cpu_setbank(1,&rom[bankaddress]);
 	
 		system1_videomode_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( chplft_videomode_w )
+	public static WriteHandlerPtr chplft_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -131,16 +131,16 @@ public class system1
 		cpu_setbank(1,&rom[bankaddress]);
 	
 		system1_videomode_w(0, data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( system1_soundport_w )
+	public static WriteHandlerPtr system1_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		/* spin for a while to let the Z80 read the command (fixes hanging sound in Regulus) */
 		cpu_spinuntil_time(TIME_IN_USEC(50));
-	}
+	} };
 	
 	
 	

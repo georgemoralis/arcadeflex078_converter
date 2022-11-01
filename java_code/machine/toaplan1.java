@@ -259,7 +259,7 @@ public class toaplan1
 		machine_init_toaplan1();
 	}
 	
-	WRITE_HANDLER( rallybik_coin_w )
+	public static WriteHandlerPtr rallybik_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (data) {
 			case 0x08: if (toaplan1_coin_count) { coin_counter_w(0,1); coin_counter_w(0,0); } break;
@@ -272,9 +272,9 @@ public class toaplan1
 			case 0x0f: coin_lockout_w(1,0); coin_lockout_w(3,0); toaplan1_coin_count=1; break;
 			default:   logerror("PC:%04x  Writing unknown data (%04x) to coin count/lockout port\n",activecpu_get_previouspc(),data); break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( toaplan1_coin_w )
+	public static WriteHandlerPtr toaplan1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("Z80 writing %02x to coin control\n",data);
 		/* This still isnt too clear yet. */
@@ -302,7 +302,7 @@ public class toaplan1
 			case 0x00: coin_lockout_global_w(1); break;	/* Lock all coin slots */
 			default:   logerror("PC:%04x  Writing unknown data (%04x) to coin count/lockout port\n",activecpu_get_previouspc(),data); break;
 		}
-	}
+	} };
 	
 	WRITE16_HANDLER( samesame_coin_w )
 	{

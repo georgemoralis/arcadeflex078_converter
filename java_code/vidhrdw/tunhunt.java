@@ -54,23 +54,23 @@ public class tunhunt
 	
 	/****************************************************************************************/
 	
-	WRITE_HANDLER( tunhunt_videoram_w )
+	public static WriteHandlerPtr tunhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tunhunt_mott_w )
+	public static WriteHandlerPtr tunhunt_mott_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( spriteram[offset]!=data )
 		{
 			spriteram[offset] = data;
 			dirtybuffer[offset>>4] = 1;
 		}
-	}
+	} };
 	
 	static void get_fg_tile_info(int tile_index)
 	{

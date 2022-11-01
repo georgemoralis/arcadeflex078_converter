@@ -178,15 +178,15 @@ public class pd4990a
 		}
 	}
 	
-	READ_HANDLER( pd4990a_testbit_r )
+	public static ReadHandlerPtr pd4990a_testbit_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (testbit);
-	}
+	} };
 	
-	READ_HANDLER( pd4990a_databit_r )
+	public static ReadHandlerPtr pd4990a_databit_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (outputbit);
-	}
+	} };
 	
 	static void pd4990a_readbit(void)
 	{

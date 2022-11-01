@@ -147,43 +147,43 @@ public class kingobox
 		}
 	}
 	
-	WRITE_HANDLER( kingofb_videoram_w )
+	public static WriteHandlerPtr kingofb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kingofb_colorram_w )
+	public static WriteHandlerPtr kingofb_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kingofb_videoram2_w )
+	public static WriteHandlerPtr kingofb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kingofb_videoram2[offset] != data)
 		{
 			kingofb_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kingofb_colorram2_w )
+	public static WriteHandlerPtr kingofb_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kingofb_colorram2[offset] != data)
 		{
 			kingofb_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kingofb_f800_w )
+	public static WriteHandlerPtr kingofb_f800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		kingofb_nmi_enable = data & 0x20;
 	
@@ -198,7 +198,7 @@ public class kingobox
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

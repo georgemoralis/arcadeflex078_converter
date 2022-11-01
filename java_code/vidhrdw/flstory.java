@@ -48,29 +48,29 @@ public class flstory
 		return video_start_generic();
 	}
 	
-	WRITE_HANDLER( flstory_videoram_w )
+	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(tilemap,offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( flstory_palette_w )
+	public static WriteHandlerPtr flstory_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset & 0x100)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
-	}
+	} };
 	
-	READ_HANDLER( flstory_palette_r )
+	public static ReadHandlerPtr flstory_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (offset & 0x100)
 			return paletteram_2[ (offset & 0xff) + (palette_bank << 8) ];
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
-	}
+	} };
 	
-	WRITE_HANDLER( flstory_gfxctrl_w )
+	public static WriteHandlerPtr flstory_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfxctrl == data)
 			return;
@@ -84,18 +84,18 @@ public class flstory
 	
 	//usrintf_showmessage("%04x: gfxctrl = %02x\n",activecpu_get_pc(),data);
 	
-	}
+	} };
 	
-	READ_HANDLER( flstory_scrlram_r )
+	public static ReadHandlerPtr flstory_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return flstory_scrlram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( flstory_scrlram_w )
+	public static WriteHandlerPtr flstory_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flstory_scrlram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data );
-	}
+	} };
 	
 	/***************************************************************************
 	

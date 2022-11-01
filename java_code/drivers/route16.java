@@ -81,14 +81,14 @@ public class route16
 	DRIVER_INIT( route16b );
 	DRIVER_INIT( stratvox );
 	
-	READ_HANDLER( routex_prot_read )
+	public static ReadHandlerPtr routex_prot_read  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc()==0x2f) return 0xFB;
 	
 		logerror ("cpu #%d (PC=%08X): unmapped prot read\n", cpu_getactivecpu(), activecpu_get_pc());
 		return 0x00;
 	
-	}
+	} };
 	
 	public static Memory_ReadAddress cpu1_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

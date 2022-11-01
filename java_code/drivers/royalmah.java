@@ -136,7 +136,7 @@ public class royalmah
 	}
 	
 	
-	WRITE_HANDLER( royalmah_videoram_w )
+	public static WriteHandlerPtr royalmah_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		UINT8 x, y;
@@ -160,10 +160,10 @@ public class royalmah
 			col1 >>= 1;
 			col2 >>= 1;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( royalmah_palbank_w )
+	public static WriteHandlerPtr royalmah_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 1 = coin counter */
 		coin_counter_w(0,data & 2);
@@ -172,20 +172,20 @@ public class royalmah
 	
 		/* bit 3 = palette bank */
 		set_vh_global_attribute(&palette_base,(data & 0x08) >> 3);
-	}
+	} };
 	
-	WRITE_HANDLER( mjderngr_coin_w )
+	public static WriteHandlerPtr mjderngr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 1 = coin counter */
 		coin_counter_w(0,data & 2);
 	
 		/* bit 2 always set? */
-	}
+	} };
 	
-	WRITE_HANDLER( mjderngr_palbank_w )
+	public static WriteHandlerPtr mjderngr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_vh_global_attribute(&palette_base,data);
-	}
+	} };
 	
 	
 	VIDEO_UPDATE( royalmah )
@@ -250,7 +250,7 @@ public class royalmah
 	
 	
 	
-	static READ_HANDLER ( majs101b_dsw_r )
+	static public static ReadHandlerPtr majs101b_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (majs101b_dsw_select)
 		{
@@ -259,12 +259,12 @@ public class royalmah
 			case 0x40: return readinputport(12);	/* DSW2 */
 		}
 		return 0;
-	}
+	} };
 	
 	
 	static data8_t suzume_bank;
 	
-	static READ_HANDLER ( suzume_dsw_r )
+	static public static ReadHandlerPtr suzume_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (suzume_bank & 0x40)
 		{
@@ -280,9 +280,9 @@ public class royalmah
 			}
 			return 0;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER ( suzume_bank_w )
+	static public static WriteHandlerPtr suzume_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
@@ -295,10 +295,10 @@ public class royalmah
 	
 		address = 0x10000 + (data & 0x07) * 0x8000;
 		cpu_setbank(1,&rom[address]);
-	}
+	} };
 	
 	
-	static WRITE_HANDLER ( tontonb_bank_w )
+	static public static WriteHandlerPtr tontonb_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
@@ -312,11 +312,11 @@ public class royalmah
 		address = 0x10000 + data * 0x8000;
 	
 		cpu_setbank(1,&rom[address]);
-	}
+	} };
 	
 	
 	/* bits 5 and 6 seem to affect which Dip Switch to read in 'majs101b' */
-	static WRITE_HANDLER ( dynax_bank_w )
+	static public static WriteHandlerPtr dynax_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
@@ -330,7 +330,7 @@ public class royalmah
 		address = 0x10000 + data * 0x8000;
 	
 		cpu_setbank(1,&rom[address]);
-	}
+	} };
 	
 	
 	

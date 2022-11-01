@@ -65,17 +65,17 @@ public class speedbal
 	
 	unsigned char *speedbal_sharedram;
 	
-	READ_HANDLER( speedbal_sharedram_r )
+	public static ReadHandlerPtr speedbal_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//  if (offset==0x0) speedbal_sharedram[offset]+=1;
 	  return speedbal_sharedram[offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( speedbal_sharedram_w )
+	public static WriteHandlerPtr speedbal_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    speedbal_sharedram[offset] = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

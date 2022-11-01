@@ -17,7 +17,7 @@ public class avalnche
 	  avalnche_input_r
 	***************************************************************************/
 	
-	READ_HANDLER( avalnche_input_r )
+	public static ReadHandlerPtr avalnche_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset & 0x03)
 		{
@@ -27,13 +27,13 @@ public class avalnche
 			case 0x03:	 return 0; /* Spare */
 		}
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	  avalnche_output_w
 	***************************************************************************/
 	
-	WRITE_HANDLER( avalnche_output_w )
+	public static WriteHandlerPtr avalnche_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 0x07)
 		{
@@ -71,16 +71,16 @@ public class avalnche
 		        set_led_status(2,data & 0x01);
 				break;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	  avalnche_noise_amplitude_w
 	***************************************************************************/
 	
-	WRITE_HANDLER( avalnche_noise_amplitude_w )
+	public static WriteHandlerPtr avalnche_noise_amplitude_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(3, data & 0x3f);
-	}
+	} };
 	
 	public static InterruptHandlerPtr avalnche_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

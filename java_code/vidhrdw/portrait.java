@@ -18,23 +18,23 @@ public class portrait
 	data8_t *portrait_bgvideoram, *portrait_fgvideoram, *portrait_spriteram;
 	static struct tilemap *foreground, *background;
 	
-	WRITE_HANDLER( portrait_bgvideo_write )
+	public static WriteHandlerPtr portrait_bgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (portrait_bgvideoram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(background,offset/2);
 			portrait_bgvideoram[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( portrait_fgvideo_write )
+	public static WriteHandlerPtr portrait_fgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (portrait_fgvideoram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(foreground,offset/2);
 			portrait_fgvideoram[offset] = data;
 		}
-	}
+	} };
 	
 	static void get_tile_info( const data8_t *source, int tile_index )
 	{

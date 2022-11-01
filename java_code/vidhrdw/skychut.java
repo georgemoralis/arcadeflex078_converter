@@ -23,7 +23,7 @@ public class skychut
 	static int bottomline;
 	
 	
-	WRITE_HANDLER( skychut_colorram_w )
+	public static WriteHandlerPtr skychut_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
@@ -31,15 +31,15 @@ public class skychut
 	
 			colorram[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( skychut_ctrl_w )
+	public static WriteHandlerPtr skychut_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//usrintf_showmessage("%02x",data);
 	
 		/* I have NO IDEA if this is correct or not */
 		bottomline = ~data & 0x20;
-	}
+	} };
 	
 	
 	/***************************************************************************

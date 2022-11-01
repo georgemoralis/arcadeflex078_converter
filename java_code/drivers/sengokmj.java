@@ -83,7 +83,7 @@ public class sengokmj
 	
 	
 	/*Multiplexer device for the mahjong panel*/
-	READ_HANDLER( mahjong_panel_0_r )
+	public static ReadHandlerPtr mahjong_panel_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch(sengokumj_mux_data)
 		{
@@ -96,17 +96,17 @@ public class sengokmj
 		}
 	//	usrintf_showmessage("Reading input port %02x at PC = %05x",sengokumj_mux_data,activecpu_get_pc());
 		return readinputport(3);
-	}
+	} };
 	
-	READ_HANDLER( mahjong_panel_1_r )
+	public static ReadHandlerPtr mahjong_panel_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(9);
-	}
+	} };
 	
-	WRITE_HANDLER( mahjong_panel_w )
+	public static WriteHandlerPtr mahjong_panel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(offset == 1)	{ sengokumj_mux_data = data; }
-	}
+	} };
 	
 	/***************************************************************************************/
 	

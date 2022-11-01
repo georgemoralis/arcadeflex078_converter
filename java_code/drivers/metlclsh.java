@@ -55,7 +55,7 @@ public class metlclsh
 	
 	static data8_t *sharedram;
 	
-	static READ_HANDLER ( sharedram_r )	{ return sharedram[offset]; }
+	static public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return sharedram[offset]; } };
 	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
 	
 	public static WriteHandlerPtr metlclsh_cause_irq = new WriteHandlerPtr() {public void handler(int offset, int data)

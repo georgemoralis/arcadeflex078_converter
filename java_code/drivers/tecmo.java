@@ -61,7 +61,7 @@ public class tecmo
 	
 	
 	
-	WRITE_HANDLER( tecmo_bankswitch_w )
+	public static WriteHandlerPtr tecmo_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -69,7 +69,7 @@ public class tecmo
 	
 		bankaddress = 0x10000 + ((data & 0xf8) << 8);
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	public static WriteHandlerPtr tecmo_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

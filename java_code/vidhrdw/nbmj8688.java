@@ -142,17 +142,17 @@ public class nbmj8688
 	
 	
 	
-	WRITE_HANDLER( nbmj8688_color_lookup_w )
+	public static WriteHandlerPtr nbmj8688_color_lookup_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_color_lookup[offset] = (data ^ 0xff);
-	}
+	} };
 	
 	/******************************************************************************
 	
 	
 	******************************************************************************/
 	
-	WRITE_HANDLER( nbmj8688_blitter_w )
+	public static WriteHandlerPtr nbmj8688_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -166,9 +166,9 @@ public class nbmj8688
 				    mbmj8688_gfxdraw(mjsikaku_gfxmode);
 					break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mjsikaku_gfxflag1_w )
+	public static WriteHandlerPtr mjsikaku_gfxflag1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int mjsikaku_flipscreen_old = -1;
 	
@@ -185,28 +185,28 @@ public class nbmj8688
 			mjsikaku_screen_refresh = 1;
 			mjsikaku_flipscreen_old = mjsikaku_flipscreen;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mjsikaku_gfxflag2_w )
+	public static WriteHandlerPtr mjsikaku_gfxflag2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxflag2 = data;
 	
 		if (nb1413m3_type == NB1413M3_SEIHAM
 				|| nb1413m3_type == NB1413M3_KORINAI)
 			mjsikaku_gfxflag2 ^= 0x20;
-	}
+	} };
 	
-	WRITE_HANDLER( mjsikaku_gfxflag3_w )
+	public static WriteHandlerPtr mjsikaku_gfxflag3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxflag3 = (data & 0xe0);
-	}
+	} };
 	
-	WRITE_HANDLER( mjsikaku_scrolly_w )
+	public static WriteHandlerPtr mjsikaku_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_scrolly = data;
-	}
+	} };
 	
-	WRITE_HANDLER( mjsikaku_romsel_w )
+	public static WriteHandlerPtr mjsikaku_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxrom = (data & 0x07);
 	
@@ -217,9 +217,9 @@ public class nbmj8688
 	#endif
 			mjsikaku_gfxrom = 0;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( secolove_romsel_w )
+	public static WriteHandlerPtr secolove_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxrom = ((data & 0xc0) >> 4) + (data & 0x03);
 		mjsikaku_gfxflag2_w(0,data);
@@ -231,9 +231,9 @@ public class nbmj8688
 	#endif
 			mjsikaku_gfxrom = 0;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( crystal2_romsel_w )
+	public static WriteHandlerPtr crystal2_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxrom = (data & 0x03);
 		mjsikaku_gfxflag2_w(0,data);
@@ -245,9 +245,9 @@ public class nbmj8688
 	#endif
 			mjsikaku_gfxrom = 0;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( seiha_romsel_w )
+	public static WriteHandlerPtr seiha_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mjsikaku_gfxrom = (data & 0x1f);
 		mjsikaku_gfxflag3_w(0,data);
@@ -259,7 +259,7 @@ public class nbmj8688
 	#endif
 			mjsikaku_gfxrom = 0;
 		}
-	}
+	} };
 	
 	/******************************************************************************
 	
@@ -645,37 +645,37 @@ public class nbmj8688
 		}
 	}
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_0_instr_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_0_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_instr_w(0,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_1_instr_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_1_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_instr_w(1,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_both_instr_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_both_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_instr_w(0,offset,data);
 		nbmj8688_HD61830B_instr_w(1,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_0_data_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_data_w(0,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_1_data_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_data_w(1,offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( nbmj8688_HD61830B_both_data_w )
+	public static WriteHandlerPtr nbmj8688_HD61830B_both_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nbmj8688_HD61830B_data_w(0,offset,data);
 		nbmj8688_HD61830B_data_w(1,offset,data);
-	}
+	} };
 	
 	
 	

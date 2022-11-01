@@ -693,15 +693,15 @@ public class wecleman
 	}
 	
 	/* Protection - an external multiplyer connected to the sound CPU */
-	READ_HANDLER( multiply_r )
+	public static ReadHandlerPtr multiply_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (multiply_reg[0] * multiply_reg[1]) & 0xFF;
-	}
+	} };
 	
-	WRITE_HANDLER( multiply_w )
+	public static WriteHandlerPtr multiply_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		multiply_reg[offset] = data;
-	}
+	} };
 	
 	/*      K007232 registers reminder:
 	
@@ -719,10 +719,10 @@ public class wecleman
 	
 	** sample playing ends when a byte with bit 7 set is reached **/
 	
-	WRITE_HANDLER( wecleman_K00723216_bank_w )
+	public static WriteHandlerPtr wecleman_K00723216_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		K007232_set_bank( 0, 0, ~data&1 );	//* (wecleman062gre)
-	}
+	} };
 	
 	public static Memory_ReadAddress wecleman_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -775,7 +775,7 @@ public class wecleman
 		{ 0,0,0 }
 	};
 	
-	WRITE_HANDLER( hotchase_sound_control_w )
+	public static WriteHandlerPtr hotchase_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int reg[8];
 	
@@ -820,19 +820,19 @@ public class wecleman
 			}
 			break;
 		}
-	}
+	} };
 	
 	/* Read and write handlers for one K007232 chip:
 	   even and odd register are mapped swapped */
 	#define HOTCHASE_K007232_RW(_chip_) \
-	READ_HANDLER( hotchase_K007232_##_chip_##_r ) \
+	public static ReadHandlerPtr hotchase_K007232_##_chip_##_r  = new ReadHandlerPtr() { public int handler(int offset) \
 	{ \
 		return K007232_read_port_##_chip_##_r(offset ^ 1); \
-	} \
-	WRITE_HANDLER( hotchase_K007232_##_chip_##_w ) \
+	} }; \
+	public static WriteHandlerPtr hotchase_K007232_##_chip_##_w = new WriteHandlerPtr() {public void handler(int offset, int data) \
 	{ \
 		K007232_write_port_##_chip_##_w(offset ^ 1, data); \
-	} \
+	} }; \
 	
 	/* 3 x K007232 */
 	HOTCHASE_K007232_RW(0)

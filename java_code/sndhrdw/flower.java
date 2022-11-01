@@ -206,7 +206,7 @@ public class flower
 	
 	/********************************************************************************/
 	
-	WRITE_HANDLER( flower_sound1_w )
+	public static WriteHandlerPtr flower_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_channel *voice;
 		int base;
@@ -240,9 +240,9 @@ public class flower
 				voice->oneshot = 1;
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( flower_sound2_w )
+	public static WriteHandlerPtr flower_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_channel *voice;
 		int base = offset & 0xf8;
@@ -295,5 +295,5 @@ public class flower
 			voice->oneshot = 0;
 			voice->oneshotplaying = 0;
 		}
-	}
+	} };
 }

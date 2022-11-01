@@ -31,11 +31,11 @@ public class sndintrf
 		read_debug = 0;
 	}
 	
-	WRITE_HANDLER( soundlatch_w )
+	public static WriteHandlerPtr soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch_callback);
-	}
+	} };
 	
 	WRITE16_HANDLER( soundlatch_word_w )
 	{
@@ -46,11 +46,11 @@ public class sndintrf
 		timer_set(TIME_NOW,word,soundlatch_callback);
 	}
 	
-	READ_HANDLER( soundlatch_r )
+	public static ReadHandlerPtr soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		read_debug = 1;
 		return latch;
-	}
+	} };
 	
 	READ16_HANDLER( soundlatch_word_r )
 	{
@@ -58,10 +58,10 @@ public class sndintrf
 		return latch;
 	}
 	
-	WRITE_HANDLER( soundlatch_clear_w )
+	public static WriteHandlerPtr soundlatch_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latch = cleared_value;
-	}
+	} };
 	
 	
 	static int latch2,read_debug2;
@@ -74,11 +74,11 @@ public class sndintrf
 		read_debug2 = 0;
 	}
 	
-	WRITE_HANDLER( soundlatch2_w )
+	public static WriteHandlerPtr soundlatch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch2_callback);
-	}
+	} };
 	
 	WRITE16_HANDLER( soundlatch2_word_w )
 	{
@@ -89,11 +89,11 @@ public class sndintrf
 		timer_set(TIME_NOW,word,soundlatch2_callback);
 	}
 	
-	READ_HANDLER( soundlatch2_r )
+	public static ReadHandlerPtr soundlatch2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		read_debug2 = 1;
 		return latch2;
-	}
+	} };
 	
 	READ16_HANDLER( soundlatch2_word_r )
 	{
@@ -101,10 +101,10 @@ public class sndintrf
 		return latch2;
 	}
 	
-	WRITE_HANDLER( soundlatch2_clear_w )
+	public static WriteHandlerPtr soundlatch2_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latch2 = cleared_value;
-	}
+	} };
 	
 	
 	static int latch3,read_debug3;
@@ -117,11 +117,11 @@ public class sndintrf
 		read_debug3 = 0;
 	}
 	
-	WRITE_HANDLER( soundlatch3_w )
+	public static WriteHandlerPtr soundlatch3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch3_callback);
-	}
+	} };
 	
 	WRITE16_HANDLER( soundlatch3_word_w )
 	{
@@ -132,11 +132,11 @@ public class sndintrf
 		timer_set(TIME_NOW,word,soundlatch3_callback);
 	}
 	
-	READ_HANDLER( soundlatch3_r )
+	public static ReadHandlerPtr soundlatch3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		read_debug3 = 1;
 		return latch3;
-	}
+	} };
 	
 	READ16_HANDLER( soundlatch3_word_r )
 	{
@@ -144,10 +144,10 @@ public class sndintrf
 		return latch3;
 	}
 	
-	WRITE_HANDLER( soundlatch3_clear_w )
+	public static WriteHandlerPtr soundlatch3_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latch3 = cleared_value;
-	}
+	} };
 	
 	
 	static int latch4,read_debug4;
@@ -160,11 +160,11 @@ public class sndintrf
 		read_debug4 = 0;
 	}
 	
-	WRITE_HANDLER( soundlatch4_w )
+	public static WriteHandlerPtr soundlatch4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch4_callback);
-	}
+	} };
 	
 	WRITE16_HANDLER( soundlatch4_word_w )
 	{
@@ -175,11 +175,11 @@ public class sndintrf
 		timer_set(TIME_NOW,word,soundlatch4_callback);
 	}
 	
-	READ_HANDLER( soundlatch4_r )
+	public static ReadHandlerPtr soundlatch4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		read_debug4 = 1;
 		return latch4;
-	}
+	} };
 	
 	READ16_HANDLER( soundlatch4_word_r )
 	{
@@ -187,10 +187,10 @@ public class sndintrf
 		return latch4;
 	}
 	
-	WRITE_HANDLER( soundlatch4_clear_w )
+	public static WriteHandlerPtr soundlatch4_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		latch4 = cleared_value;
-	}
+	} };
 	
 	
 	void soundlatch_setclearedvalue(int value)

@@ -68,7 +68,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( starwars_m6532_r )
+	public static ReadHandlerPtr starwars_m6532_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int temp;
 	
@@ -99,7 +99,7 @@ public class starwars
 		}
 	
 		return 0; /* will never execute this */
-	}
+	} };
 	
 	
 	
@@ -109,7 +109,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( starwars_m6532_w )
+	public static WriteHandlerPtr starwars_m6532_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -169,7 +169,7 @@ public class starwars
 	
 		return; /* will never execute this */
 	
-	}
+	} };
 	
 	
 	
@@ -179,7 +179,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( starwars_sin_r )
+	public static ReadHandlerPtr starwars_sin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -187,15 +187,15 @@ public class starwars
 		res = sound_data;
 		sound_data = 0;
 		return res;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( starwars_sout_w )
+	public static WriteHandlerPtr starwars_sout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		port_A |= 0x40; /* result from sound cpu pending */
 		main_data = data;
 		return;
-	}
+	} };
 	
 	
 	
@@ -205,7 +205,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( starwars_main_read_r )
+	public static ReadHandlerPtr starwars_main_read_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -215,34 +215,34 @@ public class starwars
 		res = main_data;
 		main_data = 0;
 		return res;
-	}
+	} };
 	
 	
-	READ_HANDLER( starwars_main_ready_flag_r )
+	public static ReadHandlerPtr starwars_main_ready_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if 0 /* correct, but doesn't work */
 		return (port_A & 0xc0); /* only upper two flag bits mapped */
 	#else
 		return (port_A & 0x40); /* sound cpu always ready */
 	#endif
-	}
+	} };
 	
 	
-	WRITE_HANDLER( starwars_main_wr_w )
+	public static WriteHandlerPtr starwars_main_wr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		port_A |= 0x80;  /* command from main cpu pending */
 		sound_data = data;
 		if (PA7_irq)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( starwars_soundrst_w )
+	public static WriteHandlerPtr starwars_soundrst_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		port_A &= 0x3f;
 	
 		/* reset sound CPU here  */
 		cpu_set_reset_line(1, PULSE_LINE);
-	}
+	} };
 	
 }

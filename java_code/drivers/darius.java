@@ -559,17 +559,17 @@ public class darius
 		return 0;
 	} };
 	
-	static WRITE_HANDLER ( adpcm_nmi_disable )
+	static public static WriteHandlerPtr adpcm_nmi_disable = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nmi_enable = 0;
 		/* logerror("write port 0: NMI DISABLE  PC=%4x\n", data, activecpu_get_pc() ); */
-	}
+	} };
 	
-	static WRITE_HANDLER ( adpcm_nmi_enable )
+	static public static WriteHandlerPtr adpcm_nmi_enable = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nmi_enable = 1;
 		/* logerror("write port 1: NMI ENABLE   PC=%4x\n", activecpu_get_pc() ); */
-	}
+	} };
 	
 	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

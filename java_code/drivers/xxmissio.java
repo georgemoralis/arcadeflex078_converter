@@ -27,30 +27,30 @@ public class xxmissio
 	
 	
 	
-	WRITE_HANDLER( shared_workram_w )
+	public static WriteHandlerPtr shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shared_workram[offset ^ 0x1000] = data;
-	}
+	} };
 	
-	READ_HANDLER( shared_workram_r )
+	public static ReadHandlerPtr shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return shared_workram[offset ^ 0x1000];
-	}
+	} };
 	
-	WRITE_HANDLER( xxmissio_bank_sel_w )
+	public static WriteHandlerPtr xxmissio_bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *BANK = memory_region(REGION_USER1);
 		UINT32 bank_address = (data & 0x07) * 0x4000;
 		cpu_setbank(1, &BANK[bank_address]);
-	}
+	} };
 	
-	READ_HANDLER( xxmissio_status_r )
+	public static ReadHandlerPtr xxmissio_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		xxmissio_status = (xxmissio_status | 2) & ( readinputport(4) | 0xfd );
 		return xxmissio_status;
-	}
+	} };
 	
-	WRITE_HANDLER ( xxmissio_status_m_w )
+	public static WriteHandlerPtr xxmissio_status_m_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (data)
 		{
@@ -67,9 +67,9 @@ public class xxmissio
 				xxmissio_status |= 0x04;
 				break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER ( xxmissio_status_s_w )
+	public static WriteHandlerPtr xxmissio_status_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (data)
 		{
@@ -86,7 +86,7 @@ public class xxmissio
 				cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0x10);
 				break;
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr xxmissio_interrupt_m = new InterruptHandlerPtr() {public void handler()
 	{

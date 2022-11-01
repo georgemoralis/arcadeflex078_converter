@@ -86,8 +86,8 @@ public class leprechn
 	}
 	
 	
-	READ_HANDLER( leprechn_sh_0805_r )
+	public static ReadHandlerPtr leprechn_sh_0805_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return 0xc0;
-	}
+	} };
 }

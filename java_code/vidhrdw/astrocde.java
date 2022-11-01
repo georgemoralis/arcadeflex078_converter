@@ -134,13 +134,13 @@ public class astrocde
 	
 	static int GorfDelay;				/* Gorf */
 	
-	WRITE_HANDLER( astrocde_interrupt_vector_w )
+	public static WriteHandlerPtr astrocde_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_vector = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_interrupt_enable_w )
+	public static WriteHandlerPtr astrocde_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		InterruptFlag = data;
 	
@@ -168,9 +168,9 @@ public class astrocde
 	#ifdef MAME_DEBUG
 		logerror("Interrupt Flag set to %02x\n",InterruptFlag);
 	#endif
-	}
+	} };
 	
-	WRITE_HANDLER( astrocde_interrupt_w )
+	public static WriteHandlerPtr astrocde_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* A write to 0F triggers an interrupt at that scanline */
 	
@@ -179,7 +179,7 @@ public class astrocde
 	#endif
 	
 		NextScanInt = data;
-	}
+	} };
 	
 	static void interrupt_common(void)
 	{
@@ -228,12 +228,12 @@ public class astrocde
 	
 	/* ======================================================================= */
 	
-	READ_HANDLER( wow_video_retrace_r )
+	public static ReadHandlerPtr wow_video_retrace_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return CurrentScan;
-	}
+	} };
 	
-	READ_HANDLER( wow_intercept_r )
+	public static ReadHandlerPtr wow_intercept_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -241,76 +241,76 @@ public class astrocde
 		collision = 0;
 	
 		return res;
-	}
+	} };
 	
 	
 	/* Switches color registers at this zone - 40 zones (NOT USED) */
 	
-	WRITE_HANDLER( astrocde_colour_split_w )
+	public static WriteHandlerPtr astrocde_colour_split_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		colorsplit[CurrentScan] = 2 * (data & 0x3f);
 	
 		BackgroundData = ((data&0xc0) >> 6) * 0x55;
-	}
+	} };
 	
 	
 	/* This selects commercial (high res, arcade) or
 	                  consumer (low res, astrocade) mode */
 	
-	WRITE_HANDLER( astrocde_mode_w )
+	public static WriteHandlerPtr astrocde_mode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	astrocade_mode = data & 0x01;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_vertical_blank_w )
+	public static WriteHandlerPtr astrocde_vertical_blank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (VerticalBlank != data)
 		{
 			VerticalBlank = data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_colour_register_w )
+	public static WriteHandlerPtr astrocde_colour_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		colors[CurrentScan][offset] = data;
 	
 	#ifdef MAME_DEBUG
 		logerror("colors %01x set to %02x\n",offset,data);
 	#endif
-	}
+	} };
 	
-	WRITE_HANDLER( astrocde_colour_block_w )
+	public static WriteHandlerPtr astrocde_colour_block_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int color_reg_num = 7;
 	
 		astrocde_colour_register_w(color_reg_num,data);
 	
 		color_reg_num = (color_reg_num - 1) & 7;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( wow_videoram_w )
+	public static WriteHandlerPtr wow_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((offset < 0x4000) && (wow_videoram[offset] != data))
 		{
 			wow_videoram[offset] = data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_magic_expand_color_w )
+	public static WriteHandlerPtr astrocde_magic_expand_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef MAME_DEBUG
 	//	logerror("%04x: magic_expand_color = %02x\n",activecpu_get_pc(),data);
 	#endif
 	
 		magic_expand_color = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_magic_control_w )
+	public static WriteHandlerPtr astrocde_magic_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef MAME_DEBUG
 	//	logerror("%04x: magic_control = %02x\n",activecpu_get_pc(),data);
@@ -323,7 +323,7 @@ public class astrocde
 	
 		if (magic_control & 0x04)
 			usrintf_showmessage("unsupported MAGIC ROTATE mode");
-	}
+	} };
 	
 	
 	static void copywithflip(int offset,int data)
@@ -388,7 +388,7 @@ public class astrocde
 	}
 	
 	
-	WRITE_HANDLER( wow_magicram_w )
+	public static WriteHandlerPtr wow_magicram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (magic_control & 0x08)	/* expand mode */
 		{
@@ -410,10 +410,10 @@ public class astrocde
 			magic_expand_count ^= 1;
 		}
 		else copywithflip(offset,data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrocde_pattern_board_w )
+	public static WriteHandlerPtr astrocde_pattern_board_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int src;
 		static int mode;	/*  bit 0 = direction
@@ -523,7 +523,7 @@ public class astrocde
 	#endif
 			}
 		}
-	}
+	} };
 	
 	
 	static void init_star_field(void)
@@ -613,7 +613,7 @@ public class astrocde
 	 *
 	 */
 	
-	READ_HANDLER( gorf_io_r )
+	public static ReadHandlerPtr gorf_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
 	
@@ -643,7 +643,7 @@ public class astrocde
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	/* Wizard of Wor Special Registers
@@ -665,7 +665,7 @@ public class astrocde
 	 *
 	 */
 	
-	READ_HANDLER( wow_io_r )
+	public static ReadHandlerPtr wow_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data;
 	
@@ -690,7 +690,7 @@ public class astrocde
 	#endif
 	
 		return 0;
-	}
+	} };
 	
 	/****************************************************************************/
 	

@@ -30,7 +30,7 @@ public class battlane
 	        0x01    = Scroll MSB
 	*/
 	
-	WRITE_HANDLER( battlane_palette_w )
+	public static WriteHandlerPtr battlane_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r, g, b;
 		int bit0, bit1, bit2;
@@ -57,33 +57,33 @@ public class battlane
 		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 		palette_set_color(offset, r, g, b);
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_scrollx_w )
+	public static WriteHandlerPtr battlane_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, ((battlane_video_ctrl & 0x01) << 8) + data);
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_scrolly_w )
+	public static WriteHandlerPtr battlane_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, ((battlane_cpu_control & 0x01) << 8) + data);
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_tileram_w )
+	public static WriteHandlerPtr battlane_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (battlane_tileram[offset] != data)
 		{
 		    battlane_tileram[offset] = data;
 			//tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_spriteram_w )
+	public static WriteHandlerPtr battlane_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    battlane_spriteram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_bitmap_w )
+	public static WriteHandlerPtr battlane_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i, orval;
 	
@@ -103,12 +103,12 @@ public class battlane
 				((UINT8 *)screen_bitmap->line[offset % 0x100])[(offset / 0x100) * 8 + i] &= ~orval;
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( battlane_video_ctrl_w )
+	public static WriteHandlerPtr battlane_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		battlane_video_ctrl = data;
-	}
+	} };
 	
 	static void get_tile_info_bg(int tile_index)
 	{

@@ -189,23 +189,23 @@ public class lasso
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( lasso_videoram_w )
+	public static WriteHandlerPtr lasso_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (lasso_videoram[offset] != data)
 		{
 			lasso_videoram[offset] = data;
 			tilemap_mark_tile_dirty( bg_tilemap, offset );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( lasso_colorram_w )
+	public static WriteHandlerPtr lasso_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (lasso_colorram[offset] != data)
 		{
 			lasso_colorram[offset] = data;
 			tilemap_mark_tile_dirty( bg_tilemap, offset );
 		}
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr lasso_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -219,7 +219,7 @@ public class lasso
 	} };
 	
 	
-	WRITE_HANDLER( lasso_video_control_w )
+	public static WriteHandlerPtr lasso_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank = (data & 0x04) >> 2;
 	
@@ -230,9 +230,9 @@ public class lasso
 		}
 	
 		lasso_flip_screen_w(offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( wwjgtin_video_control_w )
+	public static WriteHandlerPtr wwjgtin_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank = ((data & 0x04) ? 0 : 1) + ((data & 0x10) ? 2 : 0);
 		wwjgtin_track_enable = data & 0x08;
@@ -244,31 +244,31 @@ public class lasso
 		}
 	
 		lasso_flip_screen_w(offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( pinbo_video_control_w )
+	public static WriteHandlerPtr pinbo_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* no need to dirty the tilemap -- only the sprites use the global bank */
 		gfxbank = (data & 0x0c) >> 2;
 	
 		lasso_flip_screen_w(offset, data);
-	}
+	} };
 	
 	
 	/* The bg_tilemap color can be changed */
-	WRITE_HANDLER( lasso_backcolor_w )
+	public static WriteHandlerPtr lasso_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		for( i=0; i<0x40; i+=4 ) /* stuff into color#0 of each palette */
 			lasso_set_color(i,data);
-	}
+	} };
 	
 	
 	/* The last 4 color (= last palette) entries can be changed */
-	WRITE_HANDLER( wwjgtin_lastcolor_w )
+	public static WriteHandlerPtr wwjgtin_lastcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lasso_set_color(0x3f - offset,data);
-	}
+	} };
 	
 	
 	/*************************************

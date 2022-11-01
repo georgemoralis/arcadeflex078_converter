@@ -20,15 +20,15 @@ public class djboy
 		djboy_videoreg = data;
 	}
 	
-	WRITE_HANDLER( djboy_scrollx_w )
+	public static WriteHandlerPtr djboy_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		djboy_scrollx = data;
-	}
+	} };
 	
-	WRITE_HANDLER( djboy_scrolly_w )
+	public static WriteHandlerPtr djboy_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		djboy_scrolly = data;
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
@@ -41,14 +41,14 @@ public class djboy
 				0)
 	}
 	
-	WRITE_HANDLER( djboy_videoram_w )
+	public static WriteHandlerPtr djboy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty( background, offset & 0x7ff);
 		}
-	}
+	} };
 	
 	VIDEO_START( djboy )
 	{
@@ -100,7 +100,7 @@ public class djboy
 		} /* next page */
 	} /* draw_sprites */
 	
-	WRITE_HANDLER( djboy_paletteram_w )
+	public static WriteHandlerPtr djboy_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 		int val;
@@ -118,7 +118,7 @@ public class djboy
 			(r * 0xff) / 0xf,
 			(g * 0xff) / 0xf,
 			(b * 0xff) / 0xf );
-	}
+	} };
 	
 	VIDEO_UPDATE( djboy )
 	{

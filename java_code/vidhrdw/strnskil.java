@@ -50,21 +50,21 @@ public class strnskil
 	
 	}
 	
-	WRITE_HANDLER( strnskil_videoram_w )
+	public static WriteHandlerPtr strnskil_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( strnskil_scroll_x_w )
+	public static WriteHandlerPtr strnskil_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		strnskil_xscroll[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( strnskil_scrl_ctrl_w )
+	public static WriteHandlerPtr strnskil_scrl_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		strnskil_scrl_ctrl = data >> 5;
 	
@@ -73,7 +73,7 @@ public class strnskil
 			flip_screen_set(data & 0x08);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

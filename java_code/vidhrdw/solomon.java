@@ -12,50 +12,50 @@ public class solomon
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( solomon_videoram_w )
+	public static WriteHandlerPtr solomon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( solomon_colorram_w )
+	public static WriteHandlerPtr solomon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( solomon_videoram2_w )
+	public static WriteHandlerPtr solomon_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (solomon_videoram2[offset] != data)
 		{
 			solomon_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( solomon_colorram2_w )
+	public static WriteHandlerPtr solomon_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (solomon_colorram2[offset] != data)
 		{
 			solomon_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( solomon_flipscreen_w )
+	public static WriteHandlerPtr solomon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

@@ -26,25 +26,25 @@ public class sidearms
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( sidearms_videoram_w )
+	public static WriteHandlerPtr sidearms_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sidearms_colorram_w )
+	public static WriteHandlerPtr sidearms_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sidearms_c804_w )
+	public static WriteHandlerPtr sidearms_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0, data & 0x01);
@@ -86,15 +86,15 @@ public class sidearms
 			flip_screen_set(flipon);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sidearms_gfxctrl_w )
+	public static WriteHandlerPtr sidearms_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		objon = data & 0x01;
 		bgon = data & 0x02;
-	}
+	} };
 	
-	WRITE_HANDLER( sidearms_star_scrollx_w )
+	public static WriteHandlerPtr sidearms_star_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned int last_state = hcount_191;
 	
@@ -104,13 +104,13 @@ public class sidearms
 		// invert 74LS74A(flipflop) output on 74LS191(hscan counter) carry's rising edge
 		if (hcount_191 & ~last_state & 0x100)
 			hflop_74a_n ^= 1;
-	}
+	} };
 	
-	WRITE_HANDLER( sidearms_star_scrolly_w )
+	public static WriteHandlerPtr sidearms_star_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		vcount_191++;
 		vcount_191 &= 0xff;
-	}
+	} };
 	
 	
 	INLINE void get_sidearms_bg_tile_info(int offs)

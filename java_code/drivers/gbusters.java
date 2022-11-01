@@ -98,10 +98,10 @@ public class gbusters
 	}
 	} };
 	
-	WRITE_HANDLER( gbusters_sh_irqtrigger_w )
+	public static WriteHandlerPtr gbusters_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	public static WriteHandlerPtr gbusters_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

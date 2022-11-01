@@ -39,7 +39,7 @@ public class asteroid
 	} };
 	
 	
-	READ_HANDLER( asteroid_IN0_r )
+	public static ReadHandlerPtr asteroid_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	
 		int res;
@@ -60,10 +60,10 @@ public class asteroid
 			res = ~0x80;
 	
 		return res;
-	}
+	} };
 	
 	
-	READ_HANDLER( asteroib_IN0_r )
+	public static ReadHandlerPtr asteroib_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -75,9 +75,9 @@ public class asteroid
 			res |= 0x80;
 	
 		return res;
-	}
+	} };
 	
-	READ_HANDLER( asterock_IN0_r )
+	public static ReadHandlerPtr asterock_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		int bitmask;
@@ -97,14 +97,14 @@ public class asteroid
 			res = 0x80;
 	
 		return res;
-	}
+	} };
 	
 	/*
 	 * These 7 memory locations are used to read the player's controls.
 	 * Typically, only the high bit is used. This is handled by one input port.
 	 */
 	
-	READ_HANDLER( asteroid_IN1_r )
+	public static ReadHandlerPtr asteroid_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		int bitmask;
@@ -117,10 +117,10 @@ public class asteroid
 		else
 		 	res = ~0x80;
 		return (res);
-	}
+	} };
 	
 	
-	READ_HANDLER( asteroid_DSW1_r )
+	public static ReadHandlerPtr asteroid_DSW1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 		int res1;
@@ -129,10 +129,10 @@ public class asteroid
 	
 		res = 0xfc | ((res1 >> (2 * (3 - (offset & 0x3)))) & 0x3);
 		return res;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( asteroid_bank_switch_w )
+	public static WriteHandlerPtr asteroid_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int asteroid_bank = 0;
 		int asteroid_newbank;
@@ -154,10 +154,10 @@ public class asteroid
 		}
 		set_led_status (0, ~data & 0x02);
 		set_led_status (1, ~data & 0x01);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astdelux_bank_switch_w )
+	public static WriteHandlerPtr astdelux_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int astdelux_bank = 0;
 		int astdelux_newbank;
@@ -177,13 +177,13 @@ public class asteroid
 				RAM[0x300 + i] = temp;
 			}
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astdelux_led_w )
+	public static WriteHandlerPtr astdelux_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(offset,(data&0x80)?0:1);
-	}
+	} };
 	
 	
 	MACHINE_INIT( asteroid )
@@ -195,7 +195,7 @@ public class asteroid
 	/*
 	 * This is Lunar Lander's Inputport 0.
 	 */
-	READ_HANDLER( llander_IN0_r )
+	public static ReadHandlerPtr llander_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -207,5 +207,5 @@ public class asteroid
 			res |= 0x40;
 	
 		return res;
-	}
+	} };
 }

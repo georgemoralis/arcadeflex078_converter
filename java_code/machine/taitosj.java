@@ -39,12 +39,12 @@ public class taitosj
 	}
 	
 	
-	WRITE_HANDLER( taitosj_bankswitch_w )
+	public static WriteHandlerPtr taitosj_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1,&RAM[(data & 0x80) ? 0x10000 : 0x6000]);
-	}
+	} };
 	
 	
 	
@@ -61,39 +61,39 @@ public class taitosj
 	 direct access to the Z80 memory space. It can also trigger IRQs on the Z80.
 	
 	***************************************************************************/
-	READ_HANDLER( taitosj_fake_data_r )
+	public static ReadHandlerPtr taitosj_fake_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: protection read\n",activecpu_get_pc());
 	#endif
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( taitosj_fake_data_w )
+	public static WriteHandlerPtr taitosj_fake_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: protection write %02x\n",activecpu_get_pc(),data);
 	#endif
-	}
+	} };
 	
-	READ_HANDLER( taitosj_fake_status_r )
+	public static ReadHandlerPtr taitosj_fake_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: protection status read\n",activecpu_get_pc());
 	#endif
 		return 0xff;
-	}
+	} };
 	
 	
 	/* timer callback : */
-	READ_HANDLER( taitosj_mcu_data_r )
+	public static ReadHandlerPtr taitosj_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: protection read %02x\n",activecpu_get_pc(),toz80);
 	#endif
 		zaccept = 1;
 		return toz80;
-	}
+	} };
 	
 	/* timer callback : */
 	void taitosj_mcu_real_data_w(int data)
@@ -103,7 +103,7 @@ public class taitosj
 		fromz80 = data;
 	}
 	
-	WRITE_HANDLER( taitosj_mcu_data_w )
+	public static WriteHandlerPtr taitosj_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: protection write %02x\n",activecpu_get_pc(),data);
@@ -111,9 +111,9 @@ public class taitosj
 		timer_set(TIME_NOW,data,taitosj_mcu_real_data_w);
 		/* temporarily boost the interleave to sync things up */
 		cpu_boost_interleave(0, TIME_IN_USEC(10));
-	}
+	} };
 	
-	READ_HANDLER( taitosj_mcu_status_r )
+	public static ReadHandlerPtr taitosj_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* temporarily boost the interleave to sync things up */
 		cpu_boost_interleave(0, TIME_IN_USEC(10));
@@ -121,25 +121,25 @@ public class taitosj
 		/* bit 0 = the 68705 has read data from the Z80 */
 		/* bit 1 = the 68705 has written data for the Z80 */
 		return ~((zready << 0) | (zaccept << 1));
-	}
+	} };
 	
 	static unsigned char portA_in,portA_out;
 	
-	READ_HANDLER( taitosj_68705_portA_r )
+	public static ReadHandlerPtr taitosj_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port A read %02x\n",activecpu_get_pc(),portA_in);
 	#endif
 		return portA_in;
-	}
+	} };
 	
-	WRITE_HANDLER( taitosj_68705_portA_w )
+	public static WriteHandlerPtr taitosj_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port A write %02x\n",activecpu_get_pc(),data);
 	#endif
 		portA_out = data;
-	}
+	} };
 	
 	
 	
@@ -163,10 +163,10 @@ public class taitosj
 	 *               the main Z80 memory location to access)
 	 */
 	
-	READ_HANDLER( taitosj_68705_portB_r )
+	public static ReadHandlerPtr taitosj_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	static int address;
 	
@@ -183,7 +183,7 @@ public class taitosj
 		zaccept = 0;
 	}
 	
-	WRITE_HANDLER( taitosj_68705_portB_w )
+	public static WriteHandlerPtr taitosj_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port B write %02x\n",activecpu_get_pc(),data);
@@ -248,7 +248,7 @@ public class taitosj
 	#endif
 			address = (address & 0x00ff) | (portA_out << 8);
 		}
-	}
+	} };
 	
 	/*
 	 *  Port C connections:
@@ -260,7 +260,7 @@ public class taitosj
 	 *                  passes through)
 	 */
 	
-	READ_HANDLER( taitosj_68705_portC_r )
+	public static ReadHandlerPtr taitosj_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -269,7 +269,7 @@ public class taitosj
 	logerror("%04x: 68705 port C read %02x\n",activecpu_get_pc(),res);
 	#endif
 		return res;
-	}
+	} };
 	
 	
 	
@@ -277,7 +277,7 @@ public class taitosj
 	
 	static int protection_value;
 	
-	WRITE_HANDLER( alpine_protection_w )
+	public static WriteHandlerPtr alpine_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (data)
 		{
@@ -299,16 +299,16 @@ public class taitosj
 			protection_value = data;		/* not used as far as I can tell */
 			break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( alpinea_bankswitch_w )
+	public static WriteHandlerPtr alpinea_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    taitosj_bankswitch_w(offset, data);
 		protection_value = data >> 2;
-	}
+	} };
 	
-	READ_HANDLER( alpine_port_2_r )
+	public static ReadHandlerPtr alpine_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_2_r(offset) | protection_value;
-	}
+	} };
 }

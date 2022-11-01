@@ -113,18 +113,18 @@ public class gladiatr
 	static int banka;
 	
 	/*Rom bankswitching*/
-	WRITE_HANDLER( gladiatr_bankswitch_w ){
+	public static WriteHandlerPtr gladiatr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int bank1[2] = { 0x10000, 0x12000 };
 		static int bank2[2] = { 0x14000, 0x18000 };
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		banka = data;
 		cpu_setbank(1,&RAM[bank1[(data & 0x03)]]);
 		cpu_setbank(2,&RAM[bank2[(data & 0x03)]]);
-	}
+	} };
 	
-	READ_HANDLER( gladiatr_bankswitch_r ){
+	public static ReadHandlerPtr gladiatr_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return banka;
-	}
+	} };
 	
 	public static ReadHandlerPtr gladiator_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
@@ -199,10 +199,10 @@ public class gladiatr
 	
 	#if 1
 	/* !!!!! patch to IRQ timming for 2nd CPU !!!!! */
-	WRITE_HANDLER( gladiatr_irq_patch_w )
+	public static WriteHandlerPtr gladiatr_irq_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1,0,HOLD_LINE);
-	}
+	} };
 	#endif
 	
 	/* YM2203 port A handler (input) */

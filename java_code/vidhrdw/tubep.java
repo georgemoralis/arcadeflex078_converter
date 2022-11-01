@@ -445,50 +445,50 @@ public class tubep
 		return 0;
 	}
 	
-	WRITE_HANDLER( tubep_textram_w )
+	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tubep_textram[offset] != data)
 		{
 			dirtybuff[offset/2] = 1;
 			tubep_textram[offset] = data;
 		}
-	}
+	} };
 	
 	
 	static UINT8 background_romsel = 0;
 	
-	WRITE_HANDLER( tubep_background_romselect_w )
+	public static WriteHandlerPtr tubep_background_romselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		background_romsel = data & 1;
-	}
+	} };
 	
 	
 	static UINT8 color_A4 = 0;
 	
-	WRITE_HANDLER( tubep_colorproms_A4_line_w )
+	public static WriteHandlerPtr tubep_colorproms_A4_line_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (color_A4 != ((data & 1)<<4))
 		{
 			color_A4 = (data & 1)<<4;
 			memset(dirtybuff,1,0x800/2);
 		}
-	}
+	} };
 	
 	
 	static UINT8 ls175_b7 = 0x0f | 0xf0;
 	
-	WRITE_HANDLER( tubep_background_a000_w )
+	public static WriteHandlerPtr tubep_background_a000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ls175_b7 = ((data&0x0f)^0x0f) | 0xf0;
-	}
+	} };
 	
 	
 	static UINT8 ls175_e8 = 0x0f;
 	
-	WRITE_HANDLER( tubep_background_c000_w )
+	public static WriteHandlerPtr tubep_background_c000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ls175_e8 = ((data&0x0f)^0x0f);
-	}
+	} };
 	
 	
 	static void sprite_timer_callback(int n)
@@ -585,7 +585,7 @@ public class tubep
 	}
 	
 	
-	WRITE_HANDLER( tubep_sprite_control_w )
+	public static WriteHandlerPtr tubep_sprite_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset < 10)
 		{
@@ -651,7 +651,7 @@ public class tubep
 				break;
 			}
 		}
-	}
+	} };
 	
 	VIDEO_EOF( tubep_eof )
 	{
@@ -768,18 +768,18 @@ public class tubep
 	
 	static UINT8 ls377_data = 0;
 	
-	WRITE_HANDLER( rjammer_background_LS377_w )
+	public static WriteHandlerPtr rjammer_background_LS377_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ls377_data = data & 0xff;
-	}
+	} };
 	
 	
 	static UINT32 page = 0;
 	
-	WRITE_HANDLER( rjammer_background_page_w )
+	public static WriteHandlerPtr rjammer_background_page_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		page = (data & 1) * 0x200;
-	}
+	} };
 	
 	
 	VIDEO_UPDATE( rjammer )

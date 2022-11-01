@@ -811,7 +811,7 @@ public class tia
 	} };
 	
 	
-	READ_HANDLER( tia_r )
+	public static ReadHandlerPtr tia_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 data = 0;
 	
@@ -853,10 +853,10 @@ public class tia
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( tia_w )
+	public static WriteHandlerPtr tia_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static const int delay[0x40] =
 		{
@@ -1052,7 +1052,7 @@ public class tia
 			CXCLR_w(offset, 0);
 			break;
 		}
-	}
+	} };
 	
 	
 	void tia_init(void)

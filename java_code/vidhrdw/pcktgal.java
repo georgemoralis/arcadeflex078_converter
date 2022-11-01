@@ -37,23 +37,23 @@ public class pcktgal
 		}
 	}
 	
-	WRITE_HANDLER( pcktgal_videoram_w )
+	public static WriteHandlerPtr pcktgal_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pcktgal_flipscreen_w )
+	public static WriteHandlerPtr pcktgal_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x80))
 		{
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

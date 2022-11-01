@@ -22,14 +22,14 @@ public class dkong
 	
 	static struct tilemap *bg_tilemap;
 	
-	WRITE_HANDLER( dkong_videoram_w )
+	public static WriteHandlerPtr dkong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -180,25 +180,25 @@ public class dkong
 	}
 	
 	
-	WRITE_HANDLER( dkongjr_gfxbank_w )
+	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkong3_gfxbank_w )
+	public static WriteHandlerPtr dkong3_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfx_bank != (~data & 0x01))
 		{
 			gfx_bank = ~data & 0x01;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkong_palettebank_w )
+	public static WriteHandlerPtr dkong_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int newbank;
 	
@@ -214,14 +214,14 @@ public class dkong
 			palette_bank = newbank;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( radarscp_grid_enable_w )
+	public static WriteHandlerPtr radarscp_grid_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grid_on = data & 0x01;
-	}
+	} };
 	
-	WRITE_HANDLER( radarscp_grid_color_w )
+	public static WriteHandlerPtr radarscp_grid_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 	
@@ -230,12 +230,12 @@ public class dkong
 		b = ((~data >> 2) & 0x01) * 0xff;
 	//	palette_set_color(257,r,g,b);
 		palette_set_color(257,0x00,0x00,0xff);
-	}
+	} };
 	
-	WRITE_HANDLER( dkong_flipscreen_w )
+	public static WriteHandlerPtr dkong_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(~data & 0x01);
-	}
+	} };
 	
 	/***************************************************************************
 	

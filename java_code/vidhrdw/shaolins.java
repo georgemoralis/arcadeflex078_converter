@@ -99,34 +99,34 @@ public class shaolins
 		}
 	}
 	
-	WRITE_HANDLER( shaolins_videoram_w )
+	public static WriteHandlerPtr shaolins_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( shaolins_colorram_w )
+	public static WriteHandlerPtr shaolins_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( shaolins_palettebank_w )
+	public static WriteHandlerPtr shaolins_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palettebank != (data & 0x07))
 		{
 			palettebank = data & 0x07;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( shaolins_scroll_w )
+	public static WriteHandlerPtr shaolins_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int col;
 	
@@ -134,9 +134,9 @@ public class shaolins
 		{
 			tilemap_set_scrolly(bg_tilemap, col, data + 1);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( shaolins_nmi_w )
+	public static WriteHandlerPtr shaolins_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shaolins_nmi_enable = data;
 	
@@ -145,7 +145,7 @@ public class shaolins
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

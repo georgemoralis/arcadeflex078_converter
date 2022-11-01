@@ -103,7 +103,7 @@ public class chinagat
 		sound_irq = IRQ_LINE_NMI;
 	}
 	
-	WRITE_HANDLER( chinagat_video_ctrl_w )
+	public static WriteHandlerPtr chinagat_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/***************************
 		---- ---x   X Scroll MSB
@@ -116,7 +116,7 @@ public class chinagat
 		ddragon_scrollx_hi = ( ( data & 0x01 ) << 8 );
 	
 		flip_screen_set(~data & 0x04);
-	}
+	} };
 	
 	public static WriteHandlerPtr chinagat_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

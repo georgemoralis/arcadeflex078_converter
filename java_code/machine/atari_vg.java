@@ -20,25 +20,25 @@ public class atari_vg
 	static char earom[EAROM_SIZE];
 	
 	
-	READ_HANDLER( atari_vg_earom_r )
+	public static ReadHandlerPtr atari_vg_earom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		logerror("read earom: %02x(%02x):%02x\n", earom_offset, offset, earom_data);
 		return (earom_data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( atari_vg_earom_w )
+	public static WriteHandlerPtr atari_vg_earom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("write earom: %02x:%02x\n", offset, data);
 		earom_offset = offset;
 		earom_data = data;
-	}
+	} };
 	
 	
 	/* 0,8 and 14 get written to this location, too.
 	 * Don't know what they do exactly
 	 */
-	WRITE_HANDLER( atari_vg_earom_ctrl_w )
+	public static WriteHandlerPtr atari_vg_earom_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("earom ctrl: %02x:%02x\n",offset, data);
 		/*
@@ -54,7 +54,7 @@ public class atari_vg
 			earom[earom_offset]=earom_data;
 			logerror("    written %02x:%02x\n", earom_offset, earom_data);
 		}
-	}
+	} };
 	
 	
 	NVRAM_HANDLER( atari_vg )

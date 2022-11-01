@@ -153,7 +153,7 @@ public class fastfred
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( fastfred_videoram_w )
+	public static WriteHandlerPtr fastfred_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (fastfred_videoram[offset] != data)
 		{
@@ -161,10 +161,10 @@ public class fastfred
 	
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fastfred_attributes_w )
+	public static WriteHandlerPtr fastfred_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (fastfred_attributesram[offset] != data)
 		{
@@ -184,10 +184,10 @@ public class fastfred
 	
 			fastfred_attributesram[offset] = data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fastfred_charbank1_w )
+	public static WriteHandlerPtr fastfred_charbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data16_t new_data = (charbank & 0x0200) | ((data & 0x01) << 8);
 	
@@ -197,9 +197,9 @@ public class fastfred
 		
 			charbank = new_data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( fastfred_charbank2_w )
+	public static WriteHandlerPtr fastfred_charbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data16_t new_data = (charbank & 0x0100) | ((data & 0x01) << 9);
 	
@@ -209,10 +209,10 @@ public class fastfred
 		
 			charbank = new_data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fastfred_colorbank1_w )
+	public static WriteHandlerPtr fastfred_colorbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t new_data = (colorbank & 0x10) | ((data & 0x01) << 3);
 	
@@ -222,9 +222,9 @@ public class fastfred
 	
 			colorbank = new_data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( fastfred_colorbank2_w )
+	public static WriteHandlerPtr fastfred_colorbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t new_data = (colorbank & 0x08) | ((data & 0x01) << 4);
 	
@@ -234,16 +234,16 @@ public class fastfred
 	
 			colorbank = new_data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fastfred_background_color_w )
+	public static WriteHandlerPtr fastfred_background_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_color(0, data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fastfred_flip_screen_x_w )
+	public static WriteHandlerPtr fastfred_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen_x != (data & 0x01))
 		{
@@ -251,9 +251,9 @@ public class fastfred
 	
 			tilemap_set_flip(bg_tilemap, (flip_screen_x ? TILEMAP_FLIPX : 0) | (flip_screen_y ? TILEMAP_FLIPY : 0));
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( fastfred_flip_screen_y_w )
+	public static WriteHandlerPtr fastfred_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen_y != (data & 0x01))
 		{
@@ -261,7 +261,7 @@ public class fastfred
 	
 			tilemap_set_flip(bg_tilemap, (flip_screen_x ? TILEMAP_FLIPX : 0) | (flip_screen_y ? TILEMAP_FLIPY : 0));
 		}
-	}
+	} };
 	
 	
 	
@@ -366,23 +366,23 @@ public class fastfred
 	}
 	
 	
-	WRITE_HANDLER( imago_fg_videoram_w )
+	public static WriteHandlerPtr imago_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( imago_fg_videoram[offset] != data)
 		{
 			imago_fg_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( imago_charbank_w )
+	public static WriteHandlerPtr imago_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( charbank != data )
 		{
 			charbank = data;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	VIDEO_START( imago )
 	{

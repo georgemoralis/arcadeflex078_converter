@@ -69,19 +69,19 @@ public class grchamp
 	**	1 digit for rank (?)
 	*/
 	
-	WRITE_HANDLER( grchamp_led_data0_w )
+	public static WriteHandlerPtr grchamp_led_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_led_data0 = data;
-	}
-	WRITE_HANDLER( grchamp_led_data1_w )
+	} };
+	public static WriteHandlerPtr grchamp_led_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_led_data1 = data;
-	}
-	WRITE_HANDLER( grchamp_led_data2_w )
+	} };
+	public static WriteHandlerPtr grchamp_led_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_led_data2 = data;
-	}
-	WRITE_HANDLER( grchamp_led_data3_w )
+	} };
+	public static WriteHandlerPtr grchamp_led_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( data )
 		{
@@ -90,28 +90,28 @@ public class grchamp
 			grchamp_led_reg[which][1] = grchamp_led_data1; /* ? */
 			grchamp_led_reg[which][2] = grchamp_led_data2;
 		}
-	}
+	} };
 	
 	/***************************************************************************/
 	
 	static int PC3259_data;
 	
-	WRITE_HANDLER( PC3259_control_w )
+	public static WriteHandlerPtr PC3259_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		PC3259_data = data;
-	}
+	} };
 	
-	READ_HANDLER( PC3259_0_r )
+	public static ReadHandlerPtr PC3259_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ /* 0x01 (401a)*/
 		return 0xff; /* unknown */
-	}
+	} };
 	
-	READ_HANDLER( PC3259_1_r )
+	public static ReadHandlerPtr PC3259_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ /* 0x09 (401b)*/
 		return 0xff; /* unknown */
-	}
+	} };
 	
-	READ_HANDLER( PC3259_2_r )
+	public static ReadHandlerPtr PC3259_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ /* 0x11 (401c)*/
 		int result = 0;
 		if( grchamp_player_ypos<128 )
@@ -123,13 +123,13 @@ public class grchamp
 			result = rand()&0xff; // OBJECT crash
 		}
 		return result;
-	}
+	} };
 	
-	READ_HANDLER( PC3259_3_r )
+	public static ReadHandlerPtr PC3259_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ /* 0x19 (401d)*/
 		int result = grchamp_collision?1:0; /* crash */
 		return result;
-	}
+	} };
 	
 	/***************************************************************************/
 	

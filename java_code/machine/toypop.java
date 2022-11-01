@@ -31,19 +31,19 @@ public class toypop
 		interrupt_enable_68k = 0;
 	}
 	
-	READ_HANDLER( toypop_sound_sharedram_r )
+	public static ReadHandlerPtr toypop_sound_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* to speed up emulation, we check for the loop the sound CPU sits in most of the time
 		   and end the current iteration (things will start going again with the next IRQ) */
 		if (offset == 0xa1 - 0x40 && toypop_sound_sharedram[offset] == 0 && activecpu_get_pc() == 0xe4df)
 			cpu_spinuntil_int();
 		return toypop_sound_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_sound_sharedram_w )
+	public static WriteHandlerPtr toypop_sound_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		toypop_sound_sharedram[offset] = data;
-	}
+	} };
 	
 	READ16_HANDLER( toypop_m68000_sharedram_r )
 	{
@@ -56,25 +56,25 @@ public class toypop
 			toypop_m68000_sharedram[offset] = data & 0xff;
 	}
 	
-	WRITE_HANDLER( toypop_main_interrupt_enable_w )
+	public static WriteHandlerPtr toypop_main_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_mainCPU = 1;
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_main_interrupt_disable_w )
+	public static WriteHandlerPtr toypop_main_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_mainCPU = 0;
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_sound_interrupt_enable_w )
+	public static WriteHandlerPtr toypop_sound_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_sound = 1;
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_sound_interrupt_disable_w )
+	public static WriteHandlerPtr toypop_sound_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_sound = 0;
-	}
+	} };
 	
 	WRITE16_HANDLER( toypop_m68000_interrupt_enable_w )
 	{
@@ -104,7 +104,7 @@ public class toypop
 			cpu_set_irq_line(2, 6, HOLD_LINE);
 	} };
 	
-	READ_HANDLER( toypop_customio_r )
+	public static ReadHandlerPtr toypop_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int mode = toypop_customio[8];
 	
@@ -147,9 +147,9 @@ public class toypop
 				default:
 					return toypop_customio[offset];
 			}
-	}
+	} };
 	
-	READ_HANDLER( liblrabl_customio_r )
+	public static ReadHandlerPtr liblrabl_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int lastcoin, laststart;
 		int val, tmp, mode = toypop_customio[24];
@@ -233,25 +233,25 @@ public class toypop
 			}
 		else
 			return toypop_customio[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_sound_clear_w )
+	public static WriteHandlerPtr toypop_sound_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(1, CLEAR_LINE);
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_sound_assert_w )
+	public static WriteHandlerPtr toypop_sound_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(1, ASSERT_LINE);
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_m68000_clear_w )
+	public static WriteHandlerPtr toypop_m68000_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(2, CLEAR_LINE);
-	}
+	} };
 	
-	WRITE_HANDLER( toypop_m68000_assert_w )
+	public static WriteHandlerPtr toypop_m68000_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line(2, ASSERT_LINE);
-	}
+	} };
 }

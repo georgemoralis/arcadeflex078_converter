@@ -95,37 +95,37 @@ public class dynax
 	
 	
 	
-	WRITE_HANDLER( dynax_extra_scrollx_w )
+	public static WriteHandlerPtr dynax_extra_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		extra_scroll_x = data;
-	}
+	} };
 	
-	WRITE_HANDLER( dynax_extra_scrolly_w )
+	public static WriteHandlerPtr dynax_extra_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		extra_scroll_y = data;
-	}
+	} };
 	
 	
 	/* Destination Pen */
-	WRITE_HANDLER( dynax_blit_pen_w )
+	public static WriteHandlerPtr dynax_blit_pen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_blit_pen = data;
 	#if VERBOSE
 		logerror("P=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Background Color */
-	WRITE_HANDLER( dynax_blit_backpen_w )
+	public static WriteHandlerPtr dynax_blit_backpen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_blit_backpen = data;
 	#if VERBOSE
 		logerror("B=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Layers 0&1 Palettes (Low Bits) */
-	WRITE_HANDLER( dynax_blit_palette01_w )
+	public static WriteHandlerPtr dynax_blit_palette01_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (layer_layout == LAYOUT_HNORIDUR)
 			dynax_blit_palettes = (dynax_blit_palettes & 0x00ff) | ((data&0x0f)<<12) | ((data&0xf0)<<4);
@@ -134,10 +134,10 @@ public class dynax
 	#if VERBOSE
 		logerror("P1=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Layer 2 Palette (Low Bits) */
-	WRITE_HANDLER( dynax_blit_palette2_w )
+	public static WriteHandlerPtr dynax_blit_palette2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (layer_layout == LAYOUT_HNORIDUR)
 			dynax_blit_palettes = (dynax_blit_palettes & 0xff00) | ((data&0x0f)<<4) | ((data&0xf0)>>4);
@@ -146,19 +146,19 @@ public class dynax
 	#if VERBOSE
 		logerror("P2=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Layers Palettes (High Bits) */
-	WRITE_HANDLER( dynax_blit_palbank_w )
+	public static WriteHandlerPtr dynax_blit_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_blit_palbank = data;
 	#if VERBOSE
 		logerror("PB=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Destination Layers */
-	WRITE_HANDLER( dynax_blit_dest_w )
+	public static WriteHandlerPtr dynax_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_blit_dest = data;
 		if (layer_layout == LAYOUT_HNORIDUR)
@@ -167,54 +167,54 @@ public class dynax
 	#if VERBOSE
 		logerror("D=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Which half of the layers to write two (interleaved games only) */
-	WRITE_HANDLER( hanamai_layer_half_w )
+	public static WriteHandlerPtr hanamai_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hanamai_layer_half = data & 1;
 	#if VERBOSE
 		logerror("H=%02X ",data);
 	#endif
-	}
+	} };
 	
 	/* Write to both halves of the layers (interleaved games only) */
-	WRITE_HANDLER( hnoridur_layer_half2_w )
+	public static WriteHandlerPtr hnoridur_layer_half2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hnoridur_layer_half2 = (~data) & 1;
 	#if VERBOSE
 		logerror("H2=%02X ",data);
 	#endif
-	}
+	} };
 	
-	WRITE_HANDLER( mjdialq2_blit_dest_w )
+	public static WriteHandlerPtr mjdialq2_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int mask = (2 >> offset);	/* 1 or 2 */
 	
 		dynax_blit_dest &= ~mask;
 		if (~data & 1) dynax_blit_dest |= mask;
-	}
+	} };
 	
 	/* Layers Enable */
-	WRITE_HANDLER( dynax_layer_enable_w )
+	public static WriteHandlerPtr dynax_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_layer_enable = data;
 	
 	#if VERBOSE
 		logerror("E=%02X ",data);
 	#endif
-	}
+	} };
 	
-	WRITE_HANDLER( mjdialq2_layer_enable_w )
+	public static WriteHandlerPtr mjdialq2_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int mask = (2 >> offset);	/* 1 or 2 */
 	
 		dynax_layer_enable &= ~mask;
 		if (~data & 1) dynax_layer_enable |= mask;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( dynax_flipscreen_w )
+	public static WriteHandlerPtr dynax_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flipscreen = data & 1;
 		if (data & ~1)
@@ -222,7 +222,7 @@ public class dynax
 	#if VERBOSE
 		logerror("F=%02X ",data);
 	#endif
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -480,7 +480,7 @@ public class dynax
 	
 	
 	
-	WRITE_HANDLER( dynax_blit_scroll_w )
+	public static WriteHandlerPtr dynax_blit_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x blit_scroll_w data = %02x addr = %06x\n",activecpu_get_pc(),data,blit_src);
 		// 0x800000 also used!
@@ -508,10 +508,10 @@ public class dynax
 	#endif
 			}
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( dynax_blitter_rev2_w )
+	public static WriteHandlerPtr dynax_blitter_rev2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -523,7 +523,7 @@ public class dynax
 			case 5: blit_src = (blit_src & 0x00ffff) | (data <<16); break;
 			case 6: dynax_blit_scroll_w(0,data); break;
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -790,10 +790,10 @@ public class dynax
 	
 	static int hanamai_priority;
 	
-	WRITE_HANDLER( hanamai_priority_w )
+	public static WriteHandlerPtr hanamai_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hanamai_priority = data;
-	}
+	} };
 	
 	
 	static int debug_mask(void)

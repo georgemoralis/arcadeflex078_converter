@@ -109,32 +109,32 @@ public class _3812intf
 			YM3812ResetChip(i);
 	}
 	
-	WRITE_HANDLER( YM3812_control_port_0_w ) {
+	public static WriteHandlerPtr YM3812_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3812Write(0, 0, data);
-	}
-	WRITE_HANDLER( YM3812_write_port_0_w ) {
+	} };
+	public static WriteHandlerPtr YM3812_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3812Write(0, 1, data);
-	}
-	READ_HANDLER( YM3812_status_port_0_r ) {
+	} };
+	public static ReadHandlerPtr YM3812_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3812Read(0, 0);
-	}
-	READ_HANDLER( YM3812_read_port_0_r ) {
+	} };
+	public static ReadHandlerPtr YM3812_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3812Read(0, 1);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( YM3812_control_port_1_w ) {
+	public static WriteHandlerPtr YM3812_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3812Write(1, 0, data);
-	}
-	WRITE_HANDLER( YM3812_write_port_1_w ) {
+	} };
+	public static WriteHandlerPtr YM3812_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3812Write(1, 1, data);
-	}
-	READ_HANDLER( YM3812_status_port_1_r ) {
+	} };
+	public static ReadHandlerPtr YM3812_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3812Read(1, 0);
-	}
-	READ_HANDLER( YM3812_read_port_1_r ) {
+	} };
+	public static ReadHandlerPtr YM3812_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3812Read(1, 1);
-	}
+	} };
 	
 	#endif
 	
@@ -224,32 +224,32 @@ public class _3812intf
 			YM3526ResetChip(i);
 	}
 	
-	WRITE_HANDLER( YM3526_control_port_0_w ) {
+	public static WriteHandlerPtr YM3526_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3526Write(0, 0, data);
-	}
-	WRITE_HANDLER( YM3526_write_port_0_w ) {
+	} };
+	public static WriteHandlerPtr YM3526_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3526Write(0, 1, data);
-	}
-	READ_HANDLER( YM3526_status_port_0_r ) {
+	} };
+	public static ReadHandlerPtr YM3526_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3526Read(0, 0);
-	}
-	READ_HANDLER( YM3526_read_port_0_r ) {
+	} };
+	public static ReadHandlerPtr YM3526_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3526Read(0, 1);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( YM3526_control_port_1_w ) {
+	public static WriteHandlerPtr YM3526_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3526Write(1, 0, data);
-	}
-	WRITE_HANDLER( YM3526_write_port_1_w ) {
+	} };
+	public static WriteHandlerPtr YM3526_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		YM3526Write(1, 1, data);
-	}
-	READ_HANDLER( YM3526_status_port_1_r ) {
+	} };
+	public static ReadHandlerPtr YM3526_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3526Read(1, 0);
-	}
-	READ_HANDLER( YM3526_read_port_1_r ) {
+	} };
+	public static ReadHandlerPtr YM3526_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return YM3526Read(1, 1);
-	}
+	} };
 	
 	#endif
 	
@@ -372,32 +372,32 @@ public class _3812intf
 			Y8950ResetChip(i);
 	}
 	
-	WRITE_HANDLER( Y8950_control_port_0_w ) {
+	public static WriteHandlerPtr Y8950_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		Y8950Write(0, 0, data);
-	}
-	WRITE_HANDLER( Y8950_write_port_0_w ) {
+	} };
+	public static WriteHandlerPtr Y8950_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		Y8950Write(0, 1, data);
-	}
-	READ_HANDLER( Y8950_status_port_0_r ) {
+	} };
+	public static ReadHandlerPtr Y8950_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return Y8950Read(0, 0);
-	}
-	READ_HANDLER( Y8950_read_port_0_r ) {
+	} };
+	public static ReadHandlerPtr Y8950_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return Y8950Read(0, 1);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( Y8950_control_port_1_w ) {
+	public static WriteHandlerPtr Y8950_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		Y8950Write(1, 0, data);
-	}
-	WRITE_HANDLER( Y8950_write_port_1_w ) {
+	} };
+	public static WriteHandlerPtr Y8950_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		Y8950Write(1, 1, data);
-	}
-	READ_HANDLER( Y8950_status_port_1_r ) {
+	} };
+	public static ReadHandlerPtr Y8950_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return Y8950Read(1, 0);
-	}
-	READ_HANDLER( Y8950_read_port_1_r ) {
+	} };
+	public static ReadHandlerPtr Y8950_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
 		return Y8950Read(1, 1);
-	}
+	} };
 	
 	#endif
 }

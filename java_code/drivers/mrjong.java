@@ -77,15 +77,15 @@ public class mrjong
 	};
 	
 	
-	WRITE_HANDLER( io_0x00_w )
+	public static WriteHandlerPtr io_0x00_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mrjong_flipscreen_w(0, ((data & 0x04) > 2));
-	}
+	} };
 	
-	READ_HANDLER( io_0x03_r )
+	public static ReadHandlerPtr io_0x03_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x00;
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

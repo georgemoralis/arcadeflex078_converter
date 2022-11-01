@@ -112,37 +112,37 @@ public class punchout
 	
 	
 	
-	READ_HANDLER( punchout_input_3_r )
+	public static ReadHandlerPtr punchout_input_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = input_port_3_r(offset);
 		/* bit 4 is busy pin level */
 		if( VLM5030_BSY() ) data &= ~0x10;
 		else data |= 0x10;
 		return data;
-	}
+	} };
 	
-	WRITE_HANDLER( punchout_speech_reset_w )
+	public static WriteHandlerPtr punchout_speech_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		VLM5030_RST( data&0x01 );
-	}
+	} };
 	
-	WRITE_HANDLER( punchout_speech_st_w )
+	public static WriteHandlerPtr punchout_speech_st_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		VLM5030_ST( data&0x01 );
-	}
+	} };
 	
-	WRITE_HANDLER( punchout_speech_vcu_w )
+	public static WriteHandlerPtr punchout_speech_vcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		VLM5030_VCU( data & 0x01 );
-	}
+	} };
 	
-	WRITE_HANDLER( punchout_2a03_reset_w )
+	public static WriteHandlerPtr punchout_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 1)
 			cpu_set_reset_line(1,ASSERT_LINE);
 		else
 			cpu_set_reset_line(1,CLEAR_LINE);
-	}
+	} };
 	
 	static int prot_mode_sel = -1; /* Mode selector */
 	static int prot_mem[16];

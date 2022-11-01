@@ -105,28 +105,28 @@ public class suna8
 	
 	
 	
-	READ_HANDLER( suna8_banked_paletteram_r )
+	public static ReadHandlerPtr suna8_banked_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset += suna8_palettebank * 0x200;
 		return paletteram[offset];
-	}
+	} };
 	
-	READ_HANDLER( suna8_banked_spriteram_r )
+	public static ReadHandlerPtr suna8_banked_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset += suna8_spritebank * 0x2000;
 		return spriteram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( suna8_spriteram_w )
+	public static WriteHandlerPtr suna8_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (spriteram[offset] != data)
 		{
 			spriteram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap,offset/2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( suna8_banked_spriteram_w )
+	public static WriteHandlerPtr suna8_banked_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset += suna8_spritebank * 0x2000;
 		if (spriteram[offset] != data)
@@ -134,12 +134,12 @@ public class suna8
 			spriteram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap,offset/2);
 		}
-	}
+	} };
 	
 	/*
 		Banked Palette RAM. The data is scrambled
 	*/
-	WRITE_HANDLER( brickzn_banked_paletteram_w )
+	public static WriteHandlerPtr brickzn_banked_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 		UINT16 rgb;
@@ -163,7 +163,7 @@ public class suna8
 		g = (g << 4) | g;
 		b = (b << 4) | b;
 		palette_set_color(offset/2,r,g,b);
-	}
+	} };
 	
 	
 	

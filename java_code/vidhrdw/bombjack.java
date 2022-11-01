@@ -19,41 +19,41 @@ public class bombjack
 	
 	static struct tilemap *fg_tilemap, *bg_tilemap;
 	
-	WRITE_HANDLER( bombjack_videoram_w )
+	public static WriteHandlerPtr bombjack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bombjack_colorram_w )
+	public static WriteHandlerPtr bombjack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bombjack_background_w )
+	public static WriteHandlerPtr bombjack_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (background_image != data)
 		{
 			background_image = data;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bombjack_flipscreen_w )
+	public static WriteHandlerPtr bombjack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

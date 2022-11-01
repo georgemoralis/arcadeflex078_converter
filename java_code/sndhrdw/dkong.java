@@ -9,15 +9,15 @@ public class dkong
 	
 	static int walk = 0; /* used to determine if dkongjr is walking or climbing? */
 	
-	WRITE_HANDLER( dkong_sh_w )
+	public static WriteHandlerPtr dkong_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
-	}
+	} };
 	
-	WRITE_HANDLER( dkong_sh1_w )
+	public static WriteHandlerPtr dkong_sh1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int state[8];
 	
@@ -27,9 +27,9 @@ public class dkong
 				sample_start (offset, offset, 0);
 			state[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_death_w )
+	public static WriteHandlerPtr dkongjr_sh_death_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int death = 0;
 	
@@ -40,9 +40,9 @@ public class dkong
 			sample_start (6, 4, 0);
 			death = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_drop_w )
+	public static WriteHandlerPtr dkongjr_sh_drop_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int drop = 0;
 	
@@ -52,9 +52,9 @@ public class dkong
 				sample_start (7, 5, 0);
 			drop = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_roar_w )
+	public static WriteHandlerPtr dkongjr_sh_roar_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int roar = 0;
 	
@@ -64,9 +64,9 @@ public class dkong
 				sample_start (7,2,0);
 			roar = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_jump_w )
+	public static WriteHandlerPtr dkongjr_sh_jump_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int jump = 0;
 	
@@ -76,9 +76,9 @@ public class dkong
 				sample_start (6,0,0);
 			jump = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_land_w )
+	public static WriteHandlerPtr dkongjr_sh_land_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int land = 0;
 	
@@ -89,9 +89,9 @@ public class dkong
 			sample_start (4,1,0);
 			land = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_climb_w )
+	public static WriteHandlerPtr dkongjr_sh_climb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int climb = 0;
 	
@@ -107,9 +107,9 @@ public class dkong
 			}
 			climb = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_snapjaw_w )
+	public static WriteHandlerPtr dkongjr_sh_snapjaw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int snapjaw = 0;
 	
@@ -120,13 +120,13 @@ public class dkong
 			sample_start (4,7,0);
 			snapjaw = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( dkongjr_sh_walk_w )
+	public static WriteHandlerPtr dkongjr_sh_walk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (walk != data )
 		{
 			walk = data;
 		}
-	}
+	} };
 }

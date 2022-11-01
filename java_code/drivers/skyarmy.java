@@ -51,28 +51,28 @@ public class skyarmy
 		SET_TILE_INFO( 0, code, attr, 0)
 	}
 	
-	WRITE_HANDLER( skyarmy_videoram_w )
+	public static WriteHandlerPtr skyarmy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        skyarmy_videoram[offset] = data;
 	        tilemap_mark_tile_dirty(skyarmy_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skyarmy_colorram_w )
+	public static WriteHandlerPtr skyarmy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        skyarmy_colorram[offset] = data;
 	        tilemap_mark_tile_dirty(skyarmy_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skyarmy_scrollram_w )
+	public static WriteHandlerPtr skyarmy_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        skyarmy_scrollram[offset] = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( skyarmy_scrollram_r )
+	public static ReadHandlerPtr skyarmy_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	        return skyarmy_scrollram[offset];
-	}
+	} };
 	
 	
 	PALETTE_INIT( skyarmy )
@@ -155,10 +155,10 @@ public class skyarmy
 	} };
 	
 	
-	WRITE_HANDLER( nmi_enable_w )
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        skyarmy_nmi=data&1;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress skyarmy_readmem[]={

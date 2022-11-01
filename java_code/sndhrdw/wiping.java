@@ -214,7 +214,7 @@ public class wiping
 	
 	/********************************************************************************/
 	
-	WRITE_HANDLER( wiping_sound_w )
+	public static WriteHandlerPtr wiping_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sound_channel *voice;
 		int base;
@@ -258,5 +258,5 @@ public class wiping
 				voice->oneshotplaying = 1;
 			}
 		}
-	}
+	} };
 }

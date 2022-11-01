@@ -48,11 +48,11 @@ public class dribling
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( dribling_colorram_w )
+	public static WriteHandlerPtr dribling_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* it is very important that we mask off the two bits here */
 		colorram[offset & 0x1f9f] = data;
-	}
+	} };
 	
 	
 	

@@ -106,12 +106,12 @@ public class _5220intf
 	
 	***********************************************************************************************/
 	
-	WRITE_HANDLER( tms5220_data_w )
+	public static WriteHandlerPtr tms5220_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    /* bring up to date first */
 	    stream_update(stream, 0);
 	    tms5220_data_write(data);
-	}
+	} };
 	
 	
 	
@@ -121,12 +121,12 @@ public class _5220intf
 	
 	***********************************************************************************************/
 	
-	READ_HANDLER( tms5220_status_r )
+	public static ReadHandlerPtr tms5220_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    /* bring up to date first */
 	    stream_update(stream, -1);
 	    return tms5220_status_read();
-	}
+	} };
 	
 	
 	

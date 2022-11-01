@@ -122,31 +122,31 @@ public class tubep
 	/*************************** Main CPU on main PCB **************************/
 	
 	
-	static WRITE_HANDLER ( cpu_sharedram_w )
+	static public static WriteHandlerPtr cpu_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_sharedram[offset] = data;
-	}
-	static READ_HANDLER ( cpu_sharedram_r )
+	} };
+	static public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER ( tubep_sprite_sharedram_w )
+	static public static WriteHandlerPtr tubep_sprite_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tubep_sprite_sharedram[offset] = data;
-	}
-	static READ_HANDLER ( tubep_sprite_sharedram_r )
+	} };
+	static public static ReadHandlerPtr tubep_sprite_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tubep_sprite_sharedram[offset];
-	}
-	static WRITE_HANDLER ( tubep_sprite_colorsharedram_w )
+	} };
+	static public static WriteHandlerPtr tubep_sprite_colorsharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tubep_sprite_colorsharedram[offset] = data;
-	}
-	static READ_HANDLER ( tubep_sprite_colorsharedram_r )
+	} };
+	static public static ReadHandlerPtr tubep_sprite_colorsharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tubep_sprite_colorsharedram[offset];
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr tubep_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data)

@@ -21,18 +21,18 @@ public class orbit
 	static int orbit_flip_screen;
 	
 	
-	WRITE_HANDLER( orbit_playfield_w )
+	public static WriteHandlerPtr orbit_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_mark_tile_dirty(tilemap, offset);
 	
 		orbit_playfield_ram[offset] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( orbit_sprite_w )
+	public static WriteHandlerPtr orbit_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		orbit_sprite_ram[offset] = data;
-	}
+	} };
 	
 	
 	static UINT32 get_memory_offset(UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows)

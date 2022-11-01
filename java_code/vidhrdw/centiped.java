@@ -96,11 +96,11 @@ public class centiped
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( centiped_videoram_w )
+	public static WriteHandlerPtr centiped_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(tilemap, offset);
-	}
+	} };
 	
 	
 	
@@ -110,10 +110,10 @@ public class centiped
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( centiped_flip_screen_w )
+	public static WriteHandlerPtr centiped_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		centiped_flipscreen = data >> 7;
-	}
+	} };
 	
 	
 	
@@ -166,7 +166,7 @@ public class centiped
 	}
 	
 	
-	WRITE_HANDLER( centiped_paletteram_w )
+	public static WriteHandlerPtr centiped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r, g, b;
 	
@@ -188,7 +188,7 @@ public class centiped
 			palette_set_color(offset - 4, r, g, b);
 		else if (offset >= 12 && offset < 16)
 			palette_set_color(4 + (offset - 12), r, g, b);
-	}
+	} };
 	
 	
 	
@@ -277,7 +277,7 @@ public class centiped
 	}
 	
 	
-	WRITE_HANDLER( milliped_paletteram_w )
+	public static WriteHandlerPtr milliped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bit0,bit1,bit2;
 		int r,g,b;
@@ -303,7 +303,7 @@ public class centiped
 		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 		palette_set_color(offset, r, g, b);
-	}
+	} };
 	
 	
 	

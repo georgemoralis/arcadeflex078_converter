@@ -32,22 +32,22 @@ public class lkage
 	
 	static unsigned char portA_in,portA_out,ddrA;
 	
-	READ_HANDLER( lkage_68705_portA_r )
+	public static ReadHandlerPtr lkage_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//logerror("%04x: 68705 port A read %02x\n",activecpu_get_pc(),portA_in);
 		return (portA_out & ddrA) | (portA_in & ~ddrA);
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_portA_w )
+	public static WriteHandlerPtr lkage_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x: 68705 port A write %02x\n",activecpu_get_pc(),data);
 		portA_out = data;
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_ddrA_w )
+	public static WriteHandlerPtr lkage_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ddrA = data;
-	}
+	} };
 	
 	
 	
@@ -62,12 +62,12 @@ public class lkage
 	
 	static unsigned char portB_in,portB_out,ddrB;
 	
-	READ_HANDLER( lkage_68705_portB_r )
+	public static ReadHandlerPtr lkage_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (portB_out & ddrB) | (portB_in & ~ddrB);
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_portB_w )
+	public static WriteHandlerPtr lkage_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x: 68705 port B write %02x\n",activecpu_get_pc(),data);
 	
@@ -86,53 +86,53 @@ public class lkage
 		}
 	
 		portB_out = data;
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_ddrB_w )
+	public static WriteHandlerPtr lkage_68705_ddrB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ddrB = data;
-	}
+	} };
 	
 	
 	static unsigned char portC_in,portC_out,ddrC;
 	
-	READ_HANDLER( lkage_68705_portC_r )
+	public static ReadHandlerPtr lkage_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		portC_in = 0;
 		if (main_sent) portC_in |= 0x01;
 		if (!mcu_sent) portC_in |= 0x02;
 	//logerror("%04x: 68705 port C read %02x\n",activecpu_get_pc(),portC_in);
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_portC_w )
+	public static WriteHandlerPtr lkage_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: 68705 port C write %02x\n",activecpu_get_pc(),data);
 		portC_out = data;
-	}
+	} };
 	
-	WRITE_HANDLER( lkage_68705_ddrC_w )
+	public static WriteHandlerPtr lkage_68705_ddrC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ddrC = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( lkage_mcu_w )
+	public static WriteHandlerPtr lkage_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: mcu_w %02x\n",activecpu_get_pc(),data);
 		from_main = data;
 		main_sent = 1;
 		cpu_set_irq_line(2,0,ASSERT_LINE);
-	}
+	} };
 	
-	READ_HANDLER( lkage_mcu_r )
+	public static ReadHandlerPtr lkage_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	logerror("%04x: mcu_r %02x\n",activecpu_get_pc(),from_mcu);
 		mcu_sent = 0;
 		return from_mcu;
-	}
+	} };
 	
-	READ_HANDLER( lkage_mcu_status_r )
+	public static ReadHandlerPtr lkage_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = 0;
 	
@@ -143,5 +143,5 @@ public class lkage
 		if (mcu_sent) res |= 0x02;
 	
 		return res;
-	}
+	} };
 }

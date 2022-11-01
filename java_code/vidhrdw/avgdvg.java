@@ -883,7 +883,7 @@ public class avgdvg
 	}
 	
 	
-	WRITE_HANDLER( avgdvg_go_w )
+	public static WriteHandlerPtr avgdvg_go_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int total_length;
 	
@@ -916,7 +916,7 @@ public class avgdvg
 				busy = 0;
 			}
 		}
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( avgdvg_go_word_w )
@@ -932,10 +932,10 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	WRITE_HANDLER( avgdvg_reset_w )
+	public static WriteHandlerPtr avgdvg_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		avgdvg_clr_busy(0);
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( avgdvg_reset_word_w )
@@ -1112,7 +1112,7 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	WRITE_HANDLER( tempest_colorram_w )
+	public static WriteHandlerPtr tempest_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bit3 = (~data >> 3) & 1;
 		int bit2 = (~data >> 2) & 1;
@@ -1123,10 +1123,10 @@ public class avgdvg
 		int b = bit2 * 0xee;
 	
 		colorram[offset] = MAKE_RGB(r, g, b);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mhavoc_colorram_w )
+	public static WriteHandlerPtr mhavoc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bit3 = (~data >> 3) & 1;
 		int bit2 = (~data >> 2) & 1;
@@ -1137,7 +1137,7 @@ public class avgdvg
 		int b = bit0 * 0xee;
 	
 		colorram[offset] = MAKE_RGB(r, g, b);
-	}
+	} };
 	
 	
 	WRITE16_HANDLER( quantum_colorram_w )

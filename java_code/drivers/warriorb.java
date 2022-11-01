@@ -158,7 +158,7 @@ public class warriorb
 	
 	static int ninjaw_pandata[4];		/**** sound pan control ****/
 	
-	WRITE_HANDLER( warriorb_pancontrol )
+	public static WriteHandlerPtr warriorb_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = offset&3;
 		ninjaw_pandata[offset] = (data<<1) + data;   /* original volume*3 */
@@ -169,7 +169,7 @@ public class warriorb
 			mixer_set_stereo_volume( 3, ninjaw_pandata[0], ninjaw_pandata[1] );
 		else
 			mixer_set_stereo_volume( 4, ninjaw_pandata[2], ninjaw_pandata[3] );
-	}
+	} };
 	
 	
 	

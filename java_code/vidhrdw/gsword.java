@@ -123,25 +123,25 @@ public class gsword
 			COLOR(1,i) = sprite_lookup_table[*(color_prom++)];
 	}
 	
-	WRITE_HANDLER( gsword_videoram_w )
+	public static WriteHandlerPtr gsword_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( gsword_charbank_w )
+	public static WriteHandlerPtr gsword_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (charbank != data)
 		{
 			charbank = data;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( gsword_videoctrl_w )
+	public static WriteHandlerPtr gsword_videoctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 0x8f)
 		{
@@ -167,12 +167,12 @@ public class gsword
 		/* bit 0 could be used but unknown */
 	
 		/* other bits unused */
-	}
+	} };
 	
-	WRITE_HANDLER( gsword_scroll_w )
+	public static WriteHandlerPtr gsword_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

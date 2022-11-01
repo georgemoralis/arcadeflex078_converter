@@ -53,13 +53,13 @@ public class r2dtank
 	} };
 	
 	static int r2dtank_video_flip;
-	WRITE_HANDLER( r2dtank_video_flip_w )
+	public static WriteHandlerPtr r2dtank_video_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*	0 -> flipped
 			1 -> not flipped */
 	
 		r2dtank_video_flip = !data;
-	}
+	} };
 	
 	public static ReadHandlerPtr dipsw_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
@@ -109,15 +109,15 @@ public class r2dtank
 		}
 	} };
 	
-	WRITE_HANDLER( r2dtank_pia_0_w )
+	public static WriteHandlerPtr r2dtank_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pia_0_w(offset, ~data);
-	}
+	} };
 	
-	WRITE_HANDLER( r2dtank_pia_1_w )
+	public static WriteHandlerPtr r2dtank_pia_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pia_1_w(offset, ~data);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

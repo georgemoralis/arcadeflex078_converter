@@ -31,7 +31,7 @@ public class gyruss
 		0x00, 0x01, 0x02, 0x03, 0x04, 0x09, 0x0a, 0x0b, 0x0a, 0x0d
 	};
 	
-	READ_HANDLER( gyruss_portA_r )
+	public static ReadHandlerPtr gyruss_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* need to protect from totalcycles overflow */
 		static int last_totalcycles = 0;
@@ -47,7 +47,7 @@ public class gyruss
 		last_totalcycles = current_totalcycles;
 	
 		return gyruss_timer[clock/1024];
-	}
+	} };
 	
 	
 	
@@ -69,25 +69,25 @@ public class gyruss
 		}
 	}
 	
-	WRITE_HANDLER( gyruss_filter0_w )
+	public static WriteHandlerPtr gyruss_filter0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		filter_w(0,data);
-	}
+	} };
 	
-	WRITE_HANDLER( gyruss_filter1_w )
+	public static WriteHandlerPtr gyruss_filter1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		filter_w(1,data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( gyruss_sh_irqtrigger_w )
+	public static WriteHandlerPtr gyruss_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* writing to this register triggers IRQ on the sound CPU */
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
-	}
+	} };
 	
-	WRITE_HANDLER( gyruss_i8039_irq_w )
+	public static WriteHandlerPtr gyruss_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(3, 0, PULSE_LINE);
-	}
+	} };
 }

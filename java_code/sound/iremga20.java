@@ -128,7 +128,7 @@ public class iremga20
 	}
 	//ZT
 	
-	WRITE_HANDLER( IremGA20_w )
+	public static WriteHandlerPtr IremGA20_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int channel;
 	
@@ -174,13 +174,13 @@ public class iremga20
 			IremGA20_channel[channel].pos = IremGA20_channel[channel].start << 8;
 		break;
 		}
-	}
+	} };
 	
-	READ_HANDLER( IremGA20_r )
+	public static ReadHandlerPtr IremGA20_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Todo - Looks like there is a status bit to show whether each channel is playing */
 		return 0xff;
-	}
+	} };
 	
 	static void IremGA20_reset( void )
 	{

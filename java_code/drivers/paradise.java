@@ -341,10 +341,10 @@ public class paradise
 	
 	looks like its probably similar hardware ... */
 	
-	READ_HANDLER( tgt_ball_unk )
+	public static ReadHandlerPtr tgt_ball_unk  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return rand();
-	}
+	} };
 	
 	DRIVER_INIT (tgtball)
 	{

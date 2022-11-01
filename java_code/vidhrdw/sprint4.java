@@ -56,7 +56,7 @@ public class sprint4
 	}
 	
 	
-	WRITE_HANDLER( sprint4_video_ram_w )
+	public static WriteHandlerPtr sprint4_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data != sprint4_video_ram[offset])
 		{
@@ -64,7 +64,7 @@ public class sprint4
 		}
 	
 		sprint4_video_ram[offset] = data;
-	}
+	} };
 	
 	
 	VIDEO_UPDATE( sprint4 )

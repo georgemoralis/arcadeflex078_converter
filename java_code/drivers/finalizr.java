@@ -45,10 +45,10 @@ public class finalizr
 		coin_counter_w(1,data & 0x02);
 	} };
 	
-	WRITE_HANDLER( finalizr_i8039_irq_w )
+	public static WriteHandlerPtr finalizr_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr i8039_irqen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

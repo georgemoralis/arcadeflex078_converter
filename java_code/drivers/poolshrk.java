@@ -51,28 +51,28 @@ public class poolshrk
 	}
 	
 	
-	WRITE_HANDLER( poolshrk_scratch_sound_w ) {}
-	WRITE_HANDLER( poolshrk_score_sound_w ) {}
-	WRITE_HANDLER( poolshrk_click_sound_w ) {}
-	WRITE_HANDLER( poolshrk_bump_sound_w ) {}
+	public static WriteHandlerPtr poolshrk_scratch_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr poolshrk_score_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr poolshrk_click_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr poolshrk_bump_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
 	
 	
-	WRITE_HANDLER( poolshrk_da_latch_w )
+	public static WriteHandlerPtr poolshrk_da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		poolshrk_da_latch = data & 15;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( poolshrk_led_w )
+	public static WriteHandlerPtr poolshrk_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset & 2)
 			set_led_status(0, offset & 1);
 		if (offset & 4)
 			set_led_status(1, offset & 1);
-	}
+	} };
 	
 	
-	READ_HANDLER( poolshrk_input_r )
+	public static ReadHandlerPtr poolshrk_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 val = readinputport(offset);
 	
@@ -83,15 +83,15 @@ public class poolshrk
 		if (y >= poolshrk_da_latch) val |= 4;
 	
 		return val;
-	}
+	} };
 	
 	
-	READ_HANDLER( poolshrk_interrupt_ack_r )
+	public static ReadHandlerPtr poolshrk_interrupt_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
 		return 0;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress poolshrk_readmem[]={

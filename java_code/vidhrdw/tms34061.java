@@ -539,16 +539,16 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	READ_HANDLER( tms34061_latch_r )
+	public static ReadHandlerPtr tms34061_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tms34061.latchdata;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( tms34061_latch_w )
+	public static WriteHandlerPtr tms34061_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tms34061.latchdata = data;
-	}
+	} };
 	
 	
 	void tms34061_get_display_state(struct tms34061_display *state)

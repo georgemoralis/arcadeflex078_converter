@@ -1980,15 +1980,15 @@ public class m6800
 		TAKE_TRAP;
 	}
 	
-	READ_HANDLER( hd63701_internal_registers_r )
+	public static ReadHandlerPtr hd63701_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return m6803_internal_registers_r(offset);
-	}
+	} };
 	
-	WRITE_HANDLER( hd63701_internal_registers_w )
+	public static WriteHandlerPtr hd63701_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m6803_internal_registers_w(offset,data);
-	}
+	} };
 	
 	unsigned hd63701_dasm(char *buffer, unsigned pc)
 	{
@@ -2355,7 +2355,7 @@ public class m6800
 	
 	#if (HAS_M6803||HAS_HD63701)
 	
-	READ_HANDLER( m6803_internal_registers_r )
+	public static ReadHandlerPtr m6803_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset)
 		{
@@ -2436,9 +2436,9 @@ public class m6800
 				logerror("CPU #%d PC %04x: warning - read from reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
 				return 0;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( m6803_internal_registers_w )
+	public static WriteHandlerPtr m6803_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int latch09;
 	
@@ -2555,7 +2555,7 @@ public class m6800
 				logerror("CPU #%d PC %04x: warning - write %02x to reserved internal register %02x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
 				break;
 		}
-	}
+	} };
 	#endif
 	
 }

@@ -89,34 +89,34 @@ public class sbasketb
 		}
 	}
 	
-	WRITE_HANDLER( sbasketb_videoram_w )
+	public static WriteHandlerPtr sbasketb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sbasketb_colorram_w )
+	public static WriteHandlerPtr sbasketb_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sbasketb_flipscreen_w )
+	public static WriteHandlerPtr sbasketb_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != data)
 		{
 			flip_screen_set(data);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( sbasketb_scroll_w )
+	public static WriteHandlerPtr sbasketb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int col;
 	
@@ -124,7 +124,7 @@ public class sbasketb
 		{
 			tilemap_set_scrolly(bg_tilemap, col, data);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

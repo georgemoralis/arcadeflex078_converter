@@ -397,7 +397,7 @@ public class homedata
 		reikaids_upd7807_portc_w(0,0xff);
 	}
 	
-	READ_HANDLER( reikaids_io_r )
+	public static ReadHandlerPtr reikaids_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res = readinputport(2);	// bit 4 = coin, bit 5 = service
 	
@@ -411,7 +411,7 @@ public class homedata
 	//logerror("%04x: io_r %02x\n",activecpu_get_pc(),res);
 	
 		return res;
-	}
+	} };
 	
 	static int snd_command;
 	

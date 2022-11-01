@@ -27,26 +27,26 @@ public class atarifb
 	
 	/***************************************************************************
 	***************************************************************************/
-	WRITE_HANDLER( atarifb_alphap1_vram_w )
+	public static WriteHandlerPtr atarifb_alphap1_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		atarifb_alphap1_vram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( atarifb_alphap2_vram_w )
+	public static WriteHandlerPtr atarifb_alphap2_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		atarifb_alphap2_vram[offset] = data;
-	}
+	} };
 	
 	/***************************************************************************
 	***************************************************************************/
-	WRITE_HANDLER( atarifb_scroll_w )
+	public static WriteHandlerPtr atarifb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data - 8 != *atarifb_scroll_register)
 		{
 			*atarifb_scroll_register = data - 8;
 			memset(dirtybuffer,1,videoram_size);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	***************************************************************************/

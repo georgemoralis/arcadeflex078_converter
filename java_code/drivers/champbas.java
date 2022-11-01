@@ -53,10 +53,10 @@ public class champbas
 	
 	
 	
-	WRITE_HANDLER( champbas_dac_w )
+	public static WriteHandlerPtr champbas_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_signed_data_w(0,data<<2);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -1158,38 +1158,38 @@ public class toaplan2
 	}
 	
 	/****** Battle Bakraid Z80 handlers ******/
-	static READ_HANDLER ( raizing_command_r )
+	static public static ReadHandlerPtr raizing_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t *raizing_cpu_comm = (data8_t *)raizing_cpu_comm16;
 	
 		logerror("Z80 (PC:%04x) reading %02x from $48\n",activecpu_get_pc(),raizing_cpu_comm[BYTE_XOR_BE(1)]);
 		return raizing_cpu_comm[BYTE_XOR_BE(1)];
-	}
-	static READ_HANDLER ( raizing_request_r )
+	} };
+	static public static ReadHandlerPtr raizing_request_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		data8_t *raizing_cpu_comm = (data8_t *)raizing_cpu_comm16;
 	
 		logerror("Z80 (PC:%04x) reading %02x from $4A\n",activecpu_get_pc(),raizing_cpu_comm[BYTE_XOR_BE(3)]);
 		return raizing_cpu_comm[BYTE_XOR_BE(3)];
-	}
-	static WRITE_HANDLER ( raizing_command_ack_w )
+	} };
+	static public static WriteHandlerPtr raizing_command_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("Z80 (PC:%04x) writing %02x to $40\n",activecpu_get_pc(),data);
 		raizing_cpu_reply[0] = data;
-	}
-	static WRITE_HANDLER ( raizing_request_ack_w )
+	} };
+	static public static WriteHandlerPtr raizing_request_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("Z80 (PC:%04x) writing %02x to $42\n",activecpu_get_pc(),data);
 		raizing_cpu_reply[1] = data;
-	}
+	} };
 	
 	
-	static WRITE_HANDLER ( raizing_clear_nmi_w )
+	static public static WriteHandlerPtr raizing_clear_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror("Clear NMI on the Z80 (Z80 PC:%06x writing %04x)\n",activecpu_get_pc(),data);
 		cpu_set_nmi_line(1, CLEAR_LINE);
 		cpu_yield();
-	}
+	} };
 	
 	static WRITE16_HANDLER ( bbakraid_trigger_z80_irq )
 	{

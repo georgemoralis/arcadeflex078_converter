@@ -49,46 +49,46 @@ public class funkybee
 		}
 	}
 	
-	WRITE_HANDLER( funkybee_videoram_w )
+	public static WriteHandlerPtr funkybee_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( funkybee_colorram_w )
+	public static WriteHandlerPtr funkybee_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( funkybee_gfx_bank_w )
+	public static WriteHandlerPtr funkybee_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( funkybee_scroll_w )
+	public static WriteHandlerPtr funkybee_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, flip_screen ? -data : data);
-	}
+	} };
 	
-	WRITE_HANDLER( funkybee_flipscreen_w )
+	public static WriteHandlerPtr funkybee_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

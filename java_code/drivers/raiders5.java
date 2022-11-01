@@ -40,15 +40,15 @@ public class raiders5
 	
 	
 	
-	WRITE_HANDLER( raiders5_shared_workram_w )
+	public static WriteHandlerPtr raiders5_shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		raiders5_shared_workram[offset] = data;
-	}
+	} };
 	
-	READ_HANDLER( raiders5_shared_workram_r )
+	public static ReadHandlerPtr raiders5_shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return raiders5_shared_workram[offset];
-	}
+	} };
 	
 	/****************************************************************************/
 	

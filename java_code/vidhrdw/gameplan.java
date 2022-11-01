@@ -59,7 +59,7 @@ public class gameplan
 	static int finished_sound = 0;
 	static int cb2 = -1;
 	
-	READ_HANDLER( gameplan_sound_r )
+	public static ReadHandlerPtr gameplan_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef VERBOSE
 		logerror("GAME:  read reg%X at PC %04x\n", offset, activecpu_get_pc());
@@ -76,9 +76,9 @@ public class gameplan
 		}
 		else
 			return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( gameplan_sound_w )
+	public static WriteHandlerPtr gameplan_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef VERBOSE
 		logerror("GAME: write reg%X with %02x at PC %04x\n", offset, data, activecpu_get_pc());
@@ -117,9 +117,9 @@ public class gameplan
 				else cb2 = -1;
 			}
 		}
-	}
+	} };
 	
-	READ_HANDLER( gameplan_via5_r )
+	public static ReadHandlerPtr gameplan_via5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef VERBOSE
 		logerror("SOUND:  read reg%X at PC %04x\n", offset, activecpu_get_pc());
@@ -153,9 +153,9 @@ public class gameplan
 		}
 	
 		return 1;
-	}
+	} };
 	
-	WRITE_HANDLER( gameplan_via5_w )
+	public static WriteHandlerPtr gameplan_via5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	#ifdef VERBOSE
 		logerror("SOUND: write reg%X with %02x at PC %04x\n", offset, data, activecpu_get_pc());
@@ -168,9 +168,9 @@ public class gameplan
 	#endif
 			finished_sound = data;
 		}
-	}
+	} };
 	
-	READ_HANDLER( gameplan_video_r )
+	public static ReadHandlerPtr gameplan_video_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int x;
 		x++;
@@ -178,9 +178,9 @@ public class gameplan
 		logerror("%04x: reading %d from 200d\n", activecpu_get_pc(), x);
 	#endif
 		return x;
-	}
+	} };
 	
-	WRITE_HANDLER( gameplan_video_w )
+	public static WriteHandlerPtr gameplan_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int r0 = -1;
 		static unsigned char xpos, ypos, colour = 7;
@@ -327,7 +327,7 @@ public class gameplan
 		else
 			logerror("  !offset = %d, data = %02x\n", offset, data);
 	#endif
-	}
+	} };
 	
 	
 	/***************************************************************************

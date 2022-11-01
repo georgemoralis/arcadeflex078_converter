@@ -30,26 +30,26 @@ public class funybubl
 	
 	
 	
-	static WRITE_HANDLER ( vidram_bank_w )
+	static public static WriteHandlerPtr vidram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((data&1) == 0)
 			cpu_setbank(1,&banked_videoram[0x000000]);
 		else
 			cpu_setbank(1,&banked_videoram[0x001000]);
-	}
+	} };
 	
-	static WRITE_HANDLER ( bank2_w )
+	static public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
 			cpu_setbank(2,&rom[0x10000+0x4000*(data&0x3f)]);
-	}
+	} };
 	
 	static data8_t *funybubl_paletteram;
 	
 	
 	/* wrong i guess */
-	static WRITE_HANDLER ( funybubl_paldatawrite )
+	static public static WriteHandlerPtr funybubl_paldatawrite = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int colchanged ;
 	
@@ -68,13 +68,13 @@ public class funybubl
 	
 		palette_set_color(colchanged,r<<2,g<<2,b<<2);
 	
-	}
+	} };
 	
 	
-	static READ_HANDLER ( unk_port_r )
+	static public static ReadHandlerPtr unk_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -108,11 +108,11 @@ public class funybubl
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	WRITE_HANDLER( funybubl_soundcommand_w )
+	public static WriteHandlerPtr funybubl_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(0,data);
 		cpu_set_irq_line(1,0, PULSE_LINE);
-	}
+	} };
 	
 	
 	

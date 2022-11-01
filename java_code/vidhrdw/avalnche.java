@@ -14,7 +14,7 @@ public class avalnche
 {
 	
 	
-	WRITE_HANDLER( avalnche_videoram_w )
+	public static WriteHandlerPtr avalnche_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 	
@@ -28,7 +28,7 @@ public class avalnche
 			for (i = 0;i < 8;i++)
 				plot_pixel(tmpbitmap,x+7-i,y,Machine->pens[(data >> i) & 1]);
 		}
-	}
+	} };
 	
 	
 	VIDEO_UPDATE( avalnche )

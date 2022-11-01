@@ -2687,7 +2687,7 @@ public class seta
 									DownTown
 	***************************************************************************/
 	
-	READ_HANDLER( downtown_ip_r )
+	public static ReadHandlerPtr downtown_ip_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int dir1 = readinputport(4);	// analog port
 		int dir2 = readinputport(5);	// analog port
@@ -2708,7 +2708,7 @@ public class seta
 		}
 	
 		return 0;
-	}
+	} };
 	
 	public static Memory_ReadAddress downtown_sub_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -2736,11 +2736,11 @@ public class seta
 							Caliber 50 / U.S. Classic
 	***************************************************************************/
 	
-	WRITE_HANDLER( calibr50_soundlatch2_w )
+	public static WriteHandlerPtr calibr50_soundlatch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch2_w(0,data);
 		cpu_spinuntil_time(TIME_IN_USEC(50));	// Allow the other cpu to reply
-	}
+	} };
 	
 	public static Memory_ReadAddress calibr50_sub_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -255,7 +255,7 @@ public class taitosj
 	/* seems the most logical way to do the gears */
 	static int kikstart_gear;
 	
-	static READ_HANDLER ( kikstart_gears_read )
+	static public static ReadHandlerPtr kikstart_gears_read  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* gear MUST be 1, 2 or 3 */
 	
@@ -272,7 +272,7 @@ public class taitosj
 	//usrintf_showmessage	("Kikstart gear %02x",  kikstart_gear);
 	
 		return portreturn;
-	}
+	} };
 	
 	public static Memory_ReadAddress kikstart_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

@@ -49,7 +49,7 @@ public class ccastles
 	  bit 0 -- inverter -- 1  kohm resistor  -- GREEN
 	
 	***************************************************************************/
-	WRITE_HANDLER( ccastles_paletteram_w )
+	public static WriteHandlerPtr ccastles_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 		int bit0,bit1,bit2;
@@ -80,7 +80,7 @@ public class ccastles
 		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 		palette_set_color(offset & 0x1f,r,g,b);
-	}
+	} };
 	
 	
 	
@@ -105,7 +105,7 @@ public class ccastles
 	
 	
 	
-	READ_HANDLER( ccastles_bitmode_r )
+	public static ReadHandlerPtr ccastles_bitmode_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int addr;
 	
@@ -140,9 +140,9 @@ public class ccastles
 		}
 	
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( ccastles_bitmode_w )
+	public static WriteHandlerPtr ccastles_bitmode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int addr;
 	
@@ -218,7 +218,7 @@ public class ccastles
 				ccastles_screen_addr[1] --;
 		}
 	
-	}
+	} };
 	
 	
 	/***************************************************************************

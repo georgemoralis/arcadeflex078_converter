@@ -24,10 +24,10 @@ public class cosmic
 	
 	
 	
-	WRITE_HANDLER( cosmic_color_register_w )
+	public static WriteHandlerPtr cosmic_color_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		color_registers[offset] = data ? 1 : 0;
-	}
+	} };
 	
 	
 	static pen_t panic_map_color(UINT8 x, UINT8 y)
@@ -257,10 +257,10 @@ public class cosmic
 	}
 	
 	
-	WRITE_HANDLER( cosmic_background_enable_w )
+	public static WriteHandlerPtr cosmic_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		background_enable = data;
-	}
+	} };
 	
 	
 	static void draw_bitmap(struct mame_bitmap *bitmap)

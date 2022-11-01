@@ -133,13 +133,13 @@ public class missb2
 		palette_set_color(color+256,r,g,b);
 	}
 	
-	WRITE_HANDLER( bg_paletteram_RRRRGGGGBBBBxxxx_swap_w )
+	public static WriteHandlerPtr bg_paletteram_RRRRGGGGBBBBxxxx_swap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bg_paletteram[offset] = data;
 		bg_changecolor_RRRRGGGGBBBBxxxx(offset / 2,bg_paletteram[offset | 1] | (bg_paletteram[offset & ~1] << 8));
-	}
+	} };
 	
-	WRITE_HANDLER( bg_bank_w )
+	public static WriteHandlerPtr bg_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
@@ -147,7 +147,7 @@ public class missb2
 		/*I don't know how this is really connected,bit 1 is always high afaik...*/
 		bankaddress = ((data & 2) ? 0x1000 : 0x0000) | ((data & 1) ? 0x4000 : 0x0000) | (0x8000);
 		cpu_setbank(2,&RAM[bankaddress]);
-	}
+	} };
 	
 	
 	
@@ -192,10 +192,10 @@ public class missb2
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	//READ_HANDLER ( missb_random )
+	//public static ReadHandlerPtr missb_random  = new ReadHandlerPtr() { public int handler(int offset)
 	//{
 	//	return rand();
-	//}
+	//} };
 	
 	public static Memory_ReadAddress missb2_readmem2[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

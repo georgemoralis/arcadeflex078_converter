@@ -1754,13 +1754,13 @@ public class namcos86
 	
 	
 	
-	WRITE_HANDLER( roishtar_semaphore_w )
+	public static WriteHandlerPtr roishtar_semaphore_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    rthunder_videoram1_w(0x7e24-0x6000+offset,data);
 	
 	    if (data == 0x02)
 		    cpu_spinuntil_int();
-	}
+	} };
 	
 	static DRIVER_INIT( roishtar )
 	{

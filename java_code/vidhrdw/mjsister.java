@@ -75,7 +75,7 @@ public class mjsister
 		plot_pixel(mjsister_tmpbitmap1, x*2+1, y, Machine->pens[c2] );
 	}
 	
-	WRITE_HANDLER( mjsister_videoram_w )
+	public static WriteHandlerPtr mjsister_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (vrambank)
 		{
@@ -87,7 +87,7 @@ public class mjsister
 			mjsister_videoram0[offset] = data;
 			mjsister_plot0(offset,data);
 		}
-	}
+	} };
 	
 	VIDEO_UPDATE( mjsister )
 	{

@@ -67,7 +67,7 @@ public class yunsung8
 	***************************************************************************/
 	
 	
-	WRITE_HANDLER( yunsung8_bankswitch_w )
+	public static WriteHandlerPtr yunsung8_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -80,7 +80,7 @@ public class yunsung8
 		else			RAM = &RAM[0x4000 * (bank-3) + 0x10000];
 	
 		cpu_setbank(1, RAM);
-	}
+	} };
 	
 	/*
 		Banked Video RAM:
@@ -144,7 +144,7 @@ public class yunsung8
 	
 	static int adpcm;
 	
-	WRITE_HANDLER( yunsung8_sound_bankswitch_w )
+	public static WriteHandlerPtr yunsung8_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bank = data & 7;
@@ -157,13 +157,13 @@ public class yunsung8
 		cpu_setbank(2, RAM);
 	
 		MSM5205_reset_w(0,data & 0x20);
-	}
+	} };
 	
-	WRITE_HANDLER( yunsung8_adpcm_w )
+	public static WriteHandlerPtr yunsung8_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Swap the nibbles */
 		adpcm = ((data&0xf)<<4) | ((data >>4)&0xf);
-	}
+	} };
 	
 	
 	

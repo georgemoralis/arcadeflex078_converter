@@ -199,7 +199,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( exerion_videoreg_w )
+	public static WriteHandlerPtr exerion_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 = flip screen and joystick input multiplexor */
 		exerion_cocktail_flip = data & 1;
@@ -214,10 +214,10 @@ public class exerion
 	
 		/* bits 6-7 sprite lookup table bank */
 		sprite_palette = (data & 0xc0) >> 6;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( exerion_video_latch_w )
+	public static WriteHandlerPtr exerion_video_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int ybeam = cpu_getscanline();
 	
@@ -234,10 +234,10 @@ public class exerion
 		/* modify data on the current scanline */
 		if (offset != -1)
 			current_latches[offset] = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( exerion_video_timing_r )
+	public static ReadHandlerPtr exerion_video_timing_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bit 1 is VBLANK */
 		/* bit 0 is the SNMI signal, which is low for H >= 0x1c0 and /VBLANK */
@@ -252,7 +252,7 @@ public class exerion
 			result |= 1;
 	
 		return result;
-	}
+	} };
 	
 	
 	/*************************************

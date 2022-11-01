@@ -64,27 +64,27 @@ public class vball
 		return 0;
 	}
 	
-	WRITE_HANDLER( vb_videoram_w )
+	public static WriteHandlerPtr vb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (vb_videoram[offset] != data)
 		{
 			vb_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
-	}
+	} };
 	
-	READ_HANDLER( vb_attrib_r )
+	public static ReadHandlerPtr vb_attrib_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return vb_attribram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( vb_attrib_w )
+	public static WriteHandlerPtr vb_attrib_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( vb_attribram[offset] != data ){
 			vb_attribram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
-	}
+	} };
 	
 	void vb_bgprombank_w( int bank )
 	{

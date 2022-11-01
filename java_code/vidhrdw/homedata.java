@@ -600,34 +600,34 @@ public class homedata
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( mrokumei_videoram_w )
+	public static WriteHandlerPtr mrokumei_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset] != data )
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty( tilemap[(offset & 0x2000) >> 13][(offset & 0x1000) >> 12], (offset & 0xffe) >> 1 );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( reikaids_videoram_w )
+	public static WriteHandlerPtr reikaids_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty( tilemap[(offset & 0x2000) >> 13][offset & 3], (offset & 0xffc) >> 2 );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pteacher_videoram_w )
+	public static WriteHandlerPtr pteacher_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset] != data )
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty( tilemap[(offset & 0x2000) >> 13][(offset & 0x1000) >> 12], (offset & 0xffe) >> 1 );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( reikaids_gfx_bank_w )
+	public static WriteHandlerPtr reikaids_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	//logerror( "%04x: [setbank %02x]\n",activecpu_get_pc(),data);
@@ -639,9 +639,9 @@ public class homedata
 		}
 	
 		reikaids_which ^= 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pteacher_gfx_bank_w )
+	public static WriteHandlerPtr pteacher_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror( "%04x: gfxbank:=%02x\n", activecpu_get_pc(), data );
 		if (pteacher_gfx_bank != data)
@@ -649,17 +649,17 @@ public class homedata
 			pteacher_gfx_bank = data;
 			tilemap_mark_all_tiles_dirty( ALL_TILEMAPS );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( homedata_blitter_param_w )
+	public static WriteHandlerPtr homedata_blitter_param_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//logerror("%04x: blitter_param_w %02x\n",activecpu_get_pc(),data);
 		blitter_param[blitter_param_count] = data;
 		blitter_param_count++;
 		blitter_param_count&=3;
-	}
+	} };
 	
-	WRITE_HANDLER( mrokumei_blitter_bank_w )
+	public static WriteHandlerPtr mrokumei_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* --xxx--- layer 1 gfx bank
 		   -----x-- blitter ROM bank
@@ -670,18 +670,18 @@ public class homedata
 			tilemap_mark_all_tiles_dirty( ALL_TILEMAPS);
 	
 		blitter_bank = data;
-	}
+	} };
 	
-	WRITE_HANDLER( reikaids_blitter_bank_w )
+	public static WriteHandlerPtr reikaids_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* xxx----- priority control
 		   ----x--- target page? what's this for?
 		   ------xx blitter ROM bank
 		 */
 		blitter_bank = data;
-	}
+	} };
 	
-	WRITE_HANDLER( pteacher_blitter_bank_w )
+	public static WriteHandlerPtr pteacher_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* xxx----- blitter ROM bank
 		   -----x-- pixel clock (normal/slow)
@@ -693,25 +693,25 @@ public class homedata
 			tilemap_mark_all_tiles_dirty( ALL_TILEMAPS);
 	
 		blitter_bank = data;
-	}
+	} };
 	
-	WRITE_HANDLER( mrokumei_blitter_start_w )
+	public static WriteHandlerPtr mrokumei_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 0x80) mrokumei_handleblit(((blitter_bank & 0x04) >> 2) * 0x10000);
 	
 		/* bit 0 = bank switch; used by hourouki to access the
 		   optional service mode ROM (not available in current dump) */
-	}
+	} };
 	
-	WRITE_HANDLER( reikaids_blitter_start_w )
+	public static WriteHandlerPtr reikaids_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		reikaids_handleblit((blitter_bank & 3) * 0x10000);
-	}
+	} };
 	
-	WRITE_HANDLER( pteacher_blitter_start_w )
+	public static WriteHandlerPtr pteacher_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pteacher_handleblit((blitter_bank >> 5) * 0x10000 & (memory_region_length(REGION_USER1) - 1));
-	}
+	} };
 	
 	
 	

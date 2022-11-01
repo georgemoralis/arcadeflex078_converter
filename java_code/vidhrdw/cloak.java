@@ -45,7 +45,7 @@ public class cloak
 	  bit 0 -- diode |< -- pullup 1 kohm -- 10  kohm resistor -- pulldown 100 pf -- BLUE
 	
 	***************************************************************************/
-	WRITE_HANDLER( cloak_paletteram_w )
+	public static WriteHandlerPtr cloak_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 		int bit0,bit1,bit2;
@@ -73,9 +73,9 @@ public class cloak
 		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 	
 		palette_set_color(offset & 0x3f,r,g,b);
-	}
+	} };
 	
-	WRITE_HANDLER( cloak_clearbmp_w )
+	public static WriteHandlerPtr cloak_clearbmp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bmap = data & 0x01;
 	
@@ -92,7 +92,7 @@ public class cloak
 				memset(tmpvideoram2, 0, 256*256);
 			}
 		}
-	}
+	} };
 	
 	static void adjust_xy(int offset)
 	{
@@ -107,7 +107,7 @@ public class cloak
 		}
 	}
 	
-	READ_HANDLER( graph_processor_r )
+	public static ReadHandlerPtr graph_processor_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret;
 	
@@ -123,9 +123,9 @@ public class cloak
 		adjust_xy(offset);
 	
 		return ret;
-	}
+	} };
 	
-	WRITE_HANDLER( graph_processor_w )
+	public static WriteHandlerPtr graph_processor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int color;
 	
@@ -150,21 +150,21 @@ public class cloak
 				adjust_xy(offset);
 				break;
 			}
-	}
+	} };
 	
-	WRITE_HANDLER( cloak_videoram_w )
+	public static WriteHandlerPtr cloak_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( cloak_flipscreen_w )
+	public static WriteHandlerPtr cloak_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x80);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

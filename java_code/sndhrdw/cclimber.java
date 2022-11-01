@@ -70,24 +70,24 @@ public class cclimber
 		sample_num = data;
 	} };
 	
-	WRITE_HANDLER( cclimber_sample_rate_w )
+	public static WriteHandlerPtr cclimber_sample_rate_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* calculate the sampling frequency */
 		sample_freq = SND_CLOCK / 4 / (256 - data);
-	}
+	} };
 	
-	WRITE_HANDLER( cclimber_sample_volume_w )
+	public static WriteHandlerPtr cclimber_sample_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sample_volume = data & 0x1f;	/* range 0-31 */
-	}
+	} };
 	
-	WRITE_HANDLER( cclimber_sample_trigger_w )
+	public static WriteHandlerPtr cclimber_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data == 0 || Machine->sample_rate == 0)
 			return;
 	
 		cclimber_play_sample(32 * sample_num,sample_freq,sample_volume);
-	}
+	} };
 	
 	
 	struct AY8910interface cclimber_ay8910_interface =

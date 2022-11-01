@@ -54,43 +54,43 @@ public class ssozumo
 		}
 	}
 	
-	WRITE_HANDLER( ssozumo_videoram_w )
+	public static WriteHandlerPtr ssozumo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_colorram_w )
+	public static WriteHandlerPtr ssozumo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_videoram2_w )
+	public static WriteHandlerPtr ssozumo_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (ssozumo_videoram2[offset] != data)
 		{
 			ssozumo_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_colorram2_w )
+	public static WriteHandlerPtr ssozumo_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (ssozumo_colorram2[offset] != data)
 		{
 			ssozumo_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_paletteram_w )
+	public static WriteHandlerPtr ssozumo_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int	bit0, bit1, bit2, bit3, val;
 		int	r, g, b;
@@ -121,17 +121,17 @@ public class ssozumo
 		b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
 		palette_set_color(offs2 + 64, r, g, b);
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_scroll_w )
+	public static WriteHandlerPtr ssozumo_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( ssozumo_flipscreen_w )
+	public static WriteHandlerPtr ssozumo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x80);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

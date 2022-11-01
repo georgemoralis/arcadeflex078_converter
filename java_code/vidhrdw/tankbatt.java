@@ -72,14 +72,14 @@ public class tankbatt
 		}
 	}
 	
-	WRITE_HANDLER( tankbatt_videoram_w )
+	public static WriteHandlerPtr tankbatt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

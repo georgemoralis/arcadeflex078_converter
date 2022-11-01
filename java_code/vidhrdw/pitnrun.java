@@ -58,44 +58,44 @@ public class pitnrun
 			0)
 	}
 	
-	WRITE_HANDLER( pitnrun_videoram_w )
+	public static WriteHandlerPtr pitnrun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_all_tiles_dirty( fg );
-	}
+	} };
 	
-	WRITE_HANDLER( pitnrun_videoram2_w )
+	public static WriteHandlerPtr pitnrun_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram2[offset] = data;
 		tilemap_mark_all_tiles_dirty( bg );
-	}
+	} };
 	
 	
-	READ_HANDLER( pitnrun_videoram_r )
+	public static ReadHandlerPtr pitnrun_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return videoram[offset];
-	}
+	} };
 	
-	READ_HANDLER( pitnrun_videoram2_r )
+	public static ReadHandlerPtr pitnrun_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return videoram2[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( pitnrun_char_bank_select )
+	public static WriteHandlerPtr pitnrun_char_bank_select = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(pitnrun_char_bank!=data)
 		{
 			tilemap_mark_all_tiles_dirty( bg );
 			pitnrun_char_bank=data;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( pitnrun_scroll_w )
+	public static WriteHandlerPtr pitnrun_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pitnrun_scroll = (pitnrun_scroll & (0xff<<((offset)?0:8))) |( data<<((offset)?8:0));
 		tilemap_set_scrollx( bg, 0, pitnrun_scroll);
-	}
+	} };
 	
 	WRITE_HANDLER(pitnrun_ha_w)
 	{

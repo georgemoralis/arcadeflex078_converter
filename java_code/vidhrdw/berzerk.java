@@ -62,7 +62,7 @@ public class berzerk
 	}
 	
 	
-	WRITE_HANDLER( berzerk_videoram_w )
+	public static WriteHandlerPtr berzerk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offs_t coloroffset;
 		UINT8 x, y;
@@ -77,10 +77,10 @@ public class berzerk
 		x = offset << 3;
 	
 	    copy_byte(x, y, data, colorram[coloroffset]);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( berzerk_colorram_w )
+	public static WriteHandlerPtr berzerk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		UINT8 x, y;
@@ -99,10 +99,10 @@ public class berzerk
 	
 			copy_byte(x, y, byte, data);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( berzerk_magicram_w )
+	public static WriteHandlerPtr berzerk_magicram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data16_t data2;
 		data8_t data3;
@@ -157,19 +157,19 @@ public class berzerk
 		berzerk_magicram[offset] = data3;
 	
 		berzerk_videoram_w(offset, data3);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( berzerk_magicram_control_w )
+	public static WriteHandlerPtr berzerk_magicram_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		magicram_control = data;
 		magicram_latch = 0;
 		collision = 0;
-	}
+	} };
 	
 	
-	READ_HANDLER( berzerk_port_4e_r )
+	public static ReadHandlerPtr berzerk_port_4e_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_3_r(0) | collision;
-	}
+	} };
 }

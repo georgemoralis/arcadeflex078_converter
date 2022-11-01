@@ -109,23 +109,23 @@ public class skykid
 		}
 	} };
 	
-	READ_HANDLER( skykid_sharedram_r )
+	public static ReadHandlerPtr skykid_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sharedram[offset];
-	}
-	WRITE_HANDLER( skykid_sharedram_w )
+	} };
+	public static WriteHandlerPtr skykid_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sharedram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( skykid_bankswitch_w )
+	public static WriteHandlerPtr skykid_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		bankaddress = 0x10000 + (offset ? 0 : 0x2000);
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress skykid_readmem[]={

@@ -101,22 +101,22 @@ public class gyruss
 	
 	
 	
-	WRITE_HANDLER( gyruss_flipscreen_w )
+	public static WriteHandlerPtr gyruss_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
 			memset(dirtybuffer,1,videoram_size);
 		}
-	}
+	} };
 	
 	
 	
 	/* Return the current video scan line */
-	READ_HANDLER( gyruss_scanline_r )
+	public static ReadHandlerPtr gyruss_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return scanline;
-	}
+	} };
 	
 	
 	

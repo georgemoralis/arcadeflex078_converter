@@ -1078,11 +1078,11 @@ public class cclimber
 	
 	
 	
-	WRITE_HANDLER( swimmer_sh_soundlatch_w )
+	public static WriteHandlerPtr swimmer_sh_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	
 	

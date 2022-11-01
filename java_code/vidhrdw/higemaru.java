@@ -9,23 +9,23 @@ public class higemaru
 	
 	static struct tilemap *bg_tilemap;
 	
-	WRITE_HANDLER( higemaru_videoram_w )
+	public static WriteHandlerPtr higemaru_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( higemaru_colorram_w )
+	public static WriteHandlerPtr higemaru_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -76,7 +76,7 @@ public class higemaru
 			COLOR(1,i) = (*(color_prom++) & 0x0f) + 0x10;
 	}
 	
-	WRITE_HANDLER( higemaru_c800_w )
+	public static WriteHandlerPtr higemaru_c800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 0x7c) logerror("c800 = %02x\n",data);
 	
@@ -90,7 +90,7 @@ public class higemaru
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

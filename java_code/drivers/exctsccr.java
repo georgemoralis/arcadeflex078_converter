@@ -37,10 +37,10 @@ public class exctsccr
 	/* from machine */
 	
 	
-	WRITE_HANDLER( exctsccr_DAC_data_w )
+	public static WriteHandlerPtr exctsccr_DAC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		DAC_signed_data_w(offset,data << 2);
-	}
+	} };
 	
 	
 	/***************************************************************************

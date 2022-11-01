@@ -49,25 +49,25 @@ public class tagteam
 		}
 	}
 	
-	WRITE_HANDLER( tagteam_videoram_w )
+	public static WriteHandlerPtr tagteam_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tagteam_colorram_w )
+	public static WriteHandlerPtr tagteam_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	READ_HANDLER( tagteam_mirrorvideoram_r )
+	public static ReadHandlerPtr tagteam_mirrorvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int x,y;
 	
@@ -77,9 +77,9 @@ public class tagteam
 		offset = 32 * y + x;
 	
 		return videoram_r(offset);
-	}
+	} };
 	
-	READ_HANDLER( tagteam_mirrorcolorram_r )
+	public static ReadHandlerPtr tagteam_mirrorcolorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int x,y;
 	
@@ -89,9 +89,9 @@ public class tagteam
 		offset = 32 * y + x;
 	
 		return colorram_r(offset);
-	}
+	} };
 	
-	WRITE_HANDLER( tagteam_mirrorvideoram_w )
+	public static WriteHandlerPtr tagteam_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x,y;
 	
@@ -101,9 +101,9 @@ public class tagteam
 		offset = 32 * y + x;
 	
 		tagteam_videoram_w(offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( tagteam_mirrorcolorram_w )
+	public static WriteHandlerPtr tagteam_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x,y;
 	
@@ -113,24 +113,24 @@ public class tagteam
 		offset = 32 * y + x;
 	
 		tagteam_colorram_w(offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( tagteam_control_w )
+	public static WriteHandlerPtr tagteam_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("%04x: control = %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 7 is the palette bank */
 		palettebank = (data & 0x80) >> 7;
-	}
+	} };
 	
-	WRITE_HANDLER( tagteam_flipscreen_w )
+	public static WriteHandlerPtr tagteam_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data &0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

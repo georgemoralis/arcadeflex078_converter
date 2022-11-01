@@ -77,16 +77,16 @@ public class quizdna
 		return 0;
 	}
 	
-	WRITE_HANDLER( quizdna_bg_ram_w )
+	public static WriteHandlerPtr quizdna_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *RAM = memory_region(REGION_CPU1);
 		quizdna_bg_ram[offset] = data;
 		RAM[0x12000+offset] = data;
 	
 		tilemap_mark_tile_dirty(quizdna_bg_tilemap, (offset & 0xfff) / 2 );
-	}
+	} };
 	
-	WRITE_HANDLER( quizdna_fg_ram_w )
+	public static WriteHandlerPtr quizdna_fg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		int offs = offset & 0xfff;
@@ -98,23 +98,23 @@ public class quizdna
 	
 		for (i=0; i<32; i++)
 			tilemap_mark_tile_dirty(quizdna_fg_tilemap, ((offs/2) & 0x1f) + i*0x20 );
-	}
+	} };
 	
-	WRITE_HANDLER( quizdna_bg_yscroll_w )
+	public static WriteHandlerPtr quizdna_bg_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolldy( quizdna_bg_tilemap, 255-data, 255-data+1 );
-	}
+	} };
 	
-	WRITE_HANDLER( quizdna_bg_xscroll_w )
+	public static WriteHandlerPtr quizdna_bg_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x;
 		quizdna_bg_xscroll[offset] = data;
 		x = ~(quizdna_bg_xscroll[0] + quizdna_bg_xscroll[1]*0x100) & 0x1ff;
 	
 		tilemap_set_scrolldx( quizdna_bg_tilemap, x+64, x-64+10 );
-	}
+	} };
 	
-	WRITE_HANDLER( quizdna_screen_ctrl_w )
+	public static WriteHandlerPtr quizdna_screen_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int tmp = (data & 0x10) >> 4;
 		quizdna_video_enable = data & 0x20;
@@ -128,9 +128,9 @@ public class quizdna
 	
 		flip_screen_set(tmp);
 		tilemap_set_scrolldx( quizdna_fg_tilemap, 64, -64 +16);
-	}
+	} };
 	
-	WRITE_HANDLER( paletteram_xBGR_RRRR_GGGG_BBBB_w )
+	public static WriteHandlerPtr paletteram_xBGR_RRRR_GGGG_BBBB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b,d0,d1;
 		int offs = offset & ~1;
@@ -149,7 +149,7 @@ public class quizdna
 		b = (b << 3) | (b >> 2);
 	
 		palette_set_color(offs/2,r,g,b);
-	}
+	} };
 	
 	static void quizdna_drawsprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{

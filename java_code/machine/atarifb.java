@@ -21,7 +21,7 @@ public class atarifb
 	static int sign_x_4, sign_y_4;
 	
 	
-	WRITE_HANDLER( atarifb_out1_w )
+	public static WriteHandlerPtr atarifb_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		CTRLD = data;
 	
@@ -61,10 +61,10 @@ public class atarifb
 				palette_set_color(2,0xff,0xff,0xff); /* white  */
 			}
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( atarifb_out2_w )
+	public static WriteHandlerPtr atarifb_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(1, data & 0x0f);	// Crowd
 	
@@ -75,7 +75,7 @@ public class atarifb
 			coin_counter_w (1, data & 0x20);
 			coin_counter_w (2, data & 0x40);
 		}
-	}
+	} };
 	
 	
 	/*************************************
@@ -84,7 +84,7 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( atarifb_out3_w )
+	public static WriteHandlerPtr atarifb_out3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int loop = cpu_getiloops();
 	
@@ -112,10 +112,10 @@ public class atarifb
 				break;
 		}
 	//	logerror("out3_w, %02x:%02x\n", loop, data);
-	}
+	} };
 	
 	
-	READ_HANDLER( atarifb_in0_r )
+	public static ReadHandlerPtr atarifb_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((CTRLD & 0x20)==0x00)
 		{
@@ -150,10 +150,10 @@ public class atarifb
 	
 			return (((counter_y & 0x0f) << 4) | (counter_x & 0x0f));
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( atarifb_in2_r )
+	public static ReadHandlerPtr atarifb_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((CTRLD & 0x20)==0x00)
 		{
@@ -181,9 +181,9 @@ public class atarifb
 	
 			return (((counter_y & 0x0f) << 4) | (counter_x & 0x0f));
 		}
-	}
+	} };
 	
-	READ_HANDLER( atarifb4_in0_r )
+	public static ReadHandlerPtr atarifb4_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* LD1 and LD2 low, return sign bits */
 		if ((CTRLD & 0x60)==0x00)
@@ -248,10 +248,10 @@ public class atarifb
 		}
 	
 		else return 0;
-	}
+	} };
 	
 	
-	READ_HANDLER( atarifb4_in2_r )
+	public static ReadHandlerPtr atarifb4_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((CTRLD & 0x40)==0x00)
 		{
@@ -305,7 +305,7 @@ public class atarifb
 		}
 	
 		else return 0;
-	}
+	} };
 	
 	
 }

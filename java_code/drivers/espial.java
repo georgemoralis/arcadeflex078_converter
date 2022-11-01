@@ -22,10 +22,10 @@ public class espial
 	}
 	
 	
-	WRITE_HANDLER( zodiac_master_interrupt_enable_w )
+	public static WriteHandlerPtr zodiac_master_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_w(offset,~data & 1);
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr zodiac_master_interrupt = new InterruptHandlerPtr() {public void handler()
@@ -37,11 +37,11 @@ public class espial
 	} };
 	
 	
-	WRITE_HANDLER( zodiac_master_soundlatch_w )
+	public static WriteHandlerPtr zodiac_master_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset, data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
-	}
+	} };
 	
 	
 	

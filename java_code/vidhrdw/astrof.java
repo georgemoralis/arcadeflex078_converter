@@ -134,20 +134,20 @@ public class astrof
 		}
 	}
 	
-	WRITE_HANDLER( astrof_videoram_w )
+	public static WriteHandlerPtr astrof_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// Astro Fighter's palette is set in astrof_video_control2_w, D0 is unused
 		common_videoram_w(offset, data, *astrof_color & 0x0e);
-	}
+	} };
 	
-	WRITE_HANDLER( tomahawk_videoram_w )
+	public static WriteHandlerPtr tomahawk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// Tomahawk's palette is set per byte
 		common_videoram_w(offset, data, (*astrof_color & 0x0e) | ((*astrof_color & 0x01) << 4));
-	}
+	} };
 	
 	
-	WRITE_HANDLER( astrof_video_control1_w )
+	public static WriteHandlerPtr astrof_video_control1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// Video control register 1
 		//
@@ -162,7 +162,7 @@ public class astrof
 		{
 			flip_screen_set(data & 0x01);
 		}
-	}
+	} };
 	
 	
 	// Video control register 2
@@ -174,7 +174,7 @@ public class astrof
 	// 			   in the color PROM
 	// Bit 4-7   = Not hooked up
 	
-	WRITE_HANDLER( astrof_video_control2_w )
+	public static WriteHandlerPtr astrof_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palette_bank != (data & 0x04))
 		{
@@ -189,9 +189,9 @@ public class astrof
 		}
 	
 		/* Defer changing the colors to avoid flicker */
-	}
+	} };
 	
-	WRITE_HANDLER( tomahawk_video_control2_w )
+	public static WriteHandlerPtr tomahawk_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palette_bank == -1)
 		{
@@ -206,10 +206,10 @@ public class astrof
 		}
 	
 		/* Defer changing the colors to avoid flicker */
-	}
+	} };
 	
 	
-	READ_HANDLER( tomahawk_protection_r )
+	public static ReadHandlerPtr tomahawk_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* flip the byte */
 	
@@ -223,7 +223,7 @@ public class astrof
 				  ((*tomahawk_protection & 0x80) >> 7);
 	
 		return res;
-	}
+	} };
 	/***************************************************************************
 	
 	  Draw the game screen in the given mame_bitmap.

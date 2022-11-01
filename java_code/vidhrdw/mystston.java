@@ -75,30 +75,30 @@ public class mystston
 		}
 	}
 	
-	WRITE_HANDLER( mystston_videoram_w )
+	public static WriteHandlerPtr mystston_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset & 0x3ff);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mystston_videoram2_w )
+	public static WriteHandlerPtr mystston_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			mystston_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset & 0x1ff);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mystston_scroll_w )
+	public static WriteHandlerPtr mystston_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( mystston_control_w )
+	public static WriteHandlerPtr mystston_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		// bits 0 and 1 are foreground text color
 		if (mystston_fgcolor != ((data & 0x01) << 1) + ((data & 0x02) >> 1))
@@ -116,7 +116,7 @@ public class mystston
 	
 		// bit 7 is screen flip
 		flip_screen_set((data & 0x80) ^ ((readinputport(3) & 0x20) ? 0x80:0));
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

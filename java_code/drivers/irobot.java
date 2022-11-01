@@ -91,10 +91,10 @@ public class irobot
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( irobot_nvram_w )
+	public static WriteHandlerPtr irobot_nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		generic_nvram[offset] = data & 0x0f;
-	}
+	} };
 	
 	
 	

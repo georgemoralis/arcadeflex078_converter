@@ -11,51 +11,51 @@ public class exprraid
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( exprraid_videoram_w )
+	public static WriteHandlerPtr exprraid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( exprraid_colorram_w )
+	public static WriteHandlerPtr exprraid_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( exprraid_flipscreen_w )
+	public static WriteHandlerPtr exprraid_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( exprraid_bgselect_w )
+	public static WriteHandlerPtr exprraid_bgselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bg_index[offset] != data)
 		{
 			bg_index[offset] = data;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( exprraid_scrollx_w )
+	public static WriteHandlerPtr exprraid_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( exprraid_scrolly_w )
+	public static WriteHandlerPtr exprraid_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

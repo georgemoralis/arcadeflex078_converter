@@ -884,15 +884,15 @@ public class ymz280b
 	
 	***********************************************************************************************/
 	
-	READ_HANDLER( YMZ280B_status_0_r )
+	public static ReadHandlerPtr YMZ280B_status_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return compute_status(&ymz280b[0]);
-	}
+	} };
 	
-	READ_HANDLER( YMZ280B_status_1_r )
+	public static ReadHandlerPtr YMZ280B_status_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return compute_status(&ymz280b[1]);
-	}
+	} };
 	
 	READ16_HANDLER( YMZ280B_status_0_lsb_r )
 	{
@@ -920,15 +920,15 @@ public class ymz280b
 	
 	***********************************************************************************************/
 	
-	WRITE_HANDLER( YMZ280B_register_0_w )
+	public static WriteHandlerPtr YMZ280B_register_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymz280b[0].current_register = data;
-	}
+	} };
 	
-	WRITE_HANDLER( YMZ280B_register_1_w )
+	public static WriteHandlerPtr YMZ280B_register_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymz280b[1].current_register = data;
-	}
+	} };
 	
 	WRITE16_HANDLER( YMZ280B_register_0_lsb_w )
 	{
@@ -956,15 +956,15 @@ public class ymz280b
 	
 	***********************************************************************************************/
 	
-	WRITE_HANDLER( YMZ280B_data_0_w )
+	public static WriteHandlerPtr YMZ280B_data_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		write_to_register(&ymz280b[0], data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMZ280B_data_1_w )
+	public static WriteHandlerPtr YMZ280B_data_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		write_to_register(&ymz280b[1], data);
-	}
+	} };
 	
 	WRITE16_HANDLER( YMZ280B_data_0_lsb_w )
 	{

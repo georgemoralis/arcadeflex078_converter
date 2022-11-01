@@ -144,22 +144,22 @@ public class cshooter
 		cshooter_counter = 0;
 	}
 	
-	READ_HANDLER ( cshooter_coin_r )
+	public static ReadHandlerPtr cshooter_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Even reads must return 0xff - Odd reads must return the contents of input port 5.
 		   Code at 0x5061 is executed once during P.O.S.T. where there is one read.
 		   Code at 0x50b4 is then executed each frame (not sure) where there are 2 reads. */
 	
 		return ( (cshooter_counter++ & 1) ? 0xff : input_port_5_r(0) );
-	}
+	} };
 	
-	WRITE_HANDLER ( cshooter_c500_w )
+	public static WriteHandlerPtr cshooter_c500_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
-	WRITE_HANDLER ( cshooter_c700_w )
+	public static WriteHandlerPtr cshooter_c700_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

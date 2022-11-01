@@ -730,12 +730,12 @@ public class namcos1
 		}
 	}
 	
-	WRITE_HANDLER( namcos1_bankswitch_w ) {
+	public static WriteHandlerPtr namcos1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		namcos1_bankswitch(cpu_getactivecpu(), offset, data);
-	}
+	} };
 	
 	/* Sub cpu set start bank port */
-	WRITE_HANDLER( namcos1_subcpu_bank_w )
+	public static WriteHandlerPtr namcos1_subcpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//logerror("cpu1 bank selected %02x=%02x\n",offset,data);
 		namcos1_cpu1_banklatch = (namcos1_cpu1_banklatch&0x300)|data;
@@ -744,7 +744,7 @@ public class namcos1
 		namcos1_bankswitch( 1, 0x0e01, namcos1_cpu1_banklatch&0xff);
 		/* cpu_set_reset_line(1,PULSE_LINE); */
 	
-	}
+	} };
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -754,7 +754,7 @@ public class namcos1
 	
 	static int mcu_patch_data;
 	
-	WRITE_HANDLER( namcos1_cpu_control_w )
+	public static WriteHandlerPtr namcos1_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//logerror("reset control pc=%04x %02x\n",activecpu_get_pc(),data);
 		if( (data&1)^namcos1_reset)
@@ -774,7 +774,7 @@ public class namcos1
 				cpu_set_reset_line(3,ASSERT_LINE);
 			}
 		}
-	}
+	} };
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -782,13 +782,13 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	WRITE_HANDLER( namcos1_sound_bankswitch_w )
+	public static WriteHandlerPtr namcos1_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU3);
 		int bank = ( data >> 4 ) & 0x07;
 	
 		cpu_setbank( 17, &RAM[ 0x0c000 + ( 0x4000 * bank ) ] );
-	}
+	} };
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -813,7 +813,7 @@ public class namcos1
 	*******************************************************************************/
 	
 	/* mcu banked rom area select */
-	WRITE_HANDLER( namcos1_mcu_bankswitch_w )
+	public static WriteHandlerPtr namcos1_mcu_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int addr;
 		/* bit 2-7 : chip select line of ROM chip */
@@ -835,7 +835,7 @@ public class namcos1
 			addr = 0x4000;
 		}
 		cpu_setbank( 20, memory_region(REGION_CPU4)+addr );
-	}
+	} };
 	
 	/* This point is very obscure, but i havent found any better way yet. */
 	/* Works with all games so far.                                       */
@@ -849,13 +849,13 @@ public class namcos1
 	/* I found set $A6 only initialize in MCU                       */
 	/* This patch kill write this data by MCU case $A6 to xx(clear) */
 	
-	WRITE_HANDLER( namcos1_mcu_patch_w )
+	public static WriteHandlerPtr namcos1_mcu_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		//logerror("mcu C000 write pc=%04x data=%02x\n",activecpu_get_pc(),data);
 		if(mcu_patch_data == 0xa6) return;
 		mcu_patch_data = data;
 		cpu_bankbase[19][offset] = data;
-	}
+	} };
 	
 	/*******************************************************************************
 	*                                                                              *

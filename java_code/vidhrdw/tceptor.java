@@ -168,33 +168,33 @@ public class tceptor
 	}
 	
 	
-	READ_HANDLER( tceptor_tile_ram_r )
+	public static ReadHandlerPtr tceptor_tile_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tceptor_tile_ram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tceptor_tile_ram_w )
+	public static WriteHandlerPtr tceptor_tile_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tceptor_tile_ram[offset] != data)
 		{
 			tceptor_tile_ram[offset] = data;
 			tile_mark_dirty(offset);
 		}
-	}
+	} };
 	
-	READ_HANDLER( tceptor_tile_attr_r )
+	public static ReadHandlerPtr tceptor_tile_attr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tceptor_tile_attr[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tceptor_tile_attr_w )
+	public static WriteHandlerPtr tceptor_tile_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tceptor_tile_attr[offset] != data)
 		{
 			tceptor_tile_attr[offset] = data;
 			tile_mark_dirty(offset);
 		}
-	}
+	} };
 	
 	
 	/*******************************************************************/
@@ -217,12 +217,12 @@ public class tceptor
 		SET_TILE_INFO(bg, code, color, 0);
 	}
 	
-	READ_HANDLER( tceptor_bg_ram_r )
+	public static ReadHandlerPtr tceptor_bg_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tceptor_bg_ram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tceptor_bg_ram_w )
+	public static WriteHandlerPtr tceptor_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tceptor_bg_ram[offset] != data)
 		{
@@ -234,9 +234,9 @@ public class tceptor
 			else
 				tilemap_mark_tile_dirty(bg2_tilemap, offset - 0x800);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tceptor_bg_scroll_w )
+	public static WriteHandlerPtr tceptor_bg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -264,7 +264,7 @@ public class tceptor
 			bg2_scroll_y = data;
 			break;
 		}
-	}
+	} };
 	
 	
 	/*******************************************************************/

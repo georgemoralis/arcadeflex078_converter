@@ -195,25 +195,25 @@ public class popeye
 		}
 	}
 	
-	WRITE_HANDLER( popeye_videoram_w )
+	public static WriteHandlerPtr popeye_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popeye_colorram_w )
+	public static WriteHandlerPtr popeye_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popeye_bitmap_w )
+	public static WriteHandlerPtr popeye_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int sx,sy,x,y,colour;
 	
@@ -253,16 +253,16 @@ public class popeye
 				}
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( skyskipr_bitmap_w )
+	public static WriteHandlerPtr skyskipr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset & 0xfc0) << 1) | (offset & 0x03f);
 		if (data & 0x80)
 			offset |= 0x40;
 	
 		popeye_bitmap_w(offset,data);
-	}
+	} };
 	
 	static void get_fg_tile_info(int tile_index)
 	{

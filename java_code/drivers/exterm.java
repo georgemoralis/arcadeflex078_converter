@@ -220,7 +220,7 @@ public class exterm
 		COMBINE_DATA(&exterm_slave_speedup[offset]);
 	}
 	
-	READ_HANDLER( exterm_sound_dac_speedup_r )
+	public static ReadHandlerPtr exterm_sound_dac_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU3);
 		int value = RAM[0x0007];
@@ -230,9 +230,9 @@ public class exterm
 			cpu_spinuntil_int();
 	
 		return value;
-	}
+	} };
 	
-	READ_HANDLER( exterm_sound_ym2151_speedup_r )
+	public static ReadHandlerPtr exterm_sound_ym2151_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Doing this won't flash the LED, but we're not emulating that anyhow, so
 		   it doesn't matter */
@@ -245,7 +245,7 @@ public class exterm
 			cpu_spinuntil_int();
 	
 		return value;
-	}
+	} };
 	
 	
 	

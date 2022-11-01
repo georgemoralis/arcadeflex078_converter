@@ -326,12 +326,12 @@ public class psychic5
 	static int psychic5_bank_latch = 0x0;
 	
 	
-	READ_HANDLER( psychic5_bankselect_r )
+	public static ReadHandlerPtr psychic5_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return psychic5_bank_latch;
-	}
+	} };
 	
-	WRITE_HANDLER( psychic5_bankselect_w )
+	public static WriteHandlerPtr psychic5_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -342,9 +342,9 @@ public class psychic5
 			bankaddress = 0x10000 + ((data & 3) * 0x4000);
 			cpu_setbank(1,&RAM[bankaddress]);	 /* Select 4 banks of 16k */
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( psychic5_coin_counter_w )
+	public static WriteHandlerPtr psychic5_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
@@ -354,7 +354,7 @@ public class psychic5
 		{
 			flip_screen_set(!flip_screen);
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr psychic5_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

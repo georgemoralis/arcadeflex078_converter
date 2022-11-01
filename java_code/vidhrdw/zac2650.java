@@ -29,34 +29,34 @@ public class zac2650
 	/* once it's workings are fully understood.                   */
 	/**************************************************************/
 	
-	WRITE_HANDLER( tinvader_videoram_w )
+	public static WriteHandlerPtr tinvader_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( zac_s2636_w )
+	public static WriteHandlerPtr zac_s2636_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (s2636ram[offset] != data)
 	    {
 			s2636ram[offset] = data;
 	        dirtychar[offset>>3] = 1;
 	    }
-	}
+	} };
 	
-	READ_HANDLER( zac_s2636_r )
+	public static ReadHandlerPtr zac_s2636_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if(offset!=0xCB) return s2636ram[offset];
 	    else return CollisionSprite;
-	}
+	} };
 	
-	READ_HANDLER( tinvader_port_0_r )
+	public static ReadHandlerPtr tinvader_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_0_r(0) - CollisionBackground;
-	}
+	} };
 	
 	/*****************************************/
 	/* Check for Collision between 2 sprites */

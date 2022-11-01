@@ -45,7 +45,7 @@ public class popper
 		}
 	}
 	
-	WRITE_HANDLER( popper_ol_videoram_w )
+	public static WriteHandlerPtr popper_ol_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (popper_ol_videoram[offset] != data)
 		{
@@ -53,9 +53,9 @@ public class popper
 			tilemap_mark_tile_dirty(popper_ol_p123_tilemap,offset);
 			tilemap_mark_tile_dirty(popper_ol_p0_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popper_videoram_w )
+	public static WriteHandlerPtr popper_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (popper_videoram[offset] != data)
 		{
@@ -63,9 +63,9 @@ public class popper
 			tilemap_mark_tile_dirty(popper_p123_tilemap,offset);
 			tilemap_mark_tile_dirty(popper_p0_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popper_ol_attribram_w )
+	public static WriteHandlerPtr popper_ol_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (popper_ol_attribram[offset] != data)
 		{
@@ -73,9 +73,9 @@ public class popper
 			tilemap_mark_tile_dirty(popper_ol_p123_tilemap,offset);
 			tilemap_mark_tile_dirty(popper_ol_p0_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popper_attribram_w )
+	public static WriteHandlerPtr popper_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (popper_attribram[offset] != data)
 		{
@@ -83,9 +83,9 @@ public class popper
 			tilemap_mark_tile_dirty(popper_p123_tilemap,offset);
 			tilemap_mark_tile_dirty(popper_p0_tilemap,offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( popper_flipscreen_w )
+	public static WriteHandlerPtr popper_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		popper_flipscreen = data;
 		tilemap_set_flip( ALL_TILEMAPS,popper_flipscreen?(TILEMAP_FLIPX|TILEMAP_FLIPY):0 );
@@ -96,21 +96,21 @@ public class popper
 			tilemap_clip.min_x=tilemap_clip.max_x-15;
 		else
 			tilemap_clip.max_x=15;
-	}
+	} };
 	
-	WRITE_HANDLER( popper_e002_w )
+	public static WriteHandlerPtr popper_e002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		popper_e002 = data;
-	}
+	} };
 	
-	WRITE_HANDLER( popper_gfx_bank_w )
+	public static WriteHandlerPtr popper_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (popper_gfx_bank != data)
 		{
 			popper_gfx_bank = data;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_popper_p123_tile_info(int tile_index)
 	{

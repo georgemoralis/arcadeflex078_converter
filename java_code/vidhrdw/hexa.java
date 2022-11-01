@@ -18,16 +18,16 @@ public class hexa
 	static int charbank;
 	static struct tilemap *bg_tilemap;
 	
-	WRITE_HANDLER( hexa_videoram_w )
+	public static WriteHandlerPtr hexa_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( hexa_d008_w )
+	public static WriteHandlerPtr hexa_d008_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -60,7 +60,7 @@ public class hexa
 		}
 	
 		/* bit 6 - 7 unknown */
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

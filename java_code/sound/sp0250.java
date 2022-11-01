@@ -187,12 +187,12 @@ public class sp0250
 	}
 	
 	
-	WRITE_HANDLER( sp0250_w )
+	public static WriteHandlerPtr sp0250_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if(sp0250.fifo_pos != 15) {
 			sp0250.fifo[sp0250.fifo_pos++] = data;
 			if(sp0250.fifo_pos == 15)
 				sp0250.drq(CLEAR_LINE);
 		}
-	}
+	} };
 }

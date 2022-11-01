@@ -17,40 +17,40 @@ public class jack
 	
 	static struct tilemap *bg_tilemap;
 	
-	WRITE_HANDLER( jack_videoram_w )
+	public static WriteHandlerPtr jack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( jack_colorram_w )
+	public static WriteHandlerPtr jack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( jack_paletteram_w )
+	public static WriteHandlerPtr jack_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset,~data);
-	}
+	} };
 	
-	READ_HANDLER( jack_flipscreen_r )
+	public static ReadHandlerPtr jack_flipscreen_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		flip_screen_set(offset);
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( jack_flipscreen_w )
+	public static WriteHandlerPtr jack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(offset);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

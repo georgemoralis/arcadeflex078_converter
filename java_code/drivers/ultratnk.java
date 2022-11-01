@@ -236,20 +236,20 @@ public class ultratnk
 	 *	Sound handlers
 	 *
 	 *************************************/
-	WRITE_HANDLER( ultratnk_fire_w )
+	public static WriteHandlerPtr ultratnk_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(offset/2, offset&1);
-	}
+	} };
 	
-	WRITE_HANDLER( ultratnk_attract_w )
+	public static WriteHandlerPtr ultratnk_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(5, (data & 1));
-	}
+	} };
 	
-	WRITE_HANDLER( ultratnk_explosion_w )
+	public static WriteHandlerPtr ultratnk_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(4, data % 16);
-	}
+	} };
 	
 	
 	

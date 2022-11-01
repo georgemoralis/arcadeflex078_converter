@@ -162,14 +162,14 @@ public class mcr12
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( mcr1_videoram_w )
+	public static WriteHandlerPtr mcr1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mcr2_videoram_w )
+	public static WriteHandlerPtr mcr2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
@@ -190,10 +190,10 @@ public class mcr12
 	
 			palette_set_color(idx, r, g, b);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( twotigra_videoram_w )
+	public static WriteHandlerPtr twotigra_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap, offset & 0x3ff);
@@ -214,7 +214,7 @@ public class mcr12
 	
 			palette_set_color(idx, r, g, b);
 		}
-	}
+	} };
 	
 	
 	

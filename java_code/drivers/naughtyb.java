@@ -131,7 +131,7 @@ public class naughtyb
 	
 	//static int popflame_prot_count = 0;
 	
-	READ_HANDLER( popflame_protection_r ) /* Not used by bootleg/hack */
+	public static ReadHandlerPtr popflame_protection_r  = new ReadHandlerPtr() { public int handler(int offset) /* Not used by bootleg/hack */
 	{
 		static int values[4] = { 0x78, 0x68, 0x48, 0x38|0x80 };
 		static int count;
@@ -162,7 +162,7 @@ public class naughtyb
 		logerror("CPU #0 PC %06x: unmapped protection read\n", activecpu_get_pc());
 		return 0x00;
 	#endif
-	}
+	} };
 	
 	
 	

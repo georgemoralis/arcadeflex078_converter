@@ -32,12 +32,12 @@ public class homerun
 			cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + (((data-1)&0x7)*0x4000 ));	
 	}
 	
-	WRITE_HANDLER( homerun_videoram_w )
+	public static WriteHandlerPtr homerun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 		homerun_videoram[offset]=data;
 		tilemap_mark_tile_dirty(homerun_tilemap,offset&0xfff);
-	}
+	} };
 	
 	WRITE_HANDLER(homerun_color_w)
 	{

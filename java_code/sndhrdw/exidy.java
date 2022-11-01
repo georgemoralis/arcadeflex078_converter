@@ -475,7 +475,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( exidy_shriot_w )
+	public static WriteHandlerPtr exidy_shriot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* mask to the low 7 bits */
 		offset &= 0x7f;
@@ -543,7 +543,7 @@ public class exidy
 			timer_adjust(riot_timer, riot_interval * data, 0, 0);
 			riot_state = RIOT_COUNT;
 		}
-	}
+	} };
 	
 	
 	
@@ -553,7 +553,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	READ_HANDLER( exidy_shriot_r )
+	public static ReadHandlerPtr exidy_shriot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* mask to the low 7 bits */
 		offset &= 0x7f;
@@ -615,7 +615,7 @@ public class exidy
 	
 		logerror("Undeclared RIOT read: %x  PC:%x\n",offset,activecpu_get_pc());
 		return 0xff;
-	}
+	} };
 	
 	
 	
@@ -625,7 +625,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( exidy_sh8253_w )
+	public static WriteHandlerPtr exidy_sh8253_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int chan;
 	
@@ -659,14 +659,14 @@ public class exidy
 				sh8253_timer[chan].enable = ((data & 0x0e) != 0);
 				break;
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( exidy_sh8253_r )
+	public static ReadHandlerPtr exidy_sh8253_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    logerror("8253(R): %x\n",offset);
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -676,14 +676,14 @@ public class exidy
 	 *
 	 *************************************/
 	
-	READ_HANDLER( exidy_sh6840_r )
+	public static ReadHandlerPtr exidy_sh6840_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    logerror("6840R %x\n",offset);
 	    return 0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( exidy_sh6840_w )
+	public static WriteHandlerPtr exidy_sh6840_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* force an update of the stream */
 		stream_update(exidy_stream, 0);
@@ -723,7 +723,7 @@ public class exidy
 				break;
 			}
 		}
-	}
+	} };
 	
 	
 	
@@ -733,7 +733,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( exidy_sfxctrl_w )
+	public static WriteHandlerPtr exidy_sfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		stream_update(exidy_stream, 0);
 	
@@ -750,7 +750,7 @@ public class exidy
 				sh6840_volume[offset - 1] = ((data & 7) * BASE_VOLUME) / 7;
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -760,7 +760,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( mtrap_voiceio_w )
+	public static WriteHandlerPtr mtrap_voiceio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if (!(offset & 0x10))
 	    {
@@ -769,10 +769,10 @@ public class exidy
 		}
 	    if (!(offset & 0x20))
 			riot_portb_data = data & 1;
-	}
+	} };
 	
 	
-	READ_HANDLER( mtrap_voiceio_r )
+	public static ReadHandlerPtr mtrap_voiceio_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (!(offset & 0x80))
 		{
@@ -787,5 +787,5 @@ public class exidy
 	    	return (clock_pulse & 1) << 7;
 		}
 		return 0;
-	}
+	} };
 }

@@ -54,23 +54,23 @@ public class jailbrek
 			COLOR(1,i) = *color_prom++;
 	}
 	
-	WRITE_HANDLER( jailbrek_videoram_w )
+	public static WriteHandlerPtr jailbrek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( jailbrek_colorram_w )
+	public static WriteHandlerPtr jailbrek_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

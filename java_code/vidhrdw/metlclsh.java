@@ -39,7 +39,7 @@ public class metlclsh
 	
 	/* Functions that driver has access to: */
 	
-	WRITE_HANDLER( metlclsh_rambank_w )
+	public static WriteHandlerPtr metlclsh_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data & 1)
 		{
@@ -51,17 +51,17 @@ public class metlclsh
 			metlclsh_write_mask = 1 << (data >> 1);
 			cpu_setbank(1, metlclsh_otherram);
 		}
-	}
+	} };
 	
 	static data8_t metlclsh_gfxbank;
-	WRITE_HANDLER( metlclsh_gfxbank_w )
+	public static WriteHandlerPtr metlclsh_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (!(data & 4) && (metlclsh_gfxbank != data))
 		{
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 			metlclsh_gfxbank = data & 3;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -90,7 +90,7 @@ public class metlclsh
 		SET_TILE_INFO(1, metlclsh_bgram[tile_index] + (metlclsh_gfxbank << 7),0,0)
 	}
 	
-	WRITE_HANDLER( metlclsh_bgram_w )
+	public static WriteHandlerPtr metlclsh_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*	This ram is banked: it's either the tilemap (e401 = 1)
 			or bit n of another area (e401 = n << 1)? (that I don't understand) */
@@ -114,7 +114,7 @@ public class metlclsh
 				tilemap_mark_tile_dirty(bg_tilemap,offset & 0x1ff);
 			}
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -137,14 +137,14 @@ public class metlclsh
 		tile_info.priority = ((attr & 0x80) ? 1 : 2);
 	}
 	
-	WRITE_HANDLER( metlclsh_fgram_w )
+	public static WriteHandlerPtr metlclsh_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (metlclsh_fgram[offset] != data)
 		{
 			metlclsh_fgram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

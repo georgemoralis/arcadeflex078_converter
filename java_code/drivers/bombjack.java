@@ -86,13 +86,13 @@ public class bombjack
 		latch = param;
 	}
 	
-	WRITE_HANDLER( bombjack_soundlatch_w )
+	public static WriteHandlerPtr bombjack_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch_callback);
-	}
+	} };
 	
-	READ_HANDLER( bombjack_soundlatch_r )
+	public static ReadHandlerPtr bombjack_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -100,7 +100,7 @@ public class bombjack
 		res = latch;
 		latch = 0;
 		return res;
-	}
+	} };
 	
 	
 	

@@ -123,87 +123,87 @@ public class tp84
 	}
 	
 	
-	WRITE_HANDLER( tp84_videoram_w )
+	public static WriteHandlerPtr tp84_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_colorram_w )
+	public static WriteHandlerPtr tp84_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_videoram2_w )
+	public static WriteHandlerPtr tp84_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tp84_videoram2[offset] != data)
 		{
 			tp84_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_colorram2_w )
+	public static WriteHandlerPtr tp84_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tp84_colorram2[offset] != data)
 		{
 			tp84_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_scroll_x_w )
+	public static WriteHandlerPtr tp84_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_scroll_y_w )
+	public static WriteHandlerPtr tp84_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_flipscreen_x_w )
+	public static WriteHandlerPtr tp84_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen_x != (data & 0x01))
 		{
 			flip_screen_x_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tp84_flipscreen_y_w )
+	public static WriteHandlerPtr tp84_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen_y != (data & 0x01))
 		{
 			flip_screen_y_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	/*****
 	  col0 is a register to index the color Proms
 	*****/
-	WRITE_HANDLER( tp84_col0_w )
+	public static WriteHandlerPtr tp84_col0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (col0 != data)
 		{
 			col0 = data;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	/* Return the current video scan line */
-	READ_HANDLER( tp84_scanline_r )
+	public static ReadHandlerPtr tp84_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return scanline;
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

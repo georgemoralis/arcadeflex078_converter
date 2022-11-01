@@ -15,10 +15,10 @@ public class taxidrvr
 	static int spritectrl[9];
 	
 	
-	WRITE_HANDLER( taxidrvr_spritectrl_w )
+	public static WriteHandlerPtr taxidrvr_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spritectrl[offset] = data;
-	}
+	} };
 	
 	
 	

@@ -35,7 +35,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( clayshoo_videoram_w )
+	public static WriteHandlerPtr clayshoo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 x,y;
 		int i;
@@ -51,5 +51,5 @@ public class clayshoo
 			x++;
 			data <<= 1;
 		}
-	}
+	} };
 }

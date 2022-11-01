@@ -59,12 +59,12 @@ public class playch10
 	 *	BIOS ports handling
 	 *
 	 *************************************/
-	READ_HANDLER( pc10_port_0_r )
+	public static ReadHandlerPtr pc10_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport( 0 ) | ( ( ~pc10_int_detect & 1 ) << 3 );
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_SDCS_w )
+	public static WriteHandlerPtr pc10_SDCS_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			Hooked to CLR on LS194A - Sheet 2, bottom left.
@@ -73,61 +73,61 @@ public class playch10
 			Also hooked to the video sram. Prevent writes.
 		*/
 		pc10_sdcs = ~data & 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_CNTRLMASK_w )
+	public static WriteHandlerPtr pc10_CNTRLMASK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cntrl_mask = ~data & 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_DISPMASK_w )
+	public static WriteHandlerPtr pc10_DISPMASK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pc10_dispmask = ~data & 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_SOUNDMASK_w )
+	public static WriteHandlerPtr pc10_SOUNDMASK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* should mute the APU - unimplemented yet */
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_NMIENABLE_w )
+	public static WriteHandlerPtr pc10_NMIENABLE_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pc10_nmi_enable = data & 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_DOGDI_w )
+	public static WriteHandlerPtr pc10_DOGDI_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pc10_dog_di = data & 1;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_GAMERES_w )
+	public static WriteHandlerPtr pc10_GAMERES_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_reset_line( 1, ( data & 1 ) ? CLEAR_LINE : ASSERT_LINE );
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_GAMESTOP_w )
+	public static WriteHandlerPtr pc10_GAMESTOP_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_halt_line( 1, ( data & 1 ) ? CLEAR_LINE : ASSERT_LINE );
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_PPURES_w )
+	public static WriteHandlerPtr pc10_PPURES_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ( data & 1 )
 			ppu2c03b_reset( 0, /* cpu_getscanlineperiod() * */ 2 );
-	}
+	} };
 	
-	READ_HANDLER( pc10_detectclr_r )
+	public static ReadHandlerPtr pc10_detectclr_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		pc10_int_detect = 0;
 	
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_CARTSEL_w )
+	public static WriteHandlerPtr pc10_CARTSEL_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cart_sel &= ~( 1 << offset );
 		cart_sel |= ( data & 1 ) << offset;
-	}
+	} };
 	
 	
 	/*************************************
@@ -135,7 +135,7 @@ public class playch10
 	 *	RP5H01 handling
 	 *
 	 *************************************/
-	READ_HANDLER( pc10_prot_r )
+	public static ReadHandlerPtr pc10_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0xe7;
 	
@@ -148,9 +148,9 @@ public class playch10
 			RP5H01_0_enable_w( 0, 1 );
 		}
 		return data;
-	}
+	} };
 	
-	WRITE_HANDLER( pc10_prot_w )
+	public static WriteHandlerPtr pc10_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* we only support a single cart connected at slot 0 */
 		if ( cart_sel == 0 )
@@ -168,7 +168,7 @@ public class playch10
 			/* so we just set $ffff with the current value				*/
 			memory_region( REGION_CPU1 )[0xffff] = pc10_prot_r(0);
 		}
-	}
+	} };
 	
 	
 	/*************************************
@@ -176,7 +176,7 @@ public class playch10
 	 *	Input Ports
 	 *
 	 *************************************/
-	WRITE_HANDLER( pc10_in0_w )
+	public static WriteHandlerPtr pc10_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Toggling bit 0 high then low resets both controllers */
 		if ( data & 1 )
@@ -192,9 +192,9 @@ public class playch10
 			/* mask out select and start */
 			input_latch[0] &= ~0x0c;
 		}
-	}
+	} };
 	
-	READ_HANDLER( pc10_in0_r )
+	public static ReadHandlerPtr pc10_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = ( input_latch[0] ) & 1;
 	
@@ -206,9 +206,9 @@ public class playch10
 		ret |= 0x40;
 	
 		return ret;
-	}
+	} };
 	
-	READ_HANDLER( pc10_in1_r )
+	public static ReadHandlerPtr pc10_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = ( input_latch[1] ) & 1;
 	
@@ -252,7 +252,7 @@ public class playch10
 		ret |= 0x40;
 	
 		return ret;
-	}
+	} };
 	
 	/* RP5H01 interface */
 	static struct RP5H01_interface rp5h01_interface =

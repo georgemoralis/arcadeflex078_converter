@@ -64,7 +64,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( starwars_out_w )
+	public static WriteHandlerPtr starwars_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -111,7 +111,7 @@ public class starwars
 				logerror("recall\n"); /* what's that? */
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -121,7 +121,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( starwars_input_1_r )
+	public static ReadHandlerPtr starwars_input_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int x = readinputport(1);
 	
@@ -137,7 +137,7 @@ public class starwars
 			x &= ~0x40;
 	
 		return x;
-	}
+	} };
 	
 	
 	
@@ -147,7 +147,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( starwars_adc_r )
+	public static ReadHandlerPtr starwars_adc_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* pitch */
 		if (control_num == kPitch)
@@ -160,13 +160,13 @@ public class starwars
 		/* default to unused thrust */
 		else
 			return 0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( starwars_adc_select_w )
+	public static WriteHandlerPtr starwars_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		control_num = offset;
-	}
+	} };
 	
 	
 	
@@ -327,11 +327,11 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( swmathbx_prng_r )
+	public static ReadHandlerPtr swmathbx_prng_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		PRN = (int)((PRN + 0x2364) ^ 2); /* This is a total bodge for now, but it works!*/
 		return PRN;
-	}
+	} };
 	
 	
 	
@@ -341,19 +341,19 @@ public class starwars
 	 *
 	 *************************************/
 	
-	READ_HANDLER( swmathbx_reh_r )
+	public static ReadHandlerPtr swmathbx_reh_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (div_result & 0xff00) >> 8;
-	}
+	} };
 	
 	
-	READ_HANDLER( swmathbx_rel_r )
+	public static ReadHandlerPtr swmathbx_rel_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return div_result & 0x00ff;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( swmathbx_w )
+	public static WriteHandlerPtr swmathbx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data &= 0xff;	/* ASG 971002 -- make sure we only get bytes here */
 		switch (offset)
@@ -401,5 +401,5 @@ public class starwars
 			default:
 				break;
 		}
-	}
+	} };
 }

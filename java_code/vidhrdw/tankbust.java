@@ -111,49 +111,49 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( tankbust_background_videoram_w )
+	public static WriteHandlerPtr tankbust_background_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset]!=data )
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
-	READ_HANDLER( tankbust_background_videoram_r )
+	} };
+	public static ReadHandlerPtr tankbust_background_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return videoram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tankbust_background_colorram_w )
+	public static WriteHandlerPtr tankbust_background_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( colorram[offset]!=data )
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
-	READ_HANDLER( tankbust_background_colorram_r )
+	} };
+	public static ReadHandlerPtr tankbust_background_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return colorram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tankbust_txtram_w )
+	public static WriteHandlerPtr tankbust_txtram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( txt_ram[offset]!=data )
 		{
 			txt_ram[offset] = data;
 			tilemap_mark_tile_dirty(txt_tilemap, offset);
 		}
-	}
-	READ_HANDLER( tankbust_txtram_r )
+	} };
+	public static ReadHandlerPtr tankbust_txtram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return txt_ram[offset];
-	}
+	} };
 	
 	
 	static UINT8 xscroll[2];
 	
-	WRITE_HANDLER( tankbust_xscroll_w )
+	public static WriteHandlerPtr tankbust_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( xscroll[offset] != data )
 		{
@@ -166,11 +166,11 @@ public class tankbust
 			tilemap_set_scrollx(bg_tilemap, 0, x );
 		}
 	//usrintf_showmessage("x=%02x %02x", xscroll[0], xscroll[1]);
-	}
+	} };
 	
 	static UINT8 yscroll[2];
 	
-	WRITE_HANDLER( tankbust_yscroll_w )
+	public static WriteHandlerPtr tankbust_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( yscroll[offset] != data )
 		{
@@ -182,7 +182,7 @@ public class tankbust
 			tilemap_set_scrolly(bg_tilemap, 0, y );
 		}
 	//usrintf_showmessage("y=%02x %02x", yscroll[0], yscroll[1]);
-	}
+	} };
 	
 	/***************************************************************************
 	

@@ -101,23 +101,23 @@ public class pingpong
 			COLOR(0,i) = (*(color_prom++) & 0x0f) + 0x10;
 	}
 	
-	WRITE_HANDLER( pingpong_videoram_w )
+	public static WriteHandlerPtr pingpong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pingpong_colorram_w )
+	public static WriteHandlerPtr pingpong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

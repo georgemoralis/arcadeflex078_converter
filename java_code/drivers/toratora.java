@@ -31,7 +31,7 @@ public class toratora
 	
 	
 	
-	WRITE_HANDLER( toratora_videoram_w )
+	public static WriteHandlerPtr toratora_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
@@ -50,13 +50,13 @@ public class toratora
 				data <<= 1;
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( toratora_clear_tv_w )
+	public static WriteHandlerPtr toratora_clear_tv_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		for (offset = 0;offset < 0x2000;offset++)
 			toratora_videoram_w(offset,0);
-	}
+	} };
 	
 	
 	

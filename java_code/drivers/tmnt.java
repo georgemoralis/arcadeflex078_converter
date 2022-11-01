@@ -280,12 +280,12 @@ public class tmnt
 		else return offset ? 0x00 : 0x80;
 	}
 	
-	READ_HANDLER( tmnt_sres_r )
+	public static ReadHandlerPtr tmnt_sres_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tmnt_soundlatch;
-	}
+	} };
 	
-	WRITE_HANDLER( tmnt_sres_w )
+	public static WriteHandlerPtr tmnt_sres_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 1 resets the UPD7795C sound chip */
 		UPD7759_reset_w(0, data & 2);
@@ -297,7 +297,7 @@ public class tmnt
 		}
 		else sample_stop(0);
 		tmnt_soundlatch = data;
-	}
+	} };
 	
 	
 	static int tmnt_decode_sample(const struct MachineSound *msound)

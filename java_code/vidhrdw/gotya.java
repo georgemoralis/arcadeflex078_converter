@@ -73,25 +73,25 @@ public class gotya
 		}
 	}
 	
-	WRITE_HANDLER( gotya_videoram_w )
+	public static WriteHandlerPtr gotya_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( gotya_colorram_w )
+	public static WriteHandlerPtr gotya_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( gotya_video_control_w )
+	public static WriteHandlerPtr gotya_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 - scroll bit 8
 		   bit 1 - flip screen
@@ -104,7 +104,7 @@ public class gotya
 			flip_screen_set(data & 0x02);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

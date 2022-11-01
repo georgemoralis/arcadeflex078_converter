@@ -21,54 +21,54 @@ public class pbaction
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( pbaction_videoram_w )
+	public static WriteHandlerPtr pbaction_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pbaction_colorram_w )
+	public static WriteHandlerPtr pbaction_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pbaction_videoram2_w )
+	public static WriteHandlerPtr pbaction_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pbaction_videoram2[offset] != data)
 		{
 			pbaction_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pbaction_colorram2_w )
+	public static WriteHandlerPtr pbaction_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pbaction_colorram2[offset] != data)
 		{
 			pbaction_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pbaction_scroll_w )
+	public static WriteHandlerPtr pbaction_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll = data - 3;
 		if (flip_screen) scroll = -scroll;
 		tilemap_set_scrollx(bg_tilemap, 0, scroll);
 		tilemap_set_scrollx(fg_tilemap, 0, scroll);
-	}
+	} };
 	
-	WRITE_HANDLER( pbaction_flipscreen_w )
+	public static WriteHandlerPtr pbaction_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x01);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

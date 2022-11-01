@@ -41,10 +41,10 @@ public class thedeep
 	
 	static int nmi_enable;
 	
-	WRITE_HANDLER( thedeep_nmi_w )
+	public static WriteHandlerPtr thedeep_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		nmi_enable = data;
-	}
+	} };
 	
 	public static WriteHandlerPtr thedeep_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

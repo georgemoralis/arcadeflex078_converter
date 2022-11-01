@@ -45,25 +45,25 @@ public class sbrkout
 	    cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	READ_HANDLER( sbrkout_select1_r )
+	public static ReadHandlerPtr sbrkout_select1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    if (sbrkout_game_switch==SBRKOUT_CAVITY)
 	        return 0x80;
 	    else return 0x00;
-	}
+	} };
 	
-	READ_HANDLER( sbrkout_select2_r )
+	public static ReadHandlerPtr sbrkout_select2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    if (sbrkout_game_switch==SBRKOUT_DOUBLE)
 	        return 0x80;
 	    else return 0x00;
-	}
+	} };
 	
-	WRITE_HANDLER( sbrkout_irq_w )
+	public static WriteHandlerPtr sbrkout_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	        /* generate irq */
 	        cpu_set_irq_line(0,M6502_IRQ_LINE,HOLD_LINE);
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -74,7 +74,7 @@ public class sbrkout
 	bytes, and MAME doesn't currently support that.
 	***************************************************************************/
 	
-	READ_HANDLER( sbrkout_read_DIPs_r )
+	public static ReadHandlerPtr sbrkout_read_DIPs_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	        switch (offset)
 	        {
@@ -87,7 +87,7 @@ public class sbrkout
 	                /* Just in case */
 	                default:        return 0xFF;
 	        }
-	}
+	} };
 	
 	/***************************************************************************
 	Lamps
@@ -96,19 +96,19 @@ public class sbrkout
 	first address turns them off, the second address turns them on.  This is
 	reversed for the Serve LED, which has a NOT on the signal.
 	***************************************************************************/
-	WRITE_HANDLER( sbrkout_start_1_led_w )
+	public static WriteHandlerPtr sbrkout_start_1_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,offset & 1);
-	}
+	} };
 	
-	WRITE_HANDLER( sbrkout_start_2_led_w )
+	public static WriteHandlerPtr sbrkout_start_2_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(1,offset & 1);
-	}
+	} };
 	
-	WRITE_HANDLER( sbrkout_serve_led_w )
+	public static WriteHandlerPtr sbrkout_serve_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(2,~offset & 1);
-	}
+	} };
 	
 }

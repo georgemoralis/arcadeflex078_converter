@@ -376,7 +376,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( mcr_control_port_w )
+	public static WriteHandlerPtr mcr_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			Bit layout is as follows:
@@ -394,10 +394,10 @@ public class mcr
 		coin_counter_w(1, (data >> 1) & 1);
 		coin_counter_w(2, (data >> 2) & 1);
 		mcr_cocktail_flip = (data >> 6) & 1;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mcrmono_control_port_w )
+	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*
 			Bit layout is as follows:
@@ -413,10 +413,10 @@ public class mcr
 	
 		coin_counter_w(0, (data >> 0) & 1);
 		mcr_cocktail_flip = (data >> 6) & 1;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mcr_scroll_value_w )
+	public static WriteHandlerPtr mcr_scroll_value_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -436,7 +436,7 @@ public class mcr
 				spyhunt_scrolly = (spyhunt_scrolly & ~0xff) | data;
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -446,7 +446,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( zwackery_pia_2_w )
+	public static WriteHandlerPtr zwackery_pia_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 7 is the watchdog */
 		if (!(data & 0x80)) watchdog_reset_w(offset, data);
@@ -454,19 +454,19 @@ public class mcr
 		/* bits 5 and 6 control hflip/vflip */
 		/* bits 3 and 4 control coin counters? */
 		/* bits 0, 1 and 2 control meters? */
-	}
+	} };
 	
 	
-	WRITE_HANDLER( zwackery_pia_3_w )
+	public static WriteHandlerPtr zwackery_pia_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		zwackery_sound_data = (data >> 4) & 0x0f;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( zwackery_ca2_w )
+	public static WriteHandlerPtr zwackery_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		csdeluxe_data_w(offset, (data << 4) | zwackery_sound_data);
-	}
+	} };
 	
 	
 	void zwackery_pia_irq(int state)

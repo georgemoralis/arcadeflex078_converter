@@ -38,38 +38,38 @@ public class mappy
 	}
 	
 	
-	READ_HANDLER( mappy_sharedram_r )
+	public static ReadHandlerPtr mappy_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mappy_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( mappy_sharedram_w )
+	public static WriteHandlerPtr mappy_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mappy_sharedram[offset] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mappy_customio_1_w )
+	public static WriteHandlerPtr mappy_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mappy_customio_1[offset] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( mappy_customio_2_w )
+	public static WriteHandlerPtr mappy_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mappy_customio_2[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( mappy_reset_2_w )
+	public static WriteHandlerPtr mappy_reset_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		io_chip_1_enabled = io_chip_2_enabled = 0;
 		cpu_set_reset_line(1,PULSE_LINE);
-	}
+	} };
 	
-	WRITE_HANDLER( mappy_io_chips_enable_w )
+	public static WriteHandlerPtr mappy_io_chips_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		io_chip_1_enabled = io_chip_2_enabled = 1;
-	}
+	} };
 	
 	/*************************************************************************************
 	 *
@@ -77,7 +77,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	READ_HANDLER( mappy_customio_1_r )
+	public static ReadHandlerPtr mappy_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int crednum[] = { 1, 2, 3, 6, 1, 3, 1, 2 };
 		static int credden[] = { 1, 1, 1, 1, 2, 2, 3, 3 };
@@ -157,10 +157,10 @@ public class mappy
 	
 		/* by default, return what was stored there */
 		return mappy_customio_1[offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( mappy_customio_2_r )
+	public static ReadHandlerPtr mappy_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int mode = mappy_customio_2[8];
 	
@@ -203,7 +203,7 @@ public class mappy
 	
 		/* by default, return what was stored there */
 		return mappy_customio_2[offset];
-	}
+	} };
 	
 	
 	/*************************************************************************************
@@ -212,7 +212,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	READ_HANDLER( digdug2_customio_1_r )
+	public static ReadHandlerPtr digdug2_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int crednum[] = { 1, 1, 2, 2 };
 		static int credden[] = { 1, 2, 1, 3 };
@@ -280,10 +280,10 @@ public class mappy
 		}
 		/* by default, return what was stored there */
 		return mappy_customio_1[offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( digdug2_customio_2_r )
+	public static ReadHandlerPtr digdug2_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int mode = mappy_customio_2[8];
 	
@@ -320,7 +320,7 @@ public class mappy
 		}
 		/* by default, return what was stored there */
 		return mappy_customio_2[offset];
-	}
+	} };
 	
 	
 	/*************************************************************************************
@@ -329,7 +329,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	READ_HANDLER( motos_customio_1_r )
+	public static ReadHandlerPtr motos_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int val, mode = mappy_customio_1[8];
 	
@@ -384,10 +384,10 @@ public class mappy
 	
 		/* by default, return what was stored there */
 		return mappy_customio_1[offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( motos_customio_2_r )
+	public static ReadHandlerPtr motos_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int mode = mappy_customio_2[8];
 	
@@ -433,7 +433,7 @@ public class mappy
 	
 		/* by default, return what was stored there */
 		return mappy_customio_2[offset];
-	}
+	} };
 	
 	
 	/*************************************************************************************
@@ -442,7 +442,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	READ_HANDLER( todruaga_customio_1_r )
+	public static ReadHandlerPtr todruaga_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		static int crednum[] = { 1, 1, 2, 2 };
 		static int credden[] = { 1, 2, 1, 3 };
@@ -511,10 +511,10 @@ public class mappy
 		}
 		/* by default, return what was stored there */
 		return mappy_customio_1[offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( todruaga_customio_2_r )
+	public static ReadHandlerPtr todruaga_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int mode = mappy_customio_2[8];
 	
@@ -552,14 +552,14 @@ public class mappy
 	
 		/* by default, return what was stored there */
 		return mappy_customio_2[offset];
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mappy_interrupt_enable_1_w )
+	public static WriteHandlerPtr mappy_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_1 = offset;
-	}
+	} };
 	
 	
 	
@@ -571,10 +571,10 @@ public class mappy
 	
 	
 	
-	WRITE_HANDLER( mappy_interrupt_enable_2_w )
+	public static WriteHandlerPtr mappy_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		interrupt_enable_2 = offset;
-	}
+	} };
 	
 	
 	
@@ -585,8 +585,8 @@ public class mappy
 	} };
 	
 	
-	WRITE_HANDLER( mappy_cpu_enable_w )
+	public static WriteHandlerPtr mappy_cpu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
-	}
+	} };
 }

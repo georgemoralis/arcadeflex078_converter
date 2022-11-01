@@ -68,16 +68,16 @@ public class yiear
 		}
 	}
 	
-	WRITE_HANDLER( yiear_videoram_w )
+	public static WriteHandlerPtr yiear_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( yiear_control_w )
+	public static WriteHandlerPtr yiear_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 flips screen */
 	
@@ -99,7 +99,7 @@ public class yiear
 	
 		coin_counter_w(0, data & 0x08);
 		coin_counter_w(1, data & 0x10);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

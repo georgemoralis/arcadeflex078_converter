@@ -156,12 +156,12 @@ public class mcatadv
 	
 	/*** Sound ***/
 	
-	static WRITE_HANDLER ( mcatadv_sound_bw_w )
+	static public static WriteHandlerPtr mcatadv_sound_bw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + data * 0x4000);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress mcatadv_sound_readmem[]={

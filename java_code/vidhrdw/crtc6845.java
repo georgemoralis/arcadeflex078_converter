@@ -23,7 +23,7 @@ public class crtc6845
 {
 	
 	
-	READ_HANDLER( crtc6845_register_r )
+	public static ReadHandlerPtr crtc6845_register_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int retval=0;
 	
@@ -87,16 +87,16 @@ public class crtc6845
 				break;
 		}
 	        return retval;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( crtc6845_address_w )
+	public static WriteHandlerPtr crtc6845_address_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		crtc6845_address_latch=data&0x1f;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( crtc6845_register_w )
+	public static WriteHandlerPtr crtc6845_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	
 	logerror("CRT #0 PC %04x: WRITE reg 0x%02x data 0x%02x\n",activecpu_get_pc(),crtc6845_address_latch,data);
@@ -167,5 +167,5 @@ public class crtc6845
 			default:
 				break;
 		}
-	}
+	} };
 }

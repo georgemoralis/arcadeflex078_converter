@@ -192,7 +192,7 @@ public class nmk16
 	
 	
 	
-	WRITE_HANDLER ( ssmissin_soundbank_w )
+	public static WriteHandlerPtr ssmissin_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *rom = memory_region(REGION_SOUND1);
 		int bank;
@@ -200,7 +200,7 @@ public class nmk16
 		bank = data & 0x3;
 	
 		memcpy(rom + 0x20000,rom + 0x80000 + bank * 0x20000,0x20000);
-	}
+	} };
 	
 	
 	static data16_t *ram;

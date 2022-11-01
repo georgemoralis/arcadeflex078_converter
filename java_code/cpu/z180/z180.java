@@ -2348,15 +2348,15 @@ public class z180
 		}
 	}
 	
-	READ_HANDLER( z180_internal_r )
+	public static ReadHandlerPtr z180_internal_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return Z180.io[offset & 0x3f];
-	}
+	} };
 	
-	WRITE_HANDLER( z180_internal_w )
+	public static WriteHandlerPtr z180_internal_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		z180_set_reg( Z180_CNTLA0 + (offset & 0x3f), data );
-	}
+	} };
 	
 	/****************************************************************************
 	 * Set IRQ line state

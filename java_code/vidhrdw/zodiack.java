@@ -23,25 +23,25 @@ public class zodiack
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	WRITE_HANDLER( zodiack_videoram_w )
+	public static WriteHandlerPtr zodiack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( zodiack_videoram2_w )
+	public static WriteHandlerPtr zodiack_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (zodiack_videoram2[offset] != data)
 		{
 			zodiack_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( zodiack_attributes_w )
+	public static WriteHandlerPtr zodiack_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((offset & 1) && zodiack_attributesram[offset] != data)
 		{
@@ -55,16 +55,16 @@ public class zodiack
 		}
 	
 		zodiack_attributesram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( zodiack_flipscreen_w )
+	public static WriteHandlerPtr zodiack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	PALETTE_INIT( zodiack )
 	{

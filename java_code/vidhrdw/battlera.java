@@ -56,7 +56,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	WRITE_HANDLER( battlera_palette_w )
+	public static WriteHandlerPtr battlera_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b,pal_word;
 	
@@ -69,20 +69,20 @@ public class battlera
 		g = ((pal_word >> 6) & 7) << 5;
 		b = ((pal_word >> 0) & 7) << 5;
 		palette_set_color(offset/2, r, g, b);
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	READ_HANDLER( HuC6270_debug_r )
+	public static ReadHandlerPtr HuC6270_debug_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return HuC6270_vram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( HuC6270_debug_w )
+	public static WriteHandlerPtr HuC6270_debug_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		HuC6270_vram[offset]=data;
-	}
-	READ_HANDLER( HuC6270_register_r )
+	} };
+	public static ReadHandlerPtr HuC6270_register_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int rr;
 	
@@ -96,9 +96,9 @@ public class battlera
 			| (bldwolf_vblank << 5)	/* VD flag (1 when vblank else 0) */
 			| (0 << 6)	/* BSY flag (1 when dma active, else 0) */
 			| (0 << 7);	/* Always zero */
-	}
+	} };
 	
-	WRITE_HANDLER( HuC6270_register_w )
+	public static WriteHandlerPtr HuC6270_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset) {
 		case 0: /* Select data region */
@@ -107,11 +107,11 @@ public class battlera
 		case 1: /* Unused */
 			break;
 		}
-	}
+	} };
 	
 	/******************************************************************************/
 	
-	READ_HANDLER( HuC6270_data_r )
+	public static ReadHandlerPtr HuC6270_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result;
 	
@@ -126,9 +126,9 @@ public class battlera
 		}
 	
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( HuC6270_data_w )
+	public static WriteHandlerPtr HuC6270_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset) {
 			case 0: /* LSB */
@@ -251,7 +251,7 @@ public class battlera
 				break;
 		}
 		logerror("%04x: unknown write to  VDC_register %02x (%02x) at %02x\n",activecpu_get_pc(),VDC_register,data,offset);
-	}
+	} };
 	
 	/******************************************************************************/
 	

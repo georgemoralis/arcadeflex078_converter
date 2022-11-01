@@ -330,10 +330,10 @@ public class _8080bw
 	}
 	
 	
-	WRITE_HANDLER( c8080bw_videoram_w )
+	public static WriteHandlerPtr c8080bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram_w_p(offset, data);
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -457,16 +457,16 @@ public class _8080bw
 	} };
 	
 	
-	WRITE_HANDLER( helifire_colorram_w )
+	public static WriteHandlerPtr helifire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		colorram[offset] = data;
 	
 		/* redraw region with (possibly) changed color */
 		videoram_w_p(offset, videoram[offset]);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( schaser_colorram_w )
+	public static WriteHandlerPtr schaser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 	
@@ -480,12 +480,12 @@ public class _8080bw
 		{
 			videoram_w_p(offset, videoram[offset]);
 		}
-	}
+	} };
 	
-	READ_HANDLER( schaser_colorram_r )
+	public static ReadHandlerPtr schaser_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return colorram[offset & 0x1f1f];
-	}
+	} };
 	
 	
 	public static WriteHandlerPtr phantom2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -868,14 +868,14 @@ public class _8080bw
 	}
 	
 	
-	WRITE_HANDLER( bowler_bonus_display_w )
+	public static WriteHandlerPtr bowler_bonus_display_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Bits 0-6 control which score is lit.
 		   Bit 7 appears to be a global enable, but the exact
 		   effect is not known. */
 	
 		bowler_bonus_display = data;
-	}
+	} };
 	
 	
 	static VIDEO_UPDATE( bowler )
@@ -1001,7 +1001,7 @@ public class _8080bw
 		}
 	}
 	
-	WRITE_HANDLER( cosmo_colorram_w )
+	public static WriteHandlerPtr cosmo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int i;
 		int offs = ((offset>>5)<<8) | (offset&0x1f);
@@ -1014,7 +1014,7 @@ public class _8080bw
 			videoram_w_p(offs, videoram[offs]);
 			offs+= 0x20;
 		}		
-	}
+	} };
 	
 	public static WriteHandlerPtr cosmo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -19,16 +19,16 @@ public class arkanoid
 	
 	static struct tilemap *bg_tilemap;
 	
-	WRITE_HANDLER( arkanoid_videoram_w )
+	public static WriteHandlerPtr arkanoid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( arkanoid_d008_w )
+	public static WriteHandlerPtr arkanoid_d008_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank;
 	
@@ -69,7 +69,7 @@ public class arkanoid
 		}
 	
 		/* bit 7 is unknown */
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

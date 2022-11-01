@@ -18,7 +18,7 @@ public class btime
 	static int protection_ret = 0;
 	
 	
-	READ_HANDLER( mmonkey_protection_r )
+	public static ReadHandlerPtr mmonkey_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -30,11 +30,11 @@ public class btime
 		else logerror("Unknown protection read.  PC=%04X  Offset=%04X\n", activecpu_get_pc(), offset);
 	
 		return ret;
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( mmonkey_protection_w )
+	public static WriteHandlerPtr mmonkey_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -97,5 +97,5 @@ public class btime
 		else if (offset >= 0x0f00)                      RAM[BASE+offset] = data;   /* decrypt table */
 		else if (offset >= 0x0d00 && offset <= 0x0d05)  RAM[BASE+offset] = data;   /* source table */
 		else logerror("Unknown protection write=%02X.  PC=%04X  Offset=%04X\n", data, activecpu_get_pc(), offset);
-	}
+	} };
 }

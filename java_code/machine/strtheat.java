@@ -186,7 +186,7 @@ public class strtheat
 	}
 	
 	
-	READ_HANDLER( strtheat_decrypt_rom )
+	public static ReadHandlerPtr strtheat_decrypt_rom  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -213,7 +213,7 @@ public class strtheat
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	MACHINE_INIT( strtheat )
@@ -236,9 +236,9 @@ public class strtheat
 	}
 	
 	/*
-	WRITE_HANDLER( strtheat_writeport)
+	public static WriteHandlerPtr strtheat_writeport = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("Port Write: pc = %4x ############## \n",activecpu_get_pc());
-	}
+	} };
 	*/
 }

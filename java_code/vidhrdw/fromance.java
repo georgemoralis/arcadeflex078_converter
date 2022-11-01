@@ -134,7 +134,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( fromance_gfxreg_w )
+	public static WriteHandlerPtr fromance_gfxreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int flipscreen_old = -1;
 	
@@ -148,7 +148,7 @@ public class fromance
 			flipscreen_old = flipscreen;
 			tilemap_set_flip(ALL_TILEMAPS, flipscreen ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0);
 		}
-	}
+	} };
 	
 	
 	
@@ -158,15 +158,15 @@ public class fromance
 	 *
 	 *************************************/
 	
-	READ_HANDLER( fromance_paletteram_r )
+	public static ReadHandlerPtr fromance_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* adjust for banking and read */
 		offset |= selected_paletteram << 11;
 		return local_paletteram[offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fromance_paletteram_w )
+	public static WriteHandlerPtr fromance_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int palword;
 		int r, g, b;
@@ -186,7 +186,7 @@ public class fromance
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
 		palette_set_color(offset / 2, r, g, b);
-	}
+	} };
 	
 	
 	
@@ -196,17 +196,17 @@ public class fromance
 	 *
 	 *************************************/
 	
-	READ_HANDLER( fromance_videoram_r )
+	public static ReadHandlerPtr fromance_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return local_videoram[selected_videoram][offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fromance_videoram_w )
+	public static WriteHandlerPtr fromance_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		local_videoram[selected_videoram][offset] = data;
 		tilemap_mark_tile_dirty(selected_videoram ? fg_tilemap : bg_tilemap, offset & 0x0fff);
-	}
+	} };
 	
 	
 	
@@ -216,7 +216,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( fromance_scroll_w )
+	public static WriteHandlerPtr fromance_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flipscreen)
 		{
@@ -254,7 +254,7 @@ public class fromance
 					break;
 			}
 		}
-	}
+	} };
 	
 	
 	
@@ -272,7 +272,7 @@ public class fromance
 	}
 	
 	
-	WRITE_HANDLER( fromance_crtc_data_w )
+	public static WriteHandlerPtr fromance_crtc_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		crtc_data[crtc_register] = data;
 	
@@ -287,13 +287,13 @@ public class fromance
 				logerror("CRTC register %02X = %02X\n", crtc_register, data & 0xff);
 				break;
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( fromance_crtc_register_w )
+	public static WriteHandlerPtr fromance_crtc_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		crtc_register = data;
-	}
+	} };
 	
 	
 	

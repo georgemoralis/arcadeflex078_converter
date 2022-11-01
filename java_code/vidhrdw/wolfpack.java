@@ -37,7 +37,7 @@ public class wolfpack
 	static struct mame_bitmap* helper;
 	
 	
-	WRITE_HANDLER( wolfpack_ship_size_w )
+	public static WriteHandlerPtr wolfpack_ship_size_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 color;
 	
@@ -59,53 +59,53 @@ public class wolfpack
 			color < 0xb8 ? color + 0x48 : 0xff);
 	
 		wolfpack_ship_size = data >> 2;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( wolfpack_video_invert_w )
+	public static WriteHandlerPtr wolfpack_video_invert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_video_invert = data & 1;
-	}
-	WRITE_HANDLER( wolfpack_ship_reflect_w )
+	} };
+	public static WriteHandlerPtr wolfpack_ship_reflect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_ship_reflect = data & 1;
-	}
-	WRITE_HANDLER( wolfpack_pt_pos_select_w )
+	} };
+	public static WriteHandlerPtr wolfpack_pt_pos_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_pt_pos_select = data & 1;
-	}
-	WRITE_HANDLER( wolfpack_pt_horz_w )
+	} };
+	public static WriteHandlerPtr wolfpack_pt_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_pt_horz = data;
-	}
-	WRITE_HANDLER( wolfpack_pt_pic_w )
+	} };
+	public static WriteHandlerPtr wolfpack_pt_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_pt_pic = data & 0x3f;
-	}
-	WRITE_HANDLER( wolfpack_ship_h_w )
+	} };
+	public static WriteHandlerPtr wolfpack_ship_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_ship_h = data;
-	}
-	WRITE_HANDLER( wolfpack_torpedo_pic_w )
+	} };
+	public static WriteHandlerPtr wolfpack_torpedo_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_torpedo_pic = data;
-	}
-	WRITE_HANDLER( wolfpack_ship_h_precess_w )
+	} };
+	public static WriteHandlerPtr wolfpack_ship_h_precess_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_ship_h_precess = data & 0x3f;
-	}
-	WRITE_HANDLER( wolfpack_ship_pic_w )
+	} };
+	public static WriteHandlerPtr wolfpack_ship_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_ship_pic = data & 0x0f;
-	}
-	WRITE_HANDLER( wolfpack_torpedo_h_w )
+	} };
+	public static WriteHandlerPtr wolfpack_torpedo_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_torpedo_h = data;
-	}
-	WRITE_HANDLER( wolfpack_torpedo_v_w )
+	} };
+	public static WriteHandlerPtr wolfpack_torpedo_v_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		wolfpack_torpedo_v = data;
-	}
+	} };
 	
 	
 	VIDEO_START( wolfpack )

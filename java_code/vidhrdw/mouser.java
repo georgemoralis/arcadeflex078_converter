@@ -50,17 +50,17 @@ public class mouser
 		}
 	}
 	
-	WRITE_HANDLER( mouser_flip_screen_x_w )
+	public static WriteHandlerPtr mouser_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_x_set(~data & 1);
-	}
+	} };
 	
-	WRITE_HANDLER( mouser_flip_screen_y_w )
+	public static WriteHandlerPtr mouser_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_y_set(~data & 1);
-	}
+	} };
 	
-	WRITE_HANDLER( mouser_spriteram_w )
+	public static WriteHandlerPtr mouser_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Mark the entire row as dirty if row scrollram is written */
 		/* Only used by the MOUSER logo */
@@ -73,13 +73,13 @@ public class mouser
 			dirtybuffer[offset+i*32] = 1;
 		}
 		spriteram_w(offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( mouser_colorram_w )
+	public static WriteHandlerPtr mouser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dirtybuffer[offset] = 1;
 		colorram_w(offset, data);
-	}
+	} };
 	
 	VIDEO_UPDATE( mouser )
 	{

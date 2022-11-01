@@ -336,14 +336,14 @@ public class mazerbla
 	
 	
 	static data8_t *cfb_zpu_sharedram;
-	static WRITE_HANDLER ( sharedram_CFB_ZPU_w )
+	static public static WriteHandlerPtr sharedram_CFB_ZPU_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cfb_zpu_sharedram[offset] = data;
-	}
-	static READ_HANDLER ( sharedram_CFB_ZPU_r )
+	} };
+	static public static ReadHandlerPtr sharedram_CFB_ZPU_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cfb_zpu_sharedram[offset];
-	}
+	} };
 	
 	
 	
@@ -569,14 +569,14 @@ public class mazerbla
 	
 	
 	/* Color Frame Buffer PCB */
-	static WRITE_HANDLER ( cfb_ram_w )
+	static public static WriteHandlerPtr cfb_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cfb_ram[offset] = data;
-	}
-	static READ_HANDLER ( cfb_ram_r )
+	} };
+	static public static ReadHandlerPtr cfb_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cfb_ram[offset];
-	}
+	} };
 	
 	
 	static WRITE_HANDLER(cfb_led_w)

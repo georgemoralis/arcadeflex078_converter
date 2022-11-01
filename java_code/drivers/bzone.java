@@ -232,7 +232,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	READ_HANDLER( bzone_IN0_r )
+	public static ReadHandlerPtr bzone_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -249,7 +249,7 @@ public class bzone
 			res &= ~IN0_VG_HALT;
 	
 		return res;
-	}
+	} };
 	
 	
 	/* Translation table for one-joystick emulation */

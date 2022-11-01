@@ -174,26 +174,26 @@ public class gottlieb
 	
 	static int track[2];
 	
-	READ_HANDLER( gottlieb_track_0_r )
+	public static ReadHandlerPtr gottlieb_track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_2_r(offset) - track[0];
-	}
+	} };
 	
-	READ_HANDLER( gottlieb_track_1_r )
+	public static ReadHandlerPtr gottlieb_track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return input_port_3_r(offset) - track[1];
-	}
+	} };
 	
-	WRITE_HANDLER( gottlieb_track_reset_w )
+	public static WriteHandlerPtr gottlieb_track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* reset the trackball counters */
 		track[0] = input_port_2_r(offset);
 		track[1] = input_port_3_r(offset);
-	}
+	} };
 	
 	static int joympx;
 	
-	READ_HANDLER( stooges_IN4_r )
+	public static ReadHandlerPtr stooges_IN4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int joy;
 	
@@ -212,21 +212,21 @@ public class gottlieb
 		}
 	
 		return joy | (readinputport(4) & 0xf0);
-	}
+	} };
 	
-	WRITE_HANDLER( reactor_output_w )
+	public static WriteHandlerPtr reactor_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0,data & 0x20);
 		set_led_status(1,data & 0x40);
 		set_led_status(2,data & 0x80);
 		gottlieb_video_outputs_w(offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( stooges_output_w )
+	public static WriteHandlerPtr stooges_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		joympx = (data >> 5) & 0x03;
 		gottlieb_video_outputs_w(offset,data);
-	}
+	} };
 	
 	
 	static int current_frame = 1;
@@ -255,7 +255,7 @@ public class gottlieb
 	 * This gives a total of 1+3+3+19*53=1014 bytes, the 10 last bytes are ignored
 	 */
 	
-	READ_HANDLER( gottlieb_laserdisc_status_r )
+	public static ReadHandlerPtr gottlieb_laserdisc_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int tmp;
 		switch (offset)
@@ -294,15 +294,15 @@ public class gottlieb
 		}
 	
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( gottlieb_laserdisc_mpx_w )
+	public static WriteHandlerPtr gottlieb_laserdisc_mpx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		lasermpx = data & 1;
 		if (lasermpx==0) skipfirstbyte=1;	/* first byte of the 1K buffer (0x67) is not returned... */
-	}
+	} };
 	
-	WRITE_HANDLER( gottlieb_laserdisc_command_w )
+	public static WriteHandlerPtr gottlieb_laserdisc_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int loop;
 		int cmd;
@@ -358,7 +358,7 @@ public class gottlieb
 			}
 			lastcmd = cmd;
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr gottlieb_interrupt = new InterruptHandlerPtr() {public void handler()
 	{

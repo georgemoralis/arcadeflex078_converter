@@ -60,13 +60,13 @@ public class destroyr
 	}
 	
 	
-	WRITE_HANDLER( destroyr_ram_w )
+	public static WriteHandlerPtr destroyr_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		destroyr_zero_page[offset & 0xff] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( destroyr_misc_w )
+	public static WriteHandlerPtr destroyr_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0 to 2 connect to the sound circuits */
 	
@@ -79,24 +79,24 @@ public class destroyr
 	
 		coin_lockout_w(0, !destroyr_attract);
 		coin_lockout_w(1, !destroyr_attract);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( destroyr_cursor_load_w )
+	public static WriteHandlerPtr destroyr_cursor_load_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		destroyr_cursor = data;
 	
 		watchdog_reset_w(offset, data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( destroyr_interrupt_ack_w )
+	public static WriteHandlerPtr destroyr_interrupt_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( destroyr_output_w )
+	public static WriteHandlerPtr destroyr_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset &= 15;
 	
@@ -133,16 +133,16 @@ public class destroyr
 			logerror("unmapped output port %d\n", offset);
 			break;
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( destroyr_ram_r )
+	public static ReadHandlerPtr destroyr_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return destroyr_zero_page[offset & 0xff];
-	}
+	} };
 	
 	
-	READ_HANDLER( destroyr_input_r )
+	public static ReadHandlerPtr destroyr_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset &= 15;
 	
@@ -166,13 +166,13 @@ public class destroyr
 		logerror("unmapped input port %d\n", offset);
 	
 		return 0;
-	}
+	} };
 	
 	
-	READ_HANDLER( destroyr_scanline_r )
+	public static ReadHandlerPtr destroyr_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_getscanline();
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress destroyr_readmem[]={

@@ -91,10 +91,10 @@ public class mario
 	#define ACTIVEHIGH_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | (D << A))
 	
 	
-	WRITE_HANDLER( mario_sh_getcoin_w )    { t[0] = data; }
-	WRITE_HANDLER( mario_sh_crab_w )       { p[1] = ACTIVEHIGH_PORT_BIT(p[1],0,data); }
-	WRITE_HANDLER( mario_sh_turtle_w )     { p[1] = ACTIVEHIGH_PORT_BIT(p[1],1,data); }
-	WRITE_HANDLER( mario_sh_fly_w )        { p[1] = ACTIVEHIGH_PORT_BIT(p[1],2,data); }
+	public static WriteHandlerPtr mario_sh_getcoin_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[0] = data; } };
+	public static WriteHandlerPtr mario_sh_crab_w = new WriteHandlerPtr() {public void handler(int offset, int data)       { p[1] = ACTIVEHIGH_PORT_BIT(p[1],0,data); } };
+	public static WriteHandlerPtr mario_sh_turtle_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[1] = ACTIVEHIGH_PORT_BIT(p[1],1,data); } };
+	public static WriteHandlerPtr mario_sh_fly_w = new WriteHandlerPtr() {public void handler(int offset, int data)        { p[1] = ACTIVEHIGH_PORT_BIT(p[1],2,data); } };
 	public static WriteHandlerPtr mario_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w(offset,data); } };
 	
 	public static ReadHandlerPtr mario_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
@@ -115,7 +115,7 @@ public class mario
 	{
 		p[2] = data;
 	} };
-	WRITE_HANDLER( masao_sh_irqtrigger_w )
+	public static WriteHandlerPtr masao_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last;
 	
@@ -127,7 +127,7 @@ public class mario
 		}
 	
 		last = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

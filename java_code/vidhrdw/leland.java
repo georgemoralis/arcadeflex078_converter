@@ -102,7 +102,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( leland_gfx_port_w )
+	public static WriteHandlerPtr leland_gfx_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* adjust the proper scroll value */
 	    switch (offset)
@@ -147,7 +147,7 @@ public class leland
 				}
 				break;
 		}
-	}
+	} };
 	
 	
 	
@@ -359,10 +359,10 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( leland_master_video_addr_w )
+	public static WriteHandlerPtr leland_master_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    leland_video_addr_w(offset, data, 0);
-	}
+	} };
 	
 	
 	static void leland_delayed_mvram_w(int param)
@@ -374,7 +374,7 @@ public class leland
 	}
 	
 	
-	WRITE_HANDLER( leland_mvram_port_w )
+	public static WriteHandlerPtr leland_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (sync_next_write)
 		{
@@ -383,13 +383,13 @@ public class leland
 		}
 		else
 		    leland_vram_port_w(offset, data, 0);
-	}
+	} };
 	
 	
-	READ_HANDLER( leland_mvram_port_r )
+	public static ReadHandlerPtr leland_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return leland_vram_port_r(offset, 0);
-	}
+	} };
 	
 	
 	
@@ -399,22 +399,22 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( leland_slave_video_addr_w )
+	public static WriteHandlerPtr leland_slave_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    leland_video_addr_w(offset, data, 1);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( leland_svram_port_w )
+	public static WriteHandlerPtr leland_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    leland_vram_port_w(offset, data, 1);
-	}
+	} };
 	
 	
-	READ_HANDLER( leland_svram_port_r )
+	public static ReadHandlerPtr leland_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return leland_vram_port_r(offset, 1);
-	}
+	} };
 	
 	
 	
@@ -424,7 +424,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( ataxx_mvram_port_w )
+	public static WriteHandlerPtr ataxx_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 		if (sync_next_write)
@@ -434,14 +434,14 @@ public class leland
 		}
 		else
 			leland_vram_port_w(offset, data, 0);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( ataxx_svram_port_w )
+	public static WriteHandlerPtr ataxx_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 		leland_vram_port_w(offset, data, 1);
-	}
+	} };
 	
 	
 	
@@ -451,18 +451,18 @@ public class leland
 	 *
 	 *************************************/
 	
-	READ_HANDLER( ataxx_mvram_port_r )
+	public static ReadHandlerPtr ataxx_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 	    return leland_vram_port_r(offset, 0);
-	}
+	} };
 	
 	
-	READ_HANDLER( ataxx_svram_port_r )
+	public static ReadHandlerPtr ataxx_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 	    return leland_vram_port_r(offset, 1);
-	}
+	} };
 	
 	
 	

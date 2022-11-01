@@ -20,37 +20,37 @@ public class _8080bw
 	static int shift_data1,shift_data2,shift_amount;
 	
 	
-	WRITE_HANDLER( c8080bw_shift_amount_w )
+	public static WriteHandlerPtr c8080bw_shift_amount_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shift_amount = data;
-	}
+	} };
 	
-	WRITE_HANDLER( c8080bw_shift_data_w )
+	public static WriteHandlerPtr c8080bw_shift_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		shift_data2 = shift_data1;
 		shift_data1 = data;
-	}
+	} };
 	
 	
 	#define SHIFT  (((((shift_data1 << 8) | shift_data2) << (shift_amount & 0x07)) >> 8) & 0xff)
 	
 	
-	READ_HANDLER( c8080bw_shift_data_r )
+	public static ReadHandlerPtr c8080bw_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return SHIFT;
-	}
+	} };
 	
-	READ_HANDLER( c8080bw_shift_data_rev_r )
+	public static ReadHandlerPtr c8080bw_shift_data_rev_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int	ret = SHIFT;
 	
 		return BITSWAP8(ret,0,1,2,3,4,5,6,7);
-	}
+	} };
 	
-	READ_HANDLER( c8080bw_shift_data_comp_r )
+	public static ReadHandlerPtr c8080bw_shift_data_comp_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return SHIFT ^ 0xff;
-	}
+	} };
 	
 	
 	public static InterruptHandlerPtr c8080bw_interrupt = new InterruptHandlerPtr() {public void handler()
@@ -65,13 +65,13 @@ public class _8080bw
 		Extra / Different functions for Boot Hill                (MJC 300198)
 	****************************************************************************/
 	
-	READ_HANDLER( boothill_shift_data_r )
+	public static ReadHandlerPtr boothill_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (shift_amount < 0x10)
 			return c8080bw_shift_data_r(0);
 	    else
 	    	return c8080bw_shift_data_rev_r(0);
-	}
+	} };
 	
 	/* Grays binary again! */
 	
@@ -80,15 +80,15 @@ public class _8080bw
 		0x00, 0x40, 0x60, 0x70, 0x30, 0x10, 0x50, 0x50
 	};
 	
-	READ_HANDLER( boothill_port_0_r )
+	public static ReadHandlerPtr boothill_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_0_r(0) & 0x8f) | boothill_controller_table[input_port_3_r(0) >> 5];
-	}
+	} };
 	
-	READ_HANDLER( boothill_port_1_r )
+	public static ReadHandlerPtr boothill_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_1_r(0) & 0x8f) | boothill_controller_table[input_port_4_r(0) >> 5];
-	}
+	} };
 	
 	
 	static const int gunfight_controller_table[8] =
@@ -96,15 +96,15 @@ public class _8080bw
 		0x10, 0x50, 0x70, 0x30, 0x20, 0x60, 0x40, 0x00
 	};
 	
-	READ_HANDLER( gunfight_port_0_r )
+	public static ReadHandlerPtr gunfight_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_0_r(0) & 0x8f) | (gunfight_controller_table[input_port_3_r(0) >> 5]);
-	}
+	} };
 	
-	READ_HANDLER( gunfight_port_1_r )
+	public static ReadHandlerPtr gunfight_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_1_r(0) & 0x8f) | (gunfight_controller_table[input_port_4_r(0) >> 5]);
-	}
+	} };
 	
 	/*
 	 * Space Encounters uses rotary controllers on input ports 0 & 1
@@ -127,32 +127,32 @@ public class _8080bw
 	    36 , 37 , 39 , 38 , 34 , 35 , 33 , 32
 	};
 	
-	READ_HANDLER( spcenctr_port_0_r )
+	public static ReadHandlerPtr spcenctr_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_0_r(0) & 0xc0) | (graybit6_controller_table[input_port_0_r(0) & 0x3f] ^ 0x3f);
-	}
+	} };
 	
-	READ_HANDLER( spcenctr_port_1_r )
+	public static ReadHandlerPtr spcenctr_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_1_r(0) & 0xc0) | (graybit6_controller_table[input_port_1_r(0) & 0x3f] ^ 0x3f);
-	}
+	} };
 	
 	
-	READ_HANDLER( seawolf_port_1_r )
+	public static ReadHandlerPtr seawolf_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (input_port_0_r(0) & 0xe0) | graybit6_controller_table[input_port_0_r(0) & 0x1f];
-	}
+	} };
 	
 	
 	static int desertgu_controller_select;
 	
-	READ_HANDLER( desertgu_port_1_r )
+	public static ReadHandlerPtr desertgu_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(desertgu_controller_select ? 0 : 2);
-	}
+	} };
 	
-	WRITE_HANDLER( desertgu_controller_select_w )
+	public static WriteHandlerPtr desertgu_controller_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		desertgu_controller_select = data & 0x08;
-	}
+	} };
 }

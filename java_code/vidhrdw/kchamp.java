@@ -36,28 +36,28 @@ public class kchamp
 		}
 	}
 	
-	WRITE_HANDLER( kchamp_videoram_w )
+	public static WriteHandlerPtr kchamp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kchamp_colorram_w )
+	public static WriteHandlerPtr kchamp_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kchamp_flipscreen_w )
+	public static WriteHandlerPtr kchamp_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x01);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

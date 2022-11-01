@@ -98,11 +98,11 @@ public class c140
 		v->sample_loop=0;
 	}
 	
-	READ_HANDLER( C140_r )
+	public static ReadHandlerPtr C140_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset&=0x1ff;
 		return REG[offset];
-	}
+	} };
 	
 	/*
 	   find_sample: compute the actual address of a sample given it's
@@ -155,7 +155,7 @@ public class c140
 	
 		return (newadr);
 	}
-	WRITE_HANDLER( C140_w )
+	public static WriteHandlerPtr C140_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		stream_update(stream, 0);
 	
@@ -188,7 +188,7 @@ public class c140
 				}
 			}
 		}
-	}
+	} };
 	
 	INLINE int limit(INT32 in)
 	{

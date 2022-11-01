@@ -45,7 +45,7 @@ public class dorachan
 	
 	int dorachan_ctrl; /* bit 6 - screen flip */
 	
-	WRITE_HANDLER( dorachan_videoram_w )
+	public static WriteHandlerPtr dorachan_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
@@ -62,5 +62,5 @@ public class dorachan
 				data >>= 1;
 			}
 		}
-	}
+	} };
 }

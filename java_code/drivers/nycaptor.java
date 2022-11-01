@@ -171,15 +171,15 @@ public class nycaptor
 	
 	static UINT8 snd_data;
 	
-	READ_HANDLER( from_snd_r )
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return snd_data;
-	}
+	} };
 	
-	WRITE_HANDLER( to_main_w )
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		snd_data = data;
-	}
+	} };
 	
 	
 	READ_HANDLER(nycaptor_sharedram_r)
@@ -280,10 +280,10 @@ public class nycaptor
 	};
 	
 	
-	static READ_HANDLER ( nycaptor_generic_control_r )
+	static public static ReadHandlerPtr nycaptor_generic_control_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return generic_control_reg;
-	}
+	} };
 	
 	public static WriteHandlerPtr nycaptor_generic_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

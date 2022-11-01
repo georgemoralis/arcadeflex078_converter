@@ -144,7 +144,7 @@ public class supertnk
 	
 	
 	
-	WRITE_HANDLER( supertnk_videoram_w )
+	public static WriteHandlerPtr supertnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int x, y, i, col, col0, col1, col2;
 	
@@ -170,17 +170,17 @@ public class supertnk
 	
 			plot_pixel(tmpbitmap, x+i, y, Machine->pens[col]);
 		}
-	}
+	} };
 	
 	
 	
-	READ_HANDLER( supertnk_videoram_r )
+	public static ReadHandlerPtr supertnk_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (supertnk_video_bitplane < 3)
 			return supertnk_videoram[0x2000 * supertnk_video_bitplane + offset];
 		else
 			return 0;
-	}
+	} };
 	
 	
 	VIDEO_UPDATE( supertnk )
@@ -190,14 +190,14 @@ public class supertnk
 	
 	
 	
-	WRITE_HANDLER( supertnk_intack )
+	public static WriteHandlerPtr supertnk_intack = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( supertnk_bankswitch_w )
+	public static WriteHandlerPtr supertnk_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		UINT8 *ROM = memory_region(REGION_CPU1);
@@ -214,11 +214,11 @@ public class supertnk
 		}
 		bankaddress = 0x4000 + supertnk_rom_bank * 0x1000;
 		cpu_setbank(1,&ROM[bankaddress]);
-	}
+	} };
 	
 	
 	
-	WRITE_HANDLER( supertnk_set_video_bitplane )
+	public static WriteHandlerPtr supertnk_set_video_bitplane = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset)
 		{
@@ -231,7 +231,7 @@ public class supertnk
 				supertnk_video_bitplane |= ((data & 0x01) << 1);
 				break;
 		}
-	}
+	} };
 	
 	
 	

@@ -133,35 +133,35 @@ public class hcastle
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( hcastle_pf1_video_w )
+	public static WriteHandlerPtr hcastle_pf1_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (hcastle_pf1_videoram[offset] != data)
 		{
 			hcastle_pf1_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset & 0xbff);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( hcastle_pf2_video_w )
+	public static WriteHandlerPtr hcastle_pf2_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (hcastle_pf2_videoram[offset] != data)
 		{
 			hcastle_pf2_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset & 0xbff);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( hcastle_gfxbank_w )
+	public static WriteHandlerPtr hcastle_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gfx_bank = data;
-	}
+	} };
 	
-	READ_HANDLER( hcastle_gfxbank_r )
+	public static ReadHandlerPtr hcastle_gfxbank_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return gfx_bank;
-	}
+	} };
 	
-	WRITE_HANDLER( hcastle_pf1_control_w )
+	public static WriteHandlerPtr hcastle_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==3)
 		{
@@ -175,9 +175,9 @@ public class hcastle
 			tilemap_set_flip(fg_tilemap, (data & 0x08) ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		}
 		K007121_ctrl_0_w(offset,data);
-	}
+	} };
 	
-	WRITE_HANDLER( hcastle_pf2_control_w )
+	public static WriteHandlerPtr hcastle_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==3)
 		{
@@ -191,7 +191,7 @@ public class hcastle
 			tilemap_set_flip(bg_tilemap, (data & 0x08) ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		}
 		K007121_ctrl_1_w(offset,data);
-	}
+	} };
 	
 	/*****************************************************************************/
 	

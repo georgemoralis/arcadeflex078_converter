@@ -13,7 +13,7 @@ package vidhrdw;
 public class subs
 {
 	
-	WRITE_HANDLER( subs_invert1_w )
+	public static WriteHandlerPtr subs_invert1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((offset & 0x01) == 1)
 		{
@@ -25,9 +25,9 @@ public class subs
 			palette_set_color(1, 0x00, 0x00, 0x00);
 			palette_set_color(0, 0xFF, 0xFF, 0xFF);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( subs_invert2_w )
+	public static WriteHandlerPtr subs_invert2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((offset & 0x01) == 1)
 		{
@@ -39,7 +39,7 @@ public class subs
 			palette_set_color(3, 0x00, 0x00, 0x00);
 			palette_set_color(2, 0xFF, 0xFF, 0xFF);
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************

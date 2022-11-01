@@ -56,7 +56,7 @@ public class safarir
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
 	
-	WRITE_HANDLER( safarir_ram_w )
+	public static WriteHandlerPtr safarir_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (safarir_ram[offset] != data)
 		{
@@ -71,23 +71,23 @@ public class safarir
 				tilemap_mark_tile_dirty(bg_tilemap, offset - 0x400);
 			}
 		}
-	}
+	} };
 	
-	READ_HANDLER( safarir_ram_r )
+	public static ReadHandlerPtr safarir_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return safarir_ram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( safarir_scroll_w )
+	public static WriteHandlerPtr safarir_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( safarir_ram_bank_w )
+	public static WriteHandlerPtr safarir_ram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		safarir_ram = data ? safarir_ram1 : safarir_ram2;
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

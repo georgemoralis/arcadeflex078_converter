@@ -28,7 +28,7 @@ public class megazone
 	
 	
 	
-	READ_HANDLER( megazone_portA_r )
+	public static ReadHandlerPtr megazone_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int clock,timer;
 	
@@ -46,7 +46,7 @@ public class megazone
 		/* low three bits come from the 8039 */
 	
 		return (timer << 4) | i8039_status;
-	}
+	} };
 	
 	public static WriteHandlerPtr megazone_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -66,43 +66,43 @@ public class megazone
 		}
 	} };
 	
-	WRITE_HANDLER( megazone_videoram2_w )
+	public static WriteHandlerPtr megazone_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (megazone_videoram2[offset] != data)
 		{
 			megazone_videoram2[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( megazone_colorram2_w )
+	public static WriteHandlerPtr megazone_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (megazone_colorram2[offset] != data)
 		{
 			megazone_colorram2[offset] = data;
 		}
-	}
+	} };
 	
-	READ_HANDLER( megazone_sharedram_r )
+	public static ReadHandlerPtr megazone_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return(megazone_sharedram[offset]);
-	}
+	} };
 	
-	WRITE_HANDLER( megazone_sharedram_w )
+	public static WriteHandlerPtr megazone_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		megazone_sharedram[offset] = data;
-	}
+	} };
 	
 	public static WriteHandlerPtr megazone_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
-	WRITE_HANDLER( i8039_irqen_and_status_w )
+	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((data & 0x80) == 0)
 			cpu_set_irq_line(2, 0, CLEAR_LINE);
 		i8039_status = (data & 0x70) >> 4;
-	}
+	} };
 	
 	public static WriteHandlerPtr megazone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

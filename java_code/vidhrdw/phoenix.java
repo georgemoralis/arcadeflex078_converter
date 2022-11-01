@@ -201,12 +201,12 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	READ_HANDLER( phoenix_videoram_r )
+	public static ReadHandlerPtr phoenix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return current_videoram_pg[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( phoenix_videoram_w )
+	public static WriteHandlerPtr phoenix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -222,10 +222,10 @@ public class phoenix
 	
 		/* as part of the protecion, Survival executes code from $43a4 */
 		rom[offset + 0x4000] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( phoenix_videoreg_w )
+	public static WriteHandlerPtr phoenix_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if (current_videoram_pg_index != (data & 1))
 		{
@@ -246,9 +246,9 @@ public class phoenix
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( pleiads_videoreg_w )
+	public static WriteHandlerPtr pleiads_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    if (current_videoram_pg_index != (data & 1))
 		{
@@ -280,24 +280,24 @@ public class phoenix
 	
 		/* send two bits to sound control C (not sure if they are there) */
 		pleiads_sound_control_c_w(offset, data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( phoenix_scroll_w )
+	public static WriteHandlerPtr phoenix_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap,0,data);
-	}
+	} };
 	
 	
-	READ_HANDLER( phoenix_input_port_0_r )
+	public static ReadHandlerPtr phoenix_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (cocktail_mode)
 			return (input_port_0_r(0) & 0x07) | (input_port_1_r(0) & 0xf8);
 		else
 			return input_port_0_r(0);
-	}
+	} };
 	
-	READ_HANDLER( pleiads_input_port_0_r )
+	public static ReadHandlerPtr pleiads_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = phoenix_input_port_0_r(0) & 0xf7;
 	
@@ -318,9 +318,9 @@ public class phoenix
 		}
 	
 		return ret;
-	}
+	} };
 	
-	READ_HANDLER( survival_input_port_0_r )
+	public static ReadHandlerPtr survival_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int ret = phoenix_input_port_0_r(0);
 	
@@ -330,9 +330,9 @@ public class phoenix
 		}
 	
 		return ret;
-	}
+	} };
 	
-	READ_HANDLER( survival_protection_r )
+	public static ReadHandlerPtr survival_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (activecpu_get_pc() == 0x2017)
 		{
@@ -340,7 +340,7 @@ public class phoenix
 		}
 	
 		return survival_protection_value;
-	}
+	} };
 	
 	/***************************************************************************
 	

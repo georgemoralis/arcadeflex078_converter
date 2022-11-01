@@ -111,7 +111,7 @@ public class clayshoo
 	}
 	
 	
-	WRITE_HANDLER( clayshoo_analog_reset_w )
+	public static WriteHandlerPtr clayshoo_analog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* reset the analog value, and start two times that will fire
 		   off in a short period proportional to the position of the
@@ -121,11 +121,11 @@ public class clayshoo
 	
 		timer_set(compute_duration(readinputport(4)), 0x02, reset_analog_bit);
 		timer_set(compute_duration(readinputport(5)), 0x01, reset_analog_bit);
-	}
+	} };
 	
 	
-	READ_HANDLER( clayshoo_analog_r )
+	public static ReadHandlerPtr clayshoo_analog_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return analog_port_val;
-	}
+	} };
 }

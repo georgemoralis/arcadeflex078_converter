@@ -84,25 +84,25 @@ public class rockola
 		}
 	}
 	
-	WRITE_HANDLER( rockola_videoram_w )
+	public static WriteHandlerPtr rockola_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_videoram2_w )
+	public static WriteHandlerPtr rockola_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (rockola_videoram2[offset] != data)
 		{
 			rockola_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_colorram_w )
+	public static WriteHandlerPtr rockola_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
@@ -110,18 +110,18 @@ public class rockola
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_charram_w )
+	public static WriteHandlerPtr rockola_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (rockola_charram[offset] != data)
 		{
 			rockola_charram[offset] = data;
 			tilemap_mark_all_tiles_dirty(fg_tilemap);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_flipscreen_w )
+	public static WriteHandlerPtr rockola_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank;
 	
@@ -156,17 +156,17 @@ public class rockola
 			flip_screen_set(data & 0x80);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_scrollx_w )
+	public static WriteHandlerPtr rockola_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( rockola_scrolly_w )
+	public static WriteHandlerPtr rockola_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -275,7 +275,7 @@ public class rockola
 		}
 	}
 	
-	WRITE_HANDLER( satansat_b002_w )
+	public static WriteHandlerPtr satansat_b002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 flips screen */
 	
@@ -292,9 +292,9 @@ public class rockola
 		interrupt_enable_w(0,data & 0x02);
 	
 		/* other bits unused */
-	}
+	} };
 	
-	WRITE_HANDLER( satansat_backcolor_w )
+	public static WriteHandlerPtr satansat_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0-1 select background color. Other bits unused. */
 	
@@ -309,7 +309,7 @@ public class rockola
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void satansat_get_bg_tile_info(int tile_index)
 	{

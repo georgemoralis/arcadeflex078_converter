@@ -83,7 +83,7 @@ public class xyonix
 	}
 	
 	
-	READ_HANDLER ( xyonix_io_r )
+	public static ReadHandlerPtr xyonix_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int regPC = activecpu_get_pc();
 	
@@ -141,13 +141,13 @@ public class xyonix
 	//	usrintf_showmessage("%02x",e0_data);
 	
 		return 0xff;
-	}
+	} };
 	
-	WRITE_HANDLER ( xyonix_io_w )
+	public static WriteHandlerPtr xyonix_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	//	logerror ("xyonix_port_e0_w %02x - PC = %04x\n", data, activecpu_get_pc());
 		e0_data = data;
-	}
+	} };
 	
 	/* Mem / Port Maps ***********************************************************/
 	

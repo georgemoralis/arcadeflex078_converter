@@ -52,10 +52,10 @@ public class leprechn
 	}
 	
 	
-	WRITE_HANDLER( leprechn_graphics_command_w )
+	public static WriteHandlerPtr leprechn_graphics_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    graphics_command = data;
-	}
+	} };
 	
 	
 	static void clear_screen_done_callback(int param)
@@ -65,7 +65,7 @@ public class leprechn
 	}
 	
 	
-	WRITE_HANDLER( leprechn_videoram_w )
+	public static WriteHandlerPtr leprechn_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int sx,sy;
 	
@@ -137,11 +137,11 @@ public class leprechn
 		    // Doesn't seem to happen.
 		    logerror("Unknown Graphics Command #%2X at %04X\n", graphics_command, activecpu_get_pc());
 	    }
-	}
+	} };
 	
 	
-	READ_HANDLER( leprechn_videoram_r )
+	public static ReadHandlerPtr leprechn_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return videoram[y * Machine->drv->screen_width + x];
-	}
+	} };
 }

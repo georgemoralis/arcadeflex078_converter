@@ -126,13 +126,13 @@ public class shangkid
 		bbx_sound_enable = data;
 	} };
 	
-	WRITE_HANDLER( shangkid_bbx_AY8910_control_w )
+	public static WriteHandlerPtr shangkid_bbx_AY8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bbx_AY8910_control = data;
 		AY8910_control_port_0_w( offset, data );
-	}
+	} };
 	
-	WRITE_HANDLER( shangkid_bbx_AY8910_write_w )
+	public static WriteHandlerPtr shangkid_bbx_AY8910_write_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch( bbx_AY8910_control )
 		{
@@ -159,14 +159,14 @@ public class shangkid
 			AY8910_write_port_0_w( offset, data );
 			break;
 		}
-	}
+	} };
 	
 	/***************************************************************************************/
 	
-	READ_HANDLER( shangkid_soundlatch_r )
+	public static ReadHandlerPtr shangkid_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sound_latch;
-	}
+	} };
 	
 	/***************************************************************************************/
 	

@@ -341,7 +341,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams_vram_select_w )
+	public static WriteHandlerPtr williams_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* VRAM/ROM banking from bit 0 */
 		vram_bank = data & 0x01;
@@ -361,7 +361,7 @@ public class williams
 		{
 			cpu_setbank(1, williams_videoram);
 		}
-	}
+	} };
 	
 	
 	
@@ -377,16 +377,16 @@ public class williams
 		pia_2_cb1_w(0, (param == 0xff) ? 0 : 1);
 	}
 	
-	WRITE_HANDLER( williams_snd_cmd_w )
+	public static WriteHandlerPtr williams_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* the high two bits are set externally, and should be 1 */
 		timer_set(TIME_NOW, data | 0xc0, williams_deferred_snd_cmd_w);
-	}
+	} };
 	
-	WRITE_HANDLER( playball_snd_cmd_w )
+	public static WriteHandlerPtr playball_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW, data, williams_deferred_snd_cmd_w);
-	}
+	} };
 	
 	
 	
@@ -396,22 +396,22 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams_port_select_w )
+	public static WriteHandlerPtr williams_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		port_select = data;
-	}
+	} };
 	
 	
-	READ_HANDLER( williams_input_port_0_3_r )
+	public static ReadHandlerPtr williams_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(port_select ? 3 : 0);
-	}
+	} };
 	
 	
-	READ_HANDLER( williams_input_port_1_4_r )
+	public static ReadHandlerPtr williams_input_port_1_4_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(port_select ? 4 : 1);
-	}
+	} };
 	
 	
 	/*
@@ -439,7 +439,7 @@ public class williams
 	 *
 	 */
 	
-	READ_HANDLER( williams_49way_port_0_r )
+	public static ReadHandlerPtr williams_49way_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int joy_x, joy_y;
 		int bits_x, bits_y;
@@ -451,16 +451,16 @@ public class williams
 		bits_y = (0x70 >> (7 - joy_y)) & 0x0f;
 	
 		return (bits_x << 4) | bits_y;
-	}
+	} };
 	
 	
-	READ_HANDLER( williams_input_port_49way_0_5_r )
+	public static ReadHandlerPtr williams_input_port_49way_0_5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (port_select)
 			return williams_49way_port_0_r(0);
 		else
 			return readinputport(5);
-	}
+	} };
 	
 	
 	
@@ -536,7 +536,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams2_bank_select_w )
+	public static WriteHandlerPtr williams2_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static const UINT32 bank[8] = { 0, 0x10000, 0x20000, 0x10000, 0, 0x30000, 0x40000, 0x30000 };
 	
@@ -569,7 +569,7 @@ public class williams
 	
 		/* regardless, the top 2k references videoram */
 		cpu_setbank(3, williams_videoram + 0x8800);
-	}
+	} };
 	
 	
 	
@@ -598,7 +598,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( williams2_7segment_w )
+	public static WriteHandlerPtr williams2_7segment_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int n;
 		char dot;
@@ -629,7 +629,7 @@ public class williams
 			logerror("[ %c]\n", dot);
 		else
 			logerror("[%d%c]\n", n, dot);
-	}
+	} };
 	
 	
 	
@@ -651,7 +651,7 @@ public class williams
 	
 	
 	
-	WRITE_HANDLER( defender_bank_select_w )
+	public static WriteHandlerPtr defender_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT32 bank_offset = defender_bank_list[data & 7];
 	
@@ -671,10 +671,10 @@ public class williams
 			memory_set_bankhandler_r(2, 0, MRA_BANK2);
 			memory_set_bankhandler_w(2, 0, MWA_ROM);
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( defender_input_port_0_r )
+	public static ReadHandlerPtr defender_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int keys, altkeys;
 	
@@ -696,10 +696,10 @@ public class williams
 		}
 	
 		return keys;
-	}
+	} };
 	
 	
-	READ_HANDLER( defender_io_r )
+	public static ReadHandlerPtr defender_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* PIAs */
 		if (offset >= 0x0c00 && offset < 0x0c04)
@@ -713,10 +713,10 @@ public class williams
 	
 		/* If not bank 0 then return banked RAM */
 		return defender_bank_base[offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( defender_io_w )
+	public static WriteHandlerPtr defender_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* write the data through */
 		defender_bank_base[offset] = data;
@@ -734,7 +734,7 @@ public class williams
 			pia_1_w(offset & 3, data);
 		else if (offset >= 0x0c04 && offset < 0x0c08)
 			pia_0_w(offset & 3, data);
-	}
+	} };
 	
 	
 	
@@ -744,7 +744,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	READ_HANDLER( mayday_protection_r )
+	public static ReadHandlerPtr mayday_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Mayday does some kind of protection check that is not currently understood  */
 		/* However, the results of that protection check are stored at $a190 and $a191 */
@@ -752,7 +752,7 @@ public class williams
 		/* the protection from resetting the machine, we just return $a193 for $a190,  */
 		/* and $a194 for $a191. */
 		return mayday_protection[offset + 3];
-	}
+	} };
 	
 	
 	
@@ -762,7 +762,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	READ_HANDLER( stargate_input_port_0_r )
+	public static ReadHandlerPtr stargate_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int keys, altkeys;
 	
@@ -784,7 +784,7 @@ public class williams
 		}
 	
 		return keys;
-	}
+	} };
 	
 	
 	
@@ -801,7 +801,7 @@ public class williams
 	};
 	
 	
-	WRITE_HANDLER( blaster_vram_select_w )
+	public static WriteHandlerPtr blaster_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -820,10 +820,10 @@ public class williams
 			cpu_setbank(1, williams_videoram);
 			cpu_setbank(2, williams_videoram + 0x4000);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( blaster_bank_select_w )
+	public static WriteHandlerPtr blaster_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -834,7 +834,7 @@ public class williams
 		{
 			cpu_setbank(1, &RAM[blaster_bank_offset[blaster_bank]]);
 		}
-	}
+	} };
 	
 	
 	

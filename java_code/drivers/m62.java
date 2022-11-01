@@ -100,7 +100,7 @@ public class m62
 	/* service mode to test the ROMs. */
 	static int ldrun2_bankswap;
 	
-	READ_HANDLER( ldrun2_bankswitch_r )
+	public static ReadHandlerPtr ldrun2_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (ldrun2_bankswap)
 		{
@@ -114,9 +114,9 @@ public class m62
 				cpu_setbank(1,&RAM[0x12000]);
 		}
 		return 0;
-	}
+	} };
 	
-	WRITE_HANDLER( ldrun2_bankswitch_w )
+	public static WriteHandlerPtr ldrun2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int bankcontrol[2];
 		int banks[30] =
@@ -145,28 +145,28 @@ public class m62
 				ldrun2_bankswap = 2;
 			else ldrun2_bankswap = 0;
 		}
-	}
+	} };
 	
 	
 	/* Lode Runner 3 has, it seems, a poor man's protection consisting of a PAL */
 	/* (I think; it's included in the ROM set) which is read at certain times, */
 	/* and the game crashes if ti doesn't match the expected values. */
-	READ_HANDLER( ldrun3_prot_5_r )
+	public static ReadHandlerPtr ldrun3_prot_5_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 5;
-	}
+	} };
 	
-	READ_HANDLER( ldrun3_prot_7_r )
+	public static ReadHandlerPtr ldrun3_prot_7_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 7;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( ldrun4_bankswitch_w )
+	public static WriteHandlerPtr ldrun4_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bankaddress = 0x10000 + ((data & 0x01) * 0x4000);
 		set_m64_bank();
-	}
+	} };
 	
 	public static WriteHandlerPtr kidniki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -182,12 +182,12 @@ public class m62
 		set_m64_bank();
 	} };
 	
-	WRITE_HANDLER( spelunk2_bankswitch_w )
+	public static WriteHandlerPtr spelunk2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		bankaddress = 0x20000 + 0x1000 * ((data & 0xc0)>>6);
 		bankaddress2 = 0x10000 + 0x0400 *  (data & 0x3c);
 		set_m64_bank2();
-	}
+	} };
 	
 	public static WriteHandlerPtr youjyudn_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

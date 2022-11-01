@@ -127,12 +127,12 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	READ_HANDLER( m107_vram_r )
+	public static ReadHandlerPtr m107_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return m107_vram_data[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( m107_vram_w )
+	public static WriteHandlerPtr m107_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int a;
 	
@@ -153,11 +153,11 @@ public class m107
 	
 		if (a==pf4_vram_ptr)
 			tilemap_mark_tile_dirty( pf4_layer,offset/4);
-	}
+	} };
 	
 	/*****************************************************************************/
 	
-	WRITE_HANDLER( m107_control_w )
+	public static WriteHandlerPtr m107_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		static int last_pf1,last_pf2,last_pf3,last_pf4;
 	
@@ -217,7 +217,7 @@ public class m107
 				m107_raster_irq_position=((m107_control[0x1f]<<8) | m107_control[0x1e])-128;
 				break;
 		}
-	}
+	} };
 	
 	/*****************************************************************************/
 	
@@ -464,11 +464,11 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	WRITE_HANDLER( m107_spritebuffer_w )
+	public static WriteHandlerPtr m107_spritebuffer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset==0) {
 	//		logerror("%04x: buffered spriteram\n",activecpu_get_pc());
 			memcpy(m107_spriteram,spriteram,0x1000);
 		}
-	}
+	} };
 }

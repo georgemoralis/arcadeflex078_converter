@@ -30,43 +30,43 @@ public class gaplus
 	}
 	
 	/* shared ram functions */
-	READ_HANDLER( gaplus_sharedram_r )
+	public static ReadHandlerPtr gaplus_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return gaplus_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_sharedram_w )
+	public static WriteHandlerPtr gaplus_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset == 0x082c)	/* 0x102c */
 			flip_screen_set(data);
 	    gaplus_sharedram[offset] = data;
-	}
+	} };
 	
-	READ_HANDLER( gaplus_snd_sharedram_r )
+	public static ReadHandlerPtr gaplus_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return gaplus_snd_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_snd_sharedram_w )
+	public static WriteHandlerPtr gaplus_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    gaplus_snd_sharedram[offset] = data;
-	}
+	} };
 	
 	/* irq control functions */
-	WRITE_HANDLER( gaplus_interrupt_ctrl_2_w )
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int_enable_2 = offset;
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_interrupt_ctrl_3a_w )
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_3a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int_enable_3 = 1;
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_interrupt_ctrl_3b_w )
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_3b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int_enable_3 = 0;
-	}
+	} };
 	
 	public static InterruptHandlerPtr gaplus_interrupt_1 = new InterruptHandlerPtr() {public void handler() {
 	
@@ -86,13 +86,13 @@ public class gaplus
 	    	cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	
-	WRITE_HANDLER( gaplus_reset_2_3_w )
+	public static WriteHandlerPtr gaplus_reset_2_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    int_enable_2 = int_enable_3 = 1;
 	    cpu_set_reset_line(1,PULSE_LINE);
 	    cpu_set_reset_line(2,PULSE_LINE);
 	    credits = coincounter1 = coincounter2 = 0;
-	}
+	} };
 	
 	/************************************************************************************
 	*																					*
@@ -100,27 +100,27 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	WRITE_HANDLER( gaplus_customio_1_w )
+	public static WriteHandlerPtr gaplus_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    gaplus_customio_1[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_customio_2_w )
+	public static WriteHandlerPtr gaplus_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    gaplus_customio_2[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( gaplus_customio_3_w )
+	public static WriteHandlerPtr gaplus_customio_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ((offset == 0x09) && (data >= 0x0f))
 			sample_start(0,0,0);
 	    gaplus_customio_3[offset] = data;
-	}
+	} };
 	
 	static int credmoned [] = { 1, 1, 2, 3 };
 	static int monedcred [] = { 1, 2, 1, 1 };
 	
-	READ_HANDLER( gaplus_customio_1_r )
+	public static ReadHandlerPtr gaplus_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode;
 	
@@ -160,9 +160,9 @@ public class gaplus
 	        }
 	    }
 	    return gaplus_customio_1[offset];
-	}
+	} };
 	
-	READ_HANDLER( gaplus_customio_2_r )
+	public static ReadHandlerPtr gaplus_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int val, mode;
 	
@@ -202,9 +202,9 @@ public class gaplus
 	    }
 		else
 	        return gaplus_customio_2[offset];
-	}
+	} };
 	
-	READ_HANDLER( gaplus_customio_3_r )
+	public static ReadHandlerPtr gaplus_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode;
 	
@@ -243,7 +243,7 @@ public class gaplus
 	                return gaplus_customio_3[offset];
 	        }
 	    }
-	}
+	} };
 	
 	/************************************************************************************
 	*																					*
@@ -251,7 +251,7 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	READ_HANDLER( gapluso_customio_1_r )
+	public static ReadHandlerPtr gapluso_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode, val, temp1, temp2;
 	
@@ -379,9 +379,9 @@ public class gaplus
 			}
 		}
 	    return gaplus_customio_1[offset];
-	}
+	} };
 	
-	READ_HANDLER( gapluso_customio_2_r )
+	public static ReadHandlerPtr gapluso_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int val, mode;
 	
@@ -421,9 +421,9 @@ public class gaplus
 	    }
 		else
 			return gaplus_customio_2[offset];
-	}
+	} };
 	
-	READ_HANDLER( gapluso_customio_3_r )
+	public static ReadHandlerPtr gapluso_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode;
 	
@@ -459,7 +459,7 @@ public class gaplus
 	                return gaplus_customio_3[offset];
 	        }
 	    }
-	}
+	} };
 	
 	/************************************************************************************
 	*																					*
@@ -467,7 +467,7 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	READ_HANDLER( gaplusa_customio_1_r )
+	public static ReadHandlerPtr gaplusa_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode, val, temp1, temp2;
 	
@@ -593,9 +593,9 @@ public class gaplus
 	        }
 	    }
 	    return gaplus_customio_1[offset];
-	}
+	} };
 	
-	READ_HANDLER( gaplusa_customio_2_r )
+	public static ReadHandlerPtr gaplusa_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int val, mode;
 	
@@ -637,9 +637,9 @@ public class gaplus
 	    }
 		else
 			return gaplus_customio_2[offset];
-	}
+	} };
 	
-	READ_HANDLER( gaplusa_customio_3_r )
+	public static ReadHandlerPtr gaplusa_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int mode;
 	
@@ -675,6 +675,6 @@ public class gaplus
 	                return gaplus_customio_3[offset];
 	        }
 	    }
-	}
+	} };
 	
 }

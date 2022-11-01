@@ -40,7 +40,7 @@ public class mathbox
 	
 	/*define MB_TEST*/
 	
-	WRITE_HANDLER( mb_go_w )
+	public static WriteHandlerPtr mb_go_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	  s32 mb_temp;  /* temp 32-bit multiply results */
 	  s16 mb_q;     /* temp used in division */
@@ -264,20 +264,20 @@ public class mathbox
 	#ifdef MB_TEST
 	  logerror("  result %04x\n", mb_result & 0xffff);
 	#endif
-	}
+	} };
 	
-	READ_HANDLER( mb_status_r )
+	public static ReadHandlerPtr mb_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x00; /* always done! */
-	}
+	} };
 	
-	READ_HANDLER( mb_lo_r )
+	public static ReadHandlerPtr mb_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mb_result & 0xff;
-	}
+	} };
 	
-	READ_HANDLER( mb_hi_r )
+	public static ReadHandlerPtr mb_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (mb_result >> 8) & 0xff;
-	}
+	} };
 }

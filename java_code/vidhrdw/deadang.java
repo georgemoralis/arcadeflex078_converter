@@ -13,26 +13,26 @@ public class deadang
 	
 	/******************************************************************************/
 	
-	WRITE_HANDLER( deadang_foreground_w )
+	public static WriteHandlerPtr deadang_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		deadang_video_data[offset]=data;
 		tilemap_mark_tile_dirty( pf1_layer, offset/2 );
-	}
+	} };
 	
-	WRITE_HANDLER( deadang_text_w )
+	public static WriteHandlerPtr deadang_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset]=data;
 		tilemap_mark_tile_dirty( text_layer, offset/2 );
-	}
+	} };
 	
-	WRITE_HANDLER( deadang_bank_w )
+	public static WriteHandlerPtr deadang_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		deadangle_tilebank = data&1;
 		if (deadangle_tilebank!=deadangle_oldtilebank) {
 			deadangle_oldtilebank = deadangle_tilebank;
 			tilemap_mark_all_tiles_dirty (pf1_layer);
 		}
-	}
+	} };
 	
 	/******************************************************************************/
 	

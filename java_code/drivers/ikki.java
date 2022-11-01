@@ -23,24 +23,24 @@ public class ikki
 	/****************************************************************************/
 	
 	
-	WRITE_HANDLER( ikki_sharedram_w )
+	public static WriteHandlerPtr ikki_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ikki_sharedram[offset] = data;
-	}
+	} };
 	
-	READ_HANDLER( ikki_sharedram_r )
+	public static ReadHandlerPtr ikki_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ikki_sharedram[offset];
-	}
+	} };
 	
-	READ_HANDLER( ikki_e000_r )
+	public static ReadHandlerPtr ikki_e000_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	/* bit1: interrupt type?, bit0: CPU2 busack? */
 	
 		if (cpu_getiloops() == 0)
 			return 0;
 		return 2;
-	}
+	} };
 	
 	/****************************************************************************/
 	

@@ -17,19 +17,19 @@ public class rollrace
 	
 	
 	
-	WRITE_HANDLER( rollrace_backgroundpage_w);
-	WRITE_HANDLER( rollrace_backgroundcolor_w);
+	public static WriteHandlerPtr rollrace_backgroundpage_w = new WriteHandlerPtr() {public void handler(int offset, int data);
+	public static WriteHandlerPtr rollrace_backgroundcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
 	
-	READ_HANDLER( ra_fake_d800_r )
+	public static ReadHandlerPtr ra_fake_d800_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0x51;
-	}
+	} };
 	
-	WRITE_HANDLER( ra_fake_d800_w )
+	public static WriteHandlerPtr ra_fake_d800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	/*	logerror("d900: %02X\n",data);*/
-	}
+	} };
 	
 	static MEMORY_READ_START (readmem)
 		{ 0x0000, 0x7fff, MRA_ROM },

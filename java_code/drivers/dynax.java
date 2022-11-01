@@ -103,17 +103,17 @@ public class dynax
 		cpu_set_irq_line_and_vector(0, 0, irq ? ASSERT_LINE : CLEAR_LINE, 0xc7 | irq); /* rst $xx */
 	}
 	
-	WRITE_HANDLER( dynax_vblank_ack_w )
+	public static WriteHandlerPtr dynax_vblank_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_vblank_irq = 0;
 		sprtmtch_update_irq();
-	}
+	} };
 	
-	WRITE_HANDLER( dynax_blitter_ack_w )
+	public static WriteHandlerPtr dynax_blitter_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_blitter_irq = 0;
 		sprtmtch_update_irq();
-	}
+	} };
 	
 	public static InterruptHandlerPtr sprtmtch_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -353,10 +353,10 @@ public class dynax
 	{
 		hnoridur_layer_half2_w(0,data >> 1);
 	} };
-	WRITE_HANDLER( nanajign_layer_half_w )
+	public static WriteHandlerPtr nanajign_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		hanamai_layer_half_w(0,~data);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress sprtmtch_readmem[]={
@@ -780,10 +780,10 @@ public class dynax
 			rom[0x0d] = 0x00;	// RTC
 	} };
 	
-	WRITE_HANDLER( yarunara_flipscreen_w )
+	public static WriteHandlerPtr yarunara_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dynax_flipscreen_w(0,(data&2)?1:0);
-	}
+	} };
 	
 	public static IO_ReadPort yarunara_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

@@ -32,11 +32,11 @@ public class pitnrun
 		zaccept = 1;
 	}
 	
-	READ_HANDLER( pitnrun_mcu_data_r )
+	public static ReadHandlerPtr pitnrun_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		timer_set(TIME_NOW,0,pitnrun_mcu_real_data_r);
 		return toz80;
-	}
+	} };
 	
 	void pitnrun_mcu_real_data_w(int data)
 	{
@@ -45,31 +45,31 @@ public class pitnrun
 		fromz80 = data;
 	}
 	
-	WRITE_HANDLER( pitnrun_mcu_data_w )
+	public static WriteHandlerPtr pitnrun_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		timer_set(TIME_NOW,data,pitnrun_mcu_real_data_w);
-	}
+	} };
 	
-	READ_HANDLER( pitnrun_mcu_status_r )
+	public static ReadHandlerPtr pitnrun_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* mcu synchronization */
 		cpu_yielduntil_time (TIME_IN_USEC(5));
 		/* bit 0 = the 68705 has read data from the Z80 */
 		/* bit 1 = the 68705 has written data for the Z80 */
 		return ~((zready << 1) | (zaccept << 0));
-	}
+	} };
 	
 	static unsigned char portA_in,portA_out;
 	
-	READ_HANDLER( pitnrun_68705_portA_r )
+	public static ReadHandlerPtr pitnrun_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return portA_in;
-	}
+	} };
 	
-	WRITE_HANDLER( pitnrun_68705_portA_w )
+	public static WriteHandlerPtr pitnrun_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		portA_out = data;
-	}
+	} };
 	
 	
 	
@@ -91,10 +91,10 @@ public class pitnrun
 	 *               the main Z80 memory location to access)
 	 */
 	
-	READ_HANDLER( pitnrun_68705_portB_r )
+	public static ReadHandlerPtr pitnrun_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return 0xff;
-	}
+	} };
 	
 	static int address;
 	
@@ -109,7 +109,7 @@ public class pitnrun
 		zaccept = 0;
 	}
 	
-	WRITE_HANDLER( pitnrun_68705_portB_w )
+	public static WriteHandlerPtr pitnrun_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (~data & 0x02)
 		{
@@ -143,7 +143,7 @@ public class pitnrun
 		{
 			address = (address & 0x00ff) | (portA_out << 8);
 		}
-	}
+	} };
 	
 	/*
 	 *  Port C connections:
@@ -155,10 +155,10 @@ public class pitnrun
 	 *                  passes through)
 	 */
 	
-	READ_HANDLER( pitnrun_68705_portC_r )
+	public static ReadHandlerPtr pitnrun_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (zready << 0) | (zaccept << 1);
-	}
+	} };
 	
 	
 	

@@ -166,9 +166,9 @@ public class warpwarp
 	}
 	
 	
-	WRITE_HANDLER( warpwarp_flip_screen_w )
+	public static WriteHandlerPtr warpwarp_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 1);
-	}
+	} };
 	
 }

@@ -54,7 +54,7 @@ public class mainevt
 	} };
 	
 	
-	WRITE_HANDLER( mainevt_bankswitch_w )
+	public static WriteHandlerPtr mainevt_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
@@ -72,9 +72,9 @@ public class mainevt
 		/* bit 7 = NINITSET (unknown) */
 	
 		/* other bits unused */
-	}
+	} };
 	
-	WRITE_HANDLER( mainevt_coin_w )
+	public static WriteHandlerPtr mainevt_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_counter_w(0,data & 0x10);
 		coin_counter_w(1,data & 0x20);
@@ -82,27 +82,27 @@ public class mainevt
 		set_led_status(1,data & 0x02);
 		set_led_status(2,data & 0x04);
 		set_led_status(3,data & 0x08);
-	}
+	} };
 	
-	WRITE_HANDLER( mainevt_sh_irqtrigger_w )
+	public static WriteHandlerPtr mainevt_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
-	WRITE_HANDLER( mainevt_sh_irqcontrol_w )
+	public static WriteHandlerPtr mainevt_sh_irqcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UPD7759_reset_w(0, data & 2);
 		UPD7759_start_w(0, data & 1);
 	
 		interrupt_enable_w(0,data & 4);
-	}
+	} };
 	
-	WRITE_HANDLER( devstor_sh_irqcontrol_w )
+	public static WriteHandlerPtr devstor_sh_irqcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	interrupt_enable_w(0,data & 4);
-	}
+	} };
 	
-	WRITE_HANDLER( mainevt_sh_bankswitch_w )
+	public static WriteHandlerPtr mainevt_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank_A,bank_B;
 	
@@ -115,9 +115,9 @@ public class mainevt
 	
 		/* bits 4-5 select the UPD7759 bank */
 		UPD7759_set_bank_base(0, ((data >> 4) & 0x03) * 0x20000);
-	}
+	} };
 	
-	WRITE_HANDLER( dv_sh_bankswitch_w )
+	public static WriteHandlerPtr dv_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bank_A,bank_B;
 	
@@ -127,7 +127,7 @@ public class mainevt
 		bank_A=(data&0x3);
 		bank_B=((data>>2)&0x3);
 		K007232_set_bank( 0, bank_A, bank_B );
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

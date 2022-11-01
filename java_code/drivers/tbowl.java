@@ -145,11 +145,11 @@ public class tbowl
 	};
 	
 	/* Board C */
-	static WRITE_HANDLER ( tbowl_trigger_nmi )
+	static public static WriteHandlerPtr tbowl_trigger_nmi = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* trigger NMI on 6206B's Cpu? (guess but seems to work..) */
 		cpu_set_nmi_line(0, PULSE_LINE);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem_6206C[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

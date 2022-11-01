@@ -90,50 +90,50 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( kyugo_fgvideoram_w )
+	public static WriteHandlerPtr kyugo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kyugo_fgvideoram[offset] != data)
 		{
 			kyugo_fgvideoram[offset] = data;
 			tilemap_mark_tile_dirty( fg_tilemap, offset );
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_bgvideoram_w )
+	public static WriteHandlerPtr kyugo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kyugo_bgvideoram[offset] != data)
 		{
 			kyugo_bgvideoram[offset] = data;
 			tilemap_mark_tile_dirty( bg_tilemap, offset );
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_bgattribram_w )
+	public static WriteHandlerPtr kyugo_bgattribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kyugo_bgattribram[offset] != data)
 		{
 			kyugo_bgattribram[offset] = data;
 			tilemap_mark_tile_dirty( bg_tilemap, offset );
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( kyugo_spriteram_2_r )
+	public static ReadHandlerPtr kyugo_spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		// only the lower nibble is connected
 		return kyugo_spriteram_2[offset] | 0xf0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_scroll_x_lo_w )
+	public static WriteHandlerPtr kyugo_scroll_x_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll_x_lo = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_gfxctrl_w )
+	public static WriteHandlerPtr kyugo_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 is scroll MSB */
 		scroll_x_hi = data & 0x01;
@@ -156,16 +156,16 @@ public class kyugo
 	
 		if (data & 0x9e)
 			usrintf_showmessage("%02x",data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_scroll_y_w )
+	public static WriteHandlerPtr kyugo_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll_y = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( kyugo_flipscreen_w )
+	public static WriteHandlerPtr kyugo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flipscreen != (data & 0x01))
 		{
@@ -173,7 +173,7 @@ public class kyugo
 	
 			tilemap_set_flip(ALL_TILEMAPS, (flipscreen ? (TILEMAP_FLIPX | TILEMAP_FLIPY): 0));
 		}
-	}
+	} };
 	
 	
 	/*************************************

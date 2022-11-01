@@ -93,48 +93,48 @@ public class bankp
 		/* the bottom half of the PROM seems to be not used */
 	}
 	
-	WRITE_HANDLER( bankp_scroll_w )
+	public static WriteHandlerPtr bankp_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll_x = data;
-	}
+	} };
 	
-	WRITE_HANDLER( bankp_videoram_w )
+	public static WriteHandlerPtr bankp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bankp_colorram_w )
+	public static WriteHandlerPtr bankp_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bankp_videoram2_w )
+	public static WriteHandlerPtr bankp_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bankp_videoram2[offset] != data)
 		{
 			bankp_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bankp_colorram2_w )
+	public static WriteHandlerPtr bankp_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bankp_colorram2[offset] != data)
 		{
 			bankp_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bankp_out_w )
+	public static WriteHandlerPtr bankp_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0-1 are playfield priority */
 		/* TODO: understand how this works */
@@ -153,7 +153,7 @@ public class bankp
 		}
 	
 		/* bits 6-7 unknown */
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

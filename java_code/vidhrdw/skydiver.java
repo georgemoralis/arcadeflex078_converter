@@ -72,89 +72,89 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( skydiver_videoram_w )
+	public static WriteHandlerPtr skydiver_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (skydiver_videoram[offset] != data)
 		{
 			skydiver_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( skydiver_wram_r )
+	public static ReadHandlerPtr skydiver_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return skydiver_videoram[offset | 0x380];
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_wram_w )
+	public static WriteHandlerPtr skydiver_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		skydiver_videoram[offset | 0x0380] = data;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( skydiver_width_w )
+	public static WriteHandlerPtr skydiver_width_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		width = offset;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( skydiver_coin_lockout_w )
+	public static WriteHandlerPtr skydiver_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_global_w(!offset);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( skydiver_start_lamp_1_w )
+	public static WriteHandlerPtr skydiver_start_lamp_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(0, offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_start_lamp_2_w )
+	public static WriteHandlerPtr skydiver_start_lamp_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		set_led_status(1, offset);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( skydiver_lamp_s_w )
+	public static WriteHandlerPtr skydiver_lamp_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lamps", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_k_w )
+	public static WriteHandlerPtr skydiver_lamp_k_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampk", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_y_w )
+	public static WriteHandlerPtr skydiver_lamp_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampy", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_d_w )
+	public static WriteHandlerPtr skydiver_lamp_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampd", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_i_w )
+	public static WriteHandlerPtr skydiver_lamp_i_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampi", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_v_w )
+	public static WriteHandlerPtr skydiver_lamp_v_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampv", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_e_w )
+	public static WriteHandlerPtr skydiver_lamp_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampe", offset);
-	}
+	} };
 	
-	WRITE_HANDLER( skydiver_lamp_r_w )
+	public static WriteHandlerPtr skydiver_lamp_r_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		artwork_show("lampr", offset);
-	}
+	} };
 	
 	
 	/*************************************

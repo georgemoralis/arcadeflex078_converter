@@ -98,65 +98,65 @@ public class mitchell
 	
 	static int video_bank;
 	
-	WRITE_HANDLER( pang_video_bank_w )
+	public static WriteHandlerPtr pang_video_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Bank handler (sets base pointers for video write) (doesn't apply to mgakuen) */
 		video_bank = data;
-	}
+	} };
 	
-	WRITE_HANDLER( mgakuen_videoram_w )
+	public static WriteHandlerPtr mgakuen_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pang_videoram[offset] != data)
 		{
 			pang_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 		}
-	}
+	} };
 	
-	READ_HANDLER( mgakuen_videoram_r )
+	public static ReadHandlerPtr mgakuen_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pang_videoram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( mgakuen_objram_w )
+	public static WriteHandlerPtr mgakuen_objram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		pang_objram[offset]=data;
-	}
+	} };
 	
-	READ_HANDLER( mgakuen_objram_r )
+	public static ReadHandlerPtr mgakuen_objram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pang_objram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( pang_videoram_w )
+	public static WriteHandlerPtr pang_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (video_bank) mgakuen_objram_w(offset,data);
 		else mgakuen_videoram_w(offset,data);
-	}
+	} };
 	
-	READ_HANDLER( pang_videoram_r )
+	public static ReadHandlerPtr pang_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (video_bank) return mgakuen_objram_r(offset);
 		else return mgakuen_videoram_r(offset);
-	}
+	} };
 	
 	/***************************************************************************
 	  COLOUR RAM
 	****************************************************************************/
 	
-	WRITE_HANDLER( pang_colorram_w )
+	public static WriteHandlerPtr pang_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (pang_colorram[offset] != data)
 		{
 			pang_colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
-	}
+	} };
 	
-	READ_HANDLER( pang_colorram_r )
+	public static ReadHandlerPtr pang_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return pang_colorram[offset];
-	}
+	} };
 	
 	/***************************************************************************
 	  PALETTE HANDLERS (COLOURS: BANK 0 = 0x00-0x3f BANK 1=0x40-0xff)
@@ -164,7 +164,7 @@ public class mitchell
 	
 	static int paletteram_bank;
 	
-	WRITE_HANDLER( pang_gfxctrl_w )
+	public static WriteHandlerPtr pang_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	logerror("PC %04x: pang_gfxctrl_w %02x\n",activecpu_get_pc(),data);
 	{
@@ -197,29 +197,29 @@ public class mitchell
 		/* they were bg and sprites enable, but this screws up spang (screen flickers */
 		/* every time you pop a bubble). However, not using them as enable bits screws */
 		/* up marukin - you can see partially built up screens during attract mode. */
-	}
+	} };
 	
-	WRITE_HANDLER( pang_paletteram_w )
+	public static WriteHandlerPtr pang_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (paletteram_bank) paletteram_xxxxRRRRGGGGBBBB_w(offset + 0x800,data);
 		else paletteram_xxxxRRRRGGGGBBBB_w(offset,data);
-	}
+	} };
 	
-	READ_HANDLER( pang_paletteram_r )
+	public static ReadHandlerPtr pang_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (paletteram_bank) return paletteram_r(offset + 0x800);
 		return paletteram_r(offset);
-	}
+	} };
 	
-	WRITE_HANDLER( mgakuen_paletteram_w )
+	public static WriteHandlerPtr mgakuen_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		paletteram_xxxxRRRRGGGGBBBB_w(offset,data);
-	}
+	} };
 	
-	READ_HANDLER( mgakuen_paletteram_r )
+	public static ReadHandlerPtr mgakuen_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return paletteram_r(offset);
-	}
+	} };
 	
 	
 	

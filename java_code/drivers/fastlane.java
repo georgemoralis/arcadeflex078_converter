@@ -36,13 +36,13 @@ public class fastlane
 		}
 	} };
 	
-	WRITE_HANDLER( k007121_registers_w )
+	public static WriteHandlerPtr k007121_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset < 8)
 			K007121_ctrl_0_w(offset,data);
 		else	/* scroll registers */
 			fastlane_k007121_regs[offset] = data;
-	}
+	} };
 	
 	public static WriteHandlerPtr fastlane_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

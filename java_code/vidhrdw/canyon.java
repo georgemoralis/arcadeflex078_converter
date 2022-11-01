@@ -18,7 +18,7 @@ public class canyon
 	UINT8* canyon_videoram;
 	
 	
-	WRITE_HANDLER( canyon_videoram_w )
+	public static WriteHandlerPtr canyon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (canyon_videoram[offset] != data)
 		{
@@ -26,7 +26,7 @@ public class canyon
 		}
 	
 		canyon_videoram[offset] = data;
-	}
+	} };
 	
 	
 	static void get_bg_tile_info(int tile_index)

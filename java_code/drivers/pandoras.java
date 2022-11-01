@@ -88,26 +88,26 @@ public class pandoras
 		}
 	} };
 	
-	WRITE_HANDLER( pandoras_cpua_irqtrigger_w ){
+	public static WriteHandlerPtr pandoras_cpua_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!firq_old_data_a && data){
 			cpu_set_irq_line(0,M6809_FIRQ_LINE,HOLD_LINE);
 		}
 	
 		firq_old_data_a = data;
-	}
+	} };
 	
-	WRITE_HANDLER( pandoras_cpub_irqtrigger_w ){
+	public static WriteHandlerPtr pandoras_cpub_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!firq_old_data_b && data){
 			cpu_set_irq_line(1,M6809_FIRQ_LINE,HOLD_LINE);
 		}
 	
 		firq_old_data_b = data;
-	}
+	} };
 	
-	WRITE_HANDLER( pandoras_i8039_irqtrigger_w )
+	public static WriteHandlerPtr pandoras_i8039_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line(3, 0, ASSERT_LINE);
-	}
+	} };
 	
 	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -119,10 +119,10 @@ public class pandoras
 		i8039_status = (data & 0x20) >> 5;
 	} };
 	
-	WRITE_HANDLER( pandoras_z80_irqtrigger_w )
+	public static WriteHandlerPtr pandoras_z80_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	
 	

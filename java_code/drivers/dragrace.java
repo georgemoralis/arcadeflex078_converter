@@ -96,7 +96,7 @@ public class dragrace
 		discrete_sound_w(0x03, (dragrace_misc_flags & 0x20000000) ? 1: 0);	// HiTone enable
 	}
 	
-	WRITE_HANDLER( dragrace_misc_w )
+	public static WriteHandlerPtr dragrace_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Set/clear individual bit */
 		UINT32 mask = 1 << offset;
@@ -106,18 +106,18 @@ public class dragrace
 			dragrace_misc_flags &= (~mask);
 		logerror("Set   %#6x, Mask=%#10x, Flag=%#10x, Data=%x\n", 0x0900+offset, mask, dragrace_misc_flags, data & 0x01);
 		dragrace_update_misc_flags();
-		}
+		} };
 	
-	WRITE_HANDLER( dragrace_misc_clear_w )
+	public static WriteHandlerPtr dragrace_misc_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Clear 8 bits */
 		UINT32 mask = 0xff << (((offset >> 3) & 0x03) * 8);
 		dragrace_misc_flags &= (~mask);
 		logerror("Clear %#6x, Mask=%#10x, Flag=%#10x, Data=%x\n", 0x0920+offset, mask, dragrace_misc_flags, data & 0x01);
 		dragrace_update_misc_flags();
-	}
+	} };
 	
-	READ_HANDLER( dragrace_input_r )
+	public static ReadHandlerPtr dragrace_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int val = readinputport(2);
 	
@@ -142,10 +142,10 @@ public class dragrace
 		}
 	
 		return (val & maskB) ? 0xFF : 0x7F;
-	}
+	} };
 	
 	
-	READ_HANDLER( dragrace_steering_r )
+	public static ReadHandlerPtr dragrace_steering_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int bitA[2];
 		int bitB[2];
@@ -163,13 +163,13 @@ public class dragrace
 		return
 			(bitA[0] << 0) | (bitB[0] << 1) |
 			(bitA[1] << 2) | (bitB[1] << 3);
-	}
+	} };
 	
 	
-	READ_HANDLER( dragrace_scanline_r )
+	public static ReadHandlerPtr dragrace_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return (cpu_getscanline() ^ 0xf0) | 0x0f;
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress dragrace_readmem[]={

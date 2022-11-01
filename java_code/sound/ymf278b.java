@@ -691,84 +691,84 @@ public class ymf278b
 	}
 	
 	
-	READ_HANDLER( YMF278B_status_port_0_r )
+	public static ReadHandlerPtr YMF278B_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ymf278b_status_port_r(0);
-	}
+	} };
 	
-	READ_HANDLER( YMF278B_data_port_0_r )
+	public static ReadHandlerPtr YMF278B_data_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ymf278b_data_port_r(0);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_0_A_w )
+	public static WriteHandlerPtr YMF278B_control_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_A_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_0_A_w )
+	public static WriteHandlerPtr YMF278B_data_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_A_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_0_B_w )
+	public static WriteHandlerPtr YMF278B_control_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_B_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_0_B_w )
+	public static WriteHandlerPtr YMF278B_data_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_B_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_0_C_w )
+	public static WriteHandlerPtr YMF278B_control_port_0_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_C_w(0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_0_C_w )
+	public static WriteHandlerPtr YMF278B_data_port_0_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_C_w(0, data);
-	}
+	} };
 	
 	
-	READ_HANDLER( YMF278B_status_port_1_r )
+	public static ReadHandlerPtr YMF278B_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ymf278b_status_port_r(1);
-	}
+	} };
 	
-	READ_HANDLER( YMF278B_data_port_1_r )
+	public static ReadHandlerPtr YMF278B_data_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ymf278b_data_port_r(1);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_1_A_w )
+	public static WriteHandlerPtr YMF278B_control_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_A_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_1_A_w )
+	public static WriteHandlerPtr YMF278B_data_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_A_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_1_B_w )
+	public static WriteHandlerPtr YMF278B_control_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_B_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_1_B_w )
+	public static WriteHandlerPtr YMF278B_data_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_B_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_control_port_1_C_w )
+	public static WriteHandlerPtr YMF278B_control_port_1_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_control_port_C_w(1, data);
-	}
+	} };
 	
-	WRITE_HANDLER( YMF278B_data_port_1_C_w )
+	public static WriteHandlerPtr YMF278B_data_port_1_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ymf278b_data_port_C_w(1, data);
-	}
+	} };
 }

@@ -29,7 +29,7 @@ public class goindol
 	
 	
 	
-	WRITE_HANDLER( goindol_bankswitch_w )
+	public static WriteHandlerPtr goindol_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		UINT8 *RAM = memory_region(REGION_CPU1);
@@ -44,7 +44,7 @@ public class goindol
 		}
 	
 		flip_screen_set(data & 0x20);
-	}
+	} };
 	
 	
 	

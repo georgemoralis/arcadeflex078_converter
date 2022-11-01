@@ -108,7 +108,7 @@ public class exctsccr
 		}
 	}
 	
-	WRITE_HANDLER( exctsccr_mcu_control_w ) {
+	public static WriteHandlerPtr exctsccr_mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 	
 		if ( data == 0xff ) { /* goes around the mcu checks */
 			exctsccr_mcu_ram[0x0003] = 0x01; /* mcu state = running */
@@ -181,13 +181,13 @@ public class exctsccr
 			exctsccr_mcu_ram[0x0011] = 0x08;
 			memcpy( &exctsccr_mcu_ram[0x007f], mcu_table8, MCU_KEY_TABLE_SIZE*2 );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( exctsccr_mcu_w ) {
+	public static WriteHandlerPtr exctsccr_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 	
 		if ( offset == 0x02f9 )
 			mcu_code_latch = data;
 	
 		exctsccr_mcu_ram[offset] = data;
-	}
+	} };
 }

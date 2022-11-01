@@ -73,27 +73,27 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( iqblock_fgvideoram_w )
+	public static WriteHandlerPtr iqblock_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		iqblock_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( iqblock_bgvideoram_w )
+	public static WriteHandlerPtr iqblock_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		iqblock_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset & 0x7ff);
-	}
+	} };
 	
-	READ_HANDLER( iqblock_bgvideoram_r )
+	public static ReadHandlerPtr iqblock_bgvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return iqblock_bgvideoram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( iqblock_fgscroll_w )
+	public static WriteHandlerPtr iqblock_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(fg_tilemap,offset,data);
-	}
+	} };
 	
 	
 	

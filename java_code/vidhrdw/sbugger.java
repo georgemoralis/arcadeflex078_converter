@@ -22,17 +22,17 @@ public class sbugger
 		SET_TILE_INFO(0,tileno,color,0)
 	}
 	
-	WRITE_HANDLER( sbugger_videoram_w )
+	public static WriteHandlerPtr sbugger_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sbugger_videoram[offset] = data;
 		tilemap_mark_tile_dirty(sbugger_tilemap,offset);
-	}
+	} };
 	
-	WRITE_HANDLER( sbugger_videoram_attr_w )
+	public static WriteHandlerPtr sbugger_videoram_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sbugger_videoram_attr[offset] = data;
 		tilemap_mark_tile_dirty(sbugger_tilemap,offset);
-	}
+	} };
 	
 	VIDEO_START(sbugger)
 	{

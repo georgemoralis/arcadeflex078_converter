@@ -30,7 +30,7 @@ public class geebee
 			volume = 0;
 	}
 	
-	WRITE_HANDLER( geebee_sound_w )
+	public static WriteHandlerPtr geebee_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		stream_update(channel,0);
 		sound_latch = data;
@@ -60,7 +60,7 @@ public class geebee
 			 */
 			timer_adjust(volume_timer, TIME_IN_HZ(32768/0.2906), 0, TIME_IN_HZ(32768/0.2906));
 	    }
-	}
+	} };
 	
 	static void geebee_sound_update(int param, INT16 *buffer, int length)
 	{

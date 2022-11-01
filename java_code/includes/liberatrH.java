@@ -8,4 +8,4 @@
 
 
 
-WRITE_HANDLER( liberatr_colorram_w ) ;
+public static WriteHandlerPtr liberatr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data) ;

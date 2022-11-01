@@ -70,28 +70,28 @@ public class speedatk
 			colortable[i] = color_prom[i];	
 	}
 	
-	WRITE_HANDLER( speedatk_videoram_w )
+	public static WriteHandlerPtr speedatk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( speedatk_colorram_w )
+	public static WriteHandlerPtr speedatk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( speedatk_flip_screen_w )
+	public static WriteHandlerPtr speedatk_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
 	static void get_tile_info(int tile_index)
 	{

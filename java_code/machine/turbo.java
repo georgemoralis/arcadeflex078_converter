@@ -461,7 +461,7 @@ public class turbo
 	
 	*******************************************/
 	
-	READ_HANDLER( turbo_8279_r )
+	public static ReadHandlerPtr turbo_8279_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if ((offset & 1) == 0)
 			return readinputport(1);  /* DSW 1 */
@@ -470,9 +470,9 @@ public class turbo
 			logerror("read 0xfc%02x\n", offset);
 			return 0x10;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( turbo_8279_w )
+	public static WriteHandlerPtr turbo_8279_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 1)
 		{
@@ -499,7 +499,7 @@ public class turbo
 				}
 				break;
 		}
-	}
+	} };
 	
 	
 	void turbo_update_segments(void)
@@ -536,19 +536,19 @@ public class turbo
 	
 	*******************************************/
 	
-	READ_HANDLER( turbo_collision_r )
+	public static ReadHandlerPtr turbo_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return readinputport(3) | (turbo_collision & 15);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( turbo_collision_clear_w )
+	public static WriteHandlerPtr turbo_collision_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		turbo_collision = 0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( turbo_coin_and_lamp_w )
+	public static WriteHandlerPtr turbo_coin_and_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 7)
 		{
@@ -562,7 +562,7 @@ public class turbo
 				set_led_status(0, data & 1);
 				break;
 		}
-	}
+	} };
 	
 	
 	void turbo_update_tachometer(void)
@@ -702,14 +702,14 @@ public class turbo
 	
 	*******************************************/
 	
-	READ_HANDLER( buckrog_cpu2_command_r )
+	public static ReadHandlerPtr buckrog_cpu2_command_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		buckrog_status |= 0x80;
 		return buckrog_command;
-	}
+	} };
 	
 	
-	READ_HANDLER( buckrog_port_2_r )
+	public static ReadHandlerPtr buckrog_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int inp1 = readinputport(2);
 		int inp2 = readinputport(3);
@@ -722,10 +722,10 @@ public class turbo
 				(((inp1 >> 4) & 1) << 2) |
 				(((inp1 >> 3) & 1) << 1) |
 				(((inp1 >> 0) & 1) << 0);
-	}
+	} };
 	
 	
-	READ_HANDLER( buckrog_port_3_r )
+	public static ReadHandlerPtr buckrog_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int inp1 = readinputport(2);
 		int inp2 = readinputport(3);
@@ -738,5 +738,5 @@ public class turbo
 				(((inp1 >> 5) & 1) << 2) |
 				(((inp1 >> 2) & 1) << 1) |
 				(((inp1 >> 1) & 1) << 0);
-	}
+	} };
 }

@@ -140,10 +140,10 @@ public class itech8
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( itech8_palette_w )
+	public static WriteHandlerPtr itech8_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tlc34076_w(offset/2, data);
-	}
+	} };
 	
 	
 	
@@ -626,7 +626,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	READ_HANDLER( itech8_blitter_r )
+	public static ReadHandlerPtr itech8_blitter_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int result = blitter_data[offset / 2];
 	
@@ -647,10 +647,10 @@ public class itech8
 		}
 	
 		return result;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( itech8_blitter_w )
+	public static WriteHandlerPtr itech8_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* low bit seems to be ignored */
 		offset /= 2;
@@ -695,7 +695,7 @@ public class itech8
 	
 		/* debugging */
 		if (FULL_LOGGING) logerror("%04x:blitter_w(%02x)=%02x\n", activecpu_get_previouspc(), offset, data);
-	}
+	} };
 	
 	
 	
@@ -705,7 +705,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( itech8_tms34061_w )
+	public static WriteHandlerPtr itech8_tms34061_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int func = (offset >> 9) & 7;
 		int col = offset & 0xff;
@@ -717,10 +717,10 @@ public class itech8
 	
 		/* Row address (RA0-RA8) is not dependent on the offset */
 		tms34061_w(col, 0xff, func, data);
-	}
+	} };
 	
 	
-	READ_HANDLER( itech8_tms34061_r )
+	public static ReadHandlerPtr itech8_tms34061_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int func = (offset >> 9) & 7;
 		int col = offset & 0xff;
@@ -732,7 +732,7 @@ public class itech8
 	
 		/* Row address (RA0-RA8) is not dependent on the offset */
 		return tms34061_r(col, 0xff, func);
-	}
+	} };
 	
 	
 	

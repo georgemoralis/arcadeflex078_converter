@@ -32,10 +32,10 @@ public class sbasketb
 	
 	
 	
-	WRITE_HANDLER( sbasketb_sh_irqtrigger_w )
+	public static WriteHandlerPtr sbasketb_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
-	}
+	} };
 	
 	public static WriteHandlerPtr sbasketb_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

@@ -60,10 +60,10 @@ public class blockhl
 			ram[offset] = data;
 	} };
 	
-	WRITE_HANDLER( blockhl_sh_irqtrigger_w )
+	public static WriteHandlerPtr blockhl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
-	}
+	} };
 	
 	
 	

@@ -85,11 +85,11 @@ public class mogura
 	
 	}
 	
-	WRITE_HANDLER( mogura_tileram_w )
+	public static WriteHandlerPtr mogura_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mogura_tileram[offset] = data;
 		tilemap_mark_tile_dirty(mogura_tilemap,offset&0x7ff);
-	}
+	} };
 	
 	
 	public static IO_ReadPort readport[]={
@@ -119,14 +119,14 @@ public class mogura
 	};
 	
 	
-	WRITE_HANDLER ( mogura_gfxram_w )
+	public static WriteHandlerPtr mogura_gfxram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mogura_gfxram[offset] = data ;
 	
 		decodechar(Machine->gfx[0], offset/16, mogura_gfxram, Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		tilemap_mark_all_tiles_dirty(mogura_tilemap);
-	}
+	} };
 	
 	
 	public static Memory_ReadAddress readmem[]={

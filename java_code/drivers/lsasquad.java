@@ -41,7 +41,7 @@ public class lsasquad
 	
 	
 	
-	WRITE_HANDLER( lsasquad_bankswitch_w )
+	public static WriteHandlerPtr lsasquad_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
@@ -54,7 +54,7 @@ public class lsasquad
 		flip_screen_set(data & 0x10);
 	
 		/* other bits unknown */
-	}
+	} };
 	
 	
 	

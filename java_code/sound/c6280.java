@@ -329,7 +329,7 @@ public class c6280
 	{
 	}
 	
-	WRITE_HANDLER( C6280_0_w ) {  c6280_write(0,offset,data); }
-	WRITE_HANDLER( C6280_1_w ) {  c6280_write(1,offset,data); }
+	public static WriteHandlerPtr C6280_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {  c6280_write(0,offset,data); } };
+	public static WriteHandlerPtr C6280_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {  c6280_write(1,offset,data); } };
 	
 }

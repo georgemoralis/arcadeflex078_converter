@@ -137,49 +137,49 @@ public class espial
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( espial_videoram_w )
+	public static WriteHandlerPtr espial_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (espial_videoram[offset] != data)
 		{
 			espial_videoram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( espial_colorram_w )
+	public static WriteHandlerPtr espial_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (espial_colorram[offset] != data)
 		{
 			espial_colorram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( espial_attributeram_w )
+	public static WriteHandlerPtr espial_attributeram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (espial_attributeram[offset] != data)
 		{
 			espial_attributeram[offset] = data;
 			tilemap_mark_tile_dirty(tilemap, offset);
 		}
-	}
+	} };
 	
 	
-	WRITE_HANDLER( espial_scrollram_w )
+	public static WriteHandlerPtr espial_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		espial_scrollram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( espial_flipscreen_w )
+	public static WriteHandlerPtr espial_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flipscreen = data;
 	
 		tilemap_set_flip(0, flipscreen ? TILEMAP_FLIPX | TILEMAP_FLIPY : 0);
-	}
+	} };
 	
 	
 	/*************************************

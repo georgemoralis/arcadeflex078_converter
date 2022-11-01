@@ -24,51 +24,51 @@ public class sauro
 	
 	/* General */
 	
-	WRITE_HANDLER( tecfri_videoram_w )
+	public static WriteHandlerPtr tecfri_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tecfri_videoram[offset] != data)
 		{
 			tecfri_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tecfri_colorram_w )
+	public static WriteHandlerPtr tecfri_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tecfri_colorram[offset] != data)
 		{
 			tecfri_colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tecfri_videoram2_w )
+	public static WriteHandlerPtr tecfri_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tecfri_videoram2[offset] != data)
 		{
 			tecfri_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tecfri_colorram2_w )
+	public static WriteHandlerPtr tecfri_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (tecfri_colorram2[offset] != data)
 		{
 			tecfri_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tecfri_scroll_bg_w )
+	public static WriteHandlerPtr tecfri_scroll_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( flip_screen_w )
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
 	static void get_tile_info_bg(int tile_index)
 	{
@@ -93,13 +93,13 @@ public class sauro
 	static int scroll2_map     [8] = {2, 1, 4, 3, 6, 5, 0, 7};
 	static int scroll2_map_flip[8] = {0, 7, 2, 1, 4, 3, 6, 5};
 	
-	WRITE_HANDLER( sauro_scroll_fg_w )
+	public static WriteHandlerPtr sauro_scroll_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int *map = (flip_screen ? scroll2_map_flip : scroll2_map);
 		int scroll = (data & 0xf8) | map[data & 7];
 	
 		tilemap_set_scrollx(fg_tilemap, 0, scroll);
-	}
+	} };
 	
 	VIDEO_START( sauro )
 	{
@@ -175,10 +175,10 @@ public class sauro
 	
 	/* Tricky Doc */
 	
-	WRITE_HANDLER ( trckydoc_spriteram_mirror_w )
+	public static WriteHandlerPtr trckydoc_spriteram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spriteram[offset] = data;
-	}
+	} };
 	
 	VIDEO_START( trckydoc )
 	{

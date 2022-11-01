@@ -724,23 +724,23 @@ public class k054539
 		K054539_flags = K054539_RESET_FLAGS;
 	}
 	
-	WRITE_HANDLER( K054539_0_w )
+	public static WriteHandlerPtr K054539_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		K054539_w(0, offset, data);
-	}
+	} };
 	
-	READ_HANDLER( K054539_0_r )
+	public static ReadHandlerPtr K054539_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return K054539_r(0, offset);
-	}
+	} };
 	
-	WRITE_HANDLER( K054539_1_w )
+	public static WriteHandlerPtr K054539_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		K054539_w(1, offset, data);
-	}
+	} };
 	
-	READ_HANDLER( K054539_1_r )
+	public static ReadHandlerPtr K054539_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return K054539_r(1, offset);
-	}
+	} };
 }

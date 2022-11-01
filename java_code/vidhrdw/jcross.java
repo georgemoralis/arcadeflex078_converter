@@ -15,10 +15,10 @@ public class jcross
 	
 	int jcross_vregs[5];
 	
-	WRITE_HANDLER( jcross_palettebank_w )
+	public static WriteHandlerPtr jcross_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		fg_color = data&0xf;
-	}
+	} };
 	
 	
 	static void stuff_palette( int source_index, int dest_index, int num_colors )
@@ -62,35 +62,35 @@ public class jcross
 		}
 	}
 	
-	WRITE_HANDLER( jcross_spriteram_w )
+	public static WriteHandlerPtr jcross_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spriteram[offset] = data;
-	}
-	READ_HANDLER( jcross_spriteram_r )
+	} };
+	public static ReadHandlerPtr jcross_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return spriteram[offset];
-	}
+	} };
 	
-	READ_HANDLER( jcross_background_ram_r )
+	public static ReadHandlerPtr jcross_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return videoram[offset];
-	}
-	WRITE_HANDLER( jcross_background_ram_w )
+	} };
+	public static WriteHandlerPtr jcross_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset]=data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset);
-	}
+	} };
 	
-	READ_HANDLER( jcross_text_ram_r )
+	public static ReadHandlerPtr jcross_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return jcr_textram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( jcross_text_ram_w )
+	public static WriteHandlerPtr jcross_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		jcr_textram[offset]=data;
 		tilemap_mark_tile_dirty(tx_tilemap,offset);
-	}
+	} };
 	
 	
 	static void get_bg_tilemap_info(int tile_index)

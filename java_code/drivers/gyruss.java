@@ -73,15 +73,15 @@ public class gyruss
 	
 	unsigned char *gyruss_sharedram;
 	
-	READ_HANDLER( gyruss_sharedram_r )
+	public static ReadHandlerPtr gyruss_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return gyruss_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( gyruss_sharedram_w )
+	public static WriteHandlerPtr gyruss_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		gyruss_sharedram[offset] = data;
-	}
+	} };
 	
 	
 	

@@ -42,30 +42,30 @@ public class circus
 		circus_sample_names
 	};
 	
-	WRITE_HANDLER( circus_videoram_w )
+	public static WriteHandlerPtr circus_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( circus_clown_x_w )
+	public static WriteHandlerPtr circus_clown_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		clown_x = 240-data;
-	}
+	} };
 	
-	WRITE_HANDLER( circus_clown_y_w )
+	public static WriteHandlerPtr circus_clown_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		clown_y = 240-data;
-	}
+	} };
 	
 	/* This register controls the clown image currently displayed */
 	/* and also is used to enable the amplifier and trigger the   */
 	/* discrete circuitry that produces sound effects and music   */
 	
-	WRITE_HANDLER( circus_clown_z_w )
+	public static WriteHandlerPtr circus_clown_z_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		clown_z = (data & 0x0f);
 	*(memory_region(REGION_CPU1)+0x8000)=data; logerror("Z:%02x\n",data); //DEBUG
@@ -107,7 +107,7 @@ public class circus
 		/* Bit 7 enables amplifier (1 = on) */
 	
 	//  logerror("clown Z = %02x\n",data);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

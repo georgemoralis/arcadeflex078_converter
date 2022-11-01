@@ -883,32 +883,32 @@ public class _8080bw
 	} };
 	
 	
-	READ_HANDLER( sheriff_sh_t0_r )
+	public static ReadHandlerPtr sheriff_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sheriff_t0;
-	}
+	} };
 	
-	READ_HANDLER( sheriff_sh_t1_r )
+	public static ReadHandlerPtr sheriff_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sheriff_t1;
-	}
+	} };
 	
-	READ_HANDLER( sheriff_sh_p1_r )
+	public static ReadHandlerPtr sheriff_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return soundlatch_r(0);;
-	}
+	} };
 	
-	READ_HANDLER( sheriff_sh_p2_r )
+	public static ReadHandlerPtr sheriff_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return sheriff_p2;
-	}
+	} };
 	
-	WRITE_HANDLER( sheriff_sh_p2_w )
+	public static WriteHandlerPtr sheriff_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sheriff_p2 = data;
 	
 		DAC_data_w(0, sheriff_p2 & 0x80 ? 0xff : 0x00);
-	}
+	} };
 	
 	
 	/*******************************************************/
@@ -1048,24 +1048,24 @@ public class _8080bw
 		flip_screen_set(data & 0x20);
 	} };
 	
-	WRITE_HANDLER( helifire_sh_p1_w )
+	public static WriteHandlerPtr helifire_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		current_dac_data = data;
 	
 		DAC_data_16_w(0, (current_dac_data * Vref) >> 8);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( helifire_sh_p2_w )
+	public static WriteHandlerPtr helifire_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		Vref_control = (data&0x80) >> 7;
 		/*logerror("dac_vref_charge=%1x\n", Vref_control);*/
-	}
+	} };
 	
-	READ_HANDLER( helifire_sh_p1_r )
+	public static ReadHandlerPtr helifire_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return helifire_snd_latch;
-	}
+	} };
 	
 	/*******************************************************/
 	/*                                                     */

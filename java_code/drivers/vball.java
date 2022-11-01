@@ -127,10 +127,10 @@ public class vball
 	/* The sound system comes all but verbatim from Double Dragon */
 	
 	
-	WRITE_HANDLER( cpu_sound_command_w ) {
+	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 		soundlatch_w( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
-	}
+	} };
 	
 	
 	/* bit 0 = flip screen
@@ -142,14 +142,14 @@ public class vball
 	   bit 6 = sp prom bank
 	   bit 7 = sp prom bank
 	*/
-	WRITE_HANDLER( vb_scrollx_hi_w )
+	public static WriteHandlerPtr vb_scrollx_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(~data&1);
 		vb_scrollx_hi = (data & 0x02) << 7;
 		vb_bgprombank_w((data >> 2)&0x07);
 		vb_spprombank_w((data >> 5)&0x07);
 		//logerror("%04x: vb_scrollx_hi = %d\n",activecpu_get_previouspc(), vb_scrollx_hi);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

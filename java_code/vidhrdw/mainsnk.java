@@ -78,17 +78,17 @@ public class mainsnk
 	}
 	
 	
-	READ_HANDLER( me_fgram_r )
+	public static ReadHandlerPtr me_fgram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return me_fgram[offset];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( me_fgram_w )
+	public static WriteHandlerPtr me_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		me_fgram[offset] = data;
 		tilemap_mark_tile_dirty(me_fg_tilemap,offset);
-	}
+	} };
 	
 	
 	static void get_me_bg_tile_info(int tile_index)
@@ -103,17 +103,17 @@ public class mainsnk
 	}
 	
 	
-	READ_HANDLER( me_bgram_r )
+	public static ReadHandlerPtr me_bgram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return me_bgram[offset];
 	
-	}
+	} };
 	
-	WRITE_HANDLER( me_bgram_w )
+	public static WriteHandlerPtr me_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		me_bgram[offset] = data;
 		tilemap_mark_tile_dirty(me_bg_tilemap,offset);
-	}
+	} };
 	
 	
 	VIDEO_START(mainsnk)

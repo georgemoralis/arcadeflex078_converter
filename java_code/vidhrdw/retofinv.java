@@ -109,62 +109,62 @@ public class retofinv
 		return 0;
 	}
 	
-	WRITE_HANDLER( retofinv_flip_screen_w )
+	public static WriteHandlerPtr retofinv_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flipscreen = data;
 		memset(bg_dirtybuffer,1,retofinv_videoram_size);
 		fillbitmap(bitmap_bg,Machine->pens[0],0);
-	}
+	} };
 	
-	READ_HANDLER( retofinv_bg_videoram_r )
+	public static ReadHandlerPtr retofinv_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return retofinv_bg_videoram[offset];
-	}
+	} };
 	
-	READ_HANDLER( retofinv_fg_videoram_r )
+	public static ReadHandlerPtr retofinv_fg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return retofinv_fg_videoram[offset];
-	}
+	} };
 	
-	READ_HANDLER( retofinv_bg_colorram_r )
+	public static ReadHandlerPtr retofinv_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return retofinv_bg_colorram[offset];
-	}
+	} };
 	
-	READ_HANDLER( retofinv_fg_colorram_r )
+	public static ReadHandlerPtr retofinv_fg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return retofinv_fg_colorram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( retofinv_bg_videoram_w )
+	public static WriteHandlerPtr retofinv_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (retofinv_bg_videoram[offset] != data)
 		{
 			bg_dirtybuffer[offset] = 1;
 			retofinv_bg_videoram[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( retofinv_fg_videoram_w )
+	public static WriteHandlerPtr retofinv_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (retofinv_fg_videoram[offset] != data)
 			retofinv_fg_videoram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( retofinv_bg_colorram_w )
+	public static WriteHandlerPtr retofinv_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (retofinv_bg_colorram[offset] != data)
 		{
 			bg_dirtybuffer[offset] = 1;
 			retofinv_bg_colorram[offset] = data;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( retofinv_fg_colorram_w )
+	public static WriteHandlerPtr retofinv_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (retofinv_fg_colorram[offset] != data)
 			retofinv_fg_colorram[offset] = data;
-	}
+	} };
 	
 	void retofinv_render_sprites(struct mame_bitmap *bitmap)
 	{

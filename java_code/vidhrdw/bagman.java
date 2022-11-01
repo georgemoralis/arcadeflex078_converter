@@ -21,23 +21,23 @@ public class bagman
 	static struct tilemap *bg_tilemap;
 	
 	
-	WRITE_HANDLER( bagman_videoram_w )
+	public static WriteHandlerPtr bagman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bagman_colorram_w )
+	public static WriteHandlerPtr bagman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -95,14 +95,14 @@ public class bagman
 		}
 	}
 	
-	WRITE_HANDLER( bagman_flipscreen_w )
+	public static WriteHandlerPtr bagman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

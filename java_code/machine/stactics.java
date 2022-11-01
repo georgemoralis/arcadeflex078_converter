@@ -15,7 +15,7 @@ public class stactics
 	
 	/* defined in vidhrdw/stactics.c */
 	
-	READ_HANDLER( stactics_port_0_r )
+	public static ReadHandlerPtr stactics_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    if (*stactics_motor_on & 0x01)
 	    {
@@ -29,28 +29,28 @@ public class stactics
 	    {
 	        return (input_port_0_r(0)|0x80);
 	    }
-	}
+	} };
 	
-	READ_HANDLER( stactics_port_2_r )
+	public static ReadHandlerPtr stactics_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_2_r(0)&0xf0)+(stactics_vblank_count&0x08)+(rand()%8);
-	}
+	} };
 	
-	READ_HANDLER( stactics_port_3_r )
+	public static ReadHandlerPtr stactics_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return (input_port_3_r(0)&0x7d)+(stactics_shot_standby<<1)
 	                 +((stactics_shot_arrive^0x01)<<7);
-	}
+	} };
 	
-	READ_HANDLER( stactics_vert_pos_r )
+	public static ReadHandlerPtr stactics_vert_pos_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return 0x70-stactics_vert_pos;
-	}
+	} };
 	
-	READ_HANDLER( stactics_horiz_pos_r )
+	public static ReadHandlerPtr stactics_horiz_pos_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    return stactics_horiz_pos+0x80;
-	}
+	} };
 	
 	public static InterruptHandlerPtr stactics_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -89,9 +89,9 @@ public class stactics
 	    cpu_set_irq_line(0,0,HOLD_LINE);
 	} };
 	
-	WRITE_HANDLER( stactics_coin_lockout_w )
+	public static WriteHandlerPtr stactics_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		coin_lockout_w(offset, ~data & 0x01);
-	}
+	} };
 	
 }

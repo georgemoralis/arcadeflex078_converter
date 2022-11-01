@@ -54,13 +54,13 @@ public class segasnd
 		sega_speechboard_drq = level == ASSERT_LINE;
 	}
 	
-	WRITE_HANDLER( sega_sh_speechboard_w )
+	public static WriteHandlerPtr sega_sh_speechboard_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		sega_speechboard_latch = data & 0x7f;
 		cpu_set_irq_line(1, 0, data & 0x80 ? CLEAR_LINE : ASSERT_LINE);
 		if(!(data & 0x80))
 			sega_speechboard_t0 = 1;
-	}
+	} };
 	
 	MEMORY_READ_START( sega_speechboard_readmem )
 		{ 0x0000, 0x07ff, MRA_ROM },

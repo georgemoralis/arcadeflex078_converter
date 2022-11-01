@@ -486,7 +486,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	READ_HANDLER( showdown_pld_trigger_r )
+	public static ReadHandlerPtr showdown_pld_trigger_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bank 0 is where the PLD lives - a read here will set the trigger */
 		if (exidy440_bank == 0)
@@ -494,10 +494,10 @@ public class exidy440
 	
 		/* just return the value from the current bank */
 		return memory_region(REGION_CPU1)[0x10000 + exidy440_bank * 0x4000 + 0x0055 + offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( showdown_pld_select1_r )
+	public static ReadHandlerPtr showdown_pld_select1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bank 0 is where the PLD lives - a read here after a trigger will set bank "1" */
 		if (exidy440_bank == 0 && showdown_bank_triggered)
@@ -516,10 +516,10 @@ public class exidy440
 	
 		/* just return the value from the current bank */
 		return memory_region(REGION_CPU1)[0x10000 + exidy440_bank * 0x4000 + 0x00ed + offset];
-	}
+	} };
 	
 	
-	READ_HANDLER( showdown_pld_select2_r )
+	public static ReadHandlerPtr showdown_pld_select2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* bank 0 is where the PLD lives - a read here after a trigger will set bank "2" */
 		if (exidy440_bank == 0 && showdown_bank_triggered)
@@ -538,7 +538,7 @@ public class exidy440
 	
 		/* just return the value from the current bank */
 		return memory_region(REGION_CPU1)[0x10000 + exidy440_bank * 0x4000 + 0x1243 + offset];
-	}
+	} };
 	
 	
 	

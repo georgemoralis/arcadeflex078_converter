@@ -930,7 +930,7 @@ public class ddenlovr
 	
 	static data8_t quiz365_select;
 	
-	READ_HANDLER( quiz365_input_r )
+	public static ReadHandlerPtr quiz365_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (!(quiz365_select & 0x01))	return readinputport(3);
 		if (!(quiz365_select & 0x02))	return readinputport(4);
@@ -938,17 +938,17 @@ public class ddenlovr
 		if (!(quiz365_select & 0x08))	return 0xff;//rand();
 		if (!(quiz365_select & 0x10))	return 0xff;//rand();
 		return 0xff;
-	}
+	} };
 	
-	WRITE_HANDLER( quiz365_select_w )
+	public static WriteHandlerPtr quiz365_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		quiz365_select = data;
-	}
+	} };
 	
 	
 	static data8_t rongrong_select2;
 	
-	READ_HANDLER( rongrong_input2_r )
+	public static ReadHandlerPtr rongrong_input2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	//logerror("%04x: rongrong_input2_r offset %d select %x\n",activecpu_get_pc(),offset,rongrong_select2 );
 		/* 0 and 1 are read from offset 1, 2 from offset 0... */
@@ -959,12 +959,12 @@ public class ddenlovr
 			case 0x02:	return readinputport(2);
 		}
 		return 0xff;
-	}
+	} };
 	
-	WRITE_HANDLER( rongrong_select2_w )
+	public static WriteHandlerPtr rongrong_select2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		rongrong_select2 = data;
-	}
+	} };
 	
 	
 	READ16_HANDLER( quiz365_input2_r )
@@ -1171,7 +1171,7 @@ public class ddenlovr
 	
 	static data8_t rongrong_select;
 	
-	READ_HANDLER( rongrong_input_r )
+	public static ReadHandlerPtr rongrong_input_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (!(rongrong_select & 0x01))	return readinputport(3);
 		if (!(rongrong_select & 0x02))	return readinputport(4);
@@ -1179,9 +1179,9 @@ public class ddenlovr
 		if (!(rongrong_select & 0x08))	return 0xff;//rand();
 		if (!(rongrong_select & 0x10))	return readinputport(5);
 		return 0xff;
-	}
+	} };
 	
-	WRITE_HANDLER( rongrong_select_w )
+	public static WriteHandlerPtr rongrong_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
@@ -1192,7 +1192,7 @@ public class ddenlovr
 	
 		/* bits 5-7 = RAM bank */
 		cpu_setbank(2, &rom[0x110000 + 0x1000 * ((data & 0xe0) >> 5)]);
-	}
+	} };
 	
 	
 	

@@ -15,7 +15,7 @@ public class cchasm
 	
 	static int sound_flags;
 	
-	READ_HANDLER( cchasm_snd_io_r )
+	public static ReadHandlerPtr cchasm_snd_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int coin;
 	
@@ -43,9 +43,9 @@ public class cchasm
 	        logerror("Read from unmapped internal IO device at 0x%x\n", offset + 0x6000);
 	        return 0;
 	    }
-	}
+	} };
 	
-	WRITE_HANDLER( cchasm_snd_io_w )
+	public static WriteHandlerPtr cchasm_snd_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    switch (offset & 0x61 )
 	    {
@@ -82,7 +82,7 @@ public class cchasm
 	    default:
 	        logerror("Write %x to unmapped internal IO device at 0x%x\n", data, offset + 0x6000);
 	    }
-	}
+	} };
 	
 	WRITE16_HANDLER( cchasm_io_w )
 	{

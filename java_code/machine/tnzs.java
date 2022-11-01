@@ -76,7 +76,7 @@ public class tnzs
 	} };
 	
 	
-	READ_HANDLER( tnzs_port1_r )
+	public static ReadHandlerPtr tnzs_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = 0;
 	
@@ -91,18 +91,18 @@ public class tnzs
 	//	logerror("I8742:%04x  Read %02x from port 1\n", activecpu_get_previouspc(), data);
 	
 		return data;
-	}
+	} };
 	
-	READ_HANDLER( tnzs_port2_r )
+	public static ReadHandlerPtr tnzs_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = input_port_4_r(0);
 	
 	//	logerror("I8742:%04x  Read %02x from port 2\n", activecpu_get_previouspc(), data);
 	
 		return data;
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_port2_w )
+	public static WriteHandlerPtr tnzs_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror("I8742:%04x  Write %02x to port 2\n", activecpu_get_previouspc(), data);
 	
@@ -112,11 +112,11 @@ public class tnzs
 		coin_counter_w( 1, (~data & 0x20) );
 	
 		tnzs_input_select = data;
-	}
+	} };
 	
 	
 	
-	READ_HANDLER( arknoid2_sh_f000_r )
+	public static ReadHandlerPtr arknoid2_sh_f000_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int val;
 	
@@ -131,7 +131,7 @@ public class tnzs
 		{
 			return val & 0xff;
 		}
-	}
+	} };
 	
 	
 	static void mcu_reset(void)
@@ -543,7 +543,7 @@ public class tnzs
 	}
 	
 	
-	READ_HANDLER( tnzs_mcu_r )
+	public static ReadHandlerPtr tnzs_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (mcu_type)
 		{
@@ -562,9 +562,9 @@ public class tnzs
 				return 0xff;
 				break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_mcu_w )
+	public static WriteHandlerPtr tnzs_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (mcu_type)
 		{
@@ -582,7 +582,7 @@ public class tnzs
 			default:
 				break;
 		}
-	}
+	} };
 	
 	public static InterruptHandlerPtr arknoid2_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -636,7 +636,7 @@ public class tnzs
 	}
 	
 	
-	READ_HANDLER( tnzs_workram_r )
+	public static ReadHandlerPtr tnzs_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* Location $EF10 workaround required to stop TNZS getting */
 		/* caught in and endless loop due to shared ram sync probs */
@@ -659,14 +659,14 @@ public class tnzs
 			}
 		}
 		return tnzs_workram[offset];
-	}
+	} };
 	
-	READ_HANDLER( tnzs_workram_sub_r )
+	public static ReadHandlerPtr tnzs_workram_sub_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return tnzs_workram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_workram_w )
+	public static WriteHandlerPtr tnzs_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Location $EF10 workaround required to stop TNZS getting */
 		/* caught in and endless loop due to shared ram sync probs */
@@ -693,14 +693,14 @@ public class tnzs
 		}
 		if (tnzs_workram_backup == -1)
 			tnzs_workram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_workram_sub_w )
+	public static WriteHandlerPtr tnzs_workram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tnzs_workram[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_bankswitch_w )
+	public static WriteHandlerPtr tnzs_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -714,9 +714,9 @@ public class tnzs
 	
 		/* bits 0-2 select RAM/ROM bank */
 		cpu_setbank (1, &RAM[0x10000 + 0x4000 * (data & 0x07)]);
-	}
+	} };
 	
-	WRITE_HANDLER( tnzs_bankswitch1_w )
+	public static WriteHandlerPtr tnzs_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -764,5 +764,5 @@ public class tnzs
 	
 		/* bits 0-1 select ROM bank */
 		cpu_setbank (2, &RAM[0x10000 + 0x2000 * (data & 3)]);
-	}
+	} };
 }

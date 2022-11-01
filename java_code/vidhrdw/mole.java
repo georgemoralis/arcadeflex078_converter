@@ -59,7 +59,7 @@ public class mole
 		return 0;
 	}
 	
-	WRITE_HANDLER( moleattack_videoram_w )
+	public static WriteHandlerPtr moleattack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (offset < NUM_TILES) {
 			if (tile_data[offset] != data) {
@@ -67,18 +67,18 @@ public class mole
 				tilemap_mark_tile_dirty(bg_tilemap, offset);
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( moleattack_tilesetselector_w )
+	public static WriteHandlerPtr moleattack_tilesetselector_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tile_bank = data;
 		tilemap_mark_all_tiles_dirty(bg_tilemap);
-	}
+	} };
 	
-	WRITE_HANDLER( moleattack_flipscreen_w )
+	public static WriteHandlerPtr moleattack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data);
-	}
+	} };
 	
 	VIDEO_UPDATE( moleattack )
 	{

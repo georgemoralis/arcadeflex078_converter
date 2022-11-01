@@ -43,13 +43,13 @@ public class carjmbre
 		}
 	}
 	
-	WRITE_HANDLER( carjmbre_flipscreen_w )
+	public static WriteHandlerPtr carjmbre_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		carjmbre_flipscreen = data?(TILEMAP_FLIPX|TILEMAP_FLIPY):0;
 		tilemap_set_flip( ALL_TILEMAPS,carjmbre_flipscreen );
-	}
+	} };
 	
-	WRITE_HANDLER( carjmbre_bgcolor_w )
+	public static WriteHandlerPtr carjmbre_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int oldbg,i;
 	
@@ -65,7 +65,7 @@ public class carjmbre
 			for (i=0;i<64;i+=4)
 				palette_set_color(i, (carjmbre_bgcolor&0xff)*0x50, (carjmbre_bgcolor&0xff)*0x50, (carjmbre_bgcolor&0xff)!=0?0x50:0);
 		}
-	}
+	} };
 	
 	static void get_carjmbre_tile_info(int tile_index){
 		unsigned int tile_number = videoram[tile_index] & 0xFF;
@@ -78,10 +78,10 @@ public class carjmbre
 				0)
 	}
 	
-	WRITE_HANDLER( carjmbre_videoram_w ){
+	public static WriteHandlerPtr carjmbre_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(carjmbre_tilemap,offset&0x3ff);
-	}
+	} };
 	
 	
 	

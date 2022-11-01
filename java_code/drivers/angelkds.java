@@ -145,14 +145,14 @@ public class angelkds
 	
 	*/
 	
-	static WRITE_HANDLER ( angelkds_cpu_bank_write )
+	static public static WriteHandlerPtr angelkds_cpu_bank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_USER1);
 	
 		bankaddress = data & 0x0f;
 		cpu_setbank(1,&RAM[bankaddress*0x4000]);
-	}
+	} };
 	
 	
 	/*** Fake Inputs

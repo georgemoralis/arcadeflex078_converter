@@ -49,27 +49,27 @@ public class sprint2
 	}
 	
 	
-	READ_HANDLER( sprint2_collision1_r )
+	public static ReadHandlerPtr sprint2_collision1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return collision[0];
-	}
-	READ_HANDLER( sprint2_collision2_r )
+	} };
+	public static ReadHandlerPtr sprint2_collision2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return collision[1];
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sprint2_collision_reset1_w )
+	public static WriteHandlerPtr sprint2_collision_reset1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		collision[0] = 0;
-	}
-	WRITE_HANDLER( sprint2_collision_reset2_w )
+	} };
+	public static WriteHandlerPtr sprint2_collision_reset2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		collision[1] = 0;
-	}
+	} };
 	
 	
-	WRITE_HANDLER( sprint2_video_ram_w )
+	public static WriteHandlerPtr sprint2_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (data != sprint2_video_ram[offset])
 		{
@@ -77,7 +77,7 @@ public class sprint2
 		}
 	
 		sprint2_video_ram[offset] = data;
-	}
+	} };
 	
 	
 	static UINT8 collision_check(struct rectangle* rect)

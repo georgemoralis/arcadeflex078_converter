@@ -96,25 +96,25 @@ public class ironhors
 		}
 	}
 	
-	WRITE_HANDLER( ironhors_videoram_w )
+	public static WriteHandlerPtr ironhors_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ironhors_colorram_w )
+	public static WriteHandlerPtr ironhors_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ironhors_charbank_w )
+	public static WriteHandlerPtr ironhors_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (charbank != (data & 0x03))
 		{
@@ -125,9 +125,9 @@ public class ironhors
 		spriterambank = data & 0x08;
 	
 		/* other bits unknown */
-	}
+	} };
 	
-	WRITE_HANDLER( ironhors_palettebank_w )
+	public static WriteHandlerPtr ironhors_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palettebank != (data & 0x07))
 		{
@@ -141,9 +141,9 @@ public class ironhors
 		/* bit 6 unknown - set after game over */
 	
 		if (data & 0x88) usrintf_showmessage("ironhors_palettebank_w %02x",data);
-	}
+	} };
 	
-	WRITE_HANDLER( ironhors_flipscreen_w )
+	public static WriteHandlerPtr ironhors_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (~data & 0x08))
 		{
@@ -152,7 +152,7 @@ public class ironhors
 		}
 	
 		/* other bits are used too, but unknown */
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

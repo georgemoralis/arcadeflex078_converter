@@ -100,15 +100,15 @@ public class cvs
 		S2650 Memory Mirroring calls
 	***************************************************************************/
 	
-	READ_HANDLER( cvs_mirror_r )
+	public static ReadHandlerPtr cvs_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_readmem16(0x1400+offset);
-	}
+	} };
 	
-	WRITE_HANDLER( cvs_mirror_w )
+	public static WriteHandlerPtr cvs_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_writemem16(0x1400+offset,data);
-	}
+	} };
 	
 	/***************************************************************************
 		Speech Calls
@@ -144,7 +144,7 @@ public class cvs
 	    speech_rom_bit     = 0x0;
 	}
 	
-	WRITE_HANDLER( control_port_w )
+	public static WriteHandlerPtr control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Controls both Speech and Effects */
 	
@@ -176,7 +176,7 @@ public class cvs
 	            start_talking();
 	        }
 	    }
-	}
+	} };
 	
 	int cvs_speech_rom_read_bit(void)
 	{
@@ -197,7 +197,7 @@ public class cvs
 		return bit;
 	}
 	
-	WRITE_HANDLER( cvs_DAC2_w )
+	public static WriteHandlerPtr cvs_DAC2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    /* 4 Bit DAC - 4 memory locations used */
 	
@@ -207,13 +207,13 @@ public class cvs
 	    DAC_Value |= ((data & 0x80) >> 7) << (offset + 4);
 	
 		DAC_1_data_w(0,DAC_Value);
-	}
+	} };
 	
-	READ_HANDLER( CVS_393hz_Clock_r )
+	public static ReadHandlerPtr CVS_393hz_Clock_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	  	if(cpu_scalebyfcount(6) & 1) return 0x80;
 	    else return 0;
-	}
+	} };
 	
 	static struct TMS5110interface tms5110_interface =
 	{

@@ -718,10 +718,10 @@ public class nes_apu
 	/* EXTERNAL INTERFACE FUNCTIONS */
 	
 	/* REGISTER READ/WRITE FUNCTIONS */
-	READ_HANDLER( NESPSG_0_r ) {return apu_read(0,offset);}
-	READ_HANDLER( NESPSG_1_r ) {return apu_read(1,offset);}
-	WRITE_HANDLER( NESPSG_0_w ) {apu_write(0,offset,data);}
-	WRITE_HANDLER( NESPSG_1_w ) {apu_write(1,offset,data);}
+	public static ReadHandlerPtr NESPSG_0_r  = new ReadHandlerPtr() { public int handler(int offset) {return apu_read(0,offset);} };
+	public static ReadHandlerPtr NESPSG_1_r  = new ReadHandlerPtr() { public int handler(int offset) {return apu_read(1,offset);} };
+	public static WriteHandlerPtr NESPSG_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {apu_write(0,offset,data);} };
+	public static WriteHandlerPtr NESPSG_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {apu_write(1,offset,data);} };
 	
 	/* INITIALIZE APU SYSTEM */
 	int NESPSG_sh_start(const struct MachineSound *msound)

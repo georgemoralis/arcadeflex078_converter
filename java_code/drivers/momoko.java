@@ -27,16 +27,16 @@ public class momoko
 	
 	
 	
-	WRITE_HANDLER( momoko_fg_select_w);
-	WRITE_HANDLER( momoko_bg_select_w);
-	WRITE_HANDLER( momoko_bg_priority_w);
+	public static WriteHandlerPtr momoko_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data);
+	public static WriteHandlerPtr momoko_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data);
+	public static WriteHandlerPtr momoko_bg_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
-	WRITE_HANDLER( momoko_bg_read_bank_w )
+	public static WriteHandlerPtr momoko_bg_read_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		data8_t *BG_MAP = memory_region(REGION_USER1);
 		int bank_address = (data & 0x1f) * 0x1000;
 		cpu_setbank(1, &BG_MAP[bank_address]);
-	}
+	} };
 	
 	/****************************************************************************/
 	

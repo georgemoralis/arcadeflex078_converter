@@ -71,11 +71,11 @@ public class aliens
 	#endif
 	} };
 	
-	WRITE_HANDLER( aliens_sh_irqtrigger_w )
+	public static WriteHandlerPtr aliens_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
-	}
+	} };
 	
 	public static WriteHandlerPtr aliens_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

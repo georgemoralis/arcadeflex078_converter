@@ -35,23 +35,23 @@ public class supdrapo
 	static struct tilemap *fg_tilemap;
 	static unsigned char *char_bank;
 	
-	WRITE_HANDLER( supdrapo_videoram_w )
+	public static WriteHandlerPtr supdrapo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset] != data )
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( supdrapo_char_bank_w )
+	public static WriteHandlerPtr supdrapo_char_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( char_bank[offset] != data )
 		{
 			char_bank[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

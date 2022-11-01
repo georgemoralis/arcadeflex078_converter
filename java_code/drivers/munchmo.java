@@ -44,16 +44,16 @@ public class munchmo
 		else if( mnchmobl_nmi_enable ) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	WRITE_HANDLER( mnchmobl_soundlatch_w )
+	public static WriteHandlerPtr mnchmobl_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w( offset, data );
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
-	}
+	} };
 	
-	WRITE_HANDLER( sound_nmi_ack_w )
+	public static WriteHandlerPtr sound_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_set_nmi_line(1, CLEAR_LINE);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

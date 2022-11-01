@@ -39,25 +39,25 @@ public class malzak
 	
 	// in vidhrdw/malzak.c
 	
-	READ_HANDLER( malzak_s2636_1_r )
+	public static ReadHandlerPtr malzak_s2636_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return s2636_1_ram[offset];
-	}
+	} };
 	
-	READ_HANDLER( malzak_s2636_2_r )
+	public static ReadHandlerPtr malzak_s2636_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return s2636_2_ram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER( malzak_s2636_1_w )
+	public static WriteHandlerPtr malzak_s2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s2636_w(s2636_1_ram,offset,data,s2636_1_dirty);
-	}
+	} };
 	
-	WRITE_HANDLER( malzak_s2636_2_w )
+	public static WriteHandlerPtr malzak_s2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		s2636_w(s2636_2_ram,offset,data,s2636_2_dirty);
-	}
+	} };
 	
 	
 	public static ReadHandlerPtr saa5050_r  = new ReadHandlerPtr() { public int handler(int offset)

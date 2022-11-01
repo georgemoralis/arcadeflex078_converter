@@ -36,7 +36,7 @@ public class bigevglf
 		palette_set_color(offset&0x3ff, color&0xf0, (color&0xf)<<4, (color&0xf00)>>4);
 	}
 	
-	WRITE_HANDLER( beg_gfxcontrol_w )
+	public static WriteHandlerPtr beg_gfxcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	/* bits used: 0,1,2,3
 	 0 and 2 select plane,
@@ -44,14 +44,14 @@ public class bigevglf
 	*/
 		plane_selected=((data & 4)>>1) | (data&1);
 		plane_visible =((data & 8)>>2) | ((data&2)>>1);
-	}
+	} };
 	
-	WRITE_HANDLER( bigevglf_vidram_addr_w )
+	public static WriteHandlerPtr bigevglf_vidram_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		vidram_bank = (data & 0xff) * 0x100;
-	}
+	} };
 	
-	WRITE_HANDLER( bigevglf_vidram_w )
+	public static WriteHandlerPtr bigevglf_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		UINT32 x,y,o;
 		o = vidram_bank + offset;
@@ -59,12 +59,12 @@ public class bigevglf
 		y = o >>8;
 		x = (o & 255);
 		plot_pixel(tmp_bitmap[plane_selected],x,y,data );
-	}
+	} };
 	
-	READ_HANDLER( bigevglf_vidram_r )
+	public static ReadHandlerPtr bigevglf_vidram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return vidram[ 0x10000 * plane_selected + vidram_bank + offset];
-	}
+	} };
 	
 	VIDEO_START( bigevglf )
 	{

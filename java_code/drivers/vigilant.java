@@ -19,19 +19,19 @@ public class vigilant
 	/* vidhrdw/vigilant.c */
 	
 	
-	WRITE_HANDLER( vigilant_bank_select_w )
+	public static WriteHandlerPtr vigilant_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
-	}
+	} };
 	
 	/***************************************************************************
 	 vigilant_out2_w
 	 **************************************************************************/
-	WRITE_HANDLER( vigilant_out2_w )
+	public static WriteHandlerPtr vigilant_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* D0 = FILP = Flip screen? */
 		/* D1 = COA1 = Coin Counter A? */
@@ -40,9 +40,9 @@ public class vigilant
 		/* The hardware has both coin counters hooked up to a single meter. */
 		coin_counter_w(0,data & 0x02);
 		coin_counter_w(1,data & 0x04);
-	}
+	} };
 	
-	WRITE_HANDLER( kikcubic_coin_w )
+	public static WriteHandlerPtr kikcubic_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bits 0 is flip screen */
 	
@@ -51,7 +51,7 @@ public class vigilant
 		/* bits 4/5 are coin counters */
 		coin_counter_w(0,data & 0x10);
 		coin_counter_w(1,data & 0x20);
-	}
+	} };
 	
 	
 	

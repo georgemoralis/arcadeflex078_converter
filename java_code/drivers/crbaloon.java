@@ -76,7 +76,7 @@ public class crbaloon
 	    SN76477_enable_w(0, 0);
 	}
 	
-	WRITE_HANDLER( crbaloon_06_w )
+	public static WriteHandlerPtr crbaloon_06_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		val06 = data;
 	
@@ -120,21 +120,21 @@ public class crbaloon
 			/* constant: pin1 = hi, pin 28 = lo */
 			SN76477_envelope_w(0, 1);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( crbaloon_08_w )
+	public static WriteHandlerPtr crbaloon_08_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		val08 = data;
 	
 		crbaloon_flipscreen_w(offset,data & 1);
-	}
+	} };
 	
-	WRITE_HANDLER( crbaloon_0a_w )
+	public static WriteHandlerPtr crbaloon_0a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		val0a = data;
-	}
+	} };
 	
-	READ_HANDLER( crbaloon_IN2_r )
+	public static ReadHandlerPtr crbaloon_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		
 		if (crbaloon_collision != 0)
@@ -153,9 +153,9 @@ public class crbaloon
 	logerror("PC %04x: %02x low\n",activecpu_get_pc(),offset);
 			return (input_port_2_r(0) & 0xf0) | 0x07;
 		}
-	}
+	} };
 	
-	READ_HANDLER( crbaloon_IN3_r )
+	public static ReadHandlerPtr crbaloon_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		if (val08 & 0x02)
 			/* enable coin & start input? Wild guess!!! */
@@ -172,10 +172,10 @@ public class crbaloon
 	logerror("PC %04x: 03 low\n",activecpu_get_pc());
 			return (input_port_3_r(0) & 0x0f) | 0x00;
 		}
-	}
+	} };
 	
 	
-	READ_HANDLER( crbaloon_IN_r )
+	public static ReadHandlerPtr crbaloon_IN_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset & 0x03)
 		{
@@ -193,7 +193,7 @@ public class crbaloon
 		}
 	
 		return 0;
-	}
+	} };
 	
 	
 	

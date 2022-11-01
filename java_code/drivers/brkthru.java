@@ -61,27 +61,27 @@ public class brkthru
 	
 	static int nmi_enable;
 	
-	WRITE_HANDLER( brkthru_1803_w )
+	public static WriteHandlerPtr brkthru_1803_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 = NMI enable */
 		nmi_enable = ~data & 1;
 	
 		/* bit 1 = ? maybe IRQ acknowledge */
-	}
-	WRITE_HANDLER( darwin_0803_w )
+	} };
+	public static WriteHandlerPtr darwin_0803_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0 = NMI enable */
 		/*nmi_enable = ~data & 1;*/
 		logerror("0803 %02X\n",data);
 	        nmi_enable = data;
 		/* bit 1 = ? maybe IRQ acknowledge */
-	}
+	} };
 	
-	WRITE_HANDLER( brkthru_soundlatch_w )
+	public static WriteHandlerPtr brkthru_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch_w(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	
 	

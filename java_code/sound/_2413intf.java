@@ -128,35 +128,35 @@ public class _2413intf
 	
 	
 	#ifdef YM2413ISA
-	WRITE_HANDLER( YM2413_register_port_0_w ) {
+	public static WriteHandlerPtr YM2413_register_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 	int i,a;
 		outportb(0x308,data); // ym2413_write (0, 0, data);
 		//add delay
 		for (i=0; i<0x20; i++)
 			a = inportb(0x80);
 	
-	 } /* 1st chip */
+	 } }; /* 1st chip */
 	#else
-	WRITE_HANDLER( YM2413_register_port_0_w ) { YM2413Write (0, 0, data); } /* 1st chip */
+	public static WriteHandlerPtr YM2413_register_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (0, 0, data); } }; /* 1st chip */
 	#endif
-	WRITE_HANDLER( YM2413_register_port_1_w ) { YM2413Write (1, 0, data); } /* 2nd chip */
-	WRITE_HANDLER( YM2413_register_port_2_w ) { YM2413Write (2, 0, data); } /* 3rd chip */
-	WRITE_HANDLER( YM2413_register_port_3_w ) { YM2413Write (3, 0, data); } /* 4th chip */
+	public static WriteHandlerPtr YM2413_register_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (1, 0, data); } }; /* 2nd chip */
+	public static WriteHandlerPtr YM2413_register_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (2, 0, data); } }; /* 3rd chip */
+	public static WriteHandlerPtr YM2413_register_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (3, 0, data); } }; /* 4th chip */
 	
 	#ifdef YM2413ISA
-	WRITE_HANDLER( YM2413_data_port_0_w ) {
+	public static WriteHandlerPtr YM2413_data_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
 	int i,a;
 		outportb(0x309,data);// YM2413Write (0, 1, data);
 		//add delay
 		for (i=0; i<0x40; i++)
 			a = inportb(0x80);
-	 } /* 1st chip */
+	 } }; /* 1st chip */
 	#else
-	WRITE_HANDLER( YM2413_data_port_0_w ) { YM2413Write (0, 1, data); } /* 1st chip */
+	public static WriteHandlerPtr YM2413_data_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (0, 1, data); } }; /* 1st chip */
 	#endif
-	WRITE_HANDLER( YM2413_data_port_1_w ) { YM2413Write (1, 1, data); } /* 2nd chip */
-	WRITE_HANDLER( YM2413_data_port_2_w ) { YM2413Write (2, 1, data); } /* 3rd chip */
-	WRITE_HANDLER( YM2413_data_port_3_w ) { YM2413Write (3, 1, data); } /* 4th chip */
+	public static WriteHandlerPtr YM2413_data_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (1, 1, data); } }; /* 2nd chip */
+	public static WriteHandlerPtr YM2413_data_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (2, 1, data); } }; /* 3rd chip */
+	public static WriteHandlerPtr YM2413_data_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { YM2413Write (3, 1, data); } }; /* 4th chip */
 	
 	WRITE16_HANDLER( YM2413_register_port_0_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_0_w(offset,data & 0xff); }
 	WRITE16_HANDLER( YM2413_register_port_1_lsb_w ) { if (ACCESSING_LSB) YM2413_register_port_1_w(offset,data & 0xff); }

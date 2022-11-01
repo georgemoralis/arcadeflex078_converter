@@ -43,7 +43,7 @@ public class dominos
 	We remap our input ports because if we didn't, we'd use a bunch of ports.
 	***************************************************************************/
 	
-	READ_HANDLER( dominos_port_r )
+	public static ReadHandlerPtr dominos_port_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset)
 		{
@@ -85,7 +85,7 @@ public class dominos
 			/* Just in case */
 			default:		return 0xFF;
 		}
-	}
+	} };
 	
 	void dominos_ac_signal_flip(int dummy)
 	{
@@ -103,44 +103,44 @@ public class dominos
 	
 	The only one of these I really understand is the VBLANK...
 	***************************************************************************/
-	READ_HANDLER( dominos_sync_r )
+	public static ReadHandlerPtr dominos_sync_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ((input_port_4_r(0) & 0x60) | dominos_attract | ac_line);
-	}
+	} };
 	
 	
 	
 	/***************************************************************************
 	Attract
 	***************************************************************************/
-	WRITE_HANDLER( dominos_attract_w )
+	public static WriteHandlerPtr dominos_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		dominos_attract = (offset & 0x01) << 4;
 		discrete_sound_w(3, !(offset & 0x01));
-	}
+	} };
 	
 	/***************************************************************************
 	Lamps
 	***************************************************************************/
-	WRITE_HANDLER( dominos_lamp1_w )
+	public static WriteHandlerPtr dominos_lamp1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Address Line 0 is the data passed to LAMP1 */
 		set_led_status(0,offset & 0x01);
-	}
+	} };
 	
-	WRITE_HANDLER( dominos_lamp2_w )
+	public static WriteHandlerPtr dominos_lamp2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* Address Line 0 is the data passed to LAMP2 */
 		set_led_status(1,offset & 0x01);
-	}
+	} };
 	
 	/***************************************************************************
 	Sound function
 	***************************************************************************/
-	WRITE_HANDLER( dominos_tumble_w )
+	public static WriteHandlerPtr dominos_tumble_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		discrete_sound_w(2, offset & 0x01);
-	}
+	} };
 	
 	
 }

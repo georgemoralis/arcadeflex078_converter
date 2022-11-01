@@ -74,26 +74,26 @@ public class news
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( news_fgram_w )
+	public static WriteHandlerPtr news_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		news_fgram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( news_bgram_w )
+	public static WriteHandlerPtr news_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		news_bgram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( news_bgpic_w )
+	public static WriteHandlerPtr news_bgpic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bgpic != data)
 		{
 			bgpic = data;
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
-	}
+	} };
 	
 	
 	

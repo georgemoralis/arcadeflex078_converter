@@ -44,37 +44,37 @@ public class kopunch
 		}
 	}
 	
-	WRITE_HANDLER( kopunch_videoram_w )
+	public static WriteHandlerPtr kopunch_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kopunch_videoram2_w )
+	public static WriteHandlerPtr kopunch_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kopunch_videoram2[offset] != data)
 		{
 			kopunch_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( kopunch_scroll_x_w )
+	public static WriteHandlerPtr kopunch_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll[0] = data; // REMOVE
 		tilemap_set_scrollx(fg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( kopunch_scroll_y_w )
+	public static WriteHandlerPtr kopunch_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		scroll[1] = data; // REMOVE
 		tilemap_set_scrolly(fg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( kopunch_gfxbank_w )
+	public static WriteHandlerPtr kopunch_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfxbank != (data & 0x07))
 		{
@@ -85,7 +85,7 @@ public class kopunch
 		gfxflip = data & 0x08; // REMOVE
 	
 		tilemap_set_flip(fg_tilemap, (data & 0x08) ? TILEMAP_FLIPY : 0);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

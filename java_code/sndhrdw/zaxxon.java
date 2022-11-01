@@ -113,7 +113,7 @@ public class zaxxon
 		{ 11, 11, 1, 1, 1 },	/* background */
 	};
 	
-	WRITE_HANDLER( zaxxon_sound_w )
+	public static WriteHandlerPtr zaxxon_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int line;
 		int noise;
@@ -190,5 +190,5 @@ public class zaxxon
 			// control byte
 			break;
 		}
-	}
+	} };
 }

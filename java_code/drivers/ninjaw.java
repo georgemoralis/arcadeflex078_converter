@@ -233,7 +233,7 @@ public class ninjaw
 	
 	/**** sound pan control ****/
 	static int ninjaw_pandata[4];
-	WRITE_HANDLER( ninjaw_pancontrol )
+	public static WriteHandlerPtr ninjaw_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	  offset = offset&3;
 	  ninjaw_pandata[offset] = (float)data * (100.f / 255.0f);
@@ -244,7 +244,7 @@ public class ninjaw
 	  else{
 	    mixer_set_stereo_volume( 4, ninjaw_pandata[2], ninjaw_pandata[3] );
 	  }
-	}
+	} };
 	
 	
 	/***********************************************************

@@ -60,13 +60,13 @@ public class shangkid
 		return background?0:1;
 	}
 	
-	WRITE_HANDLER( shangkid_videoram_w )
+	public static WriteHandlerPtr shangkid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( videoram[offset]!=data ){
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty( background, offset&0x7ff );
 		}
-	}
+	} };
 	
 	static void draw_sprite( const UINT8 *source, struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const struct GfxElement *gfx;

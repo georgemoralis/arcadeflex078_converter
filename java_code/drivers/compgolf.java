@@ -45,27 +45,27 @@ public class compgolf
 	data8_t *compgolf_bg_ram;
 	static struct tilemap *text_tilemap, *background_tilemap;
 	
-	WRITE_HANDLER( compgolf_video_w )
+	public static WriteHandlerPtr compgolf_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset] = data;
 		tilemap_mark_tile_dirty(text_tilemap, offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( compgolf_back_w )
+	public static WriteHandlerPtr compgolf_back_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		compgolf_bg_ram[offset] = data;
 		tilemap_mark_tile_dirty(background_tilemap, offset/2);
-	}
+	} };
 	
-	WRITE_HANDLER( compgolf_scrollx_w )
+	public static WriteHandlerPtr compgolf_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(background_tilemap,0,data);
-	}
+	} };
 	
-	WRITE_HANDLER( compgolf_scrolly_w )
+	public static WriteHandlerPtr compgolf_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(background_tilemap,0,data);
-	}
+	} };
 	
 	static void get_text_info(int cgindex)
 	{

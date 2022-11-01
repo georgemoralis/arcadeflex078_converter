@@ -241,7 +241,7 @@ public class airbustr
 	
 	
 	/* There's an MCU here, possibly */
-	READ_HANDLER( devram_r )
+	public static ReadHandlerPtr devram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset)
 		{
@@ -273,8 +273,8 @@ public class airbustr
 			default:	{ return devram[offset]; break;}
 		}
 	
-	}
-	WRITE_HANDLER( devram_w )	{	devram[offset] = data; }
+	} };
+	public static WriteHandlerPtr devram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{	devram[offset] = data; } };
 	
 	
 	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
@@ -372,7 +372,7 @@ public class airbustr
 	} };
 	
 	
-	WRITE_HANDLER( airbustr_paletteram_w )
+	public static WriteHandlerPtr airbustr_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int r,g,b;
 		int val;
@@ -391,7 +391,7 @@ public class airbustr
 		palette_set_color(offset/2,	(r * 0xff) / 0x1f,
 										(g * 0xff) / 0x1f,
 										(b * 0xff) / 0x1f );
-	}
+	} };
 	
 	
 	/* Memory */
@@ -461,7 +461,7 @@ public class airbustr
 	} };
 	
 	
-	WRITE_HANDLER( port_38_w )	{	u4 = data; } // for debug
+	public static WriteHandlerPtr port_38_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{	u4 = data; } }; // for debug
 	
 	
 	public static IO_ReadPort readport2[]={
@@ -533,18 +533,18 @@ public class airbustr
 	
 	/* Ports */
 	
-	READ_HANDLER( soundcommand_r )
+	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		soundlatch_status = 0;		// soundlatch has been read
 		return soundlatch_r(0);
-	}
+	} };
 	
 	
-	WRITE_HANDLER( soundcommand2_w )
+	public static WriteHandlerPtr soundcommand2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		soundlatch2_status = 1;		// soundlatch2 has been written
 		soundlatch2_w(0,data);
-	}
+	} };
 	
 	
 	public static IO_ReadPort sound_readport[]={

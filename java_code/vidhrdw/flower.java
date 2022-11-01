@@ -146,9 +146,9 @@ public class flower
 	}
 	
 	
-	READ_HANDLER( flower_sharedram_r ) { return flower_sharedram[offset]; }
+	public static ReadHandlerPtr flower_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) { return flower_sharedram[offset]; } };
 	
-	WRITE_HANDLER( flower_sharedram_w )
+	public static WriteHandlerPtr flower_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flower_sharedram[offset]=data;
 	
@@ -161,5 +161,5 @@ public class flower
 		{
 			tilemap_mark_tile_dirty(flower_bg1_tilemap,offset&0x1ff);
 		}
-	}
+	} };
 }

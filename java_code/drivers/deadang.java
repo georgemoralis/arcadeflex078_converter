@@ -40,7 +40,7 @@ public class deadang
 		deadang_shared_ram[offset] = data;
 	} };
 	
-	READ_HANDLER( ghunter_trackball_low_r )
+	public static ReadHandlerPtr ghunter_trackball_low_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset)
 		{
@@ -49,8 +49,8 @@ public class deadang
 		}
 	
 		return 0;
-	}
-	READ_HANDLER( ghunter_trackball_high_r )
+	} };
+	public static ReadHandlerPtr ghunter_trackball_high_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		switch (offset)
 		{
@@ -59,7 +59,7 @@ public class deadang
 		}
 	
 		return 0;
-	}
+	} };
 	
 	/* Memory Maps */
 	

@@ -92,37 +92,37 @@ public class mario
 			COLOR(1,i) = i;
 	}
 	
-	WRITE_HANDLER( mario_videoram_w )
+	public static WriteHandlerPtr mario_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mario_gfxbank_w )
+	public static WriteHandlerPtr mario_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mario_palettebank_w )
+	public static WriteHandlerPtr mario_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (palette_bank != (data & 0x01))
 		{
 			palette_bank = data & 0x01;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( mario_scroll_w )
+	public static WriteHandlerPtr mario_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data + 17);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

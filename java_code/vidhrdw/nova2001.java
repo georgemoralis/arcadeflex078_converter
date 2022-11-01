@@ -94,60 +94,60 @@ public class nova2001
 		}
 	}
 	
-	WRITE_HANDLER( nova2001_videoram_w )
+	public static WriteHandlerPtr nova2001_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_colorram_w )
+	public static WriteHandlerPtr nova2001_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_videoram2_w )
+	public static WriteHandlerPtr nova2001_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (nova2001_videoram2[offset] != data)
 		{
 			nova2001_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_colorram2_w )
+	public static WriteHandlerPtr nova2001_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (nova2001_colorram2[offset] != data)
 		{
 			nova2001_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_scroll_x_w )
+	public static WriteHandlerPtr nova2001_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrollx(bg_tilemap, 0, data - (flip_screen ? 0 : 7));
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_scroll_y_w )
+	public static WriteHandlerPtr nova2001_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		tilemap_set_scrolly(bg_tilemap, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER( nova2001_flipscreen_w )
+	public static WriteHandlerPtr nova2001_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

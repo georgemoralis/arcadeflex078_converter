@@ -368,7 +368,7 @@ public class dec8
 		flip_screen_set(data & 0x08);
 	} };
 	
-	WRITE_HANDLER( csilver_control_w )
+	public static WriteHandlerPtr csilver_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -380,7 +380,7 @@ public class dec8
 			Bit 0x80 - Hold subcpu reset line high if clear, else low?  (Not needed anyway)
 		*/
 		cpu_setbank(1,&RAM[0x10000 + (data & 0x0f) * 0x4000]);
-	}
+	} };
 	
 	public static WriteHandlerPtr dec8_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{

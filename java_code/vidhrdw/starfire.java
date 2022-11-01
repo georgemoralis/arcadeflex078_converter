@@ -59,15 +59,15 @@ public class starfire
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( starfire_vidctrl_w )
+	public static WriteHandlerPtr starfire_vidctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    starfire_vidctrl = data;
-	}
+	} };
 	
-	WRITE_HANDLER( starfire_vidctrl1_w )
+	public static WriteHandlerPtr starfire_vidctrl1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    starfire_vidctrl1 = data;
-	}
+	} };
 	
 	
 	
@@ -77,7 +77,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( starfire_colorram_w )
+	public static WriteHandlerPtr starfire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* handle writes to the pseudo-color RAM */
 		if ((offset & 0xe0) == 0)
@@ -111,12 +111,12 @@ public class starfire
 			scanline_dirty[offset & 0xff] = 1;
 			starfire_color = data & 0x1f;
 		}
-	}
+	} };
 	
-	READ_HANDLER( starfire_colorram_r )
+	public static ReadHandlerPtr starfire_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return starfire_colorram[offset];
-	}
+	} };
 	
 	
 	
@@ -126,7 +126,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	WRITE_HANDLER( starfire_videoram_w )
+	public static WriteHandlerPtr starfire_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int sh, lr, dm, ds, mask, d0, dalu;
 		int offset1 = offset & 0x1fff;
@@ -205,9 +205,9 @@ public class starfire
 			if (mask & 0x00ff)
 				starfire_colorram[offset2] = starfire_color;
 		}
-	}
+	} };
 	
-	READ_HANDLER( starfire_videoram_r )
+	public static ReadHandlerPtr starfire_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int sh, mask, d0;
 		int offset1 = offset & 0x1fff;
@@ -235,7 +235,7 @@ public class starfire
 		d0 = (starfire_videoram[offset1] & (mask >> 8)) | (starfire_videoram[offset2] & mask);
 		d0 = (d0 << sh) | (d0 >> (8 - sh));
 		return d0 & 0xff;
-	}
+	} };
 	
 	
 	

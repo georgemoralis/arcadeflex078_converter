@@ -44,13 +44,13 @@ public class magmax
 		return (sound_latch | LS74_q);
 	} };
 	
-	WRITE_HANDLER( ay8910_portB_0_w )
+	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/*bit 0 is input to CLR line of the LS74*/
 		LS74_clr = data & 1;
 		if (LS74_clr == 0)
 			LS74_q = 0;
-	}
+	} };
 	
 	static void scanline_callback(int scanline)
 	{
@@ -80,7 +80,7 @@ public class magmax
 	
 	static int gain_control = 0;
 	
-	WRITE_HANDLER( ay8910_portA_0_w )
+	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	int percent;
 	
@@ -156,7 +156,7 @@ public class magmax
 		percent = (gain_control & 8) ? 45 : 23;
 		mixer_set_volume(7,percent);
 		mixer_set_volume(8,percent);
-	}
+	} };
 	
 	static WRITE16_HANDLER( magmax_vreg_w )
 	{

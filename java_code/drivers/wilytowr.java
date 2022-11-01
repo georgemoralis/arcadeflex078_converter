@@ -129,14 +129,14 @@ public class wilytowr
 		}
 	} };
 	
-	WRITE_HANDLER( wilytwr_flipscreen_w )
+	public static WriteHandlerPtr wilytwr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

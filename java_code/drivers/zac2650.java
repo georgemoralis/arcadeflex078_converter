@@ -347,7 +347,7 @@ public class zac2650
 		/* sound hardware */
 	MACHINE_DRIVER_END
 	
-	WRITE_HANDLER( tinvader_sound_w )
+	public static WriteHandlerPtr tinvader_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    /* sounds are NOT the same as space invaders */
 	
@@ -359,7 +359,7 @@ public class zac2650
 		/* 84 = fire */
 	    /* 90 = die */
 	    /* c4 = hit saucer */
-	}
+	} };
 	
 	ROM_START( sia2650 )
 		ROM_REGION( 0x2000, REGION_CPU1, 0 )

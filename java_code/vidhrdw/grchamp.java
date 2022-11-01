@@ -27,31 +27,31 @@ public class grchamp
 	
 	struct tilemap *tilemap[3];
 	
-	WRITE_HANDLER( grchamp_player_xpos_w )
+	public static WriteHandlerPtr grchamp_player_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_player_xpos = data;
-	}
+	} };
 	
-	WRITE_HANDLER( grchamp_player_ypos_w )
+	public static WriteHandlerPtr grchamp_player_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_player_ypos = data;
-	}
+	} };
 	
-	WRITE_HANDLER( grchamp_tile_select_w )
+	public static WriteHandlerPtr grchamp_tile_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* tile select: bits 4..7:rain; bits 0..3:player car */
 		grchamp_tile_number = data;
-	}
+	} };
 	
-	WRITE_HANDLER( grchamp_rain_xpos_w )
+	public static WriteHandlerPtr grchamp_rain_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_rain_xpos = data;
-	}
+	} };
 	
-	WRITE_HANDLER( grchamp_rain_ypos_w )
+	public static WriteHandlerPtr grchamp_rain_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		grchamp_rain_ypos = data;
-	}
+	} };
 	
 	PALETTE_INIT( grchamp )
 	{
@@ -97,14 +97,14 @@ public class grchamp
 		palette_set_color(0x43,0,0,0);
 	}
 	
-	WRITE_HANDLER( grchamp_videoram_w )
+	public static WriteHandlerPtr grchamp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if( grchamp_videoram[offset]!=data )
 		{
 			grchamp_videoram[offset] = data;
 			tilemap_mark_tile_dirty( tilemap[offset/0x800], offset%0x800 );
 		}
-	}
+	} };
 	
 	static void get_bg0_tile_info( int offset )
 	{

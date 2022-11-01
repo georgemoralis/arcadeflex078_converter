@@ -31,7 +31,7 @@ public class geebee
 	#ifdef MAME_DEBUG
 	#endif
 	
-	READ_HANDLER( geebee_in_r )
+	public static ReadHandlerPtr geebee_in_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = readinputport(offset & 3);
 		if ((offset & 3) == 2)	/* combine with Bonus Life settings ? */
@@ -43,9 +43,9 @@ public class geebee
 		}
 		logerror("in_r %d $%02X\n", offset & 3, data);
 		return data;
-	}
+	} };
 	
-	READ_HANDLER( navalone_in_r )
+	public static ReadHandlerPtr navalone_in_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	    int data = readinputport(offset & 3);
 		if ((offset & 3) == 3)
@@ -57,9 +57,9 @@ public class geebee
 		}
 	    logerror("in_r %d $%02X\n", offset & 3, data);
 	    return data;
-	}
+	} };
 	
-	WRITE_HANDLER( geebee_out6_w )
+	public static WriteHandlerPtr geebee_out6_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 	    switch (offset & 3)
 	    {
@@ -83,9 +83,9 @@ public class geebee
 			geebee_sound_w(offset,data);
 	        break;
 	    }
-	}
+	} };
 	
-	WRITE_HANDLER( geebee_out7_w )
+	public static WriteHandlerPtr geebee_out7_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		switch (offset & 7)
 		{
@@ -119,7 +119,7 @@ public class geebee
 			geebee_inv = data & 1;
 			break;
 		}
-	}
+	} };
 	
 	
 }

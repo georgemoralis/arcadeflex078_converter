@@ -15,15 +15,15 @@ public class taxidrvr
 	
 	
 	
-	WRITE_HANDLER( p2a_w ) { taxidrvr_spritectrl_w(0,data); }
-	WRITE_HANDLER( p2b_w ) { taxidrvr_spritectrl_w(1,data); }
-	WRITE_HANDLER( p2c_w ) { taxidrvr_spritectrl_w(2,data); }
-	WRITE_HANDLER( p3a_w ) { taxidrvr_spritectrl_w(3,data); }
-	WRITE_HANDLER( p3b_w ) { taxidrvr_spritectrl_w(4,data); }
-	WRITE_HANDLER( p3c_w ) { taxidrvr_spritectrl_w(5,data); }
-	WRITE_HANDLER( p4a_w ) { taxidrvr_spritectrl_w(6,data); }
-	WRITE_HANDLER( p4b_w ) { taxidrvr_spritectrl_w(7,data); }
-	WRITE_HANDLER( p4c_w ) { taxidrvr_spritectrl_w(8,data); }
+	public static WriteHandlerPtr p2a_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(0,data); } };
+	public static WriteHandlerPtr p2b_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(1,data); } };
+	public static WriteHandlerPtr p2c_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(2,data); } };
+	public static WriteHandlerPtr p3a_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(3,data); } };
+	public static WriteHandlerPtr p3b_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(4,data); } };
+	public static WriteHandlerPtr p3c_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(5,data); } };
+	public static WriteHandlerPtr p4a_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(6,data); } };
+	public static WriteHandlerPtr p4b_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(7,data); } };
+	public static WriteHandlerPtr p4c_w = new WriteHandlerPtr() {public void handler(int offset, int data) { taxidrvr_spritectrl_w(8,data); } };
 	
 	
 	

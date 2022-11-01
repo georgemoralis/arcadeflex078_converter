@@ -63,37 +63,37 @@ public class crbaloon
 		}
 	}
 	
-	WRITE_HANDLER( crbaloon_videoram_w )
+	public static WriteHandlerPtr crbaloon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( crbaloon_colorram_w )
+	public static WriteHandlerPtr crbaloon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( crbaloon_spritectrl_w )
+	public static WriteHandlerPtr crbaloon_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		spritectrl[offset] = data;
-	}
+	} };
 	
-	WRITE_HANDLER( crbaloon_flipscreen_w )
+	public static WriteHandlerPtr crbaloon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (flip_screen != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

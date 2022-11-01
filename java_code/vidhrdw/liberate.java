@@ -92,7 +92,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	WRITE_HANDLER( deco16_io_w )
+	public static WriteHandlerPtr deco16_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		deco16_io_ram[offset]=data;
 		if (offset>1 && offset<6)
@@ -118,13 +118,13 @@ public class liberate
 				cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 				break;
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( liberate_videoram_w )
+	public static WriteHandlerPtr liberate_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		videoram[offset]=data;
 		tilemap_mark_tile_dirty(fix_tilemap,offset&0x3ff);
-	}
+	} };
 	
 	/***************************************************************************/
 	
@@ -170,11 +170,11 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	WRITE_HANDLER( prosport_paletteram_w )
+	public static WriteHandlerPtr prosport_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset,~data);
-	}
+	} };
 	
 	PALETTE_INIT( liberate )
 	{

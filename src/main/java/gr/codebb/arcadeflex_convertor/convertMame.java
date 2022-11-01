@@ -197,6 +197,12 @@ public class convertMame {
                         {
                             sUtil.skipLine();
                             continue;
+                        } else {
+                            sUtil.putString("public static WriteHandlerPtr " + Convertor.token[0] + " = new WriteHandlerPtr() {public void handler(int offset, int data)");
+                            type = WRITE_HANDLER8;
+                            i3 = -1;
+                            Convertor.inpos += 1;
+                            continue;
                         }
                     }
                     Convertor.inpos = i;
@@ -211,6 +217,12 @@ public class convertMame {
                         if (sUtil.getToken(");"))//if it is a front function skip it
                         {
                             sUtil.skipLine();
+                            continue;
+                        } else {
+                            sUtil.putString("public static ReadHandlerPtr " + Convertor.token[0] + "  = new ReadHandlerPtr() { public int handler(int offset)");
+                            type = READ_HANDLER8;
+                            i3 = -1;
+                            Convertor.inpos += 1;
                             continue;
                         }
                     }
@@ -377,7 +389,7 @@ public class convertMame {
                         sUtil.putString((new StringBuilder()).append("INPUT_PORTS_END(); }}; ").toString());
                         continue;
                     }
-                    if(sUtil.getToken("INTERRUPT_GEN("))  {
+                    if (sUtil.getToken("INTERRUPT_GEN(")) {
                         sUtil.skipSpace();
                         Convertor.token[0] = sUtil.parseToken();
                         sUtil.skipSpace();

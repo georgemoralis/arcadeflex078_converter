@@ -245,16 +245,16 @@ public class x1_010
 	/* Use these for 8 bit CPUs */
 	
 	
-	READ_HANDLER( seta_sound_r )
+	public static ReadHandlerPtr seta_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		offset ^= address;
 		return x1_010_reg[offset];
-	}
+	} };
 	
 	
 	
 	
-	WRITE_HANDLER( seta_sound_w )
+	public static WriteHandlerPtr seta_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int channel, reg;
 		offset ^= address;
@@ -271,7 +271,7 @@ public class x1_010
 		logerror("PC: %06X : offset %6X : data %2X\n", activecpu_get_pc(), offset, data );
 	#endif
 		x1_010_reg[offset] = data;
-	}
+	} };
 	
 	
 	

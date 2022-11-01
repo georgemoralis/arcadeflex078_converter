@@ -204,34 +204,34 @@ public class shougi
 	//to do:
 	// add separate sharedram/r/w() for both CPUs and use control value to verify access
 	
-	static WRITE_HANDLER ( cpu_sharedram_sub_w )
+	static public static WriteHandlerPtr cpu_sharedram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (cpu_sharedram_control_val!=0) logerror("sub CPU access to shared RAM when access set for main cpu\n");
 		cpu_sharedram[offset] = data;
-	}
+	} };
 	
-	static WRITE_HANDLER ( cpu_sharedram_main_w )
+	static public static WriteHandlerPtr cpu_sharedram_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (cpu_sharedram_control_val!=1) logerror("main CPU access to shared RAM when access set for sub cpu\n");
 		cpu_sharedram[offset] = data;
-	}
+	} };
 	
-	static READ_HANDLER ( cpu_sharedram_r )
+	static public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return cpu_sharedram[offset];
-	}
+	} };
 	
-	static WRITE_HANDLER ( cpu_shared_ctrl_sub_w )
+	static public static WriteHandlerPtr cpu_shared_ctrl_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_sharedram_control_val = 0;
 	logerror("cpu_sharedram_ctrl=SUB");
-	}
+	} };
 	
-	static WRITE_HANDLER ( cpu_shared_ctrl_main_w )
+	static public static WriteHandlerPtr cpu_shared_ctrl_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		cpu_sharedram_control_val = 1;
 	logerror("cpu_sharedram_ctrl=MAIN");
-	}
+	} };
 	
 	public static WriteHandlerPtr shougi_watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
@@ -311,14 +311,14 @@ public class shougi
 	
 	/* sub */
 	static int r=0;
-	static READ_HANDLER ( dummy_r )
+	static public static ReadHandlerPtr dummy_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		r ^= 1;
 		if(r)
 			return 0xff;
 		else
 			return 0;
-	}
+	} };
 	
 	public static IO_ReadPort readport_sub[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),

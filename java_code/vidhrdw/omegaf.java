@@ -330,37 +330,37 @@ public class omegaf
 	  Memory handler
 	***************************************************************************/
 	
-	WRITE_HANDLER( omegaf_bg0_bank_w )
+	public static WriteHandlerPtr omegaf_bg0_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		omegaf_bg0_bank = data & bank_mask;
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg1_bank_w )
+	public static WriteHandlerPtr omegaf_bg1_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		omegaf_bg1_bank = data & bank_mask;
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg2_bank_w )
+	public static WriteHandlerPtr omegaf_bg2_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		omegaf_bg2_bank = data & bank_mask;
-	}
+	} };
 	
-	READ_HANDLER( omegaf_bg0_videoram_r )
+	public static ReadHandlerPtr omegaf_bg0_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return omegaf_bg0_videoram[ (omegaf_bg0_bank << 10) | offset ];
-	}
+	} };
 	
-	READ_HANDLER( omegaf_bg1_videoram_r )
+	public static ReadHandlerPtr omegaf_bg1_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return omegaf_bg1_videoram[ (omegaf_bg1_bank << 10) | offset ];
-	}
+	} };
 	
-	READ_HANDLER( omegaf_bg2_videoram_r )
+	public static ReadHandlerPtr omegaf_bg2_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return omegaf_bg2_videoram[ (omegaf_bg2_bank << 10) | offset ];
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg0_videoram_w )
+	public static WriteHandlerPtr omegaf_bg0_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -373,9 +373,9 @@ public class omegaf
 			             ( (address & 0x03e0) << 2 );
 			tilemap_mark_tile_dirty( bg0_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg1_videoram_w )
+	public static WriteHandlerPtr omegaf_bg1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -388,9 +388,9 @@ public class omegaf
 			             ( (address & 0x03e0) << 2 );
 			tilemap_mark_tile_dirty( bg1_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg2_videoram_w )
+	public static WriteHandlerPtr omegaf_bg2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -403,9 +403,9 @@ public class omegaf
 			             ( (address & 0x03e0) << 2 );
 			tilemap_mark_tile_dirty( bg2_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( robokid_bg0_videoram_w )
+	public static WriteHandlerPtr robokid_bg0_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -418,9 +418,9 @@ public class omegaf
 			               (address & 0x03e0);
 			tilemap_mark_tile_dirty( bg0_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( robokid_bg1_videoram_w )
+	public static WriteHandlerPtr robokid_bg1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -433,9 +433,9 @@ public class omegaf
 			               (address & 0x03e0);
 			tilemap_mark_tile_dirty( bg1_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( robokid_bg2_videoram_w )
+	public static WriteHandlerPtr robokid_bg2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int address;
 		int tile_index;
@@ -448,9 +448,9 @@ public class omegaf
 			               (address & 0x03e0);
 			tilemap_mark_tile_dirty( bg2_tilemap, tile_index );
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg0_scrollx_w )
+	public static WriteHandlerPtr omegaf_bg0_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrollx;
 	
@@ -459,9 +459,9 @@ public class omegaf
 		scrollx = (omegaf_bg0_scroll_x[1] << 8) | omegaf_bg0_scroll_x[0];
 		scrollx &= scrollx_mask;
 		tilemap_set_scrollx( bg0_tilemap, 0, scrollx );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg0_scrolly_w )
+	public static WriteHandlerPtr omegaf_bg0_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrolly;
 	
@@ -470,9 +470,9 @@ public class omegaf
 		scrolly = (omegaf_bg0_scroll_y[1] << 8) | omegaf_bg0_scroll_y[0];
 		scrolly &= 0x01ff;
 		tilemap_set_scrolly( bg0_tilemap, 0, scrolly );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg1_scrollx_w )
+	public static WriteHandlerPtr omegaf_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrollx;
 	
@@ -481,9 +481,9 @@ public class omegaf
 		scrollx = (omegaf_bg1_scroll_x[1] << 8) | omegaf_bg1_scroll_x[0];
 		scrollx &= scrollx_mask;
 		tilemap_set_scrollx( bg1_tilemap, 0, scrollx );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg1_scrolly_w )
+	public static WriteHandlerPtr omegaf_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrolly;
 	
@@ -492,9 +492,9 @@ public class omegaf
 		scrolly = (omegaf_bg1_scroll_y[1] << 8) | omegaf_bg1_scroll_y[0];
 		scrolly &= 0x01ff;
 		tilemap_set_scrolly( bg1_tilemap, 0, scrolly );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg2_scrollx_w )
+	public static WriteHandlerPtr omegaf_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrollx;
 	
@@ -503,9 +503,9 @@ public class omegaf
 		scrollx = (omegaf_bg2_scroll_x[1] << 8) | omegaf_bg2_scroll_x[0];
 		scrollx &= scrollx_mask;
 		tilemap_set_scrollx( bg2_tilemap, 0, scrollx );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg2_scrolly_w )
+	public static WriteHandlerPtr omegaf_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		int scrolly;
 	
@@ -514,36 +514,36 @@ public class omegaf
 		scrolly = (omegaf_bg2_scroll_y[1] << 8) | omegaf_bg2_scroll_y[0];
 		scrolly &= 0x01ff;
 		tilemap_set_scrolly( bg2_tilemap, 0, scrolly );
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_fgvideoram_w )
+	public static WriteHandlerPtr omegaf_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (omegaf_fg_videoram[offset] != data)
 		{
 			omegaf_fg_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset >> 1);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg0_enabled_w )
+	public static WriteHandlerPtr omegaf_bg0_enabled_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bg0_enabled != data)
 			bg0_enabled = data;
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg1_enabled_w )
+	public static WriteHandlerPtr omegaf_bg1_enabled_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bg1_enabled != data)
 			bg1_enabled = data;
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_bg2_enabled_w )
+	public static WriteHandlerPtr omegaf_bg2_enabled_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bg2_enabled != data)
 			bg2_enabled = data;
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_sprite_overdraw_w )
+	public static WriteHandlerPtr omegaf_sprite_overdraw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		logerror( "sprite overdraw flag : %02x\n", data );
 		if (sprite_overdraw_enabled != (data & 1))
@@ -551,12 +551,12 @@ public class omegaf
 			sprite_overdraw_enabled = data & 1;
 			fillbitmap(bitmap_sp, 15, &Machine -> visible_area);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( omegaf_flipscreen_w )
+	public static WriteHandlerPtr omegaf_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		flip_screen_set(data & 0x80);
-	}
+	} };
 	
 	/***************************************************************************
 	  Screen refresh

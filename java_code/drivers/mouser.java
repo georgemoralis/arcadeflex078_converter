@@ -29,10 +29,10 @@ public class mouser
 	/* Mouser has external masking circuitry around
 	 * the NMI input on the main CPU */
 	
-	WRITE_HANDLER( mouser_nmi_enable_w )
+	public static WriteHandlerPtr mouser_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mouser_nmi_enable = data;
-	}
+	} };
 	
 	public static InterruptHandlerPtr mouser_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
 	{
@@ -42,16 +42,16 @@ public class mouser
 	
 	/* Sound CPU interrupted on write */
 	
-	WRITE_HANDLER( mouser_sound_interrupt_w )
+	public static WriteHandlerPtr mouser_sound_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		mouser_sound_byte = data;
 		cpu_set_irq_line(1, 0, PULSE_LINE);
-	}
+	} };
 	
-	READ_HANDLER( mouser_sound_byte_r )
+	public static ReadHandlerPtr mouser_sound_byte_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return mouser_sound_byte;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),

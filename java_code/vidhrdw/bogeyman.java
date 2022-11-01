@@ -44,47 +44,47 @@ public class bogeyman
 		}
 	}
 	
-	WRITE_HANDLER( bogeyman_videoram_w )
+	public static WriteHandlerPtr bogeyman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (videoram[offset] != data)
 		{
 			videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bogeyman_colorram_w )
+	public static WriteHandlerPtr bogeyman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (colorram[offset] != data)
 		{
 			colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bogeyman_videoram2_w )
+	public static WriteHandlerPtr bogeyman_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bogeyman_videoram2[offset] != data)
 		{
 			bogeyman_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bogeyman_colorram2_w )
+	public static WriteHandlerPtr bogeyman_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (bogeyman_colorram2[offset] != data)
 		{
 			bogeyman_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( bogeyman_paletteram_w )
+	public static WriteHandlerPtr bogeyman_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset, ~data);
-	}
+	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{

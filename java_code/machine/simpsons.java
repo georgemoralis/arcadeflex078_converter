@@ -49,7 +49,7 @@ public class simpsons
 		}
 	}
 	
-	READ_HANDLER( simpsons_eeprom_r )
+	public static ReadHandlerPtr simpsons_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int res;
 	
@@ -65,9 +65,9 @@ public class simpsons
 			res &= 0xfe;
 		}
 		return res;
-	}
+	} };
 	
-	WRITE_HANDLER( simpsons_eeprom_w )
+	public static WriteHandlerPtr simpsons_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if ( data == 0xff )
 			return;
@@ -79,7 +79,7 @@ public class simpsons
 		simpsons_video_banking( data & 3 );
 	
 		simpsons_firq_enabled = data & 0x04;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -87,7 +87,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	WRITE_HANDLER( simpsons_coin_counter_w )
+	public static WriteHandlerPtr simpsons_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* bit 0,1 coin counters */
 		coin_counter_w(0,data & 0x01);
@@ -98,15 +98,15 @@ public class simpsons
 		/* bit 4 = INIT (unknown) */
 		/* bit 5 = enable sprite ROM reading */
 		K053246_set_OBJCHA_line((~data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
-	}
+	} };
 	
-	READ_HANDLER( simpsons_sound_interrupt_r )
+	public static ReadHandlerPtr simpsons_sound_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 		return 0x00;
-	}
+	} };
 	
-	READ_HANDLER( simpsons_sound_r )
+	public static ReadHandlerPtr simpsons_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
@@ -118,7 +118,7 @@ public class simpsons
 			res = (res & 0xfc) | ((res + 1) & 0x03);
 			return offset ? res : 0x00;
 		}
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -126,7 +126,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	READ_HANDLER( simpsons_speedup1_r )
+	public static ReadHandlerPtr simpsons_speedup1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -153,9 +153,9 @@ public class simpsons
 			RAM[0x486a]--;
 	
 		return RAM[0x4942];
-	}
+	} };
 	
-	READ_HANDLER( simpsons_speedup2_r )
+	public static ReadHandlerPtr simpsons_speedup2_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		int data = memory_region(REGION_CPU1)[0x4856];
 	
@@ -163,7 +163,7 @@ public class simpsons
 			cpu_spinuntil_int();
 	
 		return data;
-	}
+	} };
 	
 	/***************************************************************************
 	

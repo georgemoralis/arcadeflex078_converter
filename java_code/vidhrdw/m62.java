@@ -243,7 +243,7 @@ public class m62
 		state_save_register_UINT8("video", 0, "irem_textram",            irem_textram,   irem_textram_size);
 	}
 	
-	WRITE_HANDLER( m62_flipscreen_w )
+	public static WriteHandlerPtr m62_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
@@ -256,39 +256,39 @@ public class m62
 	
 		coin_counter_w(0,data & 2);
 		coin_counter_w(1,data & 4);
-	}
+	} };
 	
-	WRITE_HANDLER( m62_hscroll_low_w )
+	public static WriteHandlerPtr m62_hscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_background_hscroll = ( m62_background_hscroll & 0xff00 ) | data;
-	}
+	} };
 	
-	WRITE_HANDLER( m62_hscroll_high_w )
+	public static WriteHandlerPtr m62_hscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_background_hscroll = ( m62_background_hscroll & 0xff ) | ( data << 8 );
-	}
+	} };
 	
-	WRITE_HANDLER( m62_vscroll_low_w )
+	public static WriteHandlerPtr m62_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_background_vscroll = ( m62_background_vscroll & 0xff00 ) | data;
-	}
+	} };
 	
-	WRITE_HANDLER( m62_vscroll_high_w )
+	public static WriteHandlerPtr m62_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_background_vscroll = ( m62_background_vscroll & 0xff ) | ( data << 8 );
-	}
+	} };
 	
-	WRITE_HANDLER( m62_tileram_w )
+	public static WriteHandlerPtr m62_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_tileram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_background, offset >> 1 );
-	}
+	} };
 	
-	WRITE_HANDLER( m62_textram_w )
+	public static WriteHandlerPtr m62_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_textram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_foreground, offset >> 1 );
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -401,11 +401,11 @@ public class m62
 		return 0;
 	}
 	
-	WRITE_HANDLER( kungfum_tileram_w )
+	public static WriteHandlerPtr kungfum_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_tileram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_background, offset & 0x7ff );
-	}
+	} };
 	
 	static void get_kungfum_bg_tile_info( int offs )
 	{
@@ -617,24 +617,24 @@ public class m62
 	}
 	
 	
-	WRITE_HANDLER( kidniki_text_vscroll_low_w )
+	public static WriteHandlerPtr kidniki_text_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		kidniki_text_vscroll = (kidniki_text_vscroll & 0xff00) | data;
-	}
+	} };
 	
-	WRITE_HANDLER( kidniki_text_vscroll_high_w )
+	public static WriteHandlerPtr kidniki_text_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		kidniki_text_vscroll = (kidniki_text_vscroll & 0xff) | (data << 8);
-	}
+	} };
 	
-	WRITE_HANDLER( kidniki_background_bank_w )
+	public static WriteHandlerPtr kidniki_background_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (kidniki_background_bank != (data & 1))
 		{
 			kidniki_background_bank = data & 1;
 			memset(dirtybuffer,1,videoram_size);
 		}
-	}
+	} };
 	
 	static void get_kidniki_bg_tile_info( int offs )
 	{
@@ -673,14 +673,14 @@ public class m62
 	}
 	
 	
-	WRITE_HANDLER( spelunkr_palbank_w )
+	public static WriteHandlerPtr spelunkr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		if (spelunkr_palbank != (data & 0x01))
 		{
 			spelunkr_palbank = data & 0x01;
 			memset(dirtybuffer,1,videoram_size);
 		}
-	}
+	} };
 	
 	static void get_spelunkr_bg_tile_info( int offs )
 	{
@@ -720,7 +720,7 @@ public class m62
 	}
 	
 	
-	WRITE_HANDLER( spelunk2_gfxport_w )
+	public static WriteHandlerPtr spelunk2_gfxport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		m62_hscroll_high_w(0,(data&2)>>1);
 		m62_vscroll_high_w(0,(data&1));
@@ -729,7 +729,7 @@ public class m62
 			spelunkr_palbank = (data & 0x0c) >> 2;
 			memset(dirtybuffer,1,videoram_size);
 		}
-	}
+	} };
 	
 	static void get_spelunk2_bg_tile_info( int offs )
 	{
@@ -806,10 +806,10 @@ public class m62
 	}
 	
 	
-	WRITE_HANDLER( horizon_scrollram_w )
+	public static WriteHandlerPtr horizon_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		horizon_scrollram[ offset ] = data;
-	}
+	} };
 	
 	static void get_horizon_bg_tile_info( int offs )
 	{

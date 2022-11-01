@@ -69,36 +69,36 @@ public class ticket
 	/***************************************************************************
 	  ticket_dispenser_r
 	***************************************************************************/
-	READ_HANDLER( ticket_dispenser_r )
+	public static ReadHandlerPtr ticket_dispenser_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 		return ticket_dispenser_0_r(offset);
-	}
+	} };
 	
-	READ_HANDLER( ticket_dispenser_0_r )
+	public static ReadHandlerPtr ticket_dispenser_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef DEBUG_TICKET
 		logerror("PC: %04X  Ticket Status Read = %02X\n", activecpu_get_pc(), status);
 	#endif
 		return dispenser[0].status;
-	}
+	} };
 	
-	READ_HANDLER( ticket_dispenser_1_r )
+	public static ReadHandlerPtr ticket_dispenser_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
 	#ifdef DEBUG_TICKET
 		logerror("PC: %04X  Ticket Status Read = %02X\n", activecpu_get_pc(), status);
 	#endif
 		return dispenser[1].status;
-	}
+	} };
 	
 	/***************************************************************************
 	  ticket_dispenser_w
 	***************************************************************************/
-	WRITE_HANDLER( ticket_dispenser_w )
+	public static WriteHandlerPtr ticket_dispenser_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		ticket_dispenser_0_w(offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER( ticket_dispenser_0_w )
+	public static WriteHandlerPtr ticket_dispenser_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* On an activate signal, start dispensing! */
 		if ((data & active_bit) == motoron)
@@ -126,9 +126,9 @@ public class ticket
 				dispenser[0].power = 0;
 			}
 		}
-	}
+	} };
 	
-	WRITE_HANDLER( ticket_dispenser_1_w )
+	public static WriteHandlerPtr ticket_dispenser_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		/* On an activate signal, start dispensing! */
 		if ((data & active_bit) == motoron)
@@ -156,7 +156,7 @@ public class ticket
 				dispenser[1].power = 0;
 			}
 		}
-	}
+	} };
 	
 	
 	/***************************************************************************
