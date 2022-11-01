@@ -159,13 +159,13 @@ public class quizdna
 		{
 			int i;
 	
-			int x = spriteram[offs + 3]*0x100 + spriteram[offs + 2] + 64 - 8;
-			int y = (spriteram[offs + 1] & 1)*0x100 + spriteram[offs + 0];
-			int code = (spriteram[offs + 5] * 0x100 + spriteram[offs + 4]) & 0x3fff;
-			int col =  spriteram[offs + 6];
+			int x = spriteram.read(offs + 3)*0x100 + spriteram.read(offs + 2)+ 64 - 8;
+			int y = (spriteram.read(offs + 1)& 1)*0x100 + spriteram.read(offs + 0);
+			int code = (spriteram.read(offs + 5)* 0x100 + spriteram.read(offs + 4)) & 0x3fff;
+			int col =  spriteram.read(offs + 6);
 			int fx = col & 0x80;
 			int fy = col & 0x40;
-			int ysize = (spriteram[offs + 1] & 0xc0) >> 6;
+			int ysize = (spriteram.read(offs + 1)& 0xc0) >> 6;
 			int dy = 0x10;
 			col &= 0x1f;
 	

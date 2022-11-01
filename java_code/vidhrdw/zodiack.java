@@ -200,11 +200,11 @@ public class zodiack
 		{
 			int flipx, flipy, sx, sy, spritecode;
 	
-			sx = 240 - spriteram[offs + 3];
-			sy = 240 - spriteram[offs];
-			flipx = !(spriteram[offs + 1] & 0x40);
-			flipy = spriteram[offs + 1] & 0x80;
-			spritecode = spriteram[offs + 1] & 0x3f;
+			sx = 240 - spriteram.read(offs + 3);
+			sy = 240 - spriteram.read(offs);
+			flipx = !(spriteram.read(offs + 1)& 0x40);
+			flipy = spriteram.read(offs + 1)& 0x80;
+			spritecode = spriteram.read(offs + 1)& 0x3f;
 	
 			if (flip_screen && percuss_hardware)
 			{
@@ -214,7 +214,7 @@ public class zodiack
 	
 			drawgfx(bitmap, Machine->gfx[1],
 				spritecode,
-				spriteram[offs + 2] & 0x07,
+				spriteram.read(offs + 2)& 0x07,
 				flipx, flipy,
 				sx, sy,
 				//flip_screen[0] ? &spritevisibleareaflipx : &spritevisiblearea,TRANSPARENCY_PEN,0);

@@ -344,7 +344,7 @@ public class slapshot
 	
 			code = 0;
 			extoffs = offs;
-			if (extoffs >= 0x8000) extoffs -= 0x4000;   /* spriteram[0x4000-7fff] has no corresponding extension area */
+			if (extoffs >= 0x8000) extoffs -= 0x4000;   /* spriteram.read(0x4000-7fff)has no corresponding extension area */
 	
 			if (taito_sprite_type == 0)
 			{

@@ -135,10 +135,10 @@ public class hyperspt
 	
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
-			int sx = spriteram[offs + 3];
-			int sy = 240 - spriteram[offs + 1];
-			int flipx = ~spriteram[offs] & 0x40;
-			int flipy = spriteram[offs] & 0x80;
+			int sx = spriteram.read(offs + 3);
+			int sy = 240 - spriteram.read(offs + 1);
+			int flipx = ~spriteram.read(offs)& 0x40;
+			int flipy = spriteram.read(offs)& 0x80;
 	
 			if (flip_screen != 0)
 			{
@@ -152,8 +152,8 @@ public class hyperspt
 			sy += 1;
 	
 			drawgfx(bitmap,Machine->gfx[1],
-				spriteram[offs + 2] + 8 * (spriteram[offs] & 0x20),
-				spriteram[offs] & 0x0f,
+				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
+				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx, sy,
 				&Machine->visible_area,
@@ -162,8 +162,8 @@ public class hyperspt
 			/* redraw with wraparound */
 	
 			drawgfx(bitmap,Machine->gfx[1],
-				spriteram[offs + 2] + 8 * (spriteram[offs] & 0x20),
-				spriteram[offs] & 0x0f,
+				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
+				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx - 256, sy,
 				&Machine->visible_area,

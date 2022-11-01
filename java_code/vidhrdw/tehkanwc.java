@@ -185,13 +185,13 @@ public class tehkanwc
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int attr = spriteram[offs + 1];
-			int code = spriteram[offs] + ((attr & 0x08) << 5);
+			int attr = spriteram.read(offs + 1);
+			int code = spriteram.read(offs)+ ((attr & 0x08) << 5);
 			int color = attr & 0x07;
 			int flipx = attr & 0x40;
 			int flipy = attr & 0x80;
-			int sx = spriteram[offs + 2] + ((attr & 0x20) << 3) - 128;
-			int sy = spriteram[offs + 3];
+			int sx = spriteram.read(offs + 2)+ ((attr & 0x20) << 3) - 128;
+			int sy = spriteram.read(offs + 3);
 	
 			if (flip_screen_x != 0)
 			{

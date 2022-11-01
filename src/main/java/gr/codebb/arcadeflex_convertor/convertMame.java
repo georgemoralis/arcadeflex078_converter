@@ -82,6 +82,36 @@ public class convertMame {
                 }
                 case 's': {
                     i = Convertor.inpos;
+                    if (sUtil.getToken("spriteram")) {
+                        if (sUtil.parseChar() != '[') {
+                            Convertor.inpos = i;
+                            break;
+                        }
+                        Convertor.token[0] = sUtil.parseToken(']');
+                        sUtil.skipSpace();
+                        if (sUtil.parseChar() != ']') {
+                            Convertor.inpos = i;
+                            break;
+                        } else {
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() == '=') {
+                                int g = Convertor.inpos;
+                                if (sUtil.parseChar() == '=') {
+                                    Convertor.inpos = i;
+                                    break;
+                                }
+                                Convertor.inpos = g;
+                                sUtil.skipSpace();
+                                Convertor.token[1] = sUtil.parseToken(';');
+                                sUtil.putString((new StringBuilder()).append("spriteram.write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());
+                                Convertor.inpos += 1;
+                                break;
+                            }
+                            sUtil.putString((new StringBuilder()).append("spriteram.read(").append(Convertor.token[0]).append(")").toString());
+                            Convertor.inpos -= 1;
+                            continue;
+                        }
+                    }
                     boolean isstatic = false;
                     if (sUtil.getToken("static")) {
                         sUtil.skipSpace();
@@ -283,8 +313,7 @@ public class convertMame {
                 }
                 case 'v':
                     int j = Convertor.inpos;
-                    if(sUtil.getToken("videoram"))
-                    {
+                    if (sUtil.getToken("videoram")) {
                         if (sUtil.parseChar() != '[') {
                             Convertor.inpos = j;
                             break;
@@ -294,20 +323,19 @@ public class convertMame {
                         if (sUtil.parseChar() != ']') {
                             Convertor.inpos = j;
                             break;
-                        }
-                        else {
+                        } else {
                             sUtil.skipSpace();
                             if (sUtil.parseChar() == '=') {
-                                int g=Convertor.inpos;
+                                int g = Convertor.inpos;
                                 if (sUtil.parseChar() == '=') {
                                     Convertor.inpos = j;
                                     break;
                                 }
-                                Convertor.inpos=g;
+                                Convertor.inpos = g;
                                 sUtil.skipSpace();
                                 Convertor.token[1] = sUtil.parseToken(';');
                                 sUtil.putString((new StringBuilder()).append("videoram.write(").append(Convertor.token[0]).append(",").append(Convertor.token[1]).append(");").toString());
-                                Convertor.inpos +=1;
+                                Convertor.inpos += 1;
                                 break;
                             }
                             sUtil.putString((new StringBuilder()).append("videoram.read(").append(Convertor.token[0]).append(")").toString());
@@ -315,7 +343,7 @@ public class convertMame {
                             continue;
                         }
                     }
-                    Convertor.inpos=j;
+                    Convertor.inpos = j;
                     break;
                 case '{': {
                     if (type == MEMORY_READ8) {

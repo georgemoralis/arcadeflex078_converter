@@ -66,7 +66,7 @@ public class djboy
 		int page;
 		for( page=0; page<2; page++ )
 		{
-			const data8_t *pSource = &spriteram[page*0x800];
+			const data8_t *pSource = &spriteram.read(page*0x800);
 			int sx = 0;
 			int sy = 0;
 			int offs;

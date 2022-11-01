@@ -227,22 +227,22 @@ public class brkthru
 	
 		for (offs = 0;offs < spriteram_size; offs += 4)
 		{
-			if ((spriteram[offs] & 0x09) == prio)	/* Enable && Low Priority */
+			if ((spriteram.read(offs)& 0x09) == prio)	/* Enable && Low Priority */
 			{
 				int sx,sy,code,color;
 	
-				sx = 240 - spriteram[offs+3];
+				sx = 240 - spriteram.read(offs+3);
 				if (sx < -7) sx += 256;
-				sy = 240 - spriteram[offs+2];
-				code = spriteram[offs+1] + 128 * (spriteram[offs] & 0x06);
-				color = (spriteram[offs] & 0xe0) >> 5;
+				sy = 240 - spriteram.read(offs+2);
+				code = spriteram.read(offs+1)+ 128 * (spriteram.read(offs)& 0x06);
+				color = (spriteram.read(offs)& 0xe0) >> 5;
 				if (flipscreen != 0)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
 				}
 	
-				if (spriteram[offs] & 0x10)	/* double height */
+				if (spriteram.read(offs)& 0x10)	/* double height */
 				{
 					drawgfx(bitmap,Machine->gfx[9],
 							code & ~1,

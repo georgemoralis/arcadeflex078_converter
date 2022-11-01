@@ -1131,18 +1131,18 @@ public class galaxian
 	
 	static void moonqsr_modify_spritecode(data8_t *spriteram,int *code,int *flipx,int *flipy,int offs)
 	{
-		*code |= ((spriteram[offs + 2] & 0x20) << 1);
+		*code |= ((spriteram.read(offs + 2)& 0x20) << 1);
 	}
 	
 	static void mshuttle_modify_spritecode(data8_t *spriteram,int *code,int *flipx,int *flipy,int offs)
 	{
-		*code |= ((spriteram[offs + 2] & 0x30) << 2);
+		*code |= ((spriteram.read(offs + 2)& 0x30) << 2);
 	}
 	
 	static void calipso_modify_spritecode(data8_t *spriteram,int *code,int *flipx,int *flipy,int offs)
 	{
 		/* No flips */
-		*code = spriteram[offs + 1];
+		*code = spriteram.read(offs + 1);
 		*flipx = 0;
 		*flipy = 0;
 	}
@@ -1177,7 +1177,7 @@ public class galaxian
 	static void dkongjrm_modify_spritecode(data8_t *spriteram,int *code,int *flipx,int *flipy,int offs)
 	{
 		/* No x flip */
-		*code = (spriteram[offs + 1] & 0x7f) | 0x80;
+		*code = (spriteram.read(offs + 1)& 0x7f) | 0x80;
 		*flipx = 0;
 	}
 	
@@ -1855,12 +1855,12 @@ public class galaxian
 			int flipx,flipy,code;
 	
 	
-			sx = spriteram[offs + 3] + 1;	/* the existence of +1 is supported by a LOT of games */
-			sy = spriteram[offs];			/* Anteater, Mariner, for example */
-			flipx = spriteram[offs + 1] & 0x40;
-			flipy = spriteram[offs + 1] & 0x80;
-			code = spriteram[offs + 1] & 0x3f;
-			color = spriteram[offs + 2] & color_mask;
+			sx = spriteram.read(offs + 3)+ 1;	/* the existence of +1 is supported by a LOT of games */
+			sy = spriteram.read(offs);			/* Anteater, Mariner, for example */
+			flipx = spriteram.read(offs + 1)& 0x40;
+			flipy = spriteram.read(offs + 1)& 0x80;
+			code = spriteram.read(offs + 1)& 0x3f;
+			color = spriteram.read(offs + 2)& color_mask;
 	
 			if (modify_spritecode != 0)
 			{

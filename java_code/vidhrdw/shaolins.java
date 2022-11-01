@@ -176,14 +176,14 @@ public class shaolins
 	
 		for (offs = spriteram_size-32; offs >= 0; offs-=32 ) /* max 24 sprites */
 		{
-			if (spriteram[offs] && spriteram[offs + 6]) /* stop rogue sprites on high score screen */
+			if (spriteram.read(offs)&& spriteram.read(offs + 6)) /* stop rogue sprites on high score screen */
 			{
-				int code = spriteram[offs + 8];
-				int color = (spriteram[offs + 9] & 0x0f) + 16 * palettebank;
-				int flipx = !(spriteram[offs + 9] & 0x40);
-				int flipy = spriteram[offs + 9] & 0x80;
-				int sx = 240 - spriteram[offs + 6];
-				int sy = 248 - spriteram[offs + 4];
+				int code = spriteram.read(offs + 8);
+				int color = (spriteram.read(offs + 9)& 0x0f) + 16 * palettebank;
+				int flipx = !(spriteram.read(offs + 9)& 0x40);
+				int flipy = spriteram.read(offs + 9)& 0x80;
+				int sx = 240 - spriteram.read(offs + 6);
+				int sy = 248 - spriteram.read(offs + 4);
 	
 				if (flip_screen != 0)
 				{

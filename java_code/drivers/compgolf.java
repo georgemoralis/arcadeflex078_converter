@@ -133,15 +133,15 @@ public class compgolf
 	
 		for (offs = 0;offs < 0x60;offs += 4)
 		{
-			sprite = spriteram[offs+1] + (((spriteram[offs] & 0xc0) >> 6)*0x100);
-			x = 240 - spriteram[offs+3];
-			y = spriteram[offs+2];
-			color = (spriteram[offs] & 8)>>3;
-			fx = spriteram[offs]&4;
+			sprite = spriteram.read(offs+1)+ (((spriteram.read(offs)& 0xc0) >> 6)*0x100);
+			x = 240 - spriteram.read(offs+3);
+			y = spriteram.read(offs+2);
+			color = (spriteram.read(offs)& 8)>>3;
+			fx = spriteram.read(offs)&4;
 			fy = 0; /* ? */
 	
 			/*Double Height*/
-			if(spriteram[offs] & 0x10)
+			if(spriteram.read(offs)& 0x10)
 			{
 				drawgfx(bitmap,Machine->gfx[0],
 					sprite,

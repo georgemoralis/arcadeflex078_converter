@@ -112,10 +112,10 @@ public class mustache
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int sy = 240-spriteram[offs];
-			int sx = 240-spriteram[offs+3];
-			int code = spriteram[offs+2];
-			int attr = spriteram[offs+1];
+			int sy = 240-spriteram.read(offs);
+			int sx = 240-spriteram.read(offs+3);
+			int code = spriteram.read(offs+2);
+			int attr = spriteram.read(offs+1);
 			int color = (attr & 0xe0)>>5;
 	
 			if (sy == 240) continue;

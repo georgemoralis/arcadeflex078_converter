@@ -170,7 +170,7 @@ public class exctsccr
 		UINT8 *OBJ1, *OBJ2;
 	
 		OBJ1 = videoram;
-		OBJ2 = &(spriteram[0x20]);
+		OBJ2 = &(spriteram.read(0x20));
 	
 		for ( offs = 0x0e; offs >= 0; offs -= 2 ) {
 			int sx,sy,code,bank,flipx,flipy,color;

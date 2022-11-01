@@ -180,12 +180,12 @@ public class wilytowr
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int code = spriteram[offs + 1];
-			int color = (spriteram[offs + 2] & 0x0f) + (pal_bank << 4);
+			int code = spriteram.read(offs + 1);
+			int color = (spriteram.read(offs + 2)& 0x0f) + (pal_bank << 4);
 			int flipx = 0;
 			int flipy = 0;
-			int sx = spriteram[offs + 3];
-			int sy = 238 - spriteram[offs];
+			int sx = spriteram.read(offs + 3);
+			int sy = 238 - spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{

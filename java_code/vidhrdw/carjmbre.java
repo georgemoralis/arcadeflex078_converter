@@ -109,7 +109,7 @@ public class carjmbre
 	
 		tilemap_draw( bitmap,cliprect,carjmbre_tilemap,0,0 );
 	
-		//spriteram[offs]
+		//spriteram.read(offs)
 		//+0       y pos
 		//+1       sprite number
 		//+2
@@ -127,13 +127,13 @@ public class carjmbre
 			troffs=(offs-4+spriteram_size)%spriteram_size;
 	
 			//unused sprites are marked with ypos <= 0x02 (or >= 0xfd if screen flipped)
-			if (spriteram[troffs] > 0x02 && spriteram[troffs] < 0xfd)
+			if (spriteram.read(troffs)> 0x02 && spriteram.read(troffs)< 0xfd)
 			{
 				{
-					sx = spriteram[troffs+3]-7;
-					sy = 241-spriteram[troffs];
-					flipx = (spriteram[troffs+2]&0x40)>>6;
-					flipy = (spriteram[troffs+2]&0x80)>>7;
+					sx = spriteram.read(troffs+3)-7;
+					sy = 241-spriteram.read(troffs);
+					flipx = (spriteram.read(troffs+2)&0x40)>>6;
+					flipy = (spriteram.read(troffs+2)&0x80)>>7;
 	
 					if (carjmbre_flipscreen != 0)
 					{
@@ -144,8 +144,8 @@ public class carjmbre
 					}
 	
 					drawgfx(bitmap,Machine->gfx[1],
-							spriteram[troffs+1],
-							spriteram[troffs+2]&0x07,
+							spriteram.read(troffs+1),
+							spriteram.read(troffs+2)&0x07,
 							flipx,flipy,
 							sx,sy,
 							cliprect,TRANSPARENCY_PEN,0);

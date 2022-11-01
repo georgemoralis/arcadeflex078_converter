@@ -202,14 +202,14 @@ public class dogfgt
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			if (spriteram[offs] & 0x01)
+			if (spriteram.read(offs)& 0x01)
 			{
 				int sx,sy,flipx,flipy;
 	
-				sx = spriteram[offs+3];
-				sy = (240 - spriteram[offs+2]) & 0xff;
-				flipx = spriteram[offs] & 0x04;
-				flipy = spriteram[offs] & 0x02;
+				sx = spriteram.read(offs+3);
+				sy = (240 - spriteram.read(offs+2)) & 0xff;
+				flipx = spriteram.read(offs)& 0x04;
+				flipy = spriteram.read(offs)& 0x02;
 				if (flip_screen != 0)
 				{
 					sx = 240 - sx;
@@ -219,8 +219,8 @@ public class dogfgt
 				}
 	
 				drawgfx(bitmap,Machine->gfx[1],
-						spriteram[offs+1] + ((spriteram[offs] & 0x30) << 4),
-						(spriteram[offs] & 0x08) >> 3,
+						spriteram.read(offs+1)+ ((spriteram.read(offs)& 0x30) << 4),
+						(spriteram.read(offs)& 0x08) >> 3,
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);

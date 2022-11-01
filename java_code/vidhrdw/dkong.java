@@ -252,18 +252,18 @@ public class dkong
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			if (spriteram[offs])
+			if (spriteram.read(offs))
 			{
-				/* spriteram[offs + 2] & 0x40 is used by Donkey Kong 3 only */
-				/* spriteram[offs + 2] & 0x30 don't seem to be used (they are */
+				/* spriteram.read(offs + 2)& 0x40 is used by Donkey Kong 3 only */
+				/* spriteram.read(offs + 2)& 0x30 don't seem to be used (they are */
 				/* probably not part of the color code, since Mario Bros, which */
 				/* has similar hardware, uses a memory mapped port to change */
 				/* palette bank, so it's limited to 16 color codes) */
 	
 				int x,y;
 	
-				x = spriteram[offs + 3] - 8;
-				y = 240 - spriteram[offs] + 7;
+				x = spriteram.read(offs + 3)- 8;
+				y = 240 - spriteram.read(offs)+ 7;
 	
 				if (flip_screen != 0)
 				{
@@ -271,34 +271,34 @@ public class dkong
 					y = 240 - y;
 	
 					drawgfx(bitmap,Machine->gfx[1],
-							(spriteram[offs + 1] & 0x7f) + ((spriteram[offs + 2] & mask_bank) << shift_bits),
-							(spriteram[offs + 2] & 0x0f) + 16 * palette_bank,
-							!(spriteram[offs + 2] & 0x80),!(spriteram[offs + 1] & 0x80),
+							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
+							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
+							!(spriteram.read(offs + 2)& 0x80),!(spriteram.read(offs + 1)& 0x80),
 							x,y,
 							&Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
 					drawgfx(bitmap,Machine->gfx[1],
-							(spriteram[offs + 1] & 0x7f) + ((spriteram[offs + 2] & mask_bank) << shift_bits),
-							(spriteram[offs + 2] & 0x0f) + 16 * palette_bank,
-							(spriteram[offs + 2] & 0x80),(spriteram[offs + 1] & 0x80),
+							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
+							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
+							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x-256,y,
 							&Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
 					drawgfx(bitmap,Machine->gfx[1],
-							(spriteram[offs + 1] & 0x7f) + ((spriteram[offs + 2] & mask_bank) << shift_bits),
-							(spriteram[offs + 2] & 0x0f) + 16 * palette_bank,
-							(spriteram[offs + 2] & 0x80),(spriteram[offs + 1] & 0x80),
+							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
+							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
+							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x,y,
 							&Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
 					drawgfx(bitmap,Machine->gfx[1],
-							(spriteram[offs + 1] & 0x7f) + ((spriteram[offs + 2] & mask_bank) << shift_bits),
-							(spriteram[offs + 2] & 0x0f) + 16 * palette_bank,
-							(spriteram[offs + 2] & 0x80),(spriteram[offs + 1] & 0x80),
+							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
+							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
+							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x+256,y,
 							&Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
@@ -361,13 +361,13 @@ public class dkong
 		/* Draw the sprites. */
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			if (spriteram[offs])
+			if (spriteram.read(offs))
 			{
 				drawgfx(bitmap,Machine->gfx[1],
-						spriteram[offs + 2],
-						(spriteram[offs + 1] & 0x0f) + 16 * palette_bank,
-						spriteram[offs + 1] & 0x80,spriteram[offs + 1] & 0x40,
-						spriteram[offs + 3] - 8,240 - spriteram[offs] + 8,
+						spriteram.read(offs + 2),
+						(spriteram.read(offs + 1)& 0x0f) + 16 * palette_bank,
+						spriteram.read(offs + 1)& 0x80,spriteram.read(offs + 1)& 0x40,
+						spriteram.read(offs + 3)- 8,240 - spriteram.read(offs)+ 8,
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
@@ -377,7 +377,7 @@ public class dkong
 	{
 		tilemap_draw(bitmap, &Machine->visible_area, bg_tilemap, 0, 0);
 	
-		/* it uses spriteram[offs + 2] & 0x10 for sprite bank */
+		/* it uses spriteram.read(offs + 2)& 0x10 for sprite bank */
 		draw_sprites(bitmap, 0x10, 3);
 	} };
 }

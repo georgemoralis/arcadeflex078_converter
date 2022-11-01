@@ -101,12 +101,12 @@ public class solomon
 	
 		for (offs = spriteram_size - 4; offs >= 0; offs -= 4)
 		{
-			int code = spriteram[offs] + 16 * (spriteram[offs + 1] & 0x10);
-			int color = (spriteram[offs + 1] & 0x0e) >> 1;
-			int flipx = spriteram[offs + 1] & 0x40;
-			int flipy =	spriteram[offs + 1] & 0x80;
-			int sx = spriteram[offs + 3];
-			int sy = 241 - spriteram[offs + 2];
+			int code = spriteram.read(offs)+ 16 * (spriteram.read(offs + 1)& 0x10);
+			int color = (spriteram.read(offs + 1)& 0x0e) >> 1;
+			int flipx = spriteram.read(offs + 1)& 0x40;
+			int flipy =	spriteram.read(offs + 1)& 0x80;
+			int sx = spriteram.read(offs + 3);
+			int sy = 241 - spriteram.read(offs + 2);
 	
 			if (flip_screen != 0)
 			{

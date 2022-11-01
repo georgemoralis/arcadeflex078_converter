@@ -131,16 +131,16 @@ public class bogeyman
 	
 		for (offs = 0; offs < spriteram_size; offs += 4)
 		{
-			int attr = spriteram[offs];
+			int attr = spriteram.read(offs);
 	
 			if ((attr & 0x01) != 0)
 			{
-				int code = spriteram[offs + 1] + ((attr & 0x40) << 2);
+				int code = spriteram.read(offs + 1)+ ((attr & 0x40) << 2);
 				int color = (attr & 0x08) >> 3;
 				int flipx = !(attr & 0x04);
 				int flipy = attr & 0x02;
-				int sx = spriteram[offs + 3];
-				int sy = (240 - spriteram[offs + 2]) & 0xff;
+				int sx = spriteram.read(offs + 3);
+				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 				int multi = attr & 0x10;
 	
 				if (multi != 0) sy -= 16;

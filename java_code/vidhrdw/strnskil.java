@@ -103,13 +103,13 @@ public class strnskil
 	
 		for (offs = 0x60; offs < 0x100; offs += 4)
 		{
-			int code = spriteram[offs + 1];
-			int color = spriteram[offs + 2] & 0x3f;
+			int code = spriteram.read(offs + 1);
+			int color = spriteram.read(offs + 2)& 0x3f;
 			int flipx = flip_screen_x;
 			int flipy = flip_screen_y;
 	
-			int sx = spriteram[offs + 3];
-			int sy = spriteram[offs];
+			int sx = spriteram.read(offs + 3);
+			int sy = spriteram.read(offs);
 			int px, py;
 	
 			if (flip_screen != 0)

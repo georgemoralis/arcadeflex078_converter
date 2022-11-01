@@ -217,20 +217,20 @@ public class liberate
 		{
 			int multi,fx,fy,sx,sy,sy2,code,color;
 	
-			code = spriteram[offs+1] + ( ( spriteram[offs+0] & 0x60 ) << 3 );
-			sx = (240 - spriteram[offs+3]);
+			code = spriteram.read(offs+1)+ ( ( spriteram.read(offs+0)& 0x60 ) << 3 );
+			sx = (240 - spriteram.read(offs+3));
 		//if (sx < -7) sx += 256;
 	
-			sy = 240-spriteram[offs+2];
-			color = 0;//(spriteram[offs+1] & 0x03);// + ((spriteram[offs+1] & 0x08) >> 1);
+			sy = 240-spriteram.read(offs+2);
+			color = 0;//(spriteram.read(offs+1)& 0x03);// + ((spriteram.read(offs+1)& 0x08) >> 1);
 	
 	//		if (pri==0 && color!=0) continue;
 	//		if (pri==1 && color==0) continue;
 	
-			fx = spriteram[offs+0] & 0x04;
-			fy = spriteram[offs+0] & 0x08;//2;//8;
+			fx = spriteram.read(offs+0)& 0x04;
+			fy = spriteram.read(offs+0)& 0x08;//2;//8;
 	//if (fy != 0) fy=0; else fy=1;
-			multi = spriteram[offs+0] & 0x10;
+			multi = spriteram.read(offs+0)& 0x10;
 	
 	
 			if (multi != 0) sy-=16;
@@ -265,24 +265,24 @@ public class liberate
 	
 		for (offs = 0x000;offs < 0x800;offs += 4)
 		{
-		//	if ((spriteram[offs+0]&1)!=1) continue;
+		//	if ((spriteram.read(offs+0)&1)!=1) continue;
 	
-			code = spriteram[offs+1] + ((spriteram[offs+0]&0x3)<<8);
+			code = spriteram.read(offs+1)+ ((spriteram.read(offs+0)&0x3)<<8);
 			code2=code+1;
 	
-			multi = spriteram[offs+0] & 0x10;
+			multi = spriteram.read(offs+0)& 0x10;
 	
-			sy=spriteram[offs+2];
+			sy=spriteram.read(offs+2);
 			if (multi != 0) sy+=16;
-			sx = (240 - spriteram[offs+3]);
-	//		sy = (240-spriteram[offs+2]);//-16;
+			sx = (240 - spriteram.read(offs+3));
+	//		sy = (240-spriteram.read(offs+2));//-16;
 			sy = 240-sy;
 	
-			color = 1;//(spriteram[offs+0]&0x4)>>2;
+			color = 1;//(spriteram.read(offs+0)&0x4)>>2;
 	
 			fx = 0;
-			fy = spriteram[offs+0] & 0x04;
-			multi = 0;// spriteram[offs+0] & 0x10;
+			fy = spriteram.read(offs+0)& 0x04;
+			multi = 0;// spriteram.read(offs+0)& 0x10;
 	
 	//		if (multi != 0) sy-=16;
 			if (fy && multi) { code2=code; code++; }
@@ -320,25 +320,25 @@ public class liberate
 	
 		for (offs = 0x000;offs < 0x800;offs += 4)
 		{
-			if ((spriteram[offs+0]&1)!=1) continue;
-			if ((spriteram[offs+0]&0x8)!=pri) continue;
+			if ((spriteram.read(offs+0)&1)!=1) continue;
+			if ((spriteram.read(offs+0)&0x8)!=pri) continue;
 	
-			code = spriteram[offs+1] + ((spriteram[offs+0]&0xe0)<<3);
+			code = spriteram.read(offs+1)+ ((spriteram.read(offs+0)&0xe0)<<3);
 			code2=code+1;
 	
-			multi = spriteram[offs+0] & 0x10;
+			multi = spriteram.read(offs+0)& 0x10;
 	
-			sy=spriteram[offs+2];
+			sy=spriteram.read(offs+2);
 			if (multi != 0) sy+=16;
-			sx = (240 - spriteram[offs+3]);
-	//		sy = (240-spriteram[offs+2]);//-16;
+			sx = (240 - spriteram.read(offs+3));
+	//		sy = (240-spriteram.read(offs+2));//-16;
 			sy = 240-sy;
 	
-			color = (spriteram[offs+0]&0x4)>>2;
+			color = (spriteram.read(offs+0)&0x4)>>2;
 	
 			fx = 0;
-			fy = spriteram[offs+0] & 0x02;
-			multi = spriteram[offs+0] & 0x10;
+			fy = spriteram.read(offs+0)& 0x02;
+			multi = spriteram.read(offs+0)& 0x10;
 	
 	//		if (multi != 0) sy-=16;
 			if (fy && multi) { code2=code; code++; }

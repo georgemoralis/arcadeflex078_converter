@@ -373,20 +373,20 @@ public class popeye
 			 * bit 0 /
 			 */
 	
-			code = (spriteram[offs + 2] & 0x7f) + ((spriteram[offs + 3] & 0x10) << 3)
-								+ ((spriteram[offs + 3] & 0x04) << 6);
-			color = (spriteram[offs + 3] & 0x07) + 8*(*popeye_palettebank & 0x07);
+			code = (spriteram.read(offs + 2)& 0x7f) + ((spriteram.read(offs + 3)& 0x10) << 3)
+								+ ((spriteram.read(offs + 3)& 0x04) << 6);
+			color = (spriteram.read(offs + 3)& 0x07) + 8*(*popeye_palettebank & 0x07);
 			if (bitmap_type == TYPE_SKYSKIPR)
 			{
 				/* Two of the PROM address pins are tied together and one is not connected... */
 				color = (color & 0x0f) | ((color & 0x08) << 1);
 			}
 	
-			flipx = spriteram[offs + 2] & 0x80;
-			flipy = spriteram[offs + 3] & 0x08;
+			flipx = spriteram.read(offs + 2)& 0x80;
+			flipy = spriteram.read(offs + 3)& 0x08;
 	
-			sx = 2*(spriteram[offs])-8;
-			sy = 2*(256-spriteram[offs + 1]);
+			sx = 2*(spriteram.read(offs))-8;
+			sy = 2*(256-spriteram.read(offs + 1));
 	
 			if (flip_screen != 0)
 			{
@@ -396,7 +396,7 @@ public class popeye
 				sy = 496 - sy;
 			}
 	
-			if (spriteram[offs] != 0)
+			if (spriteram.read(offs)!= 0)
 				drawgfx(bitmap,Machine->gfx[1],
 						code ^ 0x1ff,
 						color,

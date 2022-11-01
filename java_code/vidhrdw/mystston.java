@@ -159,16 +159,16 @@ public class mystston
 	
 		for (offs = 0; offs < spriteram_size; offs += 4)
 		{
-			int attr = spriteram[offs];
+			int attr = spriteram.read(offs);
 	
 			if ((attr & 0x01) != 0)
 			{
-				int code = spriteram[offs + 1] + ((attr & 0x10) << 4);
+				int code = spriteram.read(offs + 1)+ ((attr & 0x10) << 4);
 				int color = (attr & 0x08) >> 3;
 				int flipx = attr & 0x04;
 				int flipy = attr & 0x02;
-				int sx = 240 - spriteram[offs + 3];
-				int sy = (240 - spriteram[offs + 2]) & 0xff;
+				int sx = 240 - spriteram.read(offs + 3);
+				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 	
 				if (flip_screen != 0)
 				{

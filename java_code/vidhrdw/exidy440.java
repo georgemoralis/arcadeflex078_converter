@@ -199,7 +199,7 @@ public class exidy440
 	public static WriteHandlerPtr exidy440_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
 		force_partial_update(cpu_getscanline());
-		spriteram[offset] = data;
+		spriteram.write(offset,data);
 	} };
 	
 	

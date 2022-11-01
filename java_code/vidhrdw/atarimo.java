@@ -357,11 +357,11 @@ public class atarimo
 		fillbitmap(mo->bitmap, desc->transpen, NULL);
 	
 		/* allocate the spriteram */
-		mo->spriteram = auto_malloc(sizeof(mo->spriteram[0]) * mo->spriteramsize);
+		mo->spriteram = auto_malloc(sizeof(mo->spriteram.read(0)) * mo->spriteramsize);
 		VERIFYRETFREE(mo->spriteram, "atarimo_init: out of memory for spriteram", 0)
 	
 		/* clear it to zero */
-		memset(mo->spriteram, 0, sizeof(mo->spriteram[0]) * mo->spriteramsize);
+		memset(mo->spriteram, 0, sizeof(mo->spriteram.read(0)) * mo->spriteramsize);
 	
 		/* allocate the code lookup */
 		mo->codelookup = auto_malloc(sizeof(mo->codelookup[0]) * round_to_powerof2(mo->codemask.mask));
@@ -461,7 +461,7 @@ public class atarimo
 	
 	static void update_active_list(struct atarimo_data *mo, int link)
 	{
-		struct atarimo_entry *bankbase = &mo->spriteram[mo->bank << mo->entrybits];
+		struct atarimo_entry *bankbase = &mo->spriteram.read(mo->bank << mo->entrybits);
 		UINT8 movisit[ATARIMO_MAXPERBANK];
 		struct atarimo_entry **current;
 		int i;
@@ -991,7 +991,7 @@ public class atarimo
 			idx = offset & 3;
 		}
 		bank = offset >> (2 + atarimo[0].entrybits);
-		COMBINE_DATA(&atarimo[0].spriteram[(bank << atarimo[0].entrybits) + entry].data[idx]);
+		COMBINE_DATA(&atarimo[0].spriteram.read((bank << atarimo[0).entrybits) + entry].data[idx]);
 		atarimo[0].last_link = -1;
 	}
 	
@@ -1016,7 +1016,7 @@ public class atarimo
 			idx = offset & 3;
 		}
 		bank = offset >> (2 + atarimo[1].entrybits);
-		COMBINE_DATA(&atarimo[1].spriteram[(bank << atarimo[1].entrybits) + entry].data[idx]);
+		COMBINE_DATA(&atarimo[1].spriteram.read((bank << atarimo[1).entrybits) + entry].data[idx]);
 		atarimo[1].last_link = -1;
 	}
 	
@@ -1045,7 +1045,7 @@ public class atarimo
 				idx = offset & 3;
 			}
 			bank = offset >> (2 + atarimo[0].entrybits);
-			COMBINE_DATA(&atarimo[0].spriteram[(bank << atarimo[0].entrybits) + entry].data[idx]);
+			COMBINE_DATA(&atarimo[0].spriteram.read((bank << atarimo[0).entrybits) + entry].data[idx]);
 			atarimo[0].last_link = -1;
 		}
 	}

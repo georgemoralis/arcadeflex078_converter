@@ -94,14 +94,14 @@ public class kchamp
 	
 	    for (offs = 0; offs < 0x100; offs += 4)
 		{
-			int attr = spriteram[offs + 2];
+			int attr = spriteram.read(offs + 2);
 	        int bank = 1 + ((attr & 0x60) >> 5);
-	        int code = spriteram[offs + 1] + ((attr & 0x10) << 4);
+	        int code = spriteram.read(offs + 1)+ ((attr & 0x10) << 4);
 	        int color = attr & 0x0f;
 			int flipx = 0;
 	        int flipy = attr & 0x80;
-	        int sx = spriteram[offs + 3] - 8;
-	        int sy = 247 - spriteram[offs];
+	        int sx = spriteram.read(offs + 3)- 8;
+	        int sy = 247 - spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{
@@ -122,14 +122,14 @@ public class kchamp
 	
 	    for (offs = 0; offs < 0x100; offs += 4)
 		{
-			int attr = spriteram[offs + 2];
+			int attr = spriteram.read(offs + 2);
 	        int bank = 1 + ((attr & 0x60) >> 5);
-	        int code = spriteram[offs + 1] + ((attr & 0x10) << 4);
+	        int code = spriteram.read(offs + 1)+ ((attr & 0x10) << 4);
 	        int color = attr & 0x0f;
 			int flipx = 0;
 	        int flipy = attr & 0x80;
-	        int sx = spriteram[offs + 3];
-	        int sy = 240 - spriteram[offs];
+	        int sx = spriteram.read(offs + 3);
+	        int sy = 240 - spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{

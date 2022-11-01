@@ -213,12 +213,12 @@ public class tankbust
 		{
 			int code,color,sx,sy,flipx,flipy;
 	
-			code  = spriteram[offs+0] & 0x3f;
-			flipy = spriteram[offs+0] & 0x40;
-			flipx = spriteram[offs+0] & 0x80;
+			code  = spriteram.read(offs+0)& 0x3f;
+			flipy = spriteram.read(offs+0)& 0x40;
+			flipx = spriteram.read(offs+0)& 0x80;
 	
-			sy = (240- spriteram[offs+1]) - 14;
-			sx = (spriteram[offs+2] & 0x01) * 256 + spriteram[offs+3] - 7;
+			sy = (240- spriteram.read(offs+1)) - 14;
+			sx = (spriteram.read(offs+2)& 0x01) * 256 + spriteram.read(offs+3)- 7;
 	
 			color = 0;
 	
@@ -230,13 +230,13 @@ public class tankbust
 			//0x40 - not used
 			//0x80 - not used
 	#if 0
-			if ((spriteram[offs+2] & 0x02))
+			if ((spriteram.read(offs+2)& 0x02))
 			{
 				code = ((int)rand()) & 63;
 			}
 	#endif
 	
-			if ((spriteram[offs+1]!=4))	//otherwise - ghost sprites
+			if ((spriteram.read(offs+1)!=4))	//otherwise - ghost sprites
 			{
 	
 				drawgfx(bitmap,Machine->gfx[0],

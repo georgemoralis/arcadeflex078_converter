@@ -142,7 +142,7 @@ public class pbillian
 		switch(select_408)
 		{
 			case    0: return 0; //pb?
-			case    1: return is_pbillian?input_port_3_r(0):((spriteram[0x20]&1)?0x8c:input_port_3_r(0));
+			case    1: return is_pbillian?input_port_3_r(0):((spriteram.read(0x20)&1)?0x8c:input_port_3_r(0));
 		
 								/* 
 									written by mcu ? (bit 7=1) (should be sequence of writes , 0x88+0x8c for example)

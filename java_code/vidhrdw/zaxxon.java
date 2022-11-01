@@ -343,14 +343,14 @@ public class zaxxon
 	
 		for (offs = spriteram_size - 4; offs >= 0; offs -= 4)
 		{
-			if (spriteram[offs] != 0xff)
+			if (spriteram.read(offs)!= 0xff)
 			{
-				int code = spriteram[offs + 1] & 0x3f;
-				int color = spriteram[offs + 2] & 0x3f;
-				int flipx = spriteram[offs + 1] & 0x40;
-				int flipy = spriteram[offs + 1] & 0x80;
-				int sx = ((spriteram[offs + 3] + 16) & 0xff) - 32;
-				int sy = 255 - spriteram[offs] - 16;
+				int code = spriteram.read(offs + 1)& 0x3f;
+				int color = spriteram.read(offs + 2)& 0x3f;
+				int flipx = spriteram.read(offs + 1)& 0x40;
+				int flipy = spriteram.read(offs + 1)& 0x80;
+				int sx = ((spriteram.read(offs + 3)+ 16) & 0xff) - 32;
+				int sy = 255 - spriteram.read(offs)- 16;
 	
 				if (flip_screen != 0)
 				{
@@ -492,20 +492,20 @@ public class zaxxon
 		/* The number of active sprites is stored at 0xc032 */
 	
 		for (offs = 0x1e * 0x20; offs >= 0x00; offs -= 0x20)
-			sprpri[spriteram[offs + 1]] = offs;
+			sprpri[spriteram.read(offs + 1)] = offs;
 	
 		for (i = 0x1e; i >= 0; i--)
 		{
 			offs = sprpri[i];
 	
-			if (spriteram[offs + 2] != 0xff)
+			if (spriteram.read(offs + 2)!= 0xff)
 			{
-				int code = spriteram[offs + 2 + 1] & 0x7f;
-				int color = spriteram[offs + 2 + 2];
-				int flipx = spriteram[offs + 2 + 2] & 0x80;
-				int flipy = spriteram[offs + 2 + 1] & 0x80;
-				int sx = ((spriteram[offs + 2 + 3] + 16) & 0xff) - 31;
-				int sy = 255 - spriteram[offs + 2] - 15;
+				int code = spriteram.read(offs + 2 + 1)& 0x7f;
+				int color = spriteram.read(offs + 2 + 2);
+				int flipx = spriteram.read(offs + 2 + 2)& 0x80;
+				int flipy = spriteram.read(offs + 2 + 1)& 0x80;
+				int sx = ((spriteram.read(offs + 2 + 3)+ 16) & 0xff) - 31;
+				int sy = 255 - spriteram.read(offs + 2)- 15;
 	
 				if (flip_screen != 0)
 				{
@@ -536,14 +536,14 @@ public class zaxxon
 	
 		for (offs = spriteram_size - 4; offs >= 0; offs -= 4)
 		{
-			if (spriteram[offs] != 0xff)
+			if (spriteram.read(offs)!= 0xff)
 			{
-				int code = spriteram[offs + 1] & 0x7f;
-				int color = spriteram[offs + 2] & 0x3f;
-				int flipx = spriteram[offs + 1] & 0x80;
-				int flipy = spriteram[offs + 1] & 0x80;
-				int sx = ((spriteram[offs + 3] + 16) & 0xff) - 32;
-				int sy = 255 - spriteram[offs] - 16;
+				int code = spriteram.read(offs + 1)& 0x7f;
+				int color = spriteram.read(offs + 2)& 0x3f;
+				int flipx = spriteram.read(offs + 1)& 0x80;
+				int flipy = spriteram.read(offs + 1)& 0x80;
+				int sx = ((spriteram.read(offs + 3)+ 16) & 0xff) - 32;
+				int sy = 255 - spriteram.read(offs)- 16;
 	
 				if (flip_screen != 0)
 				{

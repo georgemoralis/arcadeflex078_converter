@@ -158,13 +158,13 @@ public class mikie
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int gfxbank = (spriteram[offs+2] & 0x40) ? 2 : 1;
-			int code = (spriteram[offs + 2] & 0x3f) + ((spriteram[offs + 2] & 0x80) >> 1) + ((spriteram[offs] & 0x40) << 1);
-			int color = (spriteram[offs] & 0x0f) + 16 * palettebank;
-			int sx = spriteram[offs + 3];
-			int sy = 244 - spriteram[offs + 1];
-			int flipx = ~spriteram[offs] & 0x10;
-			int flipy = spriteram[offs] & 0x20;
+			int gfxbank = (spriteram.read(offs+2)& 0x40) ? 2 : 1;
+			int code = (spriteram.read(offs + 2)& 0x3f) + ((spriteram.read(offs + 2)& 0x80) >> 1) + ((spriteram.read(offs)& 0x40) << 1);
+			int color = (spriteram.read(offs)& 0x0f) + 16 * palettebank;
+			int sx = spriteram.read(offs + 3);
+			int sy = 244 - spriteram.read(offs + 1);
+			int flipx = ~spriteram.read(offs)& 0x10;
+			int flipy = spriteram.read(offs)& 0x20;
 	
 			if (flip_screen != 0)
 			{

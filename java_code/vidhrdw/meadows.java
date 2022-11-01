@@ -72,9 +72,9 @@ public class meadows
 	
 	public static WriteHandlerPtr meadows_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		if (spriteram[offset] != data)
+		if (spriteram.read(offset)!= data)
 			force_partial_update(cpu_getscanline());
-		spriteram[offset] = data;
+		spriteram.write(offset,data);
 	} };
 	
 	
@@ -91,12 +91,12 @@ public class meadows
 	
 		for (i = 0; i < 4; i++)
 		{
-			int x = spriteram[i+0] + SPR_ADJUST_X;
-			int y = spriteram[i+4] + SPR_ADJUST_Y;
-			int code = spriteram[i+8] & 0x0f; 		/* bit #0 .. #3 select sprite */
-	/*		int bank = (spriteram[i+8] >> 4) & 1; 	   bit #4 selects prom ???    */
+			int x = spriteram.read(i+0)+ SPR_ADJUST_X;
+			int y = spriteram.read(i+4)+ SPR_ADJUST_Y;
+			int code = spriteram.read(i+8)& 0x0f; 		/* bit #0 .. #3 select sprite */
+	/*		int bank = (spriteram.read(i+8)>> 4) & 1; 	   bit #4 selects prom ???    */
 			int bank = i;							/* that fixes it for now :-/ */
-			int flip = spriteram[i+8] >> 5;			/* bit #5 flip vertical flag */
+			int flip = spriteram.read(i+8)>> 5;			/* bit #5 flip vertical flag */
 	
 			drawgfx(bitmap, Machine->gfx[bank + 1], code, 0, flip, 0, x, y, clip, TRANSPARENCY_PEN, 0);
 		}

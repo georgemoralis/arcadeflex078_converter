@@ -151,7 +151,7 @@ public class slapfght
 			int i;
 			for (i=0; i<0x800; i++)
 			{
-				logerror("Offset:%03x   TileRAM:%02x   AttribRAM:%02x   SpriteRAM:%02x\n",i, videoram.read(i),colorram[i],spriteram[i]);
+				logerror("Offset:%03x   TileRAM:%02x   AttribRAM:%02x   SpriteRAM:%02x\n",i, videoram.read(i),colorram[i],spriteram.read(i));
 			}
 		}
 	}

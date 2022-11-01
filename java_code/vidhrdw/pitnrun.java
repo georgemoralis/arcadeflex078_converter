@@ -202,12 +202,12 @@ public class pitnrun
 		for (offs = 0 ; offs < 0x100; offs+=4)
 		{
 			
-			pal=spriteram[offs+2]&0x3;
+			pal=spriteram.read(offs+2)&0x3;
 		
-			sy = 256-spriteram[offs+0]-16;
-			sx = spriteram[offs+3];
-			flipy = (spriteram[offs+1]&0x80)>>7;
-			flipx = (spriteram[offs+1]&0x40)>>6;
+			sy = 256-spriteram.read(offs+0)-16;
+			sx = spriteram.read(offs+3);
+			flipy = (spriteram.read(offs+1)&0x80)>>7;
+			flipx = (spriteram.read(offs+1)&0x40)>>6;
 			
 			if (flip_screen_x != 0)
 			{
@@ -221,7 +221,7 @@ public class pitnrun
 			}
 			
 			drawgfx(bitmap,Machine->gfx[2],
-	 			(spriteram[offs+1]&0x3f)+((spriteram[offs+2]&0x80)>>1)+((spriteram[offs+2]&0x40)<<1),
+	 			(spriteram.read(offs+1)&0x3f)+((spriteram.read(offs+2)&0x80)>>1)+((spriteram.read(offs+2)&0x40)<<1),
 				pal,
 				flipx,flipy,
 				sx,sy,

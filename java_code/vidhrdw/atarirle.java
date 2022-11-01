@@ -344,12 +344,12 @@ public class atarirle
 			prescan_rle(mo, i);
 	
 		/* allocate the spriteram */
-		mo->spriteram = auto_malloc(sizeof(mo->spriteram[0]) * mo->spriteramsize);
+		mo->spriteram = auto_malloc(sizeof(mo->spriteram.read(0)) * mo->spriteramsize);
 		if (!mo->spriteram)
 			return 0;
 	
 		/* clear it to zero */
-		memset(mo->spriteram, 0, sizeof(mo->spriteram[0]) * mo->spriteramsize);
+		memset(mo->spriteram, 0, sizeof(mo->spriteram.read(0)) * mo->spriteramsize);
 	
 		/* allocate bitmaps */
 		mo->vram[0][0] = auto_bitmap_alloc_depth(Machine->drv->screen_width, Machine->drv->screen_height, 16);
@@ -496,7 +496,7 @@ public class atarirle
 		COMBINE_DATA(&atarirle_0_spriteram[offset]);
 	
 		/* store a copy in our local spriteram */
-		atarirle[0].spriteram[entry].data[idx] = atarirle_0_spriteram[offset];
+		atarirle[0].spriteram.read(entry).data[idx] = atarirle_0_spriteram[offset];
 		atarirle[0].is32bit = 0;
 	}
 	
@@ -515,8 +515,8 @@ public class atarirle
 		COMBINE_DATA(&atarirle_0_spriteram32[offset]);
 	
 		/* store a copy in our local spriteram */
-		atarirle[0].spriteram[entry].data[idx+0] = atarirle_0_spriteram32[offset] >> 16;
-		atarirle[0].spriteram[entry].data[idx+1] = atarirle_0_spriteram32[offset];
+		atarirle[0].spriteram.read(entry).data[idx+0] = atarirle_0_spriteram32[offset] >> 16;
+		atarirle[0].spriteram.read(entry).data[idx+1] = atarirle_0_spriteram32[offset];
 		atarirle[0].is32bit = 1;
 	}
 	
@@ -712,7 +712,7 @@ public class atarirle
 	
 	static void compute_checksum(struct atarirle_data *mo)
 	{
-		int reqsums = mo->spriteram[0].data[0] + 1;
+		int reqsums = mo->spriteram.read(0).data[0] + 1;
 		int i;
 	
 		/* number of checksums is in the first word */
@@ -771,7 +771,7 @@ public class atarirle
 				int scale, code;
 	
 				/* extract scale and code */
-				obj = &mo->spriteram[current->entry];
+				obj = &mo->spriteram.read(current->entry);
 				scale = EXTRACT_DATA(obj, mo->scalemask);
 				code = EXTRACT_DATA(obj, mo->codemask);
 	

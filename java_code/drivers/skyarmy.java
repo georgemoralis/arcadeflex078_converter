@@ -124,7 +124,7 @@ public class skyarmy
 		for (offs = 0 ; offs < 0x40; offs+=4)
 		{
 			
-			pal=spriteram[offs+2]&0x7;
+			pal=spriteram.read(offs+2)&0x7;
 			
 			switch(pal)
 			{
@@ -134,12 +134,12 @@ public class skyarmy
 		  	 case 4: pal=1; break;
 		  	 case 6: pal=3; break;
 			}
-			sx = spriteram[offs+3];
-			sy = 242-spriteram[offs];
-			flipy = (spriteram[offs+1]&0x80)>>7;
-			flipx = (spriteram[offs+1]&0x40)>>6;
+			sx = spriteram.read(offs+3);
+			sy = 242-spriteram.read(offs);
+			flipy = (spriteram.read(offs+1)&0x80)>>7;
+			flipx = (spriteram.read(offs+1)&0x40)>>6;
 			drawgfx(bitmap,Machine->gfx[1],
-			spriteram[offs+1]&0x3f,
+			spriteram.read(offs+1)&0x3f,
 			pal,
 			flipx,flipy,
 			sx,sy,

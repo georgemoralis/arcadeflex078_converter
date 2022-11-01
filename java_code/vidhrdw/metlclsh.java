@@ -199,18 +199,18 @@ public class metlclsh
 		{
 			int attr,code,color,sx,sy,flipx,flipy,wrapy,sizey;
 	
-			attr	=	spriteram[offs];
+			attr	=	spriteram.read(offs);
 			if (!(attr & 0x01))	continue;	// enable
 	
 			flipy	=	(attr & 0x02);
 			flipx	=	(attr & 0x04);
 			color	=	(attr & 0x08) >> 3;
 			sizey	=	(attr & 0x10);	// double height
-			code	=	((attr & 0x60) << 3) + spriteram[offs+1];
+			code	=	((attr & 0x60) << 3) + spriteram.read(offs+1);
 	
-			sx	=	240 - spriteram[offs+3];
+			sx	=	240 - spriteram.read(offs+3);
 			if (sx < -7) sx += 256;
-			sy	=	240 - spriteram[offs+2];
+			sy	=	240 - spriteram.read(offs+2);
 	
 			if (flip_screen != 0)
 			{

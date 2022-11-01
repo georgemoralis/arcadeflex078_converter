@@ -218,11 +218,11 @@ public class cloak
 	
 		for (offs = (spriteram_size / 4) - 1; offs >= 0; offs--)
 		{
-			int code = spriteram[offs + 64] & 0x7f;
-			int flipx = spriteram[offs + 64] & 0x80;
+			int code = spriteram.read(offs + 64)& 0x7f;
+			int flipx = spriteram.read(offs + 64)& 0x80;
 			int flipy = 0;
-			int sx = spriteram[offs + 192];
-			int sy = 240 - spriteram[offs];
+			int sx = spriteram.read(offs + 192);
+			int sy = 240 - spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{

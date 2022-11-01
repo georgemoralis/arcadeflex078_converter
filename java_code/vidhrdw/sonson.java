@@ -157,12 +157,12 @@ public class sonson
 	
 		for (offs = spriteram_size - 4; offs >= 0; offs -= 4)
 		{
-			int code = spriteram[offs + 2] + ((spriteram[offs + 1] & 0x20) << 3);
-			int color = spriteram[offs + 1] & 0x1f;
-			int flipx = ~spriteram[offs + 1] & 0x40;
-			int flipy = ~spriteram[offs + 1] & 0x80;
-			int sx = spriteram[offs + 3]; 
-			int sy = spriteram[offs + 0];
+			int code = spriteram.read(offs + 2)+ ((spriteram.read(offs + 1)& 0x20) << 3);
+			int color = spriteram.read(offs + 1)& 0x1f;
+			int flipx = ~spriteram.read(offs + 1)& 0x40;
+			int flipy = ~spriteram.read(offs + 1)& 0x80;
+			int sx = spriteram.read(offs + 3); 
+			int sy = spriteram.read(offs + 0);
 	
 			if (flip_screen != 0)
 			{

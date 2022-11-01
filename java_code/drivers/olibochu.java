@@ -122,13 +122,13 @@ public class olibochu
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int attr = spriteram[offs+1];
-			int code = spriteram[offs];
+			int attr = spriteram.read(offs+1);
+			int code = spriteram.read(offs);
 			int color = attr & 0x3f;
 			int flipx = attr & 0x40;
 			int flipy = attr & 0x80;
-			int sx = spriteram[offs+3];
-			int sy = ((spriteram[offs+2] + 8) & 0xff) - 8;
+			int sx = spriteram.read(offs+3);
+			int sy = ((spriteram.read(offs+2)+ 8) & 0xff) - 8;
 	
 			if (flip_screen != 0)
 			{

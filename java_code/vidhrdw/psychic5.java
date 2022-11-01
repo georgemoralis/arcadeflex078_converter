@@ -351,13 +351,13 @@ public class psychic5
 		for (offs = 11; offs < spriteram_size; offs += 16)
 		{
 			int tileofs0, tileofs1, tileofs2, tileofs3, temp1, temp2;
-			int attr = spriteram[offs + 2];
-			int code = spriteram[offs + 3] + ((attr & 0xc0) << 2);
-			int color = spriteram[offs + 4] & 0x0f;
+			int attr = spriteram.read(offs + 2);
+			int code = spriteram.read(offs + 3)+ ((attr & 0xc0) << 2);
+			int color = spriteram.read(offs + 4)& 0x0f;
 			int flipx = attr & 0x10;
 			int flipy = attr & 0x20;
-			int sx = spriteram[offs + 1];
-			int sy = spriteram[offs];
+			int sx = spriteram.read(offs + 1);
+			int sy = spriteram.read(offs);
 			int size32 = attr & 0x08;
 	
 			if ((attr & 0x01) != 0) sx -= 256;
@@ -423,10 +423,10 @@ public class psychic5
 			{
 				struct rectangle clip = *cliprect;
 	
-				int sx1 = spriteram[12];		/* sprite 0 */
-				int sy1 = spriteram[11];
-				int tile = spriteram[14];
-				int sy2 = spriteram[11+128];	/* sprite 8 */
+				int sx1 = spriteram.read(12);		/* sprite 0 */
+				int sy1 = spriteram.read(11);
+				int tile = spriteram.read(14);
+				int sy2 = spriteram.read(11+128);	/* sprite 8 */
 	
 				if (bg_clip_mode >=0 && bg_clip_mode < 3 && sy1==240) bg_clip_mode = 0;
 				if (bg_clip_mode > 2 && bg_clip_mode < 5 && sy2==240) bg_clip_mode = -10;

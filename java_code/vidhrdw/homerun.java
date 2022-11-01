@@ -80,12 +80,12 @@ public class homerun
 		for (offs = spriteram_size-4; offs >=0; offs -= 4)
 		{
 			int code,color,sx,sy,flipx,flipy;
-			sx = spriteram[offs+3];
-			sy = spriteram[offs+0]-16;
-			code = (spriteram[offs+1] ) +((spriteram[offs+2]&0x8)<<5 )+(homerun_gfx_ctrl<<9);
-			color = (spriteram[offs+2] & 0x7)+8 ;
-			flipx=(spriteram[offs+2] & 0x40) ;
-			flipy=(spriteram[offs+2] & 0x80) ;
+			sx = spriteram.read(offs+3);
+			sy = spriteram.read(offs+0)-16;
+			code = (spriteram.read(offs+1)) +((spriteram.read(offs+2)&0x8)<<5 )+(homerun_gfx_ctrl<<9);
+			color = (spriteram.read(offs+2)& 0x7)+8 ;
+			flipx=(spriteram.read(offs+2)& 0x40) ;
+			flipy=(spriteram.read(offs+2)& 0x80) ;
 			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,

@@ -239,13 +239,13 @@ public class superqix
 	
 		for (offs = 0; offs < spriteram_size; offs += 4)
 		{
-			int attr = spriteram[offs + 3];
-			int code = spriteram[offs] + 256 * (attr & 0x01);
+			int attr = spriteram.read(offs + 3);
+			int code = spriteram.read(offs)+ 256 * (attr & 0x01);
 			int color = (attr & 0xf0) >> 4;
 			int flipx = attr & 0x04;
 			int flipy = attr & 0x08;
-			int sx = spriteram[offs + 1];
-			int sy = spriteram[offs + 2];
+			int sx = spriteram.read(offs + 1);
+			int sy = spriteram.read(offs + 2);
 	
 			if (flip_screen != 0)
 			{

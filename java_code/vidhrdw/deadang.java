@@ -98,9 +98,9 @@ public class deadang
 		for (offs = 0; offs<0x800; offs+=8)
 		{
 			/* Don't draw empty sprite table entries */
-			if (spriteram[offs+7]!=0xf) continue;
+			if (spriteram.read(offs+7)!=0xf) continue;
 	
-			switch (spriteram[offs+5]&0xc0) {
+			switch (spriteram.read(offs+5)&0xc0) {
 			default:
 			case 0xc0: pri=0; break; /* Unknown */
 			case 0x80: pri=0; break; /* Over all playfields */
@@ -108,15 +108,15 @@ public class deadang
 			case 0x00: pri=0xf0|0xcc; break; /* Under middle playfield */
 			}
 	
-			fx= spriteram[offs+1]&0x20;
-			fy= spriteram[offs+1]&0x40;
-			y = spriteram[offs+0];
-			x = spriteram[offs+4];
+			fx= spriteram.read(offs+1)&0x20;
+			fy= spriteram.read(offs+1)&0x40;
+			y = spriteram.read(offs+0);
+			x = spriteram.read(offs+4);
 			if (fy != 0) fy=0; else fy=1;
-			if (spriteram[offs+5]&1) x=0-(0xff-x);
+			if (spriteram.read(offs+5)&1) x=0-(0xff-x);
 	
-			color = (spriteram[offs+3]>>4)&0xf;
-			sprite = (spriteram[offs+2]+(spriteram[offs+3]<<8))&0xfff;
+			color = (spriteram.read(offs+3)>>4)&0xf;
+			sprite = (spriteram.read(offs+2)+(spriteram.read(offs+3)<<8))&0xfff;
 	
 			if (flip_screen != 0) {
 				x=240-x;

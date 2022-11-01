@@ -311,10 +311,10 @@ public class travrusa
 	
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
-			int sx = ((spriteram[offs + 3] + 8) & 0xff) - 8;
-			int sy = 240 - spriteram[offs];
-			int code = spriteram[offs + 2];
-			int attr = spriteram[offs + 1];
+			int sx = ((spriteram.read(offs + 3)+ 8) & 0xff) - 8;
+			int sy = 240 - spriteram.read(offs);
+			int code = spriteram.read(offs + 2);
+			int attr = spriteram.read(offs + 1);
 			int flipx = attr & 0x40;
 			int flipy = attr & 0x80;
 	

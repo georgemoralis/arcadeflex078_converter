@@ -183,14 +183,14 @@ public class gottlieb
 		{
 			/* coordinates hand tuned to make the position correct in Q*Bert Qubes start */
 			/* of level animation. */
-			int sx = (spriteram[offs + 1]) - 4;
-			int sy = (spriteram[offs]) - 13;
-			int code = (255 ^ spriteram[offs + 2]) + 256 * spritebank;
+			int sx = (spriteram.read(offs + 1)) - 4;
+			int sy = (spriteram.read(offs)) - 13;
+			int code = (255 ^ spriteram.read(offs + 2)) + 256 * spritebank;
 	
 			if (flip_screen_x != 0) sx = 233 - sx;
 			if (flip_screen_y != 0) sy = 244 - sy;
 	
-			if (spriteram[offs] || spriteram[offs + 1])	/* needed to avoid garbage on screen */
+			if (spriteram.read(offs)|| spriteram.read(offs + 1))	/* needed to avoid garbage on screen */
 				drawgfx(bitmap, Machine->gfx[1],
 					code, 0,
 					flip_screen_x, flip_screen_y,

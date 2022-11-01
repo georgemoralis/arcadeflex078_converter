@@ -206,10 +206,10 @@ public class paradise
 		int i;
 		for (i = 0; i < spriteram_size ; i += 32)
 		{
-			int code	=	spriteram[i+0];	// Only 4 bytes out of 32 used?
-			int x		=	spriteram[i+1];
-			int y		=	spriteram[i+2];
-			int attr	=	spriteram[i+3];
+			int code	=	spriteram.read(i+0);	// Only 4 bytes out of 32 used?
+			int x		=	spriteram.read(i+1);
+			int y		=	spriteram.read(i+2);
+			int attr	=	spriteram.read(i+3);
 	
 			int flipx	=	0;	// ?
 			int flipy	=	0;

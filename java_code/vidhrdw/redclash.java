@@ -147,25 +147,25 @@ public class redclash
 		for (offs = spriteram_size - 0x20;offs >= 0;offs -= 0x20)
 		{
 			i = 0;
-			while (i < 0x20 && spriteram[offs + i] != 0)
+			while (i < 0x20 && spriteram.read(offs + i)!= 0)
 				i += 4;
 	
 			while (i > 0)
 			{
 				i -= 4;
 	
-				if (spriteram[offs + i] & 0x80)
+				if (spriteram.read(offs + i)& 0x80)
 				{
-					int color = spriteram[offs + i + 2] & 0x0f;
-					int sx = spriteram[offs + i + 3];
-					int sy = offs / 4 + (spriteram[offs + i] & 0x07);
+					int color = spriteram.read(offs + i + 2)& 0x0f;
+					int sx = spriteram.read(offs + i + 3);
+					int sy = offs / 4 + (spriteram.read(offs + i)& 0x07);
 	
 	
-					switch ((spriteram[offs + i] & 0x18) >> 3)
+					switch ((spriteram.read(offs + i)& 0x18) >> 3)
 					{
 						case 3:	/* 24x24 */
 						{
-							int code = ((spriteram[offs + i + 1] & 0xf0) >> 4) + ((gfxbank & 1) << 4);
+							int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
 							drawgfx(bitmap,Machine->gfx[3],
 									code,
@@ -184,10 +184,10 @@ public class redclash
 						}
 	
 						case 2:	/* 16x16 */
-							if (spriteram[offs + i] & 0x20)	/* zero hour spaceships */
+							if (spriteram.read(offs + i)& 0x20)	/* zero hour spaceships */
 							{
-								int code = ((spriteram[offs + i + 1] & 0xf8) >> 3) + ((gfxbank & 1) << 5);
-								int bank = (spriteram[offs + i + 1] & 0x02) >> 1;
+								int code = ((spriteram.read(offs + i + 1)& 0xf8) >> 3) + ((gfxbank & 1) << 5);
+								int bank = (spriteram.read(offs + i + 1)& 0x02) >> 1;
 	
 								drawgfx(bitmap,Machine->gfx[4+bank],
 										code,
@@ -198,7 +198,7 @@ public class redclash
 							}
 							else
 							{
-								int code = ((spriteram[offs + i + 1] & 0xf0) >> 4) + ((gfxbank & 1) << 4);
+								int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
 								drawgfx(bitmap,Machine->gfx[2],
 										code,
@@ -211,7 +211,7 @@ public class redclash
 	
 						case 1:	/* 8x8 */
 							drawgfx(bitmap,Machine->gfx[1],
-									spriteram[offs + i + 1],// + 4 * (spriteram[offs + i + 2] & 0x10),
+									spriteram.read(offs + i + 1),// + 4 * (spriteram.read(offs + i + 2)& 0x10),
 									color,
 									0,0,
 									sx,sy - 16,

@@ -113,12 +113,12 @@ public class mouser
 	
 				/* This bit of spriteram appears to be for row scrolling */
 				/* Note: this is dependant on flipping in y */
-				scrolled_y_position = (256 + 8*sy - spriteram[offs%32])%256;
+				scrolled_y_position = (256 + 8*sy - spriteram.read(offs%32))%256;
 				/* I think we still need to fetch the colorram bits to from the ram underneath, which is not scrolled */
 				/* Ideally we would merge these on a pixel-by-pixel basis, but it's ok to do this char-by-char, */
 				/* Since it's only for the MOUSER logo and it looks fine */
 				/* Note: this is _not_ dependant on flipping */
-				color_offs = offs%32 + ((256 + 8*(offs/32) - spriteram[offs%32])%256)/8*32;
+				color_offs = offs%32 + ((256 + 8*(offs/32) - spriteram.read(offs%32))%256)/8*32;
 	
 				drawgfx(tmpbitmap,Machine->gfx[0],
 						videoram.read(offs)| (colorram[color_offs]>>5)*256 | ((colorram[color_offs]>>4)&1)*512,
@@ -136,11 +136,11 @@ public class mouser
 		/* This is the first set of 7 sprites */
 		for(offs = 0x0084; offs < 0x00A0; offs += 4)
 		{
-			sx = spriteram[offs+3];
-			sy = 0xef-spriteram[offs+2];
+			sx = spriteram.read(offs+3);
+			sy = 0xef-spriteram.read(offs+2);
 	
-			flipx = (spriteram[offs]&0x40)>>6;
-			flipy = (spriteram[offs]&0x80)>>7;
+			flipx = (spriteram.read(offs)&0x40)>>6;
+			flipy = (spriteram.read(offs)&0x80)>>7;
 	
 			if (flip_screen_x != 0)
 			{
@@ -154,10 +154,10 @@ public class mouser
 				sy = 238 - sy;
 			}
 	
-			if ((spriteram[offs+1]&0x10)>>4)
-				drawgfx(bitmap,Machine->gfx[1+((spriteram[offs+1]&0x20)>>5)],
-						spriteram[offs]&0x3f,
-						spriteram[offs+1]%16,
+			if ((spriteram.read(offs+1)&0x10)>>4)
+				drawgfx(bitmap,Machine->gfx[1+((spriteram.read(offs+1)&0x20)>>5)],
+						spriteram.read(offs)&0x3f,
+						spriteram.read(offs+1)%16,
 						flipx,flipy,
 						sx,sy,
 						&Machine->visible_area,TRANSPARENCY_PEN,0);
@@ -166,11 +166,11 @@ public class mouser
 		/* This is the second set of 8 sprites */
 		for(offs = 0x00C4; offs < 0x00E4; offs += 4)
 		{
-			sx = spriteram[offs+3];
-			sy = 0xef-spriteram[offs+2];
+			sx = spriteram.read(offs+3);
+			sy = 0xef-spriteram.read(offs+2);
 	
-			flipx = (spriteram[offs]&0x40)>>6;
-			flipy = (spriteram[offs]&0x80)>>7;
+			flipx = (spriteram.read(offs)&0x40)>>6;
+			flipy = (spriteram.read(offs)&0x80)>>7;
 	
 			if (flip_screen_x != 0)
 			{
@@ -184,10 +184,10 @@ public class mouser
 				sy = 238 - sy;
 			}
 	
-			if ((spriteram[offs+1]&0x10)>>4)
-				drawgfx(bitmap,Machine->gfx[1+((spriteram[offs+1]&0x20)>>5)],
-						spriteram[offs]&0x3f,
-						spriteram[offs+1]%16,
+			if ((spriteram.read(offs+1)&0x10)>>4)
+				drawgfx(bitmap,Machine->gfx[1+((spriteram.read(offs+1)&0x20)>>5)],
+						spriteram.read(offs)&0x3f,
+						spriteram.read(offs+1)%16,
 						flipx,flipy,
 						sx,sy,
 						&Machine->visible_area,TRANSPARENCY_PEN,0);

@@ -153,14 +153,14 @@ public class srmp2
 		int offs, col;
 		int xoffs, yoffs;
 	
-		int ctrl	=	spriteram[ 0x600/2 ];
-		int ctrl2	=	spriteram[ 0x602/2 ];
+		int ctrl	=	spriteram.read( 0x600/2 );
+		int ctrl2	=	spriteram.read( 0x602/2 );
 	
 		int flip	=	ctrl & 0x40;
 		int numcol	=	ctrl2 & 0x0f;
 	
-		int upper	=	( spriteram[ 0x604/2 ] & 0xFF ) +
-						( spriteram[ 0x606/2 ] & 0xFF ) * 256;
+		int upper	=	( spriteram.read( 0x604/2 )& 0xFF ) +
+						( spriteram.read( 0x606/2 )& 0xFF ) * 256;
 	
 		int max_y	=	0xf0;
 	
@@ -174,8 +174,8 @@ public class srmp2
 		/* The first column is the frontmost, see twineagl test mode */
 		for (col = numcol - 1; col >= 0; col--)
 		{
-			int x	=	spriteram[(col * 0x20 + 0x08 + 0x400)/2] & 0xff;
-			int y	=	spriteram[(col * 0x20 + 0x00 + 0x400)/2] & 0xff;
+			int x	=	spriteram.read((col * 0x20 + 0x08 + 0x400)/2)& 0xff;
+			int y	=	spriteram.read((col * 0x20 + 0x00 + 0x400)/2)& 0xff;
 	
 			/* draw this column */
 			for (offs = 0; offs < 0x40/2; offs += 2/2)
@@ -261,8 +261,8 @@ public class srmp2
 	
 		int max_y	=	Machine -> drv -> screen_height;
 	
-		int ctrl	=	spriteram[ 0x600/2 ];
-	//	int ctrl2	=	spriteram[ 0x602/2 ];
+		int ctrl	=	spriteram.read( 0x600/2 );
+	//	int ctrl2	=	spriteram.read( 0x602/2 );
 	
 		int flip	=	ctrl & 0x40;
 	
@@ -279,7 +279,7 @@ public class srmp2
 			int color	=	((spriteram_3[offs + 0x200] & 0xf8) >> 3);
 	
 			int x		=	(((spriteram_3[offs + 0x200] & 0x01) << 8) + (spriteram_2[offs + 0x200] & 0xff));
-			int y		=	  (spriteram[offs + 0x000] & 0xff);
+			int y		=	  (spriteram.read(offs + 0x000)& 0xff);
 	
 			int flipx	=	code & 0x8000;
 			int flipy	=	code & 0x4000;

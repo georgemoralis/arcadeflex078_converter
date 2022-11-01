@@ -163,10 +163,10 @@ public class gotya
 	
 		for (offs = 2; offs < 0x0e; offs += 2)
 		{
-			int code = spriteram[offs + 0x01] >> 2;
-			int color = spriteram[offs + 0x11] & 0x0f;
-			int sx = 256 - spriteram[offs + 0x10] + (spriteram[offs + 0x01] & 0x01) * 256;
-			int sy = spriteram[offs + 0x00];
+			int code = spriteram.read(offs + 0x01)>> 2;
+			int color = spriteram.read(offs + 0x11)& 0x0f;
+			int sx = 256 - spriteram.read(offs + 0x10)+ (spriteram.read(offs + 0x01)& 0x01) * 256;
+			int sy = spriteram.read(offs + 0x00);
 	
 			if (flip_screen != 0)
 			{

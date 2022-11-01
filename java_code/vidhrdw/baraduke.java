@@ -176,11 +176,11 @@ public class baraduke
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int priority)
 	{
-		const unsigned char *source = &spriteram[0];
-		const unsigned char *finish = &spriteram[0x0800-16];/* the last is NOT a sprite */
+		const unsigned char *source = &spriteram.read(0);
+		const unsigned char *finish = &spriteram.read(0x0800-16);/* the last is NOT a sprite */
 	
-		int sprite_xoffs = spriteram[0x07f5] - 256 * (spriteram[0x07f4] & 1) + 16;
-		int sprite_yoffs = spriteram[0x07f7] - 256 * (spriteram[0x07f6] & 1);
+		int sprite_xoffs = spriteram.read(0x07f5)- 256 * (spriteram.read(0x07f4)& 1) + 16;
+		int sprite_yoffs = spriteram.read(0x07f7)- 256 * (spriteram.read(0x07f6)& 1);
 	
 		while( source<finish )
 		{
@@ -260,7 +260,7 @@ public class baraduke
 		int offs;
 	
 		/* this is the global sprite Y offset, actually */
-		flipscreen = spriteram[0x07f6] & 0x01;
+		flipscreen = spriteram.read(0x07f6)& 0x01;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
 		tilemap_draw(bitmap,cliprect,tilemap[1],TILEMAP_IGNORE_TRANSPARENCY,0);
@@ -306,7 +306,7 @@ public class baraduke
 		int offs;
 	
 		/* this is the global sprite Y offset, actually */
-		flipscreen = spriteram[0x07f6] & 0x01;
+		flipscreen = spriteram.read(0x07f6)& 0x01;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
 		tilemap_draw(bitmap,cliprect,tilemap[0],TILEMAP_IGNORE_TRANSPARENCY,0);

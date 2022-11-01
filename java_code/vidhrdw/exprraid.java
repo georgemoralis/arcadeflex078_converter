@@ -119,13 +119,13 @@ public class exprraid
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int attr = spriteram[offs + 1];
-			int code = spriteram[offs + 3] + ((attr & 0xe0) << 3);
+			int attr = spriteram.read(offs + 1);
+			int code = spriteram.read(offs + 3)+ ((attr & 0xe0) << 3);
 			int color = (attr & 0x03) + ((attr & 0x08) >> 1);
 			int flipx = (attr & 0x04);
 			int flipy = 0;
-			int sx = ((248 - spriteram[offs + 2]) & 0xff) - 8;
-			int sy = spriteram[offs];
+			int sx = ((248 - spriteram.read(offs + 2)) & 0xff) - 8;
+			int sy = spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{

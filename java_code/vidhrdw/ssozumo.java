@@ -175,14 +175,14 @@ public class ssozumo
 	
 		for (offs = 0; offs < spriteram_size; offs += 4)
 		{
-			if (spriteram[offs] & 0x01)
+			if (spriteram.read(offs)& 0x01)
 			{
-				int code = spriteram[offs + 1] + ((spriteram[offs] & 0xf0) << 4);
-				int color = (spriteram[offs] & 0x08) >> 3;
-				int flipx = spriteram[offs] & 0x04;
-				int flipy = spriteram[offs] & 0x02;
-				int sx = 239 - spriteram[offs + 3];
-				int sy = (240 - spriteram[offs + 2]) & 0xff;
+				int code = spriteram.read(offs + 1)+ ((spriteram.read(offs)& 0xf0) << 4);
+				int color = (spriteram.read(offs)& 0x08) >> 3;
+				int flipx = spriteram.read(offs)& 0x04;
+				int flipy = spriteram.read(offs)& 0x02;
+				int sx = 239 - spriteram.read(offs + 3);
+				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 	
 				if (flip_screen != 0)
 				{

@@ -273,10 +273,10 @@ public class zaccaria
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int sx = spriteram[offs + 3] + 1;
-			int sy = 242 - spriteram[offs];
-			int flipx = spriteram[offs + 1] & 0x40;
-			int flipy = spriteram[offs + 1] & 0x80;
+			int sx = spriteram.read(offs + 3)+ 1;
+			int sy = 242 - spriteram.read(offs);
+			int flipx = spriteram.read(offs + 1)& 0x40;
+			int flipy = spriteram.read(offs + 1)& 0x80;
 	
 			if (flip_screen_x != 0)
 			{
@@ -290,8 +290,8 @@ public class zaccaria
 			}
 	
 			drawgfx(bitmap,Machine->gfx[1],
-					(spriteram[offs + 1] & 0x3f) + (spriteram[offs + 2] & 0xc0),
-					4 * (spriteram[offs + 2] & 0x07),
+					(spriteram.read(offs + 1)& 0x3f) + (spriteram.read(offs + 2)& 0xc0),
+					4 * (spriteram.read(offs + 2)& 0x07),
 					flipx,flipy,
 					sx,sy,
 					&clip,TRANSPARENCY_PEN,0);

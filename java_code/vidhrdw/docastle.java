@@ -256,14 +256,14 @@ public class docastle
 	
 				 */
 	
-				code = spriteram[offs + 3];
-				color = spriteram[offs + 2] & 0x0f;
-				sx = ((spriteram[offs + 1] + 8) & 0xff) - 8;
-				sy = spriteram[offs];
-				flipx = spriteram[offs + 2] & 0x40;
+				code = spriteram.read(offs + 3);
+				color = spriteram.read(offs + 2)& 0x0f;
+				sx = ((spriteram.read(offs + 1)+ 8) & 0xff) - 8;
+				sy = spriteram.read(offs);
+				flipx = spriteram.read(offs + 2)& 0x40;
 				flipy = 0;
-				if (spriteram[offs + 2] & 0x10) code += 0x100;
-				if (spriteram[offs + 2] & 0x80) code += 0x200;
+				if (spriteram.read(offs + 2)& 0x10) code += 0x100;
+				if (spriteram.read(offs + 2)& 0x80) code += 0x200;
 			}
 			else
 			{
@@ -282,12 +282,12 @@ public class docastle
 	
 				 */
 	
-				code = spriteram[offs + 3];
-				color = spriteram[offs + 2] & 0x1f;
-				sx = ((spriteram[offs + 1] + 8) & 0xff) - 8;
-				sy = spriteram[offs];
-				flipx = spriteram[offs + 2] & 0x40;
-				flipy = spriteram[offs + 2] & 0x80;
+				code = spriteram.read(offs + 3);
+				color = spriteram.read(offs + 2)& 0x1f;
+				sx = ((spriteram.read(offs + 1)+ 8) & 0xff) - 8;
+				sy = spriteram.read(offs);
+				flipx = spriteram.read(offs + 2)& 0x40;
+				flipy = spriteram.read(offs + 2)& 0x80;
 			}
 	
 			if (flip_screen != 0)

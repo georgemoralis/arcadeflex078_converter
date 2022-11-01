@@ -279,11 +279,11 @@ public class namcos86
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int sprite_priority )
 	{
 		/* note: sprites don't yet clip at the top of the screen properly */
-		const unsigned char *source = &spriteram[0x1400];
-		const unsigned char *finish = &spriteram[0x1c00-16];	/* the last is NOT a sprite */
+		const unsigned char *source = &spriteram.read(0x1400);
+		const unsigned char *finish = &spriteram.read(0x1c00-16);	/* the last is NOT a sprite */
 	
-		int sprite_xoffs = spriteram[0x1bf5] - 256 * (spriteram[0x1bf4] & 1);
-		int sprite_yoffs = spriteram[0x1bf7] - 256 * (spriteram[0x1bf6] & 1);
+		int sprite_xoffs = spriteram.read(0x1bf5)- 256 * (spriteram.read(0x1bf4)& 1);
+		int sprite_yoffs = spriteram.read(0x1bf7)- 256 * (spriteram.read(0x1bf6)& 1);
 	
 		while( source<finish )
 		{
@@ -364,7 +364,7 @@ public class namcos86
 		int layer;
 	
 		/* this is the global sprite Y offset, actually */
-		flipscreen = spriteram[0x1bf6] & 1;
+		flipscreen = spriteram.read(0x1bf6)& 1;
 	
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	
@@ -387,14 +387,14 @@ public class namcos86
 		char buf[80];
 	int b=keyboard_pressed(KEYCODE_Y)?8:0;
 		sprintf(buf,"%02x %02x %02x %02x %02x %02x %02x %02x",
-				spriteram[0x1bf0+b],
-				spriteram[0x1bf1+b],
-				spriteram[0x1bf2+b],
-				spriteram[0x1bf3+b],
-				spriteram[0x1bf4+b],
-				spriteram[0x1bf5+b],
-				spriteram[0x1bf6+b],
-				spriteram[0x1bf7+b]);
+				spriteram.read(0x1bf0+b),
+				spriteram.read(0x1bf1+b),
+				spriteram.read(0x1bf2+b),
+				spriteram.read(0x1bf3+b),
+				spriteram.read(0x1bf4+b),
+				spriteram.read(0x1bf5+b),
+				spriteram.read(0x1bf6+b),
+				spriteram.read(0x1bf7+b));
 		usrintf_showmessage(buf);
 	}
 	#endif

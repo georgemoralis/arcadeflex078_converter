@@ -699,7 +699,7 @@ public class ppu2c03b
 	#if 0	/* hmm... this only goes if we implement the osd_skip_this_frame functionality */
 	
 			/* check for sprite 0 hit */
-			if ( ( scanline == spriteram[0] + 7 ) && ( ppu_regs[PPU_CONTROL1] & PPU_CONTROL1_SPRITES ) )
+			if ( ( scanline == spriteram.read(0)+ 7 ) && ( ppu_regs[PPU_CONTROL1] & PPU_CONTROL1_SPRITES ) )
 				ppu_regs[PPU_STATUS] |= PPU_STATUS_SPRITE0_HIT;
 	
 	#endif
@@ -893,7 +893,7 @@ public class ppu2c03b
 			break;
 	
 			case PPU_SPRITE_DATA:
-				ret = chips[num].spriteram[chips[num].regs[PPU_SPRITE_ADDRESS]];
+				ret = chips[num].spriteram.read(chips[num).regs[PPU_SPRITE_ADDRESS]];
 			break;
 	
 			case PPU_DATA:
@@ -974,7 +974,7 @@ public class ppu2c03b
 			break;
 	
 			case PPU_SPRITE_DATA:
-				chips[num].spriteram[chips[num].regs[PPU_SPRITE_ADDRESS]] = data;
+				chips[num].spriteram.read(chips[num).regs[PPU_SPRITE_ADDRESS]] = data;
 				chips[num].regs[PPU_SPRITE_ADDRESS] = ( chips[num].regs[PPU_SPRITE_ADDRESS] + 1 ) & 0xff;
 			break;
 	

@@ -98,13 +98,13 @@ public class jailbrek
 	
 		for (i = 0; i < spriteram_size; i += 4)
 		{
-			int attr = spriteram[i + 1];	// attributes = ?tyxcccc
-			int code = spriteram[i] + ((attr & 0x40) << 2);
+			int attr = spriteram.read(i + 1);	// attributes = ?tyxcccc
+			int code = spriteram.read(i)+ ((attr & 0x40) << 2);
 			int color = attr & 0x0f;
 			int flipx = attr & 0x10;
 			int flipy = attr & 0x20;
-			int sx = spriteram[i + 2] - ((attr & 0x80) << 1);
-			int sy = spriteram[i + 3];
+			int sx = spriteram.read(i + 2)- ((attr & 0x80) << 1);
+			int sy = spriteram.read(i + 3);
 	
 			if (flip_screen != 0)
 			{

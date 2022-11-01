@@ -144,10 +144,10 @@ public class champbas
 	
 		for (offs = spriteram_size - 2; offs >= 0; offs -= 2)
 		{
-			int code = spriteram[offs] >> 2;
-			int color = spriteram[offs + 1];
-			int flipx = spriteram[offs] & 0x01;
-			int flipy = spriteram[offs] & 0x02;
+			int code = spriteram.read(offs)>> 2;
+			int color = spriteram.read(offs + 1);
+			int flipx = spriteram.read(offs)& 0x01;
+			int flipy = spriteram.read(offs)& 0x02;
 			int sx = ((256 + 16 - spriteram_2[offs + 1]) & 0xff) - 16;
 			int sy = spriteram_2[offs] - 16;
 	

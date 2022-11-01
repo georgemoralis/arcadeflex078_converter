@@ -280,20 +280,20 @@ public class _40love
 		{
 			int code,color,sx,sy,flipx,flipy;
 	
-			sx = spriteram[offs+3];
-			sy = spriteram[offs+0] +1;
+			sx = spriteram.read(offs+3);
+			sy = spriteram.read(offs+0)+1;
 	
 			if (fortyl_flipscreen != 0)
 				sx = 240 - sx;
 			else
 				sy = 242 - sy;
 	
-			code = (spriteram[offs+1] & 0x3f) + ((spriteram[offs+2] & 0x18) << 3);
-			flipx = ((spriteram[offs+1] & 0x40) >> 6) ^ fortyl_flipscreen;
-			flipy = ((spriteram[offs+1] & 0x80) >> 7) ^ fortyl_flipscreen;
-			color = (spriteram[offs+2] & 0x07) + 0x08;
+			code = (spriteram.read(offs+1)& 0x3f) + ((spriteram.read(offs+2)& 0x18) << 3);
+			flipx = ((spriteram.read(offs+1)& 0x40) >> 6) ^ fortyl_flipscreen;
+			flipy = ((spriteram.read(offs+1)& 0x80) >> 7) ^ fortyl_flipscreen;
+			color = (spriteram.read(offs+2)& 0x07) + 0x08;
 	
-			if (spriteram[offs+2] & 0xe0)
+			if (spriteram.read(offs+2)& 0xe0)
 				color = rand()&0xf;
 	
 			drawgfx(bitmap,Machine->gfx[1],

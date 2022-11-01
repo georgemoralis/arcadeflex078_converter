@@ -209,15 +209,15 @@ public class snk
 		{
 			if(*(UINT32*)(spriteram+offs) == 0 || *(UINT32*)(spriteram+offs) == -1) continue;
 	
-			tile_number = spriteram[offs+1];
-			attributes  = spriteram[offs+3]; /* YBBX.CCCC */
+			tile_number = spriteram.read(offs+1);
+			attributes  = spriteram.read(offs+3); /* YBBX.CCCC */
 			if ((attributes & 0x40) != 0) tile_number |= 256;
 			if ((attributes & 0x20) != 0) tile_number |= 512;
 	
 			color = attributes & 0xf;
-			sx =  xscroll - spriteram[offs+2];
+			sx =  xscroll - spriteram.read(offs+2);
 			if(!(attributes & 0x80)) sx += 256;
-			sy = -yscroll + spriteram[offs];
+			sy = -yscroll + spriteram.read(offs);
 			if ((attributes & 0x10) != 0) sy += 256;
 			sx &= 0x1ff;
 			sy &= 0x1ff;

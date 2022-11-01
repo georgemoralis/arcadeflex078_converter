@@ -100,14 +100,14 @@ public class markham
 	
 		for (offs=0x60; offs<0x100; offs +=4)
 		{
-			int chr = spriteram[offs+1];
-			int col = spriteram[offs+2];
+			int chr = spriteram.read(offs+1);
+			int col = spriteram.read(offs+2);
 	
 			int fx = flip_screen;
 			int fy = flip_screen;
 	
-			int x = spriteram[offs+3];
-			int y = spriteram[offs+0];
+			int x = spriteram.read(offs+3);
+			int y = spriteram.read(offs+0);
 			int px,py;
 			col &= 0x3f ;
 	

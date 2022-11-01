@@ -138,8 +138,8 @@ public class aeroboto
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
 		{
-			int x = spriteram[offs+3];
-			int y = 240 - spriteram[offs];
+			int x = spriteram.read(offs+3);
+			int y = 240 - spriteram.read(offs);
 	
 			if (flip_screen != 0)
 			{
@@ -148,8 +148,8 @@ public class aeroboto
 			}
 	
 			drawgfx(bitmap, Machine->gfx[1],
-					spriteram[offs+1],
-					spriteram[offs+2] & 0x07,
+					spriteram.read(offs+1),
+					spriteram.read(offs+2)& 0x07,
 					flip_screen, flip_screen,
 					((x + 8) & 0xff) - 8, y,
 					cliprect, TRANSPARENCY_PEN, 0);

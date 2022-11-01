@@ -330,11 +330,11 @@ public class centiped
 		/* draw the sprites */
 		for (offs = 0; offs < 0x10; offs++)
 		{
-			int code = ((spriteram[offs] & 0x3e) >> 1) | ((spriteram[offs] & 0x01) << 6);
-			int color = spriteram[offs + 0x30];
-			int flipy = spriteram[offs] & 0x80;
-			int x = spriteram[offs + 0x20];
-			int y = 240 - spriteram[offs + 0x10];
+			int code = ((spriteram.read(offs)& 0x3e) >> 1) | ((spriteram.read(offs)& 0x01) << 6);
+			int color = spriteram.read(offs + 0x30);
+			int flipy = spriteram.read(offs)& 0x80;
+			int x = spriteram.read(offs + 0x20);
+			int y = 240 - spriteram.read(offs + 0x10);
 	
 			drawgfx(bitmap, Machine->gfx[1], code, color & 0x3f, centiped_flipscreen, flipy, x, y,
 					&spriteclip, TRANSPARENCY_PEN, 0);
@@ -361,11 +361,11 @@ public class centiped
 		/* draw the sprites */
 		for (offs = 0; offs < 0x10; offs++)
 		{
-			int code = spriteram[offs] & 0x3f;
-			int flipx = spriteram[offs] & 0x40;
-			int flipy = spriteram[offs] & 0x80;
-			int x = spriteram[offs + 0x20];
-			int y = 248 - spriteram[offs + 0x10];
+			int code = spriteram.read(offs)& 0x3f;
+			int flipx = spriteram.read(offs)& 0x40;
+			int flipy = spriteram.read(offs)& 0x80;
+			int x = spriteram.read(offs + 0x20);
+			int y = 248 - spriteram.read(offs + 0x10);
 	
 			/* The four quadrants have different colors. This is not 100% accurate,
 			   because right on the middle the sprite could actually have two or more

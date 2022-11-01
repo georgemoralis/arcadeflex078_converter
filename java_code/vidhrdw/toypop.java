@@ -176,8 +176,8 @@ public class toypop
 		for (offs = 0;offs < spriteram_size;offs += 2) {
 			// is it on?
 			if ((spriteram_2[offs]) != 0xe9) {
-				int sprite = spriteram[offs];
-				int color = spriteram[offs+1];
+				int sprite = spriteram.read(offs);
+				int color = spriteram.read(offs+1);
 				int flipx = spriteram_3[offs] & 1;
 				int flipy = spriteram_3[offs] & 2;
 	

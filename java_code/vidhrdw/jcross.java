@@ -64,11 +64,11 @@ public class jcross
 	
 	public static WriteHandlerPtr jcross_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{
-		spriteram[offset] = data;
+		spriteram.write(offset,data);
 	} };
 	public static ReadHandlerPtr jcross_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{
-		return spriteram[offset];
+		return spriteram.read(offset);
 	} };
 	
 	public static ReadHandlerPtr jcross_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
